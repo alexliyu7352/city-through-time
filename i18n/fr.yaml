@@ -1,0 +1,25 @@
+# Pack de langue français (pipeline/i18n.py)
+name: Français
+script: latin
+max_line: 0
+numerals: none
+year: { bce: "{y} av. J.-C.", ce: "{y}", tick_bce: "{y} av. J.-C.", tick_ce: "{y}", label: "{name}, {year}" }
+words:
+  today: Aujourd'hui
+  footage: Images réelles
+  photo: Photo
+  archive: Archives
+  source: Source
+  portrait: Portrait
+  imagined: Image imaginée
+  from_sources: D'après les sources
+  schematic: Schéma
+  later_imagining: Imaginé plus tard
+  ai: Générée par IA
+  new: neufs
+  taller: rehaussés
+  chapter: "CHAPITRE {n}"
+  locator: LOCALISATION
+  credit_author: Auteur     # end-card credits (city.yaml end.credits)
+  credit_voice: Narration
+  credit_music: Musique

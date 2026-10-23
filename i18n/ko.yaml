@@ -1,0 +1,25 @@
+# 한국어 언어 팩 (pipeline/i18n.py)
+name: 한국어
+script: hangul
+max_line: 26           # (한글 음절 수)
+numerals: none
+year: { bce: "기원전 {y}년", ce: "{y}", tick_bce: "기원전 {y}", tick_ce: "{y}", label: "{name} · {year}" }
+words:
+  today: 오늘
+  footage: 실사
+  photo: 사진
+  archive: 사료
+  source: 사료
+  portrait: 초상
+  imagined: 상상도
+  from_sources: 사료에 근거
+  schematic: 개념도
+  later_imagining: 후대의 상상
+  ai: AI 생성
+  new: 신축
+  taller: 증축
+  chapter: "제{n}장"
+  locator: 위치
+  credit_author: 작가     # end-card credits (city.yaml end.credits)
+  credit_voice: 내레이션
+  credit_music: 음악

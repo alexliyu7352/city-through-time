@@ -1,0 +1,25 @@
+# 一座城的旁白：每一句，按出現順序（pipeline/script.py）。畫面在 city.yaml，這裡只有字。
+# 一句 = { id, <語言>..., with, lead, later, note }；時間由 compile 排（SKILL.md 步驟 4、演出文法 5c）
+#   id     這句的名字，全片唯一，小寫英文、數字、底線（配音檔、匯出、畫面上跟著這句的元素都用它）
+#   with   講某個畫面時寫：等那個畫面出現才講。shot:<鏡頭關鍵幀的 shot 名> | pin:<標籤 id> | card:<圖卡 id> | stage[:<段名>] | node
+#   lead   比那個畫面早幾秒（負數：晚幾秒）
+#          沒寫 with：前一句讀完就接著講，可以講進鏡頭的停留裡（節點第一句在節點到達後 0.5 秒）
+#   t      舊寫法：節點畫面的第幾秒（規劃器插停留時會被往後推），只在刻意等一口氣時用
+#   { pause: 秒, why: "..." }   刻意的留白（不算冷場）
+#   later  這句講到比本站更晚的年份時寫 true（文案檢查會問）
+#   note   給寫稿、翻譯、配音的人看的備註（不上屏）
+# 數字一律阿拉伯數字（年份、日期、度量）；字幕一句不超過 22 字（film.copy.max_zh）。
+# compile 後看 build/logs/copy.txt：哪裡該補一句、哪裡太密或太長、哪裡重複、格式不對。
+langs: [zh, en]
+
+opening:   # 片頭標題上的第一句（從全片開頭算秒數）
+  - { id: opening, t: 1.2, zh: "<一句>", en: "<one line>" }
+
+nodes:
+  <node_id>:
+    - { id: <node_id>_intro, zh: "<字幕>", en: "<subtitle>" }
+    - { id: <node_id>_place, with: "shot:<鏡頭名>", zh: "<講那個畫面的字幕>", en: "<subtitle>" }
+    - { pause: 4, why: "<為什麼要留白>" }
+
+quiet:     # 刻意留白、不需要字的段落（節點秒數）：文案檢查不在這裡提「該補一句」
+  # <node_id>: [[12.8, 25.8, "星空那場戲由星官名字說話"]]

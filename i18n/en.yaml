@@ -1,0 +1,25 @@
+# English language pack (pipeline/i18n.py)
+name: English
+script: latin
+max_line: 0            # (no character count: the subtitle width check decides)
+numerals: none
+year: { bce: "{y} BCE", ce: "{y}", tick_bce: "{y} BCE", tick_ce: "{y}", label: "{name}, {year}" }
+words:
+  today: Today
+  footage: Footage
+  photo: Photo
+  archive: Archive
+  source: Source
+  portrait: Portrait
+  imagined: Imagined
+  from_sources: From the sources
+  schematic: Schematic
+  later_imagining: A later imagining
+  ai: AI-generated
+  new: new
+  taller: taller
+  chapter: "CHAPTER {n}"
+  locator: LOCATOR
+  credit_author: Author     # end-card credits (city.yaml end.credits)
+  credit_voice: Narration
+  credit_music: Music

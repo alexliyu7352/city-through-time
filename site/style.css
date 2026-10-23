@@ -1,0 +1,124 @@
+/* The entry page: the films' showroom. Colours are the films' own (the night, the plinth, the plaster of the white model, the
+   projector's warm light); the era colours appear only where a film's chapters do. */
+:root {
+  --night: #0b0f18;      /* the room */
+  --plate: #262c33;      /* the plinth's top */
+  --side: #15191e;       /* the plinth's side, the panel */
+  --plaster: #ece8e1;    /* the white model, the text */
+  --dim: #98a1ab;        /* secondary text */
+  --lamp: #ffd27a;       /* the projector: actions, focus */
+  --line: rgba(236, 232, 225, .16);
+  --serif: "Cormorant Garamond", "Noto Serif TC", "Noto Serif SC", "Noto Serif JP", Georgia, serif;
+  --sans: "Inter Tight", system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "Noto Sans SC", "Noto Sans JP", sans-serif;
+  --cjk-serif: "Noto Serif TC", "Noto Serif SC", serif;
+  --gutter: clamp(16px, 4vw, 56px);
+  color-scheme: dark;
+}
+:lang(zh-Hans) { --serif: "Cormorant Garamond", "Noto Serif SC", serif; --cjk-serif: "Noto Serif SC", serif; }
+:lang(ja) { --serif: "Cormorant Garamond", "Noto Serif JP", serif; --cjk-serif: "Noto Serif JP", serif; }
+
+* { box-sizing: border-box; }
+html { background: var(--night); }
+body { margin: 0; color: var(--plaster); background: var(--night); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--lamp); outline-offset: 3px; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: .005em; margin: 0; }
+
+/* ---- the top bar: the series' name set upright as on a museum wall, the languages as plain words */
+.top { position: absolute; z-index: 3; inset: 0 0 auto 0; display: flex; justify-content: space-between; align-items: flex-start;
+  padding: var(--gutter); pointer-events: none; }
+.top > * { pointer-events: auto; }
+.brand { display: flex; gap: 14px; align-items: flex-start; text-decoration: none; }
+.mark { writing-mode: vertical-rl; font: 700 clamp(34px, 4.6vw, 64px)/1 var(--cjk-serif); letter-spacing: .12em; color: var(--plaster); }
+.brand .sub { font: 500 clamp(17px, 1.6vw, 22px)/1.2 var(--serif); color: var(--dim); max-width: 9em; padding-top: .2em; }
+.langs { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 18px; max-width: 60vw; font-size: 14px; }
+.langs button { color: var(--dim); padding: 4px 0; border-bottom: 1px solid transparent; }
+.langs button:hover { color: var(--plaster); }
+.langs button[aria-current] { color: var(--plaster); border-bottom-color: var(--lamp); }
+
+/* ---- the globe on its plinth fills the first screen */
+.hero { position: relative; height: max(620px, 100svh); overflow: hidden;
+  background: radial-gradient(120% 80% at 50% 30%, #121925 0%, var(--night) 62%); }
+#globe { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+#globe:active { cursor: grabbing; }
+.no-gl #globe { display: none; }
+.intro { position: absolute; left: var(--gutter); bottom: var(--gutter); max-width: 34em; pointer-events: none; transition: opacity .4s; }
+.opened .intro { opacity: 0; }   /* (an open city takes the stage) */
+.lede { font: 500 clamp(20px, 2.1vw, 28px)/1.35 var(--serif); margin: 0 0 .7em; text-wrap: pretty; }
+.hint { color: var(--dim); font-size: 14px; margin: 0; }
+.tag { position: absolute; left: 0; top: 0; margin: 0; pointer-events: none; white-space: nowrap; font: 600 18px/1 var(--serif);
+  color: var(--plaster); text-shadow: 0 1px 8px rgba(0, 0, 0, .9); translate: 10px -28px; }
+
+/* ---- a city, opened: the plinth's label pulled out beside the globe */
+.panel { position: absolute; z-index: 4; top: 0; right: 0; bottom: 0; width: min(420px, 100%); overflow-y: auto;
+  background: var(--side); border-left: 1px solid var(--line); padding: 64px 28px 32px; }
+.panel[hidden] { display: none; }
+.close { position: absolute; top: 18px; right: 22px; color: var(--dim); font-size: 14px; padding: 6px 2px; }
+.close:hover { color: var(--plaster); }
+.poster { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--plate); margin-bottom: 22px; }
+.panel h2 { font-size: 40px; line-height: 1.05; }
+.also { color: var(--dim); margin: 4px 0 0; font: 500 19px/1.2 var(--serif); }
+.also:empty { display: none; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 20px 0; font-size: 15px; }
+.facts dt { color: var(--dim); }
+.facts dd { margin: 0; }
+.summary { margin: 0 0 22px; font-size: 16px; line-height: 1.65; text-wrap: pretty; }
+:lang(ja) .summary, :lang(zh-Hant) .summary, :lang(zh-Hans) .summary { line-height: 1.85; }
+.actions { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 18px; }
+.act { display: inline-block; padding: 10px 16px; border: 1px solid var(--line); text-decoration: none; font-weight: 500; }
+.act:hover { border-color: var(--plaster); }
+.act.main { background: var(--lamp); color: #1d1606; border-color: var(--lamp); }
+.act.main:hover { background: #ffe2a6; }
+.small, .pending, .ai { color: var(--dim); font-size: 14px; margin: 0; }
+.pending { border-left: 2px solid var(--lamp); padding-left: 12px; color: var(--plaster); }
+.ai { margin-bottom: 14px; }
+.source { font-size: 14px; }
+
+/* ---- a film as a bar of its chapters */
+.bar { display: flex; height: 6px; width: 100%; overflow: hidden; }
+.bar span { display: block; min-width: 1px; }
+.bar.big { height: 10px; margin-top: 16px; }
+
+/* ---- the cities: labels on the plinth's edge, and the one left empty */
+.cities, .make { padding: clamp(48px, 8vw, 104px) var(--gutter) 0; max-width: 1240px; margin: 0 auto; }
+.cities h2, .make h2 { font-size: clamp(30px, 3.4vw, 44px); }
+.note { color: var(--dim); margin: 8px 0 28px; max-width: 44em; }
+.labels { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 28px; }
+.label, .empty a { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; width: 100%; text-align: left; text-decoration: none;
+  padding: 18px 0 0; border-top: 1px solid var(--line); }
+.label:hover, .empty a:hover { border-top-color: var(--plaster); }
+.label .name, .empty .name { font: 600 30px/1.1 var(--serif); }
+.label .also { font-size: 17px; margin: 0; }
+.label .years { font-size: 15px; }
+.label .by { color: var(--dim); font-size: 14px; }
+.label .bar { margin-top: 12px; }
+.empty a { border-top-style: dashed; }
+.empty .text { color: var(--dim); font-size: 15px; max-width: 26em; }
+.empty .go { margin-top: 6px; font-size: 15px; color: var(--lamp); text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---- making one: three steps in order */
+.steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 36px; }
+.steps li { counter-increment: step; }
+.steps li::before { content: counter(step); display: block; font: 600 56px/1 var(--serif); font-variant-numeric: lining-nums; color: var(--plate); -webkit-text-stroke: 1px var(--dim); margin-bottom: 10px; }
+.steps h3 { font-size: 26px; margin-bottom: 8px; }
+.steps p { margin: 0 0 12px; color: #d3d0ca; max-width: 34em; }
+:lang(ja) .steps p, :lang(zh-Hant) .steps p, :lang(zh-Hans) .steps p { line-height: 1.8; }
+.guide { color: var(--lamp); text-underline-offset: 4px; }
+
+.foot { max-width: 1240px; margin: 0 auto; padding: clamp(56px, 8vw, 104px) var(--gutter) 40px; color: var(--dim); font-size: 14px; }
+.foot p { margin: 0 0 6px; max-width: 60em; }
+
+/* ---- narrow screens: the title lies down, the opened city slides up over the globe */
+@media (max-width: 720px) {
+  .top { flex-direction: column; gap: 14px; }
+  .mark { writing-mode: horizontal-tb; font-size: 34px; letter-spacing: .06em; }
+  .brand { flex-direction: column; gap: 4px; }
+  .langs { justify-content: flex-start; max-width: none; }
+  .hero { height: auto; padding-top: 150px; }
+  #globe { position: relative; height: 62svh; min-height: 360px; }
+  .intro, .opened .intro { position: static; padding: 0 var(--gutter); max-width: none; opacity: 1; }
+  .panel { top: auto; height: 78%; border-left: 0; border-top: 1px solid var(--line); padding: 56px 20px 28px; }
+  .panel h2 { font-size: 32px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }

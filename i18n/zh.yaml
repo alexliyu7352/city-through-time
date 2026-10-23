@@ -1,0 +1,25 @@
+# 簡體中文語言包（pipeline/i18n.py）：畫面上程式自己寫的字。城市自己的字寫在 city.yaml / script.yaml。
+name: 简体中文
+script: cjk            # cjk | hangul | latin：讀秒速度、字幕字級、字數上限、數字規則按它
+max_line: 22           # 一句字幕最多幾個字（漢字＋假名；latin 不數字數，看字幕寬度）
+numerals: han          # han：檢查漢字數字（应写成 0–9）
+year: { bce: "前 {y}", ce: "{y}", tick_bce: "前{y}", tick_ce: "{y}", label: "{name} · {year}" }
+words:
+  today: 今天
+  footage: 实拍
+  photo: 照片
+  archive: 史料
+  source: 史料
+  portrait: 画像
+  imagined: 想象图
+  from_sources: 据史料
+  schematic: 示意
+  later_imagining: 后人想象
+  ai: AI 生成
+  new: 新建
+  taller: 长高
+  chapter: "第 {n} 章"
+  locator: 定位
+  credit_author: 作者     # end-card credits (city.yaml end.credits)
+  credit_voice: 配音
+  credit_music: 配乐

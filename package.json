@@ -1,0 +1,12 @@
+{
+  "name": "city-through-time",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "《一城春秋》 A City Through Time: a city's history as a white-model film, lit era by era",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "playwright-core": "1.63.0",
+    "three": "0.170.0"
+  }
+}

@@ -1,0 +1,63 @@
+"""A city's web bundle: what play.html needs to play the film in a browser, from another server (SKILL.md 發布).
+usage: python -I tools/web.py cities/<slug>            -> cities/<slug>/dist/web/ (+ bundle.json: every file, its size and SHA-256)
+       python -I tools/web.py cities/<slug> --entry    a draft of the city's entry in cities.json (the entry page reads it), from the
+                                                       film: where it is, its years, length, languages and chapters; fill in the rest
+Upload the folder as it is (a Hugging Face dataset, a GitHub repository served by GitHub Pages, any host that allows cross-origin
+reads) and give its URL as the city's `bundle` in cities.json; the page then plays play.html?city=<slug>&bundle=<url>.
+Only what the page loads goes in (engine/main.js: the timeline, the model and its masks, the era cities, the decals and plates, the
+narration, score and sound-effect tracks as m4a, the footage and pictures), laid out as in the city folder: build/... and assets/....
+Nothing else does: no WAV, no internal test plates (satellite_hr), no reference pictures. The fonts are not in it: the page loads
+them from the project's fonts/ (a city that uses a new font brings it to fonts/ in its pull request)."""
+import hashlib, json, os, shutil, sys
+
+
+def files(D):
+    """the page's loads, relative to the city folder (engine/main.js)"""
+    B = os.path.join(D, 'build')
+    F = json.load(open(os.path.join(B, 'film.json'), encoding='utf-8'))
+    out = ['build/film.json'] + [f'build/data/{n}' for n in ('model.json', 'stats.json', 'lines.json', 'water.png', 'layers1.png', 'layers2.png',
+                                                              'layers3.png', 'hide.png', 'hide2.png', 'edge.png', 'edge2.png', 'locator.png')]
+    out.append('build/data/terrain16.png' if os.path.exists(os.path.join(B, 'data', 'terrain16.png')) else 'build/data/terrain.png')
+    built = [d.get('file') for d in F.get('decals') or []] + [(F.get('satellite') or {}).get('file'), (F.get('context') or {}).get('file'),
+             (F.get('grow') or {}).get('tfile')] + [e.get('file') for e in F.get('eras') or []]
+    built += [(F.get(k) or {}).get('file') for k in ('voice', 'score', 'sfx')] + [(F.get('score') or {}).get('loop')]
+    out += ['build/' + f for f in built if f]
+    out += [f['file'] for f in F.get('footage') or []]   # (relative to the city folder: assets/...)
+    return list(dict.fromkeys(out))
+
+
+def entry(D):
+    """the city's cities.json entry as far as the film can tell it (CONTRIBUTING.md has every field)"""
+    import yaml
+    C = yaml.safe_load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'))
+    F = json.load(open(os.path.join(D, 'build', 'film.json'), encoding='utf-8'))
+    w, s_, e, n = C['box']; nodes = F['nodes']; slug = os.path.basename(D)
+    return {'slug': slug, 'name': {'en': C['name'].get('en', slug), 'zh-Hans': C['name'].get('zh', '')},
+            'location': [round((w + e) / 2, 3), round((s_ + n) / 2, 3)],
+            'years': [int(nodes[0]['years'][0]), int(nodes[-1]['years'][1])], 'duration': round(F['dur'], 1),
+            'narration': (F.get('voice') or {}).get('lang'), 'subtitles': C['film'].get('lang', []),
+            'chapters': [{'t': round(x['t0'], 1), 'year': int(x['years'][0]), 'color': x.get('col', '#ffffff')} for x in nodes],
+            'authors': [{'name': '', 'url': ''}], 'summary': {'en': ''}, 'poster': f'cities/{slug}/poster.jpg', 'source': f'cities/{slug}',
+            'watch': [], 'bundle': None, 'license': 'CC BY-SA 4.0'}
+
+
+def main():
+    D = os.path.abspath(sys.argv[1]); out = os.path.join(D, 'dist', 'web')
+    if '--entry' in sys.argv: return print(json.dumps(entry(D), ensure_ascii=False, indent=2))
+    fs = files(D)
+    missing = [f for f in fs if not os.path.exists(os.path.join(D, f))]
+    if missing: raise SystemExit('web: missing (compile, then render/events.mjs and the music first): ' + ', '.join(missing))
+    if os.path.isdir(out): shutil.rmtree(out)
+    man = []
+    for f in fs:
+        dst = os.path.join(out, f); os.makedirs(os.path.dirname(dst), exist_ok=True); shutil.copy2(os.path.join(D, f), dst)
+        h = hashlib.sha256(open(dst, 'rb').read()).hexdigest()
+        man.append({'path': f, 'bytes': os.path.getsize(dst), 'sha256': h})
+    total = sum(m['bytes'] for m in man)
+    json.dump({'slug': os.path.basename(D), 'files': man, 'bytes': total}, open(os.path.join(out, 'bundle.json'), 'w', encoding='utf-8'), indent=1)
+    print(f'web bundle: {len(man)} files, {total / 1e6:.0f} MB -> {os.path.relpath(out)}')
+    for m in sorted(man, key=lambda m: -m['bytes'])[:5]: print(f"  {m['bytes'] / 1e6:6.1f} MB  {m['path']}")
+
+
+if __name__ == '__main__':
+    main()

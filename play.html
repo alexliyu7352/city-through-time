@@ -1,0 +1,12 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>一城春秋 · A City Through Time</title>
+<style>html,body{margin:0;background:#050607;overflow:hidden}#stage,#ov{position:absolute;left:0;top:0}canvas{display:block}</style>
+<script>
+// three.js: the pinned copy in node_modules when served from this machine (preview, renders), the same version from a CDN anywhere else
+{ const t = /^(127\.0\.0\.1|localhost)$/.test(location.hostname) ? './node_modules/three/' : 'https://cdn.jsdelivr.net/npm/three@0.170.0/';
+  const m = document.createElement('script'); m.type = 'importmap';
+  m.textContent = JSON.stringify({ imports: { three: t + 'build/three.module.js', 'three/addons/': t + 'examples/jsm/' } });
+  document.currentScript.after(m); }
+</script>
+</head><body><div id="stage"></div><canvas id="ov" width="1920" height="1080"></canvas>
+<script type="module" src="engine/main.js"></script></body></html>

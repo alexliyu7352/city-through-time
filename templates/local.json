@@ -1,0 +1,9 @@
+{
+  "raw": "local/raw",
+  "ref": "local/ref",
+  "stable_audio": "local/models/stable-audio-3",
+  "hf_cache": "local/models/huggingface",
+  "instruments": "local/instruments",
+  "chrome": "",
+  "workers": 2
+}

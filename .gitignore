@@ -1,0 +1,11 @@
+.venv/
+cities/*/build/
+cities/*/dist/
+__pycache__/
+*.mp4
+*.wav
+/local/
+node_modules/
+/internal/
+cities/*/assets/ref/
+cities/*/research/*_refs/

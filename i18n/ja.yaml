@@ -1,0 +1,25 @@
+# 日本語言語パック (pipeline/i18n.py)
+name: 日本語
+script: cjk
+max_line: 26           # (漢字と仮名を数える)
+numerals: han
+year: { bce: "紀元前{y}年", ce: "{y}", tick_bce: "前{y}", tick_ce: "{y}", label: "{name}・{year}" }
+words:
+  today: 今日
+  footage: 実写
+  photo: 写真
+  archive: 史料
+  source: 史料
+  portrait: 肖像
+  imagined: 想像図
+  from_sources: 史料に基づく
+  schematic: 模式図
+  later_imagining: 後世の想像
+  ai: AI生成
+  new: 新築
+  taller: 高層化
+  chapter: "第{n}章"
+  locator: 位置
+  credit_author: 作者     # end-card credits (city.yaml end.credits)
+  credit_voice: ナレーション
+  credit_music: 音楽

@@ -1,0 +1,40 @@
+city-through-time (《一城春秋》 A City Through Time) includes code adapted from lemo-opuscar
+(https://github.com/lemomo-ai/lemo-opuscar), used under the MIT License below:
+
+- engine/lib.js        from core/lib.js (interpolation and easing helpers)
+- engine/post.js       from core/three/post.js (post-processing)
+- engine/studio.js     from the white-model demo (the showroom, the projection shader)
+- engine/overlay.js    from the white-model demo (the 2D layer)
+- tools/motioncheck.py from the white-model demo
+- render/serve.mjs, page.mjs, still.mjs, events.mjs, video.mjs   from core/render/ (serving, opening the page, stills, events, video)
+- render/mux.mjs       from core/render/mux.sh (the delivered film)
+- tools/sheet.py       from core/render/sheet.py
+- audio/sampler.py     from core/audio/sampler.py (sampled instruments; its comments are the original's)
+- audio/sfx.py         from core/audio/sfx.py (trimmed)
+- audio/codescore.py, audio/mix.py   grew from the white-model demo's score and mix
+
+Each of these files says so in its first lines.
+
+---
+
+MIT License
+
+Copyright (c) 2026 LemoLab
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

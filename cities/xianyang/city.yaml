@@ -1,0 +1,1010 @@
+# 咸阳 · first pass (box and scale under test)
+slug: xianyang
+name: { zh: 咸阳, en: Xianyang }
+box: [108.60, 34.245, 108.94, 34.44]     # west, south, east, north (WGS84): the old town, the Qin palace site, the Han tombs on the plateau, Han Chang'an and Xi'an's north-west across the river
+scale: 10000                              # 1:10000 -> 1 model metre = 10 km
+raw:
+  cmab: cmab/shaanxi                       # under this machine's raw root (local/config.json raw; pipeline/local.py)
+buildings:
+  source: cmab
+  fill: overture_ghsl   # where CMAB has no buildings (the northern plateau, villages): Overture footprints, years from GHSL (estimates)
+  fill_gap_m: 100
+  simplify_m: 1.0
+  min_area_m2: 15
+  exaggeration: 4.0          # today's heights x4 so the massing reads at 1:10000 (the plate: terrain.exaggeration; era cities: city.exaggeration)
+# CMAB age = first year the centroid shows in GAIA impervious surface (1985-2018); the oldest band is "already there by 1987"
+bands:
+  - { lo: 1900, hi: 1988, zh: 1987 年已有, en: by 1987 }
+  - { lo: 1988, hi: 1996, zh: 1988–1995, en: 1988–1995 }
+  - { lo: 1996, hi: 2006, zh: 1996–2005, en: 1996–2005 }
+  - { lo: 2006, hi: 2013, zh: 2006–2012, en: 2006–2012 }
+  - { lo: 2013, hi: 2019, zh: 2013–2018, en: 2013–2018 }
+  - { lo: 2019, hi: 2100, zh: 2018 年后, en: after 2018 }
+landmarks:
+  - { id: qin_site, lon: 108.85753, lat: 34.41435, snap_to_building: false }          # 秦咸阳城遗址 (OSM node)
+  - { id: qin_fuku, lon: 108.84955, lat: 34.41401, snap_to_building: false }          # 秦咸阳宫府库遗址 (OSM way centre)
+  - { id: qinhan_museum, lon: 108.85953, lat: 34.40805, snap_to_building: false }     # 陕西历史博物馆秦汉馆
+  - { id: old_town, lon: 108.72000, lat: 34.33583, snap_to_building: false }          # 咸阳博物院 / 明文庙, 中山街
+  - { id: ferry, lon: 108.72102, lat: 34.32914, snap_to_building: false }             # 咸阳古渡廊桥
+  - { id: station, lon: 108.73012, lat: 34.34570, snap_to_building: false }           # 咸阳站 (1936)
+  - { id: lake, lon: 108.71863, lat: 34.32977, snap_to_building: false }              # 咸阳湖
+  - { id: airport, lon: 108.76003, lat: 34.44236, snap_to_building: false }           # 西安咸阳国际机场 (aerodrome centroid)
+  - { id: airport_t, lon: 108.7517, lat: 34.4472, snap_to_building: false }           # terminal area (wiki infobox)
+  - { id: qinhan_city, lon: 108.84414, lat: 34.39267, snap_to_building: false }       # 秦汉新城 (place node)
+  - { id: metro_west, lon: 108.65813, lat: 34.33531, snap_to_building: false }        # 咸阳西站 (metro line 1 phase 3 terminus)
+  - { id: yinjiacun, lon: 108.60, lat: 34.32, snap_to_building: false }               # 尹家村遗址 [EST: "咸阳市以西约10公里, 渭河岸边"]
+  - { id: east_edge, lon: 108.879, lat: 34.44, snap_to_building: false }              # plate edge pointer toward 汉阳陵 (6 km east, off the plate)
+# earthworks on the model: real mounds, base from the OpenStreetMap outline, height from FACTS.md (h_m); top_ratio = flat top / base
+mounds:
+  - { id: changling, osm: 汉高祖长陵, h_m: 30, top_ratio: .4, year: -195, zh: 汉长陵, en: Changling }
+  - { id: anling, osm: 汉惠帝安陵, h_m: 30, top_ratio: .4, year: -188, zh: 汉安陵, en: Anling }
+  - { id: pingling, osm: 平陵, h_m: 33, top_ratio: .4, year: -74, zh: 汉平陵, en: Pingling }
+  - { id: yanling, osm: 汉成帝延陵, h_m: 30, top_ratio: .4, year: -7, zh: 汉延陵, en: Yanling }
+  - { id: zhou_wen, osm: 周文王陵, h_m: 12, top_ratio: .4, year: -300, zh: 周陵（文王陵）, en: Zhou tombs }
+  - { id: zhou_wu, osm: 周武王陵, h_m: 12, top_ratio: .4, year: -300, zh: 周陵（武王陵）, en: Zhou tombs }
+  - { id: shunling, osm: 顺陵封土堆, h_m: 12.6, top_ratio: .4, year: 690, zh: 唐顺陵, en: Shunling }
+
+# ================================================================ THE FILM v4 — whole period cities (pipeline/citygen.py); copy written as one script
+terrain: { enabled: true, exaggeration: 3.0,   # x3: at x6 every foundation on the 北阪 stood as tall as its house (the user, 2026-10-22); terrain.py and clipcheck put the period cities' limit at about x4.5
+           context: { box: [108.36, 34.245, 108.86, 34.72], res_m: 60, exaggeration_far: 2.5, blend_km: 6,
+                     shade: { az: 250, el: 22, k: 0.8 } } }   # the land beyond the plate to the north-west, for 九嵕山 (34.6285, 108.4835: the name's mountain); 60 m so its ridges show, a low west-south-west sun so they read
+film:
+  lang: [zh, en]
+  yearFmt: zh
+  identity: { l1: "咸阳 · 1:10000", l2: "{stats.centre_wgs[1]:.3f}°N  {stats.centre_wgs[0]:.3f}°E  ·  渭河两岸 31 × 22 km" }
+  light: { base: 0.62 }
+  rise: { sinkDur: 2.8, ghost: 1.0 }   # today's white city stays whole all film (the reference's grammar); eras replace their own regions
+  drift: 0.6
+  wave_dur: 4.5              # a node's colour crosses the plate as a ring of light in this many seconds
+  era_look: { dim: 0.5, glow: 1.0, edge: 1.0, line: 1.0, light_m: 45, halo_m: 14, edge_m: 150 }   # while a period city stands: today's city dims; a thin neon line on its edge lights what stands within ~45 m of it
+  emblem: none   # the tiger tally storyline was dropped (the user, 2026-10-21: not staged well)
+  satellite_source: sentinel   # Copernicus Sentinel-2 (CC-compatible); 'hr' (Esri World Imagery, pipeline/imagery_tiles.py) is for internal tests only, never published
+  copy: { keep: ['十五五', '三月不灭', '国棉一厂', '国棉七厂', '洪武四年', '乾隆十六年', '武德二年', '元鼎三年'] }   # names, a quotation and reign years kept as written (pipeline/copylint.py)
+  sfx: [relay, lamp, burn, lights]   # the sound effects kept beside the score (the user, 2026-10-22): the lamp coming on, the burning, the lights going out
+  music:   # the score (MUSIC.md: prompts, takes, licence; tools/music.py makes the candidates, audio/lay.py lays them): a cue starts
+           # at its node (the first at the film's start) and runs to the next; take: the chosen candidate <wording>-<seed>, unset = silent
+    loop: M01   # after the film the preview plays the opening on in a loop: the drone, the heartbeat and the xun, the city's oldest sound
+    cues:
+      - { id: M01, node: name, take: 2-2, fade_in: 3.0 }   # (from the dark before the lamp)
+      - { id: M02, node: qin, take: 1-1, offset: 0 }   # (from its first stroke, on the node: laid later it opened on a 2 s rest; its climax runs on into M03, generated on it)   # (draft takes, 2026-10-22: seed 1 of each, for the user to hear against the picture)
+      - { id: M03, node: burn, continue: M02, take: 2-2 }   # (the same drums fall apart, generated on M02; 2-2 thins out toward its end, 2-1 and 2-3 stay at the climax)
+      - { id: M04, node: han, take: 2-3 }   # (2-1 rises out of silence: a hole after the burning)   # Han and Tang in one (the user, 2026-10-22: the two greatest dynasties)
+      - { id: M05, node: ming, take: 1-1, offset: 2.52 }   # (offset pinned: M06 was generated on M05 laid so)
+      - { id: M06, node: rail, take: 6-1 }   # (wording 2 kept the old town's sound; 3-1 'goes mad from 53 s'; 4-x 'the wrong feeling'; 6-1 rises 8 dB to its close, as the narration does)
+      - { id: M07, node: m1975, take: 1-2 }   # (1-1: its rhythm loses its footing 36-68 s in, as the user heard)
+      - { id: M08, node: m1998, take: 1-1 }
+      - { id: M09, node: m2005, take: 1-1 }
+      - { id: M10, node: m2014, take: 1-2 }   # (1-1 has a gap at 17 s)
+      - { id: M11, node: m2019, take: 1-1 }
+  fonts:   # one font per job, by family name and weight; looked up in fonts/ (python -I pipeline/fonts.py list .; add one: fonts.py add . "<Family>")
+    zh_strong:      { family: Noto Serif SC, weight: 600 }        # Chinese subtitles, chapter names, tags, place names, the end title
+    zh:             { family: Noto Serif SC, weight: 300 }        # readout labels, the timeline label, small Chinese text
+    zh_sans:        { family: Noto Sans SC, weight: 300 }         # end-card lines
+    zh_sans_strong: { family: Noto Sans SC, weight: 500 }         # the sky plan's labels
+    numeral:        { family: Cormorant Garamond, weight: 300 }   # big numerals (the year, the counters), the English title
+    numeral_strong: { family: Cormorant Garamond, weight: 500 }   # the timeline year, measured heights
+    en:             { family: Inter Tight, weight: 300 }          # English subtitles and captions (200 vanished over bright buildings: tested)
+    en_strong:      { family: Inter Tight, weight: 400 }          # English under tags and labels, measurements
+    mono:           { family: IBM Plex Mono, weight: 400 }        # notes, credits, the locator
+  palette:
+    epochs: ['#ffb070', '#e8553a', '#c9a7ff', '#7fe0c8', '#cfe9ff', '#ffa13d', '#ffa13d', '#ffffff']
+    bands: ['#ffb070', '#2a63ff', '#2f98ff', '#6fdcff', '#b9f1ff', '#eefcff']
+    hgt: ['#1a1440', '#5a35d6', '#e2509a', '#ffe7c4']
+    pick: '#ffd27a'
+    black: '#0b0f18'
+    plate: '#262c33'
+    plateSide: '#15191e'
+    water: '#3a5670'
+    plateEmit: 0.55
+  labels:   # geography, shown on wide shots
+    - { lon: 108.700, lat: 34.326, zh: 渭河, en: Wei River, size: 1.2, dmin: 1.0 }
+    - { lon: 108.860, lat: 34.432, zh: 咸阳原, en: Xianyang Plateau, size: 1.1, dmin: 1.0 }
+    - { lon: 108.722, lat: 34.338, zh: 今咸阳老城, en: today's old town, size: .9, dmin: 1.2 }
+    - { lon: 108.925, lat: 34.278, zh: 西安 →, en: Xi'an, size: .9, dmin: 1.2 }
+  opening:
+    dur: 8.0
+    camera: [{ t: 0.0, ll: [108.72, 34.342], az: 30, el: 8, d: 0.6 }, { t: 8.0, ll: [108.70, 34.37], az: 32, el: 11, d: 2.0 }]   # low over the Wei, looking north-north-west: the river in front, the city, the plateau, 九嵕山 on the horizon
+    context: [{ t: 0.0, a: 1 }]   # the land beyond the plate: the name's mountain
+  nodes:
+    - id: name
+      mood: { feel: wonder, level: 1 }   # the name and its land (the narrator's arc: agreed 2026-10-21)
+      years: [-4000, -400]
+      dur: 10.8   # (its source note needs 9.5 s on screen: readcheck)
+      label: { zh: 咸阳, en: The name }
+      col: '#8fb8ff'
+      readout: { label: "山南水北，俱为阳", note: "《元和郡县图志》《三辅黄图》 · 九嵕山位置：OpenStreetMap · 远景地形：Copernicus DEM，高度放大 2.5–3 倍" }
+      lines:
+        - { id: river, src: rivers, col: '#8fb8ff', width: 0.003, at: 0.3, fade: 2.5, persist: false, gain: 1.0 }
+      pins:   # the name's mountain, off the plate (the river and the old town carry their geography labels)
+        - { id: p_jiuzong, lon: 108.4835, lat: 34.6285, h_m: 0, t0: 0.4, t1: 10.6, zh: "九嵕山 · 在北", en: "Jiuzong Mountains, to the north", len: 120 }
+      context: [{ t: 0.0, a: 1 }, { t: 9.8, a: 1 }, { t: 12.3, a: 0 }]
+      camera: [{ t: 0, ll: [108.70, 34.37], az: 32, el: 11, d: 2.0 }, { t: 10.8, ll: [108.69, 34.39], az: 33, el: 12, d: 3.0 }]   # the river below the middle, the city, the plateau, 九嵕山 near the top
+    - id: neolithic
+      mood: { feel: wonder, level: 1 }   # the first village (the narrator's arc: agreed 2026-10-21)
+      years: [-4000, -3300]
+      dur: 11.2
+      label: { zh: 渭水之滨, en: The first village }
+      wave_from: [108.6180, 34.3240]   # the colour spreads from the village itself
+      col: '#8fb8ff'
+      readout: { label: "仰韶先民在渭河岸边定居", note: "尹家村遗址 · 距今约 6000–5300 年 · 聚落形制按半坡、姜寨通例示意" }
+      city:
+        origin: [108.6180, 34.3240]
+        detail: high
+        col: '#ffd9b0'
+        rise: 4.0   # starts when the camera holds the village (stagecraft settle); small on screen: lit by a scanning band
+        sink: 2.0
+        theta_deg: 0
+        outline: [[[108.6199, 34.324], [108.61986, 34.32439], [108.61972, 34.32476], [108.61949, 34.3251], [108.61919, 34.32537], [108.61883, 34.32558], [108.61842, 34.32571], [108.618, 34.32576], [108.61758, 34.32571], [108.61717, 34.32558], [108.61681, 34.32537], [108.61651, 34.3251], [108.61628, 34.32476], [108.61614, 34.32439], [108.6161, 34.324], [108.61614, 34.32361], [108.61628, 34.32324], [108.61651, 34.3229], [108.61681, 34.32263], [108.61717, 34.32242], [108.61758, 34.32229], [108.618, 34.32224], [108.61842, 34.32229], [108.61883, 34.32242], [108.61919, 34.32263], [108.61949, 34.3229], [108.61972, 34.32324], [108.61986, 34.32361]]]   # the ditch: the edge of the village
+        landmarks:
+          - { kind: village, lon: 108.6180, lat: 34.3240, n: 46, r_m: 135 }
+          - { kind: ditch, pts: [[108.6199, 34.324], [108.61986, 34.32439], [108.61972, 34.32476], [108.61949, 34.3251], [108.61919, 34.32537], [108.61883, 34.32558], [108.61842, 34.32571], [108.618, 34.32576], [108.61758, 34.32571], [108.61717, 34.32558], [108.61681, 34.32537], [108.61651, 34.3251], [108.61628, 34.32476], [108.61614, 34.32439], [108.6161, 34.324], [108.61614, 34.32361], [108.61628, 34.32324], [108.61651, 34.3229], [108.61681, 34.32263], [108.61717, 34.32242], [108.61758, 34.32229], [108.618, 34.32224], [108.61842, 34.32229], [108.61883, 34.32242], [108.61919, 34.32263], [108.61949, 34.3229], [108.61972, 34.32324], [108.61986, 34.32361], [108.6199, 34.324]], w_m: 6 }   # 外面一道壕沟 (Banpo-type ditch, schematic)
+      camera:   # no key at 0: the move continues from the name's wide shot; the last key pulls out wide so the Qin colour is seen leaving the village
+        [{ t: 3.5, ll: [108.6185, 34.3242], az: 70, el: 32, d: 0.32 }, { t: 6, ll: [108.6180, 34.3240], az: 95, el: 24, d: 0.13, fov: 34 },
+         { t: 8.5, ll: [108.6178, 34.3238], az: 120, el: 22, d: 0.11, fov: 34 }, { t: 11, ll: [108.635, 34.330], az: 105, el: 40, d: 0.95 }]
+    - id: qin
+      mood: { feel: pride, level: 2 }   # the new capital, the reforms (the narrator's arc: agreed 2026-10-21)
+      years: [-350, -350]
+      dur: 51.9
+      label: { zh: 秦都, en: The Qin capital }
+      col: '#ffb070'
+      readout: { label: "秦孝公迁都咸阳，公元前 350 年", note: "宫区在北、郭区在南（考古布局）· 宫城周长约 2.7 km · 至今未发现外郭城墙 · 平面示意" }
+      city:
+        origin: [108.8590, 34.4123]
+        col: '#ffd2a0'
+        tint: 0.6
+        detail: medium
+        rise: 7.0
+        sink: 7.5   # the contracting ring: 2 s sweeping in from beyond the frame, then 5.5 s on screen
+        until: burn
+        until_plus: 8.2
+        sinkStyle: burn
+        fall_dur: 0.25   # the burnt city goes right behind the contracting ring
+        burn: 4.6
+        theta_deg: 0
+        walls:   # the palace-city wall: sides 860 / 910 / 580 / 436 m (桑广书 2005), gates in the east and west walls; the outline is schematic, 100 m west of where it was first drawn so the 50 m avenue runs outside its east wall up to Palace No. 6 (it ran inside it, through the south wall: the user, 2026-10-21)
+          - ring: [[108.8526, 34.4150], [108.8619, 34.4148], [108.8621, 34.4109], [108.8524, 34.4098]]
+            h_m: 8
+            t_m: 9
+            style: hip
+            towers: false
+            moat: false
+            gates: [[108.8525, 34.4124], [108.8620, 34.4128]]
+        streets:   # the 50 m avenue facing Palace No. 6, a parallel avenue (schematic), the 54 m east-west road north of the palace wall
+          - { pts: [[108.8626, 34.4146], [108.8626, 34.4000]], w_m: 50 }
+          - { pts: [[108.8520, 34.4096], [108.8520, 34.4000]], w_m: 40 }
+          - { pts: [[108.8526, 34.4160], [108.8641, 34.4160]], w_m: 54 }
+        landmarks:
+          - { kind: taixie, lon: 108.8575, lat: 34.4143, w_m: 60, d_m: 45, h_m: 6, mirror_m: 57, rooms: [5, 2], exaggeration: 1.25 }   # palace No. 1: twin L-shaped terraces 60 x 45 x 6 m, 177 m end to end, a flying gallery between (qin_palaces.md §1-2, Yang Hongxun's reconstruction)
+          - { kind: terrace, lon: 108.8548, lat: 34.4150, w_m: 127, d_m: 40, h_m: 4, tiers: 1, top: 0.85, halls: [[-0.25, 0, 0.4, 0.6, 9, 'xieshan'], [0.25, 0, 0.4, 0.6, 9, 'xieshan']] }
+          - { kind: terrace, lon: 108.8566, lat: 34.4136, w_m: 60, d_m: 45, h_m: 4, tiers: 1, top: 0.85, halls: [[0, 0, 0.7, 0.6, 9, 'xieshan']] }
+          - { kind: terrace, lon: 108.8626, lat: 34.4160, w_m: 126, d_m: 126, h_m: 11.3, tiers: 3, top: 0.26, halls: [[0, 0, 0.92, 0.8, 16, 'double_hip']] }
+          - { kind: office, lon: 108.8626, lat: 34.4172, w_m: 63, d_m: 63 }
+          - { kind: hall, lon: 108.8496, lat: 34.4140, w_m: 110, d_m: 19.5, h_m: 8, roof: gable, podium: 1 }
+          - { kind: pool, lon: 108.8496, lat: 34.4128, w_m: 14, d_m: 10 }
+          - { kind: office, lon: 108.8626, lat: 34.4205, w_m: 60, d_m: 50 }
+          - { kind: ditch, pts: [[108.8350, 34.4170], [108.8600, 34.4178], [108.8840, 34.4182]], w_m: 14 }
+          - { kind: ditch, pts: [[108.8170, 34.3920], [108.8400, 34.4010], [108.8700, 34.4050], [108.8900, 34.4150], [108.9040, 34.4340]], w_m: 22 }
+          - { kind: pool, lon: 108.9040, lat: 34.4370, w_m: 600, d_m: 380 }
+          - { kind: kilns, lon: 108.8170, lat: 34.3895, n: 40, r_m: 260 }
+          - { kind: kilns, lon: 108.8320, lat: 34.4050, n: 26, r_m: 200 }
+        fabric:
+          - { region: [[108.8420, 34.4070], [108.8800, 34.4070], [108.8800, 34.4166], [108.8420, 34.4166]], lot: [60, 50], typ: courtyard, h_m: 7, empty: 0.55 }
+          - { region: [[108.8000, 34.3870], [108.8450, 34.3870], [108.8450, 34.4040], [108.8000, 34.4040]], lot: [45, 40], typ: dwelling, h_m: 5, empty: 0.58, scatter: 1.0 }
+      footage:   # imagined scenes (assets/imagined, AI from the sources, labelled): the building of the capital once the Qin city stands, with 宫殿筑在渭北的高台上 (over the growth it would hide it: 演出文法 5b); the market with qin_5; the 1962 excavation photo
+        - { id: f_qin_build, file: assets/imagined/qin_build.jpg, mode: panel, at: 15.6, dur: 6.0, in: 1.0, out: 1.0, kicker: "想象图 · IMAGINED · 据史料", zh: "商鞅营建咸阳 · 根据史料想象", en: "Building the new capital, 350 BCE (imagined from the sources)", credit: "根据《史记》与考古资料想象 · AI 生成（Codex）", pan: 0.2 }
+        - { id: f_qin_market, file: assets/imagined/qin_market.jpg, mode: panel, at: 43.9, dur: 6.5, in: 1.0, out: 1.0, kicker: "想象图 · IMAGINED · 据史料", zh: "咸阳的市集与统一的量器 · 根据史料想象", en: "A Xianyang market and its standard measures (imagined)", credit: "根据《史记》与考古资料想象 · AI 生成（Codex）", pan: -0.2 }
+        - { id: f_qin_dig, file: assets/photos_cc/qin_dig_1962.jpg, mode: doc, side: right, at: 37.3, dur: 6.5, in: 1.0, out: 0.9, kicker: "史料 · ARCHIVE · 1962", zh: "1962 年，陕西发掘咸阳秦代遗址", en: "Excavating the Qin capital, 1962", credit: "《人民画报》1962-05 · Wikimedia Commons · 公有领域" }
+      pins:
+        - { id: p_hall6, lon: 108.8626, lat: 34.4160, h_m: 30, t0: 28.2, t1: 31.9, zh: "6号宫殿 · 高 11.3 米", en: "Palace No. 6, a terrace 11.3 m high", len: 140, dx: 40 }
+      camera:   # the colour ring leaves the village (wide), the flight east to the plateau (Shang Yang), held on the plateau while the city rises and 宫殿筑在渭北的高台上 is told (no wordless hold), a dive under the building scene, a glide up the 50 m avenue to Palace No. 6 (its line on the way) and a short turn there, the workshops, the whole city as Qin grows strong
+        [{ t: 3, ll: [108.70, 34.345], az: 100, el: 46, d: 1.7 }, { t: 8.5, ll: [108.853, 34.407], az: 15, el: 36, d: 0.6 }, { t: 18.3, ll: [108.853, 34.407], az: 12, el: 36, d: 0.58 },
+         { t: 23.4, shot: glide, ll: [108.8626, 34.4082], az: 6, el: 11, d: 0.038, fov: 44 }, { t: 27.9, ll: [108.8626, 34.4158], y: 0.004, az: 2, el: 12, d: 0.065, fov: 44 },
+         { t: 30.4, ll: [108.8626, 34.4158], y: 0.004, az: -6, el: 13, d: 0.075, fov: 44 },
+         { t: 34.4, ll: [108.828, 34.399], az: 20, el: 34, d: 0.42, fov: 34 }, { t: 38.9, ll: [108.845, 34.404], az: 8, el: 50, d: 0.95, fov: 32 },
+         { t: 44.4, ll: [108.8626, 34.4175], az: -25, el: 22, d: 0.2, fov: 36 }, { t: 51.9, ll: [108.86, 34.40], az: 0, el: 44, d: 1.15 }]
+    - id: empire
+      mood: { feel: pride, level: 3 }   # the first unified empire: the peak (the narrator's arc: agreed 2026-10-21)
+      years: [-221, -221]
+      dur: 75.9
+      label: { zh: 帝都, en: The imperial capital }
+      col: '#ffd24a'   # imperial gold: its colour ring repaints the Qin city it was built around
+      ink: 0.85   # 秦尚黑 (《史记·秦始皇本纪》衣服旄旌节旗皆上黑): the capital goes dark, its walls, palaces and streets lit gold
+      readout: { label: "秦并天下，咸阳为帝都，公元前 221 年", note: "《史记·秦始皇本纪》《三辅黄图》 · 六国宫室、新街区、渭南诸宫、横桥位置与星官形状为示意 · 阿房宫前殿台基 1270 × 426 m" }
+      city:   # what 221 BCE added to the Qin city of 350 BCE (which stays up under it): FACTS.md 史记·秦始皇本纪
+        origin: [108.8590, 34.4123]
+        col: '#ffe69b'
+        tint: 0.6
+        detail: medium
+        rise: 7.0
+        sink: 7.5   # the contracting ring: 2 s sweeping in from beyond the frame, then 5.5 s on screen
+        until: burn
+        until_plus: 8.2
+        stages:   # two changes (the user, 2026-10-21). The capital made imperial, at the node's start (picture leads): the colour ring
+                  # repaints the Qin city while the south bank rises (渭南 palaces, the 阿房 platform, the bridge: the rest). Then, with
+                  # 那时，每灭一国 and 十二万户: one line of light sweeps west to east and the six palaces and the new quarters rise as it
+                  # passes (one stage: the engine draws one front per city at a time, so two at once left the quarters rising unlit).
+                  # Each starts on a key that frames it and is held until 2.5 s after (compile's stage plan); the south bank rings from there
+          - { at: 2.6, dur: 2.5, from: [108.848, 34.300] }   # the south bank (阿房 platform, 渭南 palaces, 横桥)
+          - { at: 34.0, dur: 5.6, select: { landmarks: [six_palaces], fabric: true }, sweep: [[108.765, 34.400], [108.935, 34.422]], noise: 0.05 }
+        sinkStyle: burn
+        fall_dur: 0.25   # the burnt city goes right behind the contracting ring
+        burn: 4.6
+        theta_deg: 0
+        boundary_close_m: 110
+        avoid_eras: [qin]   # the new quarters fill around the old city, never through it
+        landmarks:   # 每破诸侯，写放其宫室，作之咸阳北阪上 ... 自雍门以东至泾、渭，殿屋复道周阁相属: six palaces along the north slope (order and size schematic), joined by covered ways
+          - { group: six_palaces, kind: palace, lon: 108.8040, lat: 34.4185, w_m: 260, d_m: 190, wall_h: 5, halls: [[-0.14, 0.5, 0.24, 14, 'double_hip'], [0.22, 0.42, 0.18, 11, 'xieshan'], [-0.38, 0.34, 0.12, 9, 'xieshan']] }
+          - { group: six_palaces, kind: palace, lon: 108.8230, lat: 34.4190, w_m: 260, d_m: 190, wall_h: 5, halls: [[-0.14, 0.5, 0.24, 14, 'double'], [0.22, 0.42, 0.18, 11, 'xieshan'], [-0.38, 0.34, 0.12, 9, 'gable']] }
+          - { group: six_palaces, kind: palace, lon: 108.8800, lat: 34.4200, w_m: 260, d_m: 190, wall_h: 5, halls: [[-0.14, 0.5, 0.24, 14, 'double_hip'], [0.22, 0.42, 0.18, 11, 'xieshan'], [-0.38, 0.34, 0.12, 9, 'xieshan']] }
+          - { group: six_palaces, kind: palace, lon: 108.8980, lat: 34.4206, w_m: 260, d_m: 190, wall_h: 5, halls: [[-0.14, 0.5, 0.24, 14, 'double'], [0.22, 0.42, 0.18, 11, 'hip'], [-0.38, 0.34, 0.12, 9, 'xieshan']] }
+          - { group: six_palaces, kind: palace, lon: 108.9160, lat: 34.4212, w_m: 260, d_m: 190, wall_h: 5, halls: [[-0.14, 0.5, 0.24, 14, 'double_hip'], [0.22, 0.42, 0.18, 11, 'xieshan'], [-0.38, 0.34, 0.12, 9, 'gable']] }
+          - { group: six_palaces, kind: palace, lon: 108.9325, lat: 34.4218, w_m: 220, d_m: 180, wall_h: 5, halls: [[-0.1, 0.5, 0.26, 13, 'double'], [0.28, 0.42, 0.18, 10, 'xieshan']] }
+          - { group: six_palaces, kind: corridor, from: [108.8058, 34.4186], to: [108.8212, 34.4189], h_m: 9, w_m: 6 }
+          - { group: six_palaces, kind: corridor, from: [108.8248, 34.4188], to: [108.8530, 34.4182], h_m: 9, w_m: 6 }
+          - { group: six_palaces, kind: corridor, from: [108.8640, 34.4186], to: [108.8782, 34.4198], h_m: 9, w_m: 6 }
+          - { group: six_palaces, kind: corridor, from: [108.8818, 34.4201], to: [108.8962, 34.4205], h_m: 9, w_m: 6 }
+          - { group: six_palaces, kind: corridor, from: [108.8998, 34.4207], to: [108.9142, 34.4211], h_m: 9, w_m: 6 }
+          - { group: six_palaces, kind: corridor, from: [108.9178, 34.4213], to: [108.9311, 34.4217], h_m: 9, w_m: 6 }
+          - { kind: bridge, from: [108.8583, 34.3531], to: [108.8583, 34.3610], w_m: 14, h_m: 8, spans: 44 }   # 横桥 (position schematic)
+          - { kind: palace, lon: 108.9000, lat: 34.3100, w_m: 520, d_m: 420, wall_h: 6, halls: [[-0.1, 0.3, 0.12, 14, 'double_hip'], [0.18, 0.25, 0.1, 11, 'xieshan'], [-0.32, 0.2, 0.08, 10, 'xieshan']] }   # 兴乐宫 (later Han Changle)
+          - { kind: terrace, lon: 108.8570, lat: 34.3050, w_m: 200, d_m: 140, h_m: 14, tiers: 3, top: 0.55, halls: [[0, 0, 0.7, 0.6, 14, 'double']] }   # 章台
+          - { kind: palace, lon: 108.8760, lat: 34.2960, w_m: 300, d_m: 260, wall_h: 5, halls: [[0, 0.4, 0.2, 14, 'double_hip'], [-0.3, 0.3, 0.12, 10, 'xieshan']] }   # 信宫 / 极庙 (schematic)
+          - { kind: platform, lon: 108.8090, lat: 34.2640, w_m: 1270, d_m: 426, h_m: 9, walls: [north, east, west], wall_t: 10, wall_h: 6 }   # 阿房前殿台基 (survey 1270 x 426 m)
+        fabric:   # 徙天下豪富于咸阳十二万户: new quarters on the plain around the old city (low detail: seen from the air)
+          - { region: [[108.7700, 34.3740], [108.8000, 34.3740], [108.8000, 34.4040], [108.7700, 34.4040]], lot: [50, 44], typ: dwelling, h_m: 5, empty: 0.45, scatter: 0.4, detail: low }
+          - { region: [[108.8000, 34.3790], [108.8450, 34.3790], [108.8450, 34.3862], [108.8000, 34.3862]], lot: [36, 32], typ: dwelling, h_m: 5, empty: 0.3, detail: low }
+          - { region: [[108.8460, 34.3925], [108.8750, 34.3925], [108.8750, 34.4062], [108.8460, 34.4062]], lot: [40, 36], typ: dwelling, h_m: 5.5, empty: 0.3, detail: low }
+          - { region: [[108.8850, 34.4080], [108.9250, 34.4080], [108.9250, 34.4150], [108.8850, 34.4150]], lot: [36, 32], typ: dwelling, h_m: 5, empty: 0.32, detail: low }
+      routes:
+        - { id: r_fudao, pts: [[108.8090, 34.2640], [108.8583, 34.3531], [108.8583, 34.3610], [108.8626, 34.4160]], at: 59.2, draw: 4.5, hold: 7.0, arc: 0.06, col: '#cfe9ff', w: 0.003,
+            label_at: 0.35 }   # named by the sky's 阁道 label
+      sky:   # 《三辅黄图》以则紫宫，象帝居；渭水贯都，以象天汉；横桥南渡，以法牵牛。《史记》以象天极阁道绝汉抵营室。asterism shapes schematic
+        at: 48.4
+        off_at: 68.4   # (the sky's last line, 阁道横过天河, runs to about 160 s: the sky stays through it)
+        col: '#d6e4ff'
+        scrim: 0.5
+        groups:
+          - { id: ziwei, kind: enclosure, at: 48.4, draw: 2.0, centre: [108.8570, 34.4140], rx_m: 1900, ry_m: 1100, n: [8, 7], gap_deg: 32, star: [108.8566, 34.4143], label_ll: [108.9010, 34.4120], zh: "紫宫 · 咸阳宫", en: "Purple Palace · Xianyang Palace" }
+          - { id: tianhan, kind: band, at: 53.9, draw: 2.2, w_m: 1100, n: 1500, label_ll: [108.6900, 34.2860], zh: "天河 · 渭水", en: "Milky Way · the Wei",
+              pts: [[108.60, 34.300], [108.66, 34.300], [108.72, 34.305], [108.78, 34.322], [108.82, 34.338], [108.86, 34.357], [108.90, 34.368], [108.94, 34.376]] }
+          - { id: niu, kind: asterism, at: 55.9, draw: 1.3, at_ll: [108.8583, 34.3570], stars: [[-420, 280], [-170, 360], [80, 250], [-330, -60], [-90, -170], [190, -70]], lines: [[0, 1], [1, 2], [0, 3], [3, 4], [4, 5]], label_ll: [108.8840, 34.3520], zh: "牵牛 · 横桥", en: "Herdsman · the bridge" }
+          - { id: gedao, kind: line, at: 60.4, draw: 1.6, from: [108.8090, 34.2640], to: [108.8583, 34.3531], n: 6, jitter_m: 170, label_at: 0.5, zh: "阁道 · 复道", en: "Gallery Road · the covered way" }
+          - { id: yingshi, kind: asterism, at: 61.2, draw: 1.2, at_ll: [108.8090, 34.2640], stars: [[-850, -560], [850, -560], [850, 560], [-850, 560]], lines: [[0, 1], [1, 2], [2, 3], [3, 0]], label_ll: [108.7740, 34.2700], zh: "营室 · 阿房", en: "Encampment · Epang" }
+      footage:   # the First Emperor named (empire_ying): no likeness of him survives; an 18th-century album imagined him. The 120,000 families (empire_3): imagined
+        - { id: f_qsh, file: assets/photos_cc/qin_shihuang_18c.jpg, mode: doc, side: right, at: 8.0, dur: 6.0, in: 1.0, out: 0.9, kicker: "画像 · PORTRAIT · 18 世纪", zh: "秦始皇 · 清代画像（后人想象）", en: "The First Emperor, as an 18th-century album imagined him", credit: "《历代帝王像》册页 · Wikimedia Commons · 公有领域" }
+        - { id: f_migrants, file: assets/imagined/empire_migrants.jpg, mode: panel, with: empire_3, plus: 1.0, dur: 5.8, in: 1.0, out: 1.0, kicker: "想象图 · IMAGINED · 据史料", zh: "天下富户迁咸阳 · 根据史料想象", en: "The realm's richest families moved to Xianyang (imagined)", credit: "根据《史记》与考古资料想象 · AI 生成（Codex）", pan: 0.2 }
+      camera:   # wide over both banks while the capital turns imperial and the south bank rises, the capital in imperial colours while the First Emperor and unity are told (a slow push to the palace), back wide for the six palaces and the new quarters as they rise, the sky plan, down to the capital for his ten thousand generations
+        [{ t: 2.5, ll: [108.848, 34.330], az: 0, el: 62, d: 2.6 }, { t: 9.3, ll: [108.848, 34.333], az: -1, el: 60, d: 2.5 },
+         { t: 16.4, ll: [108.864, 34.414], az: -2, el: 38, d: 0.95 }, { t: 27.5, ll: [108.863, 34.414], az: -6, el: 35, d: 0.85 },
+         { t: 32.9, ll: [108.850, 34.405], az: 3, el: 47, d: 1.65 }, { t: 39.4, ll: [108.858, 34.400], az: 2, el: 50, d: 1.8 },
+         { t: 44.8, ll: [108.848, 34.365], az: 0, el: 58, d: 2.8 }, { t: 47.6, shot: sky, ll: [108.846, 34.334], az: 0, el: 82, d: 4.9, fov: 32 }, { t: 55.4, ll: [108.846, 34.334], az: -3, el: 81, d: 4.8, fov: 32 },
+         { t: 66.4, ll: [108.846, 34.334], az: -5, el: 79, d: 4.7, fov: 32 }, { t: 71.4, ll: [108.866, 34.412], az: 0, el: 36, d: 1.0 }, { t: 75.9, ll: [108.865, 34.410], az: -4, el: 32, d: 0.9 }]
+    - id: burn
+      mood: { feel: grief, level: 3 }   # it lasted 15 years; the fire (the narrator's arc: agreed 2026-10-21)
+      years: [-206, -206]
+      dur: 23
+      label: { zh: 焚城, en: The burning }
+      col: '#e8553a'
+      wave_from: [108.8566, 34.4143]   # the fire spreads from the palace
+      tint: 0.45      # today's city: a red cast
+      era_tint: 1.0   # the ring turns the standing capital deep red
+      footage:
+        - { id: f_fire, file: assets/imagined/burn_fire.jpg, mode: card, side: right, at: 4.6, dur: 6.5, in: 1.0, out: 1.0, kicker: "想象图 · IMAGINED · 据史料", zh: "项羽焚秦宫 · 根据史料想象", en: "The Qin palaces burn, 206 BCE (imagined)", credit: "根据《史记》与考古资料想象 · AI 生成（Codex）", pan: -0.15 }
+        - { id: f_qin, file: assets/photos_cc/qin_palace_fields.jpg, mode: card, side: right, anchor: [108.8575, 34.4143], at: 16.6, dur: 6.0, in: 1.0, out: 0.9, kicker: "今天 · TODAY · 照片", zh: "秦咸阳宫遗址", en: "The Qin palace site today: fields", credit: "Wikimedia Commons · T1 FX (Panoramio) · CC BY 3.0" }
+      readout: { label: "项羽入咸阳，烧秦宫室", note: "《史记·项羽本纪》" }
+      camera: [{ t: 3.4, ll: [108.862, 34.410], az: 10, el: 30, d: 0.6 }, { t: 7.6, ll: [108.862, 34.407], az: 4, el: 40, d: 1.1 }, { t: 19.4, ll: [108.8580, 34.4140], az: 16, el: 32, d: 0.3 }]   # the camera comes down with the contracting ring (generated, never faster than the ring) to the palace site, and holds there
+    - id: han
+      mood: { feel: wistful, level: 2 }   # the capital crossed the river; a small town (the narrator's arc: agreed 2026-10-21)
+      years: [-202, 8]
+      dur: 42.6
+      label: { zh: 渭城·长安, en: Weicheng and Chang'an }
+      col: '#ffa13d'
+      footage:
+        - { id: f_han, file: assets/photos_cc/changling_1.jpg, mode: card, side: right, anchor: [108.87663, 34.43476], with: han_3, plus: 0.3, dur: 6.0, in: 1.0, out: 0.9, kicker: "今天 · TODAY · 照片", zh: "汉高祖长陵", en: "Changling, the tomb of the founding Han emperor, today", credit: "Wikimedia Commons · Brücke-Osteuropa · CC0" }
+      routes:
+        - { id: r_south, from: [108.8626, 34.4160], to: [108.8570, 34.3000], at: 1.4, draw: 3.0, arc: 0.18, col: '#ffd59a', impact: true, follow: { el: 42, land_d: 1.15 }, zh: "都城南移 · 约 [km] 公里", en: "The capital moves about [km] km south" }
+        - { id: r_wei, from: [108.8700, 34.3570], to: [108.8700, 34.3920], at: 31.0, draw: 2.5, hold: 4.5, arc: 0.12, col: '#8fb8ff', zh: "渭河北移 · 约 4 公里", en: "The Wei moved about 4 km north" }
+      readout: { label: "汉都长安在河南，咸阳成了对岸的渭城", note: "城墙依 1997 年测定 · 宫殿依考古报告与《三辅黄图》· 殿院、里坊、渭城多为示意" }
+      city:   # Han Chang'an after research/han_fill.md (x east, y north in metres from the Weiyang front hall; every item marked 發掘 / 文獻 / 影視 / 想像)
+        origin: [108.8576, 34.3046]
+        detail: medium
+        col: '#ffd59a'
+        # no at: the beam from Qin lands on the front hall of Weiyang; the colour ring and the city grow from there once the camera holds it
+        rise: 6.0
+        stages:
+          - { dur: 4.0, noise: 0.2 }
+          - { at: 15.2, dur: 3.2, select: { landmarks: [weicheng], fabric: [weicheng], streets: [weicheng] }, from: [108.8626, 34.408] }   # Weicheng, while the camera holds on it
+        sink: 2.5
+        until: tang
+        theta_deg: 0
+        boundary_close_m: 120
+        walls:   # the 1997 survey circuit as measured on LZD18 fig. 1 (han_fill.md §0-F); gates 一门三道, piers 14 m where a gate faces a palace
+          - ring: [[108.843790, 34.294316], [108.843790, 34.314767], [108.846095, 34.315362], [108.846095, 34.336533], [108.857350, 34.342275], [108.869616, 34.343113], [108.869910, 34.344312], [108.887657, 34.351486], [108.887657, 34.354118], [108.913200, 34.354478], [108.913200, 34.300769], [108.884340, 34.301013], [108.884340, 34.292883], [108.873520, 34.292883], [108.873520, 34.294433]]
+            h_m: 12
+            t_m: 16
+            style: han3
+            towers: false
+            moat: true
+            moat_w_m: 42
+            moat_off_m: 30
+            gates: [[108.843790, 34.301490], [108.844942, 34.315127], [108.846095, 34.333189], [108.857350, 34.342275], [108.869910, 34.343473], [108.887657, 34.352802], [108.913200, 34.344312], [108.913200, 34.327682], [108.913200, 34.313451, 14], [108.898476, 34.300896], [108.877707, 34.292883], [108.859775, 34.294433, 14]]
+        streets:
+          - { pts: [[108.877707, 34.293153], [108.877707, 34.344312]], w_m: 60, lanes3: true }   # 安門大街
+          - { pts: [[108.913200, 34.344312], [108.869910, 34.344312]], w_m: 60, lanes3: true }   # 宣平門大街
+          - { pts: [[108.913200, 34.327682], [108.877707, 34.327682]], w_m: 60, lanes3: true }   # 清明門大街
+          - { pts: [[108.844942, 34.315127], [108.877707, 34.315127]], w_m: 60, lanes3: true }   # 直城門大街
+          - { pts: [[108.846095, 34.333189], [108.869910, 34.333189]], w_m: 60, lanes3: true }   # 雍門大街
+          - { pts: [[108.857350, 34.342275], [108.857350, 34.315127]], w_m: 60, lanes3: true }   # 橫門大街
+          - { pts: [[108.869910, 34.343473], [108.869910, 34.315127]], w_m: 60, lanes3: true }   # 廚城門大街
+          - { pts: [[108.887657, 34.352802], [108.887657, 34.344312]], w_m: 60, lanes3: true }   # 洛城門大街
+          - { pts: [[108.859775, 34.294433], [108.859775, 34.314424]], w_m: 12 }   # 未央宮縱路（西安門—南宮門—北宮門，x +200）
+          - { pts: [[108.844986, 34.306763], [108.869453, 34.306763]], w_m: 12 }   # 未央宮北橫路
+          - { pts: [[108.844986, 34.301509], [108.869453, 34.301509]], w_m: 12 }   # 未央宮南橫路（章城門）
+          - { pts: [[108.850532, 34.306763], [108.850532, 34.314424]], w_m: 10 }   # 作室門內大道
+          - { pts: [[108.862167, 34.295046], [108.862167, 34.314424]], w_m: 8 }   # 未央宮東半小路（想像）
+          - { pts: [[108.865212, 34.295046], [108.865212, 34.314424]], w_m: 8 }   # 未央宮東半小路（想像）
+          - { pts: [[108.880219, 34.314875], [108.913200, 34.314875]], w_m: 20 }   # 長樂宮東西幹道（霸城門內）
+          - { pts: [[108.900010, 34.302797], [108.900010, 34.314875]], w_m: 30 }   # 長樂宮南北幹道（覆盎門）
+          - { pts: [[108.851728, 34.315416], [108.851728, 34.329386]], w_m: 8 }   # 桂宮南北道路
+          - { pts: [[108.850858, 34.323077], [108.856730, 34.322266]], w_m: 8 }   # 桂宮東西道路（斜）
+          - { pts: [[108.874129, 34.321725], [108.874129, 34.328485]], w_m: 8 }   # 北宮內路（想像）
+          - { group: weicheng, pts: [[108.862600, 34.403410], [108.862600, 34.412590]], w_m: 50 }   # 鄧家村南北大道（發掘：寬逾 50 m）
+          - { group: weicheng, pts: [[108.855970, 34.408000], [108.869230, 34.408000]], w_m: 26 }   # 渭城東西主街（想像）
+        landmarks:
+          - { kind: palace, lon: 108.857219, lat: 34.304735, w_m: 2250, d_m: 2150, wall_h: 8, halls: [] }   # 未央宮宮牆 2250 × 2150（發掘）
+          - { kind: palace, lon: 108.857491, lat: 34.310278, w_m: 790, d_m: 660, wall_h: 4, halls: [] }   # 禁中內牆（影視：MC 全宮方案；讓開發掘的 4、7、8 號）
+          - { kind: front_hall, lon: 108.857600, lat: 34.304600, w_m: 200, d_m: 400, tiers: [[151, 200, 5.0], [130, 190, 10.0], [119, 180, 15.0]] }   # 1 號 前殿：400 × 200，三級台南 151／中 130／北 119 m，高 5／10／15（發掘）
+          - { kind: court, lon: 108.857296, lat: 34.309467, w_m: 130, d_m: 149, main: [0.42, 0.21, 14, 'hip'] }   # 2 號 椒房殿 130 × 148.75（發掘）
+          - { kind: court, lon: 108.847324, lat: 34.307538, w_m: 135, d_m: 71, main: [0.8, 0.2, 9, 'gable'], north: [0.8, 0.18, 9, 'gable'], wings: false }   # 3 號 中央官署（發掘）
+          - { kind: court, lon: 108.852565, lat: 34.309233, w_m: 110, d_m: 60, main: [0.42, 0.29, 12, 'hip'], north: [0.28, 0.21, 9, 'gable'], wings: false }   # 4 號 少府（發掘）
+          - { kind: terrace, lon: 108.857959, lat: 34.313613, w_m: 22, d_m: 22, h_m: 10, tiers: 2, top: 0.7, halls: [[0, 0, 0.8, 0.8, 9, 'hip']] }   # 6 號 天祿閣（發掘）
+          - { kind: terrace, lon: 108.851293, lat: 34.313568, w_m: 77, d_m: 65, h_m: 8.7, tiers: 2, top: 0.6, halls: [[0, 0, 0.7, 0.6, 11, 'hip']] }   # 7 號 石渠閣（發掘）
+          - { kind: court, lon: 108.855034, lat: 34.313892, w_m: 150, d_m: 57, main: [0.5, 0.45, 10, 'hip'], wings: false }   # 8 號（發掘，性質不明；候選麒麟閣）
+          - { kind: court, lon: 108.854936, lat: 34.305285, w_m: 59, d_m: 36, main: [0.8, 0.6, 9, 'hip'], wings: false }   # 9 號（發掘，圖量）
+          - { kind: court, lon: 108.850597, lat: 34.306177, w_m: 71, d_m: 56, main: [0.7, 0.5, 9, 'hip'], wings: false }   # 10 號（發掘，圖量）
+          - { kind: court, lon: 108.849694, lat: 34.307475, w_m: 104, d_m: 87, main: [0.5, 0.3, 10, 'hip'] }   # 11 號（發掘，圖量）
+          - { kind: court, lon: 108.860188, lat: 34.313793, w_m: 52, d_m: 36, main: [0.8, 0.6, 8, 'gable'], wings: false }   # 12 號（發掘，圖量）
+          - { kind: court, lon: 108.862983, lat: 34.303185, w_m: 135, d_m: 63, main: [0.6, 0.45, 10, 'hip'], wings: false }   # 13 號（發掘，圖量）
+          - { kind: court, lon: 108.862189, lat: 34.301986, w_m: 246, d_m: 64, main: [0.85, 0.5, 8, 'gable'], wings: false }   # 14 號（發掘，圖量）
+          - { kind: terrace, lon: 108.845856, lat: 34.307574, w_m: 40, d_m: 40, h_m: 9, tiers: 2, top: 0.6, halls: [[0, 0, 0.7, 0.7, 8, 'hip']] }   # 100 號基址（發掘，盧家口村）
+          - { kind: terrace, lon: 108.845366, lat: 34.295317, w_m: 34, d_m: 34, h_m: 9, tiers: 1, top: 0.8, halls: [[0, 0, 0.8, 0.8, 7, 'hip']] }   # 角樓（5 號為發掘；其餘照它）
+          - { kind: terrace, lon: 108.869127, lat: 34.295317, w_m: 34, d_m: 34, h_m: 9, tiers: 1, top: 0.8, halls: [[0, 0, 0.8, 0.8, 7, 'hip']] }   # 角樓（5 號為發掘；其餘照它）
+          - { kind: terrace, lon: 108.845443, lat: 34.314046, w_m: 34, d_m: 34, h_m: 9, tiers: 1, top: 0.8, halls: [[0, 0, 0.8, 0.8, 7, 'hip']] }   # 角樓（5 號為發掘；其餘照它）
+          - { kind: terrace, lon: 108.869127, lat: 34.314154, w_m: 34, d_m: 34, h_m: 9, tiers: 1, top: 0.8, halls: [[0, 0, 0.8, 0.8, 7, 'hip']] }   # 角樓（5 號為發掘；其餘照它）
+          - { kind: terrace, lon: 108.859449, lat: 34.314677, w_m: 12, d_m: 12, h_m: 11, tiers: 1, top: 0.9, halls: [[0, 0, 1.0, 1.0, 5, 'hip']] }   # 北闕（文獻）
+          - { kind: terrace, lon: 108.860101, lat: 34.314677, w_m: 12, d_m: 12, h_m: 11, tiers: 1, top: 0.9, halls: [[0, 0, 1.0, 1.0, 5, 'hip']] }   # 北闕（文獻）
+          - { kind: terrace, lon: 108.869757, lat: 34.306493, w_m: 12, d_m: 12, h_m: 11, tiers: 1, top: 0.9, halls: [[0, 0, 1.0, 1.0, 5, 'hip']] }   # 東闕（文獻）
+          - { kind: terrace, lon: 108.869757, lat: 34.307034, w_m: 12, d_m: 12, h_m: 11, tiers: 1, top: 0.9, halls: [[0, 0, 1.0, 1.0, 5, 'hip']] }   # 東闕（文獻）
+          - { kind: court, lon: 108.855425, lat: 34.307890, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 溫室殿（文獻 R1）
+          - { kind: court, lon: 108.858035, lat: 34.307890, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 清涼殿（文獻 R1）
+          - { kind: court, lon: 108.854881, lat: 34.308926, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 昭陽殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.854881, lat: 34.309783, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 飛翔殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.854881, lat: 34.310639, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 增成殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.854881, lat: 34.311495, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 合歡殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.853794, lat: 34.310368, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 蘭林殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.853794, lat: 34.311225, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 披香殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.853794, lat: 34.312081, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 鳳皇殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.855229, lat: 34.312495, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 鴛鸞殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.856404, lat: 34.311270, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 安處殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.857600, lat: 34.311270, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 常寧殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.858796, lat: 34.311270, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 茝若殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.856404, lat: 34.312081, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 椒風殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.857600, lat: 34.312081, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 發越殿（文獻 R3，後宮）
+          - { kind: court, lon: 108.858796, lat: 34.312081, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 蕙草殿（文獻 R3，後宮）
+          - { kind: pool, lon: 108.857274, lat: 34.310549, w_m: 120, d_m: 60 }   # 後宮池（文獻＋二號以北池渠：發掘）
+          - { kind: terrace, lon: 108.858687, lat: 34.312892, w_m: 40, d_m: 40, h_m: 8, tiers: 1, top: 0.6, halls: [] }   # 後宮土山（文獻）
+          - { kind: court, lon: 108.856621, lat: 34.312820, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 暴室（文獻）
+          - { kind: court, lon: 108.861950, lat: 34.313703, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 白虎閣（文獻）
+          - { kind: court, lon: 108.864125, lat: 34.313703, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 屬車閣（文獻）
+          - { kind: court, lon: 108.866299, lat: 34.313703, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 堯閣（文獻）
+          - { kind: terrace, lon: 108.860841, lat: 34.313523, w_m: 30, d_m: 30, h_m: 14, tiers: 2, top: 0.6, halls: [[0, 0, 0.8, 0.8, 8, 'hip']] }   # 柏梁臺（文獻；位置影視）
+          - { kind: court, lon: 108.854338, lat: 34.303699, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 昆德殿（文獻 R1）
+          - { kind: court, lon: 108.854338, lat: 34.302527, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 玉堂殿（文獻 R1）
+          - { kind: court, lon: 108.851347, lat: 34.310909, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 承明殿（文獻）
+          - { kind: court, lon: 108.852815, lat: 34.311089, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 金馬門・宦者署（文獻）
+          - { kind: court, lon: 108.852815, lat: 34.312171, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 內謁者署（文獻）
+          - { kind: court, lon: 108.851293, lat: 34.309918, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 金華殿（文獻）
+          - { kind: court, lon: 108.846073, lat: 34.308836, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.846073, lat: 34.310098, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.846073, lat: 34.311360, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.846073, lat: 34.312622, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.847487, lat: 34.308836, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.847487, lat: 34.310098, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.847487, lat: 34.311360, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.847487, lat: 34.312622, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.848901, lat: 34.308836, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.848901, lat: 34.310098, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.848901, lat: 34.311360, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: court, lon: 108.848901, lat: 34.312622, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 少府屬官諸署（名稱文獻、位置想像 R4）
+          - { kind: pool, lon: 108.851326, lat: 34.298268, w_m: 934, d_m: 373 }   # 滄池（發掘 2011，曲尺形，§1-E）
+          - { kind: pool, lon: 108.848618, lat: 34.296195, w_m: 436, d_m: 87 }   # 滄池（發掘 2011，曲尺形，§1-E）
+          - { kind: pool, lon: 108.851728, lat: 34.296128, w_m: 110, d_m: 65 }   # 滄池南岸小池（發掘）
+          - { kind: terrace, lon: 108.851075, lat: 34.298291, w_m: 40, d_m: 40, h_m: 16, tiers: 2, top: 0.5, halls: [[0, 0, 0.8, 0.8, 7, 'hip']] }   # 漸臺（文獻）
+          - { kind: terrace, lon: 108.847813, lat: 34.300364, w_m: 20, d_m: 20, h_m: 5, tiers: 1, top: 0.8, halls: [] }   # 釣臺／通靈臺（文獻）
+          - { kind: terrace, lon: 108.854338, lat: 34.300364, w_m: 20, d_m: 20, h_m: 5, tiers: 1, top: 0.8, halls: [] }   # 釣臺／通靈臺（文獻）
+          - { kind: terrace, lon: 108.849988, lat: 34.300724, w_m: 50, d_m: 50, h_m: 10, tiers: 1, top: 0.4, halls: [] }   # 果臺、東西山臺（文獻；「山六」）
+          - { kind: terrace, lon: 108.852707, lat: 34.300724, w_m: 50, d_m: 50, h_m: 10, tiers: 1, top: 0.4, halls: [] }   # 果臺、東西山臺（文獻；「山六」）
+          - { kind: terrace, lon: 108.845638, lat: 34.298291, w_m: 50, d_m: 50, h_m: 10, tiers: 1, top: 0.4, halls: [] }   # 果臺、東西山臺（文獻；「山六」）
+          - { kind: court, lon: 108.855425, lat: 34.296218, w_m: 100, d_m: 60, main: [0.3, 0.3, 9, 'hip'], wings: false }   # 彘圈（文獻）
+          - { kind: court, lon: 108.858035, lat: 34.300274, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 鈎盾署（文獻）
+          - { kind: court, lon: 108.861189, lat: 34.305321, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 宣明殿（文獻 R1）
+          - { kind: court, lon: 108.861189, lat: 34.304059, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 廣明殿（文獻 R1）
+          - { kind: court, lon: 108.860645, lat: 34.312351, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 高門殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.863690, lat: 34.312351, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 武臺殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.866734, lat: 34.312351, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 曲臺殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.860645, lat: 34.310909, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 白虎殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.863690, lat: 34.310909, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 麒麟殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.866734, lat: 34.310909, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 壽成殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.860645, lat: 34.309467, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 萬歲殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.863690, lat: 34.309467, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 永延殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.860645, lat: 34.308025, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 壽安殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.863690, lat: 34.308025, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 平就殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.866299, lat: 34.305321, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 宣德殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.866299, lat: 34.304059, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 東明殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.860645, lat: 34.300274, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 飛羽殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.863690, lat: 34.300274, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 通光殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.866734, lat: 34.300274, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 鈎弋殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.860645, lat: 34.298832, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 神明殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.863690, lat: 34.298832, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 延年殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.866734, lat: 34.308025, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 門署（想像）
+          - { kind: court, lon: 108.868474, lat: 34.307574, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 東宮門署（想像）
+          - { kind: court, lon: 108.860645, lat: 34.297390, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 回車殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.863690, lat: 34.297390, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 長年殿（名稱文獻、位置想像）
+          - { kind: court, lon: 108.866734, lat: 34.298471, w_m: 120, d_m: 50, main: [0.9, 0.5, 8, 'gable'], wings: false }   # 東織室（文獻）
+          - { kind: court, lon: 108.867387, lat: 34.296668, w_m: 60, d_m: 40, main: [0.5, 0.2, 5, 'gable'], wings: false }   # 凌室（文獻；尺寸借長樂宮 5 號）
+          - { kind: court, lon: 108.866734, lat: 34.309467, w_m: 110, d_m: 80, main: [0.9, 0.28, 6, 'gable'], north: [0.9, 0.28, 6, 'gable'], wings: false }   # 路軨廄（文獻）
+          - { kind: court, lon: 108.863690, lat: 34.296038, w_m: 220, d_m: 90, main: [0.9, 0.28, 6, 'gable'], north: [0.9, 0.28, 6, 'gable'], wings: false }   # 未央廄（影視：MC 方案六座長廄）
+          - { kind: palace, lon: 108.896367, lat: 34.312369, w_m: 2970, d_m: 2055, wall_h: 7, halls: [] }   # 長樂宮宮牆 ~3000 × 2044（發掘）
+          - { kind: court, lon: 108.890223, lat: 34.319805, w_m: 90, d_m: 70, main: [0.6, 0.35, 11, 'hip'] }   # 長樂 1 號（發掘，圖量）
+          - { kind: court, lon: 108.887689, lat: 34.319381, w_m: 75, d_m: 60, main: [0.6, 0.35, 11, 'hip'], wings: false }   # 長樂 2 號（發掘）
+          - { kind: court, lon: 108.886308, lat: 34.315902, w_m: 80, d_m: 70, main: [0.6, 0.35, 11, 'hip'] }   # 長樂 3 號（發掘，圖量）
+          - { kind: court, lon: 108.890256, lat: 34.318345, w_m: 120, d_m: 80, main: [0.66, 0.34, 12, 'hip'] }   # 長樂 4 號（臨華殿？發掘）
+          - { kind: court, lon: 108.889842, lat: 34.317444, w_m: 160, d_m: 55, main: [0.92, 0.55, 12, 'hip'], wings: false }   # 長樂 6 號（前殿？發掘）
+          - { kind: court, lon: 108.891637, lat: 34.316957, w_m: 40, d_m: 30, main: [0.7, 0.25, 5, 'gable'], wings: false }   # 長樂 5 號 凌室（發掘）
+          - { kind: court, lon: 108.881208, lat: 34.316804, w_m: 105, d_m: 105, main: [0.5, 0.3, 11, 'hip'] }   # 長樂西北建築群（發掘，圖量）
+          - { kind: court, lon: 108.883481, lat: 34.316317, w_m: 105, d_m: 105, main: [0.5, 0.3, 11, 'hip'] }   # 長樂西北建築群（發掘，圖量）
+          - { kind: court, lon: 108.883481, lat: 34.317939, w_m: 105, d_m: 105, main: [0.5, 0.3, 11, 'hip'] }   # 長樂西北建築群（發掘，圖量）
+          - { kind: court, lon: 108.884905, lat: 34.309692, w_m: 300, d_m: 250, main: [0.3, 0.16, 13, 'hip'] }   # 長信宮（文獻；放在西南建築群）
+          - { kind: court, lon: 108.882611, lat: 34.311810, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 長秋殿（文獻）
+          - { kind: court, lon: 108.887504, lat: 34.311810, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 永壽殿（文獻）
+          - { kind: court, lon: 108.882611, lat: 34.306853, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 永寧殿（文獻）
+          - { kind: court, lon: 108.887504, lat: 34.306853, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 長定殿（文獻）
+          - { kind: front_hall, lon: 108.904577, lat: 34.312532, w_m: 116, d_m: 197, tiers: [[70, 116, 2.0], [70, 110, 5.0], [57, 100, 8.0]] }   # 樊寨村東南夯土 116 × 197（發掘；疑似前殿）
+          - { kind: court, lon: 108.907187, lat: 34.310909, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂東南建築群（發掘：勘探；院落想像）
+          - { kind: court, lon: 108.907187, lat: 34.313613, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂東南建築群（發掘：勘探；院落想像）
+          - { kind: court, lon: 108.907187, lat: 34.308205, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂東南建築群（發掘：勘探；院落想像）
+          - { kind: court, lon: 108.903816, lat: 34.309287, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂東南建築群（發掘：勘探；院落想像）
+          - { kind: court, lon: 108.893485, lat: 34.310008, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 溫室殿（文獻）
+          - { kind: terrace, lon: 108.896747, lat: 34.319021, w_m: 60, d_m: 60, h_m: 20, tiers: 3, top: 0.4, halls: [[0, 0, 0.8, 0.8, 9, 'double_hip']] }   # 鴻臺（文獻）
+          - { kind: pool, lon: 108.895660, lat: 34.317218, w_m: 300, d_m: 200 }   # 酒池（文獻；低窪地：發掘）
+          - { kind: pool, lon: 108.902185, lat: 34.317669, w_m: 300, d_m: 200 }   # 魚池（文獻）
+          - { kind: terrace, lon: 108.893376, lat: 34.317669, w_m: 26, d_m: 26, h_m: 6, tiers: 1, top: 0.7, halls: [[0, 0, 0.8, 0.8, 5, 'hip']] }   # 池邊諸臺（文獻：酒池臺、魚池臺、著室、鬥雞、走狗、壇臺、韓信射臺）
+          - { kind: terrace, lon: 108.898052, lat: 34.316227, w_m: 26, d_m: 26, h_m: 6, tiers: 1, top: 0.7, halls: [[0, 0, 0.8, 0.8, 5, 'hip']] }   # 池邊諸臺（文獻：酒池臺、魚池臺、著室、鬥雞、走狗、壇臺、韓信射臺）
+          - { kind: terrace, lon: 108.899792, lat: 34.318300, w_m: 26, d_m: 26, h_m: 6, tiers: 1, top: 0.7, halls: [[0, 0, 0.8, 0.8, 5, 'hip']] }   # 池邊諸臺（文獻：酒池臺、魚池臺、著室、鬥雞、走狗、壇臺、韓信射臺）
+          - { kind: terrace, lon: 108.904468, lat: 34.316317, w_m: 26, d_m: 26, h_m: 6, tiers: 1, top: 0.7, halls: [[0, 0, 0.8, 0.8, 5, 'hip']] }   # 池邊諸臺（文獻：酒池臺、魚池臺、著室、鬥雞、走狗、壇臺、韓信射臺）
+          - { kind: terrace, lon: 108.904577, lat: 34.319021, w_m: 26, d_m: 26, h_m: 6, tiers: 1, top: 0.7, halls: [[0, 0, 0.8, 0.8, 5, 'hip']] }   # 池邊諸臺（文獻：酒池臺、魚池臺、著室、鬥雞、走狗、壇臺、韓信射臺）
+          - { kind: terrace, lon: 108.895660, lat: 34.318751, w_m: 26, d_m: 26, h_m: 6, tiers: 1, top: 0.7, halls: [[0, 0, 0.8, 0.8, 5, 'hip']] }   # 池邊諸臺（文獻：酒池臺、魚池臺、著室、鬥雞、走狗、壇臺、韓信射臺）
+          - { kind: terrace, lon: 108.902185, lat: 34.319111, w_m: 26, d_m: 26, h_m: 6, tiers: 1, top: 0.7, halls: [[0, 0, 0.8, 0.8, 5, 'hip']] }   # 池邊諸臺（文獻：酒池臺、魚池臺、著室、鬥雞、走狗、壇臺、韓信射臺）
+          - { kind: court, lon: 108.882611, lat: 34.320643, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 鐘室（文獻）
+          - { kind: court, lon: 108.893485, lat: 34.306403, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.896747, lat: 34.306403, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.896747, lat: 34.310188, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.893485, lat: 34.313162, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.896747, lat: 34.313162, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.902728, lat: 34.306403, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.910884, lat: 34.307304, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.905447, lat: 34.320373, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.909253, lat: 34.320102, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.909253, lat: 34.317038, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.885873, lat: 34.320824, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: court, lon: 108.892398, lat: 34.320824, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 長樂宮殿院（想像）
+          - { kind: palace, lon: 108.851837, lat: 34.323708, w_m: 900, d_m: 1840, wall_h: 6, halls: [] }   # 桂宮宮牆 900 × 1840（發掘）
+          - { kind: terrace, lon: 108.850988, lat: 34.318038, w_m: 56, d_m: 45, h_m: 12, tiers: 2, top: 0.5, halls: [] }   # 桂宮 1 號 土山（發掘）
+          - { kind: court, lon: 108.851021, lat: 34.317038, w_m: 84, d_m: 102, main: [0.61, 0.28, 13, 'hip'], north: [0.92, 0.25, 11, 'hip'], wings: false }   # 桂宮 2 號 南院＋北院（明光殿？發掘）
+          - { kind: court, lon: 108.850662, lat: 34.328818, w_m: 30, d_m: 83, main: [0.8, 0.3, 6, 'gable'], wings: false }   # 桂宮 3 號 倉儲（發掘）
+          - { kind: court, lon: 108.849586, lat: 34.329566, w_m: 126, d_m: 121, main: [0.32, 0.8, 10, 'hip'] }   # 桂宮 4 號（發掘）
+          - { kind: court, lon: 108.854033, lat: 34.329647, w_m: 386, d_m: 152, main: [0.56, 0.49, 12, 'hip'], wings: false }   # 桂宮 5 號 大殿 215.8 × 74.4（發掘）
+          - { kind: court, lon: 108.852848, lat: 34.316335, w_m: 91, d_m: 80, main: [0.7, 0.4, 10, 'hip'], north: [1.0, 0.25, 8, 'gable'], wings: false }   # 桂宮 6 號（發掘）
+          - { kind: court, lon: 108.850836, lat: 34.330972, w_m: 111, d_m: 37, main: [0.95, 0.8, 8, 'gable'], wings: false }   # 桂宮 7 號（發掘）
+          - { kind: court, lon: 108.849118, lat: 34.319922, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 桂宮殿舍（想像）
+          - { kind: court, lon: 108.854338, lat: 34.319472, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 桂宮殿舍（想像）
+          - { kind: court, lon: 108.849118, lat: 34.322626, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 桂宮殿舍（想像）
+          - { kind: court, lon: 108.854338, lat: 34.323978, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 桂宮殿舍（想像）
+          - { kind: court, lon: 108.849118, lat: 34.325330, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 桂宮殿舍（想像）
+          - { kind: court, lon: 108.854338, lat: 34.326231, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 桂宮殿舍（想像）
+          - { kind: court, lon: 108.849118, lat: 34.327673, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 桂宮殿舍（想像）
+          - { kind: court, lon: 108.854338, lat: 34.328034, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 桂宮殿舍（想像）
+          - { kind: corridor, from: [108.851619, 34.315371], to: [108.851619, 34.314442], h_m: 9, w_m: 6 }   # 紫房複道（文獻）
+          - { kind: palace, lon: 108.874129, lat: 34.324294, w_m: 620, d_m: 1710, wall_h: 5, halls: [] }   # 北宮宮牆 620 × 1710（發掘）
+          - { kind: court, lon: 108.876086, lat: 34.317939, w_m: 120, d_m: 90, main: [0.5, 0.35, 10, 'hip'] }   # 北宮 1 號建築群（發掘）
+          - { kind: court, lon: 108.875434, lat: 34.319922, w_m: 100, d_m: 90, main: [0.69, 0.35, 13, 'hip'] }   # 北宮前殿（文獻：廣五十步）
+          - { kind: court, lon: 108.874129, lat: 34.329116, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 神仙宮（文獻）
+          - { kind: court, lon: 108.874129, lat: 34.330468, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 壽宮（文獻）
+          - { kind: court, lon: 108.872498, lat: 34.322175, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 北宮殿舍（想像）
+          - { kind: court, lon: 108.872498, lat: 34.323978, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 北宮殿舍（想像）
+          - { kind: court, lon: 108.872498, lat: 34.325781, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 北宮殿舍（想像）
+          - { kind: court, lon: 108.872498, lat: 34.327583, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 北宮殿舍（想像）
+          - { kind: court, lon: 108.875760, lat: 34.322175, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 北宮殿舍（想像）
+          - { kind: court, lon: 108.875760, lat: 34.323978, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 北宮殿舍（想像）
+          - { kind: court, lon: 108.875760, lat: 34.325781, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 北宮殿舍（想像）
+          - { kind: court, lon: 108.875760, lat: 34.327583, w_m: 84, d_m: 80, main: [0.6, 0.36, 10, 'hip'], north: [0.92, 0.25, 9, 'hip'], wings: false }   # 北宮殿舍（想像）
+          - { kind: kilns, lon: 108.874564, lat: 34.316092, n: 11, r_m: 70 }   # 北宮南牆外磚瓦窯 11 座（發掘）
+          - { kind: court, lon: 108.890223, lat: 34.325330, w_m: 40, d_m: 36, main: [0.5, 0.5, 6, 'gable'], wings: false }   # 「明光宮區域」二號建築（發掘 2024–25）
+          - { kind: court, lon: 108.882611, lat: 34.323347, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.882611, lat: 34.325961, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.886961, lat: 34.323347, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.886961, lat: 34.325961, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.894573, lat: 34.323347, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.894573, lat: 34.325961, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.898922, lat: 34.323347, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.898922, lat: 34.325961, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.903272, lat: 34.323347, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.903272, lat: 34.325961, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 明光宮殿院（文獻宮名；院落想像）
+          - { kind: court, lon: 108.909253, lat: 34.326231, w_m: 170, d_m: 80, main: [0.9, 0.28, 6, 'gable'], north: [0.9, 0.28, 6, 'gable'], wings: false }   # 籍田倉（文獻；尺寸借京師倉）
+          - { kind: armoury, lon: 108.873422, lat: 34.310864, w_m: 700, d_m: 322 }   # 武庫 710 × 322，七座庫房（發掘）
+          - { kind: court, lon: 108.871737, lat: 34.312757, w_m: 300, d_m: 70, main: [0.9, 0.28, 6, 'gable'], north: [0.9, 0.28, 6, 'gable'], wings: false }   # 武庫以北類似建築（發掘：勘探）
+          - { kind: court, lon: 108.881415, lat: 34.300724, w_m: 362, d_m: 378, main: [0.3, 0.15, 14, 'double_hip'] }   # 高廟（推定）院落一 362 × 378（發掘：勘探）
+          - { kind: court, lon: 108.880871, lat: 34.296488, w_m: 485, d_m: 490, main: [0.22, 0.12, 12, 'hip'] }   # 高廟（推定）院落二 485 × 490（發掘：勘探；放在安門大街以東）
+          - { kind: office, lon: 108.860862, lat: 34.316317, w_m: 150, d_m: 120 }   # 九府（數目文獻、位置想像）
+          - { kind: office, lon: 108.862820, lat: 34.316317, w_m: 150, d_m: 120 }   # 九府（數目文獻、位置想像）
+          - { kind: office, lon: 108.864777, lat: 34.316317, w_m: 150, d_m: 120 }   # 九府（數目文獻、位置想像）
+          - { kind: office, lon: 108.866734, lat: 34.316317, w_m: 150, d_m: 120 }   # 九府（數目文獻、位置想像）
+          - { kind: office, lon: 108.868692, lat: 34.316317, w_m: 150, d_m: 120 }   # 九府（數目文獻、位置想像）
+          - { kind: office, lon: 108.876086, lat: 34.296488, w_m: 150, d_m: 120 }   # 九府（數目文獻、位置想像）
+          - { kind: office, lon: 108.876086, lat: 34.299192, w_m: 150, d_m: 120 }   # 九府（數目文獻、位置想像）
+          - { kind: office, lon: 108.876086, lat: 34.301896, w_m: 150, d_m: 120 }   # 九府（數目文獻、位置想像）
+          - { kind: office, lon: 108.876086, lat: 34.304600, w_m: 150, d_m: 120 }   # 九府（數目文獻、位置想像）
+          - { kind: court, lon: 108.868474, lat: 34.342725, w_m: 70, d_m: 60, main: [0.43, 0.22, 8, 'gable'] }   # 長安廚（文獻）
+          - { kind: market, lon: 108.863853, lat: 34.337074, w_m: 800, d_m: 700, lanes: 3 }   # 西市（乙案＝舊說東市，發掘：勘探）
+          - { kind: market, lon: 108.873966, lat: 34.338444, w_m: 590, d_m: 930, lanes: 3 }   # 東市（乙案，2014 牆段：發掘）
+          - { kind: workshops, lon: 108.853751, lat: 34.336056, w_m: 440, d_m: 420, kilns: 33 }   # 西北手工業作坊區（發掘，WS26）：陶俑窯 33 座在西部和中北部，鑄鐵（煉爐 1、烘範窯 4、廢料坑 8）在中南部，鑄錢在東北部；院落與範圍示意
+          - { kind: palace, lon: 108.869877, lat: 34.278174, w_m: 1444, d_m: 1642, wall_h: 3, halls: [] }   # 九廟大院 1444 × 1642（發掘）
+          - { kind: court, lon: 108.864418, lat: 34.281644, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F4（發掘）
+          - { kind: court, lon: 108.867865, lat: 34.281644, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F3（發掘）
+          - { kind: court, lon: 108.871595, lat: 34.281644, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F2（發掘）
+          - { kind: court, lon: 108.875184, lat: 34.281644, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F1（發掘）
+          - { kind: court, lon: 108.866060, lat: 34.277480, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F7（發掘）
+          - { kind: court, lon: 108.869714, lat: 34.277480, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F6（發掘）
+          - { kind: court, lon: 108.873389, lat: 34.277480, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F5（發掘）
+          - { kind: court, lon: 108.864418, lat: 34.273388, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F11（發掘）
+          - { kind: court, lon: 108.868159, lat: 34.273388, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F10（發掘）
+          - { kind: court, lon: 108.871900, lat: 34.273388, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F9（發掘）
+          - { kind: court, lon: 108.875630, lat: 34.273388, w_m: 270, d_m: 270, main: [0.2, 0.2, 11, 'double_hip'] }   # 王莽九廟 F8（發掘）
+          - { kind: court, lon: 108.869681, lat: 34.269269, w_m: 280, d_m: 297, main: [0.36, 0.34, 14, 'double_hip'] }   # F12 太初祖廟？（發掘）
+          - { kind: court, lon: 108.860188, lat: 34.272054, w_m: 240, d_m: 75, main: [0.4, 0.5, 8, 'hip'], wings: false }   # F13 漢社稷（發掘）
+          - { kind: court, lon: 108.858437, lat: 34.269161, w_m: 300, d_m: 300, main: [0.2, 0.2, 9, 'hip'] }   # F14 新莽社稷（發掘）
+          - { kind: ditch, w_m: 3, pts: [[108.884470, 34.273379], [108.884441, 34.273660], [108.884352, 34.273934], [108.884208, 34.274190], [108.884012, 34.274422], [108.883771, 34.274622], [108.883492, 34.274784], [108.883182, 34.274903], [108.882853, 34.274976], [108.882513, 34.275001], [108.882173, 34.274976], [108.881844, 34.274903], [108.881534, 34.274784], [108.881255, 34.274622], [108.881014, 34.274422], [108.880818, 34.274190], [108.880674, 34.273934], [108.880585, 34.273660], [108.880556, 34.273379], [108.880585, 34.273097], [108.880674, 34.272824], [108.880818, 34.272568], [108.881014, 34.272336], [108.881255, 34.272136], [108.881534, 34.271974], [108.881844, 34.271854], [108.882173, 34.271781], [108.882513, 34.271756], [108.882853, 34.271781], [108.883182, 34.271854], [108.883492, 34.271974], [108.883771, 34.272136], [108.884012, 34.272336], [108.884208, 34.272568], [108.884352, 34.272824], [108.884441, 34.273097], [108.884470, 34.273379]] }   # 大土門 明堂辟雍：圜水溝直徑約 360（發掘）
+          - { kind: court, lon: 108.882513, lat: 34.273379, w_m: 235, d_m: 235, main: [0.26, 0.26, 13, 'double_hip'] }   # 大土門 明堂辟雍：方院 235（發掘）
+          - { kind: court, lon: 108.850640, lat: 34.293153, w_m: 230, d_m: 180, main: [0.9, 0.12, 6, 'gable'], north: [0.9, 0.12, 6, 'gable'] }   # 西安門外排房建築（發掘 2013）
+          - { kind: front_hall, lon: 108.832219, lat: 34.308449, w_m: 200, d_m: 320, tiers: [[110, 200, 2.0], [110, 190, 6.0], [100, 180, 10.0]] }   # 建章宮前殿 320 × 200，北高南低（發掘）
+          - { kind: pool, lon: 108.827011, lat: 34.312712, w_m: 510, d_m: 300 }   # 太液池（發掘：勘探；曲尺形簡化）
+          - { kind: pool, lon: 108.825521, lat: 34.314785, w_m: 300, d_m: 150 }   # 太液池北段
+          - { kind: terrace, lon: 108.828740, lat: 34.313965, w_m: 40, d_m: 40, h_m: 18, tiers: 2, top: 0.5, halls: [[0, 0, 0.8, 0.8, 8, 'hip']] }   # 漸臺（發掘基址＋文獻）
+          - { kind: terrace, lon: 108.825521, lat: 34.312982, w_m: 70, d_m: 60, h_m: 7, tiers: 1, top: 0.4, halls: [] }   # 三神山（文獻）
+          - { kind: terrace, lon: 108.827696, lat: 34.312351, w_m: 70, d_m: 60, h_m: 7, tiers: 1, top: 0.4, halls: [] }   # 三神山（文獻）
+          - { kind: terrace, lon: 108.826282, lat: 34.314785, w_m: 70, d_m: 60, h_m: 7, tiers: 1, top: 0.4, halls: [] }   # 三神山（文獻）
+          - { kind: court, lon: 108.822650, lat: 34.312090, w_m: 74, d_m: 115, main: [0.6, 0.35, 10, 'hip'] }   # 建章 一號遺址（發掘）
+          - { kind: terrace, lon: 108.825216, lat: 34.321139, w_m: 52, d_m: 50, h_m: 10, tiers: 2, top: 0.5, halls: [[0, 0, 0.8, 0.8, 9, 'hip']] }   # 神明臺（發掘）
+          - { kind: terrace, lon: 108.838266, lat: 34.311540, w_m: 17, d_m: 17, h_m: 11, tiers: 1, top: 0.9, halls: [[0, 0, 1.0, 1.0, 5, 'hip']] }   # 雙鳳闕（發掘）
+          - { kind: terrace, lon: 108.838266, lat: 34.312018, w_m: 17, d_m: 17, h_m: 11, tiers: 1, top: 0.9, halls: [[0, 0, 1.0, 1.0, 5, 'hip']] }   # 雙鳳闕（發掘）
+          - { kind: corridor, from: [108.844931, 34.309107], to: [108.838353, 34.310909], h_m: 12, w_m: 8 }   # 跨城飛閣（文獻）
+          - { kind: court, lon: 108.835851, lat: 34.305501, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { kind: court, lon: 108.828783, lat: 34.305682, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { kind: court, lon: 108.822259, lat: 34.306853, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { kind: court, lon: 108.835308, lat: 34.316768, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { kind: court, lon: 108.830958, lat: 34.318570, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { kind: court, lon: 108.821171, lat: 34.316768, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { kind: court, lon: 108.818996, lat: 34.310458, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { kind: court, lon: 108.834764, lat: 34.300093, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { kind: court, lon: 108.828239, lat: 34.300544, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { kind: court, lon: 108.821715, lat: 34.300544, w_m: 110, d_m: 100, main: [0.45, 0.2, 12, 'hip'] }   # 建章宮諸殿院（文獻宮名；位置想像）
+          - { group: weicheng, kind: ditch, w_m: 4, pts: [[108.856100, 34.403500], [108.869100, 34.403500], [108.869100, 34.412500], [108.856100, 34.412500], [108.856100, 34.403500]] }   # 渭城圍溝（想像：照茂陵邑以溝為界）
+          - { group: weicheng, kind: office, lon: 108.863835, lat: 34.40881, w_m: 100, d_m: 100 }   # 渭城縣寺（想像）
+          - { group: weicheng, kind: market, lon: 108.86104, lat: 34.406875, w_m: 180, d_m: 180, lanes: 2 }   # 渭城市（想像）
+          - { group: weicheng, kind: court, lon: 108.863835, lat: 34.40746, w_m: 120, d_m: 55, main: [0.9, 0.3, 6, 'gable'], north: [0.9, 0.3, 6, 'gable'], wings: false }   # 渭城倉（想像）
+          - { kind: bridge, from: [108.8700, 34.3440], to: [108.8702, 34.3560], w_m: 16, h_m: 8, spans: 30 }   # 廚城門外渭橋（發掘：橋樁；長度示意）
+        fabric:
+          - { group: weicheng, region: [[108.856360, 34.408270], [108.862145, 34.408270], [108.862145, 34.412275], [108.856360, 34.412275]], typ: wards, ward_m: 190, ward_street_m: 12, lot: [24, 30], h_m: 5.5, empty: 0.1 }   # 渭城的里（想像：陵邑通例，里 190 m 加 12 m 巷）
+          - { group: weicheng, region: [[108.864940, 34.408270], [108.868840, 34.408270], [108.868840, 34.412275], [108.863055, 34.412275], [108.863055, 34.409620], [108.864940, 34.409620]], typ: wards, ward_m: 190, ward_street_m: 12, lot: [24, 30], h_m: 5.5, empty: 0.1 }   # 渭城的里（想像：陵邑通例，里 190 m 加 12 m 巷）
+          - { group: weicheng, region: [[108.856360, 34.403725], [108.862145, 34.403725], [108.862145, 34.405885], [108.859740, 34.405885], [108.859740, 34.407730], [108.856360, 34.407730]], typ: wards, ward_m: 190, ward_street_m: 12, lot: [24, 30], h_m: 5.5, empty: 0.1 }   # 渭城的里（想像：陵邑通例，里 190 m 加 12 m 巷）
+          - { group: weicheng, region: [[108.863055, 34.403725], [108.868840, 34.403725], [108.868840, 34.407730], [108.864810, 34.407730], [108.864810, 34.407010], [108.863055, 34.407010]], typ: wards, ward_m: 190, ward_street_m: 12, lot: [24, 30], h_m: 5.5, empty: 0.1 }   # 渭城的里（想像：陵邑通例，里 190 m 加 12 m 巷）
+          - { region: [[108.859992, 34.315776], [108.869562, 34.315776], [108.869562, 34.332901], [108.859992, 34.332901]], typ: courtyard, lot: [95, 95], h_m: 8, empty: 0.12, detail: low }   # 北第（北闕甲第）區（文獻：學者定區；宅想像）
+          - { region: [[108.869779, 34.294686], [108.873368, 34.294686], [108.873368, 34.293153], [108.877282, 34.293153], [108.877282, 34.309107], [108.869779, 34.309107]], typ: courtyard, lot: [100, 100], h_m: 8, empty: 0.12, detail: low }   # 東第區（文獻：學者定區；宅想像）
+          - { region: [[108.879892, 34.344708], [108.912841, 34.344708], [108.912841, 34.354172], [108.888048, 34.353811], [108.887396, 34.351198], [108.879892, 34.348133]], typ: wards, ward_m: 280, ward_street_m: 14, lot: [30, 42], h_m: 5.5, empty: 0.08, detail: low }   # 閭里：東北區（文獻：學者定區；里的形制想像）
+          - { region: [[108.878261, 34.328124], [108.912841, 34.328124], [108.912841, 34.343987], [108.878261, 34.343987]], typ: wards, ward_m: 280, ward_street_m: 14, lot: [30, 42], h_m: 5.5, empty: 0.1, detail: low }   # 閭里：宣平門大街以南（影視：追盛全城圖；想像）
+      lines:
+        - { id: oldwei2, src: custom, col: '#8fb8ff', width: 0.003, at: 30.4, fade: 1.5, persist: false, gain: 0.8, polylines: [[[108.60, 34.300], [108.66, 34.300], [108.72, 34.305], [108.78, 34.322], [108.82, 34.338], [108.86, 34.357], [108.90, 34.368], [108.94, 34.376]]] }
+      epochs:
+        - { id: han_tombs, at: 2.0, fade: 1.0, yr: [-200, 10], col: '#ffa13d', until: tang, buildings_inside: false }
+      sections:
+        - { id: sec1, from: [108.858, 34.325], to: [108.858, 34.44], with: han_4, plus: 2.1, hold: 3.0, title: "北阪 · 渭河到咸阳原的台阶", sub: "COPERNICUS DEM 30 m · 自南向北 12.8 km", l0: "南 · 渭河", l1: "北 · 咸阳原",
+            labels: [{ k: 0.1, text: "渭河河谷" }, { k: 0.72, text: "二级阶地" }, { k: 0.95, text: "黄土台塬 · 汉陵" }] }
+      pins:
+        - { id: p_changan, lon: 108.8576, lat: 34.3040, h_m: 30, t0: 10.0, t1: 14.0, zh: "长安 · 未央宫前殿", en: "Chang'an, the front hall of Weiyang Palace", len: 140, dx: 50 }
+        - { id: p_weicheng, lon: 108.8640, lat: 34.4105, h_m: 10, with: han_rename, zh: "渭城 · 示意", en: "Weicheng, the old site renamed (schematic)", len: 80, dx: 40 }
+        - { id: p_changling, mark: changling, with: han_4, zh: "汉长陵 · 高祖", en: "Changling, tomb of Emperor Gaozu", len: 120, dx: -40, left: true }
+      camera: [{ t: 8.6, ll: [108.880, 34.312], az: 2, el: 48, d: 1.15 }, { t: 9.6, ll: [108.876, 34.310], az: 0, el: 46, d: 1.1 }, { t: 10.6, ll: [108.858, 34.302], az: 20, el: 30, d: 0.32 }, { t: 13.4, ll: [108.858, 34.303], az: 24, el: 31, d: 0.33 },
+               { t: 15.6, shot: weicheng, ll: [108.8626, 34.4080], az: 10, el: 40, d: 0.6 }, { t: 21.6, ll: [108.8626, 34.4082], az: 16, el: 42, d: 0.62 }, { t: 22.8, ll: [108.866, 34.388], az: 14, el: 52, d: 1.8 }, { t: 23.8, shot: terrace, ll: [108.858, 34.39], az: 95, el: 9, d: 1.35 }, { t: 30.4, ll: [108.858, 34.39], az: 92, el: 11, d: 1.4 }, { t: 33.6, ll: [108.84, 34.38], az: 80, el: 32, d: 1.9 }, { t: 40.7, ll: [108.80, 34.37], az: 70, el: 40, d: 1.7 }]
+    - id: tang
+      mood: { feel: wistful, level: 1 }   # the farewell at the ferry (the narrator's arc: agreed 2026-10-21)
+      years: [619, 760]
+      dur: 30.0
+      label: { zh: 渭城朝雨, en: Morning rain at Weicheng }
+      wave_from: [108.8575, 34.4110]   # the colour leaves Weicheng with the beam
+      col: '#c9a7ff'
+      readout: { label: "唐代咸阳县，在杜邮", note: "《元和郡县图志》：城本杜郵也，武德二年置縣 · 位置与平面为示意" }
+      routes:
+        - { id: r_duyou, from: [108.8575, 34.4110], to: [108.7480, 34.3490], at: 2.4, draw: 3.0, arc: 0.22, col: '#e5d2ff', impact: true, follow: { el: 40 }, zh: "县治西移 · 约 [km] 公里 · 示意", en: "The county seat moves about [km] km west (schematic)" }
+      city:
+        origin: [108.7480, 34.3492]
+        col: '#efe2ff'
+        tint: 0.3
+        detail: high
+        # no at: the town grows where and when the beam from Weicheng lands (impact), the camera following the beam
+        rise: 5.0
+        sink: 2.5
+        until: ming
+        theta_deg: 0
+        walls:
+          - ring: [[108.7440, 34.3465], [108.7520, 34.3465], [108.7520, 34.3520], [108.7440, 34.3520]]
+            h_m: 8
+            t_m: 9
+            gates: [[108.7480, 34.3465], [108.7480, 34.3520], [108.7440, 34.3492], [108.7520, 34.3492]]
+        streets:
+          - { pts: [[108.7440, 34.3492], [108.7520, 34.3492]], w_m: 18, shops: true }
+          - { pts: [[108.7480, 34.3465], [108.7480, 34.3520]], w_m: 18, shops: true }
+        lanes: { spacing_m: 130, w_m: 6 }
+        fabric:
+          - { region: walls, lot: [20, 28], typ: courtyard, h_m: 6, empty: 0.06 }
+        landmarks:
+          - { kind: office, lon: 108.7480, lat: 34.3508, w_m: 80, d_m: 90 }
+          - { kind: temple, lon: 108.7502, lat: 34.3478, w_m: 60, d_m: 90 }
+          - { kind: pagoda, lon: 108.7502, lat: 34.3472, h_m: 34, w_m: 10, storeys: 7 }
+          - { kind: hall, lon: 108.7428, lat: 34.3488, w_m: 36, d_m: 20, h_m: 9, roof: hip, podium: 1 }
+          - { kind: boats, from: [108.7466, 34.3424], to: [108.7482, 34.3415], n: 5 }   # on the water by the north bank (the Duyou ferry)
+        trees:
+          - { pts: [[108.7400, 34.3458], [108.7560, 34.3458]], step_m: 20, h_m: 12, r_m: 5, both: false, offset_m: -8 }
+          - { pts: [[108.7408, 34.3475], [108.7408, 34.3505]], step_m: 18, h_m: 11, r_m: 4.5, both: false }
+      epochs:
+        - { id: tang_tomb, at: 0.5, fade: 1.0, yr: [600, 700], col: '#c9a7ff', until: ming, buildings_inside: false }
+      footage:
+        - { id: f_gudu_museum, file: assets/photos_cc/gudu_museum.jpg, mode: panel, with: tang_4, plus: 0.3, dur: 5.0, in: 1.0, out: 0.9, kicker: "今天 · TODAY · 照片", zh: "咸阳古渡遗址博物馆", en: "The Xianyang Ancient Ferry Site Museum", credit: "Wikimedia Commons · H2v5o68z · CC0" }
+        - { id: f_gudu_1, file: assets/photos_cc/gudu_1.jpg, mode: panel, with: tang_poem, plus: 0.3, dur: 6.0, in: 0.6, out: 1.0, kicker: "今天 · TODAY · 照片", zh: "咸阳古渡，渭河北岸", en: "The old ferry on the north bank of the Wei", credit: "Wikimedia Commons · H2v5o68z · CC0", pan: 0.3 }
+      camera: [{ t: 11.4, shot: ferry, ll: [108.7484, 34.3490], az: 200, el: 26, d: 0.13, fov: 34 },
+               { t: 13.0, ll: [108.7488, 34.3492], az: 270, el: 17, d: 0.036, fov: 44 }, { t: 17.0, ll: [108.7512, 34.3492], az: 268, el: 17, d: 0.036, fov: 44 },
+               { t: 19.0, ll: [108.7470, 34.3470], az: 190, el: 28, d: 0.12, fov: 34 }, { t: 28, ll: [108.742, 34.346], az: 160, el: 38, d: 0.5, fov: 32 }]
+    - id: ming
+      mood: { feel: calm, level: 1 }   # 500 years a county town (the narrator's arc: agreed 2026-10-21)
+      years: [1371, 1911]
+      dur: 46
+      label: { zh: 明清县城, en: The walled town }
+      col: '#9fd8e8'
+      readout: { label: "洪武四年（1371），县城西迁到今天的老城", note: "城墙九门依乾隆十六年《咸阳县志·县城图》 · 示意" }
+      routes:
+        - { id: r_ming, from: [108.7480, 34.3490], to: [108.7215, 34.3348], at: 0.6, draw: 2.4, arc: 0.3, col: '#ffe6cc', zh: "县城西迁 · 约 [km] 公里 · 示意", en: "The town moves about [km] km west (schematic)" }
+      city:
+        origin: [108.7215, 34.3348]
+        col: '#ffe6cc'
+        tint: 0.35
+        detail: high
+        at: 1.0
+        rise: 6.0
+        sink: 2.5
+        until: mills
+        theta_deg: 0
+        walls:
+          - ring: [[108.7140, 34.3326], [108.7146, 34.3321], [108.7215, 34.3320], [108.7290, 34.3320], [108.7290, 34.3335], [108.7320, 34.3335], [108.7320, 34.3362], [108.7290, 34.3362], [108.7290, 34.3372], [108.7215, 34.3374], [108.7146, 34.3373], [108.7140, 34.3368]]
+            h_m: 10
+            t_m: 11
+            gates: [[108.7170, 34.3373], [108.7140, 34.3347], [108.7168, 34.3321], [108.7200, 34.3320], [108.7250, 34.3320], [108.7255, 34.3373], [108.7280, 34.3372], [108.7290, 34.3327], [108.7320, 34.3348]]
+        streets:
+          - { pts: [[108.7140, 34.3348], [108.7320, 34.3348]], w_m: 16, shops: true }
+          - { pts: [[108.7255, 34.3373], [108.7250, 34.3320]], w_m: 14, shops: true }
+          - { pts: [[108.7200, 34.3320], [108.7200, 34.3345]], w_m: 10 }
+          - { pts: [[108.7170, 34.3373], [108.7170, 34.3348]], w_m: 10 }
+          - { pts: [[108.7168, 34.3321], [108.7168, 34.3348]], w_m: 10 }
+          - { pts: [[108.7280, 34.3372], [108.7280, 34.3348]], w_m: 10 }
+        lanes: { spacing_m: 85, w_m: 5 }
+        fabric:
+          - { region: walls, lot: [17, 25], typ: courtyard, h_m: 6.0, empty: 0.05 }
+        landmarks:
+          - { kind: temple, lon: 108.7200, lat: 34.3361, w_m: 62, d_m: 120 }
+          - { kind: belltower, lon: 108.7186, lat: 34.3353, w_m: 22 }
+          - { kind: terrace, lon: 108.7215, lat: 34.3367, w_m: 60, d_m: 44, h_m: 8, tiers: 2, top: 0.62, halls: [[0, 0, 0.7, 0.55, 9, 'double']] }
+          - { kind: office, lon: 108.7238, lat: 34.3361, w_m: 74, d_m: 100 }
+          - { kind: temple, lon: 108.7268, lat: 34.3340, w_m: 50, d_m: 92 }
+          - { kind: temple, lon: 108.7158, lat: 34.3360, w_m: 44, d_m: 80 }
+          - { kind: hall, lon: 108.7304, lat: 34.3352, w_m: 26, d_m: 18, h_m: 22, roof: double, podium: 8 }
+          - { kind: boats, from: [108.7246, 34.3308], to: [108.7254, 34.3288], n: 7 }
+          - { kind: paifang, lon: 108.7234, lat: 34.3348, w_m: 13, h_m: 9 }
+          - { kind: paifang, lon: 108.7158, lat: 34.3348, w_m: 11, h_m: 8 }
+        trees:
+          - { pts: [[108.7120, 34.3311], [108.7335, 34.3311]], step_m: 22, h_m: 12, r_m: 5, both: false, offset_m: -6 }
+      footage:
+        - { id: f_town_map, file: assets/gazetteer/1751_xianyang_county_town_map.jpg, mode: doc, side: right, at: 21.0, dur: 7.5, in: 1.0, out: 0.9, kicker: "史料 · SOURCE · 1751", zh: "乾隆十六年《咸阳县志》· 县城图", en: "The county town in the gazetteer of 1751", credit: "哈佛燕京图书馆藏 · Wikimedia Commons · 公有领域" }
+        - { id: f_belltower, file: assets/photos_cc/belltower_2.jpg, mode: panel, at: 29.0, dur: 5.5, in: 1.0, out: 0.6, kicker: "今天 · TODAY · 照片", zh: "咸阳钟楼", en: "The bell tower of the old town, today", credit: "Wikimedia Commons · H2v5o68z · CC0", pan: 0.2 }
+        - { id: f_zhongshan, file: assets/photos_cc/zhongshan_st.jpg, mode: panel, at: 34.4, dur: 5.5, in: 0.6, out: 0.6, kicker: "今天 · TODAY · 照片", zh: "咸阳中山街", en: "Zhongshan Street in the old town, today", credit: "Wikimedia Commons · H2v5o68z · CC0", pan: -0.3 }
+        - { id: f_qingwei, file: assets/photos_cc/qingweilou_1.jpg, mode: panel, at: 39.8, dur: 5.5, in: 0.6, out: 1.0, kicker: "今天 · TODAY · 照片", zh: "清渭楼", en: "Qingwei Tower by the old town, today", credit: "Wikimedia Commons · H2v5o68z · CC0", pan: 0.3 }
+      pins:
+        - { id: p_wenmiao, lon: 108.7200, lat: 34.3361, h_m: 12, t0: 15.5, t1: 20.0, zh: "文庙 · 今咸阳博物院", en: "The Confucian Temple, today's Xianyang Museum", len: 120, dx: 40 }
+        - { id: p_ferry, lon: 108.7250, lat: 34.3300, h_m: 2, t0: 16.0, t1: 20.0, zh: "咸阳古渡", en: "The Xianyang ferry", len: 90, dx: -40, left: true }
+      camera: [{ t: 0, ll: [108.7455, 34.3480], az: 170, el: 34, d: 0.2, fov: 32 }, { t: 3.5, ll: [108.7225, 34.3345], az: 190, el: 36, d: 0.3, fov: 32 },
+               { t: 8, shot: street, ll: [108.7195, 34.3348], az: 272, el: 15, d: 0.04, fov: 42 }, { t: 12.5, ll: [108.7228, 34.3349], az: 270, el: 13, d: 0.042, fov: 44 },
+               { t: 15.5, ll: [108.7200, 34.3358], az: 222, el: 22, d: 0.065, fov: 40 }, { t: 20.5, ll: [108.7228, 34.3345], az: 200, el: 40, d: 0.26, fov: 32 },
+               { t: 29, ll: [108.7190, 34.3352], az: 150, el: 26, d: 0.12, fov: 34 }, { t: 46, ll: [108.7215, 34.3345], az: 130, el: 34, d: 0.24, fov: 32 }]
+    - id: rail
+      mood: { feel: hope, level: 2 }   # the railway, a new page (the narrator's arc: agreed 2026-10-21)
+      years: [1936, 1949]
+      dur: 30
+      label: { zh: 铁路, en: The railway }
+      col: '#ffd27a'
+      footage:
+        - { id: f_train, file: assets/footage/longhai_train_commons.mp4, mode: full, at: 12.0, dur: 8.5, in: 1.0, out: 1.0, zh: "陇海铁路渭河桥", en: "A train on the Longhai Railway bridge over the Wei, today", credit: "Wikimedia Commons · Liuxingy · CC BY-SA 4.0", pan: 0.2 }
+        - { id: f_station, file: assets/photos_cc/station_full.jpg, mode: panel, at: 21.5, dur: 6.0, in: 1.0, out: 1.0, kicker: "今天 · TODAY · 照片", zh: "咸阳站", en: "Xianyang Station, today", credit: "Wikimedia Commons · Liuxingy · CC BY-SA 4.0" }
+      readout: { label: "1936 年陇海铁路设咸阳站", note: "维基 · 咸阳发布 2023 · 线路为今日 OpenStreetMap 陇海线 · 站前街区为示意" }
+      lines:
+        - { id: longhai, src: rail, filter: "陇海线", col: '#ffd27a', width: 0.0024, at: 0.6, fade: 2.0, persist: true, gain: 1.0, flow: 0.5 }
+      city:
+        origin: [108.7300, 34.3453]
+        col: '#ffe0a0'
+        detail: high
+        at: 1.5
+        rise: 4.0
+        sink: 2.5
+        until: m1975
+        theta_deg: 10
+        hide: [[[108.7280, 34.3435], [108.7420, 34.3435], [108.7420, 34.3480], [108.7280, 34.3480]]]   # the railway corridor east of the station (the glide looks down it)
+        landmarks:
+          - { kind: station, lon: 108.73007, lat: 34.3453, theta_deg: 10, w_m: 70, d_m: 20, h_m: 12 }
+          - { kind: factory, lon: 108.7360, lat: 34.3462, theta_deg: 10, w_m: 120, d_m: 40, bays: 5, h_m: 9 }
+        streets:   # the town's north street carried on from its north gate to the station, with shops; a cross street (schematic)
+          - { pts: [[108.7255, 34.3378], [108.7296, 34.3442]], w_m: 16, shops: true }
+          - { pts: [[108.7200, 34.3410], [108.7320, 34.3410]], w_m: 12 }
+        lanes: { region: [[108.7200, 34.3378], [108.7320, 34.3378], [108.7320, 34.3440], [108.7200, 34.3440]], spacing_m: 110, w_m: 5 }
+        fabric:
+          - { region: [[108.7200, 34.3378], [108.7320, 34.3378], [108.7320, 34.3440], [108.7200, 34.3440]], lot: [13, 17], typ: dwelling, h_m: 6, empty: 0.08 }
+      camera: [{ t: 0, ll: [108.7215, 34.3345], az: 130, el: 34, d: 0.24, fov: 32 }, { t: 4.5, ll: [108.7302, 34.3452], az: 165, el: 24, d: 0.12, fov: 36 }, { t: 9, shot: station, ll: [108.7340, 34.3459], az: 100, el: 24, d: 0.055, fov: 42 }, { t: 12, ll: [108.7312, 34.3454], az: 100, el: 24, d: 0.055, fov: 42 }, { t: 21, ll: [108.728, 34.344], az: 150, el: 30, d: 0.3, fov: 32 }, { t: 30, ll: [108.725, 34.342], az: 110, el: 36, d: 0.5 }]
+    - id: mills
+      mood: { feel: pride, level: 2 }   # the textile city, famous nationwide (the narrator's arc: agreed 2026-10-21)
+      years: [1951, 1958]
+      dur: 23.6
+      label: { zh: 纺织城, en: The textile city }
+      col: '#cfe9ff'
+      readout: { label: "国棉一厂 1951，二厂 1952，七厂 1958", note: "中国纺织工业联合会 2019 · 一厂位置 OpenStreetMap，二、七厂位置示意" }
+      city:
+        origin: [108.7149, 34.3404]
+        col: '#d8ecff'
+        detail: high
+        at: 0.5
+        rise: 6.0
+        sink: 2.5
+        until: m1975
+        theta_deg: 0
+        walls:
+          - { ring: [[108.7105, 34.3382], [108.7190, 34.3382], [108.7190, 34.3418], [108.7105, 34.3418]], h_m: 3, t_m: 2, towers: false, style: none, gates: [[108.7148, 34.3382]] }
+          - { ring: [[108.6985, 34.3398], [108.7060, 34.3398], [108.7060, 34.3432], [108.6985, 34.3432]], h_m: 3, t_m: 2, towers: false, style: none, gates: [[108.7022, 34.3398]] }
+          - { ring: [[108.6870, 34.3365], [108.6945, 34.3365], [108.6945, 34.3398], [108.6870, 34.3398]], h_m: 3, t_m: 2, towers: false, style: none, gates: [[108.6907, 34.3365]] }
+        landmarks:
+          - { kind: factory, lon: 108.7135, lat: 34.3398, w_m: 300, d_m: 130, bays: 14, h_m: 11 }
+          - { kind: factory, lon: 108.7170, lat: 34.3409, w_m: 120, d_m: 60, bays: 6, h_m: 10 }
+          - { kind: chimney, lon: 108.7183, lat: 34.3392, h_m: 55 }
+          - { kind: hall, lon: 108.7120, lat: 34.3412, w_m: 60, d_m: 16, h_m: 14, roof: hip }
+          - { kind: factory, lon: 108.7022, lat: 34.3414, w_m: 260, d_m: 120, bays: 12, h_m: 11 }
+          - { kind: chimney, lon: 108.7052, lat: 34.3427, h_m: 50 }
+          - { kind: factory, lon: 108.6907, lat: 34.3381, w_m: 250, d_m: 110, bays: 12, h_m: 11 }
+          - { kind: chimney, lon: 108.6937, lat: 34.3392, h_m: 50 }
+        fabric:
+          - { region: [[108.7105, 34.3422], [108.7190, 34.3422], [108.7190, 34.3460], [108.7105, 34.3460]], lot: [72, 34], typ: slab, h_m: 15, empty: 0.0 }
+          - { region: [[108.6985, 34.3436], [108.7060, 34.3436], [108.7060, 34.3466], [108.6985, 34.3466]], lot: [72, 34], typ: slab, h_m: 15, empty: 0.0 }
+          - { region: [[108.6870, 34.3402], [108.6945, 34.3402], [108.6945, 34.3430], [108.6870, 34.3430]], lot: [72, 34], typ: slab, h_m: 15, empty: 0.0 }
+      camera: [{ t: 0, ll: [108.725, 34.342], az: 110, el: 36, d: 0.5 }, { t: 5, shot: mill1, ll: [108.7140, 34.3400], az: 170, el: 28, d: 0.1, fov: 38 }, { t: 10, ll: [108.7118, 34.3402], az: 140, el: 29, d: 0.08, fov: 40 }, { t: 14, ll: [108.7030, 34.3412], az: 160, el: 32, d: 0.14, fov: 36 }, { t: 20, ll: [108.71, 34.34], az: 120, el: 38, d: 0.7 }]
+    # ---- 1975-2026: one year line. The city grows in the background (GHSL from 1975, CMAB from 1987, both estimates) while the
+    # camera tours the moments that made it (SKILL.md 演出文法 9i): it flies from one to the next as the counter runs (at most a
+    # year a second), and the counter holds while a moment is told. Sources: research/modern_a.md, modern_b.md, xianyang_research.md.
+    - id: m1975
+      mood: { feel: calm, level: 1 }   # the satellites begin (the narrator's arc: agreed 2026-10-21)
+      years: [1975, 1975]
+      dur: 11.2   # one line now (the others moved or went, 2026-10-20); its source note needs 9.9 s on screen (readcheck)
+      label: { zh: 起点, en: The starting point }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.3
+      reset: { year: 1975.5 }   # inside this node's ring the city goes back to what stood by 1975 (GHSL-dated), then grows year by year
+      tour: { ll: [108.715, 34.343], d: 0.95, el: 40 }
+      readout: { label: "1975 年起：卫星资料里的咸阳", note: "GHSL 建成体积（1975 起，100 m · 5 年）· CMAB 建筑年份（1987 起）· 北塬等 CMAB 缺漏处：Overture 建筑轮廓 · 均为估算" }
+      grow:
+        at: 0
+        bands: [{ t: {year: 1976}, spread: 8.0 }, { t: {year: 1988}, spread: 3.0 }, { t: {year: 1996}, spread: 3.0 }, { t: {year: 2006}, spread: 2.6 }, { t: {year: 2013}, spread: 2.0 }, { t: {year: 2019}, spread: 1.6 }]
+        dim: { t: {year: 2014}, to: 0.5 }
+        mono: true   # every building rises white with a flash; no colour per year band
+        warm: 4.0    # a new building stays warm for 4 s after it rises (the moment the counter reaches its year), then white
+        change: ghsl   # the first layer dated 1975-1987, rebuilt-taller buildings, counters (pipeline/ghsl_change.py)
+        counters_until: today
+        counters_note: "CMAB 首次出现年份 · GHSL 建成体积 · 估算 · 资料至 2020"
+    # ---- the stops: turning points of the city itself (its status, its industry, its links, its rise and decline, its joining
+    # with Xi'an), each with the places it names drawn as lit outlines (areas: research/modern_areas.geojson)
+    - id: m1979
+      mood: { feel: pride, level: 2 }   # the first colour tube plant (the narrator's arc: agreed 2026-10-21)
+      years: [1975, 1979]
+      dur: 19.2
+      label: { zh: 彩虹, en: Irico }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.35
+      tour: { ll: [108.669, 34.326], d: 0.34, el: 34 }
+      readout: { label: "1979 年，彩虹厂在咸阳动工", note: "彩虹集团官网 · 国资委 2021 · 陕西传媒网 2018 · 新华财经 2025 · 厂区为示意" }
+      areas:
+        - { id: caihong, col: '#ff9a3c', at: 0.3, flash: [0.6, 10.6], zh: "彩虹厂 · 厂区示意", en: "The plant (site approximate)" }
+    - id: m1983
+      mood: { feel: pride, level: 1 }   # the old names come back (the narrator's arc: agreed 2026-10-21)
+      years: [1979, 1983]
+      dur: 21.4
+      label: { zh: 设市, en: A prefecture city }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.4
+      tour: { ll: [108.712, 34.340], d: 1.0, el: 44 }   # the old city, where the two districts meet (乐育路)
+      readout: { label: "1983 年设地级市，1986 年设渭城区", note: "国务院公报 1983 年第 20 号、1986 年第 34 号 · 区界：OpenStreetMap（今日界线）",
+                 legend: [{ col: '#ffd24a', text: 秦都区, text2: Qindu }, { col: '#6fdcff', text: 渭城区, text2: Weicheng }] }
+      areas:
+        - { id: qindu, col: '#ffd24a', with: m1983_qindu, flash: [{ with: m1983_qindu, plus: 0.3 }, { with: m1983_3, plus: 0.3 }], zh: "秦都区", en: "Qindu District", frame: false, fill: 0.2, label_ll: [108.690, 34.338] }
+        - { id: weicheng, col: '#6fdcff', with: m1983_2, flash: [{ with: m1983_2, plus: 0.3 }, { with: m1983_3, plus: 1.6 }], zh: "渭城区", en: "Weicheng District", frame: false, fill: 0.2, label_ll: [108.735, 34.352] }
+    - id: m1991
+      mood: { feel: hope, level: 2 }   # from resting place to departure (the narrator's arc: agreed 2026-10-21)
+      years: [1983, 1991]
+      dur: 18.1
+      label: { zh: 机场, en: The airport }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.5
+      tour: { ll: [108.760, 34.430], d: 0.75, el: 40, az: 0 }   # from the south, looking north: the airport's southern part on the plate, the rest beyond its edge
+      readout: { label: "1991 年西安咸阳机场试运行", note: "陕西日报 2018-10-26 · 机场范围：OpenStreetMap（大部分在底板北界之外）" }
+      footage:
+        - { id: f_airport, file: assets/photos_cc/airport_t5_aerial.jpg, mode: panel, with: m1991_2, dur: 6.0, in: 0.8, out: 0.8, kicker: "今天 · TODAY · 照片", zh: "西安咸阳国际机场 T5 航站楼（2024）", en: "Xi'an Xianyang airport, Terminal 5 (2024)", credit: "Wikimedia Commons · Derxxxxx · CC0" }
+      epochs:
+        - { id: airport, at: 0.4, fade: 1.6, reach: 0.4, gain: 0.1, col: '#ffd27a', osm_polygons: ["西安咸阳国际机场"], persist: true, rim: 1.0 }
+      pins:
+        - { id: p_airport, lon: 108.7575, lat: 34.4277, h_m: 30, t0: 0.8, t1: 12.4, zh: "西安咸阳机场 · 1991（向北延伸）", en: "Xi'an Xianyang airport, 1991 (runs on north)" }   # the airport's part on the plate (41 % of it; OSM polygon clipped to the box)
+    - id: m1998
+      mood: { feel: grief, level: 2 }   # the mills fall; a generation's youth (the narrator's arc: agreed 2026-10-21)
+      years: [1991, 1998]
+      dur: 29.5
+      label: { zh: 纺织城的转折, en: The textile city turns }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.5
+      tour: { ll: [108.712, 34.340], d: 0.45, el: 40 }
+      readout: { label: "1998 年前后国棉厂改制 · 2011 年起退城入园", note: "中国棉纺织行业协会 2019 · 中国新闻网 2019 · 陕西日报 2024、2026 · 厂区：OpenStreetMap，示意" }
+      areas:
+        - { id: mill1, col: '#ff7aa8', with: m1998_2, flash: [{ with: m1998_2, plus: 0.4 }, { with: m1998_4, plus: 0.4 }], zh: "国棉一厂 · 示意", en: "Mill No. 1 (approx.)" }
+        - { id: mill8, col: '#ffb070', with: m1998_2, flash: [{ with: m1998_2, plus: 0.4 }], zh: "陕棉八厂 · 示意", en: "Mill No. 8 (approx.)" }
+        - { id: mill7, col: '#c9a7ff', with: m1998_2, plus: 2.2, flash: [{ with: m1998_2, plus: 2.6 }], zh: "国棉七厂一带 · 示意", en: "Around Mill No. 7 (approx.)" }   # (no line names it: it follows the two the line does)
+    - id: m2005
+      mood: { feel: hope, level: 1 }   # the lake (the narrator's arc: agreed 2026-10-21)
+      years: [1998, 2005]
+      dur: 13
+      label: { zh: 咸阳湖, en: Xianyang Lake }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.6
+      tour: { ll: [108.716, 34.332], d: 0.7, el: 40 }
+      readout: { label: "2005 年咸阳湖一期蓄水", note: "咸阳市广播电视台 2021 · 华商报 2011" }
+      lines:
+        - { id: roads, src: roads, filter: "motorway|trunk|primary", col: '#ffcf8a', width: 0.0016, at: {year: 1995}, fade: 3.0, persist: true, gain: 0.6, flow: 0.35 }
+      epochs:
+        - { id: lake, at: 0.3, fade: 1.6, reach: 0.3, gain: 0.25, col: '#9fe4ff', osm_polygons: ["咸阳湖"], persist: true, rim: 0.8 }
+      pins:
+        - { id: p_lake, mark: lake, t0: 0.6, t1: 7.6, zh: "咸阳湖 · 2005", en: "Xianyang Lake, 2005", col: '#6fdcff' }
+      footage:
+        - { id: f_lake, file: assets/photos_cc/lake_park.jpg, mode: panel, with: m2005_2, plus: 0.3, dur: 5.5, in: 1.0, out: 1.0, kicker: "今天 · TODAY · 照片", zh: "咸阳湖", en: "Xianyang Lake, today", credit: "Wikimedia Commons · H2v5o68z · CC0" }
+    - id: m2006
+      mood: { feel: hope, level: 2 }   # one step from one city (the narrator's arc: agreed 2026-10-21)
+      years: [2005, 2006]
+      dur: 21.2
+      label: { zh: "029", en: "029" }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.62
+      tour: { ll: [108.82, 34.30], d: 1.6, el: 60 }   # both cities: from high up, the plate filling the frame
+      readout: { label: "2006 年 9 月 16 日，西咸电话并网", note: "陕西日报 2006-09-16 · 三秦都市报 2006 · 每日经济新闻 2020 · 人民网 2023" }
+      pins:
+        - { id: p_xy, lon: 108.708, lat: 34.333, h_m: 40, with: m2006_1, until: m2006_2, zh: "咸阳", en: "Xianyang" }
+        - { id: p_xa, lon: 108.9398, lat: 34.2612, h_m: 40, with: m2006_1, until: m2006_2, zh: "西安 · 钟楼", en: "Xi'an, the Bell Tower" }
+      routes:
+        - { id: r_029, from: [108.708, 34.333], to: [108.9398, 34.2612], with: m2006_2, plus: 0.3, draw: 2.6, hold: 8.0, arc: 0.16, col: '#9fe4ff', w: 0.004, zh: "共用区号 029", en: "One area code: 029" }
+    - id: m2011
+      mood: { feel: hope, level: 1 }   # the site saved, at last (the narrator's arc: agreed 2026-10-21)
+      years: [2006, 2011]
+      label: { zh: 秦汉新城, en: Qinhan New City }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.65
+      ghost: [qin]   # the Qin city's outline, under what stands there now
+      tour: { ll: [108.845, 34.400], d: 0.75, el: 38 }
+      readout: { label: "2011 年西咸新区设立，秦汉新城成立", note: "澎湃 2016-12-28 · 陕西日报 2025-06-20 · 新城边界未公开：名称标在管委会 · 遗址公园范围为示意",
+                 legend: [{ col: '#6dfcb3', text: 秦汉新城（管委会）, text2: Qinhan New City (offices) }, { col: '#ffb347', text: 考古遗址公园 · 示意, text2: archaeological park (approx.) }] }
+      dur: 24.7
+      areas:
+        - { id: qinhan, col: '#6dfcb3', at: 0.3, zh: "秦汉新城", en: "Qinhan New City" }
+        - { id: qin_site_park, col: '#ffb347', with: m2011_4, flash: [{ with: m2011_4, plus: 0.4 }], zh: "咸阳宫考古遗址公园 · 示意", en: "Xianyang Palace archaeological park (approx.)" }
+      pins:
+        - { id: p_qinsite2, mark: qin_site, with: m2011_2, until: m2011_3, zh: "秦咸阳宫遗址", en: "The Qin palace site" }
+    - id: m2014
+      mood: { feel: wistful, level: 3 }   # the best land to Xi'an; the merger never comes (the narrator's arc: agreed 2026-10-21)
+      years: [2011, 2014]
+      dur: 31.6
+      label: { zh: 西咸新区, en: Xixian New Area }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.7
+      tour: { ll: [108.76, 34.33], d: 1.2, el: 60 }   # the whole new area: from high up
+      readout: { label: "2014 年西咸新区升为国家级新区", note: "国务院公报 国函〔2014〕2 号 · 中国经济周刊 2011 · 新城边界未公开：名称标在管委会，沣西为街道拼合示意，泾河在画面北外" }
+      areas:
+        - { id: xixian, col: '#e8f4ff', at: 0.3, zh: "西咸新区", en: "Xixian New Area" }
+        - { id: konggang, col: '#ffd24a', with: m2014_2, plus: 0.2, zh: "空港新城", en: "Konggang" }
+        - { id: fengdong, col: '#ff8fb1', with: m2014_2, plus: 0.6, zh: "沣东新城", en: "Fengdong" }
+        - { id: qinhan, col: '#6dfcb3', with: m2014_2, plus: 1.0, zh: "秦汉新城", en: "Qinhan", unseen_ok: true }   # (its point is just above the frame, no room for its name: kept for the framing; the user let it be, 2026-10-21)
+        - { id: fengxi, col: '#7ab8ff', with: m2014_2, plus: 1.4, flash: [{ with: m2014_2, plus: 1.6 }], zh: "沣西新城 · 示意", en: "Fengxi (approx.)" }
+      footage:
+        - { id: f_xixian, file: assets/footage/xixian_aerial_commons.mp4, mode: full, with: m2014_2, plus: 5.5, dur: 8.5, in: 1.0, out: 1.0, zh: "沣西大道与西咸新区", en: "Fengxi Avenue and Xixian New Area, looking west", credit: "Wikimedia Commons · Liuxingy · CC BY-SA 4.0", pan: 0.15 }
+    - id: m2019
+      mood: { feel: hope, level: 2 }   # the metro comes (the narrator's arc: agreed 2026-10-21)
+      years: [2014, 2019]
+      dur: 14
+      label: { zh: 地铁过界, en: The metro crosses over }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.8
+      tour: { ll: [108.775, 34.315], d: 0.6, el: 40 }
+      readout: { label: "2019 年 9 月 26 日，地铁 1 号线二期开通", note: "新华社 2019-09-26 · 区界：OpenStreetMap" }
+      lines:
+        - { id: metro1b, src: custom, col: '#eefcff', width: 0.0026, at: 0.6, fade: 2.0, persist: false, flow: 0.8,
+            polylines: [[[108.80897, 34.30155], [108.79251, 34.30847], [108.77281, 34.31471], [108.75842, 34.31878], [108.74822, 34.32177]]] }   # the four new stations (OSM nodes), straight between them (schematic)
+      areas:
+        - { id: qindu, col: '#ffd24a', with: m2019_2, plus: 1.8, flash: [{ with: m2019_2, plus: 2.2 }], frame: false, fill: 0 }   # (the district's line only: the station is the subject)
+      pins:
+        - { id: p_fenghe, lon: 108.74822, lat: 34.32177, h_m: 30, with: m2019_2, hold: 0.0, zh: "沣河森林公园站", en: "Fenghe Forest Park station" }
+    - id: m2023
+      mood: { feel: hope, level: 2 }   # joined by metro (the narrator's arc: agreed 2026-10-21)
+      years: [2019, 2023]
+      dur: 15
+      label: { zh: 两城一线, en: Two cities, one line }
+      col: '#2f98ff'
+      tint: 0
+      night: 0.95
+      tour: { ll: [108.73, 34.32], d: 1.15, el: 40 }
+      readout: { label: "2021 地铁 14 号线 · 2023 地铁 1 号线三期、渭河高新大桥", note: "新华社 2021 · 华商报 2021 · 华商网 2023 · 中建八局 2023 · 线路：OpenStreetMap" }
+      lines:
+        - { id: metro14, src: subway, filter: "西安地铁14号线$", col: '#eefcff', width: 0.0024, at: 0.4, fade: 2.0, persist: true, flow: 0.8 }
+        - { id: metro, src: subway, filter: "西安地铁1号线$", col: '#eefcff', width: 0.0028, with: m2023_2, plus: 0.3, fade: 2.0, persist: true, flow: 0.8 }
+        - { id: bridge5, src: custom, col: '#ffcf8a', width: 0.003, with: m2023_3, fade: 1.2, persist: true, flash: [{ with: m2023_3, plus: 0.3 }], polylines: [[[108.65371, 34.27659], [108.66063, 34.27062]]] }   # 咸阳渭河高新大桥 (OSM way 1210026150 ends)
+      pins:
+        - { id: p_metro, mark: metro_west, with: m2023_2, until: m2023_3, zh: "咸阳西站 · 地铁 1 号线", en: "Xianyang West, Metro Line 1" }
+        - { id: p_bridge5, lon: 108.65708, lat: 34.27366, h_m: 30, with: m2023_3, zh: "渭河高新大桥 · 2023", en: "Weihe Gaoxin Bridge, 2023" }
+    - id: today
+      mood: { feel: hope, level: 3 }   # still growing (the narrator's arc: agreed 2026-10-21)
+      years: [2025, 2026]
+      dur: 50
+      label: { zh: 今天, en: Today }
+      col: '#cfe9ff'
+      tint: 0
+      readout: { label: "2026年的咸阳", note: "影像：Copernicus Sentinel-2，2025-09-01 · 人民日报 2026-03-10 · 21世纪经济报道 2026-05-10 · 陕西日报 2024-11-22" }
+      footage:
+        - { id: f_today, file: assets/footage/weihe_skyline_commons.mp4, mode: full, at: 2.8, dur: 6.0, in: 1.0, out: 1.0, zh: "渭河与咸阳城区", en: "The Wei and the city, looking east", credit: "Wikimedia Commons · Liuxingy · CC BY-SA 4.0" }
+        - { id: f_fuxing, file: assets/footage/fuxing_commons.mp4, mode: full, at: 9.0, dur: 7.0, in: 1.0, out: 1.0, zh: "复兴号驶过徐兰高铁渭河桥", en: "A Fuxing train crossing the Wei", credit: "Wikimedia Commons · Liuxingy · CC BY-SA 4.0", pan: 0.15 }
+      dim_today: { at: 29.5, to: 0.55 }   # under the footprints of every period
+      satellite: { at: 16.4, fade: 5.0, persist: true, gain: 0.9, sweep: true, back_at: 26.4, back_fade: 4.0 }   # model -> photo -> model: the finale's rings play on the model
+      routes:
+        - { id: r_rings, pts: [[108.6180, 34.3240], [108.8626, 34.4160], [108.8570, 34.3000], [108.7480, 34.3490], [108.7215, 34.3348]], at: 30.4, draw: 7.0, hold: 9.0, arc: 0.12, col: '#ffe8c8', w: 0.004 }
+      decals:
+        - { id: footprints, kind: footprints, at: 30.0, fade: 3.0, persist: true, gain: 1.2, photo_dim: 0.4, fill: 0.012, w: 3, glow: 0.8, skip: [rail],
+            palette: { neolithic: '#5fc8ff', qin: '#ff8a2a', empire: '#ffd24a', han: '#ffc02a', tang: '#b67cff', ming: '#2ee0b4', mills: '#4f9dff' } }
+      camera: [{ t: 0, ll: [108.75, 34.345], az: -60, el: 34, d: 1.6 }, { t: 16, ll: [108.76, 34.35], az: -30, el: 48, d: 2.0 }, { t: 21, ll: [108.77, 34.345], az: -6, el: 68, d: 2.5 }, { t: 28, ll: [108.77, 34.345], az: 0, el: 86, d: 2.95 }, { t: 46, ll: [108.77, 34.345], az: 0, el: 88, d: 3.0 }]
+  closing:
+    lights_after: 1.5
+    end_after: 1.5
+    end_hold: 10.5
+    camera: [{ t: 0, ll: [108.77, 34.345], az: 0, el: 88, d: 3.0 }, { t: 10.5, ll: [108.76, 34.345], az: 20, el: 40, d: 3.1 }]
+  end: { zh_title: "一城春秋 · 咸阳", en_title: "A City Through Time · Xianyang",
+         credits: { author: "Alex · x.com/alexlee20122022", voice: "MiniMax Audio · AI 生成", music: "Stable Audio 3 Medium（Stability AI）· AI 生成" },   # the user, 2026-10-22 (VOICE.md, MUSIC.md)
+         lines: ["建筑：清华大学 CMAB、Overture Maps（含 Shi 等 2023）（高度与年份为估算） · 地图：© OpenStreetMap contributors", "地形：Copernicus DEM · 影像：Copernicus Sentinel-2", "历代城市为示意模型 · 实拍影像来源见 CREDITS · 史料见 FACTS.md"] }

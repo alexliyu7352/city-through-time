@@ -1,0 +1,23 @@
+[project]
+name = "city-through-time"
+version = "0.1.0"
+description = "《一城春秋》 A City Through Time: a city's history as a white-model film, lit era by era"
+requires-python = ">=3.12"
+dependencies = [
+    "brotli>=1.2",        # fonts (pipeline/fonts.py: woff2)
+    "duckdb>=1.5",        # Overture buildings (pipeline/overture_ghsl.py)
+    "fonttools>=4.67",
+    "numpy>=2.5",
+    "pillow>=13.0",
+    "pyproj>=3.8",
+    "pyshp>=3.1",         # CMAB shapefiles
+    "pyyaml>=6.0",
+    "rasterio>=1.5",      # terrain, GHSL, Sentinel-2
+    "scipy>=1.18",        # the mix (score/mix.py): filters
+    "shapely>=2.2",
+    "soundfile>=0.14",    # the mix: WAV in and out
+    "soxr>=1.1",          # the mix: resampling, true peak
+]
+
+[tool.uv]
+package = false

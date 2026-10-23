@@ -1,0 +1,176 @@
+"""Clipping check (穿模): geometry that passes through other geometry in the era cities and against today's city.
+usage: python -I tools/clipcheck.py cities/<slug> [--max 0]      exit 1 if any check finds more than --max cases
+
+Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
+  houses_vs_walls     ordinary house bodies (part 0) overlapping the city wall, a landmark or the moat
+  houses_vs_streets   house bodies standing on a main street or lane (paving, part 7)
+  trees_in_houses     a tree trunk inside a house or landmark body
+  landmarks_overlap   two different landmark bodies overlapping (beyond touching)
+  today_vs_era        today's buildings that stay up (outside the era's hide mask) but overlap the era city
+  floating            primitives whose base sits above the plate's surface (the plate is sampled like the engine does)
+  terrain_cut         bodies the plate rises through: under the footprint the ground climbs more than half the body's height
+                      above the ground the body stands on (a long wall or a big hall on a slope)
+  cross_era           bodies of a city that overlap bodies of another city standing at the same time (the empire over Qin)
+  paving_under        paving (roads, lanes, yards) the plate rises through by more than 0.3 m: a road comes out in dashes
+  tall_foundation     houses and halls whose foundation on screen is over 30% of the building's height, counted only when
+                      they are more than a tenth of the era's buildings: then the plate's exaggeration is too high for this
+                      ground (a slope's fall shows times the exaggeration, the building times its own); the line says the
+                      highest exaggeration that would pass. Plinths (citygen PLINTH: a body's base on a slope) are not bodies here.
+Footprints are the primitives' rotated rectangles in model units; overlaps under 2 m2 (rounding at shared edges) are ignored.
+"""
+import json, math, os, sys
+import numpy as np
+from PIL import Image
+import shapely
+from shapely.geometry import Polygon
+from shapely.strtree import STRtree
+
+FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH, PLINTH = range(12)
+SKIRT = 3.0       # metres every body reaches below grade (citygen Builder.skirt)
+FOUND_MAX = .3    # a foundation on screen over this share of its building's height is tall (tall_foundation)
+
+
+def rect(p, shrink=0.0):
+    t, cx, cz, rot = p[0], p[1], p[2], p[3]
+    if t in (0, 2): hw, hd = max(p[5], p[8] if t == 2 else 0) / 2, max(p[6], p[9] if t == 2 else 0) / 2
+    else: hw = hd = p[5]
+    hw, hd = max(1e-7, hw - shrink), max(1e-7, hd - shrink)
+    c, s = math.cos(rot), math.sin(rot)
+    return Polygon([(cx + x * c - z * s, cz + x * s + z * c) for x, z in ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))])
+
+
+def main():
+    city = sys.argv[1]; mx = int(sys.argv[sys.argv.index('--max') + 1]) if '--max' in sys.argv else 0
+    D = os.path.join(city, 'build', 'data'); FILM = json.load(open(os.path.join(city, 'build', 'film.json'))); M = json.load(open(os.path.join(D, 'model.json')))   # (pipeline/layout.py)
+    S = M['scale']; m2 = (1 / S) ** -2   # model units^2 per m^2
+    min_area = 2.0 * m2
+    PW, PD = M['size']
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'pipeline'))
+    import terrainio
+    timg, tj = terrainio.load(city)
+    tex = M['terrain'].get('exaggeration', 3) if M.get('terrain') else 3
+    plate_ = terrainio.plate_mesh(timg, PW, PD) if timg is not None else None
+    def plate_y(x, z):   # the plate as the engine draws it: its mesh (terrainio.plate_mesh), flat between the mesh's corners
+        return 0.0 if plate_ is None else plate_(x, z) * S * tex
+    # today's buildings as footprints
+    today = [Polygon(r[2][0]) for r in M['p'] if len(r[2][0]) >= 3]
+    today_ctr = np.array([[p.centroid.x, p.centroid.y] for p in today]) if today else np.zeros((0, 2))
+    hide = [np.asarray(Image.open(os.path.join(D, f)).convert('RGBA')) for f in ('hide.png', 'hide2.png') if os.path.exists(os.path.join(D, f))]
+    report, total, notes = {}, 0, {}
+    fields = None   # the ground's two scales (terrain.py) at model points -> (landforms, fine relief) in metres
+    ttrue, _ = terrainio.load(city, true=True)
+    if ttrue is not None:
+        large_ = terrainio.gauss(ttrue, float((tj.get('detail') or {}).get('below_m', 150.0)) / tj['res_m']); fine_ = ttrue - large_
+        def fields(x, z):
+            Hh, Ww = ttrue.shape; u = np.clip((x / PW + .5) * (Ww - 1), 0, Ww - 1.001); v = np.clip((z / PD + .5) * (Hh - 1), 0, Hh - 1.001)
+            i0, j0 = u.astype(int), v.astype(int); fu, fv = u - i0, v - j0
+            bl = lambda a: (a[j0, i0] * (1 - fu) + a[j0, i0 + 1] * fu) * (1 - fv) + (a[j0 + 1, i0] * (1 - fu) + a[j0 + 1, i0 + 1] * fu) * fv
+            return bl(large_), bl(fine_)
+    bodies_by_era = {}
+    for e in FILM.get('eras', []):
+        prims = json.load(open(os.path.join(city, 'build', e['file'])))['prims']
+        ground = [p for p in prims if p[4] <= p[12] + 1e-9 and p[11] != PLINTH]   # primitives that start at (or below) grade, not plinths
+        body = lambda parts: [p for p in ground if p[11] in parts and p[0] in (0, 2)]
+        houses = [rect(p, .3 * S) for p in body((FAB,))]
+        hard = [rect(p, .3 * S) for p in body((WALL, LMK, EARTH, WATER))]
+        streets = [rect(p, .5 * S) for p in body((PAVE,)) if p[5] > 12 * S or p[6] > 12 * S]
+        trunks = [p for p in prims if p[11] == TREE and p[0] == 3]
+        lm = [((p[15], p[16]) if len(p) > 16 else (p[1], p[2]), rect(p, .3 * S), p[11]) for p in body((LMK, EARTH))]   # (the building it belongs to, its body, part)
+        R = {}
+        def overlaps(A, B, label):
+            if not A or not B: R[label] = 0; return
+            tree = STRtree(B); n = 0; ex = []
+            for a in A:
+                for j in tree.query(a, predicate='intersects'):
+                    if a.intersection(B[j]).area > min_area: n += 1; ex.append([round(a.centroid.x, 4), round(a.centroid.y, 4)]); break
+            R[label] = n; R[label + '_at'] = ex[:5]
+        overlaps(houses, hard, 'houses_vs_walls')
+        overlaps(houses, streets, 'houses_vs_streets')
+        bodies = [rect(p, .1 * S) for p in body((FAB, LMK))]
+        if trunks and bodies:
+            tree = STRtree(bodies); n = 0
+            for p in trunks:
+                pt = shapely.Point(p[1], p[2])
+                if any(bodies[j].contains(pt) for j in tree.query(pt)): n += 1
+            R['trees_in_houses'] = n
+        # bodies of different landmarks (each primitive carries the centre of the building it belongs to: parts of one big
+        # court may touch inside it, two buildings may not)
+        if lm:
+            polys = [q for _, q, _ in lm]; owner = [o for o, _, _ in lm]; part_ = [k for _, _, k in lm]; tree = STRtree(polys); n = 0; ex_lm = []
+            for i, q in enumerate(polys):
+                for j in tree.query(q, predicate='intersects'):
+                    if j <= i or owner[j] == owner[i]: continue
+                    if part_[i] == EARTH and part_[j] == EARTH: continue   # rammed-earth tiers of one platform abut by design
+                    small, big = (q, polys[j]) if q.area < polys[j].area else (polys[j], q)
+                    if small.area < .1 * big.area: continue   # an appendage (a stair, a porch) against a much bigger body
+                    if q.intersection(polys[j]).area > min_area * 4:
+                        n += 1; c_ = q.intersection(polys[j]).centroid; ex_lm.append([round(c_.x, 4), round(c_.y, 4)])
+            R['landmarks_overlap'] = n; R['landmarks_overlap_at'] = ex_lm[:40]
+        # today's buildings that stay up next to (or through) the era city
+        if today and e.get('hide') is not None and hide:
+            img = hide[e['hide'] // 4][..., e['hide'] % 4]; Hh, Ww = img.shape
+            u = np.clip(((today_ctr[:, 0] / PW + .5) * Ww).astype(int), 0, Ww - 1); v = np.clip(((today_ctr[:, 1] / PD + .5) * Hh).astype(int), 0, Hh - 1)
+            up = [today[k] for k in np.nonzero(img[v, u] < 5)[0]]
+            era_all = [rect(p) for p in ground if p[11] not in (PAVE, WATER, TREE)]
+            overlaps(up, era_all, 'today_vs_era')
+        # floating: base above the plate by more than 1 m (exaggerated)
+        fl = [p for p in ground if p[12] - plate_y(p[1], p[2]) > 1.0 * S * tex and p[4] > plate_y(p[1], p[2]) + 1e-6]
+        R['floating'] = len(fl); R['floating_at'] = [[round(p[1], 4), round(p[2], 4)] for p in fl[:5]]
+        cut = []
+        for p in ground:
+            if p[11] in (TREE, WATER, PAVE) or p[0] not in (0, 2): continue
+            hb = p[4] + p[7] - p[12]                                   # body height above its own ground
+            if hb <= 0: continue
+            P = rect(p); xs, zs = P.exterior.xy
+            pts = list(zip(xs[:4], zs[:4])) + [((xs[i] + xs[i + 1]) / 2, (zs[i] + zs[i + 1]) / 2) for i in range(4)]
+            gx, gz = (p[13], p[14]) if len(p) > 14 else (0.0, 0.0)   # a piece laid along a slope: its ground is a plane
+            rise_ = max(plate_y(x, z) - (gx * (x - p[1]) + gz * (z - p[2])) for x, z in pts) - p[12]
+            if rise_ > max(.5 * hb, 1.0 * S * tex): cut.append(p)
+        R['terrain_cut'] = len(cut); R['terrain_cut_at'] = [[round(p[1], 4), round(p[2], 4)] for p in cut[:5]]
+        pu = []
+        for p in prims:   # the top of each paving piece (a plane when laid along a slope) against the plate, corners, edge middles, centre
+            if p[11] != PAVE or p[0] != 0: continue
+            P = rect(p); xs, zs = P.exterior.xy; gx, gz = (p[13], p[14]) if len(p) > 14 else (0.0, 0.0)
+            pts = list(zip(xs[:4], zs[:4])) + [((xs[i] + xs[i + 1]) / 2, (zs[i] + zs[i + 1]) / 2) for i in range(4)] + [(p[1], p[2])]
+            if max(plate_y(x, z) - (p[4] + p[7] + gx * (x - p[1]) + gz * (z - p[2])) for x, z in pts) > .3 * S * tex: pu.append(p)
+        R['paving_under'] = len(pu); R['paving_under_at'] = [[round(p[1], 4), round(p[2], 4)] for p in pu[:5]]
+        # tall_foundation: each house or hall body's foundation (below its base, less the skirt every body has) against its
+        # building's height (the top of its group); for the suggestion, the same body's fall at another exaggeration from the
+        # ground's two scales (terrain.py: landforms x EX, fine relief x1) at its corners, edge middles and centre
+        top = {}
+        for p in prims: k_ = (p[15], p[16]) if len(p) > 16 else (p[1], p[2]); top[k_] = max(top.get(k_, -1e9), p[4] + p[7])
+        fb = [p for p in ground if p[0] == 0 and p[11] in (FAB, LMK) and p[8] != 1 and not (p[13] or p[14]) and min(p[5], p[6]) >= 2 * S]
+        fr = np.array([[max(0.0, p[12] - p[4] - SKIRT * S * tex), top[(p[15], p[16]) if len(p) > 16 else (p[1], p[2])] - p[12]] for p in fb]).reshape(-1, 2)
+        fr = fr[fr[:, 1] > 0]; ratio = fr[:, 0] / fr[:, 1] if len(fr) else np.zeros(0)
+        p90 = float(np.percentile(ratio, 90)) if len(ratio) else 0.0
+        R['tall_foundation'] = int((ratio > FOUND_MAX).sum()) if p90 > FOUND_MAX else 0
+        sug = None
+        if fields is not None and len(fb):
+            fb_ = [p for p in fb if (top[(p[15], p[16]) if len(p) > 16 else (p[1], p[2])] - p[12]) > 0]
+            pts = np.array([[c for c in zip(*rect(p).exterior.xy)][:4] for p in fb_])   # (n, 4, 2): corners
+            pts = np.concatenate([pts, (pts + np.roll(pts, -1, axis=1)) / 2, pts.mean(axis=1, keepdims=True)], axis=1)
+            la, fi = fields(pts[..., 0], pts[..., 1])
+            fall = lambda ex: (la * ex + fi).max(axis=1) - (la * ex + fi).min(axis=1)
+            now = fall(tex) + .1   # (+ 0.1 m: a body the nine points find flat keeps its ratio)
+            ok = [ex for ex in np.arange(1.0, 10.01, .5) if np.percentile(ratio * (fall(ex) + .1) / now, 90) <= FOUND_MAX]
+            sug = max(ok) if ok else 1.0
+        notes[e['id']] = f'foundations: top tenth {p90:.0%} of the height' + (f', within {FOUND_MAX:.0%} up to x{sug:g}' if sug else '')
+        bodies_by_era[e['id']] = (e, [rect(p, .3 * S) for p in body((FAB, LMK, WALL, EARTH))])
+        for oid, (oe, ob) in bodies_by_era.items():
+            if oid == e['id'] or not ob: continue
+            if not (oe['on'] < (e.get('off') or 1e9) and e['on'] < (oe.get('off') or 1e9)): continue
+            tree = STRtree(ob); n = 0
+            for a in bodies_by_era[e['id']][1]:
+                if any(a.intersection(ob[j]).area > min_area for j in tree.query(a, predicate='intersects')): n += 1
+            R['cross_era'] = R.get('cross_era', 0) + n
+        report[e['id']] = R
+        bad = sum(v for k, v in R.items() if isinstance(v, int))
+        total += bad
+        print(f"{e['id']:10s} " + '  '.join(f"{k} {v}" for k, v in R.items() if isinstance(v, int)) + f"  ({notes[e['id']]})")
+    json.dump(report, open(os.path.join(city, 'build', 'logs', 'clipcheck.json'), 'w'), indent=1)
+    print('clipcheck:', 'ok' if total <= mx else f'{total} cases (see out/clipcheck.json)')
+    sys.exit(0 if total <= mx else 1)
+
+
+if __name__ == '__main__':
+    main()

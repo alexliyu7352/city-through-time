@@ -1,0 +1,25 @@
+# 繁體中文語言包（pipeline/i18n.py）
+name: 繁體中文
+script: cjk
+max_line: 22
+numerals: han
+year: { bce: "前 {y}", ce: "{y}", tick_bce: "前{y}", tick_ce: "{y}", label: "{name} · {year}" }
+words:
+  today: 今天
+  footage: 實拍
+  photo: 照片
+  archive: 史料
+  source: 史料
+  portrait: 畫像
+  imagined: 想像圖
+  from_sources: 據史料
+  schematic: 示意
+  later_imagining: 後人想像
+  ai: AI 生成
+  new: 新建
+  taller: 長高
+  chapter: "第 {n} 章"
+  locator: 定位
+  credit_author: 作者     # end-card credits (city.yaml end.credits)
+  credit_voice: 配音
+  credit_music: 配樂
