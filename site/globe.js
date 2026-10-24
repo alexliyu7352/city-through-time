@@ -28,12 +28,22 @@ function gradientTexture(stops, size = 512) {   // a radial gradient, for the wa
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
-export async function makeGlobe(canvas, cities, { onPick, onHover, onFrame, reduced, small }) {
+// a file, counted as it arrives (onLoad: 0..1; the entry page's loading line), when its length is known and it comes unpacked
+async function read(url, onLoad) {
+  const r = await fetch(url); if (!r.ok) throw new Error(`${url} (${r.status})`);
+  const n = r.headers.get('content-encoding') ? 0 : +r.headers.get('content-length');
+  if (!n || !onLoad || !r.body) return r.arrayBuffer();
+  const rd = r.body.getReader(), parts = []; let got = 0;
+  for (;;) { const { done, value } = await rd.read(); if (done) break; parts.push(value); got += value.length; onLoad(Math.min(1, got / n)); }
+  return new Blob(parts).arrayBuffer();
+}
+
+export async function makeGlobe(canvas, cities, { onPick, onHover, onFrame, onLoad, reduced, small }) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: small, powerPreference: 'high-performance' });   // (throws without WebGL)
   renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.75 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
-  const buf = await fetch(new URL('land.bin', import.meta.url)).then(r => r.arrayBuffer());
+  const buf = await read(new URL('land.bin', import.meta.url), onLoad);
   const total = new DataView(buf).getUint32(0, true), count = small ? Math.min(total, 26000) : total;   // (the file is shuffled: any first part is an even sample)
   const pts = new DataView(buf, 4);
 

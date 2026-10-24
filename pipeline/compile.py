@@ -1746,7 +1746,8 @@ for r_, v_ in _cfg.items():
     face_ = FONTS.find(_idx, fam_, wt_)
     if face_['file'] not in _alias:
         _alias[face_['file']] = f'F{len(_alias)}'
-        faces_.append({'alias': _alias[face_['file']], 'file': 'fonts/' + face_['file'], 'weight': f'{face_["wmin"]:.0f} {face_["wmax"]:.0f}' if face_['wmin'] != face_['wmax'] else f'{face_["wmin"]:.0f}', 'family': fam_})
+        faces_.append({'alias': _alias[face_['file']], 'file': 'fonts/' + face_['file'], 'weight': f'{face_["wmin"]:.0f} {face_["wmax"]:.0f}' if face_['wmin'] != face_['wmax'] else f'{face_["wmin"]:.0f}', 'family': fam_,
+                       'bytes': os.path.getsize(os.path.join(_ROOT, 'fonts', face_['file']))})   # (the player's loading screen: a host may send it gzipped)
     roles_[r_] = f'{wt_} {{}}px {_alias[face_["file"]]}'
     need_ = _needs(SCRIPTS[0]) if r_.startswith('primary') else _needs(SCRIPTS[-1]) if r_.startswith('secondary') else _ascii
     lack_ = FONTS.missing(_ROOT, face_, need_)

@@ -56,6 +56,8 @@
   <section class="hero" id="hero">
     <div class="stage" id="stage">
       <canvas id="globe" aria-hidden="true"></canvas>
+      <p class="wait-line wait" id="globe-wait" role="status"><span class="wl-track"><i></i></span><span class="wl-text"><span data-t="loadGlobe"></span><span class="wl-pct" id="globe-pct"></span></span></p>
+      <noscript><style>#globe-wait { display: none; }</style></noscript>
       <div class="pins" id="pins"></div>
     </div>
     <div class="hero-copy">

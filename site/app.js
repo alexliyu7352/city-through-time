@@ -52,7 +52,11 @@ function watch(c, sites, i) {
     b.onclick = () => watch(c, sites, k); return b;
   });
   $('player-sites').replaceChildren(...tabs); $('player-sites').setAttribute('aria-label', W.t('videoSites'));
-  $('player-frame').replaceChildren(el('iframe', { src: sites[i].src, title: `${W.of(c.name)} · ${sites[i].site}`, allowFullscreen: true, attrs: { allow: 'autoplay; fullscreen; picture-in-picture; encrypted-media', referrerpolicy: 'strict-origin-when-cross-origin' } }));
+  // the site's player loads behind a line that says so (another site's page: no way to tell how far, only when it is there)
+  const wait = el('p', { className: 'wait-line wait', attrs: { role: 'status' } }, el('span', { className: 'wl-track' }, el('i')), el('span', { className: 'wl-text', textContent: W.t('loading') }));
+  const frame = el('iframe', { src: sites[i].src, title: `${W.of(c.name)} · ${sites[i].site}`, allowFullscreen: true, attrs: { allow: 'autoplay; fullscreen; picture-in-picture; encrypted-media', referrerpolicy: 'strict-origin-when-cross-origin' } });
+  frame.addEventListener('load', () => wait.remove(), { once: true });
+  $('player-frame').replaceChildren(wait, frame);
   if (!player.open) player.showModal();
 }
 player.addEventListener('close', () => $('player-frame').replaceChildren());   // (the film stops with the window)
@@ -203,7 +207,7 @@ async function show(slug, from, push = true) {
   if (inPage) { const b = el('button', { type: 'button', className: 'btn btn-main' }, icon('i-play'), el('span', { textContent: W.t('watchFilm') })); b.onclick = () => watch(c, playable, 0); acts.push(b); }
   else if (sites.length) acts.push(el('a', { className: 'btn btn-main', href: sites[0].url, target: '_blank', rel: 'noopener' }, icon('i-play'), el('span', { textContent: W.fmt('watchOn', { site: sites[0].site }) })));
   if (c.bundle && c.bundle.url) {
-    acts.push(el('a', { className: 'btn ' + (acts.length ? 'btn-line' : 'btn-main'), href: at('play.html') + `?city=${encodeURIComponent(c.slug)}&play=1&bundle=${encodeURIComponent(c.bundle.url)}`, target: '_blank', rel: 'noopener' }, el('span', { textContent: W.t('play') })));
+    acts.push(el('a', { className: 'btn ' + (acts.length ? 'btn-line' : 'btn-main'), href: at('play.html') + `?city=${encodeURIComponent(c.slug)}&play=1&lang=${lang}&bundle=${encodeURIComponent(c.bundle.url)}`, target: '_blank', rel: 'noopener' }, el('span', { textContent: W.t('play') })));
     if (c.bundle.mb) acts.push(el('p', { className: 'small', textContent: W.fmt('playNote', { mb: Math.round(c.bundle.mb) }) }));
   }
   const links = (inPage ? sites : sites.slice(1)).map(v => el('a', { href: v.url, target: '_blank', rel: 'noopener', textContent: W.fmt('watchOn', { site: v.site }) }));
@@ -329,10 +333,14 @@ if (R.slug && !CITIES.some(c => c.slug === R.slug)) R.slug = null;   // (an addr
 paint();
 if (R.slug) show(R.slug, null, false);   // the city's own page opens on its city
 
+// the globe loading: a line where it will stand, in steps that can be told (three.js arrived, the land read, the model built)
+const globeWait = $('globe-wait'), waitAt = p => { globeWait.classList.remove('wait'); globeWait.style.setProperty('--p', p); $('globe-pct').textContent = `${Math.floor(p * 100)}%`; };
 try {
   const { makeGlobe } = await import('./globe.js');
+  waitAt(.4);
   const small = narrow.matches || (navigator.hardwareConcurrency || 8) <= 4 || new URLSearchParams(location.search).has('lite');   // (?lite: the phone version, to compare)
-  globe = await makeGlobe($('globe'), CITIES, { reduced, small, onPick: slug => show(slug), onHover: () => {}, onFrame: follow });
+  globe = await makeGlobe($('globe'), CITIES, { reduced, small, onPick: slug => show(slug), onHover: () => {}, onFrame: follow, onLoad: p => waitAt(.4 + .55 * p) });
+  waitAt(1); globeWait.classList.add('gone'); setTimeout(() => { globeWait.hidden = true; }, reduced ? 0 : 700);
   if (open) { globe.focus(open); globe.hold(true, narrow.matches ? 0 : panel.offsetWidth); }   // (a city opened before the globe was ready)
   const room = () => globe.setRoom(document.querySelector('.hero-copy').getBoundingClientRect().right + 32);   // (the globe keeps clear of the words)
   room(); new ResizeObserver(room).observe(document.querySelector('.hero-copy')); document.fonts.ready.then(room);

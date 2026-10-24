@@ -95,6 +95,17 @@ kbd { font: 500 12px/1 var(--text); color: var(--ink-3); border: 1px solid var(-
 #globe { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
 #globe:active { cursor: grabbing; }
 .no-gl .stage { display: none; }
+/* a loading line: what is loading, how far (a projector's thin beam filling), or a short beam passing while that cannot be told */
+.wait-line { width: min(220px, 56%); margin: 0; font-size: 13.5px; line-height: 1.4; color: var(--ink-3); pointer-events: none; transition: opacity .6s var(--ease); }
+.wait-line[hidden] { display: none; }
+.wait-line.gone { opacity: 0; }
+.wl-track { display: block; height: 2px; background: var(--line); overflow: hidden; }
+.wl-track i { display: block; height: 100%; background: var(--lamp); transform: scaleX(var(--p, 0)); transform-origin: left; transition: transform .3s linear; }
+.wait-line.wait .wl-track i { width: 28%; transform: none; animation: beam 1.6s cubic-bezier(.45, 0, .55, 1) infinite; }
+@keyframes beam { from { translate: -100% 0; } to { translate: 360% 0; } }
+.wl-text { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; }
+.wl-pct { font-variant-numeric: tabular-nums; }
+#globe-wait { position: absolute; left: calc((var(--gutter) + min(600px, 44vw) + 32px + 100% - min(64px, 4vw)) / 2); top: 45%; translate: -50% -50%; }   /* where the globe will stand: the middle of the room right of the words (globe.js setRoom) */
 .pins { position: absolute; inset: 0; z-index: var(--z-pins); pointer-events: none; }
 .pin { position: absolute; left: 0; top: 0; pointer-events: auto; display: grid; text-decoration: none; gap: 2px; padding: 7px 12px 8px 24px; text-align: left; white-space: nowrap;
   background: oklch(0.155 0.014 255 / 0.62); backdrop-filter: blur(8px); border-radius: 6px; translate: 10px -50%; transition: opacity .35s var(--ease); }
@@ -255,8 +266,9 @@ kbd { font: 500 12px/1 var(--text); color: var(--ink-3); border: 1px solid var(-
 .player-tab:hover { color: var(--ink); border-color: oklch(0.955 0.006 85 / 0.45); }
 .player-tab[aria-pressed=true] { color: var(--lamp-ink); background: var(--ink); border-color: var(--ink); }
 .player-bar .icon-btn { color: var(--ink); background: oklch(0.955 0.006 85 / 0.1); }
-.player-frame { aspect-ratio: 16 / 9; width: 100%; max-height: calc(100svh - 120px); background: #000; border-radius: 8px; overflow: hidden; }
-.player-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.player-frame { position: relative; aspect-ratio: 16 / 9; width: 100%; max-height: calc(100svh - 120px); background: #000; border-radius: 8px; overflow: hidden; }
+.player-frame iframe { position: relative; width: 100%; height: 100%; border: 0; display: block; }
+.player-frame .wait-line { position: absolute; left: 50%; top: 50%; translate: -50% -50%; }   /* (under the site's player until it is there) */
 .player[open] { animation: menu .35s var(--ease); }
 .sites { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px; margin: 2px 0 0; font-size: 14px; }
 .sites a { color: var(--ink-2); text-underline-offset: 4px; }
@@ -286,6 +298,7 @@ kbd { font: 500 12px/1 var(--text); color: var(--ink-3); border: 1px solid var(-
   .lang-btn { padding: 0 10px 0 12px; font-size: 14px; }
   .hero { min-height: 0; align-content: start; padding: 0 0 56px; }
   .stage { position: relative; height: min(56svh, 520px); margin-top: var(--bar-h); }
+  #globe-wait { left: 50%; }
   .hero-copy { max-width: none; padding: 8px var(--gutter) 0; }
   .lede { margin-top: 18px; }
   .ctas { margin-top: 26px; }
@@ -315,4 +328,5 @@ kbd { font: 500 12px/1 var(--text); color: var(--ink-3); border: 1px solid var(-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  .wait-line.wait .wl-track i { width: 100%; opacity: .3; }
 }

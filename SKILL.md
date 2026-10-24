@@ -255,7 +255,8 @@ description: 製作《一城春秋》（A City Through Time）系列資料影片
    - 成片：用戶上傳到影片網站（YouTube、B 站…），網址寫進 `entry.json` 的 `watch`（發布到幾個網站就填幾個，第一個是入口頁的預設；
      存一般的觀看網址，去掉 `&t=` 這類參數；測試用的影片先確認還在，下架的影片播放器會報一串錯）；也可以另放一份下載（`download`）；
    - 網頁播放包：`uv run python -I tools/web.py cities/<slug>` 打包到 `dist/web/`，只收頁面會讀的檔（沒有 WAV、沒有內部測試圖），
-     海報 `poster.jpg`（1280 寬）和 `poster_thumb.webp`（640 寬）也在裡面。放的地方要允許網頁跨網域讀取：建議 Hugging Face 資料集
+     海報 `poster.jpg`（1280 寬）和 `poster_thumb.webp`（640 寬）也在裡面；`bundle.json` 記著每個檔的大小，播放器的載入畫面照它算進度，
+     整個資料夾原樣放上去。放的地方要允許網頁跨網域讀取：建議 Hugging Face 資料集
      （免費、大檔沒問題）；或用戶自己的 GitHub 倉庫開 Pages（單檔 100 MB、網站 1 GB 以內）；其他靜態主機要確認有
      `Access-Control-Allow-Origin`。網址寫進 `bundle.url`，大小寫 `bundle.mb`；不做播放包時，海報兩張圖也要放到外部。
      放上去之前確認配音、配樂服務的條款允許公開散布生成的音檔，寫進 CREDITS；不許商用的部分（咸陽：MiniMax 的旁白只限個人、非商業）

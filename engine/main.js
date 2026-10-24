@@ -4,17 +4,42 @@ import * as THREE from 'three';
 import { clamp, lerp, seg, ss, eio, eo, ei, track } from './lib.js';
 import { makeStudio, NMAX, EMAX } from './studio.js';
 import { makeOverlay, W, H, SUB, font, setFonts, setUI } from './overlay.js';
+import * as L from './load.js';
 
 const QS = new URLSearchParams(location.search);
 const CITY = QS.get('city');
 if (!CITY) throw new Error('pass --q city=<slug>');
-const json = u => fetch(u).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
 // the city's files: cities/<slug>/ beside this page, or a published bundle (?bundle=<url>: tools/web.py lays it out the same way,
 // on any server that allows cross-origin reads, e.g. a Hugging Face dataset or a GitHub Pages site); the fonts always come from here
 const BUNDLE = QS.get('bundle');
 const base = BUNDLE ? BUNDLE.replace(/\/?$/, '/') : `cities/${CITY}/`, B = base + 'build/';   // what the city brings (assets) / what was made from it (pipeline/layout.py)
 const newImage = () => Object.assign(new Image(), { crossOrigin: 'anonymous' });   // (a bundle on another server must not taint the canvases)
-const [FILM, M, ST, LN] = await Promise.all([json(B + 'film.json'), json(B + 'data/model.json'), json(B + 'data/stats.json'), json(B + 'data/lines.json')]);
+// every file is asked for at once (engine/load.js counts them for the loading screen, and none waits for the one before); a
+// bundle's bundle.json (tools/web.py) gives their sizes
+const PLAY = QS.has('play');
+L.want(['film.json', 'data/model.json', 'data/stats.json', 'data/lines.json', 'data/water.png', 'data/layers1.png', 'data/layers2.png', 'data/layers3.png',
+  'data/hide.png', 'data/hide2.png', 'data/edge.png', 'data/edge2.png'].map(f => B + f));
+L.want([B + 'data/locator.png'], { optional: true });
+if (BUNDLE) L.take(base + 'bundle.json', { optional: true }).then(b => b && b.text()).then(t => t && L.sizes(Object.fromEntries(JSON.parse(t).files.map(f => [base + f.path, f.bytes])))).catch(() => {});
+const FILM = await L.json(B + 'film.json');
+L.want([...(FILM.decals || []).map(d => B + d.file), FILM.satellite && B + FILM.satellite.file, FILM.grow && FILM.grow.tfile && B + FILM.grow.tfile,
+  ...(FILM.eras || []).map(e => B + e.file), ...(FILM.footage || []).map(f => base + f.file)]);
+if (FILM.context && !QS.has('flat')) L.want([B + FILM.context.file], { optional: true });
+L.sizes(Object.fromEntries(FILM.fonts.faces.filter(f => f.bytes).map(f => [f.file, f.bytes])));   // (the fonts come from this page's server)
+L.want(FILM.fonts.faces.map(f => f.file));
+const SOUND = PLAY ? [FILM.voice && FILM.voice.file, FILM.score && FILM.score.file, FILM.sfx && FILM.sfx.file, FILM.score && FILM.score.loop].map(f => f && B + f) : [];
+L.want(SOUND, { optional: true });   // (the live page plays them: the loading screen waits for them too, so ▶ never plays silent)
+L.plan();
+const [M, ST, LN] = await Promise.all([L.json(B + 'data/model.json'), L.json(B + 'data/stats.json'), L.json(B + 'data/lines.json')]);
+if (M.terrain && !QS.has('flat')) L.want([B + 'data/terrain16.png'], { optional: true });   // (16-bit relief; terrain.png is asked for only without it)
+// a picture from its file: a texture, or an image (null for an optional one that is missing)
+const tex = async u => { const o = await L.address(u); try { return await TL.loadAsync(o); } finally { URL.revokeObjectURL(o); } };
+const image = async (u, optional = false) => {
+  const o = await L.address(u, { optional }); if (!o) return null;
+  const im = newImage(); im.src = o;
+  try { await new Promise((res, rej) => { im.onload = res; im.onerror = () => rej(new Error('image: ' + u)); }); return im; }
+  catch (e) { if (optional) return null; throw e; } finally { URL.revokeObjectURL(o); }
+};
 const DUR = FILM.dur; window.DUR = DUR;
 // a year as the film's language writes it (compile: FILM.years from i18n/<code>.yaml), else the older zh / en switch
 const yearAs = (y, tick) => { const Y = FILM.years; if (!Y) return null; const r = Math.round(y); return (r < 0 ? (tick ? Y.tick_bce || Y.bce : Y.bce) : (tick ? Y.tick_ce || Y.ce : Y.ce)).replace('{y}', Math.abs(r)); };
@@ -24,25 +49,24 @@ const LOW = QS.get('quality') === 'low' || QS.has('play');
 const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high' });
 const { U, camera, post, renderer, house, hemi, scene } = S;
 const TL = new THREE.TextureLoader();
-const decalTex = await Promise.all((FILM.decals || []).map(d => TL.loadAsync(B + d.file)));
-const photoTex = FILM.satellite ? await TL.loadAsync(B + FILM.satellite.file) : null;
+const decalTex = await Promise.all((FILM.decals || []).map(d => tex(B + d.file)));
+const photoTex = FILM.satellite ? await tex(B + FILM.satellite.file) : null;
 let terrain = null;
 if (M.terrain && !QS.has('flat')) {
-  const load = src => new Promise(res => { const im = newImage(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; });
-  let img = await load(B + 'data/terrain16.png'); const sixteen = !!img;   // 16-bit relief in R/G; the 8-bit file is the fallback
-  if (!img) img = await load(B + 'data/terrain.png'); if (!img) throw new Error('terrain.png');
+  let img = await image(B + 'data/terrain16.png', true); const sixteen = !!img;   // 16-bit relief in R/G; the 8-bit file is the fallback
+  if (!img) img = await image(B + 'data/terrain.png');
   img.sixteen = sixteen;
   terrain = { img, info: M.terrain };
 }
 if (FILM.change) S.setRenew(FILM.change.renew, FILM.change.early);
-if (FILM.grow && FILM.grow.tfile) S.setGrowT(await json(B + FILM.grow.tfile));   // buildings that wait until the camera sees them
+if (FILM.grow && FILM.grow.tfile) S.setGrowT(await L.json(B + FILM.grow.tfile));   // buildings that wait until the camera sees them
 if (FILM.grow && FILM.grow.yl) {   // the modern year line: today's buildings rise when the counter first reaches their year
   FILM.grow.yl.forEach(([t, y], i) => { S.U.uYLt.value[i] = t; S.U.uYLy.value[i] = y; }); S.U.uYLn.value = FILM.grow.yl.length;
 }
-S.build(await TL.loadAsync(B + 'data/water.png'), await TL.loadAsync(B + 'data/layers1.png'), await TL.loadAsync(B + 'data/layers2.png'), await TL.loadAsync(B + 'data/layers3.png'), decalTex, photoTex, terrain);
+S.build(await tex(B + 'data/water.png'), await tex(B + 'data/layers1.png'), await tex(B + 'data/layers2.png'), await tex(B + 'data/layers3.png'), decalTex, photoTex, terrain);
 // the land beyond the plate (terrain.context): relief for a mountain or river off the plate, shown in the nodes that ask for it
 if (FILM.context && !QS.has('flat')) {
-  const im = await new Promise(res => { const i = newImage(); i.onload = () => res(i); i.onerror = () => res(null); i.src = B + FILM.context.file; });
+  const im = await image(B + FILM.context.file, true);
   if (im) S.addContext(im, FILM.context);
 }
 const CTXK = FILM.context && FILM.context.keys.length ? track(FILM.context.keys) : null;
@@ -51,7 +75,7 @@ for (const p of FILM.props || []) S.addProp(p);
 for (const r of FILM.routes || []) S.addRoute(r.id, r.pts, r.col, r.w);
 // era cities: one generated city per period
 for (const e of FILM.eras || []) {
-  const J = await json(B + e.file); S.addEra(e.id, J.prims, e.col);
+  const J = await L.json(B + e.file); S.addEra(e.id, J.prims, e.col);
   if (e.sinkStyle === 'burn') { const seen = new Set(), cs = [];   // one spark source per building
     for (const p of J.prims) { const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`; if (p[11] === 4 || p[11] === 5 || p[11] === 7 || seen.has(k)) continue; seen.add(k); cs.push([p[15] ?? p[1], p[16] ?? p[2]]); }
     S.addFire(e.id, cs, S.ground); }
@@ -78,7 +102,7 @@ const DIM0 = new Map(); const dimBefore = n => { if (!DIM0.has(n.id)) DIM0.set(n
 const curveAt = (c, t) => { if (!c || !c.length) return -1; if (t <= c[0][0]) return c[0][1]; const n = c.length; if (t >= c[n - 1][0]) return c[n - 1][1];
   let lo = 0, hi = n - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (c[m][0] <= t) lo = m; else hi = m; } return c[lo][1] + (c[hi][1] - c[lo][1]) * (t - c[lo][0]) / ((c[hi][0] - c[lo][0]) || 1e-9); };
 const ringR = (n, t) => n.ring && t < n.ring.curve[n.ring.curve.length - 1][0] ? curveAt(n.ring.curve, t) : 99;
-S.setHide(...await Promise.all(['hide', 'hide2', 'edge', 'edge2'].map(f => TL.loadAsync(B + `data/${f}.png`))));
+S.setHide(...await Promise.all(['hide', 'hide2', 'edge', 'edge2'].map(f => tex(B + `data/${f}.png`))));
 { const cols = Array(8).fill('#ffffff'); for (const e of FILM.eras || []) if (e.hide != null) cols[e.hide] = e.col; S.setHideCols(cols); }
 S.U.uScaleH.value = M.scale * (M.bex || (M.terrain && M.terrain.exaggeration) || 3);   // window floors follow the buildings' own exaggeration
 S.U.uScaleM.value = M.scale;   // model units per metre (textures drawn at their real size)
@@ -87,12 +111,12 @@ for (const d of FILM.decals || []) U.uDrect.value[d.i].set(d.uv[0], d.uv[1], d.u
 // real footage: one <video> per clip, seeked deterministically to the frame's time
 const VID = {};
 for (const f of FILM.footage || []) {
-  if (/\.(jpe?g|png|webp)$/i.test(f.file)) { const im = newImage(); im.src = base + f.file; await new Promise((res, rej) => { im.onload = res; im.onerror = () => rej(new Error('footage: ' + f.file)); }); VID[f.id] = im; continue; }
-  const v = document.createElement('video'); v.src = base + f.file; v.muted = true; v.preload = 'auto'; v.crossOrigin = 'anonymous';
+  if (/\.(jpe?g|png|webp)$/i.test(f.file)) { VID[f.id] = await image(base + f.file); continue; }
+  const v = document.createElement('video'); v.src = await L.address(base + f.file); v.muted = true; v.preload = 'auto';   // (the whole clip in memory: seeks never wait on the network)
   await new Promise((res, rej) => { v.onloadeddata = res; v.onerror = () => rej(new Error('footage: ' + f.file)); v.load(); });
   VID[f.id] = v;
 }
-const LOC = newImage(); LOC.src = B + 'data/locator.png'; await new Promise(res => { LOC.onload = res; LOC.onerror = res; });
+const LOC = await image(B + 'data/locator.png', true) || newImage();
 const seekTo = (v, time) => new Promise(res => { if (Math.abs(v.currentTime - time) < 1 / 60) return res(); const done = () => { v.removeEventListener('seeked', done); res(); }; v.addEventListener('seeked', done); v.currentTime = time; });
 const OV = makeOverlay(document.getElementById('ov'));
 
@@ -444,7 +468,7 @@ window.EV = EV;
 // ------------------------------------------------------------------ render
 // live preview playing (?play): videos play natively and are only nudged when they drift; while a full-screen clip covers the
 // frame the 3D scene is not drawn. Stills, scrubbing and the offline render seek every frame exactly (deterministic).
-const PLAY = QS.has('play'); let PLAYING = false;
+let PLAYING = false;
 const fullCover = t => (FILM.footage || []).some(f => (f.mode || 'full') === 'full' && t >= f.on + f.fin && t <= f.on + f.dur - f.fout);
 const renderSync = t => { setCamera(t); setLight(t); setLayers(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } drawOverlay(t); };
 window.render = (FILM.footage || []).length ? async t => {
@@ -471,7 +495,7 @@ window.DRAWN = () => OV.drawn();   // every text of the frame TEXTS last drew (t
 window.CAMAT = t => { setCamera(t); return { p: camera.position.toArray(), tg: tgt.toArray(), near: camera.near, d: camDist, fov: camera.fov }; };
 
 // the film's fonts (FILM.fonts: the faces compile found in fonts/ for each job), all loaded before the first frame
-for (const f of FILM.fonts.faces) document.fonts.add(await new FontFace(f.alias, `url(${f.file})`, { weight: f.weight }).load());
+for (const f of FILM.fonts.faces) document.fonts.add(await new FontFace(f.alias, await (await L.take(f.file)).arrayBuffer(), { weight: f.weight }).load());
 await document.fonts.ready;
 await Promise.all(Object.values(FILM.fonts.roles).map(r => document.fonts.load(r.replace('{}', 20), '城0')));
 setFonts(FILM.fonts.roles); setUI(FILM.ui, FILM.sub);
@@ -489,9 +513,10 @@ window.render(QS.has('t') ? +QS.get('t') : 0);
   for (const [E, v, r, f] of keep) { E.mesh.visible = v; E.u.uEraT.value = r; E.u.uEraFallR.value = f; }
 }
 window.READY = true;
+if (!PLAY) L.done();
 
 // ------------------------------------------------------------------ live preview: ?play=1 (a transport bar; space = play/pause, arrows = step, M = narration on/off, B = music on/off, N = sound effects on/off)
-if (QS.has('play')) {
+if (PLAY) {
   const bar = document.createElement('div');
   bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;height:56px;background:rgba(10,11,14,.92);color:#e8ecf2;font:14px/1.4 IBM Plex Mono,monospace;display:flex;align-items:center;gap:14px;padding:0 16px;z-index:9;user-select:none';
   bar.innerHTML = `<button id="pp" style="width:56px;height:30px;background:#1e222a;color:#fff;border:1px solid #444;border-radius:4px;cursor:pointer">▶</button>
@@ -514,13 +539,14 @@ if (QS.has('play')) {
   // the start of lines and clicked), heard while playing, kept in step by speed within half a second (a seek while playing drops
   // sound), seeked only past that; silent when paused, scrubbed or stepped. M mutes the narration, B the music, N the sound effects
   // (film.sfx: the few the mix keeps)
-  const tracks = [];
-  for (const [f, key] of [[FILM.voice && FILM.voice.file, 'KeyM'], [FILM.score && FILM.score.file, 'KeyB'], [FILM.sfx && FILM.sfx.file, 'KeyN']])
-    if (f) fetch(B + f).then(r => r.blob()).then(b => { tracks.push({ a: Object.assign(new Audio(URL.createObjectURL(b)), { preload: 'auto' }), key }); voSync(); }).catch(() => {});
+  const tracks = [], sound = [];
+  for (const [f, key] of [[SOUND[0], 'KeyM'], [SOUND[1], 'KeyB'], [SOUND[2], 'KeyN']])
+    if (f) sound.push(L.take(f, { optional: true }).then(b => { if (b) { tracks.push({ a: Object.assign(new Audio(URL.createObjectURL(b)), { preload: 'auto' }), key }); voSync(); } }));
   // after the film (film.score.loop): the end card stays and one cue plays on in a loop, rising over 3 s, until the viewer plays,
   // scrubs or steps again (the user, 2026-10-22: a viewer of the web version may stay); B mutes it with the music
   let after = null, afterRise = 0;
-  if (FILM.score && FILM.score.loop) fetch(B + FILM.score.loop).then(r => r.blob()).then(b => { after = Object.assign(new Audio(URL.createObjectURL(b)), { loop: true, preload: 'auto' }); }).catch(() => {});
+  if (SOUND[3]) sound.push(L.take(SOUND[3], { optional: true }).then(b => { if (b) after = Object.assign(new Audio(URL.createObjectURL(b)), { loop: true, preload: 'auto' }); }));
+  Promise.allSettled(sound).then(L.done);   // the picture and the sound are in: the loading screen goes
   const afterOn = on => {
     if (!after) return;
     clearInterval(afterRise);

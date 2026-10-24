@@ -35,7 +35,7 @@ export function serve(port = 0, { overlay } = {}) {
         if (fs.existsSync(file) && fs.statSync(file).isDirectory()) { r.writeHead(301, { Location: q.url.split('?')[0] + '/' }); return r.end(); }
         fs.readFile(file, (e, d) => {
           if (e) return send(404, 'not found');
-          r.writeHead(200, { 'Content-Type': T[path.extname(file).toLowerCase()] || 'application/octet-stream' }); r.end(d);
+          r.writeHead(200, { 'Content-Type': T[path.extname(file).toLowerCase()] || 'application/octet-stream', 'Content-Length': d.length }); r.end(d);   // (the length: the player's loading screen)
         });
       } catch { send(400, 'bad request'); }
     });

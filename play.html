@@ -1,6 +1,23 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><title>一城春秋 · A City Through Time</title>
-<style>html,body{margin:0;background:#050607;overflow:hidden}#stage,#ov{position:absolute;left:0;top:0}canvas{display:block}</style>
+<style>html,body{margin:0;background:#050607;overflow:hidden}#stage,#ov{position:absolute;left:0;top:0}canvas{display:block}
+/* the loading screen (?play; engine/load.js): what is loading, how far, and why it stopped */
+.load{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:#050607;color:oklch(0.955 0.006 85);
+  font:14px/1.5 system-ui,-apple-system,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;transition:opacity .6s cubic-bezier(.22,1,.36,1)}
+.load[hidden]{display:none}.load.gone{opacity:0;pointer-events:none}
+.ld{width:min(360px,80vw)}
+.ld-brand{margin:0 0 22px;font:500 15px/1.4 "Noto Serif TC","Songti TC","Noto Serif SC",Georgia,serif;letter-spacing:.06em;color:oklch(0.955 0.006 85 / .62)}
+.ld-track{height:2px;background:oklch(0.955 0.006 85 / .13);overflow:hidden}
+.ld-track i{display:block;height:100%;background:oklch(0.865 0.115 80);transform:scaleX(0);transform-origin:left;transition:transform .3s linear}
+.ld-line{display:flex;justify-content:space-between;gap:16px;margin:12px 0 0;color:oklch(0.955 0.006 85 / .72)}
+#ld-pct{font-variant-numeric:tabular-nums}
+.wait .ld-track i{width:28%;transform:none;animation:ld-wait 1.6s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes ld-wait{from{translate:-100% 0}to{translate:360% 0}}
+.failed .ld-track{display:none}.failed .ld-line{color:oklch(0.955 0.006 85)}
+#ld-retry{margin-top:18px;min-height:44px;padding:0 22px;border:1px solid oklch(0.955 0.006 85 / .3);border-radius:999px;background:none;color:inherit;font:inherit;cursor:pointer}
+#ld-retry:hover{border-color:oklch(0.955 0.006 85 / .6)}#ld-retry:focus-visible{outline:2px solid oklch(0.865 0.115 80);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.load,.ld-track i{transition:none}.wait .ld-track i{animation:none;width:100%;opacity:.25}}
+</style>
 <script>
 // three.js: the pinned copy in node_modules when served from this machine (preview, renders), the same version from a CDN anywhere else
 { const t = /^(127\.0\.0\.1|localhost)$/.test(location.hostname) ? './node_modules/three/' : 'https://cdn.jsdelivr.net/npm/three@0.170.0/';
@@ -9,4 +26,10 @@
   document.currentScript.after(m); }
 </script>
 </head><body><div id="stage"></div><canvas id="ov" width="1920" height="1080"></canvas>
+<div class="load wait" id="load" role="status" aria-live="polite" hidden>
+  <div class="ld"><p class="ld-brand">一城春秋 · A City Through Time</p><div class="ld-track"><i id="ld-bar"></i></div>
+  <p class="ld-line"><span id="ld-what"></span><span id="ld-pct"></span></p><button id="ld-retry" type="button" hidden></button></div>
+</div>
+<script>if (new URLSearchParams(location.search).has('play')) document.getElementById('load').hidden = false;</script>
+<script type="module" src="engine/load.js"></script>
 <script type="module" src="engine/main.js"></script></body></html>
