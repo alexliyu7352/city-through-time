@@ -31,8 +31,8 @@ const PRIVATE = [
   [/\b(?:voice_?id|group_?id|api_?key|secret|token)\b["']?\s*[:=]\s*["']?[\w-]{6,}/gi, 'an account id or key'],
   [/\b(?:sk-[\w-]{20,}|hf_[A-Za-z0-9]{30,}|gh[pousr]_[A-Za-z0-9]{36,}|github_pat_\w{40,}|AKIA[0-9A-Z]{16}|eyJ[\w-]{10,}\.[\w-]{10,}\.[\w-]{10,})/g, 'a key'],
 ];
-// a bare address in Markdown runs on to the next space on GitHub: text written right after it becomes part of the link (the
-// README's first line, 2026-10-24): CJK punctuation inside what GitHub takes for the address. Addresses in [text](url), <url>,
+// a bare address in Markdown runs on to the next space on GitHub: text written right after it becomes part of the link,
+// CJK punctuation included. Addresses in [text](url), <url>,
 // a reference [x]: url or code are fine
 function bareURLs(text) {
   const out = []; let fence = false;

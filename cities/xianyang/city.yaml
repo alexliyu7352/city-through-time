@@ -45,7 +45,7 @@ mounds:
   - { id: shunling, osm: 顺陵封土堆, h_m: 12.6, top_ratio: .4, year: 690, zh: 唐顺陵, en: Shunling }
 
 # ================================================================ THE FILM v4 — whole period cities (pipeline/citygen.py); copy written as one script
-terrain: { enabled: true, exaggeration: 3.0,   # x3: at x6 every foundation on the 北阪 stood as tall as its house (the user, 2026-10-22); terrain.py and clipcheck put the period cities' limit at about x4.5
+terrain: { enabled: true, exaggeration: 3.0,   # x3: at x6 every foundation on the 北阪 stands as tall as its house; terrain.py and clipcheck put the period cities' limit at about x4.5
            context: { box: [108.36, 34.245, 108.86, 34.72], res_m: 60, exaggeration_far: 2.5, blend_km: 6,
                      shade: { az: 250, el: 22, k: 0.8 } } }   # the land beyond the plate to the north-west, for 九嵕山 (34.6285, 108.4835: the name's mountain); 60 m so its ridges show, a low west-south-west sun so they read
 film:
@@ -57,21 +57,21 @@ film:
   drift: 0.6
   wave_dur: 4.5              # a node's colour crosses the plate as a ring of light in this many seconds
   era_look: { dim: 0.5, glow: 1.0, edge: 1.0, line: 1.0, light_m: 45, halo_m: 14, edge_m: 150 }   # while a period city stands: today's city dims; a thin neon line on its edge lights what stands within ~45 m of it
-  emblem: none   # the tiger tally storyline was dropped (the user, 2026-10-21: not staged well)
+  emblem: none   # no emblem: none stages well enough on the white model to earn its place (SKILL.md 步驟 3)
   satellite_source: sentinel   # Copernicus Sentinel-2 (CC-compatible); 'hr' (Esri World Imagery, pipeline/imagery_tiles.py) is for internal tests only, never published
   copy: { keep: ['十五五', '三月不灭', '国棉一厂', '国棉七厂', '洪武四年', '乾隆十六年', '武德二年', '元鼎三年'] }   # names, a quotation and reign years kept as written (pipeline/copylint.py)
-  sfx: [relay, lamp, burn, lights]   # the sound effects kept beside the score (the user, 2026-10-22): the lamp coming on, the burning, the lights going out
+  sfx: [relay, lamp, burn, lights]   # the sound effects kept beside the score: the lamp coming on, the burning, the lights going out
   music:   # the score (MUSIC.md: prompts, takes, licence; tools/music.py makes the candidates, audio/lay.py lays them): a cue starts
            # at its node (the first at the film's start) and runs to the next; take: the chosen candidate <wording>-<seed>, unset = silent
     loop: M01   # after the film the preview plays the opening on in a loop: the drone, the heartbeat and the xun, the city's oldest sound
     cues:
       - { id: M01, node: name, take: 2-2, fade_in: 3.0 }   # (from the dark before the lamp)
-      - { id: M02, node: qin, take: 1-1, offset: 0 }   # (from its first stroke, on the node: laid later it opened on a 2 s rest; its climax runs on into M03, generated on it)   # (draft takes, 2026-10-22: seed 1 of each, for the user to hear against the picture)
+      - { id: M02, node: qin, take: 1-1, offset: 0 }   # (from its first stroke, on the node: laid later it would open on a 2 s rest; its climax runs on into M03, generated on it)
       - { id: M03, node: burn, continue: M02, take: 2-2 }   # (the same drums fall apart, generated on M02; 2-2 thins out toward its end, 2-1 and 2-3 stay at the climax)
-      - { id: M04, node: han, take: 2-3 }   # (2-1 rises out of silence: a hole after the burning)   # Han and Tang in one (the user, 2026-10-22: the two greatest dynasties)
+      - { id: M04, node: han, take: 2-3 }   # (2-1 rises out of silence: a hole after the burning)   # Han and Tang in one: the two greatest dynasties, one mood
       - { id: M05, node: ming, take: 1-1, offset: 2.52 }   # (offset pinned: M06 was generated on M05 laid so)
       - { id: M06, node: rail, take: 6-1 }   # (wording 2 kept the old town's sound; 3-1 'goes mad from 53 s'; 4-x 'the wrong feeling'; 6-1 rises 8 dB to its close, as the narration does)
-      - { id: M07, node: m1975, take: 1-2 }   # (1-1: its rhythm loses its footing 36-68 s in, as the user heard)
+      - { id: M07, node: m1975, take: 1-2 }   # (1-1: its rhythm loses its footing 36-68 s in)
       - { id: M08, node: m1998, take: 1-1 }
       - { id: M09, node: m2005, take: 1-1 }
       - { id: M10, node: m2014, take: 1-2 }   # (1-1 has a gap at 17 s)
@@ -107,7 +107,7 @@ film:
     context: [{ t: 0.0, a: 1 }]   # the land beyond the plate: the name's mountain
   nodes:
     - id: name
-      mood: { feel: wonder, level: 1 }   # the name and its land (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: wonder, level: 1 }   # the name and its land
       years: [-4000, -400]
       dur: 10.8   # (its source note needs 9.5 s on screen: readcheck)
       label: { zh: 咸阳, en: The name }
@@ -120,7 +120,7 @@ film:
       context: [{ t: 0.0, a: 1 }, { t: 9.8, a: 1 }, { t: 12.3, a: 0 }]
       camera: [{ t: 0, ll: [108.70, 34.37], az: 32, el: 11, d: 2.0 }, { t: 10.8, ll: [108.69, 34.39], az: 33, el: 12, d: 3.0 }]   # the river below the middle, the city, the plateau, 九嵕山 near the top
     - id: neolithic
-      mood: { feel: wonder, level: 1 }   # the first village (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: wonder, level: 1 }   # the first village
       years: [-4000, -3300]
       dur: 11.2
       label: { zh: 渭水之滨, en: The first village }
@@ -142,7 +142,7 @@ film:
         [{ t: 3.5, ll: [108.6185, 34.3242], az: 70, el: 32, d: 0.32 }, { t: 6, ll: [108.6180, 34.3240], az: 95, el: 24, d: 0.13, fov: 34 },
          { t: 8.5, ll: [108.6178, 34.3238], az: 120, el: 22, d: 0.11, fov: 34 }, { t: 11, ll: [108.635, 34.330], az: 105, el: 40, d: 0.95 }]
     - id: qin
-      mood: { feel: pride, level: 2 }   # the new capital, the reforms (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: pride, level: 2 }   # the new capital, the reforms
       years: [-350, -350]
       dur: 51.9
       label: { zh: 秦都, en: The Qin capital }
@@ -160,7 +160,7 @@ film:
         fall_dur: 0.25   # the burnt city goes right behind the contracting ring
         burn: 4.6
         theta_deg: 0
-        walls:   # the palace-city wall: sides 860 / 910 / 580 / 436 m (桑广书 2005), gates in the east and west walls; the outline is schematic, 100 m west of where it was first drawn so the 50 m avenue runs outside its east wall up to Palace No. 6 (it ran inside it, through the south wall: the user, 2026-10-21)
+        walls:   # the palace-city wall: sides 860 / 910 / 580 / 436 m (桑广书 2005), gates in the east and west walls; the outline is schematic, placed so the 50 m avenue runs outside its east wall up to Palace No. 6 (not inside it, through the south wall)
           - ring: [[108.8526, 34.4150], [108.8619, 34.4148], [108.8621, 34.4109], [108.8524, 34.4098]]
             h_m: 8
             t_m: 9
@@ -202,7 +202,7 @@ film:
          { t: 34.4, ll: [108.828, 34.399], az: 20, el: 34, d: 0.42, fov: 34 }, { t: 38.9, ll: [108.845, 34.404], az: 8, el: 50, d: 0.95, fov: 32 },
          { t: 44.4, ll: [108.8626, 34.4175], az: -25, el: 22, d: 0.2, fov: 36 }, { t: 51.9, ll: [108.86, 34.40], az: 0, el: 44, d: 1.15 }]
     - id: empire
-      mood: { feel: pride, level: 3 }   # the first unified empire: the peak (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: pride, level: 3 }   # the first unified empire: the peak
       years: [-221, -221]
       dur: 75.9
       label: { zh: 帝都, en: The imperial capital }
@@ -217,7 +217,7 @@ film:
         sink: 7.5   # the contracting ring: 2 s sweeping in from beyond the frame, then 5.5 s on screen
         until: burn
         until_plus: 8.2
-        stages:   # two changes (the user, 2026-10-21). The capital made imperial, at the node's start (picture leads): the colour ring
+        stages:   # two changes. The capital made imperial, at the node's start (picture leads): the colour ring
                   # repaints the Qin city while the south bank rises (渭南 palaces, the 阿房 platform, the bridge: the rest). Then, with
                   # 那时，每灭一国 and 十二万户: one line of light sweeps west to east and the six palaces and the new quarters rise as it
                   # passes (one stage: the engine draws one front per city at a time, so two at once left the quarters rising unlit).
@@ -278,7 +278,7 @@ film:
          { t: 44.8, ll: [108.848, 34.365], az: 0, el: 58, d: 2.8 }, { t: 47.6, shot: sky, ll: [108.846, 34.334], az: 0, el: 82, d: 4.9, fov: 32 }, { t: 55.4, ll: [108.846, 34.334], az: -3, el: 81, d: 4.8, fov: 32 },
          { t: 66.4, ll: [108.846, 34.334], az: -5, el: 79, d: 4.7, fov: 32 }, { t: 71.4, ll: [108.866, 34.412], az: 0, el: 36, d: 1.0 }, { t: 75.9, ll: [108.865, 34.410], az: -4, el: 32, d: 0.9 }]
     - id: burn
-      mood: { feel: grief, level: 3 }   # it lasted 15 years; the fire (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: grief, level: 3 }   # it lasted 15 years; the fire
       years: [-206, -206]
       dur: 23
       label: { zh: 焚城, en: The burning }
@@ -292,7 +292,7 @@ film:
       readout: { label: "项羽入咸阳，烧秦宫室", note: "《史记·项羽本纪》" }
       camera: [{ t: 3.4, ll: [108.862, 34.410], az: 10, el: 30, d: 0.6 }, { t: 7.6, ll: [108.862, 34.407], az: 4, el: 40, d: 1.1 }, { t: 19.4, ll: [108.8580, 34.4140], az: 16, el: 32, d: 0.3 }]   # the camera comes down with the contracting ring (generated, never faster than the ring) to the palace site, and holds there
     - id: han
-      mood: { feel: wistful, level: 2 }   # the capital crossed the river; a small town (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: wistful, level: 2 }   # the capital crossed the river; a small town
       years: [-202, 8]
       dur: 42.6
       label: { zh: 渭城·长安, en: Weicheng and Chang'an }
@@ -623,7 +623,7 @@ film:
       camera: [{ t: 8.6, ll: [108.880, 34.312], az: 2, el: 48, d: 1.15 }, { t: 9.6, ll: [108.876, 34.310], az: 0, el: 46, d: 1.1 }, { t: 10.6, ll: [108.858, 34.302], az: 20, el: 30, d: 0.32 }, { t: 13.4, ll: [108.858, 34.303], az: 24, el: 31, d: 0.33 },
                { t: 15.6, shot: weicheng, ll: [108.8626, 34.4080], az: 10, el: 40, d: 0.6 }, { t: 21.6, ll: [108.8626, 34.4082], az: 16, el: 42, d: 0.62 }, { t: 22.8, ll: [108.866, 34.388], az: 14, el: 52, d: 1.8 }, { t: 23.8, shot: terrace, ll: [108.858, 34.39], az: 95, el: 9, d: 1.35 }, { t: 30.4, ll: [108.858, 34.39], az: 92, el: 11, d: 1.4 }, { t: 33.6, ll: [108.84, 34.38], az: 80, el: 32, d: 1.9 }, { t: 40.7, ll: [108.80, 34.37], az: 70, el: 40, d: 1.7 }]
     - id: tang
-      mood: { feel: wistful, level: 1 }   # the farewell at the ferry (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: wistful, level: 1 }   # the farewell at the ferry
       years: [619, 760]
       dur: 30.0
       label: { zh: 渭城朝雨, en: Morning rain at Weicheng }
@@ -670,7 +670,7 @@ film:
                { t: 13.0, ll: [108.7488, 34.3492], az: 270, el: 17, d: 0.036, fov: 44 }, { t: 17.0, ll: [108.7512, 34.3492], az: 268, el: 17, d: 0.036, fov: 44 },
                { t: 19.0, ll: [108.7470, 34.3470], az: 190, el: 28, d: 0.12, fov: 34 }, { t: 28, ll: [108.742, 34.346], az: 160, el: 38, d: 0.5, fov: 32 }]
     - id: ming
-      mood: { feel: calm, level: 1 }   # 500 years a county town (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: calm, level: 1 }   # 500 years a county town
       years: [1371, 1911]
       dur: 46
       label: { zh: 明清县城, en: The walled town }
@@ -728,7 +728,7 @@ film:
                { t: 15.5, ll: [108.7200, 34.3358], az: 222, el: 22, d: 0.065, fov: 40 }, { t: 20.5, ll: [108.7228, 34.3345], az: 200, el: 40, d: 0.26, fov: 32 },
                { t: 29, ll: [108.7190, 34.3352], az: 150, el: 26, d: 0.12, fov: 34 }, { t: 46, ll: [108.7215, 34.3345], az: 130, el: 34, d: 0.24, fov: 32 }]
     - id: rail
-      mood: { feel: hope, level: 2 }   # the railway, a new page (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: hope, level: 2 }   # the railway, a new page
       years: [1936, 1949]
       dur: 30
       label: { zh: 铁路, en: The railway }
@@ -759,7 +759,7 @@ film:
           - { region: [[108.7200, 34.3378], [108.7320, 34.3378], [108.7320, 34.3440], [108.7200, 34.3440]], lot: [13, 17], typ: dwelling, h_m: 6, empty: 0.08 }
       camera: [{ t: 0, ll: [108.7215, 34.3345], az: 130, el: 34, d: 0.24, fov: 32 }, { t: 4.5, ll: [108.7302, 34.3452], az: 165, el: 24, d: 0.12, fov: 36 }, { t: 9, shot: station, ll: [108.7340, 34.3459], az: 100, el: 24, d: 0.055, fov: 42 }, { t: 12, ll: [108.7312, 34.3454], az: 100, el: 24, d: 0.055, fov: 42 }, { t: 21, ll: [108.728, 34.344], az: 150, el: 30, d: 0.3, fov: 32 }, { t: 30, ll: [108.725, 34.342], az: 110, el: 36, d: 0.5 }]
     - id: mills
-      mood: { feel: pride, level: 2 }   # the textile city, famous nationwide (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: pride, level: 2 }   # the textile city, famous nationwide
       years: [1951, 1958]
       dur: 23.6
       label: { zh: 纺织城, en: The textile city }
@@ -795,9 +795,9 @@ film:
     # camera tours the moments that made it (SKILL.md 演出文法 9i): it flies from one to the next as the counter runs (at most a
     # year a second), and the counter holds while a moment is told. Sources: research/modern_a.md, modern_b.md, xianyang_research.md.
     - id: m1975
-      mood: { feel: calm, level: 1 }   # the satellites begin (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: calm, level: 1 }   # the satellites begin
       years: [1975, 1975]
-      dur: 11.2   # one line now (the others moved or went, 2026-10-20); its source note needs 9.9 s on screen (readcheck)
+      dur: 11.2   # one line; its source note needs 9.9 s on screen (readcheck)
       label: { zh: 起点, en: The starting point }
       col: '#2f98ff'
       tint: 0
@@ -817,7 +817,7 @@ film:
     # ---- the stops: turning points of the city itself (its status, its industry, its links, its rise and decline, its joining
     # with Xi'an), each with the places it names drawn as lit outlines (areas: research/modern_areas.geojson)
     - id: m1979
-      mood: { feel: pride, level: 2 }   # the first colour tube plant (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: pride, level: 2 }   # the first colour tube plant
       years: [1975, 1979]
       dur: 19.2
       label: { zh: 彩虹, en: Irico }
@@ -829,7 +829,7 @@ film:
       areas:
         - { id: caihong, col: '#ff9a3c', at: 0.3, flash: [0.6, 10.6], zh: "彩虹厂 · 厂区示意", en: "The plant (site approximate)" }
     - id: m1983
-      mood: { feel: pride, level: 1 }   # the old names come back (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: pride, level: 1 }   # the old names come back
       years: [1979, 1983]
       dur: 21.4
       label: { zh: 设市, en: A prefecture city }
@@ -843,7 +843,7 @@ film:
         - { id: qindu, col: '#ffd24a', with: m1983_qindu, flash: [{ with: m1983_qindu, plus: 0.3 }, { with: m1983_3, plus: 0.3 }], zh: "秦都区", en: "Qindu District", frame: false, fill: 0.2, label_ll: [108.690, 34.338] }
         - { id: weicheng, col: '#6fdcff', with: m1983_2, flash: [{ with: m1983_2, plus: 0.3 }, { with: m1983_3, plus: 1.6 }], zh: "渭城区", en: "Weicheng District", frame: false, fill: 0.2, label_ll: [108.735, 34.352] }
     - id: m1991
-      mood: { feel: hope, level: 2 }   # from resting place to departure (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: hope, level: 2 }   # from resting place to departure
       years: [1983, 1991]
       dur: 18.1
       label: { zh: 机场, en: The airport }
@@ -859,7 +859,7 @@ film:
       pins:
         - { id: p_airport, lon: 108.7575, lat: 34.4277, h_m: 30, t0: 0.8, t1: 12.4, zh: "西安咸阳机场 · 1991（向北延伸）", en: "Xi'an Xianyang airport, 1991 (runs on north)" }   # the airport's part on the plate (41 % of it; OSM polygon clipped to the box)
     - id: m1998
-      mood: { feel: grief, level: 2 }   # the mills fall; a generation's youth (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: grief, level: 2 }   # the mills fall; a generation's youth
       years: [1991, 1998]
       dur: 29.5
       label: { zh: 纺织城的转折, en: The textile city turns }
@@ -873,7 +873,7 @@ film:
         - { id: mill8, col: '#ffb070', with: m1998_2, flash: [{ with: m1998_2, plus: 0.4 }], zh: "陕棉八厂 · 示意", en: "Mill No. 8 (approx.)" }
         - { id: mill7, col: '#c9a7ff', with: m1998_2, plus: 2.2, flash: [{ with: m1998_2, plus: 2.6 }], zh: "国棉七厂一带 · 示意", en: "Around Mill No. 7 (approx.)" }   # (no line names it: it follows the two the line does)
     - id: m2005
-      mood: { feel: hope, level: 1 }   # the lake (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: hope, level: 1 }   # the lake
       years: [1998, 2005]
       dur: 13
       label: { zh: 咸阳湖, en: Xianyang Lake }
@@ -891,7 +891,7 @@ film:
       footage:
         - { id: f_lake, file: assets/photos_cc/lake_park.jpg, mode: panel, with: m2005_2, plus: 0.3, dur: 5.5, in: 1.0, out: 1.0, kicker: "今天 · TODAY · 照片", zh: "咸阳湖", en: "Xianyang Lake, today", credit: "Wikimedia Commons · H2v5o68z · CC0" }
     - id: m2006
-      mood: { feel: hope, level: 2 }   # one step from one city (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: hope, level: 2 }   # one step from one city
       years: [2005, 2006]
       dur: 21.2
       label: { zh: "029", en: "029" }
@@ -906,7 +906,7 @@ film:
       routes:
         - { id: r_029, from: [108.708, 34.333], to: [108.9398, 34.2612], with: m2006_2, plus: 0.3, draw: 2.6, hold: 8.0, arc: 0.16, col: '#9fe4ff', w: 0.004, zh: "共用区号 029", en: "One area code: 029" }
     - id: m2011
-      mood: { feel: hope, level: 1 }   # the site saved, at last (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: hope, level: 1 }   # the site saved, at last
       years: [2006, 2011]
       label: { zh: 秦汉新城, en: Qinhan New City }
       col: '#2f98ff'
@@ -923,7 +923,7 @@ film:
       pins:
         - { id: p_qinsite2, mark: qin_site, with: m2011_2, until: m2011_3, zh: "秦咸阳宫遗址", en: "The Qin palace site" }
     - id: m2014
-      mood: { feel: wistful, level: 3 }   # the best land to Xi'an; the merger never comes (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: wistful, level: 3 }   # the best land to Xi'an; the merger never comes
       years: [2011, 2014]
       dur: 31.6
       label: { zh: 西咸新区, en: Xixian New Area }
@@ -936,12 +936,12 @@ film:
         - { id: xixian, col: '#e8f4ff', at: 0.3, zh: "西咸新区", en: "Xixian New Area" }
         - { id: konggang, col: '#ffd24a', with: m2014_2, plus: 0.2, zh: "空港新城", en: "Konggang" }
         - { id: fengdong, col: '#ff8fb1', with: m2014_2, plus: 0.6, zh: "沣东新城", en: "Fengdong" }
-        - { id: qinhan, col: '#6dfcb3', with: m2014_2, plus: 1.0, zh: "秦汉新城", en: "Qinhan", unseen_ok: true }   # (its point is just above the frame, no room for its name: kept for the framing; the user let it be, 2026-10-21)
+        - { id: qinhan, col: '#6dfcb3', with: m2014_2, plus: 1.0, zh: "秦汉新城", en: "Qinhan", unseen_ok: true }   # (its point is just above the frame, no room for its name: the framing is kept as it is)
         - { id: fengxi, col: '#7ab8ff', with: m2014_2, plus: 1.4, flash: [{ with: m2014_2, plus: 1.6 }], zh: "沣西新城 · 示意", en: "Fengxi (approx.)" }
       footage:
         - { id: f_xixian, file: assets/footage/xixian_aerial_commons.mp4, mode: full, with: m2014_2, plus: 5.5, dur: 8.5, in: 1.0, out: 1.0, zh: "沣西大道与西咸新区", en: "Fengxi Avenue and Xixian New Area, looking west", credit: "Wikimedia Commons · Liuxingy · CC BY-SA 4.0", pan: 0.15 }
     - id: m2019
-      mood: { feel: hope, level: 2 }   # the metro comes (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: hope, level: 2 }   # the metro comes
       years: [2014, 2019]
       dur: 14
       label: { zh: 地铁过界, en: The metro crosses over }
@@ -958,7 +958,7 @@ film:
       pins:
         - { id: p_fenghe, lon: 108.74822, lat: 34.32177, h_m: 30, with: m2019_2, hold: 0.0, zh: "沣河森林公园站", en: "Fenghe Forest Park station" }
     - id: m2023
-      mood: { feel: hope, level: 2 }   # joined by metro (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: hope, level: 2 }   # joined by metro
       years: [2019, 2023]
       dur: 15
       label: { zh: 两城一线, en: Two cities, one line }
@@ -975,7 +975,7 @@ film:
         - { id: p_metro, mark: metro_west, with: m2023_2, until: m2023_3, zh: "咸阳西站 · 地铁 1 号线", en: "Xianyang West, Metro Line 1" }
         - { id: p_bridge5, lon: 108.65708, lat: 34.27366, h_m: 30, with: m2023_3, zh: "渭河高新大桥 · 2023", en: "Weihe Gaoxin Bridge, 2023" }
     - id: today
-      mood: { feel: hope, level: 3 }   # still growing (the narrator's arc: agreed 2026-10-21)
+      mood: { feel: hope, level: 3 }   # still growing
       years: [2025, 2026]
       dur: 50
       label: { zh: 今天, en: Today }
@@ -999,5 +999,5 @@ film:
     end_hold: 10.5
     camera: [{ t: 0, ll: [108.77, 34.345], az: 0, el: 88, d: 3.0 }, { t: 10.5, ll: [108.76, 34.345], az: 20, el: 40, d: 3.1 }]
   end: { zh_title: "一城春秋 · 咸阳", en_title: "A City Through Time · Xianyang",
-         credits: { author: "Alex · x.com/alexlee20122022", voice: "MiniMax Audio · AI 生成", music: "Stable Audio 3 Medium（Stability AI）· AI 生成" },   # the user, 2026-10-22 (VOICE.md, MUSIC.md)
+         credits: { author: "Alex · x.com/alexlee20122022", voice: "MiniMax Audio · AI 生成", music: "Stable Audio 3 Medium（Stability AI）· AI 生成" },   # as in VOICE.md, MUSIC.md and CREDITS
          lines: ["建筑：清华大学 CMAB、Overture Maps（含 Shi 等 2023）（高度与年份为估算） · 地图：© OpenStreetMap contributors", "地形：Copernicus DEM · 影像：Copernicus Sentinel-2", "历代城市为示意模型 · 实拍影像来源见 CREDITS · 史料见 FACTS.md"] }

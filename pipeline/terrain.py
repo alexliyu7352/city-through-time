@@ -59,7 +59,7 @@ out, scenes = dem(C['box'], F.x0, F.x1, F.y0, F.y1, RES)
 W, H = out.shape[1], out.shape[0]
 os.makedirs(os.path.join(D, 'build', 'data'), exist_ok=True)   # (pipeline/layout.py)
 import terrainio
-# today's buildings out of the surface model, for the ground they stand on (the user, 2026-10-22: what stands on the ground is
+# today's buildings out of the surface model, for the ground they stand on (what stands on the ground is
 # not the ground). GLO-30 measures roofs: a town's blocks stood 2-4 m above its streets, so the period cities built over
 # today's old town showed their foundations along every street (Tang, Ming) and their yard walls rose and fell (Qin's west).
 # Every 30 m cell a footprint of the buildings source (and its fill) touches is dropped and filled from the open ground round
@@ -87,7 +87,7 @@ def _binomial(a):   # a 5-tap binomial blur (~1 px sigma) along both axes: the D
         a = sum(k[i] * np.take(p_, range(i, i + a.shape[ax]), axis=ax) for i in range(5))
     return a
 smooth = _binomial(out.astype(np.float32))
-# the plate's relief in two scales (the user, 2026-10-21: the old cities stood on a jumble). Landforms broader than
+# the plate's relief in two scales (else the old cities stand on a jumble). Landforms broader than
 # terrain.detail.below_m (a terrace, a valley side, a tableland's edge) take the film's exaggeration; what is smaller (in this
 # surface model mostly today's roofs and trees, field banks, cuttings: at x6 a 4 m bump stood 24 m high under a 5 m Han house)
 # is drawn at terrain.detail.exaggeration (default 1, its true height). Everything that stands on the plate reads this field
@@ -95,8 +95,8 @@ smooth = _binomial(out.astype(np.float32))
 TC = C.get('terrain') or {}; EX = float(TC.get('exaggeration', 3.0)); DT = {'below_m': 150.0, 'exaggeration': 1.0, **(TC.get('detail') or {})}
 large = terrainio.gauss(smooth, float(DT['below_m']) / RES)
 shown = large + (smooth - large) * (float(DT['exaggeration']) / EX)
-# how high the exaggeration can go before the period cities' houses stand on foundations as tall as themselves (the user,
-# 2026-10-22: the 北阪 at x6 stretched every house; a mountain city would at x3). Over each period city's extent (citygen.extent),
+# how high the exaggeration can go before the period cities' houses stand on foundations as tall as themselves (e.g.
+# the 北阪 at x6 stretched every house; a mountain city would at x3). Over each period city's extent (citygen.extent),
 # a reference house 12 m across and 6 m high (times the city's exaggeration) on the ground as the plate shows it (the landforms
 # x EX, the fine relief x1): the top tenth of its foundations should stay within 30% of its height. tools/clipcheck.py measures
 # the same on the built cities (tall_foundation)

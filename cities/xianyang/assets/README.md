@@ -12,7 +12,7 @@ photos/ — Wikimedia Commons，CC 授權（片尾 CREDITS 署名作者與授權
 - ferry_piles_2010_ccbysa3.jpg：咸陽古渡河床中的燒焦木樁與清渭樓，作者 申威隆，CC BY-SA 3.0
 - skyline_sandstorm_2023_ccbysa4.jpg：老城街景（GPS 34.3377N 108.7091E，朝向 123°），CC BY-SA 4.0
 
-imagined/ — 根據史料的想像圖（AI 生成，2026-10-21，經本機 Codex 的圖片生成），屏上標「想象图 · 根据史料想象 · AI 生成」
+imagined/ — 根據史料的想像圖（AI 生成，用 Codex CLI 內建的圖片生成），屏上標「想象图 · 根据史料想象 · AI 生成」
 - 片中使用：qin_build（商鞅營建）、qin_market（市集與統一的量器）、empire_migrants（富戶遷咸陽）、burn_fire（項羽焚宮）
 - 已生成未放：empire_palaces（北阪六國宮殿）、empire_bridge（橫橋與天河）：模型上已有這兩段畫面
 
@@ -20,4 +20,4 @@ ref/ — 僅供建模參考，不得上屏；有版權的參考圖（檔名含 C
 
 footage（在本機的 ref 資料夾，見 local/config.json；未入庫）
 - commons/qindu_weihe_bridge_4k.webm、weicheng_longhai_bridge_river_4k.webm：CC BY-SA 4.0 地面 4K 實拍（渭河高新大橋東望、隴海鐵路橋下渭河）
-- bilibili/：《印象咸陽》無人機鏡頭（非 CC）。2026-10-21 起片中不用；剪出的測試片段移到 ref 資料夾的 bilibili/clips/
+- bilibili/：《印象咸陽》無人機鏡頭（非 CC：不上屏，只留在本機的 ref 資料夾）

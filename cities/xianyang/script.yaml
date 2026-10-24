@@ -1,5 +1,5 @@
 # The film's narration: every line, in the order shown (pipeline/script.py). Pictures are in city.yaml.
-# Approved 2026-10-20: told to the narrator's arc (docs: SKILL.md). 2026-10-21: the tiger tally storyline dropped (the user: it was not staged well).
+# Told to the narrator's arc (SKILL.md 步驟 3-4).
 # Numbers in digits 0-9; kept as written: reign years (洪武四年, 乾隆十六年, 武德二年, 元鼎三年), names (十五五, 国棉一厂), quotations.
 langs: [zh, en]
 

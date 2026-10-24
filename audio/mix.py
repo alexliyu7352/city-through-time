@@ -18,7 +18,7 @@ FILM = json.load(open(os.path.join(B_, 'film.json'), encoding='utf-8'))
 EVJ = json.load(open(os.path.join(B_, 'events.json'), encoding='utf-8'))
 DUR = EVJ['dur']; LT = FILM['light']
 SCORE, VOICE = FILM.get('score'), FILM.get('voice')
-SFX = FILM.get('sfx') or {}   # city.yaml film.sfx: the page events that keep a sound beside a laid score (the user, 2026-10-22: the lamp,
+SFX = FILM.get('sfx') or {}   # city.yaml film.sfx: the page events that keep a sound beside a laid score (e.g. the lamp,
                               # the burning, the lights going out), laid by compile as one track from the one-shots --kit makes
 N = int((DUR + 3) * SR)
 rng = np.random.default_rng(11)

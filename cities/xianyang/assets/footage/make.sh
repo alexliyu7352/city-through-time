@@ -1,6 +1,6 @@
 #!/bin/sh
 # Regenerates the footage clips (mp4 is git-ignored). Sources live outside the repo, in this machine's ref folder (local/config.json).
-# Only CC / public-domain sources: the Bilibili test clips were dropped 2026-10-21 (moved to <ref>/bilibili/clips/).
+# Only CC / public-domain sources (the non-CC Bilibili clips stay in the ref folder and never reach the film).
 set -e
 cd "$(dirname "$0")"
 ROOT=$(cd ../../../.. && pwd); REF=$(uv run --project "$ROOT" python -I "$ROOT/pipeline/local.py" ref)

@@ -543,7 +543,7 @@ if (PLAY) {
   for (const [f, key] of [[SOUND[0], 'KeyM'], [SOUND[1], 'KeyB'], [SOUND[2], 'KeyN']])
     if (f) sound.push(L.take(f, { optional: true }).then(b => { if (b) { tracks.push({ a: Object.assign(new Audio(URL.createObjectURL(b)), { preload: 'auto' }), key }); voSync(); } }));
   // after the film (film.score.loop): the end card stays and one cue plays on in a loop, rising over 3 s, until the viewer plays,
-  // scrubs or steps again (the user, 2026-10-22: a viewer of the web version may stay); B mutes it with the music
+  // scrubs or steps again (a viewer of the web version may stay on the end card); B mutes it with the music
   let after = null, afterRise = 0;
   if (SOUND[3]) sound.push(L.take(SOUND[3], { optional: true }).then(b => { if (b) after = Object.assign(new Audio(URL.createObjectURL(b)), { loop: true, preload: 'auto' }); }));
   Promise.allSettled(sound).then(L.done);   // the picture and the sound are in: the loading screen goes

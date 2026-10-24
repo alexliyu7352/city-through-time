@@ -13,7 +13,7 @@ export async function server() { if (!srv) srv = await serve(); return srv; }
 export function closeServer() { if (srv) srv.server.close(); }
 
 // --size WxH (default 1920x1080), taken out of args; even numbers from 16 to 8192 (H.264 yuv420p), 16:9: the page draws one
-// 1920x1080 picture, and the size scales it whole (a smaller window only showed its top left corner, 2026-10-22)
+// 1920x1080 picture, and the size scales it whole (a smaller window alone would show only its top left corner)
 export function takeSize(args) {
   const i = args.indexOf('--size'); if (i < 0) return { w: 1920, h: 1080 };
   const v = args.splice(i, 2)[1] || '', m = /^(\d+)x(\d+)$/.exec(v), w = m && +m[1], h = m && +m[2];

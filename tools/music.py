@@ -9,13 +9,12 @@ place is in city.yaml film.music.cues (audio/lay.py lays them): its length is it
 END (the model closes a piece a few seconds before the length asked for, so its close falls about at the cue's end); a cue that
 continues another (continue: <id>) is generated on the last CONTEXT seconds of that cue's take before the point where it is laid
 to end (lay.laid_offset), the generation taking over from there: the new piece carries the old one's tempo, key and sound. The int8 model only: this build's
-fp32 DiT does not run on this machine (its 5.8 GB weight cache fails validation; uncached it passed 27 GB), and the user settled
-on int8 (2026-10-22, MUSIC.md §1). Candidates: build/audio/music/cand/<id>_<wording>-<seed>.wav, each with a .json
+fp32 DiT needs more memory than a 32 GB machine has (its 5.8 GB weight cache fails validation; uncached it passed 27 GB). Candidates: build/audio/music/cand/<id>_<wording>-<seed>.wav, each with a .json
 of what made it (prompt, seed, seconds, precision, the continuation); the tests: build/audio/music/test/. One at a time, niced,
 THREADS threads; an existing file is kept unless --force (a long batch resumes).
 
-The runtime is the official CPU one, Stable Audio 3's optimized/tflite (int8 DiT, flat ~2 GB of memory; on this Ryzen 3800X
-30 s of audio took 61 s, 2026-10-22): SA3 = its folder, optimized/tflite in the clone this machine's local/config.json names
+The runtime is the official CPU one, Stable Audio 3's optimized/tflite (int8 DiT, flat ~2 GB of memory; on a Ryzen 3800X
+30 s of audio takes about 61 s): SA3 = its folder, optimized/tflite in the clone this machine's local/config.json names
 (stable_audio; pinned at 77e0398, with its own .venv), its weights in HF_HUB_CACHE (hf_cache there; the optimized repo needs no login)."""
 import argparse, datetime, json, math, os, re, subprocess, sys, time
 import yaml
@@ -26,12 +25,12 @@ import lay, local
 SA3 = local.path('stable_audio', 'optimized', 'tflite')
 HF_CACHE = local.path('hf_cache')
 THREADS = int(os.environ.get('SA3_THREADS', 8))
-END = 4.0           # seconds generated past a cue's span: the model's own close falls in them (it ends 3-6 s early, 2026-10-22)
+END = 4.0           # seconds generated past a cue's span: the model's own close falls in them (it ends 3-6 s early)
 CONTEXT = 20.0      # seconds of the cue before that a continuation hears
 SHORT = 30.0        # a test word or a standalone track
 MAX_S = 380.0       # the medium DiT's longest rung
-CFG = 2.0           # classifier-free guidance with MUSIC.md's `### negative` prompt: the A/B of 2026-10-22 (abtest/) sounded less
-                    # jumbled with it (the user: C and E better than A); it runs the model twice per step
+CFG = 2.0           # classifier-free guidance with MUSIC.md's `### negative` prompt: in an A/B it sounded less
+                    # jumbled than without; it runs the model twice per step
 
 
 def prompts(md):
@@ -54,7 +53,7 @@ def slug(p):
 
 
 def measure(wav):
-    """what to know of a candidate before anyone hears it (SKILL.md 10d; 咸阳 M01 'long silences' left 30-40% of its candidates
+    """what to know of a candidate before anyone hears it (SKILL.md 10d; a prompt asking for 'long silences' left 30-40% of the candidates
     silent): its silent share and longest gap up to where its music ends, its low end (energy under 150 Hz), and its level in
     thirds (the build: rising, flat, falling)"""
     import numpy as np

@@ -2,8 +2,8 @@
 // Same rules and output as lemo-opuscar's core/render/readcheck.mjs: every text block must stay fully in frame for at least
 // (CJK chars / 4.5 + other chars / 15 + 1.5) s, never less than 1.5 s. Subtitles are checked by compile (reading hold) instead.
 // Beyond the library's: every pin of film.json in the stretch must be drawn whole at some point (one never drawn is in no list),
-// and no text may lie on another (the letters' bands of any two texts drawn opaque, named or not: 咸阳's readout legend on the
-// counters, 2026-10-22).
+// and no text may lie on another (the letters' bands of any two texts drawn opaque, named or not: e.g. a readout's
+// legend over the counters).
 // usage: node tools/readcheck.mjs <city_slug> [--step 0.08] [--from s] [--to s]     exit 0 ok, 1 too short, 2 not checked
 // --from/--to: only that stretch (batch checks: a text that starts before --from or runs past --to is judged on what is inside)
 import fs from 'fs';
@@ -52,7 +52,7 @@ for (const s of res.partial) { bad++; console.log(`BAD ${s.id.padEnd(18)} at ${s
 for (const s of res.low || []) { bad++; console.log(`BAD ${s.id.padEnd(18)} at ${s.t0.toFixed(2)}s  sits on the subtitle strip  ${JSON.stringify(s.text.slice(0, 24))}`); }
 for (const o of res.over || []) { bad++; console.log(`BAD overlap            at ${o.t0.toFixed(2)}-${o.t1.toFixed(2)}s  ${JSON.stringify(o.a.slice(0, 24))} on ${JSON.stringify(o.b.slice(0, 24))}`); }
 // a pin never drawn whole and opaque (no room for its box above its anchor, off screen or under a clip all its time) is in none
-// of the lists above, so it passed unseen (咸阳 2014's 秦汉新城, 2026-10-21). A pin that crosses --from/--to may show outside: not judged
+// of the lists above, so it would pass unseen. A pin that crosses --from/--to may show outside: not judged
 const FILM = JSON.parse(fs.readFileSync(buildDir(city, 'film.json'), 'utf8'));
 const drawn = new Set([...res.seen, ...res.partial].map(s => s.id)), last = TO == null ? FILM.dur : Math.min(FILM.dur, +TO);
 for (const p of FILM.pins || []) {

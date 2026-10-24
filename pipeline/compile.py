@@ -19,7 +19,7 @@ import stagecraft
 
 class Seen(dict):
     """a city.yaml mapping that remembers which of its keys were read: a key nothing reads is a typo, or one this version
-    does not have, and is skipped without a word (the user, 2026-10-22: 'with:' on an area was never passed on). Listed at the end"""
+    does not have, and is skipped without a word. Listed at the end"""
     def __getitem__(self, k): self.read.add(k); return super().__getitem__(k)
     def get(self, k, d=None): self.read.add(k); return super().get(k, d)
     def __contains__(self, k): self.read.add(k); return super().__contains__(k)
@@ -41,7 +41,7 @@ C = yaml.load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'), Loader=_Seen
 import layout as LAYOUT
 ST = json.load(open(LAYOUT.data(D, 'stats.json'), encoding='utf-8'))
 # a position more than a plate's width beyond the plate (and the land beyond it, terrain.context) is a typo and stops compile
-# (咸阳: the tiger tally at lat 45.0, 1200 km north, found only by stills of every second)
+# (a latitude of 45.0 for 34.5 lands 1200 km north, which nothing else would show)
 F = Frame(tuple(C['box']), 1.0 / C['scale'], near=[b_ for b_ in [((C.get('terrain') or {}).get('context') or {}).get('box')] if b_])
 FM = C['film']
 LAYOUT.ensure(D)
@@ -61,7 +61,7 @@ if SCR is not None:
     if (FM.get('opening') or {}).get('cue'): raise SystemExit('compile: film.opening.cue in city.yaml and a script.yaml: the opening line belongs in script.yaml (opening:)')
     if SCR['opening']: FM.setdefault('opening', {})['cue'] = SCR['opening'][0]
 
-# the narrator's arc and the emblem (SKILL.md 步驟 3-4; the user, 2026-10-20/21): every node says what the narrator feels there,
+# the narrator's arc and the emblem (SKILL.md 步驟 3-4): every node says what the narrator feels there,
 # and the film says whether it has an emblem. They drive the copy, the music and the picture (build/export/timeline.json)
 MOODS = {'wonder': 'the land and its first people: curiosity, awe', 'pride': 'the city flourishes, a hero appears',
          'grief': 'decline, destruction, a loss', 'wistful': 'what was hoped for and did not come, a farewell',
@@ -80,14 +80,14 @@ if EMBLEM != 'none':
     if not isinstance(EMBLEM, dict) or not EMBLEM.get('name') or not EMBLEM.get('meaning'): raise SystemExit('compile: film.emblem: {name, meaning, nodes} (what it personifies, said once in words)')
     _bad = [n_ for n_ in EMBLEM.get('nodes', []) if n_ not in [nd['id'] for nd in FM['nodes']]]
     if _bad: raise SystemExit(f'compile: film.emblem.nodes: no node {", ".join(_bad)}')
-# the emblem on the plate (tally keys) only where the film has one: the template's tiger tally outlived its storyline (咸阳, 2026-10-21)
+# the emblem on the plate (tally keys) only where the film has one
 _tally_at = [k_ for k_ in ('opening', 'closing') if (FM.get(k_) or {}).get('tally')] + [nd['id'] for nd in FM['nodes'] if nd.get('tally')]
 if EMBLEM == 'none' and _tally_at: raise SystemExit(f'compile: film.emblem is none, but there are emblem keys (tally) in {", ".join(_tally_at)}: drop them, or give the film its emblem')
 if EMBLEM != 'none' and [n_ for n_ in _tally_at if n_ not in ('opening', 'closing') and n_ not in EMBLEM.get('nodes', [])]:
     WARN.append(f'emblem keys (tally) in {", ".join(n_ for n_ in _tally_at if n_ not in ("opening", "closing") and n_ not in EMBLEM.get("nodes", []))}, '
                 f'which film.emblem.nodes does not list: the emblem shows where its story is not told')
-# the film ends on this year (SKILL.md 步驟 3), and a stop's colour ring must read against the one before (咸阳: the Qin orange
-# and the empire's first colour were one, and the ring that should repaint the city did not show): Lab ΔE76 under 25 is too close,
+# the film ends on this year (SKILL.md 步驟 3), and a stop's colour ring must read against the one before (else the ring
+# that should repaint the city does not show): Lab ΔE76 under 25 is too close,
 # unless the two are one chapter in one colour (the stops of the modern growth), which two period cities never are
 import datetime
 _ylast = (FM['nodes'][-1].get('years') or [None])[-1] if FM['nodes'] else None
@@ -330,7 +330,7 @@ TIMING = {'ring_view': 2.8, 'ring_out': 1.6, 'min_stage': 4.0, 'min_stage_small'
           'ring_fit_x': .9, 'ring_fit_y': .85, 'ruins_d': .3, 'contract_in': 2.0,
           'see_rate': .002, 'see_min': 2.0, 'see_max': 12.0,
           'dead_air_s': 3.0, 'word_gap_s': 5.0}   # today's buildings that come into view together rise one after another
-                                                              # over see_rate s each, see_min..see_max s in all (was .0012, 0..8: too fast, the user 2026-10-21)
+                                                              # over see_rate s each, see_min..see_max s in all
 # time the algorithm inserts into nodes (SKILL.md 演出文法 9e): {node id: [{tau: node seconds, delta: s, keys: [[offset s, key]], why}]};
 # compile re-runs itself with the plan until nothing more is needed
 PLAN = json.loads(os.environ.get('CT_PLAN') or '{}'); PASS = int(os.environ.get('CT_PASS') or 1)
@@ -673,7 +673,7 @@ def schedule_lines(node, dur):
     node['_pauses'] [(from, to)]. In the order of script.yaml:
       with: <picture>   waits for that picture (line_anchor); the picture waits for it in turn when the lines before run long
                         (time goes in just before the picture: kind 'words')
-      t: <seconds>      the old way: that moment of the node's picture, moving with every insertion; the picture waits likewise
+      t: <seconds>      that moment of the node's picture, moving with every insertion; the picture waits likewise
       neither           follows the line before (LINE_GAP after its reading time), through any hold the camera makes
       { pause: s }      a silence meant to be there (no check counts it as dead air)
     No line before the node's arrival; the node lasts until its last line has been read."""
@@ -828,7 +828,7 @@ for i, node in enumerate(FM['nodes']):
         light['darks'].append([round(cursor, 3), round(cursor + float(node['dark']), 3)]); cursor += float(node['dark'])
     cursor += float(node.get('gap', 0))
     dur = float(node['dur'])
-    k_ = 1.0   # (no longer stretched as a whole for its words: schedule_lines inserts time only where a line needs it)
+    k_ = 1.0   # (not stretched as a whole for its words: schedule_lines inserts time only where a line needs it)
     node['_k'] = k_; node['_ins'] = sorted(PLAN.get(node['id'], []), key=lambda q: q['tau'])   # stable: same tau keeps the order found
     node['_t0'] = round(cursor, 3)
     for rt in node.get('routes', []):   # a beam the camera follows leaves only once the camera is behind its origin, in the time
@@ -1399,7 +1399,7 @@ if NEWPLAN:
     os.execv(sys.executable, [sys.executable, '-I', os.path.abspath(__file__), D])
 if PLAN: print(f'  plan: {sum(len(v) for v in PLAN.values())} insertions after {PASS} passes, ' + ', '.join(f'{k} +{sum(q["delta"] for q in v):.1f} s' for k, v in PLAN.items()))
 # one front at a time: the engine draws a single front per city (engine/main.js: the stage growing now), so a second stage running
-# at the same time rises with no light ahead of it (帝都 2026-10-21: the new quarters came up before the sweep reached them)
+# at the same time rises with no light ahead of it (e.g. new quarters coming up before the sweep reaches them)
 for e in eras_out:
     fr_ = sorted(e['fronts'], key=lambda q: q['a'][0])
     for p_, q_ in zip(fr_, fr_[1:]):
@@ -1595,7 +1595,7 @@ Image.merge('RGBA', mask_chans[8:12]).save(LAYOUT.data(D, 'layers3.png'))   # (s
 # timeline bar: film time on the x axis, a tick at each node's first year
 bar = {'ticks': [{'t': nd['t0'], 'year': nd['years'][0], 'label': nd['label']} for nd in nodes_out], 'from': light['lamp'], 'to': last}
 E = FM.get('end', CL.get('end', {}))
-# the credits (the user, 2026-10-22): end.credits {author, voice, music, ...}, each a text or per language (the author's with a
+# the credits: end.credits {author, voice, music, ...}, each a text or per language (the author's with a
 # contact or a site), one line each above the sources and as bright as the first of them; a role's name is the language pack's
 # word credit_<role>; an empty one is left out
 _credits = [f"{i18n.word(LANG[0], 'credit_' + k_)}　{pick(v_)}" for k_, v_ in (E.get('credits') or {}).items() if v_]
@@ -1662,7 +1662,7 @@ film = {
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),
 }
-# pictures must not hide a change (SKILL.md 演出文法 5b; the user, 2026-10-21). Full-frame footage hides everything, so it never
+# pictures must not hide a change (SKILL.md 演出文法 5b). Full-frame footage hides everything, so it never
 # shows during one. A half-screen panel (engine/overlay.js: the right 64 % of the frame, melting in over 260 px) may show beside a
 # city that grows or burns on the left of the frame; it may not cover more than a third of that place on screen, sampled four times
 # a second. Changes across the whole frame (a node's colour ring, today's buildings rising, the satellite plate's sweeps, an area
@@ -1774,8 +1774,8 @@ for nid_, rs_ in ((SCR or {}).get('quiet') or {}).items():
     if nd_ is None: raise SystemExit(f'script.yaml quiet: no node {nid_!r}')
     _quiet += [(node_time(nd_, r_[0]), node_time(nd_, r_[1])) for r_ in rs_]
 _declared = list(_quiet) + [q_ for n_ in FM['nodes'] for q_ in n_.get('_pauses', [])]
-# the narration as one track for the live preview (engine: heard while playing, kept in step with the picture; the user,
-# 2026-10-22): every voiced line laid at its time, 48 kHz mono, build/audio/voice/track_<lang>.wav (the mix reads the lines)
+# the narration as one track for the live preview (engine: heard while playing, kept in step with the picture):
+# every voiced line laid at its time, 48 kHz mono, build/audio/voice/track_<lang>.wav (the mix reads the lines)
 _voiced = [c_ for c_ in cues if voice_len(c_['id'])]
 if _voiced:
     import subprocess, wave
@@ -1801,7 +1801,7 @@ _vspans = [(c_['t0'], c_['t0'] + voice_len(c_['id'])) for c_ in _voiced]
 _vwav = os.path.join(D, 'build', 'audio', 'voice', f'track_{VOICE_LANG}.wav') if _voiced else None
 _score = (LAY.lay_code(D, FM.get('music'), DUR, _vspans, _declared, _vwav, LAY.timing(film)) if _msrc == 'code'
           else LAY.lay(D, FM.get('music'), {n_['id']: n_['t0'] for n_ in nodes_out}, DUR, _vspans, _declared, _vwav))
-# the sound effects kept beside the score (city.yaml film.sfx; the user, 2026-10-22), at the moments the page fires them (main.js
+# the sound effects kept beside the score (city.yaml film.sfx), at the moments the page fires them (main.js
 # ev(): the relay as the lights go out, the lamp, each burning era from its off less its burn, the lights at the end)
 if FM.get('sfx'):
     _ev = [(light['lightsOut'], 'relay'), (light['lamp'], 'lamp'), (light['lights'], 'lights')] if light.get('lights') else [(light['lightsOut'], 'relay'), (light['lamp'], 'lamp')]
@@ -1824,7 +1824,7 @@ _finds = COPY.check(film, FM.get('copy'), _quiet, LANG[0])
 # dead air (SKILL.md 演出文法 5c): (a) a stretch longer than dead_air_s with no line spoken, nothing changing on the model, no picture
 # up and the camera all but still; (b) a gap between two lines longer than word_gap_s that nothing declares (a quiet stretch or a
 # pause), no full-screen clip fills, and that is not the next line waiting for its picture while the picture moves (the next line
-# is its node's first, or follows a picture: with). The planner's holds made (b) (秦都 50-57 s, 2026-10-21)
+# is its node's first, or follows a picture: with). The planner's holds can cause (b).
 _LINE = {c_['id']: c_ for n_ in FM['nodes'] for c_ in n_.get('cues', []) if 'id' in c_}
 _FIRST = {next((c_['id'] for c_ in n_.get('cues', []) if 'id' in c_), None) for n_ in FM['nodes']}
 _pict = [(x['on'], x['on'] + x['dur']) for x in footage_out]

@@ -59,7 +59,7 @@ class Builder:
         """x, y UTM metres; theta radians CCW from east (UTM frame); z0 metres above ground; a..e metres. A house's or a hall's
         body on a slope (its foundation deeper than self.plinth) first gets a plinth (PLINTH): a darker base 0.4 m wider all round
         from the foundation's foot up to the ground at its highest corner, so the foundation reads as a platform (台基, 吊腳)
-        and not as its walls run down the hill (the same colour as the walls stretched a house: the user, 2026-10-22)"""
+        and not as its walls run down the hill (in the walls' colour it stretches the house)"""
         S = self.F.scale
         gm = self.ground_m(x, y) if g_m is None else g_m
         if t == BOX and z0 <= 1e-6 and part in (FAB, LMK) and d != 1 and not self.slope and self.found > self.plinth and min(a, b) >= 2:
@@ -280,8 +280,8 @@ class Builder:
                 tx_, ty_ = P(w * .18 * (1 if self.rng.random() < .5 else -1), cyc + sl * .15)
                 self.tree(tx_, ty_, 8.5, 2.6)
 
-    MANSION_D = 60.0   # metres: a courtyard lot deeper than this is a mansion (a 95 m lot as one court was four thin halls
-                       # round an empty yard, and at low detail, with no walls, an empty frame: Han 北第, the user 2026-10-22)
+    MANSION_D = 60.0   # metres: a courtyard lot deeper than this is a mansion (a 95 m lot as one court is four thin halls
+                       # round an empty yard, and at low detail, with no walls, an empty frame)
 
     def mansion(self, x, y, th, w, d, h=6.0, part=FAB):
         """a mansion (宅第, 甲第) on a large lot facing south (local -y): courts one behind another along its axis (進, about
@@ -305,8 +305,8 @@ class Builder:
         """a row of 2-storey shophouses along segment a->b (UTM), on one side (side=+1 left, -1 right), set back to the
         street's edge, roofs parallel to the street, open shop fronts and awnings toward it, a small yard behind each closed by a
         wall along the row's back. Returns the row's footprints (shop and yard).
-        The houses of a row stand wall to wall at about one height (咸阳 Tang, the user 2026-10-22: 6.7 m wide, a gap between
-        each, heights apart and bare ground behind, the row looked from behind like a row of teeth)."""
+        The houses of a row stand wall to wall at about one height (6.7 m wide shops with a gap between
+        each, heights apart and bare ground behind look from behind like a row of teeth)."""
         L = math.hypot(b[0] - a[0], b[1] - a[1]); th = math.atan2(b[1] - a[1], b[0] - a[0])
         nx, ny = -math.sin(th) * side, math.cos(th) * side
         n = int(L // frontage); off = street_w / 2 + depth / 2 + .5; feet = []
@@ -511,7 +511,7 @@ class Builder:
     def market(self, x, y, th, w, d, part=LMK, lanes=2):
         """a market (市, han_changan.md §10): a walled square with gates on each side, a grid of lanes (井 shape, schematic),
         long rows of shops (列肆) filling every block between the lanes, back to back under one roof with an alley between one
-        row and the next (rows along the lanes alone left a 200 m block an empty square: the user, 2026-10-22), and the market
+        row and the next (rows along the lanes alone leave a 200 m block an empty square), and the market
         tower (旗亭, 市楼 皆重屋) at the centre"""
         P = self.frame(x, y, th)
         cs = [(-w / 2, -d / 2), (w / 2, -d / 2), (w / 2, d / 2), (-w / 2, d / 2)]
@@ -557,7 +557,7 @@ class Builder:
         kilns in the west and the north-centre, an iron foundry in the south-centre, a mint in the north-east): walled yards on
         a grid of 10 m lanes, each one trade's: a row of kilns with a work shed and a drying floor; a furnace, four mould kilns,
         a casting shed and scrap pits; a mint of two halls and a store. Yards no trade claims are the workers' houses. Scattered
-        kilns read as dots from any distance (the user, 2026-10-22)"""
+        kilns read as dots from any distance"""
         P = self.frame(x, y, th); nc, nr = max(2, round(w / 85)), max(2, round(d / 70)); cw, ch = w / nc, d / nr
         cells = [(i, j) for i in range(nc) for j in range(nr)]; at = lambda c: ((c[0] + .5) / nc, (c[1] + .5) / nr)   # 0..1 from the west, the south
         near = lambda fx, fy: min(cells, key=lambda c: (at(c)[0] - fx) ** 2 + (at(c)[1] - fy) ** 2)

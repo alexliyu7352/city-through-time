@@ -10,7 +10,7 @@
                               where the generation took over (its take's .json) and crosses over sample to sample, its take
                               beginning as the one before it.
   film.music.stop_in_silences the music stops in the declared silences (script.yaml quiet and pause), with a hard cut
-  film.music.loop             a cue whose take the preview plays on in a loop once the film has ended (the user, 2026-10-22: a
+  film.music.loop             a cue whose take the preview plays on in a loop once the film has ended (a
                               viewer of the web version may stay on the end card), made seamless: its close crossed into its start
 
 A cue rises over FADE_IN from its node and rings out XF seconds under the next one. Under each voiced line the music dips DUCK_DB; where nobody speaks it sits UNDER_DB
@@ -76,8 +76,7 @@ def take_meta(D, c):
 
 def laid_offset(c, x, span, last, meta):
     """where in its take a cue starts: as written (offset); where a continuation took over; or else so that the take's close
-    begins RING after the cue's end, and the last cue's music ends with the film: its climax inside its stretch (the user,
-    2026-10-22: the climaxes ran past their nodes)"""
+    begins RING after the cue's end, and the last cue's music ends with the film: its climax inside its stretch, not past its node"""
     if 'offset' in c: return float(c['offset'])
     if continues(c, meta): return float((meta.get('inpaint') or [0])[0])
     return max(0.0, (music_end(x) if last else closing(x) + RING) - span)
@@ -203,8 +202,8 @@ def _blocks_db(x, h):
 
 
 def _on_a_hit(cid, x, off, own):
-    """a cue whose take is cut into (offset) should open on a hit, not in a rest: 咸阳 M02 laid later opened on a 2 s rest (the user,
-    2026-10-22). Says so when the take stays 10 dB under the cue's own level for a second or more from the offset, and where it
+    """a cue whose take is cut into (offset) should open on a hit, not in a rest (a cue
+    opening on a 2 s rest sounds like a hole). Says so when the take stays 10 dB under the cue's own level for a second or more from the offset, and where it
     gets loud"""
     loud = 20 * np.log10(max(_loud_rms(own), 1e-6)); h = SR // 100
     db = _blocks_db(x[int(off * SR):int((off + 8) * SR)], h)

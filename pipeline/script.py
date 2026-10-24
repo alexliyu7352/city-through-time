@@ -6,7 +6,7 @@ voice), in the order shown; city.yaml holds none. One line:
   id     stable name of the line (unique in the film): voice files, exports and anything on screen that follows a line use it
   with   the picture the line waits for (compile's schedule_lines): shot:<camera key shot>, pin:<id>, card:<footage id>,
          stage[:<name>] or node (the node's arrival); lead: seconds before it. Pictures can follow a line in turn (with: <line id>)
-  t      the old way: seconds from the start of the node's picture (moves with every hold the camera planner inserts); the
+  t      seconds from the start of the node's picture (moves with every hold the camera planner inserts); the
          opening line counts from the film's start
          With neither, a line follows the one before as soon as it has been read, through any hold of the camera.
   <lang> the text in every language of film.lang (city.yaml), e.g. zh and en
