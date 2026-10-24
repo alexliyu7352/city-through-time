@@ -2,7 +2,7 @@
 // full entry is read only when it is opened). cities.json is generated, never committed: CI writes it when it publishes GitHub
 // Pages (.github/workflows/pages.yml), tools/preview.mjs writes it for the local preview.
 //   node tools/registry.mjs                          write cities.json
-//   node tools/registry.mjs --check [--base <ref>]   check every entry (CONTRIBUTING.zh-Hant.md has the fields); with --base, also
+//   node tools/registry.mjs --check [--base <ref>]   check every entry (CONTRIBUTING.md has the fields); with --base, also
 //                                                    the files a pull request adds under cities/: text only (the films, their
 //                                                    pictures, music and footage live on outside hosts, not in this repository;
 //                                                    the example city, EXAMPLE, keeps its pictures)

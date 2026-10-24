@@ -1,5 +1,7 @@
 # 參與《一城春秋》
 
+[English](CONTRIBUTING.md) · 繁體中文 · [简体中文](CONTRIBUTING.zh-Hans.md)
+
 兩種參與方式：**交一座城市**，讓它出現在入口頁；或**改進程式與技能**。
 
 ## 交一座城市
@@ -22,7 +24,7 @@
 uv run python -I tools/web.py cities/<城市>
 ```
 
-它會把播放器需要的檔案打包到 `cities/<城市>/dist/web/`（咸陽約 215 MB），只收頁面真的會讀的檔：沒有 WAV，也沒有內部測試用的圖。海報也在裡面：`poster.jpg`（1280 寬）和 `poster_thumb.webp`（640 寬，館藏和搜尋用）。只放影片、不做播放包時，就把這兩張圖單獨放上去。字型不在包裡，播放器會從本專案的 `fonts/` 讀（用了新字型的城市，要在 pull request 裡把字型加進 `fonts/`）。
+它會把播放器需要的檔案打包到 `cities/<城市>/dist/web/`（咸陽約 121 MB），只收頁面真的會讀的檔：沒有 WAV，也沒有內部測試用的圖。海報也在裡面：`poster.jpg`（1280 寬）和 `poster_thumb.webp`（640 寬，館藏和搜尋用）。只放影片、不做播放包時，就把這兩張圖單獨放上去。字型不在包裡，播放器會從本專案的 `fonts/` 讀（用了新字型的城市，要在 pull request 裡把字型加進 `fonts/`）。
 
 放播放包的地方必須**允許網頁跨網域讀取**。以下兩種都可以：
 
@@ -69,7 +71,7 @@ uv run python -I tools/web.py cities/<城市> --entry
 | `poster` | 海報的 https 網址（1280 寬），例如 `<播放包網址>poster.jpg`（示例城市咸陽用倉庫裡的路徑） |
 | `thumb` | 小圖的 https 網址（640 寬），例如 `<播放包網址>poster_thumb.webp` |
 | `watch` | `[{ "site": "YouTube", "url": "…" }, { "site": "Bilibili", "url": "…" }]`：發布到幾個網站就填幾個，入口頁全部列出，**第一個是預設**（「觀看影片」播它）。貼平常的影片網址（不要帶開始時間）；YouTube 和 B 站會在入口頁裡嵌入播放，播放視窗裡可以切換網站，其他網站顯示成連結 |
-| `bundle` | `{ "url": "播放包網址", "mb": 215 }`，沒有就填 `null` |
+| `bundle` | `{ "url": "播放包網址", "mb": 121 }`，沒有就填 `null` |
 | `download` | （可選）`{ "url": "…" }`，影片檔的下載網址 |
 | `ai` | AI 生成的部分：`narration`、`music`、`imagined` |
 | `license` | `CC BY-SA 4.0` |

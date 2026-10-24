@@ -242,8 +242,8 @@ const LANG_NAMES = {
 
 // the guides on GitHub, by language (a language without its own falls back along the list)
 export const GUIDES = {
-  making: { 'zh-Hant': 'docs/MAKING.zh-Hant.md' },
-  submit: { 'zh-Hant': 'CONTRIBUTING.zh-Hant.md' },
+  making: { en: 'docs/MAKING.md', 'zh-Hant': 'docs/MAKING.zh-Hant.md', 'zh-Hans': 'docs/MAKING.zh-Hans.md' },
+  submit: { en: 'CONTRIBUTING.md', 'zh-Hant': 'CONTRIBUTING.zh-Hant.md', 'zh-Hans': 'CONTRIBUTING.zh-Hans.md' },
 };
 
 export function words(lang) {

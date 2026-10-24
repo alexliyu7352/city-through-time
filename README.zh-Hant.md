@@ -4,7 +4,7 @@
 
 **入口頁：[cities.go5.si](https://cities.go5.si/)**：轉動地球、挑一座亮著的城市觀看，或者做一部你自己城市的片。
 
-[English](README.md) · 繁體中文
+[English](README.md) · 繁體中文 · [简体中文](README.zh-Hans.md)
 
 ![咸陽，1983 年設市](cities/xianyang/poster.jpg)
 
