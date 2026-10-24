@@ -2,6 +2,9 @@
 
 用戶 2026-10-22 選定：**MiniMax Audio**（[minimax.io/audio](https://www.minimax.io/audio)，線上生成）。以後改配音照這份檔案的流程做；換服務或換聲音，改這份檔案並重生全部段落。
 
+條款（2026-10-23 查）：MiniMax 的生成內容限個人、非商業使用，MiniMax 不主張所有權。所以旁白依它的條款公開，不在影片的 CC BY-SA 授權內：
+商用這部片的人要換掉旁白或另外取得授權（`LICENSE-CONTENT.md`）。
+
 旁白的身分：一位博學的歷史學者，講這座城的編年史；歷史是客觀的，講的人有感情（SKILL.md 導演原則）。
 
 ## 1. 建聲音（Voice Design）

@@ -5,13 +5,13 @@ box: [<west>, <south>, <east>, <north>]      # WGS84；以歷史核心為中心�
 scale: 10000                                  # 1:10000 → 1 模型公尺 = 10 km
 raw:                                          # 下載資料都在本機的 raw 根目錄下（local/config.json 的 raw，pipeline/local.py）：osm/、overture/、ghsl/
   cmab: cmab/<province>                       # 中國：CMAB 省包解壓目錄，相對 raw 根目錄
-buildings: { source: cmab, simplify_m: 1.0, min_area_m2: 15, exaggeration: 4.0 }   # cmab | overture_ghsl；今日建築高度 ×4
-terrain: { enabled: true, exaggeration: 3.0 } # Copernicus DEM（pipeline/terrain.py，另寫 16 位元 terrain16.png）；倍率看 terrain.py 印的 foundations 上限（山城多半 ×1–1.5），超過時坡上房子的地基跟牆一樣高
+buildings: { source: cmab, simplify_m: 1.0, min_area_m2: 15, exaggeration: 4.0 }   # cmab | overture_ghsl；今日建築高度倍率（咸陽 ×4：1:10000 下量體才看得出來）
+terrain: { enabled: true, exaggeration: 3.0 } # Copernicus DEM（pipeline/terrain.py，另寫 16 位元 terrain16.png）；3.0 是咸陽的值：先跑 terrain.py，照它印的 foundations 上限填（山城多半 ×1–1.5），超過時坡上房子的地基跟牆一樣高
 #   150 m 以下的小起伏（樹、田埂）照原高：detail: { below_m: 150, exaggeration: 1 }（預設，不寫也是這樣）；今天的建築先從地表挖掉補成裸地（bare: false 不做）
 #   遠景地形（台面外的山或水，例如城名由來的山）：context: { box: [w, s, e, n], res_m: 60, exaggeration_far: 2.5, blend_km: 6,
 #     shade: { az: 250, el: 22, k: 0.8 } }（shade：固定的低角度側光，只照亮向光的山坡，遠山在夜空前才看得清）；
 #   要它出現的節點寫 context: [{ t: 0, a: 1 }, { t: 7, a: 1 }, { t: 9.5, a: 0 }]（透明度關鍵幀），釘標可以站在上面
-bands:                                        # 年代分層（lo 含、hi 不含）
+bands:                                        # 年代分層（lo 含、hi 不含）；下面是 CMAB（中國，1985–2018）的切法，overture_ghsl 的城市用 GHSL 5 年期（DATA.md）
   - { lo: 1900, hi: 1988, zh: 1987 年已有, en: by 1987 }
   - { lo: 1988, hi: 1996, zh: 1988–1995, en: 1988–1995 }
   - { lo: 1996, hi: 2006, zh: 1996–2005, en: 1996–2005 }
@@ -27,16 +27,17 @@ film:
   yearFmt: zh                                 # 年份按哪個語言包寫（預設第一語言）：zh「前 350」、ja「紀元前350年」、en「350 BCE」
   emblem: none                                # 象徵物：none，或 { name: <物>, meaning: <它代表這座城的什麼>, nodes: [<出現的節點>] }（必填）
   # voice: { lang: zh }                       # 配音的語言（build/audio/voice/<lang>/<句子 id>.wav；預設第一語言）
+  # sfx: [relay, lamp, burn, lights]        # 保留的音效（頁面事件，render/events.mjs；咸陽用這四個）：先 audio/mix.py <city> --kit 做單音，再 compile；不寫就沒有音效
   identity: { l1: "<城市> · 1:10000 白模", l2: "{stats.centre_wgs[1]:.3f}°N  {stats.centre_wgs[0]:.3f}°E  ·  <資料來源>" }
-  light: { base: 0.42 }                       # 投影階段的展廳底光（0.3–0.5 讓城看得見）
+  light: { base: 0.62 }                       # 投影階段的展廳底光，讓城看得見；深色台面要亮一點（咸陽 0.62；不寫時 compile 用 0.28）
   rise: { sinkDur: 2.4, ghost: 1.0 }          # 1 = 今天的白模城市全片都在（參考片文法）；歷代城市在原地替換它
   satellite_source: sentinel                  # sentinel（可發布）| hr（Esri 第 15 級，僅內部測試，pipeline/imagery_tiles.py）
   node_tint: 0.5                              # 每個節點把今天的城市染成該節點顏色的強度；節點可用 tint 覆寫（現代段設 0）
-  rings_motif: { centre: [<lon>, <lat>], spacing_m: 380, from: -4000, gain: 0.3 }   # 每百年一圈的年輪光環（可省略）
+  # rings_motif: { centre: [<lon>, <lat>], spacing_m: 380, from: -4000, gain: 0.3 }   # 每百年一圈的年輪光環：從開燈到結尾都在，古代段看起來像雜訊，不建議用（咸陽沒用）
   drift: 1.0                                  # 鏡頭微漂移倍率
   timing: { ring_view: 2.8, ring_out: 1.6, min_stage: 4.0, grow: 1.6, settle_need: 2.0, ring_m: 1000, ring_q: 0.35, scan_w: 0.12 }   # 演出文法 9a/9b 的參數（光圈速度按畫面算）
   era_look: { dim: 0.5, glow: 1.0, edge: 1.0, line: 1.0, light_m: 45, halo_m: 14, edge_m: 150 }   # 歷代城市站穩後：今天的城市變暗；外緣一條霓虹細線，照亮 light_m 內的建築
-  copy: { max_zh: 22, gap_s: 8, long_gap_s: 15, dense_share: 0.9, keep: ['十五五'] }   # 文案檢查的門檻（pipeline/copylint.py，可省略用預設）；keep：照中文寫的專有名詞
+  copy: { max_zh: 22, gap_s: 8, long_gap_s: 15, dense_share: 0.9, keep: ['十五五'] }   # 文案檢查的門檻（pipeline/copylint.py，可省略用預設）；keep：照原文寫數字的專有名詞與引文（例：咸陽的「十五五」）
   fonts:   # one font per job, by family name and weight; looked up in fonts/ (uv run python -I pipeline/fonts.py list .; add one: fonts.py add . "<Family>")
     primary_strong:      { family: Noto Serif SC, weight: 600 }   # first language: subtitles, chapter names, tags, place names, the end title
     primary:             { family: Noto Serif SC, weight: 300 }   # first language: readout labels, the timeline label, small text
@@ -48,7 +49,11 @@ film:
     secondary_strong: { family: Inter Tight, weight: 400 }        # second language under tags and labels, measurements
     mono:           { family: IBM Plex Mono, weight: 400 }        # notes, credits, the locator
   palette:
-    epochs: ['#ffa13d', '#e8553a', '#c9a7ff', '#7fe0c8', '#cfe9ff', '#ffa13d', '#ffa13d', '#ffffff']   # 最多 8 個遮罩層；epoch 可自帶 col 覆蓋
+    plate: '#262c33'                          # 深色台面（不寫時引擎畫白台面）；以下四個取自咸陽
+    plateSide: '#15191e'
+    water: '#3a5670'
+    plateEmit: 0.55                           # 投在台面上的光的自發光比例：太低時星圖、遮罩幾乎看不見
+    epochs: ['#ffa13d', '#e8553a', '#c9a7ff', '#7fe0c8', '#cfe9ff', '#ffa13d', '#ffa13d', '#ffffff']   # 遮罩共 12 個通道（時間和位置都不重疊的共用一個）；epoch 可自帶 col 覆蓋
     bands: ['#ffa13d', '#2a63ff', '#2f98ff', '#6fdcff', '#b9f1ff', '#eefcff']
     hgt: ['#1a1440', '#5a35d6', '#e2509a', '#ffe7c4']
     pick: '#ffd27a'
@@ -57,8 +62,8 @@ film:
     - { lon: 0, lat: 0, zh: <河名>, en: <River>, size: 1.2, dmin: 1.0 }
   opening:                                    # 展廳燈下的白模；燈在 dur 秒滅、投影亮。鏡頭關鍵幀可寫 v: [模型座標…] 或 ll: [lon, lat], az, el, d
     dur: 7.0
-    camera: [{ t: 0.0, v: [<tx>, <ty>, <tz>, <az>, <el>, <d>] }, { t: 7.0, v: [...] }]
-    tally: [{ t: 0.0, x: <x>, y: -0.0225, z: <z>, rot: 200, scale: 1.0, split: 0, glow: 0.15 }]   # 象徵物（虎符）放在台座上
+    camera: [{ t: 0.0, ll: [<lon>, <lat>], az: 30, el: 8, d: 0.6 }, { t: 7.0, ll: [<lon>, <lat>], az: 32, el: 11, d: 2.0 }]   # 寫經緯度，不寫模型座標 v:（改了 box 模型座標就全錯）
+    # 開場屬於城市和它的名字，不放象徵物（SKILL.md 步驟 3）
   nodes:                                      # 依序排版；片長 = 節點秒數加總。節點內的時間：秒（相對節點起點）、{year: Y}、'end'
     - id: <node>
       mood: { feel: pride, level: 2 }         # 講述者在這一站的感受（必填）：wonder | pride | grief | wistful | hope | calm；level 1–3
@@ -81,7 +86,7 @@ film:
           - { dur: 5.0, from: [<lon>, <lat>], noise: 0.1 }        # 從一點向外；大用光圈、小用範圍內刷新（mode: ring | scan 可強制）
         grow: 1.6                             # 每棟長出的秒數
         fall: out                             # 收回：out = 跟著下一節點的換色光圈（預設）；in = 光圈往 fall_from（預設 origin）收縮（焚城，演出文法 6）
-        fall_dur: 1.4                         # 光圈經過後，每棟建築沉下（或今天的建築回來）的秒數
+        fall_dur: 1.4                         # 光圈經過後，每棟建築沉下（或今天的建築回來）的秒數；焚城（fall: in）寫 0.25，收縮光圈一過就倒
         boundary_close_m: 70                  # 外緣邊框：建築間距在這以內算同一片城（大而疏的城加大）
         outline: [[[<lon>, <lat>], ...]]      # 選填：建築給不出的邊界（村子的壕溝），併進外緣光帶與讓位範圍
         # landmarks 每項可加 id（給 stages 選）、group（一組一起選）、exaggeration（照復原圖做的單體保住原比例，例 1.25）
@@ -115,10 +120,10 @@ film:
         - { id: <ln>, src: rivers, col: '#8fb8ff', width: 0.003, at: 0.3, fade: 2.5, persist: false }
       props:                                  # 示意 3D 模型：terrace | hall | tower | hut | huts | wall(pts/osm, gates) | bridge(from,to) | shed | blocks | boats | station
         - { id: <p>, kind: terrace, lon: 0, lat: 0, rot: 0, w_m: 130, d_m: 100, h_m: 11.3, tiers: 3, top: .55, hall: { h_m: 10 }, at: 1.0, fade: 2.0, until: <node>, year: -350 }
-      decals:                                 # 投在台面上的圖：plan | starmap | image(方志掃描→光) | footprints(歷代城市範圍，用在結尾) | rings | emblem（全片最多 4 個）
-        - { id: <d>, kind: image, file: assets/<scan>.jpg, centre: [lon, lat], width_m: 2600, col: '#bff3e6', at: 9.0, fade: 2.0, off_at: 19.5, gain: 1.3, black_pct: 58 }
+      decals:                                 # 投在台面上的圖：plan | starmap | image | footprints(歷代城市範圍，用在結尾) | rings | emblem（全片最多 4 個）
+        - { id: <d>, kind: footprints, at: 30.0, fade: 3.0, persist: true, gain: 1.2, w: 3, glow: 0.8 }   # 古地圖、方志圖不要鋪在台面上（平鋪看起來不是 3D）：做成文獻卡（footage mode: doc）
       sections:                               # 地形剖面儀表（沿一條線取 DEM）
-        - { id: <s>, from: [lon, lat], to: [lon, lat], with: <句子 id>, title: "<標題>", sub: "<小字>", l0: "南", l1: "北", labels: [{ k: 0.1, text: "<地名>" }] }   # with 同標籤（until、hold）；或 t0/t1 秒數
+        - { id: <s>, from: [lon, lat], to: [lon, lat], with: <句子 id>, title: "<標題>", sub: "<小字>", l0: "南", l1: "北", labels: [{ k: 0.1, text: "<地名>" }] }   # with 同標籤（until、hold）；或 t0/t1 秒數；「那句結束」不含字幕多留的 0.4 秒，要和字幕一起收 hold 就加 0.4
       satellite: { at: 0.5, fade: 5.0, persist: true, sweep: true, back_at: 10.0, back_fade: 4.0 }   # 衛星台面；sweep = 一道光從西向東掃過，白模換成影像；back_at = 第二道光掃回白模
       dim_today: { at: 13.0, to: 0.55 }       # 今天的城市變暗（例：結尾在它上面描歷代足跡時）
       reset: { year: 1988 }                  # 選填：這個節點的光圈內，比這年新的今日建築先沉下，之後隨年份（grow）長回來
@@ -129,10 +134,10 @@ film:
         scrim: 0.5
         groups:   # kind: enclosure（垣：centre, rx_m, ry_m, n: [左, 右], gap_deg, star）| band（天河：pts, w_m, n）| asterism（at_ll, stars: 東北米偏移, lines）| line（from, to, n）
           - { id: ziwei, kind: enclosure, at: 14.0, draw: 2.0, centre: [<lon>, <lat>], rx_m: 1900, ry_m: 1100, n: [8, 7], gap_deg: 32, label_ll: [<lon>, <lat>], zh: "紫宫 · 咸阳宫", en: "Purple Palace · Xianyang Palace" }
-      grow: { at: 0, bands: [{ t: {year: 1987}, spread: 1.6 }, ...], dim: { t: 25, to: 0 }, mono: true, warm: 1.6, change: ghsl }   # 現代：按年份長出；mono = 一律白色；warm = 剛長出的幾秒是暖色；change: ghsl = 翻建變高（演出文法 9d）
+      grow: { at: 0, bands: [{ t: {year: 1987}, spread: 1.6 }, ...], dim: { t: 25, to: 0 }, mono: true, warm: 1.6, change: ghsl }   # 現代：按年份長出；mono = 一律白色；warm = 剛長出的幾秒是暖色（咸陽 4）；change: ghsl = 翻建變高（演出文法 9d）
       follow_change: { windows: 6, d: 0.5, el: 30, region: [[<lon>, <lat>], ...], end: { ll: [<lon>, <lat>], el: 58, d: 2.2 } }   # 鏡頭飛到每段時間變化最密的地方（不寫 camera）
       picks: [{ id: <pk>, mark: <id>, r: .06, at: 1, off_at: 'end' }]
-      tally: [{ t: 4.0, lon: 0, lat: 0, lift: 0.05, rot: 210, scale: 0.5, split: 0, glow: 0.9 }]   # 象徵物關鍵幀；split 1 = 分成兩半
+      # tally: [{ t: 4.0, lon: 0, lat: 0, lift: 0.05, rot: 210, scale: 0.5, split: 0, glow: 0.9 }]   # 象徵物關鍵幀（可選：film.emblem 不是 none，而且只寫在 emblem.nodes 列的節點）；split 1 = 分成兩半
       pins: [{ id: <pin>, mark: <id>, with: <句子 id>, zh: "<標題>", en: "<sub>", len: 120, dx: 40 }]   # with：從那句開始顯示到那句結束（until: <句子 id>、hold: 秒）；或 t0/t1 秒數
       marks: [{ id: <m>, mark: <id>, t0: {year: -195}, t1: 'end', r: 10 }]
       # 字幕不寫在這裡：在 script.yaml 的 nodes.<這個節點 id>（templates/script.yaml）
@@ -141,8 +146,8 @@ film:
     lights_after: 1.5
     end_after: 1.5
     end_hold: 9.0
-    camera: [{ t: 0, v: [...] }, { t: 10.5, v: [...] }]
-    tally: [{ t: 0.0, x: <x>, y: -0.0225, z: <z>, rot: 200, scale: 1.0, split: 0, glow: 0.3 }]
+    camera: [{ t: 0, ll: [<lon>, <lat>], az: 0, el: 88, d: 3.0 }, { t: 10.5, ll: [<lon>, <lat>], az: 20, el: 40, d: 3.1 }]
+    # tally: [...]   # 象徵物在片尾的呼應（可選，film.emblem 不是 none 才寫）
   end: { zh_title: "一城春秋 · <城市>", en_title: "A City Through Time · <City>",
          credits: { author: "<作者> · <聯繫方式或網址>", voice: "<配音：人名，或服務名 · AI 生成>", music: "<配樂：作曲者、曲庫，或模型名 · AI 生成>" },   # 片尾署名；角色名取語言包的 credit_<角色>，空的不顯示
          lines: ["<資料來源與授權>", "<示意聲明> · 史料来源见 FACTS.md"] }
@@ -162,7 +167,7 @@ film:
 #    - id: m2011
 #      years: [2005, 2011]                     # 飛行時年份從上一站跑到這一站（每秒最多一年），到站後停住
 #      dur: 16                                 # 到站後講述的秒數（字幕不夠讀會自動拉長）
-#      tour: { ll: [<lon>, <lat>], d: 0.75, el: 38 }   # 這一站的取景；az 可省（飛行時繞城轉），在模型邊緣附近的站給 az 讓邊緣在鏡頭後
+#      tour: { ll: [<lon>, <lat>], d: 0.75, el: 38 }   # 這一站的取景；az 可省（飛行時繞城轉），在模型邊緣附近的站給 az 讓邊緣在鏡頭後；主角橫跨大半塊底板時抬高 el（約 60），讓底板塞滿畫面
 #      ghost: [qin]                            # 講到古城遺址時，重新描出那座城的輪廓
 #      night: 0.65                             # 夜色逐站加深，最後萬家燈火
 #    第一站（例 m1975）放 grow: {…, change: ghsl, counters_until: <最後一站 id>} 與 reset: { year: 1975.5 }。
