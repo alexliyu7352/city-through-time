@@ -18,7 +18,7 @@
   --gutter: clamp(20px, 4.2vw, 64px);
   --bar-h: 68px;
   --ease: cubic-bezier(.22, 1, .36, 1);   /* ease-out-quint */
-  --z-pins: 2; --z-copy: 3; --z-bar: 10; --z-menu: 20; --z-scrim: 30; --z-panel: 40;
+  --z-pins: 2; --z-copy: 3; --z-bar: 10; --z-menu: 20; --z-scrim: 30; --z-panel: 40; --z-bar-open: 50;   /* bar-open: the bar over an open city (wide screens) */
   color-scheme: dark;
 }
 :lang(zh-Hant) { --display: "Bodoni Moda", "Noto Serif TC", serif; --text: "Albert Sans", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
@@ -305,7 +305,12 @@ kbd { font: 500 12px/1 var(--text); color: var(--ink-3); border: 1px solid var(-
   .panel-body { padding: 22px 20px 32px; }
   .panel h2 { font-size: 38px; }
 }
-@media (min-width: 761px) { .scrim { display: none; } }
+@media (min-width: 761px) {
+  .scrim { display: none; }
+  /* an open city's drawer starts under the bar, and the bar and its menus stay over it: the languages and the search remain in reach */
+  .panel { top: var(--bar-h); }
+  .city-open .bar { z-index: var(--z-bar-open); background: oklch(0.155 0.014 255 / 0.84); backdrop-filter: blur(14px) saturate(1.2); border-bottom-color: var(--line); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
