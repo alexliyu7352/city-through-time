@@ -9,11 +9,13 @@ const $ = id => document.getElementById(id);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const narrow = matchMedia('(max-width: 760px)');
 const store = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
-const REG = await fetch('cities.json').then(r => r.json());
+const ROOT = new URL('../', import.meta.url).href;   // the site's root: a page may be a city's, a folder or two down
+const at = u => /^(https?:|data:|\/)/.test(u) ? u : ROOT + u;   // a path in the site (cities.json, a city's files) as an address
+const REG = await fetch(at('cities.json')).then(r => r.json());
 const CITIES = REG.cities || [], REPO = REG.repo;
 
 // ---------------------------------------------------------------- addresses: [language/][city/] under the site's root
-const BASE = new URL('../', import.meta.url).pathname;   // the root ('/' on the site's own domain)
+const BASE = new URL(ROOT).pathname;   // ('/' on the site's own domain)
 const PREFIX = Object.fromEntries(LANGS.map(([k]) => [k, k === 'en' ? '' : k.toLowerCase() + '/']));
 function route(path = location.pathname) {
   const parts = (path.startsWith(BASE) ? path.slice(BASE.length) : '').replace(/index\.html$/, '').split('/').filter(Boolean);
@@ -40,7 +42,7 @@ const el = (tag, { attrs, ...props } = {}, ...kids) => {
 const icon = (id, cls = 'ico') => { const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('class', cls); s.setAttribute('aria-hidden', 'true'); s.innerHTML = `<use href="#${id}"/>`; return s; };
 const sourceURL = e => /^https?:/.test(e.source || '') ? e.source : `${REPO}/tree/main/cities/${e.slug}`;
 const ENTRY = new Map();   // the full entries read so far
-const entry = slug => ENTRY.get(slug) || ENTRY.set(slug, fetch(`cities/${slug}/entry.json`).then(r => { if (!r.ok) throw new Error(slug); return r.json(); })).get(slug);
+const entry = slug => ENTRY.get(slug) || ENTRY.set(slug, fetch(at(`cities/${slug}/entry.json`)).then(r => { if (!r.ok) throw new Error(slug); return r.json(); })).get(slug);
 const PAGE = 24;           // the collection shows this many at a time
 const player = $('player');
 // the film on one of its sites; when it is on several, the others are a click away in the player (a site can be out of reach in some countries)
@@ -63,7 +65,7 @@ const alt = c => lang !== 'en' && c.name.en && c.name.en !== W.of(c.name) ? c.na
 const card = c => el('span', { className: 'ex-card', textContent: W.of(c.name) });
 function poster(c, src, alt, fallback) {
   if (!src) return fallback();
-  const img = el('img', { src, alt, loading: 'lazy' });
+  const img = el('img', { src: at(src), alt, loading: 'lazy' });
   img.onerror = () => { img.parentElement?.classList.add('noimg'); img.replaceWith(fallback()); };
   return img;
 }
@@ -201,7 +203,7 @@ async function show(slug, from, push = true) {
   if (inPage) { const b = el('button', { type: 'button', className: 'btn btn-main' }, icon('i-play'), el('span', { textContent: W.t('watchFilm') })); b.onclick = () => watch(c, playable, 0); acts.push(b); }
   else if (sites.length) acts.push(el('a', { className: 'btn btn-main', href: sites[0].url, target: '_blank', rel: 'noopener' }, icon('i-play'), el('span', { textContent: W.fmt('watchOn', { site: sites[0].site }) })));
   if (c.bundle && c.bundle.url) {
-    acts.push(el('a', { className: 'btn ' + (acts.length ? 'btn-line' : 'btn-main'), href: `play.html?city=${encodeURIComponent(c.slug)}&play=1&bundle=${encodeURIComponent(c.bundle.url)}`, target: '_blank', rel: 'noopener' }, el('span', { textContent: W.t('play') })));
+    acts.push(el('a', { className: 'btn ' + (acts.length ? 'btn-line' : 'btn-main'), href: at('play.html') + `?city=${encodeURIComponent(c.slug)}&play=1&bundle=${encodeURIComponent(c.bundle.url)}`, target: '_blank', rel: 'noopener' }, el('span', { textContent: W.t('play') })));
     if (c.bundle.mb) acts.push(el('p', { className: 'small', textContent: W.fmt('playNote', { mb: Math.round(c.bundle.mb) }) }));
   }
   const links = (inPage ? sites : sites.slice(1)).map(v => el('a', { href: v.url, target: '_blank', rel: 'noopener', textContent: W.fmt('watchOn', { site: v.site }) }));
@@ -242,6 +244,7 @@ addEventListener('keydown', e => {
 addEventListener('popstate', () => {
   const r = route();
   if (r.lang && r.lang !== lang) { lang = r.lang; W = words(lang); paint(); }
+  if (r.slug === open) return;   // (a #link within the page)
   if (r.slug && CITIES.some(c => c.slug === r.slug)) show(r.slug, null, false); else hide(false);
 });
 

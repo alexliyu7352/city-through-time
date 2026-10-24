@@ -45,7 +45,6 @@ export function site({ out = path.join(ROOT, '_site'), origin = 'https://cities.
       duration: `PT${Math.floor(e.duration / 60)}M${Math.round(e.duration % 60)}S`, url: here, ...(film ? { embedUrl: film } : {}), inLanguage: e.narration,
       creator: e.authors.map(a => ({ '@type': 'Person', name: a.name, ...(a.url ? { url: a.url } : {}) })), license: 'https://creativecommons.org/licenses/by-sa/4.0/' };
     const head = [
-      `<base href="${base}">`,
       `<title>${esc(title)}</title>`,
       `<meta name="description" content="${esc(desc)}">`,
       ...(missing ? ['<meta name="robots" content="noindex">'] : [`<link rel="canonical" href="${here}">`,
@@ -64,8 +63,11 @@ export function site({ out = path.join(ROOT, '_site'), origin = 'https://cities.
     ].join('\n');
     const repo = reg.repo, guide = k => `${repo}/blob/main/${W.guide(k)}`;
     const fill = (h, id, inner) => h.replace(new RegExp(`(<([a-z][a-z0-9]*)\\b[^>]*\\bid="${id}"[^>]*>)[^<]*(</\\2>)`), (_, open, tag, close) => open + inner + close);
+    // the page's own files by their path from the site's root (no <base>: it would turn every #link and the icons' #refs into the root page's)
     let h = template
       .replace(/<!-- head:[^]*?<!-- \/head -->/, head)
+      .replace(/ href="\.\/"/g, ` href="${base}${prefix(l)}"`)
+      .replace(/ (href|src)="(?!https?:|data:|#|\/)([^"]*)"/g, (_, a, u) => ` ${a}="${base}${u}"`)
       .replace('<html lang="en">', `<html lang="${l}">`)
       .replace(/(<([a-z][a-z0-9]*)\b[^>]*\bdata-t="(\w+)"[^>]*>)[^<]*(<\/\2>)/g, (_, open, tag, k, close) => open + esc(W.t(k)) + close)
       .replace(/alt="" data-alt="(\w+)"/g, (_, k) => `alt="${esc(W.t(k))}" data-alt="${k}"`)
@@ -76,7 +78,7 @@ export function site({ out = path.join(ROOT, '_site'), origin = 'https://cities.
     h = fill(h, 'lang-now', esc(LANGS.find(([k]) => k === l)[1]));
     if (e) {   // the city's panel, written out (the page's script opens it, and rebuilds it as it is used)
       const alt = l !== 'en' && e.name.en && e.name.en !== name ? e.name.en : '';
-      h = fill(h, 'poster', `<img src="${esc(e.poster)}" alt="${esc(name)}">`);
+      h = fill(h, 'poster', `<img src="${esc(/^https:/.test(e.poster) ? e.poster : base + e.poster)}" alt="${esc(name)}">`);
       h = fill(h, 'panel-name', esc(name)); h = fill(h, 'panel-alt', esc(alt)); h = fill(h, 'panel-years', esc(W.span(e.years)));
       h = fill(h, 'summary', esc(desc));
       const links = (e.watch || []).map(v => `<a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(W.fmt('watchOn', { site: v.site }))}</a>`);

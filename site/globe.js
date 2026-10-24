@@ -33,7 +33,7 @@ export async function makeGlobe(canvas, cities, { onPick, onHover, onFrame, redu
   renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.75 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
-  const buf = await fetch('site/land.bin').then(r => r.arrayBuffer());
+  const buf = await fetch(new URL('land.bin', import.meta.url)).then(r => r.arrayBuffer());
   const total = new DataView(buf).getUint32(0, true), count = small ? Math.min(total, 26000) : total;   // (the file is shuffled: any first part is an even sample)
   const pts = new DataView(buf, 4);
 

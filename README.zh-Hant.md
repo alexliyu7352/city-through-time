@@ -14,7 +14,7 @@
 |---|---|---|---|
 | 咸陽 | 前 4000 年 – 2026 年 | 12 分 30 秒 | Alex |
 
-每座城的資料在 `cities/<城市>/`：入口頁用的 `entry.json`、設定和文案、史實出處 `FACTS.md`、第三方素材與授權 `CREDITS`。入口頁讀的城市索引 `cities.json`，和每座城五種語言的獨立頁面（例如 https://cities.go5.si/xianyang/ ），都由 GitHub Actions 從各城的 `entry.json` 自動產生。倉庫裡只放文字資料，成片、播放包和海報都放在外部。
+每座城的資料在 `cities/<城市>/`：入口頁用的 `entry.json`、設定和文案、史實出處 `FACTS.md`、第三方素材與授權 `CREDITS`。入口頁讀的城市索引 `cities.json`，和每座城五種語言的獨立頁面（例如 https://cities.go5.si/xianyang/ ），都由 GitHub Actions 從各城的 `entry.json` 自動產生。倉庫裡只放文字資料，成片、播放包和海報都放在外部；示例城市咸陽例外，保留了圖片、海報和網頁播放包，入口頁直接從這裡播放。
 
 ## 片子怎麼做出來
 
