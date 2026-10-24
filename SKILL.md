@@ -144,7 +144,7 @@ description: 製作《一城春秋》（A City Through Time）系列資料影片
 7. **交付**：告訴用戶檔案位置，提醒 CREDITS 列出的第三方資料與授權（CMAB CC BY、OSM ODbL、字體 OFL、取樣庫），以及 FACTS.md 裡標為示意／估算的項目。
 8. **發布到入口頁**（用戶想公開時才做；步驟寫在 `CONTRIBUTING.zh-Hant.md`）。倉庫只收文字資料，成片、播放包、海報、圖片、音樂都放在外部：
    - 先問用戶要放在哪裡、用哪個帳號，每一步上傳都要用戶自己登入或明確同意（公開了就收不回）；
-   - 成片：用戶上傳到影片網站（YouTube、B 站…），網址寫進 `entry.json` 的 `watch`；也可以另放一份下載（`download`）；
+   - 成片：用戶上傳到影片網站（YouTube、B 站…），網址寫進 `entry.json` 的 `watch`（發布到幾個網站就填幾個，第一個是入口頁的預設）；也可以另放一份下載（`download`）；
    - 網頁播放包：`uv run python -I tools/web.py cities/<slug>` 打包到 `dist/web/`，只收頁面會讀的檔（沒有 WAV、沒有內部測試圖），
      海報 `poster.jpg`（1280 寬）和 `poster_thumb.webp`（640 寬）也在裡面。放的地方要允許網頁跨網域讀取：建議 Hugging Face 資料集
      （免費、大檔沒問題）；或用戶自己的 GitHub 倉庫開 Pages（單檔 100 MB、網站 1 GB 以內）；其他靜態主機要確認有

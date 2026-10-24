@@ -35,9 +35,15 @@ function embed(url) {
   return null;
 }
 const player = $('player');
-function watch(c, src) {
-  $('player-frame').replaceChildren(el('iframe', { src, title: W.of(c.name), allowFullscreen: true, attrs: { allow: 'autoplay; fullscreen; picture-in-picture; encrypted-media', referrerpolicy: 'strict-origin-when-cross-origin' } }));
-  player.showModal();
+// the film on one of its sites; when it is on several, the others are a click away in the player (a site can be out of reach in some countries)
+function watch(c, sites, i) {
+  const tabs = sites.length < 2 ? [] : sites.map((v, k) => {
+    const b = el('button', { type: 'button', className: 'player-tab', textContent: v.site, attrs: { 'aria-pressed': String(k === i) } });
+    b.onclick = () => watch(c, sites, k); return b;
+  });
+  $('player-sites').replaceChildren(...tabs); $('player-sites').setAttribute('aria-label', W.t('videoSites'));
+  $('player-frame').replaceChildren(el('iframe', { src: sites[i].src, title: `${W.of(c.name)} · ${sites[i].site}`, allowFullscreen: true, attrs: { allow: 'autoplay; fullscreen; picture-in-picture; encrypted-media', referrerpolicy: 'strict-origin-when-cross-origin' } }));
+  if (!player.open) player.showModal();
 }
 player.addEventListener('close', () => $('player-frame').replaceChildren());   // (the film stops with the window)
 player.addEventListener('click', e => { if (e.target === player) player.close(); });
@@ -172,16 +178,18 @@ async function show(slug, from) {
   $('panel-name').textContent = W.of(c.name); $('panel-alt').textContent = alt(c);
   $('panel-years').textContent = W.span(c.years);
   filmBar(c, $('panel-bar'));
-  // the finished film first (inside the page when its site allows), then the model played live, then the video sites themselves
-  const acts = [], first = (c.watch || []).map(v => embed(v.url)).find(Boolean);
-  if (first) { const b = el('button', { type: 'button', className: 'btn btn-main' }, icon('i-play'), el('span', { textContent: W.t('watchFilm') })); b.onclick = () => watch(c, first); acts.push(b); }
+  // the finished film first: its first site is the default (inside the page when that site allows it, else a link to it); then the
+  // model played live; then every site the film is on
+  const acts = [], sites = c.watch || [], playable = sites.map(v => ({ ...v, src: embed(v.url) })).filter(v => v.src);
+  const inPage = sites.length > 0 && playable[0] && playable[0].url === sites[0].url;
+  if (inPage) { const b = el('button', { type: 'button', className: 'btn btn-main' }, icon('i-play'), el('span', { textContent: W.t('watchFilm') })); b.onclick = () => watch(c, playable, 0); acts.push(b); }
+  else if (sites.length) acts.push(el('a', { className: 'btn btn-main', href: sites[0].url, target: '_blank', rel: 'noopener' }, icon('i-play'), el('span', { textContent: W.fmt('watchOn', { site: sites[0].site }) })));
   if (c.bundle && c.bundle.url) {
     acts.push(el('a', { className: 'btn ' + (acts.length ? 'btn-line' : 'btn-main'), href: `play.html?city=${encodeURIComponent(c.slug)}&play=1&bundle=${encodeURIComponent(c.bundle.url)}`, target: '_blank', rel: 'noopener' }, el('span', { textContent: W.t('play') })));
     if (c.bundle.mb) acts.push(el('p', { className: 'small', textContent: W.fmt('playNote', { mb: Math.round(c.bundle.mb) }) }));
   }
-  const links = (c.watch || []).map(v => el('a', { href: v.url, target: '_blank', rel: 'noopener', textContent: W.fmt('watchOn', { site: v.site }) }));
-  if (links.length && first) acts.push(el('p', { className: 'sites' }, ...links.flatMap((a, i) => [i ? '　' : null, a])));
-  else for (const a of links) { a.className = 'btn ' + (acts.length ? 'btn-line' : 'btn-main'); acts.push(a); }
+  const links = (inPage ? sites : sites.slice(1)).map(v => el('a', { href: v.url, target: '_blank', rel: 'noopener', textContent: W.fmt('watchOn', { site: v.site }) }));
+  if (links.length) acts.push(el('p', { className: 'sites' }, ...links));
   if (c.download && c.download.url) acts.push(el('a', { className: 'btn btn-line', href: c.download.url, target: '_blank', rel: 'noopener', textContent: W.t('download') }));
   if (!acts.length) acts.push(el('p', { className: 'pending', textContent: W.t('pending') }));
   $('actions').replaceChildren(...acts);
