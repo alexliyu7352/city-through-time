@@ -26,9 +26,9 @@
   document.currentScript.after(m); }
 </script>
 </head><body><div id="stage"></div><canvas id="ov" width="1920" height="1080"></canvas>
-<div class="load wait" id="load" role="status" aria-live="polite" hidden>
+<div class="load wait" id="load" hidden>
   <div class="ld"><p class="ld-brand">一城春秋 · A City Through Time</p><div class="ld-track"><i id="ld-bar"></i></div>
-  <p class="ld-line"><span id="ld-what"></span><span id="ld-pct"></span></p><button id="ld-retry" type="button" hidden></button></div>
+  <p class="ld-line"><span id="ld-what" role="status"></span><span id="ld-pct"></span></p><button id="ld-retry" type="button" hidden></button></div>
 </div>
 <script>if (new URLSearchParams(location.search).has('play')) document.getElementById('load').hidden = false;</script>
 <script type="module" src="engine/load.js"></script>

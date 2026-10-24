@@ -22,7 +22,7 @@ if (live) {
   $('ld-what').textContent = W.t('loading');
   $('ld-retry').textContent = W.t('loadRetry'); $('ld-retry').onclick = () => location.reload();
   // a failure while loading: a script that did not load, an error thrown, a promise refused
-  addEventListener('error', e => { if (e.target instanceof HTMLScriptElement) fail(short(e.target.src)); else if (e instanceof ErrorEvent) fail(e.error?.message || e.message); }, true);
+  addEventListener('error', e => { if (e.target instanceof HTMLScriptElement) fail(W.t('loadCode')); else if (e instanceof ErrorEvent) fail(e.error?.message || e.message); }, true);   // (a script: one of the modules it imports, three.js from the CDN or the engine's own, did not arrive)
   addEventListener('unhandledrejection', e => fail(e.reason?.message || String(e.reason)));
 }
 

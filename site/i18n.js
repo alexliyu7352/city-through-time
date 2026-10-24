@@ -55,7 +55,7 @@ const T = {
     footLicence: 'Code under the MIT licence. Films and city material under CC BY-SA 4.0; material by others keeps its own licence, listed in each city’s CREDITS.',
     footEarth: 'The globe is built from Natural Earth and NOAA ETOPO1, both public domain.',
     noGL: 'This browser cannot draw the globe. The cities are all in the collection below.',
-    loading: 'Loading the film', loadPrep: 'Setting up the model', loadFail: 'The film could not load: {what}', loadRetry: 'Try again', loadGlobe: 'Loading the globe',
+    loading: 'Loading the film', loadPrep: 'Setting up the model', loadFail: 'The film could not load: {what}', loadRetry: 'Try again', loadCode: 'the player’s program', loadGlobe: 'Loading the globe',
   },
   ja: {
     tagline: '街の時をたどる',
@@ -99,7 +99,7 @@ const T = {
     footLicence: 'コードは MIT ライセンス。映画と街の資料は CC BY-SA 4.0。他者の素材はそれぞれのライセンスに従い、各街の CREDITS に記載しています。',
     footEarth: '地球儀は Natural Earth と NOAA ETOPO1（いずれもパブリックドメイン）から作っています。',
     noGL: 'このブラウザでは地球儀を描けません。街はすべて下のコレクションにあります。',
-    loading: '映画を読み込んでいます', loadPrep: '模型を組み立てています', loadFail: '映画を読み込めませんでした：{what}', loadRetry: 'もう一度読み込む', loadGlobe: '地球儀を読み込んでいます',
+    loading: '映画を読み込んでいます', loadPrep: '模型を組み立てています', loadFail: '映画を読み込めませんでした：{what}', loadRetry: 'もう一度読み込む', loadCode: 'プレーヤーのプログラム', loadGlobe: '地球儀を読み込んでいます',
   },
   'zh-Hant': {
     tagline: 'A City Through Time',
@@ -143,7 +143,7 @@ const T = {
     footLicence: '程式碼採 MIT 授權。影片與城市資料採 CC BY-SA 4.0；他人的素材依各自授權，列在每座城的 CREDITS。',
     footEarth: '地球儀依 Natural Earth 與 NOAA ETOPO1（皆為公有領域）製作。',
     noGL: '這個瀏覽器畫不出地球儀。所有城市都在下面的館藏裡。',
-    loading: '正在載入影片', loadPrep: '正在組裝模型', loadFail: '影片載入失敗：{what}', loadRetry: '重新載入', loadGlobe: '正在載入地球儀',
+    loading: '正在載入影片', loadPrep: '正在組裝模型', loadFail: '影片載入失敗：{what}', loadRetry: '重新載入', loadCode: '播放器程式', loadGlobe: '正在載入地球儀',
   },
   'zh-Hans': {
     tagline: 'A City Through Time',
@@ -187,7 +187,7 @@ const T = {
     footLicence: '代码采用 MIT 许可。影片与城市资料采用 CC BY-SA 4.0；他人的素材依各自许可，列在每座城的 CREDITS。',
     footEarth: '地球仪依 Natural Earth 与 NOAA ETOPO1（均为公有领域）制作。',
     noGL: '这个浏览器画不出地球仪。所有城市都在下面的馆藏里。',
-    loading: '正在加载影片', loadPrep: '正在组装模型', loadFail: '影片加载失败：{what}', loadRetry: '重新加载', loadGlobe: '正在加载地球仪',
+    loading: '正在加载影片', loadPrep: '正在组装模型', loadFail: '影片加载失败：{what}', loadRetry: '重新加载', loadCode: '播放器程序', loadGlobe: '正在加载地球仪',
   },
   es: {
     tagline: 'Una ciudad a través del tiempo',
@@ -231,7 +231,7 @@ const T = {
     footLicence: 'Código bajo licencia MIT. Películas y material de las ciudades bajo CC BY-SA 4.0; el material de terceros mantiene su licencia, detallada en los CREDITS de cada ciudad.',
     footEarth: 'El globo está hecho con Natural Earth y NOAA ETOPO1, ambos de dominio público.',
     noGL: 'Este navegador no puede dibujar el globo. Todas las ciudades están en la colección de abajo.',
-    loading: 'Cargando la película', loadPrep: 'Montando la maqueta', loadFail: 'No se pudo cargar la película: {what}', loadRetry: 'Volver a intentarlo', loadGlobe: 'Cargando el globo',
+    loading: 'Cargando la película', loadPrep: 'Montando la maqueta', loadFail: 'No se pudo cargar la película: {what}', loadRetry: 'Volver a intentarlo', loadCode: 'el programa del reproductor', loadGlobe: 'Cargando el globo',
   },
 };
 
