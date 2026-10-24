@@ -166,6 +166,11 @@ function setCamera(t) {
 
 // ------------------------------------------------------------------ light and projection state
 const LT = FILM.light;
+// the prologue (film.prologue, docs/SCRIPT.md): a passage before the opening with its own camera, words and pictures over the
+// film's own city. From each scene key on, the city (light, layers, the sky) shows the film at that moment and plays on; the
+// camera and the words keep the film's own clock. It closes on a short black.
+const PRO = FILM.prologue;
+const sceneAt = t => { if (!PRO || t >= PRO.dur) return t; let s = t; for (const [k, at] of PRO.scene) if (t >= k) s = at + (t - k); return s; };
 const darkAt = t => (LT.darks || []).some(([a, b]) => t >= a && t < b);
 const NTRACK = FILM.night && FILM.night.length ? track(FILM.night) : null; const nightAt = t => NTRACK ? NTRACK(t)[0] : 0;
 const darkK = t => { let k = 0; for (const [a, b] of (LT.darks || [])) k = Math.max(k, ss(seg(t, a, a + .35)) * (1 - ss(seg(t, b - .1, b + .4)))); return k; };
@@ -352,7 +357,7 @@ const cueAt = t => (FILM.cues || []).find(c => t >= c.t0 && t < c.t1);
 function drawOverlay(t) {
   OV.begin();
   const { g } = OV;
-  const skyA = FILM.sky ? OV.sky(t, FILM.sky, proj3) : 0;   // under everything else on the overlay
+  const skyA = FILM.sky ? OV.sky(sceneAt(t), FILM.sky, proj3) : 0;   // under everything else on the overlay (part of the city: the prologue's moment)
   let fa = 0, ffull = 0, fcorner = 0;   // how much of the frame real footage covers (full mode hides the map, the other modes only quiet it); fcorner: a panel or a right-hand document over the locator's corner
   for (const f of FILM.footage || []) {
     if (t < f.on - .01 || t > f.on + f.dur + .01) continue;
@@ -386,7 +391,7 @@ function drawOverlay(t) {
   }
   const left = Math.max(...(FILM.readouts || []).map(r => OV.env(t, r.t0 - .3, r.t1 + .2)), 0);
   OV.scrims(left, 1);
-  OV.identity(t, .3, FILM.end.t - .2, FILM.identity.l1, FILM.identity.l2);
+  OV.identity(t, (PRO ? PRO.dur : 0) + .3, FILM.end.t - .2, FILM.identity.l1, FILM.identity.l2);   // (not over the prologue)
   if (FILM.bar) {
     const node = (FILM.nodes || []).find(nd => t >= nd.t0 && t < nd.t1) || null;
     const ba = Math.min(ss(seg(t, LT.lamp + .4, LT.lamp + 1.4)), 1 - ss(seg(t, LT.lights - .2, LT.lights + .6)));
@@ -433,6 +438,10 @@ function drawOverlay(t) {
   }
   OV.subtitle(t, cueAt(t));
   OV.endCard(t, FILM.end);
+  if (PRO) {   // the prologue's closing black, and the opening coming up out of it
+    const k = ss(seg(t, PRO.dur - PRO.fade, PRO.dur)) * (1 - ss(seg(t, PRO.dur, PRO.dur + .5)));
+    if (k > 0) { g.save(); g.globalAlpha = k; g.fillStyle = '#000'; g.fillRect(0, 0, W, H); g.restore(); }
+  }
 }
 
 // ------------------------------------------------------------------ events for the mix (window.EV) and checks
@@ -470,7 +479,7 @@ window.EV = EV;
 // frame the 3D scene is not drawn. Stills, scrubbing and the offline render seek every frame exactly (deterministic).
 let PLAYING = false;
 const fullCover = t => (FILM.footage || []).some(f => (f.mode || 'full') === 'full' && t >= f.on + f.fin && t <= f.on + f.dur - f.fout);
-const renderSync = t => { setCamera(t); setLight(t); setLayers(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } drawOverlay(t); };
+const renderSync = t => { const s = sceneAt(t); setCamera(t); setLight(s); setLayers(s); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } drawOverlay(t); };
 window.render = (FILM.footage || []).length ? async t => {
   for (const f of FILM.footage) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;

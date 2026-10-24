@@ -87,11 +87,13 @@ def take_path(D, cue_id, take):
 
 
 def spans(cues, node_t0, dur):
-    """each cue's (t0, t1) on the film: from its node (the first from 0) to the next cue's start (the last to the film's end)"""
+    """each cue's (t0, t1) on the film: from its node to the next cue's start (the last to the film's end). The first cue of the
+    film proper starts with the opening (node_t0['_opening'], 0 without a prologue); a cue at node `prologue` starts at 0"""
     t0s = []
     for i, c in enumerate(cues):
         if c.get('node') not in node_t0: raise SystemExit(f"music: cue {c.get('id')}: no node {c.get('node')!r}")
-        t0s.append(0.0 if i == 0 else node_t0[c['node']])
+        first_ = i == 0 or (i == 1 and cues[0].get('node') == 'prologue')
+        t0s.append(node_t0['prologue'] if c['node'] == 'prologue' else node_t0.get('_opening', 0.0) if first_ else node_t0[c['node']])
     if any(b <= a for a, b in zip(t0s, t0s[1:])): raise SystemExit('music: the cues must start in film order, at different nodes')
     return list(zip(t0s, t0s[1:] + [dur]))
 

@@ -7,7 +7,7 @@ voice), in the order shown; city.yaml holds none. One line:
   with   the picture the line waits for (compile's schedule_lines): shot:<camera key shot>, pin:<id>, card:<footage id>,
          stage[:<name>] or node (the node's arrival); lead: seconds before it. Pictures can follow a line in turn (with: <line id>)
   t      seconds from the start of the node's picture (moves with every hold the camera planner inserts); the
-         opening line counts from the film's start
+         opening line counts from the opening's start (the film's start, or the prologue's end)
          With neither, a line follows the one before as soon as it has been read, through any hold of the camera.
   <lang> the text in every language of film.lang (city.yaml), e.g. zh and en
   later  true when the line speaks of years after the node's own (the year counter shows the node's year): the copy check asks
@@ -15,6 +15,8 @@ voice), in the order shown; city.yaml holds none. One line:
   note   for whoever writes, translates or voices the line (not shown)
 
 script.yaml:  langs: [zh, en]
+              prologue: [<line>]                the prologue's lines (city.yaml film.prologue), at t (seconds into the prologue) or
+                                                one after another; no with, no pause
               opening: [<line>]                 the film's first line, over the title
               nodes: { <node id>: [<line> or { pause: <seconds>, why: "..." }, ...] }   (a pause: a silence meant to be there)
               quiet: { <node id>: [[from, to, why], ...] }   stretches of a node meant to be silent (the copy check leaves them)
@@ -26,7 +28,7 @@ import yaml
 
 
 def load(city, langs, node_ids):
-    """script.yaml -> {'opening': [line], 'nodes': {node id: [line]}, 'quiet': {...}}; SystemExit on a malformed script"""
+    """script.yaml -> {'prologue': [line], 'opening': [line], 'nodes': {node id: [line]}, 'quiet': {...}}; SystemExit on a malformed script"""
     p = os.environ.get('CT_SCRIPT') or os.path.join(city, 'script.yaml')   # (CT_SCRIPT: compile a draft without touching script.yaml)
     if not os.path.exists(p): return None
     if os.environ.get('CT_SCRIPT'): print(f'  script: the draft {p}')
@@ -35,7 +37,9 @@ def load(city, langs, node_ids):
     seen = set(); nodes = S.get('nodes') or {}
     for nid in nodes:
         if nid not in node_ids: raise bad(f'node {nid!r} is not in city.yaml (nodes: {", ".join(node_ids)})')
-    for where, lines in [('opening', S.get('opening') or [])] + [(f'node {k}', v or []) for k, v in nodes.items()]:
+    for ln in S.get('prologue') or []:
+        if 'pause' in ln or 'with' in ln: raise bad(f'prologue: a line is placed by t or follows the one before (no pause, no with): {ln}')
+    for where, lines in [('prologue', S.get('prologue') or []), ('opening', S.get('opening') or [])] + [(f'node {k}', v or []) for k, v in nodes.items()]:
         for ln in lines:
             if 'pause' in ln:
                 if not isinstance(ln['pause'], (int, float)) or ln['pause'] <= 0: raise bad(f'{where}: pause must be seconds > 0: {ln}')
@@ -49,7 +53,7 @@ def load(city, langs, node_ids):
             for lg in langs:
                 if not ln.get(lg): raise bad(f'{where}: line {ln["id"]} has no {lg} text')
             if not isinstance(ln.get('t', 0), (int, float)): raise bad(f'{where}: line {ln["id"]}: t must be seconds')
-    return {'opening': S.get('opening') or [], 'nodes': {k: v or [] for k, v in nodes.items()}, 'quiet': S.get('quiet') or {}}
+    return {'prologue': S.get('prologue') or [], 'opening': S.get('opening') or [], 'nodes': {k: v or [] for k, v in nodes.items()}, 'quiet': S.get('quiet') or {}}
 
 
 def _flow(d):

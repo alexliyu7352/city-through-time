@@ -130,7 +130,8 @@ def main():
         if not seen: offs.append((f"ring_unseen:{n['id']}", rg['t0'], 0.0))
 
     # spins: camera keys are interpolated value by value, so 0 -> 357 degrees turns the whole way round: write -3
-    spins = [(t0, t1, a[3], b[3]) for (t0, a), (t1, b) in zip(FILM['camera'][:-1], FILM['camera'][1:]) if abs(b[3] - a[3]) > 120]
+    pd_ = (FILM.get('prologue') or {}).get('dur', 0)   # (the prologue is cut like a trailer, and closes on black)
+    spins = [(t0, t1, a[3], b[3]) for (t0, a), (t1, b) in zip(FILM['camera'][:-1], FILM['camera'][1:]) if abs(b[3] - a[3]) > 120 and t1 > pd_ + .6]
     for t0, t1, a0, a1 in spins: print(f'spin                   {t0:7.2f}-{t1:7.2f}s  azimuth {a0} -> {a1}')
     NS = 40; flags = []
     for row in CAM:

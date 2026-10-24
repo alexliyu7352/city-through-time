@@ -60,12 +60,19 @@ if SCR is not None:
         nd['cues'] = SCR['nodes'].get(nd['id'], [])
     if (FM.get('opening') or {}).get('cue'): raise SystemExit('compile: film.opening.cue in city.yaml and a script.yaml: the opening line belongs in script.yaml (opening:)')
     if SCR['opening']: FM.setdefault('opening', {})['cue'] = SCR['opening'][0]
+# the prologue (docs/SCRIPT.md): a passage before the opening with its own camera, words, pictures and sound over the film's own
+# city (from each scene key on, the city shows the film at that moment, playing on); the opening and all after it start PD later
+PRO = FM.get('prologue'); PD = float(PRO['dur']) if PRO else 0.0
+if PRO and not (SCR and SCR['prologue']): raise SystemExit('compile: film.prologue needs its lines in script.yaml (prologue:)')
+if SCR and SCR['prologue'] and not PRO: raise SystemExit('compile: script.yaml has prologue lines, but city.yaml has no film.prologue')
 
 # the narrator's arc and the emblem (docs/SCRIPT.md): every node says what the narrator feels there,
 # and the film says whether it has an emblem. They drive the copy, the music and the picture (build/export/timeline.json)
 MOODS = {'wonder': 'the land and its first people: curiosity, awe', 'pride': 'the city flourishes, a hero appears',
          'grief': 'decline, destruction, a loss', 'wistful': 'what was hoped for and did not come, a farewell',
          'hope': 'a new town rises, a new start', 'calm': 'the city goes on, quietly'}
+if PRO and 'mood' in PRO and (PRO['mood'].get('feel') not in MOODS or PRO['mood'].get('level') not in (1, 2, 3)):
+    raise SystemExit(f'compile: film.prologue.mood: {{feel: <{"|".join(MOODS)}>, level: 1-3}}')
 def node_mood(nd):
     m_ = nd.get('mood')
     if m_ is None: raise SystemExit(f'compile: node {nd["id"]} has no mood: the narrator\'s feeling there, one of {", ".join(MOODS)} (mood: pride or {{feel: pride, level: 3}})')
@@ -491,9 +498,17 @@ def camv(k):
     x, z = F.model_lonlat(*k['ll']); y = ground_ll(*k['ll']) + k.get('y', 0)
     return [round(x, 5), round(y, 5), round(z, 5), k['az'], k['el'], k['d'], fov]
 
+def footage_item(ft, on, nid):
+    """a picture or clip of a node (or of the prologue, nid None) as film.json shows it, from `on` seconds"""
+    a_, b_ = ab(ft)
+    return {'id': ft['id'], 'file': ft['file'], 'on': on, 'dur': float(ft['dur']), 'start': float(ft.get('start', 0)), 'fin': ft.get('in', 1.0), 'fout': ft.get('out', 1.0),
+            'title': a_, 'sub': b_, 'kicker': pick(ft['kicker']) if 'kicker' in ft else KICKER_TODAY, 'credit': pick(ft.get('credit', '')), 'pan': ft.get('pan', 0),
+            'mode': ft.get('mode', 'full'), 'side': ft.get('side', 'right'),
+            'anchor': (F.model_lonlat(*ft['anchor']) + [ground_ll(*ft['anchor'])]) if 'anchor' in ft else None,
+            'force': bool(ft.get('force')), '_with': ft.get('with'), '_node': nid}   # force: shown over a change on purpose (docs/STAGING.md 5b)
 # ------------------------------------------------------------------ layout: opening -> nodes -> closing
 OP = FM.get('opening', {'dur': 5.0}); CL = FM.get('closing', {})
-cursor = float(OP.get('dur', 5.0))
+cursor = PD + float(OP.get('dur', 5.0))
 light = {'lightsOut': round(cursor - 1.2, 3), 'lamp': round(cursor, 3), 'darks': []}
 yearline = []
 nodes_out = []
@@ -1201,13 +1216,7 @@ for i, node in enumerate(FM['nodes']):
         epochs_sat = {'on': T(s_.get('at', 0)), 'fade': s_.get('fade', 2.0), 'off': T(s_.get('off_at')) if 'off_at' in s_ else (None if s_.get('persist', True) else T('end')), 'offDur': s_.get('offDur', 1.5), 'gain': s_.get('gain', 1.0), 'sweep': bool(s_.get('sweep', False))}
         if 'back_at' in s_: epochs_sat['back'] = T(s_['back_at']); epochs_sat['backFade'] = s_.get('back_fade', s_.get('fade', 4.0))   # a second line gives the model back
         FM['_satellite'] = epochs_sat
-    for ft in node.get('footage', []):
-        a_, b_ = ab(ft)
-        footage_out.append({'id': ft['id'], 'file': ft['file'], 'on': T(ft.get('at', 0)), 'dur': float(ft['dur']), 'start': float(ft.get('start', 0)), 'fin': ft.get('in', 1.0), 'fout': ft.get('out', 1.0),
-                            'title': a_, 'sub': b_, 'kicker': pick(ft['kicker']) if 'kicker' in ft else KICKER_TODAY, 'credit': pick(ft.get('credit', '')), 'pan': ft.get('pan', 0),
-                            'mode': ft.get('mode', 'full'), 'side': ft.get('side', 'right'),
-                            'anchor': (F.model_lonlat(*ft['anchor']) + [ground_ll(*ft['anchor'])]) if 'anchor' in ft else None,
-                            'force': bool(ft.get('force')), '_with': ft.get('with'), '_node': node['id']})   # force: shown over a change on purpose (演出文法 5b)
+    for ft in node.get('footage', []): footage_out.append(footage_item(ft, T(ft.get('at', 0)), node['id']))
     for c in node.get('cues', []):
         if 'pause' in c: continue
         a, b = ab(c); cues.append({'id': c['id'], 'node': node['id'], 'later': bool(c.get('later')), 't0': node['_line_t'][c['id']][0], 'a': a, 'b': b, 'extra': c.get('extra', 0.4)})
@@ -1227,10 +1236,12 @@ for i, node in enumerate(FM['nodes']):
 for ep in epochs + props_out + eras_out:
     if isinstance(ep['off'], dict): ep['off'] = ep['off']['_t1']
     elif isinstance(ep['off'], tuple): ep['off'] = round(ep['off'][1]['_t0'] + ep['off'][2] * ep['off'][1].get('_k', 1.0), 3)
-for ck in OP.get('context', []): ctx_keys.append([float(ck['t']), [float(ck['a'])]])
+for ck in OP.get('context', []): ctx_keys.append([PD + float(ck['t']), [float(ck['a'])]])
 for tk in OP.get('tally', []):
     v = tk.get('v') or [tk['x'], tk.get('y', 0), tk['z'], tk.get('rot', 0), tk.get('scale', 1), tk.get('split', 0), tk.get('glow', 0), 1 if tk.get('visible', True) else 0]
-    tally_keys.append([float(tk['t']), v])
+    tally_keys.append([PD + float(tk['t']), v])
+for ft in (PRO.get('footage', []) if PRO else []): footage_out.append(footage_item(ft, float(ft.get('at', 0)), None))   # (at: prologue seconds)
+for e in (PRO.get('sfx', []) if PRO else []): evs.append({'t': float(e['t']), 'type': e['kind']})   # one-shots of film.sfx in the prologue
 last = cursor
 light['lights'] = round(last + float(CL.get('lights_after', 1.5)), 3)
 end_t = round(light['lights'] + float(CL.get('end_after', 1.5)), 3)
@@ -1267,7 +1278,7 @@ for i, c in enumerate(cues):
     if c['t1'] < c['t0'] + h - 1e-6: print(f'warning: cue {c["id"]} at {c["t0"]:.2f}s needs {h:.1f}s but has {c["t1"] - c["t0"]:.1f}s: give its node more seconds', file=sys.stderr)
     c.pop('extra', None)
 # camera: opening keys, then the nodes' keys; a node without keys drifts gently from the previous key
-op_keys = [[float(k['t']), camv(k)] for k in OP.get('camera', [])]
+op_keys = [[PD + float(k['t']), camv(k)] for k in OP.get('camera', [])] + [[float(k['t']), camv(k)] for k in (PRO.get('camera', []) if PRO else [])]
 cam = op_keys + cam
 cam.sort(key=lambda k: k[0])
 cl_keys = [[round(light['lights'] + float(k['t']), 3), camv(k)] for k in CL.get('camera', [])]
@@ -1483,7 +1494,7 @@ while t < DUR - .5:
     a0, a1 = CAMERA.state(t), CAMERA.state(t + .5)
     wide = 2 * math.sqrt(max(a0[5], 1e-4) * max(a1[5], 1e-4)) * math.tan(math.radians(a0[6]) / 2) * stagecraft.ASPECT
     mv = math.dist(a0[:3], a1[:3]) / wide; turn = abs(a1[3] - a0[3]); zoom = abs(math.log(max(a1[5], 1e-4) / max(a0[5], 1e-4))) / math.log(2)
-    if (mv > 1.0 or turn > 60 or zoom > 1.5) and not covered(t) and not covered(t + .5): jumps.append((round(t, 1), round(mv, 2), round(turn), round(zoom, 2)))
+    if (mv > 1.0 or turn > 60 or zoom > 1.5) and not covered(t) and not covered(t + .5) and t >= PD + .6: jumps.append((round(t, 1), round(mv, 2), round(turn), round(zoom, 2)))
     t += .25
 if jumps:
     seen_ = set()
@@ -1603,7 +1614,16 @@ end = {'t': end_t, 'title_a': tx(E.get(LANG[0] + '_title') or E.get('title_a')),
        'lines': _credits + [pick(s) for s in E.get('lines', [])], 'bright': max(1, len(_credits))}
 op_cue = OP.get('cue')
 if op_cue:
-    a, b = ab(op_cue); t0 = float(op_cue.get('t', 1.0)); cues.insert(0, {'id': op_cue.get('id', 'opening'), 'node': None, 'later': False, 't0': t0, 't1': round(min(t0 + max(hold(a), hold(b)) + .4, cues[0]['t0'] - .08 if cues else light['lamp']), 3), 'a': a, 'b': b})
+    a, b = ab(op_cue); t0 = PD + float(op_cue.get('t', 1.0)); cues.insert(0, {'id': op_cue.get('id', 'opening'), 'node': None, 'later': False, 't0': t0, 't1': round(min(t0 + max(hold(a), hold(b)) + .4, cues[0]['t0'] - .08 if cues else light['lamp']), 3), 'a': a, 'b': b})
+if PRO:   # the prologue's lines: each at its t or after the one before has been read, all said before the prologue's closing black
+    _pc, _t = [], .5
+    for ln in SCR['prologue']:
+        a, b = ab(ln); t0 = float(ln['t']) if 't' in ln else _t
+        if _pc and t0 < _pc[-1]['t1'] - .4: raise SystemExit(f"compile: prologue line {ln['id']} at {t0:.1f} s starts before the line before it has been read")
+        t1 = round(t0 + max(hold(a), hold(b), voice_len(ln['id']) or 0) + .4, 3)
+        if t1 > PD - float(PRO.get('fade', .8)) + 1e-6: raise SystemExit(f"compile: prologue line {ln['id']} ends at {t1:.1f} s, inside the prologue's closing black: lengthen film.prologue.dur or shorten the line")
+        _pc.append({'id': ln['id'], 'node': None, 'later': False, 't0': round(t0, 3), 't1': t1, 'a': a, 'b': b}); _t = t1 - .4 + LINE_GAP
+    cues[0:0] = _pc
 sat = FM.get('_satellite')
 def sat_out(sat):
     """the satellite plate: the higher-resolution mosaic (pipeline/imagery_tiles.py, internal tests only) when the film asks for it,
@@ -1800,12 +1820,13 @@ if _msrc not in ('cues', 'code'): raise SystemExit(f'film.music.source: cues (la
 _vspans = [(c_['t0'], c_['t0'] + voice_len(c_['id'])) for c_ in _voiced]
 _vwav = os.path.join(D, 'build', 'audio', 'voice', f'track_{VOICE_LANG}.wav') if _voiced else None
 _score = (LAY.lay_code(D, FM.get('music'), DUR, _vspans, _declared, _vwav, LAY.timing(film)) if _msrc == 'code'
-          else LAY.lay(D, FM.get('music'), {n_['id']: n_['t0'] for n_ in nodes_out}, DUR, _vspans, _declared, _vwav))
+          else LAY.lay(D, FM.get('music'), {**({'prologue': 0.0, '_opening': PD} if PRO else {}), **{n_['id']: n_['t0'] for n_ in nodes_out}}, DUR, _vspans, _declared, _vwav))
 # the sound effects kept beside the score (city.yaml film.sfx), at the moments the page fires them (main.js
 # ev(): the relay as the lights go out, the lamp, each burning era from its off less its burn, the lights at the end)
 if FM.get('sfx'):
     _ev = [(light['lightsOut'], 'relay'), (light['lamp'], 'lamp'), (light['lights'], 'lights')] if light.get('lights') else [(light['lightsOut'], 'relay'), (light['lamp'], 'lamp')]
     _ev += sorted({(round(e_['off'] - e_['burn'], 3), 'burn') for e_ in film.get('eras', []) if e_.get('sinkStyle') == 'burn' and e_.get('off') is not None})
+    if PRO: _ev = sorted(_ev + [(float(e_['t']), e_['kind']) for e_ in PRO.get('sfx', [])])
     film['sfx'] = LAY.lay_sfx(D, FM['sfx'], [q_ for q_ in _ev if q_[1] in FM['sfx']], DUR, _vspans, _vwav,
                                   os.path.join(D, 'build', 'audio', 'music', 'score.wav') if _score and _score['file'] else None)
     print(f"  sfx: {', '.join(FM['sfx'])}" + (f" laid at {', '.join(f'{t_:.2f}' for t_, _ in film['sfx']['events'])}" if film['sfx']['file'] else ' (no one-shots yet: python -I audio/mix.py <city> --kit, then compile again)'))
@@ -1814,6 +1835,14 @@ if _score:
     print(("  music: the code score " + ('laid' if _score['file'] else f'not written yet: python -I audio/codescore.py {D} (after render/events.mjs)') if _msrc == 'code' else
            f"  music: {len(_score['cues']) - len(_score['missing'])} of {len(_score['cues'])} cues laid" + (f", no take yet: {' '.join(_score['missing'])}" if _score['missing'] else ''))
           + ''.join('; ' + n_ for n_ in _score.get('notes', [])))
+if PRO:   # the prologue for the page: its length, its closing black, and from each scene key the film moment the city shows
+    _nd = {n_['id']: n_ for n_ in FM['nodes']}; _sc = []
+    for k_ in PRO['scene']:
+        if k_['node'] not in _nd: raise SystemExit(f"compile: film.prologue.scene: no node {k_['node']!r}")
+        _sc.append([float(k_['t']), node_time(_nd[k_['node']], float(k_.get('at', 0)))])
+    _sc.sort()
+    if _sc[0][0] > 0 or _sc[-1][0] >= PD: raise SystemExit('compile: film.prologue.scene: the first key at t 0, all before the prologue ends')
+    film['prologue'] = {'dur': PD, 'fade': float(PRO.get('fade', .8)), 'scene': _sc}
 json.dump(film, open(LAYOUT.build(D, 'film.json'), 'w'), ensure_ascii=False, indent=1)
 # the words on the final timeline, written out (subtitles in every language, the timed script for voice work: pipeline/subtitles.py)
 import subtitles as SUBS
@@ -1887,6 +1916,7 @@ _tl = {'dur': DUR, 'langs': LANG, 'voice': {'lang': VOICE_LANG, 'dir': os.path.r
        'pictures': [{'id': x['id'], 'mode': x.get('mode', 'full'), 't0': x['on'], 't1': round(x['on'] + x['dur'], 3), 'title': x.get('title')} for x in footage_out],
        'silences': [{'t0': round(a_, 3), 't1': round(b_, 3)} for a_, b_ in _declared],
        'lights': {'on': light['lamp'], 'off': light.get('lights'), 'end_card': end_t}}
+if PRO: _tl['prologue'] = {'t0': 0.0, 't1': PD, 'mood': PRO.get('mood')}
 json.dump(_tl, open(os.path.join(LAYOUT.export(D), 'timeline.json'), 'w'), ensure_ascii=False, indent=1)
 print('  arc: ' + ' '.join(f"{n_['id']}:{n_['mood']['feel']}{n_['mood']['level']}" for n_ in nodes_out))
 open(LAYOUT.logs(D, 'copy.txt'), 'w', encoding='utf-8').write(COPY.report(_finds))
