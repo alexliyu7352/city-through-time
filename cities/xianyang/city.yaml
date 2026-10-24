@@ -57,7 +57,7 @@ film:
   drift: 0.6
   wave_dur: 4.5              # a node's colour crosses the plate as a ring of light in this many seconds
   era_look: { dim: 0.5, glow: 1.0, edge: 1.0, line: 1.0, light_m: 45, halo_m: 14, edge_m: 150 }   # while a period city stands: today's city dims; a thin neon line on its edge lights what stands within ~45 m of it
-  emblem: none   # no emblem: none stages well enough on the white model to earn its place (SKILL.md 步驟 3)
+  emblem: none   # no emblem: none stages well enough on the white model to earn its place (docs/SCRIPT.md)
   satellite_source: sentinel   # Copernicus Sentinel-2 (CC-compatible); 'hr' (Esri World Imagery, pipeline/imagery_tiles.py) is for internal tests only, never published
   copy: { keep: ['十五五', '三月不灭', '国棉一厂', '国棉七厂', '洪武四年', '乾隆十六年', '武德二年', '元鼎三年'] }   # names, a quotation and reign years kept as written (pipeline/copylint.py)
   sfx: [relay, lamp, burn, lights]   # the sound effects kept beside the score: the lamp coming on, the burning, the lights going out
@@ -792,7 +792,7 @@ film:
           - { region: [[108.6870, 34.3402], [108.6945, 34.3402], [108.6945, 34.3430], [108.6870, 34.3430]], lot: [72, 34], typ: slab, h_m: 15, empty: 0.0 }
       camera: [{ t: 0, ll: [108.725, 34.342], az: 110, el: 36, d: 0.5 }, { t: 5, shot: mill1, ll: [108.7140, 34.3400], az: 170, el: 28, d: 0.1, fov: 38 }, { t: 10, ll: [108.7118, 34.3402], az: 140, el: 29, d: 0.08, fov: 40 }, { t: 14, ll: [108.7030, 34.3412], az: 160, el: 32, d: 0.14, fov: 36 }, { t: 20, ll: [108.71, 34.34], az: 120, el: 38, d: 0.7 }]
     # ---- 1975-2026: one year line. The city grows in the background (GHSL from 1975, CMAB from 1987, both estimates) while the
-    # camera tours the moments that made it (SKILL.md 演出文法 9i): it flies from one to the next as the counter runs (at most a
+    # camera tours the moments that made it (docs/STAGING.md 9i): it flies from one to the next as the counter runs (at most a
     # year a second), and the counter holds while a moment is told. Sources: research/modern_a.md, modern_b.md, xianyang_research.md.
     - id: m1975
       mood: { feel: calm, level: 1 }   # the satellites begin

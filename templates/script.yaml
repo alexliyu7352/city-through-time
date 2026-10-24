@@ -1,5 +1,5 @@
 # 一座城的旁白：每一句，按出現順序（pipeline/script.py）。畫面在 city.yaml，這裡只有字。
-# 一句 = { id, <語言>..., with, lead, later, note }；時間由 compile 排（SKILL.md 步驟 4、演出文法 5c）
+# 一句 = { id, <語言>..., with, lead, later, note }；時間由 compile 排（docs/SCRIPT.md、docs/STAGING.md 5c）
 #   id     這句的名字，全片唯一，小寫英文、數字、底線（配音檔、匯出、畫面上跟著這句的元素都用它）
 #   with   講某個畫面時寫：等那個畫面出現才講。shot:<鏡頭關鍵幀的 shot 名> | pin:<標籤 id> | card:<圖卡 id> | stage[:<段名>] | node
 #   lead   比那個畫面早幾秒（負數：晚幾秒）

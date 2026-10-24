@@ -1,4 +1,4 @@
-"""Stagecraft: when and how a change is shown (SKILL.md 演出文法). Everything here is computed once, in compile, and written
+"""Stagecraft: when and how a change is shown (docs/STAGING.md). Everything here is computed once, in compile, and written
 into film.json as times and sampled curves; the engine and tools/camcheck.py only interpolate them (one source of truth).
 
   camera     the film's camera from its compiled keys (the engine's track(), without the hand-held drift)

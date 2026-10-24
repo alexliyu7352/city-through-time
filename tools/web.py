@@ -1,4 +1,4 @@
-"""A city's web bundle: what play.html needs to play the film in a browser, from another server (SKILL.md 發布).
+"""A city's web bundle: what play.html needs to play the film in a browser, from another server (docs/PUBLISH.md).
 usage: python -I tools/web.py cities/<slug>            -> cities/<slug>/dist/web/ (+ bundle.json: every file, its size and SHA-256;
                                                        poster.jpg 1280 wide and poster_thumb.webp 640 wide, for the entry page)
        python -I tools/web.py cities/<slug> --entry    a draft of cities/<slug>/entry.json (the entry page lists the city from it:

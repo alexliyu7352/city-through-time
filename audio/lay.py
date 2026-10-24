@@ -1,4 +1,4 @@
-"""The score laid on the film's timeline (SKILL.md 10d; the city's MUSIC.md), for the preview and the mix:
+"""The score laid on the film's timeline (docs/SOUND.md; the city's MUSIC.md), for the preview and the mix:
 
   city.yaml film.music.source cues (the default): the cues below; code: the code score (audio/codescore.py writes it from the
                               timeline, lay_code() lays it), the fallback when a city has no generated or brought music
@@ -213,7 +213,7 @@ def _on_a_hit(cid, x, off, own):
 
 
 def _crossings(buf, joins):
-    """the score's level round each change of cue, before the dips under the voice (SKILL.md 10d: measured, not only heard): the
+    """the score's level round each change of cue, before the dips under the voice (docs/SOUND.md: measured, not only heard): the
     quietest second within 2 s of the change against the median second 2-8 s either side (seconds every quarter second, so the
     rests between drum strokes do not count as holes); a hole of 10 dB or more is marked !"""
     q = SR // 4; p = 10 ** (_blocks_db(buf, q) / 10); out = []

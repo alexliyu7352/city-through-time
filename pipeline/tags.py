@@ -1,4 +1,4 @@
-"""Tag layout (SKILL.md 演出文法 G): every tag on the map (pins and place names) is a dot, a pole straight up and a small box on
+"""Tag layout (docs/STAGING.md 9h): every tag on the map (pins and place names) is a dot, a pole straight up and a small box on
 the pole. Compile picks each tag's pole length and box side once per stretch of time it shows, so that tags shown together do
 not cover each other and keep clear of the subtitles, the readout, the locator and the timeline; the engine (overlay.js tag)
 draws what is chosen. Screen sizes follow overlay.js TAG (name 20 px, second line 14 px)."""

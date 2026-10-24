@@ -1,4 +1,4 @@
-"""Music generation for a city's score (the city's MUSIC.md; SKILL.md 10d): Stable Audio 3 Medium on this CPU.
+"""Music generation for a city's score (the city's MUSIC.md; docs/SOUND.md): Stable Audio 3 Medium on this CPU.
 usage: python -I tools/music.py cities/<slug> --list                  the cues, their spans, takes and candidates
        python -I tools/music.py cities/<slug> test                    every line of MUSIC.md's `### test` block, 30 s each
        python -I tools/music.py cities/<slug> M02 M03 [--wordings 1,2] [--seeds 1,2] [--fresh] [--force]
@@ -53,7 +53,7 @@ def slug(p):
 
 
 def measure(wav):
-    """what to know of a candidate before anyone hears it (SKILL.md 10d; a prompt asking for 'long silences' left 30-40% of the candidates
+    """what to know of a candidate before anyone hears it (docs/SOUND.md; a prompt asking for 'long silences' left 30-40% of the candidates
     silent): its silent share and longest gap up to where its music ends, its low end (energy under 150 Hz), and its level in
     thirds (the build: rising, flat, falling)"""
     import numpy as np

@@ -105,7 +105,7 @@ In the PR description, write: the check results (the lines printed by `tools/bui
 ## Improve the code and the skill
 
 - If you have a problem or an idea, open an issue first; a small fix can go straight into a pull request.
-- Follow the existing style of the code (naming, comment density, how files are divided). Write each rule once in `SKILL.md`; do not repeat it.
+- Follow the existing style of the code (naming, comment density, how files are divided). Write each rule once: one that applies to every step in `SKILL.md`, any other in that step's file (`docs/`).
 - If you change the compiler, player or renderer, run the relevant checks: use `node render/still.mjs` to produce a few stills to compare before and after, and if needed run a section of `tools/clipcheck.py`, `tools/camcheck.*` or `tools/readcheck.mjs`.
 - Use uv for Python (`uv add` to add packages, and commit `uv.lock` with it) and npm for Node (commit `package-lock.json` with it).
 - Do not commit local paths: always read paths from `local/config.json` (`pipeline/local.py`, `render/local.mjs`).

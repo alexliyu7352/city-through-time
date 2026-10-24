@@ -1,4 +1,4 @@
-"""Languages (SKILL.md 步驟 4, 演出文法 10b): the words the program itself puts on screen, per language, from i18n/<code>.yaml
+"""Languages (docs/SCRIPT.md): the words the program itself puts on screen, per language, from i18n/<code>.yaml
 (a language pack: its writing system, the longest subtitle line, its numerals, how a year is written and the shared words such as
 today / footage / imagined). The city's own words (lines, place names, captions) are in its script.yaml and city.yaml, one text
 per language of film.lang.

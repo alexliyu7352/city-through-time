@@ -116,7 +116,7 @@ if any(n.get('city') for n in C['film']['nodes']):
         SUG[n['id']] = max(ok) if ok else 1.0
         print(f"foundations: {n['id']:10s} top tenth {top(EX):.0%} of a house at x{EX:g}; within 30% up to x{SUG[n['id']]:g}" + ('' if ok else ' (the fine relief alone is too much: roofs and trees in the surface model?)'))
     if SUG and EX > min(SUG.values()):
-        print(f"WARNING: terrain.exaggeration x{EX:g} is higher than the x{min(SUG.values()):g} the steepest period city bears (SKILL.md 10)")
+        print(f"WARNING: terrain.exaggeration x{EX:g} is higher than the x{min(SUG.values()):g} the steepest period city bears (docs/MODEL.md)")
 terrainio.write16(D, shown, lo, hi)
 terrainio.write16(D, smooth, lo, hi, name='terrain_true16.png')
 Image.fromarray(((shown - lo) / max(1e-6, hi - lo) * 255).clip(0, 255).astype(np.uint8)).save(os.path.join(D, 'build', 'data', 'terrain.png'))   # (the 8-bit fallback)

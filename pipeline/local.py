@@ -1,5 +1,5 @@
 """This machine's paths and settings: local/config.json (not in git). Every machine lays its disks out its own way, so nothing
-here is fixed in code: the file is written at first use from templates/local.json, after asking the user (SKILL.md 第一次使用).
+here is fixed in code: the file is written at first use from templates/local.json, after asking the user (docs/SETUP.md).
 
 local/                       this machine (in .gitignore); by default everything heavy sits here, in one place
   config.json                the keys below; a relative path is from the project root, an absolute one is used as is, ~ expands
@@ -25,7 +25,7 @@ def get(key):
     global _cfg
     if _cfg is None:
         if not os.path.exists(FILE):
-            raise SystemExit(f'no local/config.json: copy templates/local.json there and set this machine\'s paths (SKILL.md 第一次使用)')
+            raise SystemExit(f'no local/config.json: copy templates/local.json there and set this machine\'s paths (docs/SETUP.md)')
         _cfg = json.load(open(FILE, encoding='utf-8'))
     if key not in _cfg: raise SystemExit(f'local/config.json has no "{key}" (templates/local.json lists every key)')
     return _cfg[key]

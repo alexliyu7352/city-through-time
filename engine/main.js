@@ -330,7 +330,7 @@ function setLayers(t) {
     if (S.fires[e.id]) S.fires[e.id].set(burn * (gone ? 0 : 1) * U.uProj.value, t, fin ? fr : 1e3, fo);
   }
   // today's city steps back while a period city is told; the change travels with the node's ring: outside it, the level from
-  // just before the ring started (SKILL.md 演出文法 1: a ring shows what changes inside it)
+  // just before the ring started (docs/STAGING.md 1: a ring shows what changes inside it)
   U.uDimToday.value = dimAt(t, eraUp) * (1 - today);
   U.uDimToday0.value = ci >= 0 ? dimBefore(nodes_[ci]) * (1 - today) : U.uDimToday.value;
   for (const r of FILM.routes || []) { const R = S.routes[r.id]; const land = r.on + r.draw;   // a landing beam flashes where it lands

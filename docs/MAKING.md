@@ -2,7 +2,7 @@
 
 English · [繁體中文](MAKING.zh-Hant.md) · [简体中文](MAKING.zh-Hans.md)
 
-This guide takes you from zero to a city film, using the A City Through Time skill. Claude Code (the coding agent) makes the film. You set the direction and check every step in the browser. The detailed rules are all in [`SKILL.md`](../SKILL.md), and the agent follows them.
+This guide takes you from zero to a city film, using the A City Through Time skill. Claude Code (the coding agent) makes the film. You set the direction and check every step in the browser. The rules are in [`SKILL.md`](../SKILL.md) and the step guides it points to (`docs/`), and the agent follows them.
 
 ## 1. Watch one first
 

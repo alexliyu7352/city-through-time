@@ -2,7 +2,7 @@
 // (adapted from lemo-opuscar core/render/mux.sh, MIT; see NOTICE). The picture is encoded at the target rate (held stretches get
 // copied frames) with film grain (--grain 0: none); the audio gets a two-pass loudnorm to -14 LUFS / true peak -1.2 dB (one pass
 // misses by about 0.5 LU) and silence to the picture's length when it is shorter (a longer one is cut to the picture).
-// Nothing about the tools goes out (SKILL.md 交付): no tags or chapters, no encoder strings in the container, x264's settings SEI
+// Nothing about the tools goes out (docs/DELIVER.md): no tags or chapters, no encoder strings in the container, x264's settings SEI
 // removed from the stream, AAC written bitexact.
 // The audio must decode whole, or nothing is written: no audio stream, decoder errors, or fewer seconds decoded than the file
 // claims stop the mux (a WAV streamed with `ffmpeg ... -f wav -` has a placeholder length: its three known notes are let through).

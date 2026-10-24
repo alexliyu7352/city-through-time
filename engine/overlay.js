@@ -79,7 +79,7 @@ export function makeOverlay(canvas) {
     if (o.unit) txt(bigId ? o.id + 'u' : null, o.unit, X + w + 10, Y + 4, 'zh', 44, 'rgba(244,241,234,.9)', a, { shadow: 10 });
     if (o.label) txt(o.id + 'l', o.label, X, Y + 58, 'zh', 30, '#f4f1ea', a, { shadow: 10, ls: 1 });
     // the source note: bright enough and shadowed to read over a lit map or the satellite plate, in lines;
-    // readcheck reads it as one text, the whole note (it sets how short the stop may be: SKILL.md 5d)
+    // readcheck reads it as one text, the whole note (it sets how short the stop may be: docs/STAGING.md 5d)
     const nl = noteLines(o.note), dn = noteDrop(o.note);
     nl.forEach((q, i) => txt(null, q, X, Y + 94 + i * NOTE_LH, 'mono', 16, 'rgba(225,230,236,.85)', a, { ls: 1, shadow: 8 }));
     if (nl.length && a > .98) TX.push({ id: o.id + 's', text: o.note, x0: X, y0: Y + 94 - 16 * .9, x1: X + Math.max(...nl.map(q => width(q, 'mono', 16, 1))), y1: Y + 94 + dn + 16 * .25 });

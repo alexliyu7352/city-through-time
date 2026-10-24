@@ -106,7 +106,7 @@ PR 说明里写：检查结果（`tools/build.mjs` 打印出的那几行）、�
 ## 改进代码与技能
 
 - 有问题或想法，先开 issue；小修正可以直接开 pull request。
-- 代码照现有的写法（命名、注释密度、文件分工）。一条规则在 `SKILL.md` 写一次，不要重复。
+- 代码照现有的写法（命名、注释密度、文件分工）。一条规则只写一次：每一步都适用的写在 `SKILL.md`，其他写在那一步的子文件（`docs/`）。
 - 改了编译、播放器或渲染，跑一下相关的检查：`node render/still.mjs` 出几张单张对照改动前后，必要时跑 `tools/clipcheck.py`、`tools/camcheck.*`、`tools/readcheck.mjs` 的一段。
 - Python 用 uv（`uv add` 加包，`uv.lock` 一起提交），Node 用 npm（`package-lock.json` 一起提交）。
 - 不要提交本地路径：路径一律从 `local/config.json` 读（`pipeline/local.py`、`render/local.mjs`）。

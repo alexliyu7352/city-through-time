@@ -61,7 +61,7 @@ if SCR is not None:
     if (FM.get('opening') or {}).get('cue'): raise SystemExit('compile: film.opening.cue in city.yaml and a script.yaml: the opening line belongs in script.yaml (opening:)')
     if SCR['opening']: FM.setdefault('opening', {})['cue'] = SCR['opening'][0]
 
-# the narrator's arc and the emblem (SKILL.md 步驟 3-4): every node says what the narrator feels there,
+# the narrator's arc and the emblem (docs/SCRIPT.md): every node says what the narrator feels there,
 # and the film says whether it has an emblem. They drive the copy, the music and the picture (build/export/timeline.json)
 MOODS = {'wonder': 'the land and its first people: curiosity, awe', 'pride': 'the city flourishes, a hero appears',
          'grief': 'decline, destruction, a loss', 'wistful': 'what was hoped for and did not come, a farewell',
@@ -75,7 +75,7 @@ def node_mood(nd):
     return {'feel': feel_, 'level': lvl_}
 for nd in FM['nodes']: nd['_mood'] = node_mood(nd)
 EMBLEM = FM.get('emblem')
-if EMBLEM is None: raise SystemExit("compile: film.emblem: say whether the city has one (emblem: none, or {name, meaning, nodes: [...]}: SKILL.md 步驟 3)")
+if EMBLEM is None: raise SystemExit("compile: film.emblem: say whether the city has one (emblem: none, or {name, meaning, nodes: [...]}: docs/SCRIPT.md)")
 if EMBLEM != 'none':
     if not isinstance(EMBLEM, dict) or not EMBLEM.get('name') or not EMBLEM.get('meaning'): raise SystemExit('compile: film.emblem: {name, meaning, nodes} (what it personifies, said once in words)')
     _bad = [n_ for n_ in EMBLEM.get('nodes', []) if n_ not in [nd['id'] for nd in FM['nodes']]]
@@ -86,7 +86,7 @@ if EMBLEM == 'none' and _tally_at: raise SystemExit(f'compile: film.emblem is no
 if EMBLEM != 'none' and [n_ for n_ in _tally_at if n_ not in ('opening', 'closing') and n_ not in EMBLEM.get('nodes', [])]:
     WARN.append(f'emblem keys (tally) in {", ".join(n_ for n_ in _tally_at if n_ not in ("opening", "closing") and n_ not in EMBLEM.get("nodes", []))}, '
                 f'which film.emblem.nodes does not list: the emblem shows where its story is not told')
-# the film ends on this year (SKILL.md 步驟 3), and a stop's colour ring must read against the one before (else the ring
+# the film ends on this year (docs/SCRIPT.md), and a stop's colour ring must read against the one before (else the ring
 # that should repaint the city does not show): Lab ΔE76 under 25 is too close,
 # unless the two are one chapter in one colour (the stops of the modern growth), which two period cities never are
 import datetime
@@ -120,7 +120,7 @@ def _ns(o): return SimpleNamespace(**{str(k): _ns(v) for k, v in dict.items(o)})
 STN = _ns(ST)
 def n(x): return f'{int(round(x)):,}'
 def pct(x): return str(int(round(x * 100)))
-# numbers the picture shows that come from the city's own settings and shapes (SKILL.md 步驟 4: never written by hand, so they
+# numbers the picture shows that come from the city's own settings and shapes (docs/SCRIPT.md: never written by hand, so they
 # follow when a factor or an outline changes): cfg = city.yaml ({cfg.terrain.exaggeration:g}), plate_km = the plate's
 # [width, depth] in km, km(id) = a line's length or an outline's perimeter in km, km2(id) = an outline's area in km²; the ids
 # are a researched area's (film.areas_file), an epoch's or a line's
@@ -331,7 +331,7 @@ TIMING = {'ring_view': 2.8, 'ring_out': 1.6, 'min_stage': 4.0, 'min_stage_small'
           'see_rate': .002, 'see_min': 2.0, 'see_max': 12.0,
           'dead_air_s': 3.0, 'word_gap_s': 5.0}   # today's buildings that come into view together rise one after another
                                                               # over see_rate s each, see_min..see_max s in all
-# time the algorithm inserts into nodes (SKILL.md 演出文法 9e): {node id: [{tau: node seconds, delta: s, keys: [[offset s, key]], why}]};
+# time the algorithm inserts into nodes (docs/STAGING.md 9e): {node id: [{tau: node seconds, delta: s, keys: [[offset s, key]], why}]};
 # compile re-runs itself with the plan until nothing more is needed
 PLAN = json.loads(os.environ.get('CT_PLAN') or '{}'); PASS = int(os.environ.get('CT_PASS') or 1)
 TIMING.update(FM.get('timing', {}))
@@ -376,7 +376,7 @@ LOOK_NEVER = {'ditch', 'pool', 'pool_ring', 'kilns', 'boats', 'corridor', 'chimn
 LOOK_WALLED = {'palace', 'court', 'office', 'temple', 'market', 'armoury', 'platform'}   # a precinct drawn by its lit walls
 
 def look_target(G, gids, cs, node_id, traced):
-    """where a closer look at a stage goes (plan_stages c), by rank (SKILL.md 演出文法 9c):
+    """where a closer look at a stage goes (plan_stages c), by rank (docs/STAGING.md 9c):
     1. a landmark the film names (a pin of its node within 250 m); 2. a key building drawn in light: a walled precinct, or any
     landmark of a small place traced by its outline (`traced`); 3. any other landmark. Largest first within a rank. Never
     the houses (fabric) or a low-detail part made to be seen from the air; None when the stage has nothing to look at."""
@@ -399,7 +399,7 @@ def look_target(G, gids, cs, node_id, traced):
     return None if best is None else {'c': best[1], 'rank': best[0][0], 'what': best[2]}
 
 def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
-    """when each building of a period city starts to rise (absolute seconds) and how each stage is lit (SKILL.md 演出文法).
+    """when each building of a period city starts to rise (absolute seconds) and how each stage is lit (docs/STAGING.md).
     `stages` in the spec, each with at, dur, select ({landmarks: [i..], fabric: [i..], walls/streets/lanes/trees: true or
     [i..]}; omitted = everything not claimed yet), an order (from [lon, lat]: radial; sweep [[lon, lat], [lon, lat]]: along
     a line) and noise. Without stages: one stage over everything.
@@ -424,7 +424,7 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
         if first and impact and impact.get('follow') and at in ('auto', 'arrive'):   # the camera rode the beam down and turned to
             t0 = round(impact['arrive'] + .1, 3); t_from = t0                       # the whole city: it grows from there
         else:   # the camera decides: the first moment it holds the place, from the beam's landing or the node start; a start set
-            # by hand (seconds, {after: route}) is only the earliest it may begin (SKILL.md 演出文法 9a)
+            # by hand (seconds, {after: route}) is only the earliest it may begin (docs/STAGING.md 9a)
             auto_ = at in ('auto', 'arrive') or (isinstance(at, dict) and 'arrive' in at)
             t_from = max(t_lo, impact['land'] if impact else t_lo) if auto_ else at_of(at)
             t0 = stagecraft.settle(cam, centre, rad_, t_from, t_hi, need=TIMING['settle_need'], hidden=covered)
@@ -534,7 +534,7 @@ def area_point(aid):
     return g_['coordinates'] if g_['type'] == 'Point' else None
 
 def expand_areas(node):
-    """a node's `areas` (SKILL.md 演出文法 9k): each area the narration names is drawn as a lit outline in its own colour, with its
+    """a node's `areas` (docs/STAGING.md 9k): each area the narration names is drawn as a lit outline in its own colour, with its
     name, and flashes when it is named (flash: node seconds, or {with: <line id>, plus: s}) -> the node's lines and pins.
     An area that follows a line (with: <line id>, plus: seconds after its start) hands that on: the outline starts then, its name
     `lead` seconds later and stays to the node's end, or to the end of that line (until: <line id>) plus hold seconds when either
@@ -573,7 +573,7 @@ CITY_META = {}
 
 def gen_city(node):
     """a whole period city, generated from its spec (pipeline/citygen.py) at the top of its node: the camera planning (a beam
-    that lands on it, SKILL.md 演出文法 9c) needs where its buildings are"""
+    that lands on it, docs/STAGING.md 9c) needs where its buildings are"""
     cs = node['city']; xa = None
     if cs.get('avoid_eras'):   # quarters added on top of an earlier city that still stands: keep clear of its footprints
         import shapely as _sh
@@ -669,7 +669,7 @@ def voice_len(lid):
 VOICE_TAIL = .3   # after the voice ends, before the next line may start
 
 def schedule_lines(node, dur):
-    """when each line of a node is spoken (SKILL.md 演出文法 5c), film seconds -> node['_line_t'] {id: (start, end)},
+    """when each line of a node is spoken (docs/STAGING.md 5c), film seconds -> node['_line_t'] {id: (start, end)},
     node['_pauses'] [(from, to)]. In the order of script.yaml:
       with: <picture>   waits for that picture (line_anchor); the picture waits for it in turn when the lines before run long
                         (time goes in just before the picture: kind 'words')
@@ -743,7 +743,7 @@ def path_at(pts, k):
     return list(pts[-1])
 
 def arrive_view(node, az_from, el, fov):
-    """where the camera turns once a beam has landed on a city (SKILL.md 演出文法 9c): the node's own direction (its first
+    """where the camera turns once a beam has landed on a city (docs/STAGING.md 9c): the node's own direction (its first
     camera key, else north up), the city's first stage (the one the beam lands on) whole in the picture, no nearer than the
     landing (a small town is seen with the land round it, where the colour ring goes)"""
     if node['id'] not in PRIMS: return None
@@ -760,7 +760,7 @@ def arrive_view(node, az_from, el, fov):
 
 _FS = {}
 def follow_shot(rt, node, cam_):
-    """the camera that rides a beam (SKILL.md 演出文法 8, 9c): {keys: [[seconds from the launch, key]], end: seconds from the
+    """the camera that rides a beam (docs/STAGING.md 8, 9c): {keys: [[seconds from the launch, key]], end: seconds from the
     launch to the end of its window, v0: its first key, lead: seconds it starts before the launch}.
     Its direction is given (`follow.az`) or chosen: of behind the beam, behind at 25/45/65 degrees to either side and the two
     sides, the one nearest the way the camera faces now that keeps the origin in the picture at the launch, the head all the
@@ -838,7 +838,7 @@ for i, node in enumerate(FM['nodes']):
         if t_ < need_ - .05:
             node['_ins'].append({'tau': round(at_ - 1e-3, 4), 'delta': round(need_ - t_, 2), 'keys': [], 'kind': 'approach', 'why': f'the camera needs {A_:.1f} s to get behind the origin of {rt["id"]}'})
             node['_ins'].sort(key=lambda q: q['tau']); print(f'  route {rt["id"]}: launches {need_ - t_:.1f} s later: the camera needs {A_:.1f} s to get behind its origin')
-    if node.get('tour') and cam:   # a beat of a tour (SKILL.md 演出文法 9i): the camera flies here from the last beat while the
+    if node.get('tour') and cam:   # a beat of a tour (docs/STAGING.md 9i): the camera flies here from the last beat while the
         TC = {'rate': 1.0, 'fly_spin': 5.0, 'spin': 1.0, 'push': .08, **FM.get('tour', {})}   # counter runs (at most `rate` years a second), then holds
         tr_ = node['tour']; prev_ = max(cam, key=lambda k: k[0]); pv_ = list(prev_[1])
         ys_ = node.get('years') or [node['year'], node['year']]
@@ -873,7 +873,7 @@ for i, node in enumerate(FM['nodes']):
         Vend = list(V1); Vend[3] = V1[3] + float(tr_.get('spin', TC['spin'])) * float(node['dur']); Vend[5] = V1[5] * (1 - TC['push'])
         node['camera'] = [{'t': 0, 'v': V1[:6], 'fov': fov_}, {'t': float(node['dur']), 'v': Vend[:6], 'fov': fov_}]
     # every camera key (hand-set or inserted) must leave the camera the time its move needs (no jumps): time inserted after the
-    # key before it (SKILL.md 演出文法 F)
+    # key before it (docs/STAGING.md 9f)
     hk_ = [k for k in node.get('camera', []) if isinstance(k.get('t'), (int, float))]
     prev_ = max(cam, key=lambda k: k[0]) if cam else None
     import bisect
@@ -1021,7 +1021,7 @@ for i, node in enumerate(FM['nodes']):
             import ghsl_change
             CHANGE = ghsl_change.change(local.raw(), F, _MODEL, cache=LAYOUT.data(D, 'ghsl_change.json'))
             grow['counters'] = {'t0': T(G.get('counters_at', 1.0)), 't1': node['_t1'], '_until': G.get('counters_until'), 'a': [i18n.word(LANG[0], 'new'), i18n.word(LANG[0], 'taller')], 'b': [i18n.word(LANG[-1], 'new'), i18n.word(LANG[-1], 'taller')] if len(LANG) > 1 else None, 'note': tx(G.get('counters_note', 'GHSL 建成体积 · 100 m · 5 年 · 估算'))}
-        if 'follow_change' in node:   # the camera flies over where the city changed most, window by window (SKILL.md 演出文法)
+        if 'follow_change' in node:   # the camera flies over where the city changed most, window by window (docs/STAGING.md)
             fc = node['follow_change']; y0_, y1_ = node['_years']; K = int(fc.get('windows', 5))
             Mb = _MODEL['b']; ev = []   # (year, x, z, weight)
             from shapely.geometry import Polygon as _Pg, Point as _Pt
@@ -1306,8 +1306,8 @@ if cam[-1][0] < DUR: cam.append([DUR, cam[-1][1]])
 
 # ------------------------------------------------------------------ stagecraft: rings and the cities' timing, from the final camera
 CAMERA = stagecraft.Camera(cam, FM.get('fov', 30))
-# a full-screen clip covers the picture: the camera holds nothing under it, so a city's change waits until the clip is gone (SKILL.md
-# 演出文法 5b; the 3D clock itself runs on: engine/main.js only stops drawing the scene under a clip in the live preview). Also the
+# a full-screen clip covers the picture: the camera holds nothing under it, so a city's change waits until the clip is gone (docs/STAGING.md
+# 5b; the 3D clock itself runs on: engine/main.js only stops drawing the scene under a clip in the live preview). Also the
 # one place the camera may cut (演出文法 F)
 def covered(t): return any(f['mode'] == 'full' and f['on'] + f['fin'] <= t <= f['on'] + f['dur'] - f['fout'] for f in footage_out)
 if os.environ.get('CAMDBG'):
@@ -1332,7 +1332,7 @@ for e in eras_out:   # each city: when every building rises (stages, settle) and
     print(f'  city {node["id"]}: {len(prims)} primitives, rises {on_:.1f}-{on_ + span_ + grow_:.1f} s, ' + ', '.join(f'{f_["mode"]} {f_["curve"][0][0]:.1f}-{f_["curve"][1][0]:.1f}' for f_ in fronts_))
 
 def plan_stages():
-    """SKILL.md 演出文法 9e: what the camera must still give each stage, as time inserted into its node.
+    """docs/STAGING.md 9e: what the camera must still give each stage, as time inserted into its node.
     (a) a stage starts on the first camera key that frames its place: the camera stops there (a hold) rather than the stage
         waiting for a later shot; (b) the camera holds the place until hold_after seconds after its last building is up;
     (c) a place seen only small is looked at closer (look_size of the frame's height, look_secs seconds), then the camera
@@ -1421,7 +1421,7 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
         cs_ = Seen(dict.items(cs)); cs_.read, cs_.mine = cs.read, set(); cs_['_id'] = node['id']   # (what hide_layer reads, read on cs)
         hide_regions[e['hide']] = hide_layer(prims, cs_, pd['bnd'])
         ED = float(FM.get('era_look', {}).get('edge_m', 150)) * F.scale; img_, rect_ = edge_sdf(pd['bnd'], ED); EDGES[e['hide']] = img_; e['edgeRect'] = rect_; e['edgeD'] = round(ED, 6)
-for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's colour ring, sent when its change starts (SKILL.md 演出文法 1)
+for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's colour ring, sent when its change starts (docs/STAGING.md 1)
     imp = IMPACT.get(node['id']); era_ = next((e for e in eras_out if e['id'] == node['id']), None)
     grows_ = bool(era_ and era_.get('fronts')); f0_ = min(era_['fronts'], key=lambda f_: f_['curve'][0][0]) if grows_ else None
     if imp and not (imp['follow'] and grows_): o, t0 = imp['end'], imp['land']   # from its beam's landing
@@ -1449,7 +1449,7 @@ for e in eras_out:   # how each city is taken back: contracting from its edge (i
         t_hit = next((t for t, R in curve if R >= near_), curve[-1][0]); t_all = next((t for t, R in curve if R >= reach_), curve[-1][0])
         e['fallR'] = {'mode': 'out', 'o': o, 'curve': curve, 'hit': t_hit, 'gone': round(t_all + e['fallDur'], 3)}
 for e in eras_out: e.pop('_dist', None); e.pop('_bc', None)
-# a city taken back by a contracting ring: the camera comes down with the ring (SKILL.md 演出文法 9g), from where it is when the
+# a city taken back by a contracting ring: the camera comes down with the ring (docs/STAGING.md 9g), from where it is when the
 # ring reaches the city to the next key after the ring has closed (the ruins). The ring stays whole on screen all the way: the
 # camera comes no nearer than the distance that frames the ring as it is at that moment, so it always moves slower than the
 # ring (the distance shrinks as the root of the ring, the ring shrinks on screen too); target, azimuth and elevation ease over.
@@ -1477,7 +1477,7 @@ for e in eras_out:
     cam = [k for k in cam if not (ts - .01 <= k[0] <= te + 1.51)] + keys_
     cam.sort(key=lambda k: k[0]); print(f'  camera: comes down with the closing ring {ts:.1f}-{te:.1f} s ({len(keys_)} keys, {S0[5]:.2f} -> {keys_[-1][1][5]:.2f})')
 CAMERA = stagecraft.Camera(cam, FM.get('fov', 30))
-# no cuts: the camera never jumps (SKILL.md 演出文法 F), except behind a full-screen clip (covered)
+# no cuts: the camera never jumps (docs/STAGING.md 9f), except behind a full-screen clip (covered)
 jumps = []; t = 0.0
 while t < DUR - .5:
     a0, a1 = CAMERA.state(t), CAMERA.state(t + .5)
@@ -1492,7 +1492,7 @@ if jumps:
         for k in cam:
             if j_[0] - 3 <= k[0] <= j_[0] + 3 and k[0] not in seen_: seen_.add(k[0]); print(f'        key {k[0]:8.2f}  ' + ' '.join(f'{v:.4f}' if isinstance(v, float) else str(v) for v in k[1]))
     raise SystemExit(f'compile: the camera jumps {len(jumps)} times (more than a frame, 60 degrees or 1.5 zoom doublings in half a second): give the move time')
-# a pin shows only what is on screen (SKILL.md 演出文法 9h): its place in the picture for most of its time. A tour stop frames its
+# a pin shows only what is on screen (docs/STAGING.md 9h): its place in the picture for most of its time. A tour stop frames its
 # pins (tour_subjects), so there an error; elsewhere still a warning (the film-wide pass)
 off_ = []
 ctx_keys.sort(key=lambda k: k[0])
@@ -1525,7 +1525,7 @@ for p in off_: print(f'  {"error" if p["_tour"] else "warning"}: pin {p["id"]} (
 if any(p['_tour'] for p in off_) and not os.environ.get('CT_PINWARN'): raise SystemExit('compile: a tour stop shows a pin whose place is not on screen: frame it (tour_subjects) or mark it offscreen_ok')
 for p in pins:
     for k_ in ('_node', '_tour', '_offok'): p.pop(k_, None)
-# today's buildings rise when they can be seen (SKILL.md 演出文法 7): at the moment the counter reaches a building's year, or, if
+# today's buildings rise when they can be seen (docs/STAGING.md 7): at the moment the counter reaches a building's year, or, if
 # the camera is not looking there then, the first moment after it that the building is in the frame (and no full-screen clip
 # covers the picture). Buildings that come into view together rise over a few seconds in the order of their years, not in one
 # burst. data/grow_t.json lists only the buildings that wait; the rest rise with the counter (the engine's tOfYear)
@@ -1613,7 +1613,7 @@ def sat_out(sat):
     f, meta = ('data/satellite_hr.jpg', 'data/satellite_hr.json') if hr else ('data/satellite.png', 'data/satellite.json')
     if not os.path.exists(LAYOUT.build(D, f)): return None
     return {**sat, 'file': f, 'credit': json.load(open(LAYOUT.build(D, meta))).get('credit', '')}
-# tags (pins and place names): pole length and side chosen once per stretch they show (pipeline/tags.py, SKILL.md 演出文法 G)
+# tags (pins and place names): pole length and side chosen once per stretch they show (pipeline/tags.py, docs/STAGING.md 9h)
 import tags as TAGS
 labels_out = [{'pos': F.model_lonlat(L['lon'], L['lat']) + [ground_ll(L['lon'], L['lat'])], 'a': ab(L)[0], 'b': ab(L)[1], 'size': L.get('size', 1), 'dmin': L.get('dmin', .8),
                't0': float(L.get('t0', 0)), 't1': float(L.get('t1', 1e9))} for L in FM.get('labels', [])]
@@ -1641,7 +1641,7 @@ for p in pins:
 for li, L in enumerate(labels_out): L['lay'] = LAY.get(f'label:{li}', [])
 print(f'  tags: {len(pins)} pins, {len(labels_out)} place names laid out in {sum(len(v) for v in LAY.values())} stretches')
 _core = lambda s: re.split(r'\s*[·（(]\s*', s or '')[0].strip()
-for p in pins:   # one place, two tags at once: a pin named like a place name (film.labels) shown at the same time (SKILL.md 演出文法 9h)
+for p in pins:   # one place, two tags at once: a pin named like a place name (film.labels) shown at the same time (docs/STAGING.md 9h)
     for L in labels_out:
         both_ = [(max(p['t0'], s0), min(p['t1'], s1)) for s0, s1, _, _ in L['lay'] if s0 < p['t1'] and p['t0'] < s1]
         if _core(p['text']) and _core(p['text']) == _core(L['a']) and both_:
@@ -1662,7 +1662,7 @@ film = {
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),
 }
-# pictures must not hide a change (SKILL.md 演出文法 5b). Full-frame footage hides everything, so it never
+# pictures must not hide a change (docs/STAGING.md 5b). Full-frame footage hides everything, so it never
 # shows during one. A half-screen panel (engine/overlay.js: the right 64 % of the frame, melting in over 260 px) may show beside a
 # city that grows or burns on the left of the frame; it may not cover more than a third of that place on screen, sampled four times
 # a second. Changes across the whole frame (a node's colour ring, today's buildings rising, the satellite plate's sweeps, an area
@@ -1718,9 +1718,9 @@ for x in footage_out:
         _cover.append(say_(hits_[0]) + f' (moved past the change it would leave {ln_ or "its line"})')
         continue
     _cover += [say_(h_) for h_ in hits_]
-if _cover: raise SystemExit('compile: a picture hides a change (SKILL.md 演出文法 5b: compose the shot so the change is on the left, move the '
+if _cover: raise SystemExit('compile: a picture hides a change (docs/STAGING.md 5b: compose the shot so the change is on the left, move the '
                            'picture to another line, make it a card, or give it force: true if hiding that change does not matter): ' + '; '.join(_cover))
-# the film's type (SKILL.md 演出文法 10b): one font per job, by family name and weight (film.fonts), looked up in <root>/fonts
+# the film's type (docs/SCRIPT.md): one font per job, by family name and weight (film.fonts), looked up in <root>/fonts
 # (pipeline/fonts.py); a family or weight that is not there, or a character of the copy a font cannot draw, stops the build: the
 # browser would draw it in a system font (one subtitle line in two weights, as once happened)
 import fonts as FONTS
@@ -1821,7 +1821,7 @@ SUBS.write(LAYOUT.export(D), os.path.basename(D), cues, LANG, hold, end_t)
 # the copy check (pipeline/copylint.py): where words are missing, too many, or off the house style; advice, written to build/logs
 import copylint as COPY
 _finds = COPY.check(film, FM.get('copy'), _quiet, LANG[0])
-# dead air (SKILL.md 演出文法 5c): (a) a stretch longer than dead_air_s with no line spoken, nothing changing on the model, no picture
+# dead air (docs/STAGING.md 5c): (a) a stretch longer than dead_air_s with no line spoken, nothing changing on the model, no picture
 # up and the camera all but still; (b) a gap between two lines longer than word_gap_s that nothing declares (a quiet stretch or a
 # pause), no full-screen clip fills, and that is not the next line waiting for its picture while the picture moves (the next line
 # is its node's first, or follows a picture: with). The planner's holds can cause (b).
@@ -1874,7 +1874,7 @@ _dead = _dead_air()
 open(LAYOUT.logs(D, 'deadair.txt'), 'w', encoding='utf-8').write('\n'.join(_dead) + '\n')
 print(f'  dead air: {len(_dead)} stretch(es)' + ''.join('\n    ' + d_ for d_ in _dead))
 if _dead and os.environ.get('CT_DEADAIR') != 'warn':   # (CT_DEADAIR=warn: report only, while a city is being written)
-    raise SystemExit(f'compile: dead air (SKILL.md 演出文法 5c; build/logs/deadair.txt): let a line follow the one before, have it wait for the '
+    raise SystemExit(f'compile: dead air (docs/STAGING.md 5c; build/logs/deadair.txt): let a line follow the one before, have it wait for the '
                      f'picture it speaks of (with:), shorten the hold, or declare a pause: ' + '; '.join(_dead))
 # the timeline for voice, music and sound (design phase 4): every line, every change on the model, the pictures over it, the
 # silences meant to be there, and each node's feeling; seconds of the final film (build/export/timeline.json)

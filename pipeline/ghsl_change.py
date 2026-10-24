@@ -10,7 +10,7 @@ Everything here is an estimate at 100 m x 5 years, labelled so on screen (docs/D
   early    CMAB's first layer only says "already there in 1987". The volume series of the building's cell (1975, 1980, 1985,
            1990) dates it within 1975-1987: of the buildings of a cell, the share the cell's 1975 volume covers stood by 1975, the
            rest came in the order the volume grew (a deterministic hash orders the buildings of a cell). The film's modern
-           growth starts in 1975, the first year with data (SKILL.md 演出文法 7).
+           growth starts in 1975, the first year with data (docs/STAGING.md 7).
 
   python -I pipeline/ghsl_change.py fetch <west> <south> <east> <north>     download the volume tiles (~220 MB a tile) to raw/ghsl/
                                                                           (raw/: this machine's raw root, pipeline/local.py)

@@ -7,7 +7,7 @@ For every camera sample (out/cam.json, the film's real camera with drift and nea
   blocked       a solid that stands at that time cuts the sight line between 4 % and 88 % of the way to the target
   spin          two camera keys more than 120 degrees of azimuth apart (the camera whips round)
   offscreen     a period city changes where the viewer cannot see it: while its buildings rise, fewer than 60 % of the
-                rising ones are in the frame (or a full-screen clip covers it). Change only on screen (SKILL.md 演出文法).
+                rising ones are in the frame (or a full-screen clip covers it). Change only on screen (docs/STAGING.md).
   ring_unseen   a node's colour ring starts where the camera does not look (its origin out of frame for its first 1.5 s)
 Today's buildings count only where the era hide masks have not stepped them aside (the engine's hideK at the centroid);
 period cities only while standing (risen, not yet taken back). Flagged samples are merged into intervals: out/camcheck.json.

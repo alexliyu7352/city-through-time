@@ -1,4 +1,4 @@
-"""The code score (city.yaml film.music.source: code; SKILL.md 10d): music written in code over the film's own timeline and played
+"""The code score (city.yaml film.music.source: code; docs/SOUND.md): music written in code over the film's own timeline and played
 on sampled instruments (audio/sampler.py), the fallback when a city has no generated or brought music: no model, offline, free.
 Its sample libraries (VSCO 2 CE and VCSL, CC0, about 670 MB) are downloaded once: uv run python -I tools/instruments.py.
 usage: python -I audio/codescore.py cities/<slug>      after compile and render/events.mjs (it reads build/film.json, events.json and

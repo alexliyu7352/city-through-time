@@ -63,7 +63,7 @@ film:
   opening:                                    # 展廳燈下的白模；燈在 dur 秒滅、投影亮。鏡頭關鍵幀可寫 v: [模型座標…] 或 ll: [lon, lat], az, el, d
     dur: 7.0
     camera: [{ t: 0.0, ll: [<lon>, <lat>], az: 30, el: 8, d: 0.6 }, { t: 7.0, ll: [<lon>, <lat>], az: 32, el: 11, d: 2.0 }]   # 寫經緯度，不寫模型座標 v:（改了 box 模型座標就全錯）
-    # 開場屬於城市和它的名字，不放象徵物（SKILL.md 步驟 3）
+    # 開場屬於城市和它的名字，不放象徵物（docs/SCRIPT.md）
   nodes:                                      # 依序排版；片長 = 節點秒數加總。節點內的時間：秒（相對節點起點）、{year: Y}、'end'
     - id: <node>
       mood: { feel: pride, level: 2 }         # 講述者在這一站的感受（必填）：wonder | pride | grief | wistful | hope | calm；level 1–3
@@ -96,7 +96,7 @@ film:
         streets: [{ pts: [[lon, lat], [lon, lat]], w_m: 16, shops: true }]                                 # shops：沿街兩層鋪面
         lanes: { spacing_m: 85, w_m: 5 }      # 城內巷網（region: walls 或一個 lon/lat 環）
         fabric: [{ region: walls, lot: [17, 25], typ: courtyard, h_m: 6, empty: 0.05 }]                  # typ: courtyard | dwelling | hut | slab；scatter: 1 = 無格網散佈（沒有里坊證據時）
-        # trace: research/<圖名>_trace.geojson   # 選填：照古地圖或考古平面描的城牆、街道、街區、地標（SKILL.md 10a），和上面寫的一起建
+        # trace: research/<圖名>_trace.geojson   # 選填：照古地圖或考古平面描的城牆、街道、街區、地標（docs/MODEL.md），和上面寫的一起建
         landmarks:                            # kind: temple | office | palace | belltower | pagoda | terrace | hall | paifang | factory | chimney | station | tower | corridor | bridge | boats | village | kilns | workshops | market | pool | platform | ditch
           - { kind: temple, lon: 0, lat: 0, w_m: 62, d_m: 120 }
         trees: [{ pts: [[lon, lat], [lon, lat]], step_m: 22, h_m: 12, both: false }]
@@ -104,7 +104,7 @@ film:
       footage:                                # 今天的同一個地方（實拍回聲）。mode: full（4K 全幅 7–9 s）| panel（照片右側面板）| card（低解析小卡 + anchor 引線）| doc（古地圖／檔案照文獻卡）
         - { id: <f>, file: assets/footage/<clip>.mp4, mode: full, at: 20.0, dur: 8.0, zh: <地名>, en: <place, today>, credit: "<作者 · 來源 · 授權>" }
         - { id: <p>, file: assets/photos_cc/<photo>.jpg, mode: panel, with: <句子 id>, plus: 0.5, dur: 6.0, kicker: "今天 · TODAY · 照片", zh: <地名>, en: <place>, credit: "<作者 · 授權>" }
-        # with：跟某句一起出現（plus 晚幾秒）；或 at: 秒數。半屏圖蓋住生長時會自動延到長完（同一句內）；force: true 照原時間放（SKILL.md 演出文法 5b）
+        # with：跟某句一起出現（plus 晚幾秒）；或 at: 秒數。半屏圖蓋住生長時會自動延到長完（同一句內）；force: true 照原時間放（docs/STAGING.md 5b）
       # 歷代城市的建築類型（landmarks kind）：palace / office / temple（院落）、terrace（高台）、taixie（秦式台榭：台內房間、迴廊、兩層主殿、mirror_m 雙台加飛閣）、
       #   front_hall（漢式三級台前殿，tiers）、court（宮署院落：main/north 殿）、armoury（武庫長庫）、market（市：每格排滿列肆、市樓）、workshops（作坊區：院落裡的窯、冶鑄、鑄錢，kilns: 窯數）、hall、pagoda、belltower、paifang、
       #   kilns、village、bridge、boats、factory、chimney、station、platform、ditch、pool、corridor（複道）；fabric typ：courtyard / dwelling / hut / slab / wards（閭里）。
@@ -163,7 +163,7 @@ film:
   #     - { id: M02, node: <節點> }
   #     - { id: M02b, node: <節點>, continue: M02 }      # 接著 M02 選中的那條往下生成
 
-# ---- 現代段：一條時間線上的「站」（SKILL.md 演出文法 9i、9j）
+# ---- 現代段：一條時間線上的「站」（docs/STAGING.md 9i、9j）
 #    - id: m2011
 #      years: [2005, 2011]                     # 飛行時年份從上一站跑到這一站（每秒最多一年），到站後停住
 #      dur: 16                                 # 到站後講述的秒數（字幕不夠讀會自動拉長）

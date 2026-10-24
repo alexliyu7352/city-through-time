@@ -2,7 +2,7 @@
 //   node tools/build.mjs <city_slug> [--no-data] [--no-video] [--no-mix] [--workers N]
 //   --no-video reuses build/video/video.mp4, --no-mix reuses build/audio/mix.wav (the mix takes minutes of CPU: run it alone on a desktop)
 // Layout (pipeline/layout.py): sources in cities/<slug>/, everything made in build/, the deliverables in dist/. Python runs through
-// uv (pyproject.toml); this machine's Chrome and worker count come from local/config.json (SKILL.md 第一次使用).
+// uv (pyproject.toml); this machine's Chrome and worker count come from local/config.json (docs/SETUP.md).
 import fs from 'fs'; import os from 'os'; import path from 'path'; import { spawnSync } from 'child_process';
 import { ROOT, local, cityDir, buildDir } from '../render/local.mjs';
 

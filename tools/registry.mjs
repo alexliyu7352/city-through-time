@@ -25,7 +25,7 @@ const https = u => typeof u === 'string' && /^https:\/\/\S+$/.test(u);
 const local = u => typeof u === 'string' && !u.startsWith('/') && !u.includes('..') && fs.existsSync(path.join(ROOT, u));   // (a path in this repository: the example city's)
 const image = u => https(u) || local(u);
 // what a city's text must not carry: the author's paths, account ids and keys stay on their machine (local/config.json, internal/;
-// SKILL.md 10d: the voice's id never in git)
+// docs/SOUND.md: the voice's id never in git)
 const PRIVATE = [
   [/(?<![\w/.:~-])(?:\/(?:home|Users|root|mnt|Volumes|data|tmp)\/|[A-Za-z]:\\(?:Users|Documents)\\)\S*/g, 'a path on the author\'s machine'],
   [/\b(?:voice_?id|group_?id|api_?key|secret|token)\b["']?\s*[:=]\s*["']?[\w-]{6,}/gi, 'an account id or key'],

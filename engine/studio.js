@@ -256,7 +256,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
           vec2 dp = vWP.xz - uRiseO[i]; float f = uRiseMode[i] > .5 ? dot(dp, uRiseDir[i]) : length(dp), R = uRiseR[i], inside = smoothstep(.02, .05, hm[i]);
           if (uRiseMode[i] < 1.5) c += mix(hc, vec3(1.), .2) * ringGlow(f, R, 1.) * (.3 + .7 * inside) * uRiseA[i] * (kind > .5 ? 1. : 1.4);
           // scan (a place small on screen): nothing on the ground; its outline draws itself (geometry, addEdge) and each
-          // building flashes as it rises (a mask-sized band showed the mask's pixels up close, SKILL.md 演出文法 9b)
+          // building flashes as it rises (a mask-sized band showed the mask's pixels up close, docs/STAGING.md 9b)
         }
         if (uHideFA[i] > .001) {   // a contracting ring that takes the city back (a growing one is the next node's colour ring)
           float d = length(vWP.xz - uHideO[i]); c += mix(hc, vec3(1.), .2) * ringGlow(d, uHideFR[i], -1.) * uHideFA[i] * (kind > .5 ? 1. : 1.5); }
