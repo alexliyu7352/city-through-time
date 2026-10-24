@@ -12,11 +12,12 @@ let srv = null;
 export async function server() { if (!srv) srv = await serve(); return srv; }
 export function closeServer() { if (srv) srv.server.close(); }
 
-// --size WxH (default 1920x1080), taken out of args; even numbers from 16 to 8192 (H.264 yuv420p)
+// --size WxH (default 1920x1080), taken out of args; even numbers from 16 to 8192 (H.264 yuv420p), 16:9: the page draws one
+// 1920x1080 picture, and the size scales it whole (a smaller window only showed its top left corner, 2026-10-22)
 export function takeSize(args) {
   const i = args.indexOf('--size'); if (i < 0) return { w: 1920, h: 1080 };
   const v = args.splice(i, 2)[1] || '', m = /^(\d+)x(\d+)$/.exec(v), w = m && +m[1], h = m && +m[2];
-  if (!m || [w, h].some(n => n < 16 || n > 8192 || n % 2)) { console.error(`bad --size "${v}": use WxH with even numbers from 16 to 8192, e.g. 1080x1920`); process.exit(2); }
+  if (!m || [w, h].some(n => n < 16 || n > 8192 || n % 2) || w * 1080 !== h * 1920) { console.error(`bad --size "${v}": use WxH, 16:9, even numbers from 16 to 8192, e.g. 960x540 or 3840x2160`); process.exit(2); }
   return { w, h };
 }
 
@@ -38,7 +39,7 @@ const FATAL = new Set(['script', 'document']);   // module imports are scripts t
 export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = false } = {}) {
   const { port } = await server();
   const browser = await chromium.launch({ executablePath: localPath('chrome') || undefined, args: ARGS });
-  const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: w / 1920 });   // (takeSize: 16:9)
   const log = [];   // the latest problems, printed with the hint when READY is slow
   const note = s => { log.push(s); if (log.length > 8) log.shift(); console.error(s); };
   page.on('console', m => {

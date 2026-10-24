@@ -466,6 +466,7 @@ window.render = (FILM.footage || []).length ? async t => {
   renderSync(t);
 } : renderSync;
 window.TEXTS = async t => { await window.render(t); return OV.texts(); };
+window.DRAWN = () => OV.drawn();   // every text of the frame TEXTS last drew (tools/readcheck.mjs: texts over texts)
 // tools/camcheck.mjs: the camera at time t without drawing (position, target, near plane, distance)
 window.CAMAT = t => { setCamera(t); return { p: camera.position.toArray(), tg: tgt.toArray(), near: camera.near, d: camDist, fov: camera.fov }; };
 

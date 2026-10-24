@@ -1,7 +1,9 @@
 // Reading-time check for pages whose window.render(t) / window.TEXTS(t) are async (this project's footage seeks make them so).
 // Same rules and output as lemo-opuscar's core/render/readcheck.mjs: every text block must stay fully in frame for at least
 // (CJK chars / 4.5 + other chars / 15 + 1.5) s, never less than 1.5 s. Subtitles are checked by compile (reading hold) instead.
-// Beyond the library's: every pin of film.json in the stretch must be drawn whole at some point (one never drawn is in no list).
+// Beyond the library's: every pin of film.json in the stretch must be drawn whole at some point (one never drawn is in no list),
+// and no text may lie on another (the letters' bands of any two texts drawn opaque, named or not: 咸阳's readout legend on the
+// counters, 2026-10-22).
 // usage: node tools/readcheck.mjs <city_slug> [--step 0.08] [--from s] [--to s]     exit 0 ok, 1 too short, 2 not checked
 // --from/--to: only that stretch (batch checks: a text that starts before --from or runs past --to is judged on what is inside)
 import fs from 'fs';
@@ -12,7 +14,7 @@ const city = args[0], STEP = +opt('--step', 0.08), FROM = +opt('--from', 0), TO 
 const { browser, page } = await openFilm(city);
 const res = await page.evaluate(async ({ STEP, FROM, TO }) => {
   if (typeof window.TEXTS !== 'function' || !(window.DUR > 0)) return { none: true };
-  const W = innerWidth, H = innerHeight, seen = {}, partial = {}, low = {};
+  const W = innerWidth, H = innerHeight, seen = {}, partial = {}, low = {}, over = {};
   const end = TO == null ? window.DUR : Math.min(window.DUR, +TO);
   for (let t = FROM; t <= end; t += STEP) {
     const vis = new Set();
@@ -25,10 +27,16 @@ const res = await page.evaluate(async ({ STEP, FROM, TO }) => {
       if (!s.done) s.run = Math.min(t + STEP, window.DUR) - s.t0;
     }
     for (const k in seen) if (!vis.has(k)) seen[k].done = true;
+    const D = window.DRAWN ? window.DRAWN() : [];   // (the frame TEXTS just drew)
+    for (let i = 0; i < D.length; i++) for (let j = i + 1; j < D.length; j++) {
+      const a = D[i], b = D[j], w = Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0), h = Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0);
+      if (w <= 2 || h <= 2) continue;
+      const o = over[(a.id ?? a.text) + '\u0000' + (b.id ?? b.text)] ??= { a: a.text, b: b.text, t0: t, t1: t }; o.t1 = t;   // (a counter's text changes, its id stays)
+    }
   }
   for (const k in partial) if (seen[k]) delete partial[k];
   if (FROM > 0 || TO != null) for (const k in seen) { const s = seen[k]; if (s.t0 <= FROM + STEP / 2 || s.t0 + s.run >= end - STEP / 2) s.edge = true; }   // cut by the range: not judged
-  return { seen: Object.values(seen), partial: Object.values(partial), low: Object.values(low) };
+  return { seen: Object.values(seen), partial: Object.values(partial), low: Object.values(low), over: Object.values(over) };
 }, { STEP, FROM, TO });
 await browser.close(); closeServer();
 if (res.none || (!res.seen.length && !res.partial.length)) { console.error('readcheck: NOT CHECKED (no window.TEXTS / DUR, or no text at all). This is not a pass.'); process.exit(2); }
@@ -42,6 +50,7 @@ for (const s of res.seen) {
 }
 for (const s of res.partial) { bad++; console.log(`BAD ${s.id.padEnd(18)} at ${s.t0.toFixed(2)}s  never fully visible  ${JSON.stringify(s.text.slice(0, 24))}`); }
 for (const s of res.low || []) { bad++; console.log(`BAD ${s.id.padEnd(18)} at ${s.t0.toFixed(2)}s  sits on the subtitle strip  ${JSON.stringify(s.text.slice(0, 24))}`); }
+for (const o of res.over || []) { bad++; console.log(`BAD overlap            at ${o.t0.toFixed(2)}-${o.t1.toFixed(2)}s  ${JSON.stringify(o.a.slice(0, 24))} on ${JSON.stringify(o.b.slice(0, 24))}`); }
 // a pin never drawn whole and opaque (no room for its box above its anchor, off screen or under a clip all its time) is in none
 // of the lists above, so it passed unseen (咸阳 2014's 秦汉新城, 2026-10-21). A pin that crosses --from/--to may show outside: not judged
 const FILM = JSON.parse(fs.readFileSync(buildDir(city, 'film.json'), 'utf8'));

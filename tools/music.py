@@ -53,6 +53,31 @@ def slug(p):
     return re.sub(r'[^a-z0-9]+', '-', (m.group(1) if m else p[:24]).lower()).strip('-')
 
 
+def measure(wav):
+    """what to know of a candidate before anyone hears it (SKILL.md 10d; 咸阳 M01 'long silences' left 30-40% of its candidates
+    silent): its silent share and longest gap up to where its music ends, its low end (energy under 150 Hz), and its level in
+    thirds (the build: rising, flat, falling)"""
+    import numpy as np
+    x = lay._read(wav); e = int(lay.music_end(x) * lay.SR); x_ = x[:e]; h = lay.SR // 10; n = len(x_) // h
+    if not n: return {'silent': 1.0, 'gap_s': round(len(x) / lay.SR, 1), 'low': 0.0, 'thirds_db': []}
+    db = 10 * np.log10(np.mean(np.square(x_[:n * h].reshape(n, h, 2), dtype=np.float64), axis=(1, 2)) + 1e-12)
+    quiet = db < max(-45.0, np.percentile(db, 95) - 35)
+    runs, r = [], 0
+    for q in quiet: r = r + 1 if q else 0; runs.append(r)
+    m = x_.mean(axis=1); sp = np.abs(np.fft.rfft(m)) ** 2; fr = np.fft.rfftfreq(len(m), 1 / lay.SR)
+    th = [20 * np.log10(max(lay._rms(p), 1e-6)) for p in np.array_split(x_, 3)]
+    return {'silent': round(float(quiet.mean()), 3), 'gap_s': round(max(runs) / 10, 1), 'low': round(float(sp[fr < 150].sum() / max(sp.sum(), 1e-12)), 3),
+            'thirds_db': [round(v, 1) for v in th]}
+
+
+def said(m):
+    """a candidate's measure in one line, with what wants a look first"""
+    warn = [w for w, bad in (('silent', m['silent'] > .15), ('gap', m['gap_s'] > 4), ('no low end', m['low'] < .02)) if bad]
+    low = '<1%' if m['low'] < .005 else f"{m['low']:.0%}"
+    return (f"silent {m['silent']:.0%}, gap {m['gap_s']:.1f} s, low {low}, level " + '/'.join(f'{v:.0f}' for v in m['thirds_db']) + ' dB'
+            + (f"  ! {', '.join(warn)}" if warn else ''))
+
+
 def generate(prompt, seconds, seed, out, init=None, inpaint=None, ctx=None, cfg=1.0, negative=None):
     os.makedirs(os.path.dirname(out), exist_ok=True)
     # ponytail: the runtime's venv and nice as on Linux/macOS; a Windows machine needs .venv/Scripts/python.exe and no nice
@@ -71,8 +96,9 @@ def generate(prompt, seconds, seed, out, init=None, inpaint=None, ctx=None, cfg=
             'cfg': cfg, 'negative': negative if cfg != 1.0 else None,
             'runtime': f'stable-audio-3 optimized/tflite {rev}', 'made': datetime.datetime.now().isoformat(timespec='seconds'),
             'wall_s': round(time.time() - t, 1)}
+    meta['measure'] = measure(out)
     json.dump(meta, open(out[:-4] + '.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-    print(f'  {os.path.basename(out)}: {seconds:.0f} s of audio in {meta["wall_s"]:.0f} s', flush=True)
+    print(f'  {os.path.basename(out)}: {seconds:.0f} s of audio in {meta["wall_s"]:.0f} s; {said(meta["measure"])}', flush=True)
 
 
 def main():
@@ -95,6 +121,10 @@ def main():
         for c in cues:
             t0, t1 = span[c['id']]; have = sorted(f[len(c['id']) + 1:-4] for f in os.listdir(os.path.join(mdir, 'cand')) if f.startswith(c['id'] + '_') and f.endswith('.wav')) if os.path.isdir(os.path.join(mdir, 'cand')) else []
             print(f"{c['id']:6s} {c['node']:10s} {t0:7.2f}-{t1:7.2f} ({t1 - t0:5.1f} s)  wordings {len(P.get(c['id'], []))}  take {c.get('take') or '-':5s}  candidates: {' '.join(have) or '-'}")
+            for k in have:   # (measured once, kept in the candidate's .json)
+                f = lay.take_path(D, c['id'], k); jf = f[:-4] + '.json'; meta = json.load(open(jf, encoding='utf-8')) if os.path.exists(jf) else {}
+                if 'measure' not in meta: meta['measure'] = measure(f); json.dump(meta, open(jf, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+                print(f"         {k:5s} {'*' if k == c.get('take') else ' '} {said(meta['measure'])}")
         print('other sections: ' + ' '.join(k for k in P if k not in by_id))
         return
     seeds = [int(s) for s in a.seeds.split(',')]

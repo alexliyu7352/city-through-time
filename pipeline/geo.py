@@ -15,7 +15,9 @@ def utm_epsg(lon, lat):
 class Frame:
     """Ground (UTM metres) <-> model units for one city box. box = (west, south, east, north) in degrees."""
 
-    def __init__(self, box, scale):
+    def __init__(self, box, scale, near=()):
+        """near: other boxes a position may lie in (the land beyond the plate); model_lonlat stops on a position more than a
+        plate's width beyond the plate and them"""
         self.box = box
         w, s, e, n = box
         self.epsg = utm_epsg((w + e) / 2, (s + n) / 2)
@@ -29,6 +31,11 @@ class Frame:
         self.cx, self.cy = (self.x0 + self.x1) / 2, (self.y0 + self.y1) / 2
         self.scale = scale
         self.size = [(self.x1 - self.x0) * scale, (self.y1 - self.y0) * scale]   # plate width (east-west), depth (north-south)
+        self.reach = [(self.x0, self.y0, self.x1, self.y1)]
+        for b in near:
+            bx, by = zip(*[self.to_utm.transform(lon, lat) for lon, lat in ((b[0], b[1]), (b[2], b[1]), (b[2], b[3]), (b[0], b[3]))])
+            self.reach.append((min(bx), min(by), max(bx), max(by)))
+        self.slack = max(self.x1 - self.x0, self.y1 - self.y0)
 
     def inside(self, x, y):
         return self.x0 <= x <= self.x1 and self.y0 <= y <= self.y1
@@ -38,7 +45,12 @@ class Frame:
         return [round((x - self.cx) * self.scale, 5), round(-(y - self.cy) * self.scale, 5)]
 
     def model_lonlat(self, lon, lat):
-        return self.model(*self.to_utm.transform(lon, lat))
+        x, y = self.to_utm.transform(lon, lat)
+        far = min(math.hypot(max(x0 - x, 0, x - x1), max(y0 - y, 0, y - y1)) for x0, y0, x1, y1 in self.reach)
+        if not far <= self.slack:   # (also a latitude past 90, which projects to inf)
+            raise SystemExit(f'position [{lon}, {lat}] lies {far / 1000:.0f} km beyond the plate {list(self.box)}: a typo in the city\'s '
+                             f'coordinates (longitude first, then latitude)? Search city.yaml for {lon}')
+        return self.model(x, y)
 
     def uv(self, x, y):
         """ground metres -> texture uv in [0,1] (u east, v south: v = 0 at the north edge)"""

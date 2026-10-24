@@ -17,8 +17,8 @@ const SUBTOP = H - 145;   // the subtitle strip starts here: pins and labels kee
 
 export function makeOverlay(canvas) {
   const g = canvas.getContext('2d');
-  let TX = [];
-  const begin = () => { g.clearRect(0, 0, W, H); TX = []; };
+  let TX = [], DRAWN = [];   // DRAWN: every text drawn opaque, named or not, its letters' band (tools/readcheck.mjs: texts over texts)
+  const begin = () => { g.clearRect(0, 0, W, H); TX = []; DRAWN = []; };
   function txt(id, s, x, y, k, px, col, a = 1, o = {}) {
     if (a <= .001 || !s) return 0;
     g.save(); g.globalAlpha = a; g.font = font(k, px); g.fillStyle = col; g.textBaseline = 'alphabetic';
@@ -27,6 +27,7 @@ export function makeOverlay(canvas) {
     const w = g.measureText(s).width, xx = o.right ? x - w : o.center ? x - w / 2 : x;
     g.fillText(s, xx, y); g.restore();
     if (id && a > .98) TX.push({ id, text: s, x0: xx, y0: y - px * .9, x1: xx + w, y1: y + px * .25 });
+    if (a > .98) DRAWN.push({ id: id || null, text: s, x0: xx, y0: y - px * .7, x1: xx + w, y1: y });
     return w;
   }
   const width = (s, k, px, ls = 0) => { g.save(); g.font = font(k, px); g.letterSpacing = ls + 'px'; const w = g.measureText(s).width; g.restore(); return w; };
@@ -428,5 +429,5 @@ export function makeOverlay(canvas) {
     (e.lines || []).forEach((s, i) => { const hi = i < (e.bright || 1); txt('end_l' + i, s, X, y, hi ? 'mono' : 'zh_sans', hi ? 22 : 21, hi ? 'rgba(230,234,240,.85)' : 'rgba(225,230,236,.7)', a, { ls: hi ? 2 : 1 }); y += 36; });
   }
 
-  return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, noteDrop };
+  return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, noteDrop };
 }

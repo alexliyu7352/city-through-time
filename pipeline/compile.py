@@ -17,11 +17,32 @@ import decals as DEC
 import citygen
 import stagecraft
 
+class Seen(dict):
+    """a city.yaml mapping that remembers which of its keys were read: a key nothing reads is a typo, or one this version
+    does not have, and is skipped without a word (the user, 2026-10-22: 'with:' on an area was never passed on). Listed at the end"""
+    def __getitem__(self, k): self.read.add(k); return super().__getitem__(k)
+    def get(self, k, d=None): self.read.add(k); return super().get(k, d)
+    def __contains__(self, k): self.read.add(k); return super().__contains__(k)
+    def setdefault(self, k, d=None): self.read.add(k); return super().setdefault(k, d)
+    def pop(self, k, *d): self.read.add(k); return super().pop(k, *d)
+    def __iter__(self): self.read.update(dict.keys(self)); return super().__iter__()
+    def keys(self): self.read.update(dict.keys(self)); return super().keys()
+    def items(self): self.read.update(dict.keys(self)); return super().items()
+    def values(self): self.read.update(dict.keys(self)); return super().values()
+class _SeenLoader(yaml.SafeLoader): pass
+def _seen_map(loader, node):
+    d = Seen(); d.read = set(); yield d
+    d.update(loader.construct_mapping(node)); d.mine = set(dict.keys(d))   # (keys compile adds later are not the author's)
+_SeenLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _seen_map)
+WARN = []   # warnings on the settings, said once at the end (compile runs again for each pass of the stage plan)
+
 D = os.path.abspath(sys.argv[1])
-C = yaml.safe_load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'))
+C = yaml.load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'), Loader=_SeenLoader)
 import layout as LAYOUT
 ST = json.load(open(LAYOUT.data(D, 'stats.json'), encoding='utf-8'))
-F = Frame(tuple(C['box']), 1.0 / C['scale'])
+# a position more than a plate's width beyond the plate (and the land beyond it, terrain.context) is a typo and stops compile
+# (咸阳: the tiger tally at lat 45.0, 1200 km north, found only by stills of every second)
+F = Frame(tuple(C['box']), 1.0 / C['scale'], near=[b_ for b_ in [((C.get('terrain') or {}).get('context') or {}).get('box')] if b_])
 FM = C['film']
 LAYOUT.ensure(D)
 LANG = FM.get('lang', ['zh', 'en'])
@@ -59,16 +80,66 @@ if EMBLEM != 'none':
     if not isinstance(EMBLEM, dict) or not EMBLEM.get('name') or not EMBLEM.get('meaning'): raise SystemExit('compile: film.emblem: {name, meaning, nodes} (what it personifies, said once in words)')
     _bad = [n_ for n_ in EMBLEM.get('nodes', []) if n_ not in [nd['id'] for nd in FM['nodes']]]
     if _bad: raise SystemExit(f'compile: film.emblem.nodes: no node {", ".join(_bad)}')
+# the emblem on the plate (tally keys) only where the film has one: the template's tiger tally outlived its storyline (咸阳, 2026-10-21)
+_tally_at = [k_ for k_ in ('opening', 'closing') if (FM.get(k_) or {}).get('tally')] + [nd['id'] for nd in FM['nodes'] if nd.get('tally')]
+if EMBLEM == 'none' and _tally_at: raise SystemExit(f'compile: film.emblem is none, but there are emblem keys (tally) in {", ".join(_tally_at)}: drop them, or give the film its emblem')
+if EMBLEM != 'none' and [n_ for n_ in _tally_at if n_ not in ('opening', 'closing') and n_ not in EMBLEM.get('nodes', [])]:
+    WARN.append(f'emblem keys (tally) in {", ".join(n_ for n_ in _tally_at if n_ not in ("opening", "closing") and n_ not in EMBLEM.get("nodes", []))}, '
+                f'which film.emblem.nodes does not list: the emblem shows where its story is not told')
+# the film ends on this year (SKILL.md 步驟 3), and a stop's colour ring must read against the one before (咸阳: the Qin orange
+# and the empire's first colour were one, and the ring that should repaint the city did not show): Lab ΔE76 under 25 is too close,
+# unless the two are one chapter in one colour (the stops of the modern growth), which two period cities never are
+import datetime
+_ylast = (FM['nodes'][-1].get('years') or [None])[-1] if FM['nodes'] else None
+if _ylast is not None and _ylast != datetime.date.today().year:
+    WARN.append(f'the last stop, {FM["nodes"][-1]["id"]}, ends in {_ylast}, not this year ({datetime.date.today().year}): the film ends today')
+def _lab(h):
+    r_, g_, b_ = [(c_ / 12.92 if c_ <= .04045 else ((c_ + .055) / 1.055) ** 2.4) for c_ in (int(h.lstrip('#')[i:i + 2], 16) / 255 for i in (0, 2, 4))]
+    f_ = lambda t: t ** (1 / 3) if t > 216 / 24389 else (24389 / 27 * t + 16) / 116
+    X_, Y_, Z_ = f_((r_ * .4124 + g_ * .3576 + b_ * .1805) / .95047), f_(r_ * .2126 + g_ * .7152 + b_ * .0722), f_((r_ * .0193 + g_ * .1192 + b_ * .9505) / 1.08883)
+    return 116 * Y_ - 16, 500 * (X_ - Y_), 200 * (Y_ - Z_)
+for a_, b_ in zip(FM['nodes'], FM['nodes'][1:]):
+    if not (a_.get('col') and b_.get('col')): continue
+    d_ = math.dist(_lab(a_['col']), _lab(b_['col']))
+    if 0 < d_ < 25 or (d_ < 25 and 'city' in a_ and 'city' in b_):
+        WARN.append(f'{a_["id"]} {a_["col"]} and {b_["id"]} {b_["col"]} are {d_:.0f} apart (Lab ΔE, 25 or more reads): the colour ring '
+                    f'into {b_["id"]} will not show; move them apart, or give them one colour if they are one chapter')
 
 # ------------------------------------------------------------------ text templates and positions
-def _ns(o): return SimpleNamespace(**{k: _ns(v) for k, v in o.items()}) if isinstance(o, dict) else [_ns(v) for v in o] if isinstance(o, list) else o
+def _ns(o): return SimpleNamespace(**{str(k): _ns(v) for k, v in dict.items(o)}) if isinstance(o, dict) else [_ns(v) for v in o] if isinstance(o, list) else o
 STN = _ns(ST)
 def n(x): return f'{int(round(x)):,}'
 def pct(x): return str(int(round(x * 100)))
+# numbers the picture shows that come from the city's own settings and shapes (SKILL.md 步驟 4: never written by hand, so they
+# follow when a factor or an outline changes): cfg = city.yaml ({cfg.terrain.exaggeration:g}), plate_km = the plate's
+# [width, depth] in km, km(id) = a line's length or an outline's perimeter in km, km2(id) = an outline's area in km²; the ids
+# are a researched area's (film.areas_file), an epoch's or a line's
+CFG = None
+def _shape(id_):
+    from shapely.geometry import Polygon as _Pg, LineString as _Ls, Point as _Pt
+    from shapely.ops import unary_union
+    U = lambda ring: [F.to_utm.transform(*q[:2]) for q in ring]
+    for nd in FM['nodes']:
+        for e in nd.get('epochs', []):
+            if e.get('id') != id_: continue
+            parts_ = [_Pg(U(r)) for r in e.get('polygons', [])] + [_Pg(U(r)) for nm_ in e.get('osm_polygons', []) for r in osm_rings(nm_)]
+            parts_ += [_Pt(*F.to_utm.transform(c[0], c[1])).buffer(c[2]) for c in e.get('circles', [])]
+            return unary_union([p_.buffer(0) for p_ in parts_])
+        for L in nd.get('lines', []):
+            if L.get('id') == id_ and L.get('polylines'): return unary_union([_Ls(U(pl)) for pl in L['polylines']])
+    try: rings_ = area_rings(id_)
+    except SystemExit: rings_ = []
+    if not rings_: raise SystemExit(f'compile: km({id_!r}) / km2({id_!r}): no epoch, line or researched area with that id has a shape')
+    return unary_union([_Pg(U(r)).buffer(0) for r in rings_])
+def km(id_): g_ = _shape(id_); return (g_.length if g_.geom_type in ('LineString', 'MultiLineString') else g_.exterior.length if g_.geom_type == 'Polygon' else sum(p_.exterior.length for p_ in g_.geoms)) / 1000
+def km2(id_): return _shape(id_).area / 1e6
 def _fill(m):
+    global CFG
     expr = m.group(1); fmt = None
     if ':' in expr and re.match(r'^[^:]+:[-+ 0-9.,%a-zA-Z]*$', expr): expr, fmt = expr.rsplit(':', 1)
-    v = eval(expr, {'stats': STN, 'n': n, 'pct': pct, 'round': round, 'int': int, 'len': len})   # noqa: S307 (authored config)
+    if CFG is None: CFG = _ns(C)   # (dict.items: reading it for a number does not count as reading every key)
+    v = eval(expr, {'stats': STN, 'n': n, 'pct': pct, 'round': round, 'int': int, 'len': len, 'cfg': CFG,   # noqa: S307 (authored config)
+                    'plate_km': [(F.x1 - F.x0) / 1000, (F.y1 - F.y0) / 1000], 'km': km, 'km2': km2})
     return format(v, fmt) if fmt else str(v)
 def tx(s): return re.sub(r'\{([^{}]+)\}', _fill, s) if isinstance(s, str) else s
 _LANGS_ANY = {f_[:-5] for f_ in os.listdir(os.path.join(i18n.ROOT, 'i18n')) if f_.endswith('.yaml')} | {'zh', 'en'}
@@ -1337,7 +1408,8 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
     e['fallC'] = [round(fx_, 5), round(fz_, 5)]
     e['_dist'] = [math.hypot(p[15] - fx_, p[16] - fz_) for p in prims]; e['_bc'] = [(p[15], p[16]) for p in prims]
     if e.get('hide') is not None:
-        hide_regions[e['hide']] = hide_layer(prims, {**cs, '_id': node['id']}, pd['bnd'])
+        cs_ = Seen(dict.items(cs)); cs_.read, cs_.mine = cs.read, set(); cs_['_id'] = node['id']   # (what hide_layer reads, read on cs)
+        hide_regions[e['hide']] = hide_layer(prims, cs_, pd['bnd'])
         ED = float(FM.get('era_look', {}).get('edge_m', 150)) * F.scale; img_, rect_ = edge_sdf(pd['bnd'], ED); EDGES[e['hide']] = img_; e['edgeRect'] = rect_; e['edgeD'] = round(ED, 6)
 for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's colour ring, sent when its change starts (SKILL.md 演出文法 1)
     imp = IMPACT.get(node['id']); era_ = next((e for e in eras_out if e['id'] == node['id']), None)
@@ -1558,6 +1630,13 @@ for p in pins:
     if 'pin:' + p['id'] in LAY: _, _, p['len'], p['left'] = LAY['pin:' + p['id']][0]
 for li, L in enumerate(labels_out): L['lay'] = LAY.get(f'label:{li}', [])
 print(f'  tags: {len(pins)} pins, {len(labels_out)} place names laid out in {sum(len(v) for v in LAY.values())} stretches')
+_core = lambda s: re.split(r'\s*[·（(]\s*', s or '')[0].strip()
+for p in pins:   # one place, two tags at once: a pin named like a place name (film.labels) shown at the same time (SKILL.md 演出文法 9h)
+    for L in labels_out:
+        both_ = [(max(p['t0'], s0), min(p['t1'], s1)) for s0, s1, _, _ in L['lay'] if s0 < p['t1'] and p['t0'] < s1]
+        if _core(p['text']) and _core(p['text']) == _core(L['a']) and both_:
+            WARN.append(f'pin {p["id"]} and the place name "{L["a"]}" show together {both_[0][0]:.1f}-{both_[0][1]:.1f} s: one place, two tags; '
+                        f'drop the pin or give it what the name does not say')
 film = {
     'dur': DUR, 'fov': FM.get('fov', 30), 'yearFmt': FM.get('yearFmt', 'zh'), 'identity': {'l1': pick(FM['identity']['l1']), 'l2': pick(FM['identity']['l2'])},
     'palette': FM['palette'], 'light': {**light, 'base': FM.get('light', {}).get('base', 0.28)},
@@ -1804,3 +1883,23 @@ _kinds = {k_: sum(1 for f_ in _finds if f_[2] == k_) for k_ in ('add', 'cut', 's
 print('  copy: ' + ', '.join(f'{v_} {k_}' for k_, v_ in _kinds.items()) + f' (advice: {os.path.relpath(LAYOUT.logs(D, "copy.txt"))})')
 print(f'film.json: {DUR}s from {len(nodes_out)} nodes; {len(epochs)} epochs, {len(lines)} line groups, {len(decals_out)} decals, {len(props_out)} props, {len(tally_keys)} tally keys, {len(pins)} pins, {len(cues)} cues, {len(readouts)} readouts, camera keys {len(cam)}')
 for nd in nodes_out: print(f'  node {nd["id"]:12s} {nd["t0"]:7.2f}-{nd["t1"]:7.2f}  {nd["years"][0]:.0f} → {nd["years"][1]:.0f}  {nd["label"]}')
+# keys of city.yaml nothing read (Seen): compile and the modules it hands the settings to have read theirs by now; the steps that
+# read city.yaml themselves (prep.py, terrain.py, tools/music.py, ...) name their keys in quotes in their code
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_theirs = set()
+for d_ in ('pipeline', 'tools', 'audio', 'render'):
+    for f_ in sorted(os.listdir(os.path.join(_ROOT, d_))):
+        if not f_.endswith(('.py', '.mjs', '.js')) or f_ == 'compile.py': continue
+        s_ = open(os.path.join(_ROOT, d_, f_), encoding='utf-8').read()
+        if 'city.yaml' in s_ and re.search(r'safe_load|yaml\.load|YAML\.parse', s_): _theirs |= set(re.findall(r'''['"]([A-Za-z_][\w-]*)['"]''', s_))
+def _unread(o, path=''):
+    if isinstance(o, Seen):
+        for k in [k_ for k_ in dict.keys(o) if k_ in getattr(o, 'mine', ())]:
+            p_ = f'{path}.{k}' if path else str(k)
+            if k not in o.read and str(k) not in _theirs: yield p_
+            elif k in o.read: yield from _unread(dict.__getitem__(o, k), p_)
+    elif isinstance(o, list):
+        for i, v in enumerate(o): yield from _unread(v, f'{path}[{dict.get(v, "id", i) if isinstance(v, dict) else i}]')
+_nobody = list(_unread(C))
+if _nobody: WARN.append('city.yaml keys nothing reads (a typo, a key in the wrong place, or one this version does not have): ' + ', '.join(_nobody))
+for w_ in WARN: print('warning: ' + w_, file=sys.stderr)

@@ -6,7 +6,7 @@ city.yaml (defaults below).
   add    a long silence while the picture brings something named (a pin, an area, a beam's label, a photo, the sky's names, a new
          stop) that no nearby line mentions; or a very long silence
   cut    a line too long for one reading, lines so close together that the picture has no room, a phrase said twice
-  style  numbers not in digits 0-9: Chinese numerals (dates, years, measures), full-width digits, any script's own digits
+  style  numbers not in digits 0-9: Chinese numerals (dates, years, measures, counts), full-width digits, any script's own digits
   check  a line about years after the year on the counter (later: true in script.yaml when meant)"""
 import re
 import i18n
@@ -17,6 +17,7 @@ CJK = r'[一-鿿]'
 CN_DIGIT = '〇零一二三四五六七八九'
 CN_NUM = CN_DIGIT + '十百千万两'
 UNITS = '公里|平方公里|公顷|米|亩|号线|万户|万家|万人|万锭|枚纱锭'
+COUNTERS = '[条條座个個处處次位名户戶家所间間栋棟幢层層道门門口棵株只隻头頭匹辆輛艘架部本卷件项項批片块塊种種类類届屆期岁歲倍]'
 FUNC = '的了在是这那里一也就和与着把被从到'
 
 
@@ -54,6 +55,12 @@ def chinese_numerals(text, keep):
     hits += [m.group(0) for m in re.finditer(r'(?:[一二三]?十[一二三四五六七八九]?|[一二三四五六七八九])日', t)]
     hits += [m.group(0) for m in re.finditer(rf'[{CN_NUM}点]+(?:{UNITS})', t)]
     hits += [m.group(0) for m in re.finditer(rf'[{CN_NUM}]+号(?!线)', t)]   # numbered things: 6号宫殿, 1号线 (above)
+    # counts: 四十一条, 九座, 二期, 两千四百年 (not 一 or 两 alone: 一座城 is the language's article, 两座城 its 'both'; not 几十座,
+    # which is no number; not 百年 or 千年 without a digit; idioms and quotations: film.copy.keep)
+    for m in re.finditer(rf'(?<![{CN_NUM}几数])([{CN_NUM}]+)({COUNTERS}|年)', t):
+        run, what = m.groups()
+        if run in ('一', '两') or (what == '年' and not (re.search('[十百千万]', run) and re.search('[一二三四五六七八九两]', run))): continue
+        hits.append(m.group(0))
     return sorted(set(hits), key=lambda h: t.find(h))
 
 

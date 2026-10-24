@@ -178,6 +178,8 @@ def lay(D, music, node_t0, dur, voiced, silences, voice_wav=None):
         else: g *= np.clip((dur - a - r) / END_FADE, 0, 1)
         g[-min(n, int(.05 * SR)):] *= np.linspace(1, 0, min(n, int(.05 * SR)))   # (never a click where the take runs out)
         k = int(round(a * SR)); buf[k:k + n] += (seg * g[:, None])[:N - k]
+        if off > 0 and not cont: _on_a_hit(c['id'], x, off, own)
+    _crossings(buf, [(cues[i - 1]['id'], c['id'], t0) for i, (c, (t0, _)) in enumerate(zip(cues, sp)) if i and c.get('take') and cues[i - 1].get('take')])
     _dip(buf, dur, voiced, silences, music)
     _write(D, buf, out, notes, 'lower a cue gain')
     d_ = os.path.join(D, 'build', 'audio', 'music')
@@ -193,6 +195,35 @@ def lay(D, music, node_t0, dur, voiced, silences, voice_wav=None):
         subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', lf, '-c:a', 'aac', '-b:a', '160k', lf[:-4] + '.m4a'], check=True)
         out['loop'] = os.path.relpath(lf[:-4] + '.m4a', os.path.join(D, 'build'))
     return out
+
+
+def _blocks_db(x, h):
+    n = len(x) // h
+    return 10 * np.log10(np.mean(np.square(x[:n * h].reshape(n, h, 2), dtype=np.float64), axis=(1, 2)) + 1e-12)
+
+
+def _on_a_hit(cid, x, off, own):
+    """a cue whose take is cut into (offset) should open on a hit, not in a rest: 咸阳 M02 laid later opened on a 2 s rest (the user,
+    2026-10-22). Says so when the take stays 10 dB under the cue's own level for a second or more from the offset, and where it
+    gets loud"""
+    loud = 20 * np.log10(max(_loud_rms(own), 1e-6)); h = SR // 100
+    db = _blocks_db(x[int(off * SR):int((off + 8) * SR)], h)
+    up = np.nonzero(db > loud - 10)[0]
+    if len(up) and up[0] * h / SR < 1.0: return
+    print(f'  music: {cid} starts in a rest at {off:.2f} s into its take' + (f'; it sounds {up[0] * h / SR:.2f} s later (offset {off + up[0] * h / SR:.2f} starts on it)' if len(up) else ', for 8 s and more'))
+
+
+def _crossings(buf, joins):
+    """the score's level round each change of cue, before the dips under the voice (SKILL.md 10d: measured, not only heard): the
+    quietest second within 2 s of the change against the median second 2-8 s either side (seconds every quarter second, so the
+    rests between drum strokes do not count as holes); a hole of 10 dB or more is marked !"""
+    q = SR // 4; p = 10 ** (_blocks_db(buf, q) / 10); out = []
+    db = 10 * np.log10(np.convolve(p, np.ones(4) / 4, 'same') + 1e-12)
+    for a, b, t in joins:
+        k = int(t * 4); near = db[max(0, k - 8):k + 8]; ref = np.concatenate([db[max(0, k - 32):max(0, k - 8)], db[k + 8:k + 32]])
+        if not len(near) or not len(ref): continue
+        d = float(np.median(ref) - near.min()); out.append(f'{a}→{b} {t:.1f} s {d:+.0f} dB' + (' !' if d >= 10 else ''))
+    if out: print('  music: the level at each change (the hole within 2 s against 2-8 s round it): ' + ', '.join(out))
 
 
 def _dip(buf, dur, voiced, silences, music):

@@ -77,7 +77,6 @@ film:
       city:                                   # 這個時期的整座城（pipeline/citygen.py）；範圍內的今日建築自動讓位
         origin: [lon, lat]                    # 生長從這裡向外擴散
         col: '#ffc9a0'                        # 時代色（建築染色）
-        rise: 6.0
         until: <下一個節點 id>                 # 在該節點開始時沉下（+ until_plus 秒）；sinkStyle: burn + burn: 秒 = 先燒後塌
         avoid_eras: [<前一個時期 id>]           # 疊在仍然站著的前一座城上時：新街區繞開它（例：帝都疊在秦都上）
         # at: 不寫 = 演算法（光柱落地、鏡頭到位停住，演出文法 9a）；也可寫秒數或 { after: <route id> }

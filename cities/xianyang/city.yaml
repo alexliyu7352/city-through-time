@@ -51,7 +51,7 @@ terrain: { enabled: true, exaggeration: 3.0,   # x3: at x6 every foundation on t
 film:
   lang: [zh, en]
   yearFmt: zh
-  identity: { l1: "咸阳 · 1:10000", l2: "{stats.centre_wgs[1]:.3f}°N  {stats.centre_wgs[0]:.3f}°E  ·  渭河两岸 31 × 22 km" }
+  identity: { l1: "咸阳 · 1:10000", l2: "{stats.centre_wgs[1]:.3f}°N  {stats.centre_wgs[0]:.3f}°E  ·  渭河两岸 {plate_km[0]:.0f} × {plate_km[1]:.0f} km" }
   light: { base: 0.62 }
   rise: { sinkDur: 2.8, ghost: 1.0 }   # today's white city stays whole all film (the reference's grammar); eras replace their own regions
   drift: 0.6
@@ -112,7 +112,7 @@ film:
       dur: 10.8   # (its source note needs 9.5 s on screen: readcheck)
       label: { zh: 咸阳, en: The name }
       col: '#8fb8ff'
-      readout: { label: "山南水北，俱为阳", note: "《元和郡县图志》《三辅黄图》 · 九嵕山位置：OpenStreetMap · 远景地形：Copernicus DEM，高度放大 2.5–3 倍" }
+      readout: { label: "山南水北，俱为阳", note: "《元和郡县图志》《三辅黄图》 · 九嵕山位置：OpenStreetMap · 远景地形：Copernicus DEM，高度放大 {cfg.terrain.context.exaggeration_far:g}–{cfg.terrain.exaggeration:g} 倍" }
       lines:
         - { id: river, src: rivers, col: '#8fb8ff', width: 0.003, at: 0.3, fade: 2.5, persist: false, gain: 1.0 }
       pins:   # the name's mountain, off the plate (the river and the old town carry their geography labels)
@@ -131,7 +131,7 @@ film:
         origin: [108.6180, 34.3240]
         detail: high
         col: '#ffd9b0'
-        rise: 4.0   # starts when the camera holds the village (stagecraft settle); small on screen: lit by a scanning band
+        # it rises when the camera holds the village (stagecraft settle); small on screen: lit by a scanning band
         sink: 2.0
         theta_deg: 0
         outline: [[[108.6199, 34.324], [108.61986, 34.32439], [108.61972, 34.32476], [108.61949, 34.3251], [108.61919, 34.32537], [108.61883, 34.32558], [108.61842, 34.32571], [108.618, 34.32576], [108.61758, 34.32571], [108.61717, 34.32558], [108.61681, 34.32537], [108.61651, 34.3251], [108.61628, 34.32476], [108.61614, 34.32439], [108.6161, 34.324], [108.61614, 34.32361], [108.61628, 34.32324], [108.61651, 34.3229], [108.61681, 34.32263], [108.61717, 34.32242], [108.61758, 34.32229], [108.618, 34.32224], [108.61842, 34.32229], [108.61883, 34.32242], [108.61919, 34.32263], [108.61949, 34.3229], [108.61972, 34.32324], [108.61986, 34.32361]]]   # the ditch: the edge of the village
@@ -153,7 +153,6 @@ film:
         col: '#ffd2a0'
         tint: 0.6
         detail: medium
-        rise: 7.0
         sink: 7.5   # the contracting ring: 2 s sweeping in from beyond the frame, then 5.5 s on screen
         until: burn
         until_plus: 8.2
@@ -215,7 +214,6 @@ film:
         col: '#ffe69b'
         tint: 0.6
         detail: medium
-        rise: 7.0
         sink: 7.5   # the contracting ring: 2 s sweeping in from beyond the frame, then 5.5 s on screen
         until: burn
         until_plus: 8.2
@@ -310,7 +308,6 @@ film:
         detail: medium
         col: '#ffd59a'
         # no at: the beam from Qin lands on the front hall of Weiyang; the colour ring and the city grow from there once the camera holds it
-        rise: 6.0
         stages:
           - { dur: 4.0, noise: 0.2 }
           - { at: 15.2, dur: 3.2, select: { landmarks: [weicheng], fabric: [weicheng], streets: [weicheng] }, from: [108.8626, 34.408] }   # Weicheng, while the camera holds on it
@@ -641,7 +638,6 @@ film:
         tint: 0.3
         detail: high
         # no at: the town grows where and when the beam from Weicheng lands (impact), the camera following the beam
-        rise: 5.0
         sink: 2.5
         until: ming
         theta_deg: 0
@@ -688,7 +684,6 @@ film:
         tint: 0.35
         detail: high
         at: 1.0
-        rise: 6.0
         sink: 2.5
         until: mills
         theta_deg: 0
@@ -749,7 +744,6 @@ film:
         col: '#ffe0a0'
         detail: high
         at: 1.5
-        rise: 4.0
         sink: 2.5
         until: m1975
         theta_deg: 10
@@ -776,7 +770,6 @@ film:
         col: '#d8ecff'
         detail: high
         at: 0.5
-        rise: 6.0
         sink: 2.5
         until: m1975
         theta_deg: 0
