@@ -29,7 +29,7 @@ compile 同時把每句配音照時間排成一條音軌 `build/audio/voice/trac
   不用模型、離線、免費，照影片的時間軸用取樣樂器寫（`audio/codescore.py`，取樣庫先 `uv run python -I tools/instruments.py` 下載一次，約 700 MB），
   compile 之後、`render/events.mjs` 之後跑 `uv run python -I audio/codescore.py cities/<slug>`，它寫好就直接鋪上，預覽按 B 一樣聽得到；
   之後每次 compile 都會重鋪，時間軸變了會提醒重跑（`tools/build.mjs` 會自己跑）。程式配樂只是配樂，音效照樣用 `film.sfx` 挑。
-- 分段：照節點和情感線分；
+- 分段：照節點和情感線分；風格從確認過的故事大綱和情感線來（SCRIPT.md「導演先定故事」）；
 - 每段的提示詞：只寫在 `MUSIC.md` 一處；
 - 選中的寫法和種子：重生時才能得到同一首；
 - 授權與署名。

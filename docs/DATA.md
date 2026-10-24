@@ -49,8 +49,13 @@ Overpass 只有 overpass-api.de 穩定，慢（10–60 秒一題），快取存�
 - **改了 `box` 要整串重跑**，一次跑一件：`osm.py`（新範圍）→ `terrain.py` → `satellite.py` → `prep.py` → compile。城市設定裡的位置一律寫經緯度
   （`ll:`、`lon`/`lat`），不寫模型座標（`v:`、`x`/`z`）：台面中心一動，模型座標就全錯。畫面上寫了台面大小的地方一起改（SCRIPT.md「畫面上的數字」）。
 
-## 實拍與照片（「今天」回聲）
+## 圖片與實拍
 
+片中的圖有兩種用處：每個歷史節點結尾接「今天的同一個地方」（實拍、照片），以及當時的樣子（古地圖、檔案照、古畫、文物、根據史料的想像圖）。
+
+- **配圖清單**（`research/images.md`，一站一節）：找到的圖記下來源和授權；沒找到、但值得配圖的場景也標出來（城市最繁榮的樣子、
+  重大事件的場面、詩文的意境，不限主線），寫明要畫什麼，以及細節的依據（建築、服飾、器物、地形的出處）。寫劇本時照它決定
+  哪些生成想像圖（SCRIPT.md「配圖」）。
 - 優先順序：用戶自己拍的、或用戶有權授權的 → Wikimedia Commons（CC BY / CC BY-SA / CC0，搜「<城市> 航拍」「<地標>」與英文名，`Special:MediaSearch?type=video`）→ 政府與博物館開放素材 → 網路影片（只做內部測試）。
 - 先用 Commons API 一次查完候選檔的作者和授權（`https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url|extmetadata&titles=File:A|File:B&format=json`，
   一次最多 50 個），授權不合的篩掉，再一個一個下載（咸陽的 CC0 照片和 4K CC BY-SA 影片都是這樣一次查出來的）。

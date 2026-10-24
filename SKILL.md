@@ -59,9 +59,9 @@ description: 製作《一城春秋》（A City Through Time）系列資料影片
 | 步 | 做什麼 | 先讀 | 做完的標準（★ 要用戶點頭） |
 |---|---|---|---|
 | 0 | 第一次使用：本機路徑、裝環境 | `docs/SETUP.md` | `local/config.json` 寫好，`uv sync`、`npm ci` 跑過 |
-| 1 | 研究：年代表、選站、貫穿線、出處 | `docs/RESEARCH.md` | `FACTS.md`、`research/`（含故事素材 `stories.md`）；★ 年代表和站表 |
+| 1 | 研究：年代表、選站、貫穿線、出處 | `docs/RESEARCH.md` | `FACTS.md`、`research/`（含故事素材 `stories.md`、配圖清單 `images.md`）；★ 年代表和站表 |
 | 2 | 範圍與資料：框、比例、地圖、建築、地形 | `docs/DATA.md` | `city.yaml` 的範圍與資料來源、`prep.py` 跑過；★ 一張白模看比例 |
-| 3 | 劇本：處理方案、文案、時間軸、語言與字型 | `docs/SCRIPT.md` | `TREATMENT.md`、節點、`script.yaml`；★ 旁白稿 |
+| 3 | 劇本：故事大綱、處理方案、文案、時間軸、配圖 | `docs/SCRIPT.md` | `TREATMENT.md`、節點、`script.yaml`；★ 故事大綱，★ 旁白稿 |
 | 4 | 歷代城市與地形 | `docs/MODEL.md` | 每個時期一整座照史料生成的城，clipcheck 歸零 |
 | 5 | 演出：光圈、鏡頭、標籤、圖片、實拍 | `docs/STAGING.md` | compile 沒有錯誤，警告逐條處理過 |
 | 6 | 預覽與檢查 | `docs/CHECKS.md` | 改動波及的站檢查歸零；★ 用戶在預覽裡看過這一站 |
