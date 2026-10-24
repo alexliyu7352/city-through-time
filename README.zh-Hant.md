@@ -6,7 +6,7 @@
 
 [English](README.md) · 繁體中文
 
-![咸陽，1983 年設市](cities/xianyang/poster.jpg)
+![咸陽，1983 年設市](site/img/xianyang_poster.webp)
 
 ## 已經有的城市
 
@@ -14,7 +14,7 @@
 |---|---|---|---|
 | 咸陽 | 前 4000 年 – 2026 年 | 12 分 30 秒 | Alex |
 
-完整清單在 [`cities.json`](cities.json)，入口頁就是讀這個檔。每座城的原始資料都在 `cities/<城市>/`，史實出處在它的 `FACTS.md`，第三方素材與授權在它的 `CREDITS`。
+每座城的資料在 `cities/<城市>/`：入口頁用的 `entry.json`、設定和文案、史實出處 `FACTS.md`、第三方素材與授權 `CREDITS`。入口頁讀的城市索引 `cities.json` 由 GitHub Actions 從各城的 `entry.json` 自動產生。倉庫裡只放文字資料，成片、播放包和海報都放在外部。
 
 ## 片子怎麼做出來
 
@@ -47,7 +47,7 @@ ln -s "$PWD/city-through-time" ~/.claude/skills/city-through-time   # 讓 Claude
 
 1. 成片放到 YouTube、B 站或其他影片網站。
 2. 想讓大家在入口頁直接播放，就把網頁播放包（`tools/web.py` 打包）放到 Hugging Face 資料集，或你自己的 GitHub Pages。
-3. 開一個 pull request：城市資料夾，加上 `cities.json` 裡的一筆資料。
+3. 開一個 pull request：只放城市資料夾裡的文字檔，包括入口頁用的 `entry.json`。
 
 步驟、欄位和審核標準：[`CONTRIBUTING.zh-Hant.md`](CONTRIBUTING.zh-Hant.md)。
 

@@ -9,7 +9,7 @@ This covers, unless a file or a city's `CREDITS` says otherwise:
 - every city folder under `cities/` (its `city.yaml`, `script.yaml`, `TREATMENT.md`, `FACTS.md`, `MUSIC.md`, `VOICE.md`, its research notes
   and the pictures made for it);
 - the films rendered from them, and their web bundles;
-- `cities.json` and the posters.
+- each city's `entry.json`, and the posters wherever they are hosted.
 
 Material by others keeps its own licence, listed in each city's `CREDITS`: building and map data (CC BY 4.0, ODbL 1.0), footage and
 photographs from Wikimedia Commons (CC BY-SA, CC BY, CC0, public domain), fonts (SIL Open Font License 1.1, in `fonts/`).

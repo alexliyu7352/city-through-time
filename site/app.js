@@ -1,5 +1,6 @@
-// The entry page: reads cities.json; the globe (site/globe.js), the search, the language menu, the collection, and a city opened
-// in a drawer (a sheet from below on a phone).
+// The entry page: reads cities.json (the index CI builds from every cities/<slug>/entry.json: tools/registry.mjs); the globe
+// (site/globe.js), the search, the language menu, the collection, and a city opened in a drawer (a sheet from below on a phone),
+// its full entry read when it opens.
 import { LANGS, pick, words } from './i18n.js';
 
 const $ = id => document.getElementById(id);
@@ -19,7 +20,11 @@ const el = (tag, { attrs, ...props } = {}, ...kids) => {
   e.append(...kids.filter(k => k != null && k !== '')); return e;
 };
 const icon = (id, cls = 'ico') => { const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('class', cls); s.setAttribute('aria-hidden', 'true'); s.innerHTML = `<use href="#${id}"/>`; return s; };
-const sourceURL = c => /^https?:/.test(c.source || '') ? c.source : `${REPO}/tree/main/${c.source}`;
+const sourceURL = e => /^https?:/.test(e.source || '') ? e.source : `${REPO}/tree/main/cities/${e.slug}`;
+const ENTRY = new Map();   // the full entries read so far
+const entry = slug => ENTRY.get(slug) || ENTRY.set(slug, fetch(`cities/${slug}/entry.json`).then(r => { if (!r.ok) throw new Error(slug); return r.json(); })).get(slug);
+const PAGE = 24;           // the collection shows this many at a time
+let shown = PAGE;
 const guideURL = kind => `${REPO}/blob/main/${W.guide(kind)}`;
 const alt = c => lang !== 'en' && c.name.en && c.name.en !== W.of(c.name) ? c.name.en : '';
 
@@ -63,7 +68,7 @@ addEventListener('pointerdown', e => { if (!langList.hidden && !e.target.closest
 
 // ---------------------------------------------------------------- the search: any of a city's names, its slug, its makers
 const norm = s => String(s || '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '');
-const INDEX = CITIES.map(c => ({ c, text: norm([c.slug, ...Object.values(c.name || {}), ...(c.authors || []).map(a => a.name)].join(' ')) }));
+const INDEX = CITIES.map(c => ({ c, text: norm([c.slug, ...Object.values(c.name || {}), ...(c.authors || [])].join(' ')) }));
 const matches = s => { s = norm(s).trim(); return s ? INDEX.filter(x => s.split(/\s+/).every(w => x.text.includes(w))).map(x => x.c) : CITIES; };
 function combobox(input, list, { onPick, always }) {
   let items = [], active = -1;
@@ -71,7 +76,7 @@ function combobox(input, list, { onPick, always }) {
     const s = input.value.trim(); items = matches(s).slice(0, 8);
     if (reset) active = items.length ? 0 : -1;
     list.replaceChildren(...items.map((c, i) => el('li', { id: `${list.id}-${i}`, attrs: { role: 'option', 'aria-selected': String(i === active) } },
-      el('img', { src: c.poster, alt: '', loading: 'lazy' }),
+      c.poster ? el('img', { src: c.poster, alt: '', loading: 'lazy' }) : filmBar(c, el('span', { className: 'bar-film thumb' })),
       el('div', {}, el('div', { className: 'r-name', textContent: W.of(c.name) }), el('div', { className: 'r-sub', textContent: [alt(c), W.span(c.years)].filter(Boolean).join('　') })))));
     [...list.children].forEach((li, i) => { li.onpointerdown = e => e.preventDefault(); li.onclick = () => onPick(items[i]); });
     if (s && !items.length) list.replaceChildren(el('li', { className: 'none' }, el('div', { textContent: W.fmt('searchNone', { q: s }) }),
@@ -107,15 +112,16 @@ const PLINTH = '<svg viewBox="0 0 200 150" fill="none" stroke="currentColor" str
 function renderCollection() {
   $('count').textContent = W.count(CITIES.length);
   const ul = $('exhibits'); ul.replaceChildren();
-  for (const c of CITIES) {
-    const act = c.bundle && c.bundle.url ? W.t('play') : (c.watch || [])[0] ? W.fmt('watchOn', { site: c.watch[0].site }) : null;
+  for (const c of CITIES.slice(0, shown)) {
+    const act = c.play === 'bundle' ? W.t('play') : c.play === 'watch' ? W.fmt('watchOn', { site: c.site }) : null;
     const b = el('button', { type: 'button', className: 'ex' },
-      el('figure', { className: 'ex-poster' }, el('img', { src: c.poster, alt: W.of(c.name), loading: 'lazy' }),
+      el('figure', { className: 'ex-poster' + (c.poster ? '' : ' noimg') },
+        c.poster ? el('img', { src: c.poster, alt: W.of(c.name), loading: 'lazy' }) : el('span', { className: 'ex-card', textContent: W.of(c.name) }),
         act ? el('span', { className: 'ex-play' }, icon('i-play'), el('span', { textContent: act })) : null),
       el('div', { className: 'ex-cap' },
         el('h3', { className: 'ex-name', textContent: W.of(c.name) }), alt(c) ? el('p', { className: 'ex-alt', textContent: alt(c) }) : null,
         el('p', { className: 'ex-line', textContent: [W.span(c.years), c.duration ? W.length(c.duration) : ''].filter(Boolean).join('　') }),
-        el('p', { className: 'ex-by', textContent: W.fmt('by', { who: (c.authors || []).map(a => a.name).join(', ') }) }),
+        el('p', { className: 'ex-by', textContent: W.fmt('by', { who: (c.authors || []).join(', ') }) }),
         filmBar(c, el('span', { className: 'bar-film' }))));
     b.onclick = () => show(c.slug, b);
     ul.append(el('li', {}, b));
@@ -124,15 +130,19 @@ function renderCollection() {
     el('figure', { className: 'ex-poster', innerHTML: PLINTH }),
     el('div', { className: 'ex-cap' }, el('h3', { className: 'ex-name', textContent: W.t('emptyTitle') }), el('p', { className: 'ex-line', textContent: W.t('emptyText') }),
       el('span', { className: 'more', textContent: W.t('emptyLink') })))));
+  $('more-cities').hidden = shown >= CITIES.length;
 }
+$('more-cities').onclick = () => { const first = shown; shown += PAGE; renderCollection(); $('exhibits').children[first]?.querySelector('.ex')?.focus(); };
 
 // ---------------------------------------------------------------- a city, opened
 const panel = $('panel'), scrim = $('scrim');
 let opener = null;
-function show(slug, from) {
-  const c = CITIES.find(x => x.slug === slug); if (!c) return;
+async function show(slug, from) {
+  const i = CITIES.find(x => x.slug === slug); if (!i) return;
   open = slug; if (from) opener = from;
-  $('poster').replaceChildren(el('img', { src: c.poster, alt: W.of(c.name) }));
+  let c; try { c = await entry(slug); } catch { c = { ...i, authors: i.authors.map(name => ({ name })), watch: [], ai: [], summary: {} }; }   // (the index alone, if the entry cannot be read)
+  if (open !== slug) return;
+  $('poster').replaceChildren(c.poster ? el('img', { src: c.poster, alt: W.of(c.name) }) : el('span', { className: 'ex-card', textContent: W.of(c.name) }));
   $('panel-name').textContent = W.of(c.name); $('panel-alt').textContent = alt(c);
   $('panel-years').textContent = W.span(c.years);
   filmBar(c, $('panel-bar'));

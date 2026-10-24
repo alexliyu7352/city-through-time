@@ -1,0 +1,18 @@
+# A pull request: every entry.json must be complete and valid, and a city brings text only (tools/registry.mjs --check).
+name: Check
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Check the entries and the files under cities/
+        run: node tools/registry.mjs --check --base origin/${{ github.base_ref }}

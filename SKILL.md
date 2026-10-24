@@ -142,17 +142,20 @@ description: 製作《一城春秋》（A City Through Time）系列資料影片
    參數（只移除 SEI），AAC 不寫 Lavc 字樣；封面用 bitexact 寫出，沒有編碼器註記。手上的舊檔要清：`exiftool -all=`，再用 `strings` 確認。
    build 會跑 subcheck、clipcheck、camcheck、readcheck（含：文字不得壓在字幕帶上）、motioncheck、黑幀檢查、響度（−14 LUFS）。
 7. **交付**：告訴用戶檔案位置，提醒 CREDITS 列出的第三方資料與授權（CMAB CC BY、OSM ODbL、字體 OFL、取樣庫），以及 FACTS.md 裡標為示意／估算的項目。
-8. **發布到入口頁**（用戶想公開時才做；步驟寫在 `CONTRIBUTING.zh-Hant.md`）。入口頁 `index.html` 讀 `cities.json`，每座城一筆：
+8. **發布到入口頁**（用戶想公開時才做；步驟寫在 `CONTRIBUTING.zh-Hant.md`）。倉庫只收文字資料，成片、播放包、海報、圖片、音樂都放在外部：
    - 先問用戶要放在哪裡、用哪個帳號，每一步上傳都要用戶自己登入或明確同意（公開了就收不回）；
-   - 成片：用戶上傳到影片網站（YouTube、B 站…），網址寫進 `watch`；也可以另放一份下載（`download`）；
-   - 網頁播放包（可選）：`uv run python -I tools/web.py cities/<slug>` 打包到 `dist/web/`，只收頁面會讀的檔（沒有 WAV、沒有內部測試圖）。
-     放的地方要允許網頁跨網域讀取：建議 Hugging Face 資料集（免費、大檔沒問題）；或用戶自己的 GitHub 倉庫開 Pages（單檔 100 MB、
-     網站 1 GB 以內）；其他靜態主機要確認有 `Access-Control-Allow-Origin`。網址寫進 `bundle.url`，大小寫 `bundle.mb`。
+   - 成片：用戶上傳到影片網站（YouTube、B 站…），網址寫進 `entry.json` 的 `watch`；也可以另放一份下載（`download`）；
+   - 網頁播放包：`uv run python -I tools/web.py cities/<slug>` 打包到 `dist/web/`，只收頁面會讀的檔（沒有 WAV、沒有內部測試圖），
+     海報 `poster.jpg`（1280 寬）和 `poster_thumb.webp`（640 寬）也在裡面。放的地方要允許網頁跨網域讀取：建議 Hugging Face 資料集
+     （免費、大檔沒問題）；或用戶自己的 GitHub 倉庫開 Pages（單檔 100 MB、網站 1 GB 以內）；其他靜態主機要確認有
+     `Access-Control-Allow-Origin`。網址寫進 `bundle.url`，大小寫 `bundle.mb`；不做播放包時，海報兩張圖也要放到外部。
      放上去之前確認配音、配樂服務的條款允許公開散布生成的音檔，寫進 CREDITS；
-   - `cities.json` 這一筆：`uv run python -I tools/web.py cities/<slug> --entry` 出草稿（位置、年代、片長、語言、章節顏色），
-     補上五種語言的名字和簡介（en、ja、zh-Hant、zh-Hans、es）、作者、AI 生成的部分（`ai`）；海報 `cities/<slug>/poster.jpg`（1280 寬）；
-   - 本機先試：`node tools/preview.mjs` 起伺服器後打開 `index.html`，再用 `play.html?city=<slug>&play=1&bundle=<網址>` 試播放包；
-   - 交 pull request：只放公開的檔案（不放 `local/`、`internal/`、`build/`、`dist/`、參考圖、帳號資訊、本機路徑）。
+   - `cities/<slug>/entry.json`：`uv run python -I tools/web.py cities/<slug> --entry` 寫出草稿（位置、年代、片長、語言、章節顏色），
+     補上五種語言的名字和簡介（en、ja、zh-Hant、zh-Hans、es）、作者、海報和縮圖的 https 網址、AI 生成的部分（`ai`）、`added`；
+     `node tools/registry.mjs --check` 檢查欄位。入口頁讀的 `cities.json` 由 GitHub Actions 自動產生，不手改；
+   - 本機先試：`node tools/preview.mjs`（會先產生 `cities.json`）後打開 `index.html`，再用 `play.html?city=<slug>&play=1&bundle=<網址>` 試播放包；
+   - 交 pull request：只放 `cities/<slug>/` 裡的文字檔（entry.json、city.yaml、script.yaml、CREDITS、各 .md、research/ 的文字筆記、
+     assets/README.md 這類素材說明）；圖片、音樂、影片一律不放，PR 的檢查會擋（`tools/registry.mjs --check --base`）。
 
 ## 演出文法（所有城市必須遵守）
 
@@ -351,6 +354,6 @@ description: 製作《一城春秋》（A City Through Time）系列資料影片
   `tools/instruments.py`：下載程式配樂的取樣庫（VSCO 2 CE、VCSL，CC0）到本機設定的 `instruments`。
 - `render/`：`still.mjs`（單張）、`events.mjs`（音效事件表）、`video.mjs`（影片，`--from/--to` 只渲一段）、`mux.mjs`（合成成片：響度、補靜音、不寫元數據）。
 - 入口頁：`index.html` + `site/`（讀 `cities.json`；地球的陸地 `site/land.bin` 由 `tools/portal_land.py` 從 Natural Earth 與 NOAA ETOPO1 產生；`?lite` 看手機版的畫法）；`play.html` 是播放器（`?bundle=` 讀外部播放包）；
-  `tools/web.py`（網頁播放包、`--entry` 出 cities.json 草稿）。
+  `tools/web.py`（網頁播放包、`--entry` 寫 entry.json 草稿）、`tools/registry.mjs`（從各城 entry.json 產生 `cities.json`、檢查 PR）。
 - `tools/build.mjs`（一條命令出片）、`tools/sheet.py`（縮圖表）、`tools/subcheck.mjs`、`tools/readcheck.mjs`、`tools/clipcheck.py`（模型穿模）、`tools/camcheck.mjs` + `tools/camcheck.py`（鏡頭穿模）、`tools/motioncheck.py`。
 - `templates/city.yaml`：帶註解的設定範本。`cities/xianyang/`：完整範例。

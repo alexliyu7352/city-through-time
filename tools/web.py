@@ -1,14 +1,16 @@
 """A city's web bundle: what play.html needs to play the film in a browser, from another server (SKILL.md 發布).
-usage: python -I tools/web.py cities/<slug>            -> cities/<slug>/dist/web/ (+ bundle.json: every file, its size and SHA-256)
-       python -I tools/web.py cities/<slug> --entry    a draft of the city's entry in cities.json (the entry page reads it), from the
-                                                       film: where it is, its years, length, languages and chapters; fill in the rest
+usage: python -I tools/web.py cities/<slug>            -> cities/<slug>/dist/web/ (+ bundle.json: every file, its size and SHA-256;
+                                                       poster.jpg 1280 wide and poster_thumb.webp 640 wide, for the entry page)
+       python -I tools/web.py cities/<slug> --entry    a draft of cities/<slug>/entry.json (the entry page lists the city from it:
+                                                       tools/registry.mjs), from the film: where it is, its years, length,
+                                                       languages and chapters; fill in the rest (CONTRIBUTING.zh-Hant.md)
 Upload the folder as it is (a Hugging Face dataset, a GitHub repository served by GitHub Pages, any host that allows cross-origin
 reads) and give its URL as the city's `bundle` in cities.json; the page then plays play.html?city=<slug>&bundle=<url>.
 Only what the page loads goes in (engine/main.js: the timeline, the model and its masks, the era cities, the decals and plates, the
 narration, score and sound-effect tracks as m4a, the footage and pictures), laid out as in the city folder: build/... and assets/....
 Nothing else does: no WAV, no internal test plates (satellite_hr), no reference pictures. The fonts are not in it: the page loads
 them from the project's fonts/ (a city that uses a new font brings it to fonts/ in its pull request)."""
-import hashlib, json, os, shutil, sys
+import hashlib, json, os, shutil, subprocess, sys
 
 
 def files(D):
@@ -37,13 +39,17 @@ def entry(D):
             'years': [int(nodes[0]['years'][0]), int(nodes[-1]['years'][1])], 'duration': round(F['dur'], 1),
             'narration': (F.get('voice') or {}).get('lang'), 'subtitles': C['film'].get('lang', []),
             'chapters': [{'t': round(x['t0'], 1), 'year': int(x['years'][0]), 'color': x.get('col', '#ffffff')} for x in nodes],
-            'authors': [{'name': '', 'url': ''}], 'summary': {'en': ''}, 'poster': f'cities/{slug}/poster.jpg', 'source': f'cities/{slug}',
-            'watch': [], 'bundle': None, 'license': 'CC BY-SA 4.0'}
+            'authors': [{'name': '', 'url': ''}], 'summary': {'en': ''},
+            'poster': '<bundle url>poster.jpg', 'thumb': '<bundle url>poster_thumb.webp', 'watch': [], 'bundle': None, 'download': None,
+            'ai': [], 'license': 'CC BY-SA 4.0', 'added': __import__('datetime').date.today().isoformat()}
 
 
 def main():
     D = os.path.abspath(sys.argv[1]); out = os.path.join(D, 'dist', 'web')
-    if '--entry' in sys.argv: return print(json.dumps(entry(D), ensure_ascii=False, indent=2))
+    if '--entry' in sys.argv:
+        f = os.path.join(D, 'entry.json'), json.dumps(entry(D), ensure_ascii=False, indent=2) + '\n'
+        if os.path.exists(f[0]): return print(f[1] + f'(cities/{os.path.basename(D)}/entry.json exists: the draft above was not written)')
+        open(f[0], 'w', encoding='utf-8').write(f[1]); return print(f'wrote cities/{os.path.basename(D)}/entry.json: fill in the names, summary, authors, poster and links')
     fs = files(D)
     missing = [f for f in fs if not os.path.exists(os.path.join(D, f))]
     if missing: raise SystemExit('web: missing (compile, then render/events.mjs and the music first): ' + ', '.join(missing))
@@ -53,6 +59,12 @@ def main():
         dst = os.path.join(out, f); os.makedirs(os.path.dirname(dst), exist_ok=True); shutil.copy2(os.path.join(D, f), dst)
         h = hashlib.sha256(open(dst, 'rb').read()).hexdigest()
         man.append({'path': f, 'bytes': os.path.getsize(dst), 'sha256': h})
+    poster = os.path.join(D, 'dist', 'poster.jpg')   # (the entry page shows these: entry.json poster and thumb)
+    if os.path.exists(poster):
+        for name, w, args in (('poster.jpg', 1280, ['-q:v', '3', '-fflags', '+bitexact', '-flags:v', '+bitexact']), ('poster_thumb.webp', 640, ['-c:v', 'libwebp', '-quality', '80'])):
+            dst = os.path.join(out, name)
+            subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', poster, '-vf', f'scale={w}:-2', '-map_metadata', '-1', *args, dst], check=True)
+            man.append({'path': name, 'bytes': os.path.getsize(dst), 'sha256': hashlib.sha256(open(dst, 'rb').read()).hexdigest()})
     total = sum(m['bytes'] for m in man)
     json.dump({'slug': os.path.basename(D), 'files': man, 'bytes': total}, open(os.path.join(out, 'bundle.json'), 'w', encoding='utf-8'), indent=1)
     print(f'web bundle: {len(man)} files, {total / 1e6:.0f} MB -> {os.path.relpath(out)}')

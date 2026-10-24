@@ -1,0 +1,64 @@
+{
+  "slug": "xianyang",
+  "name": {
+    "en": "Xianyang",
+    "ja": "咸陽",
+    "zh-Hant": "咸陽",
+    "zh-Hans": "咸阳",
+    "es": "Xianyang"
+  },
+  "location": [108.77, 34.343],
+  "years": [-4000, 2026],
+  "duration": 749.6,
+  "narration": "zh",
+  "subtitles": ["zh", "en"],
+  "authors": [
+    {
+      "name": "Alex",
+      "url": "https://x.com/alexlee20122022"
+    }
+  ],
+  "summary": {
+    "en": "Xianyang was the capital of Qin, where China's first unified empire began. Fifteen years later Xiang Yu set it on fire, and it burned for three months. It became a small town across the river from Chang'an, a ferry crossing and a textile city, and is now growing into one city with Xi'an.",
+    "ja": "咸陽は秦の都で、中国最初の統一帝国はここから始まった。十五年後、項羽が火を放ち、三か月燃え続けた。その後は長安の対岸の小さな町、渭水の渡し場、紡績の街となり、いまは西安とひとつの街に育ちつつある。",
+    "zh-Hant": "咸陽是秦的都城，中國第一個大一統帝國從這裡開始；十五年後，項羽一把火，燒了三個月。此後它成了長安對岸的小城、渭河的渡口、新中國的紡織城，如今正和西安長成同一座城。",
+    "zh-Hans": "咸阳是秦的都城，中国第一个大一统帝国从这里开始；十五年后，项羽一把火，烧了三个月。此后它成了长安对岸的小城、渭河的渡口、新中国的纺织城，如今正和西安长成同一座城。",
+    "es": "Xianyang fue la capital de Qin, donde empezó el primer imperio unificado de China. Quince años después, Xiang Yu le prendió fuego y ardió durante tres meses. Después fue un pueblo frente a Chang'an, un paso del río Wei y una ciudad textil, y hoy crece hasta formar una sola ciudad con Xi'an."
+  },
+  "poster": "site/img/xianyang_poster.webp",
+  "thumb": "site/img/xianyang_poster_thumb.webp",
+  "watch": [],
+  "bundle": null,
+  "download": null,
+  "ai": [
+    "narration",
+    "music",
+    "imagined"
+  ],
+  "license": "CC BY-SA 4.0",
+  "added": "2026-10-23",
+  "chapters": [
+    { "t": 8.0, "year": -4000, "color": "#8fb8ff" },
+    { "t": 18.8, "year": -4000, "color": "#8fb8ff" },
+    { "t": 38.7, "year": -350, "color": "#ffb070" },
+    { "t": 92.0, "year": -221, "color": "#ffd24a" },
+    { "t": 168.9, "year": -206, "color": "#e8553a" },
+    { "t": 191.9, "year": -202, "color": "#ffa13d" },
+    { "t": 254.6, "year": 619, "color": "#c9a7ff" },
+    { "t": 293.2, "year": 1371, "color": "#9fd8e8" },
+    { "t": 344.2, "year": 1936, "color": "#ffd27a" },
+    { "t": 379.0, "year": 1951, "color": "#cfe9ff" },
+    { "t": 404.3, "year": 1975, "color": "#2f98ff" },
+    { "t": 417.9, "year": 1975, "color": "#2f98ff" },
+    { "t": 441.1, "year": 1979, "color": "#2f98ff" },
+    { "t": 466.4, "year": 1983, "color": "#2f98ff" },
+    { "t": 492.6, "year": 1991, "color": "#2f98ff" },
+    { "t": 529.4, "year": 1998, "color": "#2f98ff" },
+    { "t": 549.4, "year": 2005, "color": "#2f98ff" },
+    { "t": 576.4, "year": 2006, "color": "#2f98ff" },
+    { "t": 606.1, "year": 2011, "color": "#2f98ff" },
+    { "t": 641.6, "year": 2014, "color": "#2f98ff" },
+    { "t": 661.5, "year": 2019, "color": "#2f98ff" },
+    { "t": 680.7, "year": 2025, "color": "#cfe9ff" }
+  ]
+}

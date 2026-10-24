@@ -160,6 +160,12 @@ kbd { font: 500 12px/1 var(--text); color: var(--ink-3); border: 1px solid var(-
 .empty .ex-poster svg { width: 46%; height: auto; color: oklch(0.955 0.006 85 / 0.4); transition: color .6s var(--ease); }
 .empty .ex:hover .ex-poster svg { color: oklch(0.955 0.006 85 / 0.7); }
 .empty .ex-line { max-width: 26em; }
+.more-cities { display: flex; margin: 56px auto 0; }
+.more-cities[hidden] { display: none; }
+/* a city without a poster: its name, set like a title card */
+.ex-poster.noimg, .panel-poster:has(.ex-card) { display: grid; place-items: center; background: radial-gradient(70% 90% at 30% 20%, var(--night-3), var(--night-2)); }
+.ex-card { font: 500 clamp(28px, 3vw, 44px)/1.1 var(--display); color: var(--ink-2); padding: 0 24px; text-align: center; }
+.results .bar-film.thumb { width: 72px; height: 40px; border-radius: 4px; }
 .more { display: inline-block; margin-top: 12px; color: var(--lamp); font-weight: 500; text-underline-offset: 5px; text-decoration-thickness: 1px; }
 .more:hover { color: var(--lamp-2); }
 
