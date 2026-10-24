@@ -27,6 +27,15 @@ const PAGE = 24;           // the collection shows this many at a time
 let shown = PAGE;
 const guideURL = kind => `${REPO}/blob/main/${W.guide(kind)}`;
 const alt = c => lang !== 'en' && c.name.en && c.name.en !== W.of(c.name) ? c.name.en : '';
+// a poster from wherever the city keeps it (shown as an image, so another host needs no cross-origin permission); one that cannot
+// be loaded gives way to the city's title card
+const card = c => el('span', { className: 'ex-card', textContent: W.of(c.name) });
+function poster(c, src, alt, fallback) {
+  if (!src) return fallback();
+  const img = el('img', { src, alt, loading: 'lazy' });
+  img.onerror = () => { img.parentElement?.classList.add('noimg'); img.replaceWith(fallback()); };
+  return img;
+}
 
 // a film as a bar: its chapters side by side, as long as they last, in their colours on screen
 function filmBar(c, node) {
@@ -76,7 +85,7 @@ function combobox(input, list, { onPick, always }) {
     const s = input.value.trim(); items = matches(s).slice(0, 8);
     if (reset) active = items.length ? 0 : -1;
     list.replaceChildren(...items.map((c, i) => el('li', { id: `${list.id}-${i}`, attrs: { role: 'option', 'aria-selected': String(i === active) } },
-      c.poster ? el('img', { src: c.poster, alt: '', loading: 'lazy' }) : filmBar(c, el('span', { className: 'bar-film thumb' })),
+      poster(c, c.poster, '', () => filmBar(c, el('span', { className: 'bar-film thumb' }))),
       el('div', {}, el('div', { className: 'r-name', textContent: W.of(c.name) }), el('div', { className: 'r-sub', textContent: [alt(c), W.span(c.years)].filter(Boolean).join('　') })))));
     [...list.children].forEach((li, i) => { li.onpointerdown = e => e.preventDefault(); li.onclick = () => onPick(items[i]); });
     if (s && !items.length) list.replaceChildren(el('li', { className: 'none' }, el('div', { textContent: W.fmt('searchNone', { q: s }) }),
@@ -116,7 +125,7 @@ function renderCollection() {
     const act = c.play === 'bundle' ? W.t('play') : c.play === 'watch' ? W.fmt('watchOn', { site: c.site }) : null;
     const b = el('button', { type: 'button', className: 'ex' },
       el('figure', { className: 'ex-poster' + (c.poster ? '' : ' noimg') },
-        c.poster ? el('img', { src: c.poster, alt: W.of(c.name), loading: 'lazy' }) : el('span', { className: 'ex-card', textContent: W.of(c.name) }),
+        poster(c, c.poster, W.of(c.name), () => card(c)),
         act ? el('span', { className: 'ex-play' }, icon('i-play'), el('span', { textContent: act })) : null),
       el('div', { className: 'ex-cap' },
         el('h3', { className: 'ex-name', textContent: W.of(c.name) }), alt(c) ? el('p', { className: 'ex-alt', textContent: alt(c) }) : null,
@@ -142,7 +151,7 @@ async function show(slug, from) {
   open = slug; if (from) opener = from;
   let c; try { c = await entry(slug); } catch { c = { ...i, authors: i.authors.map(name => ({ name })), watch: [], ai: [], summary: {} }; }   // (the index alone, if the entry cannot be read)
   if (open !== slug) return;
-  $('poster').replaceChildren(c.poster ? el('img', { src: c.poster, alt: W.of(c.name) }) : el('span', { className: 'ex-card', textContent: W.of(c.name) }));
+  $('poster').replaceChildren(poster(c, c.poster, W.of(c.name), () => card(c)));
   $('panel-name').textContent = W.of(c.name); $('panel-alt').textContent = alt(c);
   $('panel-years').textContent = W.span(c.years);
   filmBar(c, $('panel-bar'));

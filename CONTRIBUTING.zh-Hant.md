@@ -4,7 +4,7 @@
 
 ## 交一座城市
 
-這個倉庫只收文字資料：城市的設定、文案、史實出處、版權說明和研究筆記。成片、播放包、海報、圖片、音樂都放在外部（影片網站、Hugging Face、你自己的 GitHub Pages），入口頁只是連過去。
+這個倉庫只收文字資料：城市的設定、文案、史實出處、版權說明和研究筆記。成片、播放包、海報、圖片、音樂都放在外部（影片網站、Hugging Face、你自己的 GitHub Pages），入口頁只是連過去。咸陽是本專案的示例，資料夾裡保留了圖片和海報，方便從頭到尾照著做一遍；提交的城市不用照它放圖。
 
 ### 1. 先把片做出來
 
@@ -66,7 +66,7 @@ uv run python -I tools/web.py cities/<城市> --entry
 | `narration`、`subtitles` | 旁白語言、字幕語言（語言代碼，例如 `zh`、`en`） |
 | `authors` | `[{ "name": "…", "url": "…" }]` |
 | `summary` | 兩三句簡介，語言同 `name` |
-| `poster` | 海報的 https 網址（1280 寬），例如 `<播放包網址>poster.jpg` |
+| `poster` | 海報的 https 網址（1280 寬），例如 `<播放包網址>poster.jpg`（示例城市咸陽用倉庫裡的路徑） |
 | `thumb` | 小圖的 https 網址（640 寬），例如 `<播放包網址>poster_thumb.webp` |
 | `watch` | `[{ "site": "YouTube", "url": "…" }]`，可以多個 |
 | `bundle` | `{ "url": "播放包網址", "mb": 215 }`，沒有就填 `null` |

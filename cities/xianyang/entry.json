@@ -25,8 +25,8 @@
     "zh-Hans": "咸阳是秦的都城，中国第一个大一统帝国从这里开始；十五年后，项羽一把火，烧了三个月。此后它成了长安对岸的小城、渭河的渡口、新中国的纺织城，如今正和西安长成同一座城。",
     "es": "Xianyang fue la capital de Qin, donde empezó el primer imperio unificado de China. Quince años después, Xiang Yu le prendió fuego y ardió durante tres meses. Después fue un pueblo frente a Chang'an, un paso del río Wei y una ciudad textil, y hoy crece hasta formar una sola ciudad con Xi'an."
   },
-  "poster": "site/img/xianyang_poster.webp",
-  "thumb": "site/img/xianyang_poster_thumb.webp",
+  "poster": "cities/xianyang/poster.jpg",
+  "thumb": "cities/xianyang/poster_thumb.webp",
   "watch": [],
   "bundle": null,
   "download": null,

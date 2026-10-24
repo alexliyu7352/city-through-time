@@ -4,7 +4,8 @@
 //   node tools/registry.mjs                          write cities.json
 //   node tools/registry.mjs --check [--base <ref>]   check every entry (CONTRIBUTING.zh-Hant.md has the fields); with --base, also
 //                                                    the files a pull request adds under cities/: text only (the films, their
-//                                                    pictures, music and footage live on outside hosts, not in this repository)
+//                                                    pictures, music and footage live on outside hosts, not in this repository;
+//                                                    the example city, EXAMPLE, keeps its pictures)
 import fs from 'fs'; import path from 'path'; import { execFileSync } from 'child_process'; import { fileURLToPath } from 'url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -12,8 +13,9 @@ const LANGS = ['en', 'ja', 'zh-Hant', 'zh-Hans', 'es'];
 const AI = ['narration', 'music', 'imagined'];
 const TEXT = new Set(['.json', '.yaml', '.yml', '.md', '.txt', '.csv', '.geojson', '.py', '.sh']);   // what a city may bring
 const NAMED = new Set(['CREDITS', 'LICENSE']);
+const EXAMPLE = 'xianyang';   // the project's own example: kept whole, pictures and poster included
 const https = u => typeof u === 'string' && /^https:\/\/\S+$/.test(u);
-const image = u => https(u) || (typeof u === 'string' && u.startsWith('site/img/') && fs.existsSync(path.join(ROOT, u)));   // (site/img: the example city's, part of the page)
+const image = u => https(u) || (typeof u === 'string' && !u.startsWith('/') && !u.includes('..') && fs.existsSync(path.join(ROOT, u)));   // (a path: a picture in this repository, i.e. the example city's)
 
 function repoURL() {
   if (process.env.GITHUB_REPOSITORY) return `https://github.com/${process.env.GITHUB_REPOSITORY}`;
@@ -82,6 +84,7 @@ function check(base) {
     const files = execFileSync('git', ['-C', ROOT, 'diff', '--name-only', '--diff-filter=AMR', `${base}...HEAD`, '--', 'cities/'], { encoding: 'utf8' }).split('\n').filter(Boolean);
     for (const f of files) {
       const name = path.basename(f);
+      if (f.startsWith(`cities/${EXAMPLE}/`)) continue;
       if (!(TEXT.has(path.extname(name).toLowerCase()) || NAMED.has(name))) { console.error(`${f}: only text belongs here (entry.json, city.yaml, script.yaml, CREDITS, the .md files, research notes); the film, its pictures, music and footage go on an outside host`); bad++; }
     }
     console.log(`${files.length} changed file(s) under cities/`);

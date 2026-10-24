@@ -6,7 +6,7 @@
 
 [English](README.md) · 繁體中文
 
-![咸陽，1983 年設市](site/img/xianyang_poster.webp)
+![咸陽，1983 年設市](cities/xianyang/poster.jpg)
 
 ## 已經有的城市
 
