@@ -70,7 +70,7 @@ fonts/              開源字型（SIL OFL）
 - 程式碼：[MIT](LICENSE)。部分程式改自 [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar)（MIT，白模投影風格的出處），清單在 [`NOTICE`](NOTICE)。
 - 影片與城市資料：[CC BY-SA 4.0](LICENSE-CONTENT.md)。因為片中用了 CC BY-SA 的實拍，依授權規定成片本身也必須是 CC BY-SA。
 - 他人的素材依各自授權，列在每座城的 `CREDITS`：建築與地圖資料（CC BY 4.0、ODbL）、Wikimedia Commons 的實拍與照片、字型（OFL）。
-- 入口頁的地球依 [Natural Earth](https://www.naturalearthdata.com/)（公有領域）繪製。
+- 入口頁的地球依 [Natural Earth](https://www.naturalearthdata.com/) 與 NOAA ETOPO1（皆為公有領域）繪製。
 
 ## 關於 AI
 

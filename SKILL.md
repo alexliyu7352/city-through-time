@@ -350,7 +350,7 @@ description: 製作《一城春秋》（A City Through Time）系列資料影片
 - `tools/music.py`：照 `MUSIC.md` 的提示詞在本機生成配樂候選（Stable Audio 3 Medium 的官方 CPU 版，裝在本機設定的 `stable_audio`）；
   `tools/instruments.py`：下載程式配樂的取樣庫（VSCO 2 CE、VCSL，CC0）到本機設定的 `instruments`。
 - `render/`：`still.mjs`（單張）、`events.mjs`（音效事件表）、`video.mjs`（影片，`--from/--to` 只渲一段）、`mux.mjs`（合成成片：響度、補靜音、不寫元數據）。
-- 入口頁：`index.html` + `site/`（讀 `cities.json`；地球的陸地 `site/land.json` 由 `tools/portal_land.py` 從 Natural Earth 產生）；`play.html` 是播放器（`?bundle=` 讀外部播放包）；
+- 入口頁：`index.html` + `site/`（讀 `cities.json`；地球的陸地 `site/land.bin` 由 `tools/portal_land.py` 從 Natural Earth 與 NOAA ETOPO1 產生；`?lite` 看手機版的畫法）；`play.html` 是播放器（`?bundle=` 讀外部播放包）；
   `tools/web.py`（網頁播放包、`--entry` 出 cities.json 草稿）。
 - `tools/build.mjs`（一條命令出片）、`tools/sheet.py`（縮圖表）、`tools/subcheck.mjs`、`tools/readcheck.mjs`、`tools/clipcheck.py`（模型穿模）、`tools/camcheck.mjs` + `tools/camcheck.py`（鏡頭穿模）、`tools/motioncheck.py`。
 - `templates/city.yaml`：帶註解的設定範本。`cities/xianyang/`：完整範例。

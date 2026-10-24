@@ -9,3 +9,4 @@ node_modules/
 /internal/
 cities/*/assets/ref/
 cities/*/research/*_refs/
+/.agents/

@@ -2,68 +2,143 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c1118">
 <title>一城春秋 · A City Through Time</title>
-<meta name="description" content="Films that build a city as a white model and light it era by era, made by a community with a coding agent. Watch a city, or make the film of yours.">
+<meta name="description" content="Films that build a city as a white architectural model and light it era by era, made by a community with a coding agent. Watch a city, or make the film of yours.">
 <meta property="og:title" content="一城春秋 · A City Through Time">
-<meta property="og:description" content="A city's history as a white-model film, lit era by era. Watch a city, or make the film of yours.">
-<meta property="og:image" content="cities/xianyang/poster.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%230b0f18%22/%3E%3Ccircle cx=%2216%22 cy=%2222%22 r=%229%22 fill=%22none%22 stroke=%22%23ffb070%22 stroke-width=%222%22/%3E%3Crect x=%2214%22 y=%224%22 width=%224%22 height=%2218%22 fill=%22%23ece8e1%22/%3E%3C/svg%3E">
+<meta property="og:description" content="The history of a city, lit one era at a time. Watch a city, or make the film of yours.">
+<meta property="og:image" content="https://alexliyu7352.github.io/city-through-time/cities/xianyang/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%230c1118%22/%3E%3Ccircle cx=%2216%22 cy=%2222%22 r=%228.5%22 fill=%22none%22 stroke=%22%23f6cf7a%22 stroke-width=%221.6%22/%3E%3Crect x=%2214.6%22 y=%223.5%22 width=%222.8%22 height=%2218.5%22 fill=%22%23f3f1ec%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter+Tight:wght@400;500;600&family=Noto+Serif+TC:wght@500;700&family=Noto+Serif+SC:wght@500;700&family=Noto+Serif+JP:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600&family=Bodoni+Moda:opsz,wght@6..96,400..700&family=Noto+Serif+JP:wght@500;700&family=Noto+Serif+SC:wght@500;700&family=Noto+Serif+TC:wght@500;700&display=swap">
 <link rel="stylesheet" href="site/style.css">
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 </head>
 <body>
-<header class="top">
-  <a class="brand" href="./"><span class="mark" lang="zh-Hant">一城春秋</span><span class="sub" data-t="subtitle">A City Through Time</span></a>
-  <nav class="langs" aria-label="Language"></nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.4 15.4 20 20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.9 5.2 3.9 8.5s-1.3 6.1-3.9 8.5c-2.6-2.4-3.9-5.2-3.9-8.5S9.4 5.9 12 3.5Z" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.5 12.5 4 4 9-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11m0-11-11 11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.8v12.4c0 .6.7 1 1.2.7l9.6-6.2c.5-.3.5-1.1 0-1.4L9.2 5.1c-.5-.3-1.2.1-1.2.7Z" fill="currentColor"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2a9.8 9.8 0 0 0-3.1 19.1c.5.1.7-.2.7-.5v-1.7c-2.7.6-3.3-1.3-3.3-1.3-.4-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.5-1.1-4.5-4.9 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.6 1 2.7 0 3.8-2.3 4.6-4.5 4.9.4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5A9.8 9.8 0 0 0 12 2.2Z"/></symbol>
+</svg>
+
+<header class="bar" id="bar">
+  <a class="logo" href="./"><span class="logo-mark" lang="zh-Hant">一城春秋</span><span class="logo-word" data-t="tagline">A City Through Time</span></a>
+  <nav class="nav" aria-label="Sections"><a href="#collection" data-t="navCollection"></a><a href="#make" data-t="navMake"></a></nav>
+  <div class="tools">
+    <div class="search" role="search">
+      <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+      <input id="q" type="search" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
+      <kbd aria-hidden="true">/</kbd>
+      <ul class="results" id="results" role="listbox" hidden></ul>
+    </div>
+    <button class="icon-btn search-open" id="search-open" type="button"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><span class="sr" data-t="searchOpen"></span></button>
+    <div class="lang">
+      <button class="lang-btn" id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-list">
+        <svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg><span id="lang-now"></span><svg class="ico chev" aria-hidden="true"><use href="#i-down"/></svg>
+      </button>
+      <ul class="lang-list" id="lang-list" role="listbox" tabindex="-1" hidden></ul>
+    </div>
+    <a class="icon-btn gh" id="gh" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-github"/></svg><span class="sr" data-t="github"></span></a>
+  </div>
 </header>
 
 <main>
-  <section class="hero" aria-label="Globe">
-    <canvas id="globe"></canvas>
-    <p class="tag" id="tag" hidden></p>
-    <div class="intro">
-      <p class="lede" data-t="lede"></p>
-      <p class="hint" data-t="hint"></p>
+  <section class="hero" id="hero">
+    <div class="stage" id="stage">
+      <canvas id="globe" aria-hidden="true"></canvas>
+      <div class="pins" id="pins"></div>
     </div>
-    <aside class="panel" id="panel" hidden aria-labelledby="panel-name">
-      <button class="close" type="button" id="close"><span data-t="close"></span></button>
-      <img class="poster" id="poster" alt="">
-      <h2 id="panel-name"></h2>
-      <p class="also" id="panel-also"></p>
-      <div class="bar big" id="panel-bar" role="img"></div>
-      <dl class="facts" id="facts"></dl>
-      <p class="summary" id="summary"></p>
-      <div class="actions" id="actions"></div>
-      <p class="ai" id="ai"></p>
-      <a class="source" id="source" target="_blank" rel="noopener"><span data-t="source"></span></a>
-    </aside>
+    <div class="hero-copy">
+      <h1 data-t="headline"></h1>
+      <p class="lede" data-t="lede"></p>
+      <div class="ctas"><a class="btn btn-main" href="#collection" data-t="ctaWatch"></a><a class="btn btn-line" href="#make" data-t="ctaMake"></a></div>
+      <p class="hint" id="hint" data-t="hint"></p>
+    </div>
+    <p class="caption" id="caption"><strong data-t="exhibitTitle"></strong><span id="caption-text"></span></p>
   </section>
 
-  <section class="cities" aria-labelledby="cities-h">
-    <h2 id="cities-h" data-t="citiesTitle"></h2>
-    <p class="note" data-t="citiesNote"></p>
-    <ul class="labels" id="labels"></ul>
+  <section class="collection" id="collection" aria-labelledby="collection-h">
+    <div class="sec-head">
+      <h2 id="collection-h" data-t="collectionTitle"></h2>
+      <p class="sec-note" data-t="collectionNote"></p>
+      <p class="count" id="count"></p>
+    </div>
+    <ul class="exhibits" id="exhibits"></ul>
+  </section>
+
+  <section class="how" id="how" aria-labelledby="how-h">
+    <div class="sec-head">
+      <h2 id="how-h" data-t="howTitle"></h2>
+      <p class="sec-note" data-t="howLede"></p>
+    </div>
+    <ol class="stills">
+      <li><figure><img src="site/img/xianyang_research.webp" width="1600" height="733" loading="lazy" alt="" data-alt="how1Cap"><figcaption data-t="how1Cap"></figcaption></figure><h3 data-t="how1"></h3><p data-t="how1Text"></p></li>
+      <li><figure><img src="site/img/xianyang_model.webp" width="1600" height="733" loading="lazy" alt="" data-alt="how2Cap"><figcaption data-t="how2Cap"></figcaption></figure><h3 data-t="how2"></h3><p data-t="how2Text"></p></li>
+      <li><figure><img src="site/img/xianyang_light.webp" width="1600" height="733" loading="lazy" alt="" data-alt="how3Cap"><figcaption data-t="how3Cap"></figcaption></figure><h3 data-t="how3"></h3><p data-t="how3Text"></p></li>
+    </ol>
   </section>
 
   <section class="make" id="make" aria-labelledby="make-h">
-    <h2 id="make-h" data-t="makeTitle"></h2>
-    <p class="note" data-t="makeLede"></p>
-    <ol class="steps">
-      <li><h3 data-t="step1"></h3><p data-t="step1Text"></p><a class="guide" data-guide="making" target="_blank" rel="noopener"><span data-t="makingGuide"></span></a></li>
-      <li><h3 data-t="step2"></h3><p data-t="step2Text"></p><a class="guide" data-guide="submit" target="_blank" rel="noopener"><span data-t="submitGuide"></span></a></li>
-      <li><h3 data-t="step3"></h3><p data-t="step3Text"></p><a class="guide" data-guide="submit" target="_blank" rel="noopener"><span data-t="submitGuide"></span></a></li>
-    </ol>
+    <div class="make-inner">
+      <div class="make-head">
+        <h2 id="make-h" data-t="makeTitle"></h2>
+        <p class="sec-note" data-t="makeLede"></p>
+        <div class="ctas">
+          <a class="btn btn-main" data-guide="making" target="_blank" rel="noopener" data-t="makingGuide"></a>
+          <a class="btn btn-line" id="repo-cta" target="_blank" rel="noopener" data-t="openRepo"></a>
+        </div>
+      </div>
+      <ol class="steps">
+        <li><h3 data-t="step1"></h3><p data-t="step1Text"></p></li>
+        <li><h3 data-t="step2"></h3><p data-t="step2Text"></p></li>
+        <li><h3 data-t="step3"></h3><p data-t="step3Text"></p><a class="more" data-guide="submit" target="_blank" rel="noopener" data-t="submitGuide"></a></li>
+      </ol>
+    </div>
   </section>
 </main>
 
 <footer class="foot">
-  <p data-t="footLicence"></p>
-  <p><span data-t="footEarth"></span> <a id="repo" target="_blank" rel="noopener"><span data-t="footSource"></span></a></p>
+  <div class="foot-inner">
+    <p class="foot-logo"><span lang="zh-Hant">一城春秋</span> <span data-t="tagline"></span></p>
+    <p data-t="footLicence"></p>
+    <p><span data-t="footEarth"></span> <a id="repo" target="_blank" rel="noopener" data-t="github"></a></p>
+  </div>
 </footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="panel" id="panel" hidden aria-labelledby="panel-name" role="dialog">
+  <div class="grab" id="grab" aria-hidden="true"></div>
+  <button class="icon-btn close" id="close" type="button"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg><span class="sr" data-t="close"></span></button>
+  <figure class="panel-poster" id="poster"></figure>
+  <div class="panel-body">
+    <h2 id="panel-name"></h2>
+    <p class="panel-alt" id="panel-alt"></p>
+    <p class="panel-years" id="panel-years"></p>
+    <div class="bar-film big" id="panel-bar" role="img"></div>
+    <div class="actions" id="actions"></div>
+    <p class="summary" id="summary"></p>
+    <dl class="facts" id="facts"></dl>
+    <p class="ai" id="ai"></p>
+    <a class="more" id="source" target="_blank" rel="noopener" data-t="source"></a>
+  </div>
+</aside>
+
+<dialog class="search-sheet" id="search-sheet">
+  <div class="sheet-row">
+    <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+    <input id="q2" type="search" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="results2" aria-autocomplete="list">
+    <button class="icon-btn" id="sheet-close" type="button"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg><span class="sr" data-t="searchClose"></span></button>
+  </div>
+  <ul class="results in-sheet" id="results2" role="listbox"></ul>
+</dialog>
+
 <script type="module" src="site/app.js"></script>
 </body>
 </html>
