@@ -53,6 +53,9 @@ clipcheck 的 `paving_under` 檢查路面、
 
 ## 外觀與高度
 
+**暗室是主體和底板的亮度比，不是底板有多黑**：底板帶著藍色往上提，白模的受光面要亮，光環和當前時代的建築是畫面裡最亮、
+最飽和的小面積；中間調用曲線提，黑位不動，不要整體抬灰。手機在亮處看，暗部會糊成一片，平台壓縮也最傷暗的漸層。
+門檻和量法見 CHECKS.md「亮度」。
 深色台面（`palette.plate/plateSide/water/plateEmit`）、象牙白模型、邊線（`film.edges`）；高度倍率三個分開：`terrain.exaggeration`（地形）、
 `buildings.exaggeration`（今日建築）、`city.exaggeration`（歷代城市，預設 2）。**地形倍率按坡度定，不要寫死**：
 坡上的地基在畫面上是「實際落差 × 地形倍率」，房子是「高度 × 建築倍率」；例：地形 ×6、建築 ×2 時，
