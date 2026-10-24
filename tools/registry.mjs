@@ -14,6 +14,8 @@ const AI = ['narration', 'music', 'imagined'];
 const TEXT = new Set(['.json', '.yaml', '.yml', '.md', '.txt', '.csv', '.geojson', '.py', '.sh']);   // what a city may bring
 const NAMED = new Set(['CREDITS', 'LICENSE']);
 const EXAMPLE = 'xianyang';   // the project's own example: kept whole, pictures and poster included
+// a city's page is <site>/<slug>/ (tools/site.mjs): a slug may not be a name the site already has at its root, nor a language's
+const RESERVED = new Set([...fs.readdirSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')).map(n => n.toLowerCase()), ...LANGS.map(l => l.toLowerCase()), 'en']);
 const https = u => typeof u === 'string' && /^https:\/\/\S+$/.test(u);
 const local = u => typeof u === 'string' && !u.startsWith('/') && !u.includes('..') && fs.existsSync(path.join(ROOT, u));   // (a path in this repository: the example city's)
 const image = u => https(u) || local(u);
@@ -31,6 +33,7 @@ function repoURL() {
 export function problems(slug, e) {
   const p = [], is = (ok, msg) => { if (!ok) p.push(msg); };
   is(/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug), 'the folder name: lowercase letters, digits and hyphens');
+  is(!RESERVED.has(slug), `the folder name "${slug}" is taken by the site itself (its page would be <site>/${slug}/); add the country or region, e.g. ${slug}-cn`);
   is(e.slug === slug, `slug must be "${slug}" (the folder's name)`);
   is(e.name && typeof e.name.en === 'string' && e.name.en, 'name.en is required');
   for (const k of Object.keys(e.name || {})) is(LANGS.includes(k), `name.${k}: languages are ${LANGS.join(', ')}`);

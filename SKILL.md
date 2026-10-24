@@ -152,8 +152,11 @@ description: 製作《一城春秋》（A City Through Time）系列資料影片
      放上去之前確認配音、配樂服務的條款允許公開散布生成的音檔，寫進 CREDITS；
    - `cities/<slug>/entry.json`：`uv run python -I tools/web.py cities/<slug> --entry` 寫出草稿（位置、年代、片長、語言、章節顏色），
      補上五種語言的名字和簡介（en、ja、zh-Hant、zh-Hans、es）、作者、海報和縮圖的 https 網址、AI 生成的部分（`ai`）、`added`；
-     `node tools/registry.mjs --check` 檢查欄位。入口頁讀的 `cities.json` 由 GitHub Actions 自動產生，不手改；
-   - 本機先試：`node tools/preview.mjs`（會先產生 `cities.json`）後打開 `index.html`，再用 `play.html?city=<slug>&play=1&bundle=<網址>` 試播放包；
+     `node tools/registry.mjs --check` 檢查欄位（slug 也是城市頁網址，不能和網站自己的資料夾或語言代碼同名）。入口頁讀的 `cities.json`
+     和每座城五種語言的獨立頁面（`https://cities.go5.si/<slug>/`、`/zh-hant/<slug>/`…，帶分享預覽和影片資訊）由 GitHub Actions
+     用 `tools/site.mjs` 自動產生，不手改；
+   - 本機先試：`node tools/preview.mjs`（會先把網站產生到 `_site/`）後打開 `http://127.0.0.1:8765/<slug>/`，再用
+     `play.html?city=<slug>&play=1&bundle=<網址>` 試播放包；
    - 交 pull request：只放 `cities/<slug>/` 裡的文字檔（entry.json、city.yaml、script.yaml、CREDITS、各 .md、research/ 的文字筆記、
      assets/README.md 這類素材說明）；圖片、音樂、影片一律不放，PR 的檢查會擋（`tools/registry.mjs --check --base`）。
      例外是本專案的示例城市咸陽：完整保留圖片、海報和網頁播放包（`cities/xianyang/web/`，重打包後複製過去，entry.json 的 bundle 指向它，
@@ -356,6 +359,6 @@ description: 製作《一城春秋》（A City Through Time）系列資料影片
   `tools/instruments.py`：下載程式配樂的取樣庫（VSCO 2 CE、VCSL，CC0）到本機設定的 `instruments`。
 - `render/`：`still.mjs`（單張）、`events.mjs`（音效事件表）、`video.mjs`（影片，`--from/--to` 只渲一段）、`mux.mjs`（合成成片：響度、補靜音、不寫元數據）。
 - 入口頁：`index.html` + `site/`（讀 `cities.json`；地球的陸地 `site/land.bin` 由 `tools/portal_land.py` 從 Natural Earth 與 NOAA ETOPO1 產生；`?lite` 看手機版的畫法）；`play.html` 是播放器（`?bundle=` 讀外部播放包）；
-  `tools/web.py`（網頁播放包、`--entry` 寫 entry.json 草稿）、`tools/registry.mjs`（從各城 entry.json 產生 `cities.json`、檢查 PR）。
+  `tools/web.py`（網頁播放包、`--entry` 寫 entry.json 草稿）、`tools/registry.mjs`（從各城 entry.json 產生 `cities.json`、檢查 PR）、`tools/site.mjs`（產生整個網站：各語言的入口頁、城市頁、sitemap）。
 - `tools/build.mjs`（一條命令出片）、`tools/sheet.py`（縮圖表）、`tools/subcheck.mjs`、`tools/readcheck.mjs`、`tools/clipcheck.py`（模型穿模）、`tools/camcheck.mjs` + `tools/camcheck.py`（鏡頭穿模）、`tools/motioncheck.py`。
 - `templates/city.yaml`：帶註解的設定範本。`cities/xianyang/`：完整範例。

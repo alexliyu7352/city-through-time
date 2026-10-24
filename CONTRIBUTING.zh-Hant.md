@@ -58,7 +58,7 @@ uv run python -I tools/web.py cities/<城市> --entry
 
 | 欄位 | 內容 |
 |---|---|
-| `slug` | 城市資料夾的名字（小寫英文） |
+| `slug` | 城市資料夾的名字（小寫英文、數字、連字號），也是城市頁的網址：`https://cities.go5.si/<slug>/`。不能和網站自己的資料夾或語言代碼同名（例如 `site`、`ja`），檢查會擋 |
 | `name` | 城市名，五種語言：`en`、`ja`、`zh-Hant`、`zh-Hans`、`es`（缺的會改用英文） |
 | `location` | `[經度, 緯度]` |
 | `years` | `[起, 迄]`，西元前用負數 |
@@ -78,7 +78,7 @@ uv run python -I tools/web.py cities/<城市> --entry
 
 `watch` 和 `bundle` 至少要有一個；兩個都還沒有時，入口頁會顯示「影片正在上架」。
 
-入口頁讀的 `cities.json` 不用你改：每次合併到 main，GitHub Actions 會從所有城市的 `entry.json` 自動產生（`tools/registry.mjs`）。本機用 `node tools/preview.mjs` 預覽入口頁時也會先產生一份。
+入口頁讀的 `cities.json` 和每座城的獨立頁面都不用你寫：每次合併到 main，GitHub Actions 會從所有城市的 `entry.json` 自動產生（`tools/site.mjs`）。城市頁有五種語言，英文在 `https://cities.go5.si/<slug>/`，其他語言在 `/ja/<slug>/`、`/zh-hant/<slug>/`、`/zh-hans/<slug>/`、`/es/<slug>/`；標題、簡介、分享預覽圖（海報）和影片資訊都寫在頁面裡，貼到社群網站會顯示這座城的預覽，搜尋引擎也找得到。本機用 `node tools/preview.mjs` 預覽時會先產生一份到 `_site/`，打開 `http://127.0.0.1:8765/<slug>/` 就能看到。
 
 ### 5. 開 pull request
 

@@ -2,7 +2,7 @@
 
 給一座城市和一個起始年代，程式代理會查史料、抓建築與地圖資料，把整座城做成白色模型，從最早的聚落到今天，一個時代一個時代地點亮，最後渲染成一部雙語影片。
 
-**入口頁：https://alexliyu7352.github.io/city-through-time/**：轉動地球、挑一座亮著的城市觀看，或者做一部你自己城市的片。
+**入口頁：https://cities.go5.si/**：轉動地球、挑一座亮著的城市觀看，或者做一部你自己城市的片。
 
 [English](README.md) · 繁體中文
 
@@ -14,7 +14,7 @@
 |---|---|---|---|
 | 咸陽 | 前 4000 年 – 2026 年 | 12 分 30 秒 | Alex |
 
-每座城的資料在 `cities/<城市>/`：入口頁用的 `entry.json`、設定和文案、史實出處 `FACTS.md`、第三方素材與授權 `CREDITS`。入口頁讀的城市索引 `cities.json` 由 GitHub Actions 從各城的 `entry.json` 自動產生。倉庫裡只放文字資料，成片、播放包和海報都放在外部。
+每座城的資料在 `cities/<城市>/`：入口頁用的 `entry.json`、設定和文案、史實出處 `FACTS.md`、第三方素材與授權 `CREDITS`。入口頁讀的城市索引 `cities.json`，和每座城五種語言的獨立頁面（例如 https://cities.go5.si/xianyang/ ），都由 GitHub Actions 從各城的 `entry.json` 自動產生。倉庫裡只放文字資料，成片、播放包和海報都放在外部。
 
 ## 片子怎麼做出來
 
@@ -54,7 +54,7 @@ ln -s "$PWD/city-through-time" ~/.claude/skills/city-through-time   # 讓 Claude
 ## 專案結構
 
 ```
-index.html, site/   入口頁（讀 cities.json）
+index.html, site/   入口頁（讀 cities.json；tools/site.mjs 產生各語言版本和城市頁）
 play.html, engine/  播放器（three.js）：白模、投影、字幕、片尾
 pipeline/           資料與編譯：抓資料、生成歷代城市、排時間軸
 render/             渲染：單張、影片、合成成片

@@ -1,7 +1,9 @@
 // The entry page: reads cities.json (the index CI builds from every cities/<slug>/entry.json: tools/registry.mjs); the globe
 // (site/globe.js), the search, the language menu, the collection, and a city opened in a drawer (a sheet from below on a phone),
-// its full entry read when it opens.
+// its full entry read when it opens. Every city has its own address, in every language (tools/site.mjs writes those pages):
+// <root>/<slug>/ in English, <root>/zh-hant/<slug>/ and so on; the address bar follows the open city and the language.
 import { LANGS, pick, words } from './i18n.js';
+import { embed } from './video.js';
 
 const $ = id => document.getElementById(id);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -9,9 +11,25 @@ const narrow = matchMedia('(max-width: 760px)');
 const store = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
 const REG = await fetch('cities.json').then(r => r.json());
 const CITIES = REG.cities || [], REPO = REG.repo;
-let lang = new URLSearchParams(location.search).get('lang') || store.get('lang') || pick(navigator.languages);
+
+// ---------------------------------------------------------------- addresses: [language/][city/] under the site's root
+const BASE = new URL('../', import.meta.url).pathname;   // the root ('/' on the site's own domain)
+const PREFIX = Object.fromEntries(LANGS.map(([k]) => [k, k === 'en' ? '' : k.toLowerCase() + '/']));
+function route(path = location.pathname) {
+  const parts = (path.startsWith(BASE) ? path.slice(BASE.length) : '').replace(/index\.html$/, '').split('/').filter(Boolean);
+  const l = LANGS.find(([k]) => k.toLowerCase() === parts[0]);
+  if (l) parts.shift();
+  return { lang: l ? l[0] : null, slug: parts[0] || null };
+}
+const address = (slug = open) => BASE + PREFIX[lang] + (slug ? slug + '/' : '');
+const cityURL = slug => location.origin + address(slug);
+const R = route();
+// the address's language; else the one chosen before, the browser's, English. An address without one is the English page: a reader
+// of another language gets the page in theirs, and the address that says so
+let lang = R.lang || new URLSearchParams(location.search).get('lang') || store.get('lang') || pick(navigator.languages);
 if (!LANGS.some(([k]) => k === lang)) lang = 'en';
 let W = words(lang), open = null, globe = null;
+const brand = () => W.cjk ? '一城春秋' : W.t('tagline');
 
 // an element: props are set as properties, `attrs` as attributes (role, aria-*)
 const el = (tag, { attrs, ...props } = {}, ...kids) => {
@@ -24,16 +42,6 @@ const sourceURL = e => /^https?:/.test(e.source || '') ? e.source : `${REPO}/tre
 const ENTRY = new Map();   // the full entries read so far
 const entry = slug => ENTRY.get(slug) || ENTRY.set(slug, fetch(`cities/${slug}/entry.json`).then(r => { if (!r.ok) throw new Error(slug); return r.json(); })).get(slug);
 const PAGE = 24;           // the collection shows this many at a time
-// a film on a video site, played inside the page: YouTube (privacy-enhanced: no cookies before play) and Bilibili; other sites open in a tab
-function embed(url) {
-  let u; try { u = new URL(url); } catch { return null; }
-  const h = u.hostname.replace(/^(www|m)\./, '');
-  const yt = h === 'youtu.be' ? u.pathname.slice(1) : h === 'youtube.com' ? (u.searchParams.get('v') || (u.pathname.match(/^\/(embed|shorts|live)\/([\w-]{11})/) || [])[2]) : null;
-  if (yt && /^[\w-]{11}$/.test(yt)) return `https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0&playsinline=1`;
-  const bv = h === 'bilibili.com' && (u.pathname.match(/\/video\/(BV\w+)/) || [])[1];
-  if (bv) return `https://player.bilibili.com/player.html?bvid=${bv}&autoplay=1&high_quality=1&danmaku=0`;
-  return null;
-}
 const player = $('player');
 // the film on one of its sites; when it is on several, the others are a click away in the player (a site can be out of reach in some countries)
 function watch(c, sites, i) {
@@ -86,7 +94,8 @@ function menu(show) {
   langList.hidden = !show; langBtn.setAttribute('aria-expanded', String(show));
   if (show) { langActive = LANGS.findIndex(([k]) => k === lang); mark(); langList.focus(); }
 }
-function choose(k) { lang = k; store.set('lang', k); W = words(lang); menu(false); langBtn.focus(); paint(); }
+// (the address changes language in place; closing a city then goes to the entry page in this language, not Back to the old one)
+function choose(k) { lang = k; store.set('lang', k); W = words(lang); menu(false); langBtn.focus(); paint(); history.replaceState({ inPage: false }, '', address() + location.hash); }
 langBtn.onclick = () => menu(langList.hidden);
 langBtn.onkeydown = e => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); menu(true); } };
 langList.onkeydown = e => {
@@ -146,7 +155,7 @@ function renderCollection() {
   const ul = $('exhibits'); ul.replaceChildren();
   for (const c of CITIES.slice(0, shown)) {
     const act = c.play === 'watch' ? W.t('watchFilm') : c.play === 'bundle' ? W.t('play') : null;
-    const b = el('button', { type: 'button', className: 'ex' },
+    const b = el('a', { className: 'ex', href: address(c.slug) },
       el('figure', { className: 'ex-poster' + (c.poster ? '' : ' noimg') },
         poster(c, c.poster, W.of(c.name), () => card(c)),
         act ? el('span', { className: 'ex-play' }, icon('i-play'), el('span', { textContent: act })) : null),
@@ -155,7 +164,7 @@ function renderCollection() {
         el('p', { className: 'ex-line', textContent: [W.span(c.years), c.duration ? W.length(c.duration) : ''].filter(Boolean).join('　') }),
         el('p', { className: 'ex-by', textContent: W.fmt('by', { who: (c.authors || []).join(', ') }) }),
         filmBar(c, el('span', { className: 'bar-film' }))));
-    b.onclick = () => show(c.slug, b);
+    b.onclick = e => follows(e) && show(c.slug, b);
     ul.append(el('li', {}, b));
   }
   ul.append(el('li', { className: 'empty' }, el('a', { className: 'ex', href: guideURL('making'), target: '_blank', rel: 'noopener' },
@@ -169,11 +178,18 @@ $('more-cities').onclick = () => { const first = shown; shown += PAGE; renderCol
 // ---------------------------------------------------------------- a city, opened
 const panel = $('panel'), scrim = $('scrim');
 let opener = null;
-async function show(slug, from) {
+// a plain click on a city's link opens it here (true: the link is not followed); with a modifier key it goes to a new tab as usual
+const follows = e => { if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return false; e.preventDefault(); return true; };
+// the address bar follows: opening a city adds a step to the history (Back closes it), going to another city from an open one
+// replaces it; `push: false` when the address is already right (the page's own city, Back and Forward, a change of language)
+async function show(slug, from, push = true) {
   const i = CITIES.find(x => x.slug === slug); if (!i) return;
+  if (push && address(slug) !== location.pathname) history[open ? 'replaceState' : 'pushState']({ inPage: open ? !!history.state?.inPage : true }, '', address(slug));
   open = slug; if (from) opener = from;
+  document.title = `${W.of(i.name)} · ${brand()}`;
   let c; try { c = await entry(slug); } catch { c = { ...i, authors: i.authors.map(name => ({ name })), watch: [], ai: [], summary: {} }; }   // (the index alone, if the entry cannot be read)
   if (open !== slug) return;
+  shareMenu(false);
   $('poster').replaceChildren(poster(c, c.poster, W.of(c.name), () => card(c)));
   $('panel-name').textContent = W.of(c.name); $('panel-alt').textContent = alt(c);
   $('panel-years').textContent = W.span(c.years);
@@ -201,23 +217,69 @@ async function show(slug, from) {
   const ai = (c.ai || []).map(k => ({ narration: W.t('aiNarration'), music: W.t('aiMusic'), imagined: W.t('aiImagined') })[k] || k);
   $('ai').textContent = ai.length ? W.fmt('ai', { list: W.join(ai) }) : '';
   $('source').href = sourceURL(c);
-  panel.hidden = false; panel.removeAttribute('inert'); panel.scrollTop = 0; panel.style.removeProperty('--drag');
+  panel.hidden = false; panel.removeAttribute('inert'); panel.scrollTop = 0; panel.style.removeProperty('--drag'); document.documentElement.classList.add('city-open');
   requestAnimationFrame(() => panel.classList.add('open'));
   if (narrow.matches) { scrim.hidden = false; requestAnimationFrame(() => scrim.classList.add('on')); document.documentElement.style.overflow = 'hidden'; }
   if (globe) { globe.focus(slug); globe.hold(true, narrow.matches ? 0 : panel.offsetWidth); }
   setTimeout(() => $('close').focus({ preventScroll: true }), 60);
 }
-function hide() {
-  if (!open) return; open = null;
-  panel.classList.remove('open'); panel.setAttribute('inert', ''); scrim.classList.remove('on');
+function hide(push = true) {
+  if (!open) return; open = null; shareMenu(false);
+  document.title = `一城春秋 · ${W.t('tagline')}`;
+  if (push) { if (history.state?.inPage) history.back(); else history.pushState(null, '', address()); }   // (back to where the city was opened from)
+  panel.classList.remove('open'); panel.setAttribute('inert', ''); scrim.classList.remove('on'); document.documentElement.classList.remove('city-open');
   setTimeout(() => { if (!open) scrim.hidden = true; }, 350);
   document.documentElement.style.overflow = '';
   if (globe) globe.hold(false);
   if (opener && opener.isConnected) opener.focus({ preventScroll: true });
 }
 panel.setAttribute('inert', '');
-$('close').onclick = hide; scrim.onclick = hide;
-addEventListener('keydown', e => { if (e.key === 'Escape' && open && langList.hidden && !sheet.open && !player.open) hide(); });
+$('close').onclick = () => hide(); scrim.onclick = () => hide();
+addEventListener('keydown', e => {
+  if (e.key !== 'Escape' || !open || !langList.hidden || sheet.open || player.open) return;
+  if (!$('share-menu').hidden) { shareMenu(false); $('share').focus(); } else hide();
+});
+addEventListener('popstate', () => {
+  const r = route();
+  if (r.lang && r.lang !== lang) { lang = r.lang; W = words(lang); paint(); }
+  if (r.slug && CITIES.some(c => c.slug === r.slug)) show(r.slug, null, false); else hide(false);
+});
+
+// ---------------------------------------------------------------- sharing a city: the phone's own share sheet; elsewhere a menu
+// (copy the link, or a network: the ones each language's readers use most come first)
+const NETWORKS = {
+  x: ['X', (u, t) => `https://x.com/intent/tweet?text=${encodeURIComponent(t)}&url=${encodeURIComponent(u)}`],
+  facebook: ['Facebook', u => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}`],
+  line: ['LINE', u => `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(u)}`],
+  weibo: [null, (u, t) => `https://service.weibo.com/share/share.php?url=${encodeURIComponent(u)}&title=${encodeURIComponent(t)}`],
+  whatsapp: ['WhatsApp', (u, t) => `https://wa.me/?text=${encodeURIComponent(t + ' ' + u)}`],
+};
+const ORDER = { en: 'x facebook whatsapp line weibo', es: 'whatsapp x facebook line weibo', ja: 'line x facebook whatsapp weibo',
+  'zh-Hant': 'line facebook x whatsapp weibo', 'zh-Hans': 'weibo x facebook line whatsapp' };
+const shareBtn = $('share'), shareList = $('share-menu');
+function shareMenu(show) { shareList.hidden = !show; shareBtn.setAttribute('aria-expanded', String(show)); }
+function renderShare() {
+  if (!open) return;
+  const c = CITIES.find(x => x.slug === open), url = cityURL(open), text = `${W.of(c.name)} · ${brand()}`;
+  const copy = el('button', { type: 'button', textContent: W.t('shareCopy') });
+  copy.onclick = async () => {
+    try { await navigator.clipboard.writeText(url); copy.textContent = W.t('shareCopied'); $('share-status').textContent = W.t('shareCopied'); }
+    catch { prompt(W.t('shareCopy'), url); }
+    setTimeout(() => { copy.textContent = W.t('shareCopy'); $('share-status').textContent = ''; }, 1800);
+  };
+  const items = [copy, ...ORDER[lang].split(' ').map(k => el('a', { href: NETWORKS[k][1](url, text), target: '_blank', rel: 'noopener', textContent: NETWORKS[k][0] || W.t('weibo') }))];
+  if (navigator.share) { const more = el('button', { type: 'button', textContent: W.t('shareMore') }); more.onclick = () => navigator.share({ title: text, url }).catch(() => {}); items.push(more); }
+  shareList.replaceChildren(...items.map(x => el('li', {}, x)));
+  for (const a of shareList.querySelectorAll('a')) a.addEventListener('click', () => shareMenu(false));
+}
+shareBtn.onclick = async () => {
+  const c = CITIES.find(x => x.slug === open);
+  if (navigator.share && matchMedia('(pointer: coarse)').matches) {   // a phone: its own sheet has every app on it
+    try { await navigator.share({ title: `${W.of(c.name)} · ${brand()}`, url: cityURL(open) }); return; } catch (e) { if (e.name === 'AbortError') return; }
+  }
+  renderShare(); shareMenu(shareList.hidden);
+};
+addEventListener('pointerdown', e => { if (!shareList.hidden && !e.target.closest('.share')) shareMenu(false); });
 {   // on a phone: drag the sheet down to put it away
   const grab = $('grab'); let y0 = null, dy = 0;
   grab.addEventListener('pointerdown', e => { y0 = e.clientY; dy = 0; panel.classList.add('dragging'); grab.setPointerCapture(e.pointerId); });
@@ -229,8 +291,8 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && open && langList.hi
 const pins = $('pins');
 function renderPins() {
   pins.replaceChildren(...CITIES.filter(c => c.location).map(c => {
-    const b = el('button', { type: 'button', className: 'pin', tabIndex: -1 }, el('span', { className: 'p-name', textContent: W.of(c.name) }), el('span', { className: 'p-years', textContent: W.span(c.years) }));
-    b.dataset.slug = c.slug; b.style.opacity = 0; b.style.visibility = 'hidden'; b.onclick = () => show(c.slug, b); return b;
+    const b = el('a', { className: 'pin', href: address(c.slug), tabIndex: -1 }, el('span', { className: 'p-name', textContent: W.of(c.name) }), el('span', { className: 'p-years', textContent: W.span(c.years) }));
+    b.dataset.slug = c.slug; b.style.opacity = 0; b.style.visibility = 'hidden'; b.onclick = e => follows(e) && show(c.slug, b); return b;
   }));
 }
 function follow(list, t) {
@@ -250,19 +312,25 @@ function paint() {
   q.placeholder = q2.placeholder = W.t('searchPlaceholder'); q.setAttribute('aria-label', W.t('searchLabel')); q2.setAttribute('aria-label', W.t('searchLabel'));
   $('gh').href = $('repo').href = $('repo-cta').href = REPO; $('gh').title = W.t('github');
   $('caption-text').textContent = W.fmt('exhibitText', { n: W.num(globe ? globe.blocks : 63253) });
+  document.title = open ? `${W.of(CITIES.find(x => x.slug === open).name)} · ${brand()}` : `一城春秋 · ${W.t('tagline')}`;
   renderLangs(); renderCollection(); renderPins();
-  if (open) show(open);
+  if (open) { show(open, null, false); renderShare(); }
 }
 
 const bar = $('bar');
 addEventListener('scroll', () => bar.classList.toggle('scrolled', scrollY > 8), { passive: true });
 if (!reduced) document.documentElement.classList.add('intro');
+if (R.slug && !CITIES.some(c => c.slug === R.slug)) R.slug = null;   // (an address of no city: the page itself)
+{ const sp = new URLSearchParams(location.search); sp.delete('lang');   // (?lang= from older links: now the address says it)
+  if ((R.lang || 'en') !== lang || location.search.includes('lang=') || route().slug !== R.slug) history.replaceState(null, '', address(R.slug) + (sp.size ? '?' + sp : '') + location.hash); }
 paint();
+if (R.slug) show(R.slug, null, false);   // the city's own page opens on its city
 
 try {
   const { makeGlobe } = await import('./globe.js');
   const small = narrow.matches || (navigator.hardwareConcurrency || 8) <= 4 || new URLSearchParams(location.search).has('lite');   // (?lite: the phone version, to compare)
   globe = await makeGlobe($('globe'), CITIES, { reduced, small, onPick: slug => show(slug), onHover: () => {}, onFrame: follow });
+  if (open) { globe.focus(open); globe.hold(true, narrow.matches ? 0 : panel.offsetWidth); }   // (a city opened before the globe was ready)
   const room = () => globe.setRoom(document.querySelector('.hero-copy').getBoundingClientRect().right + 32);   // (the globe keeps clear of the words)
   room(); new ResizeObserver(room).observe(document.querySelector('.hero-copy')); document.fonts.ready.then(room);
   $('caption-text').textContent = W.fmt('exhibitText', { n: W.num(globe.blocks) });

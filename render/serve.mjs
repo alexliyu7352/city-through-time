@@ -1,6 +1,7 @@
 // Static server for the page (adapted from lemo-opuscar core/render/serve.mjs, MIT; see NOTICE): ES modules do not load over
 // file://. It serves the project root, listens on 127.0.0.1 only, answers only Host 127.0.0.1 / localhost (against DNS
-// rebinding) and never a file outside the root.
+// rebinding) and never a file outside the root. An address ending in / is its folder's index.html; with `overlay`, a folder of
+// generated files (tools/site.mjs) is looked in first.
 import http from 'http'; import fs from 'fs'; import path from 'path';
 import { ROOT } from './local.mjs';
 
@@ -14,15 +15,15 @@ const T = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charse
 export const pageURL = (port, q = '') => `http://127.0.0.1:${port}/play.html${q ? '?' + q : ''}`;
 
 // URL path -> file on disk; { status } when it leaves the root, does not decode, or holds a NUL
-export function resolveRequest(url) {
+export function resolveRequest(url, root = ROOT) {
   let u; try { u = decodeURIComponent(url.split('?')[0].split('#')[0]); } catch { return { status: 400 }; }
   if (u.includes('\0')) return { status: 400 };
-  const p = path.resolve(ROOT, '.' + path.sep + u.replace(/^\/+/, ''));
-  if (p !== ROOT && !p.startsWith(ROOT + path.sep)) return { status: 403 };
-  return { path: p };
+  const p = path.resolve(root, '.' + path.sep + u.replace(/^\/+/, ''));
+  if (p !== root && !p.startsWith(root + path.sep)) return { status: 403 };
+  return { path: u.endsWith('/') ? path.join(p, 'index.html') : p };
 }
 
-export function serve(port = 0) {
+export function serve(port = 0, { overlay } = {}) {
   return new Promise(res => {
     const s = http.createServer((q, r) => {
       const send = (code, body) => { r.writeHead(code, { 'Content-Type': 'text/plain' }); r.end(body); };
@@ -30,9 +31,11 @@ export function serve(port = 0) {
         if (!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(q.headers.host || '')) return send(403, 'bad host');
         const x = resolveRequest(q.url);
         if (x.status) return send(x.status, x.status === 403 ? 'outside root' : 'bad request');
-        fs.readFile(x.path, (e, d) => {
+        const o = overlay && resolveRequest(q.url, overlay), file = o && o.path && fs.existsSync(o.path) ? o.path : x.path;
+        if (fs.existsSync(file) && fs.statSync(file).isDirectory()) { r.writeHead(301, { Location: q.url.split('?')[0] + '/' }); return r.end(); }
+        fs.readFile(file, (e, d) => {
           if (e) return send(404, 'not found');
-          r.writeHead(200, { 'Content-Type': T[path.extname(x.path).toLowerCase()] || 'application/octet-stream' }); r.end(d);
+          r.writeHead(200, { 'Content-Type': T[path.extname(file).toLowerCase()] || 'application/octet-stream' }); r.end(d);
         });
       } catch { send(400, 'bad request'); }
     });

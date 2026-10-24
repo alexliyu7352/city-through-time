@@ -12,6 +12,8 @@ cities/*/research/*_refs/
 /.agents/
 # generated: the entry page's index (tools/registry.mjs; CI builds it for GitHub Pages)
 /cities.json
+# generated: the site as published (tools/site.mjs)
+/_site/
 # a contributed city brings text only; its film, pictures, music and footage live on outside hosts
 cities/**/*.jpg
 cities/**/*.jpeg
