@@ -68,7 +68,7 @@ uv run python -I tools/web.py cities/<城市> --entry
 | `summary` | 兩三句簡介，語言同 `name` |
 | `poster` | 海報的 https 網址（1280 寬），例如 `<播放包網址>poster.jpg`（示例城市咸陽用倉庫裡的路徑） |
 | `thumb` | 小圖的 https 網址（640 寬），例如 `<播放包網址>poster_thumb.webp` |
-| `watch` | `[{ "site": "YouTube", "url": "…" }]`，可以多個 |
+| `watch` | `[{ "site": "YouTube", "url": "…" }]`，可以多個。貼平常的影片網址（不要帶開始時間）；YouTube 和 B 站會自動在入口頁裡嵌入播放 |
 | `bundle` | `{ "url": "播放包網址", "mb": 215 }`，沒有就填 `null` |
 | `download` | （可選）`{ "url": "…" }`，影片檔的下載網址 |
 | `ai` | AI 生成的部分：`narration`、`music`、`imagined` |

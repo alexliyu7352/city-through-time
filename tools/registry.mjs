@@ -67,7 +67,7 @@ export function build() {
   const list = entries().filter(x => x.e && !problems(x.slug, x.e).length).map(({ e }) => ({
     slug: e.slug, name: e.name, location: e.location, years: e.years, duration: e.duration, added: e.added,
     authors: e.authors.map(a => a.name), poster: e.thumb || e.poster,
-    play: e.bundle ? 'bundle' : e.watch.length ? 'watch' : null, site: e.watch.length ? e.watch[0].site : null,
+    play: e.watch.length ? 'watch' : e.bundle ? 'bundle' : null, site: e.watch.length ? e.watch[0].site : null,
     chapters: e.chapters.map(c => ({ t: c.t, year: c.year, color: c.color })),
   })).sort((a, b) => b.added.localeCompare(a.added) || a.name.en.localeCompare(b.name.en));
   const reg = { version: 2, repo: repoURL(), cities: list };
