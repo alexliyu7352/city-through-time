@@ -14,6 +14,11 @@ This covers, unless a file or a city's `CREDITS` says otherwise:
 Material by others keeps its own licence, listed in each city's `CREDITS`: building and map data (CC BY 4.0, ODbL 1.0), footage and
 photographs from Wikimedia Commons (CC BY-SA, CC BY, CC0, public domain), fonts (SIL Open Font License 1.1, in `fonts/`).
 
+AI-generated sound is the exception. The narration was generated with MiniMax Audio, whose terms allow personal, non-commercial
+use; it is published here on those terms and is not covered by the CC BY-SA grant: whoever reuses a film commercially has to
+replace or clear the narration. The music was generated with Stable Audio 3 (Stability AI Community License: the outputs belong to
+the user). Each city's `CREDITS` and `VOICE.md` / `MUSIC.md` say which services made its sound.
+
 The films are ShareAlike because they include CC BY-SA footage: a film made with it is an adaptation and has to carry the same licence.
 A new city contributed here comes under the same terms.
 

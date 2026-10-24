@@ -34,3 +34,5 @@ cities/**/*.zip
 !cities/xianyang/**/*.png
 !cities/xianyang/**/*.webp
 cities/*/assets/ref/
+# and its web bundle (tools/web.py), so the entry page plays it straight from GitHub Pages
+!cities/xianyang/web/**

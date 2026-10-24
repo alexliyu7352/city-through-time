@@ -8,7 +8,7 @@ Upload the folder as it is (a Hugging Face dataset, a GitHub repository served b
 reads) and give its URL as the city's `bundle` in cities.json; the page then plays play.html?city=<slug>&bundle=<url>.
 Only what the page loads goes in (engine/main.js: the timeline, the model and its masks, the era cities, the decals and plates, the
 narration, score and sound-effect tracks as m4a, the footage and pictures), laid out as in the city folder: build/... and assets/....
-Nothing else does: no WAV, no internal test plates (satellite_hr), no reference pictures. The fonts are not in it: the page loads
+Nothing else does: no WAV, no internal test plates (satellite_hr), no reference pictures. The footage is re-encoded for streaming. The fonts are not in it: the page loads
 them from the project's fonts/ (a city that uses a new font brings it to fonts/ in its pull request)."""
 import hashlib, json, os, shutil, subprocess, sys
 
@@ -56,7 +56,11 @@ def main():
     if os.path.isdir(out): shutil.rmtree(out)
     man = []
     for f in fs:
-        dst = os.path.join(out, f); os.makedirs(os.path.dirname(dst), exist_ok=True); shutil.copy2(os.path.join(D, f), dst)
+        dst = os.path.join(out, f); os.makedirs(os.path.dirname(dst), exist_ok=True)
+        if f.endswith('.mp4'):   # footage: cut every frame a keyframe for the renders (make.sh); for the web, a keyframe a second, about a tenth the size
+            subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', os.path.join(D, f), '-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', '26', '-g', '24',
+                            '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-map_metadata', '-1', dst], check=True)
+        else: shutil.copy2(os.path.join(D, f), dst)
         h = hashlib.sha256(open(dst, 'rb').read()).hexdigest()
         man.append({'path': f, 'bytes': os.path.getsize(dst), 'sha256': h})
     poster = os.path.join(D, 'dist', 'poster.jpg')   # (the entry page shows these: entry.json poster and thumb)

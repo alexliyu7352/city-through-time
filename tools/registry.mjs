@@ -15,7 +15,8 @@ const TEXT = new Set(['.json', '.yaml', '.yml', '.md', '.txt', '.csv', '.geojson
 const NAMED = new Set(['CREDITS', 'LICENSE']);
 const EXAMPLE = 'xianyang';   // the project's own example: kept whole, pictures and poster included
 const https = u => typeof u === 'string' && /^https:\/\/\S+$/.test(u);
-const image = u => https(u) || (typeof u === 'string' && !u.startsWith('/') && !u.includes('..') && fs.existsSync(path.join(ROOT, u)));   // (a path: a picture in this repository, i.e. the example city's)
+const local = u => typeof u === 'string' && !u.startsWith('/') && !u.includes('..') && fs.existsSync(path.join(ROOT, u));   // (a path in this repository: the example city's)
+const image = u => https(u) || local(u);
 
 function repoURL() {
   if (process.env.GITHUB_REPOSITORY) return `https://github.com/${process.env.GITHUB_REPOSITORY}`;
@@ -41,7 +42,7 @@ export function problems(slug, e) {
   is(image(e.poster), 'poster: an https address of the poster (1280 wide), e.g. in the web bundle');
   is(e.thumb == null || image(e.thumb), 'thumb: an https address of a smaller poster (640 wide)');
   is(Array.isArray(e.watch) && e.watch.every(v => v && v.site && https(v.url)), 'watch: [{ "site": "YouTube", "url": "https://..." }] (may be empty)');
-  is(e.bundle == null || (https(e.bundle.url) && e.bundle.url.endsWith('/') && typeof e.bundle.mb === 'number'), 'bundle: null, or { "url": "https://.../", "mb": 215 }');
+  is(e.bundle == null || ((https(e.bundle.url) || local(e.bundle.url)) && e.bundle.url.endsWith('/') && typeof e.bundle.mb === 'number'), 'bundle: null, or { "url": "https://.../", "mb": 120 }');
   is(e.download == null || https(e.download.url), 'download: null, or { "url": "https://..." }');
   is(Array.isArray(e.ai) && e.ai.every(k => AI.includes(k)), `ai: what was made with AI, from ${AI.join(', ')}`);
   is(e.license === 'CC BY-SA 4.0', 'license: "CC BY-SA 4.0"');

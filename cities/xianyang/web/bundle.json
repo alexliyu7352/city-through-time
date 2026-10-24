@@ -1,0 +1,271 @@
+{
+ "slug": "xianyang",
+ "files": [
+  {
+   "path": "build/film.json",
+   "bytes": 3138900,
+   "sha256": "fa1c14f312b217b12d650aab32ff3bbb5fd3173b6a214d8c4b27816928c46c47"
+  },
+  {
+   "path": "build/data/model.json",
+   "bytes": 19040977,
+   "sha256": "79e6af697ebb6b7e5c76fef648513bea08081a8bfe8d35177abd5db14c77bbdb"
+  },
+  {
+   "path": "build/data/stats.json",
+   "bytes": 8874,
+   "sha256": "44f84d35155a759e54c3e66cc1545ec965c8f612694a93acaac085d96c16a631"
+  },
+  {
+   "path": "build/data/lines.json",
+   "bytes": 762507,
+   "sha256": "e8dae96e9b93f427e559b12ee7faafbb5684f7d6708ddc4c0fc43dc65804856f"
+  },
+  {
+   "path": "build/data/water.png",
+   "bytes": 161516,
+   "sha256": "b79dbe52b1ab6997f5a9fad781d38c5b3fcff87793f216efb64b2ae182f6ddef"
+  },
+  {
+   "path": "build/data/layers1.png",
+   "bytes": 113740,
+   "sha256": "1d4674d4add3d0404c59574943101f2fcb1df3e5e8274bfbfc5673a8647f6e80"
+  },
+  {
+   "path": "build/data/layers2.png",
+   "bytes": 60424,
+   "sha256": "f996a3783fd44c570d0402e2f1c195fdd5a4d299c3e77bff4b85ad94198f9545"
+  },
+  {
+   "path": "build/data/layers3.png",
+   "bytes": 56798,
+   "sha256": "618f46eaf0db818df2a6371b2dbab6a64a67def535ec7e4bf381ed236238a0b1"
+  },
+  {
+   "path": "build/data/hide.png",
+   "bytes": 222366,
+   "sha256": "457c188794a238f27613979cf9160e89cc8e92b944e90672432d15cf89946bd4"
+  },
+  {
+   "path": "build/data/hide2.png",
+   "bytes": 76181,
+   "sha256": "9409d57758c2007cd4080ca5788ccd387d76b1447d6b9875f1d0e0501008bfd0"
+  },
+  {
+   "path": "build/data/edge.png",
+   "bytes": 283266,
+   "sha256": "819f87446c410cf91ef49e230d1415c68e2a35e6687d2567467683f3294a0514"
+  },
+  {
+   "path": "build/data/edge2.png",
+   "bytes": 470715,
+   "sha256": "0be5a455085e8895ec3922841c1796de114f25ed6f75fb4b7edfe754f63d4880"
+  },
+  {
+   "path": "build/data/locator.png",
+   "bytes": 70271,
+   "sha256": "5939aa1f9496c367aee24c5cd8ba94d41db5b4f86bbeeaa7bfd07fedcac7edf0"
+  },
+  {
+   "path": "build/data/terrain16.png",
+   "bytes": 1049395,
+   "sha256": "f308f96a3b3f79cfc4b1bdbc7f7c45f894fbcf670cabd832d1db9b7c8e32a0b5"
+  },
+  {
+   "path": "build/data/decal_0.png",
+   "bytes": 291353,
+   "sha256": "57c5806b24dbe26415df51cc4e85841004436ade28f94cdc09d2ee093a00b62e"
+  },
+  {
+   "path": "build/data/satellite.png",
+   "bytes": 13403302,
+   "sha256": "87d576b23cb3d25ff99f1ab59c18bee7e4bf6096e988c8d8683b509cddf304bf"
+  },
+  {
+   "path": "build/data/context16.png",
+   "bytes": 881543,
+   "sha256": "050fdeb6076a1353aed7cd9d47ce5123362115a514c323237b8be038437e7ece"
+  },
+  {
+   "path": "build/data/grow_t.json",
+   "bytes": 813583,
+   "sha256": "fb0fb1e727f35c2d73b6122a04b4fee61615ad400066a420508636291764e410"
+  },
+  {
+   "path": "build/data/era_neolithic.json",
+   "bytes": 22142,
+   "sha256": "ad05824e221704426697fac1c3671c7a1e88df14322525fdc62453ba2f9e8f25"
+  },
+  {
+   "path": "build/data/era_qin.json",
+   "bytes": 4701944,
+   "sha256": "0ac71a8c270490670b3acad9667a73674f8ff74850f80460635bf059c97d34d1"
+  },
+  {
+   "path": "build/data/era_empire.json",
+   "bytes": 5057614,
+   "sha256": "82bda76f03b56df8cc0339febdc47cb4bdb277c94c7ed31741a6f758590e4eb0"
+  },
+  {
+   "path": "build/data/era_han.json",
+   "bytes": 11529005,
+   "sha256": "59568354808ddc982a80b132b6a768598879570a912518484275dfd95bb4a1ef"
+  },
+  {
+   "path": "build/data/era_tang.json",
+   "bytes": 1304615,
+   "sha256": "e8ddebb130907c8ad5d0eff1d7629092f9946d4173d5fee306cb6b50d5c3a801"
+  },
+  {
+   "path": "build/data/era_ming.json",
+   "bytes": 2737602,
+   "sha256": "b626d0283d43ed6a3bbaf86efb27bee7e00e1370dead988ff9d79d3fc7b5c703"
+  },
+  {
+   "path": "build/data/era_rail.json",
+   "bytes": 2741887,
+   "sha256": "19517c95438c0b3bdee7dc45280cee8b4d1978f738130cc6f613aa7db21f4895"
+  },
+  {
+   "path": "build/data/era_mills.json",
+   "bytes": 289781,
+   "sha256": "18ffd16658d8756c1dbef211d7b01a3254169dd97a638d925778501782e9f705"
+  },
+  {
+   "path": "build/audio/voice/track_zh.m4a",
+   "bytes": 7439660,
+   "sha256": "d0f1d881b98d2b16a94efe0c70e61295fd3a6fd11106140e2258aee742784741"
+  },
+  {
+   "path": "build/audio/music/score.m4a",
+   "bytes": 15310859,
+   "sha256": "9eb67ed567205ce3e19d121aa062e4503496acc10a0f697032fa45f4aad31c5d"
+  },
+  {
+   "path": "build/audio/sfx_track.m4a",
+   "bytes": 577649,
+   "sha256": "fead589b078a6b7be5578fc6cdc7bb1d1575194dfc952ac45e34e19dc07d1ff6"
+  },
+  {
+   "path": "build/audio/music/loop.m4a",
+   "bytes": 786230,
+   "sha256": "5a9e1b4dba00187ca930328b750145678bd32e344203b77f174ee655570c88db"
+  },
+  {
+   "path": "assets/imagined/qin_build.jpg",
+   "bytes": 608084,
+   "sha256": "695a0c70e53b013a4b8966cb5b9d2ea9c11c4bac84aa6138ec4195a62ad4fb11"
+  },
+  {
+   "path": "assets/imagined/qin_market.jpg",
+   "bytes": 625419,
+   "sha256": "081b0dde11271f939fe3979f3c8a06a230f8804b51cc78ba519bc6e2586eaf6f"
+  },
+  {
+   "path": "assets/photos_cc/qin_dig_1962.jpg",
+   "bytes": 88610,
+   "sha256": "06a48eb735cee56da97a04b72a4a00d12cfefeb8cced2f4a3b0ea7b83ed32edb"
+  },
+  {
+   "path": "assets/photos_cc/qin_shihuang_18c.jpg",
+   "bytes": 780197,
+   "sha256": "3eb243da6ef96c5101869e829f923c8400a709c4f4e174a7b2c7297b356d686a"
+  },
+  {
+   "path": "assets/imagined/empire_migrants.jpg",
+   "bytes": 581346,
+   "sha256": "bc6e8889ddcf411c7528a5585d134db12d37af9fb97cbba7e519bb70d2ee910e"
+  },
+  {
+   "path": "assets/imagined/burn_fire.jpg",
+   "bytes": 406562,
+   "sha256": "05ee8eb692a7627fd768eedee63edb837bc79f5b7e3735408a7d281fe0a69ab5"
+  },
+  {
+   "path": "assets/photos_cc/qin_palace_fields.jpg",
+   "bytes": 220784,
+   "sha256": "0da3ca3c1aa69ffdb82b44c3a6370c51a46a30c7b36d384900dc10dda02396a5"
+  },
+  {
+   "path": "assets/photos_cc/changling_1.jpg",
+   "bytes": 563426,
+   "sha256": "286e4793d5595c8b982a2bb514f334eba7859e36e929faed091e25486fdf7986"
+  },
+  {
+   "path": "assets/photos_cc/gudu_museum.jpg",
+   "bytes": 950262,
+   "sha256": "2d124e1da5fc7f8142596c2d63d72288b4dc4e73560a0a220980f03676238ac4"
+  },
+  {
+   "path": "assets/photos_cc/gudu_1.jpg",
+   "bytes": 745874,
+   "sha256": "492bb2392ab088d15f0130e999cb0f585442a5ee85b046fe58d2a326d295e4c4"
+  },
+  {
+   "path": "assets/gazetteer/1751_xianyang_county_town_map.jpg",
+   "bytes": 1242881,
+   "sha256": "f24e8088567176d51d83d2021385e220a5fb705f96f901f5c789548315c93849"
+  },
+  {
+   "path": "assets/photos_cc/belltower_2.jpg",
+   "bytes": 1300762,
+   "sha256": "1a97cdf567a5cb3e486a152ab9590de5daba4b63f21b55c62f23c2e5da6e7506"
+  },
+  {
+   "path": "assets/photos_cc/zhongshan_st.jpg",
+   "bytes": 1613297,
+   "sha256": "a5dec190eb6eddde72670bbd0d19b79e3cad50aae6cb78644986b96f88ddcbd9"
+  },
+  {
+   "path": "assets/photos_cc/qingweilou_1.jpg",
+   "bytes": 1119937,
+   "sha256": "b65b500416a7df3428131901ad5093074252b334b0c09805d387a5bd08ff0bcb"
+  },
+  {
+   "path": "assets/footage/longhai_train_commons.mp4",
+   "bytes": 4476717,
+   "sha256": "f5d9c86e1998aa8437bcc3941ba69422812914cf4b65ae4933575d890a7bfa4d"
+  },
+  {
+   "path": "assets/photos_cc/station_full.jpg",
+   "bytes": 831007,
+   "sha256": "a2894ea9c061232cf8520372402cb6ba9c047852f07761904cdc36335b3f599e"
+  },
+  {
+   "path": "assets/photos_cc/airport_t5_aerial.jpg",
+   "bytes": 124988,
+   "sha256": "9648f387db5c3fca6efa1e74465c6e9acb7c172207e6f4719cb5472779af3d61"
+  },
+  {
+   "path": "assets/photos_cc/lake_park.jpg",
+   "bytes": 535558,
+   "sha256": "e131e20ecaa99dcef9b2d93a91cb3efc9970fae55fa572f222e129d6be9f4d3b"
+  },
+  {
+   "path": "assets/footage/xixian_aerial_commons.mp4",
+   "bytes": 2017072,
+   "sha256": "0c3add99efc0740b87ed1eb751d044c571cdaec09c1e59c3f8eb91850cb9d6d7"
+  },
+  {
+   "path": "assets/footage/weihe_skyline_commons.mp4",
+   "bytes": 2105127,
+   "sha256": "b644412a5ae050b5dd7dd537adae795120aa350118539e11ab753a961a82b80b"
+  },
+  {
+   "path": "assets/footage/fuxing_commons.mp4",
+   "bytes": 6083309,
+   "sha256": "5883959198138f64c1df9c2ebdaab0615e2c04f8ba5390425e3bde1aefceb236"
+  },
+  {
+   "path": "poster.jpg",
+   "bytes": 162320,
+   "sha256": "51b67017659d057be2a1cec50e9cccb5d8db26450b290b269cfd784374f9d566"
+  },
+  {
+   "path": "poster_thumb.webp",
+   "bytes": 39294,
+   "sha256": "5ec6504d47393f4be70f6f4b40d78787c9ddbb465c80b1cf31fe74f25d6114eb"
+  }
+ ],
+ "bytes": 120627532
+}

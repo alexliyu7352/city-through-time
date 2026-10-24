@@ -156,7 +156,8 @@ description: 製作《一城春秋》（A City Through Time）系列資料影片
    - 本機先試：`node tools/preview.mjs`（會先產生 `cities.json`）後打開 `index.html`，再用 `play.html?city=<slug>&play=1&bundle=<網址>` 試播放包；
    - 交 pull request：只放 `cities/<slug>/` 裡的文字檔（entry.json、city.yaml、script.yaml、CREDITS、各 .md、research/ 的文字筆記、
      assets/README.md 這類素材說明）；圖片、音樂、影片一律不放，PR 的檢查會擋（`tools/registry.mjs --check --base`）。
-     例外是本專案的示例城市咸陽：完整保留圖片和海報（`.gitignore` 和檢查都對它開例外），建模參考圖和實拍片段仍不進 git。
+     例外是本專案的示例城市咸陽：完整保留圖片、海報和網頁播放包（`cities/xianyang/web/`，重打包後複製過去，entry.json 的 bundle 指向它，
+     入口頁直接從 GitHub Pages 播放；`.gitignore` 和檢查都對它開例外），建模參考圖和實拍原檔仍不進 git。
 
 ## 演出文法（所有城市必須遵守）
 
