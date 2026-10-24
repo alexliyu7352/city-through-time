@@ -16,7 +16,7 @@ CMAB 下載：figshare 文章 27992417 的各省 zip（陝西 = `shanxisheng.zip
 
 1. Overture：用 DuckDB 從 `s3://overturemaps-us-west-2/release/<release>/theme=buildings/type=building/` 以 bbox 篩出 footprint、height、num_floors（需要網路與 duckdb + spatial extension；`pipeline/overture_ghsl.py fetch`）。
    release 名稱會過期，舊的會下架：先列出現有的（`curl 'https://overturemaps-us-west-2.s3.amazonaws.com/?prefix=release/&delimiter=/'`），
-   再指定名稱，並把名稱寫進 CREDITS（咸陽第一次就因為名稱不對，什麼都沒抓到）。DuckDB 掃描很重，不和渲染、混音同時跑。
+   再指定名稱，並把名稱寫進 CREDITS（名稱不對就什麼都抓不到）。DuckDB 掃描很重，不和渲染、混音同時跑。
 2. GHSL：下載 GHS_BUILT_S_E{1975..2030}_GLOBE_R2023A_54009_100 對應圖幅（JRC 開放資料），`pipeline/overture_ghsl.py years` 用 rasterio 取每棟質心的首次建成期。
 3. `prep.py` 的 bands 用 5 年期：`[1975 年已有, 1980–1989, 1990–1999, 2000–2009, 2010–2019, 2020 後]`。
 4. 畫面與 FACTS.md 必須寫：「年份為 GHSL 建成區 5 年期估算，精度 100 m」。
@@ -34,7 +34,7 @@ Overpass 只有 overpass-api.de 穩定，慢（10–60 秒一題），快取存�
 
 - **範圍要讓畫面裝滿城**：框住歷史核心和旁白會講到的地方；框裡大半是農田就收緊，否則城撐不滿畫面，看起來只是一片碎屑。
 - **範圍要包住故事的兩端**：故事要的地方只差一點在框外，就把框往那邊擴；遠在框外的山水用 `terrain.context`（SKILL.md 步驟 4），不擴台面。
-- 咸陽：25 km 的框大半是農田，3 萬棟建築撐不滿（參考片 319 km² 裡有 7 萬棟），收緊到歷史核心；阿房宮前殿在框外 700 m，為了
+- 咸陽：25 km 的框大半是農田，3 萬棟建築撐不滿（撐得滿的密度大約是 319 km² 裡 7 萬棟），收緊到歷史核心；阿房宮前殿在框外 700 m，為了
   「自阿房渡渭，屬之咸陽」把南界擴到 34.245，最後是 31 × 22 km。
 - **改了 `box` 要整串重跑**，一次跑一件：`osm.py`（新範圍）→ `terrain.py` → `satellite.py` → `prep.py` → compile。城市設定裡的位置一律寫經緯度
   （`ll:`、`lon`/`lat`），不寫模型座標（`v:`、`x`/`z`）：台面中心一動，模型座標就全錯。畫面上寫了台面大小的地方一起改（SKILL.md 步驟 4）。
@@ -46,7 +46,7 @@ Overpass 只有 overpass-api.de 穩定，慢（10–60 秒一題），快取存�
   一次最多 50 個），授權不合的篩掉，再一個一個下載（咸陽的 CC0 照片和 4K CC BY-SA 影片都是這樣一次查出來的）。
 - 下載：Commons 原檔 `https://upload.wikimedia.org/...`，用 `curl -L -o <明確檔名>`；B 站等用 yt-dlp。原檔放本機的 ref 資料夾（`local/config.json` 的 `ref`），不進倉庫。
 - 處理：找出原片字幕與水印的位置，裁掉（`crop`）。網路影片的字幕和地名條位置會變：整段每隔幾秒抽一張，按最靠畫面內側的那一條定裁切框，
-  不要只看一格（咸陽：B 站 1080p 原片的裁切框是 x 448–1472、y 158–734）。然後縮放到 1600×900，降飽和約 15%，轉全 I 幀 H.264
+  不要只看一格。然後縮放到 1600×900，降飽和約 15%，轉全 I 幀 H.264
   （`-g 1`，頁面才能逐幀定位），放 `cities/<slug>/assets/footage/`。
 - 上屏：長度和方式照 SKILL.md 步驟 4 的「實拍回聲」：4K 影片全幅 7–9 秒（緩推、上下黑邊，左上「今天 · TODAY · 實拍」+ 地名，右下來源），
   高解析照片右側面板，低解析素材小卡片加引線；不要 4–6 秒一閃而過。

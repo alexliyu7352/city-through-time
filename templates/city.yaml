@@ -30,7 +30,7 @@ film:
   # sfx: [relay, lamp, burn, lights]        # 保留的音效（頁面事件，render/events.mjs；咸陽用這四個）：先 audio/mix.py <city> --kit 做單音，再 compile；不寫就沒有音效
   identity: { l1: "<城市> · 1:10000 白模", l2: "{stats.centre_wgs[1]:.3f}°N  {stats.centre_wgs[0]:.3f}°E  ·  <資料來源>" }
   light: { base: 0.62 }                       # 投影階段的展廳底光，讓城看得見；深色台面要亮一點（咸陽 0.62；不寫時 compile 用 0.28）
-  rise: { sinkDur: 2.4, ghost: 1.0 }          # 1 = 今天的白模城市全片都在（參考片文法）；歷代城市在原地替換它
+  rise: { sinkDur: 2.4, ghost: 1.0 }          # 1 = 今天的白模城市全片都在；歷代城市在原地替換它
   satellite_source: sentinel                  # sentinel（可發布）| hr（Esri 第 15 級，僅內部測試，pipeline/imagery_tiles.py）
   node_tint: 0.5                              # 每個節點把今天的城市染成該節點顏色的強度；節點可用 tint 覆寫（現代段設 0）
   # rings_motif: { centre: [<lon>, <lat>], spacing_m: 380, from: -4000, gain: 0.3 }   # 每百年一圈的年輪光環：從開燈到結尾都在，古代段看起來像雜訊，不建議用（咸陽沒用）
@@ -157,7 +157,7 @@ film:
   # music:
   #   source: cues
   #   loop: M01                # 預覽播完後片尾字卡停著，這段接著循環播放（網頁版的觀眾可能還沒走）；成片不用
-  #   stop_in_silences: false  # true：script.yaml 的 quiet 和 pause 裡配樂硬切成無聲（咸陽試過，用戶嫌突兀）
+  #   stop_in_silences: false  # true：script.yaml 的 quiet 和 pause 裡配樂硬切成無聲（聽起來突兀，不建議）
   #   cues:
   #     - { id: M01, node: <節點>, fade_in: 3.0 }        # take: <寫法>-<種子>（選中的候選）；offset: 從那條的第幾秒開始；gain: dB
   #     - { id: M02, node: <節點> }
