@@ -87,7 +87,7 @@ film:
         fall: out                             # 收回：out = 跟著下一節點的換色光圈（預設）；in = 光圈往 fall_from（預設 origin）收縮（焚城，演出文法 6）
         fall_dur: 1.4                         # 光圈經過後，每棟建築沉下（或今天的建築回來）的秒數；焚城（fall: in）寫 0.25，收縮光圈一過就倒
         boundary_close_m: 70                  # 外緣邊框：建築間距在這以內算同一片城（大而疏的城加大）
-        outline: [[[<lon>, <lat>], ...]]      # 選填：建築給不出的邊界（村子的壕溝），併進外緣光帶與讓位範圍
+        outline: [[[<lon>, <lat>], ...]]      # 選填：建築給不出的邊界（村子的壕溝），併進外緣光帶、讓位範圍和片尾足跡
         # landmarks 每項可加 id（給 stages 選）、group（一組一起選）、exaggeration（照復原圖做的單體保住原比例，例 1.25）
         theta_deg: 0                          # 街網方向（度，逆時針自東）
         detail: high                          # low | medium | high（近景要 high；十萬級構件的大城用 low / medium）

@@ -1180,7 +1180,7 @@ for i, node in enumerate(FM['nodes']):
             for nd in FM['nodes']:
                 cs = nd.get('city')
                 if not cs or nd['id'] in dc.get('skip', []): continue
-                rings_ = [w['ring'] for w in cs.get('walls', []) if 'ring' in w] + [f['region'] for f in cs.get('fabric', []) if isinstance(f.get('region'), list)]
+                rings_ = [w['ring'] for w in cs.get('walls', []) if 'ring' in w] + [f['region'] for f in cs.get('fabric', []) if isinstance(f.get('region'), list)] + cs.get('outline', [])   # outline: a village's ditch
                 if not rings_: rings_ = cs.get('hide', [])
                 if not rings_: continue
                 era_e = next((e for e in eras_out if e['id'] == nd['id']), None)
