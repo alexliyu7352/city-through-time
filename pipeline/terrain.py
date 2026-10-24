@@ -109,7 +109,7 @@ if any(n.get('city') for n in C['film']['nodes']):
     px_, py_ = F.x0 + jj / (Ww - 1) * (F.x1 - F.x0), F.y1 - ii / (Hh - 1) * (F.y1 - F.y0)
     for n in C['film']['nodes']:
         if not n.get('city'): continue
-        m_ = shapely.contains_xy(citygen.extent(n['city'], F, lambda nm: osmgeo.rings(OSM_, nm)), px_, py_)
+        m_ = shapely.contains_xy(citygen.extent(citygen.with_trace(n['city'], F, D), F, lambda nm: osmgeo.rings(OSM_, nm)), px_, py_)
         if m_.sum() < 4: continue
         top = lambda ex: float(np.percentile((gl[m_] * ex + gf[m_]) * 12.0 / (6.0 * float(n['city'].get('exaggeration', 2.0))), 90))
         ok = [float(ex) for ex in np.arange(1.0, 10.01, .5) if top(ex) <= .3]

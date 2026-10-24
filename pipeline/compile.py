@@ -105,6 +105,16 @@ for a_, b_ in zip(FM['nodes'], FM['nodes'][1:]):
         WARN.append(f'{a_["id"]} {a_["col"]} and {b_["id"]} {b_["col"]} are {d_:.0f} apart (Lab ΔE, 25 or more reads): the colour ring '
                     f'into {b_["id"]} will not show; move them apart, or give them one colour if they are one chapter')
 
+# a period city drawn over an old map or a site plan (city.trace, pipeline/citygen.py traced): its features join the city's own
+# walls, streets, blocks and landmarks for every step that reads them (the reads still count on the city as written: Seen)
+for nd in FM['nodes']:
+    cs = nd.get('city')
+    if cs and cs.get('trace'):
+        add_ = citygen.traced(cs, F, D); cs_ = Seen(dict.items(cs)); cs_.read, cs_.mine = cs.read, cs.mine
+        for k_, v_ in add_.items():
+            if v_: cs_[k_] = list(cs.get(k_, [])) + v_
+        nd['city'] = cs_
+
 # ------------------------------------------------------------------ text templates and positions
 def _ns(o): return SimpleNamespace(**{str(k): _ns(v) for k, v in dict.items(o)}) if isinstance(o, dict) else [_ns(v) for v in o] if isinstance(o, list) else o
 STN = _ns(ST)

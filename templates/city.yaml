@@ -96,6 +96,7 @@ film:
         streets: [{ pts: [[lon, lat], [lon, lat]], w_m: 16, shops: true }]                                 # shops：沿街兩層鋪面
         lanes: { spacing_m: 85, w_m: 5 }      # 城內巷網（region: walls 或一個 lon/lat 環）
         fabric: [{ region: walls, lot: [17, 25], typ: courtyard, h_m: 6, empty: 0.05 }]                  # typ: courtyard | dwelling | hut | slab；scatter: 1 = 無格網散佈（沒有里坊證據時）
+        # trace: research/<圖名>_trace.geojson   # 選填：照古地圖或考古平面描的城牆、街道、街區、地標（SKILL.md 10a），和上面寫的一起建
         landmarks:                            # kind: temple | office | palace | belltower | pagoda | terrace | hall | paifang | factory | chimney | station | tower | corridor | bridge | boats | village | kilns | workshops | market | pool | platform | ditch
           - { kind: temple, lon: 0, lat: 0, w_m: 62, d_m: 120 }
         trees: [{ pts: [[lon, lat], [lon, lat]], step_m: 22, h_m: 12, both: false }]

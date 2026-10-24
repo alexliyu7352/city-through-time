@@ -303,19 +303,28 @@ class Builder:
 
     def shophouses(self, a, b, depth, frontage=7.0, h=7.0, side=1, gap=.0, part=FAB, street_w=14.0, avoid=None):
         """a row of 2-storey shophouses along segment a->b (UTM), on one side (side=+1 left, -1 right), set back to the
-        street's edge, roofs parallel to the street, open shop fronts and awnings toward it. Returns the row's footprints."""
+        street's edge, roofs parallel to the street, open shop fronts and awnings toward it, a small yard behind each closed by a
+        wall along the row's back. Returns the row's footprints (shop and yard).
+        The houses of a row stand wall to wall at about one height (咸阳 Tang, the user 2026-10-22: 6.7 m wide, a gap between
+        each, heights apart and bare ground behind, the row looked from behind like a row of teeth)."""
         L = math.hypot(b[0] - a[0], b[1] - a[1]); th = math.atan2(b[1] - a[1], b[0] - a[0])
         nx, ny = -math.sin(th) * side, math.cos(th) * side
         n = int(L // frontage); off = street_w / 2 + depth / 2 + .5; feet = []
+        yd = min(5.0, depth * .35)   # the yard behind the house, inside the footprint (the lots around stay as they were)
         for i in range(n):
             if self.rng.random() < gap: continue
             k = (i + .5) / n; px, py = a[0] + (b[0] - a[0]) * k + nx * off, a[1] + (b[1] - a[1]) * k + ny * off
             P = self.frame(px, py, th); foot = Polygon([P(-frontage / 2, -depth / 2), P(frontage / 2, -depth / 2), P(frontage / 2, depth / 2), P(-frontage / 2, depth / 2)])
             if avoid is not None and foot.buffer(-.5).intersects(avoid): continue
             feet.append(foot); self.group()
-            hh = h * (.85 + self.rng.random() * .35); g = self.gsite(px, py, th, frontage, depth)
-            self._emit(BOX, px, py, th, 0, frontage * .96, depth, hh * .6, part=part, g_m=g)
-            self.roof(px, py, th, hh * .6, frontage * .96, depth, hh * .4, 'gable', part=ROOF, g=g, o=.5)
+            hh = h * (.92 + self.rng.random() * .16); g = self.gsite(px, py, th, frontage, depth)
+            bx, by = px - nx * yd / 2, py - ny * yd / 2   # the house: its front on the street, the yard behind it
+            self._emit(BOX, bx, by, th, 0, frontage, depth - yd, hh * .6, part=part, g_m=g)
+            self.roof(bx, by, th, hh * .6, frontage, depth - yd, hh * .4, 'gable', part=ROOF, g=g, o=.5)
+            self._emit(BOX, px + nx * (depth / 2 - .2), py + ny * (depth / 2 - .2), th, 0, frontage + .05, .4, 2.2, part=part, g_m=g)   # the yard's back wall
+            if self.det >= 1:   # the wall between two yards (at the row's start side of each)
+                yc, sd = depth / 2 - yd / 2, frontage / 2 - .15
+                self._emit(BOX, px + nx * yc - math.cos(th) * sd, py + ny * yc - math.sin(th) * sd, th, 0, .3, yd, 2.0, part=part, g_m=g)
             if self.det >= 1:
                 fx, fy = px - nx * (depth / 2 + .05), py - ny * (depth / 2 + .05)
                 self._emit(BOX, fx, fy, th, .1, frontage * .72, .2, 2.5, part=DARK, g_m=g)
@@ -877,6 +886,49 @@ def to_utm_ring(F, ring):
     return [F.to_utm.transform(lon, lat) for lon, lat in ring]
 
 
+def traced(spec, F, city_dir):
+    """a period city drawn over an old map or a site plan: spec `trace` names GeoJSON files (one or a list) under the city's
+    folder, in lon/lat, traced over the map once it is georeferenced (QGIS's georeferencer, then its drawing tools; or geojson.io
+    over a map laid in place). Each feature's properties.kind says what it becomes; its other properties are that entry's keys:
+      wall      Polygon        walls      {ring, h_m, t_m, gates, towers, style, moat}
+      street    LineString     streets    {pts, w_m, shops}
+      block     Polygon        fabric     {region, lot, typ, h_m, empty}; theta_deg defaults to the block's long side, so the lots
+                                          run with the block as drawn, not with the city's grid
+      landmark  Point/Polygon  landmarks  {kind: properties.type, lon, lat, ...}; a polygon gives its centre, w_m (the long side),
+                                          d_m and theta_deg, which properties written on the feature override
+    Returns {walls, streets, fabric, landmarks}: lists to add to the spec's own (written entries and traced ones build alike)."""
+    import json, os
+    paths = spec.get('trace') or []
+    out = {'walls': [], 'streets': [], 'fabric': [], 'landmarks': []}
+    for path in ([paths] if isinstance(paths, str) else paths):
+        for f in json.load(open(os.path.join(city_dir, path), encoding='utf-8')).get('features', []):
+            pr = dict(f.get('properties') or {}); kind = pr.pop('kind', None); g = f.get('geometry') or {}; t, c = g.get('type'), g.get('coordinates')
+            ring = None
+            if t == 'Polygon':
+                ring = [list(q[:2]) for q in c[0]]
+                if len(ring) > 3 and ring[0] == ring[-1]: ring = ring[:-1]   # (GeoJSON closes its rings; the spec's do not repeat the first point)
+                r_ = shapely.minimum_rotated_rectangle(Polygon(to_utm_ring(F, ring)))
+                q_ = list(r_.exterior.coords); e1, e2 = (q_[1][0] - q_[0][0], q_[1][1] - q_[0][1]), (q_[2][0] - q_[1][0], q_[2][1] - q_[1][1])
+                lo, sh = (e1, e2) if math.hypot(*e1) >= math.hypot(*e2) else (e2, e1)
+                long_deg = math.degrees(math.atan2(lo[1], lo[0])) % 180
+            if kind == 'wall' and t == 'Polygon': out['walls'].append({'ring': ring, **pr})
+            elif kind == 'street' and t == 'LineString': out['streets'].append({'pts': [list(q[:2]) for q in c], **pr})
+            elif kind == 'block' and t == 'Polygon': out['fabric'].append({'region': ring, 'theta_deg': round(long_deg, 2), **pr})
+            elif kind == 'landmark' and t == 'Point': out['landmarks'].append({'kind': pr.pop('type', 'hall'), 'lon': c[0], 'lat': c[1], **pr})
+            elif kind == 'landmark' and t == 'Polygon':
+                cx, cy = F.to_wgs.transform(*r_.centroid.coords[0])
+                out['landmarks'].append({'kind': pr.pop('type', 'hall'), 'lon': round(cx, 6), 'lat': round(cy, 6), 'w_m': round(math.hypot(*lo), 1),
+                                         'd_m': round(math.hypot(*sh), 1), 'theta_deg': round(long_deg, 2), **pr})
+            else: raise SystemExit(f'citygen: {path}: a feature of kind {kind!r} on a {t}: wall (Polygon), street (LineString), block (Polygon), landmark (Point or Polygon)')
+    return out
+
+
+def with_trace(spec, F, city_dir):
+    """the spec with its traced features (traced) joined to its own lists"""
+    if not spec.get('trace'): return spec
+    return {**spec, **{k: list(spec.get(k, [])) + v for k, v in traced(spec, F, city_dir).items() if v}}
+
+
 def _lines(geom):
     if geom.is_empty: return []
     if isinstance(geom, LineString): return [geom]
@@ -902,6 +954,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     """spec (dict from city.yaml, lon/lat) -> primitive list. Spec keys:
     origin [lon, lat]; theta_deg (grid rotation, CCW from east); detail (low | medium | high); exaggeration (building heights,
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
+    trace: GeoJSON drawn over an old map or a site plan (traced; the callers join it: compile, terrain.py);
     walls: [{ring|osm, h_m, t_m, gates: [[lon,lat],...], towers, style: tower|hip|none, moat}];
     streets: [{pts, w_m, shops}]; lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}];
     landmarks: [{kind, lon, lat, ...}]; trees: [{pts, step_m, h_m, r_m, both, offset_m}]"""
