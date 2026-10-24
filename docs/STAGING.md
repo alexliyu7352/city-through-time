@@ -1,162 +1,162 @@
-# 演出文法（所有城市必須遵守）
+# Staging grammar (every city must follow it)
 
-做新城市時照做，不要重新發明。括號裡是設定鍵與檢查它的工具。
-目標是國際化、有藝術感、有現代感的動態影像，不是資料圖表：一個貫穿的視覺母題、克制的色彩邏輯、大字號的數字、留白、連續而有理由的鏡頭、
-聲音和光同步。白模投影只是起點，不是天花板；下面沒寫到的地方照這個標準自己發揮，再給用戶看。
+Follow it when making a new city; do not reinvent it. Settings keys and the tools that check them are in parentheses.
+The goal is international, artistic, modern moving images, not a data chart: one running visual motif, a restrained colour logic, big numerals, white space, a continuous camera that always has a reason,
+sound and light in sync. The white-model projection is only a starting point, not a ceiling; where nothing is written below, use this standard on your own, then show the user.
 
-## 這一步最常犯的錯
+## The most common mistakes in this step
 
-- 整城同時變色、變化發生在鏡頭外、整片同時冒出、鏡頭硬切 → 規則 1–9。
-- 非 CC 的圖和影片混進給用戶看的預覽 → 上屏只用 CC、公有領域或用戶自己的，沒有就用標明的想像圖（「實拍與圖片」）。
+- The whole city changes colour at once, changes happen off camera, a whole area pops up at once, the camera cuts hard → rules 1–9.
+- Non-CC pictures and videos get mixed into the preview shown to the user → on screen use only CC, public domain or the user's own material; if there is none, use a labelled imagined picture ("Footage and pictures").
 
-## 基本文法
+## Basic grammar
 
-今天的白模城市從頭到尾都在（`rise.ghost: 1`）；每個節點整城染上該節點的顏色（節點 `tint`）；歷代城市在原地替換今天的那一塊
-（今天的建築隨一道從起源點擴散的光環沉下，舊城升起）；遷都、搬家、河道變遷、距離用光線條（`routes:`，`[km]` 自動填距離）。
-篇幅最多的事件要有拉近、打亮的鏡頭，主體佔滿畫面，不要只用暗的大遠景（亮度的門檻見 CHECKS.md「亮度」）。
-節點之間不硬切：下一個節點的第一個鏡頭關鍵幀不要寫在 t 0（讓鏡頭從上一個節點的最後位置飛過去），換色的節點要有一個能看見整片城市的遠景。
+Today's white-model city is there from start to finish (`rise.ghost: 1`); each node tints the whole city with that node's colour (node `tint`); a period city replaces that piece of today's city in place
+(today's buildings sink with a ring of light spreading from the origin, and the old city rises); moving a capital, moving house, river changes and distances use light lines (`routes:`, `[km]` fills in the distance automatically).
+The events with the most room need a close, brightly lit camera with the subject filling the frame, not only dark wide shots (for the brightness threshold see CHECKS.md "Brightness").
+No hard cuts between nodes: do not write the next node's first camera keyframe at t 0 (let the camera fly from the last position of the previous node), and a node that changes colour needs a wide shot in which the whole city can be seen.
 
-## 規則
+## Rules
 
-1. **光圈擴大 = 圈內變化；光圈收縮 = 圈外變化。** 新時期的城市從一點長出時，光圈（或沿一條線掃過的光帶）跟著長出的前緣走
-   （`city.stages`：`from` 放射、`sweep` 掃線）。城市被收回時，收縮的光圈掃過的地方舊城沉下、今天的城市回來（`fall: in`，焚城、拆城）；
-   被下一個節點取代時，跟著下一個節點的換色光圈收回（`fall: out`，預設）。**擴大的光圈一定跑出畫面才消失**：城市的光圈過了最後一棟
-   建築仍然加速往外，直到整圈都在畫面外（compile 的 `stagecraft.ring_exit`：畫面邊緣看得到的最遠地面）才淡出；不能在畫面中間停住熄掉。
-2. **變化的時候只有光圈發光。** 不鋪整片地塊的光；城市站穩以後，外緣才亮起一條細的霓虹線，只照亮線旁的建築（`era_look.line/light_m/halo_m`），
-   變化開始時這條線先熄。
-3. **每個大節點一種明顯不同的顏色，光圈掃過的地方全部變成這個顏色，包括還站著的舊城。** 兩個相鄰節點的顏色不能接近（橘和金就看不出）；
-   顏色要有出處更好（秦統一後「上黑」→ 帝都用墨金：`ink`）。舊城在後面的節點裡用那個節點的顏色和強度（節點 `tint`）。
-4. **變化只發生在觀眾看得到的地方。** 有光柱指向新城，就等光柱落地再長；沒有光柱，就等鏡頭到了再長。手寫的 `at` 只是「最早」：
-   鏡頭沒停住就自動往後（9a）。**節點的換色光圈在變化開始時才發**，從變化的起點（光柱落點或城市起點）；城市自己畫光圈時，節點光圈
-   不再畫第二道前緣（兩道疊在一點會變成一片光盤）；圈內沒有任何看得見的變化就不畫。今天的城市變暗也跟著光圈走（圈外維持原狀）。
-   camcheck 的 `offscreen` 與 `ring_unseen` 必須是 0。
-5. **建築一棟一棟長出，整棟一起。** 不能一整片同時冒出；分段（`stages`，例：六國宮殿由西向東、新街區圍著舊城），每棟 1–1.5 秒（`grow`）。
-   **節點的第一次變化在節點一開頭就發生**（畫面先行，字幕隨後）：不要為了等某一句字幕把它往後推。一個節點可以有不只一次變化，
-   後面的變化跟著講它的字幕走，分開演，不要併進第一次。例：咸陽帝都兩次：①帝都建立（進節點即發生：換色光圈把秦都染成帝都，渭南諸宮、
-   阿房、橫橋長出）②滅國後仿建六國宮殿、遷富戶造新城（配「那時，每滅一國」「十二萬戶」）。
-   **同一座城一次只能有一段在長**：引擎每座城只畫一道生長光；兩段同時長，第二段的建築沒有光帶就冒出來。
-   要一起長就併成同一段（例：六國宮殿和新街區用同一道由西向東的光柱）；compile 看到同一座城兩段時間重疊會報錯。
-   生長環預設從城市起點（`origin`）擴散，鏡頭必須看得到起點；遠離起點的一段（例：渭南）要寫 `from` 讓它從自己那裡擴散，
-   否則規劃器會等到鏡頭回到起點才讓它長。
-5b. **圖片不能蓋住正在發生的變化**。看的是畫面，不是時間：
-   - 全幅影片（`mode: full`）蓋住整個畫面。3D 的時鐘不停（預覽只是影片底下不畫 3D），所以被蓋住的時間算「鏡頭沒看著」：
-     城市生長自動等到影片結束才開始（compile 的 `covered`）。
-     遍及整個畫面的變化（換色光圈、衛星圖轉場、區域點亮）不會自己等，compile 會擋。
-   - 半屏圖（`mode: panel`，右側 64 %）可以和變化同時，只要變化發生在畫面左側、被蓋住的不超過三分之一（compile 每 0.25 秒投影檢查）。
-     遍及整個畫面的變化（節點換色光圈、現代建築的成長波、衛星圖轉場、區域點亮）算被蓋住。
-   - 被蓋住時依序：構圖讓變化落在左側 → 把圖移到同一段旁白裡變化結束之後（例：商鞅營建圖移到秦都長完，配「宫殿筑在渭北的高台上」）
-     → 改成小卡片（`card`，不受限；例：項羽焚宮圖，燒完接「如今只剩一片田野」，延後就對不上）。半屏的效果比小卡好，能用就用。
-   - 不能為了放圖拉長節點、留出旁白空白；節奏優先。文獻卡（`doc`）放在右側時也別蓋住正在長的部分。
-   - 右側的小卡、半屏圖、剖面圖、文獻卡共用同一塊位置：同一時間只放一個，各跟講它的那句排開，用截圖判斷。
-     例：漢的長陵照片和北阪剖面圖同時出現，兩個標題疊在一起；改成照片配「帝王的長眠之地」、剖面圖配「比河谷高出約90米」。
-   - compile 自動處理：半屏圖蓋住變化時，延到變化結束後，但不離開它那一句（跟的句子，或出現時正在講的那句）；延不進去就報錯。
-     有些場景蓋住了也不要緊，在那張圖寫 `force: true`：照原時間顯示，只印一行提示。
-5c. **不能冷場**（compile 擋，`build/logs/deadair.txt`）：① 超過 3 秒什麼都沒有（沒字、模型沒變、沒圖、鏡頭幾乎不動）；
-   ② 兩句之間「沒有東西可讀」超過 5 秒：刻意的留白（`quiet`、`pause`）、帶說明的圖片（實拍、照片、卡片、剖面圖）、飛往下一站的路上都算有東西，
-   其餘都算空。常見原因：規劃器在一句話中間插了停留，下一句被推到停留之後。
-   修法：讓下一句接著講、讓講畫面的句子 `with:` 它的畫面並調 `lead`、縮短節點尾巴或停留，或寫明 `pause`（例：最後一句之後 4 秒再熄燈）。
-   畫面多、字少的節點（咸陽的漢：7 句 64 秒）要把空檔分散到每兩句之間各 3–5 秒，不要集中成一段 10 秒。
-5d. **讀數欄的出處說明決定一站最短多長**（readcheck）：說明要讀完（中文每秒 4.5 字，另加 1.5 秒），站太短就不夠。
-   縮站之前先看它的說明；要短就精簡說明（上屏文字，問用戶）。
-   標籤也一樣：鏡頭在那裡停多久，標籤就只能被讀多久（例：近景只停 1.8 秒，英文標籤讀不完）。
-6. **焚城、拆城**：光圈擴散、圈內染成深紅，接著起火（三成建築在燒、其餘焦黑、火在城裡移動），然後光圈往起火點收縮，收過的地方城沉下。
-   收縮光圈要看得清：從畫面外掃進來 2 秒（`timing.contract_in`），畫面內再收 5 秒以上（城市 `sink` 是兩段合計，咸陽 7.5 秒），
-   收完才接「如今……」那一句。焚城、拆城的城（`fall: in`）收縮光圈一經過就要立刻倒：`fall_dur` 寫 0.25（預設 1.4 是給跟著換色光圈收回的城用的），
-   倒下的建築連自發光一起暗，否則光圈已經收過去、房子還站在圈外（咸陽：秦都、帝都兩座焚城都是 0.25）。火星要看得見：按實際大小畫（約 40 米長的細亮線，10 公里外幾個像素、近看不超過 11 像素，不畫成大圓點），四分之一是飄得更高更久的餘燼。
-7. **現代的逐年生長**：光圈先把比起始年新的建築收回去（`reset: { year }`），再隨年份一棟棟長回來；一律白色（`grow.mono`）。
-   每棟在年份計數器第一次走到它的年份那一刻長出（1.8 秒，compile 把年份線 `grow.yl` 給引擎），閃一下並保持暖色 `grow.warm` 秒（咸陽 4 秒），
-   生長的前緣一路連續可見；不要按年代段集中在兩三秒內冒出（集中冒出、中間大段不長，看起來像沒在長）。
-   **建築要在畫面裡才長**：年份走到時，鏡頭沒看著它就等，等它第一次進入畫面（全螢幕實拍蓋住時不算）才長；同時進入畫面的一批
-   按年份先後在幾秒內長完（每千棟 2 秒，至少 2 秒、最多 12 秒：compile `TIMING` 的 `see_*`）。compile 算出要等的建築寫進 `data/grow_t.json`，其餘隨年份長。
-   重點地方只用一種暖黃光（`epochs:`）。
-   鏡頭從老城上方升起，拉到斜俯的全景，不要長焦擠成一團，也不要垂直俯視成小點。
-   **建築資料不能有大片空白**：主資料（CMAB）缺的地方（村鎮、部分新城）用 Overture 的建築輪廓補（`buildings.fill: overture_ghsl`，
-   方圓 `fill_gap_m` 內沒有主資料建築才補，年份取 GHSL 建成面積，標估算；授權 OSM ODbL ＋ Shi 等 2023 CC BY 4.0）。
-8. **城市史上的獨特構想要給一場戲**（秦咸陽「法天象地」）：`sky:` 夜色、星官依字幕順序畫在對應的地方、每組一對名字，單一淡色、細線、克制。
-   這場戲的節奏是編排好的：演算法不在 `sky` 期間插入停留或湊近（和光柱跟拍一樣，這段時間歸它自己）。
-   城市史上的獨特構想（例：秦咸陽「法天象地」）用節點的 `sky:`：夜色罩住城市，按字幕順序在城上畫出星官（`enclosure` 垣、`band` 天河、
-   `asterism` 星官、`line` 一列星），每組配一對名字（星官 · 地名），單一淡色、細線；星官形狀標「示意」。
-9. **鏡頭的底線**：節點之間不硬切（下一節點第一個關鍵幀不寫在 0）；方位角不跨 0/360 跳（camcheck `spin`）；鏡頭不進建築、不入地（camcheck）。
-   9a–9k 是時間、光柱、鏡頭和標籤的細則。
-   鏡頭方位角是逐值插值的：0 之後接 357 會整圈打轉，要寫 -3（camcheck 會查 `spin`）。
-9a. **時間是演算法算出來的，不是手寫秒數**（`pipeline/stagecraft.py`）。城市變化的開始時間＝下列條件都成立的最早時刻：光柱已落地；
-   變化的起點（光柱落點、`from` 或城市 `origin`）在畫面中央 60 % 內，城市至少佔畫面高度 12 %；鏡頭目標停住——鏡頭還在推近也算
-   （距離每秒縮短不超過一半；拉遠不算）。只停一下也先開始，交給 9e 補停留；完全找不到就 compile 報錯，要求補一個對準它的鏡頭。光圈速度按畫面算：在畫面內至少走 `timing.ring_view`（2.8）秒，出畫面才加速；
-   每段生長至少 4 秒（小地方 2 秒），前緣每秒最多走畫面寬度的三分之一。引擎和 camcheck 只讀 compile 寫出的取樣曲線（一處算、兩處用）。
-9b. **刷新方式按大小選**：變化範圍在畫面上大（超過 1 km 或畫面半寬的 35 %）用光圈從起點擴大；小（村子、一個坊）用「範圍內刷新」：
-   地面不打光，城市的輪廓線（幾何細線，不用遮罩圖）從掃描開始的那一側兩頭描過去、在對面接上，房子依序長出、頂上閃一下
-   （遮罩圖一格 7.6 米，湊近就是鋸齒，小範圍的效果一律用幾何畫）；沿線排開的（`sweep`）用一條掃線。所有光圈、收縮圈同一個畫法：
-   1–2 像素的亮芯、幾像素的柔光、一側淡淡拖尾，寬度按螢幕像素算；出現和消失都淡入淡出約 0.4 秒。
-9c. **光柱的落點就是圓心**（`routes: impact: true`）：落地時先一閃（0.35 秒衰減）、一道衝擊波擴散 1.6 秒（太短看起來像沒有）；
-   帶著新顏色的光圈從落點展開、城市跟著長。
-   **鏡頭跟著光柱**（`follow: {el, d, land_d}`，不落在城市上的再加 `hold`＝落地後停幾秒；compile 的 `follow_shot`）：方向由演算法選——光柱正後方、後方左右斜 25°／45°／65°、
-   正側面，逐一模擬整段飛行，必須「發射時起點在畫面內、飛行中光頭一直在畫面內、落地時落點在畫面內」，通過的方向裡選離鏡頭目前
-   朝向最近的；瞄準點在光頭前方一點，並隨光柱的弧升高（`FOLLOW_LIFT`），弧頂不會衝出畫面上緣。手寫 `follow.az` 只當例外，
-   同樣要過這項檢查，不過就報錯。鏡頭要先有足夠的時間從原來的位置過去，光柱才發射（不夠就在發射前插入時間）。
-   **落地後鏡頭轉向整座城**：落點停 0.6 秒（閃光），再按移動所需的時間轉到這座城自己的方向（節點第一個手寫鏡頭的方位，沒有就正北
-   朝上），拉到第一段城市的所有建築都在畫面內（不比落地時更近：小鎮連同周圍一起看，換色光圈才看得到）；城市和光圈等鏡頭到位才開始，
-   之後才湊近看細節。這段鏡頭歸 compile，手寫關鍵幀落在裡面會被略過（compile 會印出來）。
-9d. **現代的變化按資料的時間，不假設從核心往外長**：`grow.change: ghsl` 用 GHSL 建成體積（100 m、5 年）找出「後來翻建變高」的建築，
-   先矮後高；計數器顯示新建與長高；`follow_change` 讓鏡頭低空飛到每個時期變化最密集的地方（`region` 限定片子講的城）。
-   拆除沒有資料：GHSL 的觀測體積不會減少，也沒有公開資料記錄已拆的房子——畫面不說拆除。
-9e. **鏡頭給變化的時間由演算法補**（compile 的 `plan_stages`，結果寫在 `build/logs/plan.json`，compile 自己重跑到不再需要為止）：
-   (a) 有更早的關鍵幀已經對準城市、鏡頭卻沒停，就在那一格停住，城市在那裡長；(b) 最後一棟長完後鏡頭至少再停 `timing.hold_after`（2.5）秒；
-   (c) 一座新城的重點建築從頭到尾都沒被看近過（它在畫面內、周圍 `look_focus_m` 400 米佔畫面高度 40 % 以上、3.5 秒；節點自己的近景也算），
-   長完就飛過去看一眼。看哪裡按優先級（compile 的 `look_target`）：① 片子點名的（節點釘標 250 米內的地標）；② 用光描出來的重點建築
-   （城牆圍起的宮院、官署、寺廟、市、武庫；或用輪廓線描出的小地方裡的建築）；③ 其他地標建築；同級挑最大的。成片民居、遠景用的
-   低細節部分、溝渠水池窯場永遠不選；三級都沒有就不湊近。
-   補的都是插入的時間：節點變長，後面的字幕、鏡頭一起往後移。
-   **規劃器有平衡點**：插進去的停留會改變鏡頭，鏡頭又改變下一輪要插的時間，改一個數字（`lead`、停留、關鍵幀秒數）可能讓整站多出十幾秒。
-   改鏡頭時一次只動一個數字，每次看 compile 印的 `plan (pass N): node … +… s` 那幾行和 `build/logs/plan.json` 有沒有變，變了先退回；
-   綁畫面的句子 `lead` 要留足，不要逼出「旁白時間」插入，否則每輪結果都不一樣（例：一站的 `lead` 從 7 改成 4，停留從 8 秒變 20 秒）。
-9f. **鏡頭不准跳**：任兩個關鍵幀（手寫、插入、光柱跟拍的落地）之間要留夠移動的時間（`stagecraft.move_time`：目標移動、縮放、轉向、
-   俯仰換算成畫面寬度，每秒最多 0.6 個畫面），不夠就自動插入時間；最後 compile 逐 0.25 秒檢查，半秒內移動超過一個畫面、轉 60° 或
-   縮放 1.5 倍以上就報錯（全螢幕實拍蓋住時除外）。
-9g. **收縮光圈時鏡頭跟著下降，但永遠比光圈慢**：焚城、拆城的收縮光圈一進到畫面，就要整圈留在畫面內直到收完（只管收縮中的光圈、
-   按它當下的大小；擴大的光圈照舊衝出畫面）。compile 產生這段鏡頭：光圈從畫面外掃進來的那段時間（`timing.contract_in`，見規則 6）裡鏡頭轉向火源；光圈的起始大小按
-   「對準火源時能整圈放進畫面」算；距離按光圈半徑的平方根縮短，而且不得近於框住當下光圈所需的距離，所以光圈在畫面上也越縮越小；
-   最後停在下一個手寫鏡頭。
-9h. **釘標與地名同一種標籤**（釘標必須釘在底板上：地方大半在底板外時釘在它在底板內的部分，名稱註明延伸方向，compile 擋住釘在底板外的；`h_m` 從那裡的地面算起：台塬上的宮殿，釘標站在台塬上，不是站在底板的零高度、陷進坡裡；建築離開畫面時釘標跟著淡出，不卡在畫面邊上）：圓點、一根直立的細桿、桿頂掛一個小暗盒，細桿就是盒子的邊（不另畫色條）；字 20／14 像素。
-   桿長和盒子在左或右由 compile 排（`pipeline/tags.py`）：同時出現的標籤互不遮擋，也避開字幕、讀數、小地圖和時間軸；每段出現期間固定不跳。
-   歷史節點的釘標不在畫面裡時，compile 只印 `warning: pin … is off screen`（現代段才報錯）：每一條都要處理，讓鏡頭的最後一格瞄準它（例如台基），
-   或確認可以接受並告訴用戶；修了釘標的高度或位置，回頭看鏡頭還拍不拍得到它。不要另加和地理標籤（`film.labels`）同名的釘標，兩個會疊在一起（同時出現時 compile 會提醒）。
-9i. **現代段是一條時間線**（`tour:`）：城市生長當背景（從資料最早的年份開始：GHSL 1975），鏡頭依序走訪每個時間點；節點寫 `tour: {ll, d, el}`，
-   compile 算出從上一站飛過來的時間（移動所需、且年份每秒最多跑一年），飛行時年份往前跑、鏡頭順勢繞城轉（每秒約 5°），到站後年份停住，
-   講完再走。不要在生長中途插入事件逼鏡頭趕路；遠處的事件就是下一站。資料到哪年就停在哪年（畫面標「资料至 2020」）。
-   **每站的鏡頭由它講的東西算出來**（compile 的 `tour_subjects`）：這站的釘標和範圍（`areas`）全部框進畫面（留出標籤的空間），`ll`/`d`
-   只在沒有主角時才用；compile 檢查每個釘標在它出現期間大部分時間都在畫面內，現代段不在就報錯（真的看不到的標 `offscreen_ok`）。
-   標籤從沒畫出來（點在畫面邊緣，標籤框放不下），readcheck 算沒過；用戶同意不管的，在那個標籤或範圍寫 `unseen_ok: true`（不改取景，只讓檢查放行）。
-   主角橫跨大半塊底板、框不完時，抬高俯角（`tour.el` 約 60），讓底板塞滿畫面，不要拉遠到看見底板外的黑（咸陽：2006 兩城、2014 新區）。
-   提「只改一點鏡頭」之前先算：每個標籤框要的空間（上方約 200 px），扣掉讀數區、小地圖、字幕帶、時間軸，在現在的朝向下要拉多遠才放得下；
-   算出來不是小改，就照原樣交給用戶決定。
-   這站講的地方，它的地名從飛過去那一刻到這站結束一直顯示（地名平時只在遠景出現）。
-9j. **講到古城遺址時把它的輪廓重新描出來**（節點 `ghost: [<era id>]`）：消失的城市以細線和地面的光重新出現在今天的城市下面，
-   讓觀眾看見「新城長在舊城上」。
-9k. **字幕點名的範圍要畫出來**（節點 `areas: [{id, col, with 或 at, flash, zh, en}]`，邊界在 `research/*_areas.geojson`）：行政區、新區、新城、
-   廠區、保護範圍各用一種顏色的發光外框，加名稱，跟點名它的那句出現（`with:`）；字幕講到哪個，哪個閃一下（`flash`）；兩種以上同時出現時讀數區加圖例（`legend`）。
-   每個範圍同時是一張遮罩：範圍內的建築染上它的顏色（`fill`，大的行政區 0.2，小的廠區 0.45；染在建築材質本身，和歷代城市的染色一樣——只加在投影光裡會被白牆的一般光照沖掉，地面有色、房子仍白），邊緣發光，外框在遠景保持螢幕寬度——
-   地面細線在密集城區會被房子擋住，只靠線看不見。遮罩共 12 個通道（`data/layers1-3.png`），時間和位置都不重疊的遮罩共用一個通道。
-   研究只找到代表點、沒有邊界的範圍（例：西咸新區五座新城在 OSM 和公開文件裡都沒有界線）只在點上標名稱，不畫自編的框；
-   字幕裡的數字只用有具名出處的（「遺址保護範圍縮到二十多平方公里」只有一位未具名負責人的說法，不上屏）。
-   邊界不是官方的標「示意」。底板邊界外的部分自然被切掉。
+1. **Ring expanding = change inside the ring; ring contracting = change outside the ring.** When a new period's city grows from a point, the ring (or a band of light sweeping along a line) follows the growing front
+   (`city.stages`: `from` radiates, `sweep` sweeps a line). When a city is taken back, the old city sinks wherever the contracting ring has swept and today's city returns (`fall: in`, burning or demolishing a city);
+   when it is replaced by the next node, it is taken back along with the next node's colour-change ring (`fall: out`, the default). **An expanding ring always runs out of the picture before it disappears:** the city's ring keeps accelerating outward after the last
+   building, until the whole ring is outside the picture (compile's `stagecraft.ring_exit`: the farthest ground visible at the picture edge) and only then fades out; it must not stop and go out in the middle of the picture.
+2. **While change happens, only the ring glows.** Do not light whole plots; once the city has settled, a thin neon line lights up at its outer edge, lighting only the buildings beside the line (`era_look.line/light_m/halo_m`),
+   and this line goes out first when a change begins.
+3. **Every big node gets a clearly different colour, and everything the ring sweeps over turns into this colour, including the old city still standing.** The colours of two adjacent nodes must not be close (orange and gold cannot be told apart);
+   better still if the colour has a source (after the Qin unification "上黑" (honouring black) → the imperial capital uses ink-gold: `ink`). The old city in later nodes uses that node's colour and strength (node `tint`).
+4. **Change happens only where the audience can see it.** If a beam points at the new city, wait for the beam to land before it grows; with no beam, wait until the camera has arrived. A hand-written `at` is only "the earliest":
+   if the camera has not settled it moves later automatically (9a). **The node's colour-change ring is sent only when the change begins**, from the start of the change (the beam's landing point or the city's origin); when the city draws its own ring, the node ring
+   does not draw a second front (two stacked at one point turn into a disc of light); if no visible change is inside the ring, it is not drawn. Today's city dimming also follows the ring (outside the ring it stays as it was).
+   camcheck's `offscreen` and `ring_unseen` must be 0.
+5. **Buildings grow one by one, each as a whole.** A whole area must not pop up at once; use stages (`stages`, example: the palaces of the six states from west to east, new quarters around the old city), 1–1.5 seconds per building (`grow`).
+   **The first change of a node happens right at the start of the node** (picture first, subtitle after): do not push it later to wait for a subtitle. A node may have more than one change,
+   and the later ones follow the subtitle that tells them and are staged separately; do not merge them into the first. Example, Xianyang's imperial capital has two: ① the imperial capital is established (happens on entering the node: the colour-change ring dyes the Qin capital into the imperial capital, and the palaces south of the Wei,
+   Epang and the Heng Bridge grow), ② after the states were destroyed, the palaces of the six states are rebuilt and the rich households are moved to build a new city (with 「那時，每滅一國」 ("then, every time a state was destroyed") and 「十二萬戶」 ("120,000 households")).
+   **A city can have only one stage growing at a time:** the engine draws one growth light per city; if two stages grow at once, the buildings of the second pop up without a band of light.
+   To grow together, merge them into one stage (example: the palaces of the six states and the new quarters use the same west-to-east beam); compile reports an error when two stages of the same city overlap in time.
+   The growth ring by default spreads from the city's origin (`origin`), and the camera must be able to see the origin; a stage far from the origin (example: south of the Wei) must write `from` to spread from its own place,
+   otherwise the planner waits until the camera returns to the origin before it lets it grow.
+5b. **Pictures must not cover a change that is happening.** What counts is the screen, not the time:
+   - A full-frame video (`mode: full`) covers the whole picture. The 3D clock does not stop (the preview just does not draw 3D under the video), so the covered time counts as "the camera is not looking":
+     city growth automatically waits until the video ends (compile's `covered`).
+     Changes that span the whole picture (colour-change ring, satellite transition, area lighting) do not wait by themselves, and compile blocks them.
+   - A half-screen picture (`mode: panel`, the right 64%) may coincide with a change as long as the change happens on the left of the picture and no more than a third is covered (compile checks by projection every 0.25 seconds).
+     Changes that span the whole picture (the node's colour-change ring, the growth wave of modern buildings, the satellite transition, area lighting) count as covered.
+   - When covered, in order: compose the shot so the change falls on the left → move the picture to after the change ends within the same narration (example: the picture of Shang Yang's construction is moved to after the Qin capital has finished growing, matched with 「宫殿筑在渭北的高台上」 ("the palaces were built on the high terraces north of the Wei"))
+     → turn it into a small card (`card`, not restricted; example: the picture of Xiang Yu burning the palaces, followed by 「如今只剩一片田野」 ("now only fields are left"); delayed, it would not match).
+     A half-screen picture works better than a small card, so use it where possible.
+   - Do not lengthen a node to place a picture, or leave a gap in the narration; pace comes first. A document card (`doc`) on the right must not cover the part that is growing.
+   - The small card, half-screen picture, section and document card on the right share the same place: put only one at a time, each aligned with the line that speaks of it, and judge by screenshot.
+     Example: a photo of the Han Changling tomb and the section of the north slope appeared together and their two titles overlapped; changed so the photo goes with 「帝王的長眠之地」 ("the resting place of emperors") and the section with 「比河谷高出約90米」 ("about 90 m above the river valley").
+   - What compile does automatically: when a half-screen picture covers a change, it is delayed until the change ends, but not out of its line (the line it follows, or the line being spoken when it appears); if it cannot be delayed in, it reports an error.
+     Some scenes do not matter when covered; write `force: true` on that picture: it is shown at the original time, with a single line of notice.
+5c. **No dead air** (compile blocks it, `build/logs/deadair.txt`): ① more than 3 seconds with nothing (no text, the model unchanged, no picture, the camera almost still); ② more than 5 seconds between two lines with "nothing to read":
+   deliberate silence (`quiet`, `pause`), pictures with captions (footage, photos, cards, sections), and the way flying to the next station all count as having something, and the rest counts as empty. A common cause: the planner inserted a hold in the middle of a line, and the next line was pushed to after the hold.
+   Fixes: let the next line follow on, have the line that speaks of a picture use `with:` that picture and adjust `lead`, shorten the node's tail or the hold, or state `pause` explicitly (example: 4 seconds after the last line before the lights go out).
+   A node with much picture and little text (Xianyang's Han: 7 lines in 64 seconds) should spread the gaps to 3–5 seconds between every two lines, not gather them into one 10-second stretch.
+5d. **The source note in the readout column decides how short a station can be** (readcheck): the note must be read through (Chinese 4.5 characters per second, plus 1.5 seconds), and a station that is too short does not allow it.
+   Before shortening a station, look at its note; to make it short, simplify the note (on-screen text, ask the user).
+   The same goes for tags: a tag can be read only as long as the camera stays there (example: a close-up that holds only 1.8 seconds cannot be read through by an English tag).
+6. **Burning and demolishing a city:** the ring spreads and dyes the inside deep red, then fire starts (three tenths of the buildings burn, the rest are charred, the fire moves through the city), then the ring contracts toward the fire's origin, and the city sinks wherever it has passed.
+   The contracting ring must be easy to see: it sweeps in from outside the picture for 2 seconds (`timing.contract_in`), then contracts for 5 seconds or more inside the picture (the city's `sink` is the two parts together, Xianyang 7.5 seconds),
+   and only when it has finished does the line "如今……" ("now …") follow. A city that is burned or demolished (`fall: in`) must fall as soon as the contracting ring passes: write `fall_dur` 0.25 (the default 1.4 is for a city taken back along with the colour-change ring),
+   and the falling buildings go dark together with their self-illumination, otherwise the ring has already swept past and the houses are still standing outside it (Xianyang: both burned cities, the Qin capital and the imperial capital, use 0.25). Sparks must be visible: draw them at actual size (thin bright lines about 40 m long, a few pixels at 10 km, no more than 11 pixels close up, never big round dots), and a quarter of them are embers that drift higher and last longer.
+7. **Modern year-by-year growth:** the ring first takes back the buildings newer than the starting year (`reset: { year }`), then they grow back one by one with the years, always white (`grow.mono`).
+   Each building grows at the moment the year counter first reaches its year (1.8 seconds; compile gives the engine the year line `grow.yl`), flashes, and stays warm for `grow.warm` seconds (Xianyang 4 seconds),
+   with the front of growth continuously visible all the way; do not pop up in a cluster of two or three seconds by era (clustered popping with long stretches of no growth looks like nothing is growing).
+   **Buildings grow only when they are in the picture:** if the camera is not looking at it when the year arrives, wait until it first enters the picture (time covered by full-screen footage does not count) before it grows; a batch entering the picture together
+   grows within a few seconds in order of year (2 seconds per thousand buildings, at least 2 seconds, at most 12 seconds: `see_*` in compile's `TIMING`). compile writes the buildings that have to wait into `data/grow_t.json`, and the rest grow with the year.
+   Key places use only one warm yellow light (`epochs:`).
+   The camera rises from above the old town and pulls out to an oblique overview; do not squeeze everything together with a telephoto, and do not look straight down so that the city becomes small dots.
+   **Building data must have no large blank areas:** where the main data (CMAB) is missing (villages and towns, some new towns), fill with Overture building outlines (`buildings.fill: overture_ghsl`,
+   filled only where no main-data building lies within `fill_gap_m`, the year taken from the GHSL built-up area and labelled estimate; licences OSM ODbL + Shi et al. 2023 CC BY 4.0).
+8. **A city history's unique idea deserves a scene** (Qin Xianyang's 「法天象地」 ("modelling heaven and earth")): `sky:` night colour, star groups drawn in the corresponding places in subtitle order, one pair of names per group, a single pale colour, thin lines, restrained.
+   The rhythm of this scene is composed: the algorithm inserts no hold or move closer during `sky` (as with beam following, this stretch belongs to itself).
+   For a unique idea in the city's history (example: Qin Xianyang's 「法天象地」) use the node's `sky:`: night colour covers the city, and star groups are drawn on the city in subtitle order (`enclosure` wall, `band` Heavenly River,
+   `asterism` star group, `line` a row of stars), each group with a pair of names (star group · place name), a single pale colour, thin lines; label the star-group shapes "schematic".
+9. **The camera's baseline:** no hard cuts between nodes (the next node's first keyframe is not written at 0); azimuth does not jump across 0/360 (camcheck `spin`); the camera does not enter buildings or the ground (camcheck).
+   9a–9k are the detailed rules for time, beams, camera and tags.
+   Camera azimuth is interpolated value by value: 0 followed by 357 makes a full turn, so write -3 (camcheck checks `spin`).
+9a. **Time is computed by an algorithm, not written as seconds by hand** (`pipeline/stagecraft.py`). A city change begins at the earliest moment when all of these hold: the beam has landed;
+   the start of the change (the beam's landing point, `from`, or the city `origin`) is within the central 60% of the picture, and the city takes at least 12% of the picture height; the camera target has settled — a camera still pushing in also counts
+   (distance shortening by no more than half per second; pulling out does not count). If it settles only for a moment it starts anyway and 9e supplies the hold; if none can be found at all, compile reports an error and asks for a camera aimed at it. Ring speed is computed by the picture: inside the picture it takes at least `timing.ring_view` (2.8) seconds, and it speeds up only once out of the picture;
+   each growth stage takes at least 4 seconds (2 seconds for a small place), and the front moves at most a third of the picture width per second. The engine and camcheck read only the sampled curve compile writes (computed in one place, used in two).
+9b. **The refresh method is chosen by size:** if the changed area is large on screen (over 1 km or 35% of half the picture width), expand a ring of light from the start; if it is small (a village, one ward), use "refresh within the area":
+   the ground is not lit, the city's outline (thin geometric lines, not a mask image) is traced from both ends on the side where the scan begins and joins on the opposite side, and the houses grow in order with a flash on top
+   (a mask image has 7.6 m per cell, which is jagged up close, so effects for small areas are always drawn with geometry); things laid out along a line (`sweep`) use one sweep line. All rings and contracting rings share one drawing method:
+   a bright core of 1–2 pixels, a soft glow of a few pixels, a faint trail on one side, with width computed in screen pixels; appearing and disappearing both fade in and out over about 0.4 seconds.
+9c. **The beam's landing point is the centre of the circle** (`routes: impact: true`): on landing, first a flash (decaying over 0.35 seconds), then a shock wave spreading for 1.6 seconds (shorter looks like nothing happened);
+   a ring with the new colour spreads from the landing point, and the city grows with it.
+   **The camera follows the beam** (`follow: {el, d, land_d}`, and for one that does not land on a city add `hold` = seconds to stay after landing; compile's `follow_shot`): the algorithm chooses the direction — directly behind the beam, behind it 25° / 45° / 65° to the left or right,
+   or straight from the side — simulates the whole flight for each, and the flight must satisfy "the start is in the picture at launch, the head of the beam stays in the picture throughout, the landing point is in the picture at landing"; among the directions that pass, it picks the one nearest the camera's current
+   heading. The aim point is a little ahead of the beam head and rises with the arc of the beam (`FOLLOW_LIFT`), so the top of the arc does not shoot out of the top edge of the picture. A hand-written `follow.az` is only an exception
+   and must pass the same check, or it reports an error. The camera needs enough time to get from where it was before the beam is fired (if not enough, time is inserted before launch).
+   **After landing the camera turns to the whole city:** hold on the landing point for 0.6 seconds (the flash), then turn, in the time the movement needs, to the city's own direction (the azimuth of the node's first hand-written camera, or north up if none),
+   and pull out until all the buildings of the first stage of the city are in the picture (no closer than at landing: a small town is seen together with its surroundings, so the colour-change ring can be seen); the city and the ring start only when the camera is in place,
+   and only after that does the camera move closer to see detail. This stretch of camera belongs to compile; hand-written keyframes falling inside it are skipped (compile prints them).
+9d. **Modern change follows the data's time and does not assume growth from the core outward:** `grow.change: ghsl` uses GHSL built volume (100 m, 5 years) to find the buildings that were "later rebuilt taller", first low then tall;
+   the counter shows new builds and rises; `follow_change` makes the camera fly low to the place where change is densest in each period (`region` limits it to the city the film is about).
+   There is no data on demolition: GHSL's observed volume never decreases, and no public data records demolished houses — the picture does not speak of demolition.
+9e. **The time the camera gives to change is supplied by the algorithm** (compile's `plan_stages`, with the result in `build/logs/plan.json`; compile reruns itself until nothing more is needed):
+   (a) if an earlier keyframe is already aimed at the city but the camera has not held, hold the camera at that frame and the city grows there; (b) after the last building has grown, the camera holds for at least `timing.hold_after` (2.5) seconds;
+   (c) if the key buildings of a new city have never been seen closely from start to finish (in the picture, with the surrounding `look_focus_m` 400 m taking 40% or more of the picture height for 3.5 seconds; the node's own close-ups also count),
+   fly over and take a look after it has grown. Where to look follows a priority (compile's `look_target`): ① what the film names (a landmark within 250 m of a node pin); ② key buildings traced with light
+   (palace courts enclosed by walls, offices, temples, markets, armouries; or buildings in a small place traced with an outline); ③ other landmark buildings; within the same level pick the largest. Residential blocks, the low-detail parts used for wide shots,
+   and ditches, ponds and kilns are never chosen; if none of the three levels has one, it does not move closer.
+   Everything supplied is inserted time: the node gets longer, and the later subtitles and camera move back together.
+   **The planner has an equilibrium:** an inserted hold changes the camera, and the camera changes the time to insert in the next pass, so changing one number (`lead`, a hold, a keyframe's seconds) can add a dozen seconds to a whole station.
+   When changing the camera, change one number at a time, and each time look at the `plan (pass N): node … +… s` lines compile prints and whether `build/logs/plan.json` changed; if it changed, undo first;
+   leave enough `lead` on lines tied to pictures, and do not force "narration time" to be inserted, otherwise every pass gives a different result (example: changing a station's `lead` from 7 to 4 turned a hold from 8 seconds into 20).
+9f. **The camera must not jump:** between any two keyframes (hand-written, inserted, or the landing of a beam-following shot) leave enough time to move (`stagecraft.move_time`: target movement, zoom, turn and
+   pitch converted into picture widths, at most 0.6 picture widths per second); if not enough, time is inserted automatically; finally compile checks every 0.25 seconds and reports an error if within half a second the camera moves more than one picture, turns 60°,
+   or zooms 1.5 times or more (except when covered by full-screen footage).
+9g. **When a ring contracts the camera descends with it, but always more slowly than the ring:** as soon as the contracting ring of a burned or demolished city enters the picture, the whole ring must stay in the picture until it has finished (this governs only the contracting ring,
+   by its size at that moment; an expanding ring still runs out of the picture). compile produces this camera: during the stretch when the ring sweeps in from outside the picture (`timing.contract_in`, see rule 6) the camera turns to the fire's origin; the ring's starting size is computed from
+   "the whole ring can fit in the picture when aimed at the fire's origin"; the distance shortens by the square root of the ring's radius and may be no closer than needed to frame the ring at that moment, so the ring also keeps getting smaller on screen;
+   it finally stops at the next hand-written camera.
+9h. **Pins and place names are the same kind of tag** (a pin must be pinned on the plate: where most of a place is off the plate, pin it to the part inside the plate and note in the name which way it extends; compile blocks pins off the plate; `h_m` is counted from the ground there: for a palace on a plateau, the pin stands on the plateau, not at the plate's zero height sunk into the slope; when the building leaves the picture the pin fades out with it and does not stick at the picture edge): a dot, a thin upright pole, a small dark box hanging from the top of the pole, the pole being the box's edge (no separate colour bar); type 20 / 14 pixels.
+   Pole length and whether the box is on the left or right are arranged by compile (`pipeline/tags.py`): tags shown at the same time never cover one another, and avoid the subtitles, readouts, minimap and timeline; they stay fixed during their appearance.
+   When a historic node's pin is not in the picture, compile only prints `warning: pin … is off screen` (only the modern section reports an error): every one must be handled, by making the last frame of the camera aim at it (for example the plinth),
+   or by confirming that it is acceptable and telling the user; after fixing a pin's height or position, look again whether the camera still catches it. Do not add a pin with the same name as a geographic label (`film.labels`): the two overlap (compile warns when they appear together).
+9i. **The modern section is one timeline** (`tour:`): city growth is the background (from the earliest year of the data: GHSL 1975), and the camera visits each point in time in order; a node writes `tour: {ll, d, el}`,
+   compile computes the time to fly from the previous station (what the movement needs, and the year runs at most one year per second); during the flight the year runs forward and the camera circles the city (about 5° per second), on arrival the year stops,
+   and after the telling it moves on. Do not insert events in the middle of growth to force the camera to hurry; a faraway event is the next station. Stop at whatever year the data reaches (the picture is labelled "资料至 2020" ("data up to 2020")).
+   **Each station's camera is computed from what it tells** (compile's `tour_subjects`): all pins and areas (`areas`) of this station are framed in the picture (leaving room for the tags), and `ll`/`d`
+   are used only when there is no subject; compile checks that each pin is in the picture for most of the time it appears, and reports an error in the modern section if not (mark one that truly cannot be seen `offscreen_ok`).
+   A tag that was never drawn (the point is at the picture edge and the tag box does not fit) fails readcheck; for one the user agrees to ignore, write `unseen_ok: true` on that tag or area (it does not change the framing, it only lets the check pass).
+   When the subject spans most of the plate and cannot be framed, raise the pitch (`tour.el` about 60), so that the plate fills the picture; do not pull out to see the black beyond the plate (Xianyang: 2006 the two cities, 2014 the new area).
+   Before proposing "just change the camera a little", compute first: the space each tag box needs (about 200 px above), minus the readout area, minimap, subtitle band and timeline, and how far out the camera has to pull at the current heading to fit them;
+   if the result is not a small change, hand it to the user as it is to decide.
+   The place name of the place this station tells stays displayed from the moment of flying there until this station ends (place names normally show only in the wide shot).
+9j. **When telling of an ancient city site, trace its outline again** (node `ghost: [<era id>]`): the vanished city reappears as thin lines and light on the ground under today's city,
+   so the audience sees "the new city grows on the old city".
+9k. **Areas named by a subtitle must be drawn** (node `areas: [{id, col, with or at, flash, zh, en}]`, boundaries in `research/*_areas.geojson`): administrative districts, new areas, new towns,
+   factory areas and protected areas each get a glowing outline in one colour, plus the name, appearing with the line that names it (`with:`); whichever the subtitle is telling flashes once (`flash`); when two or more appear at once, the readout area gets a legend (`legend`).
+   Each area is also a mask: buildings inside the area take its colour (`fill`: 0.2 for a large administrative district, 0.45 for a small factory area; dyed in the building material itself, like the dyeing of period cities — added only in the projected light it would be washed out by the white walls' ordinary lighting, leaving the ground coloured and the houses still white), the edge glows, and the outline keeps its screen width in the wide shot —
+   thin lines on the ground are blocked by houses in dense urban areas and cannot be seen on their own. There are 12 mask channels in all (`data/layers1-3.png`), and masks that do not overlap in time and place share a channel.
+   For an area for which research found only a representative point and no boundary (example: the five new towns of Xixian New Area have no boundary in OSM or in public documents), put only the name on the point and do not draw a self-made frame;
+   a number in a subtitle uses only a number with a named source (「遺址保護範圍縮到二十多平方公里」 ("the site protection area was reduced to over twenty square kilometres") rests only on one unnamed official's statement and does not go on screen).
+   If the boundary is not official, label it "schematic". The part beyond the plate's boundary is naturally cut off.
 
-## 實拍與圖片
+## Footage and pictures
 
-每個歷史節點結尾接「今天的同一個地方」（`footage:`，`mode: full | panel | card | doc`）：4K 影片全幅 7–9 秒、高解析照片右側面板、
-低解析素材小卡片加引線（`anchor`）、古地圖文獻卡；不要讓實拍一閃而過。**上屏的第三方素材只用 CC 或公有領域**（Wikimedia Commons）；
-用戶自己拍的、或有權授權的也可以用，CREDITS 寫明授權。都沒有時，值得配圖的場景用根據史料的想像圖（哪些場景配圖、怎麼生成見 SCRIPT.md「配圖」；卡片標「根據史料想像」，CREDITS 寫明）。
-想像圖在片中用 `mode: panel`（右側半幅、融進地圖），kicker「想象图 · IMAGINED · 据史料」，放在模型沒有在長東西的時候；非 CC 素材只准在本機做流程測試，
-不入庫，也不進給用戶看的預覽。
-新加的卡片、照片、文獻卡都截一張看：圖蓋住了什麼（小地圖、正在長的地方、字幕帶）只有截圖看得出，直式的圖最容易撞
-（說明文字常壓在字幕上）。換掉一張素材或一個影像來源時，畫面上寫死它出處的地方
-（讀數的出處行、片尾 `end.lines`、CREDITS）一起改，compile 不會比對。
-**實拍**：預覽播放時影片原生播放、只在不同步時校正，全螢幕實拍蓋住畫面時不畫 3D；成片仍逐格精確對位。全螢幕只用 1600×900 以上的影片，更低的做小卡。
+Each historic node ends with "the same place today" (`footage:`, `mode: full | panel | card | doc`): 4K video full frame for 7–9 seconds, high-resolution photos in the right-hand panel,
+low-resolution material as a small card with a leader line (`anchor`), a document card for old maps; do not let footage flash by. **On-screen third-party material is only CC or public domain** (Wikimedia Commons);
+the user's own shots or material the user has the right to license may also be used, with the licence stated in CREDITS. If there is none of these, a scene worth a picture gets an imagined picture based on the sources (which scenes get pictures and how to generate them: SCRIPT.md "Pictures"; label the card "根據史料想像" ("imagined from the sources"), and state it in CREDITS).
+An imagined picture in the film uses `mode: panel` (right half, blended into the map) with the kicker 「想象图 · IMAGINED · 据史料」 ("imagined picture · IMAGINED · from the sources"), placed when nothing is growing on the model; non-CC material is allowed only for pipeline tests on the local machine,
+not stored in the repository, and not in the preview shown to the user.
+Take a screenshot of every new card, photo and document card: what the picture covers (minimap, the part that is growing, the subtitle band) can only be seen on a screenshot, and portrait pictures collide most easily
+(the caption often lands on the subtitle). When replacing a piece of material or an imagery source, change together the places on screen where its source is written in (the readout's source line, the end card `end.lines`,
+CREDITS); compile does not compare them.
+**Footage:** during preview playback the video plays natively and is corrected only when out of sync, and 3D is not drawn when full-screen footage covers the picture; the final film is still positioned exactly frame by frame. Full screen uses only video of 1600×900 or higher; lower resolution becomes a small card.
 
-## 小地圖、衛星圖與結尾
+## Minimap, satellite and ending
 
-定位小地圖與地理標籤（`film.labels`）自動出現；歷代城市的範圍會畫在小地圖上。現代段可寫 `night: 1` 出夜景窗燈與路網光流。
-衛星圖只用在最後的全台俯視，用 `sweep: true` 做成白模到影像的掃描轉場，
-`back_at` 再掃回白模（結尾的足跡與光線畫在白模上，節點顏色才看得見）；
-`pipeline/imagery_tiles.py` 可抓 Esri 第 15 級影像（約 4 m，`film.satellite_source: hr`），它不是開放資料，只能在本機測流程；
-給用戶看的預覽和成片一律用 Sentinel-2（`sentinel`，10 m，全台俯視時夠清楚）。
-結尾用 `footprints` 投影把歷代城市的實際足跡描在衛星圖上，再用一條光線把各時代中心串起來。
+The locator minimap and the geographic labels (`film.labels`) appear automatically; the period cities' extents are drawn on the minimap. The modern section can write `night: 1` for night-time window lights and light flowing along the road network.
+Satellite imagery is used only in the final overview of the whole plate, made into a scan transition from white model to imagery with `sweep: true`,
+and `back_at` sweeps back to the white model (the ending's footprints and light lines are drawn on the white model, so that the node colours can be seen);
+`pipeline/imagery_tiles.py` can fetch Esri level-15 imagery (about 4 m, `film.satellite_source: hr`), which is not open data and may be used only to test the pipeline on the local machine;
+the preview shown to the user and the final film always use Sentinel-2 (`sentinel`, 10 m, clear enough for the overview of the whole plate).
+The ending uses the `footprints` projection to trace the actual footprints of the period cities on the satellite image, then strings the centres of the eras together with a line of light.

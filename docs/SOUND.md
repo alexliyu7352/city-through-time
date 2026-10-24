@@ -1,58 +1,58 @@
-# 聲音：配音、配樂、音效
+# Sound: voice, music, effects
 
-## 這一步最常犯的錯
+## The most common mistakes in this step
 
-- 憑印象寫配樂提示詞 → 先研究這座城各時期的音樂（RESEARCH.md 第 8 節）。
-- 把別的版本的參數結論套到實際跑的版本 → 查實際要跑的那個版本的程式。
-- 切好配音又去頭尾靜音，削掉字首。
-- 配音、配樂服務的條款到發布前才查 → 選定服務的同時就查。
+- Writing music prompts from impression → first research the music of each period of this city (RESEARCH.md §8).
+- Applying a parameter conclusion from another version to the version that actually runs → look at the code of the version that will actually run.
+- Cutting the voice into lines and then also trimming leading and trailing silence, which eats the start of the words.
+- Checking the terms of the voice and music services only just before release → check them at the moment the service is chosen.
 
-## 工具與模型
+## Tools and models
 
-- **工具和模型照實際的版本**：請用戶操作一個工具之前，先看它實際的介面（拿不到就請用戶截圖），寫下的設定值都要能在介面上找到；
-  模型的參數查實際要跑的那個版本的程式（`--help`、原始碼），研究只當線索，拿不準就同提示詞、同種子做一次 A/B。
+- **Tools and models as they actually are:** before asking the user to operate a tool, first look at its real interface (ask the user for a screenshot if you cannot get it), and every setting value you write down must be findable on the interface;
+  look up a model's parameters in the code of the exact version that will run (`--help`, source code), treat research only as a lead, and if unsure do an A/B with the same prompt and the same seed.
 
-## 配音、配樂與時間軸
+## Voice, music and the timeline
 
-**配音與時間軸**：一部完整的片有旁白、配樂、音效三樣；全程只用程式（compile、`render/`、ffmpeg），不用剪輯軟體，改一句、換一段都能整條重跑。
-成片裡的每條聲音都先在預覽裡聽得到，預覽和成片用同一條軌。配音（錄的或生成的）一句一個檔，放 `build/audio/voice/<語言>/<句子 id>.wav`（也可 mp3、m4a、ogg），
-語言預設第一語言（`film.voice.lang`）。重新 compile：有配音檔的句子用配音的長度（加 0.3 秒），跟著那句的畫面一起移；
-compile 同時把每句配音照時間排成一條音軌 `build/audio/voice/track_<語言>.wav`，預覽（`?play=1`）播放時一起播，和畫面差超過 0.15 秒就拉回；
-暫停、拖動、逐格時不出聲，M 鍵開關旁白；配樂排好時一起播，B 鍵開關配樂；保留的音效（`film.sfx`，先 `uv run python -I audio/mix.py <city> --kit` 做單音、再 compile）也一起播，N 鍵開關，成片混音用同一條；播完停在片尾字卡時，`film.music.loop` 指定的那段接著循環播放，再按播放或拖動就停（音軌轉成 m4a 整個載入：預覽伺服器不支援分段讀取，在大 WAV 裡跳轉會吃掉句首；小誤差用播放速度追，不跳轉）。
-一整段生成的配音（句間插固定停頓）切成一句一檔時：按停頓切、前後各留 0.15 秒靜音、5 毫秒淡入 20 毫秒淡出，
-**不要做去頭尾靜音**（會削掉句首的字、產生爆音：一部 92 句的片有 83 句的第一個字被削掉一半）；切完核對句數和每句長度對字數，再抽幾句聽開頭（不能只看長度）。配音前先問用戶用什麼方式（錄音、線上服務、本機模型），選定後寫進城市的 `VOICE.md`（咸陽：MiniMax）。
-寫配音流程前先看那個工具實際的介面（情緒選項、一次能放多少字、能不能逐句設定），能整段一次生成就不分批，
-不寫介面上沒有的選項。
-選定配音、配樂服務的同時就查條款（能不能公開散布、能不能商用、要不要登記），寫進 `VOICE.md`、`MUSIC.md`，並問用戶影片會不會營利。帳號自己的東西（聲音 ID、金鑰）只放本機，不進 git。
-配樂也一樣：先問用戶用什麼方式（線上 AI、本機模型、CC／公有領域曲庫、作曲，或程式配樂），選定後寫進城市的 `MUSIC.md`：
-- **兩種鋪法**（`film.music.source`）：`cues`（預設）按節點鋪一段段配樂，生成的、曲庫的、自己作的都是；`code` 用程式配樂當備用：
-  不用模型、離線、免費，照影片的時間軸用取樣樂器寫（`audio/codescore.py`，取樣庫先 `uv run python -I tools/instruments.py` 下載一次，約 700 MB），
-  compile 之後、`render/events.mjs` 之後跑 `uv run python -I audio/codescore.py cities/<slug>`，它寫好就直接鋪上，預覽按 B 一樣聽得到；
-  之後每次 compile 都會重鋪，時間軸變了會提醒重跑（`tools/build.mjs` 會自己跑）。程式配樂只是配樂，音效照樣用 `film.sfx` 挑。
-- 分段：照節點和情感線分；風格從確認過的故事大綱和情感線來（SCRIPT.md「導演先定故事」）；
-- 每段的提示詞：只寫在 `MUSIC.md` 一處；
-- 選中的寫法和種子：重生時才能得到同一首；
-- 授權與署名。
-寫提示詞前**先研究這座城各時期的音樂**：樂器、樂種、史料或考古出處，分清實證、推論、現代慣例，寫進 `research/music.md`；
-研究過程的筆記（分頭研究的各份筆記、出處原文）一起放 `research/music_notes/`：它們是這座城的資料，跟城市一起進 git，
-不要留在專案根目錄或不進 git 的資料夾（放在那裡容易被當成用不到的刪掉）。
-再定全片貫穿的城市聲音和每段的主奏，不憑印象寫。
-也要查生成模型認得哪些樂器詞、哪些參數有用：查實際要跑的那個版本的程式（`--help`、原始碼），研究和官方說明只當線索，拿不準就同提示詞、
-同種子做 A/B（例：Stable Audio 3 Medium 原版權重的說明寫沒有負面提示詞、換種子幾乎不變；`tools/music.py` 用的官方 CPU 版其實有 `--cfg`、`--negative-prompt`，
-換種子也會出另一首，A/B 後 CFG 2.0 加負面提示詞比較順）。冷門的樂器詞先單獨生成一小段，請用戶試聽確認像了，再寫進整段（模型不認得笙，
-sheng 出來像箏）。要在本機跑模型之前，先查官方有沒有給 CPU、Mac、NVIDIA 各自的版本，再跟用戶談硬碟、記憶體和登入（例：Stable Audio 3 Medium 官方 CPU 版
-權重 3 GB、不用登入、記憶體 2 GB；標準權重要 15 GB 硬碟、約 20 GB 記憶體）；換更大的版本前，先在記憶體上限下跑通 30 秒、
-量到用量和時間，跑通才改預設。
-咸陽：Stable Audio 3 Medium 本機生成，11 段。網路上的歌曲有版權，不用；只用自己生成的、CC 或公有領域的音樂。
-排配樂照導演的眼光：每段只比節點多生成幾秒，讓高潮和收尾落在段內；換場淡入淡出、中間不留空；同一種聲音往下走的地方（帝都的鼓→焚城）才接著上一段的結尾生成
-（`continue:`），換時代、換畫面的地方照自己的畫面寫，不接續（接著上一段生成，風格會跟著上一個時代走）；旁白的留白不要把配樂切掉，最後一句說完正是配樂推到高潮的時候。
-提示詞不寫靜音、停頓、留白這類字，模型會照字面做（寫了 long silences，候選有三四成的時間沒聲音）：要稀疏就寫一條墊底的持續音，
-要節奏就把節奏寫出來；簡化提示詞只減樂器、不減情緒，每段保留一句照那一站旁白讀出的情緒走向。每個候選先量靜音比例、最長空白、音量走勢
-（`tools/music.py` 生成時印出，`--list` 逐個列出，靜音超過 15%、空白超過 4 秒、沒有低頻的標 !），有問題的不給用戶聽。相鄰而且在同一段情感裡的節點用同一段配樂（咸陽：漢、唐合成一段）。鋪好後量每個換場前後 2 秒的音量凹陷，不只靠聽
-（compile 鋪配樂時印出每個換場的凹陷，10 dB 以上標 !）；裁掉一條配樂的開頭時，起點要落在一擊上（起點後一秒以上都是休止，compile 會提醒，
-並算出落在下一擊的 offset）；動了被接續的那一段，接續它的那段要重生。
-請用戶試聽時附一張表：段名、片中起訖時間、節點、用的檔案、其他候選；用戶退回哪段就只重生哪段。
-片尾署名寫在 city.yaml 的 `end.credits`：作者、配音、配樂（可再加別的角色，角色名先加進每個語言包的 `credit_<角色>`）。
-AI 生成的配音、配樂要寫明「AI 生成」；同一份署名也寫進 CREDITS。定配音、配樂時就一起問用戶片尾怎麼署名。
-`build/export/timeline.json` 是定稿的時間軸：每句（含配音長度）、模型上每次變化、圖片、刻意的留白、每站的情感，配樂與音效照它做。
-順序：文案定稿 → 畫面 → compile、預覽 → 配音 → 再 compile（時間軸定稿）→ 配樂、音效 → 渲染。
+**Voice and the timeline:** a complete film has three things: narration, music and effects. Use only programs throughout (compile, `render/`, ffmpeg), no editing software, so that changing one line or swapping one piece reruns the whole thing.
+Every sound in the final film must first be audible in the preview, and the preview and the final film use the same track. Voice (recorded or generated) is one file per line, put in `build/audio/voice/<language>/<line id>.wav` (mp3, m4a and ogg are also fine),
+with the language defaulting to the first language (`film.voice.lang`). After compiling again: a line with a voice file uses the voice's length (plus 0.3 seconds), and moves together with the picture of that line;
+compile also arranges each line's voice by time into one audio track, `build/audio/voice/track_<language>.wav`, which plays together in the preview (`?play=1`), pulled back whenever it differs from the picture by more than 0.15 seconds;
+there is no sound while paused, dragging or stepping frame by frame, and the M key switches the narration on and off; when the music is laid it plays together, and the B key switches the music; the kept effects (`film.sfx`, first make single sounds with `uv run python -I audio/mix.py <city> --kit`, then compile) also play together, and the N key switches them, and the final mix uses the same track; after playing to the end card, the segment named by `film.music.loop` keeps looping, and pressing play again or dragging stops it (the audio track is converted to m4a and loaded whole: the preview server does not support range reads, and jumping inside a large WAV eats the start of a line; small errors are chased with playback speed, not by jumping).
+When a voice generated as one whole piece (with fixed pauses between lines) is cut into one file per line: cut at the pauses, leave 0.15 seconds of silence before and after, with a 5 ms fade-in and 20 ms fade-out,
+and **do not trim leading and trailing silence** (it eats the first word of a line and produces pops: in a film of 92 lines, 83 had half of the first word eaten); after cutting, check the number of lines and each line's length against its character count, and listen to the openings of a few lines (do not go by length alone). Before voicing, ask the user how (recording, online service, local model), and write the choice into the city's `VOICE.md` (Xianyang: MiniMax).
+Before writing the voice workflow, look at the tool's real interface (emotion options, how much text at once, whether it can be set line by line); if a whole piece can be generated at once, do not split it into batches,
+and do not write options the interface does not have.
+When a voice or music service is chosen, check its terms at the same time (whether the output can be distributed publicly, whether it can be used commercially, whether registration is needed), write them into `VOICE.md` and `MUSIC.md`, and ask the user whether the video will earn money. Things belonging to the account (voice ID, keys) stay only on the local machine and do not go into git.
+The same goes for music: first ask the user how (online AI, local model, a CC / public-domain library, composing, or a code score), and write the choice into the city's `MUSIC.md`:
+- **Two ways of laying it** (`film.music.source`): `cues` (default) lays pieces of music node by node, whether generated, from a library or composed by hand; `code` is a code score as a fallback:
+  no model, offline, free, written with sampled instruments over the film's own timeline (`audio/codescore.py`; download the sample library once first with `uv run python -I tools/instruments.py`, about 700 MB),
+  run `uv run python -I audio/codescore.py cities/<slug>` after compile and after `render/events.mjs`, and once it is written it is laid directly, and pressing B in the preview plays it just the same;
+  after that every compile lays it again, and when the timeline changes it reminds you to rerun (`tools/build.mjs` runs it itself). A code score is only music; the effects are still chosen with `film.sfx`.
+- Sections: divide by nodes and the emotional line; the style comes from the confirmed story outline and the emotional line (SCRIPT.md "The director fixes the story first");
+- The prompt of each section: written in `MUSIC.md` in one place only;
+- The chosen wording and seed: so that regenerating gives the same piece;
+- Licence and credit.
+Before writing prompts, **first research the music of each period of this city:** instruments, genres, sources in historical records or archaeology, separating evidence, inference and modern convention, written in `research/music.md`;
+the notes of the research process (the separate notes of each research thread, the source texts) go together in `research/music_notes/`: they are this city's data, and go into git with the city,
+and must not be left in the project root or in a folder not in git (left there they are easily taken as unneeded and deleted).
+Then fix the city sound that runs through the whole film and the lead of each section; do not write from impression.
+Also find out which instrument words the generation model recognises and which parameters work: look at the code of the exact version that will run (`--help`, source code), treat research and official descriptions only as leads, and if unsure do an A/B with the same prompt and
+the same seed (example: the original weights of Stable Audio 3 Medium are documented as having no negative prompt, and changing the seed hardly changes the result; the official CPU version used by `tools/music.py` in fact has `--cfg` and `--negative-prompt`,
+and changing the seed also gives a different piece; after A/B, CFG 2.0 with a negative prompt came out smoother). For a rare instrument word, generate a short piece of it alone and ask the user to listen and confirm it sounds right before writing it into a whole section (the model does not know the sheng:
+"sheng" came out like a zheng). Before running a model locally, first check whether the official project offers separate versions for CPU, Mac and NVIDIA, and then discuss disk, memory and login with the user (example: the official CPU version of Stable Audio 3 Medium
+has weights of 3 GB, no login, 2 GB of memory; the standard weights need 15 GB of disk and about 20 GB of memory); before changing to a bigger version, first get 30 seconds running under the memory limit,
+measure the usage and time, and change the default only once it runs.
+Xianyang: Stable Audio 3 Medium generated locally, 11 sections. Songs on the internet are copyrighted and are not used; use only music you generated yourself, CC or public domain.
+Lay the music with a director's eye: each section is generated only a few seconds longer than its node, so that the climax and the close fall inside the section; scene changes fade in and out with no gap in the middle; only where the same sound continues (the drums of the imperial capital → the burning of the city) is it generated as a continuation of the end of the previous section
+(`continue:`), and where the era or the picture changes it is written for its own picture and does not continue (generating as a continuation of the previous section makes the style follow the previous era); a pause in the narration must not cut the music, and the moment after the last line is spoken is when the music pushes to its climax.
+Prompts must not contain words such as silence, pause or rest, which the model takes literally (writing long silences left 30–40% of the candidates with no sound): for sparseness write a sustained underlying drone,
+for rhythm write the rhythm out; simplify a prompt by cutting instruments only, not emotion, and keep in each section one line of the emotional course read from that station's narration. Measure each candidate first for silence ratio, longest gap and loudness trend
+(`tools/music.py` prints them on generation, `--list` lists them one by one, and mark with ! silence over 15%, a gap over 4 seconds, no low frequencies), and do not let the user hear one with a problem. Adjacent nodes within the same emotion use the same piece of music (Xianyang: Han and Tang are combined into one). After laying, measure the loudness dip in the 2 seconds before and after each scene change, not by ear alone
+(compile prints each scene change's dip when it lays the music, and marks 10 dB or more with !); when trimming the beginning of a piece, the start must land on a hit (a rest of more than one second after the start is warned by compile,
+which also computes the offset that lands on the next hit); if you change a section that is continued from, the section that continues it must be regenerated.
+When asking the user to listen, attach a table: section name, start and end in the film, node, file used, other candidates; regenerate only the section the user sends back.
+The end-card credits are written in city.yaml's `end.credits`: author, voice, music (other roles can be added, adding the role name first to `credit_<role>` in each language pack).
+AI-generated voice and music must be stated as "AI generated"; the same credit goes in CREDITS. Ask the user how to credit them on the end card at the same time as the voice and music are chosen.
+`build/export/timeline.json` is the final timeline: every line (including voice length), every change on the model, pictures, deliberate silences, and each station's emotion; music and effects are made from it.
+Order: copy final → picture → compile, preview → voice → compile again (timeline final) → music, effects → render.

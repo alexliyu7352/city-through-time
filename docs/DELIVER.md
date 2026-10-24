@@ -1,26 +1,26 @@
-# 出片與交付
+# Rendering and delivery
 
-## 這一步最常犯的錯
+## The most common mistakes in this step
 
-- 漏了簡介、沒清元數據 → 兩樣跟影片一起交。
-- 成片太暗 → 出片前量全片亮度，過門檻才交（CHECKS.md「亮度」）。
-- 回報了混音的響度 → 取成片量到的數字。
+- Forgetting the description, not clearing the metadata → deliver both with the video.
+- The film is too dark → measure the brightness of the whole film before rendering, and deliver only when it passes the threshold (CHECKS.md "Brightness").
+- Reporting the loudness of the mix → use the numbers measured on the final film.
 
-## 出片（用戶在預覽裡點頭之後才做）
+## Rendering (only after the user approves in the preview)
 
-`node tools/build.mjs <slug>`（已有資料時加 `--no-data`；已渲染影格時加 `--no-video`）。
-`tools/build.mjs` 寫出的 `dist/poster.jpg` 是片中一格的佔位圖；正式封面在發布時做（PUBLISH.md「封面」）。
-出片一併交**簡介** `dist/description.md`，片子的語言各一份：
-一句話、短簡介（社群貼文）、長簡介（影片平台）、章節時間（取自 `build/export/timeline.json` 的節點；第一個 0:00，每章至少 10 秒）、
-怎麼做的與出處授權（CC BY / BY-SA 的作者要寫出來）、AI 生成聲明、作者署名。事實只用旁白和 FACTS.md 裡有的。
-交出去的檔案**不帶元數據**：`render/mux.mjs` 合成時就不寫 encoder 標籤、章節和其他 metadata，去掉 x264 寫在影像裡的
-參數（只移除 SEI），AAC 不寫 Lavc 字樣；封面用 bitexact 寫出，沒有編碼器註記。手上的舊檔要清：`exiftool -all=`，再用 `strings` 確認。
-build 會跑 subcheck、clipcheck、camcheck、readcheck（含：文字不得壓在字幕帶上、兩段文字不得互疊）、motioncheck、黑幀檢查、響度（−14 LUFS）。
-全片檢查就在這一步跑，跑之前先問用戶現在能不能佔用電腦。平時只跑了受影響的站、但全片都會動的改動（地形、字型、全片的時間軸），
-當時就記下「出片前要跑全片」，到這一步一起補。全片的亮度也在這一步量，門檻見 CHECKS.md「亮度」。
-回報的響度、峰值取 `render/mux.mjs` 量的成片數字，不是混音的（兩者會差零點幾 LUFS）。
-motioncheck 報「像剪接」時抽幾格看是壞格還是鏡頭轉得快；後者回報用戶，要不要放慢由用戶決定。
+`node tools/build.mjs <slug>` (add `--no-data` when the data already exists; add `--no-video` when the frames are already rendered).
+`dist/poster.jpg` written by `tools/build.mjs` is a placeholder of one frame from the film; the real cover is made at publishing (PUBLISH.md "Cover").
+Rendering also delivers the **description** `dist/description.md`, one for each language of the film:
+a one-line summary, a short description (social post), a long description (video platform), chapter times (from the nodes in `build/export/timeline.json`; the first at 0:00, each chapter at least 10 seconds),
+how it was made and the sources and licences (the authors of CC BY / BY-SA material must be named), the AI-generation statement, and the author's credit. For facts use only what is in the narration and FACTS.md.
+The delivered files **carry no metadata:** when `render/mux.mjs` composes them it writes no encoder tag, chapters or other metadata, strips the parameters x264 writes into the video
+(removing only the SEI), and AAC carries no Lavc string; the cover is written bitexact, with no encoder note. Clean old files on hand: `exiftool -all=`, then confirm with `strings`.
+build runs subcheck, clipcheck, camcheck, readcheck (including: text must not sit on the subtitle band, and two pieces of text must not overlap), motioncheck, a black-frame check, and loudness (−14 LUFS).
+The whole-film checks run in this step; ask the user first whether the computer can be taken over now. For a change that touches the whole film (terrain, fonts, the whole-film timeline) when only the affected stations were run,
+note at that time "run the whole film before rendering the final film", and catch up in this step. The whole-film brightness is also measured in this step; for the threshold see CHECKS.md "Brightness".
+Report the loudness and peak taken from the final film as measured by `render/mux.mjs`, not those of the mix (the two differ by a few tenths of a LUFS).
+When motioncheck reports "looks like a cut", pull out a few frames to see whether it is a bad frame or the camera turning fast; report the latter to the user, who decides whether to slow it down.
 
-## 交付
+## Handover
 
-告訴用戶檔案位置，提醒 CREDITS 列出的第三方資料與授權（CMAB CC BY、OSM ODbL、字體 OFL、取樣庫），以及 FACTS.md 裡標為示意／估算的項目。
+Tell the user where the files are, and remind them of the third-party data and licences listed in CREDITS (CMAB CC BY, OSM ODbL, fonts OFL, sample library) and of the items in FACTS.md labelled schematic / estimated.

@@ -1,25 +1,27 @@
-# 一座城的旁白：每一句，按出現順序（pipeline/script.py）。畫面在 city.yaml，這裡只有字。
-# 一句 = { id, <語言>..., with, lead, later, note }；時間由 compile 排（docs/SCRIPT.md、docs/STAGING.md 5c）
-#   id     這句的名字，全片唯一，小寫英文、數字、底線（配音檔、匯出、畫面上跟著這句的元素都用它）
-#   with   講某個畫面時寫：等那個畫面出現才講。shot:<鏡頭關鍵幀的 shot 名> | pin:<標籤 id> | card:<圖卡 id> | stage[:<段名>] | node
-#   lead   比那個畫面早幾秒（負數：晚幾秒）
-#          沒寫 with：前一句讀完就接著講，可以講進鏡頭的停留裡（節點第一句在節點到達後 0.5 秒）
-#   t      舊寫法：節點畫面的第幾秒（規劃器插停留時會被往後推），只在刻意等一口氣時用
-#   { pause: 秒, why: "..." }   刻意的留白（不算冷場）
-#   later  這句講到比本站更晚的年份時寫 true（文案檢查會問）
-#   note   給寫稿、翻譯、配音的人看的備註（不上屏）
-# 數字一律阿拉伯數字（年份、日期、度量）；字幕一句不超過 22 字（film.copy.max_zh）。
-# compile 後看 build/logs/copy.txt：哪裡該補一句、哪裡太密或太長、哪裡重複、格式不對。
+# Narration of one city: every line, in order of appearance (pipeline/script.py). The picture is in city.yaml; only the words are here.
+# One line = { id, <language>..., with, lead, later, note }; compile schedules the time (docs/SCRIPT.md, docs/STAGING.md 5c)
+#   id     the line's name, unique in the whole film, lowercase letters, digits, underscores (voice files, exports and the picture elements that follow this line all use it)
+#   with   write it when the line talks about a picture: it is spoken only when that picture appears. shot:<shot name of a camera keyframe> | pin:<tag id> | card:<card id> | stage[:<stage name>] | node
+#   lead   seconds earlier than that picture (negative: later)
+#          without with: the line follows when the line before has been read, and may run into the camera's hold (the first line of a node comes 0.5 seconds after the node is reached)
+#   t      old form: the second of the node's picture (pushed later when the planner inserts holds); use it only to wait deliberately for a breath
+#   { pause: seconds, why: "..." }   a deliberate silence (it does not count as dead air)
+#   later  write true when the line speaks of a year later than this station (the copy check asks)
+#   note   a remark for the people who write, translate or voice the script (not shown on screen)
+# Numbers are always Arabic numerals (years, dates, measures); a subtitle is at most 22 characters (CJK ≤22 characters, film.copy.max_zh).
+# After compile, read build/logs/copy.txt: where a line should be added, where it is too dense or too long, where it repeats, where the format is wrong.
 langs: [zh, en]
 
-opening:   # 片頭標題上的第一句（從全片開頭算秒數）
-  - { id: opening, t: 1.2, zh: "<一句>", en: "<one line>" }
+# prologue:   # only with film.prologue in city.yaml: its lines, at t (seconds into the prologue) or one after another
+#   - { id: pro_1, zh: "<Chinese line>", en: "<one line>" }
+opening:   # the first line on the opening title (seconds counted from the start of the opening: the film's start, or the prologue's end)
+  - { id: opening, t: 1.2, zh: "<Chinese line>", en: "<one line>" }
 
 nodes:
   <node_id>:
-    - { id: <node_id>_intro, zh: "<字幕>", en: "<subtitle>" }
-    - { id: <node_id>_place, with: "shot:<鏡頭名>", zh: "<講那個畫面的字幕>", en: "<subtitle>" }
-    - { pause: 4, why: "<為什麼要留白>" }
+    - { id: <node_id>_intro, zh: "<Chinese subtitle>", en: "<subtitle>" }
+    - { id: <node_id>_place, with: "shot:<shot name>", zh: "<Chinese subtitle about that picture>", en: "<subtitle>" }
+    - { pause: 4, why: "<why the silence>" }
 
-quiet:     # 刻意留白、不需要字的段落（節點秒數）：文案檢查不在這裡提「該補一句」
-  # <node_id>: [[12.8, 25.8, "星空那場戲由星官名字說話"]]
+quiet:     # stretches of deliberate silence that need no text (node seconds): the copy check does not suggest "add a line" here
+  # <node_id>: [[12.8, 25.8, "the starfield scene is carried by the names of the star groups"]]

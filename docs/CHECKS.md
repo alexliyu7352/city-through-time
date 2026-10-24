@@ -1,48 +1,48 @@
-# 預覽與檢查
+# Preview and checks
 
-## 這一步最常犯的錯
+## The most common mistakes in this step
 
-- 每改一次就跑全片，用戶的電腦卡到打不了字 → 平時只查改動波及的站，全片只在出片前、先問過才跑（「每次改完」）。
-- 說「修好了」，卻沒在那一秒、那個東西上看過 → 「在用戶指的那個東西上驗收」。
+- Running the whole film after every change, so the user's computer freezes and they cannot type → normally check only the stations the change touched, and run the whole film only before rendering the final film, and only after asking ("After every change").
+- Saying "fixed" without having looked at that second and that object → "Accept on the thing the user pointed at" (under "Acceptance and reporting").
 
-## 預覽
+## Preview
 
-`uv run python -I pipeline/compile.py cities/<slug>`；
-`node tools/preview.mjs <slug>` 起本機伺服器，用戶在 Chrome 打開它印出的 `play.html?city=<slug>&play=1` 即時播放；做完一個節點就給用戶看，再鋪下一個。
-另出縮圖表（`node render/still.mjs <slug> --range a:b:step` + `tools/sheet.py`）逐段檢查：釘標是否出框、圖層是否可見、鏡頭是否對準主體。
-給用戶看之前照下面的「驗收與回報」：伺服器還在、自己先截一張確認是新版、提醒重新整理，只講預覽真的有的東西。
+`uv run python -I pipeline/compile.py cities/<slug>`;
+`node tools/preview.mjs <slug>` starts a local server, and the user opens in Chrome the `play.html?city=<slug>&play=1` it prints to play live; show the user each node when it is done, then lay the next one.
+Also produce contact sheets (`node render/still.mjs <slug> --range a:b:step` + `tools/sheet.py`) and check section by section: whether pins are out of frame, whether layers are visible, whether the camera is aimed at the subject.
+Before showing the user, follow "Acceptance and reporting" below: the server is still running, you have taken a screenshot yourself to confirm it is the new version, remind the user to refresh, and speak only of what the preview really has.
 
-## 每次改完
+## After every change
 
-每次改完都要檢查，歸零再給用戶看，**但只查改動波及的範圍**：時間或內容變了的每一站，前後各多一站（先比對改前改後各站的開始時間，
-被縮短或被推移的站也算）。`uv run python -I tools/clipcheck.py cities/<slug>`（模型穿模：房壓牆、房壓街、地標互疊、坡地吃進建築、
-同時存在的兩代城市互疊、浮空；不渲染，整座城照跑），`node tools/camcheck.mjs <slug> --from <a> --to <b>` 再 `uv run python -I tools/camcheck.py cities/<slug>`
-（鏡頭穿模：鏡頭在地下、在建築裡、視線被擋），`node tools/readcheck.mjs <slug> --from <a> --to <b>`（文字停留），截圖逐秒看
-（`node render/still.mjs <slug> --range <a>:<b>:1` + `uv run python -I tools/sheet.py`）：檢查查不到的問題（構圖、太快、太暗）靠這一步。
-全片的截圖、camcheck、readcheck 會把用戶的電腦卡到打不了字，只在修全片的那一輪和出片前跑，而且先問過用戶（DELIVER.md）。
-截圖預設 1920×1080；`--size` 只收 16:9（例如 960x540），整個畫面等比縮放；
-比 1920 寬只是放大，文字層是 1920 寬畫的，不會更清楚。
-compile 結尾印的 warning 每條都要處理，不能放著：city.yaml 裡沒有程式讀的鍵（打錯字、放錯位置，或這一版沒有的寫法：寫了也沒作用）、相鄰兩站顏色太近、釘標和地名同名又同時出現、最後一站不是今年。座標離台面和遠景範圍超過
-一個台面寬（多半是經緯度打錯或寫反）compile 直接停下。
+Check after every change and show the user only when everything is at zero, **but check only the range the change touched:** every station whose time or content changed, plus one station before and after each (first compare the start times of the stations before and after the change;
+a station that was shortened or pushed also counts). `uv run python -I tools/clipcheck.py cities/<slug>` (model clipping: houses over walls, houses over streets, landmarks overlapping each other, slopes eating into buildings,
+two period cities existing at the same time overlapping, floating; it does not render, and runs over the whole city), `node tools/camcheck.mjs <slug> --from <a> --to <b>` then `uv run python -I tools/camcheck.py cities/<slug>`
+(camera clipping: camera underground, inside a building, line of sight blocked), `node tools/readcheck.mjs <slug> --from <a> --to <b>` (text dwell time), and look at screenshots second by second
+(`node render/still.mjs <slug> --range <a>:<b>:1` + `uv run python -I tools/sheet.py`): problems the checks cannot find (composition, too fast, too dark) are caught by this step.
+Whole-film screenshots, camcheck and readcheck freeze the user's computer so they cannot type; run them only in the round that fixes the whole film and before rendering the final film, and ask the user first (DELIVER.md).
+Screenshots default to 1920×1080; `--size` accepts only 16:9 (for example 960x540), and the whole picture is scaled in proportion;
+going wider than 1920 is only enlargement, and the text layer is drawn at 1920 wide, so it does not get clearer.
+Every warning compile prints at the end must be handled, none left alone: keys in city.yaml that no code reads (a typo, a wrong place, or a form this version does not have: writing it has no effect), colours of two adjacent stations that are too close, a pin and a place name with the same name appearing together, the last station not being this year. If a coordinate is more than
+one plate width from the plate and the far-terrain extent (mostly longitude and latitude mistyped or reversed), compile stops directly.
 
-## 亮度
+## Brightness
 
-- 量法：`ffmpeg -ss <a> -t <秒數> -i <影片> -vf "fps=2,scale=640:-2,signalstats,metadata=mode=print:file=<輸出>" -f null -`，看 YAVG（平均）、
-  YLOW、YHIGH（8 位元，黑 16、白 235）；預覽階段量 `render/still.mjs` 的截圖。平時只量改動的段落，全片只在出片前量（先問用戶）。
-- 門檻：全片平均 YAVG ≥ 80；任何一分鐘的平均 ≥ 60；篇幅最多的事件不能比全片平均暗。參考值：主體受光面 YHIGH 約 140–190，
-  底板 26–38（看得出是深藍，不是黑），黑位 18–24；字幕和介面的白不超過 235（`signalstats=stat=brng` 檢查）。
-- 最後在手機上實看：室內開燈、白天窗邊、螢幕亮度約一半；建築輪廓分得出、遠景沒有糊成一片、字幕不刺眼。
+- How to measure: `ffmpeg -ss <a> -t <seconds> -i <video> -vf "fps=2,scale=640:-2,signalstats,metadata=mode=print:file=<output>" -f null -`, and read YAVG (mean),
+  YLOW, YHIGH (8-bit, black 16, white 235); in the preview stage measure the screenshots of `render/still.mjs`. Normally measure only the changed stretches, and the whole film only before rendering the final film (ask the user first).
+- Thresholds: whole-film mean YAVG ≥ 80; the mean of any one minute ≥ 60; the event with the most room must not be darker than the whole-film mean. Reference values: YHIGH of the lit faces of the subject about 140–190,
+  plate 26–38 (visibly dark blue, not black), black level 18–24; the white of subtitles and interface does not exceed 235 (check with `signalstats=stat=brng`).
+- Finally look on a phone: lights on indoors, or by a window in daytime, screen brightness about half; building outlines can be told apart, the wide shots have not smeared into one, the subtitles are not glaring.
 
-## 驗收與回報
+## Acceptance and reporting
 
-- **給用戶看之前**：確認預覽伺服器還在（停電、重開機後要重跑 `node tools/preview.mjs`）；自己先截一張確認已經是新版，並提醒「重新整理後再看」
-  （開著的頁面可能是改到一半時載入的）；只講預覽真的有的東西（例：預覽還不能播聲音時，不請用戶「在預覽裡聽」）。
-- **在用戶指的那個東西上驗收**：在那一秒、那個東西上截圖確認，不拿旁邊的代替（例：範圍染色要看房子變了色，不是只看地面）；
-  換掉一個效果，最遠和最近的鏡頭各看一次：「沒刪」不等於「看得見」（例：火星縮到 3 像素，近看也看不到）。
-- **用戶說「變了」，先對照再推原因**：把改動前的提交重建出來（`git worktree add`，或 `git archive` 到暫存資料夾），同一秒截圖對照；
-  找原因用排除法：部件各塗一種顏色、一項項拿掉，看毛病跟著哪一樣走，不要先認定原因。
-- **說之前先核實**：說「程式是這樣做的」先讀程式；說「檢查通過」要在最後一次改動之後的狀態上跑，並寫明跑了哪一段；說「畫面不變」先比對
-  改動前後的 `build/film.json`（取景從釘標、範圍、句子算出來，拿掉一個標籤也會讓構圖移動）。測試失敗時先查測試本身（網址打錯、檔案不在），
-  再下結論。
-- **說清楚影響範圍**：一棟、一站、一座城，還是全片、所有城市。改所有節點共用的判斷時，編譯全片，比對各站時長、`build/logs/plan.json`、
-  `build/logs/deadair.txt`，不只看出問題的那段。
+- **Before showing the user:** confirm the preview server is still running (after a power cut or reboot, run `node tools/preview.mjs` again); take a screenshot yourself to confirm it is already the new version, and remind the user to "look again after refreshing"
+  (an open page may have been loaded halfway through a change); speak only of what the preview really has (example: when the preview cannot play sound yet, do not ask the user to "listen in the preview").
+- **Accept on the thing the user pointed at:** confirm by screenshot at that second and on that object, not on something beside it (example: for an area's colouring look at the houses changing colour, not only the ground);
+  when replacing an effect, look once at the farthest and once at the nearest camera: "not deleted" does not mean "visible" (example: sparks shrunk to 3 pixels cannot be seen even up close).
+- **When the user says "it changed", compare before reasoning about the cause:** rebuild the commit before the change (`git worktree add`, or `git archive` into a temp folder), and compare screenshots at the same second;
+  find the cause by elimination: paint each part a different colour, remove them one by one, and see which one the defect follows; do not decide the cause first.
+- **Verify before you say it:** before saying "the program does it this way", read the program; "checks pass" must be run on the state after the last change, stating which stretch was run; before saying "the picture is unchanged", compare
+  `build/film.json` before and after the change (framing is computed from pins, areas and lines, so removing one tag also moves the composition). When a test fails, first examine the test itself (a mistyped URL, a missing file),
+  then draw a conclusion.
+- **State the scope of the effect:** one building, one station, one city, or the whole film and all cities. When changing a judgement shared by all nodes, compile the whole film and compare each station's duration, `build/logs/plan.json` and
+  `build/logs/deadair.txt`, not only the stretch where the problem appeared.

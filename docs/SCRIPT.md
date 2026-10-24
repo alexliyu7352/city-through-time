@@ -1,159 +1,182 @@
-# 劇本：故事、處理方案、文案、時間軸、語言與字型
+# Script: story, treatment, copy, timeline, languages and fonts
 
-## 這一步最常犯的錯
+## The most common mistakes in this step
 
-- 沒和用戶定好要講什麼故事就寫旁白 → 先出故事大綱，用戶確認後才寫旁白和字幕（「導演先定故事」）。
-- 逐條報事實 → 先寫一條連貫的旁白，有對照、呼應、落到人（「文案」）。
-- 手寫秒數，改一處就全錯 → 旁白和變化的時間都由 compile 排（「字幕與時間軸」；STAGING.md 9a、9e）。
-- 每站等長、先定總長再往裡塞 → 節點有輕重（「處理方案與節點」）。
-- 寫到一半才發現沒有故事可講，回頭補查 → 寫劇本前先讀研究收齊的故事素材（`research/stories.md`，RESEARCH.md 第 3 節）。
+- Writing the narration without agreeing with the user what story to tell → first produce a story outline, and write the narration and subtitles only after the user confirms it ("The director fixes the story first").
+- Reporting facts one by one → first write one connected narration with contrast, echo and a landing on people ("Copy").
+- Writing seconds by hand, so one change breaks everything → compile schedules the narration and the changes ("Subtitles and the timeline"; STAGING.md 9a, 9e).
+- Making every station the same length, or fixing the total length first and squeezing things in → nodes have different weight ("Treatment and nodes").
+- Discovering halfway that there is no story to tell, and going back to research → before writing the script, read the story material collected in research (`research/stories.md`, RESEARCH.md §3).
 
-## 導演先定故事
+## The director fixes the story first
 
-這一步你是這部片的導演，不是資料整理員：資料是素材，講一個什麼故事、觀眾看完記住什麼，是你的選擇，也要先跟用戶談定。
-照順序做，每一步用戶確認才往下：
+In this step you are the director of the film, not a data clerk: the data is material, and what story to tell and what the audience remembers afterwards are your choice, to be settled with the user first.
+Do the following in order; go on only when the user confirms each step:
 
-1. **故事大綱**：讀 `research/stories.md` 和確認過的站表，寫一份大綱給用戶看：
-   - 一句話：這部片講一座什麼樣的城、一個什麼故事（咸陽：一座做過天下中心的城，燒成田野、退成小城，兩千年後又和對岸的長安長成同一座城）；
-   - 故事的脈絡：起、承、轉、合各落在哪幾站；
-   - 篇幅最多的段落：對這座城最重要的事件和人物，各講什麼、為什麼重要，主角做成了什麼（RESEARCH.md 第 2 節）；
-   - 每一段：講什麼、主角是誰、講述者的感受、大約多長；
-   - 開場怎麼交代城市和它的名字，結尾怎麼落到這座城的未來；
-   - 序章：片頭先給觀眾看哪一刻、配哪幾句、用什麼問題收尾（「序章」）；
-   - 配圖：哪些場景要配圖，用找到的圖還是生成想像圖（「配圖」）。
+1. **Story outline:** read `research/stories.md` and the confirmed station list, and write an outline for the user to read:
+   - One sentence: what kind of city the film is about and what story (Xianyang: a city that was once the centre of the world, burned into fields, shrank to a small town, and two thousand years later grew into one city with Chang'an across the river);
+   - The arc of the story: which stations carry the beginning, development, turn and close;
+   - The longest passages: for the most important events and people of the city, what is told in each and why it matters, and what the protagonist achieved (RESEARCH.md §2);
+   - For each part: what is told, who the protagonist is, the narrator's feeling, roughly how long;
+   - How the opening introduces the city and its name, and how the ending lands on the city's future;
+   - Prologue: which moment the opening shows the audience first, with which lines, and the question it ends on ("Prologue");
+   - Pictures: which scenes get pictures, and whether to use found pictures or generated imagined ones ("Pictures").
 
-   大綱沒經用戶確認，不寫旁白、不排畫面。
-2. **處理方案**：照確認的大綱寫 `TREATMENT.md`（「處理方案與節點」）。
-3. **旁白稿**：照大綱寫整片連續的旁白（「文案」），給用戶看；確認後才切成字幕、寫進 `script.yaml`。
-4. **情感線**：每站講述者的感受照大綱定（`mood`，「象徵物與情感線」）；配樂的風格也從大綱和情感線來（SOUND.md）。
+   Until the user confirms the outline, write no narration and arrange no picture.
+2. **Treatment:** write `TREATMENT.md` from the confirmed outline ("Treatment and nodes").
+3. **Narration draft:** write the continuous narration for the whole film from the outline ("Copy") and show it to the user; only after confirmation cut it into subtitles and write it into `script.yaml`.
+4. **Emotional line:** fix the narrator's feeling at each station from the outline (`mood`, "Emblem and emotional line"); the style of the music also comes from the outline and the emotional line (SOUND.md).
 
-做到一半要改故事的方向，回到大綱重新和用戶確認，不在字幕上零碎修補。
+If the direction of the story has to change midway, go back to the outline and confirm it again with the user; do not patch it piecemeal on the subtitles.
 
-## 處理方案與節點
+## Treatment and nodes
 
-照確認的大綱寫 `TREATMENT.md`（象徵物、節點表、顏色邏輯、字幕設計、配樂方向），再把節點寫進 `city.yaml` 的 `film.nodes`（節點制：每個節點自帶年份、秒數、圖層、道具、釘標、字幕、鏡頭；片長由節點加總）。
-節點表除了「事件」，另有一欄「這座城在這一站變成什麼樣」（位置、形狀、地位、產業）：遮住事件欄只看這一欄，空白的站刪掉或改寫。
-**節點有輕重**：大轉折（建都、統一、毀城、設市）給足畫面和不只一句旁白，過渡站幾句帶過；不要每站等長，也不要先定總長再往裡塞
-（例：咸陽的帝都 77 秒，1975 一站 13.5 秒）。素材不夠時回到研究補查，不憑空編。
+Write `TREATMENT.md` from the confirmed outline (emblem, node table, colour logic, subtitle design, music direction), then write the nodes into `film.nodes` of `city.yaml` (node system: each node carries its own year, seconds, layers, props, pins, subtitles and camera; the film's length is the sum of the nodes).
+Besides "event", the node table has a column "what the city becomes at this station" (position, shape, status, industry): cover the event column and read only this one; delete or rewrite a station whose cell is empty.
+**Nodes have different weight:** a major turning point (becoming a capital, unification, destruction of the city, becoming a municipality) gets enough picture and more than one line of narration; transition stations get a few lines.
+Do not make every station the same length, and do not fix the total length first and squeeze things in
+(example: Xianyang's imperial capital is 77 seconds, the 1975 station 13.5 seconds). When the material is not enough, go back to research; never invent.
 
-## 序章
+## Prologue
 
-片頭先放一段 15–25 秒的序章，把全片最有衝擊力的一刻先給觀眾看，再從頭講。平台衡量開頭用的是「30 秒後還剩多少人」，
-前 30 秒沒交代這座城為什麼值得看，觀眾就走了。
-- 序章是獨立的一段：有自己的鏡頭、旁白和配樂，和正片裡那一幕不同；城市模型和正片共用。演完黑場，接正片的開場，不做倒轉。
-- 用大綱裡篇幅最多、畫面最強的事件（咸陽：帝都的金光和焚城的火）。鏡頭拉近、比正片亮，主體佔滿畫面。
-- 以引擎畫的真實場景為主（約七成），可以穿插一兩張想像圖，補白模給不了的人和場面。序章裡出現的，正片裡都要看得到：
-  序章和封面都是對觀眾的承諾。
-- 旁白兩三句，最後用一個問題收尾（咸陽：「它從哪裡來？又怎樣活到今天？」）；不提前說出正片的反轉（咸陽：不說「只撐了15年」）。
-- 配樂用正片裡同一路的聲音（咸陽：帝都的鼓），可以加一記正片的音效。
-- 檢驗：這一刻在正片裡再出現一次，是更好還是更差？更差就換一刻。
+Open the film with a 15–25 second prologue that shows the audience the most striking moment of the whole film first, then tells the story from the beginning. Platforms measure an opening by "how many are left after 30 seconds";
+if the first 30 seconds do not say why this city is worth watching, the audience leaves.
+- The prologue is a separate piece: it has its own camera, narration and music, and differs from that scene in the main film; the city model is shared with the main film. It ends in black and cuts to the opening of the main film; no rewinding.
+- Use the event with the most room and the strongest picture in the outline (Xianyang: the golden light of the imperial capital and the fire that burned the city). The camera is close and brighter than in the main film, with the subject filling the frame.
+- Mostly real scenes drawn by the engine (about 70%), with one or two imagined pictures mixed in to supply the people and scenes a white model cannot give. What appears in the prologue must be seen in the main film:
+  the prologue and the cover are promises to the audience.
+- Two or three lines of narration, ending on a question (Xianyang: 「它從哪裡來？又怎樣活到今天？」 ("Where did it come from? And how did it live to today?")); do not give away the main film's reversal in advance (Xianyang: do not say 「只撐了15年」 ("it lasted only 15 years")).
+- The music uses the same voice as in the main film (Xianyang: the drums of the imperial capital), and one sound effect from the main film may be added.
+- Test: if this moment appears once more in the main film, is it better or worse? If worse, choose another moment.
 
-序章的設定鍵還沒做，程式做好後補在這裡。
+Settings (`film.prologue` in `city.yaml`; the lines go in `script.yaml` under `prologue:`):
 
-## 配圖
+```yaml
+film:
+  prologue:
+    dur: 20                                   # seconds before the opening; the opening and everything after it start this much later
+    fade: 0.8                                 # seconds of closing black (default 0.8); the opening comes up out of it in 0.5 s
+    mood: { feel: grief, level: 3 }           # for the music (build/export/timeline.json `prologue`)
+    scene:                                    # from t (prologue seconds) on, the city shows the main film at <node> + at and plays on
+      - { t: 0,  node: empire, at: 40 }
+      - { t: 9,  node: burn,   at: 6 }
+    camera: [{ t: 0, ll: [<lon>, <lat>], az: 20, el: 25, d: 0.5 }, ...]   # the prologue's own shots, t in prologue seconds
+    footage: [{ id: p_fire, file: assets/imagined/<name>.jpg, mode: card, at: 11, dur: 3.5, ... }]   # same form as a node's footage, at in prologue seconds
+    sfx: [{ t: 9, kind: burn }]               # one-shots of film.sfx at prologue seconds
+  music: { cues: [{ id: M00, node: prologue, take: ... }, ...] }   # a cue at the prologue starts at 0; the next cue starts with the opening
+```
 
-照大綱定配圖，不只主線：值得一看的畫面也配，例如城市最繁榮的樣子（漢唐的長安）、詩文的意境（王維的渭城朝雨）、重大事件的場面。
-先用配圖清單（`research/images.md`，DATA.md「配圖清單」）裡找到的 CC 圖；沒有的生成根據史料的想像圖，做法和標示見 STAGING.md「實拍與圖片」。
-每張圖配一句講它的旁白，放的時候不蓋住正在發生的變化（STAGING.md 5b）。
-生成想像圖：先問用戶手上有什麼圖片生成工具，沒有就把提示詞交給用戶，讓他用別的 AI 生成後放進 `assets/imagined/`。
-用戶有 Codex CLI 時可以用它：`codex exec --skip-git-repo-check -` 從 stdin 讀提示詞，叫它用內建的圖片生成畫一張 16:9 並複製到
-`assets/imagined/<名>.png`（實得 1672×941，約兩分鐘一張，可並行）。每張提示詞寫明場景和年代細節（建築、服飾、器物、地形，
-依據配圖清單裡的出處），全片用同一段風格與負面提示詞，幾張才像同一套。
-人物沒有當時的畫像：用後世畫像要標「後人想像」；現代雕像照片多半不好看，不用。
+- `scene`: only the city follows the borrowed moment (model, light rings, fire, the night sky); the camera, subtitles and pictures keep the
+  prologue's own clock. Each key is a cut: pair it with a camera key at the same t. The camera jump check leaves the prologue alone (it is
+  cut like a trailer).
+- `script.yaml`: `prologue: [{ id, zh, en, t? }]`. A line without `t` follows the one before once it has been read; every line must end
+  before the closing black (compile stops otherwise). No `with`, no `pause`.
+- Check the prologue with stills (`node render/still.mjs <slug> 2 10 16`) next to the same moments of the main film: the same city, other shots.
 
-## 象徵物與情感線
+## Pictures
 
-象徵物（可選）：借一件物把城市人格化（城市最明亮的時刻，或它的抽象化身，例如一隻不死鳥）。它是錦上添花，不是必備：
-寓意不強，或在白模上演不好（一件 3D 物飄在城上，看起來像道具），就整條不用，或只在片頭、片尾各呼應一次（片頭仍先交代城市和它的名字）；
-拿掉時連帶的旁白一起拿掉（咸陽沒有用象徵物：`emblem: none`）。要用時：在 `engine/props.js` 加 make<Emblem>() 或重用 makeTally；
-**象徵物不能搶戲**：只在情感主線的轉折點出現，開場屬於城市和它的名字；一站沒有時間講它就只用畫面，或卡片加文字，不多加旁白。
-**宣告給 compile 看（強約束）**：`film.emblem` 一定要寫：`none`，或 `{ name, meaning, nodes: [...] }`；每個節點一定要寫
-`mood: { feel, level }`：講述者在這一站的感受，`wonder`（土地與最早的人）、`pride`（城興、英雄）、`grief`（衰落、毀滅、失去）、
-`wistful`（盼過的沒有來、告別）、`hope`（新城長起、重新開始）、`calm`（城市安靜地過日子），`level` 1–3。少了 compile 就停。
-它們寫進 `build/export/timeline.json`，配樂照它起伏；compile 也印出整條情感線（`arc:`），一眼看得出起落對不對。
-`emblem: none` 卻寫了 tally 關鍵幀，compile 會停下。
+Decide the pictures from the outline, not only on the main line: scenes worth a look get pictures too, such as the city at its most prosperous (Han and Tang Chang'an), the mood of a poem (Wang Wei's 「渭城朝雨」 ("morning rain at Weicheng")), the scenes of major events.
+Use first the CC pictures found in the picture list (`research/images.md`, DATA.md "Pictures and footage"); for the rest, generate imagined pictures based on the sources; for how to do it and how to label it see STAGING.md "Footage and pictures".
+Each picture gets one line of narration about it, and when placed it must not cover a change that is happening (STAGING.md 5b).
+To generate imagined pictures: first ask the user which image-generation tools they have; if none, give the prompt to the user, who generates it with another AI and puts it in `assets/imagined/`.
+If the user has the Codex CLI, it can be used: `codex exec --skip-git-repo-check -` reads the prompt from stdin; tell it to draw one 16:9 picture with its built-in image generation and copy it to
+`assets/imagined/<name>.png` (in practice 1672×941, about two minutes each, can run in parallel). Each prompt states the scene and the period details (buildings, clothes, objects, terrain,
+following the sources in the picture list); use one common style and negative prompt for the whole film so that the pictures look like a set.
+For people with no portrait from their time: a later portrait must be labelled "後人想像" ("imagined by later generations"); photos of modern statues mostly look bad, so do not use them.
 
-## 文案
+## Emblem and emotional line
 
-照確認的大綱先寫整片的連續旁白稿（講城的故事，不逐條報事實），給用戶確認後再切成字幕；代理自己查來寫的每個**事實**都要能追到 FACTS.md。
-講述者是一位飽學、客觀又有感情的長者：城興、英雄出場時自豪，城衰、城毀時悲傷，新城長起時看見希望。講述者自己的感受、評價和聯想
-（「這份執念，從咸陽開始」「盼了 10 多年的合一，就此落了空」）不需要出處：這是作品，不是新聞播報。把關只在收集材料那一步。
-**要有故事性，不是把固定的史實重念一遍**。常用的做法：
-- 對照：把兩件事並排，讓觀眾自己感到落差（始皇要「二世三世至於萬世」，下一句「然而，它只撐了15年」）。
-- 前後呼應：前面埋一句，後面收回來（漢代「帝王長眠的高原」→ 1991「帝王長眠的高原，成了飛向遠方的起點」；
-  秦都「商鞅統一了秦國的尺、斗和秤」→ 帝都「文字、車軌、尺和秤，從此全天下一樣」；帝都「渭水是天河，橫橋是牽牛」→
-  結尾「兩座城沒有合併，卻長成同一座城，就像2000多年前，渭水兩岸本是一座咸陽」）。
-- 落到人身上：一段事實的最後，用一句人的處境收住（國棉改制後「一代紡織人的青春，就留在了這裡」）。
+The emblem (optional): borrow an object to personify the city (the brightest moment of the city, or its abstract embodiment, such as a phoenix). It is an extra, not a requirement:
+if its meaning is weak, or it plays badly on the white model (a 3D object floating over the city looks like a prop), do not use it at all, or echo it once each in the opening and the ending (the opening still introduces the city and its name first);
+when it is removed, remove the narration tied to it as well (Xianyang uses no emblem: `emblem: none`). If used: add make<Emblem>() in `engine/props.js` or reuse makeTally;
+**the emblem must not steal the show:** it appears only at the turning points of the emotional main line, and the opening belongs to the city and its name; when a station has no time to speak of it, use only the picture, or a card with text, and add no narration.
+**Declare it to compile (a hard constraint):** `film.emblem` must be written: `none`, or `{ name, meaning, nodes: [...] }`; every node must have
+`mood: { feel, level }`: the narrator's feeling at this station, `wonder` (the land and the earliest people), `pride` (the city rises, heroes), `grief` (decline, destruction, loss),
+`wistful` (what was hoped for did not come, farewell), `hope` (a new city grows, a new start), `calm` (the city lives quietly), with `level` 1–3. compile stops without them.
+They are written into `build/export/timeline.json`, and the music rises and falls with them; compile also prints the whole emotional line (`arc:`), so you can see at a glance whether the rises and falls are right.
+If `emblem: none` but tally keyframes are written, compile stops.
 
-## 字幕與讀數的寫法
+## Copy
 
-- 一句字幕的長度：漢字 ≤22 字，英文 ≤70 字元，其他書寫系統照 `i18n/<代碼>.yaml` 的上限。
-- 字幕一條一個事實，第一語言在上、第二語言在下（「語言」）；不確定的寫「傳說」「可能」「示意」。
-- **數字一律用阿拉伯數字 0–9，每種語言都一樣**：年份、日期、時刻、數量、度量、百分比、序號（1 號線、第 3 期）。寫旁白時就這樣寫，不是寫完再改：
-  不用中文數字（一九八三年、八百八十二）、日文漢數字、阿拉伯-印度數字（٠١٢٣）、波斯數字、天城文（०१२）、泰文（๐๑๒）等各語系自己的數字字元，
-  也不用全形數字（１２３）。片子要給不同語言的觀眾看，數字是共通的部分。
-  例外只有專有名詞與固定說法：計畫或事件的名稱（「十五五」）、成語與慣用語（一座又一座、一層一層）、引文（火三月不滅），
-  以及**歷史紀年照原文**：帝王年號紀年（洪武四年、乾隆十六年、武德二年）、干支紀年、其他曆法的紀年。不要換算成公元寫進旁白：
-  公元年份已經在畫面左側的年份面板上，旁白保留原來的紀年，才有那個時代的味道。
-  例外寫進 city.yaml 的 `film.copy.keep`，文案檢查就不再提。
-- 讀數（左欄）只放一個大數字（年份計數器或一個統計數）、一行標籤、一行來源。
-- 讀秒規則：中文字數÷4.5 + 英文字母÷15 + 1.5 秒，最少 1.8 秒；寧可把片拉長，不要刪事實。
+First write a continuous narration for the whole film from the confirmed outline (telling the city's story, not reporting facts one by one), and cut it into subtitles after the user confirms; every **fact** the agent researched and wrote must be traceable to FACTS.md.
+The narrator is an erudite, objective elder with feeling: proud when the city rises and heroes appear, sad when the city declines or is destroyed, seeing hope when a new city grows. The narrator's own feelings, judgements and associations
+(「這份執念，從咸陽開始」 ("this obsession began in Xianyang"), 「盼了 10 多年的合一，就此落了空」 ("the union hoped for over 10 years came to nothing")) need no source: this is a work, not a news broadcast. The gate is only at the step of collecting material.
+**It must have a story; it must not merely read out fixed facts again.** Common methods:
+- Contrast: set two things side by side so the audience feels the gap by themselves (the First Emperor wanted 「二世三世至於萬世」 ("second generation, third generation, to ten thousand generations"), and the next line is 「然而，它只撐了15年」 ("Yet it lasted only 15 years")).
+- Echo: plant a line early and take it back later (Han: 「帝王長眠的高原」 ("the plateau where emperors sleep") → 1991: 「帝王長眠的高原，成了飛向遠方的起點」 ("the plateau where emperors sleep became the starting point of flights to far places");
+  Qin capital: 「商鞅統一了秦國的尺、斗和秤」 ("Shang Yang unified Qin's rulers, measures and scales") → imperial capital: 「文字、車軌、尺和秤，從此全天下一樣」 ("writing, axle widths, rulers and scales, from now the same under all heaven");
+  imperial capital: 「渭水是天河，橫橋是牽牛」 ("the Wei is the Heavenly River, the Heng Bridge is the Cowherd star") →
+  ending: 「兩座城沒有合併，卻長成同一座城，就像2000多年前，渭水兩岸本是一座咸陽」 ("the two cities did not merge, yet grew into one city, just as over 2,000 years ago the two banks of the Wei were one Xianyang")).
+- Landing on people: end a passage of facts with a line about a person's situation (after the state cotton mill restructuring, 「一代紡織人的青春，就留在了這裡」 ("a generation of textile workers left their youth here")).
 
-## 字幕與時間軸
+## Writing subtitles and readouts
 
-**字幕寫在 `cities/<slug>/script.yaml`**（`templates/script.yaml`；city.yaml 只有畫面），每句一個名字（id），按講的順序排。
-**時間由 compile 排，不手寫秒數**（`schedule_lines`）：
-- 講某個畫面的句子寫 `with:`，等那個畫面出現才講：`shot:<鏡頭關鍵幀的 shot 名>`、`pin:<標籤>`、`card:<圖卡>`、`stage[:<段名>]`、`node`；
-  `lead:` 提前幾秒（負數是延後）。
-- 其他句子不寫時間：前一句讀完就接著講（中間 0.35 秒），可以講進鏡頭的停留裡；節點第一句在節點到達後 0.5 秒。
-- `{ pause: 秒, why: "..." }`：刻意的留白（不算冷場）。
-- 畫面也可以跟句子走：圖卡、路線、區域、地圖線、投影、城市的生長段寫 `with: <句子 id>`（`plus:` 晚幾秒）；
-  標籤和剖面圖 `with:` 從那句開始顯示到那句結束（或 `until: <句子 id>`）再加 `hold` 秒。「那句結束」是字幕自己的長度，
-  不含字幕讀完後多留的 0.4 秒（`extra`）：要和字幕一起收，`hold` 多加 0.4。
-  區域 `with:` 時外框從那句開始，名稱隨後出現並留到節點結束（寫了 `until`/`hold` 就照標籤的算法）；`flash` 也可以寫 `{ with: <句子 id>, plus: 秒 }`。
-- `t:`（節點畫面的第幾秒）：跟著畫面時間走，規劃器插停留時會被往後推。只在刻意等一口氣時用。
-- 介紹某個畫面的句子一定要 `with:` 那個畫面；延後或提早一段畫面（星空、圖片、剖面圖）時，同一段的鏡頭停留和標籤時間一起看
-  （畫面延後了、鏡頭沒多停，標籤會跟著鏡頭掉進字幕帶）。
-compile 會寫出 `build/logs/copy.txt` 文案檢查，給「該補一句」「該刪減」的建議（只給建議，不改文案）：
-`add` 長時間沒字而畫面在點名某個地方（釘標、範圍、光柱、星官）卻沒一句提到，或留白太久；`cut` 一句超過 22 字、20 秒內塞三句以上幾乎
-沒有空隙、同一個說法講兩次；`style` 該用阿拉伯數字 0–9（年份、日期、數量、度量；中文數字、全形數字、其他語系自己的數字字元都算）；`check` 講到比本站更晚的年份（刻意的就在那句寫 `later: true`）。
-刻意的留白寫在 script.yaml 的 `quiet:`。門檻在 city.yaml `film.copy`。
-compile 同時寫出 `build/export/`：雙語與各語言的 `.srt`、`.vtt`，以及 `script_timed.tsv`（每句的開始、結束、到下一句前有幾秒、讀完要幾秒：配音用）。
-數字檢查也掃字幕以外的上屏文字（釘標、讀數、地名、照片說明、光柱標籤、片尾）。專有名詞和引文照原文的寫進 `film.copy.keep`
-（咸陽：十五五、國棉一廠、火三月不滅）。
-**改文案先出草稿**：草稿另存（例如 `build/review/script_draft.yaml`），`CT_SCRIPT=<草稿> uv run python -I pipeline/compile.py cities/<slug>`
-編譯草稿並在預覽裡看，script.yaml 不動；附逐句的修改前後對照給用戶，確認後才換進 script.yaml。
-字幕每條至少停留 中文字數÷4.5 + 英文字母÷15 + 1.5 秒。前面的句子講不完時，compile 只在需要的地方插入時間（插在那句要等的畫面之前，
-畫面跟著等；最後一句講不完就延長節點），不把整個節點按比例拉長。最後一個節點必須是當前年份（不是的話 compile 會提醒）。
-第二語言的字幕超過單行安全寬度（subcheck 印 WIDE）時，拆成兩句、各給一個 id；不刪字，也不縮字級。
+- Length of one subtitle: Chinese characters ≤22 characters (CJK ≤22 characters), English ≤70 characters, other scripts follow the limit in `i18n/<code>.yaml`.
+- One fact per subtitle, the first language on top and the second language below ("Languages"); write "傳說" ("legend"), "可能" ("possibly"), "示意" ("schematic") for what is uncertain.
+- **Numbers are always Arabic numerals 0–9, in every language:** years, dates, times of day, quantities, measures, percentages, ordinals (Line 1, Phase 3). Write them that way from the start of the narration, not by changing them afterwards:
+  do not use Chinese numerals (一九八三年, 八百八十二), Japanese kanji numerals, Arabic-Indic digits (٠١٢٣), Persian digits, Devanagari (०१२), Thai (๐๑๒) or any other script's own digit characters,
+  and no full-width digits (１２３) either. The film is for audiences of different languages, and numbers are the common part.
+  The only exceptions are proper nouns and fixed expressions: names of plans or events (「十五五」 ("the 15th Five-Year Plan")), idioms and set phrases (一座又一座, 一層一層), quotations (「火三月不滅」 ("the fire burned for three months")),
+  and **historical dating in the original form:** regnal-era years (洪武四年, 乾隆十六年, 武德二年), sexagenary-cycle years, years of other calendars. Do not convert them to the Common Era in the narration:
+  the Common Era year is already on the year panel on the left of the screen, and keeping the original dating gives the flavour of the period.
+  Write the exceptions into `film.copy.keep` in city.yaml, and the copy check stops mentioning them.
+- The readout (left column) holds only one big number (the year counter or one statistic), one label line, one source line.
+- Reading-time rule: Chinese characters ÷ 4.5 + English letters ÷ 15 + 1.5 seconds, at least 1.8 seconds; stretch the film rather than delete facts.
 
-## 畫面上的數字
+## Subtitles and the timeline
 
-畫面上的數字由幾何或設定決定的，不要手寫：兩點距離用 `[km]`；文字裡的 `{…}` 可取 `{plate_km[0]:.0f}`（台面寬、深，公里）、
-`{cfg.terrain.exaggeration:g}`（city.yaml 的任何設定，例如倍率）、`{km('id')}`（線的長度或範圍的周長，公里）、`{km2('id')}`（範圍的面積，
-平方公里；id 是研究範圍、epoch 或線的）、`{stats.…}`（咸陽的台面大小和遠景倍率就是這樣寫的）。史料給的數字照史料寫，不要換成示意模型量出來的
-（咸陽宮城周長：報告 2747 米，讀數寫約 2.7 公里；示意框量出來 2.77 公里）。沒有佔位可取的（影像來源），改了設定或幾何，就同時改讀數、開場說明、片尾和 CREDITS；改模型的幾何（移牆、移框、換地塊）之前，先查字幕和讀數講到它的數字，
-改完仍要對得上（例：只移一面牆，周長就和讀數對不上，改成整框平移）。
+**Subtitles are written in `cities/<slug>/script.yaml`** (`templates/script.yaml`; city.yaml holds only the picture), one name (id) per line, in the order spoken.
+**compile schedules the time; never write seconds by hand** (`schedule_lines`):
+- A line that talks about a particular picture gets `with:` and is spoken only when that picture appears: `shot:<shot name of a camera keyframe>`, `pin:<tag>`, `card:<card>`, `stage[:<stage name>]`, `node`;
+  `lead:` brings it forward by some seconds (a negative number delays it).
+- Other lines have no time: they follow when the line before has been read (0.35 seconds between), and may run into the camera's hold; the first line of a node comes 0.5 seconds after the node is reached.
+- `{ pause: seconds, why: "..." }`: a deliberate silence (it does not count as dead air).
+- Pictures can also follow lines: cards, routes, areas, map lines, projections and a city's growth stages get `with: <line id>` (`plus:` is some seconds later);
+  tags and sections with `with:` show from the start of that line to its end (or `until: <line id>`) plus `hold` seconds. "The end of that line" is the subtitle's own length,
+  without the 0.4 seconds (`extra`) the subtitle stays after being read: to close together with the subtitle, add 0.4 to `hold`.
+  When an area has `with:`, its outline starts at that line, the name appears afterwards and stays until the node ends (if `until`/`hold` are written, it follows the tag's rule); `flash` can also be written as `{ with: <line id>, plus: seconds }`.
+- `t:` (the second of the node's picture): follows picture time, and is pushed later when the planner inserts holds. Use it only to wait deliberately for a breath.
+- A line that introduces a picture must have `with:` that picture; when a picture (starfield, image, section) is delayed or brought forward, look at the camera hold and tag times of the same stretch together
+  (if the picture is delayed but the camera does not hold longer, the tag follows the camera into the subtitle band).
+compile writes `build/logs/copy.txt`, the copy check, with suggestions "add a line" and "cut" (suggestions only; it does not change the copy):
+`add`: a long time with no text while the picture names a place (pin, area, beam, star group) that no line mentions, or a silence that is too long; `cut`: a line over 22 characters, three or more lines in 20 seconds with almost no gap,
+the same statement made twice; `style`: should use Arabic numerals 0–9 (years, dates, quantities, measures; Chinese numerals, full-width digits and other scripts' own digits all count); `check`: mentions a year later than this station (if deliberate, write `later: true` on that line).
+Deliberate silences are written in `quiet:` of script.yaml. The thresholds are in city.yaml `film.copy`.
+compile also writes `build/export/`: `.srt` and `.vtt` for the bilingual and for each language, and `script_timed.tsv` (for each line: start, end, seconds to the next line, seconds needed to read it: for voice recording).
+The number check also scans on-screen text other than subtitles (pins, readouts, place names, photo captions, beam labels, the end card). Proper nouns and quotations that keep the original form go in `film.copy.keep`
+(Xianyang: 十五五, 國棉一廠 (State Cotton Mill No. 1), 火三月不滅).
+**Change copy as a draft first:** save the draft separately (for example `build/review/script_draft.yaml`), compile the draft with `CT_SCRIPT=<draft> uv run python -I pipeline/compile.py cities/<slug>`
+and look at it in the preview, leaving script.yaml untouched; give the user a before-and-after comparison line by line, and swap it into script.yaml only after confirmation.
+Each subtitle stays at least Chinese characters ÷ 4.5 + English letters ÷ 15 + 1.5 seconds. When earlier lines cannot be finished, compile inserts time only where needed (before the picture that line has to wait for,
+and the picture waits along; if the last line cannot be finished, the node is lengthened), and does not stretch the whole node proportionally. The last node must be the current year (compile warns if it is not).
+When the second language's subtitle exceeds the single-line safe width (subcheck prints WIDE), split it into two lines with an id each; do not delete words and do not shrink the type size.
 
-## 字型
+## Numbers on screen
 
-**字型按用途在 city.yaml 設定**（`film.fonts`，九個用途：第一語言的標題與字幕 `primary_strong`、內文 `primary`、黑體兩種
-`primary_sans` / `primary_sans_strong`、大數字兩種 `numeral` / `numeral_strong`、第二語言兩種 `secondary` / `secondary_strong`、等寬小字 `mono`），
-寫字型名稱與字重，compile 到 `fonts/` 按字型檔裡的名稱找；找不到、沒有那個字重、或文案裡有字型畫不出的字，一律報錯，不讓瀏覽器拿系統字型補
-（只存片子用到的字的話，改了文案，新字會變成系統字型，一行字幕粗細不一）。`fonts/` 只放允許轉發的授權（SIL OFL 1.1、Apache 2.0）的完整字型，
-連同授權文字進 git；新字型 `uv run python -I pipeline/fonts.py add . "<Family>"`（從 Google 開源字型庫抓），`fonts.py list .` 看現有的。
-字重要實測，不照建議清單：用正式流程渲染 3 秒（成片 crf 19，再模擬平台 4 Mbps、2.5 Mbps 重壓）量過，靜止字幕的逐格變化只有 0.2–0.4 灰階，
-細筆畫不會因壓縮閃爍；真正的問題是英文字重 200 在亮的建築上幾乎看不見，至少用 300。換字型或字重時同樣先渲幾秒看。
+Numbers on screen that are decided by geometry or settings must not be written by hand: for the distance between two points use `[km]`; `{…}` in text can take `{plate_km[0]:.0f}` (plate width, depth in km),
+`{cfg.terrain.exaggeration:g}` (any setting in city.yaml, for example the exaggeration), `{km('id')}` (length of a line or perimeter of an area, in km), `{km2('id')}` (area of an area, in
+square km; the id is of a research area, an epoch or a line), `{stats.…}` (this is how Xianyang writes its plate size and the far-terrain exaggeration). Numbers given by the sources are written as the sources give them, not replaced by what the schematic model measures
+(Xianyang palace city perimeter: the report says 2747 metres, the readout says about 2.7 km; the schematic frame measures 2.77 km). Where no placeholder can fetch the number (the imagery source), when you change settings or geometry, change the readout, the opening note, the end card and CREDITS at the same time. Before changing
+the model's geometry (moving a wall, moving the frame, changing a plot), first look up the numbers that the subtitles and readouts state about it, and after the change they must still match (example: moving only one wall makes the perimeter disagree with the readout, so shift the whole frame instead).
 
-## 語言
+## Fonts
 
-**語言**（`film.lang`，一種或兩種，任何有語言包的語言，不限中英文）。語言包在 `i18n/<代碼>.yaml`
-（現有 zh、zh-Hant、en、ja、ko、fr）：書寫系統、一句字幕最長幾個字、數字規則、年份寫法（前 350、紀元前350年、기원전 350년、350 BCE）、
-程式自己寫上畫面的字（今天、實拍、想像圖、新建、長高、CHAPTER、LOCATOR）。新語言：複製一個語言包翻譯，`uv run python -I pipeline/i18n.py` 檢查。
-- 城市自己的字：旁白每句每種語言都要有（script.yaml）；釘標、地名、圖卡標題按語言寫（`zh:`、`ja:`…）；讀數、識別、片尾、剖面圖、出處
-  可以寫一種（第一語言）或按語言寫（`{ ja: ..., en: ... }`）。畫面上的字少了某種語言，compile 列出來並停下。
-- 讀秒按書寫系統：漢字與假名每秒 4.5 字、諺文每秒 6 音節、字母每秒 15 個；字幕字級按書寫系統（第一行漢字 38、拉丁 34；第二行拉丁 30、漢字 32）。
-- 字型要畫得出那種語言的字（compile 檢查，缺字就停）：日文用的思源宋體 SC 有假名；韓文要另選有諺文的字型。
-- 由右往左的文字（阿拉伯文、希伯來文）還不支援：compile 遇到就停。
-- 中文以外當第一語言只做過短測試（日英：字幕、年份、計數器、缺字報錯都對），還沒有正式的片；第一次做時每段多看。
-- 選語言的預設：不是英語的城市用本地語言＋英文（本地語言是第一語言，大字那行）；英語城市只用英文（`lang: [en]`）。用戶另有指定照用戶。
+**Fonts are set per job in city.yaml** (`film.fonts`, nine jobs: first-language title and subtitle `primary_strong`, body `primary`, two sans-serif `primary_sans` / `primary_sans_strong`, two for big numerals `numeral` / `numeral_strong`,
+two for the second language `secondary` / `secondary_strong`, small monospace `mono`), giving a font name and weight; compile looks in `fonts/` by the name inside the font file, and reports an error, never letting the browser fill in a system font, if the font is not found, has no such weight,
+or the copy contains a character the font cannot draw (if only the characters used by the film were stored, changing the copy would turn new characters into system-font characters, and one subtitle line would have uneven weight). `fonts/` holds only complete fonts under licences that allow redistribution (SIL OFL 1.1, Apache 2.0),
+committed to git together with the licence text; add a new font with `uv run python -I pipeline/fonts.py add . "<Family>"` (fetched from the Google open-source font library), and see what exists with `fonts.py list .`.
+Test weights, do not follow the suggestion list: render 3 seconds with the official pipeline (final film crf 19, then recompress to simulate platforms at 4 Mbps and 2.5 Mbps) and measure: still subtitles change only 0.2–0.4 grey levels frame to frame,
+and thin strokes do not flicker with compression; the real problem is that English weight 200 is almost invisible over bright buildings, so use at least 300. When changing a font or weight, likewise render a few seconds and look first.
+
+## Languages
+
+**Languages** (`film.lang`, one or two, any language that has a language pack, not limited to Chinese and English). Language packs are in `i18n/<code>.yaml`
+(existing: zh, zh-Hant, en, ja, ko, fr): script, the maximum length of a subtitle, number rules, how years are written (前 350, 紀元前350年, 기원전 350년, 350 BCE),
+and the words the program itself puts on screen (今天 (today), 實拍 (live footage), 想像圖 (imagined picture), 新建 (new), 長高 (taller), CHAPTER, LOCATOR). New language: copy a language pack and translate it, and check with `uv run python -I pipeline/i18n.py`.
+- The city's own words: every line of narration needs every language (script.yaml); pins, place names and card titles are written per language (`zh:`, `ja:`…); readouts, identity, end card, sections and sources
+  can be written in one language (the first) or per language (`{ ja: ..., en: ... }`). If any text on screen lacks a language, compile lists it and stops.
+- Reading time by script: Chinese characters and kana 4.5 characters per second, Hangul 6 syllables per second, letters 15 per second; subtitle size by script (first line: Chinese 38, Latin 34; second line: Latin 30, Chinese 32).
+- The font must be able to draw that language (compile checks, and stops on a missing glyph): for Japanese, the Source Han Serif SC used has kana; for Korean choose another font that has Hangul.
+- Right-to-left scripts (Arabic, Hebrew) are not supported yet: compile stops when it meets them.
+- A first language other than Chinese has been through only a short test (Japanese-English: subtitles, years, counter, missing-glyph errors all correct), and no real film yet; look more closely at every passage the first time.
+- Default choice of language: a city that is not English-speaking uses the local language + English (the local language is the first language, the big-type line); an English-speaking city uses English only (`lang: [en]`). If the user specifies otherwise, follow the user.

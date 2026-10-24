@@ -1,135 +1,135 @@
-# 研究：年代表、選材、故事素材與出處
+# Research: timeline, selection, story material and sources
 
-目標：用戶只給城市與起始年代。年代表、選站、貫穿線、故事素材、幾何全部由代理自己查，而且每一條都能回到來源。
-研究是劇本的材料庫：寫劇本時要用的事件、人物、故事和當地人的心事，這一步就要收齊，寫劇本時不必再回頭查。
+Goal: the user gives only a city and a starting era. The agent finds the timeline, the choice of stations, the through-line, the story material and the geometry itself, and every item can be traced back to its source.
+Research is the script's stock room: the events, people, stories and the locals' feelings that the script will need are collected in this step, so that writing the script does not require going back to look things up.
 
-## 這一步最常犯的錯
+## The most common mistakes in this step
 
-- 照通用的朝代表填空（新石器→秦→漢→唐→明→鐵路），每站一樣重 → 先回答第 2 節的問題，每一站都是這座城自己的東西。
-- 只收「哪一年發生了什麼」的乾巴巴記載 → 事件的經過、人物、細節、當地人的心事一起收（第 3 節），否則寫劇本時沒有故事可講。
-- 把考古發掘、陵墓當成站；把橋、路、地鐵這類連接排得太前 → 照第 2 節的優先順序。
-- 故事停在今天的統計數字 → 講到今年，結尾落在這座城的未來（第 4 節）。
-- 子代理和用戶轉貼的清單錯處不少 → 逐條回到原文（第 4、7 節）。
-- 憑印象寫「那個時代」的音樂、服飾、器物 → 先查那個時代實際有什麼（第 8 節）。
+- Filling in a generic dynasty table (Neolithic → Qin → Han → Tang → Ming → railway) with every station weighted the same → first answer the questions in §2; every station must be this city's own.
+- Collecting only dry records of "what happened in which year" → collect the course of events, people, details and the locals' feelings together (§3), or there will be no story to tell when the script is written.
+- Making archaeological digs or tombs into stations; putting connections such as bridges, roads and subways too early → follow the priority order in §2.
+- Letting the story stop at today's statistics → tell it up to this year and end on the city's future (§4).
+- Lists pasted by subagents and the user contain many errors → go back to the original text item by item (§4, §7).
+- Writing the music, clothes and objects of "that era" from impression → first find out what actually existed in that era (§8).
 
-## 1. 怎麼做
+## 1. How to do it
 
-1. 用 WebSearch / WebFetch 建立年代表，每條事實附 URL 與原文（可派研究子代理，任務書照第 7 節）。
-2. 回答第 2 節的問題，選站、選貫穿線（第 5 節）。
-3. 每一站收故事素材（第 3 節）。
-4. 結果寫進城市資料夾：`FACTS.md`（畫面上每一個說法的出處）和 `research/`（各份筆記、報告、出處原文、`stories.md`、`images.md`），
-   跟城市一起進 git：它們是這座城的資料，不是暫存檔。
-5. 關鍵事實要自己再開原文核一次：開頭與結尾、所有上屏的年份、人物與地名、引文。
-6. **年代表和站表先列給用戶看**：每站寫年份、這座城在這裡變成什麼樣或發生了什麼、要講的故事、出處狀態；用戶點頭才進下一步。
+1. Build the timeline with WebSearch / WebFetch, with a URL and the original text for every fact (research subagents may be used; brief them as in §7).
+2. Answer the questions in §2, then choose the stations and the through-line (§5).
+3. Collect story material for each station (§3).
+4. Write the results into the city folder: `FACTS.md` (the source of every claim on screen) and `research/` (notes, reports, source texts, `stories.md`, `images.md`),
+   which go into git with the city: they are this city's data, not temporary files.
+5. Open the original text yourself once more for the key facts: the opening and the ending, every year shown on screen, people's and places' names, quotations.
+6. **List the timeline and the station table for the user first:** for each station give the year, what the city becomes or what happens there, the story to tell, and the status of the sources; go to the next step only when the user approves.
 
-## 2. 選材：什麼值得講
+## 2. Selection: what is worth telling
 
-歷史的厚重感來自兩樣：這座城經歷的轉折，以及對這座城意義重大、值得紀念的事與人。考古發現的數量不是厚重感。
-按優先順序：
+The weight of history comes from two things: the turning points the city went through, and the events and people that matter greatly to the city and deserve to be remembered. The number of archaeological finds is not weight.
+In order of priority:
 
-1. **地位與重大事件**：建城、建都、統一、遷都、設市、升格，以及在這裡發生、對這座城意義重大的事
-   （咸陽：秦統一六國，咸陽成為第一個大一統帝國的都城；項羽焚城）。
-2. **人物與故事**：在這裡做出決定、留下故事的人，和在這裡發生過的故事（咸陽：秦王嬴政滅六國、稱始皇帝，在這裡建立中國第一個大一統的帝國；商鞅遷都咸陽、在這裡推行變法；王維在渭城送別友人）。
-3. **興衰**：繁榮、戰火、衰敗、重建。
-4. **城市形態**：新區、新城、湖、河道，城市朝哪裡長。
-5. **產業**：一個產業的興起、鼎盛、衰落、轉型（咸陽：紡織城 → 電子城 → 國棉改制 → 西部屏谷）。
-6. **連接**（最後才考慮）：橋、鐵路、機場、地鐵、區號。只有它改變了這座城的命運，或本身帶著故事時才成站
-   （咸陽：029 區號並網，承載著兩城合一的期盼）。
+1. **Status and major events:** founding the city, becoming a capital, unification, moving the capital, becoming a municipality, promotion in rank, and events that happened here and matter greatly to the city
+   (Xianyang: Qin unified the six states and Xianyang became the capital of the first unified empire; Xiang Yu burned the city).
+2. **People and stories:** people who made decisions or left stories here, and stories that happened here (Xianyang: King Ying Zheng of Qin destroyed the six states, took the title First Emperor and founded China's first unified empire here; Shang Yang moved the capital to Xianyang and carried out his reforms here; Wang Wei saw off a friend at Weicheng).
+3. **Rise and fall:** prosperity, war, decline, rebuilding.
+4. **Urban form:** new districts, new towns, lakes, river channels, the direction the city grew.
+5. **Industry:** the rise, peak, decline and transformation of an industry (Xianyang: textile city → electronics city → state cotton mill restructuring → Western Screen Valley).
+6. **Connections** (considered last): bridges, railways, airports, subways, area codes. They become a station only if they changed the city's fate or carry a story themselves
+   (Xianyang: the 029 area code merger, which carried the hope of the two cities becoming one).
 
-檢驗：拿掉這一站，觀眾對「這座城是誰、經歷過什麼、怎麼變成今天」的理解會少一塊嗎？不會就不成站。
+Test: if this station is removed, does the audience understand a piece less of "who this city is, what it went through, how it became today"? If not, it is not a station.
 
-**重大的事給足篇幅**：一座城最輝煌或最痛的時刻，不是一句旁白帶過的一站，而是可以講好幾分鐘的一段故事。
-研究時就把它查透：前因、經過、關鍵人物、細節、對這座城的影響（咸陽：秦王嬴政用 10 年滅六國、稱始皇帝，分天下為三十六郡；
-每滅一國就在咸陽北阪照原樣仿建它的宮室，又把天下豪富十二萬戶遷到咸陽，文字、車軌、度量衡從這裡統一到全天下）。
-這件事的主角也要講足：他做成了什麼、為什麼重要；有爭議的地方照史料寫成事實，不要只拿他當後面衰落的反襯。
+**Give major events enough room:** the most glorious or most painful moment of a city is not a station carried by one line of narration; it can be a story of several minutes.
+Research it thoroughly at this stage: causes, course, key people, details, the effect on the city (Xianyang: King Ying Zheng of Qin destroyed the six states in 10 years and took the title First Emperor, dividing the world into 36 commanderies;
+for every state he destroyed, he rebuilt its palaces as exact copies on the north slope of Xianyang, and moved 120,000 of the richest households under heaven to Xianyang; writing, axle widths and weights and measures were unified from here for the whole world).
+Tell the protagonist of such an event fully too: what he achieved and why it matters; write the disputed points as facts according to the sources, and do not use him only as a contrast to the decline that follows.
 
-**先找出這座城和別的城不一樣的地方，再定結構。** 定站之前先回答這些問題，答案決定開場、篇幅最多的段落、那場獨特的戲和結尾：
-1. 名字從哪來：開場就交代它（咸陽：九嵕山在北、渭水在南，山水俱陽）。
-2. 對這座城最重要、最值得紀念的事和人是什麼：它們是全片篇幅最多的段落。
-3. 有什麼別的城沒有的規劃或地理：給它一場戲（STAGING.md 規則 8；咸陽：秦咸陽法天象地、咸陽原的台地）。
-4. 城址動過沒有、怎麼動的：沒動和搬過都是故事（成都 2000 多年沒動過，咸陽搬了好幾次）。
-5. 歷史上給過它哪些身份（咸陽：秦都、帝都、渭城、縣城、紡織城、電子城、空港）。
-6. 有沒有一件從頭到尾都在的東西（第 5 節的貫穿線；可選的象徵物見 SCRIPT.md）。
-7. 它的未來是什麼：正在建的、規劃中的、當地人期待的（結尾的展望，第 4 節）。
+**First find what makes this city different from other cities, then decide the structure.** Before fixing the stations, answer these questions; the answers decide the opening, the longest passages, the unique scene and the ending:
+1. Where the name comes from: say it in the opening (Xianyang: Mount Jiuzong to the north and the Wei river to the south, so mountain and water are both "yang").
+2. What are the most important and most memorable events and people for this city: they are the longest passages of the film.
+3. What planning or geography does it have that other cities do not: give it a scene (STAGING.md rule 8; Xianyang: Qin Xianyang modelled on heaven and earth, the terraces of the Xianyang plateau).
+4. Was the city site moved, and how: staying put and moving are both stories (Chengdu has not moved in over 2,000 years; Xianyang moved several times).
+5. What identities history has given it (Xianyang: Qin capital, imperial capital, Weicheng, county town, textile city, electronics city, airport city).
+6. Is there something that is there from start to finish (the through-line in §5; for the optional emblem see SCRIPT.md).
+7. What its future is: what is being built, what is planned, what the locals look forward to (the outlook at the end, §4).
 
-站表不要照通用的朝代順序填空，每一站都要是這座城自己的東西。
+Do not fill the station list in generic dynasty order; every station must be this city's own.
 
-**考古與陵墓**：只有在它改變了城市本身時才成一站，例如新城建設和遺址保護的衝突、遺址成了城市的公園或地標。發掘本身、出土數字、
-陵墓都不單獨成站，最多是某一站裡的一句。古代部分講城市時，考古是「怎麼知道」的出處，不是故事本身。
+**Archaeology and tombs:** they become a station only when they changed the city itself, for example the conflict between new-town construction and site protection, or a site that became a city park or landmark. An excavation by itself, find counts
+and tombs are never a station of their own, at most a sentence inside one. When the ancient part is about the city, archaeology is the source of "how we know", not the story itself.
 
-**每站要能畫在模型上**：一個範圍（區、新城、廠區、保護範圍）、一條線（橋、地鐵、鐵路）或一個點；畫不出來的事實和故事放進旁白，
-配在它所屬那一站的畫面上，不單獨成站。
+**Every station must be drawable on the model:** a region (a district, new town, factory area, protected area), a line (a bridge, subway, railway) or a point. Facts and stories that cannot be drawn go into the narration
+and are matched with the picture of the station they belong to; they do not become a station of their own.
 
-咸陽 1975–2026 的例子：彩虹廠（電子城）、設市與分區、機場、國棉改制、咸陽湖、029 並網、秦漢新城與遺址保護範圍、西咸新區、
-地鐵進咸陽、兩城一線、「十五五」與西部屏谷。反例：府庫裡的火、機場下的古墓、新公布的陵墓（考古細節，不是城市的轉折）。
+The Xianyang 1975–2026 example: Rainbow factory (electronics city), becoming a municipality and its districts, the airport, state cotton mill restructuring, Xianyang Lake, the 029 merger, Qin-Han New City and the site protection area, Xixian New Area,
+the subway into Xianyang, two cities one line, the "15th Five-Year Plan" and Western Screen Valley. Counter-examples: fire in the treasury, an ancient tomb under the airport, a newly announced tomb (archaeological detail, not a turning point of the city).
 
-## 3. 故事素材：寫劇本時要用的，這一步收齊
+## 3. Story material: collect here what the script will use
 
-不只記「發生了什麼」，也記讓它成為故事的東西，寫進 `research/stories.md`，一站一節：
+Record not only "what happened" but also what makes it a story, in `research/stories.md`, one section per station:
 
-- **人物**：誰在這裡做了什麼決定、說過什麼；原話照錄，附出處。
-- **場景與細節**：當時的樣子、規模、數字、物件、聲音（咸陽：「每破諸侯，寫放其宮室，作之咸陽北阪上」）。
-- **這座城的人的心事**：盼過什麼、失去過什麼、為什麼驕傲。地方誌、新聞採訪、評論、口述都可以是出處。
-  例：咸陽和西安太近、歷史糾纏太深。2006 年 029 並網後，咸陽人盼著兩城合一、恢復昔日榮光；2017 年西咸新區交西安代管，
-  最精華的一塊地歸了西安，合併也就此不會發生。所以 2017 那一句是惆悵，不是中性的行政變更。
-  這些心事決定講述者的情緒，也決定結尾怎麼收（咸陽：兩城沒有合併，卻長在一起）。
-- **詩文與典故**：寫這裡的詩、成語、傳說（咸陽：王維《送元二使安西》的「渭城朝雨」）。傳說標「傳說」。
-- **值得配圖的場景**：城市最繁榮的樣子、重大事件的場面、詩文的意境；有圖記下來源，沒圖也標出來（DATA.md「配圖清單」）。
-- **能前後呼應的線索**：早年的一件事和後來的一件事能對照（咸陽：秦時渭水兩岸本是一座咸陽；兩千多年後，咸陽和西安隔著渭水長成同一座城）。
+- **People:** who made what decision here and what they said; quote their words exactly, with the source.
+- **Scenes and details:** how it looked then, the scale, numbers, objects, sounds (Xianyang: 「每破諸侯，寫放其宮室，作之咸陽北阪上」 ("whenever he broke a feudal lord, he copied that lord's palaces and built them on the north slope of Xianyang")).
+- **The feelings of this city's people:** what they hoped for, what they lost, why they are proud. Local gazetteers, news interviews, commentary and oral accounts can all be sources.
+  Example: Xianyang and Xi'an are too close and their history is too entangled. After the 029 merger in 2006, Xianyang people hoped the two cities would become one and the old glory would return; in 2017 the Xixian New Area was handed to Xi'an to administer,
+  the finest piece of land went to Xi'an, and a merger would never happen. So the 2017 line is wistful, not a neutral administrative change.
+  These feelings decide the narrator's emotion and also how the ending closes (Xianyang: the two cities did not merge, yet grew together).
+- **Poems and allusions:** poems, idioms and legends about this place (Xianyang: Wang Wei's 《送元二使安西》 (Seeing Yuan the Second Off to Anxi) and its 「渭城朝雨」 ("morning rain at Weicheng")). Mark legends as "legend".
+- **Scenes worth a picture:** the city at its most prosperous, the scenes of major events, the mood of a poem; note the source where there is a picture, and mark the scene even where there is none (DATA.md "Pictures and footage").
+- **Threads that can echo:** an early event and a later one that can be set against each other (Xianyang: in Qin times the two banks of the Wei were one Xianyang; over 2,000 years later Xianyang and Xi'an grew into one city across the Wei).
 
-故事素材的出處要求和事實一樣（第 4 節的狀態標記）：不一定是官方記載，能證實的報導、訪談、地方誌、學者著作都可以；
-查不到出處的不收。寫劇本時先用 `stories.md`；不夠時回到這一步補查，不憑空編。
+The sources for story material are held to the same standard as facts (the status marks in §4): they need not be official records; verifiable reports, interviews, gazetteers and scholars' works are all fine;
+do not collect what has no source. Use `stories.md` first when writing the script; when it is not enough, go back to this step and research more; never invent.
 
-## 4. 年代表
+## 4. The timeline
 
-從起始年代到今天，每條：年份（公元前用負數）、事件、來源 URL、原文引文、狀態標記。
-狀態：[OK] 開過原文；[SEC] 只有維基或搜尋摘要；[WEAK] 旅遊／聚合站；[EST] 估算。
-只有 [OK] 和 [SEC] 可以上屏；[SEC] 的關鍵年份要再找一個來源或在 FACTS.md 註明。兩個來源衝突時兩個都記，畫面用較保守的說法。
-數字照原文抄（核對用）；寫進旁白時的寫法見 SCRIPT.md。
+From the starting era to today, each entry has: year (BCE as a negative number), event, source URL, the original quotation, a status mark.
+Status: [OK] original text opened; [SEC] only Wikipedia or a search summary; [WEAK] tourism or aggregator site; [EST] estimate.
+Only [OK] and [SEC] may go on screen; for the key years of a [SEC] entry find one more source or note it in FACTS.md. When two sources conflict, record both and use the more conservative wording on screen.
+Copy numbers as in the original (for checking); for how to write them in the narration see SCRIPT.md.
 
-**講到今年，收在未來**：最後一站講到今年（最新的政府工作報告、統計公報、本年度大事）；結尾要落在這座城的未來：
-正在建的、規劃中的、當地人期待的，故事才完整。展望也要有出處：規劃寫成規劃、期待寫成期待，不寫成已經完成。
+**Tell it up to this year, and close on the future:** the last station reaches this year (the latest government work report, statistical bulletin, this year's major events); the ending must land on the city's future:
+what is being built, what is planned, what the locals look forward to, and only then is the story complete. The outlook needs sources too: write a plan as a plan and an expectation as an expectation, never as already done.
 
-這些要求約束的是代理自己的研究，管的是事實。講述者的感受、評價和聯想不需要出處（那是作品的聲音）；但不能把感受寫成新的事實。
-用戶自己寫的文案（本地歷史、家族記憶、沒上網的資料）照用，不要求出處；與已查到的資料矛盾時才提出。
-用戶轉貼的別處材料（別的代理給的清單、網路文章、年表）不算用戶自己的文案：它們是線索，照本節逐條回到原文，查不到的不上屏；
-查到的說法和轉貼的不一樣，照查到的寫，並告訴用戶。裡面建議的做法也要實測才採用（例：一份轉貼的咸陽現代站表，查證後只收了三件半：
-「紡織一條街」查無出處；「西部顯示谷」其實是「西部屏谷」；「2019 地鐵時代」要分成 2019 年過界、2023 年進主城兩步講）。
+These requirements bind the agent's own research and govern facts. The narrator's feelings, judgements and associations need no source (that is the voice of the work), but a feeling must not be written as a new fact.
+Copy the user writes themselves (local history, family memory, material not online) is used as is without demanding a source; raise it only when it contradicts data you found.
+Material the user pastes from elsewhere (a list from another agent, a web article, a chronology) is not the user's own copy: treat it as leads, go back to the original item by item as in this section, and keep off the screen whatever cannot be found;
+when what you find differs from what was pasted, write what you found and tell the user. Practices it suggests are adopted only after testing (example: a pasted Xianyang modern station list kept only three and a half items after checking:
+"the textile street" had no source; "Western Display Valley" was actually "Western Screen Valley"; "2019 subway era" had to be told in two steps, crossing the boundary in 2019 and entering the main city in 2023).
 
-## 5. 貫穿線（anchor）
+## 5. The through-line (anchor)
 
-找一件從起點一直存在、今天仍看得到的東西，讓觀眾在各個時代認出同一座城：一條河與它的渡口、一塊台地、一條軸線、一座城門、
-一個延續的產業。成都的範本：金沙遺址——3000 年前埋下，2001 年施工時挖出，太陽神鳥成了城徽（這裡考古成立，是因為它變成了城市的象徵）。
-評分順序：
-1. 它的變化本身就是城市的轉折（遷移、改建、廢棄、重新使用），而且每次都有明確年份。
-2. 在模型範圍之內（否則只能當序幕或用邊緣指示牌）。
-3. 來源是官方、學術或主流媒體原文，不是旅遊網站。
-4. 回聲會重複更好（例如咸陽：渭河的渡口、橋、湖與地鐵一再改寫兩岸的關係）。
+Find something that has existed from the start and can still be seen today, so the audience recognises the same city in every era: a river and its ferry crossing, a plateau, an axis, a city gate,
+an industry that continues. The Chengdu model: the Jinsha site, buried 3,000 years ago and dug up during construction in 2001, whose Sun Bird became the city emblem (archaeology counts here because it became a symbol of the city).
+Scoring order:
+1. Its changes are themselves turning points of the city (moved, rebuilt, abandoned, reused), each with a clear year.
+2. It lies within the model extent (otherwise it can only be a prologue or use an edge signpost).
+3. Its source is official, scholarly or mainstream media original text, not a tourism site.
+4. Better still if the echo can repeat (for example in Xianyang: the Wei river's ferries, bridges, lake and subway rewrite the relation between the two banks again and again).
 
-## 6. 幾何
+## 6. Geometry
 
-先查 OSM：`historic=*`、`site_type`、`archaeological_site`、`tomb`、`citywalls`、保護區多邊形（pipeline/osm.py 的 historic 主題已抓）。
-有輪廓就用輪廓（`osm_polygons:` / `mounds: osm:`），FACTS.md 記 way id。
-沒有輪廓：用文獻描述畫示意多邊形（`polygons:`），畫面標「示意」。沒有坐標的點只在字幕提，不打釘標。
-字幕點名的範圍（行政區、新區、新城、廠區、保護範圍）要找邊界：OSM 行政界線、官方規劃圖、組成它的鄉鎮街道；找不到就從四至描述畫示意。
-全部寫進 `research/<主題>_areas.geojson`（properties.id、status、source），研究檔逐項記來源與做法。
-土丘、台基等今天仍在的土方用 `mounds:` 建成真實幾何（底面取 OSM 輪廓，高度取文獻，無記載者取通例並註明）。
+Check OSM first: `historic=*`, `site_type`, `archaeological_site`, `tomb`, `citywalls`, protected-area polygons (the historic theme of pipeline/osm.py already fetches them).
+Use an outline where one exists (`osm_polygons:` / `mounds: osm:`) and record the way id in FACTS.md.
+Where there is no outline, draw a schematic polygon from the literature (`polygons:`) and label it "schematic" on screen. A point with no coordinates is mentioned only in a subtitle, with no pin.
+For an area a subtitle names (an administrative district, new area, new town, factory area, protected area), find the boundary: OSM administrative boundaries, official planning maps, the townships and streets it is made of; if none is found, draw a schematic one from the description of its four limits.
+Write everything into `research/<topic>_areas.geojson` (properties.id, status, source), and record the source and method of each item in the research file.
+Earthworks and platforms that still exist today, such as mounds, are built as real geometry with `mounds:` (base from the OSM outline, height from the literature, a customary value where nothing is recorded, with a note).
 
-## 7. 研究子代理的任務書要點
+## 7. Briefing research subagents
 
-- 任務書先寫第 2 節的選材規則和優先順序：地位與重大事件、人物與故事在前，連接在最後；考古與陵墓只在改變了城市時才列。
-- 指定輸出檔與章節：年代表、故事素材（第 3 節）、坐標表、錨點候選排序、數字、未核實清單。
-- 要求每條附 URL 與原文；要求區分原文與 fetcher 摘要（[PARAPHRASE]）；故事素材同樣附出處（人物原話、地方誌、採訪）。
-- 政府網站常常連不上：讓它記下 URL，主代理再試或改用新聞轉載。
-- 主代理必須自己再核：錨點事件、所有上屏年份、人物與地名，以及句子裡差一個詞就錯的限定詞（「國際」「首個」「進市區」）。
-  沒附原文的條目一律當作未核實（例：一份 15 條的咸陽清單裡，咸陽湖蓄水年份、地鐵二期「進市區」、機場「國際」二字、「中國第一隻彩管」
-  都有錯或沒有出處）。
-- 指定輸出的路徑在 `cities/<slug>/research/`（筆記、報告、出處原文都是，音樂研究的分頭筆記放 `research/music_notes/`），跟城市一起進 git。
-  寫成摘要之後，原來的筆記照樣留著：摘要裡沒有逐條的出處和原文。
+- The brief begins with the selection rules and priority order of §2: status and major events, people and stories first, connections last; archaeology and tombs are listed only when they changed the city.
+- Name the output files and sections: timeline, story material (§3), coordinate table, ranking of anchor candidates, numbers, a list of unverified items.
+- Require a URL and the original text for every item; require a distinction between original text and the fetcher's summary ([PARAPHRASE]); story material also carries sources (a person's own words, gazetteer, interview).
+- Government sites are often unreachable: have the subagent note the URL, and the main agent tries again or uses a news reprint.
+- The main agent must check again itself: the anchor event, every year shown on screen, people's and places' names, and qualifiers where one word makes the sentence wrong ("international", "first", "into the urban area").
+  An entry with no original text attached counts as unverified (example: in a 15-item Xianyang list, the year Xianyang Lake was filled, subway phase 2 "into the urban area", the word "international" for the airport, and "China's first colour picture tube"
+  were all wrong or had no source).
+- The output path is `cities/<slug>/research/` (notes, reports and source texts all go there; separate notes of music research go in `research/music_notes/`), and it goes into git with the city.
+  After a summary is written, the original notes stay as they are: the summary has no item-by-item sources and original text.
 
-## 8. 時代感：先查那個時代實際有什麼
+## 8. Period feel: first find out what actually existed then
 
-音樂、服飾、器物、建築細節、想像圖的提示詞，寫之前先研究那個時代、那個地方實際有什麼，分清實證（出土、原典）、推論、現代慣例，
-寫進 `research/<主題>.md`，每條附出處。憑印象寫的「古風」多半是時代錯置。
-例（咸陽，`cities/xianyang/research/music.md`）：憑印象會用簫、古琴當城市聲音，秦段用法國號、低音銅管，焚城用二胡；查了才知道秦有李斯「擊甕叩缶彈箏搏髀」、兵馬俑坑的鼓、
-秦公鐘鎛和石磬，銅管、二胡都是時代錯置，簫和古琴在關中找不到本地依據。最後定為鼓當脈搏、塤當記憶、箏當秦聲。
+For music, clothes, objects, architectural details and prompts for imagined pictures, before writing, research what actually existed in that era and place, separating evidence (excavated, primary text), inference and modern convention,
+and write it into `research/<topic>.md` with a source for each item. An "ancient style" written from impression is mostly an anachronism.
+Example (Xianyang, `cities/xianyang/research/music.md`): from impression one would use the xiao flute and guqin as the city's sound, French horn and low brass for the Qin section, and erhu for the burning of the city; research showed that Qin has Li Si's 「擊甕叩缶彈箏搏髀」 ("striking jars and pots, plucking the zheng, slapping the thigh"), the drums of the terracotta army pits,
+the Qin bells and bianzhong and stone chimes; brass and erhu are anachronisms, and no local basis for the xiao and guqin can be found in Guanzhong. In the end: drum as pulse, xun as memory, zheng as the voice of Qin.

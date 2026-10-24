@@ -1,87 +1,86 @@
-# 歷代城市與地形
+# Period cities and terrain
 
-## 這一步最常犯的錯
+## The most common mistakes in this step
 
-- 一個圈、幾排格子、只有牆的房子、空城 → 每個時期一整座照史料生成的城，填滿，逐項跟史料的圖對（「每個時期一整座城」「不能有空城」）。
-- 地形倍率寫死，坡上的地基比房子還高 → 按坡度量（「外觀與高度」）。
+- One ring, a few rows of grid cells, houses that are only walls, an empty city → one whole city per period generated from the sources, filled in, checked item by item against the sources' drawings ("A whole city for each period", "No empty cities").
+- A hard-coded terrain exaggeration, so the foundation on a slope is taller than the house → measure by slope ("Appearance and height").
 
-## 每個時期一整座城
+## A whole city for each period
 
-**每個歷史時期是一整座城的 3D 模型**：在節點寫 `city:` 規格，由 `pipeline/citygen.py` 生成（城牆、城門與甕城、主街與巷網、合院／民居／宿舍地塊、
-宮殿院落、高台、複道、寺廟、鐘樓、塔、紗廠、車站、橋、船、樹）。有史料照史料（考古平面、方志城圖、OSM 遺址輪廓），沒有就按同期同類城市的通例，畫面標「示意」。
-先拿史料最全的那座城做近景；近景鏡頭距離 0.035–0.06（約 0.1 m／像素）、仰角 10–15°、沿主街在城牆內滑行（`fov: 40–44`），
-房子看得出是房子再鋪其他時期。沒有示意圖的城，先派研究子代理查考古與文獻布局（寫進 `research/`），不要用格子充數。
-每個歷史時期至少一個低角度近景（仰角 10–15°），讓觀眾看出房子是房子；遠景只用來看換色和生長。
-照史料做的部件，要拿模型和那張圖逐項對：位置、朝向、層次、尺寸；compile、clipcheck 沒報錯不代表做對了
-（例：台基的三級疊錯了方向，沒有任何檢查會報）。
+**Every historic period is a 3D model of a whole city:** write a `city:` spec in the node, and `pipeline/citygen.py` generates it (walls, gates and barbicans, main streets and lane network, courtyard / dwelling / dormitory plots,
+palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, cotton mills, stations, bridges, boats, trees). Follow the sources where there are sources (archaeological plans, gazetteer city maps, OSM site outlines); where there are none, follow the custom of contemporary cities of the same kind and label the picture "schematic".
+Do the close-up for the city with the fullest sources first; close-up camera distance 0.035–0.06 (about 0.1 m per pixel), elevation 10–15°, gliding along the main street inside the walls (`fov: 40–44`),
+and lay the other periods only once the houses are recognisable as houses. For a city with no schematic, first send a research subagent to find the archaeological and documentary layout (written into `research/`); do not fill in with grid cells.
+Every historic period needs at least one low-angle close-up (elevation 10–15°) so that the audience sees that houses are houses; the wide shot is used only to see the colour change and the growth.
+For a part made from the sources, check the model against that drawing item by item: position, orientation, tiers, size; no error from compile or clipcheck does not mean it is right
+(example: the three tiers of a platform were stacked in the wrong direction, and no check will report that).
 
-## 邊界、疊層與變化
+## Boundaries, overlay and change
 
-邊界由生成的建築自動算出；建築給不出的邊界（村子的壕溝）用 `outline:` 補上，片尾的歷代足跡也照它畫；
-疊在前一個時期上的城市寫 `avoid_eras: [<id>]`，新街區會繞開舊城。坡地上的城牆、複道、街面順著坡傾斜（citygen `lay`），不要一段段做成台階。
-後一個時期要看得出變化：疊在前一座城上的新城，規模或布局要明顯不同（加幾個小院不算），照史料放大；舊城留在下面，換色後先用遠景
-讓觀眾看見新城從舊城周圍長出來，再湊近（例：咸陽的帝都照《史記》，六國宮室沿北阪
-一字排開、十二萬戶的新街區圍著舊城）。
+The boundary is computed automatically from the generated buildings; for a boundary the buildings cannot give (a village moat) add `outline:`, and the footprints of the historic cities at the end are also drawn from it;
+a city laid over the previous period writes `avoid_eras: [<id>]`, so the new quarters go around the old city. Walls, elevated corridors and street surfaces on slopes tilt with the slope (citygen `lay`); do not make them into steps segment by segment.
+The later period must show change: a new city laid over the previous one must differ clearly in scale or layout (adding a few small courtyards does not count), enlarged according to the sources; the old city stays underneath, and after the colour change use a wide shot first
+so that the audience sees the new city grow around the old one, then move closer (example: Xianyang's imperial capital follows the 《史記》 (Records of the Grand Historian): the palaces of the six states
+line up along the north slope, and the new quarters of 120,000 households surround the old city).
 
-## 不能有空城
+## No empty cities
 
-**不能有空城**：歷代城市盡量照圖恢復（考古平面 → 復原圖、模型 → 影視場景 → 同期通例想像），每項標依據（發掘 / 文獻 / 影視 / 想像），
-不是發掘的一律標「示意」。宮城、城牆內不能留大片空地（除了池、苑、廣場、田），找不到資料的區域按通例或影視布局填滿。
-stages 用名字選部件（`id` / `group`），不能用序號：清單一改序號就錯。
-大量建築用產生器從研究清單換算（例：`cities/xianyang/research/han_gen.py`，座標以前殿為原點的公尺），每項註明依據；
-改完跑 clipcheck，重疊、穿模都要是 0。照復原圖做的單體（秦一號宮殿）可用 `exaggeration` 降低高度誇張，保住原比例。
-道路要連續、有質感：坡上的道路分段鋪，相鄰兩段在接縫處取同一高度、頭尾相接不重疊（高低差會留一道細影，重疊的兩個面會閃，
-看起來就是斷斷續續的虛線）；路面畫夯土的顆粒與斑塊，道路另有沿路的車轍（一車道 4.2 米、兩轍相距 1.4 米），一個像素蓋住的地面
-比紋理大時自動淡掉，遠看不閃。城市一律鋪在引擎實際畫出的地面上（`terrainio.plate_mesh`：底板是約 48 米一格的網格、格內是平的三角形，
-在凹處比取樣的地形高），不是鋪在取樣的地形上；建築的基地取足跡內每 8 米左右的最高點。
-**每棟各自落地**：合院、宮院、院落裡的每棟房子各自站在腳下的地面（正房高、倒座低，像依坡而建），院牆和院子順著坡走；
-長的廂房沿坡落差超過 0.5 米就分段，一段一個高度（`Builder.step`）。不要整座院落放同一個高度：48 米深的院落在坡上，
-低的一邊整排房子都站在高高的地基上。也不要在地形裡削高填低整地：底板 48 米一格，台地一級在畫面上比房子還高，
-而且會把站在坡上的地標削低。
-**大地塊蓋多進宅第**：合院地塊深過 60 米（`Builder.MANSION_D`）自動蓋成宅第：沿中軸約 30 米一進、寬地塊兩側加跨院、外圍院牆任何細節都畫。
-一個合院撐不滿大地塊，只剩邊上幾條細房子圍著空地，低細節時像空框。
-同理，市要每格排滿列肆，作坊區照發掘畫成一個個院落（`workshops`），不要只沿街一排或撒散點：遠看都是空框和沙粒。
-產生器裡寫死的尺寸（房子深度、攤位排數、院落進數），要拿城市設定裡最大的地塊試一次：撐不滿的大地塊只畫一圈邊，低細節時就是空框。
-改門檻時避開用戶剛看過、點過頭的那一批，不要讓它們一半變、一半不變。
-**照古地圖或考古平面排街區**（`city.trace`）：先把圖對準地圖（QGIS 的地理配準），在上面描出城牆（面）、街道（線）、街區（面）、
-地標（點或面），存成 GeoJSON 放進 `research/`，每個圖形的 `kind` 寫 wall、street、block、landmark，其他屬性就是那一項的設定
-（`lot`、`typ`、`w_m`、`shops`、地標的 `type`…）；街區裡的房子順著街區自己的長邊排，不跟全城的格網（`pipeline/citygen.py` 的 `traced`）。
-描的和 `city:` 裡寫的一起建，可以混用。這個功能還沒有城市用過，第一次用時先拿一小塊給用戶看。
-**沿街店鋪**一列牆貼牆、高度相近，店身後面留後院、院牆連成一線（間間有縫、高低不一、背後空著，從背後斜看像一排牙齒）。還沒做：陡坡上的房子順等高線排（見「地面與地形」）。
-clipcheck 的 `paving_under` 檢查路面、
-院子有沒有被底板蓋住（超過 0.3 米就算），必須是 0。新的街區要有街道和巷子（`streets`、`lanes: {region}`），不能只有一片房子。
+**No empty cities:** restore the period cities from drawings as far as possible (archaeological plan → reconstruction drawing or model → film and TV set → imagination by the custom of the same period), and label each item with its basis (excavation / documents / film and TV / imagination);
+whatever is not excavated is labelled "schematic". Do not leave large empty spaces inside a palace city or inside walls (except ponds, gardens, squares, fields); fill the areas with no data by custom or by film layout.
+`stages` select parts by name (`id` / `group`), never by index: the index breaks whenever the list changes.
+Generate large numbers of buildings from the research list with a generator (example: `cities/xianyang/research/han_gen.py`, coordinates in metres with the front hall as origin), noting the basis for each item;
+run clipcheck afterwards, and overlaps and clipping must be 0. A single building made from a reconstruction drawing (Qin Palace No. 1) may use `exaggeration` to lower the height exaggeration and keep its original proportions.
+Roads must be continuous and textured: lay a road on a slope in segments, with adjacent segments taking the same height at the seam and meeting end to end without overlapping (a height difference leaves a thin shadow, and two overlapping faces flicker,
+which looks like a broken dashed line); the road surface is drawn with rammed-earth grain and patches, and roads also have wheel ruts along them (one lane 4.2 m, the two ruts 1.4 m apart), which fade out automatically when the ground covered by a pixel
+is larger than the texture, so they do not flicker from afar. Always lay a city on the ground the engine actually draws (`terrainio.plate_mesh`: the plate is a grid of about 48 m cells with flat triangles inside the cells,
+higher than the sampled terrain in hollows), not on the sampled terrain; the base of a building takes the highest point in its footprint, sampled every 8 m or so.
+**Every building lands on its own:** each house in a courtyard, palace court or compound stands on the ground beneath it (main hall high, front row low, as if built along the slope), and the courtyard walls and yards follow the slope;
+a long wing is split into segments when the drop along the slope exceeds 0.5 m, one height per segment (`Builder.step`). Do not put a whole compound at one height: with a 48 m deep compound on a slope,
+the whole row of houses on the low side stands on a very high base. Also do not cut high and fill low to level the terrain: the plate is 48 m per cell, one step of terrace is taller on screen than a house,
+and it would cut down the landmarks standing on the slope.
+**Large plots get multi-courtyard mansions:** a courtyard plot deeper than 60 m (`Builder.MANSION_D`) is built automatically as a mansion: one courtyard every 30 m or so along the central axis, side courtyards added on both sides of a wide plot, and the surrounding wall drawn in every detail.
+A single courtyard cannot fill a large plot, leaving only a few thin houses at the edge around empty ground, which looks like an empty frame at low detail.
+Likewise, a market must have rows of shops in every cell, and a workshop area must be drawn as courtyards one by one as excavated (`workshops`), not a single row along the street or scattered points: from afar they look like empty frames and grains of sand.
+The sizes hard-coded in a generator (house depth, number of stall rows, number of courtyard sequences) must be tried on the largest plot in the city's settings: a large plot that cannot be filled gets only an outline, which is an empty frame at low detail.
+When changing a threshold, avoid the batch the user has just seen and approved; do not let half of them change and half not.
+**Lay out blocks from an old map or an archaeological plan** (`city.trace`): first register the map (georeferencing in QGIS), then trace on it the walls (polygons), streets (lines), blocks (polygons)
+and landmarks (points or polygons), save them as GeoJSON in `research/`, write `kind` of each shape as wall, street, block or landmark, and the other properties are the settings of that item
+(`lot`, `typ`, `w_m`, `shops`, the landmark's `type`…); houses in a block line up along the block's own long side, not the city-wide grid (`traced` in `pipeline/citygen.py`).
+What is traced is built together with what is written in `city:`, and the two can be mixed. No city has used this feature yet; the first time, show the user a small piece first.
+**Shops along a street** form a row wall to wall, of similar height, with a back yard behind each shop body and the yard walls joined in one line (with gaps between shops, uneven heights and open backs, a row looks like a row of teeth when seen obliquely from behind). Not built yet: houses on steep slopes lined up along contour lines (see "Ground and terrain").
+clipcheck's `paving_under` checks whether the paving and yards are covered by the plate (more than 0.3 m counts), and it must be 0. A new quarter needs streets and lanes (`streets`, `lanes: {region}`); it cannot be only a field of houses.
 
-## 外觀與高度
+## Appearance and height
 
-**暗室是主體和底板的亮度比，不是底板有多黑**：底板帶著藍色往上提，白模的受光面要亮，光環和當前時代的建築是畫面裡最亮、
-最飽和的小面積；中間調用曲線提，黑位不動，不要整體抬灰。手機在亮處看，暗部會糊成一片，平台壓縮也最傷暗的漸層。
-門檻和量法見 CHECKS.md「亮度」。
-深色台面（`palette.plate/plateSide/water/plateEmit`）、象牙白模型、邊線（`film.edges`）；高度倍率三個分開：`terrain.exaggeration`（地形）、
-`buildings.exaggeration`（今日建築）、`city.exaggeration`（歷代城市，預設 2）。**地形倍率按坡度定，不要寫死**：
-坡上的地基在畫面上是「實際落差 × 地形倍率」，房子是「高度 × 建築倍率」；例：地形 ×6、建築 ×2 時，
-坡上合院的地基跟牆一樣高，房子像被拉長。`pipeline/terrain.py` 量各朝代城範圍內的坡度，印出
-`foundations:` 每城一行：參考房子（12 米寬、6 米高 × 城市倍率）的地基最高的一成占房高多少，以及不超過 30% 的最高倍率；
-設定的倍率高過最陡那座城的上限就印 WARNING。蓋好之後 clipcheck 的 `tall_foundation` 用實際的房子再量一次（最高的一成超過房高 30%
-就算數，必須是 0），每行也印出這座城能承受的最高倍率。例：咸陽平原上 ×10 都可以，北阪約 ×4.5，片中用 ×3。
-山城的坡大，多半只能 ×1–1.5（山本身已經夠高）。坡上的房子和殿另有一圈較暗的台基（`PLINTH`），高地基讀成台基或吊腳樓，不像牆被拉長。
+**The dark room is the brightness ratio between the subject and the plate, not how black the plate is:** lift the plate with a blue tint, make the lit faces of the white model bright, and make the ring of light and the buildings of the current period the brightest,
+most saturated small areas in the picture; lift the mid-tones with a curve and leave the black level alone; do not raise the whole thing to grey. On a phone in bright surroundings the dark parts smear together, and platform compression hurts dark gradients most.
+For thresholds and how to measure, see CHECKS.md "Brightness".
+Dark plate (`palette.plate/plateSide/water/plateEmit`), ivory model, edge lines (`film.edges`); three separate height exaggerations: `terrain.exaggeration` (terrain),
+`buildings.exaggeration` (today's buildings), `city.exaggeration` (period cities, default 2). **Set the terrain exaggeration by slope; do not hard-code it:**
+the foundation on a slope on screen is "actual drop × terrain exaggeration", and a house is "height × building exaggeration"; example: with terrain ×6 and buildings ×2,
+the foundation of a courtyard on a slope is as tall as the walls, and the house looks stretched. `pipeline/terrain.py` measures the slope inside each dynasty city's extent and prints
+one `foundations:` line per city: how much of a reference house's height (12 m wide, 6 m high × the city exaggeration) is taken by the highest tenth of foundations, and the highest exaggeration that stays within 30%;
+if the configured exaggeration is above the limit of the steepest city, it prints a WARNING. After building, clipcheck's `tall_foundation` measures again with the real houses (it counts when the highest tenth exceeds 30% of the house height;
+it must be 0), and also prints, on each line, the highest exaggeration this city can bear. Example: on the Xianyang plain even ×10 is fine, the north slope is about ×4.5, and the film uses ×3.
+Mountain cities have big slopes and can mostly take only ×1–1.5 (the mountain is already high enough). Houses and halls on slopes also have a darker ring of plinth (`PLINTH`), so a high foundation reads as a plinth or stilt house and not as a stretched wall.
 
-## 地面與地形
+## Ground and terrain
 
-**地面是裸地**：GLO-30 量到的是屋頂，`terrain.py` 把今天建築輪廓（buildings 的來源和 fill）碰到的每個 30 米格子挖掉，
-用四周的街道、院子、田地補平（不用「資料高度減建築高度」：一格混著屋頂和街道，建築高度又是估算，減出來會坑坑疤疤）。
-墳塚、塬、河岸不是建築，照原樣。`terrain.bare: false` 不補。
-還沒做（等第一座山城）：陡坡的房子順等高線排、太陡處不放房子。
-**地形分兩種尺度放大**（`terrain.detail: { below_m: 150, exaggeration: 1 }`，預設值）：塬、台地、河谷這種大地形照 `terrain.exaggeration` 放大；
-150 米以下的小起伏照原高（×1）。Copernicus GLO-30 是地表模型，量到的是今天的屋頂和樹頂，城區的小起伏多半是它們；
-照大地形的倍率放大（例：×6），4 米的起伏在畫面上有 24 米，比 5 米的民居高得多，古城像蓋在亂石堆上。真實地形另存 `terrain_true16.png`，
-要印公尺數的（剖面圖）從它取。改了要重跑 `pipeline/terrain.py` 和 `pipeline/prep.py`，再編譯。
-兩種尺度有代價：比 `below_m` 窄的陡坎（台塬邊、河岸）也會被壓平，坡上地標腳下畫出來的高低差反而變大；改 `below_m` 只是換一座城出問題。
-改完看 clipcheck 的 `tall_foundation`，再截坡上地標的近景。
-**動地形之前**（倍率、尺度、裸地），先列出史料點名、而且站在坡上的地標（高台、台基、依坡的宮殿），改完逐一對照它們在畫面上的高度
-和旁白講的數字（例：旁白說「築在高台上」，畫面上就要站在高台上）。
-**遠景地形**：故事需要的山或水在台面外（咸陽：城名由來的九嵕山，在台面外 23 公里），不要擴大台面（城會變小變空），用
-`terrain.context`：只有地形、顏色同台面、邊緣淡入黑暗；貼著台面用台面的高度倍率，遠處降到 `exaggeration_far`
-（山用台面的倍率會變成一堵牆；咸陽台面 ×3，遠處 2.5），畫面讀數要寫倍率。網格要細到看得出山脊（咸陽 150 m 時九嵕山磨成沙丘，60 m 才出來），
-範圍只取台面到那座山之間；`shade: { az, el, k }` 是一個固定的低角度側光，只照亮向光的山坡（平地維持台面的暗色，
-整片照亮會像雪地）：沒有它，和台面同色的遠山在夜空前幾乎看不見。加了 `terrain.context` 或改了它，要重跑 `pipeline/terrain.py`。只在需要的節點顯示（`context` 關鍵幀），站在上面的釘標只能在它顯示時出現（compile 會擋）。
-**量之前確認量的是哪一份**：同一樣東西常有幾份（地形有 8 位元的 `terrain.png`、16 位元的 `terrain16.png` 和 `terrain_true16.png`，引擎讀 16 位元）。
+**The ground is bare earth:** GLO-30 measures roofs, so `terrain.py` digs out every 30 m cell touched by today's building outlines (the source and fill of buildings) and levels it with the surrounding streets, yards and fields
+(it does not use "data height minus building height": a cell mixes roofs and streets and the building height is an estimate, so the subtraction comes out pitted).
+Tombs, loess plateaus and river banks are not buildings and stay as they are. `terrain.bare: false` does not level.
+Not built yet (wait for the first mountain city): houses on steep slopes lined up along contour lines, and no houses where it is too steep.
+**Terrain is exaggerated at two scales** (`terrain.detail: { below_m: 150, exaggeration: 1 }`, the default): large terrain such as plateaus, terraces and river valleys is exaggerated by `terrain.exaggeration`;
+small relief below 150 m keeps its original height (×1). Copernicus GLO-30 is a surface model and measures today's roofs and treetops, and most of the small relief in a city is those;
+exaggerating them by the large-terrain factor (for example ×6) makes 4 m of relief 24 m on screen, much taller than a 5 m dwelling, and the ancient city looks as if built on a heap of rubble. The true terrain is stored separately as `terrain_true16.png`;
+take from it anything that prints metres (sections). After changing, rerun `pipeline/terrain.py` and `pipeline/prep.py`, then compile.
+The two scales have a cost: steep scarps narrower than `below_m` (plateau edges, river banks) are flattened too, so the drop drawn at the foot of a landmark on a slope gets larger; changing `below_m` only moves the problem to another city.
+After the change, look at clipcheck's `tall_foundation`, then take a close-up still of the landmarks on slopes.
+**Before touching the terrain** (exaggeration, scale, bare earth), list the landmarks that the sources name and that stand on a slope (terraces, plinths, palaces built along the slope), and after the change compare their heights on screen one by one
+with the numbers in the narration (example: when the narration says "built on a high terrace", the picture must show it standing on a high terrace).
+**Distant terrain:** when a mountain or water the story needs is outside the plate (Xianyang: Mount Jiuzong, the origin of the city's name, is 23 km outside the plate), do not enlarge the plate (the city would shrink and look empty); use
+`terrain.context`: terrain only, the same colour as the plate, fading into darkness at the edge; next to the plate it uses the plate's height exaggeration and farther away drops to `exaggeration_far`
+(with the plate's exaggeration a mountain becomes a wall; Xianyang's plate is ×3, the far terrain 2.5), and the readout must state the exaggeration. The grid must be fine enough to show ridges (at 150 m Xianyang's Mount Jiuzong was ground down to a dune; at 60 m it appears),
+and the extent covers only the stretch from the plate to that mountain; `shade: { az, el, k }` is one fixed low-angle side light that lights only the slopes facing the light (flat ground keeps the plate's dark colour,
+and lighting everything would look like snowfield): without it, distant mountains in the plate's colour are almost invisible against the night sky. After adding or changing `terrain.context`, rerun `pipeline/terrain.py`. Show it only in the nodes that need it (the `context` keyframe); a pin standing on it may appear only while it is shown (compile blocks it).
+**Before measuring, confirm which copy you are measuring:** one thing often has several copies (terrain has the 8-bit `terrain.png`, the 16-bit `terrain16.png` and `terrain_true16.png`; the engine reads the 16-bit one).

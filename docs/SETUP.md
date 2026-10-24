@@ -1,18 +1,18 @@
-# 第一次使用：本機設定與環境（每台電腦一次）
+# First use: local settings and environment (once per computer)
 
-每台電腦的硬碟安排不一樣，所以本機的路徑和設定都不寫在程式和提交的檔案裡，只放在 `local/config.json`（不進 git，`pipeline/local.py`
-讀它；範本 `templates/local.json`）。沒有這個檔時先做這一步，再開始任何城市：
-1. **建議全部集中放在專案的 `local/` 下**：範本就是這樣（`local/raw`、`local/ref`、`local/models/...`、`local/instruments`），整個資料夾
-   被 .gitignore 擋住，搬家、備份、清掉都只動一處。相對路徑從專案根目錄算，Linux、macOS、Windows 都一樣。只有用戶自己另有安排時
-   （例如硬碟不夠，大檔要放別顆硬碟）才逐項改成絕對路徑，`~` 可用。
-2. **逐項問用戶**（AskUserQuestion，先講建議值和大約大小）：
-   - `raw`：下載的原始資料（OSM、CMAB、Overture、GHSL），一座城約 1–2 GB；
-   - `ref`：實拍與照片的下載原檔（各城 `assets/footage/make.sh` 從這裡剪片段）；
-   - `stable_audio`、`hf_cache`：選了 Stable Audio 3 配樂才要（程式約 2.5 GB、權重約 3.2 GB）；
-   - `instruments`：選了程式配樂才要（取樣庫約 670 MB）；
-   - `chrome`：Playwright 自帶的 headless shell 裝不上時（例如 Ubuntu 20.04），改用系統 Chrome 的路徑；空字串＝用 Playwright 自帶的；
-   - `workers`：同時渲染幾頁；邊用電腦邊渲染給 2。
-3. 照回答寫 `local/config.json`，建好資料夾。
-4. 檢查工具：uv、Node 20 以上、ffmpeg、exiftool（出片清元數據）。`npm ci` 裝 three 和 playwright-core（版本固定在 `package-lock.json`）；`uv sync` 建 Python 環境：uv 照 `.python-version` 自己下載 Python 3.12，
-   照 `uv.lock` 裝套件（`pyproject.toml` 列依賴，新增套件用 `uv add`）。
-之後所有 Python 指令都用 `uv run python -I …`，不要用系統的 `python`（可能是別的版本，例如 2.7）。之後換電腦或改路徑，只改 `local/config.json`。
+Every computer arranges its disks differently, so local paths and settings are not written in code or in committed files. They live only in `local/config.json` (not in git; `pipeline/local.py`
+reads it; template `templates/local.json`). When this file is missing, do this step first, before any city:
+1. **Put everything under the project's `local/`** (recommended): the template does exactly this (`local/raw`, `local/ref`, `local/models/...`, `local/instruments`), and the whole folder
+   is blocked by .gitignore, so moving, backing up and clearing touch one place only. Relative paths count from the project root and work the same on Linux, macOS and Windows. Change an entry to an absolute path only when the user has their own arrangement
+   (for example the disk is too small and big files must go on another drive); `~` is allowed.
+2. **Ask the user about each entry** (AskUserQuestion; state the suggested value and the approximate size first):
+   - `raw`: downloaded raw data (OSM, CMAB, Overture, GHSL), about 1–2 GB per city;
+   - `ref`: the original downloads of footage and photos (each city's `assets/footage/make.sh` cuts clips from here);
+   - `stable_audio`, `hf_cache`: needed only if Stable Audio 3 is chosen for the music (program about 2.5 GB, weights about 3.2 GB);
+   - `instruments`: needed only if the code score is chosen (sample library about 670 MB);
+   - `chrome`: when Playwright's own headless shell cannot be installed (for example Ubuntu 20.04), the path of the system Chrome to use instead; an empty string means Playwright's own;
+   - `workers`: how many pages to render at once; give 2 if the user keeps using the computer while it renders.
+3. Write `local/config.json` from the answers and create the folders.
+4. Check the tools: uv, Node 20 or newer, ffmpeg, exiftool (clears metadata when rendering). `npm ci` installs three and playwright-core (versions pinned in `package-lock.json`); `uv sync` builds the Python environment: uv downloads Python 3.12 itself according to `.python-version`
+   and installs packages according to `uv.lock` (`pyproject.toml` lists the dependencies; add a package with `uv add`).
+After that, run every Python command as `uv run python -I …`; do not use the system `python` (it may be another version, such as 2.7). To move to another computer or change a path, change only `local/config.json`.

@@ -1,96 +1,98 @@
 ---
 name: city-through-time
-description: 製作《一城春秋》（A City Through Time）系列資料影片：給一座城市和一個起始年代，自行查史料、抓建築與地圖資料，用白模投影的手法（白模、暗室、光做演員）渲染一部按年代逐層點亮的城市史影片（本地語言＋英文；英語城市只用英文）。觸發詞：一城春秋、A City Through Time、城市變遷影片、白模城市影片、按年代點亮城市。
+description: "Make “A City Through Time” (《一城春秋》) data films: given a city and a starting era, research the sources, fetch building and map data, and render a white-model projection film that lights the city up era by era (white model, dark room, light as the actor; local language plus English, English only for English-speaking cities). Trigger words: 一城春秋, A City Through Time, 城市變遷影片 (city-change film), 白模城市影片 (white-model city film), 按年代點亮城市 (light a city up by era)."
 ---
 
 # city-through-time · 一城春秋 · A City Through Time
 
-輸入：城市名、起始年代（例如「咸陽，從新石器時代開始」）。輸出：`cities/<slug>/dist/` 裡的影片、字幕、封面和簡介，
-以及城市資料夾裡的 `TREATMENT.md`、`FACTS.md`、`CREDITS`。專案根目錄是本檔所在的資料夾；`cities/xianyang/` 是完整範例，
-拿不準怎麼寫時先看它。
+Input: a city name and a starting era (for example "Xianyang, from the Neolithic"). Output: the film, subtitles, cover and description in `cities/<slug>/dist/`,
+plus `TREATMENT.md`, `FACTS.md` and `CREDITS` in the city folder. The project root is the folder this file is in; `cities/xianyang/` is a complete example,
+so look at it first when unsure how to write something.
 
-**本檔是索引**：這裡只有核心約束和流程。每一步開始之前，先讀那一步的子檔（流程表的「先讀」欄），照它做；做完再讀下一步的。
-對話被壓縮、換了代理或隔了幾天，先照「現在在哪一步」判斷，再讀那一步的子檔。用戶點名要改某一段時，直接讀那一段所屬的子檔
-（改鏡頭讀 STAGING，改旁白讀 SCRIPT）。
+**This file is the index.** It holds only the core constraints and the workflow. Before each step, read that step's file (the "Read first" column of the workflow table) and follow it; read the next step's file only when you get there.
+After a context compaction, an agent change or a few days' break, first work out "Which step are we on", then read that step's file. When the user names a part to change, read the file that part belongs to
+(camera and staging: STAGING; narration: SCRIPT).
 
-## 核心約束（每一步都適用）
+## Core constraints (apply to every step)
 
-和用戶一起做
-- **先提案，再動手**：改程式、資料格式、引擎、流程之前，先說原因和做法，用戶同意才改；用戶說「先討論」時只查、只截圖，不改檔。
-  中途提的新要求排進計畫、說它排在哪一步，不當場插進去做。
-- **只改點名的**：用戶退回哪一段就只重做哪一段；找到更好的設定，也只用在點名的地方，提一句「別處也能用」讓用戶決定。
-  **用戶點的問題是例子**：同一個畫面、同一個產生器裡同樣的毛病，自己找出來，列給用戶看再修。
-- **先一小批，再全片**：先修點到的幾處、只測這些；用戶在預覽確認後，才把同一個修法套到全片。
-- **表揚過的段落是基準**：記進 TREATMENT.md（秒數、好在哪裡），之後每一批修改都回頭看，不能退步。
-- **回報要能對照**：附片中時間（mm:ss）、節點、檔名；只做了一半就寫明哪幾段還不對；順延的問題記成清單，下一輪主動接上；
-  上一份報告說錯了，下一份第一件事先更正。說「檢查通過」「畫面不變」之前先真的跑過、比對過（CHECKS.md）。
-- **工具照實際的版本**：請用戶操作一個工具之前先看它實際的介面（拿不到就請用戶截圖）；模型的參數查實際要跑的那個版本的程式。
-  沒把握的設計（時間軸、配樂流程、演出），先看同類作品和開源專案怎麼做，再提方案。
-- **推送、上傳、公開，每次都等用戶當次開口**：上一次的同意只管上一次；commit 之後回報寫明「還沒推」。
+Working with the user
+- **Propose first, then act.** Before changing code, a data format, the engine or the workflow, state the reason and the approach, and change it only after the user agrees. When the user says "let's discuss first", only look things up and take screenshots; change no files.
+  A new request made midway goes into the plan with a note of which step it falls in; do not do it on the spot.
+- **Change only what was named.** Redo only the part the user sent back. If you find a better setting, use it only where named and add one line ("this works elsewhere too") for the user to decide.
+  **The problem the user points at is an example:** find the same defect in the same picture or the same generator yourself, and list it for the user before fixing.
+- **Small batch first, then the whole film.** Fix the few spots pointed at and test only those; apply the same fix to the whole film only after the user confirms it in the preview.
+- **Praised passages are the baseline.** Record them in TREATMENT.md (seconds, what works), and check every later batch of changes against them; they must not regress.
+- **Reports must be checkable.** Give film time (mm:ss), node and file name; if only half is done, say which parts are still wrong; record deferred problems as a list and pick it up in the next round without being asked;
+  if the previous report was wrong, correct it first in the next one. Before saying "checks pass" or "the picture is unchanged", actually run and compare (CHECKS.md).
+- **Use the tool as it actually is.** Before asking the user to operate a tool, look at its real interface (ask the user for a screenshot if you cannot get it); look up a model's parameters in the code of the exact version that will run.
+  For a design you are unsure about (timeline, music workflow, staging), look at how comparable works and open-source projects do it, then propose.
+- **Pushing, uploading and publishing each need the user's go-ahead on that occasion.** Consent for the last one covers only the last one; after a commit, report "not pushed yet".
 
-電腦與檔案
-- 本機的路徑和設定只放 `local/config.json`（SETUP.md）；Python 一律 `uv run python -I …`。
-- **重活一次一件**：渲染、混音、配樂生成、DuckDB 掃描、全片截圖不同時跑；渲染預設 2 個 worker 並 nice；長工作的進度寫進日誌檔、
-  另開指令讀，不接 `| tail`；等背景工作就等它的 PID 或輸出檔，不等程序名字（`pgrep` 會比對到自己的 shell）。全片的截圖和檢查會讓用戶的電腦卡到打不了字：平時只查改動的站，全片只在修全片的那一輪和出片前跑，而且先問過用戶。
-- **試做放副本**：A/B、拿掉部件看效果，放在暫存資料夾或 git worktree；動了 `build/` 或城市設定，做完還原並確認回到原樣。
-  退回改動時手動改回，不用 `git checkout --`、`git reset --hard`（會連別的還沒提交的改動一起丟掉）。新語言、新寫法也在複製出來的
-  城市資料夾裡試，試完刪掉，不改正式的設定。
-- **腳本留在專案裡**：產生器、量測、檢查的腳本放城市的 `research/` 或 `tools/`，不只留在暫存目錄（兩輪之間會被清掉）。
-- **刪除前先列清單**：只刪用戶點名的和明顯的垃圾；研究筆記、報告、出處原文是城市的資料，不刪。刪之前逐檔看在不在 git、
-  別處有沒有副本、有沒有程序正在用（`lsof +D <目錄>`、`ps`）。
-- **新城市靠設定，不靠改程式**：修一個問題先想山城、沒有建築資料的城、非中文的城會不會也這樣；能通用就改共用的程式。
-- 用戶的 shell 可能是 zsh：`for f in $list` 不會按空白拆開，`$c:path` 的 `:p` 會被當成修飾詞；寫成 `for f in a b c`、`"${c}:path"`。
+Computer and files
+- Local paths and settings live only in `local/config.json` (SETUP.md); always run Python as `uv run python -I …`.
+- **One heavy job at a time:** do not run rendering, mixing, music generation, DuckDB scans and whole-film screenshots at the same time. Render with 2 workers and nice by default. Write the progress of long jobs to a log file
+  and read it with a separate command; do not pipe into `| tail`. To wait for a background job, wait on its PID or output file, not on the process name (`pgrep` matches its own shell). Whole-film screenshots and checks freeze the user's computer so they cannot type:
+  normally check only the stations you changed; run the whole film only in the round that fixes the whole film and before rendering the final film, and ask the user first.
+- **Try things on a copy.** For A/B tests and removing a part to see the effect, use a temporary folder or a git worktree. If you touched `build/` or a city's settings, restore it afterwards and confirm it is back to what it was.
+  Undo changes by hand; do not use `git checkout --` or `git reset --hard` (they also throw away other uncommitted changes). Try new languages and new ways of writing things in a copied
+  city folder, delete it afterwards, and do not change the real settings.
+- **Keep scripts in the project.** Put generator, measurement and check scripts in the city's `research/` or `tools/`, not only in a temp directory (it is cleared between rounds).
+- **List before deleting.** Delete only what the user named and obvious junk. Research notes, reports and source texts are the city's data; do not delete them. Before deleting, check file by file whether it is in git,
+  whether a copy exists elsewhere, and whether a process is using it (`lsof +D <directory>`, `ps`).
+- **A new city is configuration, not code changes.** When fixing a problem, ask whether a mountain city, a city with no building data, or a non-Chinese city would hit it too; if the fix can be general, change the shared code.
+- The user's shell may be zsh: `for f in $list` does not split on spaces, and the `:p` in `$c:path` is read as a modifier. Write `for f in a b c` and `"${c}:path"`.
 
-誠實
-- 代理自己查來寫進片子的事實，都要在 FACTS.md 有真實出處（約束的是代理的研究，不是用戶，也不是講述者的感受）。
-  用戶自己寫或改的文案照用，不強求出處；只在和已查到的資料矛盾時提出來。
-- 示意就標示意、估算就標估算：歷代城市是示意模型；建築年份不是建成年（CMAB 是不透水面首次出現年份，GHSL 是 5 年一期的建成區），
-  1975 年以前沒有逐棟資料；沒有公開座標的遺址不打點，或標「位置示意」。
-- 上屏的第三方素材只用 CC、公有領域，或用戶有權授權的；AI 生成的旁白、配樂、想像圖在畫面和片尾標明。
+Honesty
+- Every fact the agent researched and put into the film needs a real source in FACTS.md (this binds the agent's research, not the user and not the narrator's feelings).
+  Copy the user writes or edits is used as is without demanding a source; raise it only when it contradicts data you found.
+- Label schematic as schematic and estimated as estimated: the period cities are schematic models; building years are not construction years (CMAB gives the first year an impervious surface appears; GHSL gives built-up area in 5-year periods),
+  and there is no building-by-building data before 1975. Do not put a dot on a site with no public coordinates, or label it "location schematic".
+- On screen, use third-party material only if it is CC, public domain, or something the user has the right to license. AI-generated narration, music and imagined pictures are labelled on screen and in the end card.
 
-寫規則
-- 任何城市都成立的，寫進對應步驟的子檔（每一步都適用的才寫進本檔），一條只寫一次，在改做法的同一次就寫；只屬一座城的，
-  寫進城市自己的檔案；只是某位用戶的習慣，記在代理自己的記憶裡，不寫進公開檔。
-- **寫給沒有上下文的代理**：只寫規則和必要的原因；不寫改名、改版經過、日期、誰在哪次說過什麼、「我／我們」，也不提讀者看不到的
-  東西（本機的參考影片、內部筆記、對話裡的代號）；舉例用 `cities/xianyang/` 裡查得到的設定和數字。
+Writing rules
+- A rule that holds for any city goes into the file of the step it belongs to (only rules for every step go in this file). Write each rule once, in the same change that changes the practice. A rule that belongs to one city only
+  goes in that city's own files. A habit of one particular user is kept in the agent's own memory, not in a public file.
+- **Write for an agent with no context.** Write only the rule and the reasons that are needed. No renames, no version history, no dates, no who-said-what-when, no "I/we", and nothing the reader cannot see
+  (local reference videos, internal notes, code names from a conversation). Give examples from settings and numbers that can be looked up in `cities/xianyang/`.
+- **Skill files are written in English:** `SKILL.md`, the step files in `docs/`, and the comments in the templates. Keep Chinese only where it is data (quoted narration or on-screen text, place names, book titles), with an English gloss in parentheses the first time.
 
-## 流程
+## Workflow
 
-| 步 | 做什麼 | 先讀 | 做完的標準（★ 要用戶點頭） |
+| Step | What to do | Read first | Done when (★ = the user must approve) |
 |---|---|---|---|
-| 0 | 第一次使用：本機路徑、裝環境 | `docs/SETUP.md` | `local/config.json` 寫好，`uv sync`、`npm ci` 跑過 |
-| 1 | 研究：年代表、選站、貫穿線、出處 | `docs/RESEARCH.md` | `FACTS.md`、`research/`（含故事素材 `stories.md`、配圖清單 `images.md`）；★ 年代表和站表 |
-| 2 | 範圍與資料：框、比例、地圖、建築、地形 | `docs/DATA.md` | `city.yaml` 的範圍與資料來源、`prep.py` 跑過；★ 一張白模看比例 |
-| 3 | 劇本：故事大綱、處理方案、文案、時間軸、配圖 | `docs/SCRIPT.md` | `TREATMENT.md`、節點、`script.yaml`；★ 故事大綱，★ 旁白稿 |
-| 4 | 歷代城市與地形 | `docs/MODEL.md` | 每個時期一整座照史料生成的城，clipcheck 歸零 |
-| 5 | 演出：光圈、鏡頭、標籤、圖片、實拍 | `docs/STAGING.md` | compile 沒有錯誤，警告逐條處理過 |
-| 6 | 預覽與檢查 | `docs/CHECKS.md` | 改動波及的站檢查歸零；★ 用戶在預覽裡看過這一站 |
-| 7 | 聲音：配音、配樂、音效 | `docs/SOUND.md` | `VOICE.md`、`MUSIC.md`，三條軌在預覽裡聽得到；★ 每段配樂 |
-| 8 | 出片與交付 | `docs/DELIVER.md` | ★ 預覽點頭後才渲染；`dist/` 有影片、字幕、簡介；全片檢查和亮度過門檻 |
-| 9 | 發布：封面、上傳、入口頁（用戶想公開時才做） | `docs/PUBLISH.md` | ★ 封面構思；★ 每次上傳、推送都經用戶當次同意 |
+| 0 | First use: local paths, install the environment | `docs/SETUP.md` | `local/config.json` written; `uv sync` and `npm ci` have run |
+| 1 | Research: timeline, choice of stations, through-line, sources | `docs/RESEARCH.md` | `FACTS.md` and `research/` (including story material `stories.md` and the picture list `images.md`); ★ timeline and station list |
+| 2 | Extent and data: frame, scale, map, buildings, terrain | `docs/DATA.md` | extent and data sources in `city.yaml`, `prep.py` has run; ★ one white-model still to check the scale |
+| 3 | Script: story outline, treatment, copy, timeline, pictures | `docs/SCRIPT.md` | `TREATMENT.md`, nodes, `script.yaml`; ★ story outline, ★ narration draft |
+| 4 | Period cities and terrain | `docs/MODEL.md` | one whole city per period, generated from the sources, clipcheck at zero |
+| 5 | Staging: rings, camera, tags, pictures, footage | `docs/STAGING.md` | compile has no errors, every warning handled |
+| 6 | Preview and checks | `docs/CHECKS.md` | checks at zero for every station the change touched; ★ the user has seen this station in the preview |
+| 7 | Sound: voice, music, effects | `docs/SOUND.md` | `VOICE.md`, `MUSIC.md`, all three tracks audible in the preview; ★ each piece of music |
+| 8 | Render and deliver | `docs/DELIVER.md` | ★ render only after the user approves the preview; `dist/` has video, subtitles, description; whole-film checks and brightness pass the thresholds |
+| 9 | Publish: cover, upload, portal page (only when the user wants it public) | `docs/PUBLISH.md` | ★ cover concept; ★ every upload and push has the user's go-ahead on that occasion |
 
-3–6 一個節點一個節點做：做完一站給用戶看，再鋪下一站。聲音排在畫面之後：文案定稿 → 畫面 → 預覽 → 配音 → 再 compile
-（時間軸定稿）→ 配樂、音效 → 渲染。
+Do steps 3–6 node by node: finish one station, show it to the user, then lay the next. Sound comes after picture: copy final → picture → preview → voice → compile again
+(timeline final) → music and effects → render.
 
-## 現在在哪一步
+## Which step are we on
 
-| 看到的 | 在哪一步 |
+| What you see | Step |
 |---|---|
-| 沒有 `local/config.json` | 0 |
-| 沒有 `cities/<slug>/FACTS.md`，或站表還沒經用戶點頭 | 1 |
-| 有 FACTS.md，沒有 `build/data/model.json` | 2 |
-| 有模型，還有節點沒做完或沒給用戶看過 | 3–6（看 TREATMENT.md 和預覽，問用戶做到哪一站） |
-| 畫面都看過，還沒有配音，或配樂還沒選定 | 7 |
-| 沒有 `dist/<slug>.mp4`，或成片比最後一次修改舊 | 8 |
-| 有成片，用戶要公開 | 9 |
+| No `local/config.json` | 0 |
+| No `cities/<slug>/FACTS.md`, or the station list has not been approved by the user | 1 |
+| FACTS.md exists, no `build/data/model.json` | 2 |
+| The model exists, and some nodes are unfinished or have not been shown to the user | 3–6 (check TREATMENT.md and the preview, and ask the user which station you are at) |
+| All pictures seen, but no voice yet, or the music is not settled | 7 |
+| No `dist/<slug>.mp4`, or the film is older than the last change | 8 |
+| The film exists and the user wants it public | 9 |
 
-## 檔案地圖
+## File map
 
-- `engine/` 播放頁（three.js：`main.js` 讀 film.json 播放，`studio.js` 白模場景與投影著色器，`overlay.js` 讀數、釘標、字幕、片尾）。
-- `pipeline/` 抓資料（`osm.py`、`cmab.py`、`overture_ghsl.py`、`terrain.py`、`satellite.py`）、`prep.py`（→ 模型）、`citygen.py`（歷代城市）、
-  `compile.py`（city.yaml → film.json）、`fonts.py`（字型庫）。
-- `render/` 單張、事件表、影片、合成成片；`audio/` 配樂排程、程式配樂、取樣器、混音；`tools/` 檢查（subcheck、readcheck、clipcheck、
-  camcheck、motioncheck）、`build.mjs`（一條命令出片）、`music.py`、`web.py`（網頁播放包）、`registry.mjs` 與 `site.mjs`（入口網站）。
-- 城市資料夾放自己寫和帶來的（進 git）；`build/` 放產生的（不進 git；`build/data` 重做很慢，不要隨手刪）；`dist/` 放成品（`pipeline/layout.py`）。
-- `templates/` 範本；`i18n/` 語言包；`fonts/` 字型；`index.html` + `site/` 入口頁（陸地 `site/land.bin` 由 `tools/portal_land.py` 產生，
-  `?lite` 看手機版的畫法）；`play.html` 播放器（`?bundle=` 讀外部播放包）。
+- `engine/` the player page (three.js: `main.js` reads film.json and plays it, `studio.js` is the white-model scene and projection shaders, `overlay.js` is readouts, pins, subtitles, the end card).
+- `pipeline/` data fetching (`osm.py`, `cmab.py`, `overture_ghsl.py`, `terrain.py`, `satellite.py`), `prep.py` (→ model), `citygen.py` (period cities),
+  `compile.py` (city.yaml → film.json), `fonts.py` (font library).
+- `render/` stills, event table, video, composing the final film; `audio/` music scheduling, code score, sampler, mixing; `tools/` checks (subcheck, readcheck, clipcheck,
+  camcheck, motioncheck), `build.mjs` (one command renders the film), `music.py`, `web.py` (web player bundle), `registry.mjs` and `site.mjs` (portal site).
+- A city folder holds what is written and brought in by hand (goes into git); `build/` holds what is generated (not in git; `build/data` is slow to rebuild, so do not delete it casually); `dist/` holds the finished products (`pipeline/layout.py`).
+- `templates/` templates; `i18n/` language packs; `fonts/` fonts; `index.html` + `site/` the portal page (the land `site/land.bin` is produced by `tools/portal_land.py`;
+  `?lite` shows how the phone version draws); `play.html` the player (`?bundle=` reads an external player bundle).

@@ -1,43 +1,43 @@
-# city-through-time（一城春秋）· city.yaml 範本 v4（節點制，每個時期一整座生成的城）。複製到 cities/<slug>/city.yaml 後逐項填寫；完整範例：cities/xianyang/city.yaml
+# city-through-time (一城春秋) · city.yaml template v4 (node system, one whole generated city per period). Copy to cities/<slug>/city.yaml and fill in item by item; complete example: cities/xianyang/city.yaml
 slug: <slug>
-name: { zh: <中文名>, en: <English name> }
-box: [<west>, <south>, <east>, <north>]      # WGS84；以歷史核心為中心的現代主城區，長邊 20–30 km
-scale: 10000                                  # 1:10000 → 1 模型公尺 = 10 km
-raw:                                          # 下載資料都在本機的 raw 根目錄下（local/config.json 的 raw，pipeline/local.py）：osm/、overture/、ghsl/
-  cmab: cmab/<province>                       # 中國：CMAB 省包解壓目錄，相對 raw 根目錄
-buildings: { source: cmab, simplify_m: 1.0, min_area_m2: 15, exaggeration: 4.0 }   # cmab | overture_ghsl；今日建築高度倍率（咸陽 ×4：1:10000 下量體才看得出來）
-terrain: { enabled: true, exaggeration: 3.0 } # Copernicus DEM（pipeline/terrain.py，另寫 16 位元 terrain16.png）；3.0 是咸陽的值：先跑 terrain.py，照它印的 foundations 上限填（山城多半 ×1–1.5），超過時坡上房子的地基跟牆一樣高
-#   150 m 以下的小起伏（樹、田埂）照原高：detail: { below_m: 150, exaggeration: 1 }（預設，不寫也是這樣）；今天的建築先從地表挖掉補成裸地（bare: false 不做）
-#   遠景地形（台面外的山或水，例如城名由來的山）：context: { box: [w, s, e, n], res_m: 60, exaggeration_far: 2.5, blend_km: 6,
-#     shade: { az: 250, el: 22, k: 0.8 } }（shade：固定的低角度側光，只照亮向光的山坡，遠山在夜空前才看得清）；
-#   要它出現的節點寫 context: [{ t: 0, a: 1 }, { t: 7, a: 1 }, { t: 9.5, a: 0 }]（透明度關鍵幀），釘標可以站在上面
-bands:                                        # 年代分層（lo 含、hi 不含）；下面是 CMAB（中國，1985–2018）的切法，overture_ghsl 的城市用 GHSL 5 年期（DATA.md）
+name: { zh: <Chinese name>, en: <English name> }
+box: [<west>, <south>, <east>, <north>]      # WGS84; the modern main urban area centred on the historic core, long side 20–30 km
+scale: 10000                                  # 1:10000 → 1 model metre = 10 km
+raw:                                          # downloaded data all lives under the local raw root (raw in local/config.json, pipeline/local.py): osm/, overture/, ghsl/
+  cmab: cmab/<province>                       # China: the directory the CMAB provincial package is unzipped to, relative to the raw root
+buildings: { source: cmab, simplify_m: 1.0, min_area_m2: 15, exaggeration: 4.0 }   # cmab | overture_ghsl; height exaggeration of today's buildings (Xianyang ×4: at 1:10000 the volumes are visible only this way)
+terrain: { enabled: true, exaggeration: 3.0 } # Copernicus DEM (pipeline/terrain.py, which also writes the 16-bit terrain16.png); 3.0 is Xianyang's value: run terrain.py first and fill in the limit from the foundations it prints (mountain cities mostly ×1–1.5); above it the foundations of houses on slopes are as tall as the walls
+#   small relief below 150 m (trees, field ridges) keeps its original height: detail: { below_m: 150, exaggeration: 1 } (the default; same if not written); today's buildings are first dug out of the surface and levelled to bare earth (bare: false does not do this)
+#   distant terrain (mountains or water outside the plate, for example the mountain a city's name comes from): context: { box: [w, s, e, n], res_m: 60, exaggeration_far: 2.5, blend_km: 6,
+#     shade: { az: 250, el: 22, k: 0.8 } } (shade: one fixed low-angle side light that lights only the slopes facing it, so the distant mountain can be seen against the night sky);
+#   in the node where it should appear write context: [{ t: 0, a: 1 }, { t: 7, a: 1 }, { t: 9.5, a: 0 }] (opacity keyframes); a pin may stand on it
+bands:                                        # age layers (lo included, hi excluded); below is the CMAB cut (China, 1985–2018); cities on overture_ghsl use GHSL 5-year periods (DATA.md)
   - { lo: 1900, hi: 1988, zh: 1987 年已有, en: by 1987 }
   - { lo: 1988, hi: 1996, zh: 1988–1995, en: 1988–1995 }
   - { lo: 1996, hi: 2006, zh: 1996–2005, en: 1996–2005 }
   - { lo: 2006, hi: 2013, zh: 2006–2012, en: 2006–2012 }
   - { lo: 2013, hi: 2019, zh: 2013–2018, en: 2013–2018 }
   - { lo: 2019, hi: 2100, zh: 2018 年后, en: after 2018 }
-landmarks:                                    # 釘標與鏡頭用的點；film 裡以 mark: <id> 引用（props 的 id 也可當 mark）
+landmarks:                                    # points for pins and the camera; film refers to them as mark: <id> (the id of a prop also works as a mark)
   - { id: old_town, lon: 0, lat: 0, snap_to_building: false }
-mounds: []                                    # 今天仍在的土方：{ id, osm: <OSM way name> 或 lon/lat+base_m, h_m, top_ratio, year, zh, en }
+mounds: []                                    # earthworks that still exist today: { id, osm: <OSM way name> or lon/lat+base_m, h_m, top_ratio, year, zh, en }
 
 film:
-  lang: [zh, en]                              # 一或兩種，任何有語言包的語言（i18n/<代碼>.yaml：zh, zh-Hant, en, ja, ko, fr）；第一種是大字那行
-  yearFmt: zh                                 # 年份按哪個語言包寫（預設第一語言）：zh「前 350」、ja「紀元前350年」、en「350 BCE」
-  emblem: none                                # 象徵物：none，或 { name: <物>, meaning: <它代表這座城的什麼>, nodes: [<出現的節點>] }（必填）
-  # voice: { lang: zh }                       # 配音的語言（build/audio/voice/<lang>/<句子 id>.wav；預設第一語言）
-  # sfx: [relay, lamp, burn, lights]        # 保留的音效（頁面事件，render/events.mjs；咸陽用這四個）：先 audio/mix.py <city> --kit 做單音，再 compile；不寫就沒有音效
-  identity: { l1: "<城市> · 1:10000 白模", l2: "{stats.centre_wgs[1]:.3f}°N  {stats.centre_wgs[0]:.3f}°E  ·  <資料來源>" }
-  light: { base: 0.62 }                       # 投影階段的展廳底光，讓城看得見；深色台面要亮一點（咸陽 0.62；不寫時 compile 用 0.28）
-  rise: { sinkDur: 2.4, ghost: 1.0 }          # 1 = 今天的白模城市全片都在；歷代城市在原地替換它
-  satellite_source: sentinel                  # sentinel（可發布）| hr（Esri 第 15 級，僅內部測試，pipeline/imagery_tiles.py）
-  node_tint: 0.5                              # 每個節點把今天的城市染成該節點顏色的強度；節點可用 tint 覆寫（現代段設 0）
-  # rings_motif: { centre: [<lon>, <lat>], spacing_m: 380, from: -4000, gain: 0.3 }   # 每百年一圈的年輪光環：從開燈到結尾都在，古代段看起來像雜訊，不建議用（咸陽沒用）
-  drift: 1.0                                  # 鏡頭微漂移倍率
-  timing: { ring_view: 2.8, ring_out: 1.6, min_stage: 4.0, grow: 1.6, settle_need: 2.0, ring_m: 1000, ring_q: 0.35, scan_w: 0.12 }   # 演出文法 9a/9b 的參數（光圈速度按畫面算）
-  era_look: { dim: 0.5, glow: 1.0, edge: 1.0, line: 1.0, light_m: 45, halo_m: 14, edge_m: 150 }   # 歷代城市站穩後：今天的城市變暗；外緣一條霓虹細線，照亮 light_m 內的建築
-  copy: { max_zh: 22, gap_s: 8, long_gap_s: 15, dense_share: 0.9, keep: ['十五五'] }   # 文案檢查的門檻（pipeline/copylint.py，可省略用預設）；keep：照原文寫數字的專有名詞與引文（例：咸陽的「十五五」）
+  lang: [zh, en]                              # one or two, any language with a language pack (i18n/<code>.yaml: zh, zh-Hant, en, ja, ko, fr); the first is the big-type line
+  yearFmt: zh                                 # which language pack writes the years (default: the first language): zh "前 350", ja "紀元前350年", en "350 BCE"
+  emblem: none                                # emblem: none, or { name: <object>, meaning: <what it stands for in this city>, nodes: [<nodes where it appears>] } (required)
+  # voice: { lang: zh }                       # language of the voice (build/audio/voice/<lang>/<line id>.wav; default: the first language)
+  # sfx: [relay, lamp, burn, lights]        # kept sound effects (page events, render/events.mjs; Xianyang uses these four): first make the single sounds with audio/mix.py <city> --kit, then compile; if not written there are no effects
+  identity: { l1: "<city> · 1:10000 白模", l2: "{stats.centre_wgs[1]:.3f}°N  {stats.centre_wgs[0]:.3f}°E  ·  <data source>" }
+  light: { base: 0.62 }                       # the gallery's base light in the projection stage, so the city can be seen; a dark plate needs it brighter (Xianyang 0.62; compile uses 0.28 if not written)
+  rise: { sinkDur: 2.4, ghost: 1.0 }          # 1 = today's white-model city is there throughout the film; the period cities replace it in place
+  satellite_source: sentinel                  # sentinel (releasable) | hr (Esri level 15, internal testing only, pipeline/imagery_tiles.py)
+  node_tint: 0.5                              # how strongly each node tints today's city with the node's colour; a node can override it with tint (set 0 in the modern section)
+  # rings_motif: { centre: [<lon>, <lat>], spacing_m: 380, from: -4000, gain: 0.3 }   # tree-ring light rings, one per century: present from the lights coming on to the ending; in the ancient section they look like noise, so not recommended (Xianyang does not use it)
+  drift: 1.0                                  # camera micro-drift multiplier
+  timing: { ring_view: 2.8, ring_out: 1.6, min_stage: 4.0, grow: 1.6, settle_need: 2.0, ring_m: 1000, ring_q: 0.35, scan_w: 0.12 }   # parameters of staging rules 9a/9b (ring speed is computed by the picture)
+  era_look: { dim: 0.5, glow: 1.0, edge: 1.0, line: 1.0, light_m: 45, halo_m: 14, edge_m: 150 }   # once a period city has settled: today's city dims; a thin neon line at the outer edge lights the buildings within light_m
+  copy: { max_zh: 22, gap_s: 8, long_gap_s: 15, dense_share: 0.9, keep: ['十五五'] }   # thresholds of the copy check (pipeline/copylint.py, may be omitted to use the defaults); keep: proper nouns and quotations whose numbers are written as in the original (example: Xianyang's 「十五五」 ("15th Five-Year Plan"))
   fonts:   # one font per job, by family name and weight; looked up in fonts/ (uv run python -I pipeline/fonts.py list .; add one: fonts.py add . "<Family>")
     primary_strong:      { family: Noto Serif SC, weight: 600 }   # first language: subtitles, chapter names, tags, place names, the end title
     primary:             { family: Noto Serif SC, weight: 300 }   # first language: readout labels, the timeline label, small text
@@ -49,125 +49,132 @@ film:
     secondary_strong: { family: Inter Tight, weight: 400 }        # second language under tags and labels, measurements
     mono:           { family: IBM Plex Mono, weight: 400 }        # notes, credits, the locator
   palette:
-    plate: '#262c33'                          # 深色台面（不寫時引擎畫白台面）；以下四個取自咸陽
+    plate: '#262c33'                          # dark plate (the engine draws a white plate if not written); the four below are taken from Xianyang
     plateSide: '#15191e'
     water: '#3a5670'
-    plateEmit: 0.55                           # 投在台面上的光的自發光比例：太低時星圖、遮罩幾乎看不見
-    epochs: ['#ffa13d', '#e8553a', '#c9a7ff', '#7fe0c8', '#cfe9ff', '#ffa13d', '#ffa13d', '#ffffff']   # 遮罩共 12 個通道（時間和位置都不重疊的共用一個）；epoch 可自帶 col 覆蓋
+    plateEmit: 0.55                           # share of self-illumination of light projected on the plate: too low and the star chart and masks are almost invisible
+    epochs: ['#ffa13d', '#e8553a', '#c9a7ff', '#7fe0c8', '#cfe9ff', '#ffa13d', '#ffa13d', '#ffffff']   # 12 mask channels in all (masks that overlap in neither time nor place share one); an epoch can carry its own col to override
     bands: ['#ffa13d', '#2a63ff', '#2f98ff', '#6fdcff', '#b9f1ff', '#eefcff']
     hgt: ['#1a1440', '#5a35d6', '#e2509a', '#ffe7c4']
     pick: '#ffd27a'
     black: '#0b0f18'
-  labels:                                     # 地理標籤（寬鏡頭自動顯示）：河、塬、老城、鄰城方向
-    - { lon: 0, lat: 0, zh: <河名>, en: <River>, size: 1.2, dmin: 1.0 }
-  opening:                                    # 展廳燈下的白模；燈在 dur 秒滅、投影亮。鏡頭關鍵幀可寫 v: [模型座標…] 或 ll: [lon, lat], az, el, d
+  labels:                                     # geographic labels (shown automatically in wide shots): rivers, plateaus, the old town, directions of neighbouring cities
+    - { lon: 0, lat: 0, zh: <river name>, en: <River>, size: 1.2, dmin: 1.0 }
+  # prologue:                                 # optional: a 15–25 s passage before the opening, over the film's own city (docs/SCRIPT.md "Prologue")
+  #   dur: 20
+  #   mood: { feel: grief, level: 3 }
+  #   scene: [{ t: 0, node: <node>, at: 10 }]   # from t on, the city shows the film at <node> + at seconds, playing on
+  #   camera: [{ t: 0, ll: [<lon>, <lat>], az: 20, el: 25, d: 0.5 }]
+  #   footage: []                             # pictures, at in prologue seconds
+  #   sfx: []                                 # [{ t: 9, kind: burn }]
+  opening:                                    # the white model under the gallery lights; the lights go out after dur seconds and the projection comes on. Camera keyframes can be written v: [model coordinates…] or ll: [lon, lat], az, el, d
     dur: 7.0
-    camera: [{ t: 0.0, ll: [<lon>, <lat>], az: 30, el: 8, d: 0.6 }, { t: 7.0, ll: [<lon>, <lat>], az: 32, el: 11, d: 2.0 }]   # 寫經緯度，不寫模型座標 v:（改了 box 模型座標就全錯）
-    # 開場屬於城市和它的名字，不放象徵物（docs/SCRIPT.md）
-  nodes:                                      # 依序排版；片長 = 節點秒數加總。節點內的時間：秒（相對節點起點）、{year: Y}、'end'
+    camera: [{ t: 0.0, ll: [<lon>, <lat>], az: 30, el: 8, d: 0.6 }, { t: 7.0, ll: [<lon>, <lat>], az: 32, el: 11, d: 2.0 }]   # write longitude/latitude, not model coordinates v: (after changing box all model coordinates are wrong)
+    # the opening belongs to the city and its name; no emblem here (docs/SCRIPT.md)
+  nodes:                                      # laid out in order; film length = sum of node seconds. Times inside a node: seconds (relative to the node start), {year: Y}, 'end'
     - id: <node>
-      mood: { feel: pride, level: 2 }         # 講述者在這一站的感受（必填）：wonder | pride | grief | wistful | hope | calm；level 1–3
-      years: [<y0>, <y1>]                     # 計數器在此節點從 y0 跑到 y1（單一年份寫兩次）
+      mood: { feel: pride, level: 2 }         # the narrator's feeling at this station (required): wonder | pride | grief | wistful | hope | calm; level 1–3
+      years: [<y0>, <y1>]                     # the counter runs from y0 to y1 in this node (write a single year twice)
       dur: 16
-      label: { zh: <章名>, en: <Chapter> }
-      wave_from: [<lon>, <lat>]                 # 選填：這個節點的顏色從哪裡擴散（預設：上一個時期城市的原點）
-      ink: 0                                  # 選填 0..1：這個節點的城市壓暗成墨色，城牆宮殿街道用節點顏色勾出（例：秦尚黑）
+      label: { zh: <Chinese chapter name>, en: <Chapter> }
+      wave_from: [<lon>, <lat>]                 # optional: where this node's colour spreads from (default: the origin of the previous period's city)
+      ink: 0                                  # optional 0..1: darken the city of this node to ink, and outline walls, palaces and streets in the node's colour (example: Qin honouring black)
       col: '#ffa13d'
-      readout: { label: "<一行標籤>", note: "<來源行>" }       # big 預設為年份計數器；big: "數字" + unit 可改；legendBands: {unit: 栋} 顯示年代圖例
-      city:                                   # 這個時期的整座城（pipeline/citygen.py）；範圍內的今日建築自動讓位
-        origin: [lon, lat]                    # 生長從這裡向外擴散
-        col: '#ffc9a0'                        # 時代色（建築染色）
-        until: <下一個節點 id>                 # 在該節點開始時沉下（+ until_plus 秒）；sinkStyle: burn + burn: 秒 = 先燒後塌
-        avoid_eras: [<前一個時期 id>]           # 疊在仍然站著的前一座城上時：新街區繞開它（例：帝都疊在秦都上）
-        # at: 不寫 = 演算法（光柱落地、鏡頭到位停住，演出文法 9a）；也可寫秒數或 { after: <route id> }
-        stages:                               # 選填：按字幕分段長出（演出文法 5）；select 用名字選 landmarks / fabric / walls / streets / trees：寫各項的 id 或 group（不能寫序號：加一項序號就全錯）；true = 該類全部；不寫 = 其餘全部
-          - { at: 4.4, dur: 4.6, select: { landmarks: [north_palaces] }, sweep: [[<lon>, <lat>], [<lon>, <lat>]], noise: 0.05 }   # 沿一條線掃過
-          - { dur: 5.0, from: [<lon>, <lat>], noise: 0.1 }        # 從一點向外；大用光圈、小用範圍內刷新（mode: ring | scan 可強制）
-        grow: 1.6                             # 每棟長出的秒數
-        fall: out                             # 收回：out = 跟著下一節點的換色光圈（預設）；in = 光圈往 fall_from（預設 origin）收縮（焚城，演出文法 6）
-        fall_dur: 1.4                         # 光圈經過後，每棟建築沉下（或今天的建築回來）的秒數；焚城（fall: in）寫 0.25，收縮光圈一過就倒
-        boundary_close_m: 70                  # 外緣邊框：建築間距在這以內算同一片城（大而疏的城加大）
-        outline: [[[<lon>, <lat>], ...]]      # 選填：建築給不出的邊界（村子的壕溝），併進外緣光帶、讓位範圍和片尾足跡
-        # landmarks 每項可加 id（給 stages 選）、group（一組一起選）、exaggeration（照復原圖做的單體保住原比例，例 1.25）
-        theta_deg: 0                          # 街網方向（度，逆時針自東）
-        detail: high                          # low | medium | high（近景要 high；十萬級構件的大城用 low / medium）
-        exaggeration: 2.0                     # 歷代建築高度倍率（地面用地形倍率）
-        walls: [{ ring: [[lon, lat], ...], h_m: 10, t_m: 11, gates: [[lon, lat], ...], style: tower }]   # style: tower（城樓、甕城、垛口、馬面、護城河）| hip | none（土牆、壕溝）
-        streets: [{ pts: [[lon, lat], [lon, lat]], w_m: 16, shops: true }]                                 # shops：沿街兩層鋪面
-        lanes: { spacing_m: 85, w_m: 5 }      # 城內巷網（region: walls 或一個 lon/lat 環）
-        fabric: [{ region: walls, lot: [17, 25], typ: courtyard, h_m: 6, empty: 0.05 }]                  # typ: courtyard | dwelling | hut | slab；scatter: 1 = 無格網散佈（沒有里坊證據時）
-        # trace: research/<圖名>_trace.geojson   # 選填：照古地圖或考古平面描的城牆、街道、街區、地標（docs/MODEL.md），和上面寫的一起建
+      readout: { label: "<one label line>", note: "<source line>" }       # big is the year counter by default; big: "number" + unit changes it; legendBands: {unit: 栋} shows the age legend
+      city:                                   # the whole city of this period (pipeline/citygen.py); today's buildings within the extent give way automatically
+        origin: [lon, lat]                    # growth spreads outward from here
+        col: '#ffc9a0'                        # period colour (building tint)
+        until: <next node id>                 # sinks when that node starts (+ until_plus seconds); sinkStyle: burn + burn: seconds = burns first, then collapses
+        avoid_eras: [<previous period id>]    # when laid over a previous city still standing: the new quarters go around it (example: the imperial capital over the Qin capital)
+        # at: if not written = the algorithm (beam lands, camera in place and settled, staging rule 9a); may also be seconds or { after: <route id> }
+        stages:                               # optional: grows in stages following the subtitles (staging rule 5); select picks by name from landmarks / fabric / walls / streets / trees: write each item's id or group (never an index: adding one item breaks every index); true = all of that kind; not written = all the rest
+          - { at: 4.4, dur: 4.6, select: { landmarks: [north_palaces] }, sweep: [[<lon>, <lat>], [<lon>, <lat>]], noise: 0.05 }   # sweeps along a line
+          - { dur: 5.0, from: [<lon>, <lat>], noise: 0.1 }        # outward from a point; large ones use a ring, small ones refresh within the area (mode: ring | scan can force it)
+        grow: 1.6                             # seconds for each building to grow
+        fall: out                             # taken back: out = along with the next node's colour-change ring (default); in = the ring contracts toward fall_from (default origin) (burning a city, staging rule 6)
+        fall_dur: 1.4                         # seconds for each building to sink (or today's building to return) after the ring passes; for a burned city (fall: in) write 0.25, so it falls as soon as the contracting ring passes
+        boundary_close_m: 70                  # outer edge border: buildings closer together than this count as one city (increase for large, sparse cities)
+        outline: [[[<lon>, <lat>], ...]]      # optional: a boundary the buildings cannot give (a village moat), merged into the outer-edge band, the area given way, and the ending footprints
+        # each landmarks item can add id (for stages to select), group (select as a group), exaggeration (a single building made from a reconstruction drawing keeps its original proportions, e.g. 1.25)
+        theta_deg: 0                          # street grid direction (degrees, counter-clockwise from east)
+        detail: high                          # low | medium | high (close-ups need high; large cities with hundreds of thousands of parts use low / medium)
+        exaggeration: 2.0                     # height exaggeration of period buildings (the ground uses the terrain exaggeration)
+        walls: [{ ring: [[lon, lat], ...], h_m: 10, t_m: 11, gates: [[lon, lat], ...], style: tower }]   # style: tower (gate towers, barbicans, crenellations, bastions, moat) | hip | none (earth walls, ditches)
+        streets: [{ pts: [[lon, lat], [lon, lat]], w_m: 16, shops: true }]                                 # shops: two-storey shopfronts along the street
+        lanes: { spacing_m: 85, w_m: 5 }      # lane network inside the city (region: walls or a lon/lat ring)
+        fabric: [{ region: walls, lot: [17, 25], typ: courtyard, h_m: 6, empty: 0.05 }]                  # typ: courtyard | dwelling | hut | slab; scatter: 1 = scattered without a grid (when there is no evidence of wards)
+        # trace: research/<map name>_trace.geojson   # optional: walls, streets, blocks and landmarks traced from an old map or an archaeological plan (docs/MODEL.md), built together with what is written above
         landmarks:                            # kind: temple | office | palace | belltower | pagoda | terrace | hall | paifang | factory | chimney | station | tower | corridor | bridge | boats | village | kilns | workshops | market | pool | platform | ditch
           - { kind: temple, lon: 0, lat: 0, w_m: 62, d_m: 120 }
         trees: [{ pts: [[lon, lat], [lon, lat]], step_m: 22, h_m: 12, both: false }]
-        hide: [[[lon, lat], ...]]             # 額外讓今日建築讓位的範圍（沒有城牆的時期）
-      footage:                                # 今天的同一個地方（實拍回聲）。mode: full（4K 全幅 7–9 s）| panel（照片右側面板）| card（低解析小卡 + anchor 引線）| doc（古地圖／檔案照文獻卡）
-        - { id: <f>, file: assets/footage/<clip>.mp4, mode: full, at: 20.0, dur: 8.0, zh: <地名>, en: <place, today>, credit: "<作者 · 來源 · 授權>" }
-        - { id: <p>, file: assets/photos_cc/<photo>.jpg, mode: panel, with: <句子 id>, plus: 0.5, dur: 6.0, kicker: "今天 · TODAY · 照片", zh: <地名>, en: <place>, credit: "<作者 · 授權>" }
-        # with：跟某句一起出現（plus 晚幾秒）；或 at: 秒數。半屏圖蓋住生長時會自動延到長完（同一句內）；force: true 照原時間放（docs/STAGING.md 5b）
-      # 歷代城市的建築類型（landmarks kind）：palace / office / temple（院落）、terrace（高台）、taixie（秦式台榭：台內房間、迴廊、兩層主殿、mirror_m 雙台加飛閣）、
-      #   front_hall（漢式三級台前殿，tiers）、court（宮署院落：main/north 殿）、armoury（武庫長庫）、market（市：每格排滿列肆、市樓）、workshops（作坊區：院落裡的窯、冶鑄、鑄錢，kilns: 窯數）、hall、pagoda、belltower、paifang、
-      #   kilns、village、bridge、boats、factory、chimney、station、platform、ditch、pool、corridor（複道）；fabric typ：courtyard / dwelling / hut / slab / wards（閭里）。
-      #   城牆 style：tower（明清城樓甕城）/ hip / han3（一門三道，gates 第三個數＝隔牆寬）/ none；moat_w_m、moat_off_m；streets lanes3: true＝漢式三股大街。
-      #   尺寸先查考古報告（research/<topic>.md，每個數字附出處），沒有的才按同期通例示意。
-      routes:                                 # 光線條：遷都、搬家、河道變遷、距離。[km] 自動填兩點距離；位置是估算時標「示意」
-        - { id: <r>, from: [lon, lat], to: [lon, lat], at: 0.6, draw: 3.0, hold: 3.5, arc: 0.2, col: '#ffd59a', impact: true, follow: { el: 40 }, zh: "都城南移 · 约 [km] 公里", en: "The capital moves about [km] km south" }   # impact：落點是新城的圓心；follow：鏡頭跟著光柱飛（方向由 compile 模擬選出；az 只當例外，同樣要讓光柱整段在畫面內），落地後轉向整座城
-      tint: 0.5                               # 今天的城市染成本節點顏色的強度
-      night: 1.0                              # 現代段夜景：窗燈、路網光流（lines 加 flow: 0.5）
-      epochs:                                 # 整區染色（含區內建築）＋發光邊；yr 讓該年份範圍的土方按計數器亮起
-        - { id: <ep>, at: 0.5, fade: 2.5, reach: 0.7, rim: 1.2, col: '#ffa13d', osm_polygons: ["<OSM name>"], until: <node id> }   # 或 polygons: [[[lon,lat],...]] / circles: [[lon,lat,r_m]]；off_at / offStyle: burn
-      lines:                                  # 投影線：src rivers | rail | subway | roads | custom(polylines)；filter 正則
+        hide: [[[lon, lat], ...]]             # extra areas where today's buildings give way (for periods without walls)
+      footage:                                # the same place today (live-footage echo). mode: full (4K full frame 7–9 s) | panel (photo in the right panel) | card (low-resolution small card + anchor leader line) | doc (old map / archive photo document card)
+        - { id: <f>, file: assets/footage/<clip>.mp4, mode: full, at: 20.0, dur: 8.0, zh: <place name>, en: <place, today>, credit: "<author · source · licence>" }
+        - { id: <p>, file: assets/photos_cc/<photo>.jpg, mode: panel, with: <line id>, plus: 0.5, dur: 6.0, kicker: "今天 · TODAY · 照片", zh: <place name>, en: <place>, credit: "<author · licence>" }
+        # with: appears together with a line (plus = seconds later); or at: seconds. A half-screen picture that covers growth is automatically delayed until growth is done (within the same line); force: true shows it at the original time (docs/STAGING.md 5b)
+      # building types of period cities (landmarks kind): palace / office / temple (courtyards), terrace (high terrace), taixie (Qin-style terrace hall: rooms inside the terrace, corridors, two-storey main hall, mirror_m twin terraces plus a flying pavilion),
+      #   front_hall (Han-style three-tier terrace front hall, tiers), court (palace-office court: main/north halls), armoury (long armoury hall), market (market: shop rows in every cell, market tower), workshops (workshop area: kilns, bronze casting, coin casting in courtyards, kilns: number of kilns), hall, pagoda, belltower, paifang,
+      #   kilns, village, bridge, boats, factory, chimney, station, platform, ditch, pool, corridor (elevated corridor); fabric typ: courtyard / dwelling / hut / slab / wards (lǘlǐ residential wards).
+      #   wall style: tower (Ming-Qing gate towers and barbicans) / hip / han3 (one gate with three passages, the third number of gates = width of the partition wall) / none; moat_w_m, moat_off_m; streets lanes3: true = Han-style three-lane main street.
+      #   For sizes look up the archaeological reports first (research/<topic>.md, a source for every number); only where there is none, show schematically by the custom of the same period.
+      routes:                                 # light lines: moving a capital, moving house, river changes, distances. [km] fills in the distance between the two points automatically; label "schematic" when positions are estimates
+        - { id: <r>, from: [lon, lat], to: [lon, lat], at: 0.6, draw: 3.0, hold: 3.5, arc: 0.2, col: '#ffd59a', impact: true, follow: { el: 40 }, zh: "都城南移 · 约 [km] 公里", en: "The capital moves about [km] km south" }   # impact: the landing point is the centre of the new city; follow: the camera follows the beam (compile simulates and chooses the direction; az is only an exception and must also keep the whole beam in the picture), and turns to the whole city after landing
+      tint: 0.5                               # how strongly today's city is tinted with this node's colour
+      night: 1.0                              # night view of the modern section: window lights, light flowing along the road network (lines add flow: 0.5)
+      epochs:                                 # tint a whole area (including the buildings in it) + glowing edge; yr makes earthworks in that range of years light up with the counter
+        - { id: <ep>, at: 0.5, fade: 2.5, reach: 0.7, rim: 1.2, col: '#ffa13d', osm_polygons: ["<OSM name>"], until: <node id> }   # or polygons: [[[lon,lat],...]] / circles: [[lon,lat,r_m]]; off_at / offStyle: burn
+      lines:                                  # projected lines: src rivers | rail | subway | roads | custom(polylines); filter is a regular expression
         - { id: <ln>, src: rivers, col: '#8fb8ff', width: 0.003, at: 0.3, fade: 2.5, persist: false }
-      props:                                  # 示意 3D 模型：terrace | hall | tower | hut | huts | wall(pts/osm, gates) | bridge(from,to) | shed | blocks | boats | station
+      props:                                  # schematic 3D models: terrace | hall | tower | hut | huts | wall(pts/osm, gates) | bridge(from,to) | shed | blocks | boats | station
         - { id: <p>, kind: terrace, lon: 0, lat: 0, rot: 0, w_m: 130, d_m: 100, h_m: 11.3, tiers: 3, top: .55, hall: { h_m: 10 }, at: 1.0, fade: 2.0, until: <node>, year: -350 }
-      decals:                                 # 投在台面上的圖：plan | starmap | image | footprints(歷代城市範圍，用在結尾) | rings | emblem（全片最多 4 個）
-        - { id: <d>, kind: footprints, at: 30.0, fade: 3.0, persist: true, gain: 1.2, w: 3, glow: 0.8 }   # 古地圖、方志圖不要鋪在台面上（平鋪看起來不是 3D）：做成文獻卡（footage mode: doc）
-      sections:                               # 地形剖面儀表（沿一條線取 DEM）
-        - { id: <s>, from: [lon, lat], to: [lon, lat], with: <句子 id>, title: "<標題>", sub: "<小字>", l0: "南", l1: "北", labels: [{ k: 0.1, text: "<地名>" }] }   # with 同標籤（until、hold）；或 t0/t1 秒數；「那句結束」不含字幕多留的 0.4 秒，要和字幕一起收 hold 就加 0.4
-      satellite: { at: 0.5, fade: 5.0, persist: true, sweep: true, back_at: 10.0, back_fade: 4.0 }   # 衛星台面；sweep = 一道光從西向東掃過，白模換成影像；back_at = 第二道光掃回白模
-      dim_today: { at: 13.0, to: 0.55 }       # 今天的城市變暗（例：結尾在它上面描歷代足跡時）
-      reset: { year: 1988 }                  # 選填：這個節點的光圈內，比這年新的今日建築先沉下，之後隨年份（grow）長回來
-      sky:                                    # 選填：照星空排布的城（法天象地）：夜色罩住城市，按順序畫出星官，每組一對名字
+      decals:                                 # pictures projected on the plate: plan | starmap | image | footprints (footprints of the period cities, used at the ending) | rings | emblem (at most 4 in the whole film)
+        - { id: <d>, kind: footprints, at: 30.0, fade: 3.0, persist: true, gain: 1.2, w: 3, glow: 0.8 }   # do not lay old maps or gazetteer maps flat on the plate (laid flat they do not look 3D): make them document cards (footage mode: doc)
+      sections:                               # terrain section gauge (takes the DEM along a line)
+        - { id: <s>, from: [lon, lat], to: [lon, lat], with: <line id>, title: "<title>", sub: "<small text>", l0: "南", l1: "北", labels: [{ k: 0.1, text: "<place name>" }] }   # with works as for tags (until, hold); or t0/t1 seconds; "the end of that line" does not include the 0.4 s the subtitle stays, so to close together with the subtitle add 0.4 to hold
+      satellite: { at: 0.5, fade: 5.0, persist: true, sweep: true, back_at: 10.0, back_fade: 4.0 }   # satellite plate; sweep = a band of light sweeps from west to east and the white model turns into imagery; back_at = a second band sweeps back to the white model
+      dim_today: { at: 13.0, to: 0.55 }       # today's city dims (example: at the ending, while the footprints of the period cities are traced over it)
+      reset: { year: 1988 }                  # optional: within this node's ring, today's buildings newer than this year sink first, then grow back with the years (grow)
+      sky:                                    # optional: a city laid out like the starry sky (modelling heaven and earth): night colour covers the city, star groups are drawn in order, each with a pair of names
         at: 12.8
         off_at: 25.8
         col: '#d6e4ff'
         scrim: 0.5
-        groups:   # kind: enclosure（垣：centre, rx_m, ry_m, n: [左, 右], gap_deg, star）| band（天河：pts, w_m, n）| asterism（at_ll, stars: 東北米偏移, lines）| line（from, to, n）
+        groups:   # kind: enclosure (wall: centre, rx_m, ry_m, n: [left, right], gap_deg, star) | band (Heavenly River: pts, w_m, n) | asterism (at_ll, stars: east/north metre offsets, lines) | line (from, to, n)
           - { id: ziwei, kind: enclosure, at: 14.0, draw: 2.0, centre: [<lon>, <lat>], rx_m: 1900, ry_m: 1100, n: [8, 7], gap_deg: 32, label_ll: [<lon>, <lat>], zh: "紫宫 · 咸阳宫", en: "Purple Palace · Xianyang Palace" }
-      grow: { at: 0, bands: [{ t: {year: 1987}, spread: 1.6 }, ...], dim: { t: 25, to: 0 }, mono: true, warm: 1.6, change: ghsl }   # 現代：按年份長出；mono = 一律白色；warm = 剛長出的幾秒是暖色（咸陽 4）；change: ghsl = 翻建變高（演出文法 9d）
-      follow_change: { windows: 6, d: 0.5, el: 30, region: [[<lon>, <lat>], ...], end: { ll: [<lon>, <lat>], el: 58, d: 2.2 } }   # 鏡頭飛到每段時間變化最密的地方（不寫 camera）
+      grow: { at: 0, bands: [{ t: {year: 1987}, spread: 1.6 }, ...], dim: { t: 25, to: 0 }, mono: true, warm: 1.6, change: ghsl }   # modern: grows with the years; mono = all white; warm = seconds a newly grown building stays warm-coloured (Xianyang 4); change: ghsl = rebuilt taller (staging rule 9d)
+      follow_change: { windows: 6, d: 0.5, el: 30, region: [[<lon>, <lat>], ...], end: { ll: [<lon>, <lat>], el: 58, d: 2.2 } }   # the camera flies to where change is densest in each stretch of time (do not write camera)
       picks: [{ id: <pk>, mark: <id>, r: .06, at: 1, off_at: 'end' }]
-      # tally: [{ t: 4.0, lon: 0, lat: 0, lift: 0.05, rot: 210, scale: 0.5, split: 0, glow: 0.9 }]   # 象徵物關鍵幀（可選：film.emblem 不是 none，而且只寫在 emblem.nodes 列的節點）；split 1 = 分成兩半
-      pins: [{ id: <pin>, mark: <id>, with: <句子 id>, zh: "<標題>", en: "<sub>", len: 120, dx: 40 }]   # with：從那句開始顯示到那句結束（until: <句子 id>、hold: 秒）；或 t0/t1 秒數
+      # tally: [{ t: 4.0, lon: 0, lat: 0, lift: 0.05, rot: 210, scale: 0.5, split: 0, glow: 0.9 }]   # emblem keyframes (optional: film.emblem is not none, and written only in the nodes listed in emblem.nodes); split 1 = split in two halves
+      pins: [{ id: <pin>, mark: <id>, with: <line id>, zh: "<title>", en: "<sub>", len: 120, dx: 40 }]   # with: shown from the start of that line to its end (until: <line id>, hold: seconds); or t0/t1 seconds
       marks: [{ id: <m>, mark: <id>, t0: {year: -195}, t1: 'end', r: 10 }]
-      # 字幕不寫在這裡：在 script.yaml 的 nodes.<這個節點 id>（templates/script.yaml）
-      camera: [{ t: 0, ll: [lon, lat], az: 160, el: 30, d: 0.5 }, { t: 8, shot: street, ll: [lon, lat], az: 270, el: 13, d: 0.042, fov: 44 }]   # 或 v: [tx,ty,tz,az,el,d]；方位角 0 = 鏡頭在目標南側朝北看；近景 d 0.035–0.06；shot：句子可以 with: "shot:street" 等這個鏡頭
+      # subtitles are not written here: they are in nodes.<this node id> of script.yaml (templates/script.yaml)
+      camera: [{ t: 0, ll: [lon, lat], az: 160, el: 30, d: 0.5 }, { t: 8, shot: street, ll: [lon, lat], az: 270, el: 13, d: 0.042, fov: 44 }]   # or v: [tx,ty,tz,az,el,d]; azimuth 0 = camera south of the target looking north; close-up d 0.035–0.06; shot: a line can use with: "shot:street" to wait for this shot
   closing:
     lights_after: 1.5
     end_after: 1.5
     end_hold: 9.0
     camera: [{ t: 0, ll: [<lon>, <lat>], az: 0, el: 88, d: 3.0 }, { t: 10.5, ll: [<lon>, <lat>], az: 20, el: 40, d: 3.1 }]
-    # tally: [...]   # 象徵物在片尾的呼應（可選，film.emblem 不是 none 才寫）
-  end: { zh_title: "一城春秋 · <城市>", en_title: "A City Through Time · <City>",
-         credits: { author: "<作者> · <聯繫方式或網址>", voice: "<配音：人名，或服務名 · AI 生成>", music: "<配樂：作曲者、曲庫，或模型名 · AI 生成>" },   # 片尾署名；角色名取語言包的 credit_<角色>，空的不顯示
-         lines: ["<資料來源與授權>", "<示意聲明> · 史料来源见 FACTS.md"] }
+    # tally: [...]   # the emblem's echo at the ending (optional, written only if film.emblem is not none)
+  end: { zh_title: "一城春秋 · <city>", en_title: "A City Through Time · <City>",
+         credits: { author: "<author> · <contact or URL>", voice: "<voice: a person's name, or the service name · AI generated>", music: "<music: composer, library, or model name · AI generated>" },   # end-card credits; role names come from credit_<role> in the language pack, empty ones are not shown
+         lines: ["<data sources and licences>", "<schematic statement> · 史料来源见 FACTS.md"] }
   # music: { bpm: 100, chords: { prologue: Dm, burn: Cm, turn: Ab, turn_floor: Fm, coda: Db, lights: C } }
-  # 配樂（MUSIC.md；audio/lay.py 排上時間軸）。source: cues（預設）按節點鋪：tools/music.py 生成候選（或曲庫、自己作的），一段從它的節點
-  # 開始，到下一段開始，第一段從片頭開始；source: code 用程式配樂（audio/codescore.py，不用 cues；bpm、chords 改它的速度與和聲，gain 調整體 dB）
+  # music (MUSIC.md; audio/lay.py lays it on the timeline). source: cues (default) lays it node by node: tools/music.py generates candidates (or from a library, or composed by hand), a piece starts at its node
+  # and runs until the next piece starts, the first piece from the start of the film; source: code uses the code score (audio/codescore.py, no cues; bpm and chords change its tempo and harmony, gain adjusts the overall dB)
   # music:
   #   source: cues
-  #   loop: M01                # 預覽播完後片尾字卡停著，這段接著循環播放（網頁版的觀眾可能還沒走）；成片不用
-  #   stop_in_silences: false  # true：script.yaml 的 quiet 和 pause 裡配樂硬切成無聲（聽起來突兀，不建議）
+  #   loop: M01                # after the preview has played to the end the end card stays up and this piece keeps looping (web viewers may not have left yet); not used in the final film
+  #   stop_in_silences: false  # true: in the quiet and pause of script.yaml the music is cut hard to silence (sounds abrupt, not recommended)
   #   cues:
-  #     - { id: M01, node: <節點>, fade_in: 3.0 }        # take: <寫法>-<種子>（選中的候選）；offset: 從那條的第幾秒開始；gain: dB
-  #     - { id: M02, node: <節點> }
-  #     - { id: M02b, node: <節點>, continue: M02 }      # 接著 M02 選中的那條往下生成
+  #     - { id: M01, node: <node>, fade_in: 3.0 }        # take: <wording>-<seed> (the chosen candidate); offset: start from this second of the take; gain: dB
+  #     - { id: M02, node: <node> }
+  #     - { id: M02b, node: <node>, continue: M02 }      # generated as a continuation of the chosen take of M02
 
-# ---- 現代段：一條時間線上的「站」（docs/STAGING.md 9i、9j）
+# ---- modern section: "stations" on one timeline (docs/STAGING.md 9i, 9j)
 #    - id: m2011
-#      years: [2005, 2011]                     # 飛行時年份從上一站跑到這一站（每秒最多一年），到站後停住
-#      dur: 16                                 # 到站後講述的秒數（字幕不夠讀會自動拉長）
-#      tour: { ll: [<lon>, <lat>], d: 0.75, el: 38 }   # 這一站的取景；az 可省（飛行時繞城轉），在模型邊緣附近的站給 az 讓邊緣在鏡頭後；主角橫跨大半塊底板時抬高 el（約 60），讓底板塞滿畫面
-#      ghost: [qin]                            # 講到古城遺址時，重新描出那座城的輪廓
-#      night: 0.65                             # 夜色逐站加深，最後萬家燈火
-#    第一站（例 m1975）放 grow: {…, change: ghsl, counters_until: <最後一站 id>} 與 reset: { year: 1975.5 }。
+#      years: [2005, 2011]                     # during the flight the year runs from the previous station to this one (at most one year per second), and stops on arrival
+#      dur: 16                                 # seconds of telling after arrival (lengthened automatically if the subtitles are not enough to read)
+#      tour: { ll: [<lon>, <lat>], d: 0.75, el: 38 }   # the framing of this station; az may be omitted (the camera circles the city in flight); for stations near the model edge give az so that the edge is behind the camera; when the subject spans most of the plate raise el (about 60) so the plate fills the picture
+#      ghost: [qin]                            # when telling of an ancient city site, trace that city's outline again
+#      night: 0.65                             # night deepens station by station, ending with the lights of ten thousand homes
+#    The first station (e.g. m1975) takes grow: {…, change: ghsl, counters_until: <last station id>} and reset: { year: 1975.5 }.
