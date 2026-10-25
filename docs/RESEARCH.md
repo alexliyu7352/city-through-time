@@ -25,7 +25,8 @@ Research is the script's stock room: the events, people, stories and the locals'
    - the shape: the highest peak, the deepest fall, where the film turns, and the narrator's feeling rising and falling across the stations;
    - the two or three big passages (minutes each), the people who drive them and the picture only this film can show for each (SCRIPT.md),
      and which stations are short transitions;
-   - the opening and the ending (the city's future, and an echo of an earlier station if there is one);
+   - the opening and the ending: name at least one concrete thing ahead (being built, scheduled, planned or hoped for, with its source), and an echo of an earlier
+     station if there is one; "the city's next chapter" with nothing named is not an ending;
    - then the table: for each station the year, what happens and what the city becomes, the story and its people, big or short, and the status of the sources.
 
 ## 2. Selection: what is worth telling
@@ -43,6 +44,14 @@ In order of priority:
    (Xianyang: the 029 area code merger, which carried the hope of the two cities becoming one).
 
 Test: if this station is removed, does the audience understand a piece less of "who this city is, what it went through, how it became today"? If not, it is not a station.
+A world event that only took place in the city (a treaty signed there, a match played there) passes this test only if the city or its people changed because of it;
+otherwise it is a line of narration or a short transition.
+
+**Know the audience.** Decide who will watch (the city's own people, the country, the world) before choosing. Places and moments the audience already knows are
+anchors: use them, and give them what they did not know about those places. A topic few of them know needs a reason to be in the film and must say at once why it matters.
+
+**The story is the city's arc, not an argument.** The theme comes out of what the city won, lost and became. A thesis of your own (a social or political point the film
+would prove) is offered to the user as an option; it does not steer the choice of stations unless the user takes it.
 
 **Give major events enough room:** the most glorious or most painful moment of a city is not a station carried by one line of narration; it can be a story of several minutes.
 Research it thoroughly at this stage: causes, course, key people, details, the effect on the city (Xianyang: King Ying Zheng of Qin destroyed the six states in 10 years and took the title First Emperor, dividing the world into 36 commanderies;
@@ -54,7 +63,8 @@ a peak, a fall or a loss, a return and a future; name the people who drove each 
 A station whose story is a building programme, an administrative act or a planning policy is a short transition at most, unless something was won or lost there.
 Compress a stretch without drama, but never leave the modern era empty: the city growing building by building from the first year of the data
 (GHSL: 1975) is one of this film's signature pictures (STAGING.md 9i), and the story must reach this year. Give the decades of living memory their own
-stations (new districts, industries that rose or fell, events that shook the city, the people of those years), and end on this year and the future. Test: read the station table aloud as one story; if it sounds like a list of projects, rewrite it.
+stations (new districts, industries that rose or fell, events that shook the city, the people of those years), and end on this year and the future.
+At least one of them is about the city's own growth, with the data's year-by-year growth as its main picture, not only as a backdrop to another event. Test: read the station table aloud as one story; if it sounds like a list of projects, rewrite it.
 
 **First find what makes this city different from other cities, then decide the structure.** Before fixing the stations, answer these questions; the answers decide the opening, the longest passages, the unique scene and the ending:
 1. Where the name comes from: say it in the opening (Xianyang: Mount Jiuzong to the north and the Wei river to the south, so mountain and water are both "yang").
