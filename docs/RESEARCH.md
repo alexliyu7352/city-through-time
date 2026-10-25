@@ -23,7 +23,8 @@ Research is the script's stock room: the events, people, stories and the locals'
 6. **Show the user the story first, then the station table**, and go to the next step only when the user approves:
    - one sentence that says what the city wins, loses and becomes (the stakes), not an abstract theme such as "a city that keeps rewriting itself";
    - the shape: the highest peak, the deepest fall, where the film turns, and the narrator's feeling rising and falling across the stations;
-   - the two or three big passages (minutes each) and the people who drive them, and which stations are short transitions;
+   - the two or three big passages (minutes each), the people who drive them and the picture only this film can show for each (SCRIPT.md),
+     and which stations are short transitions;
    - the opening and the ending (the city's future, and an echo of an earlier station if there is one);
    - then the table: for each station the year, what happens and what the city becomes, the story and its people, big or short, and the status of the sources.
 
@@ -51,7 +52,9 @@ Tell the protagonist of such an event fully too: what he achieved and why it mat
 **Tell an epic, not a list of public works.** Choose the stations as the film's director already: the city is the protagonist, and it has stakes. An epic has a rise,
 a peak, a fall or a loss, a return and a future; name the people who drove each of them (rulers, builders, invaders, saints, artists, ordinary residents whose words survive).
 A station whose story is a building programme, an administrative act or a planning policy is a short transition at most, unless something was won or lost there.
-Compress a modern stretch without drama into one or two stations. Test: read the station table aloud as one story; if it sounds like a list of projects, rewrite it.
+Compress a stretch without drama, but never leave the modern era empty: the city growing building by building from the first year of the data
+(GHSL: 1975) is one of this film's signature pictures (STAGING.md 9i), and the story must reach this year. Give the decades of living memory their own
+stations (new districts, industries that rose or fell, events that shook the city, the people of those years), and end on this year and the future. Test: read the station table aloud as one story; if it sounds like a list of projects, rewrite it.
 
 **First find what makes this city different from other cities, then decide the structure.** Before fixing the stations, answer these questions; the answers decide the opening, the longest passages, the unique scene and the ending:
 1. Where the name comes from: say it in the opening (Xianyang: Mount Jiuzong to the north and the Wei river to the south, so mountain and water are both "yang").
