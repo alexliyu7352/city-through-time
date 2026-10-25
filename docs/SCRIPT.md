@@ -151,7 +151,9 @@ resting on the concrete lines before it (「這份執念，從咸陽開始」 ("
 - **A fact left at the end.** A one-line beat joins the sentence or picture it belongs to, where the facts really meet (a clause, a contrast, a time word); it is not
   appended in outline order as a separate dated sentence closing a paragraph. Never invent a connection to attach it (a comparison of years, "in the same year that"),
   and never pack several facts into one sentence: a spoken sentence carries one main fact and fits one or two subtitles ("Writing subtitles and readouts";
-  Xianyang's English lines average 13 words, at most 21). End each paragraph on its strongest line: the turn, the picture, the feeling, the person.
+  Xianyang's English lines average 13 words, at most 21). One fact is not one short clause: a sentence may carry its how, why or where, and the lengths vary,
+  so the telling flows and a short line lands a turn (Xianyang's fall, four short lines, comes after the longer lines of the empire; a film of short lines reads as a list).
+  End each paragraph on its strongest line: the turn, the picture, the feeling, the person.
   A one-line beat that connects to nothing near it is in the wrong place in the detailed outline: say so when showing the draft.
 - **The same point twice.** Do not announce a point, make it, and then sum it up; when a quote, a deed or a picture lands the point, do not paraphrase it before or after.
   (Xianyang's fall of the capital is four lines, 「然而，它只撐了15年。項羽引兵入咸陽，燒秦宮室。火三月不滅。如今，那裡只剩一片田野。」 ("It lasted 15 years. Xiang Yu took
