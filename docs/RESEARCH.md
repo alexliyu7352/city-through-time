@@ -20,7 +20,12 @@ Research is the script's stock room: the events, people, stories and the locals'
 4. Write the results into the city folder: `FACTS.md` (the source of every claim on screen) and `research/` (notes, reports, source texts, `stories.md`, `images.md`),
    which go into git with the city: they are this city's data, not temporary files.
 5. Open the original text yourself once more for the key facts: the opening and the ending, every year shown on screen, people's and places' names, quotations.
-6. **List the timeline and the station table for the user first:** for each station give the year, what the city becomes or what happens there, the story to tell, and the status of the sources; go to the next step only when the user approves.
+6. **Show the user the story first, then the station table**, and go to the next step only when the user approves:
+   - one sentence that says what the city wins, loses and becomes (the stakes), not an abstract theme such as "a city that keeps rewriting itself";
+   - the shape: the highest peak, the deepest fall, where the film turns, and the narrator's feeling rising and falling across the stations;
+   - the two or three big passages (minutes each) and the people who drive them, and which stations are short transitions;
+   - the opening and the ending (the city's future, and an echo of an earlier station if there is one);
+   - then the table: for each station the year, what happens and what the city becomes, the story and its people, big or short, and the status of the sources.
 
 ## 2. Selection: what is worth telling
 
@@ -43,6 +48,11 @@ Research it thoroughly at this stage: causes, course, key people, details, the e
 for every state he destroyed, he rebuilt its palaces as exact copies on the north slope of Xianyang, and moved 120,000 of the richest households under heaven to Xianyang; writing, axle widths and weights and measures were unified from here for the whole world).
 Tell the protagonist of such an event fully too: what he achieved and why it matters; write the disputed points as facts according to the sources, and do not use him only as a contrast to the decline that follows.
 
+**Tell an epic, not a list of public works.** Choose the stations as the film's director already: the city is the protagonist, and it has stakes. An epic has a rise,
+a peak, a fall or a loss, a return and a future; name the people who drove each of them (rulers, builders, invaders, saints, artists, ordinary residents whose words survive).
+A station whose story is a building programme, an administrative act or a planning policy is a short transition at most, unless something was won or lost there.
+Compress a modern stretch without drama into one or two stations. Test: read the station table aloud as one story; if it sounds like a list of projects, rewrite it.
+
 **First find what makes this city different from other cities, then decide the structure.** Before fixing the stations, answer these questions; the answers decide the opening, the longest passages, the unique scene and the ending:
 1. Where the name comes from: say it in the opening (Xianyang: Mount Jiuzong to the north and the Wei river to the south, so mountain and water are both "yang").
 2. What are the most important and most memorable events and people for this city: they are the longest passages of the film.
@@ -57,8 +67,9 @@ Do not fill the station list in generic dynasty order; every station must be thi
 **Archaeology and tombs:** they become a station only when they changed the city itself, for example the conflict between new-town construction and site protection, or a site that became a city park or landmark. An excavation by itself, find counts
 and tombs are never a station of their own, at most a sentence inside one. When the ancient part is about the city, archaeology is the source of "how we know", not the story itself.
 
-**Every station must be drawable on the model:** a region (a district, new town, factory area, protected area), a line (a bridge, subway, railway) or a point. Facts and stories that cannot be drawn go into the narration
-and are matched with the picture of the station they belong to; they do not become a station of their own.
+**Every station needs a place on the model:** a region (a district, new town, factory area, protected area), a line (a bridge, subway, railway) or a point; a point is enough.
+The station's story is what happened and who did it; the model shows where. Do not choose stations for what can be built on the model. Facts and stories that have no place
+go into the narration and are matched with the picture of the station they belong to; they do not become a station of their own.
 
 The Xianyang 1975–2026 example: Rainbow factory (electronics city), becoming a municipality and its districts, the airport, state cotton mill restructuring, Xianyang Lake, the 029 merger, Qin-Han New City and the site protection area, Xixian New Area,
 the subway into Xianyang, two cities one line, the "15th Five-Year Plan" and Western Screen Valley. Counter-examples: fire in the treasury, an ancient tomb under the airport, a newly announced tomb (archaeological detail, not a turning point of the city).
