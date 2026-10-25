@@ -23,7 +23,8 @@ Do the following in order; go on only when the user confirms each step:
      the city growing year by year. A story the model cannot show (an interior, a work of art, a face) is named as a picture to supply ("Pictures");
      a big passage that has no picture of its own on the model is a sign to choose another moment of the same story. Check each big passage against what this
      medium shows best: a city burning, sinking or shrinking, rising or spreading, rebuilt in place, lines of light drawn across it. If the history has such a moment
-     and the outline does not use it, say why;
+     and the outline does not use it, say why. An extent or an order known only roughly is not a reason: draw it schematic from the best description and label it
+     (RESEARCH.md §6); leave out only what no source supports;
    - Prologue: which moment the opening shows the audience first, with which lines, and the question it ends on ("Prologue");
    - Pictures: which scenes get pictures, and whether to use found pictures or generated imagined ones ("Pictures").
 
