@@ -3,8 +3,8 @@
 ## The most common mistakes in this step
 
 - Writing the narration without agreeing with the user what story to tell → first produce a story outline, and write the narration and subtitles only after the user confirms it ("The director fixes the story first").
-- Reporting facts one by one → first write one connected narration with contrast, echo and a landing on people ("Copy").
-- Lines that sum up instead of show, facts left at the ends of paragraphs, the same point said twice → check every sentence for the three faults ("Copy").
+- Reporting facts one by one → tell the whole story as its storyteller, with your own feeling ("Copy").
+- Narration that sounds like AI (lines that only say what something means, the tone of a report, stock phrases) → read it aloud and rewrite ("Copy").
 - Writing seconds by hand, so one change breaks everything → compile schedules the narration and the changes ("Subtitles and the timeline"; STAGING.md 9a, 9e).
 - Making every station the same length, or fixing the total length first and squeezing things in → nodes have different weight ("Treatment and nodes").
 - Discovering halfway that there is no story to tell, and going back to research → before writing the script, read the story material collected in research (`research/stories.md`, RESEARCH.md §3).
@@ -33,15 +33,16 @@ Do the following in order; go on only when the user confirms each step:
    Until the user confirms the outline, write no narration and arrange no picture.
 2. **Detailed outline:** break every station of the confirmed outline into beats. A beat is one thing the audience learns or feels, with the picture that carries it
    (an event, a person and what they did or said, a detail, a picture on the model or a supplied one). Mark every beat:
-   - **key**: a full scene, several lines and a picture of its own;
-   - **one line**: said once, over the picture of a neighbouring beat.
+   - **key**: part of the story, a scene the audience should feel: several lines and a picture of its own;
+   - **one line**: background, or an event mentioned in passing: said once, over the picture of a neighbouring key beat. A one-line beat that fits no key beat near it
+     is in the wrong place.
 
    Decide by the story: a beat that does not move the arc, or that the audience cannot follow without more set-up than it is worth, is one line. Do not cut beats
    yet: what to cut is decided on real text (step 4). While writing it, keep a rough sense of length (a key beat takes about 20–40 seconds, a one-line beat
    5–8 seconds); the film fits within **15 minutes** unless the user sets another length. Show the user the detailed outline; go on only when the user confirms it.
 3. **Treatment:** write `TREATMENT.md` from the confirmed detailed outline ("Treatment and nodes").
-4. **Narration draft:** write the continuous narration for the whole film from the confirmed detailed outline ("Copy"), then estimate its length from the
-   speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
+4. **Narration draft:** write the continuous narration for the whole film from the confirmed detailed outline, a key beat told as a scene and a one-line beat
+   in passing ("Copy"); then estimate its length from the speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
    plus the pauses, the prologue, the opening and the picture holds the outline needs.
    - Within the length: show the draft and its estimate to the user.
    - Over the length: adjust the detailed outline (a key beat becomes one line, beats merge, a beat goes) and show the user every change, why, and the time it
@@ -124,15 +125,10 @@ If `emblem: none` but tally keyframes are written, compile stops.
 
 ## Copy
 
-First write a continuous narration for the whole film from the confirmed outline (telling the city's story, not reporting facts one by one), and cut it into subtitles after the user confirms; every **fact** the agent researched and wrote must be traceable to FACTS.md.
-The narrator is an erudite, objective elder with feeling: proud when the city rises and heroes appear, sad when the city declines or is destroyed, seeing hope when a new city grows. The narrator's own feelings, judgements and associations
-(「這份執念，從咸陽開始」 ("this obsession began in Xianyang"), 「盼了 10 多年的合一，就此落了空」 ("the union hoped for over 10 years came to nothing")) need no source: this is a work, not a news broadcast. The gate is only at the step of collecting material.
-**The voice tells the story; the sources stay off it.** Traceable means traceable in FACTS.md, not cited in the sentence. Who recorded an event, how a number was estimated,
-that a picture is schematic or a project is still a plan: these go in FACTS.md and on screen (the readout's source line, the label on the picture or card, the end card).
-The narrator says what happened and what the city became (Xianyang: 「火三月不滅」 ("the fire burned for three months") is spoken without naming the *Shiji*; the source sits in FACTS.md).
-Name a chronicler, a report or a dataset in the voice only when the record is itself part of the story (an eyewitness's shock, a plan the city is arguing over), never as attribution.
-Where a line has to carry its doubt, one word does it (「傳說」 ("legend"), "it is said"), not a sentence about the historian.
-**It must have a story; it must not merely read out fixed facts again.** Common methods:
+Write the narration for the whole film from the confirmed detailed outline, and cut it into subtitles after the user confirms it.
+**You are the storyteller.** Tell the city's whole story as its director would, with your own feeling: proud when the city rises and its heroes appear, grieving when it falls
+or burns, hopeful when a new city grows. Your own feelings, judgements and associations are part of the telling (「這份執念，從咸陽開始」 ("that resolve began in Xianyang"),
+「盼了 10 多年的合一，就此落了空」 ("the union hoped for over 10 years came to nothing")): this is a work, not a news broadcast. How to tell it is your choice; some ways Xianyang uses:
 - Contrast: set two things side by side so the audience feels the gap by themselves (the First Emperor wanted 「二世三世至於萬世」 ("second generation, third generation, to ten thousand generations"), and the next line is 「然而，它只撐了15年」 ("Yet it lasted only 15 years")).
 - Echo: plant a line early and take it back later (Han: 「帝王長眠的高原」 ("the plateau where emperors sleep") → 1991: 「帝王長眠的高原，成了飛向遠方的起點」 ("the plateau where emperors sleep became the starting point of flights to far places");
   Qin capital: 「商鞅統一了秦國的尺、斗和秤」 ("Shang Yang unified Qin's rulers, measures and scales") → imperial capital: 「文字、車軌、尺和秤，從此全天下一樣」 ("writing, axle widths, rulers and scales, from now the same under all heaven");
@@ -140,29 +136,17 @@ Where a line has to carry its doubt, one word does it (「傳說」 ("legend"), 
   ending: 「兩座城沒有合併，卻長成同一座城，就像2000多年前，渭水兩岸本是一座咸陽」 ("the two cities did not merge, yet grew into one city, just as over 2,000 years ago the two banks of the Wei were one Xianyang")).
 - Landing on people: end a passage of facts with a line about a person's situation (after the state cotton mill restructuring, 「一代紡織人的青春，就留在了這裡」 ("a generation of textile workers left their youth here")).
 
-Above all, the narration must sound like a person telling a story aloud. Read the draft aloud: whatever nobody would say that way (a report, a list, a primer,
-a sentence the listener loses track of) is rewritten. No rule here sets a sentence length: write as speech, and leave subtitle length to the cutting of the
-confirmed narration into subtitles ("Writing subtitles and readouts").
+**The one hard rule: it must sound like a person telling a story aloud, not like AI.** Read the draft aloud and rewrite whatever nobody would say that way.
+Signs of AI writing, to recognise when reading aloud, not a list to tick off:
+- A sentence that only says what something means, with nothing to see or feel ("unification brought a common order"; Xianyang says 「文字、車軌、尺和秤，從此全天下一樣」).
+- A point said, then explained, then summed up (Xianyang's fall is four lines, 「然而，它只撐了15年。項羽引兵入咸陽，燒秦宮室。火三月不滅。如今，那裡只剩一片田野。」
+  ("It lasted 15 years. Xiang Yu took Xianyang and set the palaces alight. The fire burned for three months. Today only fields remain."), and none explains what it meant).
+- The tone of a report: who recorded it, how it was estimated, that it is still a plan. These go on screen (the source line, the label on the picture or card, the end card);
+  the voice names a record only when it is part of the story (an eyewitness's shock), and carries doubt in one word (「傳說」 ("legend"), "it is said").
+- Stock phrases (「見證了」 "a testament to", 「不僅……更是……」 "not only … but also", 「另一種」 "another kind of"), a moral at the end of every paragraph,
+  every sentence in the same rhythm, facts strung along in outline order, a sentence the listener loses track of.
 
-Then check every sentence of the draft for three faults. The check repairs sentences under the confirmed detailed outline; it does not change the weight of a beat:
-a key beat still gets a scene of several lines (step 2), and the voice keeps each station's feeling (its `mood`), so the turns of the story keep a line of feeling
-resting on the concrete lines before it (「這份執念，從咸陽開始」 ("that resolve began in Xianyang") after 2,000 years of China coming back together).
-- **A line that only says what something means.** A sentence with nothing to see, hear or feel, made of abstract nouns (order, culture, achievement, the scale of the city,
-  a new face, another kind of authority), sums up what the narration should show. Test: cover the sentence; if the paragraph loses nothing the audience can picture or feel,
-  it is such a line. Replace it with the concrete thing the beat already holds (a name, a number, an object, a deed, words someone said); do not bring in new names and
-  dates just to make a line concrete. Cut it only when it repeats what the lines before it have already shown. (Xianyang tells unification as
-  「文字、車軌、尺和秤，從此全天下一樣」 ("one script, one axle width, one rule and one scale, everywhere"); "unification brought a common order" would say nothing.)
-- **A fact left at the end.** A one-line beat joins the sentence or picture it belongs to, where the facts really meet (a clause, a contrast, a time word); it is not
-  appended in outline order as a separate dated sentence closing a paragraph. Never invent a connection to attach it (a comparison of years, "in the same year that").
-  End each paragraph on its strongest line: the turn, the picture, the feeling, the person.
-  A one-line beat that connects to nothing near it is in the wrong place in the detailed outline: say so when showing the draft.
-- **The same point twice.** Do not announce a point, make it, and then sum it up; when a quote, a deed or a picture lands the point, do not paraphrase it before or after.
-  (Xianyang's fall of the capital is four lines, 「然而，它只撐了15年。項羽引兵入咸陽，燒秦宮室。火三月不滅。如今，那裡只剩一片田野。」 ("It lasted 15 years. Xiang Yu took
-  Xianyang and set the palaces alight. The fire burned for three months. Today only fields remain."), and no line explains what the fall meant.)
-  The copy check's "the same statement made twice" catches only near-identical lines; this is for the writer.
-
-After the check, compare the draft with the detailed outline station by station. A key beat shrunk to one sentence, a station that has lost its feeling, or a voice
-far shorter than the picture means the check was misread: write the station again from the outline.
+No rule sets a sentence length: write as speech; subtitle length is handled when the confirmed narration is cut into subtitles ("Writing subtitles and readouts").
 
 ## Writing subtitles and readouts
 
