@@ -125,6 +125,11 @@ If `emblem: none` but tally keyframes are written, compile stops.
 First write a continuous narration for the whole film from the confirmed outline (telling the city's story, not reporting facts one by one), and cut it into subtitles after the user confirms; every **fact** the agent researched and wrote must be traceable to FACTS.md.
 The narrator is an erudite, objective elder with feeling: proud when the city rises and heroes appear, sad when the city declines or is destroyed, seeing hope when a new city grows. The narrator's own feelings, judgements and associations
 (「這份執念，從咸陽開始」 ("this obsession began in Xianyang"), 「盼了 10 多年的合一，就此落了空」 ("the union hoped for over 10 years came to nothing")) need no source: this is a work, not a news broadcast. The gate is only at the step of collecting material.
+**The voice tells the story; the sources stay off it.** Traceable means traceable in FACTS.md, not cited in the sentence. Who recorded an event, how a number was estimated,
+that a picture is schematic or a project is still a plan: these go in FACTS.md and on screen (the readout's source line, the label on the picture or card, the end card).
+The narrator says what happened and what the city became (Xianyang: 「火三月不滅」 ("the fire burned for three months") is spoken without naming the *Shiji*; the source sits in FACTS.md).
+Name a chronicler, a report or a dataset in the voice only when the record is itself part of the story (an eyewitness's shock, a plan the city is arguing over), never as attribution.
+Where a line has to carry its doubt, one word does it (「傳說」 ("legend"), "it is said"), not a sentence about the historian.
 **It must have a story; it must not merely read out fixed facts again.** Common methods:
 - Contrast: set two things side by side so the audience feels the gap by themselves (the First Emperor wanted 「二世三世至於萬世」 ("second generation, third generation, to ten thousand generations"), and the next line is 「然而，它只撐了15年」 ("Yet it lasted only 15 years")).
 - Echo: plant a line early and take it back later (Han: 「帝王長眠的高原」 ("the plateau where emperors sleep") → 1991: 「帝王長眠的高原，成了飛向遠方的起點」 ("the plateau where emperors sleep became the starting point of flights to far places");
@@ -136,7 +141,8 @@ The narrator is an erudite, objective elder with feeling: proud when the city ri
 ## Writing subtitles and readouts
 
 - Length of one subtitle: Chinese characters ≤22 characters (CJK ≤22 characters), English ≤70 characters, other scripts follow the limit in `i18n/<code>.yaml`.
-- One fact per subtitle, the first language on top and the second language below ("Languages"); write "傳說" ("legend"), "可能" ("possibly"), "示意" ("schematic") for what is uncertain.
+- One fact per subtitle, the first language on top and the second language below ("Languages"); write "傳說" ("legend"), "可能" ("possibly"), "示意" ("schematic") for what is uncertain,
+  as a word in the line or a label on the picture, not as a sentence about the source ("Copy").
 - **Numbers are always Arabic numerals 0–9, in every language:** years, dates, times of day, quantities, measures, percentages, ordinals (Line 1, Phase 3). Write them that way from the start of the narration, not by changing them afterwards:
   do not use Chinese numerals (一九八三年, 八百八十二), Japanese kanji numerals, Arabic-Indic digits (٠١٢٣), Persian digits, Devanagari (०१२), Thai (๐๑๒) or any other script's own digit characters,
   and no full-width digits (１２３) either. The film is for audiences of different languages, and numbers are the common part.
