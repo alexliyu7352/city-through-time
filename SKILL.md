@@ -9,6 +9,10 @@ Input: a city name and a starting era (for example "Xianyang, from the Neolithic
 plus `TREATMENT.md`, `FACTS.md` and `CREDITS` in the city folder. The project root is the folder this file is in; `cities/xianyang/` is a complete example,
 so look at it first when unsure how to write something.
 
+**Before anything else, research included: if `local/config.json` does not exist, do step 0 now.** Read `docs/SETUP.md`, ask the
+user about each machine path it lists, and write the file; start no other step until it exists. Ask only about those paths: a city's
+own files (research, `FACTS.md`, `city.yaml`, `build/`, `dist/`) always live in `cities/<slug>/` inside the project.
+
 **This file is the index.** It holds only the core constraints and the workflow. Before each step, read that step's file (the "Read first" column of the workflow table) and follow it; read the next step's file only when you get there.
 After a context compaction, an agent change or a few days' break, first work out "Which step are we on", then read that step's file. When the user names a part to change, read the file that part belongs to
 (camera and staging: STAGING; narration: SCRIPT).

@@ -1,11 +1,13 @@
 # First use: local settings and environment (once per computer)
 
 Every computer arranges its disks differently, so local paths and settings are not written in code or in committed files. They live only in `local/config.json` (not in git; `pipeline/local.py`
-reads it; template `templates/local.json`). When this file is missing, do this step first, before any city:
+reads it; template `templates/local.json`). When this file is missing, do this step first, before any other step (research included):
 1. **Put everything under the project's `local/`** (recommended): the template does exactly this (`local/raw`, `local/ref`, `local/models/...`, `local/instruments`), and the whole folder
    is blocked by .gitignore, so moving, backing up and clearing touch one place only. Relative paths count from the project root and work the same on Linux, macOS and Windows. Change an entry to an absolute path only when the user has their own arrangement
    (for example the disk is too small and big files must go on another drive); `~` is allowed.
-2. **Ask the user about each entry** (AskUserQuestion; state the suggested value and the approximate size first):
+2. **Ask the user about each entry** (one question per entry, with the agent's question tool if it has one; state the suggested value and the approximate size first).
+   Ask only about these machine paths. Do not ask where the city's files go: research, `FACTS.md`, `city.yaml`, `build/` and `dist/` always live in
+   `cities/<slug>/` inside the project (`pipeline/layout.py`).
    - `raw`: downloaded raw data (OSM, CMAB, Overture, GHSL), about 1–2 GB per city;
    - `ref`: the original downloads of footage and photos (each city's `assets/footage/make.sh` cuts clips from here);
    - `stable_audio`, `hf_cache`: needed only if Stable Audio 3 is chosen for the music (program about 2.5 GB, weights about 3.2 GB);
