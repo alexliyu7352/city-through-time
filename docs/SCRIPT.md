@@ -140,6 +140,10 @@ Where a line has to carry its doubt, one word does it (「傳說」 ("legend"), 
   ending: 「兩座城沒有合併，卻長成同一座城，就像2000多年前，渭水兩岸本是一座咸陽」 ("the two cities did not merge, yet grew into one city, just as over 2,000 years ago the two banks of the Wei were one Xianyang")).
 - Landing on people: end a passage of facts with a line about a person's situation (after the state cotton mill restructuring, 「一代紡織人的青春，就留在了這裡」 ("a generation of textile workers left their youth here")).
 
+Above all, the narration must sound like a person telling a story aloud. Read the draft aloud: whatever nobody would say that way (a report, a list, a primer,
+a sentence the listener loses track of) is rewritten. No rule here sets a sentence length: write as speech, and leave subtitle length to the cutting of the
+confirmed narration into subtitles ("Writing subtitles and readouts").
+
 Then check every sentence of the draft for three faults. The check repairs sentences under the confirmed detailed outline; it does not change the weight of a beat:
 a key beat still gets a scene of several lines (step 2), and the voice keeps each station's feeling (its `mood`), so the turns of the story keep a line of feeling
 resting on the concrete lines before it (「這份執念，從咸陽開始」 ("that resolve began in Xianyang") after 2,000 years of China coming back together).
@@ -149,10 +153,7 @@ resting on the concrete lines before it (「這份執念，從咸陽開始」 ("
   dates just to make a line concrete. Cut it only when it repeats what the lines before it have already shown. (Xianyang tells unification as
   「文字、車軌、尺和秤，從此全天下一樣」 ("one script, one axle width, one rule and one scale, everywhere"); "unification brought a common order" would say nothing.)
 - **A fact left at the end.** A one-line beat joins the sentence or picture it belongs to, where the facts really meet (a clause, a contrast, a time word); it is not
-  appended in outline order as a separate dated sentence closing a paragraph. Never invent a connection to attach it (a comparison of years, "in the same year that"),
-  and never pack several facts into one sentence: a spoken sentence carries one main fact and fits one or two subtitles ("Writing subtitles and readouts";
-  Xianyang's English lines average 13 words, at most 21). One fact is not one short clause: a sentence may carry its how, why or where, and the lengths vary,
-  so the telling flows and a short line lands a turn (Xianyang's fall, four short lines, comes after the longer lines of the empire; a film of short lines reads as a list).
+  appended in outline order as a separate dated sentence closing a paragraph. Never invent a connection to attach it (a comparison of years, "in the same year that").
   End each paragraph on its strongest line: the turn, the picture, the feeling, the person.
   A one-line beat that connects to nothing near it is in the wrong place in the detailed outline: say so when showing the draft.
 - **The same point twice.** Do not announce a point, make it, and then sum it up; when a quote, a deed or a picture lands the point, do not paraphrase it before or after.
@@ -166,6 +167,7 @@ far shorter than the picture means the check was misread: write the station agai
 ## Writing subtitles and readouts
 
 - Length of one subtitle: Chinese characters ≤22 characters (CJK ≤22 characters), English ≤70 characters, other scripts follow the limit in `i18n/<code>.yaml`.
+  This applies when the confirmed narration is cut into subtitles (a long sentence becomes several subtitles); it is not a reason to write short sentences ("Copy").
 - One fact per subtitle, the first language on top and the second language below ("Languages"); write "傳說" ("legend"), "可能" ("possibly"), "示意" ("schematic") for what is uncertain,
   as a word in the line or a label on the picture, not as a sentence about the source ("Copy").
 - **Numbers are always Arabic numerals 0–9, in every language:** years, dates, times of day, quantities, measures, percentages, ordinals (Line 1, Phase 3). Write them that way from the start of the narration, not by changing them afterwards:
