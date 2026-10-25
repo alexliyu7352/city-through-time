@@ -33,17 +33,21 @@ Do the following in order; go on only when the user confirms each step:
 2. **Detailed outline:** break every station of the confirmed outline into beats. A beat is one thing the audience learns or feels, with the picture that carries it
    (an event, a person and what they did or said, a detail, a picture on the model or a supplied one). Mark every beat:
    - **key**: a full scene, several lines and a picture of its own;
-   - **one line**: said once, over the picture of a neighbouring beat;
-   - **cut**: stays in research.
+   - **one line**: said once, over the picture of a neighbouring beat.
 
-   Decide by the story: a beat that does not move the arc, or that the audience cannot follow without more set-up than it is worth, becomes one line or is cut.
-   The film fits within **15 minutes** unless the user sets another length; meet it here, by cutting and compressing beats. As a rough guide a key beat takes
-   20–40 seconds and a one-line beat 5–8 seconds. Show the user the detailed outline with its marks and a rough total; go on only when the user confirms it.
+   Decide by the story: a beat that does not move the arc, or that the audience cannot follow without more set-up than it is worth, is one line. Do not cut beats
+   yet: what to cut is decided on real text (step 4). While writing it, keep a rough sense of length (a key beat takes about 20–40 seconds, a one-line beat
+   5–8 seconds); the film fits within **15 minutes** unless the user sets another length. Show the user the detailed outline; go on only when the user confirms it.
 3. **Treatment:** write `TREATMENT.md` from the confirmed detailed outline ("Treatment and nodes").
-4. **Narration draft:** write the continuous narration for the whole film from the detailed outline ("Copy"), then estimate its length from the speaking rate:
-   about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second, plus the pauses,
-   the prologue, the opening and the picture holds the outline needs. Over the length, go back to the detailed outline and cut or compress beats; never speed up
-   the voice or crowd the lines. Show the draft and its estimate to the user; only after confirmation cut it into subtitles and write it into `script.yaml`.
+4. **Narration draft:** write the continuous narration for the whole film from the confirmed detailed outline ("Copy"), then estimate its length from the
+   speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
+   plus the pauses, the prologue, the opening and the picture holds the outline needs.
+   - Within the length: show the draft and its estimate to the user.
+   - Over the length: adjust the detailed outline (a key beat becomes one line, beats merge, a beat goes) and show the user every change, why, and the time it
+     saves, with the new estimate. Only after the user confirms, rework the narration from the adjusted detailed outline (do not just strike sentences out of
+     the old draft), estimate again, and show the draft.
+
+   Never speed up the voice or crowd the lines to fit. Only after the user confirms the draft, cut it into subtitles and write it into `script.yaml`;
    compile then gives the exact length.
 5. **Emotional line:** fix the narrator's feeling at each station from the outline (`mood`, "Emblem and emotional line"); the style of the music also comes from the outline and the emotional line (SOUND.md).
 
@@ -54,7 +58,7 @@ If the direction of the story has to change midway, go back to the outline and c
 Write `TREATMENT.md` from the confirmed outline (emblem, node table, colour logic, subtitle design, music direction), then write the nodes into `film.nodes` of `city.yaml` (node system: each node carries its own year, seconds, layers, props, pins, subtitles and camera; the film's length is the sum of the nodes).
 Besides "event", the node table has a column "what the city becomes at this station" (position, shape, status, industry): cover the event column and read only this one; delete or rewrite a station whose cell is empty.
 **Nodes have different weight:** a major turning point (becoming a capital, unification, destruction of the city, becoming a municipality) gets enough picture and more than one line of narration; transition stations get a few lines.
-Do not make every station the same length; the length limit is met in the detailed outline by cutting and compressing beats, never by squeezing lines into fixed seconds
+Do not make every station the same length; the length limit is met by adjusting the beats of the detailed outline after timing the narration, never by squeezing lines into fixed seconds
 (example: Xianyang's imperial capital is 77 seconds, the 1975 station 13.5 seconds). When the material is not enough, go back to research; never invent.
 
 ## Prologue
