@@ -23,7 +23,7 @@ Research is the script's stock room: the events, people, stories and the locals'
 6. **Show the user the story first, then the station table**, and go to the next step only when the user approves:
    - one sentence that says what the city wins, loses and becomes (the stakes), not an abstract theme such as "a city that keeps rewriting itself";
    - the shape: the highest peak, the deepest fall, where the film turns, and the narrator's feeling rising and falling across the stations;
-   - the two or three big passages (minutes each), the people who drive them and the picture only this film can show for each (SCRIPT.md),
+   - the two or three big passages (the most room; real times come only after the script), the people who drive them and the picture only this film can show for each (SCRIPT.md),
      and which stations are short transitions;
    - the opening and the ending: name at least one concrete thing ahead (being built, scheduled, planned or hoped for, with its source), and an echo of an earlier
      station if there is one; "the city's next chapter" with nothing named is not an ending;

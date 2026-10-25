@@ -17,7 +17,8 @@ Do the following in order; go on only when the user confirms each step:
    - One sentence: what kind of city the film is about and what story (Xianyang: a city that was once the centre of the world, burned into fields, shrank to a small town, and two thousand years later grew into one city with Chang'an across the river);
    - The arc of the story: which stations carry the beginning, development, turn and close;
    - The longest passages: for the most important events and people of the city, what is told in each and why it matters, and what the protagonist achieved (RESEARCH.md §2);
-   - For each part: what is told, who the protagonist is, the narrator's feeling, roughly how long;
+   - For each part: what is told, who the protagonist is, the narrator's feeling, and its weight (big or short). Minutes at this stage are guesses, not a plan:
+     the real length comes from the detailed outline and the narration (steps 2 and 4);
    - How the opening introduces the city and its name, and how the ending lands on the city's future;
    - For each big passage, the picture only this film can show: a fire spreading, the city shrinking inside its walls, new roads lighting up one by one,
      the city growing year by year. A story the model cannot show (an interior, a work of art, a face) is named as a picture to supply ("Pictures");
@@ -29,9 +30,22 @@ Do the following in order; go on only when the user confirms each step:
    - Pictures: which scenes get pictures, and whether to use found pictures or generated imagined ones ("Pictures").
 
    Until the user confirms the outline, write no narration and arrange no picture.
-2. **Treatment:** write `TREATMENT.md` from the confirmed outline ("Treatment and nodes").
-3. **Narration draft:** write the continuous narration for the whole film from the outline ("Copy") and show it to the user; only after confirmation cut it into subtitles and write it into `script.yaml`.
-4. **Emotional line:** fix the narrator's feeling at each station from the outline (`mood`, "Emblem and emotional line"); the style of the music also comes from the outline and the emotional line (SOUND.md).
+2. **Detailed outline:** break every station of the confirmed outline into beats. A beat is one thing the audience learns or feels, with the picture that carries it
+   (an event, a person and what they did or said, a detail, a picture on the model or a supplied one). Mark every beat:
+   - **key**: a full scene, several lines and a picture of its own;
+   - **one line**: said once, over the picture of a neighbouring beat;
+   - **cut**: stays in research.
+
+   Decide by the story: a beat that does not move the arc, or that the audience cannot follow without more set-up than it is worth, becomes one line or is cut.
+   The film fits within **15 minutes** unless the user sets another length; meet it here, by cutting and compressing beats. As a rough guide a key beat takes
+   20–40 seconds and a one-line beat 5–8 seconds. Show the user the detailed outline with its marks and a rough total; go on only when the user confirms it.
+3. **Treatment:** write `TREATMENT.md` from the confirmed detailed outline ("Treatment and nodes").
+4. **Narration draft:** write the continuous narration for the whole film from the detailed outline ("Copy"), then estimate its length from the speaking rate:
+   about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second, plus the pauses,
+   the prologue, the opening and the picture holds the outline needs. Over the length, go back to the detailed outline and cut or compress beats; never speed up
+   the voice or crowd the lines. Show the draft and its estimate to the user; only after confirmation cut it into subtitles and write it into `script.yaml`.
+   compile then gives the exact length.
+5. **Emotional line:** fix the narrator's feeling at each station from the outline (`mood`, "Emblem and emotional line"); the style of the music also comes from the outline and the emotional line (SOUND.md).
 
 If the direction of the story has to change midway, go back to the outline and confirm it again with the user; do not patch it piecemeal on the subtitles.
 
@@ -40,7 +54,7 @@ If the direction of the story has to change midway, go back to the outline and c
 Write `TREATMENT.md` from the confirmed outline (emblem, node table, colour logic, subtitle design, music direction), then write the nodes into `film.nodes` of `city.yaml` (node system: each node carries its own year, seconds, layers, props, pins, subtitles and camera; the film's length is the sum of the nodes).
 Besides "event", the node table has a column "what the city becomes at this station" (position, shape, status, industry): cover the event column and read only this one; delete or rewrite a station whose cell is empty.
 **Nodes have different weight:** a major turning point (becoming a capital, unification, destruction of the city, becoming a municipality) gets enough picture and more than one line of narration; transition stations get a few lines.
-Do not make every station the same length, and do not fix the total length first and squeeze things in
+Do not make every station the same length; the length limit is met in the detailed outline by cutting and compressing beats, never by squeezing lines into fixed seconds
 (example: Xianyang's imperial capital is 77 seconds, the 1975 station 13.5 seconds). When the material is not enough, go back to research; never invent.
 
 ## Prologue
