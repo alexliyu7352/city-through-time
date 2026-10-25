@@ -48,7 +48,8 @@ Do the following in order; go on only when the user confirms each step:
      saves, with the new estimate. Only after the user confirms, rework the narration from the adjusted detailed outline (do not just strike sentences out of
      the old draft), estimate again, and show the draft.
 
-   Never speed up the voice or crowd the lines to fit. Only after the user confirms the draft, cut it into subtitles and write it into `script.yaml`;
+   Never speed up the voice or crowd the lines to fit, and never answer a shorter voice with longer silent holds: picture time comes from what the audience must
+   watch change (Xianyang: 604 seconds of voice in a film of 750 seconds; the copy check flags long silences). Only after the user confirms the draft, cut it into subtitles and write it into `script.yaml`;
    compile then gives the exact length.
 5. **Emotional line:** fix the narrator's feeling at each station from the outline (`mood`, "Emblem and emotional line"); the style of the music also comes from the outline and the emotional line (SOUND.md).
 
@@ -139,19 +140,26 @@ Where a line has to carry its doubt, one word does it (「傳說」 ("legend"), 
   ending: 「兩座城沒有合併，卻長成同一座城，就像2000多年前，渭水兩岸本是一座咸陽」 ("the two cities did not merge, yet grew into one city, just as over 2,000 years ago the two banks of the Wei were one Xianyang")).
 - Landing on people: end a passage of facts with a line about a person's situation (after the state cotton mill restructuring, 「一代紡織人的青春，就留在了這裡」 ("a generation of textile workers left their youth here")).
 
-Then check every sentence of the draft for three faults, and rewrite where one is found:
+Then check every sentence of the draft for three faults. The check repairs sentences under the confirmed detailed outline; it does not change the weight of a beat:
+a key beat still gets a scene of several lines (step 2), and the voice keeps each station's feeling (its `mood`), so the turns of the story keep a line of feeling
+resting on the concrete lines before it (「這份執念，從咸陽開始」 ("that resolve began in Xianyang") after 2,000 years of China coming back together).
 - **A line that only says what something means.** A sentence with nothing to see, hear or feel, made of abstract nouns (order, culture, achievement, the scale of the city,
-  a new face, another kind of authority), sums up what the narration should show. Replace it with the concrete thing it sums up (a name, a number, an object, a deed, words someone said)
-  or cut it. Test: cover the sentence; if the paragraph loses nothing the audience can picture or feel, cut it. (Xianyang tells unification as
+  a new face, another kind of authority), sums up what the narration should show. Test: cover the sentence; if the paragraph loses nothing the audience can picture or feel,
+  it is such a line. Replace it with the concrete thing the beat already holds (a name, a number, an object, a deed, words someone said); do not bring in new names and
+  dates just to make a line concrete. Cut it only when it repeats what the lines before it have already shown. (Xianyang tells unification as
   「文字、車軌、尺和秤，從此全天下一樣」 ("one script, one axle width, one rule and one scale, everywhere"); "unification brought a common order" would say nothing.)
-  The narrator's own judgement stays when it is short, has feeling and rests on the concrete lines before it (「這份執念，從咸陽開始」 after 2,000 years of China coming back together).
-- **A fact left at the end.** A one-line beat joins the sentence or picture it belongs to, where it connects (a clause, a contrast, a time word); it is not appended in
-  outline order as a separate dated sentence closing a paragraph. End each paragraph on its strongest line: the turn, the picture, the feeling, the person.
+- **A fact left at the end.** A one-line beat joins the sentence or picture it belongs to, where the facts really meet (a clause, a contrast, a time word); it is not
+  appended in outline order as a separate dated sentence closing a paragraph. Never invent a connection to attach it (a comparison of years, "in the same year that"),
+  and never pack several facts into one sentence: a spoken sentence carries one main fact and fits one or two subtitles ("Writing subtitles and readouts";
+  Xianyang's English lines average 13 words, at most 21). End each paragraph on its strongest line: the turn, the picture, the feeling, the person.
   A one-line beat that connects to nothing near it is in the wrong place in the detailed outline: say so when showing the draft.
 - **The same point twice.** Do not announce a point, make it, and then sum it up; when a quote, a deed or a picture lands the point, do not paraphrase it before or after.
   (Xianyang's fall of the capital is four lines, 「然而，它只撐了15年。項羽引兵入咸陽，燒秦宮室。火三月不滅。如今，那裡只剩一片田野。」 ("It lasted 15 years. Xiang Yu took
   Xianyang and set the palaces alight. The fire burned for three months. Today only fields remain."), and no line explains what the fall meant.)
   The copy check's "the same statement made twice" catches only near-identical lines; this is for the writer.
+
+After the check, compare the draft with the detailed outline station by station. A key beat shrunk to one sentence, a station that has lost its feeling, or a voice
+far shorter than the picture means the check was misread: write the station again from the outline.
 
 ## Writing subtitles and readouts
 
