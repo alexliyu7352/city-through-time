@@ -42,9 +42,12 @@ def fetch(city, release='2026-09-23.1'):
 
 
 def _scan(out, box, release):
-    """the DuckDB scan of the public release (httpfs + spatial) into out.tmp.json"""
+    """the DuckDB scan of the public release (httpfs + spatial) into out.tmp.json: written under another name and renamed only
+    when the scan has finished, so an interrupted scan leaves nothing a later fetch would take for a finished one"""
     import duckdb
     w, s, e, n = box
+    part = out + '.scan.json'
+    if os.path.exists(part): os.remove(part)   # (what an interrupted scan left)
     con = duckdb.connect()
     con.execute("INSTALL httpfs; LOAD httpfs; INSTALL spatial; LOAD spatial; SET s3_region='us-west-2'; SET memory_limit='3GB'; SET threads=2;")
     q = f"""
@@ -52,8 +55,9 @@ def _scan(out, box, release):
         SELECT id, height, num_floors, class, subtype, ST_AsGeoJSON(geometry) AS geometry
         FROM read_parquet('s3://overturemaps-us-west-2/release/{release}/theme=buildings/type=building/*', filename=true, hive_partitioning=1)
         WHERE bbox.xmin >= {w} AND bbox.xmax <= {e} AND bbox.ymin >= {s} AND bbox.ymax <= {n}
-      ) TO '{out}.tmp.json' (FORMAT JSON, ARRAY true)"""
-    con.execute(q)
+      ) TO '{part}' (FORMAT JSON, ARRAY true)"""
+    con.execute(q); con.close()
+    os.replace(part, out + '.tmp.json')
 
 
 def first_epoch(raw, lonlats, box, threshold=1500):
