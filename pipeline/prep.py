@@ -188,7 +188,8 @@ def osm_named(name):
     return None
 for m in C.get('mounds', []):
     if 'osm' in m:   # base = the mapped outline's minimum rotated rectangle; centre and rotation from it
-        pts = osm_named(m['osm']); assert pts, f'mound {m["id"]}: OSM way {m["osm"]!r} not in the historic cache'
+        pts = osm_named(m['osm']); assert pts, (f'mound {m["id"]}: OSM way {m["osm"]!r} not in the historic answer for the box (a mound beyond the plate '
+                                      f'takes lon, lat, rot_deg, base_m and top_m instead)')
         rect = Polygon(pts).minimum_rotated_rectangle; rc = list(rect.exterior.coords)[:4]
         e0 = math.hypot(rc[1][0] - rc[0][0], rc[1][1] - rc[0][1]); e1 = math.hypot(rc[2][0] - rc[1][0], rc[2][1] - rc[1][1])
         x, y = rect.centroid.x, rect.centroid.y; rot = math.atan2(rc[1][1] - rc[0][1], rc[1][0] - rc[0][0])

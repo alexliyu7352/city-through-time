@@ -42,7 +42,7 @@ mounds:
   - { id: yanling, osm: 汉成帝延陵, h_m: 30, top_ratio: .4, year: -7, zh: 汉延陵, en: Yanling }
   - { id: zhou_wen, osm: 周文王陵, h_m: 12, top_ratio: .4, year: -300, zh: 周陵（文王陵）, en: Zhou tombs }
   - { id: zhou_wu, osm: 周武王陵, h_m: 12, top_ratio: .4, year: -300, zh: 周陵（武王陵）, en: Zhou tombs }
-  - { id: shunling, osm: 顺陵封土堆, h_m: 12.6, top_ratio: .4, year: 690, zh: 唐顺陵, en: Shunling }
+  - { id: shunling, lon: 108.798713551, lat: 34.465275851, rot_deg: -81.572720, base_m: [46.5935, 45.6271], top_m: [18.6374, 18.2508], h_m: 12.6, year: 690, zh: 唐顺陵, en: Shunling }   # 2.8 km north of the plate, so not in the OSM answer for the box: the outline of OSM way 220956464 (顺陵封土堆) as a rectangle, top 0.4 of the base
 
 # ================================================================ THE FILM v4 — whole period cities (pipeline/citygen.py); copy written as one script
 terrain: { enabled: true, exaggeration: 3.0,   # x3: at x6 every foundation on the 北阪 stands as tall as its house; terrain.py and clipcheck put the period cities' limit at about x4.5
