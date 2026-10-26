@@ -632,7 +632,7 @@ def node_time(node, v, default=None):
         return round(t0 + max(0, min(1, k)) * (t1 - t0) + float(v.get('plus', 0)), 3)
     raise ValueError(f'bad time {v!r} in node {node.get("id")}')
 
-LINE_GAP = .35     # between one line's reading time and the next line
+LINE_GAP = .35     # between the end of one line (its voice and VOICE_TAIL) and the next line
 # the default kicker of a "today" picture: first language, the second in capitals, the first's word for footage (今天 · TODAY · 实拍)
 KICKER_TODAY = ' · '.join([i18n.word(LANG[0], 'today')] + ([i18n.word(LANG[1], 'today').upper()] if len(LANG) > 1 else []) + [i18n.word(LANG[0], 'footage')])
 LINE_FIRST = .5    # a node's first line, when it follows nothing: this long after the node arrives
@@ -662,8 +662,8 @@ def line_anchor(node, ln):
     return node_time(node, float(tau_)) - float(ln.get('lead', 0)), float(tau_)
 
 # the voice (design phase 4): once a line is recorded or generated, build/audio/voice/<language>/<line id>.wav (or .mp3, .m4a, .ogg),
-# its length times the line instead of the reading estimate (film.voice: the voiced language, default the first); the pictures that
-# follow the line move with it
+# its length times the line instead of the speaking estimate (film.voice: the voiced language, default the first); the pictures that
+# follow the line move with it. Only the voice times a line: a subtitle, in either language, is read faster than it is heard
 VOICE_LANG = (FM.get('voice') or {}).get('lang', LANG[0])
 VOICE_DIR = os.path.join(D, 'build', 'audio', 'voice', VOICE_LANG)
 _VOICE = {}
@@ -682,6 +682,11 @@ def voice_len(lid):
         break
     _VOICE[lid] = v_; return v_
 VOICE_TAIL = .3   # after the voice ends, before the next line may start
+def spoken(ln):
+    """how long a line of narration takes: its voice once recorded, else its text in the voiced language at that language's
+    speaking rate (i18n speak); the subtitles follow it and never hold it"""
+    v_ = voice_len(ln['id'])
+    return v_ if v_ is not None else i18n.speaking_time(VOICE_LANG, tx(ln.get(VOICE_LANG)))
 
 def schedule_lines(node, dur):
     """when each line of a node is spoken (docs/STAGING.md 5c), film seconds -> node['_line_t'] {id: (start, end)},
@@ -689,16 +694,16 @@ def schedule_lines(node, dur):
       with: <picture>   waits for that picture (line_anchor); the picture waits for it in turn when the lines before run long
                         (time goes in just before the picture: kind 'words')
       t: <seconds>      that moment of the node's picture, moving with every insertion; the picture waits likewise
-      neither           follows the line before (LINE_GAP after its reading time), through any hold the camera makes
+      neither           follows the line before (LINE_GAP after it has been said), through any hold the camera makes
       { pause: s }      a silence meant to be there (no check counts it as dead air)
-    No line before the node's arrival; the node lasts until its last line has been read."""
+    A line takes as long as it is said (spoken). No line before the node's arrival; the node lasts until its last line has been said."""
     arrive_ = node_time(node, 0)   # (after a tour's flight or a beam's approach: inserted before the node's own second 0)
     for _it in range(80):
         prev_end, out_, pauses_, fix_ = arrive_, {}, [], None
         for ln in node.get('cues', []):
             if 'pause' in ln:
                 pauses_.append((prev_end, prev_end + float(ln['pause']))); prev_end += float(ln['pause']); continue
-            need_ = max(hold(ab(ln)[0]), hold(ab(ln)[1]), (voice_len(ln['id']) or 0) + VOICE_TAIL)   # (read, or heard)
+            need_ = spoken(ln) + VOICE_TAIL
             if 'with' in ln: early_, tau_ = line_anchor(node, ln)
             elif isinstance(ln.get('t'), (int, float)): early_, tau_ = node_time(node, float(ln['t'])), float(ln['t'])
             else: early_, tau_ = (prev_end if out_ else arrive_ + LINE_FIRST), None   # (a node's first line: a breath after it arrives)
@@ -1219,7 +1224,7 @@ for i, node in enumerate(FM['nodes']):
     for ft in node.get('footage', []): footage_out.append(footage_item(ft, T(ft.get('at', 0)), node['id']))
     for c in node.get('cues', []):
         if 'pause' in c: continue
-        a, b = ab(c); cues.append({'id': c['id'], 'node': node['id'], 'later': bool(c.get('later')), 't0': node['_line_t'][c['id']][0], 'a': a, 'b': b, 'extra': c.get('extra', 0.4)})
+        a, b = ab(c); cues.append({'id': c['id'], 'node': node['id'], 'later': bool(c.get('later')), 't0': node['_line_t'][c['id']][0], 'a': a, 'b': b, 'say': round(spoken(c), 3), 'extra': c.get('extra', 0.4)})
     for e in node.get('events', []): evs.append({'t': T(e['t']), 'type': e['type'], **{k: v for k, v in e.items() if k not in ('t', 'type')}})
     keys = node.get('camera', [])
     for k in keys:
@@ -1270,11 +1275,11 @@ if grow:   # the growth's {year} times and its counters' end, on the whole year 
     if grow.get('counters'):
         u_ = grow['counters'].pop('_until', None)
         if u_: grow['counters']['t1'] = next(n['_t1'] for n in FM['nodes'] if n['id'] == u_)
-# cues: hold >= reading time, never into the next cue or the end card
+# cues: on screen while heard, and on to be read while the next cue leaves room; never into the next cue or the end card
 cues.sort(key=lambda c: c['t0'])
 for i, c in enumerate(cues):
-    h = max(hold(c['a']), hold(c['b']), (voice_len(c['id']) or 0)); nxt = cues[i + 1]['t0'] if i + 1 < len(cues) else end_t   # (on screen while it is heard)
-    c['t1'] = round(min(c['t0'] + h + c['extra'], nxt - 0.08), 3)
+    h = c['say']; nxt = cues[i + 1]['t0'] if i + 1 < len(cues) else end_t
+    c['t1'] = round(min(c['t0'] + max(h, hold(c['a']), hold(c['b'])) + c['extra'], nxt - 0.08), 3)
     if c['t1'] < c['t0'] + h - 1e-6: print(f'warning: cue {c["id"]} at {c["t0"]:.2f}s needs {h:.1f}s but has {c["t1"] - c["t0"]:.1f}s: give its node more seconds', file=sys.stderr)
     c.pop('extra', None)
 # camera: opening keys, then the nodes' keys; a node without keys drifts gently from the previous key
@@ -1614,15 +1619,19 @@ end = {'t': end_t, 'title_a': tx(E.get(LANG[0] + '_title') or E.get('title_a')),
        'lines': _credits + [pick(s) for s in E.get('lines', [])], 'bright': max(1, len(_credits))}
 op_cue = OP.get('cue')
 if op_cue:
-    a, b = ab(op_cue); t0 = PD + float(op_cue.get('t', 1.0)); cues.insert(0, {'id': op_cue.get('id', 'opening'), 'node': None, 'later': False, 't0': t0, 't1': round(min(t0 + max(hold(a), hold(b)) + .4, cues[0]['t0'] - .08 if cues else light['lamp']), 3), 'a': a, 'b': b})
-if PRO:   # the prologue's lines: each at its t or after the one before has been read, all said before the prologue's closing black
+    a, b = ab(op_cue); t0 = PD + float(op_cue.get('t', 1.0)); say_ = spoken({**op_cue, 'id': op_cue.get('id', 'opening')})
+    cues.insert(0, {'id': op_cue.get('id', 'opening'), 'node': None, 'later': False, 't0': t0, 'say': round(say_, 3), 't1': round(min(t0 + max(say_, hold(a), hold(b)) + .4, cues[0]['t0'] - .08 if cues else light['lamp']), 3), 'a': a, 'b': b})
+if PRO:   # the prologue's lines: each at its t or after the one before has been said, all said before the prologue's closing black
     _pc, _t = [], .5
     for ln in SCR['prologue']:
         a, b = ab(ln); t0 = float(ln['t']) if 't' in ln else _t
-        if _pc and t0 < _pc[-1]['t1'] - .4: raise SystemExit(f"compile: prologue line {ln['id']} at {t0:.1f} s starts before the line before it has been read")
-        t1 = round(t0 + max(hold(a), hold(b), voice_len(ln['id']) or 0) + .4, 3)
+        if _pc and t0 < _pc[-1]['t1'] - .4: raise SystemExit(f"compile: prologue line {ln['id']} at {t0:.1f} s starts before the line before it has been said")
+        say_ = spoken(ln); t1 = round(t0 + say_ + .4, 3)
         if t1 > PD - float(PRO.get('fade', .8)) + 1e-6: raise SystemExit(f"compile: prologue line {ln['id']} ends at {t1:.1f} s, inside the prologue's closing black: lengthen film.prologue.dur or shorten the line")
-        _pc.append({'id': ln['id'], 'node': None, 'later': False, 't0': round(t0, 3), 't1': t1, 'a': a, 'b': b}); _t = t1 - .4 + LINE_GAP
+        _pc.append({'id': ln['id'], 'node': None, 'later': False, 't0': round(t0, 3), 't1': t1, 'a': a, 'b': b, 'say': round(say_, 3)}); _t = t1 - .4 + LINE_GAP
+    for i_, c_ in enumerate(_pc):   # on to be read while the next line or the closing black leaves room
+        room_ = _pc[i_ + 1]['t0'] - .08 if i_ + 1 < len(_pc) else PD - float(PRO.get('fade', .8))
+        c_['t1'] = round(max(c_['t1'], min(c_['t0'] + max(hold(c_['a']), hold(c_['b'])) + .4, room_)), 3)
     cues[0:0] = _pc
 sat = FM.get('_satellite')
 def sat_out(sat):
@@ -1846,7 +1855,7 @@ if PRO:   # the prologue for the page: its length, its closing black, and from e
 json.dump(film, open(LAYOUT.build(D, 'film.json'), 'w'), ensure_ascii=False, indent=1)
 # the words on the final timeline, written out (subtitles in every language, the timed script for voice work: pipeline/subtitles.py)
 import subtitles as SUBS
-SUBS.write(LAYOUT.export(D), os.path.basename(D), cues, LANG, hold, end_t)
+SUBS.write(LAYOUT.export(D), os.path.basename(D), cues, LANG, end_t)
 # the copy check (pipeline/copylint.py): where words are missing, too many, or off the house style; advice, written to build/logs
 import copylint as COPY
 _finds = COPY.check(film, FM.get('copy'), _quiet, LANG[0])

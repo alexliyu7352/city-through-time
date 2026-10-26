@@ -132,13 +132,12 @@ def check(film, cfg=None, quiet=(), lang='zh'):
     for c in cues:
         n = i18n.line_length(lang, c['a'])
         if C['max_zh'] and n > C['max_zh']: F.append((c['t0'], c.get('node') or '-', 'cut', f'{c["id"]}: {n} characters (at most {C["max_zh"]}): split it or say less — {c["a"]}'))
-    read = i18n.reading_time
     i = 0
     while i < len(cues):
         w0 = cues[i]['t0']; grp = [c for c in cues[i:] if c['t0'] < w0 + C['dense_window_s']]
-        share = sum(read(c['a']) for c in grp) / C['dense_window_s']
+        share = sum(c['say'] for c in grp) / C['dense_window_s']   # (the time each is said: compile)
         if len(grp) >= 3 and share > C['dense_share']:
-            F.append((w0, cues[i].get('node') or '-', 'cut', f'{len(grp)} lines in {C["dense_window_s"]:.0f} s from {w0:.0f} s (reading fills {share:.0%} of it): '
+            F.append((w0, cues[i].get('node') or '-', 'cut', f'{len(grp)} lines in {C["dense_window_s"]:.0f} s from {w0:.0f} s (the narration fills {share:.0%} of it): '
                       f'no room for the picture; drop or merge one ({", ".join(c["id"] for c in grp)})'))
             i += len(grp); continue
         i += 1

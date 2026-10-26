@@ -2,6 +2,7 @@
 name: 繁體中文
 script: cjk
 max_line: 22
+speak: 4.3             # 旁白每秒念幾個字（漢字＋假名）：還沒配音時，一句旁白的長度按它估
 numerals: han
 year: { bce: "前 {y}", ce: "{y}", tick_bce: "前{y}", tick_ce: "{y}", label: "{name} · {year}" }
 words:

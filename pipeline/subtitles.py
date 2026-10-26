@@ -4,7 +4,8 @@
   <slug>.srt                both languages, one block per line (what dist/ gets)
   <slug>.<lang>.srt / .vtt  one language
   script_timed.tsv          one row per line: id, node, start, end, the time it has before the next line starts (a voice must fit
-                            in it), the time reading it needs, and the text in every language: the sheet for voice work
+                            in it), the time it is said (its voice, or the speaking estimate before there is one), and the text
+                            in every language: the sheet for voice work
 
 Times are the compiled ones (pipeline/compile.py): a line's start never moves without a recompile, and the exports are rewritten
 with it."""
@@ -16,8 +17,8 @@ def _ts(s, sep=','):
     return f'{ms // 3600000:02d}:{ms // 60000 % 60:02d}:{ms // 1000 % 60:02d}{sep}{ms % 1000:03d}'
 
 
-def write(out_dir, slug, cues, langs, read_time, end_t):
-    """cues: the film's [{id, node, t0, t1, a, b}] (a, b: the first and second language); read_time(text) -> seconds"""
+def write(out_dir, slug, cues, langs, end_t):
+    """cues: the film's [{id, node, t0, t1, a, b, say}] (a, b: the first and second language; say: seconds it is said)"""
     os.makedirs(out_dir, exist_ok=True)
     cs = sorted(cues, key=lambda c: c['t0'])
     texts = lambda c: [c.get('a'), c.get('b')][:len(langs)]
@@ -33,9 +34,9 @@ def write(out_dir, slug, cues, langs, read_time, end_t):
     for i, lg in enumerate(langs):
         pick = lambda c, i=i: texts(c)[i] or ''
         srt(os.path.join(out_dir, f'{slug}.{lg}.srt'), pick); vtt(os.path.join(out_dir, f'{slug}.{lg}.vtt'), pick)
-    rows = ['\t'.join(['id', 'node', 'start', 'end', 'room', 'reading'] + langs)]
+    rows = ['\t'.join(['id', 'node', 'start', 'end', 'room', 'spoken'] + langs)]
     for k, c in enumerate(cs):
         room = (cs[k + 1]['t0'] if k + 1 < len(cs) else end_t) - c['t0']
-        rows.append('\t'.join([c['id'], c.get('node') or '', f'{c["t0"]:.3f}', f'{c["t1"]:.3f}', f'{room:.2f}', f'{max(read_time(t) for t in texts(c) if t):.2f}']
+        rows.append('\t'.join([c['id'], c.get('node') or '', f'{c["t0"]:.3f}', f'{c["t1"]:.3f}', f'{room:.2f}', f'{c["say"]:.2f}']
                               + [(t or '').replace('\t', ' ') for t in texts(c)]))
     open(os.path.join(out_dir, 'script_timed.tsv'), 'w', encoding='utf-8').write('\n'.join(rows) + '\n')

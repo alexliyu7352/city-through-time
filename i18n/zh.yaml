@@ -2,6 +2,7 @@
 name: 简体中文
 script: cjk            # cjk | hangul | latin：讀秒速度、字幕字級、字數上限、數字規則按它
 max_line: 22           # 一句字幕最多幾個字（漢字＋假名；latin 不數字數，看字幕寬度）
+speak: 4.3             # 旁白每秒念幾個字（漢字＋假名）：還沒配音時，一句旁白的長度按它估（咸陽 2,600 字 604 秒）
 numerals: han          # han：檢查漢字數字（应写成 0–9）
 year: { bce: "前 {y}", ce: "{y}", tick_bce: "前{y}", tick_ce: "{y}", label: "{name} · {year}" }
 words:

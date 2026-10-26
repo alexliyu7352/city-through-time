@@ -2,6 +2,7 @@
 name: English
 script: latin
 max_line: 0            # (no character count: the subtitle width check decides)
+speak: 2.5             # words a second a narrator says: how long a line takes before its voice is recorded
 numerals: none
 year: { bce: "{y} BCE", ce: "{y}", tick_bce: "{y} BCE", tick_ce: "{y}", label: "{name}, {year}" }
 words:

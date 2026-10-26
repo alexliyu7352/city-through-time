@@ -52,7 +52,7 @@ Do the following in order; go on only when the user confirms each step:
 3. **Treatment:** write `TREATMENT.md` from the confirmed detailed outline ("Treatment and nodes").
 4. **Narration draft:** write the continuous narration for the whole film from the confirmed detailed outline, a key beat told as a scene and a one-line beat
    in passing ("Copy"); then estimate its length from the speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
-   plus the pauses, the prologue, the opening and the picture holds the outline needs.
+   plus the pauses, the prologue, the opening and the picture holds the outline needs (compile times the lines the same way until the voice is recorded: "Subtitles and the timeline").
    - About the length, or a little over: show the draft and its estimate to the user.
    - Clearly over: adjust the detailed outline (a key beat becomes one line, beats merge, a beat goes) and show the user every change, why, and the time it
      saves, with the new estimate. Only after the user confirms, rework the narration from the adjusted detailed outline (do not just strike sentences out of
@@ -105,7 +105,7 @@ film:
 - `scene`: only the city follows the borrowed moment (model, light rings, fire, the night sky); the camera, subtitles and pictures keep the
   prologue's own clock. Each key is a cut: pair it with a camera key at the same t. The camera jump check leaves the prologue alone (it is
   cut like a trailer).
-- `script.yaml`: `prologue: [{ id, zh, en, t? }]`. A line without `t` follows the one before once it has been read; every line must end
+- `script.yaml`: `prologue: [{ id, zh, en, t? }]`. A line without `t` follows the one before once it has been said; every line must end
   before the closing black (compile stops otherwise). No `with`, no `pause`.
 - Check the prologue with stills (`node render/still.mjs <slug> 2 10 16`) next to the same moments of the main film: the same city, other shots.
 
@@ -175,7 +175,8 @@ No rule sets a sentence length: write as speech; subtitle length is handled when
   the Common Era year is already on the year panel on the left of the screen, and keeping the original dating gives the flavour of the period.
   Write the exceptions into `film.copy.keep` in city.yaml, and the copy check stops mentioning them.
 - The readout (left column) holds only one big number (the year counter or one statistic), one label line, one source line.
-- Reading-time rule: Chinese characters ÷ 4.5 + English letters ÷ 15 + 1.5 seconds, at least 1.8 seconds; stretch the film rather than delete facts.
+- Timing rule: a line of narration takes as long as it is said in the voiced language, and only that: a subtitle in any language is read faster than it is heard, so the second language never holds a line ("Subtitles and the timeline").
+  Text nobody says (pins, readouts, source notes, title cards) needs its reading time: Chinese characters ÷ 4.5 + letters ÷ 15 + 1.5 seconds, at least 1.8 seconds; stretch the film rather than delete facts.
 
 ## Subtitles and the timeline
 
@@ -183,7 +184,7 @@ No rule sets a sentence length: write as speech; subtitle length is handled when
 **compile schedules the time; never write seconds by hand** (`schedule_lines`):
 - A line that talks about a particular picture gets `with:` and is spoken only when that picture appears: `shot:<shot name of a camera keyframe>`, `pin:<tag>`, `card:<card>`, `stage[:<stage name>]`, `node`;
   `lead:` brings it forward by some seconds (a negative number delays it).
-- Other lines have no time: they follow when the line before has been read (0.35 seconds between), and may run into the camera's hold; the first line of a node comes 0.5 seconds after the node is reached.
+- Other lines have no time: they follow when the line before has been said (0.35 seconds between), and may run into the camera's hold; the first line of a node comes 0.5 seconds after the node is reached.
 - `{ pause: seconds, why: "..." }`: a deliberate silence (it does not count as dead air).
 - Pictures can also follow lines: cards, routes, areas, map lines, projections and a city's growth stages get `with: <line id>` (`plus:` is some seconds later);
   tags and sections with `with:` show from the start of that line to its end (or `until: <line id>`) plus `hold` seconds. "The end of that line" is the subtitle's own length,
@@ -196,12 +197,13 @@ compile writes `build/logs/copy.txt`, the copy check, with suggestions "add a li
 `add`: a long time with no text while the picture names a place (pin, area, beam, star group) that no line mentions, or a silence that is too long; `cut`: a line over 22 characters, three or more lines in 20 seconds with almost no gap,
 the same statement made twice; `style`: should use Arabic numerals 0–9 (years, dates, quantities, measures; Chinese numerals, full-width digits and other scripts' own digits all count); `check`: mentions a year later than this station (if deliberate, write `later: true` on that line).
 Deliberate silences are written in `quiet:` of script.yaml. The thresholds are in city.yaml `film.copy`.
-compile also writes `build/export/`: `.srt` and `.vtt` for the bilingual and for each language, and `script_timed.tsv` (for each line: start, end, seconds to the next line, seconds needed to read it: for voice recording).
+compile also writes `build/export/`: `.srt` and `.vtt` for the bilingual and for each language, and `script_timed.tsv` (for each line: start, end, seconds to the next line, seconds it is said: for voice recording).
 The number check also scans on-screen text other than subtitles (pins, readouts, place names, photo captions, beam labels, the end card). Proper nouns and quotations that keep the original form go in `film.copy.keep`
 (Xianyang: 十五五, 國棉一廠 (State Cotton Mill No. 1), 火三月不滅).
 **Change copy as a draft first:** save the draft separately (for example `build/review/script_draft.yaml`), compile the draft with `CT_SCRIPT=<draft> uv run python -I pipeline/compile.py cities/<slug>`
 and look at it in the preview, leaving script.yaml untouched; give the user a before-and-after comparison line by line, and swap it into script.yaml only after confirmation.
-Each subtitle stays at least Chinese characters ÷ 4.5 + English letters ÷ 15 + 1.5 seconds. When earlier lines cannot be finished, compile inserts time only where needed (before the picture that line has to wait for,
+Each line takes as long as its voice (`film.voice.lang`, by default the first language); before the voice is recorded, as long as its text in that language takes to say at the language pack's `speak` rate
+(Chinese 4.3 characters, English 2.5 words a second). The subtitles follow the voice and never hold it; a subtitle stays on to be read only while the next line leaves room. When earlier lines cannot be finished, compile inserts time only where needed (before the picture that line has to wait for,
 and the picture waits along; if the last line cannot be finished, the node is lengthened), and does not stretch the whole node proportionally. The last node must be the current year (compile warns if it is not).
 When the second language's subtitle exceeds the single-line safe width (subcheck prints WIDE), split it into two lines with an id each; do not delete words and do not shrink the type size.
 
@@ -229,7 +231,8 @@ and thin strokes do not flicker with compression; the real problem is that Engli
 and the words the program itself puts on screen (今天 (today), 實拍 (live footage), 想像圖 (imagined picture), 新建 (new), 長高 (taller), CHAPTER, LOCATOR). New language: copy a language pack and translate it, and check with `uv run python -I pipeline/i18n.py`.
 - The city's own words: every line of narration needs every language (script.yaml); pins, place names and card titles are written per language (`zh:`, `ja:`…); readouts, identity, end card, sections and sources
   can be written in one language (the first) or per language (`{ ja: ..., en: ... }`). If any text on screen lacks a language, compile lists it and stops.
-- Reading time by script: Chinese characters and kana 4.5 characters per second, Hangul 6 syllables per second, letters 15 per second; subtitle size by script (first line: Chinese 38, Latin 34; second line: Latin 30, Chinese 32).
+- Reading time by script (text nobody says): Chinese characters and kana 4.5 characters per second, Hangul 6 syllables per second, letters 15 per second. Speaking rate per language pack (`speak`, the voiced language needs it:
+  measure it on a few recorded lines; a pack without it stops compile for a film voiced in it): Chinese 4.3 characters, English 2.5 words a second. Subtitle size by script (first line: Chinese 38, Latin 34; second line: Latin 30, Chinese 32).
 - The font must be able to draw that language (compile checks, and stops on a missing glyph): for Japanese, the Source Han Serif SC used has kana; for Korean choose another font that has Hangul.
 - Right-to-left scripts (Arabic, Hebrew) are not supported yet: compile stops when it meets them.
 - A first language other than Chinese has been through only a short test (Japanese-English: subtitles, years, counter, missing-glyph errors all correct), and no real film yet; look more closely at every passage the first time.

@@ -3,7 +3,7 @@
 #   id     the line's name, unique in the whole film, lowercase letters, digits, underscores (voice files, exports and the picture elements that follow this line all use it)
 #   with   write it when the line talks about a picture: it is spoken only when that picture appears. shot:<shot name of a camera keyframe> | pin:<tag id> | card:<card id> | stage[:<stage name>] | node
 #   lead   seconds earlier than that picture (negative: later)
-#          without with: the line follows when the line before has been read, and may run into the camera's hold (the first line of a node comes 0.5 seconds after the node is reached)
+#          without with: the line follows when the line before has been said, and may run into the camera's hold (the first line of a node comes 0.5 seconds after the node is reached)
 #   t      old form: the second of the node's picture (pushed later when the planner inserts holds); use it only to wait deliberately for a breath
 #   { pause: seconds, why: "..." }   a deliberate silence (it does not count as dead air)
 #   later  write true when the line speaks of a year later than this station (the copy check asks)

@@ -1,6 +1,6 @@
 // Reading-time check for pages whose window.render(t) / window.TEXTS(t) are async (this project's footage seeks make them so).
 // Same rules and output as lemo-opuscar's core/render/readcheck.mjs: every text block must stay fully in frame for at least
-// (CJK chars / 4.5 + other chars / 15 + 1.5) s, never less than 1.5 s. Subtitles are checked by compile (reading hold) instead.
+// (CJK chars / 4.5 + other chars / 15 + 1.5) s, never less than 1.5 s. Subtitles follow the narration instead (compile: on screen while heard).
 // Beyond the library's: every pin of film.json in the stretch must be drawn whole at some point (one never drawn is in no list),
 // and no text may lie on another (the letters' bands of any two texts drawn opaque, named or not: e.g. a readout's
 // legend over the counters).
