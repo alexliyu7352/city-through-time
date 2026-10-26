@@ -67,9 +67,9 @@ def first_epoch(raw, lonlats, box, threshold=1500):
     for y in EPOCHS:
         for z in ghsl.paths(raw, 'S', y, box):
             with rasterio.open(ghsl.tif(z)) as ds:
-                vals = np.array([v[0] for v in ds.sample(zip(xs, ys))])
-            for i, v in enumerate(vals):
-                if years[i] is None and v >= threshold: years[i] = y
+                vals = np.array([v[0] for v in ds.sample(zip(xs, ys))]); nodata = ds.nodata
+            for i, v in enumerate(vals):   # (a point off this tile, or a cell without data, reads nodata: 65535, above any threshold)
+                if years[i] is None and v != nodata and v >= threshold: years[i] = y
     return years
 
 
