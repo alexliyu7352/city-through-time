@@ -37,15 +37,24 @@ Do the following in order; go on only when the user confirms each step:
    - **one line**: background, or an event mentioned in passing: said once, over the picture of a neighbouring key beat. A one-line beat that fits no key beat near it
      is in the wrong place.
 
+   **The city is the film's protagonist.** Its people, heroes included, are how the audience feels what happens to the city; the city's change is the story itself.
+   Keep the two in one thread, not a passage about a person followed by a passage of city data (Xianyang: the cotton mills make it a textile city, the mills decline,
+   the old mill becomes a museum, 「一代紡織人的青春，就留在了這裡」 ("a generation of textile workers left their youth here")). Where no person stands out, often in
+   recent decades, the city's own fate is the story: what it became, what it hoped for, what it lost (Xianyang: it hoped to merge with Xi'an, the new district was put
+   under Xi'an instead, the hope came to nothing, and seen from above the two cities are growing into one). Not every station needs a person.
+   - What the audience should feel at a key beat is a feeling about the city's fate, not information to deliver.
+   - A research note (how a figure was estimated, what the data does not show) is not a beat; it goes on screen or in the notes.
+   - A one-line beat about the city's change is told as the cause or the result of the scene beside it, not added after the scene's peak.
+
    Decide by the story: a beat that does not move the arc, or that the audience cannot follow without more set-up than it is worth, is one line. Do not cut beats
    yet: what to cut is decided on real text (step 4). While writing it, keep a rough sense of length (a key beat takes about 20–40 seconds, a one-line beat
-   5–8 seconds); the film fits within **15 minutes** unless the user sets another length. Show the user the detailed outline; go on only when the user confirms it.
+   5–8 seconds); aim for about **15 minutes** unless the user sets another length (a little over is fine). Show the user the detailed outline; go on only when the user confirms it.
 3. **Treatment:** write `TREATMENT.md` from the confirmed detailed outline ("Treatment and nodes").
 4. **Narration draft:** write the continuous narration for the whole film from the confirmed detailed outline, a key beat told as a scene and a one-line beat
    in passing ("Copy"); then estimate its length from the speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
    plus the pauses, the prologue, the opening and the picture holds the outline needs.
-   - Within the length: show the draft and its estimate to the user.
-   - Over the length: adjust the detailed outline (a key beat becomes one line, beats merge, a beat goes) and show the user every change, why, and the time it
+   - About the length, or a little over: show the draft and its estimate to the user.
+   - Clearly over: adjust the detailed outline (a key beat becomes one line, beats merge, a beat goes) and show the user every change, why, and the time it
      saves, with the new estimate. Only after the user confirms, rework the narration from the adjusted detailed outline (do not just strike sentences out of
      the old draft), estimate again, and show the draft.
 
@@ -61,7 +70,7 @@ If the direction of the story has to change midway, go back to the outline and c
 Write `TREATMENT.md` from the confirmed outline (emblem, node table, colour logic, subtitle design, music direction), then write the nodes into `film.nodes` of `city.yaml` (node system: each node carries its own year, seconds, layers, props, pins, subtitles and camera; the film's length is the sum of the nodes).
 Besides "event", the node table has a column "what the city becomes at this station" (position, shape, status, industry): cover the event column and read only this one; delete or rewrite a station whose cell is empty.
 **Nodes have different weight:** a major turning point (becoming a capital, unification, destruction of the city, becoming a municipality) gets enough picture and more than one line of narration; transition stations get a few lines.
-Do not make every station the same length; the length limit is met by adjusting the beats of the detailed outline after timing the narration, never by squeezing lines into fixed seconds
+Do not make every station the same length; the film's length is met by adjusting the beats of the detailed outline after timing the narration, never by squeezing lines into fixed seconds
 (example: Xianyang's imperial capital is 77 seconds, the 1975 station 13.5 seconds). When the material is not enough, go back to research; never invent.
 
 ## Prologue
@@ -145,6 +154,8 @@ Signs of AI writing, to recognise when reading aloud, not a list to tick off:
   the voice names a record only when it is part of the story (an eyewitness's shock), and carries doubt in one word (「傳說」 ("legend"), "it is said").
 - Stock phrases (「見證了」 "a testament to", 「不僅……更是……」 "not only … but also", 「另一種」 "another kind of"), a moral at the end of every paragraph,
   every sentence in the same rhythm, facts strung along in outline order, a sentence the listener loses track of.
+- Talking to the audience and saying what you feel are the storyteller's own moves; they become a habit when the same move comes back again and again
+  ("imagine…", "look…" every few lines), or when a line names a feeling the picture already shows.
 
 No rule sets a sentence length: write as speech; subtitle length is handled when the confirmed narration is cut into subtitles ("Writing subtitles and readouts").
 
