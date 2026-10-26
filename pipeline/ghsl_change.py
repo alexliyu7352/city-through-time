@@ -12,53 +12,46 @@ Everything here is an estimate at 100 m x 5 years, labelled so on screen (docs/D
            rest came in the order the volume grew (a deterministic hash orders the buildings of a cell). The film's modern
            growth starts in 1975, the first year with data (docs/STAGING.md 7).
 
-  python -I pipeline/ghsl_change.py fetch <west> <south> <east> <north>     download the volume tiles (~220 MB a tile) to raw/ghsl/
-                                                                          (raw/: this machine's raw root, pipeline/local.py)
+  python -I pipeline/ghsl_change.py fetch <city_dir>     download the volume tiles that cover the city's box (~220 MB a tile)
+                                                       to raw/ghsl/ (raw/: this machine's raw root, pipeline/local.py; pipeline/ghsl.py)
   change(raw, frame, model) -> {'renew': [[i, f0, yA, yB], ...], 'early': [[i, year], ...], 'counts': [[year, new, taller], ...]}
 """
-import glob, json, os, sys, urllib.request
+import json, math, os, sys
 import numpy as np
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ghsl
 
-EPOCHS = [1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025, 2030]
-URL = ('https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_BUILT_V_GLOBE_R2023A/GHS_BUILT_V_E{y}_GLOBE_R2023A_54009_100/V1-0/tiles/'
-       'GHS_BUILT_V_E{y}_GLOBE_R2023A_54009_100_V1_0_{tile}.zip')
+EPOCHS = ghsl.EPOCHS
 LAST_OBSERVED = 2020   # the later epochs of R2023A are projections: change is read up to here
 FIRST_LAYER = 1987     # CMAB's earliest layer ("already there in 1987"): dated within 1975..1987 from the cell's volume
 VERSION = 2            # the cache's layout (bump when the output changes)
 
 
-def _tile(lon, lat):
-    from pyproj import Transformer
-    x, y = Transformer.from_crs(4326, 'ESRI:54009', always_xy=True).transform(lon, lat)
-    return f'R{int((9000000 - y) // 1000000) + 1}_C{int((x + 18041000) // 1000000) + 1}'
-
-
-def fetch(raw, box):
-    w, s, e, n = box
-    out = os.path.join(raw, 'ghsl'); os.makedirs(out, exist_ok=True)
-    for tile in sorted({_tile(lon, lat) for lon in (w, e) for lat in (s, n)}):
-        for y in EPOCHS:
-            url = URL.format(y=y, tile=tile); dst = os.path.join(out, os.path.basename(url))
-            if os.path.exists(dst): continue
-            print('fetching', url); urllib.request.urlretrieve(url, dst + '.part'); os.replace(dst + '.part', dst)
-    return out
-
-
 def cube(raw, box):
     """the volume cube over the box: (epochs, rows, cols) m3 per 100 m cell, with the Mollweide transform of the window"""
     import rasterio
+    from rasterio.io import MemoryFile
+    from rasterio.merge import merge
     from rasterio.windows import from_bounds
     from pyproj import Transformer
     tr = Transformer.from_crs(4326, 'ESRI:54009', always_xy=True)
     w, s, e, n = box
     xs, ys = tr.transform([w, e, w, e], [s, s, n, n]); B = (min(xs) - 200, min(ys) - 200, max(xs) + 200, max(ys) + 200)
     V, T = [], None
+    # the tiles that cover the box, copied cell for cell around it (the tiles share one 100 m grid, so nothing is resampled),
+    # then the window read from that copy as from one tile: a box inside one tile gets exactly the cells it always got
+    G = 100; Bg = (math.floor(B[0] / G) * G - 3 * G, math.floor(B[1] / G) * G - 3 * G, math.ceil(B[2] / G) * G + 3 * G, math.ceil(B[3] / G) * G + 3 * G)
     for y in EPOCHS:
-        zs = sorted(glob.glob(os.path.join(raw, 'ghsl', f'GHS_BUILT_V_E{y}_*.zip')))
-        if not zs: raise SystemExit(f'ghsl: no volume tile for {y} in {raw}/ghsl (python -I pipeline/ghsl_change.py fetch ...)')
-        z = zs[0]
-        with rasterio.open(f'zip://{z}!' + os.path.basename(z)[:-4] + '.tif') as ds:
-            win = from_bounds(*B, ds.transform); a = ds.read(1, window=win).astype(np.float64); T = ds.window_transform(win)
+        srcs = [rasterio.open(ghsl.tif(z)) for z in ghsl.paths(raw, 'V', y, box)]
+        try:
+            arr, tf = merge(srcs, bounds=Bg)
+            prof = dict(driver='GTiff', height=arr.shape[1], width=arr.shape[2], count=1, dtype=arr.dtype, transform=tf, crs=srcs[0].crs, nodata=srcs[0].nodata)
+        finally:
+            for ds in srcs: ds.close()
+        with MemoryFile() as mf:
+            with mf.open(**prof) as ds: ds.write(arr)
+            with mf.open() as ds:
+                win = from_bounds(*B, ds.transform); a = ds.read(1, window=win).astype(np.float64); T = ds.window_transform(win)
         a[a > 4e9] = 0; V.append(a)
     return np.array(V), T
 
@@ -124,6 +117,6 @@ def change(raw, frame, model, cache=None, grow=1.5):
 
 
 if __name__ == '__main__':
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import local   # this machine's raw root
-    if len(sys.argv) >= 6 and sys.argv[1] == 'fetch': print(fetch(local.raw(), [float(v) for v in sys.argv[2:6]]))
+    import layout, local   # the city's box, this machine's raw root
+    if len(sys.argv) >= 3 and sys.argv[1] == 'fetch': print(ghsl.fetch(local.raw(), 'V', layout.box(sys.argv[2])))
     else: print(__doc__)

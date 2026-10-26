@@ -93,7 +93,7 @@ Do steps 3–6 node by node: finish one station, show it to the user, then lay t
 ## File map
 
 - `engine/` the player page (three.js: `main.js` reads film.json and plays it, `studio.js` is the white-model scene and projection shaders, `overlay.js` is readouts, pins, subtitles, the end card).
-- `pipeline/` data fetching (`osm.py`, `cmab.py`, `overture_ghsl.py`, `terrain.py`, `satellite.py`), `prep.py` (→ model), `citygen.py` (period cities),
+- `pipeline/` data fetching (`osm.py`, `cmab.py`, `overture_ghsl.py`, `ghsl.py`, `terrain.py`, `satellite.py`; `layout.py` says where a city's files and downloads live), `prep.py` (→ model), `citygen.py` (period cities),
   `compile.py` (city.yaml → film.json), `fonts.py` (font library).
 - `render/` stills, event table, video, composing the final film; `audio/` music scheduling, code score, sampler, mixing; `tools/` checks (subcheck, readcheck, clipcheck,
   camcheck, motioncheck), `build.mjs` (one command renders the film), `music.py`, `web.py` (web player bundle), `registry.mjs` and `site.mjs` (portal site).

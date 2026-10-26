@@ -7,8 +7,14 @@
 ## Getting started
 
 Copy `templates/city.yaml` to `cities/<slug>/city.yaml` and fill in the extent (box), scale and data sources;
-fetch OSM with `uv run python -I pipeline/osm.py <w> <s> <e> <n>` (saved under the local raw folder); run `pipeline/terrain.py` (DEM) and `pipeline/satellite.py` (Sentinel-2) once each;
+fetch OSM with `uv run python -I pipeline/osm.py cities/<slug>` (the box is read from city.yaml); run `pipeline/terrain.py` (DEM) and `pipeline/satellite.py` (Sentinel-2) once each;
 produce the model with `uv run python -I pipeline/prep.py cities/<slug>`. Then render one white-model still to confirm the extent and scale.
+
+**Where downloads live.** Downloads stay outside git, under this machine's raw root (`raw` in `local/config.json`). What only one city uses, its OSM answers and
+its Overture footprints, goes in that city's own folder, `<raw root>/cities/<slug>/` (`pipeline/layout.py` `raw`). What serves many cities stays shared under the raw root:
+GHSL tiles (`ghsl/`, one tile covers 1000 km), CMAB provinces (`cmab/`), imagery tiles (`tiles/`), Natural Earth. Every fetch takes the box from city.yaml; every reader
+takes the file made for the city's box, or the shared tiles that cover that box (`pipeline/ghsl.py`). Never choose a raw file by its place in a folder listing (the first
+or the last name): with a second city on the machine, that file is the other city's.
 
 ## Building footprints, heights, years
 
@@ -24,16 +30,16 @@ CMAB download: the provincial zips of figshare article 27992417 (Shaanxi = `shan
 
 ### Steps of the overture_ghsl adapter (global cities)
 
-1. Overture: use DuckDB to select footprint, height and num_floors by bbox from `s3://overturemaps-us-west-2/release/<release>/theme=buildings/type=building/` (needs network and duckdb + the spatial extension; `pipeline/overture_ghsl.py fetch`).
+1. Overture: use DuckDB to select footprint, height and num_floors by bbox from `s3://overturemaps-us-west-2/release/<release>/theme=buildings/type=building/` (needs network and duckdb + the spatial extension; `pipeline/overture_ghsl.py fetch cities/<slug> --release <name>`, into the city's own raw folder).
    Release names expire and old ones are taken down: first list the current ones (`curl 'https://overturemaps-us-west-2.s3.amazonaws.com/?prefix=release/&delimiter=/'`),
    then give the name explicitly and write the name into CREDITS (with a wrong name nothing is fetched). A DuckDB scan is heavy; do not run it at the same time as rendering or mixing.
-2. GHSL: download the tiles for GHS_BUILT_S_E{1975..2030}_GLOBE_R2023A_54009_100 (JRC open data); `pipeline/overture_ghsl.py years` uses rasterio to take each building centroid's first built-up period.
+2. GHSL: download the tiles of GHS_BUILT_S_E{1975..2030}_GLOBE_R2023A_54009_100 that cover the box (JRC open data; `pipeline/overture_ghsl.py ghsl cities/<slug>`: one tile, or two to four for a box across a tile edge); `prep.py` takes each building centroid's first built-up period from them.
 3. The bands of `prep.py` use 5-year periods: `[already there in 1975, 1980–1989, 1990–1999, 2000–2009, 2010–2019, after 2020]`.
 4. The screen and FACTS.md must say: "Years are estimates from GHSL 5-year built-up periods, accuracy 100 m".
 
 ## Maps (OpenStreetMap, ODbL)
 
-`pipeline/osm.py` fetches by theme and caches by query hash in `raw/osm/`: water (water surfaces and river lines), roads, rail, historic (heritage sites, protected areas, tombs), places, aeroway.
+`pipeline/osm.py` fetches by theme and caches by query hash in the city's own raw folder (`<raw root>/cities/<slug>/osm/`): water (water surfaces and river lines), roads, rail, historic (heritage sites, protected areas, tombs), places, aeroway.
 Of the Overpass servers only overpass-api.de is stable, and it is slow (10–60 seconds a query); if the cache exists, do not fetch again.
 Credit: write © OpenStreetMap contributors on the identity tag and the end card; write ODbL in CREDITS. Derived databases (raw/, data/) carry the same licence; the video itself is not restricted.
 
@@ -84,7 +90,7 @@ Pictures in the film have two uses: each historic node ends with "the same place
 
 ## Modern "growing taller": GHSL built volume (`pipeline/ghsl_change.py`)
 
-- Data: GHS-BUILT-V R2023A, 100 m cells, every 5 years 1975–2030 (2025 and 2030 are projections; only up to 2020 is read), CC BY 4.0. Download: `uv run python -I pipeline/ghsl_change.py fetch <w> <s> <e> <n>` (one 1000 km tile, 12 periods, about 220 MB).
+- Data: GHS-BUILT-V R2023A, 100 m cells, every 5 years 1975–2030 (2025 and 2030 are projections; only up to 2020 is read), CC BY 4.0. Download: `uv run python -I pipeline/ghsl_change.py fetch cities/<slug>` (the 1000 km tiles that cover the box, one or more; 12 periods, about 220 MB a tile).
 - Use: for each of today's buildings take the volume series of its cell; if the building already exists later and the cell's volume grew by 1.5 times or more, treat it as "rebuilt taller": it first appears at the height of f0 (= volume then / volume in 2020), and grows to today's height in the periods where the volume grew most. `grow.change: ghsl`.
 - What it cannot do: **demolition.** The observed volume of R2023A never decreases in any cell (checked over the whole Xianyang extent: no cell decreased between two periods), and no public data records demolished buildings. The film does not talk about demolition.
 - On-screen label: "GHSL 建成体积 · 100 m · 5 年 · 估算" (GHSL built volume · 100 m · 5 years · estimate).

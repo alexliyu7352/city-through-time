@@ -3,7 +3,6 @@ schematic plan (walls, palaces) from a period map, and the closing annual-rings 
 `uv` rectangle (in plate uv, 0..1) the engine maps onto the plate; alpha is the light, colour is the projector's hue.
 Every decal is explicitly schematic: the film labels it 示意."""
 import json, math, os
-import local
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageChops
 
@@ -26,7 +25,7 @@ def _uv_rect(F, centre_lonlat, size_m):
     return [u - w / 2, v - h / 2, u + w / 2, v + h / 2]
 
 
-def emblem(dc, F, ST, C, out):
+def emblem(dc, F, ST, C, out, osm):
     """a glowing emblem: either an SVG-like list of strokes (circles, polylines in a -1..1 square) or a PNG mask"""
     S = dc.get('px', 1024); im = Image.new('RGBA', (S, S), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
     col = tuple(int(dc.get('col', '#ffd27a').lstrip('#')[i:i + 2], 16) for i in (0, 2, 4))
@@ -56,7 +55,7 @@ def emblem(dc, F, ST, C, out):
     return {'uv': _uv_rect(F, dc['centre'], dc['size_m'])}
 
 
-def starmap(dc, F, ST, C, out):
+def starmap(dc, F, ST, C, out, osm):
     """stars and constellation lines positioned on the plate (lon/lat per star), a faint star field around them"""
     MW = dc.get('px', 2048); MH = round(MW * F.size[1] / F.size[0])
     im = Image.new('RGBA', (MW, MH), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
@@ -79,7 +78,7 @@ def starmap(dc, F, ST, C, out):
     return {'uv': [0, 0, 1, 1]}
 
 
-def plan(dc, F, ST, C, out):
+def plan(dc, F, ST, C, out, osm):
     """a schematic plan from a period map: walls as glowing outlines, courts as faint fills, gates as gaps (lon/lat polygons)"""
     MW = dc.get('px', 2048); MH = round(MW * F.size[1] / F.size[0])
     im = Image.new('RGBA', (MW, MH), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
@@ -90,7 +89,7 @@ def plan(dc, F, ST, C, out):
             if 'pts' in sh: pts = P(sh['pts'])
             else:
                 import osmgeo
-                pts = P(osmgeo.rings(osmgeo.elements(local.raw()), sh['osm'])[0])
+                pts = P(osmgeo.rings(osm, sh['osm'])[0])
             d.line(pts + ([pts[0]] if sh.get('closed', True) else []), fill=col + (255,), width=sh.get('w', 6), joint='curve')
         elif sh['kind'] == 'fill': d.polygon(P(sh['pts']), fill=col + (int(255 * sh.get('a', .25)),))
         elif sh['kind'] == 'line': d.line(P(sh['pts']), fill=col + (int(255 * sh.get('a', .8)),), width=sh.get('w', 3))
@@ -101,7 +100,7 @@ def plan(dc, F, ST, C, out):
     return {'uv': [0, 0, 1, 1]}
 
 
-def rings(dc, F, ST, C, out):
+def rings(dc, F, ST, C, out, osm):
     """the annual-rings diagram: fine concentric lines around a centre, the plate coloured by period regions (polygons or the
     building bands' convex hulls), like the cut face of a tree"""
     from shapely.geometry import Polygon, MultiPoint, Point
@@ -121,7 +120,7 @@ def rings(dc, F, ST, C, out):
         if 'polygon' in rg: poly = Polygon([F.to_utm.transform(lon, lat) for lon, lat in rg['polygon']])
         elif 'osm_polygon' in rg:
             import osmgeo
-            poly = Polygon([F.to_utm.transform(lon, lat) for lon, lat in osmgeo.rings(osmgeo.elements(local.raw()), rg['osm_polygon'])[0]])
+            poly = Polygon([F.to_utm.transform(lon, lat) for lon, lat in osmgeo.rings(osm, rg['osm_polygon'])[0]])
         elif 'band_hull' in rg:   # the convex hull of all buildings up to this band (from model.json)
             M = json.load(open(os.path.join(os.path.dirname(out), 'model.json')))
             lo = C['bands'][rg['band_hull']]['hi']
@@ -148,7 +147,7 @@ def rings(dc, F, ST, C, out):
     return {'uv': [0, 0, 1, 1]}
 
 
-def image(dc, F, ST, C, out):
+def image(dc, F, ST, C, out, osm):
     """a scanned map or drawing projected on the plate: ink becomes light (alpha = darkness), tinted; centre lon/lat, width in metres,
     rotation in degrees (clockwise), optional crop box [x0, y0, x1, y1] in source pixels"""
     im = Image.open(os.path.join(os.path.dirname(out), '..', dc['file'])).convert('L')
@@ -171,7 +170,7 @@ def image(dc, F, ST, C, out):
     return {'uv': [u - w / 2, v - h / 2, u + w / 2, v + h / 2]}
 
 
-def footprints(dc, F, ST, C, out):
+def footprints(dc, F, ST, C, out, osm):
     """every period city's footprint on today's plate, each in its era colour: where the city stood, age by age"""
     MW = dc.get('px', 2048); MH = round(MW * F.size[1] / F.size[0])
     im = Image.new('RGBA', (MW, MH), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
@@ -202,5 +201,6 @@ def footprints(dc, F, ST, C, out):
 KINDS = {'emblem': emblem, 'starmap': starmap, 'plan': plan, 'rings': rings, 'image': image, 'footprints': footprints}
 
 
-def render(dc, F, ST, C, out):
-    return KINDS[dc['kind']](dc, F, ST, C, out)
+def render(dc, F, ST, C, out, osm=()):
+    """osm: the city's OSM elements (pipeline/osmgeo.py elements), for shapes and regions given by an OSM name"""
+    return KINDS[dc['kind']](dc, F, ST, C, out, osm)

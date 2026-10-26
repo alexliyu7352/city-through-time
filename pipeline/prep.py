@@ -50,7 +50,7 @@ if src == 'cmab':
     it = cmab.load(local.raw(RAW['cmab']), F, simplify_m=C['buildings'].get('simplify_m', 1.0), min_area=C['buildings'].get('min_area_m2', 15))
 elif src == 'overture_ghsl':
     import overture_ghsl
-    it = overture_ghsl.load(local.raw(), F, simplify_m=C['buildings'].get('simplify_m', 1.0), min_area=C['buildings'].get('min_area_m2', 15), threshold=C['buildings'].get('ghsl_threshold', 1500))
+    it = overture_ghsl.load(D, F, simplify_m=C['buildings'].get('simplify_m', 1.0), min_area=C['buildings'].get('min_area_m2', 15), threshold=C['buildings'].get('ghsl_threshold', 1500))
 else:
     sys.exit(f'unknown buildings.source {src}')
 tallest = []
@@ -71,7 +71,7 @@ if C['buildings'].get('fill') == 'overture_ghsl':
     gap = float(C['buildings'].get('fill_gap_m', 100)); occ = set()
     for _, _, cx_, cy_, _ in tallest: occ.add((int(cx_ // gap), int(cy_ // gap)))
     n_fill = 0
-    for poly, h, year, how, func in overture_ghsl.load(local.raw(), F, simplify_m=C['buildings'].get('simplify_m', 1.0), min_area=C['buildings'].get('min_area_m2', 15), threshold=C['buildings'].get('ghsl_threshold', 1500)):
+    for poly, h, year, how, func in overture_ghsl.load(D, F, simplify_m=C['buildings'].get('simplify_m', 1.0), min_area=C['buildings'].get('min_area_m2', 15), threshold=C['buildings'].get('ghsl_threshold', 1500)):
         c = poly.centroid; k = (int(c.x // gap), int(c.y // gap))
         if any((k[0] + dx, k[1] + dy) in occ for dx in (-1, 0, 1) for dy in (-1, 0, 1)): continue
         bi = len(B); b = band_of(year)
@@ -88,8 +88,8 @@ print(f'buildings: {len(B)}  age: {dict(stat)}')
 def osm_file(theme):
     """the cached Overpass answer for this city's box (pipeline/osm.py names caches by query hash, one per box)"""
     import osm
-    f = osm.cache_path(local.raw(), tuple(C['box']), theme)
-    if not os.path.exists(f): print(f'warning: no OSM {theme} cache for this box; run pipeline/osm.py with the box first'); return None
+    f = osm.cache_path(LAYOUT.raw(D), tuple(C['box']), theme)
+    if not os.path.exists(f): print(f'warning: no OSM {theme} cache for this box; run pipeline/osm.py {D} first'); return None
     return f
 
 def osm_elements(theme):
@@ -182,10 +182,7 @@ for m in C.get('landmarks', []):
 # earthworks (tomb mounds etc.) as truncated pyramids: real monuments, dimensions from the sources in FACTS.md
 mounds = []
 def osm_named(name):
-    d = local.raw('osm')
-    fs = sorted(f for f in os.listdir(d) if f.startswith('historic_')) if os.path.isdir(d) else []
-    if not fs: return None
-    for e in json.load(open(os.path.join(d, fs[-1]), encoding='utf-8'))['elements']:
+    for e in osm_elements('historic'):
         if e.get('tags', {}).get('name') == name and e['type'] == 'way' and e.get('geometry'):
             return [F.to_utm.transform(p['lon'], p['lat']) for p in e['geometry']]
     return None

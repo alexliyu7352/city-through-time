@@ -227,10 +227,10 @@ else:
     def section_profile(a_ll, b_ll, n=120): return {}
     _tex = 3.0; _cj = None; CTX_RECT = None
 
-# ------------------------------------------------------------------ OSM geometry by name (all cached themes)
+# ------------------------------------------------------------------ OSM geometry by name (all cached themes of the city's box)
 import osmgeo
 import local
-OSM = osmgeo.elements(local.raw())
+OSM = osmgeo.elements(LAYOUT.raw(D), tuple(C['box']))
 def osm_rings(name): return osmgeo.rings(OSM, name)
 
 _MODEL = json.load(open(LAYOUT.data(D, 'model.json')))
@@ -1208,7 +1208,7 @@ for i, node in enumerate(FM['nodes']):
                     FM.setdefault('labels', []).append({'lon': lon_, 'lat': lat_, **{l_: P_['year']['label'].format(name=nm_, year=i18n.year(l_, y_)) for l_, P_, nm_ in zip(LANG, PACK, (lz, le))},
                                                         'size': 1.0, 'dmin': 0, 't0': T(dc.get('at', 0)) + 1.0, 't1': node['_t1'] + 1.0})
         k = len(decals_out); assert k < 4, 'at most 4 decals'
-        png = DEC.render(dc, F, ST, C, LAYOUT.data(D, f'decal_{k}.png'))
+        png = DEC.render(dc, F, ST, C, LAYOUT.data(D, f'decal_{k}.png'), OSM)
         decals_out.append({'i': k, 'id': dc['id'], 'file': f'data/decal_{k}.png', 'on': T(dc.get('at', 0)), 'fade': dc.get('fade', 1.5), 'off': T(dc.get('off_at')) if 'off_at' in dc else (None if dc.get('persist') else T('end')),
                            'offStyle': dc.get('offStyle', 'fade'), 'offDur': dc.get('offDur', 1.2), 'gain': dc.get('gain', 1.0), 'uv': png['uv'], 'glow': dc.get('glow', 1.0), 'photo_dim': dc.get('photo_dim', 0)})
     if 'satellite' in node:

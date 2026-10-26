@@ -3,7 +3,8 @@ here is fixed in code: the file is written at first use from templates/local.jso
 
 local/                       this machine (in .gitignore); by default everything heavy sits here, in one place
   config.json                the keys below; a relative path is from the project root, an absolute one is used as is, ~ expands
-  raw/                       raw: downloaded data (osm/, overture/, ghsl/, tiles/, cmab/<province>/; city.yaml raw.cmab is relative to it)
+  raw/                       raw: downloaded data: shared by cities (ghsl/, tiles/, cmab/<province>/, naturalearth/; city.yaml raw.cmab is
+                             relative to it), and each city's own in cities/<slug>/ (osm/, overture/: pipeline/layout.py raw)
   ref/                       ref: originals of footage and photos as downloaded (a city's assets/footage/make.sh cuts its clips from them)
   models/                    stable_audio: the Stable Audio 3 clone (tools/music.py); hf_cache: its weights (HF_HUB_CACHE)
   instruments/               instruments: the sample libraries of the code score

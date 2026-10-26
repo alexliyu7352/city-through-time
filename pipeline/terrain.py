@@ -72,7 +72,7 @@ if (C.get('terrain') or {}).get('bare', True) is not False and C.get('buildings'
     def _feet():
         kw = dict(simplify_m=BC.get('simplify_m', 1.0), min_area=BC.get('min_area_m2', 15))
         if BC.get('source') == 'cmab': yield from (q for q, *_ in cmab.load(local.raw(C['raw']['cmab']), F, **kw))
-        if 'overture_ghsl' in (BC.get('source'), BC.get('fill')): yield from (q for q, *_ in overture_ghsl.load(local.raw(), F, threshold=BC.get('ghsl_threshold', 1500), **kw))
+        if 'overture_ghsl' in (BC.get('source'), BC.get('fill')): yield from (q for q, *_ in overture_ghsl.load(D, F, threshold=BC.get('ghsl_threshold', 1500), **kw))
     roofs = rasterio.features.rasterize(((q, 1) for q in _feet()), out_shape=out.shape, transform=rasterio.transform.from_origin(F.x0, F.y1, RES, RES), all_touched=True, dtype='uint8').astype(bool)
     open_ = (~roofs).astype(np.float32); z_ = np.where(roofs, 0.0, out).astype(np.float32); todo = roofs.copy()
     for s_ in (1, 2, 4, 8, 16, 32):   # (cells of blur: the open ground within about 2.5 sigma)
@@ -102,8 +102,8 @@ shown = large + (smooth - large) * (float(DT['exaggeration']) / EX)
 # the same on the built cities (tall_foundation)
 SUG = {}
 if any(n.get('city') for n in C['film']['nodes']):
-    import citygen, osmgeo, shapely, local
-    OSM_ = osmgeo.elements(local.raw()); fine_ = smooth - large
+    import citygen, osmgeo, shapely, layout
+    OSM_ = osmgeo.elements(layout.raw(D), F.box); fine_ = smooth - large
     gl, gf = np.hypot(*np.gradient(large, RES)), np.hypot(*np.gradient(fine_, RES))
     Hh, Ww = smooth.shape; jj, ii = np.meshgrid(np.arange(Ww), np.arange(Hh))
     px_, py_ = F.x0 + jj / (Ww - 1) * (F.x1 - F.x0), F.y1 - ii / (Hh - 1) * (F.y1 - F.y0)

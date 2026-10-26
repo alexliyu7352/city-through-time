@@ -3,7 +3,7 @@ slug: <slug>
 name: { zh: <Chinese name>, en: <English name> }
 box: [<west>, <south>, <east>, <north>]      # WGS84; the modern main urban area centred on the historic core, long side 20–30 km
 scale: 10000                                  # 1:10000 → 1 model metre = 10 km
-raw:                                          # downloaded data all lives under the local raw root (raw in local/config.json, pipeline/local.py): osm/, overture/, ghsl/
+raw:                                          # downloads live under the local raw root (raw in local/config.json): the city's own in cities/<slug>/ (osm/, overture/), shared ones (ghsl/, cmab/) by box (docs/DATA.md)
   cmab: cmab/<province>                       # China: the directory the CMAB provincial package is unzipped to, relative to the raw root
 buildings: { source: cmab, simplify_m: 1.0, min_area_m2: 15, exaggeration: 4.0 }   # cmab | overture_ghsl; height exaggeration of today's buildings (Xianyang ×4: at 1:10000 the volumes are visible only this way)
 terrain: { enabled: true, exaggeration: 3.0 } # Copernicus DEM (pipeline/terrain.py, which also writes the 16-bit terrain16.png); 3.0 is Xianyang's value: run terrain.py first and fill in the limit from the foundations it prints (mountain cities mostly ×1–1.5); above it the foundations of houses on slopes are as tall as the walls

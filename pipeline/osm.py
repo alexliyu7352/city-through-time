@@ -1,5 +1,6 @@
-"""OpenStreetMap features for a city box, through Overpass, cached under raw/osm/ by query hash.
-usage: python -I pipeline/osm.py <west> <south> <east> <north> [themes...]      (raw/: this machine's raw root, pipeline/local.py)
+"""OpenStreetMap features for a city box, through Overpass, cached by query hash in the city's own raw folder
+(<raw root>/cities/<slug>/osm/, pipeline/layout.py raw).
+usage: python -I pipeline/osm.py <city_dir> [themes...]      (the box is city.yaml's)
 Themes: water (areas + rivers), roads (motorway..primary), rail (rail, light rail, subway), historic (historic=*, sites).
 Overpass is slow and sometimes down: each theme is one request with a long timeout; a cached answer is never re-fetched."""
 import sys, os, json, hashlib, time, urllib.request, urllib.error
@@ -43,16 +44,17 @@ def query(box, theme, timeout=300):
     return f'[out:json][timeout:{timeout}];\n{body}\nout body geom;'
 
 
-def cache_path(raw, box, theme, timeout=300):
-    """where the answer for this box and theme is cached (the file name carries the query hash, so each box has its own)"""
+def cache_path(city_raw, box, theme, timeout=300):
+    """where the answer for this box and theme is cached in the city's raw folder (the file name carries the query hash, so
+    each box has its own)"""
     h = hashlib.sha1(query(box, theme, timeout).encode()).hexdigest()[:12]
-    return os.path.join(raw, 'osm', f'{theme}_{h}.json')
+    return os.path.join(city_raw, 'osm', f'{theme}_{h}.json')
 
 
-def fetch(raw, box, theme, timeout=300):
+def fetch(city_raw, box, theme, timeout=300):
     ql = query(box, theme, timeout)
-    os.makedirs(os.path.join(raw, 'osm'), exist_ok=True)
-    out = cache_path(raw, box, theme, timeout)
+    os.makedirs(os.path.join(city_raw, 'osm'), exist_ok=True)
+    out = cache_path(city_raw, box, theme, timeout)
     if os.path.exists(out):
         return out
     last = None
@@ -77,7 +79,8 @@ def fetch(raw, box, theme, timeout=300):
 
 
 if __name__ == '__main__':
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import local   # this machine's raw root
-    box = tuple(float(v) for v in sys.argv[1:5]); themes = sys.argv[5:] or list(THEMES)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import layout   # the city's raw folder and box
+    if len(sys.argv) < 2: sys.exit(__doc__)
+    city = sys.argv[1]; box = layout.box(city); themes = sys.argv[2:] or list(THEMES)
     for t in themes:
-        fetch(local.raw(), box, t)
+        fetch(layout.raw(city), box, t)

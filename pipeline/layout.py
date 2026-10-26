@@ -13,6 +13,8 @@ cities/<slug>/                   what a person writes or brings (in git)
     video/                       the picture alone, before the mix is laid on
     review/                      stills and contact sheets made while reviewing
   dist/                          what is delivered: <slug>.mp4, <slug>.srt, poster.jpg (not in git)
+
+<raw root>/cities/<slug>/        the city's own downloads, on this machine (pipeline/local.py; not in git): osm/, overture/
 """
 import os
 
@@ -25,6 +27,22 @@ def audio(city, *p): return build(city, 'audio', *p)
 def video(city, *p): return build(city, 'video', *p)
 def review(city, *p): return build(city, 'review', *p)
 def dist(city, *p): return os.path.join(city, 'dist', *p)
+
+
+def raw(city, *p):
+    """the city's own downloads (its OSM answers, its Overture footprints): <raw root>/cities/<slug>/. Data that serves many
+    cities (GHSL tiles, CMAB provinces, imagery tiles, Natural Earth) stays shared under the raw root, and a reader takes from it
+    only what covers the city's box, never a file chosen by its place in a folder listing (docs/DATA.md)"""
+    import local
+    return local.raw('cities', os.path.basename(os.path.normpath(city)), *p)
+
+
+def box(city):
+    """the city's box (west, south, east, north) from its city.yaml: the extent every download and reader of the city uses"""
+    import yaml
+    f = os.path.join(city, 'city.yaml')
+    if not os.path.isfile(f): raise SystemExit(f'{city}: no city.yaml here (give the city folder, cities/<slug>)')
+    return tuple(yaml.safe_load(open(f, encoding='utf-8'))['box'])
 
 
 def ensure(city):

@@ -1,10 +1,13 @@
-"""Named geometry from the pipeline's OpenStreetMap cache (all themes under raw/osm)."""
+"""Named geometry from a city's cached OpenStreetMap answers (pipeline/osm.py, in the city's raw folder)."""
 import json, os
 
-def elements(raw_dir):
-    d = os.path.join(raw_dir or '', 'osm'); out = []
-    for f in (sorted(os.listdir(d)) if os.path.isdir(d) else []):
-        if f.endswith('.json'): out += json.load(open(os.path.join(d, f), encoding='utf-8'))['elements']
+def elements(city_raw, box):
+    """the elements of the city's cached answers for its box, every theme (themes in name order)"""
+    import osm
+    out = []
+    for theme in sorted(osm.THEMES):
+        f = osm.cache_path(city_raw, box, theme)
+        if os.path.exists(f): out += json.load(open(f, encoding='utf-8'))['elements']
     return out
 
 def rings(els, name):
