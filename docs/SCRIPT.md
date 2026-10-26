@@ -37,8 +37,8 @@ Do the following in order; go on only when the user confirms each step:
    - **one line**: background, or an event mentioned in passing: said once, over the picture of a neighbouring key beat. A one-line beat that fits no key beat near it
      is in the wrong place.
 
-   **The city is the film's protagonist.** Its people, heroes included, are how the audience feels what happens to the city; the city's change is the story itself.
-   Keep the two in one thread, not a passage about a person followed by a passage of city data (Xianyang: the cotton mills make it a textile city, the mills decline,
+   **The city is the film's protagonist:** the story follows the city's fate, and its people, heroes included, are how the audience feels it.
+   Keep the people and the city's change in one thread, not a passage about a person followed by a passage of city data (Xianyang: the cotton mills make it a textile city, the mills decline,
    the old mill becomes a museum, 「一代紡織人的青春，就留在了這裡」 ("a generation of textile workers left their youth here")). Where no person stands out, often in
    recent decades, the city's own fate is the story: what it became, what it hoped for, what it lost (Xianyang: it hoped to merge with Xi'an, the new district was put
    under Xi'an instead, the hope came to nothing, and seen from above the two cities are growing into one). Not every station needs a person.
@@ -146,6 +146,8 @@ or burns, hopeful when a new city grows. Your own feelings, judgements and assoc
 - Landing on people: end a passage of facts with a line about a person's situation (after the state cotton mill restructuring, 「一代紡織人的青春，就留在了這裡」 ("a generation of textile workers left their youth here")).
 
 **The one hard rule: it must sound like a person telling a story aloud, not like AI.** Read the draft aloud and rewrite whatever nobody would say that way.
+Checking the beats, the sources and the timing does not show that the telling works: read the whole film aloud as a listener, and wherever you do not care what happens
+to the city, tell that scene again.
 Signs of AI writing, to recognise when reading aloud, not a list to tick off:
 - A sentence that only says what something means, with nothing to see or feel ("unification brought a common order"; Xianyang says 「文字、車軌、尺和秤，從此全天下一樣」).
 - A point said, then explained, then summed up (Xianyang's fall is four lines, 「然而，它只撐了15年。項羽引兵入咸陽，燒秦宮室。火三月不滅。如今，那裡只剩一片田野。」
@@ -154,8 +156,8 @@ Signs of AI writing, to recognise when reading aloud, not a list to tick off:
   the voice names a record only when it is part of the story (an eyewitness's shock), and carries doubt in one word (「傳說」 ("legend"), "it is said").
 - Stock phrases (「見證了」 "a testament to", 「不僅……更是……」 "not only … but also", 「另一種」 "another kind of"), a moral at the end of every paragraph,
   every sentence in the same rhythm, facts strung along in outline order, a sentence the listener loses track of.
-- Talking to the audience and saying what you feel are the storyteller's own moves; they become a habit when the same move comes back again and again
-  ("imagine…", "look…" every few lines), or when a line names a feeling the picture already shows.
+- Talking to the audience, saying what you feel, an "I": these are not signs of AI but the storyteller's own moves; keep them. They become a habit only when
+  the same move comes back again and again ("imagine…", "look…" every few lines), or when a line names a feeling the picture already shows.
 
 No rule sets a sentence length: write as speech; subtitle length is handled when the confirmed narration is cut into subtitles ("Writing subtitles and readouts").
 
