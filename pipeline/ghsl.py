@@ -1,6 +1,6 @@
 """The GHSL R2023A tiles (JRC open data, CC BY 4.0): 100 m cells on a Mollweide grid (ESRI:54009), cut into 1000 km squares
 R<row>_C<col> counted from the upper left. A tile serves every city that lies on it, so the tiles stay shared under raw/ghsl/;
-a reader takes only the tiles that cover its city's box (one, or two to four for a box across a tile edge).
+a reader takes only the tiles that cover its city's area (one, or two to four for an area across a tile edge).
   S  GHS-BUILT-S, built-up surface, m² a cell (pipeline/overture_ghsl.py dates buildings by it)
   V  GHS-BUILT-V, built-up volume, m³ a cell (pipeline/ghsl_change.py)"""
 import os, urllib.request

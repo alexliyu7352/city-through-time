@@ -1,6 +1,6 @@
-"""OpenStreetMap features for a city box, through Overpass, cached by query hash in the city's own raw folder
+"""OpenStreetMap features for a city's area, through Overpass, cached by query hash in the city's own raw folder
 (<raw root>/cities/<slug>/osm/, pipeline/layout.py raw).
-usage: python -I pipeline/osm.py <city_dir> [themes...]      (the box is city.yaml's)
+usage: python -I pipeline/osm.py <city_dir> [themes...]      (the area around the plate: pipeline/layout.py area)
 Themes: water (areas + rivers), roads (motorway..primary), rail (rail, light rail, subway), historic (historic=*, sites).
 Overpass is slow and sometimes down: each theme is one request with a long timeout; a cached answer is never re-fetched."""
 import sys, os, json, hashlib, time, urllib.request, urllib.error
@@ -79,8 +79,8 @@ def fetch(city_raw, box, theme, timeout=300):
 
 
 if __name__ == '__main__':
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import layout   # the city's raw folder and box
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import layout   # the city's raw folder and area
     if len(sys.argv) < 2: sys.exit(__doc__)
-    city = sys.argv[1]; box = layout.box(city); themes = sys.argv[2:] or list(THEMES)
+    city = sys.argv[1]; box = layout.area(city); themes = sys.argv[2:] or list(THEMES)
     for t in themes:
         fetch(layout.raw(city), box, t)

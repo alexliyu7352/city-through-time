@@ -20,7 +20,7 @@ os.makedirs(CACHE, exist_ok=True)
 n = 2 ** Z
 def tx(lon): return (lon + 180) / 360 * n
 def ty(lat): r = math.radians(lat); return (1 - math.log(math.tan(r) + 1 / math.cos(r)) / math.pi) / 2 * n
-w, s, e, nn = C['box']; m = .01
+w, s, e, nn = F.area; m = .01
 X0, X1 = int(tx(w - m)), int(tx(e + m)); Y0, Y1 = int(ty(nn + m)), int(ty(s - m))
 print(f'tiles x {X0}..{X1}, y {Y0}..{Y1}: {(X1 - X0 + 1) * (Y1 - Y0 + 1)}')
 mosaic = np.zeros(((Y1 - Y0 + 1) * 256, (X1 - X0 + 1) * 256, 3), np.uint8)

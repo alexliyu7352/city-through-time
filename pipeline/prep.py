@@ -86,10 +86,10 @@ print(f'buildings: {len(B)}  age: {dict(stat)}')
 
 # ------------------------------------------------------------------ OSM: water mask, line features, landmarks
 def osm_file(theme):
-    """the cached Overpass answer for this city's box (pipeline/osm.py names caches by query hash, one per box)"""
+    """the cached Overpass answer for this city's area (pipeline/osm.py names caches by query hash, one per area)"""
     import osm
-    f = osm.cache_path(LAYOUT.raw(D), tuple(C['box']), theme)
-    if not os.path.exists(f): print(f'warning: no OSM {theme} cache for this box; run pipeline/osm.py {D} first'); return None
+    f = osm.cache_path(LAYOUT.raw(D), F.area, theme)
+    if not os.path.exists(f): print(f"warning: no OSM {theme} cache for this city's area; run pipeline/osm.py {D} first"); return None
     return f
 
 def osm_elements(theme):
@@ -188,7 +188,7 @@ def osm_named(name):
     return None
 for m in C.get('mounds', []):
     if 'osm' in m:   # base = the mapped outline's minimum rotated rectangle; centre and rotation from it
-        pts = osm_named(m['osm']); assert pts, (f'mound {m["id"]}: OSM way {m["osm"]!r} not in the historic answer for the box (a mound beyond the plate '
+        pts = osm_named(m['osm']); assert pts, (f'mound {m["id"]}: OSM way {m["osm"]!r} not in the historic answer for the area round the plate (a mound beyond it '
                                       f'takes lon, lat, rot_deg, base_m and top_m instead)')
         rect = Polygon(pts).minimum_rotated_rectangle; rc = list(rect.exterior.coords)[:4]
         e0 = math.hypot(rc[1][0] - rc[0][0], rc[1][1] - rc[0][1]); e1 = math.hypot(rc[2][0] - rc[1][0], rc[2][1] - rc[1][1])

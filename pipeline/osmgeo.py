@@ -1,12 +1,12 @@
 """Named geometry from a city's cached OpenStreetMap answers (pipeline/osm.py, in the city's raw folder)."""
 import json, os
 
-def elements(city_raw, box):
-    """the elements of the city's cached answers for its box, every theme (themes in name order)"""
+def elements(city_raw, area):
+    """the elements of the city's cached answers for its area, every theme (themes in name order)"""
     import osm
     out = []
     for theme in sorted(osm.THEMES):
-        f = osm.cache_path(city_raw, box, theme)
+        f = osm.cache_path(city_raw, area, theme)
         if os.path.exists(f): out += json.load(open(f, encoding='utf-8'))['elements']
     return out
 

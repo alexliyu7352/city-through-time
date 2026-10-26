@@ -1,7 +1,7 @@
-"""Sentinel-2 true-colour mosaic of a city box, for the "today, from above" plate texture.
+"""Sentinel-2 true-colour mosaic under a city's plate, for the "today, from above" plate texture.
 usage: python -I pipeline/satellite.py <city_dir> [--from 2025-04-01 --to 2025-10-31 --cloud 5]
-Finds the least-cloudy L2A scenes per MGRS tile through Earth Search (STAC, no login), reads only the box window from each
-TCI cloud-optimised GeoTIFF on AWS, reprojects to the city's UTM frame at 10 m, mosaics and writes data/satellite.png
+Finds the least-cloudy L2A scenes per MGRS tile through Earth Search (STAC, no login), reads only the window of the city's area
+(the lon/lat box around the plate, geo.Frame.area) from each TCI cloud-optimised GeoTIFF on AWS, reprojects to the city's UTM frame at 10 m, mosaics and writes data/satellite.png
 (+ data/satellite.json with scene ids, dates, cloud cover). Licence: Copernicus Sentinel data, free to use with attribution
 ("Contains modified Copernicus Sentinel data [year]")."""
 import json, os, sys, urllib.request
@@ -18,7 +18,7 @@ args = sys.argv[2:]
 opt = lambda k, d: args[args.index(k) + 1] if k in args else d
 T0, T1, CLOUD = opt('--from', '2025-04-01'), opt('--to', '2025-10-31'), float(opt('--cloud', '5'))
 F = Frame(tuple(C['box']), 1.0 / C['scale'])
-w, s, e, n = C['box']
+w, s, e, n = F.area
 
 q = {'collections': ['sentinel-2-l2a'], 'bbox': [w, s, e, n], 'datetime': f'{T0}T00:00:00Z/{T1}T23:59:59Z',
      'query': {'eo:cloud_cover': {'lt': CLOUD}}, 'limit': 100}
@@ -45,7 +45,7 @@ os.environ.setdefault('AWS_NO_SIGN_REQUEST', 'YES')
 for t, f in by_tile.items():
     href = f['assets']['visual']['href']
     with rasterio.open(href) as src:
-        # the box in the scene's CRS
+        # the area in the scene's CRS
         from rasterio.warp import transform_bounds
         b = transform_bounds('EPSG:4326', src.crs, w, s, e, n)
         win = src.window(*b).round_offsets().round_lengths()

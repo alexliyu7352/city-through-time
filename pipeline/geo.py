@@ -12,6 +12,14 @@ def utm_epsg(lon, lat):
     return (32600 if lat >= 0 else 32700) + zone
 
 
+def lonlat_box(to_wgs, x0, y0, x1, y1):
+    """the lon/lat box (west, south, east, north) around the rectangle x0..x1, y0..y1 in ground metres: its edges are sampled (a
+    straight line in metres is a curve in degrees) and the box rounded outward to 4 places (about 10 m), so a file named after it
+    keeps its name"""
+    w, s, e, n = to_wgs.transform_bounds(x0, y0, x1, y1, densify_pts=21)
+    return (math.floor(w * 1e4) / 1e4, math.floor(s * 1e4) / 1e4, math.ceil(e * 1e4) / 1e4, math.ceil(n * 1e4) / 1e4)
+
+
 class Frame:
     """Ground (UTM metres) <-> model units for one city box. box = (west, south, east, north) in degrees."""
 
@@ -29,6 +37,9 @@ class Frame:
         self.x0, self.x1 = (xs[0] + xs[3]) / 2, (xs[1] + xs[2]) / 2
         self.y0, self.y1 = (ys[0] + ys[1]) / 2, (ys[2] + ys[3]) / 2
         self.cx, self.cy = (self.x0 + self.x1) / 2, (self.y0 + self.y1) / 2
+        # what every download of the city fetches: the box in metres leans, so half of each plate edge stands outside the box
+        # (Xianyang: up to 360 m, 1.3% of the plate), and data fetched for the box alone leaves that ground without terrain, buildings or roads
+        self.area = lonlat_box(self.to_wgs, self.x0, self.y0, self.x1, self.y1)
         self.scale = scale
         self.size = [(self.x1 - self.x0) * scale, (self.y1 - self.y0) * scale]   # plate width (east-west), depth (north-south)
         self.reach = [(self.x0, self.y0, self.x1, self.y1)]

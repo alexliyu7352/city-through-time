@@ -12,7 +12,7 @@ Everything here is an estimate at 100 m x 5 years, labelled so on screen (docs/D
            rest came in the order the volume grew (a deterministic hash orders the buildings of a cell). The film's modern
            growth starts in 1975, the first year with data (docs/STAGING.md 7).
 
-  python -I pipeline/ghsl_change.py fetch <city_dir>     download the volume tiles that cover the city's box (~220 MB a tile)
+  python -I pipeline/ghsl_change.py fetch <city_dir>     download the volume tiles that cover the city's area (~220 MB a tile)
                                                        to raw/ghsl/ (raw/: this machine's raw root, pipeline/local.py; pipeline/ghsl.py)
   change(raw, frame, model) -> {'renew': [[i, f0, yA, yB], ...], 'early': [[i, year], ...], 'counts': [[year, new, taller], ...]}
 """
@@ -63,7 +63,7 @@ def change(raw, frame, model, cache=None, grow=1.5):
         c_ = json.load(open(cache))
         if c_.get('version') == VERSION and c_.get('n') == len(model['p']): return c_   # (buildings added or removed: computed again)
     from pyproj import Transformer
-    V, T = cube(raw, frame.box)
+    V, T = cube(raw, frame.area)
     to_moll = Transformer.from_crs(frame.epsg, 'ESRI:54009', always_xy=True)
     S = model['scale']; ei = {y: i for i, y in enumerate(EPOCHS)}; iL = ei[LAST_OBSERVED]
     def cell(xm, ym):   # Mollweide -> (row, col) or None
@@ -117,6 +117,6 @@ def change(raw, frame, model, cache=None, grow=1.5):
 
 
 if __name__ == '__main__':
-    import layout, local   # the city's box, this machine's raw root
-    if len(sys.argv) >= 3 and sys.argv[1] == 'fetch': print(ghsl.fetch(local.raw(), 'V', layout.box(sys.argv[2])))
+    import layout, local   # the city's area, this machine's raw root
+    if len(sys.argv) >= 3 and sys.argv[1] == 'fetch': print(ghsl.fetch(local.raw(), 'V', layout.area(sys.argv[2])))
     else: print(__doc__)

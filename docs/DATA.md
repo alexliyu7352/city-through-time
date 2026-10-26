@@ -7,13 +7,17 @@
 ## Getting started
 
 Copy `templates/city.yaml` to `cities/<slug>/city.yaml` and fill in the extent (box), scale and data sources;
-fetch OSM with `uv run python -I pipeline/osm.py cities/<slug>` (the box is read from city.yaml); run `pipeline/terrain.py` (DEM) and `pipeline/satellite.py` (Sentinel-2) once each;
+fetch OSM with `uv run python -I pipeline/osm.py cities/<slug>` (it fetches the city's area, worked out from the box in city.yaml); run `pipeline/terrain.py` (DEM) and `pipeline/satellite.py` (Sentinel-2) once each;
 produce the model with `uv run python -I pipeline/prep.py cities/<slug>`. Then render one white-model still to confirm the extent and scale.
 
 **Where downloads live.** Downloads stay outside git, under this machine's raw root (`raw` in `local/config.json`). What only one city uses, its OSM answers and
 its Overture footprints, goes in that city's own folder, `<raw root>/cities/<slug>/` (`pipeline/layout.py` `raw`). What serves many cities stays shared under the raw root:
-GHSL tiles (`ghsl/`, one tile covers 1000 km), CMAB provinces (`cmab/`), imagery tiles (`tiles/`), Natural Earth. Every fetch takes the box from city.yaml; every reader
-takes the file made for the city's box, or the shared tiles that cover that box (`pipeline/ghsl.py`). Never choose a raw file by its place in a folder listing (the first
+GHSL tiles (`ghsl/`, one tile covers 1000 km), CMAB provinces (`cmab/`), imagery tiles (`tiles/`), Natural Earth. Every fetch and every reader takes the city's
+**area**, not its box: the plate is a north-up rectangle in metres cut from the box, and the box turned into metres leans, so half of each
+plate edge stands outside the box (by a few hundred metres; Xianyang 360 m). The area is the lon/lat box around the plate (`pipeline/geo.py` `Frame.area`,
+`pipeline/layout.py` `area`); data fetched for the box alone leaves that ground without terrain, buildings or roads. A reader takes the file made for
+the area, or the shared tiles that cover it (`pipeline/ghsl.py`). If `terrain.py` prints a WARNING that the DEM leaves part of the plate empty, find the missing
+tile before going on: it is not a limit of the data to note. Never choose a raw file by its place in a folder listing (the first
 or the last name): with a second city on the machine, that file is the other city's.
 
 ## Building footprints, heights, years
@@ -30,10 +34,10 @@ CMAB download: the provincial zips of figshare article 27992417 (Shaanxi = `shan
 
 ### Steps of the overture_ghsl adapter (global cities)
 
-1. Overture: use DuckDB to select footprint, height and num_floors by bbox from `s3://overturemaps-us-west-2/release/<release>/theme=buildings/type=building/` (needs network and duckdb + the spatial extension; `pipeline/overture_ghsl.py fetch cities/<slug> --release <name>`, into the city's own raw folder).
+1. Overture: use DuckDB to select footprint, height and num_floors in the city's area from `s3://overturemaps-us-west-2/release/<release>/theme=buildings/type=building/` (needs network and duckdb + the spatial extension; `pipeline/overture_ghsl.py fetch cities/<slug> --release <name>`, into the city's own raw folder).
    Release names expire and old ones are taken down: first list the current ones (`curl 'https://overturemaps-us-west-2.s3.amazonaws.com/?prefix=release/&delimiter=/'`),
    then give the name explicitly and write the name into CREDITS (with a wrong name nothing is fetched). A DuckDB scan is heavy; do not run it at the same time as rendering or mixing.
-2. GHSL: download the tiles of GHS_BUILT_S_E{1975..2030}_GLOBE_R2023A_54009_100 that cover the box (JRC open data; `pipeline/overture_ghsl.py ghsl cities/<slug>`: one tile, or two to four for a box across a tile edge); `prep.py` takes each building centroid's first built-up period from them.
+2. GHSL: download the tiles of GHS_BUILT_S_E{1975..2030}_GLOBE_R2023A_54009_100 that cover the city's area (JRC open data; `pipeline/overture_ghsl.py ghsl cities/<slug>`: one tile, or two to four for a box across a tile edge); `prep.py` takes each building centroid's first built-up period from them.
 3. The bands of `prep.py` use 5-year periods: `[already there in 1975, 1980–1989, 1990–1999, 2000–2009, 2010–2019, after 2020]`.
 4. The screen and FACTS.md must say: "Years are estimates from GHSL 5-year built-up periods, accuracy 100 m".
 
@@ -52,7 +56,7 @@ The model covers only the modern main urban area centred on the historic core, w
 - **The extent must enclose both ends of the story:** if a place the story needs lies just outside the frame, widen the frame that way; for mountains and water far outside the frame use `terrain.context` (MODEL.md "Ground and terrain") and do not enlarge the plate.
 - Xianyang: a 25 km frame was mostly farmland and 30,000 buildings could not fill it (a density that fills it is about 70,000 buildings in 319 km²), so it was tightened to the historic core; the front hall of Epang Palace is 700 m outside the frame, and
   for "from Epang cross the Wei, joining Xianyang" the southern limit was widened to 34.245, ending at 31 × 22 km.
-- **After changing `box`, rerun the whole chain**, one job at a time: `osm.py` (new extent) → `terrain.py` → `satellite.py` → `prep.py` → compile. Always write positions in the city settings as longitude/latitude
+- **After changing `box`, rerun the whole chain**, one job at a time: `osm.py` and, for Overture, `overture_ghsl.py fetch` (new area) → `terrain.py` → `satellite.py` → `prep.py` → compile. Always write positions in the city settings as longitude/latitude
   (`ll:`, `lon`/`lat`), never as model coordinates (`v:`, `x`/`z`): when the plate centre moves, all model coordinates are wrong. Change in the same pass every place on screen that states the plate size ("Numbers on screen" in SCRIPT.md).
 
 ## Pictures and footage

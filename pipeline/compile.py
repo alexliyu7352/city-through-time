@@ -227,10 +227,10 @@ else:
     def section_profile(a_ll, b_ll, n=120): return {}
     _tex = 3.0; _cj = None; CTX_RECT = None
 
-# ------------------------------------------------------------------ OSM geometry by name (all cached themes of the city's box)
+# ------------------------------------------------------------------ OSM geometry by name (all cached themes of the city's area)
 import osmgeo
 import local
-OSM = osmgeo.elements(LAYOUT.raw(D), tuple(C['box']))
+OSM = osmgeo.elements(LAYOUT.raw(D), F.area)
 def osm_rings(name): return osmgeo.rings(OSM, name)
 
 _MODEL = json.load(open(LAYOUT.data(D, 'model.json')))

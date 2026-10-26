@@ -14,7 +14,8 @@ cities/<slug>/                   what a person writes or brings (in git)
     review/                      stills and contact sheets made while reviewing
   dist/                          what is delivered: <slug>.mp4, <slug>.srt, poster.jpg (not in git)
 
-<raw root>/cities/<slug>/        the city's own downloads, on this machine (pipeline/local.py; not in git): osm/, overture/
+<raw root>/cities/<slug>/        the city's own downloads, on this machine (pipeline/local.py; not in git): osm/, overture/,
+                                 each for the city's area (area below)
 """
 import os
 
@@ -32,17 +33,24 @@ def dist(city, *p): return os.path.join(city, 'dist', *p)
 def raw(city, *p):
     """the city's own downloads (its OSM answers, its Overture footprints): <raw root>/cities/<slug>/. Data that serves many
     cities (GHSL tiles, CMAB provinces, imagery tiles, Natural Earth) stays shared under the raw root, and a reader takes from it
-    only what covers the city's box, never a file chosen by its place in a folder listing (docs/DATA.md)"""
+    only what covers the city's area, never a file chosen by its place in a folder listing (docs/DATA.md)"""
     import local
     return local.raw('cities', os.path.basename(os.path.normpath(city)), *p)
 
 
 def box(city):
-    """the city's box (west, south, east, north) from its city.yaml: the extent every download and reader of the city uses"""
+    """the city's box (west, south, east, north) from its city.yaml: the plate is cut from it (geo.Frame)"""
     import yaml
     f = os.path.join(city, 'city.yaml')
     if not os.path.isfile(f): raise SystemExit(f'{city}: no city.yaml here (give the city folder, cities/<slug>)')
     return tuple(yaml.safe_load(open(f, encoding='utf-8'))['box'])
+
+
+def area(city):
+    """the lon/lat box around the city's plate (geo.Frame.area), a little larger than its box: what every download of the city
+    fetches and every reader looks up (the plate stands outside the box along half of each edge)"""
+    import geo
+    return geo.Frame(box(city), 1.0).area
 
 
 def ensure(city):

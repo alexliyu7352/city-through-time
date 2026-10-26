@@ -1,4 +1,4 @@
-"""Real relief under the white model: Copernicus GLO-30 DEM (30 m) for the city box, through Earth Search (STAC, no login),
+"""Real relief under the white model: Copernicus GLO-30 DEM (30 m) under the plate, through Earth Search (STAC, no login),
 reprojected to the city's UTM frame and written as data/terrain16.png (16-bit, see terrainio; data/terrain.png is the 8-bit
 fallback: 0 = box minimum, 255 = box maximum) with data/terrain.json (min/max/percentiles). The engine displaces the plate by
 this field with a vertical exaggeration from city.yaml (terrain.exaggeration, default 3), and prep.py lifts each building's base
@@ -18,7 +18,7 @@ import rasterio
 from rasterio.warp import reproject, Resampling, transform_bounds
 from PIL import Image
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from geo import Frame
+from geo import Frame, lonlat_box
 
 D = os.path.abspath(sys.argv[1])
 C = yaml.safe_load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'))
@@ -26,15 +26,15 @@ F = Frame(tuple(C['box']), 1.0 / C['scale'])
 os.environ.setdefault('AWS_NO_SIGN_REQUEST', 'YES')
 
 
-def dem(box, x0, x1, y0, y1, res, margin=0.0):
-    """Copernicus GLO-30 over box (lon/lat), resampled to the city's UTM frame on the rectangle x0..x1, y0..y1 (metres) at res
-    metres a cell, row 0 at the north -> (metres above sea level as float32 HxW, the scene ids). margin (degrees) reads a
-    little beyond the box, so the UTM rectangle's corners have data too"""
-    w, s, e, n = box[0] - margin, box[1] - margin, box[2] + margin, box[3] + margin
+def dem(x0, x1, y0, y1, res):
+    """Copernicus GLO-30 resampled to the city's UTM frame on the rectangle x0..x1, y0..y1 (metres) at res metres a cell, row 0
+    at the north -> (metres above sea level as float32 HxW, the scene ids). It reads the lon/lat box around the rectangle, not a
+    box from city.yaml: the rectangle stands outside the box it was cut from along half of each edge"""
+    w, s, e, n = lonlat_box(F.to_wgs, x0, y0, x1, y1)
     q = {'collections': ['cop-dem-glo-30'], 'bbox': [w, s, e, n], 'limit': 40}
     req = urllib.request.Request('https://earth-search.aws.element84.com/v1/search', data=json.dumps(q).encode(), headers={'Content-Type': 'application/json'})
     feats = json.loads(urllib.request.urlopen(req, timeout=120).read())['features']
-    if not feats: sys.exit(f'no Copernicus DEM tile matched {box}')
+    if not feats: sys.exit(f'no Copernicus DEM tile matched {[w, s, e, n]}')
     W = int(round((x1 - x0) / res)); H = int(round((y1 - y0) / res))
     dst_transform = rasterio.transform.from_origin(x0, y1, res, res)
     out = np.full((H, W), np.nan, np.float32)
@@ -42,7 +42,9 @@ def dem(box, x0, x1, y0, y1, res, margin=0.0):
         href = f['assets']['data']['href'] if 'data' in f['assets'] else next(iter(f['assets'].values()))['href']
         with rasterio.open(href) as src:
             b = transform_bounds('EPSG:4326', src.crs, w, s, e, n)
-            win = src.window(*b).round_offsets().round_lengths().intersection(rasterio.windows.Window(0, 0, src.width, src.height))
+            win = src.window(*b).round_offsets().round_lengths()
+            win = rasterio.windows.Window(win.col_off - 2, win.row_off - 2, win.width + 4, win.height + 4)   # (two cells more each way, for the resampling at the edge)
+            win = win.intersection(rasterio.windows.Window(0, 0, src.width, src.height))
             if win.width <= 0 or win.height <= 0: continue
             data = src.read(1, window=win).astype(np.float32); tr = src.window_transform(win); nod = src.nodata
         if nod is not None: data[data == nod] = np.nan
@@ -50,12 +52,14 @@ def dem(box, x0, x1, y0, y1, res, margin=0.0):
         reproject(data, tile, src_transform=tr, src_crs=src.crs, dst_transform=dst_transform, dst_crs=f'EPSG:{F.epsg}', resampling=Resampling.bilinear, src_nodata=np.nan, dst_nodata=np.nan)
         m = np.isnan(out) & ~np.isnan(tile); out[m] = tile[m]
         print(f['id'], 'filled', f'{(~np.isnan(out)).mean() * 100:.1f}%')
-    if np.isnan(out).any(): out = np.where(np.isnan(out), np.nanmin(out), out)
+    if np.isnan(out).any():   # (a tile the catalogue does not have, such as open sea)
+        print(f'WARNING: no DEM for {np.isnan(out).mean():.1%} of the rectangle (filled with its lowest height): find which tile is missing before going on')
+        out = np.where(np.isnan(out), np.nanmin(out), out)
     return out, [f['id'] for f in feats]
 
 
 RES = 30.0
-out, scenes = dem(C['box'], F.x0, F.x1, F.y0, F.y1, RES)
+out, scenes = dem(F.x0, F.x1, F.y0, F.y1, RES)
 W, H = out.shape[1], out.shape[0]
 os.makedirs(os.path.join(D, 'build', 'data'), exist_ok=True)   # (pipeline/layout.py)
 import terrainio
@@ -103,7 +107,7 @@ shown = large + (smooth - large) * (float(DT['exaggeration']) / EX)
 SUG = {}
 if any(n.get('city') for n in C['film']['nodes']):
     import citygen, osmgeo, shapely, layout
-    OSM_ = osmgeo.elements(layout.raw(D), F.box); fine_ = smooth - large
+    OSM_ = osmgeo.elements(layout.raw(D), F.area); fine_ = smooth - large
     gl, gf = np.hypot(*np.gradient(large, RES)), np.hypot(*np.gradient(fine_, RES))
     Hh, Ww = smooth.shape; jj, ii = np.meshgrid(np.arange(Ww), np.arange(Hh))
     px_, py_ = F.x0 + jj / (Ww - 1) * (F.x1 - F.x0), F.y1 - ii / (Hh - 1) * (F.y1 - F.y0)
@@ -133,7 +137,7 @@ if CX:
     cw, cs, ce, cn = CX['box']; cres = float(CX.get('res_m', 150))
     xs, ys = zip(*[F.to_utm.transform(lon, lat) for lon, lat in ((cw, cs), (ce, cs), (ce, cn), (cw, cn))])
     cx0, cx1, cy0, cy1 = min(xs), max(xs), min(ys), max(ys)
-    cout, cscenes = dem(CX['box'], cx0, cx1, cy0, cy1, cres, margin=.05)
+    cout, cscenes = dem(cx0, cx1, cy0, cy1, cres)
     clo, chi = float(cout.min()), float(cout.max())
     q = np.round((_binomial(cout) - clo) / max(1e-6, chi - clo) * 65535).clip(0, 65535).astype(np.uint32)
     rgb = np.zeros((*q.shape, 3), np.uint8); rgb[..., 0] = (q >> 8).astype(np.uint8); rgb[..., 1] = (q & 255).astype(np.uint8)

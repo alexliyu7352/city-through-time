@@ -4,10 +4,10 @@ and the film must say so (docs/DATA.md).
 
   python -I pipeline/overture_ghsl.py fetch <city_dir> [--release 2026-09-23.1]
       (releases: curl 'https://overturemaps-us-west-2.s3.amazonaws.com/?prefix=release/&delimiter=/'; the scan is heavy: run it alone, niced)
-      -> <the city's raw folder>/overture/buildings_<hash of the box>.geojson  (the box is city.yaml's; the city's raw folder:
-         pipeline/layout.py raw; DuckDB + httpfs + spatial over the public S3 release; needs network)
+      -> <the city's raw folder>/overture/buildings_<hash of the area>.geojson  (the area around the plate: pipeline/layout.py area;
+         the city's raw folder: pipeline/layout.py raw; DuckDB + httpfs + spatial over the public S3 release; needs network)
   python -I pipeline/overture_ghsl.py ghsl <city_dir>
-      -> raw/ghsl/GHS_BUILT_S_E<year>_... the tiles that cover the box (pipeline/ghsl.py; shared by the cities on them)
+      -> raw/ghsl/GHS_BUILT_S_E<year>_... the tiles that cover the city's area (pipeline/ghsl.py; shared by the cities on them)
 raw/ is this machine's raw root (pipeline/local.py). load(city, frame) yields (polygon_utm, height_m, year_or_None, how, function) like cmab.load(), for prep.py."""
 import hashlib, json, os, sys
 from shapely.geometry import shape
@@ -21,18 +21,18 @@ EPOCHS = ghsl.EPOCHS
 def _key(box): return hashlib.sha1(json.dumps([round(v, 4) for v in box]).encode()).hexdigest()[:10]
 
 
-def _cached(city, box):
-    """the city's Overture file for this box (a new box needs a new fetch: the old box's file is never read)"""
-    return layout.raw(city, 'overture', f'buildings_{_key(box)}.geojson')
+def _cached(city, area):
+    """the city's Overture file for this area (a new box needs a new fetch: the old area's file is never read)"""
+    return layout.raw(city, 'overture', f'buildings_{_key(area)}.geojson')
 
 
 def fetch(city, release='2026-09-23.1'):
-    """Overture buildings in the city's box -> GeoJSON (WGS84). Uses DuckDB's httpfs + spatial extensions."""
-    box = layout.box(city)
-    out = _cached(city, box); os.makedirs(os.path.dirname(out), exist_ok=True)
+    """Overture buildings in the city's area -> GeoJSON (WGS84). Uses DuckDB's httpfs + spatial extensions."""
+    area = layout.area(city)
+    out = _cached(city, area); os.makedirs(os.path.dirname(out), exist_ok=True)
     if os.path.exists(out): return out
     if not os.path.exists(out + '.tmp.json'):   # (a scan already done is not run again: it takes minutes over the network)
-        _scan(out, box, release)
+        _scan(out, area, release)
     rows = json.load(open(out + '.tmp.json'))
     geo = lambda g: json.loads(g) if isinstance(g, str) else g   # (newer DuckDB writes the JSON column as an object)
     fc = {'type': 'FeatureCollection', 'features': [{'type': 'Feature', 'properties': {k: r[k] for k in ('id', 'height', 'num_floors', 'class', 'subtype')}, 'geometry': geo(r['geometry'])} for r in rows]}
@@ -60,16 +60,16 @@ def _scan(out, box, release):
     os.replace(part, out + '.tmp.json')
 
 
-def first_epoch(raw, lonlats, box, threshold=1500):
-    """for each (lon, lat) inside the box: the first epoch whose built-up surface in the 100 m cell is >= threshold m² (of 10,000),
-    else None; read from the GHSL tiles that cover the box"""
+def first_epoch(raw, lonlats, area, threshold=1500):
+    """for each (lon, lat) inside the area: the first epoch whose built-up surface in the 100 m cell is >= threshold m² (of 10,000),
+    else None; read from the GHSL tiles that cover the area"""
     import numpy as np, rasterio
     from pyproj import Transformer
     tr = Transformer.from_crs(4326, 'ESRI:54009', always_xy=True)
     xs, ys = tr.transform([p[0] for p in lonlats], [p[1] for p in lonlats])
     years = [None] * len(lonlats)
     for y in EPOCHS:
-        for z in ghsl.paths(raw, 'S', y, box):
+        for z in ghsl.paths(raw, 'S', y, area):
             with rasterio.open(ghsl.tif(z)) as ds:
                 vals = np.array([v[0] for v in ds.sample(zip(xs, ys))]); nodata = ds.nodata
             for i, v in enumerate(vals):   # (a point off this tile, or a cell without data, reads nodata: 65535, above any threshold)
@@ -78,8 +78,8 @@ def first_epoch(raw, lonlats, box, threshold=1500):
 
 
 def load(city, frame, simplify_m=1.0, min_area=15.0, threshold=1500):
-    cached = _cached(city, frame.box)
-    if not os.path.exists(cached): sys.exit(f'no Overture file for the box of {city}: run pipeline/overture_ghsl.py fetch {city} first')
+    cached = _cached(city, frame.area)
+    if not os.path.exists(cached): sys.exit(f'no Overture file for the area of {city}: run pipeline/overture_ghsl.py fetch {city} first')
     feats = json.load(open(cached))['features']
     polys, cents = [], []
     for f in feats:
@@ -99,7 +99,7 @@ def load(city, frame, simplify_m=1.0, min_area=15.0, threshold=1500):
             polys.append((p, float(h), pr.get('class') or '')); cents.append(frame.ground_wgs(c.x, c.y))
         except Exception:   # noqa: BLE001
             continue
-    years = first_epoch(local.raw(), cents, frame.box, threshold) if cents else []
+    years = first_epoch(local.raw(), cents, frame.area, threshold) if cents else []
     for (p, h, cls), y in zip(polys, years):
         yield p, h, y, ('epoch' if y else 'unknown'), cls
 
@@ -111,4 +111,4 @@ if __name__ == '__main__':
         rel = sys.argv[sys.argv.index('--release') + 1] if '--release' in sys.argv else '2026-09-23.1'
         fetch(city, rel)
     else:
-        ghsl.fetch(local.raw(), 'S', layout.box(city))
+        ghsl.fetch(local.raw(), 'S', layout.area(city))
