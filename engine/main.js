@@ -200,7 +200,6 @@ function setLight(t) {
   // a pulse of light when a node begins
   let pulse = 0; for (const nd of FILM.nodes || []) pulse = Math.max(pulse, Math.exp(-Math.max(0, t - nd.t0) / .9) * (t >= nd.t0 ? 1 : 0));
   U.uPulse.value = pulse;
-  house.target.position.set(0, 0, 0); house.target.updateMatrixWorld();
 }
 // an epoch's alpha over time: fade in at `on`, out at `off` (burn = a flicker then dark)
 function epochAlpha(t, e) {
