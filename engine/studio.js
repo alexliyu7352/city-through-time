@@ -183,14 +183,21 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     return o;
   }
   float aaLine(float x, float period, float w){ float d = abs(fract(x / period + .5) - .5) * period; float fw = fwidth(x); return 1. - smoothstep(w, w + fw * 1.5, d); }
-  // how much of the projected light a face takes: as much as the key light gives it (followShadow), a third of it on the faces
-  // turned away; level ground takes all of it. Projected light that came down alike on every wall (it hangs high above the
-  // plate) filled the shade and left the walls of a lit city one flat colour
+  // how squarely a face meets the key light (followShadow): 1 on level ground and on a face turned to it, a third on the faces turned away
   float keyK(vec3 N){ return (.3 + max(dot(N, uKeyDir), 0.)) / (.3 + max(uKeyDir.y, .2)); }
+  // how much of the projected light a face takes: the projector hangs high above the plate, so level ground and roofs take all of
+  // it (as squarely as they face it) and a wall little: .3 on the side turned to the key light, .12 on the side turned away. The
+  // key light models the walls; the projector's light is what makes a roof the brightest face. (Scaled by keyK, the 45-degree key
+  // gave the wall it faced as much as a roof, and the lit modern city went white as one sheet; at a flat .42 on every wall it
+  // filled the shade)
+  float projK(vec3 N){
+    float l = length(uKeyDir.xz), side = l > 1e-4 ? max(dot(N.xz, uKeyDir.xz / l), 0.) : 0.;
+    return mix(.42 + .58 * max(dot(N, normalize(uProjPos - vWP)), 0.), .12 + .18 * side, 1. - abs(N.y));
+  }
   // kind 0 building/mound, 1 plate, 2 plinth
   vec3 projLight(float kind, float wm){
     vec3 N = normalize(vWN);
-    float dirK = keyK(N);
+    float dirK = projK(N);
     vec2 q = abs(vWP.xz) - (uPlate * .5 + .05);
     float thr = 1. - smoothstep(0., .03, max(q.x, q.y));
     bool bld = kind < .5 && vData.w > -.5;
