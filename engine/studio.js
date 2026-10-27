@@ -133,10 +133,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   vec2 plateUV(){ return vWP.xz / uPlate + .5; }
   // era cities: how light each part of a building is (citygen.py parts): walls, landmarks, city walls, bridges, trees,
-  // water, openings, paving, roofs, landmark roofs, rammed earth, plinths (a body's base on a slope: darker than its walls)
+  // water, openings, paving, roofs, landmark roofs, rammed earth, plinths (a body's base on a slope: a little darker than its
+  // walls; at half their light, the plinths of a row stepping down a slope read as a jagged shadow along its foot)
   float eraShade(float p){
     if (p < .5) return uEraFab; if (p < 1.5) return 1.1; if (p < 2.5) return .95; if (p < 3.5) return .75; if (p < 4.5) return .5;
-    if (p < 5.5) return .06; if (p < 6.5) return .1; if (p < 7.5) return .3; if (p < 8.5) return .72; if (p < 9.5) return .78; if (p < 10.5) return .8; return .5;   // roofs a shade under the walls: dark roofs read as hollow boxes from above
+    if (p < 5.5) return .06; if (p < 6.5) return .1; if (p < 7.5) return .3; if (p < 8.5) return .72; if (p < 9.5) return .78; if (p < 10.5) return .8; return .82;   // roofs a shade under the walls: dark roofs read as hollow boxes from above
   }
   float h21(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
   float vnoise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f);
@@ -377,7 +378,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, .32, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .55;' : ''}`)
         .replace('#include <opaque_fragment>', `outgoingLight += projLight(${kind}.0, wm) * mix(diffuseColor.rgb, vec3(1.), ${kind === 1 ? 'uPlateEmit' : '.1'}) * 1.35;
  ${kind === 1 ? 'outgoingLight += uShadeC * uShadeK * max(0., dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01) * (1. - wm) * step(.5, normalize(vWN).y);   // terrain.shade: slopes turned to a fixed low sun (the plate top, not its sides)' : ''}
- ${kind === 0 ? `if (vData.w > -.5 && abs(vData.w - 1.) > .5 && abs(normalize(vWN).y) < .5) {   // a wall darkens toward its foot, where the street and its neighbours hide the room's light: the city stands on the plate instead of floating over it. The band is uFootM metres (main.js: a few metres up close, a few pixels' worth from afar)
+ ${kind === 0 ? `if (vData.w > -.5 && abs(vData.w - 1.) > .5 && abs(normalize(vWN).y) < .5 && !(vData.w > 2.5 && abs(vData.y - 11.) < .5)) {   // a wall darkens toward its foot, where the street and its neighbours hide the room's light: the city stands on the plate instead of floating over it (a period house's plinth is that foot already, and keeps its light). The band is uFootM metres (main.js: a few metres up close, a few pixels' worth from afar)
    float fh_ = (vWP.y - vBase) / uScaleH; outgoingLight *= mix(.62, 1., smoothstep(0., uFootM, fh_)); }
  if (uEraBurn > 0. && vData.w > 2.5) outgoingLight += eraFire() * uEraBurn * 1.7 * uProj * vUp;   // a building that has fallen no longer burns
  if (vData.w > 2.5 && max(uEraInk, uEraInk0) > 0.) {   // ink: the dark city's walls, landmarks, streets and ridges lit in its colour
