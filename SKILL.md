@@ -96,7 +96,7 @@ Do steps 3–6 node by node: finish one station, show it to the user, then lay t
 - `pipeline/` data fetching (`osm.py`, `cmab.py`, `overture_ghsl.py`, `ghsl.py`, `terrain.py`, `satellite.py`; `layout.py` says where a city's files and downloads live and the area every download covers), `prep.py` (→ model), `citygen.py` (period cities),
   `compile.py` (city.yaml → film.json), `fonts.py` (font library).
 - `render/` stills, event table, video, composing the final film; `audio/` music scheduling, code score, sampler, mixing; `tools/` checks (subcheck, readcheck, clipcheck,
-  camcheck, motioncheck), `build.mjs` (one command renders the film), `music.py`, `web.py` (web player bundle), `registry.mjs` and `site.mjs` (portal site).
+  camcheck, motioncheck), `modelview.py` (stills of a period city before it is in the film), `build.mjs` (one command renders the film), `music.py`, `web.py` (web player bundle), `registry.mjs` and `site.mjs` (portal site).
 - A city folder holds what is written and brought in by hand (goes into git); `build/` holds what is generated (not in git; `build/data` is slow to rebuild, so do not delete it casually); `dist/` holds the finished products (`pipeline/layout.py`).
 - `templates/` templates; `i18n/` language packs; `fonts/` fonts; `index.html` + `site/` the portal page (the land `site/land.bin` is produced by `tools/portal_land.py`;
   `?lite` shows how the phone version draws); `play.html` the player (`?bundle=` reads an external player bundle).

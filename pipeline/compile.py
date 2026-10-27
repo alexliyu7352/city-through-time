@@ -342,6 +342,10 @@ TIMING = {'ring_view': 2.8, 'ring_out': 1.6, 'min_stage': 4.0, 'min_stage_small'
 # compile re-runs itself with the plan until nothing more is needed
 PLAN = json.loads(os.environ.get('CT_PLAN') or '{}'); PASS = int(os.environ.get('CT_PASS') or 1)
 TIMING.update(FM.get('timing', {}))
+# a model study (tools/modelview.py, CT_STUDY=1): the period cities rise stage after stage from their node's start, whatever the
+# camera does, and nothing is inserted for the camera; only the stills taken once they stand count
+STUDY = os.environ.get('CT_STUDY') == '1'
+if STUDY and PASS == 1: print('  study: the cities rise without the camera (tools/modelview.py); not a film')
 
 def model_ground(x, z):
     """the plate's height (model units) under a model point"""
@@ -419,6 +423,7 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
     G, order = stage_parts(prims, meta, cs, node_id)
     grow = float(cs.get('grow', TIMING['grow']))
     start, fronts = {}, []
+    study_next = t_lo   # (a study: each stage starts once the one before has run)
     for st, first, gids in order:   # (the beam lands on the city's first stage in spec order)
         C = [G[g]['c'] for g in gids]
         cx_ = sum(c[0] for c in C) / len(C); cz_ = sum(c[1] for c in C) / len(C)
@@ -428,7 +433,9 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
             ox_, oz_ = F.model_lonlat(*st['from']) if 'from' in st else impact['end'] if (first and impact) else F.model_lonlat(*cs['origin'])
             centre = (ox_, model_ground(ox_, oz_), oz_); rad_ = max(math.hypot(x - ox_, z - oz_) for x, z in C) + 30 * F.scale
         at = st.get('at', cs.get('at', 'auto'))
-        if first and impact and impact.get('follow') and at in ('auto', 'arrive'):   # the camera rode the beam down and turned to
+        if STUDY:
+            t_from = max(study_next, at_of(at) if isinstance(at, (int, float)) else t_lo); t0 = round(t_from + .2, 3)
+        elif first and impact and impact.get('follow') and at in ('auto', 'arrive'):   # the camera rode the beam down and turned to
             t0 = round(impact['arrive'] + .1, 3); t_from = t0                       # the whole city: it grows from there
         else:   # the camera decides: the first moment it holds the place, from the beam's landing or the node start; a start set
             # by hand (seconds, {after: route}) is only the earliest it may begin (docs/STAGING.md 9a)
@@ -487,6 +494,7 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
                        'w': round(w, 6), 'a': [round(t0 - TIMING['fade'], 3), round(max(t1 + grow * .5, curve_[-1][0]), 3)], 'n': len(gids),
                        '_plan': {'t_from': t_from, 't0': t0, 't_end': round(t0 + dur + grow, 3), 'centre': centre, 'rad': rad_, 'n': len(gids),
                                  'focus': look_target(G, gids, cs, node_id, mode == 'scan')}})   # for plan_stages (popped)
+        study_next = fronts[-1]['a'][1] + .5
     st_p = [start[gid] for gid, _, _ in meta]
     on = min(st_p); span = max(1e-3, max(st_p) - on)
     return on, span, [(v - on) / span for v in st_p], fronts, grow
@@ -1400,7 +1408,7 @@ def plan_stages():
                                'kind': 'look', 'why': f'a closer look at {e["id"]} ({P["focus"]["what"]}, rank {P["focus"]["rank"]}) after {t_l:.1f} s (seen close at most {best * .1:.1f} s)'}))
     return new
 
-NEWPLAN = plan_stages()
+NEWPLAN = [] if STUDY else plan_stages()
 if NEWPLAN:
     for node, q in NEWPLAN:
         print(f'  plan (pass {PASS}): node {node["id"]} +{q["delta"]:.1f} s at {q["tau"]:.2f}: {q["why"]}')

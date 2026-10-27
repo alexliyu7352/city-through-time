@@ -10,6 +10,7 @@
 `uv run python -I pipeline/compile.py cities/<slug>`;
 `node tools/preview.mjs <slug>` starts a local server, and the user opens in Chrome the `play.html?city=<slug>&play=1` it prints to play live; show the user each node when it is done, then lay the next one.
 Also produce contact sheets (`node render/still.mjs <slug> --range a:b:step` + `tools/sheet.py`) and check section by section: whether pins are out of frame, whether layers are visible, whether the camera is aimed at the subject.
+A period city that has no place in the film yet is looked at with `tools/modelview.py` (MODEL.md).
 Before showing the user, follow "Acceptance and reporting" below: the server is still running, you have taken a screenshot yourself to confirm it is the new version, remind the user to refresh, and speak only of what the preview really has.
 
 ## After every change
