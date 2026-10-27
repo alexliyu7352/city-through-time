@@ -87,7 +87,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uPickOn: { value: 0 }, uPickPos: { value: new THREE.Vector2(9, 9) }, uPickR: { value: .02 }, cPick: { value: lin(PAL.pick || '#ffd27a') },
     cBlack: { value: lin(PAL.black || '#0b0f18') },
     uEraA: { value: 0 }, uEraBurn: { value: 0 }, uPhotoK: { value: 1 }, uEraCol: { value: lin('#ffffff') }, uEraFab: { value: .9 },
-    cWater: { value: lin(PAL.water || '#1a2129') }, uPlateEmit: { value: PAL.plateEmit ?? .1 }, uNight: { value: 0 }, uLit: { value: .35 }, uScaleH: { value: .0003 }, uScaleM: { value: .0001 }, uHide: { value: null }, uHide2: { value: null }, uHideCol: { value: Array.from({ length: 8 }, () => new THREE.Color(1, 1, 1)) }, uNodeCol: { value: new THREE.Color(1, 1, 1) }, uNodeA: { value: 0 }, uPlateV: { value: new THREE.Vector2(PW, PD) },
+    cWater: { value: lin(PAL.water || '#1a2129') }, uPlateEmit: { value: PAL.plateEmit ?? .1 }, uNight: { value: 0 }, uLit: { value: .35 }, uScaleH: { value: .0003 }, uScaleM: { value: .0001 }, uFootM: { value: 4 }, uHide: { value: null }, uHide2: { value: null }, uHideCol: { value: Array.from({ length: 8 }, () => new THREE.Color(1, 1, 1)) }, uNodeCol: { value: new THREE.Color(1, 1, 1) }, uNodeA: { value: 0 }, uPlateV: { value: new THREE.Vector2(PW, PD) },
     uShadeL: { value: new THREE.Vector3(0, 1, 0) }, uShadeK: { value: 0 }, uShadeC: { value: lin('#c9d6e8') },   // terrain.shade (main.js)
   };
 
@@ -120,7 +120,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform vec3 uEraCol0;   // a period city's colour outside the current node's colour ring (inside it: uEraCol)
   uniform vec3 cEp[${EMAX}], cBand[${NMAX}], cH[4], cPick, cBlack;
   uniform vec2 uPlate, uPickPos; uniform vec3 uProjPos, uKeyDir; uniform sampler2D uWater, uL1, uL2, uL3;
-  uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[8];
+  uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uFootM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[8];
   uniform vec3 uShadeL, uShadeC; uniform float uShadeK;
   uniform sampler2D uHide, uHide2;
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
@@ -370,7 +370,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, .32, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .55;' : ''}`)
         .replace('#include <opaque_fragment>', `outgoingLight += projLight(${kind}.0, wm) * mix(diffuseColor.rgb, vec3(1.), ${kind === 1 ? 'uPlateEmit' : '.1'}) * 1.35;
  ${kind === 1 ? 'outgoingLight += uShadeC * uShadeK * max(0., dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01) * (1. - wm) * step(.5, normalize(vWN).y);   // terrain.shade: slopes turned to a fixed low sun (the plate top, not its sides)' : ''}
- ${kind === 0 ? `if (uEraBurn > 0. && vData.w > 2.5) outgoingLight += eraFire() * uEraBurn * 1.7 * uProj * vUp;   // a building that has fallen no longer burns
+ ${kind === 0 ? `if (vData.w > -.5 && abs(vData.w - 1.) > .5 && abs(normalize(vWN).y) < .5) {   // a wall darkens toward its foot, where the street and its neighbours hide the room's light: the city stands on the plate instead of floating over it. The band is uFootM metres (main.js: a few metres up close, a few pixels' worth from afar)
+   float fh_ = (vWP.y - vBase) / uScaleH; outgoingLight *= mix(.62, 1., smoothstep(0., uFootM, fh_)); }
+ if (uEraBurn > 0. && vData.w > 2.5) outgoingLight += eraFire() * uEraBurn * 1.7 * uProj * vUp;   // a building that has fallen no longer burns
  if (vData.w > 2.5 && max(uEraInk, uEraInk0) > 0.) {   // ink: the dark city's walls, landmarks, streets and ridges lit in its colour
    float iw2 = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); float ik2 = mix(uEraInk0, uEraInk, iw2); vec3 ec2 = mix(uEraCol0, uEraCol, iw2); float p2 = vData.y;
    float gold = p2 < .5 ? .05 : p2 < 3.5 ? .7 : p2 < 6.5 ? 0. : p2 < 7.5 ? .35 : p2 < 8.5 ? .12 : p2 < 9.5 ? .8 : .25;
