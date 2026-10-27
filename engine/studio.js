@@ -137,7 +137,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // walls; at half their light, the plinths of a row stepping down a slope read as a jagged shadow along its foot)
   float eraShade(float p){
     if (p < .5) return uEraFab; if (p < 1.5) return 1.1; if (p < 2.5) return .95; if (p < 3.5) return .75; if (p < 4.5) return .5;
-    if (p < 5.5) return .06; if (p < 6.5) return .1; if (p < 7.5) return .3; if (p < 8.5) return .72; if (p < 9.5) return .78; if (p < 10.5) return .8; return .82;   // roofs a shade under the walls: dark roofs read as hollow boxes from above
+    if (p < 5.5) return .06; if (p < 6.5) return .1; if (p < 7.5) return .3; if (p < 8.5) return .5; if (p < 9.5) return .55; if (p < 10.5) return .8; return .82;   // roofs half the walls' light, tile against plaster, so a roof reads apart from its walls (at .72 they were one tone); darker, a house seen from above reads as a hollow box
   }
   float h21(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
   float vnoise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f);
