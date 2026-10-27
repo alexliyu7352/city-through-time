@@ -1537,7 +1537,7 @@ if _cj and ctx_keys:
                'shade': C['terrain']['context'].get('shade'), 'keys': ctx_keys}
 elif ctx_keys: print('warning: context keys but no build/data/context.json (run pipeline/terrain.py with terrain.context)', file=sys.stderr)
 # terrain.shade: a fixed low sun on the plate's slopes (engine/main.js), so hills read on the dark plate whatever the room light does;
-# az from north, clockwise (default 325: the side the room light comes from, so slopes and buildings are lit alike), el above the
+# az from north, clockwise (default 325, from the north-west; the room light turns with the camera, this sun stays put), el above the
 # horizon, k its strength, col its colour
 SHADE_OUT = None; _sh = (C.get('terrain') or {}).get('shade')
 if _sh is not None:

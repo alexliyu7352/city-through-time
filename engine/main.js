@@ -154,11 +154,11 @@ const tgt = new THREE.Vector3();
 const CAMQ = QS.has('cam') ? QS.get('cam').split(',').map(Number) : null;   // stills: a fixed camera "tx,ty,tz,az,el,d"
 let camDist = 1, camElev = 30;
 function setCamera(t) {
-  let [tx, ty, tz, az, el, d, fov] = CAMQ || CAM(t); camDist = d; camElev = el;
+  let [tx, ty, tz, az, el, d, fov] = CAMQ || CAM(t); camDist = d; camElev = el; const az0 = az;   // (the key light turns with the shot, not the drift)
   // a breath of hand-held drift so holds never freeze (deterministic in t, scaled to the shot's distance)
   const dr = (FILM.drift ?? 1) * d * .012; az += Math.sin(t * .37) * .9 * (FILM.drift ?? 1); el += Math.sin(t * .23 + 1.2) * .5 * (FILM.drift ?? 1);
   tx += Math.sin(t * .29 + .4) * dr; tz += Math.cos(t * .19 + 2.1) * dr; ty += Math.sin(t * .31 + .9) * dr * .3;
-  tgt.set(tx, ty, tz); S.followShadow(tx, ty, tz, d);
+  tgt.set(tx, ty, tz); S.followShadow(tx, ty, tz, d, az0);
   const a = THREE.MathUtils.degToRad(az), e = THREE.MathUtils.degToRad(el);
   camera.position.set(tx + d * Math.sin(a) * Math.cos(e), ty + d * Math.sin(e), tz + d * Math.cos(a) * Math.cos(e));
   camera.fov = fov || FILM.fov || 30;

@@ -624,12 +624,19 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     edges[id] = { u, set(a, c, draw = 1) { u.uA.value = a; u.uDraw.value = draw; if (c) u.uCol.value.copy(c); for (const m of meshes) m.visible = a > .002; } };
     return edges[id];
   }
-  // the key light's shadow follows the camera target so close-ups get sharp shadows (texel ~ 0.7 m at the closest shots)
-  const keyDir = new THREE.Vector3().setFromSphericalCoords(1, THREE.MathUtils.degToRad(40), THREE.MathUtils.degToRad(215));
-  function followShadow(tx, ty, tz, d) {
-    const S = Math.min(DIAG * .55, Math.max(.06, d * .75));
+  // the key light stands to the camera's front left, KEY_SIDE degrees round from it at KEY_EL above the plate, whichever way
+  // the camera looks (az: the camera's bearing from its target, main.js): the faces the camera sees are lit from the side and
+  // cast their shadows away to the right. A light fixed in the room lit half the film's shots from behind, every face in shade.
+  // The rim stands behind the city on the other side. The key's shadow follows the camera target so close-ups get sharp
+  // shadows (texel ~ 0.7 m at the closest shots)
+  const KEY_SIDE = -50, KEY_EL = 45, RIM_SIDE = 150, RIM_EL = 28, keyDir = new THREE.Vector3(), rimDir = new THREE.Vector3();
+  function followShadow(tx, ty, tz, d, az) {
+    const S = Math.min(DIAG * .55, Math.max(.06, d * .75)), rad = THREE.MathUtils.degToRad;
+    keyDir.setFromSphericalCoords(1, rad(90 - KEY_EL), rad(az + KEY_SIDE)); rimDir.setFromSphericalCoords(1, rad(90 - RIM_EL), rad(az + RIM_SIDE));
     house.position.set(tx + keyDir.x * DIAG * 1.2, ty + keyDir.y * DIAG * 1.2, tz + keyDir.z * DIAG * 1.2);
     house.target.position.set(tx, ty, tz); house.target.updateMatrixWorld();
+    rim.position.set(tx + rimDir.x * DIAG, ty + rimDir.y * DIAG, tz + rimDir.z * DIAG);
+    rim.target.position.set(tx, ty, tz); rim.target.updateMatrixWorld();
     Object.assign(house.shadow.camera, { left: -S, right: S, top: S, bottom: -S, near: .05, far: DIAG * 2.6 });
     house.shadow.camera.updateProjectionMatrix();
     house.shadow.normalBias = .0015 * S / (DIAG * .55) + .00008; house.shadow.bias = -.00002;
@@ -704,16 +711,15 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
 
   // ---------------------------------------------------------------- lights (index 0 house, index 1 sun kept for the shader's light loop)
   const house = new THREE.DirectionalLight('#ffffff', 2);
-  house.position.setFromSphericalCoords(1.6 * DIAG, THREE.MathUtils.degToRad(40), THREE.MathUtils.degToRad(215)); house.castShadow = true;
+  house.castShadow = true;   // (placed by followShadow)
   const SH = DIAG * .55;
   Object.assign(house.shadow.camera, { left: -SH, right: SH, top: SH, bottom: -SH, near: .5, far: 4 * DIAG });
   house.shadow.mapSize.set(4096, 4096); house.shadow.radius = 5; house.shadow.bias = -.0002; house.shadow.normalBias = .0015;
   house.shadow.camera.updateProjectionMatrix();
   scene.add(house, house.target);
   const hemi = new THREE.HemisphereLight('#dfe7f2', '#141414', .3); scene.add(hemi);
-  // a cool rim from behind the plate: edges of buildings and props catch it while the projector runs
-  const rim = new THREE.DirectionalLight('#9fc3ff', 0);
-  rim.position.setFromSphericalCoords(1.4 * DIAG, THREE.MathUtils.degToRad(62), THREE.MathUtils.degToRad(20)); scene.add(rim, rim.target);
+  // a cool rim from behind the city (placed by followShadow): edges of buildings and props catch it while the projector runs
+  const rim = new THREE.DirectionalLight('#9fc3ff', 0); scene.add(rim, rim.target);
   // dust in the projector beam: a slow cloud of soft points above the plate, warm, brighter in the beam; embers during a burn
   const NP = 2600, pp = new Float32Array(NP * 3), ps = new Float32Array(NP);
   { let sd = 3; const rnd = () => { sd = (sd * 16807) % 2147483647; return sd / 2147483647; };

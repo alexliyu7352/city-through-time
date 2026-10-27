@@ -10,8 +10,8 @@ usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,
             (to try a change before writing it into city.yaml) or as a new period city at the end of the film; --year is the
             year the counter shows for a new one (default: the film's last)
   --at      the point the camera looks at, landed on the ground there; give it once per still. az/el/d after it are this
-            still's own, else --az/--el/--d (defaults: the close-up of docs/MODEL.md, d .045 and el 12; az 305 has the
-            room light, from the north-west, fall across the frame so slopes read)
+            still's own, else --az/--el/--d (defaults: the close-up of docs/MODEL.md, d .045 and el 12; az 305 looks across
+            terrain.shade's fixed sun, from the north-west, so slopes read; the room light stands beside the camera at any az)
   --wide    d .35, el 30: the whole city, for the colour and the layout
   --sheet   the city's houses, type by type, in place of the city: a block two lots deep of each house type its fabric
             names or it declares (docs/MODEL.md "House types"; the lot its fabric gives, else one usual for the form), in a
