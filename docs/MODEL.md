@@ -78,6 +78,9 @@ exaggerating them by the large-terrain factor (for example ×6) makes 4 m of rel
 take from it anything that prints metres (sections). After changing, rerun `pipeline/terrain.py` and `pipeline/prep.py`, then compile.
 The two scales have a cost: steep scarps narrower than `below_m` (plateau edges, river banks) are flattened too, so the drop drawn at the foot of a landmark on a slope gets larger; changing `below_m` only moves the problem to another city.
 After the change, look at clipcheck's `tall_foundation`, then take a close-up still of the landmarks on slopes (`tools/modelview.py`).
+**Hills on the plate:** the plate is dark and the room light is high, so a hill reads only where light rakes across it; when the story stands on hills (the list below is not empty), write
+`terrain.shade: { k: 1 }`: one fixed low sun (default `az: 325, el: 25`, the side the room light comes from) lights the slopes turned to it, as `terrain.context`'s shade does beyond the plate,
+while flat ground and water keep the plate's colour. It needs only compile; `k` from 0 to 2 (2 begins to glow). `tools/modelview.py` looks across this light by default.
 **Before touching the terrain** (exaggeration, scale, bare earth), list the landmarks that the sources name and that stand on a slope (terraces, plinths, palaces built along the slope), and after the change compare their heights on screen one by one
 with the numbers in the narration (example: when the narration says "built on a high terrace", the picture must show it standing on a high terrace).
 **Distant terrain:** when a mountain or water the story needs is outside the plate (Xianyang: Mount Jiuzong, the origin of the city's name, is 23 km outside the plate), do not enlarge the plate (the city would shrink and look empty); use

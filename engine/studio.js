@@ -88,6 +88,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     cBlack: { value: lin(PAL.black || '#0b0f18') },
     uEraA: { value: 0 }, uEraBurn: { value: 0 }, uPhotoK: { value: 1 }, uEraCol: { value: lin('#ffffff') }, uEraFab: { value: .9 },
     cWater: { value: lin(PAL.water || '#1a2129') }, uPlateEmit: { value: PAL.plateEmit ?? .1 }, uNight: { value: 0 }, uLit: { value: .35 }, uScaleH: { value: .0003 }, uScaleM: { value: .0001 }, uHide: { value: null }, uHide2: { value: null }, uHideCol: { value: Array.from({ length: 8 }, () => new THREE.Color(1, 1, 1)) }, uNodeCol: { value: new THREE.Color(1, 1, 1) }, uNodeA: { value: 0 }, uPlateV: { value: new THREE.Vector2(PW, PD) },
+    uShadeL: { value: new THREE.Vector3(0, 1, 0) }, uShadeK: { value: 0 }, uShadeC: { value: lin('#c9d6e8') },   // terrain.shade (main.js)
   };
 
   // the film's year line from the modern growth on (compile: grow.yl): when the counter first reaches a year. Today's buildings
@@ -120,6 +121,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform vec3 cEp[${EMAX}], cBand[${NMAX}], cH[4], cPick, cBlack;
   uniform vec2 uPlate, uPickPos; uniform vec3 uProjPos; uniform sampler2D uWater, uL1, uL2, uL3;
   uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[8];
+  uniform vec3 uShadeL, uShadeC; uniform float uShadeK;
   uniform sampler2D uHide, uHide2;
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
   // vData: x = year (0 unknown, negative BCE), y = height m, z = rank 0..1 (switch-on order), w = kind (0 building, 1 mound/earthwork, -1 plate)
@@ -360,6 +362,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(diffuseColor.rgb, cWater, wm);${kind === 0 ? ' if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * uEraBurn); if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); diffuseColor.rgb *= mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)) * (1. - .84 * ik_); } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
         .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, .32, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .55;' : ''}`)
         .replace('#include <opaque_fragment>', `outgoingLight += projLight(${kind}.0, wm) * mix(diffuseColor.rgb, vec3(1.), ${kind === 1 ? 'uPlateEmit' : '.1'}) * 1.35;
+ ${kind === 1 ? 'outgoingLight += uShadeC * uShadeK * max(0., dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01) * (1. - wm) * step(.5, normalize(vWN).y);   // terrain.shade: slopes turned to a fixed low sun (the plate top, not its sides)' : ''}
  ${kind === 0 ? `if (uEraBurn > 0. && vData.w > 2.5) outgoingLight += eraFire() * uEraBurn * 1.7 * uProj * vUp;   // a building that has fallen no longer burns
  if (vData.w > 2.5 && max(uEraInk, uEraInk0) > 0.) {   // ink: the dark city's walls, landmarks, streets and ridges lit in its colour
    float iw2 = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); float ik2 = mix(uEraInk0, uEraInk, iw2); vec3 ec2 = mix(uEraCol0, uEraCol, iw2); float p2 = vData.y;

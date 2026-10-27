@@ -8,6 +8,7 @@ raw:                                          # downloads live under the local r
 buildings: { source: cmab, simplify_m: 1.0, min_area_m2: 15, exaggeration: 4.0 }   # cmab | overture_ghsl; height exaggeration of today's buildings (Xianyang ×4: at 1:10000 the volumes are visible only this way)
 terrain: { enabled: true, exaggeration: 3.0 } # Copernicus DEM (pipeline/terrain.py, which also writes the 16-bit terrain16.png); 3.0 is Xianyang's value: run terrain.py first and fill in the limit from the foundations it prints (mountain cities mostly ×1–1.5); above it the foundations of houses on slopes are as tall as the walls
 #   small relief below 150 m (trees, field ridges) keeps its original height: detail: { below_m: 150, exaggeration: 1 } (the default; same if not written); today's buildings are first dug out of the surface and levelled to bare earth (bare: false does not do this)
+#   hills the story stands on: shade: { k: 1 } (az 325, el 25 by default: one fixed low sun on the plate's slopes, so they read on the dark plate; docs/MODEL.md)
 #   distant terrain (mountains or water outside the plate, for example the mountain a city's name comes from): context: { box: [w, s, e, n], res_m: 60, exaggeration_far: 2.5, blend_km: 6,
 #     shade: { az: 250, el: 22, k: 0.8 } } (shade: one fixed low-angle side light that lights only the slopes facing it, so the distant mountain can be seen against the night sky);
 #   in the node where it should appear write context: [{ t: 0, a: 1 }, { t: 7, a: 1 }, { t: 9.5, a: 0 }] (opacity keyframes); a pin may stand on it

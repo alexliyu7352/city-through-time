@@ -1532,6 +1532,14 @@ if _cj and ctx_keys:
                'fade': float(C['terrain']['context'].get('fade_km', 10)) * 1000 * F.scale, 'col': C['terrain']['context'].get('col'),
                'shade': C['terrain']['context'].get('shade'), 'keys': ctx_keys}
 elif ctx_keys: print('warning: context keys but no build/data/context.json (run pipeline/terrain.py with terrain.context)', file=sys.stderr)
+# terrain.shade: a fixed low sun on the plate's slopes (engine/main.js), so hills read on the dark plate whatever the room light does;
+# az from north, clockwise (default 325: the side the room light comes from, so slopes and buildings are lit alike), el above the
+# horizon, k its strength, col its colour
+SHADE_OUT = None; _sh = (C.get('terrain') or {}).get('shade')
+if _sh is not None:
+    if not isinstance(_sh, dict) or set(_sh) - {'az', 'el', 'k', 'col'}: raise SystemExit(f'compile: terrain.shade: {{ az, el, k, col }} (got {_sh})')
+    SHADE_OUT = {'az': float(_sh.get('az', 325)), 'el': float(_sh.get('el', 25)), 'k': float(_sh.get('k', 1.0)), 'col': _sh.get('col', '#c9d6e8')}
+    if not 0 < SHADE_OUT['el'] < 90 or not 0 <= SHADE_OUT['k'] <= 2: raise SystemExit(f'compile: terrain.shade: el between 0 and 90 degrees, k from 0 to 2 (got {_sh})')
 for p in pins:   # a pin points at something on the plate, or on the land beyond it while that is shown: anything else floats over the void
     if abs(p['pos'][0]) > F.size[0] / 2 or abs(p['pos'][1]) > F.size[1] / 2:
         on_ctx = CTX_RECT and CTX_RECT[0] <= p['pos'][0] <= CTX_RECT[1] and CTX_RECT[2] <= p['pos'][1] <= CTX_RECT[3]
@@ -1695,7 +1703,7 @@ film = {
     'labels': labels_out,
     'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
-    'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT,
+    'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),
 }
