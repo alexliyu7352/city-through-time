@@ -6,7 +6,12 @@ import * as THREE from 'three';
 
 export class Geo {
   constructor() { this.pos = []; this.nor = []; this.dat = []; this.base = []; this.ctr = []; this.gx = 0; this.gz = 0; this.cc = null; }   // gx, gz: a shear (model y per model x / z) so long pieces follow a slope; cc: the building centre written per vertex (aCtr)
-  tri(a, b, c, n, d, base = 0) { for (const p of [a, b, c]) { this.pos.push(...p); this.nor.push(...n); this.dat.push(...d); this.base.push(base); if (this.cc) this.ctr.push(this.cc[0], this.cc[1]); } }
+  // a triangle is wound to face along its normal: WebGL draws only the counter-clockwise (front) side, and a face wound the other
+  // way round is seen from inside, so the near wall of a house vanished and the inner side of its far wall showed through
+  tri(a, b, c, n, d, base = 0) {
+    const u = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], v = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];
+    if ((u[1] * v[2] - u[2] * v[1]) * n[0] + (u[2] * v[0] - u[0] * v[2]) * n[1] + (u[0] * v[1] - u[1] * v[0]) * n[2] < 0) [b, c] = [c, b];
+    for (const p of [a, b, c]) { this.pos.push(...p); this.nor.push(...n); this.dat.push(...d); this.base.push(base); if (this.cc) this.ctr.push(this.cc[0], this.cc[1]); } }
   quad(a, b, c, d_, n, d, base = 0) { this.tri(a, b, c, n, d, base); this.tri(a, c, d_, n, d, base); }
   // axis-aligned box, rotated about y by rot (radians) around (cx, cz); y from y0 to y0 + h
   box(cx, y0, cz, w, h, d, rot = 0, data = [0, 0, 0, 1], base = null) {
@@ -52,8 +57,8 @@ export class Geo {
     let n1 = up(nrm(a, r0, f)); this.quad(a, f, r1, r0, n1, data, base);      // west slope
     let n2 = up(nrm(b, e, r1)); this.quad(b, r0, r1, e, n2, data, base);      // east slope
     const gs = [s, 0, -c];                                                    // gable ends (normals along local -z / +z)
-    this.tri(P(-w / 2, 0, -hd), P(w / 2, 0, -hd), P(0, h, -hd), [-gs[0], 0, -gs[2]], data, base);
-    this.tri(P(w / 2, 0, hd), P(-w / 2, 0, hd), P(0, h, hd), [gs[0], 0, gs[2]], data, base);
+    this.tri(P(-w / 2, 0, -hd), P(w / 2, 0, -hd), P(0, h, -hd), gs, data, base);
+    this.tri(P(w / 2, 0, hd), P(-w / 2, 0, hd), P(0, h, hd), [-gs[0], 0, -gs[2]], data, base);
     // soffit under the eaves so the overhang reads from below
     if (o > 0) { this.quad(f, e, b, a, [0, -1, 0], data, base); }
   }
