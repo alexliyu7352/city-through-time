@@ -186,7 +186,7 @@ function setLight(t) {
   house.intensity = 2.0 * houseK * (1 - .82 * nt); hemi.intensity = (.3 * houseK + .015) * (1 - .6 * nt);
   scene.environmentIntensity = lerp(.03, .32, houseK) * (1 - .7 * nt);   // a neutral studio environment, kept low: its light panels mirror on the flat plate
   scene.backgroundIntensity = lerp(.5, 1, houseK);
-  post.bloom.threshold = lerp(1.6, .85, Math.min(off, 1 - back));
+  post.bloom.threshold = lerp(1.6, 1.1, Math.min(off, 1 - back));
   // GTAO only on macro shots at rooftop height: on wide or grazing views it draws wedge-shaped dark bands across the plate
   if (post.dof.ao) post.dof.aoAmt = QS.has('noao') ? 0 : .8 * (1 - ss(seg(camDist, .32, .55)));
   U.uFootM.value = Math.max(4, 3 * camDist / M.scale * 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / 1080);   // the walls' dark foot: 4 m, or 3 pixels' worth at the target

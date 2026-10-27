@@ -27,9 +27,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const PW = M.size[0], PD = M.size[1], DIAG = Math.hypot(PW, PD);
   const camera = new THREE.PerspectiveCamera(30, W / H, 0.02, 4 * DIAG);
   const post = makePost(renderer, scene, camera, W, H, LOW ? { ssaa: 1, ao: false } : { ssaa: 2, ao: true, aoRadius: .035, aoScale: 1.4, aoThickness: .05, aoAmt: .9 });
-  post.bloom.strength = .32; post.bloom.radius = .55; post.bloom.threshold = .85;
+  post.bloom.strength = .26; post.bloom.radius = .55; post.bloom.threshold = 1.1;   // only what is brighter than white glows: lit white walls bloomed into a milky haze
   if (!LOW) { post.dof.ao.updateGtaoMaterial({ samples: 24 }); post.dof.ao.updatePdMaterial({ radius: 10, samples: 24, rings: 3 }); }
-  post.vig.uniforms.amt.value = .42;
+  post.vig.uniforms.amt.value = .25;   // the corners darken a little (at .42 they took a fifth of a wide shot's light)
   if (post.dof.ao) deformMaterial(post.dof.ao.normalMaterial);
   {   // crisp model edges: creases and silhouettes from the Laplacian of inverse depth (planes are linear in 1/z on screen)
     const m = post.dof.coc.material, SS = LOW ? 1 : 2;

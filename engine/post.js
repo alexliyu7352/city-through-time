@@ -1,5 +1,5 @@
 // Post-processing (adapted from lemo-opuscar core/three/post.js, MIT, (c) 2026 LemoLab; see NOTICE): scene -> (MSAA + depth) ->
-// [GTAO ambient occlusion] -> physical depth of field (CoC ~ |1/f - 1/z|, spiral sampling) -> bloom -> grade / vignette -> tone mapping.
+// [GTAO ambient occlusion] -> physical depth of field (CoC ~ |1/f - 1/z|, spiral sampling) -> bloom -> grade / vignette -> tone mapping -> dither.
 // makePost(renderer, scene, camera, w, h, { ssaa: 2, ao: true }): ssaa is the internal supersampling factor (the canvas shows at its
 // CSS size; the browser scales it down in the screenshot)
 import * as THREE from 'three';
@@ -92,6 +92,16 @@ const vignetteShader = {
       gl_FragColor = c; }`
 };
 
+// the last step, on the finished sRGB picture: noise of about one 8-bit step, so the dark room's gradients do not break into bands
+// when the picture is cut to 8 bits (OutputPass does not dither)
+const ditherShader = {
+  uniforms: { tDiffuse: { value: null } },
+  vertexShader: vignetteShader.vertexShader,
+  fragmentShader: `varying vec2 vUv; uniform sampler2D tDiffuse;
+    float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+    void main(){ vec4 c = texture2D(tDiffuse, vUv); vec2 p = gl_FragCoord.xy; c.rgb += (h(p) - h(p + 17.31)) * (1.5 / 255.); gl_FragColor = c; }`
+};
+
 export function makePost(renderer, scene, camera, w, h, o = {}) {
   const s = o.ssaa || 1, W = w * s, H = h * s;
   const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType }));
@@ -99,6 +109,6 @@ export function makePost(renderer, scene, camera, w, h, o = {}) {
   const bloom = new UnrealBloomPass(new THREE.Vector2(W, H), .2, .5, 1.6);
   const vig = new ShaderPass(vignetteShader);
   const out = new OutputPass();
-  composer.addPass(dof); composer.addPass(bloom); composer.addPass(vig); composer.addPass(out);
+  composer.addPass(dof); composer.addPass(bloom); composer.addPass(vig); composer.addPass(out); composer.addPass(new ShaderPass(ditherShader));
   return { composer, dof, bloom, vig };
 }
