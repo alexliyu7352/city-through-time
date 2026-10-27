@@ -63,7 +63,7 @@ if (FILM.grow && FILM.grow.tfile) S.setGrowT(await L.json(B + FILM.grow.tfile));
 if (FILM.grow && FILM.grow.yl) {   // the modern year line: today's buildings rise when the counter first reaches their year
   FILM.grow.yl.forEach(([t, y], i) => { S.U.uYLt.value[i] = t; S.U.uYLy.value[i] = y; }); S.U.uYLn.value = FILM.grow.yl.length;
 }
-S.build(await tex(B + 'data/water.png'), await tex(B + 'data/layers1.png'), await tex(B + 'data/layers2.png'), await tex(B + 'data/layers3.png'), decalTex, photoTex, terrain);
+const CITYMESH = S.build(await tex(B + 'data/water.png'), await tex(B + 'data/layers1.png'), await tex(B + 'data/layers2.png'), await tex(B + 'data/layers3.png'), decalTex, photoTex, terrain);
 // the land beyond the plate (terrain.context): relief for a mountain or river off the plate, shown in the nodes that ask for it
 if (FILM.context && !QS.has('flat')) {
   const im = await image(B + FILM.context.file, true);
@@ -74,8 +74,13 @@ const CTXK = FILM.context && FILM.context.keys.length ? track(FILM.context.keys)
 for (const p of FILM.props || []) S.addProp(p);
 for (const r of FILM.routes || []) S.addRoute(r.id, r.pts, r.col, r.w);
 // era cities: one generated city per period
+const ERABOX = {};   // each period city's extent on the plate [x0, z0, x1, z1] and its densest 200 m square [x, z] (the viewer, ?view)
 for (const e of FILM.eras || []) {
   const J = await L.json(B + e.file); S.addEra(e.id, J.prims, e.col);
+  const b = J.prims.reduce((b, p) => [Math.min(b[0], p[1]), Math.min(b[1], p[2]), Math.max(b[2], p[1]), Math.max(b[3], p[2])], [Infinity, Infinity, -Infinity, -Infinity]);
+  const cell = 200 * M.scale, n = new Map(); let top = null;
+  for (const p of J.prims) { const k = `${Math.floor(p[1] / cell)},${Math.floor(p[2] / cell)}`, c = (n.get(k) || 0) + 1; n.set(k, c); if (!top || c > top[1]) top = [k, c]; }
+  ERABOX[e.id] = { box: b, dense: top ? top[0].split(',').map(v => (+v + .5) * cell) : [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2] };
   if (e.sinkStyle === 'burn') { const seen = new Set(), cs = [];   // one spark source per building
     for (const p of J.prims) { const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`; if (p[11] === 4 || p[11] === 5 || p[11] === 7 || seen.has(k)) continue; seen.add(k); cs.push([p[15] ?? p[1], p[16] ?? p[2]]); }
     S.addFire(e.id, cs, S.ground); }
@@ -164,9 +169,10 @@ function setCamera(t) {
   camera.fov = fov || FILM.fov || 30;
   camera.near = Math.min(.02, Math.max(.0003, d * .04));   // close shots fly through the streets: the near plane follows the distance
   camera.updateProjectionMatrix(); camera.lookAt(tgt); camera.updateMatrixWorld();
-  // depth of field: blur in pixels goes as aperture / distance, so close shots get a proportionally smaller aperture
-  post.dof.focus = d; post.dof.aper = d < .15 ? lerp(1.6, 3.2, seg(d, .04, .15)) * Math.max(.2, d / .15) : lerp(3.2, 1.6, seg(d, .15, 2.2)); post.dof.maxCoc = d < .15 ? 7 : 10;
+  lens(d);
 }
+// depth of field: blur in pixels goes as aperture / distance, so close shots get a proportionally smaller aperture
+function lens(d) { post.dof.focus = d; post.dof.aper = d < .15 ? lerp(1.6, 3.2, seg(d, .04, .15)) * Math.max(.2, d / .15) : lerp(3.2, 1.6, seg(d, .15, 2.2)); post.dof.maxCoc = d < .15 ? 7 : 10; }
 
 // ------------------------------------------------------------------ light and projection state
 const LT = FILM.light;
@@ -524,6 +530,22 @@ window.render(QS.has('t') ? +QS.get('t') : 0);
   for (const [E] of keep) { E.mesh.visible = true; E.u.uEraT.value = 1e6; E.u.uEraFallR.value = E.u.uEraFallIn.value > .5 ? 1e3 : -1; }
   S.renderer.render(S.scene, S.camera);
   for (const [E, v, r, f] of keep) { E.mesh.visible = v; E.u.uEraT.value = r; E.u.uEraFallR.value = f; }
+}
+// the period cities' viewer (?view, engine/view.js): this scene and light without the timeline, the camera the viewer's
+if (QS.has('view')) {
+  document.getElementById('ov').style.display = 'none';
+  (await import('./view.js')).startView({ S, FILM, QS, W, H, scale: M.scale, setLight, setLayers, lens, cityMesh: CITYMESH, eraBox: ERABOX,
+    setDist: (d, el) => { camDist = d; camElev = el; },
+    quiet: () => {   // what setLayers lays at a moment of the film that is not the period cities: off
+      for (let i = 0; i < EMAX; i++) U.uEpA.value[i] = 0;
+      for (let i = 0; i < 4; i++) U.uDA.value[i] = 0;
+      for (let i = 0; i < 8; i++) { U.uRiseA.value[i] = 0; U.uHideFA.value[i] = 0; U.uEdgeA.value[i] = 0; U.uHideT.value[i] = -1; U.uHideFR.value[i] = -1; U.uHideFI.value[i] = 0; U.uHideFW.value[i] = -1; }
+      U.uPhotoA.value = 0; U.uRingN.value = 0; U.uPulse.value = 0; U.uShockA.value = 0; U.uNodeFront.value = 0; U.uNodeR.value = 99;
+      U.uNodeA.value = U.uNodeA0.value = 0; U.uPickOn.value = 0; U.uHgtOn.value = 0; U.uResetR.value = -1; U.uResetY.value = 0;
+      for (const k in lineA) lineA[k].value = 0;
+      for (const r of Object.values(S.routes)) r.set(0, 0);
+      S.tally.visible = false;
+    } });
 }
 window.READY = true;
 if (!PLAY) L.done();

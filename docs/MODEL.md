@@ -17,6 +17,14 @@ and lay the other periods only once the houses are recognisable as houses. Take 
 Every historic period needs at least one low-angle close-up (elevation 10–15°) so that the audience sees that houses are houses; the wide shot is used only to see the colour change and the growth.
 For a part made from the sources, check the model against that drawing item by item: position, orientation, tiers, size; no error from compile or clipcheck does not mean it is right
 (example: the three tiers of a platform were stacked in the wrong direction, and no check will report that).
+**After any change to a period city's model or to the look** (citygen, a house type, `engine/props.js`, the light and shading), look at every period city from every side:
+`node tools/eraview.mjs <slug> [--eras a,b]` first runs `tools/geocheck.mjs`, which stops on any face of a period city or prop that points into its piece (such a face is either not drawn from
+outside, so a near wall goes missing and the inner side of the far wall shows through, or is lit as if it faced away, so a gable end shines white in its roof); it then takes each period city's
+densest houses from eight bearings at two heights and the whole city from four, in the film's look and in a check look (plain white, everything sharp, the key light fixed in the room, so a face
+is seen to turn from lit to shade as the camera goes round), one sheet per city and look in `build/review/eraview/`. Look at every sheet before reporting: a fault on one side of a house does not
+show in a still from the other side. The same scene is a page for looking round by hand, with the user or alone: `play.html?city=<slug>&view` (printed by `tools/preview.mjs`; drag to turn,
+right-drag to move, the wheel to come closer, the arrow keys to turn, a double click to look at a point; tick the period cities to show, each at its place on the plate; 全 / 近 for the whole city or
+its houses up close; 成片 / 檢查 for the two looks; `&quality=low` is faster and leaves out the period cities' shadows).
 
 ## House types
 
