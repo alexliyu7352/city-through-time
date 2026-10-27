@@ -17,7 +17,7 @@ Before showing the user, follow "Acceptance and reporting" below: the server is 
 
 Check after every change and show the user only when everything is at zero, **but check only the range the change touched:** every station whose time or content changed, plus one station before and after each (first compare the start times of the stations before and after the change;
 a station that was shortened or pushed also counts). `uv run python -I tools/clipcheck.py cities/<slug>` (model clipping: houses over walls, houses over streets, landmarks overlapping each other, slopes eating into buildings,
-two period cities existing at the same time overlapping, floating; it does not render, and runs over the whole city), `node tools/camcheck.mjs <slug> --from <a> --to <b>` then `uv run python -I tools/camcheck.py cities/<slug>`
+two period cities existing at the same time overlapping, floating; it does not render, and runs over the whole city), `node tools/geocheck.mjs <slug>` (faces of the period cities and props that point the wrong way; it does not render), `node tools/camcheck.mjs <slug> --from <a> --to <b>` then `uv run python -I tools/camcheck.py cities/<slug>`
 (camera clipping: camera underground, inside a building, line of sight blocked), `node tools/readcheck.mjs <slug> --from <a> --to <b>` (text dwell time), and look at screenshots second by second
 (`node render/still.mjs <slug> --range <a>:<b>:1` + `uv run python -I tools/sheet.py`): problems the checks cannot find (composition, too fast, too dark) are caught by this step.
 Whole-film screenshots, camcheck and readcheck freeze the user's computer so they cannot type; run them only in the round that fixes the whole film and before rendering the final film, and ask the user first (DELIVER.md).
