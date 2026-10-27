@@ -64,7 +64,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // ---------------------------------------------------------------- projection uniforms (shared by every surface)
   const U = {
     uProj: { value: 0 }, uNow: { value: 0 }, uYear: { value: -9999 }, uToday: { value: 1 }, uGrowRise: { value: 0 }, uGhost: { value: 0 }, uPulse: { value: 0 },
-    uRingC: { value: new THREE.Vector2(0, 0) }, uRingS: { value: .035 }, uRingN: { value: 0 }, uRingA: { value: 0 }, uProjPos: { value: new THREE.Vector3(0, 1.3 * DIAG, .2 * DIAG) },
+    uRingC: { value: new THREE.Vector2(0, 0) }, uRingS: { value: .035 }, uRingN: { value: 0 }, uRingA: { value: 0 }, uProjPos: { value: new THREE.Vector3(0, 1.3 * DIAG, .2 * DIAG) }, uKeyDir: { value: new THREE.Vector3(0, 1, 0) },
     uPlate: { value: new THREE.Vector2(PW, PD) }, uWater: { value: null }, uL1: { value: null }, uL2: { value: null }, uL3: { value: null },
     uBase: { value: 0 },                                          // the plate's faint grid under the projector (0..1)
     uEpA: { value: arr(EMAX, 0) }, uEpY0: { value: arr(EMAX, 1e9) }, uEpY1: { value: arr(EMAX, -1e9) }, uEpB: { value: arr(EMAX, 0) },
@@ -119,7 +119,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform float uGrowMono;
   uniform vec3 uEraCol0;   // a period city's colour outside the current node's colour ring (inside it: uEraCol)
   uniform vec3 cEp[${EMAX}], cBand[${NMAX}], cH[4], cPick, cBlack;
-  uniform vec2 uPlate, uPickPos; uniform vec3 uProjPos; uniform sampler2D uWater, uL1, uL2, uL3;
+  uniform vec2 uPlate, uPickPos; uniform vec3 uProjPos, uKeyDir; uniform sampler2D uWater, uL1, uL2, uL3;
   uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[8];
   uniform vec3 uShadeL, uShadeC; uniform float uShadeK;
   uniform sampler2D uHide, uHide2;
@@ -183,10 +183,14 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     return o;
   }
   float aaLine(float x, float period, float w){ float d = abs(fract(x / period + .5) - .5) * period; float fw = fwidth(x); return 1. - smoothstep(w, w + fw * 1.5, d); }
+  // how much of the projected light a face takes: as much as the key light gives it (followShadow), a third of it on the faces
+  // turned away; level ground takes all of it. Projected light that came down alike on every wall (it hangs high above the
+  // plate) filled the shade and left the walls of a lit city one flat colour
+  float keyK(vec3 N){ return (.3 + max(dot(N, uKeyDir), 0.)) / (.3 + max(uKeyDir.y, .2)); }
   // kind 0 building/mound, 1 plate, 2 plinth
   vec3 projLight(float kind, float wm){
     vec3 N = normalize(vWN);
-    float dirK = .42 + .58 * max(dot(N, normalize(uProjPos - vWP)), 0.);
+    float dirK = keyK(N);
     vec2 q = abs(vWP.xz) - (uPlate * .5 + .05);
     float thr = 1. - smoothstep(0., .03, max(q.x, q.y));
     bool bld = kind < .5 && vData.w > -.5;
@@ -634,7 +638,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     const S = Math.min(DIAG * .55, Math.max(.06, d * .75)), rad = THREE.MathUtils.degToRad;
     keyDir.setFromSphericalCoords(1, rad(90 - KEY_EL), rad(az + KEY_SIDE)); rimDir.setFromSphericalCoords(1, rad(90 - RIM_EL), rad(az + RIM_SIDE));
     house.position.set(tx + keyDir.x * DIAG * 1.2, ty + keyDir.y * DIAG * 1.2, tz + keyDir.z * DIAG * 1.2);
-    house.target.position.set(tx, ty, tz); house.target.updateMatrixWorld();
+    house.target.position.set(tx, ty, tz); house.target.updateMatrixWorld(); U.uKeyDir.value.copy(keyDir);
     rim.position.set(tx + rimDir.x * DIAG, ty + rimDir.y * DIAG, tz + rimDir.z * DIAG);
     rim.target.position.set(tx, ty, tz); rim.target.updateMatrixWorld();
     Object.assign(house.shadow.camera, { left: -S, right: S, top: S, bottom: -S, near: .05, far: DIAG * 2.6 });
