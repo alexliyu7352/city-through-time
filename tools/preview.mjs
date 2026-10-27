@@ -2,7 +2,7 @@
 // own pages, generated into _site/ as CI does for GitHub Pages, tools/site.mjs).
 //   node tools/preview.mjs <city_slug> [port]
 // The page runs the real render(t) with a transport bar: space = play/pause, ←/→ = one frame, shift+←/→ = 5 s.
-// quality=low (default in play mode) renders without supersampling and ambient occlusion; add &quality=high to compare.
+// quality=low (default in play mode) renders without supersampling and without the period cities' shadows; add &quality=high to compare.
 // &view instead of &play: the period cities alone, to turn round with the mouse (engine/view.js).
 import path from 'path';
 import { serve, pageURL } from '../render/serve.mjs';

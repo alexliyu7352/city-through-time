@@ -17,7 +17,7 @@ export const EMAX = 12;   // epoch mask channels: data/layers1-3.png, RGBA each 
 const YLN = 48;   // points of the modern year line the shaders read (compile: grow.yl)
 
 export function makeStudio(W, H, M, PAL, opts = {}) {
-  const LOW = !!opts.low;   // live preview: pixel ratio 1, no supersampling, no ambient occlusion
+  const LOW = !!opts.low;   // live preview: pixel ratio 1, no supersampling
   const renderer = new THREE.WebGLRenderer({ antialias: LOW, preserveDrawingBuffer: true });
   renderer.setPixelRatio(LOW ? 1 : 2); renderer.setSize(W, H);
   renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
@@ -26,11 +26,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const scene = new THREE.Scene();
   const PW = M.size[0], PD = M.size[1], DIAG = Math.hypot(PW, PD);
   const camera = new THREE.PerspectiveCamera(30, W / H, 0.02, 4 * DIAG);
-  const post = makePost(renderer, scene, camera, W, H, LOW ? { ssaa: 1, ao: false } : { ssaa: 2, ao: true, aoRadius: .035, aoScale: 1.4, aoThickness: .05, aoAmt: .9 });
+  // no screen-space ambient occlusion (GTAO): in every low view it turned all beyond some distance black, a straight band
+  // across the picture and the far half of each close-up a fifth as bright; the walls' dark foot and the shadows stand in for it
+  const post = makePost(renderer, scene, camera, W, H, { ssaa: LOW ? 1 : 2, ao: false });
   post.bloom.strength = .26; post.bloom.radius = .55; post.bloom.threshold = 1.1;   // only what is brighter than white glows: lit white walls bloomed into a milky haze
-  if (!LOW) { post.dof.ao.updateGtaoMaterial({ samples: 24 }); post.dof.ao.updatePdMaterial({ radius: 10, samples: 24, rings: 3 }); }
   post.vig.uniforms.amt.value = .25;   // the corners darken a little (at .42 they took a fifth of a wide shot's light)
-  if (post.dof.ao) deformMaterial(post.dof.ao.normalMaterial);
   {   // crisp model edges: creases and silhouettes from the Laplacian of inverse depth (planes are linear in 1/z on screen)
     const m = post.dof.coc.material, SS = LOW ? 1 : 2;
     m.uniforms.res = { value: new THREE.Vector2(W * SS, H * SS) }; m.uniforms.edgeAmt = { value: 0 }; m.uniforms.edgeW = { value: SS };
