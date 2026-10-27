@@ -62,7 +62,7 @@ def sheet_city(C, era, spec, at, Fr, city, scale, d, az=None, el=12.0):
     each a block two lots deep and 60 m or more long along x (UTM east) from `at`, 40 m apart, fronts to the south on a street;
     today's buildings hidden there and out to the cameras. Returns the city spec and the shots: one per block at the close-up
     distance d (the film's: a type is judged as the film shows it), from the front and a little west (az 335 unless given: the
-    next block stays aside, the west sides catch the room light), and one of them all"""
+    next block stays aside; the room light stands at the camera's front left), and one of them all"""
     nodes = {n['id']: n for n in C['film']['nodes']}
     cs = spec if spec is not None else (nodes.get(era) or {}).get('city')
     if not cs: raise SystemExit(f'modelview: --sheet: {era} has no city: block (give one with --spec)')
@@ -91,7 +91,7 @@ def sheet_city(C, era, spec, at, Fr, city, scale, d, az=None, el=12.0):
     return sheet, shots_
 
 
-def study_film(C, era, spec, shots_, fov, year=None):
+def study_film(C, era, spec, shots_, fov, year=None, sheet=False):
     """the study's city.yaml: the film's own settings, its nodes reduced to the era (and the cities it stands on), one camera key
     per still in the era's node"""
     F = C['film']; nodes = {n['id']: n for n in F['nodes']}
@@ -100,7 +100,9 @@ def study_film(C, era, spec, shots_, fov, year=None):
     if era not in nodes and not spec:
         raise SystemExit(f'modelview: city.yaml has no node {era}: give its city: block with --spec <file> (nodes with one: {", ".join(n["id"] for n in F["nodes"] if n.get("city")) or "none"})')
     target = {k: copy.deepcopy(v) for k, v in nodes.get(era, {}).items() if k in NODE_KEEP}
-    if spec: target['city'] = spec
+    if spec:   # a spec that gives no colour (or seed) of its own takes the era city's, not the node's (a period city without col is lit in its node's)
+        own = target.get('city') or {}
+        target['city'] = {**{k: own[k] for k in ('col', 'seed') if k in own}, **spec}
     if era not in nodes:
         last = F['nodes'][-1]
         target.update(id=era, years=[year, year] if year is not None else list(last.get('years', [2000, 2000])), dur=20.0, mood={'feel': 'calm', 'level': 1}, label={l: era for l in F.get('lang', ['zh', 'en'])},
@@ -124,6 +126,8 @@ def study_film(C, era, spec, shots_, fov, year=None):
     S = copy.deepcopy(C); SF = S['film']
     for k in ('prologue', 'voice', 'music', 'sfx'): SF.pop(k, None)
     SF.update(drift=0, opening={'dur': 0}, closing={'lights_after': 0, 'end_after': 0, 'end_hold': .2}, nodes=study)   # (drift 0: stills of one view frame alike)
+    if sheet:   # the type blocks stand within a few dozen metres of their little city's edge: its edge light and line would flood every
+        SF['era_look'] = {**(SF.get('era_look') or {}), 'edge': 0, 'line': 0}   # one, where a house of the film stands well inside its city
     return S
 
 
@@ -178,7 +182,7 @@ def main():
         if len(sh) != 1: raise SystemExit('modelview: --sheet takes one --at, where the row of blocks starts (a flat open place)')
         spec, sh = sheet_city(C, args.era, spec, sh[0]['ll'], Fr, city, C['scale'], args.d, az_given, args.el)
     S = study_folder(city, slug)
-    yaml.safe_dump(study_film(C, args.era, spec, sh, args.fov, args.year), open(os.path.join(S, 'city.yaml'), 'w', encoding='utf-8'), allow_unicode=True, sort_keys=False)
+    yaml.safe_dump(study_film(C, args.era, spec, sh, args.fov, args.year, sheet=args.sheet), open(os.path.join(S, 'city.yaml'), 'w', encoding='utf-8'), allow_unicode=True, sort_keys=False)
     env = {**{k: v for k, v in os.environ.items() if k not in ('CT_SCRIPT', 'CT_PLAN', 'CT_PASS')},   # (a draft script or a plan of the real film is not the study's)
            'CT_STUDY': '1', 'CT_DEADAIR': 'warn'}   # (compile: the city rises without the camera; a film without words)
     LAYOUT.ensure(S)
