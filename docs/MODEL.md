@@ -4,11 +4,12 @@
 
 - One ring, a few rows of grid cells, houses that are only walls, an empty city → one whole city per period generated from the sources, filled in, checked item by item against the sources' drawings ("A whole city for each period", "No empty cities").
 - A hard-coded terrain exaggeration, so the foundation on a slope is taller than the house → measure by slope ("Appearance and height").
+- Houses of another region or period drawn with the built-in houses (north China's courtyards), or a city's own code drawing its houses → declare the house types from the research and look at them on the sheet first ("House types").
 
 ## A whole city for each period
 
 **Every historic period is a 3D model of a whole city:** write a `city:` spec in the node, and `pipeline/citygen.py` generates it (walls, gates and barbicans, main streets and lane network, courtyard / dwelling / dormitory plots,
-palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, cotton mills, stations, bridges, boats, trees). Follow the sources where there are sources (archaeological plans, gazetteer city maps, OSM site outlines); where there are none, follow the custom of contemporary cities of the same kind and label the picture "schematic".
+palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, cotton mills, stations, bridges, boats, trees; the houses of other regions and periods: "House types"). Follow the sources where there are sources (archaeological plans, gazetteer city maps, OSM site outlines); where there are none, follow the custom of contemporary cities of the same kind and label the picture "schematic".
 Do the close-up for the city with the fullest sources first; close-up camera distance 0.035–0.06 (about 0.1 m per pixel), elevation 10–15°, gliding along the main street inside the walls (`fov: 40–44`),
 and lay the other periods only once the houses are recognisable as houses. Take these stills with `uv run python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>`
 (a city not in city.yaml yet: `--spec <file> --year <y>`): it compiles that city alone in a study folder beside the film and shows it in the film's own palette and light, with the camera landed on the ground
@@ -16,6 +17,33 @@ and lay the other periods only once the houses are recognisable as houses. Take 
 Every historic period needs at least one low-angle close-up (elevation 10–15°) so that the audience sees that houses are houses; the wide shot is used only to see the colour change and the growth.
 For a part made from the sources, check the model against that drawing item by item: position, orientation, tiers, size; no error from compile or clipcheck does not mean it is right
 (example: the three tiers of a platform were stacked in the wrong direction, and no check will report that).
+
+## House types
+
+The generator's built-in houses (`typ: courtyard`, `dwelling`, `hut`, `slab`, `wards`) are one region's: north China's. A city elsewhere, or a period whose houses differ,
+declares its house types from the research, as data: `types:` at the top of city.yaml (for all its periods) or in a node's `city:` (that period only). A fabric names a type with
+`typ:` and gives the lot (`lot: [width, depth]` in metres; no `h_m`: a type is as tall as its storeys). A name the city does not declare is looked up in the shared library,
+`types/<name>.yaml` (one file per type, written out whole; `types/han_courtyard.yaml` is one). Every key is a fact from the sources, and `basis` says which are estimates:
+
+```yaml
+types:
+  <name>:
+    where: <the region>                 # where, when, basis: required
+    when: <the period>
+    basis: research/<notes>.md, <what the numbers come from; which are estimates>
+    form: row                           # detached | row (wall to wall, a yard behind) | court (one building round a court or a light well) | compound (separate buildings round a yard inside a wall)
+    storeys: [2, 4]                     # fewest and most (storey_m: 3.2 by default)
+    roof: { shape: gabled, pitch_deg: 30, overhang_m: 0.5, ridge: along }   # shape (OpenStreetMap roof:shape): flat, gabled, hipped, pyramidal, skillion, mansard, gambrel; ridge: along or across the street (detached, row)
+    ground: shops                       # closed | shops | arcade (the upper storeys over a walk; arcade_m)
+    # court: { frac: 0.3 } (court, compound: the court's share of the lot); yard_wall_m; portico_m; podium_m
+```
+
+A type written in the city can start from another (`from: <name>`) and change some keys; it still writes its own where, when and basis. A type's name is its own (never a
+built-in one). A key a type does not have, a key its form does not use, or a missing where, when or basis stops compile with what to write. Round roofs (`dome`, `onion`, `round`)
+are not drawn yet. A city's own scripts (`research/*_gen.py`) lay out where things are; what a house looks like is a type, never code in the city, so every city builds with the same generator.
+Look at the types before laying the city: `uv run python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat>` (a flat open place) builds a block of each type the period
+declares or its fabric names, at the film's close-up distance, in its palette and light, and puts the stills side by side in `sheet.jpg`. Show the user the sheet, and lay the city once
+each type reads as itself.
 
 ## Boundaries, overlay and change
 

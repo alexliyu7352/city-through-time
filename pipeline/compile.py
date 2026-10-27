@@ -121,6 +121,10 @@ for nd in FM['nodes']:
         for k_, v_ in add_.items():
             if v_: cs_[k_] = list(cs.get(k_, [])) + v_
         nd['city'] = cs_
+    # its house types (the node's city.types, city.yaml types, the shared library types/): looked up and checked once, here
+    if cs:
+        types_ = citygen.house_types(nd['city'], C.get('types'), f'node {nd.get("id")}')
+        if types_: nd['city']['types'] = types_
 
 # ------------------------------------------------------------------ text templates and positions
 def _ns(o): return SimpleNamespace(**{str(k): _ns(v) for k, v in dict.items(o)}) if isinstance(o, dict) else [_ns(v) for v in o] if isinstance(o, list) else o

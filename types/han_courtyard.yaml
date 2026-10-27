@@ -1,0 +1,15 @@
+# A house type of the shared library (docs/MODEL.md "House types"): a period city's fabric names it, typ: han_courtyard,
+# and gives the lot. A city that changes it writes a type of its own, from: han_courtyard, with its own where, when and basis.
+where: north China, the Wei valley and the Central Plains (Han Chang'an and the villages of its time)
+when: Western Han, 2nd century BCE to the 1st century CE
+basis: >-
+  cities/xianyang/research/han_changan.md 12-F: house plans in one row, L-shaped, three-sided and four-sided round a yard
+  (WM, GB, WWC), Sandaohao house lots of 260-660 m2 (LND22), the Sanyangzhuang courtyards facing south (SYZ25); 12-C: small
+  houses under overhanging gable roofs (WM). The pitch, the yard's share and the wall's height are estimates from the Han
+  pottery house models (refs 22-24 there)
+form: compound
+storeys: 1
+storey_m: 3.4
+roof: { shape: gabled, pitch_deg: 27, overhang_m: 0.55 }
+court: { frac: 0.35 }
+yard_wall_m: 2.6

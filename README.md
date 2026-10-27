@@ -62,6 +62,7 @@ audio/              sound: laying music, code-written music, mixing
 tools/              one-command film build, preview, checks, web bundle, music generation
 cities/<city>/      each city's source data (config, script, fact sources, research, assets)
 templates/, i18n/   templates for new cities; the text shown on screen (six languages)
+types/              shared house types of past periods, one file per type
 fonts/              open-source fonts (SIL OFL)
 ```
 

@@ -3,6 +3,7 @@ before the city has a place in the film's timeline; city.yaml, script.yaml and t
 
 usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,<el>[,<d>]]] [--at ...]
                                     [--spec <file.yaml> [--year <y>]] [--az 305] [--el 12] [--d .045] [--fov 42] [--wide] [--name <folder>]
+       python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat> [--spec <file.yaml>] ...
 
   <era>     the id of a node of city.yaml that has a city: block, or a new id given with --spec
   --spec    a YAML file holding a city: block (what a node's city: holds, docs/MODEL.md), shown in place of the node's own
@@ -12,6 +13,11 @@ usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,
             still's own, else --az/--el/--d (defaults: the close-up of docs/MODEL.md, d .045 and el 12; az 305 has the
             room light, from the north-west, fall across the frame so slopes read)
   --wide    d .35, el 30: the whole city, for the colour and the layout
+  --sheet   the city's houses, type by type, in place of the city: a block two lots deep of each house type its fabric
+            names or it declares (docs/MODEL.md "House types"; the lot its fabric gives, else one usual for the form), in a
+            row eastward from --at along a street (give a flat open place), one still of each block at the close-up distance
+            (from az 335 unless --az: the fronts and the lit west sides) and one of them all, and sheet.jpg with them side by
+            side (named by type)
   --name    the folder of the stills under build/review/modelview/ (default: the era's id)
 
 What it does: writes a study city at build/review/modelview/<slug>/ (a city folder of its own: a city.yaml with the film's
@@ -21,17 +27,19 @@ research/ and assets/), compiles it, runs tools/clipcheck.py on it, and takes th
 opens the same view in the preview (node tools/preview.mjs). The study has no words, sound, pins or pictures, only the city.
 The terrain is the city's as prepared: a new terrain.exaggeration needs pipeline/terrain.py and prep.py run on the city.
 """
-import argparse, copy, json, os, shutil, subprocess, sys
+import argparse, copy, json, math, os, shutil, subprocess, sys
 
 import yaml
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 sys.path.insert(0, os.path.join(ROOT, 'pipeline'))
+import citygen
 import geo
 import layout as LAYOUT
 
 NODE_KEEP = ('id', 'years', 'dur', 'mood', 'label', 'col', 'tint', 'era_tint', 'ink', 'city')   # what a node's city looks like by
 CLOSE = {'az': 305.0, 'el': 12.0, 'd': .045}; WIDE = {'el': 30.0, 'd': .35}
+FORM_LOT = {'detached': [18, 24], 'row': [7, 18], 'court': [30, 36], 'compound': [24, 30]}   # (metres) the sheet's lot for a type no fabric names yet
 
 
 def shots(args):
@@ -47,6 +55,40 @@ def shots(args):
         if not d['d'] > 0: raise SystemExit(f'modelview: --at {s}: d must be above 0 (model units; the close-up is .035-.06)')
         out.append(d)
     return out
+
+
+def sheet_city(C, era, spec, at, Fr, city, scale, d, az=None, el=12.0):
+    """--sheet: a city of the era's house types in place of its own (built-in ones its fabric names, then declared ones): for
+    each a block two lots deep and 60 m or more long along x (UTM east) from `at`, 40 m apart, fronts to the south on a street;
+    today's buildings hidden there and out to the cameras. Returns the city spec and the shots: one per block at the close-up
+    distance d (the film's: a type is judged as the film shows it), from the front and a little west (az 335 unless given: the
+    next block stays aside, the west sides catch the room light), and one of them all"""
+    nodes = {n['id']: n for n in C['film']['nodes']}
+    cs = spec if spec is not None else (nodes.get(era) or {}).get('city')
+    if not cs: raise SystemExit(f'modelview: --sheet: {era} has no city: block (give one with --spec)')
+    cs_t = citygen.with_trace(cs, Fr, city)
+    tps = citygen.house_types(cs_t, C.get('types'), f'node {era}')
+    show = []   # (type, lot, h_m for a built-in one)
+    for fb in cs_t.get('fabric', []):
+        t = fb.get('typ', 'courtyard'); t = 'courtyard' if t == 'wards' else t   # (a ward's houses are courtyards)
+        if t not in [q[0] for q in show]: show.append((t, list(fb.get('lot', [18, 26])), fb.get('h_m', 6) if t in citygen.BUILTIN_TYPES else None))
+    show += [(t, FORM_LOT[T['form']], None) for t, T in tps.items() if t not in [q[0] for q in show]]
+    if not show: raise SystemExit(f'modelview: --sheet: the city of {era} has no houses (no fabric, no types)')
+    ox, oy = Fr.to_utm.transform(*at); x = ox; fabric, shots_ = [], []; az = 335.0 if az is None else az
+    ll = lambda u, v: [round(c, 7) for c in Fr.to_wgs.transform(u, v)]
+    deep = max(2 * q[1][1] for q in show) + 1
+    for t, (lw, ld), h in show:
+        bw = max(5, math.ceil(60 / lw)) * lw + 1.0
+        fabric.append({'region': [ll(x, oy), ll(x + bw, oy), ll(x + bw, oy + 2 * ld + 1), ll(x, oy + 2 * ld + 1)], 'lot': [lw, ld], 'typ': t, 'empty': 0, 'theta_deg': 0, **({'h_m': h} if h is not None else {})})
+        shots_.append({'name': t, 'll': ll(x + bw / 2, oy + ld), 'az': az, 'el': el, 'd': d})
+        x += bw + 40
+    shots_.append({'name': 'all', 'll': ll((ox + x - 40) / 2, oy + deep / 2), 'az': az, 'el': max(el, 20.0), 'd': round(max(1.5 * d, .7 * (x - ox) / scale), 4)})
+    r = max(220.0, 1.1 * d * scale)   # (metres: out to where the cameras stand)
+    sheet = {'origin': list(at), 'theta_deg': 0, 'detail': cs.get('detail', 'medium'), 'exaggeration': cs.get('exaggeration', 2.0), 'types': tps, 'fabric': fabric,
+             'streets': [{'pts': [ll(ox - 10, oy - 7), ll(x - 30, oy - 7)], 'w_m': 8}],
+             'hide': [[ll(ox - r / 2, oy - r), ll(x + r / 2, oy - r), ll(x + r / 2, oy + deep + 60), ll(ox - r / 2, oy + deep + 60)]]}
+    sheet.update({k: cs[k] for k in ('col', 'seed') if k in cs})
+    return sheet, shots_
 
 
 def study_film(C, era, spec, shots_, fov, year=None):
@@ -112,12 +154,13 @@ def main():
     ap.add_argument('city'); ap.add_argument('era')
     ap.add_argument('--at', action='append', required=True); ap.add_argument('--spec'); ap.add_argument('--year', type=int)
     ap.add_argument('--az', type=float); ap.add_argument('--el', type=float); ap.add_argument('--d', type=float); ap.add_argument('--fov', type=float, default=42.0)
-    ap.add_argument('--wide', action='store_true'); ap.add_argument('--name')
+    ap.add_argument('--wide', action='store_true'); ap.add_argument('--name'); ap.add_argument('--sheet', action='store_true')
     args = ap.parse_args()
-    base = {**CLOSE, **(WIDE if args.wide else {})}
+    az_given = args.az; base = {**CLOSE, **(WIDE if args.wide else {})}
     for k in ('az', 'el', 'd'):
         if getattr(args, k) is None: setattr(args, k, base[k])
     city = os.path.abspath(args.city); slug = os.path.basename(os.path.normpath(city))
+    if args.sheet and not args.name: args.name = f'{args.era}_sheet'
     if (args.name or args.era) == slug: raise SystemExit(f'modelview: build/review/modelview/{slug}/ is the study city itself: give the stills another --name')
     if not os.path.isfile(os.path.join(city, 'city.yaml')): raise SystemExit(f'modelview: {args.city}: no city.yaml here (give the city folder, cities/<slug>)')
     if not os.path.isfile(LAYOUT.data(city, 'model.json')): raise SystemExit(f'modelview: {args.city} has not been prepared: run pipeline/prep.py first')
@@ -129,7 +172,11 @@ def main():
         spec = yaml.safe_load(open(args.spec, encoding='utf-8'))
         if isinstance(spec, dict) and 'city' in spec: spec = spec['city']
         if not isinstance(spec, dict): raise SystemExit(f'modelview: {args.spec} holds no city: block')
+    Fr = geo.Frame(tuple(C['box']), 1.0 / C['scale'])
     sh = shots(args)
+    if args.sheet:
+        if len(sh) != 1: raise SystemExit('modelview: --sheet takes one --at, where the row of blocks starts (a flat open place)')
+        spec, sh = sheet_city(C, args.era, spec, sh[0]['ll'], Fr, city, C['scale'], args.d, az_given, args.el)
     S = study_folder(city, slug)
     yaml.safe_dump(study_film(C, args.era, spec, sh, args.fov, args.year), open(os.path.join(S, 'city.yaml'), 'w', encoding='utf-8'), allow_unicode=True, sort_keys=False)
     env = {**{k: v for k, v in os.environ.items() if k not in ('CT_SCRIPT', 'CT_PLAN', 'CT_PASS')},   # (a draft script or a plan of the real film is not the study's)
@@ -145,7 +192,7 @@ def main():
     t = round(min(node['t1'] - .2, max(up + 1.0, FILM['light']['lamp'] + 2.5)), 2)
     if t < up: print(f'WARNING: {args.era} is still rising when its node ends ({up:.1f} s > {node["t1"]:.1f} s): the stills show it unfinished')
     # each still's camera as compile landed it (the ground under --at, at the film's terrain exaggeration)
-    Fr = geo.Frame(tuple(C['box']), 1.0 / C['scale']); cams = []
+    cams = []
     for s in sh:
         x, z = Fr.model_lonlat(*s['ll'])
         k = next((v for tk, v in FILM['camera'] if node['t0'] - 1e-3 <= tk <= node['t1'] + 1e-3 and abs(v[0] - x) < 2e-5 and abs(v[2] - z) < 2e-5 and v[3:6] == [s['az'], s['el'], s['d']]), None)
@@ -155,12 +202,18 @@ def main():
     print((rc.stdout.strip().splitlines() or ['clipcheck: no output'])[-1] + f'  ({os.path.relpath(LAYOUT.logs(S, "clipcheck.log"), ROOT)})')
     out = LAYOUT.review(city, 'modelview', args.name or args.era); os.makedirs(out, exist_ok=True)
     bundle = os.path.relpath(S, ROOT).replace(os.sep, '/') + '/'
+    files = []
     for i, (s, v) in enumerate(zip(sh, cams), 1):
-        q = f'bundle={bundle}&cam=' + ','.join(f'{x:g}' for x in v)
-        r = run(['node', 'render/still.mjs', slug, f'{t:.2f}', '--q', q, '--out', out, '--prefix', f'{i}_'], LAYOUT.logs(S, f'still_{i}.log'))
+        q = f'bundle={bundle}&cam=' + ','.join(f'{x:g}' for x in v); pre = f'{i}_{s["name"]}_' if 'name' in s else f'{i}_'
+        r = run(['node', 'render/still.mjs', slug, f'{t:.2f}', '--q', q, '--out', out, '--prefix', pre], LAYOUT.logs(S, f'still_{i}.log'))
         if r.returncode: print(r.stdout[-2000:]); raise SystemExit('modelview: the still failed')
-        print(f'{os.path.relpath(os.path.join(out, f"{i}_{t:.2f}.jpg"), ROOT)}   at {s["ll"][0]:.5f},{s["ll"][1]:.5f} az {s["az"]:g} el {s["el"]:g} d {s["d"]:g}')
+        files.append(os.path.join(out, f'{pre}{t:.2f}.jpg'))
+        print(f'{os.path.relpath(files[-1], ROOT)}   at {s["ll"][0]:.5f},{s["ll"][1]:.5f} az {s["az"]:g} el {s["el"]:g} d {s["d"]:g}')
         print(f'    in the preview (node tools/preview.mjs {slug}): http://127.0.0.1:8765/play.html?city={slug}&t={t:.2f}&{q}')
+    if args.sheet:
+        r = run([sys.executable, '-I', 'tools/sheet.py', os.path.join(out, 'sheet.jpg'), *files, '--cols', '3', '--w', '640'], LAYOUT.logs(S, 'sheet.log'))
+        if r.returncode: print(r.stdout[-2000:]); raise SystemExit('modelview: the contact sheet failed')
+        print(f'{os.path.relpath(os.path.join(out, "sheet.jpg"), ROOT)}   every still, named by house type')
     print(f'{args.era}: risen at {up:.1f} s of the study, stills at {t:.2f} s')
 
 

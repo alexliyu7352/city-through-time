@@ -103,7 +103,7 @@ film:
         walls: [{ ring: [[lon, lat], ...], h_m: 10, t_m: 11, gates: [[lon, lat], ...], style: tower }]   # style: tower (gate towers, barbicans, crenellations, bastions, moat) | hip | none (earth walls, ditches)
         streets: [{ pts: [[lon, lat], [lon, lat]], w_m: 16, shops: true }]                                 # shops: two-storey shopfronts along the street
         lanes: { spacing_m: 85, w_m: 5 }      # lane network inside the city (region: walls or a lon/lat ring)
-        fabric: [{ region: walls, lot: [17, 25], typ: courtyard, h_m: 6, empty: 0.05 }]                  # typ: courtyard | dwelling | hut | slab; scatter: 1 = scattered without a grid (when there is no evidence of wards)
+        fabric: [{ region: walls, lot: [17, 25], typ: courtyard, h_m: 6, empty: 0.05 }]                  # typ: courtyard | dwelling | hut | slab (north China's), or a house type (types:, below); scatter: 1 = scattered without a grid (when there is no evidence of wards)
         # trace: research/<map name>_trace.geojson   # optional: walls, streets, blocks and landmarks traced from an old map or an archaeological plan (docs/MODEL.md), built together with what is written above
         landmarks:                            # kind: temple | office | palace | belltower | pagoda | terrace | hall | paifang | factory | chimney | station | tower | corridor | bridge | boats | village | kilns | workshops | market | pool | platform | ditch
           - { kind: temple, lon: 0, lat: 0, w_m: 62, d_m: 120 }
@@ -118,6 +118,8 @@ film:
       #   kilns, village, bridge, boats, factory, chimney, station, platform, ditch, pool, corridor (elevated corridor); fabric typ: courtyard / dwelling / hut / slab / wards (lǘlǐ residential wards).
       #   wall style: tower (Ming-Qing gate towers and barbicans) / hip / han3 (one gate with three passages, the third number of gates = width of the partition wall) / none; moat_w_m, moat_off_m; streets lanes3: true = Han-style three-lane main street.
       #   For sizes look up the archaeological reports first (research/<topic>.md, a source for every number); only where there is none, show schematically by the custom of the same period.
+      #   houses of other regions and periods: types: { <name>: { where, when, basis, form, storeys, roof: { shape }, ... } } at the top of city.yaml (all periods) or in city: (this one),
+      #   or a library type, types/<name>.yaml; a fabric names it, typ: <name>, with its lot and no h_m (docs/MODEL.md "House types"); look at them first: tools/modelview.py --sheet.
       routes:                                 # light lines: moving a capital, moving house, river changes, distances. [km] fills in the distance between the two points automatically; label "schematic" when positions are estimates
         - { id: <r>, from: [lon, lat], to: [lon, lat], at: 0.6, draw: 3.0, hold: 3.5, arc: 0.2, col: '#ffd59a', impact: true, follow: { el: 40 }, zh: "都城南移 · 约 [km] 公里", en: "The capital moves about [km] km south" }   # impact: the landing point is the centre of the new city; follow: the camera follows the beam (compile simulates and chooses the direction; az is only an exception and must also keep the whole beam in the picture), and turns to the whole city after landing
       tint: 0.5                               # how strongly today's city is tinted with this node's colour

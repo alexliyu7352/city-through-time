@@ -23,7 +23,7 @@ Primitive record (list): [type, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, g
 Heights: ground relief is exaggerated like the terrain plate (gex); building heights by the era's own factor (hex), so
 courtyards keep their proportions while the plateau still reads.
 """
-import math, random
+import math, os, random
 import numpy as np
 import shapely
 from shapely.geometry import Polygon, LineString, Point
@@ -53,6 +53,7 @@ class Builder:
         self.plinth = .3   # metres of foundation (self.found) above which a house's or a hall's body gets a plinth (_emit)
         self.slope = None  # (dg/dx, dg/dy) ground metres per metre: the primitives emitted now are laid along a slope (see lay)
         self.gid, self.tag, self.meta = 0, ('misc', 0), []   # building groups (a building rises whole) and what each came from (stages)
+        self.types = {}    # the declared house types a fabric can name (house_types), name -> complete type
 
     # ------------------------------------------------------------------ low level
     def _emit(self, t, x, y, theta, z0, a, b, c, d=0.0, e=0.0, part=FAB, g_m=None, rank=None):
@@ -753,6 +754,133 @@ class Builder:
                 self._emit(BOX, x, y, th, 1.1 + f * 3.2, w * .96, d + .3, 1.3, part=DARK, g_m=g)
         self.roof(x, y, th, h, w, d, 2.6, 'hip', part=ROOF, g=g, o=.5, ornaments=False)
 
+    # ------------------------------------------------------------------ house types from the sources (house_types: types/, city.yaml)
+    def house(self, x, y, th, lw, ld, T, part=FAB):
+        """a house of a declared type T (house_types) on a lw x ld lot whose street side is local -y. A margin keeps lots apart;
+        the front leaves room for a portico and a podium's stair. detached: one building set back in its yard; row: wall to wall
+        with its neighbours, a yard behind; court: one building round a court (a block of flats round a light well, a house
+        round its atrium or patio), on one level; compound: separate buildings round a yard inside a wall, the main one at the
+        back, each on its own ground"""
+        P = self.frame(x, y, th); j = self.rng.random; m = .15
+        n = self.rng.randint(*T['storeys']); pm, pz = T['portico_m'], T['podium_m']
+        front = m + pm + pz * 1.4   # (the stair before a podium)
+        W, D = lw - 2 * m, ld - m - front   # the room the buildings have
+        f = T['form']; R = T['roof']; along = R.get('ridge', 'along') == 'along'
+        if f == 'detached':
+            w, d = W * (.62 + .1 * j()), D * (.5 + .08 * j()); s = max(0.0, (ld - 2 * m) * .1 - pm)
+            self.house_body(*P(0, -ld / 2 + front + s + d / 2), th, w, d, n, T, part, along=along)
+            if T['yard_wall_m'] and self.det >= 1: self._yard_wall(P, lw, ld, m, T['yard_wall_m'], part)
+        elif f == 'row':   # (no eaves past the party walls: two neighbours' roofs at one height would overlap and flicker)
+            d = D * (.6 + .06 * j())
+            self.house_body(*P(0, -ld / 2 + front + d / 2), th, W, d, n, T, part, along=along, ends=False)
+            if T['yard_wall_m'] and self.det >= 1:   # the yard's back wall and the wall to the next yard
+                yb = ld / 2 - m - .2; y0_ = -ld / 2 + front + d; g = self.gsite(*P(0, (y0_ + yb) / 2), th, W, yb - y0_)
+                self._emit(BOX, *P(0, yb), th, 0, W, .4, T['yard_wall_m'], part=part, g_m=g)
+                self._emit(BOX, *P(-W / 2 + .2, (y0_ + yb) / 2), th, 0, .4, yb - y0_ - .4, T['yard_wall_m'], part=part, g_m=g); self.found = 0.0
+        elif f == 'court':
+            k = math.sqrt(T['court']['frac']); rx, ry = max(4.0, W * (1 - k) / 2), max(4.0, D * (1 - k) / 2)
+            if W - 2 * rx < 3 or D - 2 * ry < 3: raise SystemExit(f'citygen: a court house on a {lw:g} x {ld:g} m lot: no room for its court (each wing is 4 m deep at least); give its fabric a larger lot')
+            cy = -ld / 2 + front + D / 2; g = self.gsite(*P(0, cy - pm / 2), th, W, D + pm)   # (one building: one level)
+            self.house_body(*P(0, cy - D / 2 + ry / 2), th, W, ry, n, T, part, gate=True, g=g)                  # the street wing
+            self.house_body(*P(0, cy + D / 2 - ry / 2), th, W, ry, n, T, part, street=False, g=g)               # the back wing
+            for s_ in (-1, 1):                                                                                 # the side wings
+                self.house_body(*P(s_ * (W / 2 - rx / 2), cy), th + math.pi / 2, D - 2 * ry, rx, n, T, part, street=False, g=g)
+            self.found = 0.0
+        else:   # compound: inside its wall
+            W, D = W - 1.0, D - 1.0; k = math.sqrt(T['court']['frac']); cy = -ld / 2 + front + .5 + D / 2
+            md = min(12.0, max(4.0, D * (1 - k) * .6)); fd = min(8.0, D * (1 - k) * .4); sd = min(8.0, max(3.5, W * (1 - k) / 2))
+            n2 = max(T['storeys'][0], n - 1); gap = .8; fz = fd if fd >= 3.5 else 2.4
+            self.house_body(*P(0, cy + D / 2 - md / 2), th, W * .9, md, n, T, part)                                # the main building
+            sl = D - md - fz - 2 * gap
+            if sl > 3:
+                for s_ in (-1, 1): self.house_body(*P(s_ * (W / 2 - sd / 2), cy - D / 2 + fz + gap + sl / 2), th + math.pi / 2, sl, sd, n2, T, part, street=False)
+            if fd >= 3.5: self.house_body(*P(0, cy - D / 2 + fd / 2), th, W * .7, fd, n2, T, part, gate=True)       # the front building, the gate through it
+            elif self.det >= 1:   # a gate house in the wall
+                gx, gy = P(0, cy - D / 2 + 1.2); g = self.gsite(gx, gy, th, 4, 2.4)
+                self._emit(BOX, gx, gy, th, 0, 4, 2.4, 3.0, part=part, g_m=g); self.house_roof(gx, gy, th, 3.0, 4, 2.4, R, True, g)
+                self._emit(BOX, *P(0, cy - D / 2 - .05), th, .1, 1.5, .2, 2.3, part=DARK, g_m=g); self.found = 0.0
+            if T['yard_wall_m'] and self.det >= 1: self._yard_wall(P, lw, ld, m, T['yard_wall_m'], part)
+
+    def _yard_wall(self, P, lw, ld, m, h, part):
+        """the wall round a lot (P: the lot's frame) just inside its margin, a gate gap in the middle of its street side"""
+        e = m + .2; a, b, c, d = P(-lw / 2 + e, -ld / 2 + e), P(lw / 2 - e, -ld / 2 + e), P(lw / 2 - e, ld / 2 - e), P(-lw / 2 + e, ld / 2 - e)
+        for p, q in ((b, c), (c, d), (d, a), (a, P(-1.6, -ld / 2 + e)), (P(1.6, -ld / 2 + e), b)): self.strip(p, q, .4, h, part=part)
+
+    def house_body(self, x, y, th, w, d, n, T, part=FAB, street=True, gate=False, along=True, ends=True, g=None):
+        """one building of a declared type on a w x d footprint (a portico, when the type has one, before it on the street side,
+        local -y): n storeys of T's storey_m, on a podium a little smaller than the footprint when the type has one (its stair in
+        front); on the street side the ground storey is closed with a door, open shop fronts (shops), or set back behind posts
+        under the storeys above (arcade), a row of windows on every storey (detail high); gate: a passage through it instead of
+        a door; then the type's roof (house_roof). g: the ground it stands on (one level for the wings of one building), else
+        its own (gsite)"""
+        P = self.frame(x, y, th); sm = T['storey_m']; hb = n * sm; pm = T['portico_m'] if street else 0; pz = T['podium_m']
+        grd = T['ground'] if street else 'closed'; own = g is None
+        if own: g = self.gsite(*P(0, -pm / 2), th, w, d + pm)
+        z = 0.0
+        if pz:   # the podium under the body and the portico, the stair before it; the body .6 m in from its edges
+            self._emit(BOX, *P(0, -pm / 2), th, 0, w, d + pm, pz, part=part, g_m=g)
+            if street: self._emit(FRUSTUM, *P(0, -d / 2 - pm - pz * .7), th, 0, min(6.0, w * .4), pz * 1.4, pz, min(6.0, w * .4), .3, part=part, g_m=g)
+            z = pz; w, d = w - 1.2, d - 1.2
+        if grd == 'arcade':   # the ground storey behind the walk, posts on the front line, the storeys above over the walk
+            a = T['arcade_m']; self._emit(BOX, *P(0, a / 2), th, z, w, d - a, sm, part=part, g_m=g)
+            k_ = max(2, round(w / 3.6))
+            for i in range(k_ + 1): self._emit(BOX, *P(-w / 2 + .3 + (w - .6) * i / k_, -d / 2 + .3), th, z, .6, .6, sm, part=part, g_m=g)
+            self._emit(BOX, x, y, th, z + sm, w, d, hb - sm, part=part, g_m=g)
+            if self.det >= 1: self._emit(BOX, *P(0, -d / 2 + a - .05), th, z + .1, w * .8, .2, sm * .72, part=DARK, g_m=g)
+        else:
+            self._emit(BOX, x, y, th, z, w, d, hb, part=part, g_m=g)
+            if self.det >= 1 and street:
+                if gate: self._emit(BOX, x, y, th, z, 2.6, d + .2, min(3.4, sm * .9), part=DARK, g_m=g)   # the passage through
+                elif grd == 'shops': self._emit(BOX, *P(0, -d / 2 - .05), th, z + .1, w * .82, .2, min(2.8, sm * .78), part=DARK, g_m=g)
+                else: self._emit(BOX, *P(0, -d / 2 - .05), th, z + .1, min(1.4, w * .3), .2, min(2.3, sm * .72), part=DARK, g_m=g)
+        if self.det >= 2 and street:   # windows, every storey, on the street side
+            k_ = max(1, min(6, int(w // 3.6)))
+            for s_ in range(0 if grd == 'closed' else 1, n):
+                for i in range(k_):
+                    lx = -w / 2 + w * (i + .5) / k_
+                    if s_ == 0 and abs(lx) < 1.8: continue   # (the door, the passage)
+                    self._emit(BOX, *P(lx, -d / 2 - .05), th, z + s_ * sm + sm * .38, min(1.0, w / k_ * .4), .2, min(1.5, sm * .42), part=DARK, g_m=g)
+        if pm:   # the portico: posts along its front, a lean-to roof from the wall
+            k_ = max(2, round(w / 3.2))
+            for i in range(k_ + 1): self._emit(BOX, *P(-w / 2 + .3 + (w - .6) * i / k_, -d / 2 - pm + .3), th, z, .5, .5, sm, part=part, g_m=g)
+            self.lean(*P(0, -d / 2 - pm / 2), th, w, pm + .6, z + sm + .7, .7, part=ROOF, g=g)
+        self.house_roof(x, y, th, z + hb, w, d, T['roof'], along, g, ends)
+        if own: self.found = 0.0
+
+    def house_roof(self, x, y, th, z0, w, d, R, along=True, g=None, ends=True):
+        """a declared type's roof over a w x d body whose eaves are at z0 (R: shape, pitch_deg, overhang_m; ROOF_SHAPES), its
+        ridge along local x (w), or along local y when not along; a hipped roof's ridge runs along the longer side. ends False:
+        no eaves past the ends of a ridge along w (the party walls of a row)"""
+        if not along: th, w, d = th + math.pi / 2, d, w
+        s, o, tn = R['shape'], R['overhang_m'], math.tan(math.radians(R['pitch_deg'])); W, D = w + 2 * o, d + 2 * o
+        L = W if ends or not along else w
+        if s == 'flat':   # a slab, a parapet round it when it has no eaves
+            self._emit(BOX, x, y, th, z0, L, D, .35, part=ROOF, g_m=g)
+            if self.det >= 1 and o < .2:
+                P = self.frame(x, y, th)
+                for lx, ly, a, b in ((0, -D / 2 + .15, L, .3), (0, D / 2 - .15, L, .3), (-L / 2 + .15, 0, .3, D - .6), (L / 2 - .15, 0, .3, D - .6)):
+                    self._emit(BOX, *P(lx, ly), th, z0 + .35, a, b, .8, part=FAB, g_m=g)
+        elif s == 'gabled':
+            L = w + 2 * o * .6 if ends or not along else w; rh = d / 2 * tn
+            self._emit(GABLE, x, y, th + math.pi / 2, z0, d, L, rh, o, part=ROOF, g_m=g)
+            if self.det >= 1: self._emit(BOX, x, y, th, z0 + rh - .2, L + (.2 if ends or not along else 0), .35, .45, part=ROOF, g_m=g)   # the ridge
+        elif s in ('hipped', 'pyramidal'):
+            rh = min(W, D) / 2 * tn
+            top = (.02, .02) if s == 'pyramidal' else (max(W - D, .02), .02) if W >= D else (.02, max(D - W, .02))
+            self._emit(FRUSTUM, x, y, th, z0, W, D, rh, *top, part=ROOF, g_m=g)
+        elif s == 'skillion':   # one slope falling to local -y: the walls rise to it (a sheared box, its lower part inside the body), a slab on top
+            rh = d * tn; k = tn * self.hex / self.gex; s0 = self.slope; self.slope = (-math.sin(th) * k, math.cos(th) * k)
+            self._emit(BOX, x, y, th, z0 - rh / 2 - .1, w - .06, d - .1, rh + .1, part=FAB, g_m=g); self.slope = s0
+            self.lean(x, y, th, L, D, z0 + rh / 2 + tn * D / 2 + .3, tn * D, part=ROOF, g=g, t=.3)
+        elif s == 'mansard':   # a steep lower slope (pitch_deg) all round, about a storey high, a low hipped top
+            h1 = min(3.2, .35 * min(w, d)); a = h1 / tn; Wt, Dt = W - 2 * a, D - 2 * a; rh = min(Wt, Dt) / 2 * math.tan(math.radians(15))
+            self._emit(FRUSTUM, x, y, th, z0, W, D, h1, Wt, Dt, part=ROOF, g_m=g)
+            self._emit(FRUSTUM, x, y, th, z0 + h1, Wt, Dt, rh, *((max(Wt - Dt, .02), .02) if Wt >= Dt else (.02, max(Dt - Wt, .02))), part=ROOF, g_m=g)
+        elif s == 'gambrel':   # a steep lower slope (pitch_deg) on the two long sides, a gentle gable above
+            h1 = min(3.2, .35 * d); a = h1 / tn; dt = D - 2 * a
+            self._emit(FRUSTUM, x, y, th, z0, L, D, h1, L, dt, part=ROOF, g_m=g)
+            self._emit(GABLE, x, y, th + math.pi / 2, z0 + h1, dt, L, dt / 2 * math.tan(math.radians(25)), 0, part=ROOF, g_m=g)
+
     # ------------------------------------------------------------------ walls
     def walls(self, ring, h=10.0, t=10.0, gates=(), towers=True, part=WALL, gate_style='tower', moat=None, bastion_m=80.0, moat_w=16.0, moat_off=None):
         """a city wall along a closed ring (UTM points): battered rammed-earth body, merlons on the outer parapet, bastions
@@ -878,6 +1006,7 @@ class Builder:
                         self.strip(a, b, .4, 2.0, part=part)
             elif typ == 'hut': self.hut(px, py, min(lw, ld) * .32, h, part=part)
             elif typ == 'slab': self.slab(px, py, theta_i, w_ * .8, d_ * .35, h, part=part)
+            else: self.house(px, py, theta_i, lw, ld, self.types[typ], part=part)   # a declared type (house_types)
             n += 1
         return n
 
@@ -929,6 +1058,112 @@ def with_trace(spec, F, city_dir):
     return {**spec, **{k: list(spec.get(k, [])) + v for k, v in traced(spec, F, city_dir).items() if v}}
 
 
+BUILTIN_TYPES = ('courtyard', 'dwelling', 'hut', 'slab', 'wards')   # the generator's own houses: one region's (north China)
+TYPES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'types')   # the shared library of house types
+FORMS = ('detached', 'row', 'court', 'compound')
+ROOF_SHAPES = {'flat': 0, 'gabled': 30, 'hipped': 25, 'pyramidal': 25, 'skillion': 12, 'mansard': 70, 'gambrel': 60}   # OpenStreetMap roof:shape -> its usual pitch (mansard, gambrel: the steep lower slope)
+ROOF_LATER = ('dome', 'onion', 'round')   # (they need a round primitive the engine does not have yet)
+TYPE_KEYS = ('where', 'when', 'basis', 'form', 'storeys', 'storey_m', 'roof', 'court', 'yard_wall_m', 'ground', 'arcade_m', 'portico_m', 'podium_m')
+
+
+def house_type(T, src):
+    """a house type checked and completed with its defaults (docs/MODEL.md "House types"). Each key is a fact from the sources
+    about the houses of one place and time, and where, when and basis say which: a type without them, a key it does not have,
+    a key its form does not use or a value out of range stops compile with what to write (src: where the type is written).
+    The result holds the keys its form uses, so it passes again unchanged"""
+    def no(m): raise SystemExit(f'citygen: {src}: {m}')
+    def num(k, v, lo, hi):
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or not lo <= v <= hi: no(f'{k}: {v!r}: a number from {lo:g} to {hi:g}')
+        return float(v)
+    if not isinstance(T, dict): no('a house type is a mapping of its keys (docs/MODEL.md "House types")')
+    bad = sorted(set(T) - set(TYPE_KEYS))
+    if bad: no(f'no key {", ".join(bad)} (a house type has {", ".join(TYPE_KEYS)})')
+    for k in ('where', 'when', 'basis'):
+        if not str(T.get(k) or '').strip(): no(f'{k} is missing: a house type says where its houses stood, when, and on what basis (the research it comes from)')
+    f = T.get('form')
+    if f not in FORMS: no(f'form: {f!r}: one of {", ".join(FORMS)}')
+    st = T.get('storeys'); st = [st, st] if isinstance(st, int) and not isinstance(st, bool) else st
+    if not (isinstance(st, list) and len(st) == 2 and all(isinstance(v, int) and not isinstance(v, bool) for v in st) and 1 <= st[0] <= st[1] <= 40):
+        no(f'storeys: {T.get("storeys")!r}: [fewest, most] whole storeys from 1 to 40, or one number when all have as many')
+    R = T.get('roof')
+    if not isinstance(R, dict) or 'shape' not in R: no('roof: { shape, pitch_deg, overhang_m, ridge }, shape at least')
+    bad = sorted(set(R) - {'shape', 'pitch_deg', 'overhang_m', 'ridge'})
+    if bad: no(f'roof: no key {", ".join(bad)} (shape, pitch_deg, overhang_m, ridge)')
+    s = R['shape']
+    if s in ROOF_LATER: no(f'roof.shape {s}: not drawn yet (it needs a round primitive the engine does not have yet)')
+    if s not in ROOF_SHAPES: no(f'roof.shape {s!r}: one of {", ".join(ROOF_SHAPES)} (OpenStreetMap roof:shape)')
+    pitch = num('roof.pitch_deg', R.get('pitch_deg', ROOF_SHAPES[s]), 0, 80)
+    if s == 'flat' and pitch: no('roof.pitch_deg: a flat roof has no pitch')
+    if s in ('mansard', 'gambrel') and not 45 <= pitch <= 80: no(f'roof.pitch_deg {pitch:g}: a {s} roof gives its steep lower slope, 45 to 80')
+    if s not in ('flat', 'mansard', 'gambrel') and not 5 <= pitch <= 60: no(f'roof.pitch_deg {pitch:g}: 5 to 60 for a {s} roof')
+    roof = {'shape': s, 'pitch_deg': pitch, 'overhang_m': num('roof.overhang_m', R.get('overhang_m', 0 if s == 'flat' else .5), 0, 3)}
+    if f in ('detached', 'row'):
+        roof['ridge'] = R.get('ridge', 'along')
+        if roof['ridge'] not in ('along', 'across'): no(f'roof.ridge: {roof["ridge"]!r}: along (the ridge along the street) or across (the gable to the street)')
+    elif 'ridge' in R: no(f'roof.ridge: a {f} house runs each ridge along its wing; only a detached or a row house turns it')
+    out = {'where': str(T['where']), 'when': str(T['when']), 'basis': str(T['basis']), 'form': f, 'storeys': list(st),
+           'storey_m': num('storey_m', T.get('storey_m', 3.2), 2.2, 8), 'roof': roof}
+    if f in ('court', 'compound'):
+        C_ = T.get('court', {})
+        if not isinstance(C_, dict) or set(C_) - {'frac'}: no('court: { frac } (the court\'s share of the lot, .05 to .7)')
+        out['court'] = {'frac': num('court.frac', C_.get('frac', .3), .05, .7)}
+    elif 'court' in T: no(f'court: a {f} house has no court (form court or compound)')
+    if f == 'court' and 'yard_wall_m' in T: no('yard_wall_m: a court house is its own wall')
+    if f != 'court': out['yard_wall_m'] = num('yard_wall_m', T.get('yard_wall_m', 2.4 if f == 'compound' else 0), 0, 8)
+    out['ground'] = T.get('ground', 'closed')
+    if out['ground'] not in ('closed', 'shops', 'arcade'): no(f'ground: {out["ground"]!r}: closed, shops (open shop fronts on the street) or arcade (posts under the upper storeys)')
+    if out['ground'] == 'arcade':
+        if st[0] < 2: no('ground: arcade stands the upper storeys over the walk, so storeys from 2 (a one-storey house with a covered walk before it writes portico_m)')
+        if T.get('portico_m'): no('ground: arcade and portico_m: one walk or the other')
+        out['arcade_m'] = num('arcade_m', T.get('arcade_m', 3.0), 1.5, 8)
+    elif 'arcade_m' in T: no('arcade_m: only with ground: arcade')
+    out['portico_m'] = num('portico_m', T.get('portico_m', 0), 0, 8); out['podium_m'] = num('podium_m', T.get('podium_m', 0), 0, 6)
+    return out
+
+
+def house_types(spec, shared=None, label='city'):
+    """the house types a period city can build, name -> complete type (house_type): each it declares (city.types) or the city
+    declares for all its periods (city.yaml types), and each its fabric names, looked up in that order and then in the shared
+    library, types/<name>.yaml. A type written in the city may start `from:` another (declared or in the library) and change
+    some keys; it still says its own where, when and basis. A fabric typ neither built in nor found, or the fabric of a
+    declared type giving h_m (its height is its storeys), stops compile. Call it after with_trace: traced blocks name types."""
+    own, common = spec.get('types') or {}, shared or {}
+    for src, d in ((f'{label}: city.types', own), ('city.yaml: types', common)):
+        if not isinstance(d, dict): raise SystemExit(f'citygen: {src}: a mapping, type name -> type')
+    out = {}
+    def get(name, via=()):
+        if name in out: return out[name]
+        if name in BUILTIN_TYPES: raise SystemExit(f'citygen: {label}: house type {name!r} is a built-in name ({", ".join(BUILTIN_TYPES)}): give the type a name of its own')
+        if name in via: raise SystemExit(f'citygen: {label}: house types {" -> ".join(via + (name,))}: a type made from itself; give it a name of its own')
+        if name in own: T, src = own[name], f'{label}: city.types.{name}'
+        elif name in common: T, src = common[name], f'city.yaml: types.{name}'
+        else:
+            p = os.path.join(TYPES_DIR, f'{name}.yaml')
+            if not os.path.isfile(p): raise SystemExit(f'citygen: {label}: house type {name!r} is not built in ({", ".join(BUILTIN_TYPES)}), not declared (city.types, city.yaml types) and not in the shared library (types/{name}.yaml)')
+            import yaml
+            T, src = yaml.safe_load(open(p, encoding='utf-8')), f'types/{name}.yaml'
+            if isinstance(T, dict) and 'from' in T: raise SystemExit(f'citygen: {src}: from: a library type is written out whole')
+        if isinstance(T, dict) and 'from' in T:   # the base's keys, then this type's (roof and court key by key); keys the new form does not use go
+            miss = [k for k in ('where', 'when', 'basis') if not str(T.get(k) or '').strip()]
+            if miss: raise SystemExit(f'citygen: {src}: {", ".join(miss)} missing: a type made from another says its own where, when and basis (what it changes, and from which sources)')
+            b = get(T['from'], via + (name,)); f = T.get('form', b['form']); g_ = T.get('ground', b['ground'])
+            drop = {k for k, out_ in (('court', f not in ('court', 'compound')), ('yard_wall_m', f == 'court'), ('arcade_m', g_ != 'arcade')) if out_}
+            M = {k: v for k, v in b.items() if k not in drop}; M.update({k: v for k, v in T.items() if k != 'from'})
+            for k in ('roof', 'court'):
+                if isinstance(b.get(k), dict) and isinstance(T.get(k), dict): M[k] = {**b[k], **T[k]}
+            if f not in ('detached', 'row') and 'ridge' not in (T.get('roof') or {}): M['roof'] = {k: v for k, v in M['roof'].items() if k != 'ridge'}
+            if 'shape' in (T.get('roof') or {}) and 'pitch_deg' not in T['roof']: M['roof'].pop('pitch_deg', None)   # (a new shape: its own usual pitch)
+            T = M
+        out[name] = house_type(T, src); return out[name]
+    for name in list(own) + list(common): get(name)   # every declared type is checked, built or not
+    for fb in spec.get('fabric', []):
+        typ = fb.get('typ', 'courtyard')
+        if typ in BUILTIN_TYPES: continue
+        get(typ)
+        if 'h_m' in fb: raise SystemExit(f'citygen: {label}: a fabric of type {typ} gives h_m: a declared type is as tall as its storeys (storeys x storey_m); drop h_m')
+    return out
+
+
 def _lines(geom):
     if geom.is_empty: return []
     if isinstance(geom, LineString): return [geom]
@@ -956,10 +1191,15 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
     trace: GeoJSON drawn over an old map or a site plan (traced; the callers join it: compile, terrain.py);
     walls: [{ring|osm, h_m, t_m, gates: [[lon,lat],...], towers, style: tower|hip|none, moat}];
-    streets: [{pts, w_m, shops}]; lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}];
+    streets: [{pts, w_m, shops}]; lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
+    (typ: a built-in house or one of `types`, complete: house_types);
     landmarks: [{kind, lon, lat, ...}]; trees: [{pts, step_m, h_m, r_m, both, offset_m}]"""
     ox, oy = F.to_utm.transform(*spec['origin'])
     B = Builder(F, ground_m, exag, spec.get('exaggeration', 2.0), (ox, oy), seed=spec.get('seed', 7), detail=spec.get('detail', 'medium'))
+    B.types = spec.get('types') or {}   # complete (house_types, which the caller runs)
+    for fb in spec.get('fabric', []):   # (a typ that is neither would leave its lots empty without a word)
+        if fb.get('typ', 'courtyard') not in BUILTIN_TYPES and fb.get('typ') not in B.types:
+            raise SystemExit(f'citygen: fabric typ {fb.get("typ")!r} is not a house type: built in ({", ".join(BUILTIN_TYPES)}) or declared (docs/MODEL.md "House types")')
     wall_polys = []
     for wi, w in enumerate(spec.get('walls', [])):
         B.group(('walls', wi))
