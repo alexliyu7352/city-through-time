@@ -281,7 +281,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       float pk = eraShade(vData.y);
       vec3 ecol = mix(uEraCol0, uEraCol, inW);   // a later node's colour ring repaints a city still standing
       float ink = mix(uEraInk0, uEraInk, inW);
-      c = mix(c, ecol * pk, uEraA * (1. - ink));
+      c = mix(c, ecol * pk * .45, uEraA * (1. - ink));   // (at full strength it washed the lit faces past white, roofs and walls one pale tone)
       float fl = vUp * (1. - vUp) * 4.;
       c += ecol * fl * .9 * uEraA + vec3(.4) * fl * uEraA;
       c *= 1. - .9 * uEraBurn;   // charred (the flames are added as emission, see eraFire)
@@ -363,7 +363,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <fog_vertex>', `#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz; vWN = normalize(mat3(modelMatrix) * objectNormal);`);
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>\n${HEAD}`)
-        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(diffuseColor.rgb, cWater, wm);${kind === 0 ? ' if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * uEraBurn); if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); diffuseColor.rgb *= mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)) * (1. - .84 * ik_); } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
+        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(diffuseColor.rgb, cWater, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * uEraBurn); if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
+        // a period city's colour is in the light that falls on it, not in its plaster: the lamps' direct light (key, fill, rim) takes
+        // the era's colour, the room's soft light stays neutral, so its walls are warm where lit and grey in the shade
+        .replace('#include <aomap_fragment>', `#include <aomap_fragment>${kind === 0 ? '\n reflectedLight.directDiffuse *= eraKeyT;' : ''}`)
         .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, .32, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .55;' : ''}`)
         .replace('#include <opaque_fragment>', `outgoingLight += projLight(${kind}.0, wm) * mix(diffuseColor.rgb, vec3(1.), ${kind === 1 ? 'uPlateEmit' : '.1'}) * 1.35;
  ${kind === 1 ? 'outgoingLight += uShadeC * uShadeK * max(0., dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01) * (1. - wm) * step(.5, normalize(vWN).y);   // terrain.shade: slopes turned to a fixed low sun (the plate top, not its sides)' : ''}
@@ -372,7 +375,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    float iw2 = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); float ik2 = mix(uEraInk0, uEraInk, iw2); vec3 ec2 = mix(uEraCol0, uEraCol, iw2); float p2 = vData.y;
    float gold = p2 < .5 ? .05 : p2 < 3.5 ? .7 : p2 < 6.5 ? 0. : p2 < 7.5 ? .35 : p2 < 8.5 ? .12 : p2 < 9.5 ? .8 : .25;
    outgoingLight += ec2 * gold * ik2 * (.35 + .65 * max(normalize(vWN).y, 0.)) * .55 * uProj * (1. - uEraBurn); }
- if (vData.w > 2.5) outgoingLight += diffuseColor.rgb * uEraCol * uEraGlow * .42 * uProj * (1. - uEraBurn) * vUp;   // the period city glows a little: it is the subject
+ if (vData.w > 2.5) outgoingLight += diffuseColor.rgb * uEraCol * uEraGlow * .2 * uProj * (1. - uEraBurn) * vUp * keyK(normalize(vWN));   // the period city glows a little (it is the subject), more on the faces the key light finds
  if (uNight > 0. && vData.w > -.5 && vData.w < .5) {   // night: lit windows on the facades of today's buildings, roofs dark
    vec3 Nn = normalize(vWN); float fl = (vWP.y - vBase) / (uScaleH * 3.2);           // floors of 3.2 m
    if (abs(Nn.y) < .5 && fl > .6) {
