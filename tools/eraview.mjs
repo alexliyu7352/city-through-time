@@ -6,7 +6,7 @@
 // rows top to bottom: close-up at 12 degrees up, close-up at 35 degrees up, the whole city at 30 degrees; left to right the camera's
 // bearing 0, 45 .. 315, counted as the film's camera keys count it (0: the camera south of the city, 90 east, 180 north, 270
 // west). The stills are kept in <era>/.
-// usage: node tools/eraview.mjs <city_slug> [--eras a,b] [--look film|check] [--d .045] [--quality low]
+// usage: node tools/eraview.mjs <city_slug> [--eras a,b] [--look film|check] [--d .045 (the close-up's distance; nearer for a small place)] [--quality low]
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
@@ -30,7 +30,9 @@ const root = buildDir(city, 'review', 'eraview');
 for (const e of eras) {
   const dir = path.join(root, e.id); fs.mkdirSync(dir, { recursive: true });
   for (const look of looks) {
-    const rows = [[`${e.id}:dense`, 12, D, AZ], [`${e.id}:dense`, 35, D, AZ], [e.id, 30, Math.min(1.2, Math.max(.04, e.r * 2.2)), [0, 90, 180, 270]]];
+    // the close-up nearer for a small place (a village a few hundred metres across); the whole city however large it is
+    const dc = Math.min(D, Math.max(.012, e.r * .8)), dw = Math.min(2.8, Math.max(.04, e.r * 2.2));
+    const rows = [[`${e.id}:dense`, 12, dc, AZ], [`${e.id}:dense`, 35, dc, AZ], [e.id, 30, dw, [0, 90, 180, 270]]];
     const files = [];
     for (const [target, el, d, azs] of rows) for (const az of azs) {
       await page.evaluate(o => window.VIEW(o), { eras: [e.id], look, today: false, target, az, el, d });

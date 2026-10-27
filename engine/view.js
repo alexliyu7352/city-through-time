@@ -5,7 +5,7 @@
 // of field, the key light beside the camera as in the film) and 檢查 (check: plain white in white light, everything sharp, the key
 // light fixed in the room, so a face is seen to turn from lit to shade as the camera goes round: a face drawn inside out shows at once).
 // URL: &eras=qin,han (ticked; default the first), &look=check, &today, &bare (no panel), &quality=low (faster, no shadows of the
-// period cities). window.VIEW({ eras, look, today, target: <era id> | [x, y, z], az, el, d }) sets it from a script and draws
+// period cities). window.VIEW({ eras, look, today, target: <era id> | [x, z] (on the ground) | [x, y, z], az, el, d }) sets it from a script and draws
 // (tools/eraview.mjs); window.VIEWINFO() lists the period cities with their centres and sizes; a target 'qin:dense' is the densest
 // 200 m square of that city, where its houses stand closest.
 import * as THREE from 'three';
@@ -37,7 +37,7 @@ export function startView(X) {
   const where = () => { const v = camera.position.clone().sub(controls.target); sph.setFromVector3(v); return { az: THREE.MathUtils.radToDeg(Math.atan2(v.x, v.z)), el: 90 - THREE.MathUtils.radToDeg(sph.phi), d: sph.radius }; };
   const place = (az, el, d) => { const a = THREE.MathUtils.degToRad(az), e = THREE.MathUtils.degToRad(Math.max(1, Math.min(88, el))), t = controls.target;
     camera.position.set(t.x + d * Math.sin(a) * Math.cos(e), t.y + d * Math.sin(e), t.z + d * Math.cos(a) * Math.cos(e)); controls.update(); };
-  const goTo = key => { const c = info(key); controls.target.set(c.x, c.y, c.z); key.endsWith(':dense') ? place(305, 20, .045) : place(305, 30, Math.min(1.2, Math.max(.04, c.r * 2.2))); };   // the whole city, or a close-up of its houses
+  const goTo = key => { const c = info(key); controls.target.set(c.x, c.y, c.z); key.endsWith(':dense') ? place(305, 20, .045) : place(305, 30, Math.min(2.8, Math.max(.04, c.r * 2.2))); };   // the whole city, or a close-up of its houses
 
   // the scene for the period cities ticked, in the look chosen
   function apply() {
@@ -130,7 +130,7 @@ export function startView(X) {
   window.VIEWINFO = () => ERAS.map(e => ({ id: e.id, label: label(e.id), ...info(e.id), dense: [info(e.id + ':dense').x, info(e.id + ':dense').z] }));
   window.VIEW = async (o = {}) => {
     if (o.eras) st.on = new Set(o.eras.map(k => k.split(':')[0])); if (o.look) st.look = o.look; if (o.today != null) st.today = !!o.today;
-    if (o.target) { const c = typeof o.target === 'string' ? info(o.target) : { x: o.target[0], y: o.target[1], z: o.target[2] }; controls.target.set(c.x, c.y, c.z); }
+    if (o.target) { const t = o.target, c = typeof t === 'string' ? info(t) : t.length === 2 ? { x: t[0], y: S.ground(t[0], t[1]), z: t[1] } : { x: t[0], y: t[1], z: t[2] }; controls.target.set(c.x, c.y, c.z); }
     const w = where(); place(o.az ?? w.az, o.el ?? w.el, o.d ?? w.d);
     if (window.__viewSync) window.__viewSync();
     draw(); await new Promise(r => requestAnimationFrame(r));
