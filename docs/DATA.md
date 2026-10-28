@@ -56,7 +56,8 @@ The model covers only the modern main urban area centred on the historic core, w
 - **The extent must enclose both ends of the story:** if a place the story needs lies just outside the frame, widen the frame that way; for mountains and water far outside the frame use `terrain.context` (MODEL.md "Ground and terrain") and do not enlarge the plate.
 - Xianyang: a 25 km frame was mostly farmland and 30,000 buildings could not fill it (a density that fills it is about 70,000 buildings in 319 km²), so it was tightened to the historic core; the front hall of Epang Palace is 700 m outside the frame, and
   for "from Epang cross the Wei, joining Xianyang" the southern limit was widened to 34.245, ending at 31 × 22 km.
-- **After changing `box`, rerun the whole chain**, one job at a time: `osm.py` and, for Overture, `overture_ghsl.py fetch` (new area) → `terrain.py` → `satellite.py` → `prep.py` → compile. Always write positions in the city settings as longitude/latitude
+- **After changing `box`, rerun the whole chain**, one job at a time: `osm.py` and, for Overture, `overture_ghsl.py fetch` (new area) → `terrain.py` → `satellite.py` → `prep.py` → compile. The same after a pipeline update changes the area every download covers (`layout.area`): a city prepared before keeps the old area's files, which are never read again, so `terrain.py` and `prep.py`
+  stop on the missing new ones until the chain has run. Always write positions in the city settings as longitude/latitude
   (`ll:`, `lon`/`lat`), never as model coordinates (`v:`, `x`/`z`): when the plate centre moves, all model coordinates are wrong. Change in the same pass every place on screen that states the plate size ("Numbers on screen" in SCRIPT.md).
 
 ## Pictures and footage
