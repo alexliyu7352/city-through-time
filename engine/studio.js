@@ -68,7 +68,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uPlate: { value: new THREE.Vector2(PW, PD) }, uWater: { value: null }, uL1: { value: null }, uL2: { value: null }, uL3: { value: null },
     uBase: { value: 0 },                                          // the plate's faint grid under the projector (0..1)
     uEpA: { value: arr(EMAX, 0) }, uEpY0: { value: arr(EMAX, 1e9) }, uEpY1: { value: arr(EMAX, -1e9) }, uEpB: { value: arr(EMAX, 0) },
-    uEpC: { value: Array.from({ length: EMAX }, () => new THREE.Vector2(0, 0)) }, uEpR: { value: arr(EMAX, 9) }, uEpRim: { value: arr(EMAX, 1) },
+    uEpC: { value: Array.from({ length: EMAX }, () => new THREE.Vector2(0, 0)) }, uEpR: { value: arr(EMAX, 9) }, uEpRim: { value: arr(EMAX, 1) }, uEpW: { value: arr(EMAX, 1) },
     uD0: { value: null }, uD1: { value: null }, uD2: { value: null }, uD3: { value: null },
     uDA: { value: [0, 0, 0, 0] }, uDG: { value: [1, 1, 1, 1] }, uDrect: { value: Array.from({ length: 4 }, () => new THREE.Vector4(0, 0, 1, 1)) },
     uPhoto: { value: null }, uPhotoA: { value: 0 }, uPhotoSweep: { value: 2 }, uPhotoSweep0: { value: -1 },
@@ -102,7 +102,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   varying float vGrowT;
   uniform float uProj, uNow, uYear, uBase, uGrowOn, uGrowDim, uHgtF, uHgtOn, uHgtBand, uHgtMax, uPickOn, uPickR, uNB, uPulse, uRingS, uRingN, uRingA;
   uniform vec2 uRingC;
-  uniform float uEpA[${EMAX}], uEpY0[${EMAX}], uEpY1[${EMAX}], uEpB[${EMAX}], uEpR[${EMAX}], uEpRim[${EMAX}], uGT[${NMAX}], uGS[${NMAX}], uBLo[${NMAX}];
+  uniform float uEpA[${EMAX}], uEpY0[${EMAX}], uEpY1[${EMAX}], uEpB[${EMAX}], uEpR[${EMAX}], uEpRim[${EMAX}], uEpW[${EMAX}], uGT[${NMAX}], uGS[${NMAX}], uBLo[${NMAX}];
   uniform vec2 uEpC[${EMAX}];
   uniform sampler2D uD0, uD1, uD2, uD3, uPhoto; uniform float uDA[4], uDG[4], uPhotoA, uPhotoSweep, uPhotoSweep0; uniform vec4 uDrect[4];
   // the model-to-photo sweep: the photo covers the plate (and the buildings) between two lines that cross from west to east
@@ -232,7 +232,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       float rv = smoothstep(.08, -.08, length(vWP.xz - uEpC[i]) - uEpR[i]);              // a wash spreading from the epoch's centre (soft rim)
       float m = kind < 1.5 ? layerAt(uv, i) : 0.;
       float rim = (abs(dFdx(m)) + abs(dFdy(m))) * 14. * uEpRim[i];                          // a glowing edge where the mask ends
-      if (kind > .5) m *= .5;                                                                // the plate takes the wash quietly; the things on it carry the colour
+      if (kind > .5) m *= .5 * uEpW[i];                                                      // the plate takes the wash quietly, a large area more quietly still (compile: wash); the things on it carry the colour
       else if (vData.w > 1.5) m *= 1.25;                                                     // schematic props a little brighter
       else if (uEpB[i] < .5) m = 0.;                                                         // buildings inside the mask only when the epoch asks for it
       c = mix(c, ec * 1.05, a * m * rv) + ec * clamp(rim, 0., 1.) * a * rv * 1.3;

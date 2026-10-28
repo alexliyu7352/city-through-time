@@ -995,8 +995,13 @@ for i, node in enumerate(FM['nodes']):
         off = T(e.get('off_at')) if 'off_at' in e else (None if e.get('persist') else T('end'))
         if 'until' in e: off = next(x for x in FM['nodes'] if x['id'] == e['until'])  # resolved below
         on_ = T(e.get('at', 0)); reach_ = e.get('reach', 0.7)
-        if e.get('reach') == 'fit' and pts_all:   # (an area: the wash reaches just past its own outline)
-            reach_ = round(max(math.hypot(F.model_lonlat(*q)[0] - cx, F.model_lonlat(*q)[1] - cz) for q in pts_all) * 1.08 + .01, 4)
+        if pts_all:   # an area: the wash reaches just past its own outline ('fit'), never less (it stopped short in a soft circle across the area, an edge that is nothing)
+            fit_ = round(max(math.hypot(F.model_lonlat(*q)[0] - cx, F.model_lonlat(*q)[1] - cz) for q in pts_all) + .09, 4)   # (the engine's wash fades over .08 inside its reach)
+            reach_ = fit_ if reach_ == 'fit' else max(reach_, fit_)
+        # the plate's share of the wash falls as the area grows: a district-sized fill on the dark plate covered half the frame
+        # in one colour, and a warm colour thinned on the dark plate turns to mud; its outline and the buildings inside carry it
+        # (full up to 1 km2, half at 2 km2, a tenth from 10 km2)
+        plate_km2 = (unary_union(parts_).intersection(_Pg([(-F.size[0] / 2, -F.size[1] / 2), (F.size[0] / 2, -F.size[1] / 2), (F.size[0] / 2, F.size[1] / 2), (-F.size[0] / 2, F.size[1] / 2)])).area * 100) if parts_ else 0.0
         # eight mask channels for the whole film: a mask shares a channel with masks that are over before it starts and lie
         # outside the reach of its wash (its wash would light them too), else takes a new one
         shape_ = unary_union(parts_).buffer(.01) if parts_ else None
@@ -1020,6 +1025,7 @@ for i, node in enumerate(FM['nodes']):
               'yr': e.get('yr'), 'bld': 0 if e.get('buildings_inside') is False else 1, 'gain': e.get('gain', 1.0), 'rim': e.get('rim', 1.0), 'col': e.get('col')}
         if 'dimAt' in e: ep['dimAt'] = T(e['dimAt']); ep['dimTo'] = e.get('dimTo', .4)
         if cx is not None: ep['centre'] = [round(cx, 5), round(cz, 5)]; ep['reach'] = reach_
+        if plate_km2 > 1: ep['wash'] = round(max(.1, 1 / plate_km2), 3)
         if e.get('flash'): ep['flash'] = [T(v) for v in e['flash']]
         epochs.append(ep)
     for L in node.get('lines', []):

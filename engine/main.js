@@ -219,7 +219,7 @@ function epochAlpha(t, e) {
   return a;
 }
 function setLayers(t) {
-  for (let i = 0; i < EMAX; i++) { U.uEpA.value[i] = 0; U.uEpY0.value[i] = 1e9; U.uEpY1.value[i] = -1e9; U.uEpB.value[i] = 0; U.uEpR.value[i] = 9; }
+  for (let i = 0; i < EMAX; i++) { U.uEpA.value[i] = 0; U.uEpY0.value[i] = 1e9; U.uEpY1.value[i] = -1e9; U.uEpB.value[i] = 0; U.uEpR.value[i] = 9; U.uEpW.value[i] = 1; }
   for (const e of FILM.epochs || []) {   // (masks that share a channel never overlap in time: the one showing sets it)
     const fl = (e.flash || []).reduce((m, tf) => Math.max(m, Math.exp(-(((t - tf) / .45) ** 2))), 0);   // an area flares as it is named
     const a = epochAlpha(t, e) * (e.gain ?? 1) * (e.dimAt != null && t > e.dimAt ? lerp(1, e.dimTo ?? .5, ss(seg(t, e.dimAt, e.dimAt + .8))) : 1) * (1 + 1.4 * fl);
@@ -228,7 +228,7 @@ function setLayers(t) {
     if (e.yr) { U.uEpY0.value[e.i] = e.yr[0]; U.uEpY1.value[e.i] = e.yr[1]; }
     U.uEpB.value[e.i] = e.bld ? 1 : 0;
     if (e.centre) { U.uEpC.value[e.i].set(e.centre[0], e.centre[1]); U.uEpR.value[e.i] = lerp(0, e.reach || 1, eo(seg(t, e.on, e.on + (e.fade ?? 1.2) * 1.6))); }
-    U.uEpRim.value[e.i] = e.rim ?? 1;
+    U.uEpRim.value[e.i] = e.rim ?? 1; U.uEpW.value[e.i] = e.wash ?? 1;
     if (e.col) U.cEp.value[e.i].set(e.col);
   }
   for (const d of FILM.decals || []) { U.uDA.value[d.i] = epochAlpha(t, d) * (d.gain ?? 1); U.uDG.value[d.i] = d.glow ?? 1; }
