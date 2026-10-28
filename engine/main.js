@@ -117,6 +117,7 @@ if (FILM.shade) { const a = THREE.MathUtils.degToRad(FILM.shade.az), e = THREE.M
   S.U.uShadeL.value.set(Math.sin(a) * Math.cos(e), Math.sin(e), -Math.cos(a) * Math.cos(e)); S.U.uShadeK.value = FILM.shade.k; S.U.uShadeC.value.set(FILM.shade.col || (FILM.palette || {}).plate || '#3a4757'); }
 const TK = FILM.tally && FILM.tally.keys && FILM.tally.keys.length ? track(FILM.tally.keys) : null;
 for (const d of FILM.decals || []) U.uDrect.value[d.i].set(d.uv[0], d.uv[1], d.uv[2], d.uv[3]);
+U.uNightDeep.value = (FILM.night_look && FILM.night_look.deep) || 0;   // film.night_look.deep: the night city (docs/STAGING.md)
 // real footage: one <video> per clip, seeked deterministically to the frame's time
 const VID = {};
 for (const f of FILM.footage || []) {

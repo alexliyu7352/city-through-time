@@ -1534,6 +1534,11 @@ elif ctx_keys: print('warning: context keys but no build/data/context.json (run 
 # az from north, clockwise (default 325, from the north-west; the room light turns with the camera, this sun stays put), el above the
 # horizon, k its strength (a slope facing it lit up to .5 k in the plate's hue, one facing away darker, to .65 at k 1), col its hue
 # (the plate's colour unless written)
+# film.night_look: { deep: 0..1 }: the night city (engine: at night today's walls go dark, fewer windows burn brighter, the plate dims)
+NIGHT_LOOK = None; _nl = FM.get('night_look')
+if _nl is not None:
+    if not isinstance(_nl, dict) or set(_nl) - {'deep'} or not 0 <= float(_nl.get('deep', 1)) <= 1: raise SystemExit(f'compile: film.night_look: {{ deep: 0..1 }} (got {_nl})')
+    NIGHT_LOOK = {'deep': float(_nl.get('deep', 1))}
 SHADE_OUT = None; _sh = (C.get('terrain') or {}).get('shade')
 if _sh is not None:
     if not isinstance(_sh, dict) or set(_sh) - {'az', 'el', 'k', 'col'}: raise SystemExit(f'compile: terrain.shade: {{ az, el, k, col }} (got {_sh})')
@@ -1703,6 +1708,7 @@ film = {
     'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
+    'night_look': NIGHT_LOOK,
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),
 }

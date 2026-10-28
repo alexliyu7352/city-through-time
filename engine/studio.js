@@ -89,6 +89,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uEraA: { value: 0 }, uEraBurn: { value: 0 }, uPhotoK: { value: 1 }, uEraCol: { value: lin('#ffffff') }, uEraFab: { value: .9 },
     cWater: { value: lin(PAL.water || '#1a2129') }, uPlateEmit: { value: PAL.plateEmit ?? .1 }, uNight: { value: 0 }, uLit: { value: .35 }, uScaleH: { value: .0003 }, uScaleM: { value: .0001 }, uFootM: { value: 4 }, uHide: { value: null }, uHide2: { value: null }, uHideCol: { value: Array.from({ length: 8 }, () => new THREE.Color(1, 1, 1)) }, uNodeCol: { value: new THREE.Color(1, 1, 1) }, uNodeA: { value: 0 }, uPlateV: { value: new THREE.Vector2(PW, PD) },
     uShadeL: { value: new THREE.Vector3(0, 1, 0) }, uShadeK: { value: 0 }, uShadeC: { value: lin('#3a4757') },   // terrain.shade (main.js): its hue, the plate's own unless col is written
+    uNightDeep: { value: 0 },   // film.night_look.deep: at night today's buildings go dark, a few windows burn brighter (the night city)
   };
 
   // the film's year line from the modern growth on (compile: grow.yl): when the counter first reaches a year. Today's buildings
@@ -121,7 +122,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform vec3 cEp[${EMAX}], cBand[${NMAX}], cH[4], cPick, cBlack;
   uniform vec2 uPlate, uPickPos; uniform vec3 uProjPos, uKeyDir; uniform sampler2D uWater, uL1, uL2, uL3;
   uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uFootM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[8];
-  uniform vec3 uShadeL, uShadeC; uniform float uShadeK;
+  uniform vec3 uShadeL, uShadeC; uniform float uShadeK, uNightDeep;
   uniform sampler2D uHide, uHide2;
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
   // vData: x = year (0 unknown, negative BCE), y = height m, z = rank 0..1 (switch-on order), w = kind (0 building, 1 mound/earthwork, -1 plate)
@@ -388,17 +389,19 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
  if (vData.w > 2.5) outgoingLight += diffuseColor.rgb * uEraCol * uEraGlow * .2 * uProj * (1. - uEraBurn) * vUp * keyK(normalize(vWN));   // the period city glows a little (it is the subject), more on the faces the key light finds
  if (uNight > 0. && vData.w > -.5 && vData.w < .5) {   // night: lit windows on the facades of today's buildings, roofs dark
    vec3 Nn = normalize(vWN); float fl = (vWP.y - vBase) / (uScaleH * 3.2);           // floors of 3.2 m
+   float nd_ = uNightDeep * uNight; if (abs(Nn.y) < .5) outgoingLight *= 1. - .9 * nd_;   // the deep night: the walls go dark, the lit windows carry the city
    if (abs(Nn.y) < .5 && fl > .6) {
      vec2 tg = normalize(vec2(-Nn.z, Nn.x)); float u = dot(vWP.xz, tg) / (uScaleH / 3. * 3.6);  // bays of 3.6 m (plan scale = height scale / exaggeration)
      vec2 cell = vec2(floor(u), floor(fl)); float h = fract(sin(dot(cell + vData.z * 91.7, vec2(12.9898, 78.233))) * 43758.5453);
      vec2 f = fract(vec2(u, fl)); float win = step(.18, f.x) * step(f.x, .82) * step(.25, f.y) * step(f.y, .8);
-     float fw = max(fwidth(u), fwidth(fl)); float lit = h < uLit ? 1. : 0.;
-     float e = mix(win * lit, uLit * .3, smoothstep(.35, .8, fw));   // far away: an average glow instead of aliasing
+     float fw = max(fwidth(u), fwidth(fl)); float lit = h < uLit * (1. - .37 * nd_) ? 1. : 0.;
+     float e = mix(win * lit, uLit * .3 * (1. - .75 * nd_), smoothstep(.35, .8, fw));   // far away: an average glow instead of aliasing (fewer windows lit in the deep night)
      vec3 wc = mix(vec3(1., .78, .48), vec3(.75, .86, 1.), step(.7, fract(h * 7.3)));
-     outgoingLight += wc * e * 1.6 * uNight;
+     outgoingLight += wc * e * (1.6 + 2.6 * nd_) * uNight;
    }
-   outgoingLight *= mix(1., .6, uNight * step(.5, Nn.y));   // (roofs to .35 turned the wide shots of the modern half grey: a roof is most of what a wide shot sees)
+   outgoingLight *= mix(1., .6, uNight * step(.5, Nn.y)) * (1. - .85 * nd_ * step(.5, Nn.y));   // (roofs to .35 turned the wide shots of the modern half grey: a roof is most of what a wide shot sees)
  }` : ''}
+ ${kind === 1 ? 'outgoingLight *= 1. - .45 * uNightDeep * uNight;' : ''}
 #include <opaque_fragment>`);
     };
     m.customProgramCacheKey = () => 'proj' + kind;

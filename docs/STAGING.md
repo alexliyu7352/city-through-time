@@ -158,7 +158,7 @@ CREDITS); compile does not compare them.
 
 ## Minimap, satellite and ending
 
-The locator minimap and the geographic labels (`film.labels`) appear automatically; the period cities' extents are drawn on the minimap. The modern section can write `night: 1` for night-time window lights and light flowing along the road network.
+The locator minimap and the geographic labels (`film.labels`) appear automatically; the period cities' extents are drawn on the minimap. `film.night_look: { deep: 1 }` turns the night into a night city: today's walls and roofs go dark and fewer windows burn brighter, warm and cool, so a telephoto look across the river at night reads as a sea of lights (0: the white city with lit windows). The modern section can write `night: 1` for night-time window lights and light flowing along the road network.
 Satellite imagery is used only in the final overview of the whole plate, made into a scan transition from white model to imagery with `sweep: true`,
 and `back_at` sweeps back to the white model (the ending's footprints and light lines are drawn on the white model, so that the node colours can be seen);
 `pipeline/imagery_tiles.py` can fetch Esri level-15 imagery (about 4 m, `film.satellite_source: hr`), which is not open data and may be used only to test the pipeline on the local machine;

@@ -37,6 +37,7 @@ film:
   # rings_motif: { centre: [<lon>, <lat>], spacing_m: 380, from: -4000, gain: 0.3 }   # tree-ring light rings, one per century: present from the lights coming on to the ending; in the ancient section they look like noise, so not recommended (Xianyang does not use it)
   drift: 1.0                                  # camera micro-drift multiplier
   timing: { ring_view: 2.8, ring_out: 1.6, min_stage: 4.0, grow: 1.6, settle_need: 2.0, ring_m: 1000, ring_q: 0.35, scan_w: 0.12 }   # parameters of staging rules 9a/9b (ring speed is computed by the picture)
+  night_look: { deep: 1 }                     # the night city: at night today's walls go dark and fewer windows burn brighter (0: white city, lit windows)
   era_look: { dim: 0.8, glow: 1.0, edge: 1.0, line: 1.0, light_m: 45, halo_m: 14, edge_m: 150 }   # once a period city has settled: today's city dims (0.8: to a fifth of its light; at 0.5 the dense, tall city of today outshone a later period's town); a thin neon line at the outer edge lights the buildings within light_m
   copy: { max_zh: 22, gap_s: 8, long_gap_s: 15, dense_share: 0.9, keep: ['十五五'] }   # thresholds of the copy check (pipeline/copylint.py, may be omitted to use the defaults); keep: proper nouns and quotations whose numbers are written as in the original (example: Xianyang's 「十五五」 ("15th Five-Year Plan"))
   fonts:   # one font per job, by family name and weight; looked up in fonts/ (uv run python -I pipeline/fonts.py list .; add one: fonts.py add . "<Family>")
