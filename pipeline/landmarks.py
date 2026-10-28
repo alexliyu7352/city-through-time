@@ -76,7 +76,7 @@ FIELDS = {
             'shape': ('enum', SHAPES, 'hemisphere', 'its profile: hemisphere; saucer (lower than half, Hagia Sophia); pointed (Florence, Timurid); onion (Russian, wider than its drum, a point on top); bulbous (Mughal); helmet; bell (a stupa, a chedi); cone'),
             'rise_m': ('num', (.3, 250), None, 'its height from where it springs (by shape when absent: hemisphere half its width, saucer a quarter, pointed .74, onion one width, bulbous .9, helmet .7, bell one, cone .8)'),
             'd_m': ('num', (1, 300), None, 'its own width (an onion or a bulbous dome is wider than its drum: the drum\'s width over .7 or .8 when absent; others the drum\'s)'),
-            'true': ('bool', None, True, 'its curve kept true while the walls are exaggerated (stretched, a dome reads as an egg)'),
+            'keep_curve': ('bool', None, True, 'its curve kept true while the walls are exaggerated (stretched, a dome reads as an egg)'),
         }, {}, 'the dome'),
         'lantern': ('obj', {'d_m': ('num', (.5, 40), REQ, 'its width'), 'h_m': ('num', (.5, 60), REQ, 'its height'), 'top': ('enum', ('dome', 'cone', 'onion', 'point'), 'dome', 'its cap')}, None, 'a small turret on top'),
         'finial_m': ('num', (0, 40), 0.0, 'a mast on top (a cross, a crescent, a kalasha)'),
@@ -154,7 +154,7 @@ FIELDS = {
         'sweep_deg': ('num', (10, 360), 360.0, 'a part of a turn, centred on its back'),
         'oval': ('num', (.1, 10), 1.0, 'its depth over its width (1: round)'),
         'inset': ('bool', None, False, 'oval: r measured in from the outline along its normal (a band of one depth all round), not scaled'),
-        'true': ('bool', None, False, 'its heights not exaggerated (a curve that must keep its shape)'),
+        'keep_curve': ('bool', None, False, 'its heights not exaggerated (a curve that must keep its shape)'),
     }, 'any solid turned round a vertical axis, from its section (a shape no class has)'),
     'prism': ({
         'plan_m': ('pts', 3, None, '[[x, y], ...] metres in its frame: an outline raised straight up (any plan: a star fort, a curved wall)'),
@@ -169,6 +169,14 @@ FIELDS = {
     }, 'several classes put together: a domed hall with its portico, a cathedral with towers, a mosque with minarets'),
 }
 KINDS = tuple(FIELDS)
+# a key YAML reads as true or false (PyYAML, YAML 1.1: on, off, yes, no, true, false) can never be written: no field may be one
+_YAML_BOOL = {'true', 'false', 'yes', 'no', 'on', 'off'}
+def _keys(spec):
+    for k, (t, arg, _, _) in spec.items():
+        yield k
+        if t in ('obj', 'list') and isinstance(arg, dict): yield from _keys(arg)
+_bad = _YAML_BOOL & {k.lower() for sp in [COMMON, PART] + [f for f, _ in FIELDS.values()] for k in _keys(sp)}
+assert not _bad, f'landmarks: fields named as YAML booleans: {_bad}'
 
 
 # ------------------------------------------------------------------ checking
@@ -439,7 +447,7 @@ def top(L, hx):
     if k == 'ring': return z + L['h_m'] * hx
     if k == 'dome':
         dm = L['dome']; dw = dm.get('d_m') or L['d_m'] / NECK.get(dm['shape'], 1.0); rise = dm.get('rise_m') or RISE[dm['shape']] * dw
-        return z + ((L.get('base') or {}).get('h_m', 0) + L['drum_h_m'] + (L.get('lantern') or {}).get('h_m', 0) + L['finial_m']) * hx + rise * (1 if dm['true'] else hx)
+        return z + ((L.get('base') or {}).get('h_m', 0) + L['drum_h_m'] + (L.get('lantern') or {}).get('h_m', 0) + L['finial_m']) * hx + rise * (1 if dm['keep_curve'] else hx)
     if k == 'long_hall':
         R = L['roof']; pitch = R.get('pitch_deg') or 30
         return z + ((L.get('podium') or {}).get('h_m', 0) + L['h_m'] + L['w_m'] / 2 * math.tan(math.radians(min(pitch, 60))) * (.5 if R['shape'] == 'vault' else 1)) * hx
@@ -448,7 +456,7 @@ def top(L, hx):
         w_ = (L['stages'][-1]['w_m'] if L.get('stages') else L['w_m'])
         return z + ((L.get('pedestal') or {}).get('h_m', 0) + hs + (L['top'].get('h_m') or (4 * w_ if L['top']['shape'] == 'spire' else w_))) * hx
     if k in ('stepped', 'arches'): return z + L['h_m'] * hx
-    if k == 'revolve': return z + max(p[1] for p in L['profile_m']) * (1 if L['true'] else hx)
+    if k == 'revolve': return z + max(p[1] for p in L['profile_m']) * (1 if L['keep_curve'] else hx)
     if k == 'prism': return z + (L['h_m'] if 'plan_m' in L else max(p[1] for p in L['section_m'])) * hx
     if k == 'parts':
         tops = []
@@ -575,9 +583,9 @@ def _dome(D, L, P, th, z):
         D.turn(P, th, 0, 0, z0 + hh, 2 * R_ + ps['col_m'] * 2, 2 * R_ + ps['col_m'] * 2, max(.8, hh * .1), [(L['d_m'] / 2 / (R_ + ps['col_m']), 0.0), (1.0, 0.0), (1.0, 1.0), (L['d_m'] / 2 / (R_ + ps['col_m']), 1.0)], 0)
     dw = dm.get('d_m') or L['d_m'] / NECK.get(shape, 1.0); dwW = D.poly_w(dw, n)
     rise = dm.get('rise_m') or RISE[shape] * dw
-    D.turn(P, th, 0, 0, z, dwW, dwW, rise, profile(shape, rise / dw), n, part=C.LROOF, sweep=sw, true=dm['true'])
-    top = z + rise / (B.hex if dm['true'] else 1)   # metres before the walls' exaggeration (z is too)
-    if L['oculus_m'] and sw == 1: D.B._emit(C.CYL, *P(0, 0), 0, top - .03 * rise / (B.hex if dm['true'] else 1), L['oculus_m'] / 2, 0, .4, part=C.DARK, g_m=D.g)
+    D.turn(P, th, 0, 0, z, dwW, dwW, rise, profile(shape, rise / dw), n, part=C.LROOF, sweep=sw, true=dm['keep_curve'])
+    top = z + rise / (B.hex if dm['keep_curve'] else 1)   # metres before the walls' exaggeration (z is too)
+    if L['oculus_m'] and sw == 1: D.B._emit(C.CYL, *P(0, 0), 0, top - .03 * rise / (B.hex if dm['keep_curve'] else 1), L['oculus_m'] / 2, 0, .4, part=C.DARK, g_m=D.g)
     ln = L.get('lantern')
     if ln and sw == 1:
         D.turn(P, th, 0, 0, top - .02 * rise, ln['d_m'], ln['d_m'], ln['h_m'] * .7, [(0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0)], n)
@@ -797,7 +805,7 @@ def _arches(D, L, P, th, z):
 def _revolve(D, L, P, th, z):
     pr = L['profile_m']; R = max(p[0] for p in pr); H = max(p[1] for p in pr)
     if R <= 0 or H <= 0: raise SystemExit(f'citygen: revolve {L.get("name") or ""}: its profile has no width or no height')
-    try: D.B.revolve(*P(0, 0), th, z, 2 * R, 2 * R * L['oval'], H / (D.B.hex if L['true'] else 1), [(p[0] / R, p[1] / H) for p in pr], L['sides'], part=C.LMK, g_m=D.g, sweep=L['sweep_deg'] / 360, inset=L['inset'])
+    try: D.B.revolve(*P(0, 0), th, z, 2 * R, 2 * R * L['oval'], H / (D.B.hex if L['keep_curve'] else 1), [(p[0] / R, p[1] / H) for p in pr], L['sides'], part=C.LMK, g_m=D.g, sweep=L['sweep_deg'] / 360, inset=L['inset'])
     except ValueError as e: raise SystemExit(f'citygen: revolve {L.get("name") or ""}: {e}')
 
 

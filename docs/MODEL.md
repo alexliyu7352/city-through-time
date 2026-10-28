@@ -104,7 +104,7 @@ seats is about as deep as its wall is high.
 
 **A monument stands level:** a landmark of these classes is built on one level plane, on a platform where the ground falls away under it (like a house's lot, "A house stands on one
 plane" in "No empty cities"); a long run of arches is the exception, its pieces each on their own ground. Heights are exaggerated as the houses' are (`exaggeration` of the city, or the landmark's own:
-1 to draw it after a true elevation), but a dome keeps its true curve (`dome.true`): stretched, a dome reads as an egg. Thin elements that carry a skyline (minarets, spires, masts)
+1 to draw it after a true elevation), but a dome keeps its true curve (`dome.keep_curve`): stretched, a dome reads as an egg. Thin elements that carry a skyline (minarets, spires, masts)
 are a few pixels wide at a kilometre and vanish in the wide shots; look at the period city's wide still (eraview) and say so when the film relies on one.
 
 **Look before laying the city:** `modelview --sheet` builds every landmark of these classes the period declares, each from four sides at a distance that fits its size, beside its
