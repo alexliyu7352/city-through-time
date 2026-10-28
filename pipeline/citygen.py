@@ -44,9 +44,13 @@ def footprint(p, pad=0.0):
     quarter keeps clear of; clipcheck; camcheck), so a new kind of primitive is known to all of them at once"""
     t, cx, cz, rot = p[0], p[1], p[2], p[3]
     c_, s_ = math.cos(rot), math.sin(rot)
-    if t == REVOLVE:   # an oval (its section's widest point)
-        rm = max(r for r, _ in p[17])
-        pts = [((p[5] / 2 * rm + pad) * math.cos(i * math.tau / 24), (p[6] / 2 * rm + pad) * math.sin(i * math.tau / 24)) for i in range(24)]
+    if t == REVOLVE:   # an oval (its section's widest point); part of a turn: that sector, from its narrowest point
+        rm = max(r for r, _ in p[17]); sw = p[9] if 0 < p[9] < 1 else 1
+        if sw == 1: pts = [((p[5] / 2 * rm + pad) * math.cos(i * math.tau / 24), (p[6] / 2 * rm + pad) * math.sin(i * math.tau / 24)) for i in range(24)]
+        else:
+            a0, n = -math.pi / 2 - sw * math.pi, max(2, math.ceil(24 * sw)); r0 = min(r for r, _ in p[17])
+            arc = lambda r_, k_: [((p[5] / 2 * r_ + k_ * pad) * math.cos(a0 + i / n * sw * math.tau), (p[6] / 2 * r_ + k_ * pad) * math.sin(a0 + i / n * sw * math.tau)) for i in range(n + 1)]
+            pts = arc(rm, 1) + (arc(r0, -1)[::-1] if r0 > 0 else [(0.0, 0.0)])
     elif t == PRISM and not p[9]:   # a plan: its outer ring
         pts = list(Polygon(p[17][0]).buffer(pad, join_style='mitre').exterior.coords)[:-1] if pad else [tuple(q) for q in p[17][0]]
     else:
@@ -117,14 +121,16 @@ class Builder:
         if shape is not None: rec.append(shape)   # (finish puts the building's centre before it)
         self.prims.append(rec); self.meta.append((self.gid, self.tag))
 
-    def revolve(self, x, y, theta, z0, w, d, h, prof, sides=32, part=LMK, g_m=None):
+    def revolve(self, x, y, theta, z0, w, d, h, prof, sides=32, part=LMK, g_m=None, sweep=1.0):
         """a solid of revolution (engine Geo.revolve): `prof` its section, [(r, y), ...] with r a share of the half width and y of
         the height h, a closed outline from the base round (the axis r = 0, the base y = 0; the engine draws every other edge);
         w x d metres across (an oval when they differ, its w along the frame's x), `sides` steps round (8: an octagon). A dome, a
-        drum, a round tower, an amphitheatre's ring"""
+        drum, a round tower, an amphitheatre's ring. sweep < 1: that share of a turn, centred on the frame's +y (the back: a
+        theatre's seats behind its stage, an apse beyond a hall's end, a half dome), the cut ends capped"""
         P_ = [(max(0.0, float(r)), max(0.0, float(q))) for r, q in prof]
         if len(P_) < 3 or max(r for r, _ in P_) <= 0 or max(q for _, q in P_) <= 0: raise ValueError(f'revolve: a section needs three points or more, off the axis and above the base: {prof}')
-        self._emit(REVOLVE, x, y, theta, z0, w, d, h, int(sides), 0, part=part, g_m=g_m, shape=[[round(r, 5), round(q, 5)] for r, q in P_])
+        sw = float(sweep) if 0 < sweep < 1 else 0
+        self._emit(REVOLVE, x, y, theta, z0, w, d, h, int(sides), round(sw, 5), part=part, g_m=g_m, shape=[[round(r, 5), round(q, 5)] for r, q in P_])
 
     def prism(self, x, y, theta, z0, rings, h, top=1.0, along=False, part=LMK, g_m=None):
         """a prism (engine Geo.prism): `rings` the outline in metres, the outer ring then any holes ([(x, y), ...], the last point

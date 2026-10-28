@@ -89,8 +89,9 @@ export class Geo {
   // along local x and z (an oval: an amphitheatre, a dome over an oblong hall). Every edge of the outline is a surface but those on
   // the axis and those along the base (never seen); its normal is the outline's outward one (so a ring's inner wall faces the
   // arena), shaded smooth across a corner under 30 degrees, round the axis too when a step is under 30 degrees (a dome reads
-  // round, a drum's rim and an octagon's corners stay sharp)
-  revolve(cx, y0, cz, rx, rz, h, prof, sides = 32, rot = 0, data = [0, 0, 0, 1], base = null) {
+  // round, a drum's rim and an octagon's corners stay sharp). sweep < 1: that share of a turn, centred on the piece's back
+  // (local -z: a theatre's seats, an apse, a half dome), `sides` steps over it, the section capped at both cut ends
+  revolve(cx, y0, cz, rx, rz, h, prof, sides = 32, rot = 0, data = [0, 0, 0, 1], base = null, sweep = 1) {
     if (prof.reduce((A, p, i) => { const q = prof[(i + 1) % prof.length]; return A + p[0] * q[1] - q[0] * p[1]; }, 0) < 0) prof = prof.slice().reverse();   // (given clockwise)
     const B0 = base == null ? y0 : base, c = Math.cos(rot), s = Math.sin(rot), n = prof.length, Rm = (rx + rz) / 2, CR = Math.cos(Math.PI / 6);
     const P = (r, y, a) => { const x = r * rx * Math.cos(a), z = r * rz * Math.sin(a), X = cx + x * c - z * s, Z = cz + x * s + z * c; return [X, y0 + y * h + this.gx * (X - cx) + this.gz * (Z - cz), Z]; };
@@ -102,17 +103,24 @@ export class Geo {
       const j = k ? (i + 1) % n : (i + n - 1) % n, a = en[i], b = en[j];
       return a[0] * b[0] + a[1] * b[1] > CR ? [a[0] + b[0], a[1] + b[1]] : a;
     };
-    const smooth = 2 * Math.PI / sides < Math.PI / 6;
+    const sw = sweep > 0 && sweep < 1 ? sweep : 1, A0 = sw < 1 ? -Math.PI / 2 - sw * Math.PI : 0, st = sw * 2 * Math.PI / sides, smooth = st < Math.PI / 6;
     for (let i = 0; i < n; i++) {
       const [r0, q0] = prof[i], [r1, q1] = prof[(i + 1) % n];
       if ((r0 <= 0 && r1 <= 0) || (q0 <= 0 && q1 <= 0)) continue;   // on the axis, along the base
       const m0 = vn(i, 0), m1 = vn(i, 1);
       for (let k = 0; k < sides; k++) {
-        const a0 = k / sides * 2 * Math.PI, a1 = (k + 1) / sides * 2 * Math.PI, am = (a0 + a1) / 2, b0 = smooth ? a0 : am, b1 = smooth ? a1 : am;
+        const a0 = A0 + k * st, a1 = A0 + (k + 1) * st, am = (a0 + a1) / 2, b0 = smooth ? a0 : am, b1 = smooth ? a1 : am;
         const p00 = P(r0, q0, a0), p01 = P(r0, q0, a1), p10 = P(r1, q1, a0), p11 = P(r1, q1, a1), f = N3(en[i], am);
         if (r0 <= 0) this.tri(p00, p11, p10, f, data, B0, [N3(m0, am), N3(m1, b1), N3(m1, b0)]);
         else if (r1 <= 0) this.tri(p00, p01, p10, f, data, B0, [N3(m0, b0), N3(m0, b1), N3(m1, am)]);
         else { this.tri(p00, p01, p11, f, data, B0, [N3(m0, b0), N3(m0, b1), N3(m1, b1)]); this.tri(p00, p11, p10, f, data, B0, [N3(m0, b0), N3(m1, b1), N3(m1, b0)]); }
+      }
+    }
+    if (sw < 1) {   // the cut ends: the section itself, facing away round the turn
+      const C = prof.map(([r, y]) => new THREE.Vector2(r, y)), faces = THREE.ShapeUtils.triangulateShape(C, []);
+      for (const [a, k] of [[A0, -1], [A0 + sw * 2 * Math.PI, 1]]) {
+        const x = -rz * Math.sin(a) * k, z = rx * Math.cos(a) * k, L = Math.hypot(x, z) || 1, nn = [(x * c - z * s) / L, 0, (x * s + z * c) / L];
+        for (const [i, j, m] of faces) this.tri(P(C[i].x, C[i].y, a), P(C[j].x, C[j].y, a), P(C[m].x, C[m].y, a), nn, data, B0);
       }
     }
   }
@@ -332,7 +340,7 @@ export function buildEra(prims, year = 0) {
     else if (t === 2) G.frustum(cx, y0, cz, a, b, d, e, c, rot, data, g);
     else if (t === 3) G.cylinder(cx, y0, cz, a, c, 10, data, g);
     else if (t === 4) G.cone(cx, y0, cz, a, c, 10, data, g);
-    else if (t === 5) G.revolve(cx, y0, cz, a / 2, b / 2, c, p[17], d, rot, data, g);   // a, b: width, depth; d: sides; p[17]: the section
+    else if (t === 5) G.revolve(cx, y0, cz, a / 2, b / 2, c, p[17], d, rot, data, g, e);   // a, b: width, depth; d: sides; e: the share of a turn (0: whole); p[17]: the section
     else if (t === 6) G.prism(cx, y0, cz, p[17], e ? b : c, d, e, rot, data, g);      // a, b: width, depth (laid along: b its length); c: height; d: top scale; e: laid along; p[17]: the rings
   }
   return G.geometry();

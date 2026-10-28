@@ -34,9 +34,11 @@ function solid(P) {
   const { cx, y0, cz } = P, rot = (P.kind === 'revolve' ? P.args[5] : P.args[4]) || 0, c = Math.cos(rot), s = Math.sin(rot);
   const local = ([X, Y, Z]) => { const dx = X - cx, dz = Z - cz; return [dx * c + dz * s, Y - y0, -dx * s + dz * c]; };
   if (P.kind === 'revolve') {
-    const [rx, rz, h, prof, sides = 32] = P.args, st = 2 * Math.PI / sides;
+    const [rx, rz, h, prof, sides = 32, , , , sweep = 1] = P.args, sw = sweep > 0 && sweep < 1 ? sweep : 1, A0 = sw < 1 ? -Math.PI / 2 - sw * Math.PI : 0, st = sw * 2 * Math.PI / sides;
     return { size: Math.min((rx + rz) / 2, h), inside: q => {
-      const [x, y, z] = local(q), u = x / rx, w = z / rz, a = Math.atan2(w, u), am = (Math.floor(((a % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI) / st) + .5) * st;
+      const [x, y, z] = local(q), u = x / rx, w = z / rz, T = 2 * Math.PI, a = ((Math.atan2(w, u) - A0) % T + T) % T;   // (the angle from the start of the turn)
+      if (a > sw * T) return false;   // outside the part of a turn
+      const am = (Math.floor(a / st) + .5) * st;
       return inPoly(prof, Math.hypot(u, w) * Math.cos(a - am) / Math.cos(st / 2), y / h);   // the radius measured to the facet (a polygon, not the circle)
     } };
   }
