@@ -38,7 +38,7 @@ COMMON = {
     'theta_deg': ('num', (-360, 360), None, 'its turn, counter-clockwise from east: at 0 its x runs east and its front faces south (the city\'s theta_deg when absent)'),
     'basis': ('str', None, REQ, 'where the sizes come from (a research note) and which of them are estimates'),
     'name': ('str', None, None, 'what it is (messages, the sheet)'),
-    'exaggeration': ('num', (.5, 5), None, 'its heights\' exaggeration (the city\'s when absent; 1: true, for a landmark drawn after a true elevation)'),
+    'exaggeration': ('num', (.5, 5), None, 'its heights\' exaggeration (when absent the city\'s, fading as the landmark gets taller: see exaggeration(); 1: true, for one drawn after a true elevation)'),
     'z_m': ('num', (0, 300), 0.0, 'metres above its ground (a part standing on another: a dome on a hall\'s crossing)'),
 }
 PART = {   # what a part of `parts` adds
@@ -814,10 +814,23 @@ def _prism(D, L, P, th, z):
     else: D.B.prism(*P(0, 0), th, z, [L['section_m']], L['length_m'], along=True, part=C.LMK, g_m=D.g)
 
 
+FADE_M = 25.0   # metres: the height at which a landmark's exaggeration has faded half way (exaggeration)
+
+
+def exaggeration(L, city_hex):
+    """a landmark's height exaggeration: its own when it gives one; else the city's, fading as the landmark gets taller,
+    1 + (x - 1) / (1 + (H / 25 m)^2) with H its true height. A small building is stretched to read at the film's scale as the
+    houses are (a 6 m shrine nearly twice), a tall one less (a 48 m amphitheatre 1.2 times), and a monument big enough to read on
+    its own keeps the proportions people know it by (stretched twice, a pyramid's 52 degree faces stood at 68). One factor for
+    the whole landmark: its shape is scaled, never bent"""
+    if L.get('exaggeration'): return float(L['exaggeration'])
+    return 1 + (city_hex - 1) / (1 + (top(L, 1.0) / FADE_M) ** 2)
+
+
 def build(B, L, x, y, th):
     """draw a checked landmark at UTM x, y turned th on one level plane (a platform on a slope); returns its footprint's
     half sizes (metres, its frame) for the fabric to keep clear"""
-    hw, hd = extent(L)
+    hw, hd = extent(L); hx0 = B.hex; B.hex = exaggeration(L, hx0)
     try:
         if L['kind'] == 'arches' and L['length_m'] > 120: _run(B, L, x, y, th, hd)
         else:
@@ -830,7 +843,7 @@ def build(B, L, x, y, th):
                     g = B.gsite(x, y, th, 2 * hw, 2 * hd)
                     draw(Draw(B, g), L, x, y, th)
             finally: B.lot_slope, B.plinth = s0, p0
-    finally: B.found = 0.0
+    finally: B.hex = hx0; B.found = 0.0
     return hw, hd
 
 

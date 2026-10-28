@@ -90,7 +90,7 @@ def sheet_city(C, era, spec, at, Fr, city, scale, d, az=None, el=12.0):
             a_, b_ = Fr.to_utm.transform(*L['from']), Fr.to_utm.transform(*L['to']); L = {**L, 'length_m': math.hypot(b_[0] - a_[0], b_[1] - a_[1])}
         hw, hd = landmarks.extent(L); L = {k: v for k, v in L.items() if k not in ('from', 'to', 'theta_deg')}
         c = ll(x + hw, oy + hd); lm_out.append({**L, 'lon': c[0], 'lat': c[1], 'theta_deg': 0}); deep = max(deep, 2 * hd + 1)
-        nm = L.get('name') or f'{L["kind"]}{i + 1}'; tp = landmarks.top(L, L.get('exaggeration') or sheet_hex)   # (framed whole: its plan and its height, looked at half way up)
+        nm = L.get('name') or f'{L["kind"]}{i + 1}'; tp = landmarks.top(L, landmarks.exaggeration(L, sheet_hex))   # (framed whole: its plan and its height, looked at half way up)
         dl = round(min(.3, max(.012, max(2.6 * math.hypot(hw, hd), 2.4 * tp) / scale)), 4)
         shots_ += [{'name': re.sub(r'\W+', '_', f'{nm}_az{a_}'), 'll': c, 'y': round(tp / 2 / scale, 6), 'az': float(a_), 'el': 30.0, 'd': dl} for a_ in (30, 120, 210, 300)]
         x += 2 * hw + 60
