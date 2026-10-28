@@ -148,6 +148,8 @@ class Builder:
         R_ = [[(float(u), float(v)) for u, v in r] for r in rings]
         if not R_ or any(len(r) < 3 for r in R_): raise ValueError(f'prism: a ring needs three points or more: {rings}')
         if along:
+            v0 = min(v for r in R_ for _, v in r)
+            if v0 > 0: z0 += v0; R_ = [[(u, v - v0) for u, v in r] for r in R_]   # (a section off the ground, a strut: the record starts where it does)
             sh = [[[round(u * S, 7), round(max(0.0, v) * S * self.hex, 7)] for u, v in r] for r in R_]
             w = 2 * max(abs(u) for r in R_ for u, _ in r); hh = max(v for r in R_ for _, v in r)
             self._emit(PRISM, x, y, theta, z0, w, h, hh, 1.0, 1, part=part, g_m=g_m, shape=sh)
