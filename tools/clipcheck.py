@@ -22,6 +22,10 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
                       they are more than a tenth of the era's buildings: then the plate's exaggeration is too high for this
                       ground (a slope's fall shows times the exaggeration, the building times its own); the line says the
                       highest exaggeration that would pass. Plinths (citygen PLINTH: a body's base on a slope) are not bodies here.
+Checks on today's buildings (data/model.json):
+  today floating      buildings whose base stands more than 1 m (times the plate's exaggeration) above the lowest plate point
+                      under the footprint: prep.py seats each one on that point, so a count here means the model was prepared
+                      on another terrain (terrain.py run again, prep.py not) or seated another way
 Footprints are the primitives' rotated rectangles in model units; overlaps under 2 m2 (rounding at shared edges) are ignored.
 """
 import json, math, os, sys
@@ -218,6 +222,11 @@ def main():
         bad = sum(v for k, v in R.items() if isinstance(v, int))
         total += bad
         print(f"{e['id']:10s} " + '  '.join(f"{k} {v}" for k, v in R.items() if isinstance(v, int)) + f"  ({notes[e['id']]})")
+    if plate_ is not None:   # today's buildings on the plate (prep.py seat)
+        fl = [r for r in M['p'] if len(r[2][0]) >= 3 and r[3] - plate_.lowest(r[2][0]) * S * tex > 1.0 * S * tex]
+        report['today'] = {'floating': len(fl), 'floating_at': [[round(sum(p[0] for p in r[2][0]) / len(r[2][0]), 4), round(sum(p[1] for p in r[2][0]) / len(r[2][0]), 4)] for r in fl[:5]]}
+        total += len(fl)
+        print(f"{'today':10s} floating {len(fl)}")
     json.dump(report, open(os.path.join(city, 'build', 'logs', 'clipcheck.json'), 'w'), indent=1)
     print('clipcheck:', 'ok' if total <= mx else f'{total} cases (see out/clipcheck.json)')
     sys.exit(0 if total <= mx else 1)

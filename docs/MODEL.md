@@ -172,6 +172,9 @@ Mountain cities have big slopes and can mostly take only ×1–1.5 (the mountain
 (it does not use "data height minus building height": a cell mixes roofs and streets and the building height is an estimate, so the subtraction comes out pitted).
 Tombs, loess plateaus and river banks are not buildings and stay as they are. `terrain.bare: false` does not level.
 Not built yet (wait for the first mountain city): houses on steep slopes lined up along contour lines, and no houses where it is too steep.
+**Today's buildings stand on the lowest ground under them:** `prep.py` puts each building's base on the lowest point of the plate under its footprint (the plate as the engine draws it, `terrainio.plate_mesh`)
+and its top where its height puts it above the ground at its centroid, so a building on a slope reaches down to the ground on its downhill side instead of hanging in the air.
+clipcheck's `today floating` counts any building that does not, which is how a model prepared on an older terrain shows: after `terrain.py`, run `prep.py` again.
 **Terrain is exaggerated at two scales** (`terrain.detail: { below_m: 150, exaggeration: 1 }`, the default): large terrain such as plateaus, terraces and river valleys is exaggerated by `terrain.exaggeration`;
 small relief below 150 m keeps its original height (×1). Copernicus GLO-30 is a surface model and measures today's roofs and treetops, and most of the small relief in a city is those;
 exaggerating them by the large-terrain factor (for example ×6) makes 4 m of relief 24 m on screen, much taller than a 5 m dwelling, and the ancient city looks as if built on a heap of rubble. The true terrain is stored separately as `terrain_true16.png`;

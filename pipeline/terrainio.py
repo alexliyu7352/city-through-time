@@ -68,6 +68,33 @@ def plate_mesh(arr, PW, PD, nx=640):
         h00, h10, h01, h11 = V[iz, ix], V[iz, ix + 1], V[iz + 1, ix], V[iz + 1, ix + 1]
         if a + b <= 1: return float(h00 + (h10 - h00) * a + (h01 - h00) * b)
         return float(h11 + (h01 - h11) * (1 - a) + (h10 - h11) * (1 - b))
+    cw, cd = (PW + .1) / nx, (PD + .1) / nz   # a mesh cell, model units
+
+    def many(x, z):   # f over arrays of points
+        gx = (x + (PW + .1) / 2) / (PW + .1) * nx; gz = (z + (PD + .1) / 2) / (PD + .1) * nz
+        ix = np.clip(gx.astype(int), 0, nx - 1); iz = np.clip(gz.astype(int), 0, nz - 1); a, b = gx - ix, gz - iz
+        h00, h10, h01, h11 = V[iz, ix], V[iz, ix + 1], V[iz + 1, ix], V[iz + 1, ix + 1]
+        return np.where(a + b <= 1, h00 + (h10 - h00) * a + (h01 - h00) * b, h11 + (h01 - h11) * (1 - a) + (h10 - h11) * (1 - b))
+
+    def lowest(ring):
+        """the lowest point of the plate under a footprint (a ring of model x, z points). Each mesh triangle is flat, so it lies
+        at a corner of the ring, a mesh corner inside the ring, or where a ring edge crosses a mesh line (the edges are walked a
+        quarter cell at a time, which finds it to within a few centimetres)"""
+        r = np.asarray(ring, float); pts = [r]
+        for p, q in zip(r, np.roll(r, -1, axis=0)):
+            n = int(max(abs(q[0] - p[0]) / cw, abs(q[1] - p[1]) / cd) * 4)
+            if n: pts.append(p + (q - p) * (np.arange(1, n + 1) / (n + 1))[:, None])
+        pts = np.vstack(pts); lo = float(many(pts[:, 0], pts[:, 1]).min())
+        (x0, z0), (x1, z1) = r.min(axis=0), r.max(axis=0)
+        ix = np.arange(max(0, math.ceil((x0 + (PW + .1) / 2) / cw)), min(nx, math.floor((x1 + (PW + .1) / 2) / cw)) + 1)
+        iz = np.arange(max(0, math.ceil((z0 + (PD + .1) / 2) / cd)), min(nz, math.floor((z1 + (PD + .1) / 2) / cd)) + 1)
+        if len(ix) and len(iz):
+            import shapely
+            gx_, gz_ = np.meshgrid(-(PW + .1) / 2 + ix * cw, -(PD + .1) / 2 + iz * cd)
+            inside = shapely.contains_xy(shapely.Polygon(r), gx_, gz_)
+            if inside.any(): lo = min(lo, float(V[np.ix_(iz, ix)][inside].min()))
+        return lo
+    f.lowest = lowest
     return f
 
 

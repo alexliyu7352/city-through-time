@@ -30,9 +30,18 @@ if os.path.exists(tpath) and C.get('terrain', {}).get('enabled', True):
         """ground metres -> model units of relief (already exaggerated) at a ground point (bilinear, like the engine)"""
         u, v = F.uv(x, y); return terrainio.bilinear(timg, u, v) * F.scale * TEX
     TER = {'min_m': tj['min_m'], 'max_m': tj['max_m'], 'exaggeration': TEX, 'size': tj['size']}
+    PLATE = terrainio.plate_mesh(timg, *F.size)
+    def seat(rings, h, c):
+        """a building of today on the plate as the engine draws it: its base on the lowest ground under its footprint, its top
+        where its height puts it above the ground at its centroid c (model x, z); on a slope its downhill side stands on the
+        ground instead of in the air (docs/MODEL.md, Ground and terrain) -> (height, base) in model units"""
+        mid = PLATE(*c) * F.scale * TEX
+        base = min(mid, PLATE.lowest(rings[0]) * F.scale * TEX)
+        return h + mid - base, base
     print(f'terrain: {tj["min_m"]}–{tj["max_m"]} m, exaggeration x{TEX}')
 else:
     def ground(x, y): return 0.0
+    def seat(rings, h, c): return h, 0.0
 
 # ------------------------------------------------------------------ buildings (heights exaggerated like the terrain so the massing reads at 1:10000)
 BEX = float(C.get('buildings', {}).get('exaggeration', C.get('terrain', {}).get('exaggeration', 3.0)))   # today's buildings; the plate has its own factor
@@ -60,7 +69,8 @@ for poly, h, year, how, func in it:
     B.append([year if year is not None else 0, round(h, 1)])
     rings = [[F.model(x, y) for x, y in poly.exterior.coords[:-1]]] + [[F.model(x, y) for x, y in r.coords[:-1]] for r in poly.interiors]
     c = poly.centroid
-    P.append([bi, round(h * F.scale * BEX, 6), rings, round(ground(c.x, c.y), 6)])
+    hh, base = seat(rings, h * F.scale * BEX, F.model(c.x, c.y))
+    P.append([bi, round(hh, 6), rings, round(base, 6)])
     stat[how] += 1; n_by_band[b] += 1; area_by_band[b] += poly.area; h_by_band[b].append(h)
     tallest.append((h, bi, c.x, c.y, year))
 # where the primary source has no buildings at all (CMAB leaves out villages and parts of the new towns: the northern plateau stood
@@ -77,7 +87,8 @@ if C['buildings'].get('fill') == 'overture_ghsl':
         bi = len(B); b = band_of(year)
         B.append([year if year is not None else 0, round(h, 1)])
         rings = [[F.model(x, y) for x, y in poly.exterior.coords[:-1]]] + [[F.model(x, y) for x, y in r.coords[:-1]] for r in poly.interiors]
-        P.append([bi, round(h * F.scale * BEX, 6), rings, round(ground(c.x, c.y), 6)])
+        hh, base = seat(rings, h * F.scale * BEX, F.model(c.x, c.y))
+        P.append([bi, round(hh, 6), rings, round(base, 6)])
         stat['fill'] += 1; n_by_band[b] += 1; area_by_band[b] += poly.area; h_by_band[b].append(h); n_fill += 1
         tallest.append((h, bi, c.x, c.y, year))
     print(f'fill: {n_fill} Overture buildings where {src} has none within {gap:.0f} m')
