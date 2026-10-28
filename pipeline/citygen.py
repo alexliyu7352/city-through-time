@@ -1208,6 +1208,8 @@ def with_trace(spec, F, city_dir):
     return {**spec, **{k: list(spec.get(k, [])) + v for k, v in traced(spec, F, city_dir).items() if v}}
 
 
+BUILTIN_LANDMARKS = ('temple', 'office', 'palace', 'belltower', 'pagoda', 'front_hall', 'court', 'armoury', 'market', 'workshops', 'pool_ring', 'taixie', 'terrace', 'hall',
+                     'paifang', 'kilns', 'pool', 'platform', 'ditch', 'factory', 'chimney', 'station', 'tower', 'corridor', 'bridge', 'boats', 'village')   # the generator's own landmark kinds (build_city): one region's (north China), and its modern ones
 BUILTIN_TYPES = ('courtyard', 'dwelling', 'hut', 'slab', 'wards')   # the generator's own houses: one region's (north China)
 TYPES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'types')   # the shared library of house types
 FORMS = ('detached', 'row', 'court', 'compound')

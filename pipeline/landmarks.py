@@ -268,7 +268,9 @@ def checked(spec, label='city'):
     """the city's landmarks of KINDS checked and completed in place (others are the generator's own kinds, left as they are);
     stops compile with what to write"""
     for i, L in enumerate(spec.get('landmarks') or []):
-        if isinstance(L, dict) and L.get('kind') in KINDS:
+        if not isinstance(L, dict) or L.get('kind') not in KINDS + C.BUILTIN_LANDMARKS:   # (an unknown kind drew nothing, without a word)
+            raise SystemExit(f'citygen: {label}: landmarks[{i}]: kind {L.get("kind") if isinstance(L, dict) else L!r}: one of the classes for any region ({", ".join(KINDS)}; docs/MODEL.md "Landmarks of any region") or the generator\'s own ({", ".join(C.BUILTIN_LANDMARKS)})')
+        if L.get('kind') in KINDS:
             try: spec['landmarks'][i] = check(L, f'{label}: landmarks[{i}]{" (" + L["name"] + ")" if L.get("name") else ""}')
             except Bad as e: raise SystemExit(f'citygen: {e} (docs/MODEL.md "Landmarks of any region"; every key: uv run python -I pipeline/landmarks.py {L.get("kind")})')
     return spec
