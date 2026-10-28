@@ -205,8 +205,7 @@ class Builder:
         if podium:
             self._emit(BOX, x, y, th, z0, w + 4, d + 4, podium, part=EARTH, g_m=g)
             if self.det >= 1:
-                sx, sy = P(0, front * (d / 2 + 2 + podium * .7))
-                self._emit(FRUSTUM, sx, sy, th, z0, max(4, w * .3), podium * 1.6, podium, max(4, w * .3), .3, part=EARTH, g_m=g)
+                self.stair(P, 0, front * (d / 2 + 2), th, max(4, w * .3), podium, podium * 1.6, g, out=front, z0=z0)
             z0 += podium
         hb, rh = h * .56, h * .44
         if cols is None: cols = self.det >= 1 and w >= 7
@@ -349,6 +348,16 @@ class Builder:
         self._emit(FRUSTUM, x, y, self.rng.random() * 3, h * .65 * k, r * 1.9 * k, r * 1.9 * k, h * .35 * k, r * .7 * k, r * .7 * k, part=TREE, g_m=g)
 
     # ------------------------------------------------------------------ Qin-Han palace types (research/qin_palaces.md, research/han_changan.md)
+    def stair(self, P, fx, fy, th, w, h, run, g, out=-1, z0=0.0, part=EARTH):
+        """a flight of steps (踏道) against a face, rising from the ground `run` out from it to `h` at the face: a few broad
+        steps, each a slab from the face outward, so it reads as a stair from any side. P is the frame of what it climbs, (fx, fy)
+        the middle of the face's top edge in that frame, out the side the stair leads off to (-1: local y down). (A frustum
+        with its top centred over its base stood as a free blade in front of the face, not as a ramp up to it)"""
+        n = max(3, min(10, round(h / 1.6)))
+        for i in range(n):
+            dep = run * (n - i) / n; sx, sy = P(fx, fy + out * dep / 2)
+            self._emit(BOX, sx, sy, th, z0 + h * i / n, w, dep, h / n, part=part, g_m=g)
+
     def lean(self, x, y, th, w, d, z0, drop, part=LROOF, g=None, t=.35):
         """a lean-to roof: a thin slab w (along th) x d, its high edge on local +y at z0, falling `drop` metres to local -y"""
         dy = (-math.sin(th), math.cos(th)); k = drop / max(d, 1e-6) * self.hex / self.gex   # slope in ground metres per metre (the shear uses gex)
@@ -431,7 +440,7 @@ class Builder:
         for b in (upper or []):   # extra halls in the platform's frame: (fx, fy, w, d, h, roof)
             bx, by = P(b[0] * w, b[1] * d); self.hall(bx, by, th, b[2], b[3], b[4], roof=b[5], z0=z, part=part, g=g)
         # a stair up the south face, toward the twin's side
-        sx, sy = P(-w * .3 if not flip else w * .3, -(d / 2 + 5.2 + h * .45)); self._emit(FRUSTUM, sx, sy, th, 0, 5.0, h * 1.2, h * .98, 5.0, h * .05, part=EARTH, g_m=g)
+        self.stair(P, -w * .3 if not flip else w * .3, -d * .95 / 2, th, 5.0, h * .98, d * .025 + 5.2 + h * 1.05, g)
 
     def front_hall(self, x, y, th, w=200.0, d=400.0, tiers=((140, 200, 3.0), (120, 180, 8.0), (110, 165, 15.0)), part=LMK):
         """the front hall of Weiyang (未央宫前殿, han_changan.md §4-B): a platform rising in three terraces from south to north
@@ -461,7 +470,7 @@ class Builder:
             if self.det >= 1:
                 gx_, gy_ = self.frame(cx_, cyy, th)(0, -cd / 2); self.hall(gx_, gy_, th, 26, 9, 9, roof='hip', z0=z, part=part, g=g, cols=False)
             # a stair from the terrace below (or the ground) up its south face
-            sx, sy = P(0, cy - td / 2 - th_ * .55); gs_ = min(self.ground_m(sx, sy), g); self._emit(FRUSTUM, sx, sy, th, 0, 14, th_ * 1.3, th_ * .98 + (g - gs_), 14, th_ * .06, part=EARTH, g_m=gs_)
+            sx, sy = P(0, cy - td / 2 - th_ * .55); gs_ = min(self.ground_m(sx, sy), g); self.stair(P, 0, cy - td / 2, th, 14, th_ * .98 + (g - gs_), th_ * 1.3, gs_)
             y0 += td   # the next terrace north of this one (they were all stacked at the south end)
 
     def court(self, x, y, th, w, d, main=(0.6, .2, 14, 'hip'), north=None, wings=True, wall_h=4.0, part=LMK, podium=1.2):
@@ -629,8 +638,7 @@ class Builder:
                     self.strip(P(lx0 * w * kk / 2, ly0 * d * kk / 2), P(lx1 * w * kk / 2, ly1 * d * kk / 2), 2.6, 2.4, part=LROOF, z0=h * (i + 1) / tiers, g=g)
         if stairs:
             sw = max(6, w * .1)
-            sx, sy = P(0, -(d / 2 + h * .45))
-            self._emit(FRUSTUM, sx, sy, th, 0, sw, h * 1.2, h * .98, sw, h * .05, part=EARTH, g_m=g)
+            self.stair(P, 0, -d * top / 2, th, sw, h * .98, d * (1 - top) / 2 + h * 1.05, g)
         tw, td = w * top, d * top
         if gallery and self.det >= 1:   # a corridor ring on the top edge
             for (lx0, ly0, lx1, ly1) in sides:
@@ -819,7 +827,7 @@ class Builder:
         z = 0.0
         if pz:   # the podium under the body and the portico, the stair before it; the body .6 m in from its edges
             self._emit(BOX, *P(0, -pm / 2), th, 0, w, d + pm, pz, part=part, g_m=g)
-            if street: self._emit(FRUSTUM, *P(0, -d / 2 - pm - pz * .7), th, 0, min(6.0, w * .4), pz * 1.4, pz, min(6.0, w * .4), .3, part=part, g_m=g)
+            if street: self.stair(P, 0, -d / 2 - pm, th, min(6.0, w * .4), pz, pz * 1.4, g, part=part)
             z = pz; w, d = w - 1.2, d - 1.2
         if grd == 'arcade':   # the ground storey behind the walk, posts on the front line, the storeys above over the walk
             a = T['arcade_m']; self._emit(BOX, *P(0, a / 2), th, z, w, d - a, sm, part=part, g_m=g)
