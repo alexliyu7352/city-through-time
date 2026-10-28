@@ -8,10 +8,12 @@ export class Geo {
   constructor() { this.pos = []; this.nor = []; this.dat = []; this.base = []; this.ctr = []; this.gx = 0; this.gz = 0; this.cc = null; }   // gx, gz: a shear (model y per model x / z) so long pieces follow a slope; cc: the building centre written per vertex (aCtr)
   // a triangle is wound to face along its normal: WebGL draws only the counter-clockwise (front) side, and a face wound the other
   // way round is seen from inside, so the near wall of a house vanished and the inner side of its far wall showed through
-  tri(a, b, c, n, d, base = 0) {
+  // (ns: a normal per corner, for a curved surface shaded smooth; the winding still follows n, the face's own)
+  tri(a, b, c, n, d, base = 0, ns = null) {
     const u = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], v = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];
-    if ((u[1] * v[2] - u[2] * v[1]) * n[0] + (u[2] * v[0] - u[0] * v[2]) * n[1] + (u[0] * v[1] - u[1] * v[0]) * n[2] < 0) [b, c] = [c, b];
-    for (const p of [a, b, c]) { this.pos.push(...p); this.nor.push(...n); this.dat.push(...d); this.base.push(base); if (this.cc) this.ctr.push(this.cc[0], this.cc[1]); } }
+    let m = ns || [n, n, n];
+    if ((u[1] * v[2] - u[2] * v[1]) * n[0] + (u[2] * v[0] - u[0] * v[2]) * n[1] + (u[0] * v[1] - u[1] * v[0]) * n[2] < 0) { [b, c] = [c, b]; m = [m[0], m[2], m[1]]; }
+    [a, b, c].forEach((p, i) => { this.pos.push(...p); this.nor.push(...m[i]); this.dat.push(...d); this.base.push(base); if (this.cc) this.ctr.push(this.cc[0], this.cc[1]); }); }
   quad(a, b, c, d_, n, d, base = 0) { this.tri(a, b, c, n, d, base); this.tri(a, c, d_, n, d, base); }
   // axis-aligned box, rotated about y by rot (radians) around (cx, cz); y from y0 to y0 + h
   box(cx, y0, cz, w, h, d, rot = 0, data = [0, 0, 0, 1], base = null) {
@@ -80,6 +82,80 @@ export class Geo {
       const p0 = [cx + r * Math.cos(a0), y0, cz + r * Math.sin(a0)], p1 = [cx + r * Math.cos(a1), y0, cz + r * Math.sin(a1)];
       const m = (a0 + a1) / 2, k = r / Math.hypot(r, h);
       this.tri(p0, p1, [cx, y0 + h, cz], [Math.cos(m) * (1 - k * .3), k, Math.sin(m) * (1 - k * .3)], data, B0);
+    }
+  }
+  // a solid of revolution: the section `prof` ([[r, y], ...]: r a share of the radius, y of the height h; a closed outline, from
+  // the base round counter-clockwise with r to the right and y up) spun round the vertical axis in `sides` steps; rx, rz the radii
+  // along local x and z (an oval: an amphitheatre, a dome over an oblong hall). Every edge of the outline is a surface but those on
+  // the axis and those along the base (never seen); its normal is the outline's outward one (so a ring's inner wall faces the
+  // arena), shaded smooth across a corner under 30 degrees, round the axis too when a step is under 30 degrees (a dome reads
+  // round, a drum's rim and an octagon's corners stay sharp)
+  revolve(cx, y0, cz, rx, rz, h, prof, sides = 32, rot = 0, data = [0, 0, 0, 1], base = null) {
+    if (prof.reduce((A, p, i) => { const q = prof[(i + 1) % prof.length]; return A + p[0] * q[1] - q[0] * p[1]; }, 0) < 0) prof = prof.slice().reverse();   // (given clockwise)
+    const B0 = base == null ? y0 : base, c = Math.cos(rot), s = Math.sin(rot), n = prof.length, Rm = (rx + rz) / 2, CR = Math.cos(Math.PI / 6);
+    const P = (r, y, a) => { const x = r * rx * Math.cos(a), z = r * rz * Math.sin(a), X = cx + x * c - z * s, Z = cz + x * s + z * c; return [X, y0 + y * h + this.gx * (X - cx) + this.gz * (Z - cz), Z]; };
+    // a section normal (metres, r and y) -> the surface's normal at angle a (the oval's scaling and the rotation applied)
+    const N3 = ([nr, ny], a) => { const x = nr / h * Math.cos(a) / rx, y = ny / Rm / h, z = nr / h * Math.sin(a) / rz, X = x * c - z * s, Z = x * s + z * c, L = Math.hypot(X, y, Z) || 1; return [X / L, y / L, Z / L]; };
+    const en = [];   // each edge's outward normal in metres
+    for (let i = 0; i < n; i++) { const [r0, q0] = prof[i], [r1, q1] = prof[(i + 1) % n], dr = (r1 - r0) * Rm, dy = (q1 - q0) * h, L = Math.hypot(dr, dy) || 1; en.push([dy / L, -dr / L]); }
+    const vn = (i, k) => {   // edge i's normal at its corner k (0 start, 1 end): the mean with the neighbour's where they meet gently
+      const j = k ? (i + 1) % n : (i + n - 1) % n, a = en[i], b = en[j];
+      return a[0] * b[0] + a[1] * b[1] > CR ? [a[0] + b[0], a[1] + b[1]] : a;
+    };
+    const smooth = 2 * Math.PI / sides < Math.PI / 6;
+    for (let i = 0; i < n; i++) {
+      const [r0, q0] = prof[i], [r1, q1] = prof[(i + 1) % n];
+      if ((r0 <= 0 && r1 <= 0) || (q0 <= 0 && q1 <= 0)) continue;   // on the axis, along the base
+      const m0 = vn(i, 0), m1 = vn(i, 1);
+      for (let k = 0; k < sides; k++) {
+        const a0 = k / sides * 2 * Math.PI, a1 = (k + 1) / sides * 2 * Math.PI, am = (a0 + a1) / 2, b0 = smooth ? a0 : am, b1 = smooth ? a1 : am;
+        const p00 = P(r0, q0, a0), p01 = P(r0, q0, a1), p10 = P(r1, q1, a0), p11 = P(r1, q1, a1), f = N3(en[i], am);
+        if (r0 <= 0) this.tri(p00, p11, p10, f, data, B0, [N3(m0, am), N3(m1, b1), N3(m1, b0)]);
+        else if (r1 <= 0) this.tri(p00, p01, p10, f, data, B0, [N3(m0, b0), N3(m0, b1), N3(m1, am)]);
+        else { this.tri(p00, p01, p11, f, data, B0, [N3(m0, b0), N3(m0, b1), N3(m1, b1)]); this.tri(p00, p11, p10, f, data, B0, [N3(m0, b0), N3(m1, b1), N3(m1, b0)]); }
+      }
+    }
+  }
+  // a prism: the outline `rings` (the outer ring, then any holes; [[u, v], ...] in model units, the last point not repeating the
+  // first) carried straight for length h. axis 0: a plan (u east, v south, round (cx, cz) before the rotation) raised from y0, its
+  // top shrunk toward the outer ring's centre by `top` (1 straight up, 0 to a point: a spire, a hipped roof on any plan); the top
+  // capped. axis 1: a section (u across, v up from y0) laid along local z, centred, both ends capped (a vault, a nave with its
+  // aisles in one piece). A wall's normal faces away from the solid (a hole's into the hole), shaded smooth across a corner under
+  // 30 degrees (a curved plan reads curved, a rectangle's corners stay sharp)
+  prism(cx, y0, cz, rings, h, top = 1, axis = 0, rot = 0, data = [0, 0, 0, 1], base = null) {
+    const B0 = base == null ? y0 : base, c = Math.cos(rot), s = Math.sin(rot), CR = Math.cos(Math.PI / 6);
+    const area = r => r.reduce((A, p, i) => { const q = r[(i + 1) % r.length]; return A + p[0] * q[1] - q[0] * p[1]; }, 0) / 2;
+    const R = rings.map((r, i) => (area(r) > 0) === (i === 0) ? r.slice() : r.slice().reverse());   // the outer ring counter-clockwise, holes clockwise
+    const O = R[0], gu = O.reduce((a, p) => a + p[0], 0) / O.length, gv = O.reduce((a, p) => a + p[1], 0) / O.length;
+    const L3 = axis ? ((u, v, t) => [u, v, (t - .5) * h]) : ((u, v, t) => { const k = 1 + (top - 1) * t; return [gu + (u - gu) * k, t * h, gv + (v - gv) * k]; });
+    const W = ([x, y, z]) => { const X = cx + x * c - z * s, Z = cz + x * s + z * c; return [X, y0 + y + this.gx * (X - cx) + this.gz * (Z - cz), Z]; };
+    const Wn = ([x, y, z]) => { const L = Math.hypot(x, y, z) || 1; return [(x * c - z * s) / L, y / L, (x * s + z * c) / L]; };
+    const P = (u, v, t) => W(L3(u, v, t));
+    const loc = (u, v) => axis ? [u, v, 0] : [u, 0, v];   // a plan or section direction in local xyz
+    for (const r of R) {
+      const n = r.length, en = r.map((p, i) => { const q = r[(i + 1) % n], du = q[0] - p[0], dv = q[1] - p[1], L = Math.hypot(du, dv) || 1; return [dv / L, -du / L]; });
+      const vn = (i, j) => { const a = en[i], b = en[j]; return a[0] * b[0] + a[1] * b[1] > CR ? [a[0] + b[0], a[1] + b[1]] : a; };
+      for (let i = 0; i < n; i++) {
+        const j = (i + 1) % n, [u0, v0] = r[i], [u1, v1] = r[j];
+        if (axis && v0 <= 0 && v1 <= 0) continue;   // a section's foot (never seen)
+        const a = P(u0, v0, 0), b = P(u1, v1, 0), e = P(u1, v1, 1), d = P(u0, v0, 1);
+        // the face's normal: the edge's outward direction, leaning in with the taper
+        const x = [e[0] - b[0], e[1] - b[1], e[2] - b[2]], y_ = [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
+        let f = [y_[1] * x[2] - y_[2] * x[1], y_[2] * x[0] - y_[0] * x[2], y_[0] * x[1] - y_[1] * x[0]];
+        const o = Wn(loc(...en[i])); if (f[0] * o[0] + f[1] * o[1] + f[2] * o[2] < 0) f = f.map(q => -q);
+        const Lf = Math.hypot(...f); if (Lf < 1e-14) continue;
+        f = f.map(q => q / Lf);
+        const lean = q => top === 1 || axis ? Wn(loc(...q)) : (() => { const w = Wn(loc(...q)), k = f[1]; const L = Math.hypot(w[0], w[2]) || 1, hz = Math.sqrt(Math.max(0, 1 - k * k)); return [w[0] / L * hz, k, w[2] / L * hz]; })();
+        const ma = lean(vn(i, (i + n - 1) % n)), mb = lean(vn(i, j));
+        if (top === 0 && !axis) this.tri(a, b, d, f, data, B0, [ma, mb, ma]);
+        else { this.tri(a, b, e, f, data, B0, [ma, mb, mb]); this.tri(a, e, d, f, data, B0, [ma, mb, ma]); }
+      }
+    }
+    // the caps: the top (axis 0), both ends (axis 1)
+    const C = R.map(r => r.map(([u, v]) => new THREE.Vector2(u, v))), faces = THREE.ShapeUtils.triangulateShape(C[0], C.slice(1)), V = C.flat();
+    for (const t of axis ? [0, 1] : (top > 0 ? [1] : [])) {
+      const nn = Wn(axis ? [0, 0, t ? 1 : -1] : [0, 1, 0]);
+      for (const [i, j, k] of faces) this.tri(P(V[i].x, V[i].y, t), P(V[j].x, V[j].y, t), P(V[k].x, V[k].y, t), nn, data, B0);
     }
   }
   // a wall segment from a to b (model xz) as a box of thickness t and height h, standing on y0
@@ -243,7 +319,7 @@ export function makeTally(opts = {}) {
 }
 
 // ---------------------------------------------------------------- era cities: primitive list (pipeline/citygen.py) -> one geometry
-// record: [type, cx, cz, rot, y0, a, b, c, d, e, rank, part, g]; aData = [year, part, rank, 3]; aBase = g (the rise pivot)
+// record: [type, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx, gz, bx, bz, shape]; aData = [year, part, rank, 3]; aBase = g (the rise pivot)
 export function buildEra(prims, year = 0) {
   const G = new Geo();
   for (const p of prims) {
@@ -256,6 +332,8 @@ export function buildEra(prims, year = 0) {
     else if (t === 2) G.frustum(cx, y0, cz, a, b, d, e, c, rot, data, g);
     else if (t === 3) G.cylinder(cx, y0, cz, a, c, 10, data, g);
     else if (t === 4) G.cone(cx, y0, cz, a, c, 10, data, g);
+    else if (t === 5) G.revolve(cx, y0, cz, a / 2, b / 2, c, p[17], d, rot, data, g);   // a, b: width, depth; d: sides; p[17]: the section
+    else if (t === 6) G.prism(cx, y0, cz, p[17], e ? b : c, d, e, rot, data, g);      // a, b: width, depth (laid along: b its length); c: height; d: top scale; e: laid along; p[17]: the rings
   }
   return G.geometry();
 }

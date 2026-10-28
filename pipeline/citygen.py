@@ -32,10 +32,29 @@ from shapely.geometry.polygon import orient
 from shapely.ops import unary_union
 from shapely import affinity
 
-BOX, GABLE, FRUSTUM, CYL, CONE = 0, 1, 2, 3, 4
+BOX, GABLE, FRUSTUM, CYL, CONE, REVOLVE, PRISM = 0, 1, 2, 3, 4, 5, 6   # REVOLVE, PRISM carry their shape after the building's centre (record field 17)
 FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH = range(11)
 PLINTH = 11   # a body's base on a slope (_emit): darker than the walls, so a tall foundation reads as a platform
 DETAIL = {'low': 0, 'medium': 1, 'high': 2}
+
+
+def footprint(p, pad=0.0):
+    """a record's plan on the plate: its outline [(x, z), ...] in model units, grown by `pad` (shrunk when negative). Every reader
+    of a record's plan takes it from here (compile: the period city's outline, where today's buildings give way, what a later
+    quarter keeps clear of; clipcheck; camcheck), so a new kind of primitive is known to all of them at once"""
+    t, cx, cz, rot = p[0], p[1], p[2], p[3]
+    c_, s_ = math.cos(rot), math.sin(rot)
+    if t == REVOLVE:   # an oval (its section's widest point)
+        rm = max(r for r, _ in p[17])
+        pts = [((p[5] / 2 * rm + pad) * math.cos(i * math.tau / 24), (p[6] / 2 * rm + pad) * math.sin(i * math.tau / 24)) for i in range(24)]
+    elif t == PRISM and not p[9]:   # a plan: its outer ring
+        pts = list(Polygon(p[17][0]).buffer(pad, join_style='mitre').exterior.coords)[:-1] if pad else [tuple(q) for q in p[17][0]]
+    else:
+        if t in (BOX, GABLE, FRUSTUM, PRISM): hw = max(p[5], p[8] if t == FRUSTUM else 0) / 2 + pad + (p[8] if t == GABLE else 0); hd = max(p[6], p[9] if t == FRUSTUM else 0) / 2 + pad
+        else: hw = hd = p[5] + pad
+        hw, hd = max(1e-7, hw), max(1e-7, hd)
+        pts = ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))
+    return [(cx + x * c_ - z * s_, cz + x * s_ + z * c_) for x, z in pts]
 
 
 class Builder:
@@ -59,8 +78,9 @@ class Builder:
         self.types = {}    # the declared house types a fabric can name (house_types), name -> complete type
 
     # ------------------------------------------------------------------ low level
-    def _emit(self, t, x, y, theta, z0, a, b, c, d=0.0, e=0.0, part=FAB, g_m=None, rank=None):
-        """x, y UTM metres; theta radians CCW from east (UTM frame); z0 metres above ground; a..e metres. A house's or a hall's
+    def _emit(self, t, x, y, theta, z0, a, b, c, d=0.0, e=0.0, part=FAB, g_m=None, rank=None, shape=None):
+        """x, y UTM metres; theta radians CCW from east (UTM frame); z0 metres above ground; a..e metres (REVOLVE, PRISM: d, e
+        and `shape` as revolve and prism make them). A house's or a hall's
         body on a slope (its foundation deeper than self.plinth) first gets a plinth (PLINTH): a darker base 0.4 m wider all round
         from the foundation's foot up to the ground at its highest corner, so the foundation reads as a platform (台基, 吊腳)
         and not as its walls run down the hill (in the walls' colour it stretches the house)"""
@@ -73,19 +93,55 @@ class Builder:
         base = gm * S * self.gex
         y0 = base + z0 * S * self.hex
         ch = c * S * self.hex
-        if z0 <= 1e-6 and t in (BOX, FRUSTUM, CYL):   # a foundation below grade (deeper by the slope under a building on a hillside)
-            sk = (self.skirt + self.found) * S * self.gex; y0 -= sk; ch += sk
+        if z0 <= 1e-6 and t in (BOX, FRUSTUM, CYL, REVOLVE, PRISM):   # a foundation below grade (deeper by the slope under a building on a hillside)
+            sk = (self.skirt + self.found) * S * self.gex; y0 -= sk
+            if t == REVOLVE:   # the section's base stays at the foot, the rest of it rises by the foundation
+                shape = [[r_, 0.0 if q_ <= 0 else round((q_ * ch + sk) / (ch + sk), 5)] for r_, q_ in shape]
+            elif t == PRISM and e:   # (a section laid along: the same, in model units)
+                shape = [[[u_, 0.0 if v_ <= 0 else round(v_ + sk, 7)] for u_, v_ in r_] for r_ in shape]
+            elif t == PRISM:   # a plan: its sides carried down along their taper, the top shrunk to match
+                k0 = 1 + (1 - d) * sk / max(ch, 1e-12); O_ = shape[0]; gu, gv = sum(q_[0] for q_ in O_) / len(O_), sum(q_[1] for q_ in O_) / len(O_)
+                shape = [[[round(gu + (u_ - gu) * k0, 7), round(gv + (v_ - gv) * k0, 7)] for u_, v_ in r_] for r_ in shape]; d = d / k0
+            ch += sk
         pl = lambda v: v * S
         if t == BOX: rec = [t, mx, mz, -theta, y0, pl(a), pl(b), ch, d, 0]   # d: 1 marks a road piece (strip)
         elif t == GABLE: rec = [t, mx, mz, -theta, y0, pl(a), pl(b), ch, pl(d), 0]
         elif t == FRUSTUM: rec = [t, mx, mz, -theta, y0, pl(a), pl(b), ch, pl(d), pl(e)]
+        elif t in (REVOLVE, PRISM): rec = [t, mx, mz, -theta, y0, pl(a), pl(b), ch, d, e]
         else: rec = [t, mx, mz, 0, y0, pl(a), 0, ch, 0, 0]
         rec = [round(v, 7) if isinstance(v, float) else v for v in rec]
         rec += [r, part, round(base, 7)]
         if self.slope:   # a shear in model space: y += gx * dX + gz * dZ (model z points south, UTM y north)
             rec += [round(self.slope[0] * self.gex, 6), round(-self.slope[1] * self.gex, 6)]
         else: rec += [0, 0]
+        if shape is not None: rec.append(shape)   # (finish puts the building's centre before it)
         self.prims.append(rec); self.meta.append((self.gid, self.tag))
+
+    def revolve(self, x, y, theta, z0, w, d, h, prof, sides=32, part=LMK, g_m=None):
+        """a solid of revolution (engine Geo.revolve): `prof` its section, [(r, y), ...] with r a share of the half width and y of
+        the height h, a closed outline from the base round (the axis r = 0, the base y = 0; the engine draws every other edge);
+        w x d metres across (an oval when they differ, its w along the frame's x), `sides` steps round (8: an octagon). A dome, a
+        drum, a round tower, an amphitheatre's ring"""
+        P_ = [(max(0.0, float(r)), max(0.0, float(q))) for r, q in prof]
+        if len(P_) < 3 or max(r for r, _ in P_) <= 0 or max(q for _, q in P_) <= 0: raise ValueError(f'revolve: a section needs three points or more, off the axis and above the base: {prof}')
+        self._emit(REVOLVE, x, y, theta, z0, w, d, h, int(sides), 0, part=part, g_m=g_m, shape=[[round(r, 5), round(q, 5)] for r, q in P_])
+
+    def prism(self, x, y, theta, z0, rings, h, top=1.0, along=False, part=LMK, g_m=None):
+        """a prism (engine Geo.prism): `rings` the outline in metres, the outer ring then any holes ([(x, y), ...], the last point
+        not repeating the first). A plan (along False): x, y in the frame (building.frame), raised h metres, the top shrunk toward
+        the outer ring's centre by `top` (0: to a point). A section (along True): x across, y up from the foot, laid along the
+        frame's y for h metres, both ends capped. A court's ring of wall, a tower on any plan, a vault, a nave with its aisles"""
+        S = self.F.scale
+        R_ = [[(float(u), float(v)) for u, v in r] for r in rings]
+        if not R_ or any(len(r) < 3 for r in R_): raise ValueError(f'prism: a ring needs three points or more: {rings}')
+        if along:
+            sh = [[[round(u * S, 7), round(max(0.0, v) * S * self.hex, 7)] for u, v in r] for r in R_]
+            w = 2 * max(abs(u) for r in R_ for u, _ in r); hh = max(v for r in R_ for _, v in r)
+            self._emit(PRISM, x, y, theta, z0, w, h, hh, 1.0, 1, part=part, g_m=g_m, shape=sh)
+        else:
+            sh = [[[round(u * S, 7), round(-v * S, 7)] for u, v in r] for r in R_]   # (model z points south)
+            w = 2 * max(abs(u) for r in R_ for u, _ in r); dd = 2 * max(abs(v) for r in R_ for _, v in r)
+            self._emit(PRISM, x, y, theta, z0, w, dd, h, max(0.0, min(1.0, float(top))), 0, part=part, g_m=g_m, shape=sh)
 
     def group(self, tag=None):
         """start a new building group: its primitives rise and fall together (one house, one hall, one wall piece)"""
@@ -95,7 +151,8 @@ class Builder:
     def finish(self, noise=.08, meta=None):
         """rank = distance of the building's centre from the origin, normalised, with noise per building (not per primitive:
         a roof never rises before its walls). Each record gets its building's centre (model xz) as fields 15, 16; `meta`, when
-        a list, receives (group id, source tag, distance in metres) per primitive for compile's stages"""
+        a list, receives (group id, source tag, distance in metres) per primitive for compile's stages. A shape (REVOLVE, PRISM)
+        stays last, field 17"""
         if not self.prims: return []
         acc = {}
         for p, (gid, _) in zip(self.prims, self.meta):
@@ -107,7 +164,7 @@ class Builder:
         for p, (gid, tag) in zip(self.prims, self.meta):
             cx, cz, dm = ctr[gid]
             r = min(1, max(0, dm / mx * (1 - noise) + hrand(gid) * noise))
-            out.append(p[:10] + [round(r, 4)] + p[11:] + [round(cx, 6), round(cz, 6)])
+            out.append(p[:10] + [round(r, 4)] + p[11:15] + [round(cx, 6), round(cz, 6)] + p[15:])
             if meta is not None: meta.append((gid, tag, dm))
         return out
 

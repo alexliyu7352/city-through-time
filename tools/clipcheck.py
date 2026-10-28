@@ -30,6 +30,8 @@ from PIL import Image
 import shapely
 from shapely.geometry import Polygon
 from shapely.strtree import STRtree
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'pipeline'))
+from citygen import footprint
 
 FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH, PLINTH = range(12)
 STREET_M, SHORT_M, STREET_W = 150.0, 20.0, 10.0   # how far a road's end looks for what it leads to; a gap under SHORT_M is near enough; roads this wide or wider (metres)
@@ -37,13 +39,11 @@ SKIRT = 3.0       # metres every body reaches below grade (citygen Builder.skirt
 FOUND_MAX = .3    # a foundation on screen over this share of its building's height is tall (tall_foundation)
 
 
+SOLID = (0, 2, 5, 6)   # the record types that are bodies (box, frustum, solid of revolution, prism; not a roof, a trunk, a cone)
+
+
 def rect(p, shrink=0.0):
-    t, cx, cz, rot = p[0], p[1], p[2], p[3]
-    if t in (0, 2): hw, hd = max(p[5], p[8] if t == 2 else 0) / 2, max(p[6], p[9] if t == 2 else 0) / 2
-    else: hw = hd = p[5]
-    hw, hd = max(1e-7, hw - shrink), max(1e-7, hd - shrink)
-    c, s = math.cos(rot), math.sin(rot)
-    return Polygon([(cx + x * c - z * s, cz + x * s + z * c) for x, z in ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))])
+    return Polygon(footprint(p, -shrink))   # (citygen.footprint: every reader of a record's plan)
 
 
 def main():
@@ -52,7 +52,6 @@ def main():
     S = M['scale']; m2 = (1 / S) ** -2   # model units^2 per m^2
     min_area = 2.0 * m2
     PW, PD = M['size']
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'pipeline'))
     import terrainio
     timg, tj = terrainio.load(city)
     tex = M['terrain'].get('exaggeration', 3) if M.get('terrain') else 3
@@ -77,7 +76,7 @@ def main():
     for e in FILM.get('eras', []):
         prims = json.load(open(os.path.join(city, 'build', e['file'])))['prims']
         ground = [p for p in prims if p[4] <= p[12] + 1e-9 and p[11] != PLINTH]   # primitives that start at (or below) grade, not plinths
-        body = lambda parts: [p for p in ground if p[11] in parts and p[0] in (0, 2)]
+        body = lambda parts: [p for p in ground if p[11] in parts and p[0] in SOLID]
         houses = [rect(p, .3 * S) for p in body((FAB,))]
         hard = [rect(p, .3 * S) for p in body((WALL, LMK, EARTH, WATER))]
         streets = [rect(p, .5 * S) for p in body((PAVE,)) if p[5] > 12 * S or p[6] > 12 * S]
@@ -95,7 +94,7 @@ def main():
         overlaps(houses, streets, 'houses_vs_streets')
         # a trunk inside a body: its foot below the body's top, inside its footprint (a hall on a podium starts above grade, so
         # every body counts, at any height; a tree on top of a terrace stands at its top and is not inside it)
-        bp = [p for p in prims if p[11] in (FAB, LMK, EARTH) and p[0] in (0, 2)]
+        bp = [p for p in prims if p[11] in (FAB, LMK, EARTH) and p[0] in SOLID]
         bodies = [rect(p, .1 * S) for p in bp]
         if trunks and bodies:
             tree = STRtree(bodies); n = 0; ex = []
@@ -139,7 +138,7 @@ def main():
         roads = [p for p in prims if p[0] == 0 and p[11] == PAVE and len(p) > 8 and p[8] == 1 and p[6] >= STREET_W * S]   # (a lane may stop inside its block)
         if roads:
             rr = [rect(p, -.5 * S) for p in roads]; rtree = STRtree(rr)
-            goal = [rect(p) for p in prims if p[0] in (0, 2) and p[11] in (LMK, EARTH, WALL) and p[7] > 1.5 * S * tex]
+            goal = [rect(p) for p in prims if p[0] in SOLID and p[11] in (LMK, EARTH, WALL) and p[7] > 1.5 * S * tex]
             gtree = STRtree(goal) if goal else None; n = 0; ex = []
             for i, p in enumerate(roads):
                 c_, s_ = math.cos(p[3]), math.sin(p[3])
@@ -170,11 +169,11 @@ def main():
         R['floating'] = len(fl); R['floating_at'] = [[round(p[1], 4), round(p[2], 4)] for p in fl[:5]]
         cut = []
         for p in ground:
-            if p[11] in (TREE, WATER, PAVE) or p[0] not in (0, 2): continue
+            if p[11] in (TREE, WATER, PAVE) or p[0] not in SOLID: continue
             hb = p[4] + p[7] - p[12]                                   # body height above its own ground
             if hb <= 0: continue
-            P = rect(p); xs, zs = P.exterior.xy
-            pts = list(zip(xs[:4], zs[:4])) + [((xs[i] + xs[i + 1]) / 2, (zs[i] + zs[i + 1]) / 2) for i in range(4)]
+            P = rect(p); xs, zs = P.exterior.xy; k_ = len(xs) - 1
+            pts = list(zip(xs[:k_], zs[:k_])) + [((xs[i] + xs[i + 1]) / 2, (zs[i] + zs[i + 1]) / 2) for i in range(k_)]
             gx, gz = (p[13], p[14]) if len(p) > 14 else (0.0, 0.0)   # a piece laid along a slope: its ground is a plane
             rise_ = max(plate_y(x, z) - (gx * (x - p[1]) + gz * (z - p[2])) for x, z in pts) - p[12]
             if rise_ > max(.5 * hb, 1.0 * S * tex): cut.append(p)

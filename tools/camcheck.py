@@ -16,6 +16,8 @@ import json, math, os, sys
 import numpy as np
 import shapely
 from PIL import Image
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'pipeline'))
+from citygen import footprint
 
 FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH, PLINTH = range(12)
 
@@ -53,11 +55,8 @@ def main():
         polys, base, top = [], [], []
         start = np.array([e['on'] + p[10] * e['span'] for p in prims]); bc = np.array([[p[15], p[16]] if len(p) > 16 else [p[1], p[2]] for p in prims])
         for p in prims:
-            t, cx, cz, rot = p[0], p[1], p[2], p[3]
-            hw, hd = (max(p[5], p[8] if t == 2 else 0) / 2 + (p[8] if t == 1 else 0), max(p[6], p[9] if t == 2 else 0) / 2) if t in (0, 1, 2) else (p[5], p[5])
-            c_, s_ = math.cos(rot), math.sin(rot)
-            polys.append([(cx + x * c_ - z * s_, cz + x * s_ + z * c_) for x, z in ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))])
-            tilt = (abs(p[13]) + abs(p[14])) * max(hw, hd) if len(p) > 14 else 0.0   # a piece laid along a slope rises and falls by this much
+            polys.append(footprint(p))
+            tilt = max(abs(p[13] * (x - p[1]) + p[14] * (z - p[2])) for x, z in polys[-1]) if len(p) > 14 else 0.0   # a piece laid along a slope rises and falls by this much at its corners
             base.append(p[4] - tilt); top.append(p[4] + p[7] + tilt)
         g = shapely.polygons(polys)
         eras.append({'e': e, 'g': g, 'tree': shapely.STRtree(g), 'base': np.array(base), 'top': np.array(top), 'start': start, 'bc': bc, 'gy': np.array([p[12] for p in prims])})

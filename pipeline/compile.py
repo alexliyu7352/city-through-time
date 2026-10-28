@@ -248,10 +248,7 @@ def era_boundary(prims, cs):
     S = F.scale; feet = []
     for p in prims:
         if p[4] > p[12] + 1e-9 or p[11] in (4, 5, 7): continue
-        t, cx, cz, rot = p[0], p[1], p[2], p[3]
-        hw, hd = (max(p[5], p[8] if t == 2 else 0) / 2 + (p[8] if t == 1 else 0), max(p[6], p[9] if t == 2 else 0) / 2) if t in (0, 1, 2) else (p[5], p[5])
-        c_, s_ = math.cos(rot), math.sin(rot)
-        feet.append([(cx + x * c_ - z * s_, cz + x * s_ + z * c_) for x, z in ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))])
+        feet.append(citygen.footprint(p))
     if not feet: return []
     R = cs.get('boundary_close_m', 70) * S
     # grow every footprint first, then union (the union of grown rectangles is simple; buffering a union of 30k pieces takes minutes)
@@ -281,14 +278,6 @@ def edge_sdf(bnd, D):
     PWm, PDm = F.size
     return img, [round(x0 / PWm + .5, 6), round(z0 / PDm + .5, 6), round(x1 / PWm + .5, 6), round(z1 / PDm + .5, 6)]
 
-def rect_of(p, pad=0.0):
-    """a primitive's footprint corners (model xz), padded"""
-    t, cx, cz, rot = p[0], p[1], p[2], p[3]
-    if t in (0, 1, 2): hw = max(p[5], p[8] if t == 2 else 0) / 2 + pad + (p[8] if t == 1 else 0); hd = max(p[6], p[9] if t == 2 else 0) / 2 + pad
-    else: hw = hd = p[5] + pad
-    c_, s_ = math.cos(rot), math.sin(rot)
-    return [(cx + x * c_ - z * s_, cz + x * s_ + z * c_) for x, z in ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))]
-
 def hide_layer(prims, cs, bnd=()):
     """where an era city stands, today's buildings step aside. The value is .04 + .96 x the rank (start time, 0..1 over the
     era's rise) of the era building at that spot, so today's building there sinks just before the old one beside it rises,
@@ -302,14 +291,14 @@ def hide_layer(prims, cs, bnd=()):
     code = lambda r: max(10, int(round((.04 + .96 * r) * 255)))
     im = Image.new('L', (HW, HH), 0); dr = ImageDraw.Draw(im)
     for p in sorted(prims, key=lambda q: -q[10]):   # the earliest rank wins where footprints overlap: drawn last
-        dr.polygon([U_(x, z) for x, z in rect_of(p, pad)], fill=code(p[10]))
+        dr.polygon([U_(x, z) for x, z in citygen.footprint(p, pad)], fill=code(p[10]))
     FOOT[cs.get('_id', '')] = im.point(lambda v: 255 if v else 0)   # the era's own footprint (the finale's fallback)
     try:   # whole buildings of today that touch the era city step aside with the earliest era building they touch
         from shapely.geometry import Polygon as _P
         from shapely.strtree import STRtree as _T
         ground = [p for p in prims if p[4] <= p[12] + 1e-9 and p[11] not in (4, 5, 7)]
         if ground:
-            tree = _T([_P(rect_of(p)) for p in ground]); rk = _np.array([p[10] for p in ground])
+            tree = _T([_P(citygen.footprint(p)) for p in ground]); rk = _np.array([p[10] for p in ground])
             for b in _MODEL['p']:
                 ring = b[2][0]
                 if len(ring) < 3: continue
@@ -608,10 +597,7 @@ def gen_city(node):
         for oid in cs['avoid_eras']:
             for p in PRIMS[oid]:
                 if p[11] == 4: continue
-                t_, cx, cz, rot = p[0], p[1], p[2], p[3]
-                hw, hd = (max(p[5], p[8] if t_ == 2 else 0) / 2 + (p[8] if t_ == 1 else 0), max(p[6], p[9] if t_ == 2 else 0) / 2) if t_ in (0, 1, 2) else (p[5], p[5])
-                c_, s_ = math.cos(rot), math.sin(rot)
-                fx.append([((cx + x * c_ - z * s_) / F.scale + F.cx, -(cz + x * s_ + z * c_) / F.scale + F.cy) for x, z in ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))])
+                fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer(_sh.polygons(fx), 4.0, join_style='mitre'))
     meta_ = []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_)
     CITY_META[node['id']] = meta_
