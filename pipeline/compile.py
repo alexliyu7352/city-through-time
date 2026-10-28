@@ -509,6 +509,43 @@ def footage_item(ft, on, nid):
             'mode': ft.get('mode', 'full'), 'side': ft.get('side', 'right'),
             'anchor': (F.model_lonlat(*ft['anchor']) + [ground_ll(*ft['anchor'])]) if 'anchor' in ft else None,
             'force': bool(ft.get('force')), '_with': ft.get('with'), '_node': nid}   # force: shown over a change on purpose (docs/STAGING.md 5b)
+
+# a living moment (docs/STAGING.md "Living moments"): a picture of the period made from one shot of the model (tools/living.py)
+# and projected back onto it from that shot's camera. Its kicker says what it is: the first language's word, the second's in
+# capitals, "from the sources"
+KICKER_LIVING = ' · '.join([i18n.word(LANG[0], 'reconstruction')] + ([i18n.word(LANG[1], 'reconstruction').upper()] if len(LANG) > 1 else []) + [i18n.word(LANG[0], 'from_sources')])
+LIVE_T = {'arrive': 2.5, 'reveal': 3.5, 'hold': 6.0, 'out': 1.5, 'back': 2.0}   # seconds of its phases (the ring starts at `at`/`with`)
+LIVING_BAD = []   # moments whose picture is missing or was made from another shot: compile writes its outputs, then stops
+
+def living_item(lv, on, nid):
+    """a living moment as film.json gives it to the engine: the shot (a camera key, the projector), its phases from `on`, where
+    the ring starts (the viewer's foot unless `from: [lon, lat]`), weather, zoom and label; its picture checked against the shot"""
+    id_ = lv.get('id'); where_ = f'compile: node {nid}: living {id_}'
+    if 'shot' not in lv: raise SystemExit(f'{where_}: no shot (the camera the picture is made from: {{ ll: [lon, lat], az, el, d, fov }})')
+    cam_ = camv(lv['shot']); x_, y_, z_, az_, el_, d_, fov_ = cam_
+    a_, e_ = math.radians(az_), math.radians(el_)
+    org_ = [round(x_ + d_ * math.sin(a_) * math.cos(e_), 5), round(z_ + d_ * math.cos(a_) * math.cos(e_), 5)] if lv.get('from', 'viewer') == 'viewer' else F.model_lonlat(*lv['from'])
+    w_ = lv.get('weather') or {}
+    if set(w_) - {'rain', 'mist', 'mist_y'}: raise SystemExit(f'{where_}: weather: {{ rain: 0..1, mist: 0..1, mist_y: 0..1 }} (got {w_})')
+    file_ = lv.get('file', f'assets/living/{id_}.png'); side_ = os.path.splitext(file_)[0] + '.json'
+    if not os.path.exists(os.path.join(D, file_)):
+        LIVING_BAD.append(f'living {id_}: no picture at {file_} yet: run uv run python -I tools/living.py ref {D} {id_}, then gen (or adopt a picture made elsewhere)')
+    elif not os.path.exists(os.path.join(D, side_)):
+        LIVING_BAD.append(f'living {id_}: {file_} has no record of the shot it was made from ({side_}): run tools/living.py adopt {D} {id_} once it is checked')
+    else:
+        rec_ = json.load(open(os.path.join(D, side_), encoding='utf-8'))
+        if any(abs(float(p_) - float(q_)) > 1e-4 for p_, q_ in zip(rec_.get('cam', []), cam_)) or len(rec_.get('cam', [])) != 7:
+            LIVING_BAD.append(f'living {id_}: the shot changed since {file_} was made ({rec_.get("cam")} -> {cam_}): the picture no longer lines up; run tools/living.py ref and gen again')
+    card_ = os.path.join(D, 'research', 'living', f'{id_}.yaml'); src_ = []   # the scene card: what the picture shows, from which sources
+    if not os.path.exists(card_): LIVING_BAD.append(f'living {id_}: no scene card at research/living/{id_}.yaml (place, when, picture, avoid, sources)')
+    else:
+        c_ = yaml.safe_load(open(card_, encoding='utf-8')) or {}; src_ = [str(x_) for x_ in (c_.get('sources') or [])]
+        if not src_ or not c_.get('picture'): LIVING_BAD.append(f'living {id_}: research/living/{id_}.yaml needs picture and sources')
+    a2_, b2_ = ab(lv) if any(k_ in lv for k_ in LANG) else ('', None)
+    return {'id': id_, 'file': file_, 'on': on, 'cam': cam_, 'origin': org_, **{k_: float(lv.get(k_, v_)) for k_, v_ in LIVE_T.items()},
+            'zoom': float(lv.get('zoom', .94)), 'rain': float(w_.get('rain', 0)), 'mist': float(w_.get('mist', 0)), 'mistY': float(w_.get('mist_y', .7)),
+            'kicker': pick(lv['kicker']) if 'kicker' in lv else KICKER_LIVING, 'title': a2_ or '', 'sub': b2_ or '', 'sources': src_, '_node': nid}
+
 def spot_item(sp, t0, t1, nid):
     """a spot (docs/STAGING.md "Spot"): the light falls on one place, the rest of the room goes dark"""
     if 'll' not in sp: raise SystemExit(f'compile: node {nid}: spot: ll: [lon, lat] (the subject) and r_m (the lit radius)')
@@ -522,6 +559,7 @@ yearline = []
 nodes_out = []
 epochs, lines, pins, marks, picks, ranges, readouts, cues, cam, decals_out, footage_out, grow, height, evs = [], [], [], [], [], [], [], [], [], [], [], None, None, []
 props_out, tally_keys, sections, eras_out, hide_regions, night_keys, routes_out, dim_keys = [], [], [], [], [], [], [], []
+living_out = []
 spots_out = []
 ctx_keys = []   # the land beyond the plate (terrain.context): [t, [opacity]]
 sky_out = None
@@ -732,7 +770,7 @@ def bind_pictures(node):
     until: <line id>) plus hold seconds. An area hands its with on to the outline and name it becomes (expand_areas). The time
     itself is node_time's {with: ...}"""
     W_ = lambda it, plus: {'with': it['with'], 'plus': float(it.get('plus', plus))}
-    for lst in (node.get('footage', []), node.get('routes', []), node.get('epochs', []), node.get('lines', []), node.get('decals', []),
+    for lst in (node.get('footage', []), node.get('living', []), node.get('routes', []), node.get('epochs', []), node.get('lines', []), node.get('decals', []),
                 (node.get('city') or {}).get('stages', [])):
         for it in lst:
             if 'with' not in it: continue
@@ -1234,6 +1272,7 @@ for i, node in enumerate(FM['nodes']):
         if 'back_at' in s_: epochs_sat['back'] = T(s_['back_at']); epochs_sat['backFade'] = s_.get('back_fade', s_.get('fade', 4.0))   # a second line gives the model back
         FM['_satellite'] = epochs_sat
     for ft in node.get('footage', []): footage_out.append(footage_item(ft, T(ft.get('at', 0)), node['id']))
+    for lv in node.get('living', []): living_out.append(living_item(lv, T(lv.get('at', 0)), node['id']))
     for sp in node.get('spot', []):
         if 'with' in sp: spots_out.append(spot_item(sp, T(sp['t0']), T(sp['t1']), node['id']))
         else: spots_out.append(spot_item(sp, T(sp.get('at', 0)), T(sp.get('at', 0)) + float(sp.get('dur', 6)), node['id']))
@@ -1717,6 +1756,7 @@ film = {
     'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
+    'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],
     'spots': spots_out,
     'night_look': NIGHT_LOOK,
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
@@ -1957,6 +1997,14 @@ if _bad and os.environ.get('CT_MODELCHECK') != 'warn':
     raise SystemExit(f'compile: the model fails {" and ".join(_bad)} (build/logs/{_bad[0]}.log): a period city: fix it (pipeline/citygen.py, '
                      f'the city\'s spec) and compile again, tools/eraview.mjs and play.html?view show where; "today floating": today\'s '
                      f'buildings were prepared on another terrain or seated another way: run pipeline/prep.py again (docs/MODEL.md, Ground and terrain)')
+# living moments: one at a time, never with another picture (footage, a panel, a card); each needs its picture, made from its own shot
+_lw = sorted([(x_['on'] - x_['arrive'], x_['on'] + x_['reveal'] + x_['hold'] + x_['out'] + x_['back'], x_['id']) for x_ in living_out])
+for (a0_, a1_, ai_), (b0_, b1_, bi_) in zip(_lw, _lw[1:]):
+    if b0_ < a1_: LIVING_BAD.append(f'living {bi_} ({b0_:.1f}-{b1_:.1f} s) starts before living {ai_} has ended ({a1_:.1f} s)')
+for a0_, a1_, ai_ in _lw:
+    for f_ in footage_out:
+        if f_['on'] < a1_ and a0_ < f_['on'] + f_['dur']: LIVING_BAD.append(f'living {ai_} ({a0_:.1f}-{a1_:.1f} s) overlaps the picture {f_["id"]} ({f_["mode"]}, {f_["on"]:.1f}-{f_["on"] + f_["dur"]:.1f} s): one picture at a time')
+for m_ in LIVING_BAD: print('  ' + m_)
 _dead = _dead_air()
 open(LAYOUT.logs(D, 'deadair.txt'), 'w', encoding='utf-8').write('\n'.join(_dead) + '\n')
 print(f'  dead air: {len(_dead)} stretch(es)' + ''.join('\n    ' + d_ for d_ in _dead))
@@ -2002,3 +2050,5 @@ def _unread(o, path=''):
 _nobody = list(_unread(C))
 if _nobody: WARN.append('city.yaml keys nothing reads (a typo, a key in the wrong place, or one this version does not have): ' + ', '.join(_nobody))
 for w_ in WARN: print('warning: ' + w_, file=sys.stderr)
+if LIVING_BAD and os.environ.get('CT_LIVING') != 'warn':   # (CT_LIVING=warn: report only, while the pictures are being made: tools/living.py ref reads film.json)
+    raise SystemExit('compile: living moments (docs/STAGING.md "Living moments"): ' + '; '.join(LIVING_BAD))

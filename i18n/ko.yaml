@@ -7,6 +7,7 @@ year: { bce: "기원전 {y}년", ce: "{y}", tick_bce: "기원전 {y}", tick_ce: 
 words:
   today: 오늘
   footage: 실사
+  reconstruction: AI 생성 재현
   photo: 사진
   archive: 사료
   source: 사료

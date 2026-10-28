@@ -25,6 +25,7 @@ def files(D):
     built += [(F.get(k) or {}).get('file') for k in ('voice', 'score', 'sfx')] + [(F.get('score') or {}).get('loop')]
     out += ['build/' + f for f in built if f]
     out += [f['file'] for f in F.get('footage') or []]   # (relative to the city folder: assets/...)
+    out += [v['file'] for v in F.get('living') or []]   # living moments' pictures (assets/living/)
     return list(dict.fromkeys(out))
 
 

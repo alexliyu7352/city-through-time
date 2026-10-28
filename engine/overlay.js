@@ -429,5 +429,5 @@ export function makeOverlay(canvas) {
     (e.lines || []).forEach((s, i) => { const hi = i < (e.bright || 1); txt('end_l' + i, s, X, y, hi ? 'mono' : 'zh_sans', hi ? 22 : 21, hi ? 'rgba(230,234,240,.85)' : 'rgba(225,230,236,.7)', a, { ls: hi ? 2 : 1 }); y += 36; });
   }
 
-  return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, noteDrop };
+  return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, noteDrop };
 }

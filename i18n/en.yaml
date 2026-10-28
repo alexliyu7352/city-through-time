@@ -8,6 +8,7 @@ year: { bce: "{y} BCE", ce: "{y}", tick_bce: "{y} BCE", tick_ce: "{y}", label: "
 words:
   today: Today
   footage: Footage
+  reconstruction: AI-generated reconstruction
   photo: Photo
   archive: Archive
   source: Source

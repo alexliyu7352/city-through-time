@@ -8,6 +8,7 @@ year: { bce: "前 {y}", ce: "{y}", tick_bce: "前{y}", tick_ce: "{y}", label: "{
 words:
   today: 今天
   footage: 實拍
+  reconstruction: AI 生成重現
   photo: 照片
   archive: 史料
   source: 史料

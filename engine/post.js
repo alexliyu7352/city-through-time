@@ -102,13 +102,31 @@ const ditherShader = {
     void main(){ vec4 c = texture2D(tDiffuse, vUv); vec2 p = gl_FragCoord.xy; c.rgb += (h(p) - h(p + 17.31)) * (1.5 / 255.); gl_FragColor = c; }`
 };
 
+// weather over a living moment's picture: a band of mist drifting across the horizon (uMistY: its height in the frame, 0 bottom)
+// and a fine slanting rain; off (the pass disabled) unless a moment asks for it
+const weatherShader = {
+  uniforms: { tDiffuse: { value: null }, uRain: { value: 0 }, uMist: { value: 0 }, uMistY: { value: .7 }, uT: { value: 0 } },
+  vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }`,
+  fragmentShader: `varying vec2 vUv; uniform sampler2D tDiffuse; uniform float uRain, uMist, uMistY, uT;
+    float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+    float vn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f); return mix(mix(h(i), h(i + vec2(1, 0)), f.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), f.x), f.y); }
+    float fbm(vec2 p){ float a = .5, s = 0.; for (int i = 0; i < 4; i++) { s += a * vn(p); p *= 2.03; a *= .5; } return s; }
+    void main(){ vec4 c = texture2D(tDiffuse, vUv);
+      float band = pow(clamp(1. - abs(vUv.y - uMistY) / .16, 0., 1.), 1.3);
+      c.rgb = mix(c.rgb, vec3(.55, .6, .66), fbm(vec2(vUv.x * 3. + uT * .04, vUv.y * 6.)) * band * uMist);
+      vec2 q = vec2(vUv.x * 160. + vUv.y * 25., vUv.y * 40. + uT * 22.), f = fract(q);
+      float s = step(.86, h(floor(q))) * smoothstep(0., .05, f.x) * smoothstep(.12, .05, f.x) * smoothstep(0., .3, f.y) * smoothstep(1., .6, f.y);
+      c.rgb += vec3(.7, .74, .8) * s * uRain * .25; gl_FragColor = c; }`
+};
+
 export function makePost(renderer, scene, camera, w, h, o = {}) {
   const s = o.ssaa || 1, W = w * s, H = h * s;
   const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType }));
   const dof = new DofScenePass(scene, camera, W, H, o);
   const bloom = new UnrealBloomPass(new THREE.Vector2(W, H), .2, .5, 1.6);
   const vig = new ShaderPass(vignetteShader);
+  const weather = new ShaderPass(weatherShader); weather.enabled = false;
   const out = new OutputPass();
-  composer.addPass(dof); composer.addPass(bloom); composer.addPass(vig); composer.addPass(out); composer.addPass(new ShaderPass(ditherShader));
-  return { composer, dof, bloom, vig };
+  composer.addPass(dof); composer.addPass(bloom); composer.addPass(weather); composer.addPass(vig); composer.addPass(out); composer.addPass(new ShaderPass(ditherShader));
+  return { composer, dof, bloom, vig, weather };
 }

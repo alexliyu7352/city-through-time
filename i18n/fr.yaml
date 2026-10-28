@@ -7,6 +7,7 @@ year: { bce: "{y} av. J.-C.", ce: "{y}", tick_bce: "{y} av. J.-C.", tick_ce: "{y
 words:
   today: Aujourd'hui
   footage: Images réelles
+  reconstruction: Reconstitution générée par IA
   photo: Photo
   archive: Archives
   source: Source

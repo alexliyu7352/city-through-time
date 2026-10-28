@@ -25,6 +25,7 @@ const FILM = await L.json(B + 'film.json');
 L.want([...(FILM.decals || []).map(d => B + d.file), FILM.satellite && B + FILM.satellite.file, FILM.grow && FILM.grow.tfile && B + FILM.grow.tfile,
   ...(FILM.eras || []).map(e => B + e.file), ...(FILM.footage || []).map(f => base + f.file)]);
 if (FILM.context && !QS.has('flat')) L.want([B + FILM.context.file], { optional: true });
+L.want((FILM.living || []).map(v => base + v.file), { optional: true });   // (a living moment's picture: missing until tools/living.py has made it)
 L.sizes(Object.fromEntries(FILM.fonts.faces.filter(f => f.bytes).map(f => [f.file, f.bytes])));   // (the fonts come from this page's server)
 L.want(FILM.fonts.faces.map(f => f.file));
 const SOUND = PLAY ? [FILM.voice && FILM.voice.file, FILM.score && FILM.score.file, FILM.sfx && FILM.sfx.file, FILM.score && FILM.score.loop].map(f => f && B + f) : [];
@@ -118,6 +119,39 @@ if (FILM.shade) { const a = THREE.MathUtils.degToRad(FILM.shade.az), e = THREE.M
 const TK = FILM.tally && FILM.tally.keys && FILM.tally.keys.length ? track(FILM.tally.keys) : null;
 for (const d of FILM.decals || []) U.uDrect.value[d.i].set(d.uv[0], d.uv[1], d.uv[2], d.uv[3]);
 U.uNightDeep.value = (FILM.night_look && FILM.night_look.deep) || 0;   // film.night_look.deep: the night city (docs/STAGING.md)
+// living moments (film.living, docs/STAGING.md "Living moments"): a picture of the period made from this very shot of the model and
+// projected back onto it from the shot's own camera. The camera arrives and stops (the projection is exact only from there: it may
+// zoom, never move), today's city sinks, a ring of light spreads from the viewer and turns the white model into the living town,
+// the sky and the far land come with it; it holds (a slow zoom, weather), dissolves back to the model, and the camera goes on
+const LIVING = FILM.living || [], LIVETEX = {}, PCAM = new THREE.PerspectiveCamera();
+for (const v of LIVING) { try { const t_ = await tex(base + v.file); t_.colorSpace = THREE.SRGBColorSpace; t_.anisotropy = 8; LIVETEX[v.id] = t_; } catch { /* no picture yet: compile said so */ } }
+let LV = null;   // this frame's moment: { L, cam: the shot's share of the camera, k: the scene's (today sunk, lines out), pa: the picture, r: the ring, sky, zoom }
+function liveAt(t) {
+  for (const L of LIVING) {
+    const a0 = L.on - L.arrive, r1 = L.on + L.reveal, h1 = r1 + L.hold, o1 = h1 + L.out, b1 = o1 + L.back;
+    if (t < a0 || t > b1) continue;
+    const cam = t < L.on ? ss(seg(t, a0, L.on)) : t <= o1 ? 1 : 1 - ss(seg(t, o1, b1));
+    const k = t < L.on ? ss(seg(t, a0 + L.arrive * .3, L.on)) : t <= o1 ? 1 : 1 - ss(seg(t, o1, b1));
+    const rk = seg(t, L.on, r1), e = ss(Math.min(1, rk / .82)), tail = Math.max(0, (rk - .82) / .18);   // the ring crosses the town, then runs out to the horizon
+    return { L, cam, k, pa: t < L.on ? 0 : 1 - ss(seg(t, h1, o1)), r: t < L.on ? 0 : 6 * L.cam[5] * e + 2 * tail * tail, sky: ss(seg(rk, .35, .85)), zoom: lerp(1, L.zoom, ss(seg(t, r1, h1))) };
+  }
+  return null;
+}
+function setLiving(t) {
+  const Wp = post.weather, L = LV && LV.L, tx_ = L && LIVETEX[L.id];
+  U.uLiveSink.value = LV ? LV.k : 0; U.uEdgeGain.value = (LOOK.edge ?? 1) * (1 - (LV ? LV.k : 0));
+  if (!tx_) { U.uPA.value = 0; S.liveSky.visible = false; Wp.enabled = false; return; }   // (no moment now, or its picture is not made yet: the white model holds the shot)
+  const [px, py, pz, paz, pel, pd, pfov] = L.cam, a = THREE.MathUtils.degToRad(paz), e = THREE.MathUtils.degToRad(pel);   // the projector: the shot's camera, no drift, no zoom
+  PCAM.fov = pfov; PCAM.aspect = W / H; PCAM.near = Math.min(.02, Math.max(.0003, pd * .04)); PCAM.far = camera.far;
+  PCAM.position.set(px + pd * Math.sin(a) * Math.cos(e), py + pd * Math.sin(e), pz + pd * Math.cos(a) * Math.cos(e)); PCAM.lookAt(px, py, pz);
+  PCAM.updateProjectionMatrix(); PCAM.updateMatrixWorld(); U.uPM.value.multiplyMatrices(PCAM.projectionMatrix, PCAM.matrixWorldInverse); U.uPI.value = tx_;
+  U.uPA.value = LV.pa; U.uPRC.value.set(L.origin[0], L.origin[1]); U.uPRR.value = LV.r; U.uPF.value = LV.sky; U.uPF0.value = 5 * pd; U.uPF1.value = 8 * pd;
+  const dist = .3, hh = 2 * dist * Math.tan(THREE.MathUtils.degToRad(pfov / 2)), fwd = new THREE.Vector3(); PCAM.getWorldDirection(fwd);   // the sky card behind the town
+  S.liveSky.position.copy(PCAM.position).addScaledVector(fwd, dist); S.liveSky.quaternion.copy(PCAM.quaternion); S.liveSky.scale.set(hh * PCAM.aspect * 1.6, hh * 1.6, 1);
+  S.liveSky.material.uniforms.uA.value = LV.sky * LV.pa; S.liveSky.visible = LV.sky * LV.pa > 0;
+  const wk = LV.sky * LV.pa; Wp.enabled = wk > 0 && (L.rain > 0 || L.mist > 0);
+  Wp.uniforms.uRain.value = L.rain * wk; Wp.uniforms.uMist.value = L.mist * wk; Wp.uniforms.uMistY.value = L.mistY; Wp.uniforms.uT.value = t;
+}
 // real footage: one <video> per clip, seeked deterministically to the frame's time
 const VID = {};
 for (const f of FILM.footage || []) {
@@ -160,9 +194,13 @@ const tgt = new THREE.Vector3();
 const CAMQ = QS.has('cam') ? QS.get('cam').split(',').map(Number) : null;   // stills: a fixed camera "tx,ty,tz,az,el,d"
 let camDist = 1, camElev = 30;
 function setCamera(t) {
-  let [tx, ty, tz, az, el, d, fov] = CAMQ || CAM(t); camDist = d; camElev = el; const az0 = az;   // (the key light turns with the shot, not the drift)
-  // a breath of hand-held drift so holds never freeze (deterministic in t, scaled to the shot's distance)
-  const dr = (FILM.drift ?? 1) * d * .012; az += Math.sin(t * .37) * .9 * (FILM.drift ?? 1); el += Math.sin(t * .23 + 1.2) * .5 * (FILM.drift ?? 1);
+  let [tx, ty, tz, az, el, d, fov] = CAMQ || CAM(t);
+  const lb = LV && !CAMQ ? LV.cam : 0;   // a living moment's shot takes over: the camera arrives, stops (it may only zoom), and leaves
+  if (lb > 0) { const s_ = LV.L.cam, daz = ((s_[3] - az) % 360 + 540) % 360 - 180;
+    tx = lerp(tx, s_[0], lb); ty = lerp(ty, s_[1], lb); tz = lerp(tz, s_[2], lb); az += daz * lb; el = lerp(el, s_[4], lb); d = lerp(d, s_[5], lb); fov = lerp(fov || FILM.fov || 30, s_[6] * LV.zoom, lb); }
+  camDist = d; camElev = el; const az0 = az;   // (the key light turns with the shot, not the drift)
+  // a breath of hand-held drift so holds never freeze (deterministic in t, scaled to the shot's distance; none on a living moment's shot)
+  const DF = (FILM.drift ?? 1) * (1 - lb), dr = DF * d * .012; az += Math.sin(t * .37) * .9 * DF; el += Math.sin(t * .23 + 1.2) * .5 * DF;
   tx += Math.sin(t * .29 + .4) * dr; tz += Math.cos(t * .19 + 2.1) * dr; ty += Math.sin(t * .31 + .9) * dr * .3;
   tgt.set(tx, ty, tz); S.followShadow(tx, ty, tz, d, az0);
   const a = THREE.MathUtils.degToRad(az), e = THREE.MathUtils.degToRad(el);
@@ -170,7 +208,7 @@ function setCamera(t) {
   camera.fov = fov || FILM.fov || 30;
   camera.near = Math.min(.02, Math.max(.0003, d * .04));   // close shots fly through the streets: the near plane follows the distance
   camera.updateProjectionMatrix(); camera.lookAt(tgt); camera.updateMatrixWorld();
-  lens(d);
+  lens(d); if (LV) post.dof.aper *= 1 - LV.k;   // (no depth of field over a living moment: the picture is sharp throughout)
 }
 // depth of field: blur in pixels goes as aperture / distance, so close shots get a proportionally smaller aperture
 function lens(d) { post.dof.focus = d; post.dof.aper = d < .15 ? lerp(1.6, 3.2, seg(d, .04, .15)) * Math.max(.2, d / .15) : lerp(3.2, 1.6, seg(d, .15, 2.2)); post.dof.maxCoc = d < .15 ? 7 : 10; }
@@ -195,7 +233,7 @@ function setLight(t) {
   scene.backgroundIntensity = lerp(.5, 1, houseK);
   post.bloom.threshold = lerp(1.6, 1.1, Math.min(off, 1 - back));
   U.uFootM.value = Math.max(4, 3 * camDist / M.scale * 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / 1080);   // the walls' dark foot: 4 m, or 3 pixels' worth at the target
-  post.dof.coc.material.uniforms.edgeAmt.value = QS.has('noedge') ? 0 : (FILM.edges ?? .55) * (1 - ss(seg(camDist, .25, .9)));   // fine lines on the close shots
+  post.dof.coc.material.uniforms.edgeAmt.value = QS.has('noedge') ? 0 : (FILM.edges ?? .55) * (1 - ss(seg(camDist, .25, .9))) * (1 - (LV ? LV.k : 0));   // fine lines on the close shots
   const strike = seg(t, LT.lamp, LT.lamp + .12), flick = t > LT.lamp && t < LT.lamp + .25 ? .75 + .25 * Math.sin((t - LT.lamp) * 90) : 1;
   U.uProj.value = strike * flick * (1 - darkK(t)) * (1 - ss(seg(t, LT.lights, LT.lights + .8)));
   S.setBeam(U.uProj.value, ((FILM.epochs || []).some(e => e.offStyle === 'burn' && t >= e.off && t < e.off + (e.offDur ?? 1.2) + 1.5) || (FILM.eras || []).some(e => e.sinkStyle === 'burn' && t >= e.off - e.burn * .6 && t < e.off + e.sink)) ? 1 : 0, t);
@@ -249,7 +287,7 @@ function setLayers(t) {
   U.uPhotoK.value = (SAT?.gain ?? 1) * pdim;
   for (const L of FILM.lines || []) if (lineA[L.id]) {   // (an area's outline flares as it is named)
     const fl = (L.flash || []).reduce((m, tf) => Math.max(m, Math.exp(-(((t - tf) / .45) ** 2))), 0);
-    lineA[L.id].value = epochAlpha(t, L) * (L.gain || 1) * (1 + 2.2 * fl);
+    lineA[L.id].value = epochAlpha(t, L) * (L.gain || 1) * (1 + 2.2 * fl) * (1 - (LV ? LV.k : 0));
   }
   const G = FILM.grow;
   if (G) {
@@ -343,7 +381,7 @@ function setLayers(t) {
       if (F_) { U.uRiseR.value[h] = curveAt(F_.curve, t); U.uRiseO.value[h].set(F_.o[0], F_.o[1]); U.uRiseDir.value[h].set(...(F_.dir || [0, 0]));
         U.uRiseMode.value[h] = F_.mode === 'ring' ? 0 : F_.mode === 'line' ? 1 : 2; U.uRiseW.value[h] = F_.w || 0; }
     }
-    if (S.edges[e.id]) S.edges[e.id].set(Math.max(edgeA, gA * .8) * (LOOK.line ?? 1), gA > edgeA ? S.eras[e.id].base : E.u.uEraCol.value, gA > edgeA ? gD : draw);
+    if (S.edges[e.id]) S.edges[e.id].set(Math.max(edgeA, gA * .8) * (LOOK.line ?? 1) * (1 - (LV ? LV.k : 0)), gA > edgeA ? S.eras[e.id].base : E.u.uEraCol.value, gA > edgeA ? gD : draw);
     if (S.fires[e.id]) S.fires[e.id].set(burn * (gone ? 0 : 1) * U.uProj.value, t, fin ? fr : 1e3, fo);
   }
   // today's city steps back while a period city is told; the change travels with the node's ring: outside it, the level from
@@ -351,7 +389,7 @@ function setLayers(t) {
   U.uDimToday.value = dimAt(t, eraUp) * (1 - today);
   U.uDimToday0.value = ci >= 0 ? dimBefore(nodes_[ci]) * (1 - today) : U.uDimToday.value;
   for (const r of FILM.routes || []) { const R = S.routes[r.id]; const land = r.on + r.draw;   // a landing beam flashes where it lands
-    if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))), r.impact && t >= land ? Math.exp(-(t - land) / .35) : 0); }
+    if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - (LV ? LV.k : 0)), r.impact && t >= land ? Math.exp(-(t - land) / .35) : 0); }
   const NT = FILM.night && FILM.night.length ? track(FILM.night)(t)[0] : 0; U.uNight.value = NT;
   S.setContext(CTXK ? Math.max(0, Math.min(1, CTXK(t)[0])) : 0);
   if (TK) { const [x, y, z, ry, sc, split, glow, vis] = TK(t); S.tally.visible = vis > .5; S.tally.position.set(x, y, z); S.tally.rotation.y = THREE.MathUtils.degToRad(ry); S.tally.scale.setScalar(sc); S.tally.setState(split, glow); S.tally.setLight(sc * sc * (vis > .5 ? 1 : 0)); }
@@ -370,7 +408,7 @@ function drawOverlay(t) {
   OV.begin();
   const { g } = OV;
   const skyA = FILM.sky ? OV.sky(sceneAt(t), FILM.sky, proj3) : 0;   // under everything else on the overlay (part of the city: the prologue's moment)
-  let fa = 0, ffull = 0, fcorner = 0;   // how much of the frame real footage covers (full mode hides the map, the other modes only quiet it); fcorner: a panel or a right-hand document over the locator's corner
+  let fa = LV ? LV.k : 0, ffull = fa, fcorner = 0;   // how much of the frame real footage (or a living moment's picture) covers (full mode hides the map, the other modes only quiet it); fcorner: a panel or a right-hand document over the locator's corner
   for (const f of FILM.footage || []) {
     if (t < f.on - .01 || t > f.on + f.dur + .01) continue;
     const e = { in: seg(t, f.on, f.on + f.fin), out: seg(t, f.on + f.dur - f.fout, f.on + f.dur), k: seg(t, f.on, f.on + f.dur) };
@@ -401,6 +439,7 @@ function drawOverlay(t) {
     const la = (1 - fa) * (1 - fcorner) * (1 - skyA) * (secOn ? 0 : 1) * ss(seg(t, LT.lamp + 1.5, LT.lamp + 3)) * (1 - ss(seg(t, LT.lights - .5, LT.lights)));
     OV.locator(LOC, la, era ? era.outline : null, era ? era.col : '#ffffff', node ? node.label : '', ok ? quad.map(([u, v]) => [Math.max(0, Math.min(1, u)), Math.max(0, Math.min(1, v))]) : null);
   }
+  if (LV && LIVETEX[LV.L.id]) OV.caption(LV.L, 96, 170, LV.sky * LV.pa);   // the living moment's label: AI-generated reconstruction, from the sources
   const left = Math.max(...(FILM.readouts || []).map(r => OV.env(t, r.t0 - .3, r.t1 + .2)), 0);
   OV.scrims(left, 1);
   OV.identity(t, (PRO ? PRO.dur : 0) + .3, FILM.end.t - .2, FILM.identity.l1, FILM.identity.l2);   // (not over the prologue)
@@ -491,7 +530,7 @@ window.EV = EV;
 // frame the 3D scene is not drawn. Stills, scrubbing and the offline render seek every frame exactly (deterministic).
 let PLAYING = false;
 const fullCover = t => (FILM.footage || []).some(f => (f.mode || 'full') === 'full' && t >= f.on + f.fin && t <= f.on + f.dur - f.fout);
-const renderSync = t => { const s = sceneAt(t); setCamera(t); setLight(s); setLayers(s); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } drawOverlay(t); };
+const renderSync = t => { const s = sceneAt(t); LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); setLiving(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } if (!QS.has('clean')) drawOverlay(t); else OV.begin(); };   // clean: the model alone (tools/living.py's reference)
 window.render = (FILM.footage || []).length ? async t => {
   for (const f of FILM.footage) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;

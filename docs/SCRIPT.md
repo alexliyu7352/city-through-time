@@ -113,6 +113,7 @@ film:
 
 Decide the pictures from the outline, not only on the main line: scenes worth a look get pictures too, such as the city at its most prosperous (Han and Tang Chang'an), the mood of a poem (Wang Wei's 「渭城朝雨」 ("morning rain at Weicheng")), the scenes of major events.
 Use first the CC pictures found in the picture list (`research/images.md`, DATA.md "Pictures and footage"); for the rest, generate imagined pictures based on the sources; for how to do it and how to label it see STAGING.md "Footage and pictures".
+A scene the audience should see alive (a street, a market, a festival, one moment of the city's daily life) is a living moment rather than a panel (STAGING.md "Living moments"): the picture is made from the model's own shot and the model turns into it; two or three a film, on key beats.
 Each picture gets one line of narration about it, and when placed it must not cover a change that is happening (STAGING.md 5b).
 To generate imagined pictures: first ask the user which image-generation tools they have; if none, give the prompt to the user, who generates it with another AI and puts it in `assets/imagined/`.
 If the user has the Codex CLI, it can be used: `codex exec --skip-git-repo-check -` reads the prompt from stdin; tell it to draw one 16:9 picture with its built-in image generation and copy it to

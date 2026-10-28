@@ -91,6 +91,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uShadeL: { value: new THREE.Vector3(0, 1, 0) }, uShadeK: { value: 0 }, uShadeC: { value: lin('#3a4757') },   // terrain.shade (main.js): its hue, the plate's own unless col is written
     uNightDeep: { value: 0 },   // film.night_look.deep: at night today's buildings go dark, a few windows burn brighter (the night city)
     uSpotC: { value: new THREE.Vector2(0, 0) }, uSpotR: { value: 9 }, uSpotK: { value: 1 }, uSpotB: { value: 1 },   // spot: the light falls on a subject, the rest of the room goes dark
+    // a living moment: a picture of the period projected from its shot's camera onto the model (uPM), shown inside a ring of light
+    // (uPRC, uPRR) and on the far land as the sky comes (uPF beyond uPF0..uPF1 from the ring's centre); uLiveSink: today's city sinks
+    uPI: { value: null }, uPM: { value: new THREE.Matrix4() }, uPA: { value: 0 }, uPRC: { value: new THREE.Vector2(0, 0) }, uPRR: { value: 0 }, uPF: { value: 0 },
+    uPF0: { value: 9 }, uPF1: { value: 10 }, uLiveSink: { value: 0 },
   };
 
   // the film's year line from the modern growth on (compile: grow.yl): when the counter first reaches a year. Today's buildings
@@ -125,6 +129,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uFootM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[8];
   uniform vec3 uShadeL, uShadeC; uniform float uShadeK, uNightDeep;
   uniform float uSpotR, uSpotK, uSpotB; uniform vec2 uSpotC;
+  uniform sampler2D uPI; uniform mat4 uPM; uniform float uPA, uPRR, uPF, uPF0, uPF1; uniform vec2 uPRC;
   uniform sampler2D uHide, uHide2;
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
   // vData: x = year (0 unknown, negative BCE), y = height m, z = rank 0..1 (switch-on order), w = kind (0 building, 1 mound/earthwork, -1 plate)
@@ -322,7 +327,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }`;
 
   const RISE_DECL = `${YL_GLSL}
-  uniform float uNow; attribute vec4 aData; attribute float aBase; varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase; uniform float uToday, uGrowRise, uYear, uGhost; uniform sampler2D uHide, uHide2; uniform vec2 uPlateV; attribute vec2 aCtr; uniform vec2 uResetC; uniform float uResetR, uResetY; varying vec2 aCtrV; attribute vec3 aGrowH; attribute float aGrowT; varying float vGrowT;
+  uniform float uNow; attribute vec4 aData; attribute float aBase; varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase; uniform float uToday, uGrowRise, uYear, uGhost, uLiveSink; uniform sampler2D uHide, uHide2; uniform vec2 uPlateV; attribute vec2 aCtr; uniform vec2 uResetC; uniform float uResetR, uResetY; varying vec2 aCtrV; attribute vec3 aGrowH; attribute float aGrowT; varying float vGrowT;
   uniform float uHideT[8], uHideG[8], uHideFR[8], uHideFI[8], uHideFW[8]; uniform vec2 uHideO[8];
   uniform float uEraT, uEraSpan, uEraGrow, uEraFallR, uEraFallIn, uEraFallW; uniform vec2 uEraO;
   // a ring that takes a city back: contracting (in) it takes what lies outside it, growing (out) what lies inside. R is the
@@ -346,7 +351,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
      vec2 huv = aCtr / uPlateV + .5; vec4 h1 = texture2D(uHide, huv), h2 = texture2D(uHide2, huv);   // where an era city stands, today's buildings step aside,
      float hm[8]; hm[0] = h1.r; hm[1] = h1.g; hm[2] = h1.b; hm[3] = h1.a; hm[4] = h2.r; hm[5] = h2.g; hm[6] = h2.b; hm[7] = h2.a;
      float hk = 0.; for (int i = 0; i < 8; i++) hk = max(hk, hideK(hm[i], i));   // with the same front that raises the era
-     ry *= 1. - hk;
+     ry *= (1. - hk) * (1. - uLiveSink);   // (a living moment: today's city sinks while the period's picture is shown)
      if (hk > .985 || ry < .002) ry = -1.;   // fully stepped aside: below the plate, not a bright sliver of roof on the ground
    }
    else if (aData.w > .5 && aData.w < 1.5) { float by = smoothstep(yr - 1., yr + 3., uYear); ry = max(uToday, by); }
@@ -405,6 +410,12 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
  }` : ''}
  ${kind === 1 ? 'outgoingLight *= 1. - .45 * uNightDeep * uNight;' : ''}
  ${kind < 1.5 ? 'outgoingLight *= mix(uSpotK, uSpotB, smoothstep(uSpotR, uSpotR * .35, length(vWP.xz - uSpotC)));' : ''}
+ ${kind < 1.5 ? `if (uPA > 0.) {
+   vec4 pc_ = uPM * vec4(vWP, 1.); vec2 pu_ = pc_.xy / pc_.w * .5 + .5; float dr_ = length(vWP.xz - uPRC) - uPRR;
+   if (pc_.w > 0. && pu_.x > 0. && pu_.x < 1. && pu_.y > 0. && pu_.y < 1.) {
+     float in_ = max(smoothstep(.0012, -.0012, dr_), smoothstep(uPF0, uPF1, length(vWP.xz - uPRC)) * uPF);
+     outgoingLight = mix(outgoingLight, texture2D(uPI, pu_).rgb, uPA * in_); }
+   float gw_ = max(1.5e-4, distance(cameraPosition, vWP) * .012); outgoingLight += vec3(1., .84, .6) * exp(-dr_ * dr_ / (gw_ * gw_)) * uPA * .9 * step(.0001, uPRR) * (1. - uPF); }` : ''}
 #include <opaque_fragment>`);
     };
     m.customProgramCacheKey = () => 'proj' + kind;
@@ -803,5 +814,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     return fires[id];
   }
 
-  return { renderer, scene, camera, post, U, addContext, setContext, setHide, setHideCols, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  // a living moment's sky: the picture's sky and far land on a card far behind the shot, facing its camera (placed by main.js)
+  const liveSky = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ uniforms: { uPI: U.uPI, uPM: U.uPM, uA: { value: 0 } }, depthWrite: false, transparent: true,
+    vertexShader: 'varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+    fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA; varying vec3 vW; void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(texture2D(uPI, u).rgb, uA); }' }));
+  liveSky.visible = false; liveSky.renderOrder = -1; liveSky.frustumCulled = false; scene.add(liveSky);
+  return { renderer, scene, camera, post, U, liveSky, addContext, setContext, setHide, setHideCols, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

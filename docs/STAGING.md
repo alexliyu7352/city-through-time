@@ -156,8 +156,29 @@ Take a screenshot of every new card, photo and document card: what the picture c
 CREDITS); compile does not compare them.
 **Footage:** during preview playback the video plays natively and is corrected only when out of sync, and 3D is not drawn when full-screen footage covers the picture; the final film is still positioned exactly frame by frame. Full screen uses only video of 1600×900 or higher; lower resolution becomes a small card.
 
+**Living moments** (node `living:`): a picture of the period made from one shot of the model and projected back onto it from that shot's own camera. The camera arrives at the shot and stops,
+today's city sinks, a thin ring of light spreads from the viewer's feet and turns the white model into the living town, the sky and the far land come with it; it holds (a slow zoom, mist, rain),
+dissolves back to the model, and the camera goes on. It shows what the plate cannot: the daily life of the place at one moment, on the model the audience has been watching, not beside it.
+- **Use two or three a film**, on key beats that can be told as one moment of life (a street the morning after rain, a market, a crowd going to the games), with the line that tells it (`with:`).
+  Never over a change on the model, never with another picture at the same time (compile stops). A scene that only needs to be seen, not lived in, stays an imagined panel.
+- **The shot:** low, close (`d` 0.01–0.04, the period city's streets and roofs filling the frame, a gate or a landmark far off), `fov` 35–45. The camera flies to it in `arrive` seconds from where the film's
+  camera is: put the keys before it close enough that the arrival is not a dive. While the picture is up the camera only zooms (`zoom`, 0.94 by default): the projection is exact only from its own camera,
+  and a camera that moves smears it.
+- **The picture follows the sources:** write the scene card `research/living/<id>.yaml` (`place`, `when`, `picture`: what the moment shows, each detail from the sources; `avoid`: what the sources rule out,
+  later or modern things; `sources`: the notes and FACTS lines). Then compile (`CT_LIVING=warn` while there is no picture), `uv run python -I tools/living.py ref cities/<slug> <id>` (the shot as a still and
+  the prompt), `gen` (the Codex CLI edits the still; with another image tool, give it the still and the prompt, save the answer as `assets/living/<id>.png`, then `adopt`), and look at the `sheet`:
+  the picture's buildings, walls and streets must sit on the model's (an image tool that drew another view: make it again), and nothing in it may contradict the card. Ask the user which image tool they
+  have, as for imagined pictures (SCRIPT.md "Pictures").
+- **A picture belongs to its shot and its model:** compile stops when the shot changed after the picture was made; after a change to the model or the terrain, `tools/living.py check` tells which
+  pictures no longer fit (CHECKS.md).
+- **Label and credit:** the kicker 「AI 生成重现 · AI-GENERATED RECONSTRUCTION · 据史料」 shows while the picture is up (written by compile from the language packs); the card's sources go into CREDITS,
+  and the platforms' AI-content declarations are made when the film is published (PUBLISH.md).
+- Keys: `{ id, with | at, shot: { ll, az, el, d, fov, y }, arrive: 2.5, reveal: 3.5, hold: 6, out: 1.5, back: 2, zoom: 0.94, from: viewer | [lon, lat], weather: { rain: 0..1, mist: 0..1, mist_y: 0.7 },
+  file: assets/living/<id>.png, zh, en }` (zh/en: an optional title under the kicker).
+
 **Spot** (node `spot:`): when the narration speaks of one place in a wide shot (the palaces on the north slope, a market, a gate), the light falls on it and the rest of the room goes dark:
 `{ ll: [lon, lat], r_m: 600, with | at, until, hold, dur, dim: 0.16, boost: 1.35, fade: 0.8 }`. The eye goes to the subject at once without the camera moving; keep it for the beats where a wide shot has to stay wide.
+
 ## Minimap, satellite and ending
 
 The locator minimap and the geographic labels (`film.labels`) appear automatically; the period cities' extents are drawn on the minimap. `film.night_look: { deep: 1 }` turns the night into a night city: today's walls and roofs go dark and fewer windows burn brighter, warm and cool, so a telephoto look across the river at night reads as a sea of lights (0: the white city with lit windows). The modern section can write `night: 1` for night-time window lights and light flowing along the road network.
