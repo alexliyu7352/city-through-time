@@ -1005,6 +1005,12 @@ class Builder:
             h1 = min(3.2, .35 * d); a = h1 / tn; dt = D - 2 * a
             self._emit(FRUSTUM, x, y, th, z0, L, D, h1, L, dt, part=ROOF, g_m=g)
             self._emit(GABLE, x, y, th + math.pi / 2, z0 + h1, dt, L, dt / 2 * math.tan(math.radians(25)), 0, part=ROOF, g_m=g)
+        elif s in ('dome', 'onion'):   # over the body's oval (an oval dome over an oblong body), its curve true: the height exaggeration is taken off its rise (stretched, a dome reads as an egg)
+            rise = min(w, d) / 2 if s == 'dome' else min(w, d) * 1.25
+            self.revolve(x, y, th, z0, w, d, rise / self.hex, DOME if s == 'dome' else ONION, 32, part=ROOF, g_m=g)
+        elif s == 'round':   # a barrel along the ridge, a half circle across d, true like a dome
+            sec = [(d / 2 * math.cos(i / 12 * math.pi), d / 2 * math.sin(i / 12 * math.pi) / self.hex) for i in range(13)]
+            self.prism(x, y, th + math.pi / 2, z0, [sec], L, along=True, part=ROOF, g_m=g)
 
     # ------------------------------------------------------------------ walls
     def walls(self, ring, h=10.0, t=10.0, gates=(), towers=True, part=WALL, gate_style='tower', moat=None, bastion_m=80.0, moat_w=16.0, moat_off=None):
@@ -1190,8 +1196,11 @@ def with_trace(spec, F, city_dir):
 BUILTIN_TYPES = ('courtyard', 'dwelling', 'hut', 'slab', 'wards')   # the generator's own houses: one region's (north China)
 TYPES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'types')   # the shared library of house types
 FORMS = ('detached', 'row', 'court', 'compound')
-ROOF_SHAPES = {'flat': 0, 'gabled': 30, 'hipped': 25, 'pyramidal': 25, 'skillion': 12, 'mansard': 70, 'gambrel': 60}   # OpenStreetMap roof:shape -> its usual pitch (mansard, gambrel: the steep lower slope)
-ROOF_LATER = ('dome', 'onion', 'round')   # (they need a round primitive the engine does not have yet)
+ROOF_SHAPES = {'flat': 0, 'gabled': 30, 'hipped': 25, 'pyramidal': 25, 'skillion': 12, 'mansard': 70, 'gambrel': 60, 'dome': 0, 'onion': 0, 'round': 0}   # OpenStreetMap roof:shape -> its usual pitch (mansard, gambrel: the steep lower slope; dome, onion, round: none, they rise with their curve)
+ROOF_ROUND = ('dome', 'onion', 'round')
+# sections of round roofs (Builder.revolve: r a share of the half width, y of the rise), from the base round to the top on the axis
+DOME = [(0.0, 0.0), (1.0, 0.0)] + [(round(math.cos(i / 12 * math.pi / 2), 5), round(math.sin(i / 12 * math.pi / 2), 5)) for i in range(1, 13)]
+ONION = [(0.0, 0.0), (.7, 0.0), (.84, .16), (1.0, .36), (.96, .52), (.78, .68), (.48, .82), (.2, .93), (0.0, 1.0)]   # a bulb wider than its neck, drawn to a point
 TYPE_KEYS = ('where', 'when', 'basis', 'form', 'storeys', 'storey_m', 'roof', 'court', 'yard_wall_m', 'ground', 'arcade_m', 'portico_m', 'podium_m')
 
 
@@ -1219,14 +1228,17 @@ def house_type(T, src):
     bad = sorted(set(R) - {'shape', 'pitch_deg', 'overhang_m', 'ridge'})
     if bad: no(f'roof: no key {", ".join(bad)} (shape, pitch_deg, overhang_m, ridge)')
     s = R['shape']
-    if s in ROOF_LATER: no(f'roof.shape {s}: not drawn yet (it needs a round primitive the engine does not have yet)')
     if s not in ROOF_SHAPES: no(f'roof.shape {s!r}: one of {", ".join(ROOF_SHAPES)} (OpenStreetMap roof:shape)')
     pitch = num('roof.pitch_deg', R.get('pitch_deg', ROOF_SHAPES[s]), 0, 80)
     if s == 'flat' and pitch: no('roof.pitch_deg: a flat roof has no pitch')
+    if s in ROOF_ROUND:
+        if pitch: no(f'roof.pitch_deg: a {s} roof rises with its curve (a dome half its span, an onion a little more than its width, a round roof half its span), no pitch')
+        if R.get('overhang_m', 0): no(f'roof.overhang_m: a {s} roof springs from the walls, no eaves')
+        if s != 'round' and 'ridge' in R: no(f'roof.ridge: {s} roofs have no ridge (round has: the barrel runs along it)')
     if s in ('mansard', 'gambrel') and not 45 <= pitch <= 80: no(f'roof.pitch_deg {pitch:g}: a {s} roof gives its steep lower slope, 45 to 80')
-    if s not in ('flat', 'mansard', 'gambrel') and not 5 <= pitch <= 60: no(f'roof.pitch_deg {pitch:g}: 5 to 60 for a {s} roof')
-    roof = {'shape': s, 'pitch_deg': pitch, 'overhang_m': num('roof.overhang_m', R.get('overhang_m', 0 if s == 'flat' else .5), 0, 3)}
-    if f in ('detached', 'row'):
+    if s not in ('flat', 'mansard', 'gambrel') + ROOF_ROUND and not 5 <= pitch <= 60: no(f'roof.pitch_deg {pitch:g}: 5 to 60 for a {s} roof')
+    roof = {'shape': s, 'pitch_deg': pitch, 'overhang_m': num('roof.overhang_m', R.get('overhang_m', 0 if s in ('flat',) + ROOF_ROUND else .5), 0, 3)}
+    if f in ('detached', 'row') and s not in ('dome', 'onion'):
         roof['ridge'] = R.get('ridge', 'along')
         if roof['ridge'] not in ('along', 'across'): no(f'roof.ridge: {roof["ridge"]!r}: along (the ridge along the street) or across (the gable to the street)')
     elif 'ridge' in R: no(f'roof.ridge: a {f} house runs each ridge along its wing; only a detached or a row house turns it')
@@ -1280,8 +1292,9 @@ def house_types(spec, shared=None, label='city'):
             M = {k: v for k, v in b.items() if k not in drop}; M.update({k: v for k, v in T.items() if k != 'from'})
             for k in ('roof', 'court'):
                 if isinstance(b.get(k), dict) and isinstance(T.get(k), dict): M[k] = {**b[k], **T[k]}
-            if f not in ('detached', 'row') and 'ridge' not in (T.get('roof') or {}): M['roof'] = {k: v for k, v in M['roof'].items() if k != 'ridge'}
-            if 'shape' in (T.get('roof') or {}) and 'pitch_deg' not in T['roof']: M['roof'].pop('pitch_deg', None)   # (a new shape: its own usual pitch)
+            if (f not in ('detached', 'row') or M['roof'].get('shape') in ('dome', 'onion')) and 'ridge' not in (T.get('roof') or {}): M['roof'] = {k: v for k, v in M['roof'].items() if k != 'ridge'}
+            for k in ('pitch_deg', 'overhang_m'):   # (a new shape: its own usual pitch and eaves)
+                if 'shape' in (T.get('roof') or {}) and k not in T['roof']: M['roof'].pop(k, None)
             T = M
         out[name] = house_type(T, src); return out[name]
     for name in list(own) + list(common): get(name)   # every declared type is checked, built or not

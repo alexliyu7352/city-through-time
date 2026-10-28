@@ -48,14 +48,15 @@ types:
     basis: research/<notes>.md, <what the numbers come from; which are estimates>
     form: row                           # detached | row (wall to wall, a yard behind) | court (one building round a court or a light well) | compound (separate buildings round a yard inside a wall)
     storeys: [2, 4]                     # fewest and most (storey_m: 3.2 by default)
-    roof: { shape: gabled, pitch_deg: 30, overhang_m: 0.5, ridge: along }   # shape (OpenStreetMap roof:shape): flat, gabled, hipped, pyramidal, skillion, mansard, gambrel; ridge: along or across the street (detached, row)
+    roof: { shape: gabled, pitch_deg: 30, overhang_m: 0.5, ridge: along }   # shape (OpenStreetMap roof:shape): flat, gabled, hipped, pyramidal, skillion, mansard, gambrel, dome, onion, round; ridge: along or across the street (detached, row)
     ground: shops                       # closed | shops | arcade (the upper storeys over a walk; arcade_m)
     # court: { frac: 0.3 } (court, compound: the court's share of the lot); yard_wall_m; portico_m; podium_m
 ```
 
 A type written in the city can start from another (`from: <name>`) and change some keys; it still writes its own where, when and basis. A type's name is its own (never a
-built-in one). A key a type does not have, a key its form does not use, or a missing where, when or basis stops compile with what to write. Round roofs (`dome`, `onion`, `round`)
-are not drawn yet. A city's own scripts (`research/*_gen.py`) lay out where things are; what a house looks like is a type, never code in the city, so every city builds with the same generator.
+built-in one). A key a type does not have, a key its form does not use, or a missing where, when or basis stops compile with what to write. A round roof (`dome` over
+the body's oval, `onion`, `round`: a barrel along the ridge) rises with its curve, so it takes no pitch and no eaves, and keeps its true shape while the walls are
+exaggerated (a stretched dome reads as an egg). A city's own scripts (`research/*_gen.py`) lay out where things are; what a house looks like is a type, never code in the city, so every city builds with the same generator.
 Look at the types before laying the city: `uv run python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat>` (a flat open place) builds a block of each type the period
 declares or its fabric names, at the film's close-up distance, in its palette and light, and puts the stills side by side in `sheet.jpg`. Show the user the sheet, and lay the city once
 each type reads as itself.
