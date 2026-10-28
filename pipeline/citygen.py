@@ -724,20 +724,27 @@ class Builder:
                 if self.det >= 1: self.strip(a, b, 2.0, .45, part=LROOF, z0=wall_h)
         gx, gy = P(0, -d / 2)
         self.hall(gx, gy, th, gw * 1.6, max(6, gw * .7), min(14, wall_h * 2.1), roof='xieshan', part=part, cols=False)
+        aw = max(3, min(12, w * .08))
         if self.det >= 1:   # the paved axis
-            self.strip(P(0, -d / 2 + 2), P(0, d / 2 - 2), max(3, min(12, w * .08)), .12, part=PAVE)
+            self.strip(P(0, -d / 2 + 2), P(0, d / 2 - 2), aw, .12, part=PAVE)
+        clear = [(0, -d / 2, gw * .8, max(3, gw * .35)), (0, 0, aw / 2, d / 2)]   # (local centre, half sizes): no tree there
         for n_, (ly, fw, fd, hh, roof) in enumerate(halls):
-            hx, hy = P(0, ly * d)
-            self.hall(hx, hy, th, fw * w, fd * d, hh, roof=roof, z0=0, part=part, podium=max(.8, hh * .12), g=None)   # each hall on its own ground
+            hx, hy = P(0, ly * d); pod = max(.8, hh * .12)
+            self.hall(hx, hy, th, fw * w, fd * d, hh, roof=roof, z0=0, part=part, podium=pod, g=None)   # each hall on its own ground
+            clear.append((0, ly * d, fw * w / 2 + 2, fd * d / 2 + 2 + pod * 1.6))   # its podium and the stair before it
             if side_halls and self.det >= 1 and n_ > 0:
                 sl = max(8, fd * d * 1.4); sw_ = min(8, w * .14)
                 for k in (-1, 1):
                     sx, sy = P(k * (w / 2 - sw_ / 2 - 2.5), (ly - .14) * d)
                     self.hall(sx, sy, th + math.pi / 2, sl, sw_, hh * .65, roof='gable', part=part, g=None, cols=False, front=k)
-        if self.det >= 1 and w * d < 60000:
+                    clear.append((k * (w / 2 - sw_ / 2 - 2.5), (ly - .14) * d, sw_ / 2, sl / 2))
+        if self.det >= 1 and w * d < 60000:   # a few trees in the courts, never in a hall, its podium or stair, the gate or the axis
             for _ in range(int(w * d / 1800)):
-                tx_, ty_ = P(self.rng.uniform(-.42, .42) * w, self.rng.uniform(-.42, .42) * d)
-                self.tree(tx_, ty_, 9, 3)
+                lx, ly_ = self.rng.uniform(-.42, .42) * w, self.rng.uniform(-.42, .42) * d
+                if any(abs(lx - cx_) < hx_ + 5 and abs(ly_ - cy_) < hy_ + 5 for cx_, cy_, hx_, hy_ in clear):   # (5 m: the crown)
+                    for _ in range(3): self.rng.random()   # the draws tree() would take: the rest of the city stays as it was
+                    continue
+                self.tree(*P(lx, ly_), 9, 3)
 
     def factory(self, x, y, th, w, d, bays=8, h=10.0, part=LMK):
         """a saw-tooth weaving shed: a long body, a row of north-light roofs, window bands on the long walls"""
@@ -1385,6 +1392,14 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         else:
             B.fill(reg, th, tuple(fb.get('lot', [18, 26])), fb.get('typ', 'courtyard'), fb.get('h_m', 6), fb.get('empty', .06), avoid=avoid, scatter=fb.get('scatter', 0.0))
         B.det = det0
+    bodies = None   # what stands on the ground by now (model xz): a row of trees steps over a house, a hall or a terrace on its line
+    if spec.get('trees'):
+        S_ = F.scale; rects = []
+        for p in B.prims:
+            if p[0] in (BOX, FRUSTUM) and p[11] in (FAB, LMK, EARTH) and p[7] > 1.0 * S_ * B.hex:
+                c_, s_ = math.cos(p[3]), math.sin(p[3]); hw, hd = max(p[5], p[8] if p[0] == FRUSTUM else 0) / 2, max(p[6], p[9] if p[0] == FRUSTUM else 0) / 2
+                rects.append(Polygon([(p[1] + x * c_ - z * s_, p[2] + x * s_ + z * c_) for x, z in ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))]))
+        bodies = (shapely.STRtree(rects), rects) if rects else None
     for ti, tr in enumerate(spec.get('trees', [])):
         B.group(('trees', ti))
         pts = [F.to_utm.transform(*p) for p in tr['pts']]
@@ -1395,5 +1410,11 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                 if tr.get('both', True) or side == 1:
                     off = tr.get('offset_m', 9) * side
                     q = line.interpolate(min(line.length, line.project(p) + 1)); th = math.atan2(q.y - p.y, q.x - p.x)
-                    B.group(); B.tree(p.x - math.sin(th) * off, p.y + math.cos(th) * off, tr.get('h_m', 11), tr.get('r_m', 4), tr.get('kind', 'willow'))
+                    tx_, ty_ = p.x - math.sin(th) * off, p.y + math.cos(th) * off
+                    if bodies is not None:
+                        pt = Point(*F.model(tx_, ty_))
+                        if any(bodies[1][j].buffer(1.5 * F.scale).contains(pt) for j in bodies[0].query(pt.buffer(2 * F.scale))):
+                            for _ in range(3): B.rng.random()   # the draws tree() would take: the rest of the city stays as it was
+                            continue
+                    B.group(); B.tree(tx_, ty_, tr.get('h_m', 11), tr.get('r_m', 4), tr.get('kind', 'willow'))
     return B.finish(spec.get('rank_noise', .08), meta)

@@ -4,7 +4,7 @@ usage: python -I tools/clipcheck.py cities/<slug> [--max 0]      exit 1 if any c
 Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
   houses_vs_walls     ordinary house bodies (part 0) overlapping the city wall, a landmark or the moat
   houses_vs_streets   house bodies standing on a main street or lane (paving, part 7)
-  trees_in_houses     a tree trunk inside a house or landmark body
+  trees_in_houses     a tree trunk inside a house, landmark or earthwork body (at any height: a hall on a podium too)
   landmarks_overlap   two different landmark bodies overlapping (beyond touching)
   today_vs_era        today's buildings that stay up (outside the era's hide mask) but overlap the era city
   floating            primitives whose base sits above the plate's surface (the plate is sampled like the engine does)
@@ -86,13 +86,16 @@ def main():
             R[label] = n; R[label + '_at'] = ex[:5]
         overlaps(houses, hard, 'houses_vs_walls')
         overlaps(houses, streets, 'houses_vs_streets')
-        bodies = [rect(p, .1 * S) for p in body((FAB, LMK))]
+        # a trunk inside a body: its foot below the body's top, inside its footprint (a hall on a podium starts above grade, so
+        # every body counts, at any height; a tree on top of a terrace stands at its top and is not inside it)
+        bp = [p for p in prims if p[11] in (FAB, LMK, EARTH) and p[0] in (0, 2)]
+        bodies = [rect(p, .1 * S) for p in bp]
         if trunks and bodies:
-            tree = STRtree(bodies); n = 0
+            tree = STRtree(bodies); n = 0; ex = []
             for p in trunks:
                 pt = shapely.Point(p[1], p[2])
-                if any(bodies[j].contains(pt) for j in tree.query(pt)): n += 1
-            R['trees_in_houses'] = n
+                if any(bodies[j].contains(pt) and p[4] < bp[j][4] + bp[j][7] - .5 * S for j in tree.query(pt)): n += 1; ex.append([round(p[1], 4), round(p[2], 4)])
+            R['trees_in_houses'] = n; R['trees_in_houses_at'] = ex[:5]
         # bodies of different landmarks (each primitive carries the centre of the building it belongs to: parts of one big
         # court may touch inside it, two buildings may not)
         if lm:
