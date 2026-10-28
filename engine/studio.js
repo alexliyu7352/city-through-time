@@ -397,7 +397,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
      vec3 wc = mix(vec3(1., .78, .48), vec3(.75, .86, 1.), step(.7, fract(h * 7.3)));
      outgoingLight += wc * e * 1.6 * uNight;
    }
-   outgoingLight *= mix(1., .35, uNight * step(.5, Nn.y));
+   outgoingLight *= mix(1., .6, uNight * step(.5, Nn.y));   // (roofs to .35 turned the wide shots of the modern half grey: a roof is most of what a wide shot sees)
  }` : ''}
 #include <opaque_fragment>`);
     };
