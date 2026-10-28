@@ -199,7 +199,7 @@ def main():
     cams = []
     for s in sh:
         x, z = Fr.model_lonlat(*s['ll'])
-        k = next((v for tk, v in FILM['camera'] if node['t0'] - 1e-3 <= tk <= node['t1'] + 1e-3 and abs(v[0] - x) < 2e-5 and abs(v[2] - z) < 2e-5 and v[3:6] == [s['az'], s['el'], s['d']]), None)
+        k = next((v for tk, v in FILM['camera'] if node['t0'] - 1e-3 <= tk <= node['t1'] + 1e-3 and abs(v[0] - x) < 2e-5 and abs(v[2] - z) < 2e-5 and abs((v[3] - s['az'] + 180) % 360 - 180) < 1e-6 and v[4:6] == [s['el'], s['d']]), None)   # (compile unwraps the bearing: 390 is 30)
         if k is None: raise SystemExit(f'modelview: the camera key for --at {s["ll"]} is not in the study film (compile changed it)')
         cams.append(k)
     for l_ in r.stdout.splitlines():   # (compile runs the model checks, geocheck and clipcheck, and keeps their logs)
