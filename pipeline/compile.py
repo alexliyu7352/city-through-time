@@ -15,6 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from geo import Frame
 import decals as DEC
 import citygen
+import landmarks
 import stagecraft
 
 class Seen(dict):
@@ -125,6 +126,7 @@ for nd in FM['nodes']:
     if cs:
         types_ = citygen.house_types(nd['city'], C.get('types'), f'node {nd.get("id")}')
         if types_: nd['city']['types'] = types_
+        landmarks.checked(nd['city'], f'node {nd.get("id")}')   # its landmarks of the classes of any region: checked and completed once, here
 
 # ------------------------------------------------------------------ text templates and positions
 def _ns(o): return SimpleNamespace(**{str(k): _ns(v) for k, v in dict.items(o)}) if isinstance(o, dict) else [_ns(v) for v in o] if isinstance(o, list) else o

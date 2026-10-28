@@ -27,7 +27,7 @@ research/ and assets/), compiles it (compile runs the model checks, tools/geoche
 opens the same view in the preview (node tools/preview.mjs). The study has no words, sound, pins or pictures, only the city.
 The terrain is the city's as prepared: a new terrain.exaggeration needs pipeline/terrain.py and prep.py run on the city.
 """
-import argparse, copy, json, math, os, shutil, subprocess, sys
+import argparse, copy, json, math, os, re, shutil, subprocess, sys
 
 import yaml
 
@@ -35,6 +35,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 sys.path.insert(0, os.path.join(ROOT, 'pipeline'))
 import citygen
 import geo
+import landmarks
 import layout as LAYOUT
 
 NODE_KEEP = ('id', 'years', 'dur', 'mood', 'label', 'col', 'tint', 'era_tint', 'ink', 'city')   # what a node's city looks like by
@@ -73,18 +74,28 @@ def sheet_city(C, era, spec, at, Fr, city, scale, d, az=None, el=12.0):
         t = fb.get('typ', 'courtyard'); t = 'courtyard' if t == 'wards' else t   # (a ward's houses are courtyards)
         if t not in [q[0] for q in show]: show.append((t, list(fb.get('lot', [18, 26])), fb.get('h_m', 6) if t in citygen.BUILTIN_TYPES else None))
     show += [(t, FORM_LOT[T['form']], None) for t, T in tps.items() if t not in [q[0] for q in show]]
-    if not show: raise SystemExit(f'modelview: --sheet: the city of {era} has no houses (no fabric, no types)')
+    lms = [landmarks.check(L, f'node {era}: landmarks[{i}]') for i, L in enumerate(cs_t.get('landmarks') or []) if isinstance(L, dict) and L.get('kind') in landmarks.KINDS]
+    if not show and not lms: raise SystemExit(f'modelview: --sheet: the city of {era} has no houses (no fabric, no types) and no landmarks of the classes (pipeline/landmarks.py)')
     ox, oy = Fr.to_utm.transform(*at); x = ox; fabric, shots_ = [], []; az = 335.0 if az is None else az
     ll = lambda u, v: [round(c, 7) for c in Fr.to_wgs.transform(u, v)]
-    deep = max(2 * q[1][1] for q in show) + 1
+    deep = max([2 * q[1][1] for q in show] + [0]) + 1
     for t, (lw, ld), h in show:
         bw = max(5, math.ceil(60 / lw)) * lw + 1.0
         fabric.append({'region': [ll(x, oy), ll(x + bw, oy), ll(x + bw, oy + 2 * ld + 1), ll(x, oy + 2 * ld + 1)], 'lot': [lw, ld], 'typ': t, 'empty': 0, 'theta_deg': 0, **({'h_m': h} if h is not None else {})})
         shots_.append({'name': t, 'll': ll(x + bw / 2, oy + ld), 'az': az, 'el': el, 'd': d})
         x += bw + 40
+    lm_out = []; sheet_hex = cs.get('exaggeration', 2.0)
+    for i, L in enumerate(lms):   # then the landmarks, each from four sides, fronts to the south
+        hw, hd = landmarks.extent(L); L = {k: v for k, v in L.items() if k not in ('from', 'to', 'theta_deg')}
+        if L['kind'] == 'arches' and 'length_m' not in L: L['length_m'] = 2 * hw
+        c = ll(x + hw, oy + hd); lm_out.append({**L, 'lon': c[0], 'lat': c[1], 'theta_deg': 0}); deep = max(deep, 2 * hd + 1)
+        nm = L.get('name') or f'{L["kind"]}{i + 1}'; tp = landmarks.top(L, L.get('exaggeration') or sheet_hex)   # (framed whole: its plan and its height, looked at half way up)
+        dl = round(min(.3, max(.012, max(2.6 * math.hypot(hw, hd), 2.4 * tp) / scale)), 4)
+        shots_ += [{'name': re.sub(r'\W+', '_', f'{nm}_az{a_}'), 'll': c, 'y': round(tp / 2 / scale, 6), 'az': float(a_), 'el': 30.0, 'd': dl} for a_ in (30, 120, 210, 300)]
+        x += 2 * hw + 60
     shots_.append({'name': 'all', 'll': ll((ox + x - 40) / 2, oy + deep / 2), 'az': az, 'el': max(el, 20.0), 'd': round(max(1.5 * d, .7 * (x - ox) / scale), 4)})
     r = max(220.0, 1.1 * d * scale)   # (metres: out to where the cameras stand)
-    sheet = {'origin': list(at), 'theta_deg': 0, 'detail': cs.get('detail', 'medium'), 'exaggeration': cs.get('exaggeration', 2.0), 'types': tps, 'fabric': fabric,
+    sheet = {'origin': list(at), 'theta_deg': 0, 'detail': cs.get('detail', 'medium'), 'exaggeration': cs.get('exaggeration', 2.0), 'types': tps, 'fabric': fabric, 'landmarks': lm_out,
              'streets': [{'pts': [ll(ox - 10, oy - 7), ll(x - 30, oy - 7)], 'w_m': 8}],
              'hide': [[ll(ox - r / 2, oy - r), ll(x + r / 2, oy - r), ll(x + r / 2, oy + deep + 60), ll(ox - r / 2, oy + deep + 60)]]}
     sheet.update({k: cs[k] for k in ('col', 'seed') if k in cs})
@@ -122,7 +133,7 @@ def study_film(C, era, spec, shots_, fov, year=None, sheet=False):
         if cs.get('until') not in ids: cs.pop('until', None); cs.pop('until_plus', None)   # a city taken back by a later node stays up here
         n['camera'] = [{'t': 0, 'll': shots_[0]['ll'], 'az': shots_[0]['az'], 'el': shots_[0]['el'], 'd': shots_[0]['d'], 'fov': fov}]
     dur = float(target['dur'])
-    target['camera'] = [{'t': round(dur * (k + 1) / (len(shots_) + 1), 2), 'll': s['ll'], 'az': s['az'], 'el': s['el'], 'd': s['d'], 'fov': fov} for k, s in enumerate(shots_)]
+    target['camera'] = [{'t': round(dur * (k + 1) / (len(shots_) + 1), 2), 'll': s['ll'], **({'y': s['y']} if s.get('y') else {}), 'az': s['az'], 'el': s['el'], 'd': s['d'], 'fov': fov} for k, s in enumerate(shots_)]
     S = copy.deepcopy(C); SF = S['film']
     for k in ('prologue', 'voice', 'music', 'sfx'): SF.pop(k, None)
     SF.update(drift=0, opening={'dur': 0}, closing={'lights_after': 0, 'end_after': 0, 'end_hold': .2}, nodes=study)   # (drift 0: stills of one view frame alike)

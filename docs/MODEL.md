@@ -5,6 +5,7 @@
 - One ring, a few rows of grid cells, houses that are only walls, an empty city → one whole city per period generated from the sources, filled in, checked item by item against the sources' drawings ("A whole city for each period", "No empty cities").
 - A hard-coded terrain exaggeration, so the foundation on a slope is taller than the house → measure by slope ("Appearance and height").
 - Houses of another region or period drawn with the built-in houses (north China's courtyards), or a city's own code drawing its houses → declare the house types from the research and look at them on the sheet first ("House types").
+- A landmark of another region drawn with the generator's own kinds (a Chinese hall for a temple, a box for a dome) → one of the classes for any region, its sizes from the sources ("Landmarks of any region").
 
 ## A whole city for each period
 
@@ -60,6 +61,56 @@ exaggerated (a stretched dome reads as an egg). A city's own scripts (`research/
 Look at the types before laying the city: `uv run python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat>` (a flat open place) builds a block of each type the period
 declares or its fabric names, at the film's close-up distance, in its palette and light, and puts the stills side by side in `sheet.jpg`. Show the user the sheet, and lay the city once
 each type reads as itself.
+
+## Landmarks of any region
+
+The generator's own landmark kinds (`hall`, `terrace`, `palace`, `pagoda`, `court`…) are north China's. Elsewhere a landmark is one of a few classes of massing, written as data in
+the node's `city.landmarks` with its sizes in metres from the research (`pipeline/landmarks.py`); the classes reach the monuments of most traditions, so a city never needs code of its own:
+
+- `ring`: seats or rooms round an open floor. Amphitheatres (`plan: oval`: the band of seats keeps one depth all round, so the arena is the narrower oval it is), theatres (`half`, `sweep_deg`, a `stage`), circuses and stadia (`u`, `obround`, a `spina`), round houses (`round`, `section: building`).
+- `dome`: a round or polygonal building under a dome: rotundas, mausoleums, domed churches and mosques, baptisteries, stupas. A `base` block, a `drum`, the dome's `shape` (hemisphere, saucer, pointed, onion, bulbous, helmet, bell, cone), a `lantern`, an `oculus`, a `peristyle`; `sweep_deg: 180` is a half dome.
+- `long_hall`: a long hall under one roof: temples (`colonnade`, `podium`), basilicas, churches and cathedrals (`aisles`, `transept`, `apse`, `buttresses` with `flying`), stoas, market and prayer halls, palace halls (`roof.flared`, `roof.eaves: 2`: East Asian roofs); roofs gabled, hipped, hip_gable, pyramidal, flat, vault, mansard.
+- `column`: a tall shaft: obelisks and honorific columns (`taper`, `pedestal`), towers and keeps (`parapet`), minarets (`stages` with `balcony_m`), pagodas (`stages` with an `eave` each), lighthouses, shikharas (`top: shikhara`).
+- `stepped`: a stepped platform or pyramid: pyramids (`tiers: 1, top: 0`), ziggurats, Mesoamerican platforms (`stair: {at: all}`), terraces on a round or polygonal plan (`slope: vertical`).
+- `arches`: a wall of arches: triumphal arches and gates, aqueducts and arched bridges (`tiers`, `from`/`to`; a run over 120 m is laid in pieces, each on its own ground), arcades and loggias, iwans and great portals (`through: false`: deep recesses, dark at the back).
+- `revolve` and `prism`: free solids for a form no class has: a section turned round an axis (a television tower, a bell-shaped stupa), an outline raised (a star fort, a building round its court: `holes_m`) or a section laid along (a vault).
+- `parts`: several of these together, each placed (`at`, `theta_deg`, `z_m` above the whole's ground, or `atop` another part: a lantern on a dome, a spire on a tower) and copied (`repeat`: `mirror`, `ring`, `line`, `corners`); the parts may overlap, the model shows their union. A part on another stands on it with `atop`, never a `z_m` counted by hand: a dome keeps its true curve while the other heights are exaggerated, so a height added up from the sizes misses its top.
+
+```yaml
+landmarks:
+  - kind: parts                     # a rotunda with a portico before it
+    name: rotunda
+    lon: 0.0                        # its centre
+    lat: 0.0
+    theta_deg: 0                    # turned counter-clockwise from east; at 0 its front faces south
+    basis: research/<notes>.md, diameter and drum from the survey; the portico's columns estimated
+    parts:
+      - { kind: dome, d_m: 58, drum_h_m: 30, dome: { shape: saucer, rise_m: 14 }, oculus_m: 9 }
+      - { kind: long_hall, at: [0, -38], w_m: 34, d_m: 16, h_m: 15, colonnade: { at: front, n_front: 8 }, roof: { shape: gabled, pitch_deg: 23 } }
+  - kind: column                    # a minaret: a shaft, two balconies, a pointed cap
+    lon: 0.0
+    lat: 0.0
+    basis: research/<notes>.md
+    stages: [ { w_m: 3.8, h_m: 50, balcony_m: 1.2 }, { w_m: 3.2, h_m: 12, balcony_m: 1.0 } ]
+    top: { shape: cone, h_m: 12 }
+```
+
+Every key, its range, its default and what it means: `uv run python -I pipeline/landmarks.py [kind]`, the same table compile checks against: a key a class does not have, a value
+out of range, a missing size or a missing `basis` stops compile with what to write. Each size comes from the sources and `basis` says which are estimates; a size the sources do not
+give is taken from a building of the same type and period (named in the research note), not a round number. Proportions that tell a wrong guess at once: a hemispherical dome rises
+half its width, a pointed one about three quarters, an onion about one and a quarter times its drum's width; an Ottoman pencil minaret is about 19 times as tall as it is wide,
+a square North African one about 5; a Gothic nave about 3 times as high as wide; an Egyptian pyramid rises 0.64 of its base, Mesoamerican ones 0.3–0.45; an amphitheatre's band of
+seats is about as deep as its wall is high.
+
+**A monument stands level:** a landmark of these classes is built on one level plane, on a platform where the ground falls away under it (like a house's lot, "A house stands on one
+plane" in "No empty cities"); a long run of arches is the exception, its pieces each on their own ground. Heights are exaggerated as the houses' are (`exaggeration` of the city, or the landmark's own:
+1 to draw it after a true elevation), but a dome keeps its true curve (`dome.true`): stretched, a dome reads as an egg. Thin elements that carry a skyline (minarets, spires, masts)
+are a few pixels wide at a kilometre and vanish in the wide shots; look at the period city's wide still (eraview) and say so when the film relies on one.
+
+**Look before laying the city:** `modelview --sheet` builds every landmark of these classes the period declares, each from four sides at a distance that fits its size, beside its
+house types, and puts the stills in `sheet.jpg`; show the user the sheet. **Not drawn yet** (say so rather than stand in a solid): open frames of thin members (iron towers,
+gasholder frames, truss bridges: a solid shape reads as an obelisk), buildings below the ground (rock-hewn churches, stepwells), helical ramps (a stepped cone stands in), ribs and
+flutes on domes and shafts. A form the classes cannot make is added to them, as a key of a class (its line in `FIELDS` and its drawing) or a new class, never as code in a city.
 
 ## Boundaries, overlay and change
 

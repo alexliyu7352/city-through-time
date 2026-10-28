@@ -1350,7 +1350,9 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     walls: [{ring|osm, h_m, t_m, gates: [[lon,lat],...], towers, style: tower|hip|none, moat}];
     streets: [{pts, w_m, shops}]; lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
     (typ: a built-in house or one of `types`, complete: house_types);
-    landmarks: [{kind, lon, lat, ...}]; trees: [{pts, step_m, h_m, r_m, both, offset_m}]"""
+    landmarks: [{kind, lon, lat, ...}] (the generator's own kinds, or the classes of pipeline/landmarks.py); trees: [{pts, step_m, h_m, r_m, both, offset_m}]"""
+    import landmarks as LMK_
+    LMK_.checked(spec)   # (the landmarks of any region: their classes checked and completed; compile has checked them once already)
     ox, oy = F.to_utm.transform(*spec['origin'])
     B = Builder(F, ground_m, exag, spec.get('exaggeration', 2.0), (ox, oy), seed=spec.get('seed', 7), detail=spec.get('detail', 'medium'))
     B.types = spec.get('types') or {}   # complete (house_types, which the caller runs)
@@ -1377,6 +1379,12 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         th = math.radians(L.get('theta_deg', spec.get('theta_deg', 0)))
         k = L['kind']
         B.hex = float(L.get('exaggeration', HEX0))   # a landmark built after a drawn elevation can keep nearer its true proportions
+        if k in LMK_.KINDS:   # a class of any region (pipeline/landmarks.py), drawn level on its own site
+            if k == 'arches' and 'from' in L:   # a run between two points
+                a_, b_ = F.to_utm.transform(*L['from']), F.to_utm.transform(*L['to'])
+                L = {**L, 'length_m': math.hypot(b_[0] - a_[0], b_[1] - a_[1])}; x, y = (a_[0] + b_[0]) / 2, (a_[1] + b_[1]) / 2; th = math.atan2(b_[1] - a_[1], b_[0] - a_[0])
+            hw, hd = LMK_.build(B, L, x, y, th); P = B.frame(x, y, th)
+            lm_foot.append(Polygon([P(-hw, -hd), P(hw, -hd), P(hw, hd), P(-hw, hd)]).buffer(6)); continue
         if k == 'temple': B.compound(x, y, th, L.get('w_m', 70), L.get('d_m', 130), L.get('halls', [(-.25, .5, .16, 9, 'xieshan'), (.05, .6, .2, 13, 'double'), (.32, .55, .16, 10, 'xieshan')]))
         elif k == 'office': B.compound(x, y, th, L.get('w_m', 80), L.get('d_m', 110), L.get('halls', [(-.2, .55, .18, 8, 'xieshan'), (.15, .6, .2, 9, 'hip')]))
         elif k == 'palace': B.compound(x, y, th, L.get('w_m', 160), L.get('d_m', 200), L.get('halls', [(-.25, .5, .16, 12, 'xieshan'), (.05, .6, .2, 16, 'double_hip'), (.3, .5, .16, 12, 'xieshan')]), wall_h=L.get('wall_h', 6), side_halls=L.get('w_m', 160) < 400)
