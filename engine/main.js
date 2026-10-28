@@ -111,10 +111,10 @@ S.setHide(...await Promise.all(['hide', 'hide2', 'edge', 'edge2'].map(f => tex(B
 { const cols = Array(8).fill('#ffffff'); for (const e of FILM.eras || []) if (e.hide != null) cols[e.hide] = e.col; S.setHideCols(cols); }
 S.U.uScaleH.value = M.scale * (M.bex || (M.terrain && M.terrain.exaggeration) || 3);   // window floors follow the buildings' own exaggeration
 S.U.uScaleM.value = M.scale;   // model units per metre (textures drawn at their real size)
-// terrain.shade: a fixed low sun on the plate, as terrain.context's on the land beyond it: the slopes turned to it read in any
-// light of the room, flat ground and water keep the plate's colour
+// terrain.shade: a fixed low sun on the plate: the slopes turned to it lighter in the plate's own colour, those turned away darker,
+// so the relief reads in any light of the room; flat ground and water keep the plate's colour
 if (FILM.shade) { const a = THREE.MathUtils.degToRad(FILM.shade.az), e = THREE.MathUtils.degToRad(FILM.shade.el);
-  S.U.uShadeL.value.set(Math.sin(a) * Math.cos(e), Math.sin(e), -Math.cos(a) * Math.cos(e)); S.U.uShadeK.value = FILM.shade.k; S.U.uShadeC.value.set(FILM.shade.col); }
+  S.U.uShadeL.value.set(Math.sin(a) * Math.cos(e), Math.sin(e), -Math.cos(a) * Math.cos(e)); S.U.uShadeK.value = FILM.shade.k; S.U.uShadeC.value.set(FILM.shade.col || (FILM.palette || {}).plate || '#3a4757'); }
 const TK = FILM.tally && FILM.tally.keys && FILM.tally.keys.length ? track(FILM.tally.keys) : null;
 for (const d of FILM.decals || []) U.uDrect.value[d.i].set(d.uv[0], d.uv[1], d.uv[2], d.uv[3]);
 // real footage: one <video> per clip, seeked deterministically to the frame's time

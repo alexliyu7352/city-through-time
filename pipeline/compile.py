@@ -1532,11 +1532,12 @@ if _cj and ctx_keys:
 elif ctx_keys: print('warning: context keys but no build/data/context.json (run pipeline/terrain.py with terrain.context)', file=sys.stderr)
 # terrain.shade: a fixed low sun on the plate's slopes (engine/main.js), so hills read on the dark plate whatever the room light does;
 # az from north, clockwise (default 325, from the north-west; the room light turns with the camera, this sun stays put), el above the
-# horizon, k its strength, col its colour
+# horizon, k its strength (a slope facing it lit up to .5 k in the plate's hue, one facing away darker, to .65 at k 1), col its hue
+# (the plate's colour unless written)
 SHADE_OUT = None; _sh = (C.get('terrain') or {}).get('shade')
 if _sh is not None:
     if not isinstance(_sh, dict) or set(_sh) - {'az', 'el', 'k', 'col'}: raise SystemExit(f'compile: terrain.shade: {{ az, el, k, col }} (got {_sh})')
-    SHADE_OUT = {'az': float(_sh.get('az', 325)), 'el': float(_sh.get('el', 25)), 'k': float(_sh.get('k', 1.0)), 'col': _sh.get('col', '#c9d6e8')}
+    SHADE_OUT = {'az': float(_sh.get('az', 325)), 'el': float(_sh.get('el', 25)), 'k': float(_sh.get('k', 1.0)), 'col': _sh.get('col')}
     if not 0 < SHADE_OUT['el'] < 90 or not 0 <= SHADE_OUT['k'] <= 2: raise SystemExit(f'compile: terrain.shade: el between 0 and 90 degrees, k from 0 to 2 (got {_sh})')
 for p in pins:   # a pin points at something on the plate, or on the land beyond it while that is shown: anything else floats over the void
     if abs(p['pos'][0]) > F.size[0] / 2 or abs(p['pos'][1]) > F.size[1] / 2:

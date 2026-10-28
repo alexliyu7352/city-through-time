@@ -88,7 +88,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     cBlack: { value: lin(PAL.black || '#0b0f18') },
     uEraA: { value: 0 }, uEraBurn: { value: 0 }, uPhotoK: { value: 1 }, uEraCol: { value: lin('#ffffff') }, uEraFab: { value: .9 },
     cWater: { value: lin(PAL.water || '#1a2129') }, uPlateEmit: { value: PAL.plateEmit ?? .1 }, uNight: { value: 0 }, uLit: { value: .35 }, uScaleH: { value: .0003 }, uScaleM: { value: .0001 }, uFootM: { value: 4 }, uHide: { value: null }, uHide2: { value: null }, uHideCol: { value: Array.from({ length: 8 }, () => new THREE.Color(1, 1, 1)) }, uNodeCol: { value: new THREE.Color(1, 1, 1) }, uNodeA: { value: 0 }, uPlateV: { value: new THREE.Vector2(PW, PD) },
-    uShadeL: { value: new THREE.Vector3(0, 1, 0) }, uShadeK: { value: 0 }, uShadeC: { value: lin('#c9d6e8') },   // terrain.shade (main.js)
+    uShadeL: { value: new THREE.Vector3(0, 1, 0) }, uShadeK: { value: 0 }, uShadeC: { value: lin('#3a4757') },   // terrain.shade (main.js): its hue, the plate's own unless col is written
   };
 
   // the film's year line from the modern growth on (compile: grow.yl): when the counter first reaches a year. Today's buildings
@@ -377,7 +377,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <aomap_fragment>', `#include <aomap_fragment>${kind === 0 ? '\n reflectedLight.directDiffuse *= eraKeyT;' : ''}`)
         .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, .32, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .55;' : ''}`)
         .replace('#include <opaque_fragment>', `outgoingLight += projLight(${kind}.0, wm) * mix(diffuseColor.rgb, vec3(1.), ${kind === 1 ? 'uPlateEmit' : '.1'}) * 1.35;
- ${kind === 1 ? 'outgoingLight += uShadeC * uShadeK * max(0., dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01) * (1. - wm) * step(.5, normalize(vWN).y);   // terrain.shade: slopes turned to a fixed low sun (the plate top, not its sides)' : ''}
+ ${kind === 1 ? '{ float sh_ = clamp((dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01), -1., 1.) * (1. - wm) * step(.5, normalize(vWN).y); vec3 tn_ = uShadeC / max(max(uShadeC.r, uShadeC.g), max(uShadeC.b, .001)); outgoingLight = outgoingLight * (sh_ < 0. ? max(.5, 1. + .35 * uShadeK * sh_) : 1.) + tn_ * .5 * uShadeK * max(sh_, 0.); }   // terrain.shade: a fixed low sun on the plate top (not its sides): a slope turned to it lit in the plate\'s own hue (at most .5 k, a steel blue on a dark blue plate), a slope turned away darker, flat ground and water as they are; a white light added on the dark plate read as snow on the hills' : ''}
  ${kind === 0 ? `if (vData.w > -.5 && abs(vData.w - 1.) > .5 && abs(normalize(vWN).y) < .5 && !(vData.w > 2.5 && abs(vData.y - 11.) < .5)) {   // a wall darkens toward its foot, where the street and its neighbours hide the room's light: the city stands on the plate instead of floating over it (a period house's plinth is that foot already, and keeps its light). The band is uFootM metres (main.js: a few metres up close, a few pixels' worth from afar)
    float fh_ = (vWP.y - vBase) / uScaleH; outgoingLight *= mix(.62, 1., smoothstep(0., uFootM, fh_)); }
  if (uEraBurn > 0. && vData.w > 2.5) outgoingLight += eraFire() * uEraBurn * 1.7 * uProj * vUp;   // a building that has fallen no longer burns
