@@ -86,8 +86,9 @@ def sheet_city(C, era, spec, at, Fr, city, scale, d, az=None, el=12.0):
         x += bw + 40
     lm_out = []; sheet_hex = cs.get('exaggeration', 2.0)
     for i, L in enumerate(lms):   # then the landmarks, each from four sides, fronts to the south
+        if 'from' in L:   # (a run between two points: its length, laid along the row)
+            a_, b_ = Fr.to_utm.transform(*L['from']), Fr.to_utm.transform(*L['to']); L = {**L, 'length_m': math.hypot(b_[0] - a_[0], b_[1] - a_[1])}
         hw, hd = landmarks.extent(L); L = {k: v for k, v in L.items() if k not in ('from', 'to', 'theta_deg')}
-        if L['kind'] == 'arches' and 'length_m' not in L: L['length_m'] = 2 * hw
         c = ll(x + hw, oy + hd); lm_out.append({**L, 'lon': c[0], 'lat': c[1], 'theta_deg': 0}); deep = max(deep, 2 * hd + 1)
         nm = L.get('name') or f'{L["kind"]}{i + 1}'; tp = landmarks.top(L, L.get('exaggeration') or sheet_hex)   # (framed whole: its plan and its height, looked at half way up)
         dl = round(min(.3, max(.012, max(2.6 * math.hypot(hw, hd), 2.4 * tp) / scale)), 4)
