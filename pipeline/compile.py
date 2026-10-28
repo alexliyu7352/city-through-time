@@ -895,7 +895,7 @@ for i, node in enumerate(FM['nodes']):
     hk_ = [k for k in node.get('camera', []) if isinstance(k.get('t'), (int, float))]
     prev_ = max(cam, key=lambda k: k[0]) if cam else None
     import bisect
-    for it_ in range(60):   # each entry: (time, key, where a pace insertion after it goes in node['_ins'], its tau)
+    for it_ in range(60 + 2 * len(hk_)):   # (one fix a round: as many rounds as keys could need) each entry: (time, key, where a pace insertion after it goes in node['_ins'], its tau)
         taus_ = [q['tau'] for q in node['_ins']]
         fw_ = [(node_time(node, r_.get('at', 0)) - follow_shot(r_, node, cam)['lead'] - .05, node_time(node, r_.get('at', 0)) + follow_shot(r_, node, cam)['end'] + .05)
                for r_ in node.get('routes', []) if r_.get('follow')]   # (a hand key inside a beam follow goes: the follow owns its window)
