@@ -766,12 +766,17 @@ class Builder:
                 k = r * 2.4 * (1 - z / h * .42) + .2; self._emit(BOX, x, y, 0, z, k, k, .8, part=DARK)
 
     def slab(self, x, y, th, w=60.0, d=12.0, h=14.0, part=FAB):
-        """a Soviet-style dormitory block: window bands per floor, a low hip roof"""
+        """a Soviet-style dormitory block: a window in every 3.6 m bay of each floor on both long sides, a low hip roof (a dark
+        band round every floor read as a striped cabinet, not as rooms)"""
         g = self.gsite(x, y, th, w, d)
         self._emit(BOX, x, y, th, 0, w, d, h, part=part, g_m=g)
         if self.det >= 1:
+            P = self.frame(x, y, th); nb = max(1, int(w // 3.6))
             for f in range(int(h // 3.2)):
-                self._emit(BOX, x, y, th, 1.1 + f * 3.2, w * .96, d + .3, 1.3, part=DARK, g_m=g)
+                for i in range(nb):
+                    for side in (-1, 1):
+                        wx, wy = P(-w / 2 + w * (i + .5) / nb, side * d / 2)
+                        self._emit(BOX, wx, wy, th, 1.2 + f * 3.2, 1.6, .3, 1.4, part=DARK, g_m=g)
         self.roof(x, y, th, h, w, d, 2.6, 'hip', part=ROOF, g=g, o=.5, ornaments=False)
 
     # ------------------------------------------------------------------ house types from the sources (house_types: types/, city.yaml)
