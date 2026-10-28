@@ -100,7 +100,7 @@ const eraInk = (e, n) => later(e, n) ? n.ink || 0 : (ownNode(e) || {}).ink || 0;
 const DIMK = FILM.dim && FILM.dim.length ? track(FILM.dim) : null;
 const eraUpAt = t => Math.max(0, ...(FILM.eras || []).map(e => { const FR = e.fallR; if (FR != null && t > FR.gone) return 0;
   return ss(seg(t, e.on, e.on + e.span + e.grow)) * (FR ? 1 - ss(seg(t, FR.hit, FR.gone)) : 1); }));
-const dimAt = (t, up = eraUpAt(t)) => Math.max((LOOK.dim ?? .5) * up, DIMK ? DIMK(t)[0] : 0);
+const dimAt = (t, up = eraUpAt(t)) => Math.max((LOOK.dim ?? .8) * up, DIMK ? DIMK(t)[0] : 0);
 const DIM0 = new Map(); const dimBefore = n => { if (!DIM0.has(n.id)) DIM0.set(n.id, dimAt(ringT0(n) - .01)); return DIM0.get(n.id); };
 // a node's colour ring: radius at time t (the plate's far corner from its origin is reached after wave_dur seconds)
 // sampled curves from compile (pipeline/stagecraft.py): ring radius over time; linear between samples, clamped at the ends

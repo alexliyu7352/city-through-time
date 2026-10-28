@@ -13,6 +13,7 @@ sound and light in sync. The white-model projection is only a starting point, no
 
 Today's white-model city is there from start to finish (`rise.ghost: 1`); each node tints the whole city with that node's colour (node `tint`); a period city replaces that piece of today's city in place
 (today's buildings sink with a ring of light spreading from the origin, and the old city rises); moving a capital, moving house, river changes and distances use light lines (`routes:`, `[km]` fills in the distance automatically).
+While a period city stands, today's city keeps about a fifth of its light (`era_look.dim: 0.8`): the period city is the figure, and in the later periods today's city is dense and tall around a small old town (at half its light it took the frame).
 The events with the most room need a close, brightly lit camera with the subject filling the frame, not only dark wide shots (for the brightness threshold see CHECKS.md "Brightness").
 No hard cuts between nodes: do not write the next node's first camera keyframe at t 0 (let the camera fly from the last position of the previous node), and a node that changes colour needs a wide shot in which the whole city can be seen.
 

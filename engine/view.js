@@ -56,7 +56,7 @@ export function startView(X) {
       if (e.hide != null) { U.uEdgeA.value[e.hide] = film ? 1 : 0; U.uHideCol.value[e.hide].copy(E.base); U.uHideT.value[e.hide] = st.today ? 1e3 : -1; }   // today's buildings step aside where it stands
     }
     cityMesh.visible = st.today;
-    U.uToday.value = 1; U.uDimToday.value = U.uDimToday0.value = film ? LOOK.dim ?? .5 : .3;
+    U.uToday.value = 1; U.uDimToday.value = U.uDimToday0.value = film ? LOOK.dim ?? .8 : .3;
   }
   let pending = false;
   function draw() {

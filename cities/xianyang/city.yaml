@@ -56,7 +56,7 @@ film:
   rise: { sinkDur: 2.8, ghost: 1.0 }   # today's white city stays whole all film (the reference's grammar); eras replace their own regions
   drift: 0.6
   wave_dur: 4.5              # a node's colour crosses the plate as a ring of light in this many seconds
-  era_look: { dim: 0.5, glow: 1.0, edge: 1.0, line: 1.0, light_m: 45, halo_m: 14, edge_m: 150 }   # while a period city stands: today's city dims; a thin neon line on its edge lights what stands within ~45 m of it
+  era_look: { dim: 0.8, glow: 1.0, edge: 1.0, line: 1.0, light_m: 45, halo_m: 14, edge_m: 150 }   # while a period city stands: today's city dims (to a fifth); a thin neon line on its edge lights what stands within ~45 m of it
   emblem: none   # no emblem: none stages well enough on the white model to earn its place (docs/SCRIPT.md)
   satellite_source: sentinel   # Copernicus Sentinel-2 (CC-compatible); 'hr' (Esri World Imagery, pipeline/imagery_tiles.py) is for internal tests only, never published
   copy: { keep: ['十五五', '三月不灭', '国棉一厂', '国棉七厂', '洪武四年', '乾隆十六年', '武德二年', '元鼎三年'] }   # names, a quotation and reign years kept as written (pipeline/copylint.py)
