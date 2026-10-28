@@ -25,6 +25,7 @@ courtyards keep their proportions while the plateau still reads.
 """
 import math, os, random
 import numpy as np
+from contextlib import contextmanager
 import shapely
 from shapely.geometry import Polygon, LineString, Point
 from shapely.geometry.polygon import orient
@@ -52,6 +53,8 @@ class Builder:
         self.step = .5     # metres of fall along a long wing before it steps down the slope in pieces (gable_house)
         self.plinth = .3   # metres of foundation (self.found) above which a house's or a hall's body gets a plinth (_emit)
         self.slope = None  # (dg/dx, dg/dy) ground metres per metre: the primitives emitted now are laid along a slope (see lay)
+        self.site = None   # the lot being built on, made one plane (lot_site): (x, y, height there, slope, foundation)
+        self.lot_slope = .04   # the steepest a lot's plane leans (ground metres per metre, before the plate's exaggeration): a house tilts with a gentle slope; on a steeper one it stands on a terrace (a whole house sheared along a hillside reads as falling over, and its roof slopes cross)
         self.gid, self.tag, self.meta = 0, ('misc', 0), []   # building groups (a building rises whole) and what each came from (stages)
         self.types = {}    # the declared house types a fabric can name (house_types), name -> complete type
 
@@ -112,10 +115,41 @@ class Builder:
         """a level site for a w x d footprint on a slope: the building stands at the HIGHEST ground under it (centre, corners,
         edge middles), so the hill never cuts through it, and its foundation reaches down over the slope (self.found), a
         platform showing on the downhill side as on a real hillside"""
+        if self.site is not None:   # on a lot made one plane (lot_site): that plane, under every part of the house alike
+            x0, y0, g0, sl, fd = self.site; self.found = fd; return g0 + sl[0] * (x - x0) + sl[1] * (y - y0)
         P = self.frame(x, y, th); n = max(3, min(33, int(math.ceil(max(w, d) / 8)) + 1))   # every 8 m or so: finer than the plate's mesh (48 m), so nothing between samples rises through it
         gs = [self.ground_m(*P(w * (i / (n - 1) - .5), d * (j / (n - 1) - .5))) for i in range(n) for j in range(n)]
         self.found = max(gs) - min(gs)
         return max(gs)
+
+    @contextmanager
+    def lot_site(self, x, y, th, w, d):
+        """a house's lot made one plane before it is built on (平整土地): the plane fitted to the ground under the w x d lot,
+        raised just enough that the ground nowhere pokes through it, level where the ground is level and tilted with the hill
+        where it is not (up to lot_slope; steeper, the house stands on a terrace whose foundation takes the rest). Where the plane
+        stands above the ground by more than self.plinth, the lot is one platform under it (台基, a plinth) down to the ground,
+        and the house's walls keep their height on top of it; without it the foundation went into every wall, and a court on a
+        steep slope stood behind a wall as tall as a city's. Every part of the house (its wings, walls, gate, court) then stands on that plane (gsite, strip and
+        gable_house take it, the pieces are sheared along it), so a house is one piece on the slope: its wings no longer stand
+        each on its own level against the walls and the court, nor on plinths of their own. Inside a lot already made one plane
+        (a mansion's courts) the plane is the mansion's."""
+        if self.site is not None: yield; return
+        P = self.frame(x, y, th); n = max(3, min(12, int(math.ceil(max(w, d) / 6)) + 1)); pts = []
+        for i in range(n):
+            for j in range(n):
+                qx, qy = P(w * (i / (n - 1) - .5), d * (j / (n - 1) - .5)); pts.append((qx - x, qy - y, self.ground_m(qx, qy)))
+        A = np.array([[1.0, a, b] for a, b, _ in pts]); z = np.array([g for _, _, g in pts])
+        c0, bx, by = np.linalg.lstsq(A, z, rcond=None)[0]
+        k = min(1.0, self.lot_slope / max(math.hypot(bx, by), 1e-9)); bx, by = bx * k, by * k   # steeper than lot_slope: a terrace, its foundation taking the rest
+        res = z - A @ np.array([0.0, bx, by]); c0 = 0.0; lift = float(res.max()) + self.clear
+        s0, f0 = self.slope, self.found
+        g0, sl, fd = float(c0) + lift, (float(bx), float(by)), lift - float(res.min())
+        self.slope = sl
+        if fd > self.plinth:   # the platform: a thin top on the plane, its foundation down to the lowest ground under the lot
+            self.group(); self.found = fd; self._emit(BOX, x, y, th, 0, w, d, .05, part=PLINTH, g_m=g0); fd = 0.0
+        self.site = (x, y, g0, sl, fd); self.found = fd
+        try: yield
+        finally: self.site = None; self.slope, self.found = s0, f0
 
     @staticmethod
     def frame(x, y, th):
@@ -147,6 +181,7 @@ class Builder:
         L = math.hypot(b[0] - a[0], b[1] - a[1])
         if L < .5: return
         th = math.atan2(b[1] - a[1], b[0] - a[0]); road = (1.0 if part == PAVE else 0.0) if road is None else float(road)
+        if g is None and self.site is not None: g = self.gsite((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, th, L, w)   # on a lot made one plane: along it (sheared)
         if g is not None: self._emit(BOX, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2, th, z0, L, w, h, road, part=part, g_m=g); return
         g3 = (self.ground_m(*a), self.ground_m(*b), self.ground_m((a[0] + b[0]) / 2, (a[1] + b[1]) / 2))
         n = max(1, math.ceil(L / piece)) if max(g3) - min(g3) > .25 else 1
@@ -231,7 +266,7 @@ class Builder:
         """one wing of a house: walls, a gable roof with overhang and ridge (ridge along local x, length w), door and windows
         on the front side (local y = front). On its own ground (g None) a long wing that falls more than self.step along its
         length steps down the slope in pieces, each on its own level, as on a hillside"""
-        if g is None and w > 2 * d:
+        if g is None and w > 2 * d and self.site is None:   # (on a lot made one plane the wing lies along it whole)
             P = self.frame(x, y, th); fall = abs(self.ground_m(*P(w / 2, 0)) - self.ground_m(*P(-w / 2, 0)))
             k = min(int(w // (2 * d)), int(math.ceil(fall / self.step)))   # (a piece at least twice as long as it is deep)
             if k > 1:
@@ -250,10 +285,9 @@ class Builder:
 
     def courtyard(self, x, y, th, w, d, h=6.0, part=FAB):
         """a courtyard house (合院) in a w x d lot facing south (local -y): main hall north, two side wings, a south row,
-        the lot walls with a gate house at the south-east corner, a paved court and maybe a tree. Each building stands on its
-        own ground and the walls and the court follow the slope: on a hillside the main hall stands highest and the south row
-        lowest, as courtyards step up a slope (one level for the whole lot stood every wing of a house on the 北阪 on a
-        foundation as tall as its walls). A lot deeper than MANSION_D is a mansion of several courts (mansion)"""
+        the lot walls with a gate house at the south-east corner, a paved court and maybe a tree. On a lot made one plane
+        (lot_site, fill) every building, wall and the court stand on that plane, level or tilted with the hill; alone, each
+        building stands on its own ground. A lot deeper than MANSION_D is a mansion of several courts (mansion)"""
         if d > self.MANSION_D: return self.mansion(x, y, th, w, d, h, part)
         P = self.frame(x, y, th)
         md = min(8.0, d * .3); sd = min(5.5, w * .26); gd = min(4.5, d * .17)
@@ -340,7 +374,7 @@ class Builder:
             self._emit(BOX, x + math.cos(a) * r, y + math.sin(a) * r, a + math.pi / 2, .05, .9, .3, h * .32, part=DARK, g_m=g)
 
     def tree(self, x, y, h=10.0, r=3.5, kind='willow'):
-        g = self.ground_m(x, y)
+        g = self.gsite(x, y, 0, 1, 1) if self.site is not None else self.ground_m(x, y)   # (in a lot made one plane: on it)
         self._emit(CYL, x, y, 0, 0, r * .12, 0, h * .35, part=TREE, g_m=g)
         k = .7 + self.rng.random() * .5
         self._emit(FRUSTUM, x, y, self.rng.random() * 3, h * .3 * k, r * 1.5 * k, r * 1.5 * k, h * .35 * k, r * 1.9 * k, r * 1.9 * k, part=TREE, g_m=g)
@@ -711,7 +745,15 @@ class Builder:
         """a walled compound (temple, office, palace court): enclosure wall with a tiled coping, a gate hall, halls on the
         axis on podiums, side halls facing the axis, a paved axis and a few trees.
         halls: list of (ly fraction -0.5..0.5 along the axis, w fraction, d fraction, h, roof)"""
-        P = self.frame(x, y, th)   # each hall and the gate on its own ground, the walls along the slope
+        if max(w, d) > self.COURT_M: return self._compound(x, y, th, w, d, halls, wall_h, part, side_halls)   # a palace city: its halls on their own ground, its walls along the hill
+        with self.lot_site(x, y, th, w, d):   # one court, one plane: its halls, gate, walls and paving on it (on a steep slope, on a platform)
+            self._compound(x, y, th, w, d, halls, wall_h, part, side_halls)
+
+    COURT_M = 300.0   # metres: a walled court up to this size is built on one plane (lot_site); a palace city of a kilometre or two
+                      # spans more ground than one plane can follow, so its halls stand each on its own level
+
+    def _compound(self, x, y, th, w, d, halls, wall_h, part, side_halls):
+        P = self.frame(x, y, th)
         corners = [(-w / 2, -d / 2), (w / 2, -d / 2), (w / 2, d / 2), (-w / 2, d / 2)]
         gw = max(6.0, min(40.0, w * .16))
         for i in range(4):
@@ -730,7 +772,7 @@ class Builder:
         clear = [(0, -d / 2, gw * .8, max(3, gw * .35)), (0, 0, aw / 2, d / 2)]   # (local centre, half sizes): no tree there
         for n_, (ly, fw, fd, hh, roof) in enumerate(halls):
             hx, hy = P(0, ly * d); pod = max(.8, hh * .12)
-            self.hall(hx, hy, th, fw * w, fd * d, hh, roof=roof, z0=0, part=part, podium=pod, g=None)   # each hall on its own ground
+            self.hall(hx, hy, th, fw * w, fd * d, hh, roof=roof, z0=0, part=part, podium=pod, g=None)   # (on the court's plane)
             clear.append((0, ly * d, fw * w / 2 + 2, fd * d / 2 + 2 + pod * 1.6))   # its podium and the stair before it
             if side_halls and self.det >= 1 and n_ > 0:
                 sl = max(8, fd * d * 1.4); sw_ = min(8, w * .14)
@@ -1021,19 +1063,23 @@ class Builder:
             else: theta_i = theta
             j = self.rng.random
             w_, d_ = lw * (1 - jitter * j()), ld * (1 - jitter * j())
-            if typ == 'courtyard': self.courtyard(px, py, theta_i, w_ * .96, d_ * .96, h * (.85 + .3 * j()), part=part)
-            elif typ == 'dwelling':   # one or two small gable wings in a walled yard (commoners' houses, workshops)
-                self.gable_house(px, py + d_ * .18, theta_i, w_ * .8, d_ * .4, h * (.8 + .4 * j()), part=part, front=-1)
-                if j() < .55: self.gable_house(px - w_ * .28, py - d_ * .18, theta_i + math.pi / 2, d_ * .3, w_ * .3, h * .75, part=part, front=-1)
-                if self.det >= 1:
-                    P = self.frame(px, py, theta_i)
-                    for (a, b) in ((P(-w_ / 2, -d_ / 2), P(w_ * .1, -d_ / 2)), (P(w_ * .3, -d_ / 2), P(w_ / 2, -d_ / 2)), (P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2)), (P(-w_ / 2, -d_ / 2), P(-w_ / 2, d_ / 2))):
-                        self.strip(a, b, .4, 2.0, part=part)
-            elif typ == 'hut': self.hut(px, py, min(lw, ld) * .32, h, part=part)
-            elif typ == 'slab': self.slab(px, py, theta_i, w_ * .8, d_ * .35, h, part=part)
-            else: self.house(px, py, theta_i, lw, ld, self.types[typ], part=part)   # a declared type (house_types)
+            with self.lot_site(px, py, theta_i, lw, ld): self._lot(typ, px, py, theta_i, lw, ld, w_, d_, h, part, j)
             n += 1
         return n
+
+    def _lot(self, typ, px, py, theta_i, lw, ld, w_, d_, h, part, j):
+        """one lot of a fabric (fill): its house, on the lot made one plane (lot_site)"""
+        if typ == 'courtyard': self.courtyard(px, py, theta_i, w_ * .96, d_ * .96, h * (.85 + .3 * j()), part=part)
+        elif typ == 'dwelling':   # one or two small gable wings in a walled yard (commoners' houses, workshops)
+            self.gable_house(px, py + d_ * .18, theta_i, w_ * .8, d_ * .4, h * (.8 + .4 * j()), part=part, front=-1)
+            if j() < .55: self.gable_house(px - w_ * .28, py - d_ * .18, theta_i + math.pi / 2, d_ * .3, w_ * .3, h * .75, part=part, front=-1)
+            if self.det >= 1:
+                P = self.frame(px, py, theta_i)
+                for (a, b) in ((P(-w_ / 2, -d_ / 2), P(w_ * .1, -d_ / 2)), (P(w_ * .3, -d_ / 2), P(w_ / 2, -d_ / 2)), (P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2)), (P(-w_ / 2, -d_ / 2), P(-w_ / 2, d_ / 2))):
+                    self.strip(a, b, .4, 2.0, part=part)
+        elif typ == 'hut': self.hut(px, py, min(lw, ld) * .32, h, part=part)
+        elif typ == 'slab': self.slab(px, py, theta_i, w_ * .8, d_ * .35, h, part=part)
+        else: self.house(px, py, theta_i, lw, ld, self.types[typ], part=part)   # a declared type (house_types)
 
 
 def to_utm_ring(F, ring):

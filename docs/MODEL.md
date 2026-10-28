@@ -79,10 +79,12 @@ Roads must be continuous and textured: lay a road on a slope in segments, with a
 which looks like a broken dashed line); the road surface is drawn with rammed-earth grain and patches, and roads also have wheel ruts along them (one lane 4.2 m, the two ruts 1.4 m apart), which fade out automatically when the ground covered by a pixel
 is larger than the texture, so they do not flicker from afar. Always lay a city on the ground the engine actually draws (`terrainio.plate_mesh`: the plate is a grid of about 48 m cells with flat triangles inside the cells,
 higher than the sampled terrain in hollows), not on the sampled terrain; the base of a building takes the highest point in its footprint, sampled every 8 m or so.
-**Every building lands on its own:** each house in a courtyard, palace court or compound stands on the ground beneath it (main hall high, front row low, as if built along the slope), and the courtyard walls and yards follow the slope;
-a long wing is split into segments when the drop along the slope exceeds 0.5 m, one height per segment (`Builder.step`). Do not put a whole compound at one height: with a 48 m deep compound on a slope,
-the whole row of houses on the low side stands on a very high base. Also do not cut high and fill low to level the terrain: the plate is 48 m per cell, one step of terrace is taller on screen than a house,
-and it would cut down the landmarks standing on the slope.
+**A house stands on one plane:** houses differ in height with the ground, but inside one house the ground was levelled before it was built. Every lot of a fabric and every walled court
+up to 300 m (`Builder.COURT_M`; a palace city spans more ground than one plane can follow) is made one plane first (`Builder.lot_site`): fitted to the ground under the lot and raised just enough
+that the ground nowhere pokes through, level where the ground is level, tilted with the hill up to 4 % (`Builder.lot_slope`); on a steeper slope the lot stands on a platform (台基) down to the
+ground, and its walls keep their height on top of it. Every part of the house (wings, walls, gate, court, its trees) stands on that plane: never put the parts of one house each on its
+own ground (the wings stepped against the walls and the court, each on a darker plinth of its own, and read as broken), and never let the foundation of a steep lot go into the
+walls (a court on the 北阪 stood behind a wall as tall as a city's). clipcheck's `floating` knows the platforms.
 **Large plots get multi-courtyard mansions:** a courtyard plot deeper than 60 m (`Builder.MANSION_D`) is built automatically as a mansion: one courtyard every 30 m or so along the central axis, side courtyards added on both sides of a wide plot, and the surrounding wall drawn in every detail.
 A single courtyard cannot fill a large plot, leaving only a few thin houses at the edge around empty ground, which looks like an empty frame at low detail.
 Likewise, a market must have rows of shops in every cell, and a workshop area must be drawn as courtyards one by one as excavated (`workshops`), not a single row along the street or scattered points: from afar they look like empty frames and grains of sand.

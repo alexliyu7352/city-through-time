@@ -10,7 +10,8 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
                       landmark, earthwork or wall 20-150 m ahead without reaching it (an avenue stopping short of the palace
                       it leads to)
   today_vs_era        today's buildings that stay up (outside the era's hide mask) but overlap the era city
-  floating            primitives whose base sits above the plate's surface (the plate is sampled like the engine does)
+  floating            primitives whose base sits above the plate's surface and not on a lot's platform (the plate is sampled
+                      like the engine does)
   terrain_cut         bodies the plate rises through: under the footprint the ground climbs more than half the body's height
                       above the ground the body stands on (a long wall or a big hall on a slope)
   cross_era           bodies of a city that overlap bodies of another city standing at the same time (the empire over Qin)
@@ -143,6 +144,11 @@ def main():
             overlaps(up, era_all, 'today_vs_era')
         # floating: base above the plate by more than 1 m (exaggerated)
         fl = [p for p in ground if p[12] - plate_y(p[1], p[2]) > 1.0 * S * tex and p[4] > plate_y(p[1], p[2]) + 1e-6]
+        plat = [q for q in prims if q[11] == PLINTH and q[0] == 0]   # a lot's platform (citygen lot_site): what stands on it is not floating
+        if fl and plat:
+            prs = [rect(q).buffer(2 * S) for q in plat]; ptree = STRtree(prs)   # (a wall on the lot's edge stands half on it)
+            top = lambda q, x, z: q[4] + q[7] + (q[13] if len(q) > 13 else 0) * (x - q[1]) + (q[14] if len(q) > 14 else 0) * (z - q[2])   # (a platform on a sloping lot is sheared)
+            fl = [p for p in fl if not any(prs[j].contains(shapely.Point(p[1], p[2])) and top(plat[j], p[1], p[2]) >= p[4] - .5 * S * tex for j in ptree.query(shapely.Point(p[1], p[2])))]
         R['floating'] = len(fl); R['floating_at'] = [[round(p[1], 4), round(p[2], 4)] for p in fl[:5]]
         cut = []
         for p in ground:
