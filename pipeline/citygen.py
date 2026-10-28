@@ -326,8 +326,7 @@ class Builder:
                 yc, sd = depth / 2 - yd / 2, frontage / 2 - .15
                 self._emit(BOX, px + nx * yc - math.cos(th) * sd, py + ny * yc - math.sin(th) * sd, th, 0, .3, yd, 2.0, part=part, g_m=g)
             if self.det >= 1:
-                fx, fy = px - nx * (depth / 2 + .05), py - ny * (depth / 2 + .05)
-                self._emit(BOX, fx, fy, th, .1, frontage * .72, .2, 2.5, part=DARK, g_m=g)
+                self.shopfront(px - nx * (depth / 2 + .05), py - ny * (depth / 2 + .05), th, 0, frontage * .72, 2.5, part, g)
                 ax_, ay_ = px - nx * (depth / 2 + .8), py - ny * (depth / 2 + .8)
                 self._emit(BOX, ax_, ay_, th, 2.9, frontage * .9, 1.6, .18, part=ROOF, g_m=g)
         return feet
@@ -348,6 +347,12 @@ class Builder:
         self._emit(FRUSTUM, x, y, self.rng.random() * 3, h * .65 * k, r * 1.9 * k, r * 1.9 * k, h * .35 * k, r * .7 * k, r * .7 * k, part=TREE, g_m=g)
 
     # ------------------------------------------------------------------ Qin-Han palace types (research/qin_palaces.md, research/han_changan.md)
+    def shopfront(self, x, y, th, z0, w, h, part, g):
+        """an open shop front w wide on the face at (x, y): a counter (柜台) waist-high across it in the wall's colour, the dark
+        opening above it up to h; a front dark from the ground up read as a black hole in the wall, not as a shop"""
+        self._emit(BOX, x, y, th, z0 + .05, w, .5, .95, part=part, g_m=g)
+        self._emit(BOX, x, y, th, z0 + 1.0, w, .2, max(.6, h - 1.0), part=DARK, g_m=g)
+
     def stair(self, P, fx, fy, th, w, h, run, g, out=-1, z0=0.0, part=EARTH):
         """a flight of steps (踏道) against a face, rising from the ground `run` out from it to `h` at the face: a few broad
         steps, each a slab from the face outward, so it reads as a stair from any side. P is the frame of what it climbs, (fx, fy)
@@ -839,7 +844,7 @@ class Builder:
             self._emit(BOX, x, y, th, z, w, d, hb, part=part, g_m=g)
             if self.det >= 1 and street:
                 if gate: self._emit(BOX, x, y, th, z, 2.6, d + .2, min(3.4, sm * .9), part=DARK, g_m=g)   # the passage through
-                elif grd == 'shops': self._emit(BOX, *P(0, -d / 2 - .05), th, z + .1, w * .82, .2, min(2.8, sm * .78), part=DARK, g_m=g)
+                elif grd == 'shops': self.shopfront(*P(0, -d / 2 - .05), th, z, w * .82, min(2.8, sm * .78), part, g)
                 else: self._emit(BOX, *P(0, -d / 2 - .05), th, z + .1, min(1.4, w * .3), .2, min(2.3, sm * .72), part=DARK, g_m=g)
         if self.det >= 2 and street:   # windows, every storey, on the street side
             k_ = max(1, min(6, int(w // 3.6)))
