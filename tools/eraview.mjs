@@ -1,10 +1,11 @@
 // The period cities from every side, after any change to their models or to the look (docs/MODEL.md). Runs tools/geocheck.mjs
 // first and stops on a face pointing the wrong way; then opens the viewer (play.html?view, engine/view.js) and takes, of each
-// period city, a close-up of its houses (its densest 200 m square) from eight bearings at two heights, and the whole city from
-// four bearings, in both looks: 成片 (film: its colour, glow, edge line, the key light beside the camera) and 檢查 (check: plain
+// period city, a close-up of its houses (its densest 200 m square) from eight bearings at two heights, its four largest landmarks
+// (halls, terraces, palaces: where a stair, a tree or a road meets a big building) from four bearings each, and the whole city
+// from four bearings, in both looks: 成片 (film: its colour, glow, edge line, the key light beside the camera) and 檢查 (check: plain
 // white, sharp, the key light fixed in the room). One sheet per city and look: cities/<slug>/build/review/eraview/<era>_<look>.jpg,
-// rows top to bottom: close-up at 12 degrees up, close-up at 35 degrees up, the whole city at 30 degrees; left to right the camera's
-// bearing 0, 45 .. 315, counted as the film's camera keys count it (0: the camera south of the city, 90 east, 180 north, 270
+// rows top to bottom: close-up at 12 degrees up, close-up at 35 degrees up, the landmarks (two rows, four bearings each), the whole
+// city at 30 degrees; left to right the camera's bearing 0, 45 .. 315, counted as the film's camera keys count it (0: the camera south of the city, 90 east, 180 north, 270
 // west). The stills are kept in <era>/.
 // usage: node tools/eraview.mjs <city_slug> [--eras a,b] [--look film|check] [--d .045 (the close-up's distance; nearer for a small place)] [--quality low]
 import fs from 'fs';
@@ -24,6 +25,17 @@ console.log(gc.lines.join('\n'));
 if (gc.failed) { console.error('eraview: geocheck failed, the faces above point the wrong way (engine/props.js Geo); fix them before looking'); process.exit(1); }
 
 const AZ = [0, 45, 90, 135, 180, 225, 270, 315];
+// an era's largest landmarks: its landmark, landmark-roof and earthwork pieces (citygen parts 1, 9, 10) grouped by the building
+// they belong to, the four with the most ground under them, each with its centre and extent [x, z, size] (model units)
+const FILM = JSON.parse(fs.readFileSync(buildDir(city, 'film.json'), 'utf8'));
+function landmarks(id) {
+  const e = FILM.eras.find(q => q.id === id), P = JSON.parse(fs.readFileSync(buildDir(city, e.file), 'utf8')).prims, g = new Map();
+  for (const p of P) if ([1, 9, 10].includes(p[11])) {
+    const k = `${(p[15] ?? p[1]).toFixed(4)},${(p[16] ?? p[2]).toFixed(4)}`, r = Math.max(p[5], p[6] || 0) / 2, v = g.get(k) || [1e9, 1e9, -1e9, -1e9, 0];
+    v[0] = Math.min(v[0], p[1] - r); v[1] = Math.min(v[1], p[2] - r); v[2] = Math.max(v[2], p[1] + r); v[3] = Math.max(v[3], p[2] + r); v[4] += p[5] * (p[6] || p[5]); g.set(k, v);
+  }
+  return [...g.values()].sort((a, b) => b[4] - a[4]).slice(0, 4).map(v => [(v[0] + v[2]) / 2, (v[1] + v[3]) / 2, Math.hypot(v[2] - v[0], v[3] - v[1])]);
+}
 const { browser, page } = await openFilm(city, { q: 'view&bare' + (opt('--quality', '') === 'low' ? '&quality=low' : '') });
 const eras = (await page.evaluate(() => window.VIEWINFO())).filter(e => !only || only.includes(e.id));
 const root = buildDir(city, 'review', 'eraview');
@@ -32,18 +44,21 @@ for (const e of eras) {
   for (const look of looks) {
     // the close-up nearer for a small place (a village a few hundred metres across); the whole city however large it is
     const dc = Math.min(D, Math.max(.012, e.r * .8)), dw = Math.min(2.8, Math.max(.04, e.r * 2.2));
-    const rows = [[`${e.id}:dense`, 12, dc, AZ], [`${e.id}:dense`, 35, dc, AZ], [e.id, 30, dw, [0, 90, 180, 270]]];
+    // the landmarks: 16 views, four bearings of each of the four largest (fewer landmarks: more bearings of each)
+    const lm = landmarks(e.id), lmv = lm.length ? [...Array(16).keys()].map(i => { const k = i % lm.length, j = Math.floor(i / lm.length); return [lm[k], (30 + j * 360 / Math.ceil(16 / lm.length)) % 360, k]; }) : [];
+    const rows = [[`${e.id}:dense`, 12, dc, AZ, 'close'], [`${e.id}:dense`, 35, dc, AZ, 'close'], ...lmv.map(([L, az, k]) => [[L[0], L[1]], 30, Math.min(.3, Math.max(.012, L[2] * 1.4)), [az], `landmark${k + 1}`]), [e.id, 30, dw, [0, 90, 180, 270], 'whole']];
     const files = [];
-    for (const [target, el, d, azs] of rows) for (const az of azs) {
+    for (const [target, el, d, azs, what] of rows) for (const az of azs) {
       await page.evaluate(o => window.VIEW(o), { eras: [e.id], look, today: false, target, az, el, d });
-      const f = path.join(dir, `${look}_${target.includes(':') ? 'close' : 'whole'}_el${el}_az${az}.jpg`);
+      const f = path.join(dir, `${look}_${what}_el${el}_az${Math.round(az)}.jpg`);
       await page.screenshot({ path: f, type: 'jpeg', quality: 90 }); files.push(f);
     }
     // the sheet: 8 tiles a row (the whole city's four take two places each)
-    const sheet = path.join(root, `${e.id}_${look}.jpg`), n = files.length;
-    const f = files.map((_, i) => `[${i}]scale=${i < 16 ? 480 : 960}:-1[v${i}]`).join(';');
-    const r1 = [...Array(8).keys()].map(i => `[v${i}]`).join(''), r2 = [...Array(8).keys()].map(i => `[v${i + 8}]`).join(''), r3 = [...Array(n - 16).keys()].map(i => `[v${i + 16}]`).join('');
-    const ff = spawnSync('ffmpeg', ['-loglevel', 'error', '-y', ...files.flatMap(x => ['-i', x]), '-filter_complex', `${f};${r1}hstack=8[a];${r2}hstack=8[b];${r3}hstack=${n - 16}[c];[a][b][c]vstack=3`, '-frames:v', '1', sheet], { stdio: 'inherit' });
+    const sheet = path.join(root, `${e.id}_${look}.jpg`), n = files.length, nw = 4, nr = (n - nw) / 8;
+    const f = files.map((_, i) => `[${i}]scale=${i < n - nw ? 480 : 960}:-1[v${i}]`).join(';');
+    const row = (a, k) => [...Array(k).keys()].map(i => `[v${a + i}]`).join('');
+    const rowsF = [...Array(nr).keys()].map(r => `${row(r * 8, 8)}hstack=8[r${r}]`).join(';') + `;${row(n - nw, nw)}hstack=${nw}[r${nr}]`;
+    const ff = spawnSync('ffmpeg', ['-loglevel', 'error', '-y', ...files.flatMap(x => ['-i', x]), '-filter_complex', `${f};${rowsF};${[...Array(nr + 1).keys()].map(r => `[r${r}]`).join('')}vstack=${nr + 1}`, '-frames:v', '1', sheet], { stdio: 'inherit' });
     if (ff.status) { console.error(`eraview: ffmpeg could not lay out ${sheet}`); process.exit(1); }
     console.log(`eraview: ${e.id} (${e.label}) ${look}: ${sheet}`);
   }
