@@ -133,7 +133,7 @@ FIELDS = {
         'stair': ('obj', {'at': ('enum', ('front', 'all', 'none'), 'front', 'up the front, up all four sides, none'), 'w_m': ('num', (.5, 200), None, 'its width (.15 of the foot when absent)')}, {}, 'flights to the top'),
     }, 'a stepped platform or pyramid: pyramids, ziggurats, Mesoamerican temple platforms, altars, stupa terraces, temple mountains'),
     'arches': ({
-        'from': ('ll', None, None, '[lon, lat] one end of a run (an aqueduct, a bridge, a loggia); with to, instead of lon, lat and length_m'),
+        'from': ('ll', None, None, '[lon, lat] one end of a run (an aqueduct, a bridge, a loggia); with to, instead of lon, lat and length_m. Its top runs straight from end to end, h_m above the ground at each; over 120 m it is laid in pieces whose arches reach down to the ground under them'),
         'to': ('ll', None, None, '[lon, lat] the other end'),
         'length_m': ('num', (1, 5000), None, 'its length (with lon, lat)'),
         'h_m': ('num', (1, 120), REQ, 'height to its top'),
@@ -818,24 +818,37 @@ def build(B, L, x, y, th):
     """draw a checked landmark at UTM x, y turned th on one level plane (a platform on a slope); returns its footprint's
     half sizes (metres, its frame) for the fabric to keep clear"""
     hw, hd = extent(L)
-    if L['kind'] == 'arches' and L['length_m'] > 120:   # a long run (an aqueduct): in pieces, each on its own ground
-        n = math.ceil(L['length_m'] / 80); P = C.Builder.frame(x, y, th); seg = L['length_m'] / n
-        tot = L.get('bays') or max(1, round(L['length_m'] / max(1.0, (L['h_m'] - L['attic_m']) / L['tiers'] * .9)))
-        for i in range(n):
-            q = {**L, 'length_m': seg, 'bays': max(1, round(tot / n))}
-            sx, sy = P(-L['length_m'] / 2 + (i + .5) * seg, 0); g = B.gsite(sx, sy, th, seg, hd * 2)
-            draw(Draw(B, g), q, sx, sy, th); B.found = 0.0
-        return hw, hd
-    # level: a monument is built level, on a platform where the ground falls away under it by more than 2 % of its width (less:
-    # its own walls reach down, as the foundation every body has; a square plate under a round building on a gentle slope read wrong)
-    s0, p0 = B.lot_slope, B.plinth; B.lot_slope = 0.0; B.plinth = max(B.plinth, .02 * 2 * min(hw, hd))
     try:
-        with B.lot_site(x, y, th, 2 * hw, 2 * hd):
-            g = B.gsite(x, y, th, 2 * hw, 2 * hd)
-            draw(Draw(B, g), L, x, y, th)
-    finally: B.lot_slope, B.plinth = s0, p0
-    B.found = 0.0
+        if L['kind'] == 'arches' and L['length_m'] > 120: _run(B, L, x, y, th, hd)
+        else:
+            # level: a monument is built level, on a platform where the ground falls away under it by more than 2 % of its width
+            # (less: its own walls reach down, as the foundation every body has; a square plate under a round building on a gentle
+            # slope read wrong)
+            s0, p0 = B.lot_slope, B.plinth; B.lot_slope = 0.0; B.plinth = max(B.plinth, .02 * 2 * min(hw, hd))
+            try:
+                with B.lot_site(x, y, th, 2 * hw, 2 * hd):
+                    g = B.gsite(x, y, th, 2 * hw, 2 * hd)
+                    draw(Draw(B, g), L, x, y, th)
+            finally: B.lot_slope, B.plinth = s0, p0
+    finally: B.found = 0.0
     return hw, hd
+
+
+def _run(B, L, x, y, th, hd):
+    """a long run of arches (an aqueduct, a bridge): its top straight from one end to the other, h_m above the ground at each
+    end, laid in pieces of 80 m or less whose arches reach down to the ground under them (a valley's arches are the taller).
+    Pieces each standing h_m above their own ground stepped up and down with it, a saw along the top"""
+    Lm = L['length_m']; n = math.ceil(Lm / 80); seg = Lm / n; P = C.Builder.frame(x, y, th)
+    tot = L.get('bays') or max(1, round(Lm / max(1.0, (L['h_m'] - L['attic_m']) / L['tiers'] * .9)))
+    ga, gb = B.ground_m(*P(-Lm / 2, 0)), B.ground_m(*P(Lm / 2, 0)); gr = (gb - ga) / Lm   # the line's ground, metres per metre along
+    s0 = B.slope; B.slope = (gr * math.cos(th), gr * math.sin(th))   # (every piece sheared along it: one straight top)
+    try:
+        for i in range(n):
+            c = -Lm / 2 + (i + .5) * seg; gl = ga + gr * (c + Lm / 2); sx, sy = P(c, 0)
+            under = [gl + gr * (u - c) - B.ground_m(*P(u, v)) for u in [c - seg / 2 + seg * k / 6 for k in range(7)] for v in (-hd, 0.0, hd)]
+            B.found = max(0.0, max(under))   # (its foundation: down to the lowest ground under it)
+            draw(Draw(B, gl), {**L, 'length_m': seg, 'bays': max(1, round(tot / n))}, sx, sy, th)
+    finally: B.slope = s0
 
 
 def describe(kinds=KINDS):
