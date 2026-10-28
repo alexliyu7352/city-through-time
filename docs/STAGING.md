@@ -156,6 +156,8 @@ Take a screenshot of every new card, photo and document card: what the picture c
 CREDITS); compile does not compare them.
 **Footage:** during preview playback the video plays natively and is corrected only when out of sync, and 3D is not drawn when full-screen footage covers the picture; the final film is still positioned exactly frame by frame. Full screen uses only video of 1600×900 or higher; lower resolution becomes a small card.
 
+**Spot** (node `spot:`): when the narration speaks of one place in a wide shot (the palaces on the north slope, a market, a gate), the light falls on it and the rest of the room goes dark:
+`{ ll: [lon, lat], r_m: 600, with | at, until, hold, dur, dim: 0.16, boost: 1.35, fade: 0.8 }`. The eye goes to the subject at once without the camera moving; keep it for the beats where a wide shot has to stay wide.
 ## Minimap, satellite and ending
 
 The locator minimap and the geographic labels (`film.labels`) appear automatically; the period cities' extents are drawn on the minimap. `film.night_look: { deep: 1 }` turns the night into a night city: today's walls and roofs go dark and fewer windows burn brighter, warm and cool, so a telephoto look across the river at night reads as a sea of lights (0: the white city with lit windows). The modern section can write `night: 1` for night-time window lights and light flowing along the road network.

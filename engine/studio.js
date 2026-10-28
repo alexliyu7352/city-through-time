@@ -90,6 +90,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     cWater: { value: lin(PAL.water || '#1a2129') }, uPlateEmit: { value: PAL.plateEmit ?? .1 }, uNight: { value: 0 }, uLit: { value: .35 }, uScaleH: { value: .0003 }, uScaleM: { value: .0001 }, uFootM: { value: 4 }, uHide: { value: null }, uHide2: { value: null }, uHideCol: { value: Array.from({ length: 8 }, () => new THREE.Color(1, 1, 1)) }, uNodeCol: { value: new THREE.Color(1, 1, 1) }, uNodeA: { value: 0 }, uPlateV: { value: new THREE.Vector2(PW, PD) },
     uShadeL: { value: new THREE.Vector3(0, 1, 0) }, uShadeK: { value: 0 }, uShadeC: { value: lin('#3a4757') },   // terrain.shade (main.js): its hue, the plate's own unless col is written
     uNightDeep: { value: 0 },   // film.night_look.deep: at night today's buildings go dark, a few windows burn brighter (the night city)
+    uSpotC: { value: new THREE.Vector2(0, 0) }, uSpotR: { value: 9 }, uSpotK: { value: 1 }, uSpotB: { value: 1 },   // spot: the light falls on a subject, the rest of the room goes dark
   };
 
   // the film's year line from the modern growth on (compile: grow.yl): when the counter first reaches a year. Today's buildings
@@ -123,6 +124,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform vec2 uPlate, uPickPos; uniform vec3 uProjPos, uKeyDir; uniform sampler2D uWater, uL1, uL2, uL3;
   uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uFootM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[8];
   uniform vec3 uShadeL, uShadeC; uniform float uShadeK, uNightDeep;
+  uniform float uSpotR, uSpotK, uSpotB; uniform vec2 uSpotC;
   uniform sampler2D uHide, uHide2;
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
   // vData: x = year (0 unknown, negative BCE), y = height m, z = rank 0..1 (switch-on order), w = kind (0 building, 1 mound/earthwork, -1 plate)
@@ -402,6 +404,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    outgoingLight *= mix(1., .6, uNight * step(.5, Nn.y)) * (1. - .85 * nd_ * step(.5, Nn.y));   // (roofs to .35 turned the wide shots of the modern half grey: a roof is most of what a wide shot sees)
  }` : ''}
  ${kind === 1 ? 'outgoingLight *= 1. - .45 * uNightDeep * uNight;' : ''}
+ ${kind < 1.5 ? 'outgoingLight *= mix(uSpotK, uSpotB, smoothstep(uSpotR, uSpotR * .35, length(vWP.xz - uSpotC)));' : ''}
 #include <opaque_fragment>`);
     };
     m.customProgramCacheKey = () => 'proj' + kind;

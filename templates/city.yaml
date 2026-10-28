@@ -113,6 +113,8 @@ film:
       footage:                                # the same place today (live-footage echo). mode: full (4K full frame 7–9 s) | panel (photo in the right panel) | card (low-resolution small card + anchor leader line) | doc (old map / archive photo document card)
         - { id: <f>, file: assets/footage/<clip>.mp4, mode: full, at: 20.0, dur: 8.0, zh: <place name>, en: <place, today>, credit: "<author · source · licence>" }
         - { id: <p>, file: assets/photos_cc/<photo>.jpg, mode: panel, with: <line id>, plus: 0.5, dur: 6.0, kicker: "今天 · TODAY · 照片", zh: <place name>, en: <place>, credit: "<author · licence>" }
+      spot:                                   # the light falls on one place in a wide shot, the rest of the room goes dark
+        - { ll: [lon, lat], r_m: 600, with: <line id> }
         # with: appears together with a line (plus = seconds later); or at: seconds. A half-screen picture that covers growth is automatically delayed until growth is done (within the same line); force: true shows it at the original time (docs/STAGING.md 5b)
       # building types of period cities (landmarks kind): palace / office / temple (courtyards), terrace (high terrace), taixie (Qin-style terrace hall: rooms inside the terrace, corridors, two-storey main hall, mirror_m twin terraces plus a flying pavilion),
       #   front_hall (Han-style three-tier terrace front hall, tiers), court (palace-office court: main/north halls), armoury (long armoury hall), market (market: shop rows in every cell, market tower), workshops (workshop area: kilns, bronze casting, coin casting in courtyards, kilns: number of kilns), hall, pagoda, belltower, paifang,

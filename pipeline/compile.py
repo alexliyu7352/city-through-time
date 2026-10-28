@@ -509,6 +509,11 @@ def footage_item(ft, on, nid):
             'mode': ft.get('mode', 'full'), 'side': ft.get('side', 'right'),
             'anchor': (F.model_lonlat(*ft['anchor']) + [ground_ll(*ft['anchor'])]) if 'anchor' in ft else None,
             'force': bool(ft.get('force')), '_with': ft.get('with'), '_node': nid}   # force: shown over a change on purpose (docs/STAGING.md 5b)
+def spot_item(sp, t0, t1, nid):
+    """a spot (docs/STAGING.md "Spot"): the light falls on one place, the rest of the room goes dark"""
+    if 'll' not in sp: raise SystemExit(f'compile: node {nid}: spot: ll: [lon, lat] (the subject) and r_m (the lit radius)')
+    return {'t0': t0, 't1': t1, 'fade': float(sp.get('fade', .8)), 'c': F.model_lonlat(*sp['ll']), 'r': float(sp.get('r_m', 600)) * F.scale,
+            'k': float(sp.get('dim', .16)), 'b': float(sp.get('boost', 1.35))}
 # ------------------------------------------------------------------ layout: opening -> nodes -> closing
 OP = FM.get('opening', {'dur': 5.0}); CL = FM.get('closing', {})
 cursor = PD + float(OP.get('dur', 5.0))
@@ -517,6 +522,7 @@ yearline = []
 nodes_out = []
 epochs, lines, pins, marks, picks, ranges, readouts, cues, cam, decals_out, footage_out, grow, height, evs = [], [], [], [], [], [], [], [], [], [], [], None, None, []
 props_out, tally_keys, sections, eras_out, hide_regions, night_keys, routes_out, dim_keys = [], [], [], [], [], [], [], []
+spots_out = []
 ctx_keys = []   # the land beyond the plate (terrain.context): [t, [opacity]]
 sky_out = None
 def tour_subjects(node):
@@ -732,7 +738,7 @@ def bind_pictures(node):
             if 'with' not in it: continue
             if isinstance(it.get('at'), (int, float)): raise SystemExit(f'compile: node {node["id"]}: {it.get("id", "a stage")} has with and at: one or the other')
             it['at'] = W_(it, 0.0)
-    for p in node.get('pins', []) + node.get('sections', []):
+    for p in node.get('pins', []) + node.get('sections', []) + node.get('spot', []):
         if 'with' not in p: continue
         p['t0'] = W_(p, .3)
         if 't1' not in p: p['t1'] = {'with': p.get('until', p['with']), 'edge': 'end', 'plus': float(p.get('hold', 1.5))}
@@ -1228,6 +1234,9 @@ for i, node in enumerate(FM['nodes']):
         if 'back_at' in s_: epochs_sat['back'] = T(s_['back_at']); epochs_sat['backFade'] = s_.get('back_fade', s_.get('fade', 4.0))   # a second line gives the model back
         FM['_satellite'] = epochs_sat
     for ft in node.get('footage', []): footage_out.append(footage_item(ft, T(ft.get('at', 0)), node['id']))
+    for sp in node.get('spot', []):
+        if 'with' in sp: spots_out.append(spot_item(sp, T(sp['t0']), T(sp['t1']), node['id']))
+        else: spots_out.append(spot_item(sp, T(sp.get('at', 0)), T(sp.get('at', 0)) + float(sp.get('dur', 6)), node['id']))
     for c in node.get('cues', []):
         if 'pause' in c: continue
         a, b = ab(c); cues.append({'id': c['id'], 'node': node['id'], 'later': bool(c.get('later')), 't0': node['_line_t'][c['id']][0], 'a': a, 'b': b, 'say': round(spoken(c), 3), 'extra': c.get('extra', 0.4)})
@@ -1708,6 +1717,7 @@ film = {
     'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
+    'spots': spots_out,
     'night_look': NIGHT_LOOK,
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),
