@@ -169,7 +169,7 @@ film:
             moat: false
             gates: [[108.8525, 34.4124], [108.8620, 34.4128]]
         streets:   # the 50 m avenue facing Palace No. 6, a parallel avenue (schematic), the 54 m east-west road north of the palace wall
-          - { pts: [[108.8626, 34.4146], [108.8626, 34.4000]], w_m: 50 }
+          - { pts: [[108.8626, 34.4153], [108.8626, 34.4000]], w_m: 50 }   # (its north end at the foot of Palace No. 6's stair: at 34.4146 it stopped 80 m short of it)
           - { pts: [[108.8520, 34.4096], [108.8520, 34.4000]], w_m: 40 }
           - { pts: [[108.8526, 34.4160], [108.8641, 34.4160]], w_m: 54 }
         landmarks:
@@ -695,7 +695,7 @@ film:
         streets:
           - { pts: [[108.7140, 34.3348], [108.7320, 34.3348]], w_m: 16, shops: true }
           - { pts: [[108.7255, 34.3373], [108.7250, 34.3320]], w_m: 14, shops: true }
-          - { pts: [[108.7200, 34.3320], [108.7200, 34.3345]], w_m: 10 }
+          - { pts: [[108.7200, 34.3320], [108.7200, 34.3348]], w_m: 10 }   # (to the main street, as the cross streets beside it: at 34.3345 it stopped 25 m short)
           - { pts: [[108.7170, 34.3373], [108.7170, 34.3348]], w_m: 10 }
           - { pts: [[108.7168, 34.3321], [108.7168, 34.3348]], w_m: 10 }
           - { pts: [[108.7280, 34.3372], [108.7280, 34.3348]], w_m: 10 }
@@ -752,7 +752,7 @@ film:
           - { kind: station, lon: 108.73007, lat: 34.3453, theta_deg: 10, w_m: 70, d_m: 20, h_m: 12 }
           - { kind: factory, lon: 108.7360, lat: 34.3462, theta_deg: 10, w_m: 120, d_m: 40, bays: 5, h_m: 9 }
         streets:   # the town's north street carried on from its north gate to the station, with shops; a cross street (schematic)
-          - { pts: [[108.7255, 34.3378], [108.7296, 34.3442]], w_m: 16, shops: true }
+          - { pts: [[108.7255, 34.3378], [108.7302, 34.3451]], w_m: 16, shops: true }   # (up to the station's front: at 34.3442 it stopped 128 m short of it)
           - { pts: [[108.7200, 34.3410], [108.7320, 34.3410]], w_m: 12 }
         lanes: { region: [[108.7200, 34.3378], [108.7320, 34.3378], [108.7320, 34.3440], [108.7200, 34.3440]], spacing_m: 110, w_m: 5 }
         fabric:

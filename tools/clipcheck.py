@@ -6,6 +6,9 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
   houses_vs_streets   house bodies standing on a main street or lane (paving, part 7)
   trees_in_houses     a tree trunk inside a house, landmark or earthwork body (at any height: a hall on a podium too)
   landmarks_overlap   two different landmark bodies overlapping (beyond touching)
+  streets_short       the end of a street (a road 10 m wide or more) that meets no other road within 20 m and points at a
+                      landmark, earthwork or wall 20-150 m ahead without reaching it (an avenue stopping short of the palace
+                      it leads to)
   today_vs_era        today's buildings that stay up (outside the era's hide mask) but overlap the era city
   floating            primitives whose base sits above the plate's surface (the plate is sampled like the engine does)
   terrain_cut         bodies the plate rises through: under the footprint the ground climbs more than half the body's height
@@ -26,6 +29,7 @@ from shapely.geometry import Polygon
 from shapely.strtree import STRtree
 
 FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH, PLINTH = range(12)
+STREET_M, SHORT_M, STREET_W = 150.0, 20.0, 10.0   # how far a road's end looks for what it leads to; a gap under SHORT_M is near enough; roads this wide or wider (metres)
 SKIRT = 3.0       # metres every body reaches below grade (citygen Builder.skirt)
 FOUND_MAX = .3    # a foundation on screen over this share of its building's height is tall (tall_foundation)
 
@@ -109,6 +113,27 @@ def main():
                     if q.intersection(polys[j]).area > min_area * 4:
                         n += 1; c_ = q.intersection(polys[j]).centroid; ex_lm.append([round(c_.x, 4), round(c_.y, 4)])
             R['landmarks_overlap'] = n; R['landmarks_overlap_at'] = ex_lm[:40]
+        # a street that stops short: one end of a road (paving marked a road, field 8) that meets no other road and points at a
+        # landmark, an earthwork or a wall within street_m, without reaching it (an avenue that ends 80 m before the palace it
+        # leads to reads as a broken road). Two pieces of one street meet end to end, so an end inside another road piece is a
+        # junction, not an end
+        roads = [p for p in prims if p[0] == 0 and p[11] == PAVE and len(p) > 8 and p[8] == 1 and p[6] >= STREET_W * S]   # (a lane may stop inside its block)
+        if roads:
+            rr = [rect(p, -.5 * S) for p in roads]; rtree = STRtree(rr)
+            goal = [rect(p) for p in prims if p[0] in (0, 2) and p[11] in (LMK, EARTH, WALL) and p[7] > 1.5 * S * tex]
+            gtree = STRtree(goal) if goal else None; n = 0; ex = []
+            for i, p in enumerate(roads):
+                c_, s_ = math.cos(p[3]), math.sin(p[3])
+                for k in (-1, 1):
+                    E = shapely.Point(p[1] + k * p[5] / 2 * c_, p[2] + k * p[5] / 2 * s_)
+                    if any(j != i and rr[j].distance(E) < SHORT_M * S for j in rtree.query(E.buffer(SHORT_M * S))): continue   # a junction, the next piece, or a lane stopping at a street
+                    if gtree is None: continue
+                    ray = shapely.LineString([(E.x + k * c_ * 3 * S, E.y + k * s_ * 3 * S), (E.x + k * c_ * STREET_M * S, E.y + k * s_ * STREET_M * S)])
+                    if any(goal[j].contains(E) or goal[j].distance(E) < SHORT_M * S for j in gtree.query(E.buffer(SHORT_M * S))): continue   # it reaches it, or near enough (a lane stopping at the path inside a wall)
+                    hits = [goal[j].intersection(ray) for j in gtree.query(ray) if goal[j].intersects(ray)]
+                    if hits:
+                        dist = min(E.distance(h) for h in hits) / S; n += 1; ex.append([round(E.x, 4), round(E.y, 4), round(dist), round(p[6] / S)])
+            R['streets_short'] = n; R['streets_short_at'] = ex[:10]
         # today's buildings that stay up next to (or through) the era city
         if today and e.get('hide') is not None and hide:
             img = hide[e['hide'] // 4][..., e['hide'] % 4]; Hh, Ww = img.shape

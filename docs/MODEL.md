@@ -27,7 +27,10 @@ right-drag to move, the wheel to come closer, the arrow keys to turn, a double c
 its houses up close; 成片 / 檢查 for the two looks; `&quality=low` is faster and leaves out the period cities' shadows).
 **Every compile checks the period cities' models** (geocheck, and clipcheck: things standing in one another, a tree in a house, a street stopping short) and stops when
 one fails, after writing the film, naming the check and its log (`build/logs/geocheck.log`, `clipcheck.log`); fix the model and compile again, never set the check to warn
-for the film (`CT_MODELCHECK=warn` is for model studies, tools/modelview.py).
+for the film (`CT_MODELCHECK=warn` is for model studies, tools/modelview.py). **A street ends at something:** another street, a gate, the foot of the stair or the face of
+the building it leads to, or the edge of the city; an avenue's end written 80 m short of the palace it leads to reads as a broken road (clipcheck `streets_short`:
+the end of a street 10 m wide or more that points at a landmark, earthwork or wall 20-150 m ahead without reaching it). When writing a street's points toward a
+building, end it at that building's stair or face, not at a round number near it.
 
 ## House types
 
