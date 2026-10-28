@@ -6,6 +6,8 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
   houses_vs_streets   house bodies standing on a main street or lane (paving, part 7)
   trees_in_houses     a tree trunk inside a house, landmark or earthwork body (at any height: a hall on a podium too)
   landmarks_overlap   two different landmark bodies overlapping (beyond touching)
+  walls_through       a wall (a thin long piece) right across a hall or a house (its whole width), in the same court too;
+                      a wall running part way into the gate house it ends at is as built
   streets_short       the end of a street (a road 10 m wide or more) that meets no other road within 20 m and points at a
                       landmark, earthwork or wall 20-150 m ahead without reaching it (an avenue stopping short of the palace
                       it leads to)
@@ -114,6 +116,22 @@ def main():
                     if q.intersection(polys[j]).area > min_area * 4:
                         n += 1; c_ = q.intersection(polys[j]).centroid; ex_lm.append([round(c_.x, 4), round(c_.y, 4)])
             R['landmarks_overlap'] = n; R['landmarks_overlap_at'] = ex_lm[:40]
+        # a wall through a building: a thin long piece (a court's or a city's wall, citygen strip) across a hall or a house body,
+        # in the same court too (parts of one court are let touch in landmarks_overlap, so a wall through its own side hall passed)
+        # (across: the wall covers the building's whole width along its line; a wall running into a gate house or a corner hall
+        # it ends at goes in part way, as built)
+        wp_ = [p for p in body((LMK, WALL)) if min(p[5], p[6]) <= 2.5 * S and max(p[5], p[6]) > 8 * S]
+        bp_ = [p for p in body((LMK, FAB)) if min(p[5], p[6]) > 2.5 * S]
+        n = 0; ex = []
+        if wp_ and bp_:
+            br_ = [rect(p, .3 * S) for p in bp_]; btree = STRtree(br_)
+            for p in wp_:
+                a = rect(p, .3 * S); ang = p[3] + (0 if p[5] >= p[6] else math.pi / 2); ux, uz = math.cos(ang), math.sin(ang)
+                span = lambda g: (lambda v: max(v) - min(v))([x * ux + z * uz for x, z in g.exterior.coords]) if not g.is_empty and g.geom_type == 'Polygon' else 0.0
+                for j in btree.query(a, predicate='intersects'):
+                    q = a.intersection(br_[j])
+                    if q.area > min_area and span(q) >= .9 * span(br_[j]): n += 1; c_ = q.centroid; ex.append([round(c_.x, 4), round(c_.y, 4)]); break
+        R['walls_through'] = n; R['walls_through_at'] = ex[:10]
         # a street that stops short: one end of a road (paving marked a road, field 8) that meets no other road and points at a
         # landmark, an earthwork or a wall within street_m, without reaching it (an avenue that ends 80 m before the palace it
         # leads to reads as a broken road). Two pieces of one street meet end to end, so an end inside another road piece is a

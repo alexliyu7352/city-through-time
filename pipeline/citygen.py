@@ -775,11 +775,12 @@ class Builder:
             self.hall(hx, hy, th, fw * w, fd * d, hh, roof=roof, z0=0, part=part, podium=pod, g=None)   # (on the court's plane)
             clear.append((0, ly * d, fw * w / 2 + 2, fd * d / 2 + 2 + pod * 1.6))   # its podium and the stair before it
             if side_halls and self.det >= 1 and n_ > 0:
-                sl = max(8, fd * d * 1.4); sw_ = min(8, w * .14)
+                sl = min(max(8, fd * d * 1.4), d - 10); sw_ = min(8, w * .14)
+                cy_ = min(max((ly - .14) * d, -d / 2 + sl / 2 + 4), d / 2 - sl / 2 - 4)   # inside the walls (a hall near the gate had its side halls half outside them)
                 for k in (-1, 1):
-                    sx, sy = P(k * (w / 2 - sw_ / 2 - 2.5), (ly - .14) * d)
+                    sx, sy = P(k * (w / 2 - sw_ / 2 - 2.5), cy_)
                     self.hall(sx, sy, th + math.pi / 2, sl, sw_, hh * .65, roof='gable', part=part, g=None, cols=False, front=k)
-                    clear.append((k * (w / 2 - sw_ / 2 - 2.5), (ly - .14) * d, sw_ / 2, sl / 2))
+                    clear.append((k * (w / 2 - sw_ / 2 - 2.5), cy_, sw_ / 2, sl / 2))
         if self.det >= 1 and w * d < 60000:   # a few trees in the courts, never in a hall, its podium or stair, the gate or the axis
             for _ in range(int(w * d / 1800)):
                 lx, ly_ = self.rng.uniform(-.42, .42) * w, self.rng.uniform(-.42, .42) * d
