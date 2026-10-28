@@ -58,7 +58,7 @@ def main():
             polys.append(footprint(p))
             tilt = max(abs(p[13] * (x - p[1]) + p[14] * (z - p[2])) for x, z in polys[-1]) if len(p) > 14 else 0.0   # a piece laid along a slope rises and falls by this much at its corners
             base.append(p[4] - tilt); top.append(p[4] + p[7] + tilt)
-        g = shapely.polygons(polys)
+        g = np.array([shapely.Polygon(q) for q in polys])   # (footprints of any number of corners: citygen.footprint)
         eras.append({'e': e, 'g': g, 'tree': shapely.STRtree(g), 'base': np.array(base), 'top': np.array(top), 'start': start, 'bc': bc, 'gy': np.array([p[12] for p in prims])})
 
     nodes = FILM.get('nodes', [])

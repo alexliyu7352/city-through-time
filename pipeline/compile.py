@@ -252,7 +252,7 @@ def era_boundary(prims, cs):
     if not feet: return []
     R = cs.get('boundary_close_m', 70) * S
     # grow every footprint first, then union (the union of grown rectangles is simple; buffering a union of 30k pieces takes minutes)
-    g = _sh.union_all(_sh.buffer(_sh.polygons(feet), R, join_style='mitre')).buffer(-R * .7, join_style='mitre')
+    g = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in feet], R, join_style='mitre')).buffer(-R * .7, join_style='mitre')
     if cs.get('outline'):   # an outline the buildings do not give (a village's ditch): joined into the city's outline
         g = g.union(_sh.union_all([_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in r]) for r in cs['outline']]))
     polys = [q for q in getattr(g, 'geoms', [g]) if q.area >= (cs.get('boundary_min_m', 140) * S) ** 2]
@@ -598,7 +598,7 @@ def gen_city(node):
             for p in PRIMS[oid]:
                 if p[11] == 4: continue
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
-        xa = _sh.union_all(_sh.buffer(_sh.polygons(fx), 4.0, join_style='mitre'))
+        xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
     meta_ = []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_)
     CITY_META[node['id']] = meta_
 CHANGE = None   # what grew taller where (ghsl_change), when a node asks for it   # era primitives by id; a node's landing beam; camera follow windows (hand keys must stay out)
