@@ -90,13 +90,23 @@ export class Geo {
   // the axis and those along the base (never seen); its normal is the outline's outward one (so a ring's inner wall faces the
   // arena), shaded smooth across a corner under 30 degrees, round the axis too when a step is under 30 degrees (a dome reads
   // round, a drum's rim and an octagon's corners stay sharp). sweep < 1: that share of a turn, centred on the piece's back
-  // (local -z: a theatre's seats, an apse, a half dome), `sides` steps over it, the section capped at both cut ends
-  revolve(cx, y0, cz, rx, rz, h, prof, sides = 32, rot = 0, data = [0, 0, 0, 1], base = null, sweep = 1) {
+  // (local -z: a theatre's seats, an apse, a half dome), `sides` steps over it, the section capped at both cut ends.
+  // inset: r measures in from the outer oval along its normal, not as a share of its radii (r = 1 the oval, r = 0 the smaller
+  // radius in): an oval's band of seats keeps its depth all round, so the arena is the narrower oval it is (the Colosseum's)
+  revolve(cx, y0, cz, rx, rz, h, prof, sides = 32, rot = 0, data = [0, 0, 0, 1], base = null, sweep = 1, inset = false) {
     if (prof.reduce((A, p, i) => { const q = prof[(i + 1) % prof.length]; return A + p[0] * q[1] - q[0] * p[1]; }, 0) < 0) prof = prof.slice().reverse();   // (given clockwise)
-    const B0 = base == null ? y0 : base, c = Math.cos(rot), s = Math.sin(rot), n = prof.length, Rm = (rx + rz) / 2, CR = Math.cos(Math.PI / 6);
-    const P = (r, y, a) => { const x = r * rx * Math.cos(a), z = r * rz * Math.sin(a), X = cx + x * c - z * s, Z = cz + x * s + z * c; return [X, y0 + y * h + this.gx * (X - cx) + this.gz * (Z - cz), Z]; };
-    // a section normal (metres, r and y) -> the surface's normal at angle a (the oval's scaling and the rotation applied)
-    const N3 = ([nr, ny], a) => { const x = nr / h * Math.cos(a) / rx, y = ny / Rm / h, z = nr / h * Math.sin(a) / rz, X = x * c - z * s, Z = x * s + z * c, L = Math.hypot(X, y, Z) || 1; return [X / L, y / L, Z / L]; };
+    const B0 = base == null ? y0 : base, c = Math.cos(rot), s = Math.sin(rot), n = prof.length, Rm = inset ? Math.min(rx, rz) : (rx + rz) / 2, CR = Math.cos(Math.PI / 6);
+    const EN = a => { const x = rz * Math.cos(a), z = rx * Math.sin(a), L = Math.hypot(x, z) || 1; return [x / L, z / L]; };   // the oval's outward normal at angle a
+    const P = (r, y, a) => {
+      let x = r * rx * Math.cos(a), z = r * rz * Math.sin(a);
+      if (inset) { const [nx, nz] = EN(a); x = rx * Math.cos(a) - (1 - r) * Rm * nx; z = rz * Math.sin(a) - (1 - r) * Rm * nz; }
+      const X = cx + x * c - z * s, Z = cz + x * s + z * c; return [X, y0 + y * h + this.gx * (X - cx) + this.gz * (Z - cz), Z]; };
+    // a section normal (metres, r and y) -> the surface's normal at angle a (the oval's scaling, or its normal, and the rotation)
+    const N3 = ([nr, ny], a) => {
+      let x, y, z;
+      if (inset) { const [nx, nz] = EN(a); x = nr * nx; y = ny; z = nr * nz; }
+      else { x = nr / h * Math.cos(a) / rx; y = ny / Rm / h; z = nr / h * Math.sin(a) / rz; }
+      const X = x * c - z * s, Z = x * s + z * c, L = Math.hypot(X, y, Z) || 1; return [X / L, y / L, Z / L]; };
     const en = [];   // each edge's outward normal in metres
     for (let i = 0; i < n; i++) { const [r0, q0] = prof[i], [r1, q1] = prof[(i + 1) % n], dr = (r1 - r0) * Rm, dy = (q1 - q0) * h, L = Math.hypot(dr, dy) || 1; en.push([dy / L, -dr / L]); }
     const vn = (i, k) => {   // edge i's normal at its corner k (0 start, 1 end): the mean with the neighbour's where they meet gently
@@ -119,7 +129,7 @@ export class Geo {
     if (sw < 1) {   // the cut ends: the section itself, facing away round the turn
       const C = prof.map(([r, y]) => new THREE.Vector2(r, y)), faces = THREE.ShapeUtils.triangulateShape(C, []);
       for (const [a, k] of [[A0, -1], [A0 + sw * 2 * Math.PI, 1]]) {
-        const x = -rz * Math.sin(a) * k, z = rx * Math.cos(a) * k, L = Math.hypot(x, z) || 1, nn = [(x * c - z * s) / L, 0, (x * s + z * c) / L];
+        const [ex, ez] = EN(a), x = (inset ? -ez : -rz * Math.sin(a)) * k, z = (inset ? ex : rx * Math.cos(a)) * k, L = Math.hypot(x, z) || 1, nn = [(x * c - z * s) / L, 0, (x * s + z * c) / L];   // (across the cut: its points lie along the radius, or along the oval's normal)
         for (const [i, j, m] of faces) this.tri(P(C[i].x, C[i].y, a), P(C[j].x, C[j].y, a), P(C[m].x, C[m].y, a), nn, data, B0);
       }
     }
@@ -340,7 +350,7 @@ export function buildEra(prims, year = 0) {
     else if (t === 2) G.frustum(cx, y0, cz, a, b, d, e, c, rot, data, g);
     else if (t === 3) G.cylinder(cx, y0, cz, a, c, 10, data, g);
     else if (t === 4) G.cone(cx, y0, cz, a, c, 10, data, g);
-    else if (t === 5) G.revolve(cx, y0, cz, a / 2, b / 2, c, p[17], d, rot, data, g, e);   // a, b: width, depth; d: sides; e: the share of a turn (0: whole); p[17]: the section
+    else if (t === 5) G.revolve(cx, y0, cz, a / 2, b / 2, c, p[17].p || p[17], d, rot, data, g, e, !!p[17].inset);   // a, b: width, depth; d: sides; e: the share of a turn (0: whole); p[17]: the section ({p, inset: 1}: measured in from the oval)
     else if (t === 6) G.prism(cx, y0, cz, p[17], e ? b : c, d, e, rot, data, g);      // a, b: width, depth (laid along: b its length); c: height; d: top scale; e: laid along; p[17]: the rings
   }
   return G.geometry();

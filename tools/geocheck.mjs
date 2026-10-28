@@ -3,8 +3,8 @@
 // wall's inner side showing through) or lit as if it faced the other way (a gable end shining white in a roof). Each piece
 // (box, gable, frustum, cylinder, cone) is checked on its own: every triangle wound along its normal, and the normal pointing
 // away from the piece's centre (a piece laid along a slope is checked as if level); a solid of revolution or a prism, which can
-// face inward (a ring's arena wall, a court's inner wall), with a point just off each face: outside the solid on its front, inside
-// on its back. It renders nothing.
+// face inward (a ring's arena wall, a court's inner wall), with a point just off each face: outside the piece's own surface on
+// its front, inside on its back. It renders nothing.
 // usage: node tools/geocheck.mjs <city_slug | city folder> [--eras a,b]     exit 1 on any face that fails, naming the city, the piece and where
 import fs from 'fs';
 import path from 'path';
@@ -27,28 +27,20 @@ export function pieces(build) {
   return out;
 }
 
-const inPoly = (r, x, y) => { let k = false; for (let i = 0, j = r.length - 1; i < r.length; j = i++) { const [xi, yi] = r[i], [xj, yj] = r[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) k = !k; } return k; };
-// whether a point (level: the slope taken off) is inside a revolve or a prism (engine/props.js: the same parameters), and the
-// solid's size (how far off its faces to test)
-function solid(P) {
-  const { cx, y0, cz } = P, rot = (P.kind === 'revolve' ? P.args[5] : P.args[4]) || 0, c = Math.cos(rot), s = Math.sin(rot);
-  const local = ([X, Y, Z]) => { const dx = X - cx, dz = Z - cz; return [dx * c + dz * s, Y - y0, -dx * s + dz * c]; };
-  if (P.kind === 'revolve') {
-    const [rx, rz, h, prof, sides = 32, , , , sweep = 1] = P.args, sw = sweep > 0 && sweep < 1 ? sweep : 1, A0 = sw < 1 ? -Math.PI / 2 - sw * Math.PI : 0, st = sw * 2 * Math.PI / sides;
-    return { size: Math.min((rx + rz) / 2, h), inside: q => {
-      const [x, y, z] = local(q), u = x / rx, w = z / rz, T = 2 * Math.PI, a = ((Math.atan2(w, u) - A0) % T + T) % T;   // (the angle from the start of the turn)
-      if (a > sw * T) return false;   // outside the part of a turn
-      const am = (Math.floor(a / st) + .5) * st;
-      return inPoly(prof, Math.hypot(u, w) * Math.cos(a - am) / Math.cos(st / 2), y / h);   // the radius measured to the facet (a polygon, not the circle)
-    } };
-  }
-  const [rings, h, top = 1, axis = 0] = P.args, O = rings[0], gu = O.reduce((a, p) => a + p[0], 0) / O.length, gv = O.reduce((a, p) => a + p[1], 0) / O.length;
-  const us = rings.flat().map(p => p[0]), vs = rings.flat().map(p => p[1]);
-  return { size: Math.min(Math.max(...us) - Math.min(...us), Math.max(...vs) - Math.min(...vs), h), inside: q => {
-    const [x, y, z] = local(q); let u, v, t;
-    if (axis) { u = x; v = y; t = z / h + .5; } else { t = y / h; const k = 1 + (top - 1) * t; if (k <= 0) return false; u = gu + (x - gu) / k; v = gv + (z - gv) / k; }
-    return t >= 0 && t <= 1 && inPoly(rings[0], u, v) && !rings.slice(1).some(r => inPoly(r, u, v));
-  } };
+// whether a point is inside the piece's own surface: a ray up from it crosses that surface an odd number of times (the piece is
+// closed but for its foot, which a ray going up never meets); positions level (the slope taken off). Independent of how the
+// engine made the surface (a ring's inner wall, a sector's cut ends, a court's hole all count alike)
+function closed(tris) {
+  const D = [1e-3, 1, 2.3e-3];   // (a ray a hair off the vertical: never along an edge)
+  const hit = (o, [a, b, c]) => {   // Möller-Trumbore, the ray o + t D, t > 0
+    const e1 = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], e2 = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];
+    const p = [D[1] * e2[2] - D[2] * e2[1], D[2] * e2[0] - D[0] * e2[2], D[0] * e2[1] - D[1] * e2[0]], det = e1[0] * p[0] + e1[1] * p[1] + e1[2] * p[2];
+    if (Math.abs(det) < 1e-30) return false;
+    const f = 1 / det, s = [o[0] - a[0], o[1] - a[1], o[2] - a[2]], u = f * (s[0] * p[0] + s[1] * p[1] + s[2] * p[2]); if (u < 0 || u > 1) return false;
+    const q = [s[1] * e1[2] - s[2] * e1[1], s[2] * e1[0] - s[0] * e1[2], s[0] * e1[1] - s[1] * e1[0]], v = f * (D[0] * q[0] + D[1] * q[1] + D[2] * q[2]); if (v < 0 || u + v > 1) return false;
+    return f * (e2[0] * q[0] + e2[1] * q[1] + e2[2] * q[2]) > 0;
+  };
+  return o => tris.reduce((k, T) => k + hit(o, T), 0) % 2 === 1;
 }
 
 // the faces of one piece that fail, as strings
@@ -56,7 +48,12 @@ export function faults(P) {
   const { pos, nor } = P, n = pos.length / 9, bad = [];
   const at = j => [pos[j], pos[j + 1] - P.gx * (pos[j] - P.cx) - P.gz * (pos[j + 2] - P.cz), pos[j + 2]];   // (the slope taken off)
   let y0 = Infinity, y1 = -Infinity; for (let j = 0; j < pos.length; j += 3) { const y = at(j)[1]; y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
-  const C = [P.cx, (y0 + y1) / 2, P.cz], S = P.kind === 'revolve' || P.kind === 'prism' ? solid(P) : null;
+  const C = [P.cx, (y0 + y1) / 2, P.cz];
+  let S = null;
+  if (P.kind === 'revolve' || P.kind === 'prism') {
+    const T = [...Array(n).keys()].map(i => [at(i * 9), at(i * 9 + 3), at(i * 9 + 6)]), xs = T.flat().map(p => p[0]), zs = T.flat().map(p => p[2]);
+    S = { inside: closed(T), size: Math.min(Math.max(...xs) - Math.min(...xs), Math.max(...zs) - Math.min(...zs), y1 - y0) };
+  }
   for (let i = 0; i < n; i++) {
     const a = at(i * 9), b = at(i * 9 + 3), c = at(i * 9 + 6), N = nor.slice(i * 9, i * 9 + 3);
     const u = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], w = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];

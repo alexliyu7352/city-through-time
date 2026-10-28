@@ -45,10 +45,10 @@ def footprint(p, pad=0.0):
     t, cx, cz, rot = p[0], p[1], p[2], p[3]
     c_, s_ = math.cos(rot), math.sin(rot)
     if t == REVOLVE:   # an oval (its section's widest point); part of a turn: that sector, from its narrowest point
-        rm = max(r for r, _ in p[17]); sw = p[9] if 0 < p[9] < 1 else 1
+        pr = p[17]['p'] if isinstance(p[17], dict) else p[17]; rm = max(r for r, _ in pr); sw = p[9] if 0 < p[9] < 1 else 1
         if sw == 1: pts = [((p[5] / 2 * rm + pad) * math.cos(i * math.tau / 24), (p[6] / 2 * rm + pad) * math.sin(i * math.tau / 24)) for i in range(24)]
         else:
-            a0, n = -math.pi / 2 - sw * math.pi, max(2, math.ceil(24 * sw)); r0 = min(r for r, _ in p[17])
+            a0, n = -math.pi / 2 - sw * math.pi, max(2, math.ceil(24 * sw)); r0 = min(r for r, _ in pr)
             arc = lambda r_, k_: [((p[5] / 2 * r_ + k_ * pad) * math.cos(a0 + i / n * sw * math.tau), (p[6] / 2 * r_ + k_ * pad) * math.sin(a0 + i / n * sw * math.tau)) for i in range(n + 1)]
             pts = arc(rm, 1) + (arc(r0, -1)[::-1] if r0 > 0 else [(0.0, 0.0)])
     elif t == PRISM and not p[9]:   # a plan: its outer ring
@@ -100,7 +100,8 @@ class Builder:
         if z0 <= 1e-6 and t in (BOX, FRUSTUM, CYL, REVOLVE, PRISM):   # a foundation below grade (deeper by the slope under a building on a hillside)
             sk = (self.skirt + self.found) * S * self.gex; y0 -= sk
             if t == REVOLVE:   # the section's base stays at the foot, the rest of it rises by the foundation
-                shape = [[r_, 0.0 if q_ <= 0 else round((q_ * ch + sk) / (ch + sk), 5)] for r_, q_ in shape]
+                lift = lambda pr: [[r_, 0.0 if q_ <= 0 else round((q_ * ch + sk) / (ch + sk), 5)] for r_, q_ in pr]
+                shape = {**shape, 'p': lift(shape['p'])} if isinstance(shape, dict) else lift(shape)
             elif t == PRISM and e:   # (a section laid along: the same, in model units)
                 shape = [[[u_, 0.0 if v_ <= 0 else round(v_ + sk, 7)] for u_, v_ in r_] for r_ in shape]
             elif t == PRISM:   # a plan: its sides carried down along their taper, the top shrunk to match
@@ -121,16 +122,22 @@ class Builder:
         if shape is not None: rec.append(shape)   # (finish puts the building's centre before it)
         self.prims.append(rec); self.meta.append((self.gid, self.tag))
 
-    def revolve(self, x, y, theta, z0, w, d, h, prof, sides=32, part=LMK, g_m=None, sweep=1.0):
+    def revolve(self, x, y, theta, z0, w, d, h, prof, sides=32, part=LMK, g_m=None, sweep=1.0, inset=False):
         """a solid of revolution (engine Geo.revolve): `prof` its section, [(r, y), ...] with r a share of the half width and y of
         the height h, a closed outline from the base round (the axis r = 0, the base y = 0; the engine draws every other edge);
         w x d metres across (an oval when they differ, its w along the frame's x), `sides` steps round (8: an octagon). A dome, a
         drum, a round tower, an amphitheatre's ring. sweep < 1: that share of a turn, centred on the frame's +y (the back: a
-        theatre's seats behind its stage, an apse beyond a hall's end, a half dome), the cut ends capped"""
+        theatre's seats behind its stage, an apse beyond a hall's end, a half dome), the cut ends capped. inset: r measures in
+        from the outer oval along its normal (1 the oval, 0 its smaller half width in), so a band of seats keeps its depth all
+        round an oval; a band deeper than the oval's sharpest curve (smaller half width squared over the larger) folds over"""
         P_ = [(max(0.0, float(r)), max(0.0, float(q))) for r, q in prof]
         if len(P_) < 3 or max(r for r, _ in P_) <= 0 or max(q for _, q in P_) <= 0: raise ValueError(f'revolve: a section needs three points or more, off the axis and above the base: {prof}')
-        sw = float(sweep) if 0 < sweep < 1 else 0
-        self._emit(REVOLVE, x, y, theta, z0, w, d, h, int(sides), round(sw, 5), part=part, g_m=g_m, shape=[[round(r, 5), round(q, 5)] for r, q in P_])
+        sw = float(sweep) if 0 < sweep < 1 else 0; sh = [[round(r, 5), round(q, 5)] for r, q in P_]
+        if inset:
+            a_, b_ = max(w, d) / 2, min(w, d) / 2
+            if (1 - min(r for r, _ in P_)) * b_ >= b_ * b_ / a_: raise ValueError(f'revolve: a band {(1 - min(r for r, _ in P_)) * b_:.1f} m deep folds over in a {w:g} x {d:g} m oval (its sharpest curve: {b_ * b_ / a_:.1f} m)')
+            sh = {'p': sh, 'inset': 1}
+        self._emit(REVOLVE, x, y, theta, z0, w, d, h, int(sides), round(sw, 5), part=part, g_m=g_m, shape=sh)
 
     def prism(self, x, y, theta, z0, rings, h, top=1.0, along=False, part=LMK, g_m=None):
         """a prism (engine Geo.prism): `rings` the outline in metres, the outer ring then any holes ([(x, y), ...], the last point
