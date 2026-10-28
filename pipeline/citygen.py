@@ -990,9 +990,10 @@ class Builder:
     def house_roof(self, x, y, th, z0, w, d, R, along=True, g=None, ends=True):
         """a declared type's roof over a w x d body whose eaves are at z0 (R: shape, pitch_deg, overhang_m; ROOF_SHAPES), its
         ridge along local x (w), or along local y when not along; a hipped roof's ridge runs along the longer side. ends False:
-        no eaves past the ends of a ridge along w (the party walls of a row)"""
+        no eaves past the ends of a ridge along w (the party walls of a row). Its pitch is drawn true, as a dome keeps its curve: the
+        height exaggeration is taken off every rise (a 25-degree roof drawn at x2 stood at 43 degrees, a northern town's gables)"""
         if not along: th, w, d = th + math.pi / 2, d, w
-        s, o, tn = R['shape'], R['overhang_m'], math.tan(math.radians(R['pitch_deg'])); W, D = w + 2 * o, d + 2 * o
+        s, o, tn = R['shape'], R['overhang_m'], math.tan(math.radians(R['pitch_deg'])) / self.hex; W, D = w + 2 * o, d + 2 * o
         L = W if ends or not along else w
         if s == 'flat':   # a slab, a parapet round it when it has no eaves
             self._emit(BOX, x, y, th, z0, L, D, .35, part=ROOF, g_m=g)
@@ -1013,13 +1014,13 @@ class Builder:
             self._emit(BOX, x, y, th, z0 - rh / 2 - .1, w - .06, d - .1, rh + .1, part=FAB, g_m=g); self.slope = s0
             self.lean(x, y, th, L, D, z0 + rh / 2 + tn * D / 2 + .3, tn * D, part=ROOF, g=g, t=.3)
         elif s == 'mansard':   # a steep lower slope (pitch_deg) all round, about a storey high, a low hipped top
-            h1 = min(3.2, .35 * min(w, d)); a = h1 / tn; Wt, Dt = W - 2 * a, D - 2 * a; rh = min(Wt, Dt) / 2 * math.tan(math.radians(15))
+            h1 = min(3.2, .35 * min(w, d)); a = min(h1 / tn, .4 * min(W, D)); Wt, Dt = W - 2 * a, D - 2 * a; rh = min(Wt, Dt) / 2 * math.tan(math.radians(15)) / self.hex
             self._emit(FRUSTUM, x, y, th, z0, W, D, h1, Wt, Dt, part=ROOF, g_m=g)
             self._emit(FRUSTUM, x, y, th, z0 + h1, Wt, Dt, rh, *((max(Wt - Dt, .02), .02) if Wt >= Dt else (.02, max(Dt - Wt, .02))), part=ROOF, g_m=g)
         elif s == 'gambrel':   # a steep lower slope (pitch_deg) on the two long sides, a gentle gable above
-            h1 = min(3.2, .35 * d); a = h1 / tn; dt = D - 2 * a
+            h1 = min(3.2, .35 * d); a = min(h1 / tn, .4 * D); dt = D - 2 * a
             self._emit(FRUSTUM, x, y, th, z0, L, D, h1, L, dt, part=ROOF, g_m=g)
-            self._emit(GABLE, x, y, th + math.pi / 2, z0 + h1, dt, L, dt / 2 * math.tan(math.radians(25)), 0, part=ROOF, g_m=g)
+            self._emit(GABLE, x, y, th + math.pi / 2, z0 + h1, dt, L, dt / 2 * math.tan(math.radians(25)) / self.hex, 0, part=ROOF, g_m=g)
         elif s in ('dome', 'onion'):   # over the body's oval (an oval dome over an oblong body), its curve true: the height exaggeration is taken off its rise (stretched, a dome reads as an egg)
             rise = min(w, d) / 2 if s == 'dome' else min(w, d) * 1.25
             self.revolve(x, y, th, z0, w, d, rise / self.hex, DOME if s == 'dome' else ONION, 32, part=ROOF, g_m=g)

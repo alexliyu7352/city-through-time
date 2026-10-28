@@ -57,7 +57,10 @@ types:
 A type written in the city can start from another (`from: <name>`) and change some keys; it still writes its own where, when and basis. A type's name is its own (never a
 built-in one). A key a type does not have, a key its form does not use, or a missing where, when or basis stops compile with what to write. A round roof (`dome` over
 the body's oval, `onion`, `round`: a barrel along the ridge) rises with its curve, so it takes no pitch and no eaves, and keeps its true shape while the walls are
-exaggerated (a stretched dome reads as an egg). A city's own scripts (`research/*_gen.py`) lay out where things are; what a house looks like is a type, never code in the city, so every city builds with the same generator.
+exaggerated (a stretched dome reads as an egg). A pitched roof keeps its pitch too: `pitch_deg` is the angle on screen (a 25-degree roof stretched x2 stood at 43 degrees and read as another country's steep gables). A city's own scripts (`research/*_gen.py`) lay out where things are; what a house looks like is a type, never code in the city, so every city builds with the same generator.
+**Choose the form by how the buildings were built.** A block built in one go as one building (a block of flats round a light well, a barracks, a monastery, a mill's dormitories) is one body of one height:
+`court` or `detached` on a lot the size of the block, `storeys` a single number. `row` is for a street built house by house, each on its own narrow lot, where a `storeys` range gives the street its uneven skyline.
+On the sheet, a row whose units step up and down shows each unit's gable end standing above its lower neighbour: when the sources describe the block as one building, that sawtooth is wrong.
 Look at the types before laying the city: `uv run python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat>` (a flat open place) builds a block of each type the period
 declares or its fabric names, at the film's close-up distance, in its palette and light, and puts the stills side by side in `sheet.jpg`. Show the user the sheet, and lay the city once
 each type reads as itself.
