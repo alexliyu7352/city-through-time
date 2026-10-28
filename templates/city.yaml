@@ -50,7 +50,7 @@ film:
     secondary_strong: { family: Inter Tight, weight: 400 }        # second language under tags and labels, measurements
     mono:           { family: IBM Plex Mono, weight: 400 }        # notes, credits, the locator
   palette:
-    plate: '#262c33'                          # dark plate (the engine draws a white plate if not written); the four below are taken from Xianyang
+    plate: '#3a4757'                          # deep blue plate, not black (the engine draws a white plate if not written): in a wide shot most of the frame is plate, and near-black (#262c33) left the film's wide shots at a mean of about 45/255; the four below are taken from Xianyang
     plateSide: '#15191e'
     water: '#3a5670'
     plateEmit: 0.55                           # share of self-illumination of light projected on the plate: too low and the star chart and masks are almost invisible

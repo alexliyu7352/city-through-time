@@ -92,7 +92,7 @@ film:
     hgt: ['#1a1440', '#5a35d6', '#e2509a', '#ffe7c4']
     pick: '#ffd27a'
     black: '#0b0f18'
-    plate: '#262c33'
+    plate: '#3a4757'
     plateSide: '#15191e'
     water: '#3a5670'
     plateEmit: 0.55
