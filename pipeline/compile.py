@@ -1928,6 +1928,23 @@ def _dead_air():
                 'the node before runs on after its last line' if n_['id'] in _FIRST else 'after a pause')
         out.append(f"no words      {g0_:7.2f}-{g1_:7.2f} s ({L_:.1f} s, {open_:.1f} s with nothing to read) {c_['id']} -> {n_['id']}: {why_} (moving {mov_:.1f} s)")
     return out
+# the period cities' models, on every compile (docs/MODEL.md): every face out of its piece (tools/geocheck.mjs) and nothing
+# standing in anything, no street stopping short of what it leads to (tools/clipcheck.py). Run here, a fault is found when it
+# is made, whoever compiles; looked for by hand, it was found when someone happened to see it. CT_MODELCHECK=warn: report only
+def _model_checks():
+    import subprocess
+    root_ = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); bad_ = []
+    for name_, cmd_ in (('geocheck', ['node', os.path.join(root_, 'tools', 'geocheck.mjs'), D]), ('clipcheck', [sys.executable, '-I', os.path.join(root_, 'tools', 'clipcheck.py'), D])):
+        r_ = subprocess.run(cmd_, cwd=root_, capture_output=True, text=True)
+        open(LAYOUT.logs(D, f'{name_}.log'), 'w', encoding='utf-8').write(r_.stdout + r_.stderr)
+        print('  ' + ((r_.stdout.strip().splitlines() or [f'{name_}: no output ({r_.stderr.strip()[-200:]})'])[-1]))
+        if r_.returncode: bad_.append(name_)
+    return bad_
+if film.get('eras') or film.get('props'):
+    _bad = _model_checks()
+    if _bad and os.environ.get('CT_MODELCHECK') != 'warn':
+        raise SystemExit(f'compile: the period cities fail {" and ".join(_bad)} (build/logs/{_bad[0]}.log): fix the model (pipeline/citygen.py, '
+                         f'the city\'s spec) and compile again; tools/eraview.mjs and play.html?view show where')
 _dead = _dead_air()
 open(LAYOUT.logs(D, 'deadair.txt'), 'w', encoding='utf-8').write('\n'.join(_dead) + '\n')
 print(f'  dead air: {len(_dead)} stretch(es)' + ''.join('\n    ' + d_ for d_ in _dead))

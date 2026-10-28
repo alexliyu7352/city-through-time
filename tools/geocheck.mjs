@@ -3,8 +3,9 @@
 // wall's inner side showing through) or lit as if it faced the other way (a gable end shining white in a roof). Each piece
 // (box, gable, frustum, cylinder, cone) is checked on its own: every triangle wound along its normal, and the normal pointing
 // away from the piece's centre (a piece laid along a slope is checked as if level). It renders nothing.
-// usage: node tools/geocheck.mjs <city_slug> [--eras a,b]     exit 1 on any face that fails, naming the city, the piece and where
+// usage: node tools/geocheck.mjs <city_slug | city folder> [--eras a,b]     exit 1 on any face that fails, naming the city, the piece and where
 import fs from 'fs';
+import path from 'path';
 import { Geo, buildEra, buildProp } from '../engine/props.js';
 import { buildDir } from '../render/local.mjs';
 
@@ -42,11 +43,13 @@ function faults(P) {
   return bad;
 }
 
+// city: a slug (cities/<slug>/) or a city folder (a model study's, tools/modelview.py; compile passes its own)
 export function geocheck(city, only = null) {
-  const F = JSON.parse(fs.readFileSync(buildDir(city, 'film.json'), 'utf8'));
+  const at = (...p) => city.includes('/') ? path.join(path.resolve(city), 'build', ...p) : buildDir(city, ...p);
+  const F = JSON.parse(fs.readFileSync(at('film.json'), 'utf8'));
   const runs = [];
   for (const e of F.eras || []) if (!only || only.includes(e.id)) {
-    const J = JSON.parse(fs.readFileSync(buildDir(city, e.file), 'utf8'));
+    const J = JSON.parse(fs.readFileSync(at(e.file), 'utf8'));
     runs.push([`era ${e.id}`, () => buildEra(J.prims)]);
   }
   for (const p of F.props || []) if (!only || only.includes(p.id)) runs.push([`prop ${p.id}`, () => buildProp(p, () => 0, 1e-4)]);   // (flat ground: the direction of a face does not depend on it)
@@ -67,7 +70,7 @@ export function geocheck(city, only = null) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2), city = args[0], i = args.indexOf('--eras');
-  if (!city) { console.error('usage: node tools/geocheck.mjs <city_slug> [--eras a,b]'); process.exit(2); }
+  if (!city) { console.error('usage: node tools/geocheck.mjs <city_slug | city folder> [--eras a,b]'); process.exit(2); }
   const { failed, lines } = geocheck(city, i >= 0 ? args[i + 1].split(',') : null);
   console.log(`geocheck ${city}:\n${lines.join('\n')}`);
   if (failed) { console.log(`geocheck: ${failed} of the period cities and props have faces pointing the wrong way (engine/props.js Geo)`); process.exit(1); }

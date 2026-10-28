@@ -22,7 +22,7 @@ usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,
 
 What it does: writes a study city at build/review/modelview/<slug>/ (a city folder of its own: a city.yaml with the film's
 settings and the one node, or that node after the earlier cities it stands on, avoid_eras; copies of the prepared data; links to
-research/ and assets/), compiles it, runs tools/clipcheck.py on it, and takes the stills once the city has risen
+research/ and assets/), compiles it (compile runs the model checks, tools/geocheck.mjs and tools/clipcheck.py, and reports them without stopping), and takes the stills once the city has risen
 (render/still.mjs with ?bundle= on the study folder, the camera fixed and still). It prints each still and the address that
 opens the same view in the preview (node tools/preview.mjs). The study has no words, sound, pins or pictures, only the city.
 The terrain is the city's as prepared: a new terrain.exaggeration needs pipeline/terrain.py and prep.py run on the city.
@@ -184,7 +184,7 @@ def main():
     S = study_folder(city, slug)
     yaml.safe_dump(study_film(C, args.era, spec, sh, args.fov, args.year, sheet=args.sheet), open(os.path.join(S, 'city.yaml'), 'w', encoding='utf-8'), allow_unicode=True, sort_keys=False)
     env = {**{k: v for k, v in os.environ.items() if k not in ('CT_SCRIPT', 'CT_PLAN', 'CT_PASS')},   # (a draft script or a plan of the real film is not the study's)
-           'CT_STUDY': '1', 'CT_DEADAIR': 'warn'}   # (compile: the city rises without the camera; a film without words)
+           'CT_STUDY': '1', 'CT_DEADAIR': 'warn', 'CT_MODELCHECK': 'warn'}   # (compile: the city rises without the camera; a film without words; a study is looked at even when its model checks fail)
     LAYOUT.ensure(S)
     r = run([sys.executable, '-I', 'pipeline/compile.py', S], LAYOUT.logs(S, 'compile.log'), env)
     if r.returncode:
@@ -202,8 +202,8 @@ def main():
         k = next((v for tk, v in FILM['camera'] if node['t0'] - 1e-3 <= tk <= node['t1'] + 1e-3 and abs(v[0] - x) < 2e-5 and abs(v[2] - z) < 2e-5 and v[3:6] == [s['az'], s['el'], s['d']]), None)
         if k is None: raise SystemExit(f'modelview: the camera key for --at {s["ll"]} is not in the study film (compile changed it)')
         cams.append(k)
-    rc = run([sys.executable, '-I', 'tools/clipcheck.py', S], LAYOUT.logs(S, 'clipcheck.log'))
-    print((rc.stdout.strip().splitlines() or ['clipcheck: no output'])[-1] + f'  ({os.path.relpath(LAYOUT.logs(S, "clipcheck.log"), ROOT)})')
+    for l_ in r.stdout.splitlines():   # (compile runs the model checks, geocheck and clipcheck, and keeps their logs)
+        if l_.strip().startswith(('geocheck:', 'clipcheck:')): print(l_.strip() + f'  ({os.path.relpath(LAYOUT.logs(S), ROOT)})')
     out = LAYOUT.review(city, 'modelview', args.name or args.era); os.makedirs(out, exist_ok=True)
     bundle = os.path.relpath(S, ROOT).replace(os.sep, '/') + '/'
     files = []
