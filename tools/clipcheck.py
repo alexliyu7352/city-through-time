@@ -228,7 +228,7 @@ def main():
         total += len(fl)
         print(f"{'today':10s} floating {len(fl)}")
     json.dump(report, open(os.path.join(city, 'build', 'logs', 'clipcheck.json'), 'w'), indent=1)
-    print('clipcheck:', 'ok' if total <= mx else f'{total} cases (see out/clipcheck.json)')
+    print('clipcheck:', 'ok' if total <= mx else f'{total} cases (see build/logs/clipcheck.json)')
     sys.exit(0 if total <= mx else 1)
 
 
