@@ -50,7 +50,7 @@ types:
     form: row                           # detached | row (wall to wall, a yard behind) | court (one building round a court or a light well) | compound (separate buildings round a yard inside a wall)
     storeys: [2, 4]                     # fewest and most (storey_m: 3.2 by default)
     roof: { shape: gabled, pitch_deg: 30, overhang_m: 0.5, ridge: along }   # shape (OpenStreetMap roof:shape): flat, gabled, hipped, pyramidal, skillion, mansard, gambrel, dome, onion, round; ridge: along or across the street (detached, row)
-    ground: shops                       # closed | shops | arcade (the upper storeys over a walk; arcade_m)
+    ground: shops                       # closed | shops | arcade (the upper storeys over a walk; arcade_m); a court's street wing has its shops either side of its way in; never behind a yard wall (detached, compound)
     # court: { frac: 0.3 } (court, compound: the court's share of the lot); yard_wall_m; portico_m; podium_m
 ```
 

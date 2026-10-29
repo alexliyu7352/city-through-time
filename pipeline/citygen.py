@@ -951,8 +951,8 @@ class Builder:
         local -y): n storeys of T's storey_m, on a podium a little smaller than the footprint when the type has one (its stair in
         front); on the street side the ground storey is closed with a door, open shop fronts (shops), or set back behind posts
         under the storeys above (arcade), a row of windows on every storey (detail high); gate: a passage through it instead of
-        a door; then the type's roof (house_roof). g: the ground it stands on (one level for the wings of one building), else
-        its own (gsite)"""
+        a door (the shops either side of it); then the type's roof (house_roof). g: the ground it stands on (one level for the
+        wings of one building), else its own (gsite)"""
         P = self.frame(x, y, th); sm = T['storey_m']; hb = n * sm; pm = T['portico_m'] if street else 0; pz = T['podium_m']
         grd = T['ground'] if street else 'closed'; own = g is None
         if own: g = self.gsite(*P(0, -pm / 2), th, w, d + pm)
@@ -971,8 +971,11 @@ class Builder:
             self._emit(BOX, x, y, th, z, w, d, hb, part=part, g_m=g)
             if self.det >= 1 and street:
                 if gate: self._emit(BOX, x, y, th, z, 2.6, d + .2, min(3.4, sm * .9), part=DARK, g_m=g)   # the passage through
-                elif grd == 'shops': self.shopfront(*P(0, -d / 2 - .05), th, z, w * .82, min(2.8, sm * .78), part, g)
-                else: self._emit(BOX, *P(0, -d / 2 - .05), th, z + .1, min(1.4, w * .3), .2, min(2.3, sm * .72), part=DARK, g_m=g)
+                if grd == 'shops':   # with a passage, the shops on either side of it (a court's street wing once lost its shops to its way in)
+                    if not gate: self.shopfront(*P(0, -d / 2 - .05), th, z, w * .82, min(2.8, sm * .78), part, g)
+                    elif (sw := w * .41 - 1.9) >= 1.5:   # from a pier .6 m beside the passage out to the same margin
+                        for s_ in (-1, 1): self.shopfront(*P(s_ * (1.9 + sw / 2), -d / 2 - .05), th, z, sw, min(2.8, sm * .78), part, g)
+                elif not gate: self._emit(BOX, *P(0, -d / 2 - .05), th, z + .1, min(1.4, w * .3), .2, min(2.3, sm * .72), part=DARK, g_m=g)
         if self.det >= 2 and street:   # windows, every storey, on the street side
             k_ = max(1, min(6, int(w // 3.6)))
             for s_ in range(0 if grd == 'closed' else 1, n):
@@ -1276,6 +1279,8 @@ def house_type(T, src):
         if T.get('portico_m'): no('ground: arcade and portico_m: one walk or the other')
         out['arcade_m'] = num('arcade_m', T.get('arcade_m', 3.0), 1.5, 8)
     elif 'arcade_m' in T: no('arcade_m: only with ground: arcade')
+    if out['ground'] != 'closed' and f in ('detached', 'compound') and out['yard_wall_m']:   # (the wall runs along the street side, in front of the shops)
+        no(f'ground: {out["ground"]} behind a yard wall: the wall stands between the street and the {out["ground"]}, so nobody sees them; a house that opens on the street is a row or court house, or this one writes yard_wall_m: 0')
     out['portico_m'] = num('portico_m', T.get('portico_m', 0), 0, 8); out['podium_m'] = num('podium_m', T.get('podium_m', 0), 0, 6)
     return out
 
