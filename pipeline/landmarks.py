@@ -38,6 +38,8 @@ COMMON = {
     'theta_deg': ('num', (-360, 360), None, 'its turn, counter-clockwise from east: at 0 its x runs east and its front faces south (the city\'s theta_deg when absent)'),
     'basis': ('str', None, REQ, 'where the sizes come from (a research note) and which of them are estimates'),
     'name': ('str', None, None, 'what it is (messages, the sheet)'),
+    'id': ('str', None, None, 'its name for a stage to select it by (stages name parts by id or group, never by index)'),
+    'group': ('str', None, None, 'a name it shares with the others a stage selects together'),
     'exaggeration': ('num', (.5, 5), None, 'its heights\' exaggeration (when absent the city\'s, fading as the landmark gets taller: see exaggeration(); 1: true, for one drawn after a true elevation)'),
     'z_m': ('num', (0, 300), 0.0, 'metres above its ground (a part standing on another: a dome on a hall\'s crossing)'),
 }
@@ -238,7 +240,7 @@ def check(L, src, part=False):
     com = dict(COMMON)
     if part:
         com.update(PART); com['basis'] = ('str', None, None, COMMON['basis'][3])
-        for q in ('lon', 'lat'): com.pop(q)
+        for q in ('lon', 'lat', 'id', 'group'): com.pop(q)   # (a stage selects a whole landmark, not one of its parts)
     out = _fields(L, {**com, **spec_}, src)
     if not part and k != 'arches' and ('lon' not in out or 'lat' not in out): raise Bad(f'{src}: lon and lat are missing: its centre')
     if k == 'arches':
