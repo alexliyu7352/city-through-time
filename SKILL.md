@@ -59,9 +59,10 @@ Subagents and parallel work
   first (MODEL.md: one quarter before the whole city); and how to report (paths of stills, the checks' lines, open questions, short). It does not ask the user anything; it asks the main agent.
 - **Run in parallel what shares no files:** period cities two or three at a time. Heavy jobs stay one at a time across all agents (rendering, mixing, music generation, whole-film checks);
   studies and stills run at most two at once. The main agent merges one piece at a time into `city.yaml`, after review.
-- **Reasoning effort by the kind of work**, set when starting the subagent (the model and effort options of the spawn call): the highest for research, the story and the script, and for
-  reviewing and judging pictures; a step lower for laying out a city from approved sources and types and for running checks and fixing what they find; the lowest for mechanical edits
-  (moving files, renaming, formatting).
+- **Reasoning effort by the kind of work**, set when starting the subagent (the model and effort options of the spawn call), measured from the main agent's own level: that level for
+  research, the story and the script, and for reviewing and judging pictures; one level below for laying out a city from approved sources and types and for running checks and fixing
+  what they find; the lowest for mechanical edits (moving files, renaming, formatting). Never above the main agent's level: the levels above it mostly add time, and time is what the
+  subagents are for.
 - **Review before merging.** The main agent checks each piece against its step's done line and the rules before it goes into the film; a piece sent back goes to the same subagent with the
   reason (it keeps its context), not to a new one. The user's approvals (★ in the table) are asked by the main agent.
 
