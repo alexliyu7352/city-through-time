@@ -9,18 +9,19 @@
 // west). The stills are kept in <era>/. Each city is shown as it stands at a moment of the film (engine/eralife.js): a city that
 // loses parts while it stands (lose:) at each of its moments, one set of sheets each, <era>_m<k>_<look>.jpg (stills in <era>_m<k>/),
 // its close-up and landmarks those standing then; --at <seconds>: every city at that one moment, <era>_at<s>_<look>.jpg.
-// usage: node tools/eraview.mjs <city_slug> [--eras a,b] [--look film|check] [--at <seconds>] [--d .045 (the close-up's distance; nearer for a small place)] [--quality low]
+// city: a slug (cities/<slug>/) or a city folder (a model study's, tools/modelview.py), as tools/geocheck.mjs takes it.
+// usage: node tools/eraview.mjs <city_slug | city folder> [--eras a,b] [--look film|check] [--at <seconds>] [--d .045 (the close-up's distance; nearer for a small place)] [--quality low]
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
 import { openFilm, closeServer, shot } from '../render/page.mjs';
-import { buildDir } from '../render/local.mjs';
+import { buildDir, ROOT } from '../render/local.mjs';
 import { geocheck } from './geocheck.mjs';
 import { whole } from '../engine/eralife.js';
 
 const args = process.argv.slice(2), opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
 const city = args[0];
-if (!city) { console.error('usage: node tools/eraview.mjs <city_slug> [--eras a,b] [--look film|check] [--at <seconds>] [--d .045] [--quality low]'); process.exit(2); }
+if (!city) { console.error('usage: node tools/eraview.mjs <city_slug | city folder> [--eras a,b] [--look film|check] [--at <seconds>] [--d .045] [--quality low]'); process.exit(2); }
 const only = opt('--eras', null)?.split(','), looks = opt('--look', null) ? [opt('--look')] : ['film', 'check'], D = +opt('--d', .045), AT = opt('--at', null);
 
 const gc = geocheck(city, only);
@@ -30,18 +31,19 @@ if (gc.failed) { console.error('eraview: geocheck failed, the faces above point 
 const AZ = [0, 45, 90, 135, 180, 225, 270, 315];
 // an era's largest landmarks standing whole at film time t: its landmark, landmark-roof and earthwork pieces (citygen parts 1, 9,
 // 10) grouped by the building they belong to, the four with the most ground under them, each with its centre and extent [x, z, size] (model units)
-const FILM = JSON.parse(fs.readFileSync(buildDir(city, 'film.json'), 'utf8'));
+const folder = city.includes('/') ? path.resolve(city) : null, at = (...p) => folder ? path.join(folder, 'build', ...p) : buildDir(city, ...p);
+const FILM = JSON.parse(fs.readFileSync(at('film.json'), 'utf8'));
 function landmarks(id, t) {
-  const e = FILM.eras.find(q => q.id === id), J = JSON.parse(fs.readFileSync(buildDir(city, e.file), 'utf8')), g = new Map();
+  const e = FILM.eras.find(q => q.id === id), J = JSON.parse(fs.readFileSync(at(e.file), 'utf8')), g = new Map();
   for (const [i, p] of J.prims.entries()) if ([1, 9, 10].includes(p[11]) && whole(e, p[10], J.lost ? J.lost[i] : 0, t)) {
     const k = `${(p[15] ?? p[1]).toFixed(4)},${(p[16] ?? p[2]).toFixed(4)}`, r = Math.max(p[5], p[6] || 0) / 2, v = g.get(k) || [1e9, 1e9, -1e9, -1e9, 0];
     v[0] = Math.min(v[0], p[1] - r); v[1] = Math.min(v[1], p[2] - r); v[2] = Math.max(v[2], p[1] + r); v[3] = Math.max(v[3], p[2] + r); v[4] += p[5] * (p[6] || p[5]); g.set(k, v);
   }
   return [...g.values()].sort((a, b) => b[4] - a[4]).slice(0, 4).map(v => [(v[0] + v[2]) / 2, (v[1] + v[3]) / 2, Math.hypot(v[2] - v[0], v[3] - v[1])]);
 }
-const { browser, page } = await openFilm(city, { q: 'view&bare' + (opt('--quality', '') === 'low' ? '&quality=low' : '') });
+const { browser, page } = await openFilm(folder ? 'study' : city, { q: (folder ? `bundle=${path.relative(ROOT, folder)}/&` : '') + 'view&bare' + (opt('--quality', '') === 'low' ? '&quality=low' : '') });
 const eras = (await page.evaluate(() => window.VIEWINFO())).filter(e => !only || only.includes(e.id));
-const root = buildDir(city, 'review', 'eraview');
+const root = at('review', 'eraview');
 for (const e of eras) for (const [mi, m] of (AT != null ? [{ t: +AT, dense: e.dense }] : e.moments).entries()) {
   const tag = AT != null ? `_at${+AT}` : e.moments.length > 1 ? `_m${mi + 1}` : '';   // (one moment: the names as they were)
   const dir = path.join(root, e.id + tag); fs.mkdirSync(dir, { recursive: true });
