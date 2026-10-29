@@ -14,6 +14,10 @@ Rendering also delivers the **description** `dist/description.md`, one for each 
 a one-line summary, a short description (social post), a long description (video platform), chapter times (from the nodes in `build/export/timeline.json`; the first at 0:00, each chapter at least 10 seconds),
 how it was made and the sources and licences (the authors of CC BY / BY-SA material must be named), the AI-generation statement, the author's credit,
 and the project's credit, which LICENSE requires wherever a film is published: "Made with 一城春秋 · A City Through Time" and https://github.com/alexliyu7352/city-through-time. For facts use only what is in the narration and FACTS.md.
+**The title on a video platform** leads with the city and what a newcomer gets from the film, in plain words, and ends with the series name:
+`咸陽：一座城的兩千年，從秦宮到今天｜一城春秋`, `Xianyang: 2,000 years of one city, from the Qin palaces to today | A City Through Time`.
+**The first line of every description is the series' plain subtitle**, the portal's headline in that language (`headline` in `site/i18n.js`):
+「一座城的歷史，一個時代一個時代地點亮。」, "The history of a city, lit one era at a time." A viewer meets the series name before knowing what the series is; the subtitle tells them.
 The delivered files **carry no metadata:** when `render/mux.mjs` composes them it writes no encoder tag, chapters or other metadata, strips the parameters x264 writes into the video
 (removing only the SEI), and AAC carries no Lavc string; the cover is written bitexact, with no encoder note. Clean old files on hand: `exiftool -all=`, then confirm with `strings`.
 build runs subcheck, clipcheck, camcheck, readcheck (including: text must not sit on the subtitle band, and two pieces of text must not overlap), motioncheck, a black-frame check, and loudness (−14 LUFS).
