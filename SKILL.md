@@ -46,6 +46,25 @@ Computer and files
 - **A new city is configuration, not code changes.** When fixing a problem, ask whether a mountain city, a city with no building data, or a non-Chinese city would hit it too; if the fix can be general, change the shared code.
 - The user's shell may be zsh: `for f in $list` does not split on spaces, and the `:p` in `$c:path` is read as a modifier. Write `for f in a b c` and `"${c}:path"`.
 
+Subagents and parallel work
+- **The main agent coordinates; subagents build.** A film fills one session with research, script, every period and every check; once that context is large, every action re-reads it
+  and the work slows to a crawl. Keep the main session for the plan, the user's decisions, review and merging, and give each self-contained piece to a subagent started with a fresh
+  context (one that does not inherit this conversation: Codex `spawn_agent` without forking the turns, Claude Code's Agent tool, or whatever the environment offers). Where no subagent can
+  be started, start each piece in a new session from the same brief.
+- **A piece** is work with its own inputs and its own files: one period city (step 4, once the research, the extent and the approved house types exist), one research question (step 1),
+  the candidates for one music cue (step 7). Not a piece: what the user decides, the stations' staging (step 5 goes station by station, each building on the last), and a change to
+  files several pieces share (the engine, the pipeline, types shared by periods, the shared keys of `city.yaml`): those stay with the main agent.
+- **The brief is all the subagent knows.** Write: the goal and its done line (the workflow table); the files it owns (for a period city: `research/<period>_*` and its study spec, built with
+  `tools/modelview.py --spec` under its own name) and the files it must not touch; what to read in full first (this file, the step's doc, `FACTS.md`, the approved types); what to deliver
+  first (MODEL.md: one quarter before the whole city); and how to report (paths of stills, the checks' lines, open questions, short). It does not ask the user anything; it asks the main agent.
+- **Run in parallel what shares no files:** period cities two or three at a time. Heavy jobs stay one at a time across all agents (rendering, mixing, music generation, whole-film checks);
+  studies and stills run at most two at once. The main agent merges one piece at a time into `city.yaml`, after review.
+- **Reasoning effort by the kind of work**, set when starting the subagent (the model and effort options of the spawn call): the highest for research, the story and the script, and for
+  reviewing and judging pictures; a step lower for laying out a city from approved sources and types and for running checks and fixing what they find; the lowest for mechanical edits
+  (moving files, renaming, formatting).
+- **Review before merging.** The main agent checks each piece against its step's done line and the rules before it goes into the film; a piece sent back goes to the same subagent with the
+  reason (it keeps its context), not to a new one. The user's approvals (★ in the table) are asked by the main agent.
+
 Honesty
 - Every fact the agent researched and put into the film needs a real source in FACTS.md (this binds the agent's research, not the user and not the narrator's feelings).
   Copy the user writes or edits is used as is without demanding a source; raise it only when it contradicts data you found.

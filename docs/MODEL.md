@@ -6,11 +6,18 @@
 - A hard-coded terrain exaggeration, so the foundation on a slope is taller than the house → measure by slope ("Appearance and height").
 - Houses of another region or period drawn with the built-in houses (north China's courtyards), or a city's own code drawing its houses → declare the house types from the research and look at them on the sheet first ("House types").
 - A landmark of another region drawn with the generator's own kinds (a Chinese hall for a temple, a box for a dome) → one of the classes for any region, its sizes from the sources ("Landmarks of any region").
+- A whole city laid in one go and sent back whole → one quarter first: its low close-up and a wide shot, approved, then the rest the same way ("A whole city for each period").
+- Lots stamped over a district in a few fixed sizes, one bearing per district: from afar the city reads as tiled fields with stepped edges → blocks traced from the map, houses along each block's own streets ("Lay out blocks from an old map").
+- A share of house types or a storey count with no basis, labelled "schematic" (a made-up ratio decides what the whole city looks like) → the share and the storey range written from the sources first ("House types").
+- Open ground left as bare plate (gardens, a palace hill, the ground between public buildings): in a built-up city it reads as a lake → drawn as what it is, or filled by the sources ("No empty cities").
+- Shapes no source has (a garden as a regular hexagon, a quarter cut along a ruler line) → traced from the registered map, or following streets and terrain, labelled schematic.
+- Schematic houses kept where a sourced building stood → the sourced building first; the schematic houses in its way are moved or dropped, and the note says so.
 
 ## A whole city for each period
 
 **Every historic period is a 3D model of a whole city:** write a `city:` spec in the node, and `pipeline/citygen.py` generates it (walls, gates and barbicans, main streets and lane network, courtyard / dwelling / dormitory plots,
 palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, cotton mills, stations, bridges, boats, trees; the houses of other regions and periods: "House types"). Follow the sources where there are sources (archaeological plans, gazetteer city maps, OSM site outlines); where there are none, follow the custom of contemporary cities of the same kind and label the picture "schematic".
+**Every period city starts with one quarter:** lay one quarter from its sources, show its low close-up and a wide shot, and lay the rest of the city only after it is approved (a whole city laid on a wrong idea is redone whole; a quarter is redone in a round).
 Do the close-up for the city with the fullest sources first; close-up camera distance 0.035–0.06 (about 0.1 m per pixel), elevation 10–15°, gliding along the main street inside the walls (`fov: 40–44`),
 and lay the other periods only once the houses are recognisable as houses. Take these stills with `uv run python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>`
 (a city not in city.yaml yet: `--spec <file> --year <y>`): it compiles that city alone in a study folder beside the film and shows it in the film's own palette and light, with the camera landed on the ground
@@ -64,6 +71,8 @@ On the sheet, a row whose units step up and down shows each unit's gable end sta
 Look at the types before laying the city: `uv run python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat>` (a flat open place) builds a block of each type the period
 declares or its fabric names, at the film's close-up distance, in its palette and light, and puts the stills side by side in `sheet.jpg`. Show the user the sheet, and lay the city once
 each type reads as itself.
+**How much of a quarter each type takes is a fact too:** write the share and its basis (a count in the sources, an excavated quarter, a named comparison) beside the layout before laying
+the city, quarter by quarter; a share written "schematic" with no basis decides what the whole city looks like. Heights vary between buildings as the sources' storey range says, not by copying one block in rows.
 
 ## Landmarks of any region
 
