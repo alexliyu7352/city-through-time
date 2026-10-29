@@ -157,7 +157,7 @@ line up along the north slope, and the new quarters of 120,000 households surrou
 
 **No empty cities:** restore the period cities from drawings as far as possible (archaeological plan → reconstruction drawing or model → film and TV set → imagination by the custom of the same period), and label each item with its basis (excavation / documents / film and TV / imagination);
 whatever is not excavated is labelled "schematic". Do not leave large empty spaces inside a palace city or inside walls (except ponds, gardens, squares, fields); fill the areas with no data by custom or by film layout.
-An open space that is kept is drawn as what it is: a garden, park or grove as trees over the whole area (`trees: [{region: [[lon, lat], ...]}]`, about `step_m` 16 apart, never on a street or in a building); left as bare plate inside a built-up city it reads as a lake.
+An open space that is kept is drawn as what it is: a garden, park or grove as trees over the whole area (`trees: [{region: [[lon, lat], ...]}]`, about `step_m` 16 apart, scattered rather than in rows, never on a street or in a building); left as bare plate inside a built-up city it reads as a lake.
 A region may cover a building with a court (a portico, a cloister: the court is planted, the walls are not) and a court on a platform (its trees stand on the platform's top); a garden is part of the city's outline.
 `stages` select parts by name (`id` / `group`), never by index: the index breaks whenever the list changes.
 Generate large numbers of buildings from the research list with a generator (example: `cities/xianyang/research/han_gen.py`, coordinates in metres with the front hall as origin), noting the basis for each item;

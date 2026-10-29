@@ -1629,13 +1629,17 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     for ti, tr in enumerate(spec.get('trees', [])):
         B.group(('trees', ti))
         if ('pts' in tr) == ('region' in tr): raise SystemExit(f'citygen: trees[{ti}]: write pts (a row along a line) or region (a garden, park or grove filled with trees), one of the two')
-        if 'region' in tr:   # trees over the whole area about step_m apart, a little off the grid, never on a street or in a building
+        if 'region' in tr:   # trees over the whole area about step_m apart, never on a street or in a building, scattered as a grove
+            # grows: each at a random place kept .7 step_m off the ones before it (as many as a grid; a grid, even shaken, read as
+            # the rows of an orchard)
             rg = tr['region']; reg = Polygon(to_utm_ring(F, osm_rings(rg[4:])[0] if isinstance(rg, str) and rg.startswith('osm:') else rg))
             sm_ = tr.get('step_m', 16); x0_, y0_, x1_, y1_ = reg.bounds; clear_ = streets.buffer(tr.get('r_m', 4)) if not streets.is_empty else None
-            for gx in np.arange(x0_ + sm_ / 2, x1_, sm_):
-                for gy in np.arange(y0_ + sm_ / 2, y1_, sm_):
-                    tx_, ty_ = gx + (B.rng.random() - .5) * sm_ * .6, gy + (B.rng.random() - .5) * sm_ * .6
-                    if reg.contains(Point(tx_, ty_)) and (clear_ is None or not clear_.contains(Point(tx_, ty_))): plant(tx_, ty_, tr)
+            d_, near_ = .7 * sm_, {}
+            for _ in range(int(4 * (x1_ - x0_) * (y1_ - y0_) / (sm_ * sm_))):
+                tx_, ty_ = x0_ + B.rng.random() * (x1_ - x0_), y0_ + B.rng.random() * (y1_ - y0_); c_ = (int(tx_ // d_), int(ty_ // d_))
+                if any(math.hypot(tx_ - a_, ty_ - b_) < d_ for i_ in (-1, 0, 1) for j_ in (-1, 0, 1) for a_, b_ in near_.get((c_[0] + i_, c_[1] + j_), ())): continue
+                if reg.contains(Point(tx_, ty_)) and (clear_ is None or not clear_.contains(Point(tx_, ty_))):
+                    near_.setdefault(c_, []).append((tx_, ty_)); plant(tx_, ty_, tr)
             continue
         pts = [F.to_utm.transform(*p) for p in tr['pts']]
         line = LineString(pts); n = tr.get('n', int(line.length // tr.get('step_m', 18)))
