@@ -265,7 +265,9 @@ def era_boundary(prims, cs):
     return [[[round(x, 5), round(z, 5)] for x, z in q.simplify(8 * S).exterior.coords] for q in polys]
 
 EW = 1024   # edge distance fields: one era per channel, each over its own crop of the plate (edge.png, edge2.png)
-EDGES = []   # per era: [image, crop rect in plate uv]
+HIDE_BY, EDGE_BY = {}, {}   # per era: where today's buildings step aside (hide_layer), the distance field to its outline (edge_sdf)
+SLOTS = 8   # channels of hide.png / hide2.png and edge.png / edge2.png (engine/studio.js); cities apart in time share one
+if os.environ.get('CT_ERA_SLOTS'): SLOTS = int(os.environ['CT_ERA_SLOTS'])   # (fewer, to test the sharing on a film that needs none)
 
 def edge_sdf(bnd, D):
     """distance to the era's outline, in units of D (0 on the line, 1 at D or beyond), over the outline's bounding box (+D).
@@ -1270,11 +1272,7 @@ for i, node in enumerate(FM['nodes']):
         e['boundary'] = bnd
         e['outline'] = [[[round(x / F.size[0] + .5, 4), round(z / F.size[1] + .5, 4)] for x, z in r] for r in bnd]   # the locator's frame (plate uv)
         if 'reuse' in cs: e['reuse'] = cs['reuse']
-        if len(hide_regions) >= 8:   # (without a channel a city's front never glows and today's buildings stand through it)
-            raise SystemExit(f"compile: era {node['id']}: a film has at most 8 period cities (each one a channel of hide.png / hide2.png and edge.png / edge2.png: "
-                             f"today's buildings step aside, its front and its edge are lit); this is the ninth after {', '.join(x['id'] for x in eras_out)}. "
-                             f"Tell a change inside a period with the stages and lose: of its city (docs/MODEL.md) instead of a new city")
-        e['hide'] = len(hide_regions); hide_regions.append(None); EDGES.append(None)   # where this era stands, today's buildings step aside (filled once the timing is known)
+        e['hide'] = None   # its channel (where today's buildings step aside, its front and its edge are lit): given once the timing is known (era_slots)
         e['_pend'] = {'cs': cs, 'node': node, 'prims': prims, 'meta': meta_, 'at_of': at_of, 'bnd': bnd}
         eras_out.append(e); print(f'  city {node["id"]}: {len(prims)} primitives')
     for rt in node.get('routes', []):      # a light path: a move, a shift, a distance (lon/lat points; each hop arcs up by `arc` x its length)
@@ -1553,10 +1551,9 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
     fx_, fz_ = F.model_lonlat(*(cs.get('fall_from') or cs['origin']))
     e['fallC'] = [round(fx_, 5), round(fz_, 5)]
     e['_dist'] = [math.hypot(p[15] - fx_, p[16] - fz_) for p in prims]; e['_bc'] = [(p[15], p[16]) for p in prims]
-    if e.get('hide') is not None:
-        cs_ = Seen(dict.items(cs)); cs_.read, cs_.mine = cs.read, set(); cs_['_id'] = node['id']   # (what hide_layer reads, read on cs)
-        hide_regions[e['hide']] = hide_layer(prims, cs_, pd['bnd'])
-        ED = float(FM.get('era_look', {}).get('edge_m', 150)) * F.scale; img_, rect_ = edge_sdf(pd['bnd'], ED); EDGES[e['hide']] = img_; e['edgeRect'] = rect_; e['edgeD'] = round(ED, 6)
+    cs_ = Seen(dict.items(cs)); cs_.read, cs_.mine = cs.read, set(); cs_['_id'] = node['id']   # (what hide_layer reads, read on cs)
+    HIDE_BY[e['id']] = hide_layer(prims, cs_, pd['bnd'])
+    ED = float(FM.get('era_look', {}).get('edge_m', 150)) * F.scale; img_, rect_ = edge_sdf(pd['bnd'], ED); EDGE_BY[e['id']] = img_; e['edgeRect'] = rect_; e['edgeD'] = round(ED, 6)
 for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's colour ring, sent when its change starts (docs/STAGING.md 1)
     imp = IMPACT.get(node['id']); era_ = next((e for e in eras_out if e['id'] == node['id']), None)
     grows_ = bool(era_ and era_.get('fronts')); f0_ = min(era_['fronts'], key=lambda f_: f_['curve'][0][0]) if grows_ else None
@@ -1608,6 +1605,28 @@ for e in eras_out:   # a part of a city lost while the rest stands (lose:): a ri
               f"{curve[0][0]:.1f}-{out_[-1]['gone']:.1f} s, ring {ls.get('ring', 'in')}")
     e['losses'] = out_
 for e in eras_out: e.pop('_dist', None); e.pop('_bc', None)
+def occupancy(e):
+    """when an era's channel is in use: from its first light (its fronts, its rise) to its last (taken back, or the film's end),
+    and while a later node draws it again as its outline (ghost)"""
+    a = min([e['on']] + [f['curve'][0][0] for f in e.get('fronts') or []]) - 1.0
+    iv = [[a, (e['fallR']['gone'] if e.get('fallR') else DUR) + 1.0]]
+    return iv + [[n['arrive'] - 1.0, n['t1'] + 1.0] for n in nodes_out if e['id'] in (n.get('ghost') or [])]
+SLOT_HELD = [[] for _ in range(SLOTS)]   # per channel, the eras that hold it, in time order
+if len(eras_out) <= SLOTS:   # one channel each, in the order of the film
+    for i_, e in enumerate(eras_out): e['hide'] = i_; SLOT_HELD[i_].append(e['id'])
+else:   # cities apart in time share a channel: the engine loads the one in use (engine/main.js slots)
+    occ_ = {e['id']: occupancy(e) for e in eras_out}
+    meet = lambda A, B: any(a0 < b1 and b0 < a1 for a0, a1 in A for b0, b1 in B)
+    for e in sorted(eras_out, key=lambda e: min(a for a, _ in occ_[e['id']])):
+        h = next((k for k in range(SLOTS) if not any(meet(occ_[e['id']], occ_[o]) for o in SLOT_HELD[k])), None)
+        if h is None:
+            t_ = min(a for a, _ in occ_[e['id']]); with_ = [o for k in range(SLOTS) for o in SLOT_HELD[k] if meet(occ_[e['id']], occ_[o])]
+            raise SystemExit(f"compile: era {e['id']}: more than {SLOTS} period cities stand or are drawn at once from {t_:.1f} s (with {', '.join(with_)}); "
+                             f"the engine lights {SLOTS} at a time: take one back earlier (until, off_at) or tell a change inside a city with stages and lose:")
+        e['hide'] = h; SLOT_HELD[h].append(e['id'])
+    for e in eras_out:
+        if len(SLOT_HELD[e['hide']]) > 1: e['occupy'] = [[round(a, 3), round(b, 3)] for a, b in occ_[e['id']]]
+    print('  era channels: ' + ', '.join(f'{k}: {"/".join(v)}' for k, v in enumerate(SLOT_HELD) if v))
 # a city taken back by a contracting ring: the camera comes down with the ring (docs/STAGING.md 9g), from where it is when the
 # ring reaches the city to the next key after the ring has closed (the ruins). The ring stays whole on screen all the way: the
 # camera comes no nearer than the distance that frames the ring as it is at that moment, so it always moves slower than the
@@ -1742,8 +1761,13 @@ if grow and grow.get('yl'):
     print(f'  growth: {len(ids_)} buildings rise with the counter; {len(out_)} wait until the camera sees them, '
           f'{int(np.isnan(seen_).sum())} are never in view before the end (they rise with the counter, unseen)')
 # masks -> two RGBA textures
-hch = list(hide_regions[:8])
+hch = [HIDE_BY[v[0]] if v else Image.new('L', (HW, HH), 0) for v in SLOT_HELD]   # (a shared channel holds its first city; the others in their own files)
 while len(hch) < 8: hch.append(Image.new('L', (HW, HH), 0))
+own_ = {oid for v in SLOT_HELD if len(v) > 1 for oid in v}
+for oid in own_: HIDE_BY[oid].save(LAYOUT.data(D, f'hide_{oid}.png')); EDGE_BY[oid].save(LAYOUT.data(D, f'edge_{oid}.png'))
+for f_ in os.listdir(LAYOUT.data(D, '')):   # (a city's own files left from a build that shared its channel)
+    m_ = re.match(r'(hide|edge)_(.+)\.png$', f_)
+    if m_ and m_.group(2) not in own_: os.remove(LAYOUT.data(D, f_))
 Image.merge('RGBA', hch[:4]).save(LAYOUT.data(D, 'hide.png'))
 try:   # locator base: today's footprints (grey) and the river (blue) on a dark ground
     import numpy as _np
@@ -1758,7 +1782,7 @@ try:   # locator base: today's footprints (grey) and the river (blue) on a dark 
 except Exception as ex:
     print('locator: skipped', ex)
 Image.merge('RGBA', hch[4:8]).save(LAYOUT.data(D, 'hide2.png'))
-ech = list(EDGES[:8])
+ech = [EDGE_BY[v[0]] if v else Image.new('L', (EW, EW), 255) for v in SLOT_HELD]
 while len(ech) < 8: ech.append(Image.new('L', (EW, EW), 255))
 Image.merge('RGBA', ech[:4]).save(LAYOUT.data(D, 'edge.png')); Image.merge('RGBA', ech[4:8]).save(LAYOUT.data(D, 'edge2.png'))
 while len(mask_chans) < 12: mask_chans.append(Image.new('L', (MW, MH), 0))

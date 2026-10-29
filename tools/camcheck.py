@@ -51,7 +51,11 @@ def main():
     ttree = shapely.STRtree(today)
     eras = []
     for e in FILM.get('eras', []):
-        prims = [p for p in json.load(open(os.path.join(city, 'build', e['file'])))['prims'] if p[11] not in (WATER, PAVE)]
+        J_ = json.load(open(os.path.join(city, 'build', e['file']))); lost_ = J_.get('lost') or [0] * len(J_['prims'])
+        keep_ = [(p, k) for p, k in zip(J_['prims'], lost_) if p[11] not in (WATER, PAVE)]
+        prims = [p for p, _ in keep_]
+        own = None   # a city sharing its channel with others apart in time has its own mask (compile era channels)
+        if e.get('occupy'): own = np.asarray(Image.open(os.path.join(D, f"hide_{e['id']}.png")).convert('L')).astype(np.float32)[v, u] / 255
         polys, base, top = [], [], []
         start = np.array([e['on'] + p[10] * e['span'] for p in prims]); bc = np.array([[p[15], p[16]] if len(p) > 16 else [p[1], p[2]] for p in prims])
         for p in prims:
@@ -59,7 +63,8 @@ def main():
             tilt = max(abs(p[13] * (x - p[1]) + p[14] * (z - p[2])) for x, z in polys[-1]) if len(p) > 14 else 0.0   # a piece laid along a slope rises and falls by this much at its corners
             base.append(p[4] - tilt); top.append(p[4] + p[7] + tilt)
         g = np.array([shapely.Polygon(q) for q in polys])   # (footprints of any number of corners: citygen.footprint)
-        eras.append({'e': e, 'g': g, 'tree': shapely.STRtree(g), 'base': np.array(base), 'top': np.array(top), 'start': start, 'bc': bc, 'gy': np.array([p[12] for p in prims])})
+        eras.append({'e': e, 'g': g, 'tree': shapely.STRtree(g), 'base': np.array(base), 'top': np.array(top), 'start': start, 'bc': bc, 'gy': np.array([p[12] for p in prims]),
+                     'lost': np.array([k for _, k in keep_]), 'own': own})
 
     nodes = FILM.get('nodes', [])
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'pipeline'))
@@ -74,6 +79,9 @@ def main():
         e = E['e']; ok = E['start'][idx] + .5 * e['grow'] <= t
         st = fall_state(e, t)
         if st is not None: ok &= ~taken(E['bc'][idx], st)
+        for j, q in enumerate(e.get('losses') or [], 1):   # a part lost while the rest stands (compile lose:), with its own ring
+            if t - .5 * e.get('fallDur', 1.4) < q['curve'][0][0]: continue
+            ok &= ~((E['lost'][idx] == j) & taken(E['bc'][idx], (curve_at(q['curve'], t - .5 * e.get('fallDur', 1.4)), q['o'], q['mode'] == 'in')))
         return ok
     def today_standing(idx, t):
         """the engine's hideK at the building's centroid: stepped aside just before the era building beside it rises, back
@@ -83,7 +91,7 @@ def main():
             e = E['e']
             if e.get('hide') is None or t < e['on']: continue
             tn = (t - e['on']) / e['span']; g = e['grow'] / e['span']
-            m = hm[idx, e['hide']]; r = (m - .04) / .96
+            m = (E['own'][idx] if E['own'] is not None else hm[idx, e['hide']]); r = (m - .04) / .96
             hk = (m >= .02) & (tn >= r - .3 * g)
             st = fall_state(e, t)
             if st is not None: hk &= ~taken(ctr[idx], st)

@@ -14,7 +14,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const FIXED_AZ = 355, WHITE = new THREE.Color(1, 1, 1);   // check: the key light (50 degrees left of this bearing, 45 up) stands in the south-west of the room (bearings as the camera keys count them: 0 south, 90 east)
 
 export function startView(X) {
-  const { S, FILM, QS, W, H, setLight, setLayers, lens, cityMesh, eraBox, setDist, quiet, scale } = X;
+  const { S, FILM, QS, W, H, setLight, setLayers, lens, cityMesh, eraBox, setDist, quiet, scale, takeChannel } = X;   // (takeChannel: a city ticked takes its shared channel; two ticked sharing one: the later)
   const { U, camera, post, renderer } = S;
   const LOOK = FILM.era_look || {}, LT = FILM.light, ERAS = (FILM.eras || []).filter(e => S.eras[e.id]);
   const TV = LT.lamp + 4;   // a moment with the projector on; what else the film shows then is cleared (quiet)
@@ -53,7 +53,7 @@ export function startView(X) {
       u.uEraT.value = 1e6; u.uEraSpan.value = e.span; u.uEraGrow.value = e.grow; u.uEraFallR.value = -1; u.uEraFallIn.value = 0; u.uEraFallW.value = -1;
       u.uEraA.value = film ? e.tint : 1; u.uEraBurn.value = 0; u.uEraGlow.value = film ? LOOK.glow ?? 1 : 0;   // check: the projector's light white at full strength
       u.uEraCol.value.copy(film ? E.base : WHITE); u.uEraCol0.value.copy(u.uEraCol.value); u.uEraInk.value = u.uEraInk0.value = film ? ink(e.id) : 0;
-      if (e.hide != null) { U.uEdgeA.value[e.hide] = film ? 1 : 0; U.uHideCol.value[e.hide].copy(E.base); U.uHideT.value[e.hide] = st.today ? 1e3 : -1; }   // today's buildings step aside where it stands
+      if (e.hide != null) { takeChannel(e); U.uEdgeA.value[e.hide] = film ? 1 : 0; U.uHideCol.value[e.hide].copy(E.base); U.uHideT.value[e.hide] = st.today ? 1e3 : -1; }   // today's buildings step aside where it stands
     }
     cityMesh.visible = st.today;
     U.uToday.value = 1; U.uDimToday.value = U.uDimToday0.value = film ? LOOK.dim ?? .8 : .3;

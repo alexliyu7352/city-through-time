@@ -88,7 +88,7 @@ for (const e of FILM.eras || []) {
 }
 const LOOK = FILM.era_look || {}; S.U.uEdgeGain.value = LOOK.edge ?? 1; S.U.uEdgeLight.value = (LOOK.light_m ?? 45) * M.scale; S.U.uEdgeHalo.value = (LOOK.halo_m ?? 14) * M.scale;
 for (const e of FILM.eras || []) {   // each standing city's edge: its distance field crop, and the neon line on its outline
-  if (e.hide != null && e.edgeRect) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; }
+  if (e.hide != null && e.edgeRect && !e.occupy) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; }   // (a shared channel: set by the city it holds)
   const sc = (e.fronts || []).find(f => f.mode === 'scan');   // a small place: its outline draws itself from where the scan starts
   if (e.boundary && e.boundary.length) S.addEdge(e.id, e.boundary, e.col, sc ? sc.dir : null);
 }
@@ -109,6 +109,20 @@ const curveAt = (c, t) => { if (!c || !c.length) return -1; if (t <= c[0][0]) re
   let lo = 0, hi = n - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (c[m][0] <= t) lo = m; else hi = m; } return c[lo][1] + (c[hi][1] - c[lo][1]) * (t - c[lo][0]) / ((c[hi][0] - c[lo][0]) || 1e-9); };
 const ringR = (n, t) => n.ring && t < n.ring.curve[n.ring.curve.length - 1][0] ? curveAt(n.ring.curve, t) : 99;
 S.setHide(...await Promise.all(['hide', 'hide2', 'edge', 'edge2'].map(f => tex(B + `data/${f}.png`))));
+// cities apart in time share a channel (compile: era channels): a shared channel holds, at any moment, the city in use then
+// (its intervals in `occupy`), drawn in from its own files when it takes the channel over (studio shareChannels); the
+// files hold each channel's first city. Only the city a channel holds sets that channel's uniforms.
+const SHARE = (FILM.eras || []).filter(e => e.occupy && e.hide != null), holding = {};
+let CH = null;
+if (SHARE.length) {
+  CH = S.shareChannels();
+  for (const e of SHARE) e._own = await Promise.all([tex(B + `data/hide_${e.id}.png`), tex(B + `data/edge_${e.id}.png`)]);
+  for (const e of [...SHARE].sort((a, b) => b.occupy[0][0] - a.occupy[0][0])) holding[e.hide] = e;   // (the earliest last: it wins)
+  for (const e of Object.values(holding)) if (e.edgeRect) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; }
+}
+const takeChannel = e => { if (!CH || !e.occupy || holding[e.hide] === e) return; CH.put(e.hide, ...e._own); holding[e.hide] = e;
+  if (e.edgeRect) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; } };
+const inChannel = e => !e.occupy || holding[e.hide] === e;
 { const cols = Array(8).fill('#ffffff'); for (const e of FILM.eras || []) if (e.hide != null) cols[e.hide] = e.col; S.setHideCols(cols); }
 S.U.uScaleH.value = M.scale * (M.bex || (M.terrain && M.terrain.exaggeration) || 3);   // window floors follow the buildings' own exaggeration
 S.U.uScaleM.value = M.scale;   // model units per metre (textures drawn at their real size)
@@ -343,6 +357,7 @@ function setLayers(t) {
   // it stands, a thin edge line.
   let eraUp = 0;
   const nodes_ = FILM.nodes || []; let ci = -1; for (let i = 0; i < nodes_.length; i++) if (t >= ringT0(nodes_[i])) ci = i;
+  for (const e of SHARE) if (e.occupy.some(([a, b]) => t >= a && t < b)) takeChannel(e);   // the city in use takes its shared channel
   for (const e of FILM.eras || []) {
     const E = S.eras[e.id]; if (!E) continue;
     const tE = t - e.on, full = e.span + e.grow, SD = e.fallDur || 1.4, FR = e.fallR, fin = FR && FR.mode === 'in';
@@ -371,7 +386,7 @@ function setLayers(t) {
     // on it now (node `ghost`)
     let gA = 0, gD = 1;
     for (const n of nodes_) if ((n.ghost || []).includes(e.id)) { const a = OV.env(t, n.arrive, n.t1, .6, .8); if (a > gA) { gA = a; gD = eo(seg(t, n.arrive, n.arrive + 2.2)); } }
-    if (e.hide != null) {
+    if (e.hide != null && inChannel(e)) {
       const h = e.hide;
       U.uHideT.value[h] = tE < -.01 || gone ? -1 : tE / e.span; U.uHideG.value[h] = e.grow / e.span;
       U.uHideO.value[h].set(fo[0], fo[1]); U.uHideFR.value[h] = fr; U.uHideFI.value[h] = fin ? 1 : 0; U.uHideFW.value[h] = fr1;
@@ -578,7 +593,7 @@ window.render(QS.has('t') ? +QS.get('t') : 0);
 // the period cities' viewer (?view, engine/view.js): this scene and light without the timeline, the camera the viewer's
 if (QS.has('view')) {
   document.getElementById('ov').style.display = 'none';
-  (await import('./view.js')).startView({ S, FILM, QS, W, H, scale: M.scale, setLight, setLayers, lens, cityMesh: CITYMESH, eraBox: ERABOX,
+  (await import('./view.js')).startView({ S, FILM, QS, W, H, scale: M.scale, setLight, setLayers, lens, cityMesh: CITYMESH, eraBox: ERABOX, takeChannel,
     setDist: (d, el) => { camDist = d; camElev = el; },
     quiet: () => {   // what setLayers lays at a moment of the film that is not the period cities: off
       for (let i = 0; i < EMAX; i++) U.uEpA.value[i] = 0;

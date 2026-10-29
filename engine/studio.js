@@ -729,6 +729,30 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   function setTex(k, t, srgb = false) { if (!t) { U[k].value = blank; return; } t.flipY = false; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; t.anisotropy = 4; U[k].value = t; }
   function setHideCols(cols) { cols.forEach((c, i) => { if (i < 8) U.uHideCol.value[i].copy(lin(c)); }); }
   function setHide(t, t2, e, e2) { for (const [k, x] of [['uHide', t], ['uHide2', t2], ['uEdge', e], ['uEdge2', e2]]) { x.flipY = false; x.colorSpace = THREE.NoColorSpace; x.magFilter = x.minFilter = THREE.LinearFilter; x.generateMipmaps = false; U[k].value = x; } }
+  // cities apart in time share a channel (compile: era channels). In a film that has them the four channel textures become
+  // render targets holding what the files hold; a city taking a channel over is drawn into it from its own files (hide_<id>,
+  // edge_<id>): one channel written, the other three kept (a constant blend colour masks them), all on the graphics card
+  let chans = null;
+  function shareChannels() {
+    const copy = new THREE.ShaderMaterial({ uniforms: { uSrc: { value: null }, uOne: { value: 0 } }, depthTest: false, depthWrite: false,
+      vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }',
+      fragmentShader: 'uniform sampler2D uSrc; uniform float uOne; varying vec2 vUv; void main(){ vec4 c = texture2D(uSrc, vUv); gl_FragColor = uOne > .5 ? vec4(c.r) : c; }' });
+    const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), copy), qs = new THREE.Scene(), qc = new THREE.Camera(); qs.add(quad);
+    const exact = x => { x.flipY = false; x.colorSpace = THREE.NoColorSpace; x.magFilter = x.minFilter = THREE.NearestFilter; x.generateMipmaps = false; x.needsUpdate = true; return x; };
+    const draw = (rt, src, k) => {   // k: the channel to write (0-3), or -1 for all four
+      copy.uniforms.uSrc.value = exact(src); copy.uniforms.uOne.value = k < 0 ? 0 : 1;
+      copy.blending = k < 0 ? THREE.NoBlending : THREE.CustomBlending;
+      copy.blendSrc = THREE.ConstantColorFactor; copy.blendDst = THREE.OneMinusConstantColorFactor; copy.blendSrcAlpha = THREE.ConstantAlphaFactor; copy.blendDstAlpha = THREE.OneMinusConstantAlphaFactor;
+      copy.blendColor.setRGB(k === 0 ? 1 : 0, k === 1 ? 1 : 0, k === 2 ? 1 : 0); copy.blendAlpha = k === 3 ? 1 : 0;
+      const was = renderer.getRenderTarget(), ac = renderer.autoClear; renderer.autoClear = false; renderer.setRenderTarget(rt); renderer.render(qs, qc); renderer.setRenderTarget(was); renderer.autoClear = ac; };   // (no clear: the other channels stay)
+    const rts = {};
+    for (const k of ['uHide', 'uHide2', 'uEdge', 'uEdge2']) {
+      const src = U[k].value, rt = new THREE.WebGLRenderTarget(src.image.width, src.image.height, { depthBuffer: false, generateMipmaps: false, magFilter: THREE.LinearFilter, minFilter: THREE.LinearFilter });
+      rt.texture.colorSpace = THREE.NoColorSpace; rt.texture.flipY = false; draw(rt, src, -1); rts[k] = rt; U[k].value = rt.texture;
+    }
+    chans = { put(h, hide, edge) { draw(rts[h < 4 ? 'uHide' : 'uHide2'], hide, h % 4); draw(rts[h < 4 ? 'uEdge' : 'uEdge2'], edge, h % 4); } };
+    return chans;
+  }
   function build(water, l1, l2, l3, decals = [], photo = null, terrain = null) {
     water.flipY = false; water.colorSpace = THREE.NoColorSpace; water.anisotropy = 8; U.uWater.value = water;
     for (const [k, t] of [['uL1', l1], ['uL2', l2], ['uL3', l3]]) { t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.anisotropy = 4; U[k].value = t; }
@@ -825,5 +849,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     vertexShader: 'varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
     fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA; varying vec3 vW; void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(texture2D(uPI, u).rgb, uA); }' }));
   liveSky.visible = false; liveSky.renderOrder = -1; liveSky.frustumCulled = false; scene.add(liveSky);
-  return { renderer, scene, camera, post, U, liveSky, addContext, setContext, setHide, setHideCols, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { renderer, scene, camera, post, U, liveSky, addContext, setContext, setHide, setHideCols, shareChannels, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

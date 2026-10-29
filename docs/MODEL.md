@@ -138,6 +138,8 @@ the default: a city shrinking to its core) or `out` (from `from` outward: a fire
 not move. compile refuses a part lost before it has risen, after the city is taken back, in two losses, or a loss that takes nothing; at most four per city. A city laid later
 over the old one (`avoid_eras`) may build where a part was lost by its node (fields where houses were: a `trees` region there); clipcheck counts a lost part and what rises
 where it stood as never standing together. The city's outline and the ground where today's buildings stepped aside stay as they were (a shrunken city's walls usually stand).
+**How many period cities:** as many as the history has. At most eight stand or are drawn (a ghost outline) at the same moment, each lighting one channel (where today's buildings
+step aside, its front and its edge); cities apart in time share a channel, and compile says which (`era channels`) or stops at a ninth at once.
 
 The boundary is computed automatically from the generated buildings; for a boundary the buildings cannot give (a village moat) add `outline:`, and the footprints of the historic cities at the end are also drawn from it;
 a city laid over the previous period writes `avoid_eras: [<id>]`, so the new quarters go around the old city. Walls, elevated corridors and street surfaces on slopes tilt with the slope (citygen `lay`); do not make them into steps segment by segment.

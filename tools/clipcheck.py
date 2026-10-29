@@ -171,7 +171,7 @@ def main():
             R['streets_short'] = n; R['streets_short_at'] = ex[:10]
         # today's buildings that stay up next to (or through) the era city
         if today and e.get('hide') is not None and hide:
-            img = hide[e['hide'] // 4][..., e['hide'] % 4]; Hh, Ww = img.shape
+            img = np.asarray(Image.open(os.path.join(D, f"hide_{e['id']}.png")).convert('L')) if e.get('occupy') else hide[e['hide'] // 4][..., e['hide'] % 4]; Hh, Ww = img.shape   # (a shared channel: the city's own mask)
             u = np.clip(((today_ctr[:, 0] / PW + .5) * Ww).astype(int), 0, Ww - 1); v = np.clip(((today_ctr[:, 1] / PD + .5) * Hh).astype(int), 0, Hh - 1)
             up = [today[k] for k in np.nonzero(img[v, u] < 5)[0]]
             era_all = [rect(p) for p in ground if p[11] not in (PAVE, WATER, TREE)]
