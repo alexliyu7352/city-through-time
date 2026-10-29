@@ -474,7 +474,8 @@ def top(L, hx):
     if k == 'column':
         hs = sum(s_['h_m'] for s_ in L['stages']) if L.get('stages') else L['h_m']
         w_ = (L['stages'][-1]['w_m'] if L.get('stages') else L['w_m'])
-        return z + ((L.get('pedestal') or {}).get('h_m', 0) + hs + (L['top'].get('h_m') or (4 * w_ if L['top']['shape'] == 'spire' else w_))) * hx
+        crown = 0.0 if L['top']['shape'] == 'flat' else (L['top'].get('h_m') or (4 * w_ if L['top']['shape'] == 'spire' else w_))   # (flat: no crown is drawn)
+        return z + ((L.get('pedestal') or {}).get('h_m', 0) + hs + crown) * hx
     if k in ('stepped', 'arches'): return z + L['h_m'] * hx
     if k == 'revolve': return z + max(p[1] for p in L['profile_m']) * (1 if L['keep_curve'] else hx)
     if k == 'prism': return z + (L['h_m'] if 'plan_m' in L else max(p[1] for p in L['section_m'])) * hx
@@ -521,10 +522,14 @@ def placed(L):
 def draw(D, L, x, y, th, z=0.0):
     """one landmark (a part too) with its centre at UTM x, y, its frame turned th, standing z metres above the ground plane"""
     k = L['kind']; P = D.frame(x, y, th); z = z + (L.get('z_m') or 0.0)
-    if k == 'parts':   # (a part on another stands on its top: the other's height on screen, back in the metres the walls are exaggerated from)
-        tops = []
-        for q in L['parts']: tops.append((tops[q['atop']] if q.get('atop') is not None else 0.0) + top(q, D.B.hex))
-        for q, (px, py, pth) in placed(L): draw(D, q, *P(px, py), th + pth, z + (tops[q['atop']] / D.B.hex if q.get('atop') is not None else 0.0))
+    if k == 'parts':   # a part on another stands on the top the other was drawn to (measured from its pieces, in the metres the
+        # walls are exaggerated from: a dome keeps its true curve), not on an estimate of it (a flat column was counted a crown high)
+        tops, B = [], D.B
+        for q in L['parts']:
+            z_ = tops[q['atop']] if q.get('atop') is not None else z
+            n0 = len(B.prims)
+            for _, (px, py, pth) in placed({'parts': [q]}): draw(D, q, *P(px, py), th + pth, z_)
+            tops.append(max(((r[4] + r[7] - r[12]) / (B.F.scale * B.hex) for r in B.prims[n0:]), default=z_))
         return
     {'ring': _ring, 'dome': _dome, 'long_hall': _long_hall, 'column': _column, 'stepped': _stepped, 'arches': _arches, 'revolve': _revolve, 'prism': _prism}[k](D, L, P, th, z)
 
