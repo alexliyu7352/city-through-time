@@ -13,6 +13,7 @@ import { buildProp, makeTally, buildEra } from './props.js';
 
 const lin = h => new THREE.Color(h);
 export const NMAX = 8;
+export const LMAX = 4;   // the parts one period city can lose while the rest stands (compile LOSE_MAX; record kind 4.. in aData.w)
 export const EMAX = 12;   // epoch mask channels: data/layers1-3.png, RGBA each (compile shares a channel between masks apart in time and place)
 const YLN = 48;   // points of the modern year line the shaders read (compile: grow.yl)
 
@@ -132,6 +133,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform sampler2D uPI; uniform mat4 uPM; uniform float uPA, uPRR, uPF, uPF0, uPF1; uniform vec2 uPRC;
   uniform sampler2D uHide, uHide2;
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
+  uniform float uLossBurn[${LMAX}];
+  float eraBurnK(){ float b = uEraBurn; for (int k = 0; k < ${LMAX}; k++) if (abs(vData.w - 4. - float(k)) < .5) b = max(b, uLossBurn[k]); return b; }   // the whole city burning, or the part of it a fire takes (lose: burn)
   // vData: x = year (0 unknown, negative BCE), y = height m, z = rank 0..1 (switch-on order), w = kind (0 building, 1 mound/earthwork, -1 plate)
   int bandOf(float y){ int b = -1; for (int i = 0; i < ${NMAX}; i++) { if (float(i) < uNB && y >= uBLo[i]) b = i; } return b; }
   vec3 hgtCol(float h){
@@ -300,7 +303,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       c = mix(c, ecol * pk * .45, uEraA * (1. - ink));   // (at full strength it washed the lit faces past white, roofs and walls one pale tone)
       float fl = vUp * (1. - vUp) * 4.;
       c += ecol * fl * .9 * uEraA + vec3(.4) * fl * uEraA;
-      c *= 1. - .9 * uEraBurn;   // charred (the flames are added as emission, see eraFire)
+      c *= 1. - .9 * eraBurnK();   // charred (the flames are added as emission, see eraFire)
     }
     // decals: graphics projected on the plate (and the things standing on it): emblem, star map, plan, rings
     if (kind < 1.5) {
@@ -330,6 +333,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform float uNow; attribute vec4 aData; attribute float aBase; varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase; uniform float uToday, uGrowRise, uYear, uGhost, uLiveSink; uniform sampler2D uHide, uHide2; uniform vec2 uPlateV; attribute vec2 aCtr; uniform vec2 uResetC; uniform float uResetR, uResetY; varying vec2 aCtrV; attribute vec3 aGrowH; attribute float aGrowT; varying float vGrowT;
   uniform float uHideT[8], uHideG[8], uHideFR[8], uHideFI[8], uHideFW[8]; uniform vec2 uHideO[8];
   uniform float uEraT, uEraSpan, uEraGrow, uEraFallR, uEraFallIn, uEraFallW; uniform vec2 uEraO;
+  uniform float uLossR[${LMAX}], uLossIn[${LMAX}], uLossW[${LMAX}]; uniform vec2 uLossO[${LMAX}];   // a part of the city lost (lose:): its ring
   // a ring that takes a city back: contracting (in) it takes what lies outside it, growing (out) what lies inside. R is the
   // ring now, R1 where it was a sink-time ago: a building the ring passed sinks over that time (0 standing .. 1 gone)
   float fallK(vec2 o, float R, float fin, float R1){ float d = length(aCtr - o);
@@ -357,6 +361,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    else if (aData.w > .5 && aData.w < 1.5) { float by = smoothstep(yr - 1., yr + 3., uYear); ry = max(uToday, by); }
    else if (aData.w > 2.5) {   // era cities: each building rises at its own start (rank x span, from the stages), whole; a ring takes them back
      float st = aData.z * uEraSpan; ry = smoothstep(st, st + uEraGrow, uEraT) * (1. - fallK(uEraO, uEraFallR, uEraFallIn, uEraFallW));
+     for (int k = 0; k < ${LMAX}; k++) if (abs(aData.w - 4. - float(k)) < .5) ry *= 1. - fallK(uLossO[k], uLossR[k], uLossIn[k], uLossW[k]);   // a lost part goes with its own ring
      if (ry < .002) ry = -1.; }
    vUp = max(ry, 0.); vBase = aBase; aCtrV = aCtr; vGrowT = aGrowT;
    transformed.y = ry < 0. ? aBase - .02 : aBase + (transformed.y - aBase) * max(ry, .0005); }`;
@@ -379,7 +384,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <fog_vertex>', `#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz; vWN = normalize(mat3(modelMatrix) * objectNormal);`);
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>\n${HEAD}`)
-        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(diffuseColor.rgb, cWater, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * uEraBurn); if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
+        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(diffuseColor.rgb, cWater, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * eraBurnK()); if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
         // a period city's colour is in the light that falls on it, not in its plaster: the lamps' direct light (key, fill, rim) takes
         // the era's colour, the room's soft light stays neutral, so its walls are warm where lit and grey in the shade
         .replace('#include <aomap_fragment>', `#include <aomap_fragment>${kind === 0 ? '\n reflectedLight.directDiffuse *= eraKeyT;' : ''}`)
@@ -388,12 +393,12 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
  ${kind === 1 ? '{ float sh_ = clamp((dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01), -1., 1.) * (1. - wm) * step(.5, normalize(vWN).y); vec3 tn_ = uShadeC / max(max(uShadeC.r, uShadeC.g), max(uShadeC.b, .001)); outgoingLight = outgoingLight * (sh_ < 0. ? max(.5, 1. + .35 * uShadeK * sh_) : 1.) + tn_ * .5 * uShadeK * max(sh_, 0.); }   // terrain.shade: a fixed low sun on the plate top (not its sides): a slope turned to it lit in the plate\'s own hue (at most .5 k, a steel blue on a dark blue plate), a slope turned away darker, flat ground and water as they are; a white light added on the dark plate read as snow on the hills' : ''}
  ${kind === 0 ? `if (vData.w > -.5 && abs(vData.w - 1.) > .5 && abs(normalize(vWN).y) < .5 && !(vData.w > 2.5 && abs(vData.y - 11.) < .5)) {   // a wall darkens toward its foot, where the street and its neighbours hide the room's light: the city stands on the plate instead of floating over it (a period house's plinth is that foot already, and keeps its light). The band is uFootM metres (main.js: a few metres up close, a few pixels' worth from afar)
    float fh_ = (vWP.y - vBase) / uScaleH; outgoingLight *= mix(.62, 1., smoothstep(0., uFootM, fh_)); }
- if (uEraBurn > 0. && vData.w > 2.5) outgoingLight += eraFire() * uEraBurn * 1.7 * uProj * vUp;   // a building that has fallen no longer burns
+ if (vData.w > 2.5) { float eb_ = eraBurnK(); if (eb_ > 0.) outgoingLight += eraFire() * eb_ * 1.7 * uProj * vUp; }   // a building that has fallen no longer burns
  if (vData.w > 2.5 && max(uEraInk, uEraInk0) > 0.) {   // ink: the dark city's walls, landmarks, streets and ridges lit in its colour
    float iw2 = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); float ik2 = mix(uEraInk0, uEraInk, iw2); vec3 ec2 = mix(uEraCol0, uEraCol, iw2); float p2 = vData.y;
    float gold = p2 < .5 ? .05 : p2 < 3.5 ? .7 : p2 < 6.5 ? 0. : p2 < 7.5 ? .35 : p2 < 8.5 ? .12 : p2 < 9.5 ? .8 : .25;
-   outgoingLight += ec2 * gold * ik2 * (.35 + .65 * max(normalize(vWN).y, 0.)) * .55 * uProj * (1. - uEraBurn); }
- if (vData.w > 2.5) outgoingLight += diffuseColor.rgb * uEraCol * uEraGlow * .2 * uProj * (1. - uEraBurn) * vUp * keyK(normalize(vWN));   // the period city glows a little (it is the subject), more on the faces the key light finds
+   outgoingLight += ec2 * gold * ik2 * (.35 + .65 * max(normalize(vWN).y, 0.)) * .55 * uProj * (1. - eraBurnK()); }
+ if (vData.w > 2.5) outgoingLight += diffuseColor.rgb * uEraCol * uEraGlow * .2 * uProj * (1. - eraBurnK()) * vUp * keyK(normalize(vWN));   // the period city glows a little (it is the subject), more on the faces the key light finds
  if (uNight > 0. && vData.w > -.5 && vData.w < .5) {   // night: lit windows on the facades of today's buildings, roofs dark
    vec3 Nn = normalize(vWN); float fl = (vWP.y - vBase) / (uScaleH * 3.2);           // floors of 3.2 m
    float nd_ = uNightDeep * uNight; if (abs(Nn.y) < .5) outgoingLight *= 1. - .9 * nd_;   // the deep night: the walls go dark, the lit windows carry the city
@@ -591,9 +596,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   // era cities: one mesh per period, each with its own rise/sink/colour uniforms
   const eras = {};
-  function addEra(id, prims, col) {
-    const geo = buildEra(prims);
-    const u = { uEraT: { value: -1 }, uEraSpan: { value: 1 }, uEraGrow: { value: 1 }, uEraFallR: { value: -1 }, uEraFallIn: { value: 0 }, uEraFallW: { value: .01 }, uEraO: { value: new THREE.Vector2() }, uEraInk: { value: 0 }, uEraInk0: { value: 0 }, uEraA: { value: 0 }, uEraBurn: { value: 0 }, uEraCol: { value: lin(col || '#ffd9a0') }, uEraCol0: { value: lin(col || '#ffd9a0') }, uEraFab: { value: 1.0 }, uEraGlow: { value: 0 } };
+  function addEra(id, prims, col, lost = null) {
+    const geo = buildEra(prims, 0, lost);
+    const u = { uEraT: { value: -1 }, uEraSpan: { value: 1 }, uEraGrow: { value: 1 }, uEraFallR: { value: -1 }, uEraFallIn: { value: 0 }, uEraFallW: { value: .01 }, uEraO: { value: new THREE.Vector2() }, uEraInk: { value: 0 }, uEraInk0: { value: 0 }, uEraA: { value: 0 }, uEraBurn: { value: 0 }, uEraCol: { value: lin(col || '#ffd9a0') }, uEraCol0: { value: lin(col || '#ffd9a0') }, uEraFab: { value: 1.0 }, uEraGlow: { value: 0 },
+      uLossR: { value: Array(LMAX).fill(-1) }, uLossIn: { value: Array(LMAX).fill(0) }, uLossW: { value: Array(LMAX).fill(.01) }, uLossBurn: { value: Array(LMAX).fill(0) }, uLossO: { value: Array.from({ length: LMAX }, () => new THREE.Vector2()) } };
     const mesh = new THREE.Mesh(geo, projMaterial(0, { color: '#f4f2ee', roughness: .86, metalness: 0 }, u));
     mesh.customDepthMaterial = deformMaterial(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), u);
     mesh.castShadow = !LOW; mesh.receiveShadow = true; mesh.frustumCulled = false; mesh.visible = false; scene.add(mesh);   // live preview: era cities cast no shadow (the shadow pass would draw them twice)

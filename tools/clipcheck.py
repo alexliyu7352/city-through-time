@@ -79,24 +79,32 @@ def main():
             return bl(large_), bl(fine_)
     bodies_by_era = {}
     for e in FILM.get('eras', []):
-        prims = json.load(open(os.path.join(city, 'build', e['file'])))['prims']
+        J_ = json.load(open(os.path.join(city, 'build', e['file']))); prims = J_['prims']
+        # when each record stands: from its rise to the city's end, or to its loss (lose:): a part lost and what is built where it
+        # stood never stand together, so they are not an overlap (within the city: from each record's own rise)
+        lost_ = J_.get('lost') or [0] * len(prims); off_ = e.get('off') or 1e9
+        span_ = {id(p): (e['on'] + p[10] * e['span'], e['losses'][k - 1]['gone'] if k else off_) for p, k in zip(prims, lost_)}
+        both = lambda a, b: span_[id(a)][0] < span_[id(b)][1] and span_[id(b)][0] < span_[id(a)][1]
         ground = [p for p in prims if p[4] <= p[12] + 1e-9 and p[11] != PLINTH]   # primitives that start at (or below) grade, not plinths
         body = lambda parts: [p for p in ground if p[11] in parts and p[0] in SOLID]
-        houses = [rect(p, .3 * S) for p in body((FAB,))]
-        hard = [rect(p, .3 * S) for p in body((WALL, LMK, EARTH, WATER))]
-        streets = [rect(p, .5 * S) for p in body((PAVE,)) if p[5] > 12 * S or p[6] > 12 * S]
+        hp_, wp0_, sp_ = body((FAB,)), body((WALL, LMK, EARTH, WATER)), [p for p in body((PAVE,)) if p[5] > 12 * S or p[6] > 12 * S]
+        houses = [rect(p, .3 * S) for p in hp_]
+        hard = [rect(p, .3 * S) for p in wp0_]
+        streets = [rect(p, .5 * S) for p in sp_]
         trunks = [p for p in prims if p[11] == TREE and p[0] == 3]
-        lm = [((p[15], p[16]) if len(p) > 16 else (p[1], p[2]), rect(p, .3 * S), p[11]) for p in body((LMK, EARTH))]   # (the building it belongs to, its body, part)
+        lmp_ = body((LMK, EARTH))
+        lm = [((p[15], p[16]) if len(p) > 16 else (p[1], p[2]), rect(p, .3 * S), p[11]) for p in lmp_]   # (the building it belongs to, its body, part)
         R = {}
-        def overlaps(A, B, label):
+        def overlaps(A, B, label, PA=None, PB=None):   # (PA, PB: the records, when only those standing together count)
             if not A or not B: R[label] = 0; return
             tree = STRtree(B); n = 0; ex = []
-            for a in A:
+            for i, a in enumerate(A):
                 for j in tree.query(a, predicate='intersects'):
+                    if PA is not None and not both(PA[i], PB[j]): continue
                     if a.intersection(B[j]).area > min_area: n += 1; ex.append([round(a.centroid.x, 4), round(a.centroid.y, 4)]); break
             R[label] = n; R[label + '_at'] = ex[:5]
-        overlaps(houses, hard, 'houses_vs_walls')
-        overlaps(houses, streets, 'houses_vs_streets')
+        overlaps(houses, hard, 'houses_vs_walls', hp_, wp0_)
+        overlaps(houses, streets, 'houses_vs_streets', hp_, sp_)
         # a trunk inside a body: the ground it stands on below the body's top (along the body's slope), inside where the body
         # stands (a hall on a podium starts above grade, so every body counts, at any height; a tree on top of a terrace stands
         # at its top and is not inside it; a court or an arena is open: solid_plan). A platform counts too: a tree in a court on
@@ -108,7 +116,7 @@ def main():
             tree = STRtree(bodies); n = 0; ex = []
             for p in trunks:
                 pt = shapely.Point(p[1], p[2])
-                if any(bodies[j].contains(pt) and p[12] < top(bp[j], p[1], p[2]) - .5 * S for j in tree.query(pt)): n += 1; ex.append([round(p[1], 4), round(p[2], 4)])
+                if any(bodies[j].contains(pt) and p[12] < top(bp[j], p[1], p[2]) - .5 * S and both(p, bp[j]) for j in tree.query(pt)): n += 1; ex.append([round(p[1], 4), round(p[2], 4)])
             R['trees_in_houses'] = n; R['trees_in_houses_at'] = ex[:5]
         # bodies of different landmarks (each primitive carries the centre of the building it belongs to: parts of one big
         # court may touch inside it, two buildings may not)
@@ -116,7 +124,7 @@ def main():
             polys = [q for _, q, _ in lm]; owner = [o for o, _, _ in lm]; part_ = [k for _, _, k in lm]; tree = STRtree(polys); n = 0; ex_lm = []
             for i, q in enumerate(polys):
                 for j in tree.query(q, predicate='intersects'):
-                    if j <= i or owner[j] == owner[i]: continue
+                    if j <= i or owner[j] == owner[i] or not both(lmp_[i], lmp_[j]): continue
                     if part_[i] == EARTH and part_[j] == EARTH: continue   # rammed-earth tiers of one platform abut by design
                     small, big = (q, polys[j]) if q.area < polys[j].area else (polys[j], q)
                     if small.area < .1 * big.area: continue   # an appendage (a stair, a porch) against a much bigger body
@@ -136,6 +144,7 @@ def main():
                 a = rect(p, .3 * S); ang = p[3] + (0 if p[5] >= p[6] else math.pi / 2); ux, uz = math.cos(ang), math.sin(ang)
                 span = lambda g: (lambda v: max(v) - min(v))([x * ux + z * uz for x, z in g.exterior.coords]) if not g.is_empty and g.geom_type == 'Polygon' else 0.0
                 for j in btree.query(a, predicate='intersects'):
+                    if not both(p, bp_[j]): continue
                     q = a.intersection(br_[j])
                     if q.area > min_area and span(q) >= .9 * span(br_[j]): n += 1; c_ = q.centroid; ex.append([round(c_.x, 4), round(c_.y, 4)]); break
         R['walls_through'] = n; R['walls_through_at'] = ex[:10]
@@ -214,13 +223,14 @@ def main():
             ok = [ex for ex in np.arange(1.0, 10.01, .5) if np.percentile(ratio * (fall(ex) + .1) / now, 90) <= FOUND_MAX]
             sug = max(ok) if ok else 1.0
         notes[e['id']] = f'foundations: top tenth {p90:.0%} of the height' + (f', within {FOUND_MAX:.0%} up to x{sug:g}' if sug else '')
-        bodies_by_era[e['id']] = (e, [rect(p, .3 * S) for p in body((FAB, LMK, WALL, EARTH))])
-        for oid, (oe, ob) in bodies_by_era.items():
+        xb_ = body((FAB, LMK, WALL, EARTH))
+        bodies_by_era[e['id']] = (e, [rect(p, .3 * S) for p in xb_], [span_[id(p)][1] for p in xb_])   # (each body until its city's end or its loss)
+        for oid, (oe, ob, oend) in bodies_by_era.items():
             if oid == e['id'] or not ob: continue
             if not (oe['on'] < (e.get('off') or 1e9) and e['on'] < (oe.get('off') or 1e9)): continue
             tree = STRtree(ob); n = 0
-            for a in bodies_by_era[e['id']][1]:
-                if any(a.intersection(ob[j]).area > min_area for j in tree.query(a, predicate='intersects')): n += 1
+            for a, aend in zip(bodies_by_era[e['id']][1], bodies_by_era[e['id']][2]):
+                if any(oe['on'] < aend and e['on'] < oend[j] and a.intersection(ob[j]).area > min_area for j in tree.query(a, predicate='intersects')): n += 1
             R['cross_era'] = R.get('cross_era', 0) + n
         report[e['id']] = R
         bad = sum(v for k, v in R.items() if isinstance(v, int))

@@ -350,6 +350,61 @@ def model_ground(x, z):
     """the plate's height (model units) under a model point"""
     return ground_m_xy(x / F.scale + F.cx, -z / F.scale + F.cy) * F.scale * _tex
 
+def select_parts(sel, cs, node_id, what):
+    """a `select` ({landmarks: [names], fabric: [...], walls/streets/lanes/trees: true or names}) -> {category: True or
+    [indices]}. Parts are named by `id` or `group` (list indices shift when a part is added: refused)"""
+    out = {}
+    for cat, v in sel.items():
+        if v is True: out[cat] = True; continue
+        items = cs.get(cat) if isinstance(cs.get(cat), list) else []
+        idx = []
+        for name in v:
+            if not isinstance(name, str):
+                raise SystemExit(f'compile: era {node_id}: {what} select {cat}: {name!r} is an index; give the part an id (or group) and name it')
+            hit = [i for i, it in enumerate(items) if isinstance(it, dict) and name in (it.get('id'), it.get('group'))]
+            if not hit: raise SystemExit(f'compile: era {node_id}: {what} select {cat}: no part with id or group {name!r}')
+            idx += hit
+        out[cat] = idx
+    return out
+
+def match(sel, tag):
+    v = sel.get(tag[0]); return v is True or (isinstance(v, list) and tag[1] in v)
+
+LOSE_KEYS = {'id', 'at', 'select', 'region', 'keep', 'style', 'ring', 'from', 'dur', 'burn'}
+LOSE_MAX = 4   # (engine/studio.js LMAX: the losses one city can have)
+
+def lost_parts(prims, meta, cs, node_id):
+    """which part of the city each `lose:` takes (docs/MODEL.md "A part of a city lost"): per primitive 0 (stays) or the
+    loss's number (1..). A loss takes the parts its `select` names (all when absent), whose building centre is inside its
+    `region` (when given) and outside its `keep` (when given); a building is taken whole. A part in two losses, a loss that
+    takes nothing, or more losses than the engine draws stops compile."""
+    L = cs.get('lose') or []
+    if not L: return None
+    if len(L) > LOSE_MAX: raise SystemExit(f'compile: era {node_id}: {len(L)} losses; a city has at most {LOSE_MAX} (one ring each)')
+    import shapely as _sh
+    def area(v):
+        rings = [v] if isinstance(v, str) or (isinstance(v[0], (list, tuple)) and isinstance(v[0][0], (int, float))) else v   # (one ring, or a list of rings / osm: names)
+        return _sh.union_all([_sh.Polygon([F.model_lonlat(*q) for q in (osm_rings(r[4:])[0] if isinstance(r, str) and r.startswith('osm:') else r)]) for r in rings])
+    G = {}
+    for p, (gid, tag, _) in zip(prims, meta): G.setdefault(gid, (tag, _sh.Point(p[15], p[16])))
+    of = {}
+    for j, ls in enumerate(L, 1):
+        bad = set(ls) - LOSE_KEYS
+        if bad or 'id' not in ls or 'at' not in ls:
+            raise SystemExit(f'compile: era {node_id}: lose[{j - 1}]: ' + (f'no key {", ".join(sorted(bad))}' if bad else 'write id and at') + f' (keys: {", ".join(sorted(LOSE_KEYS))})')
+        if ls.get('style', 'sink') not in ('sink', 'burn') or ls.get('ring', 'in') not in ('in', 'out'):
+            raise SystemExit(f'compile: era {node_id}: lose {ls["id"]}: style is sink or burn, ring is in or out')
+        sel = select_parts(ls['select'], cs, node_id, 'lose') if ls.get('select') else None
+        inside = area(ls['region']) if ls.get('region') else None; kept = area(ls['keep']) if ls.get('keep') else None
+        n = 0
+        for gid, (tag, c) in G.items():
+            if tag[0] == 'trees' and not sel: continue   # (trees go only when named: a garden outlives the houses round it)
+            if (sel and not match(sel, tag)) or (inside is not None and not inside.contains(c)) or (kept is not None and kept.contains(c)): continue
+            if gid in of: raise SystemExit(f'compile: era {node_id}: a building is in two losses ({L[of[gid] - 1]["id"]}, {ls["id"]}); a part is lost once')
+            of[gid] = j; n += 1
+        if not n: raise SystemExit(f'compile: era {node_id}: lose {ls["id"]} takes nothing (its select, region and keep leave no building)')
+    return [of.get(m[0], 0) for m in meta]
+
 def stage_parts(prims, meta, cs, node_id):
     """the city's buildings by stage: G {group id: {tag, c (model xz centre)}} and [(stage, first, [group ids]), ...] in the
     order the stages claim them (stages with a `select` first, then the rest; `first` = the first stage in spec order, the
@@ -358,22 +413,7 @@ def stage_parts(prims, meta, cs, node_id):
     G = {}
     for p, (gid, tag, _) in zip(prims, meta):
         G.setdefault(gid, {'tag': tag, 'c': (p[15], p[16])})
-    def resolve(sel):
-        out = {}
-        for cat, v in sel.items():
-            if v is True: out[cat] = True; continue
-            items = cs.get(cat) if isinstance(cs.get(cat), list) else []
-            idx = []
-            for name in v:
-                if not isinstance(name, str):
-                    raise SystemExit(f'compile: era {node_id}: stage select {cat}: {name!r} is an index; give the part an id (or group) and name it')
-                hit = [i for i, it in enumerate(items) if isinstance(it, dict) and name in (it.get('id'), it.get('group'))]
-                if not hit: raise SystemExit(f'compile: era {node_id}: stage select {cat}: no part with id or group {name!r}')
-                idx += hit
-            out[cat] = idx
-        return out
-    def match(sel, tag):
-        v = sel.get(tag[0]); return v is True or (isinstance(v, list) and tag[1] in v)
+    resolve = lambda sel: select_parts(sel, cs, node_id, 'stage')
     stages = [dict(st, select=resolve(st['select'])) if st.get('select') else st for st in stages]
     taken, order = set(), []
     for st in [x for x in stages if x.get('select')] + [x for x in stages if not x.get('select')]:
@@ -635,6 +675,7 @@ def expand_areas(node):
                                                 **name_(.5), **{l_: a_.get(l_) for l_ in LANG}, 'len': a_.get('len', 90), **unseen_})
 
 PRIMS, IMPACT, FOLLOW, FOLLOW_KEYS = {}, {}, [], []
+LOST = {}   # era id -> per primitive: 0 (stays) or the number of the loss that takes it (lost_parts)
 CITY_META = {}
 
 def gen_city(node):
@@ -644,13 +685,31 @@ def gen_city(node):
     if cs.get('avoid_eras'):   # quarters added on top of an earlier city that still stands: keep clear of its footprints
         import shapely as _sh
         fx = []
+        here = next(i for i, n in enumerate(FM['nodes']) if n is node)
         for oid in cs['avoid_eras']:
-            for p in PRIMS[oid]:
-                if p[11] == 4: continue
+            gone_ = lost_by(oid, here)
+            for i_, p in enumerate(PRIMS[oid]):
+                if p[11] == 4 or gone_[i_]: continue   # (a part lost by this node leaves its ground free)
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
     meta_ = []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_)
     CITY_META[node['id']] = meta_
+    LOST[node['id']] = lost_parts(PRIMS[node['id']], meta_, cs, node['id'])
+
+def lose_node(era_id, ls):
+    """the node a loss of an era's city happens in: its own, or the one `at: {node: <id>, at: ...}` names"""
+    at = ls['at']
+    nid = at['node'] if isinstance(at, dict) and 'node' in at else era_id
+    nd = next((n for n in FM['nodes'] if n['id'] == nid), None)
+    if nd is None: raise SystemExit(f'compile: era {era_id}: lose {ls["id"]}: no node {nid!r}')
+    return nd
+
+def lost_by(era_id, node_index):
+    """per primitive of an era: lost in a node up to node_index (its ground is free for a city laid there)"""
+    L, cs = LOST.get(era_id), next(n for n in FM['nodes'] if n['id'] == era_id)['city']
+    if not L: return [0] * len(PRIMS[era_id])
+    by = {j: FM['nodes'].index(lose_node(era_id, ls)) <= node_index for j, ls in enumerate(cs['lose'], 1)}
+    return [bool(j) and by[j] for j in L]
 CHANGE = None   # what grew taller where (ghsl_change), when a node asks for it   # era primitives by id; a node's landing beam; camera follow windows (hand keys must stay out)
 PROP_MARKS = {}   # prop id -> [x, z, top_y] so pins can anchor on props
 MW = 2048; MH = round(MW * F.size[1] / F.size[0])
@@ -1487,7 +1546,7 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
         P_ = f.pop('_plan', None)
         if P_: PLACES.append((e['id'], f['a'], P_['centre'], P_['rad'], [f['a'][0], P_['t_end']]))   # (a: the front's light, to its run-off; then while buildings rise)
     for p, r in zip(prims, ranks_): p[10] = round(r, 5)
-    json.dump({'prims': prims}, open(LAYOUT.build(D, e['file']), 'w'), separators=(',', ':'))   # (film.json's file references are relative to build/)
+    json.dump({'prims': prims, **({'lost': LOST[e['id']]} if LOST.get(e['id']) else {})}, open(LAYOUT.build(D, e['file']), 'w'), separators=(',', ':'))   # (film.json's file references are relative to build/)
     fx_, fz_ = F.model_lonlat(*(cs.get('fall_from') or cs['origin']))
     e['fallC'] = [round(fx_, 5), round(fz_, 5)]
     e['_dist'] = [math.hypot(p[15] - fx_, p[16] - fz_) for p in prims]; e['_bc'] = [(p[15], p[16]) for p in prims]
@@ -1522,6 +1581,29 @@ for e in eras_out:   # how each city is taken back: contracting from its edge (i
         dd = [math.hypot(x - o[0], z - o[1]) for x, z in e['_bc']]; near_, reach_ = min(dd), max(dd) + .02
         t_hit = next((t for t, R in curve if R >= near_), curve[-1][0]); t_all = next((t for t, R in curve if R >= reach_), curve[-1][0])
         e['fallR'] = {'mode': 'out', 'o': o, 'curve': curve, 'hit': t_hit, 'gone': round(t_all + e['fallDur'], 3)}
+for e in eras_out:   # a part of a city lost while the rest stands (lose:): a ring from or to `from` passing just that part
+    L_, cs_ = LOST.get(e['id']), next(n for n in FM['nodes'] if n['id'] == e['id'])['city']
+    if not L_: continue
+    prims_, out_ = PRIMS[e['id']], []
+    for j, ls in enumerate(cs_['lose'], 1):
+        nd_ = lose_node(e['id'], ls); at_ = ls['at']['at'] if isinstance(ls['at'], dict) and 'node' in ls['at'] else ls['at']
+        own_ = nd_['id'] == e['id']
+        if not own_ and isinstance(at_, dict) and 'after' in at_: raise SystemExit(f"compile: era {e['id']}: lose {ls['id']}: after a route is for the city's own node")
+        t_ = next(pd_['at_of'] for e2, pd_, _ in TIMED if e2 is e)(at_) if own_ else node_time(nd_, at_)
+        o_ = F.model_lonlat(*ls['from']) if 'from' in ls else tuple(e['fallC'])
+        mine = [i for i, k in enumerate(L_) if k == j]
+        dd = [math.hypot(prims_[i][15] - o_[0], prims_[i][16] - o_[1]) for i in mine]; pad_ = 20 * F.scale
+        late = max(e['on'] + prims_[i][10] * e['span'] + e['grow'] for i in mine)
+        if late > t_ - .3: raise SystemExit(f"compile: era {e['id']}: lose {ls['id']} at {t_:.1f} s takes buildings still rising until {late:.1f} s; a part is lost after it stands")
+        if e.get('off') is not None and t_ >= e['off']: raise SystemExit(f"compile: era {e['id']}: lose {ls['id']} at {t_:.1f} s comes after the city is taken back ({e['off']:.1f} s)")
+        dur_ = float(ls.get('dur', 6.0)); burn_ = float(ls.get('burn', 3.0)) if ls.get('style') == 'burn' else 0.0
+        r0, r1 = (max(dd) + pad_, max(0.0, min(dd) - pad_)) if ls.get('ring', 'in') == 'in' else (max(0.0, min(dd) - pad_), max(dd) + pad_)
+        curve = stagecraft.sweep_curve(t_ + burn_ * .45, r0, r1, dur_)   # (burning: the fire takes hold first, then the ring brings it down)
+        out_.append({'id': ls['id'], 'mode': ls.get('ring', 'in'), 'o': [round(o_[0], 5), round(o_[1], 5)], 'curve': curve,
+                     'burn': [round(t_ - burn_ * .55, 3), round(t_ + burn_ * .45, 3)] if burn_ else None, 'gone': round(curve[-1][0] + e['fallDur'], 3)})
+        print(f"  lose {e['id']}.{ls['id']}: {len(set(m_[0] for k, m_ in zip(L_, CITY_META[e['id']]) if k == j))} buildings, {ls.get('style', 'sink')} "
+              f"{curve[0][0]:.1f}-{out_[-1]['gone']:.1f} s, ring {ls.get('ring', 'in')}")
+    e['losses'] = out_
 for e in eras_out: e.pop('_dist', None); e.pop('_bc', None)
 # a city taken back by a contracting ring: the camera comes down with the ring (docs/STAGING.md 9g), from where it is when the
 # ring reaches the city to the next key after the ring has closed (the ruins). The ring stays whole on screen all the way: the

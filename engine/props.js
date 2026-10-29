@@ -337,12 +337,13 @@ export function makeTally(opts = {}) {
 }
 
 // ---------------------------------------------------------------- era cities: primitive list (pipeline/citygen.py) -> one geometry
-// record: [type, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx, gz, bx, bz, shape]; aData = [year, part, rank, 3]; aBase = g (the rise pivot)
-export function buildEra(prims, year = 0) {
+// record: [type, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx, gz, bx, bz, shape]; aData = [year, part, rank, 3 + loss]; aBase = g (the rise pivot)
+// lost: per record 0, or the number of the loss that takes it (compile lost_parts; the era's own ring, studio.js uLoss*)
+export function buildEra(prims, year = 0, lost = null) {
   const G = new Geo();
-  for (const p of prims) {
+  for (const [i, p] of prims.entries()) {
     const [t, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx = 0, gz = 0, bx = cx, bz = cz] = p;
-    const data = [t === 0 && d === 1 ? 10 + rot : year, part, rank, 3];   // a road piece carries its direction (the engine draws ruts along it)
+    const data = [t === 0 && d === 1 ? 10 + rot : year, part, rank, 3 + (lost ? lost[i] : 0)];   // a road piece carries its direction (the engine draws ruts along it)
     G.gx = gx; G.gz = gz;   // a piece laid along a slope (citygen: walls, corridors, paving)
     G.cc = [bx, bz];        // the building it belongs to: rises and falls as one
     if (t === 0) G.box(cx, y0, cz, a, c, b, rot, data, g);

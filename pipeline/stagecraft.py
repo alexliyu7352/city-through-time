@@ -165,6 +165,13 @@ def contract_curve(t0, r_max, r_view, dur, t_out=1.2, step=.1):
     return out
 
 
+def sweep_curve(t0, r0, r1, dur, step=.1):
+    """a ring going from r0 to r1 (in or out) over dur seconds, easing in and out: a part of a city taken back while the rest
+    stands (lose:), the ring stopping where the last of that part is. [[t, R], ...]"""
+    n = max(2, int(round(dur / step)))
+    return [[round(t0 + i / n * dur, 3), round(r0 + (r1 - r0) * (lambda u: u * u * (3 - 2 * u))(i / n), 6)] for i in range(n + 1)]
+
+
 def ring_exit(cam, t, o, y, r_cap):
     """how far a ring round o (model x, z; ground height y) must grow to have left the frame at t: the farthest point of the
     ground the frame's edge sees (a ray above the horizon: r_cap, the plate's far corner)"""

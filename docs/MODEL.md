@@ -129,6 +129,16 @@ flutes on domes and shafts. A form the classes cannot make is added to them, as 
 
 ## Boundaries, overlay and change
 
+**A part of a city lost while the rest stands** (`lose:` in the period city): a fire that takes some quarters, a city shrinking to its core, a lake drained for a new
+building. Do not take the whole city away and raise a smaller one in its place: what stood through the change would sink and rise again, and the audience reads a city
+destroyed and rebuilt. A loss names what it takes as a stage does (`select` by id or group; every part when absent, trees only when named), inside its `region` and outside
+its `keep` (a ring of `[lon, lat]`, several, or `osm:<name>`), and when: `at` in the city's own node (seconds or `{with: <line>}`), or `{node: <id>, at: ...}` in a later
+node while the city still stands (`until`). `style: sink` (the default) or `burn` (the part catches fire for `burn` seconds first); `ring: in` (from outside toward `from`,
+the default: a city shrinking to its core) or `out` (from `from` outward: a fire spreading); `dur` seconds. Each building goes whole as the ring passes it; the rest does
+not move. compile refuses a part lost before it has risen, after the city is taken back, in two losses, or a loss that takes nothing; at most four per city. A city laid later
+over the old one (`avoid_eras`) may build where a part was lost by its node (fields where houses were: a `trees` region there); clipcheck counts a lost part and what rises
+where it stood as never standing together. The city's outline and the ground where today's buildings stepped aside stay as they were (a shrunken city's walls usually stand).
+
 The boundary is computed automatically from the generated buildings; for a boundary the buildings cannot give (a village moat) add `outline:`, and the footprints of the historic cities at the end are also drawn from it;
 a city laid over the previous period writes `avoid_eras: [<id>]`, so the new quarters go around the old city. Walls, elevated corridors and street surfaces on slopes tilt with the slope (citygen `lay`); do not make them into steps segment by segment.
 The later period must show change: a new city laid over the previous one must differ clearly in scale or layout (adding a few small courtyards does not count), enlarged according to the sources; the old city stays underneath, and after the colour change use a wide shot first

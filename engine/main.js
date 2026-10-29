@@ -77,7 +77,7 @@ for (const r of FILM.routes || []) S.addRoute(r.id, r.pts, r.col, r.w);
 // era cities: one generated city per period
 const ERABOX = {};   // each period city's extent on the plate [x0, z0, x1, z1] and its densest 200 m square [x, z] (the viewer, ?view)
 for (const e of FILM.eras || []) {
-  const J = await L.json(B + e.file); S.addEra(e.id, J.prims, e.col);
+  const J = await L.json(B + e.file); S.addEra(e.id, J.prims, e.col, J.lost || null);
   const b = J.prims.reduce((b, p) => [Math.min(b[0], p[1]), Math.min(b[1], p[2]), Math.max(b[2], p[1]), Math.max(b[3], p[2])], [Infinity, Infinity, -Infinity, -Infinity]);
   const cell = 200 * M.scale, n = new Map(); let top = null;
   for (const p of J.prims) { const k = `${Math.floor(p[1] / cell)},${Math.floor(p[2] / cell)}`, c = (n.get(k) || 0) + 1; n.set(k, c); if (!top || c > top[1]) top = [k, c]; }
@@ -353,6 +353,9 @@ function setLayers(t) {
     E.mesh.visible = tE > -.01 && !gone;
     E.u.uEraT.value = tE; E.u.uEraSpan.value = e.span; E.u.uEraGrow.value = e.grow;
     E.u.uEraFallR.value = fr; E.u.uEraFallIn.value = fin ? 1 : 0; E.u.uEraFallW.value = fr1; E.u.uEraO.value.set(fo[0], fo[1]);
+    (e.losses || []).forEach((q, j) => {   // a part of the city lost while the rest stands (compile lose:): its own ring, its own fire
+      E.u.uLossR.value[j] = curveAt(q.curve, t); E.u.uLossW.value[j] = curveAt(q.curve, t - SD); E.u.uLossIn.value[j] = q.mode === 'in' ? 1 : 0;
+      E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0; });
     E.u.uEraA.value = Math.max(e.tint, later(e, nodes_[ci]) ? (nodes_[ci].era_tint ?? nodes_[ci].tint) : 0) * (1 - .5 * today);   // a later node recolours at its own strength
     const burn = e.sinkStyle === 'burn' && e.off != null ? ss(seg(t, e.off - e.burn, e.off - e.burn * .55)) : 0;   // the city catches fire, then falls
     const up = gone ? 0 : ss(seg(t, e.on, e.on + full)) * (1 - fk);
