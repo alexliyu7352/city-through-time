@@ -2,7 +2,7 @@
 // (adapted from lemo-opuscar core/render/still.mjs, MIT; see NOTICE). One page, every time in turn; JPEG at quality 92.
 // Default folder: cities/<city>/build/review/stills.
 import fs from 'fs'; import path from 'path';
-import { openFilm, closeServer, takeSize } from './page.mjs';
+import { openFilm, closeServer, takeSize, shot } from './page.mjs';
 import { buildDir } from './local.mjs';
 
 const args = process.argv.slice(2);
@@ -21,6 +21,6 @@ for (const ts of times) {
   const t0 = Date.now();
   await page.evaluate(t => window.render(t), parseFloat(ts));
   const f = path.join(outDir, `${prefix}${ts}.jpg`);
-  await page.screenshot({ path: f, type: 'jpeg', quality: 92 }); console.log(f, Date.now() - t0 + 'ms');
+  await shot(page, { path: f, type: 'jpeg', quality: 92 }, true); console.log(f, Date.now() - t0 + 'ms');
 }
 await browser.close(); closeServer();

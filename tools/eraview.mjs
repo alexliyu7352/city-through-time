@@ -11,7 +11,7 @@
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
-import { openFilm, closeServer } from '../render/page.mjs';
+import { openFilm, closeServer, shot } from '../render/page.mjs';
 import { buildDir } from '../render/local.mjs';
 import { geocheck } from './geocheck.mjs';
 
@@ -51,7 +51,7 @@ for (const e of eras) {
     for (const [target, el, d, azs, what] of rows) for (const az of azs) {
       await page.evaluate(o => window.VIEW(o), { eras: [e.id], look, today: false, target, az, el, d });
       const f = path.join(dir, `${look}_${what}_el${el}_az${Math.round(az)}.jpg`);
-      await page.screenshot({ path: f, type: 'jpeg', quality: 90 }); files.push(f);
+      await shot(page, { path: f, type: 'jpeg', quality: 90 }, true); files.push(f);
     }
     // the sheet: 8 tiles a row (the whole city's four take two places each)
     const sheet = path.join(root, `${e.id}_${look}.jpg`), n = files.length, nw = 4, nr = (n - nw) / 8;

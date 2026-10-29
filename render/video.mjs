@@ -5,7 +5,7 @@
 // desktop stays usable. One render per --out: <out>.lock holds the pid (a lock whose pid is gone, or untouched for 12 h, is taken
 // over); the segments sit in a hidden folder beside --out, removed when the render ends, fails or is stopped.
 import fs from 'fs'; import os from 'os'; import path from 'path'; import { spawn, execFileSync } from 'child_process';
-import { openFilm, closeServer, takeSize } from './page.mjs';
+import { openFilm, closeServer, takeSize, shot } from './page.mjs';
 import { local, buildDir } from './local.mjs';
 
 const args = process.argv.slice(2), { w: W, h: H } = takeSize(args), opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
@@ -58,7 +58,7 @@ try { await Promise.all([...Array(WK)].map(async (_, w) => {
   ff.stdin.on('error', () => { dead ??= 'ffmpeg closed its input early'; });
   for (let f = a; f < b && !dead; f++) {
     await page.evaluate(t => window.render(t), f / FPS);
-    const buf = await page.screenshot({ type: 'jpeg', quality: 95 });
+    const buf = await shot(page, { type: 'jpeg', quality: 95 });
     if (dead) break;
     if (!ff.stdin.write(buf)) await Promise.race([new Promise(r => ff.stdin.once('drain', r)), closed]);
     if ((f - a) % 60 === 0) console.log(`w${w} ${f - a}/${b - a}  ${((Date.now() - t0) / 1000).toFixed(0)}s`);

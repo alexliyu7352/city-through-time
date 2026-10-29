@@ -3,6 +3,7 @@
 // exits non-zero at once; any other missing file (fetch, image, font) prints one warning, since the page has fallbacks.
 // The browser: this machine's `chrome` (local/config.json) when set, else Playwright's own headless shell. The GPU is used
 // when there is one; macOS asks for Metal (newer headless shells fall back to software GL with --use-angle=gl, ~6x slower).
+import fs from 'fs';
 import { chromium } from 'playwright-core';
 import { serve, pageURL } from './serve.mjs';
 import { localPath } from './local.mjs';
@@ -19,6 +20,22 @@ export function takeSize(args) {
   const v = args.splice(i, 2)[1] || '', m = /^(\d+)x(\d+)$/.exec(v), w = m && +m[1], h = m && +m[2];
   if (!m || [w, h].some(n => n < 16 || n > 8192 || n % 2) || w * 1080 !== h * 1920) { console.error(`bad --size "${v}": use WxH, 16:9, even numbers from 16 to 8192, e.g. 960x540 or 3840x2160`); process.exit(2); }
   return { w, h };
+}
+
+// a screenshot of the frame the page has just drawn (window.render, window.VIEW), the one way every tool takes its pictures.
+// The page's two canvases (the scene, the overlay) reach the screen on the browser's own schedule: a study's still once came
+// out with its overlay half there (no texts, the scrim in squares). So first two animation frames, the frame with the new
+// drawing on screen (they cost no time: the page draws only when asked). sure (stills, sheets): take it again until two in a
+// row are the same, the page being still; a film's frames are too many for a second look, and a slip there lasts one frame.
+export async function shot(page, opts = {}, sure = false) {
+  const take = async () => { await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))); return page.screenshot({ ...opts, path: undefined }); };
+  let buf = await take();
+  for (let i = 0; sure; i++) {
+    const again = await take(); if (again.equals(buf)) break;
+    buf = again; if (i === 3) { console.error(`[note] the picture kept changing over five screenshots: kept the last${opts.path ? ' (' + opts.path + ')' : ''}`); break; }
+  }
+  if (opts.path) fs.writeFileSync(opts.path, buf);
+  return buf;
 }
 
 let warnedGL = false;
