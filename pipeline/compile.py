@@ -298,15 +298,18 @@ def hide_layer(prims, cs, bnd=()):
     U_ = lambda X, Z: ((X / PWm + .5) * HW, (Z / PDm + .5) * HH)
     code = lambda r: max(10, int(round((.04 + .96 * r) * 255)))
     im = Image.new('L', (HW, HH), 0); dr = ImageDraw.Draw(im)
-    for p in sorted(prims, key=lambda q: -q[10]):   # the earliest rank wins where footprints overlap: drawn last
-        dr.polygon([U_(x, z) for x, z in citygen.footprint(p, pad)], fill=code(p[10]))
+    from shapely.geometry import Polygon as _P
+    era_ = cs.get('_id', ''); shapes = [(p[10], citygen.footprint(p, pad)) for p in prims]
+    drapes = [(prims[basin_piece(era_, b)][10], _P([F.model(*q) for q in b['ring']])) for b in BASINS.get(era_, []) if b['top_m'] is None]   # (a draped
+    shapes += [(r_, list(g_.buffer(pad, join_style=2).exterior.coords)) for r_, g_ in drapes]   # pool is the plate, its piece a 1 m mark: its outline)
+    for r_, pts_ in sorted(shapes, key=lambda q: -q[0]):   # the earliest rank wins where footprints overlap: drawn last
+        dr.polygon([U_(x, z) for x, z in pts_], fill=code(r_))
     FOOT[cs.get('_id', '')] = im.point(lambda v: 255 if v else 0)   # the era's own footprint (the finale's fallback)
     try:   # whole buildings of today that touch the era city step aside with the earliest era building they touch
-        from shapely.geometry import Polygon as _P
         from shapely.strtree import STRtree as _T
         ground = [p for p in prims if p[4] <= p[12] + 1e-9 and p[11] not in (4, 5, 7)]
-        if ground:
-            tree = _T([_P(citygen.footprint(p)) for p in ground]); rk = _np.array([p[10] for p in ground])
+        if ground or drapes:
+            tree = _T([_P(citygen.footprint(p)) for p in ground] + [g_ for _, g_ in drapes]); rk = _np.array([p[10] for p in ground] + [r_ for r_, _ in drapes])
             for b in _MODEL['p']:
                 ring = b[2][0]
                 if len(ring) < 3: continue
@@ -702,6 +705,9 @@ def expand_areas(node):
 PRIMS, IMPACT, FOLLOW, FOLLOW_KEYS = {}, {}, [], []
 LOST = {}   # era id -> per primitive: 0 (stays) or the number of the loss that takes it (lost_parts)
 BASINS = {}   # era id -> its dug pools (citygen: rim, water top, building group)
+def basin_piece(era_id, b):
+    """the index of a pool's water among its era's pieces (a dug pool's water, a draped pool's 1 m mark that times it)"""
+    return next(i for i, (m_, p_) in enumerate(zip(CITY_META[era_id], PRIMS[era_id])) if m_[0] == b['gid'] and p_[11] == citygen.WATER)
 SITES = {}   # era id -> {landmark index: its site (metres)} for the landmarks a loss clears the ground for (citygen)
 SITE_ON = {}   # era id -> {landmark index: the building groups on its site} (lost_parts; they must be gone before it rises)
 CITY_META = {}
@@ -1645,6 +1651,7 @@ for e in eras_out:   # a part of a city lost while the rest stands (lose:): a ri
         o_ = F.model_lonlat(*ls['from']) if 'from' in ls else tuple(e['fallC'])
         mine = [i for i, k in enumerate(L_) if k == j]
         dd = [math.hypot(prims_[i][15] - o_[0], prims_[i][16] - o_[1]) for i in mine]; pad_ = 20 * F.scale
+        dd += [math.hypot(x - o_[0], z - o_[1]) for b in BASINS.get(e['id'], []) if L_[basin_piece(e['id'], b)] == j for x, z in (F.model(*q) for q in b['ring'])]   # (a pool: its outline, not its centre)
         late = max(e['on'] + prims_[i][10] * e['span'] + e['grow'] for i in mine)
         if late > t_ - .3: raise SystemExit(f"compile: era {e['id']}: lose {ls['id']} at {t_:.1f} s takes buildings still rising until {late:.1f} s; a part is lost after it stands")
         if e.get('off') is not None and t_ >= e['off']: raise SystemExit(f"compile: era {e['id']}: lose {ls['id']} at {t_:.1f} s comes after the city is taken back ({e['off']:.1f} s)")
@@ -1695,12 +1702,13 @@ for e in eras_out:
     if not BASINS.get(e['id']): continue
     meta_, prims_, L_ = CITY_META[e['id']], PRIMS[e['id']], LOST.get(e['id']); out_ = []
     for b in BASINS[e['id']]:
-        i_ = next(i for i, (m_, p_) in enumerate(zip(meta_, prims_)) if m_[0] == b['gid'] and p_[11] == citygen.WATER)   # (its water)
+        i_ = basin_piece(e['id'], b)
         if nb_ >= BASIN_MAX: raise SystemExit(f"compile: era {e['id']}: more than {BASIN_MAX} pools in a film (each is a basin the plate is lowered in)")
         if bmap_ is None: bmap_ = Image.new('RGBA', (MW, MH), (0, 0, 0, 0)); bdr_ = ImageDraw.Draw(bmap_)
         v_ = 0 if b['top_m'] is None else max(1, min(65535, round((b['top_m'] - BAS_LO) / (BAS_HI - BAS_LO) * 65535)))   # (0: draped, the plate is its water)
         bdr_.polygon([((mx_ / F.size[0] + .5) * MW, (mz_ / F.size[1] + .5) * MH) for mx_, mz_ in (F.model(*q) for q in b['ring'])], fill=(255, v_ >> 8, v_ & 255, nb_ + 1))
-        out_.append({'k': nb_, 'rank': prims_[i_][10], 'c': [round(prims_[i_][15], 5), round(prims_[i_][16], 5)], 'lost': L_[i_] if L_ else 0}); nb_ += 1
+        out_.append({'k': nb_, 'rank': prims_[i_][10], 'c': [round(prims_[i_][15], 5), round(prims_[i_][16], 5)], 'lost': L_[i_] if L_ else 0,
+                     **({'draped': True} if b['top_m'] is None else {})}); nb_ += 1   # (draped: the engine takes its water as a loss's ring passes, point by point)
     e['basins'] = out_
 BASIN_MAP = {'file': 'data/basins.png', 'lo': BAS_LO, 'hi': BAS_HI, 'k': round(F.scale * _tex, 9)} if bmap_ is not None else None
 if bmap_ is not None: bmap_.save(LAYOUT.data(D, 'basins.png'))

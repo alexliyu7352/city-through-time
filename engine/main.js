@@ -372,8 +372,11 @@ function setLayers(t) {
     E.mesh.visible = tE > -.01 && !gone;
     E.u.uEraT.value = tE; E.u.uEraSpan.value = e.span; E.u.uEraGrow.value = e.grow;
     E.u.uEraFallR.value = fr; E.u.uEraFallIn.value = fin ? 1 : 0; E.u.uEraFallW.value = fr1; E.u.uEraO.value.set(fo[0], fo[1]);
-    for (const b of e.basins || []) { const st = e.on + b.rank * e.span;
-      U.uBasinA.value[b.k] = ss(seg(t, st, st + e.grow)) * (1 - ringK(b.c, FR, t, SD)) * (1 - (b.lost ? ringK(b.c, e.losses[b.lost - 1], t, SD) : 0)); }
+    for (const b of e.basins || []) { const st = e.on + b.rank * e.span, q = b.lost ? e.losses[b.lost - 1] : null;
+      U.uBasinA.value[b.k] = ss(seg(t, st, st + e.grow)) * (1 - ringK(b.c, FR, t, SD)) * (1 - (q && !b.draped ? ringK(b.c, q, t, SD) : 0));
+      if (b.draped && q) {   // a draped pool is the plate: its water goes point by point as its loss's ring passes (studio wmask)
+        const R = curveAt(q.curve, t), R1 = curveAt(q.curve, t - SD);
+        U.uBasinL.value[b.k].set(q.o[0], q.o[1], R, q.mode === 'in' ? Math.max(R1, R + 1e-5) : Math.min(R1, R - 1e-5)); } }   // (which side of R tells the ring's way)
     (e.losses || []).forEach((q, j) => {   // a part of the city lost while the rest stands (compile lose:): its own ring, its own fire
       E.u.uLossR.value[j] = curveAt(q.curve, t); E.u.uLossW.value[j] = curveAt(q.curve, t - SD); E.u.uLossIn.value[j] = q.mode === 'in' ? 1 : 0;
       E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0; });
