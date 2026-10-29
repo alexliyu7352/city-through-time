@@ -1377,7 +1377,7 @@ def extent(spec, F, osm_rings=None):
     parts += [LineString([F.to_utm.transform(*q) for q in st['pts']]).buffer(st.get('w_m', 14) / 2) for st in spec.get('streets', [])]
     return unary_union(parts) if parts else Polygon()
 
-def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None):
+def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None, sites=None):
     """spec (dict from city.yaml, lon/lat) -> primitive list. Spec keys:
     origin [lon, lat]; theta_deg (grid rotation, CCW from east); detail (low | medium | high); exaggeration (building heights,
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
@@ -1385,7 +1385,9 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     walls: [{ring|osm, h_m, t_m, gates: [[lon,lat],...], towers, style: tower|hip|none, moat}];
     streets: [{pts, w_m, shops}]; lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
     (typ: a built-in house or one of `types`, complete: house_types);
-    landmarks: [{kind, lon, lat, ...}] (the generator's own kinds, or the classes of pipeline/landmarks.py); trees: [{pts, step_m, h_m, r_m, both, offset_m}]"""
+    landmarks: [{kind, lon, lat, ...}] (the generator's own kinds, or the classes of pipeline/landmarks.py); trees: [{pts, step_m, h_m, r_m, both, offset_m}].
+    A landmark a loss clears the ground for (`lose: [{for: [<id>]}]`) is built later over the houses: the fabric is laid over its site,
+    and `sites` (when given) gets {landmark index: its site} (metres; what the fabric would have kept clear) for compile's loss"""
     import landmarks as LMK_
     LMK_.checked(spec)   # (the landmarks of any region: their classes checked and completed; compile has checked them once already)
     ox, oy = F.to_utm.transform(*spec['origin'])
@@ -1404,9 +1406,10 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         wall_polys.append(Polygon(ring))
     inside = unary_union([p.buffer(-14) for p in wall_polys]) if wall_polys else None
     # landmarks first (their footprints are kept clear of fabric)
-    lm_foot = []
+    lm_foot, lm_at = [], []   # (lm_at: where each landmark's footprints start in lm_foot)
     HEX0 = B.hex
     for li, L in enumerate(spec.get('landmarks', [])):
+        lm_at.append(len(lm_foot))
         B.group(('landmarks', li))   # one landmark rises as one piece (kilns, huts, boats: one piece each, below)
         if 'lon' in L: x, y = F.to_utm.transform(L['lon'], L['lat'])
         elif 'from' in L: x, y = F.to_utm.transform(*L['from'])
@@ -1528,6 +1531,14 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
             if k in ('armoury', 'market', 'court'): hw += 2; hd += 2
             lm_foot.append(Polygon([P(-hw, -hd), P(hw, -hd), P(hw, hd), P(-hw, hd)]).buffer(6))
     B.hex = HEX0
+    lm_at.append(len(lm_foot))
+    # a landmark built later where houses stood (a loss's `for`): the houses are laid over its site and stay until that loss takes
+    # them; streets, lanes and shop rows still keep off it (a lane is one piece across the city: no loss could take just its stretch)
+    later_ = {n for ls in spec.get('lose') or [] for n in ls.get('for') or []}
+    own_ = [li for li, L in enumerate(spec.get('landmarks', [])) if later_ & {L.get('id'), L.get('group')} - {None}]
+    if sites is not None: sites.update({li: unary_union(lm_foot[lm_at[li]:lm_at[li + 1]]) for li in own_})
+    drop_ = {k for li in own_ for k in range(lm_at[li], lm_at[li + 1])}
+    fab_foot = [f for k, f in enumerate(lm_foot) if k not in drop_]
     if len(B.basins) > 1:   # one body of water, one level: pools that touch (an L-shaped lake drawn as two) take the lowest top among them
         dug_ = [b for b in B.basins if b['top_m'] is not None]; polys_ = [Polygon(b['ring']).buffer(2) for b in dug_]; grp_ = list(range(len(dug_)))
         root_ = lambda i: i if grp_[i] == i else root_(grp_[i])
@@ -1576,7 +1587,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
             if st.get('shops'):
                 for side in (1, -1): shop_feet.extend(B.shophouses(a, b, depth=st.get('shop_depth', 14), frontage=st.get('frontage', 7), h=st.get('shop_h', 7.5), side=side, gap=.08, street_w=st.get('w_m', 14), avoid=shop_avoid))
     streets = unary_union(street_geoms) if street_geoms else Polygon()
-    avoid = unary_union(lm_foot + shop_feet + [streets] + ([extra_avoid] if extra_avoid is not None else [])) if (lm_foot or shop_feet or not streets.is_empty or extra_avoid is not None) else None
+    avoid = unary_union(fab_foot + shop_feet + [streets] + ([extra_avoid] if extra_avoid is not None else [])) if (fab_foot or shop_feet or not streets.is_empty or extra_avoid is not None) else None
     wall_strips = unary_union([Polygon(to_utm_ring(F, w['ring'])).exterior.buffer(w.get('t_m', 10) * 1.2 + 10) for w in spec.get('walls', []) if 'ring' in w]) if spec.get('walls') else None
     for fi, fb in enumerate(spec.get('fabric', [])):
         B.group(('fabric', fi))

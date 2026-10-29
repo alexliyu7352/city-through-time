@@ -140,7 +140,10 @@ node while the city still stands (`until`). `style: sink` (the default) or `burn
 the default: a city shrinking to its core) or `out` (from `from` outward: a fire spreading); `dur` seconds. Each building goes whole as the ring passes it; the rest does
 not move. compile refuses a part lost before it has risen, after the city is taken back, in two losses, or a loss that takes nothing; at most four per city. A city laid later
 over the old one (`avoid_eras`) may build where a part was lost by its node (fields where houses were: a `trees` region there); clipcheck counts a lost part and what rises
-where it stood as never standing together. The city's outline and the ground where today's buildings stepped aside stay as they were (a shrunken city's walls usually stand).
+where it stood as never standing together. **A landmark built later where houses stood** (a forum cut through a quarter, a palace raised on a burnt one) is named in the
+loss that clears its ground (`for: [<id>]`): citygen lays the houses over its site instead of leaving it empty from the city's start, the loss takes every building on
+the site (the ground citygen would have kept clear; with a `region`, that too), and compile stops when the landmark's stage starts before they are gone. Without `for`
+a landmark's site is empty from the start, which is right only for what stood there before the houses. The city's outline and the ground where today's buildings stepped aside stay as they were (a shrunken city's walls usually stand).
 **How many period cities:** as many as the history has. At most eight stand or are drawn (a ghost outline) at the same moment, each lighting one channel (where today's buildings
 step aside, its front and its edge); cities apart in time share a channel, and compile says which (`era channels`) or stops at a ninth at once.
 

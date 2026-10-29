@@ -372,14 +372,17 @@ def select_parts(sel, cs, node_id, what):
 def match(sel, tag):
     v = sel.get(tag[0]); return v is True or (isinstance(v, list) and tag[1] in v)
 
-LOSE_KEYS = {'id', 'at', 'select', 'region', 'keep', 'style', 'ring', 'from', 'dur', 'burn'}
+LOSE_KEYS = {'id', 'at', 'select', 'region', 'keep', 'style', 'ring', 'from', 'dur', 'burn', 'for'}
 LOSE_MAX = 4   # (engine/studio.js LMAX: the losses one city can have)
 
 def lost_parts(prims, meta, cs, node_id):
     """which part of the city each `lose:` takes (docs/MODEL.md "A part of a city lost"): per primitive 0 (stays) or the
     loss's number (1..). A loss takes the parts its `select` names (all when absent), whose building centre is inside its
     `region` (when given) and outside its `keep` (when given); a building is taken whole. A part in two losses, a loss that
-    takes nothing, or more losses than the engine draws stops compile."""
+    takes nothing, or more losses than the engine draws stops compile.
+    `for`: the landmarks (id or group) built later where houses stood. citygen laid the houses over their sites; the loss takes
+    every building on a site that no other loss takes (whatever its select and region; its keep still holds), never the landmark
+    itself; without a region it takes only that. The landmark must rise after its site has gone (checked with the loss times)."""
     L = cs.get('lose') or []
     if not L: return None
     if len(L) > LOSE_MAX: raise SystemExit(f'compile: era {node_id}: {len(L)} losses; a city has at most {LOSE_MAX} (one ring each)')
@@ -389,22 +392,42 @@ def lost_parts(prims, meta, cs, node_id):
         return _sh.union_all([_sh.Polygon([F.model_lonlat(*q) for q in (osm_rings(r[4:])[0] if isinstance(r, str) and r.startswith('osm:') else r)]) for r in rings])
     G = {}
     for p, (gid, tag, _) in zip(prims, meta): G.setdefault(gid, (tag, _sh.Point(p[15], p[16])))
-    of = {}
+    of, kept_ = {}, {}
     for j, ls in enumerate(L, 1):
         bad = set(ls) - LOSE_KEYS
         if bad or 'id' not in ls or 'at' not in ls:
             raise SystemExit(f'compile: era {node_id}: lose[{j - 1}]: ' + (f'no key {", ".join(sorted(bad))}' if bad else 'write id and at') + f' (keys: {", ".join(sorted(LOSE_KEYS))})')
         if ls.get('style', 'sink') not in ('sink', 'burn') or ls.get('ring', 'in') not in ('in', 'out'):
             raise SystemExit(f'compile: era {node_id}: lose {ls["id"]}: style is sink or burn, ring is in or out')
+    fo = {j: select_parts({'landmarks': ls['for']}, cs, node_id, 'lose for')['landmarks'] if ls.get('for') else [] for j, ls in enumerate(L, 1)}
+    later_ = {li for v in fo.values() for li in v}   # (never taken by a loss: they rise after one)
+    for j, ls in enumerate(L, 1):
         sel = select_parts(ls['select'], cs, node_id, 'lose') if ls.get('select') else None
-        inside = area(ls['region']) if ls.get('region') else None; kept = area(ls['keep']) if ls.get('keep') else None
-        n = 0
+        inside = area(ls['region']) if ls.get('region') else None; kept_[j] = kept = area(ls['keep']) if ls.get('keep') else None
+        if fo[j] and inside is None: continue   # (only the sites: below)
         for gid, (tag, c) in G.items():
             if tag[0] == 'trees' and not sel: continue   # (trees go only when named: a garden outlives the houses round it)
             if (sel and not match(sel, tag)) or (inside is not None and not inside.contains(c)) or (kept is not None and kept.contains(c)): continue
+            if tag[0] == 'landmarks' and tag[1] in later_: continue
             if gid in of: raise SystemExit(f'compile: era {node_id}: a building is in two losses ({L[of[gid] - 1]["id"]}, {ls["id"]}); a part is lost once')
-            of[gid] = j; n += 1
-        if not n: raise SystemExit(f'compile: era {node_id}: lose {ls["id"]} takes nothing (its select, region and keep leave no building)')
+            of[gid] = j
+    if later_:   # the sites of what is built later where houses stood: every building on one goes, by its own loss or by this one
+        import numpy as _np
+        Sm = lambda g: _sh.transform(g, lambda q: _np.column_stack([(q[:, 0] - F.cx) * F.scale, -(q[:, 1] - F.cy) * F.scale]))
+        parts_ = {}
+        for p, (gid, tag, _) in zip(prims, meta): parts_.setdefault(gid, []).append(p)
+        SITE_ON[node_id] = on_ = {}
+        for j, lis in fo.items():
+            for li in lis:
+                if li not in SITES[node_id]: raise SystemExit(f'compile: era {node_id}: lose {L[j - 1]["id"]}: for {cs["landmarks"][li].get("id")}: citygen gave no site for it')
+                site = Sm(SITES[node_id][li]); on_[li] = []
+                for gid, (tag, c) in G.items():   # (on it: any piece of the building over the site; a lane is one piece across the city: never)
+                    if tag[0] in ('streets', 'lanes', 'walls') or (tag[0] == 'landmarks' and tag[1] in later_): continue
+                    if c.distance(site) > 200 * F.scale or not any(_sh.Polygon(citygen.footprint(p)).intersects(site) for p in parts_[gid]): continue
+                    on_[li].append(gid)
+                    if gid not in of and not (kept_[j] is not None and kept_[j].contains(c)): of[gid] = j
+    for j, ls in enumerate(L, 1):
+        if j not in of.values(): raise SystemExit(f'compile: era {node_id}: lose {ls["id"]} takes nothing (its select, region, keep' + (' and its sites: another loss takes what stood there' if fo[j] else ' leave no building') + ')')
     return [of.get(m[0], 0) for m in meta]
 
 def stage_parts(prims, meta, cs, node_id):
@@ -679,6 +702,8 @@ def expand_areas(node):
 PRIMS, IMPACT, FOLLOW, FOLLOW_KEYS = {}, {}, [], []
 LOST = {}   # era id -> per primitive: 0 (stays) or the number of the loss that takes it (lost_parts)
 BASINS = {}   # era id -> its dug pools (citygen: rim, water top, building group)
+SITES = {}   # era id -> {landmark index: its site (metres)} for the landmarks a loss clears the ground for (citygen)
+SITE_ON = {}   # era id -> {landmark index: the building groups on its site} (lost_parts; they must be gone before it rises)
 CITY_META = {}
 
 def gen_city(node):
@@ -695,8 +720,8 @@ def gen_city(node):
                 if p[11] == 4 or gone_[i_]: continue   # (a part lost by this node leaves its ground free)
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
-    meta_, bas_ = [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_)
-    BASINS[node['id']] = bas_
+    meta_, bas_, sites_ = [], [], {}; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_)
+    BASINS[node['id']] = bas_; SITES[node['id']] = sites_
     CITY_META[node['id']] = meta_
     LOST[node['id']] = lost_parts(PRIMS[node['id']], meta_, cs, node['id'])
 
@@ -1606,6 +1631,13 @@ for e in eras_out:   # a part of a city lost while the rest stands (lose:): a ri
         print(f"  lose {e['id']}.{ls['id']}: {len(set(m_[0] for k, m_ in zip(L_, CITY_META[e['id']]) if k == j))} buildings, {ls.get('style', 'sink')} "
               f"{curve[0][0]:.1f}-{out_[-1]['gone']:.1f} s, ring {ls.get('ring', 'in')}")
     e['losses'] = out_
+    for li, gids in (SITE_ON.get(e['id']) or {}).items():   # a landmark built where houses stood (a loss's for) rises once they are gone
+        gs_, M_ = set(gids), CITY_META[e['id']]
+        rise_ = min(e['on'] + p[10] * e['span'] for p, m in zip(prims_, M_) if m[1][0] == 'landmarks' and m[1][1] == li)
+        gone_ = max((out_[L_[i] - 1]['gone'] for i, m in enumerate(M_) if m[0] in gs_ and L_[i]), default=None)
+        if gone_ is not None and rise_ < gone_ - .05:
+            raise SystemExit(f"compile: era {e['id']}: {cs_['landmarks'][li].get('id')} starts to rise at {rise_:.1f} s, but the buildings on its site "
+                             f"are gone only at {gone_:.1f} s: its stage later, or the loss that takes them earlier")
 for e in eras_out: e.pop('_dist', None); e.pop('_bc', None)
 def occupancy(e):
     """when an era's channel is in use: from its first light (its fronts, its rise) to its last (taken back, or the film's end),
