@@ -243,7 +243,8 @@ _MODEL = json.load(open(LAYOUT.data(D, 'model.json')))
 FOOT = {}
 HW = 4096; HH = round(HW * F.size[1] / F.size[0])   # hide masks: ~7.6 m per pixel at Xianyang's plate
 def era_boundary(prims, cs):
-    """the period city's outline on the plate: the union of its ground-level bodies (no trees, water or paving), closed over
+    """the period city's outline on the plate: the union of its ground-level bodies (no trees, water or paving) and its
+    gardens (trees over a region), closed over
     gaps up to `boundary_close_m` and opened again by 70 % of it (so it sits ~30 % of that outside the outermost building),
     small islands dropped, simplified. Rings in model units [[x, z], ...]: the glowing frame, the ground fill and the hide mask."""
     import shapely as _sh
@@ -257,6 +258,9 @@ def era_boundary(prims, cs):
     g = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in feet], R, join_style='mitre')).buffer(-R * .7, join_style='mitre')
     if cs.get('outline'):   # an outline the buildings do not give (a village's ditch): joined into the city's outline
         g = g.union(_sh.union_all([_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in r]) for r in cs['outline']]))
+    gardens = [t['region'] for t in cs.get('trees', []) if 'region' in t]   # (a garden is the city's ground, a row along a road is not)
+    if gardens:
+        g = g.union(_sh.union_all([_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in (osm_rings(r[4:])[0] if isinstance(r, str) and r.startswith('osm:') else r)]) for r in gardens]))
     polys = [q for q in getattr(g, 'geoms', [g]) if q.area >= (cs.get('boundary_min_m', 140) * S) ** 2]
     return [[[round(x, 5), round(z, 5)] for x, z in q.simplify(8 * S).exterior.coords] for q in polys]
 

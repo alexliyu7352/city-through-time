@@ -4,7 +4,8 @@ usage: python -I tools/clipcheck.py cities/<slug> [--max 0]      exit 1 if any c
 Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
   houses_vs_walls     ordinary house bodies (part 0) overlapping the city wall, a landmark or the moat
   houses_vs_streets   house bodies standing on a main street or lane (paving, part 7)
-  trees_in_houses     a tree trunk inside a house, landmark or earthwork body (at any height: a hall on a podium too)
+  trees_in_houses     a tree trunk inside a house, landmark or earthwork body (at any height: a hall on a podium too), or
+                      standing below the top of the platform it is on (a court's on a hillside); a court or an arena is open
   landmarks_overlap   two different landmark bodies overlapping (beyond touching)
   walls_through       a wall (a thin long piece) right across a hall or a house (its whole width), in the same court too;
                       a wall running part way into the gate house it ends at is as built
@@ -35,7 +36,7 @@ import shapely
 from shapely.geometry import Polygon
 from shapely.strtree import STRtree
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'pipeline'))
-from citygen import footprint
+from citygen import footprint, solid_plan
 
 FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH, PLINTH = range(12)
 STREET_M, SHORT_M, STREET_W = 150.0, 20.0, 10.0   # how far a road's end looks for what it leads to; a gap under SHORT_M is near enough; roads this wide or wider (metres)
@@ -96,15 +97,18 @@ def main():
             R[label] = n; R[label + '_at'] = ex[:5]
         overlaps(houses, hard, 'houses_vs_walls')
         overlaps(houses, streets, 'houses_vs_streets')
-        # a trunk inside a body: its foot below the body's top, inside its footprint (a hall on a podium starts above grade, so
-        # every body counts, at any height; a tree on top of a terrace stands at its top and is not inside it)
-        bp = [p for p in prims if p[11] in (FAB, LMK, EARTH) and p[0] in SOLID]
-        bodies = [rect(p, .1 * S) for p in bp]
+        # a trunk inside a body: the ground it stands on below the body's top (along the body's slope), inside where the body
+        # stands (a hall on a podium starts above grade, so every body counts, at any height; a tree on top of a terrace stands
+        # at its top and is not inside it; a court or an arena is open: solid_plan). A platform counts too: a tree in a court on
+        # a hillside stands on it, and one standing on the slope inside it shows only its crown
+        bp = [p for p in prims if p[11] in (FAB, LMK, EARTH, PLINTH) and p[0] in SOLID]
+        bodies = [solid_plan(p, -.1 * S) for p in bp]
+        top = lambda q, x, z: q[4] + q[7] + q[13] * (x - q[1]) + q[14] * (z - q[2])
         if trunks and bodies:
             tree = STRtree(bodies); n = 0; ex = []
             for p in trunks:
                 pt = shapely.Point(p[1], p[2])
-                if any(bodies[j].contains(pt) and p[4] < bp[j][4] + bp[j][7] - .5 * S for j in tree.query(pt)): n += 1; ex.append([round(p[1], 4), round(p[2], 4)])
+                if any(bodies[j].contains(pt) and p[12] < top(bp[j], p[1], p[2]) - .5 * S for j in tree.query(pt)): n += 1; ex.append([round(p[1], 4), round(p[2], 4)])
             R['trees_in_houses'] = n; R['trees_in_houses_at'] = ex[:5]
         # bodies of different landmarks (each primitive carries the centre of the building it belongs to: parts of one big
         # court may touch inside it, two buildings may not)

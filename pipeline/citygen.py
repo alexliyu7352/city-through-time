@@ -61,6 +61,20 @@ def footprint(p, pad=0.0):
     return [(cx + x * c_ - z * s_, cz + x * s_ + z * c_) for x, z in pts]
 
 
+def solid_plan(p, pad=0.0):
+    """where a record's body stands, as a Polygon in model units with its open middle left open: a prism plan's holes (a
+    portico's court), a ring of revolution's inner oval (an arena). What may stand inside a body (a tree) asks this; the
+    readers of the plan as ground (the period city's outline, the hide mask) keep footprint, filled"""
+    P = Polygon(footprint(p, pad)); c_, s_ = math.cos(p[3]), math.sin(p[3])
+    put = lambda pts: [(p[1] + x * c_ - z * s_, p[2] + x * s_ + z * c_) for x, z in pts]
+    if p[0] == PRISM and not p[9] and len(p[17]) > 1:
+        return P.difference(unary_union([Polygon(put(r)).buffer(-pad, join_style='mitre') for r in p[17][1:]]))
+    if p[0] == REVOLVE and not 0 < p[9] < 1:
+        pr = p[17]['p'] if isinstance(p[17], dict) else p[17]; r0 = min(r for r, _ in pr)
+        if r0 > 0: return P.difference(Polygon(put([((p[5] / 2 * r0 - pad) * math.cos(i * math.tau / 24), (p[6] / 2 * r0 - pad) * math.sin(i * math.tau / 24)) for i in range(24)])))
+    return P
+
+
 class Builder:
     def __init__(self, F, ground_m, gex, hex_, origin_xy, seed=1, detail='medium'):
         """F: geo.Frame; ground_m(x, y) -> metres of relief (unexaggerated) at a UTM point; gex: ground exaggeration (the
@@ -445,8 +459,8 @@ class Builder:
             a = self.rng.random() * math.tau
             self._emit(BOX, x + math.cos(a) * r, y + math.sin(a) * r, a + math.pi / 2, .05, .9, .3, h * .32, part=DARK, g_m=g)
 
-    def tree(self, x, y, h=10.0, r=3.5, kind='willow'):
-        g = self.gsite(x, y, 0, 1, 1) if self.site is not None else self.ground_m(x, y)   # (in a lot made one plane: on it)
+    def tree(self, x, y, h=10.0, r=3.5, kind='willow', g=None):
+        if g is None: g = self.gsite(x, y, 0, 1, 1) if self.site is not None else self.ground_m(x, y)   # (in a lot made one plane: on it)
         self._emit(CYL, x, y, 0, 0, r * .12, 0, h * .35, part=TREE, g_m=g)
         k = .7 + self.rng.random() * .5
         self._emit(FRUSTUM, x, y, self.rng.random() * 3, h * .3 * k, r * 1.5 * k, r * 1.5 * k, h * .35 * k, r * 1.9 * k, r * 1.9 * k, part=TREE, g_m=g)
@@ -1545,21 +1559,23 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         else:
             B.fill(reg, th, tuple(fb.get('lot', [18, 26])), fb.get('typ', 'courtyard'), fb.get('h_m', 6), fb.get('empty', .06), avoid=avoid, scatter=fb.get('scatter', 0.0))
         B.det = det0
-    bodies = None   # what stands on the ground by now (model xz): a row of trees steps over a house, a hall or a terrace on its line
-    if spec.get('trees'):
-        S_ = F.scale; rects = []
-        for p in B.prims:
-            if p[0] in (BOX, FRUSTUM) and p[11] in (FAB, LMK, EARTH) and p[7] > 1.0 * S_ * B.hex:
-                c_, s_ = math.cos(p[3]), math.sin(p[3]); hw, hd = max(p[5], p[8] if p[0] == FRUSTUM else 0) / 2, max(p[6], p[9] if p[0] == FRUSTUM else 0) / 2
-                rects.append(Polygon([(p[1] + x * c_ - z * s_, p[2] + x * s_ + z * c_) for x, z in ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))]))
+    bodies = decks = None   # what stands on the ground by now (model xz): a row of trees steps over a house, a hall or a terrace on its line
+    if spec.get('trees'):   # (every kind of body, its court or arena left open: a garden inside a portico is planted)
+        S_ = F.scale
+        whole = lambda p: p[:15] + [p[1], p[2]] + p[15:]   # (a record as finish leaves it: the centre before a shape, where footprint reads it)
+        rects = [solid_plan(whole(p)) for p in B.prims if p[0] in (BOX, FRUSTUM, REVOLVE, PRISM) and p[11] in (FAB, LMK, EARTH) and p[7] > 1.0 * S_ * B.hex]
         bodies = (shapely.STRtree(rects), rects) if rects else None
-    def plant(tx_, ty_, tr):   # one tree, unless it would stand in a building
-        if bodies is not None:
-            pt = Point(*F.model(tx_, ty_))
-            if any(bodies[1][j].buffer(1.5 * F.scale).contains(pt) for j in bodies[0].query(pt.buffer(2 * F.scale))):
-                for _ in range(3): B.rng.random()   # the draws tree() would take: the rest of the city stays as it was
-                return
-        B.group(); B.tree(tx_, ty_, tr.get('h_m', 11), tr.get('r_m', 4), tr.get('kind', 'willow'))
+        dk = [p for p in B.prims if p[0] == BOX and p[11] == PLINTH]   # the platforms a lot or a court stands on (lot_site)
+        decks = (shapely.STRtree([Polygon(footprint(p)) for p in dk]), dk, [Polygon(footprint(p)) for p in dk]) if dk else None
+    def plant(tx_, ty_, tr):   # one tree, unless it would stand in a building; on a platform (a lot's or a court's 台基), on its top
+        pt = Point(*F.model(tx_, ty_)); g = None
+        if bodies is not None and any(bodies[1][j].buffer(1.5 * F.scale).contains(pt) for j in bodies[0].query(pt.buffer(2 * F.scale))):
+            for _ in range(3): B.rng.random()   # the draws tree() would take: the rest of the city stays as it was
+            return
+        if decks is not None:   # (a court on a hillside stands on its platform: its trees grew from the slope inside it)
+            on = [decks[1][j] for j in decks[0].query(pt) if decks[2][j].contains(pt)]
+            if on: g = max((q[12] + q[13] * (pt.x - q[1]) + q[14] * (pt.y - q[2])) / (S_ * B.gex) for q in on) + .05 * B.hex / B.gex
+        B.group(); B.tree(tx_, ty_, tr.get('h_m', 11), tr.get('r_m', 4), tr.get('kind', 'willow'), g=g)
     for ti, tr in enumerate(spec.get('trees', [])):
         B.group(('trees', ti))
         if ('pts' in tr) == ('region' in tr): raise SystemExit(f'citygen: trees[{ti}]: write pts (a row along a line) or region (a garden, park or grove filled with trees), one of the two')
