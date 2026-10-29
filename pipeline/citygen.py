@@ -1553,8 +1553,24 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                 c_, s_ = math.cos(p[3]), math.sin(p[3]); hw, hd = max(p[5], p[8] if p[0] == FRUSTUM else 0) / 2, max(p[6], p[9] if p[0] == FRUSTUM else 0) / 2
                 rects.append(Polygon([(p[1] + x * c_ - z * s_, p[2] + x * s_ + z * c_) for x, z in ((-hw, -hd), (hw, -hd), (hw, hd), (-hw, hd))]))
         bodies = (shapely.STRtree(rects), rects) if rects else None
+    def plant(tx_, ty_, tr):   # one tree, unless it would stand in a building
+        if bodies is not None:
+            pt = Point(*F.model(tx_, ty_))
+            if any(bodies[1][j].buffer(1.5 * F.scale).contains(pt) for j in bodies[0].query(pt.buffer(2 * F.scale))):
+                for _ in range(3): B.rng.random()   # the draws tree() would take: the rest of the city stays as it was
+                return
+        B.group(); B.tree(tx_, ty_, tr.get('h_m', 11), tr.get('r_m', 4), tr.get('kind', 'willow'))
     for ti, tr in enumerate(spec.get('trees', [])):
         B.group(('trees', ti))
+        if ('pts' in tr) == ('region' in tr): raise SystemExit(f'citygen: trees[{ti}]: write pts (a row along a line) or region (a garden, park or grove filled with trees), one of the two')
+        if 'region' in tr:   # trees over the whole area about step_m apart, a little off the grid, never on a street or in a building
+            rg = tr['region']; reg = Polygon(to_utm_ring(F, osm_rings(rg[4:])[0] if isinstance(rg, str) and rg.startswith('osm:') else rg))
+            sm_ = tr.get('step_m', 16); x0_, y0_, x1_, y1_ = reg.bounds; clear_ = streets.buffer(tr.get('r_m', 4)) if not streets.is_empty else None
+            for gx in np.arange(x0_ + sm_ / 2, x1_, sm_):
+                for gy in np.arange(y0_ + sm_ / 2, y1_, sm_):
+                    tx_, ty_ = gx + (B.rng.random() - .5) * sm_ * .6, gy + (B.rng.random() - .5) * sm_ * .6
+                    if reg.contains(Point(tx_, ty_)) and (clear_ is None or not clear_.contains(Point(tx_, ty_))): plant(tx_, ty_, tr)
+            continue
         pts = [F.to_utm.transform(*p) for p in tr['pts']]
         line = LineString(pts); n = tr.get('n', int(line.length // tr.get('step_m', 18)))
         for i in range(n):
@@ -1563,11 +1579,5 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                 if tr.get('both', True) or side == 1:
                     off = tr.get('offset_m', 9) * side
                     q = line.interpolate(min(line.length, line.project(p) + 1)); th = math.atan2(q.y - p.y, q.x - p.x)
-                    tx_, ty_ = p.x - math.sin(th) * off, p.y + math.cos(th) * off
-                    if bodies is not None:
-                        pt = Point(*F.model(tx_, ty_))
-                        if any(bodies[1][j].buffer(1.5 * F.scale).contains(pt) for j in bodies[0].query(pt.buffer(2 * F.scale))):
-                            for _ in range(3): B.rng.random()   # the draws tree() would take: the rest of the city stays as it was
-                            continue
-                    B.group(); B.tree(tx_, ty_, tr.get('h_m', 11), tr.get('r_m', 4), tr.get('kind', 'willow'))
+                    plant(p.x - math.sin(th) * off, p.y + math.cos(th) * off, tr)
     return B.finish(spec.get('rank_noise', .08), meta)
