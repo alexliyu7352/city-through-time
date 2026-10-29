@@ -63,6 +63,9 @@ Subagents and parallel work
   research, the story and the script, and for reviewing and judging pictures; one level below for laying out a city from approved sources and types and for running checks and fixing
   what they find; the lowest for mechanical edits (moving files, renaming, formatting). Never above the main agent's level: the levels above it mostly add time, and time is what the
   subagents are for.
+- **Models:** a subagent runs on the main agent's own model or on the one a tier below it (the same provider's next lighter model), never on a stronger one, and never two tiers
+  below. A stronger model, or a level above the main agent's, can spend the user's whole quota on one piece. When a piece seems to need a stronger model than the main
+  agent's, ask the user first, with the reason; do not start it.
 - **Review before merging.** The main agent checks each piece against its step's done line and the rules before it goes into the film; a piece sent back goes to the same subagent with the
   reason (it keeps its context), not to a new one. The user's approvals (★ in the table) are asked by the main agent.
 
