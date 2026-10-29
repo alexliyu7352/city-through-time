@@ -385,7 +385,8 @@ def lost_parts(prims, meta, cs, node_id):
     takes nothing, or more losses than the engine draws stops compile.
     `for`: the landmarks (id or group) built later where houses stood. citygen laid the houses over their sites; the loss takes
     every building on a site that no other loss takes (whatever its select and region; its keep still holds), never the landmark
-    itself; without a region it takes only that. The landmark must rise after its site has gone (checked with the loss times)."""
+    itself; without a region it takes only that. The landmark must rise after its site has gone (checked with the loss times).
+    A landmark built later goes only by a loss that names it in its select (a lake drained before the arena on its ground)."""
     L = cs.get('lose') or []
     if not L: return None
     if len(L) > LOSE_MAX: raise SystemExit(f'compile: era {node_id}: {len(L)} losses; a city has at most {LOSE_MAX} (one ring each)')
@@ -403,15 +404,18 @@ def lost_parts(prims, meta, cs, node_id):
         if ls.get('style', 'sink') not in ('sink', 'burn') or ls.get('ring', 'in') not in ('in', 'out'):
             raise SystemExit(f'compile: era {node_id}: lose {ls["id"]}: style is sink or burn, ring is in or out')
     fo = {j: select_parts({'landmarks': ls['for']}, cs, node_id, 'lose for')['landmarks'] if ls.get('for') else [] for j, ls in enumerate(L, 1)}
-    later_ = {li for v in fo.values() for li in v}   # (never taken by a loss: they rise after one)
+    later_ = {li for v in fo.values() for li in v}   # (they rise after a loss: taken only by one that names them)
     for j, ls in enumerate(L, 1):
         sel = select_parts(ls['select'], cs, node_id, 'lose') if ls.get('select') else None
+        named = set(sel['landmarks']) if sel and isinstance(sel.get('landmarks'), list) else set()
+        if named & set(fo[j]): raise SystemExit(f'compile: era {node_id}: lose {ls["id"]} both clears the ground for and takes '
+                                                f'{", ".join(cs["landmarks"][li].get("id", str(li)) for li in sorted(named & set(fo[j])))}: one or the other')
         inside = area(ls['region']) if ls.get('region') else None; kept_[j] = kept = area(ls['keep']) if ls.get('keep') else None
         if fo[j] and inside is None: continue   # (only the sites: below)
         for gid, (tag, c) in G.items():
             if tag[0] == 'trees' and not sel: continue   # (trees go only when named: a garden outlives the houses round it)
             if (sel and not match(sel, tag)) or (inside is not None and not inside.contains(c)) or (kept is not None and kept.contains(c)): continue
-            if tag[0] == 'landmarks' and tag[1] in later_: continue
+            if tag[0] == 'landmarks' and tag[1] in later_ and tag[1] not in named: continue
             if gid in of: raise SystemExit(f'compile: era {node_id}: a building is in two losses ({L[of[gid] - 1]["id"]}, {ls["id"]}); a part is lost once')
             of[gid] = j
     if later_:   # the sites of what is built later where houses stood: every building on one goes, by its own loss or by this one
@@ -420,15 +424,17 @@ def lost_parts(prims, meta, cs, node_id):
         parts_ = {}
         for p, (gid, tag, _) in zip(prims, meta): parts_.setdefault(gid, []).append(p)
         SITE_ON[node_id] = on_ = {}
+        drapes_ = {b['gid']: _sh.Polygon(b['ring']) for b in BASINS.get(node_id, []) if b['top_m'] is None}   # (a draped pool's piece is a 1 m mark: its outline, metres)
         for j, lis in fo.items():
             for li in lis:
                 if li not in SITES[node_id]: raise SystemExit(f'compile: era {node_id}: lose {L[j - 1]["id"]}: for {cs["landmarks"][li].get("id")}: citygen gave no site for it')
                 site = Sm(SITES[node_id][li]); on_[li] = []
                 for gid, (tag, c) in G.items():   # (on it: any piece of the building over the site; a lane is one piece across the city: never)
-                    if tag[0] in ('streets', 'lanes', 'walls') or (tag[0] == 'landmarks' and tag[1] in later_): continue
-                    if c.distance(site) > 200 * F.scale or not any(_sh.Polygon(citygen.footprint(p)).intersects(site) for p in parts_[gid]): continue
-                    on_[li].append(gid)
-                    if gid not in of and not (kept_[j] is not None and kept_[j].contains(c)): of[gid] = j
+                    if tag[0] in ('streets', 'lanes', 'walls') or (tag[0] == 'landmarks' and tag[1] == li): continue
+                    if not (drapes_[gid].intersects(SITES[node_id][li]) if gid in drapes_ else
+                            c.distance(site) <= 200 * F.scale and any(_sh.Polygon(citygen.footprint(p)).intersects(site) for p in parts_[gid])): continue
+                    on_[li].append(gid)   # (another landmark built later on this site: never cleared here; when a loss names it, li rises after it goes)
+                    if not (tag[0] == 'landmarks' and tag[1] in later_) and gid not in of and not (kept_[j] is not None and kept_[j].contains(c)): of[gid] = j
     for j, ls in enumerate(L, 1):
         if j not in of.values(): raise SystemExit(f'compile: era {node_id}: lose {ls["id"]} takes nothing (its select, region, keep' + (' and its sites: another loss takes what stood there' if fo[j] else ' leave no building') + ')')
     return [of.get(m[0], 0) for m in meta]
