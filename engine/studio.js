@@ -45,7 +45,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         float wd = 1. / max(-perspectiveDepthToViewZ(texture2D(tDepth, vUv - vec2(0., px.y)).x, near, far), 1e-6);
         float wu = 1. / max(-perspectiveDepthToViewZ(texture2D(tDepth, vUv + vec2(0., px.y)).x, near, far), 1e-6);
         float lap = abs(wl + wr + wd + wu - 4. * w0) / w0;
-        col *= 1. - edgeAmt * smoothstep(.0025, .012, lap);
+        col *= 1. - edgeAmt * smoothstep(.0025, .012, lap) * smoothstep(.02, .08, abs(texture2D(tColor, vUv).a - .5));   // (not on a draped pool: the ground's creases under its water are no edge)
       }
       gl_FragColor = vec4(col, c);`);
     m.needsUpdate = true;
@@ -182,13 +182,14 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   vec3 photoAt(vec2 uv){ vec3 p = texture2D(uPhoto, uv).rgb; p = pow(p, vec3(1.08)) * 1.18; float l = dot(p, vec3(.299, .587, .114)); p = mix(vec3(l), p, 1.12); return p * vec3(1.02, 1., .97) * uPhotoK; }
   bool onPlate(vec2 uv){ return all(greaterThanEqual(uv, vec2(0.))) && all(lessThanEqual(uv, vec2(1.))); }
   uniform sampler2D uBasin; uniform float uBasinA[${BMAX}];
+  float wDrapedK = 0.;   // this fragment's share of a draped pool (wmask sets it): no edge lines are drawn on it (post, the plate's alpha)
   float wmask(){ vec2 uv = plateUV(); if (!onPlate(uv)) return 0.; float w = texture2D(uWater, uv).r;
     // a draped pool (its water top 0 in the basin map): the plate is its water while it stands, its edge blended between the
     // map's four nearest texels (the map is read exactly, nearest, for the dug pools' water tops: their edge alone would step)
     vec2 ts = vec2(textureSize(uBasin, 0)), p = uv * ts - .5, f = fract(p), c0 = (floor(p) + .5) / ts; float d[4];
     for (int q = 0; q < 4; q++) { vec4 b = texture2D(uBasin, c0 + vec2(float(q % 2), float(q / 2)) / ts); d[q] = 0.;
       if (b.r > .5 && b.g + b.b < .5 / 255.) { int k = int(b.a * 255. + .5) - 1; for (int i = 0; i < ${BMAX}; i++) if (i == k) d[q] = uBasinA[i]; } }
-    return max(w, mix(mix(d[0], d[1], f.x), mix(d[2], d[3], f.x), f.y)); }
+    wDrapedK = mix(mix(d[0], d[1], f.x), mix(d[2], d[3], f.x), f.y); return max(w, wDrapedK); }
   float layerAt(vec2 uv, int i){ if (!onPlate(uv)) return 0.; vec4 m = i < 4 ? texture2D(uL1, uv) : i < 8 ? texture2D(uL2, uv) : texture2D(uL3, uv); int k = i - (i < 4 ? 0 : i < 8 ? 4 : 8); return k == 0 ? m.r : k == 1 ? m.g : k == 2 ? m.b : m.a; }
   // today's buildings inside an epoch's mask (an area the narration names) take its colour in their own material, as a period city
   // takes its node's: the projector light alone was washed out by the lit white walls (the ground showed the colour, the houses not)
@@ -436,7 +437,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
      float in_ = max(smoothstep(.0012, -.0012, dr_), smoothstep(uPF0, uPF1, length(vWP.xz - uPRC)) * uPF);
      outgoingLight = mix(outgoingLight, texture2D(uPI, pu_).rgb, uPA * in_); }
    float gw_ = max(1.5e-4, distance(cameraPosition, vWP) * .012); outgoingLight += vec3(1., .84, .6) * exp(-dr_ * dr_ / (gw_ * gw_)) * uPA * .9 * step(.0001, uPRR) * (1. - uPF); }` : ''}
-#include <opaque_fragment>`);
+#include <opaque_fragment>${kind === 1 ? '\n gl_FragColor.a = 1. - .5 * wDrapedK;   // (.5 on a draped pool: the edge pass leaves it out; the scene buffer\'s alpha is read for nothing else)' : ''}`);
     };
     m.customProgramCacheKey = () => 'proj' + kind;
     return m;
