@@ -402,7 +402,8 @@ def roof(D, P, th, z, w, d, R, along_y=True, part=C.LROOF):
 
 
 def extent(L):
-    """(half width, half depth) in its own frame, metres: what it covers (its site, the fabric kept clear)"""
+    """(half width, half depth) in its own frame, metres, round its anchor: the frame a sheet or a study gives it (the fabric
+    keeps clear of the box of what it covers instead, bounds)"""
     k = L['kind']
     if k == 'ring':
         o = L['outer_m']; hw, hd = o[0] / 2, o[1] / 2
@@ -441,6 +442,23 @@ def extent(L):
             hw = max(hw, abs(px) + a * c + b * s); hd = max(hd, abs(py) + a * s + b * c)
         return hw, hd
     raise ValueError(k)
+
+
+def bounds(L):
+    """(x0, y0, x1, y1) in its own frame, metres: what it covers, which need not be centred on its anchor (parts set off to
+    one side, a plan drawn off its origin). Its level site is laid there; a box round the anchor (extent) laid a platform
+    and kept the houses off the side where it built nothing"""
+    k = L['kind']
+    if k == 'parts':
+        xs, ys = [], []
+        for q, (px, py, pth) in placed(L):
+            u0, v0, u1, v1 = bounds(q); c, s = math.cos(pth), math.sin(pth)
+            for u, v in ((u0, v0), (u1, v0), (u1, v1), (u0, v1)): xs.append(px + u * c - v * s); ys.append(py + u * s + v * c)
+        return min(xs), min(ys), max(xs), max(ys)
+    if k == 'prism' and 'plan_m' in L:
+        xs, ys = [q[0] for q in L['plan_m']], [q[1] for q in L['plan_m']]
+        return min(xs), min(ys), max(xs), max(ys)
+    hw, hd = extent(L); return -hw, -hd, hw, hd
 
 
 def top(L, hx):
@@ -833,16 +851,17 @@ def build(B, L, x, y, th):
     """draw a checked landmark at UTM x, y turned th on one level plane (a platform on a slope); returns its footprint's
     half sizes (metres, its frame) for the fabric to keep clear"""
     hw, hd = extent(L); hx0 = B.hex; B.hex = exaggeration(L, hx0)
+    x0, y0, x1, y1 = bounds(L); w, d = x1 - x0, y1 - y0; sx, sy = B.frame(x, y, th)((x0 + x1) / 2, (y0 + y1) / 2)   # (its site: where it stands, not round its anchor)
     try:
         if L['kind'] == 'arches' and L['length_m'] > 120: _run(B, L, x, y, th, hd)
         else:
             # level: a monument is built level, on a platform where the ground falls away under it by more than 2 % of its width
             # (less: its own walls reach down, as the foundation every body has; a square plate under a round building on a gentle
             # slope read wrong)
-            s0, p0 = B.lot_slope, B.plinth; B.lot_slope = 0.0; B.plinth = max(B.plinth, .02 * 2 * min(hw, hd))
+            s0, p0 = B.lot_slope, B.plinth; B.lot_slope = 0.0; B.plinth = max(B.plinth, .02 * min(w, d))
             try:
-                with B.lot_site(x, y, th, 2 * hw, 2 * hd):
-                    g = B.gsite(x, y, th, 2 * hw, 2 * hd)
+                with B.lot_site(sx, sy, th, w, d):
+                    g = B.gsite(sx, sy, th, w, d)
                     draw(Draw(B, g), L, x, y, th)
             finally: B.lot_slope, B.plinth = s0, p0
     finally: B.hex = hx0; B.found = 0.0
