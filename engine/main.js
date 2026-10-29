@@ -99,8 +99,12 @@ const later = (e, n) => n && n.id !== e.id && n.tint > 0 && ringT0(n) >= e.on - 
 const eraTint = (e, n) => later(e, n) ? new THREE.Color(n.col).lerp(WHITE, .12) : S.eras[e.id].base;
 const eraInk = (e, n) => later(e, n) ? n.ink || 0 : (ownNode(e) || {}).ink || 0;
 const DIMK = FILM.dim && FILM.dim.length ? track(FILM.dim) : null;
-const eraUpAt = t => Math.max(0, ...(FILM.eras || []).map(e => { const FR = e.fallR; if (FR != null && t > FR.gone) return 0;
-  return ss(seg(t, e.on, e.on + e.span + e.grow)) * (FR ? 1 - ss(seg(t, FR.hit, FR.gone)) : 1); }));
+// how far a period city stands at t: as it rises, or with stages as its first stage rises (compile up), so a part built
+// later does not keep today's city bright and the city unlit until it is up; it goes with its contracting ring
+const upAt = (e, t) => { const FR = e.fallR; if (FR != null && t > FR.gone) return 0;
+  const [a, b] = e.up || [e.on, e.on + e.span + e.grow];
+  return ss(seg(t, a, b)) * (FR ? 1 - ss(seg(t, FR.hit, FR.gone)) : 1); };
+const eraUpAt = t => Math.max(0, ...(FILM.eras || []).map(e => upAt(e, t)));
 const dimAt = (t, up = eraUpAt(t)) => Math.max((LOOK.dim ?? .8) * up, DIMK ? DIMK(t)[0] : 0);
 const DIM0 = new Map(); const dimBefore = n => { if (!DIM0.has(n.id)) DIM0.set(n.id, dimAt(ringT0(n) - .01)); return DIM0.get(n.id); };
 // a node's colour ring: radius at time t (the plate's far corner from its origin is reached after wave_dur seconds)
@@ -368,7 +372,6 @@ function setLayers(t) {
     const fo = FR ? FR.o : [0, 0];
     const fr = FR ? curveAt(FR.curve, t) : (fin ? 1e3 : -1), fr1 = FR ? curveAt(FR.curve, t - SD) : fr;
     const gone = FR != null && t > FR.gone;
-    const fk = FR ? ss(seg(t, FR.hit, FR.gone)) : 0;
     E.mesh.visible = tE > -.01 && !gone;
     E.u.uEraT.value = tE; E.u.uEraSpan.value = e.span; E.u.uEraGrow.value = e.grow;
     E.u.uEraFallR.value = fr; E.u.uEraFallIn.value = fin ? 1 : 0; E.u.uEraFallW.value = fr1; E.u.uEraO.value.set(fo[0], fo[1]);
@@ -382,7 +385,7 @@ function setLayers(t) {
       E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0; });
     E.u.uEraA.value = Math.max(e.tint, later(e, nodes_[ci]) ? (nodes_[ci].era_tint ?? nodes_[ci].tint) : 0) * (1 - .5 * today);   // a later node recolours at its own strength
     const burn = e.sinkStyle === 'burn' && e.off != null ? ss(seg(t, e.off - e.burn, e.off - e.burn * .55)) : 0;   // the city catches fire, then falls
-    const up = gone ? 0 : ss(seg(t, e.on, e.on + full)) * (1 - fk);
+    const up = upAt(e, t);
     E.u.uEraBurn.value = burn; E.u.uEraGlow.value = up * (LOOK.glow ?? 1);
     eraUp = Math.max(eraUp, up);
     E.u.uEraCol.value.copy(eraTint(e, nodes_[ci])); E.u.uEraCol0.value.copy(ci > 0 ? eraTint(e, nodes_[ci - 1]) : E.base);

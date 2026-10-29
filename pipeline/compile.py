@@ -564,7 +564,10 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
         study_next = fronts[-1]['a'][1] + .5
     st_p = [start[gid] for gid, _, _ in meta]
     on = min(st_p); span = max(1e-3, max(st_p) - on)
-    return on, span, [(v - on) / span for v in st_p], fronts, grow
+    # when the city stands, for the engine (today's city steps back, the city glows): with stages, as its first stage rises,
+    # so a part built later in the node does not keep today's city bright and the city unlit until it is up
+    up = min([round(min(start[g] for g in gids), 3), round(max(start[g] for g in gids) + grow, 3)] for _, _, gids in order) if len(order) > 1 else None
+    return on, span, [(v - on) / span for v in st_p], fronts, grow, up
 
 def camv(k):
     """camera key: v = [tx, ty, tz, az, el, d] in model units, or ll = [lon, lat] (+ y, az, el, d) for a target on the map"""
@@ -1518,9 +1521,9 @@ def ring_fit(t, o):   # the largest ring round o the camera shows whole at t, ai
 TIMED = []
 for e in eras_out:   # each city: when every building rises (stages, settle) and the light of its change
     pd = e.pop('_pend'); cs, node, prims = pd['cs'], pd['node'], pd['prims']
-    on_, span_, ranks_, fronts_, grow_ = era_times(prims, pd['meta'], cs, pd['at_of'], CAMERA, node['_t0'], node['_t1'], IMPACT.get(node['id']), node['id'])
+    on_, span_, ranks_, fronts_, grow_, up_ = era_times(prims, pd['meta'], cs, pd['at_of'], CAMERA, node['_t0'], node['_t1'], IMPACT.get(node['id']), node['id'])
     TIMED.append((e, pd, ranks_))
-    e.update({'on': round(on_, 3), 'span': round(span_, 3), 'grow': grow_, 'rise': round(span_ + grow_, 3), 'fronts': fronts_})
+    e.update({'on': round(on_, 3), 'span': round(span_, 3), 'grow': grow_, 'rise': round(span_ + grow_, 3), 'fronts': fronts_, **({'up': up_} if up_ else {})})
     print(f'  city {node["id"]}: {len(prims)} primitives, rises {on_:.1f}-{on_ + span_ + grow_:.1f} s, ' + ', '.join(f'{f_["mode"]} {f_["curve"][0][0]:.1f}-{f_["curve"][1][0]:.1f}' for f_ in fronts_))
 
 def plan_stages():
