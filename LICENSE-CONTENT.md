@@ -1,6 +1,7 @@
 # Licence of the films and the city material
 
-The code of this project is under the MIT licence (`LICENSE`). The films and everything a city brings are under a different one:
+The code of this project is under the MIT licence with an attribution condition (`LICENSE`): whoever shows others a film or a preview made with
+the Software credits the project on it. The films and everything a city brings are under a different one:
 
 **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)**, https://creativecommons.org/licenses/by-sa/4.0/
 

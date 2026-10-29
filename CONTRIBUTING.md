@@ -123,4 +123,4 @@ In the PR description, write: the check results (the lines printed by `tools/bui
 
 ## Licence
 
-Code you submit is under MIT ([`LICENSE`](LICENSE)); city data and films are under CC BY-SA 4.0 ([`LICENSE-CONTENT.md`](LICENSE-CONTENT.md)).
+Code you submit is under MIT with an attribution condition ([`LICENSE`](LICENSE)); city data and films are under CC BY-SA 4.0 ([`LICENSE-CONTENT.md`](LICENSE-CONTENT.md)).

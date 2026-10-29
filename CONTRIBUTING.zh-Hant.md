@@ -124,4 +124,4 @@ PR 說明裡寫：檢查結果（`tools/build.mjs` 印出的那幾行）、用�
 
 ## 授權
 
-你交的程式碼採 MIT（[`LICENSE`](LICENSE)）；城市資料和影片採 CC BY-SA 4.0（[`LICENSE-CONTENT.md`](LICENSE-CONTENT.md)）。
+你交的程式碼採附署名條件的 MIT（[`LICENSE`](LICENSE)）；城市資料和影片採 CC BY-SA 4.0（[`LICENSE-CONTENT.md`](LICENSE-CONTENT.md)）。

@@ -1,4 +1,4 @@
-MIT License
+MIT License, with an attribution condition
 
 Copyright (c) 2026 Alex (github.com/alexliyu7352) and the city-through-time contributors
 
@@ -9,8 +9,32 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+
+2. Attribution in what you publish. If you make available to others a film,
+   video, animation or still image made with the Software (on a video
+   platform, a website, social media, in a broadcast or a screening), or a
+   page that plays or previews such a work (a web bundle, the Software's
+   player, or a page built from its engine), you must credit the project
+   where the audience sees it:
+
+   (a) in the work itself, a legible on-screen credit, shown at least for the
+       length of its end card (on a still image, on the image): the words
+       "一城春秋 · A City Through Time" and the address
+       github.com/alexliyu7352/city-through-time. The Software's end card
+       draws this credit; you may restyle or move it, but you may not remove
+       it, cover it, or make it unreadable;
+
+   (b) wherever the work is published (its description, caption or page), the
+       words "Made with 一城春秋 · A City Through Time" and a link to
+       https://github.com/alexliyu7352/city-through-time;
+
+   (c) on a page that plays or previews the work, a visible link with those
+       words to that address. The Software's player shows one.
+
+   Using the Software privately, without making such a work or page available
+   to others, carries no attribution duty.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -19,3 +43,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Versions of the Software published up to commit d0bd33d (2026-10-24) were
+released under the plain MIT License, without condition 2; copies of those
+versions remain under it.
+
+Parts of the Software are adapted from lemo-opuscar under the MIT License;
+they are listed, with that licence, in NOTICE. The films and the city
+material are under CC BY-SA 4.0 (LICENSE-CONTENT.md).

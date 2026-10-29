@@ -68,7 +68,8 @@ fonts/              open-source fonts (SIL OFL)
 
 ## Licence
 
-- Code: [MIT](LICENSE). Some code is adapted from [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) (MIT, the origin of the white-model projection style); the list is in [`NOTICE`](NOTICE).
+- Code: [MIT, with an attribution condition](LICENSE). Use, change and share it freely; once you show others a film, picture or online preview made with it, credit the project on the work: "一城春秋 · A City Through Time" and the repository's address on screen (the end card draws it by default; do not remove or cover it), "Made with 一城春秋 · A City Through Time" and a link to the repository wherever the work is published, and a visible link to the repository on a page that plays it (the built-in player has one). Private use carries no such duty. Versions published up to 2026-10-24 (`d0bd33d`) remain under the plain MIT licence. Some code is adapted from [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) (MIT, the origin of the white-model projection style); the list is in [`NOTICE`](NOTICE).
+- Bring your city back to this repository: cities submitted here appear on the entry page (see [`CONTRIBUTING`](CONTRIBUTING.md)).
 - Films and city data: [CC BY-SA 4.0](LICENSE-CONTENT.md). The films use CC BY-SA live-action footage, so under that licence the finished film must also be CC BY-SA.
 - Material by others follows its own licence, listed in each city's `CREDITS`: building and map data (CC BY 4.0, ODbL), live-action footage and photos from Wikimedia Commons, and fonts (OFL).
 - The globe on the entry page is drawn from [Natural Earth](https://www.naturalearthdata.com/) and NOAA ETOPO1 (both public domain).

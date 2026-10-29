@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import { clamp, lerp, seg, ss, eio, eo, ei, track } from './lib.js';
 import { makeStudio, NMAX, EMAX } from './studio.js';
-import { makeOverlay, W, H, SUB, font, setFonts, setUI } from './overlay.js';
+import { makeOverlay, W, H, SUB, font, setFonts, setUI, REPO } from './overlay.js';
 import * as L from './load.js';
 
 const QS = new URLSearchParams(location.search);
@@ -597,17 +597,19 @@ if (PLAY) {
   bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;height:56px;background:rgba(10,11,14,.92);color:#e8ecf2;font:14px/1.4 IBM Plex Mono,monospace;display:flex;align-items:center;gap:14px;padding:0 16px;z-index:9;user-select:none';
   bar.innerHTML = `<button id="pp" style="width:56px;height:30px;background:#1e222a;color:#fff;border:1px solid #444;border-radius:4px;cursor:pointer">▶</button>
     <span id="tm" style="min-width:150px"></span><input id="sc" type="range" min="0" max="${DUR}" step="0.02" value="0" style="flex:1">
-    <span id="yr" style="min-width:90px;text-align:right"></span><span id="fps" style="min-width:60px;text-align:right;opacity:.6"></span>`;
+    <span id="yr" style="min-width:90px;text-align:right"></span><span id="fps" style="min-width:60px;text-align:right;opacity:.6"></span>
+    <a href="${REPO}" target="_blank" rel="noopener" style="color:#c9d2de;text-decoration:none;white-space:nowrap">一城春秋 · A City Through Time</a>`;   // (LICENSE, condition 2c)
   document.body.appendChild(bar);
   // fit the 1920x1080 picture above the bar, whatever the window size
   const fit = () => { const k = Math.min(innerWidth / W, (innerHeight - 56) / H); for (const id of ['stage', 'ov']) { const el = document.getElementById(id); el.style.transformOrigin = 'top left'; el.style.transform = `scale(${k})`; } };
   fit(); window.addEventListener('resize', fit);
   const sc = bar.querySelector('#sc'), pp = bar.querySelector('#pp'), tm = bar.querySelector('#tm'), yr = bar.querySelector('#yr'), fpsEl = bar.querySelector('#fps');
   // markers under the scrubber: every cue and the light events
-  const marks = document.createElement('div'); marks.style.cssText = 'position:fixed;left:246px;right:176px;bottom:50px;height:6px;pointer-events:none;z-index:9';
+  const marks = document.createElement('div'); marks.style.cssText = 'position:fixed;bottom:50px;height:6px;pointer-events:none;z-index:9';
+  const under = () => { const r = sc.getBoundingClientRect(); marks.style.left = r.left + 'px'; marks.style.width = r.width + 'px'; };   // (the scrubber's own span, whatever else the bar holds)
   for (const c of FILM.cues || []) { const m = document.createElement('i'); m.style.cssText = `position:absolute;left:${c.t0 / DUR * 100}%;width:2px;height:6px;background:#ffd27a`; marks.appendChild(m); }
   for (const t of [LT.lightsOut, LT.lamp, LT.lights, FILM.end.t]) { const m = document.createElement('i'); m.style.cssText = `position:absolute;left:${t / DUR * 100}%;width:2px;height:6px;background:#6fdcff`; marks.appendChild(m); }
-  document.body.appendChild(marks);
+  document.body.appendChild(marks); under(); window.addEventListener('resize', under);
   let cur = QS.has('t') ? +QS.get('t') : 0, playing = false, t0 = 0, c0 = 0, frames = 0, ft = performance.now();
   const show = () => { sc.value = cur; tm.textContent = `${cur.toFixed(2)} s / ${DUR}`; yr.textContent = fmtYear(yearAt(cur)); };
   // the narration and the score (compile: film.voice, every voiced line laid at its time; film.score, the music laid by node and

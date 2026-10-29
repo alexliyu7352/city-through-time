@@ -4,6 +4,8 @@
 import { clamp, lerp, seg, ss, eo } from './lib.js';
 
 export const W = 1920, H = 1080;
+// the project's credit: the end card draws it on every film, the player links it (LICENSE, condition 2)
+export const CREDIT = '一城春秋 · A City Through Time  ·  github.com/alexliyu7352/city-through-time', REPO = 'https://github.com/alexliyu7352/city-through-time';
 // the film's type, one font per job (city.yaml film.fonts, resolved by compile into FILM.fonts.roles: 'weight {}px alias')
 let F = {};
 export function setFonts(roles) { F = roles; }
@@ -427,6 +429,8 @@ export function makeOverlay(canvas) {
     g.save(); g.globalAlpha = a; g.fillStyle = e.rule || '#ffa13d'; g.fillRect(X, y + 14, 120 * k, 2); g.restore(); y += 58;
     // the first `bright` lines (the credits, or the first source line) in the brighter mono, the rest quieter
     (e.lines || []).forEach((s, i) => { const hi = i < (e.bright || 1); txt('end_l' + i, s, X, y, hi ? 'mono' : 'zh_sans', hi ? 22 : 21, hi ? 'rgba(230,234,240,.85)' : 'rgba(225,230,236,.7)', a, { ls: hi ? 2 : 1 }); y += 36; });
+    // the project's credit, on every film whatever its city.yaml says (LICENSE, condition 2a: whoever publishes a film keeps it legible)
+    txt('end_credit', CREDIT, X, y + 22, 'mono', 20, 'rgba(225,230,236,.66)', a, { ls: 1 });
   }
 
   return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, noteDrop };

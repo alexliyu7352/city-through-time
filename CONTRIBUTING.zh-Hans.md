@@ -124,4 +124,4 @@ PR 说明里写：检查结果（`tools/build.mjs` 打印出的那几行）、�
 
 ## 许可
 
-你交的代码采用 MIT（[`LICENSE`](LICENSE)）；城市数据和视频采用 CC BY-SA 4.0（[`LICENSE-CONTENT.md`](LICENSE-CONTENT.md)）。
+你交的代码采用附署名条件的 MIT（[`LICENSE`](LICENSE)）；城市数据和视频采用 CC BY-SA 4.0（[`LICENSE-CONTENT.md`](LICENSE-CONTENT.md)）。

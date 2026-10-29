@@ -68,7 +68,8 @@ fonts/              開源字型（SIL OFL）
 
 ## 授權
 
-- 程式碼：[MIT](LICENSE)。部分程式改自 [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar)（MIT，白模投影風格的出處），清單在 [`NOTICE`](NOTICE)。
+- 程式碼：[MIT，附署名條件](LICENSE)。可以自由使用、修改、散布；只要把用它做的影片、圖片或線上預覽公開給別人看，就必須在作品上標明出處：片中顯示「一城春秋 · A City Through Time」和倉庫網址（片尾卡預設會畫，不可刪除或遮住），發布處的說明寫「Made with 一城春秋 · A City Through Time」並附倉庫連結，播放頁要有連到倉庫的可見連結（內建播放器已有）。只自己用、不公開，沒有這項義務。2026-10-24（`d0bd33d`）以前公開的版本仍是不附條件的 MIT。部分程式改自 [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar)（MIT，白模投影風格的出處），清單在 [`NOTICE`](NOTICE)。
+- 歡迎把你做的城市交回這個倉庫：交回的城市會出現在入口頁（見 [`CONTRIBUTING`](CONTRIBUTING.zh-Hant.md)）。
 - 影片與城市資料：[CC BY-SA 4.0](LICENSE-CONTENT.md)。因為片中用了 CC BY-SA 的實拍，依授權規定成片本身也必須是 CC BY-SA。
 - 他人的素材依各自授權，列在每座城的 `CREDITS`：建築與地圖資料（CC BY 4.0、ODbL）、Wikimedia Commons 的實拍與照片、字型（OFL）。
 - 入口頁的地球依 [Natural Earth](https://www.naturalearthdata.com/) 與 NOAA ETOPO1（皆為公有領域）繪製。
