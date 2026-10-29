@@ -10,6 +10,7 @@ Research is the script's stock room: the events, people, stories and the locals'
 - Making archaeological digs or tombs into stations; putting connections such as bridges, roads and subways too early → follow the priority order in §2.
 - Letting the story stop at today's statistics → tell it up to this year and end on the city's future (§4).
 - Lists pasted by subagents and the user contain many errors → go back to the original text item by item (§4, §7).
+- Leaving what each period's city was like to the modelling step: its size, people and houses turn up after the script is approved and contradict it, and the model is sent back round by round for basis it never had → a survey of each period's city here (§9).
 - Writing the music, clothes and objects of "that era" from impression → first find out what actually existed in that era (§8).
 
 ## 1. How to do it
@@ -157,3 +158,14 @@ For music, clothes, objects, architectural details and prompts for imagined pict
 and write it into `research/<topic>.md` with a source for each item. An "ancient style" written from impression is mostly an anachronism.
 Example (Xianyang, `cities/xianyang/research/music.md`): from impression one would use the xiao flute and guqin as the city's sound, French horn and low brass for the Qin section, and erhu for the burning of the city; research showed that Qin has Li Si's 「擊甕叩缶彈箏搏髀」 ("striking jars and pots, plucking the zheng, slapping the thigh"), the drums of the terracotta army pits,
 the Qin bells and bianzhong and stone chimes; brass and erhu are anachronisms, and no local basis for the xiao and guqin can be found in Guanzhong. In the end: drum as pulse, xun as memory, zheng as the voice of Qin.
+
+## 9. The period cities: a survey before the script
+
+Every station that shows a period city gets a survey in `research/period_cities.md`, one section per period, each item with its source (or marked estimate):
+its extent (the walls, or where the built-up area ended); its people (a number and what it rests on); its houses (the kinds, what share of the city each took, how many storeys);
+its key buildings with the year each was built, rebuilt or lost, and what stood in the station's year; the changes inside the period (a fire, a quarter cleared, a city shrinking);
+its open ground (gardens, squares, fields); and the sources a model can be built from (registered old maps, archaeological plans, a reconstruction model or drawing, the
+museum or the publication that holds them), with what will have to be schematic. Keep it to what the script and the model's plan need: the size, the people, the houses and the
+changes shape the story and the narration, and the sources say how much of each city can be traced and how much will be inferred. The detail of the buildings (plans, storeys
+of each, lots, roof pitches) is researched in step 4, period by period, from this survey (MODEL.md).
+

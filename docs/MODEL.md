@@ -17,6 +17,9 @@
 
 **Every historic period is a 3D model of a whole city:** write a `city:` spec in the node, and `pipeline/citygen.py` generates it (walls, gates and barbicans, main streets and lane network, courtyard / dwelling / dormitory plots,
 palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, cotton mills, stations, bridges, boats, trees; the houses of other regions and periods: "House types"). Follow the sources where there are sources (archaeological plans, gazetteer city maps, OSM site outlines); where there are none, follow the custom of contemporary cities of the same kind and label the picture "schematic".
+**Every period city starts from its research:** from the survey of step 1 (`research/period_cities.md`), research what the model needs before laying anything: the plans and positions of its buildings, the
+house types and their share and storeys, the streets and lots of its quarters, its open ground, each item sourced or marked estimate, written into `research/<period>_*`. Periods are independent here:
+one research subagent per period, in parallel (SKILL.md "Subagents and parallel work"). Research done only when a sample is sent back costs a round each time.
 **Every period city starts with one quarter:** lay one quarter from its sources, show its low close-up and a wide shot, and lay the rest of the city only after it is approved (a whole city laid on a wrong idea is redone whole; a quarter is redone in a round).
 Do the close-up for the city with the fullest sources first; close-up camera distance 0.035–0.06 (about 0.1 m per pixel), elevation 10–15°, gliding along the main street inside the walls (`fov: 40–44`),
 and lay the other periods only once the houses are recognisable as houses. Take these stills with `uv run python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>`
