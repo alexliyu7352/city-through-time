@@ -76,7 +76,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uPhoto: { value: null }, uPhotoA: { value: 0 }, uPhotoSweep: { value: 2 }, uPhotoSweep0: { value: -1 },
     // node colour wave: the old colour (Col0, A0) outside a ring of radius R around C, the new one inside, a light front on the ring
     uNodeCol0: { value: new THREE.Color(1, 1, 1) }, uNodeA0: { value: 0 }, uNodeC: { value: new THREE.Vector2(0, 0) }, uNodeR: { value: 99 }, uNodeFront: { value: 0 },
-    uBasin: { value: null }, uBasinA: { value: Array(BMAX).fill(0) }, uBasinL: { value: Array.from({ length: BMAX }, () => new THREE.Vector4(0, 0, 1e9, 2e9)) }, uBasinLo: { value: 0 }, uBasinHi: { value: 1 }, uBasinK: { value: 0 },
+    uBasin: { value: null }, uBasinA: { value: Array(BMAX).fill(0) }, uBasinL: { value: Array.from({ length: BMAX }, () => new THREE.Vector4(0, 0, 1e9, 2e9)) }, uBasinLo: { value: 0 }, uBasinHi: { value: 1 }, uBasinK: { value: 0 }, uBasinBand: { value: 4 },
     uDimToday: { value: 0 }, uDimToday0: { value: 0 }, uEraGlow: { value: 0 }, uEdge: { value: null }, uEdge2: { value: null }, uEdgeGain: { value: 1 },
     // per era channel (the hide masks): era time (0..1 over its rise, -1 off), grow share, the taking-back ring (centre, radius, in/out, width),
     // the edge (alpha, crop of its distance field, falloff); the ring/edge colour is uHideCol
@@ -181,16 +181,21 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   vec3 photoAt(vec2 uv){ vec3 p = texture2D(uPhoto, uv).rgb; p = pow(p, vec3(1.08)) * 1.18; float l = dot(p, vec3(.299, .587, .114)); p = mix(vec3(l), p, 1.12); return p * vec3(1.02, 1., .97) * uPhotoK; }
   bool onPlate(vec2 uv){ return all(greaterThanEqual(uv, vec2(0.))) && all(lessThanEqual(uv, vec2(1.))); }
-  uniform sampler2D uBasin; uniform float uBasinA[${BMAX}]; uniform vec4 uBasinL[${BMAX}];   // (a draped pool's loss ring: origin, radius now, radius a moment ago)
+  uniform sampler2D uBasin; uniform float uBasinA[${BMAX}], uBasinBand; uniform vec4 uBasinL[${BMAX}];   // (a draped pool's loss ring: origin, radius now, radius a moment ago)
   float wDrapedK = 0.;   // this fragment's share of a draped pool (wmask sets it): no edge lines are drawn on it (post, the plate's alpha)
   float wmask(){ vec2 uv = plateUV(); if (!onPlate(uv)) return 0.; float w = texture2D(uWater, uv).r;
-    // a draped pool (its water top 0 in the basin map): the plate is its water while it stands, its edge blended between the
-    // map's four nearest texels (the map is read exactly, nearest, for the dug pools' water tops: their edge alone would step)
-    vec2 ts = vec2(textureSize(uBasin, 0)), p = uv * ts - .5, f = fract(p), c0 = (floor(p) + .5) / ts; float d[4];
-    for (int q = 0; q < 4; q++) { vec4 b = texture2D(uBasin, c0 + vec2(float(q % 2), float(q / 2)) / ts); d[q] = 0.;
-      if (b.r > .5 && b.g + b.b < .5 / 255.) { int k = int(b.a * 255. + .5) - 1; for (int i = 0; i < ${BMAX}; i++) if (i == k) {
-        vec4 L = uBasinL[i]; d[q] = uBasinA[i] * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); } } }   // (lost where its ring has passed, as main.js ringK)
-    wDrapedK = mix(mix(d[0], d[1], f.x), mix(d[2], d[3], f.x), f.y); return max(w, wDrapedK); }
+    // a draped pool (alpha 128 + its number in the basin map): the plate is its water while it stands. Round its edge the map
+    // holds the distance to it (texels, + inside, compile BAS_BAND), blended between the four nearest texels, so the edge
+    // follows the drawn outline, not the texels' steps (the map is read exactly, nearest, for the dug pools' water tops)
+    vec2 ts = vec2(textureSize(uBasin, 0)), p = uv * ts - .5, f = fract(p), c0 = (floor(p) + .5) / ts; float s[4]; int kq[4], k = -1; float top = -1e9;
+    for (int q = 0; q < 4; q++) { vec4 b = texture2D(uBasin, c0 + vec2(float(q % 2), float(q / 2)) / ts); s[q] = -uBasinBand; kq[q] = -1;
+      if (b.a > 128.5 / 255.) { kq[q] = int(b.a * 255. + .5) - 129; s[q] = ((b.g * 65280. + b.b * 255.) / 65535. - .5) * 2. * uBasinBand; if (s[q] > top) { top = s[q]; k = kq[q]; } } }
+    if (k < 0) return w;
+    for (int q = 0; q < 4; q++) if (kq[q] != k) s[q] = -uBasinBand;   // (two pools' bands meeting: the nearer pool's)
+    float sd = mix(mix(s[0], s[1], f.x), mix(s[2], s[3], f.x), f.y), aa = max(fwidth(sd), .3);
+    for (int i = 0; i < ${BMAX}; i++) if (i == k) { vec4 L = uBasinL[i];
+      wDrapedK = uBasinA[i] * smoothstep(-aa, aa, sd) * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); }   // (lost where its ring has passed, as main.js ringK)
+    return max(w, wDrapedK); }
   float layerAt(vec2 uv, int i){ if (!onPlate(uv)) return 0.; vec4 m = i < 4 ? texture2D(uL1, uv) : i < 8 ? texture2D(uL2, uv) : texture2D(uL3, uv); int k = i - (i < 4 ? 0 : i < 8 ? 4 : 8); return k == 0 ? m.r : k == 1 ? m.g : k == 2 ? m.b : m.a; }
   // today's buildings inside an epoch's mask (an area the narration names) take its colour in their own material, as a period city
   // takes its node's: the projector light alone was washed out by the lit white walls (the ground showed the colour, the houses not)
@@ -745,7 +750,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const blank = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1); blank.needsUpdate = true;
   function setTex(k, t, srgb = false) { if (!t) { U[k].value = blank; return; } t.flipY = false; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; t.anisotropy = 4; U[k].value = t; }
   function setBasins(t, map) { t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.magFilter = t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true;
-    U.uBasin.value = t; U.uBasinLo.value = map.lo; U.uBasinHi.value = map.hi; U.uBasinK.value = map.k; }
+    U.uBasin.value = t; U.uBasinLo.value = map.lo; U.uBasinHi.value = map.hi; U.uBasinK.value = map.k; U.uBasinBand.value = map.band ?? 4; }
   function setHideCols(cols) { cols.forEach((c, i) => { if (i < 8) U.uHideCol.value[i].copy(lin(c)); }); }
   function setHide(t, t2, e, e2) { for (const [k, x] of [['uHide', t], ['uHide2', t2], ['uEdge', e], ['uEdge2', e2]]) { x.flipY = false; x.colorSpace = THREE.NoColorSpace; x.magFilter = x.minFilter = THREE.LinearFilter; x.generateMipmaps = false; U[k].value = x; } }
   // cities apart in time share a channel (compile: era channels). In a film that has them the four channel textures become

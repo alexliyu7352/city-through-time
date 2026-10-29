@@ -1706,7 +1706,11 @@ else:   # cities apart in time share a channel: the engine loads the one in use 
 # a basin below its water while the basin stands (its number's uniform follows its pool rising, taken back or lost), so a
 # pool on uneven ground is water from rim to rim; the ground comes back when the pool is taken back or lost
 BAS_LO, BAS_HI, BASIN_MAX = -100.0, 6000.0, 32   # (metres a water top may stand at, in 16 bits; engine/studio.js uBasinA)
-bmap_, nb_ = None, 0
+# a draped pool (where it was, not how high: the plate is its water) is kept in the map as its distance to its edge (texels, +
+# inside) in a band of BAS_BAND texels round it, alpha 128 + its number: the engine blends that distance between texels, so the
+# water's edge follows the drawn outline and not the texels' steps (a texel is about 11 m on a city's plate)
+BAS_BAND = 4
+bmap_, nb_, drp_ = None, 0, []
 for e in eras_out:
     if not BASINS.get(e['id']): continue
     meta_, prims_, L_ = CITY_META[e['id']], PRIMS[e['id']], LOST.get(e['id']); out_ = []
@@ -1714,12 +1718,29 @@ for e in eras_out:
         i_ = basin_piece(e['id'], b)
         if nb_ >= BASIN_MAX: raise SystemExit(f"compile: era {e['id']}: more than {BASIN_MAX} pools in a film (each is a basin the plate is lowered in)")
         if bmap_ is None: bmap_ = Image.new('RGBA', (MW, MH), (0, 0, 0, 0)); bdr_ = ImageDraw.Draw(bmap_)
-        v_ = 0 if b['top_m'] is None else max(1, min(65535, round((b['top_m'] - BAS_LO) / (BAS_HI - BAS_LO) * 65535)))   # (0: draped, the plate is its water)
-        bdr_.polygon([((mx_ / F.size[0] + .5) * MW, (mz_ / F.size[1] + .5) * MH) for mx_, mz_ in (F.model(*q) for q in b['ring'])], fill=(255, v_ >> 8, v_ & 255, nb_ + 1))
+        ring_ = [((mx_ / F.size[0] + .5) * MW, (mz_ / F.size[1] + .5) * MH) for mx_, mz_ in (F.model(*q) for q in b['ring'])]
+        if b['top_m'] is None: drp_.append((nb_, ring_))
+        else:
+            v_ = max(1, min(65535, round((b['top_m'] - BAS_LO) / (BAS_HI - BAS_LO) * 65535)))
+            bdr_.polygon(ring_, fill=(255, v_ >> 8, v_ & 255, nb_ + 1))
         out_.append({'k': nb_, 'rank': prims_[i_][10], 'c': [round(prims_[i_][15], 5), round(prims_[i_][16], 5)], 'lost': L_[i_] if L_ else 0,
                      **({'draped': True} if b['top_m'] is None else {})}); nb_ += 1   # (draped: the engine takes its water as a loss's ring passes, point by point)
     e['basins'] = out_
-BASIN_MAP = {'file': 'data/basins.png', 'lo': BAS_LO, 'hi': BAS_HI, 'k': round(F.scale * _tex, 9)} if bmap_ is not None else None
+if drp_:   # the draped pools' bands, where no dug pool is; two bands meeting: the nearer pool's
+    import numpy as _np, shapely as _sh
+    a_ = _np.array(bmap_); best_ = _np.full((MH, MW), -_np.inf)
+    for k_, ring_ in drp_:
+        P_ = _sh.Polygon(ring_); x0_, y0_, x1_, y1_ = P_.bounds
+        i0_, j0_ = max(0, math.floor(x0_) - BAS_BAND), max(0, math.floor(y0_) - BAS_BAND)
+        i1_, j1_ = min(MW, math.ceil(x1_) + BAS_BAND + 1), min(MH, math.ceil(y1_) + BAS_BAND + 1)
+        I_, J_ = _np.meshgrid(_np.arange(i0_, i1_) + .5, _np.arange(j0_, j1_) + .5)   # (texel centres, as the engine reads them)
+        s_ = _sh.distance(P_.boundary, _sh.points(I_, J_)) * _np.where(_sh.contains_xy(P_, I_, J_), 1, -1)
+        w_ = (s_ > -BAS_BAND) & (s_ > best_[j0_:j1_, i0_:i1_]) & ~((a_[j0_:j1_, i0_:i1_, 3] > 0) & (a_[j0_:j1_, i0_:i1_, 3] < 128))
+        v_ = _np.round((_np.clip(s_, -BAS_BAND, BAS_BAND) / BAS_BAND * .5 + .5) * 65535).astype(_np.uint32)
+        blk_ = a_[j0_:j1_, i0_:i1_]; blk_[w_] = _np.stack([_np.zeros_like(v_), v_ >> 8, v_ & 255, _np.full_like(v_, 129 + k_)], -1)[w_]
+        best_[j0_:j1_, i0_:i1_][w_] = s_[w_]
+    bmap_ = Image.fromarray(a_, 'RGBA')
+BASIN_MAP = {'file': 'data/basins.png', 'lo': BAS_LO, 'hi': BAS_HI, 'k': round(F.scale * _tex, 9), **({'band': BAS_BAND} if drp_ else {})} if bmap_ is not None else None
 if bmap_ is not None: bmap_.save(LAYOUT.data(D, 'basins.png'))
 elif os.path.exists(LAYOUT.data(D, 'basins.png')): os.remove(LAYOUT.data(D, 'basins.png'))
 # a city taken back by a contracting ring: the camera comes down with the ring (docs/STAGING.md 9g), from where it is when the

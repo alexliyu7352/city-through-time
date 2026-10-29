@@ -210,7 +210,8 @@ When today's ground rises more than `banks_m` (6 m) round a pool, compile stops:
 (today's ground is not the ancient one; a pool drawn across the foot of a hill); move it within what its source allows, and say so in its note, or, for a basin
 truly cut that deep, write `banks_m` with its basis. When the source fixes the place and today's ground still rises across it (the ancient ground is lost:
 a valley filled, a hillside cut back), write `level: draped`: the plate itself is its water while it stands (as today's rivers are drawn), showing where it
-was and not how high it stood; label it schematic on screen. Today's buildings step aside from its whole outline as it rises; a loss's ring spans its outline (any pool's)
+was and not how high it stood; label it schematic on screen. Its water's edge is its outline exactly as drawn (compile keeps the distance to it in the pool map,
+so it is smooth at any size and does not step with the map's texels), so the outline is what the audience sees: trace it from the source's plan, not a box round it. Today's buildings step aside from its whole outline as it rises; a loss's ring spans its outline (any pool's)
 and takes its water point by point as it passes. clipcheck's `water_under_plate` finds water the ground rises through (a ditch on a slope).
 **Today's buildings stand on the lowest ground under them:** `prep.py` puts each building's base on the lowest point of the plate under its footprint (the plate as the engine draws it, `terrainio.plate_mesh`)
 and its top where its height puts it above the ground at its centroid, so a building on a slope reaches down to the ground on its downhill side instead of hanging in the air.
