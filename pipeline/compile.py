@@ -1641,7 +1641,7 @@ for e in eras_out:
         i_ = next(i for i, (m_, p_) in enumerate(zip(meta_, prims_)) if m_[0] == b['gid'] and p_[11] == citygen.WATER)   # (its water)
         if nb_ >= BASIN_MAX: raise SystemExit(f"compile: era {e['id']}: more than {BASIN_MAX} pools in a film (each is a basin the plate is lowered in)")
         if bmap_ is None: bmap_ = Image.new('RGBA', (MW, MH), (0, 0, 0, 0)); bdr_ = ImageDraw.Draw(bmap_)
-        v_ = max(0, min(65535, round((b['top_m'] - BAS_LO) / (BAS_HI - BAS_LO) * 65535)))
+        v_ = 0 if b['top_m'] is None else max(1, min(65535, round((b['top_m'] - BAS_LO) / (BAS_HI - BAS_LO) * 65535)))   # (0: draped, the plate is its water)
         bdr_.polygon([((mx_ / F.size[0] + .5) * MW, (mz_ / F.size[1] + .5) * MH) for mx_, mz_ in (F.model(*q) for q in b['ring'])], fill=(255, v_ >> 8, v_ & 255, nb_ + 1))
         out_.append({'k': nb_, 'rank': prims_[i_][10], 'c': [round(prims_[i_][15], 5), round(prims_[i_][16], 5)], 'lost': L_[i_] if L_ else 0}); nb_ += 1
     e['basins'] = out_

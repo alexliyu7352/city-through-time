@@ -181,7 +181,14 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   vec3 photoAt(vec2 uv){ vec3 p = texture2D(uPhoto, uv).rgb; p = pow(p, vec3(1.08)) * 1.18; float l = dot(p, vec3(.299, .587, .114)); p = mix(vec3(l), p, 1.12); return p * vec3(1.02, 1., .97) * uPhotoK; }
   bool onPlate(vec2 uv){ return all(greaterThanEqual(uv, vec2(0.))) && all(lessThanEqual(uv, vec2(1.))); }
-  float wmask(){ vec2 uv = plateUV(); if (!onPlate(uv)) return 0.; return texture2D(uWater, uv).r; }
+  uniform sampler2D uBasin; uniform float uBasinA[${BMAX}];
+  float wmask(){ vec2 uv = plateUV(); if (!onPlate(uv)) return 0.; float w = texture2D(uWater, uv).r;
+    // a draped pool (its water top 0 in the basin map): the plate is its water while it stands, its edge blended between the
+    // map's four nearest texels (the map is read exactly, nearest, for the dug pools' water tops: their edge alone would step)
+    vec2 ts = vec2(textureSize(uBasin, 0)), p = uv * ts - .5, f = fract(p), c0 = (floor(p) + .5) / ts; float d[4];
+    for (int q = 0; q < 4; q++) { vec4 b = texture2D(uBasin, c0 + vec2(float(q % 2), float(q / 2)) / ts); d[q] = 0.;
+      if (b.r > .5 && b.g + b.b < .5 / 255.) { int k = int(b.a * 255. + .5) - 1; for (int i = 0; i < ${BMAX}; i++) if (i == k) d[q] = uBasinA[i]; } }
+    return max(w, mix(mix(d[0], d[1], f.x), mix(d[2], d[3], f.x), f.y)); }
   float layerAt(vec2 uv, int i){ if (!onPlate(uv)) return 0.; vec4 m = i < 4 ? texture2D(uL1, uv) : i < 8 ? texture2D(uL2, uv) : texture2D(uL3, uv); int k = i - (i < 4 ? 0 : i < 8 ? 4 : 8); return k == 0 ? m.r : k == 1 ? m.g : k == 2 ? m.b : m.a; }
   // today's buildings inside an epoch's mask (an area the narration names) take its colour in their own material, as a period city
   // takes its node's: the projector light alone was washed out by the lit white walls (the ground showed the colour, the houses not)
@@ -370,7 +377,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    transformed.y = ry < 0. ? aBase - .02 : aBase + (transformed.y - aBase) * max(ry, .0005);
    if (uPlateTop > .5 && uBasinK > 0.) {   // the plate in a dug pool: below its water while the pool stands, back when it is taken back or lost
      vec4 bs = texture2D(uBasin, transformed.xz / uPlateV + .5);
-     if (bs.r > .5) { int k = int(bs.a * 255. + .5) - 1; float on = 0.; for (int i = 0; i < ${BMAX}; i++) if (i == k) on = uBasinA[i];
+     if (bs.r > .5 && bs.g + bs.b > .5 / 255.) { int k = int(bs.a * 255. + .5) - 1; float on = 0.; for (int i = 0; i < ${BMAX}; i++) if (i == k) on = uBasinA[i];
        float wy = (uBasinLo + (bs.g * 65280. + bs.b * 255.) / 65535. * (uBasinHi - uBasinLo)) * uBasinK;
        transformed.y = mix(transformed.y, min(transformed.y, wy - .6 * uBasinK), on); } } }`;
   // the same deformation for depth-only passes (ambient-occlusion normals/depth, shadow maps), so they see the city the camera sees

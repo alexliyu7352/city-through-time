@@ -1443,14 +1443,10 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                     B.kiln(kx, ky, a_, g=ground_m(kx, ky))
                 else: B.gable_house(kx, ky, th + B.rng.uniform(-.4, .4), B.rng.uniform(9, 16), B.rng.uniform(5, 7), B.rng.uniform(4, 5.5), part=FAB)
             continue
-        elif k == 'pool' and L.get('level') == 'draped':   # where it was, not how high: its water laid on today's ground, tile by tile along the slope
-            P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']; nu, nv = max(1, math.ceil(w_ / 16)), max(1, math.ceil(d_ / 16)); tu, tv = w_ / nu, d_ / nv
-            for i in range(nu):
-                for j in range(nv):
-                    cx_, cy_ = P(-w_ / 2 + (i + .5) * tu, -d_ / 2 + (j + .5) * tv); h_ = 2.0
-                    gx_ = (B.ground_m(cx_ + h_, cy_) - B.ground_m(cx_ - h_, cy_)) / (2 * h_); gy_ = (B.ground_m(cx_, cy_ + h_) - B.ground_m(cx_, cy_ - h_)) / (2 * h_)
-                    s0_ = B.slope; B.slope = (gx_, gy_); B._emit(BOX, cx_, cy_, th, 0, tu + .05, tv + .05, .3, part=WATER); B.slope = s0_
-            B.found = 0.0
+        elif k == 'pool' and L.get('level') == 'draped':   # where it was, not how high: the plate is its water (compile's basin map), a 1 m mark carries its timing
+            P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']
+            B._emit(BOX, x, y, th, 0, 1, 1, .05, part=WATER); B.found = 0.0
+            B.basins.append({'ring': [P(-w_ / 2, -d_ / 2), P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2), P(-w_ / 2, d_ / 2)], 'top_m': None, 'gid': B.gid})
         elif k == 'pool':   # a dug basin: its water at the lowest point of its rim, the ground inside lowered below it (compile's basin map)
             P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']; ring_ = [P(-w_ / 2, -d_ / 2), P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2), P(-w_ / 2, d_ / 2)]
             rim = [B.ground_m(a[0] + (b[0] - a[0]) * i / n_, a[1] + (b[1] - a[1]) * i / n_) for a, b in zip(ring_, ring_[1:] + ring_[:1])
@@ -1533,13 +1529,13 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
             lm_foot.append(Polygon([P(-hw, -hd), P(hw, -hd), P(hw, hd), P(-hw, hd)]).buffer(6))
     B.hex = HEX0
     if len(B.basins) > 1:   # one body of water, one level: pools that touch (an L-shaped lake drawn as two) take the lowest top among them
-        polys_ = [Polygon(b['ring']).buffer(2) for b in B.basins]; grp_ = list(range(len(B.basins)))
+        dug_ = [b for b in B.basins if b['top_m'] is not None]; polys_ = [Polygon(b['ring']).buffer(2) for b in dug_]; grp_ = list(range(len(dug_)))
         root_ = lambda i: i if grp_[i] == i else root_(grp_[i])
         for i in range(len(polys_)):
             for j in range(i):
                 if polys_[i].intersects(polys_[j]): grp_[root_(i)] = root_(j)
         for r_ in {root_(i) for i in range(len(grp_))}:
-            mem_ = [B.basins[i] for i in range(len(grp_)) if root_(i) == r_]; lo_ = min(b['top_m'] for b in mem_)
+            mem_ = [dug_[i] for i in range(len(grp_)) if root_(i) == r_]; lo_ = min(b['top_m'] for b in mem_)
             for b in mem_:
                 dy_ = (lo_ - b['top_m']) * F.scale * B.gex; b['top_m'] = lo_
                 for p_, (gid_, _) in zip(B.prims, B.meta):
