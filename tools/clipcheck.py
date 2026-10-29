@@ -36,7 +36,7 @@ import shapely
 from shapely.geometry import Polygon
 from shapely.strtree import STRtree
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'pipeline'))
-from citygen import footprint, solid_plan
+from citygen import footprint, plan, solid_plan
 
 FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH, PLINTH = range(12)
 STREET_M, SHORT_M, STREET_W = 150.0, 20.0, 10.0   # how far a road's end looks for what it leads to; a gap under SHORT_M is near enough; roads this wide or wider (metres)
@@ -48,7 +48,7 @@ SOLID = (0, 2, 5, 6)   # the record types that are bodies (box, frustum, solid o
 
 
 def rect(p, shrink=0.0):
-    return Polygon(footprint(p, -shrink))   # (citygen.footprint: every reader of a record's plan)
+    return plan(p, -shrink)   # (citygen.plan: a record's plan as a geometry; shrunk, a plan with a narrow neck may part in two)
 
 
 def main():

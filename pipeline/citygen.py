@@ -51,8 +51,10 @@ def footprint(p, pad=0.0):
             a0, n = -math.pi / 2 - sw * math.pi, max(2, math.ceil(24 * sw)); r0 = min(r for r, _ in pr)
             arc = lambda r_, k_: [((p[5] / 2 * r_ + k_ * pad) * math.cos(a0 + i / n * sw * math.tau), (p[6] / 2 * r_ + k_ * pad) * math.sin(a0 + i / n * sw * math.tau)) for i in range(n + 1)]
             pts = arc(rm, 1) + (arc(r0, -1)[::-1] if r0 > 0 else [(0.0, 0.0)])
-    elif t == PRISM and not p[9]:   # a plan: its outer ring
-        pts = list(Polygon(p[17][0]).buffer(pad, join_style='mitre').exterior.coords)[:-1] if pad else [tuple(q) for q in p[17][0]]
+    elif t == PRISM and not p[9]:   # a plan: its outer ring (shrunk past a narrow neck: its largest piece; plan keeps them all)
+        g = Polygon(p[17][0]).buffer(pad, join_style='mitre') if pad else None
+        if g is not None and g.geom_type == 'MultiPolygon': g = max(g.geoms, key=lambda q: q.area)
+        pts = list(g.exterior.coords)[:-1] if g is not None and not g.is_empty else [tuple(q) for q in p[17][0]]
     else:
         if t in (BOX, GABLE, FRUSTUM, PRISM): hw = max(p[5], p[8] if t == FRUSTUM else 0) / 2 + pad + (p[8] if t == GABLE else 0); hd = max(p[6], p[9] if t == FRUSTUM else 0) / 2 + pad
         else: hw = hd = p[5] + pad
@@ -61,11 +63,21 @@ def footprint(p, pad=0.0):
     return [(cx + x * c_ - z * s_, cz + x * s_ + z * c_) for x, z in pts]
 
 
+def plan(p, pad=0.0):
+    """a record's plan as a geometry in model units, grown by `pad` (shrunk when negative). Shrunk past a narrow neck (two
+    runs of wall joined by a thin piece) a plan parts into pieces, or is gone: a MultiPolygon or an empty one, which every
+    geometric test (clipcheck, what may stand inside a body) takes as it is; footprint gives one ring, for what draws a plan"""
+    if p[0] == PRISM and not p[9] and pad < 0:
+        c_, s_ = math.cos(p[3]), math.sin(p[3])
+        return affinity.affine_transform(Polygon(p[17][0]).buffer(pad, join_style='mitre'), [c_, -s_, s_, c_, p[1], p[2]])
+    return Polygon(footprint(p, pad))
+
+
 def solid_plan(p, pad=0.0):
     """where a record's body stands, as a Polygon in model units with its open middle left open: a prism plan's holes (a
     portico's court), a ring of revolution's inner oval (an arena). What may stand inside a body (a tree) asks this; the
     readers of the plan as ground (the period city's outline, the hide mask) keep footprint, filled"""
-    P = Polygon(footprint(p, pad)); c_, s_ = math.cos(p[3]), math.sin(p[3])
+    P = plan(p, pad); c_, s_ = math.cos(p[3]), math.sin(p[3])
     put = lambda pts: [(p[1] + x * c_ - z * s_, p[2] + x * s_ + z * c_) for x, z in pts]
     if p[0] == PRISM and not p[9] and len(p[17]) > 1:
         return P.difference(unary_union([Polygon(put(r)).buffer(-pad, join_style='mitre') for r in p[17][1:]]))
