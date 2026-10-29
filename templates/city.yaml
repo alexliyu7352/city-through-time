@@ -76,7 +76,7 @@ film:
   nodes:                                      # laid out in order; film length = sum of node seconds. Times inside a node: seconds (relative to the node start), {year: Y}, 'end'
     - id: <node>
       mood: { feel: pride, level: 2 }         # the narrator's feeling at this station (required): wonder | pride | grief | wistful | hope | calm; level 1–3
-      years: [<y0>, <y1>]                     # the counter runs from y0 to y1 in this node (write a single year twice)
+      years: [<y0>, <y1>]                     # the counter runs from y0 to y1 in this node (write a single year twice); a line that tells an event inside them writes year: (script.yaml)
       dur: 16
       label: { zh: <Chinese chapter name>, en: <Chapter> }
       wave_from: [<lon>, <lat>]                 # optional: where this node's colour spreads from (default: the origin of the previous period's city)

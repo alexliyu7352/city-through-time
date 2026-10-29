@@ -761,12 +761,38 @@ def node_time(node, v, default=None):
         if lt_ is None: raise SystemExit(f'compile: node {node.get("id")}: with: {v["with"]!r} is not a line of this node (script.yaml)')
         return round(lt_[1 if v.get('edge') == 'end' else 0] + float(v.get('plus', 0)), 3)
     if isinstance(v, dict) and 'abs' in v: return round(float(v['abs']), 3)
-    if isinstance(v, dict) and 'year' in v:
+    if isinstance(v, dict) and 'year' in v and not any('year' in ln for ln in node.get('cues', [])):
         y0, y1 = node['_years']; t0, t1 = node['_t0'], node['_t1']
         if node.get('_tourA'): t1 = t0 + node['_tourA']   # a tour beat: the counter runs during the flight, then holds
         k = 0 if y1 == y0 else (float(v['year']) - y0) / (y1 - y0)
         return round(t0 + max(0, min(1, k)) * (t1 - t0) + float(v.get('plus', 0)), 3)
+    if isinstance(v, dict) and 'year' in v:   # lines that name years (node_years): when the counter first shows it (its start or end when outside)
+        pts, y = node_years(node), float(v['year'])
+        for (ta, ya), (tb, yb) in zip(pts, pts[1:]):
+            if ya == yb or not min(ya, yb) <= y <= max(ya, yb): continue
+            return round(ta + (y - ya) / (yb - ya) * (tb - ta) + float(v.get('plus', 0)), 3)
+        t_ = pts[0][0] if abs(y - pts[0][1]) <= abs(y - pts[-1][1]) else next(t for t, y_ in pts if y_ == pts[-1][1])
+        return round(t_ + float(v.get('plus', 0)), 3)
     raise ValueError(f'bad time {v!r} in node {node.get("id")}')
+
+def node_years(node):
+    """the node's counter, [[film seconds, year], ...]: from its first year at its start to its last at its end (a tour: during
+    the flight, then held). A line that names a year in the node's span (`year:` in script.yaml) holds the counter on it while
+    it is said: the years between run at their own pace, so an event told in its line shows its year"""
+    y0, y1 = node['_years']; t0, t1 = node['_t0'], node['_t1']
+    named = [ln for ln in node.get('cues', []) if 'year' in ln]
+    if node.get('_tourA'):
+        if named: raise SystemExit(f'compile: node {node["id"]}: year: on line {named[0]["id"]}: a tour stop\'s counter runs only in its flight')
+        return [[t0, y0], [round(t0 + node['_tourA'], 3), y1], [t1, y1]]
+    if named and '_line_t' not in node: raise SystemExit(f'compile: node {node["id"]}: a time given as a year is read before the lines are timed (year: on line {named[0]["id"]})')
+    pts = [[t0, y0]]
+    for ln in named:
+        y, (a, b) = float(ln['year']), node['_line_t'][ln['id']]
+        if not min(pts[-1][1], y1) <= y <= max(pts[-1][1], y1):
+            raise SystemExit(f'compile: node {node["id"]}: line {ln["id"]} has year: {ln["year"]}, outside the counter\'s way from {pts[-1][1]:g} '
+                             f'(the stop\'s start or the line before) to {y1:g}: the lines that name years go in their order, inside the stop\'s years')
+        pts += [[a, y], [b, y]]
+    return pts + [[t1, y1]]
 
 LINE_GAP = .35     # between the end of one line (its voice and VOICE_TAIL) and the next line
 # the default kicker of a "today" picture: first language, the second in capitals, the first's word for footage (今天 · TODAY · 实拍)
@@ -1069,8 +1095,7 @@ for i, node in enumerate(FM['nodes']):
     node['_t0'] = round(cursor, 3); node['_t1'] = round(cursor + dur, 3)
     ys = node.get('years') or [node['year'], node['year']]; node['_years'] = [float(ys[0]), float(ys[1])]
     if first_year is None: first_year = node['_years'][0]
-    if node.get('_tourA'): yearline += [[node['_t0'], node['_years'][0]], [round(node['_t0'] + node['_tourA'], 3), node['_years'][1]], [node['_t1'], node['_years'][1]]]
-    else: yearline += [[node['_t0'], node['_years'][0]], [node['_t1'], node['_years'][1]]]
+    yearline += node_years(node)
     T = lambda v, d=None, _n=node: node_time(_n, v, d)
     # the node's colour reaches today's city as a ring of light spreading from where the story just was: `wave_from` [lon, lat],
     # else the previous node's period city, else where the camera last looked

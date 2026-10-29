@@ -1,11 +1,14 @@
 # Narration of one city: every line, in order of appearance (pipeline/script.py). The picture is in city.yaml; only the words are here.
-# One line = { id, <language>..., with, lead, later, note }; compile schedules the time (docs/SCRIPT.md, docs/STAGING.md 5c)
+# One line = { id, <language>..., with, lead, year, later, note }; compile schedules the time (docs/SCRIPT.md, docs/STAGING.md 5c)
 #   id     the line's name, unique in the whole film, lowercase letters, digits, underscores (voice files, exports and the picture elements that follow this line all use it)
 #   with   write it when the line talks about a picture: it is spoken only when that picture appears. shot:<shot name of a camera keyframe> | pin:<tag id> | card:<card id> | stage[:<stage name>] | node
 #   lead   seconds earlier than that picture (negative: later)
 #          without with: the line follows when the line before has been said, and may run into the camera's hold (the first line of a node comes 0.5 seconds after the node is reached)
 #   t      old form: the second of the node's picture (pushed later when the planner inserts holds); use it only to wait deliberately for a breath
 #   { pause: seconds, why: "..." }   a deliberate silence (it does not count as dead air)
+#   year   the year of the event the line tells, inside its station's years: the counter stands on it while the line is said.
+#          Without it the counter runs straight from the station's first year to its last, so in a station of many years a dated
+#          event shows another year (the copy check asks of 4-digit years; write it for every dated event, any year)
 #   later  write true when the line speaks of a year later than this station (the copy check asks)
 #   note   a remark for the people who write, translate or voice the script (not shown on screen)
 # Numbers are always Arabic numerals (years, dates, measures); a subtitle is at most 22 characters (CJK ≤22 characters, film.copy.max_zh).

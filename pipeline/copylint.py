@@ -175,6 +175,14 @@ def check(film, cfg=None, quiet=(), lang='zh'):
         later = [y for y in years_in(c['a']) if y_end is not None and y > y_end + .5]
         if later and not c.get('later'):
             F.append((c['t0'], c.get('node') or '-', 'check', f'{c["id"]}: speaks of {", ".join(map(str, later))}, after this stop\'s {y_end:.0f} (later: true in script.yaml if meant)'))
+    # check: a year said while the counter shows another (a stop that spans years runs its counter straight through them)
+    for c in cues:
+        ys_ = ny.get(c.get('node'))
+        if not ys_ or ys_[0] == ys_[1]: continue
+        now_ = _year_at(yl, c['t0']); named_ = [y for y in years_in(c['a']) if min(ys_) <= y <= max(ys_)]
+        if named_ and now_ is not None and all(abs(y - now_) > 1 for y in named_):
+            F.append((c['t0'], c.get('node') or '-', 'check', f'{c["id"]}: says {named_[0]} while the counter shows {now_:.0f} '
+                      f'(year: {named_[0]} on the line in script.yaml holds the counter on it while the line is said)'))
     return sorted(F)
 
 
