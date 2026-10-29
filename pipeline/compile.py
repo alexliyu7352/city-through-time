@@ -1270,8 +1270,11 @@ for i, node in enumerate(FM['nodes']):
         e['boundary'] = bnd
         e['outline'] = [[[round(x / F.size[0] + .5, 4), round(z / F.size[1] + .5, 4)] for x, z in r] for r in bnd]   # the locator's frame (plate uv)
         if 'reuse' in cs: e['reuse'] = cs['reuse']
-        if len(hide_regions) < 8:   # where this era stands, today's buildings step aside (one channel per era; filled once the timing is known)
-            e['hide'] = len(hide_regions); hide_regions.append(None); EDGES.append(None)
+        if len(hide_regions) >= 8:   # (without a channel a city's front never glows and today's buildings stand through it)
+            raise SystemExit(f"compile: era {node['id']}: a film has at most 8 period cities (each one a channel of hide.png / hide2.png and edge.png / edge2.png: "
+                             f"today's buildings step aside, its front and its edge are lit); this is the ninth after {', '.join(x['id'] for x in eras_out)}. "
+                             f"Tell a change inside a period with the stages and lose: of its city (docs/MODEL.md) instead of a new city")
+        e['hide'] = len(hide_regions); hide_regions.append(None); EDGES.append(None)   # where this era stands, today's buildings step aside (filled once the timing is known)
         e['_pend'] = {'cs': cs, 'node': node, 'prims': prims, 'meta': meta_, 'at_of': at_of, 'bnd': bnd}
         eras_out.append(e); print(f'  city {node["id"]}: {len(prims)} primitives')
     for rt in node.get('routes', []):      # a light path: a move, a shift, a distance (lon/lat points; each hop arcs up by `arc` x its length)
