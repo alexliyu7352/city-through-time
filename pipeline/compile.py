@@ -678,6 +678,7 @@ def expand_areas(node):
 
 PRIMS, IMPACT, FOLLOW, FOLLOW_KEYS = {}, {}, [], []
 LOST = {}   # era id -> per primitive: 0 (stays) or the number of the loss that takes it (lost_parts)
+BASINS = {}   # era id -> its dug pools (citygen: rim, water top, building group)
 CITY_META = {}
 
 def gen_city(node):
@@ -694,7 +695,8 @@ def gen_city(node):
                 if p[11] == 4 or gone_[i_]: continue   # (a part lost by this node leaves its ground free)
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
-    meta_ = []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_)
+    meta_, bas_ = [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_)
+    BASINS[node['id']] = bas_
     CITY_META[node['id']] = meta_
     LOST[node['id']] = lost_parts(PRIMS[node['id']], meta_, cs, node['id'])
 
@@ -1627,6 +1629,25 @@ else:   # cities apart in time share a channel: the engine loads the one in use 
     for e in eras_out:
         if len(SLOT_HELD[e['hide']]) > 1: e['occupy'] = [[round(a, 3), round(b, 3)] for a, b in occ_[e['id']]]
     print('  era channels: ' + ', '.join(f'{k}: {"/".join(v)}' for k, v in enumerate(SLOT_HELD) if v))
+# dug pools (citygen): one map for the film, each basin's outline, water top and number; the engine lowers the plate inside
+# a basin below its water while the basin stands (its number's uniform follows its pool rising, taken back or lost), so a
+# pool on uneven ground is water from rim to rim; the ground comes back when the pool is taken back or lost
+BAS_LO, BAS_HI, BASIN_MAX = -100.0, 6000.0, 32   # (metres a water top may stand at, in 16 bits; engine/studio.js uBasinA)
+bmap_, nb_ = None, 0
+for e in eras_out:
+    if not BASINS.get(e['id']): continue
+    meta_, prims_, L_ = CITY_META[e['id']], PRIMS[e['id']], LOST.get(e['id']); out_ = []
+    for b in BASINS[e['id']]:
+        i_ = next(i for i, (m_, p_) in enumerate(zip(meta_, prims_)) if m_[0] == b['gid'] and p_[11] == citygen.WATER)   # (its water)
+        if nb_ >= BASIN_MAX: raise SystemExit(f"compile: era {e['id']}: more than {BASIN_MAX} pools in a film (each is a basin the plate is lowered in)")
+        if bmap_ is None: bmap_ = Image.new('RGBA', (MW, MH), (0, 0, 0, 0)); bdr_ = ImageDraw.Draw(bmap_)
+        v_ = max(0, min(65535, round((b['top_m'] - BAS_LO) / (BAS_HI - BAS_LO) * 65535)))
+        bdr_.polygon([((mx_ / F.size[0] + .5) * MW, (mz_ / F.size[1] + .5) * MH) for mx_, mz_ in (F.model(*q) for q in b['ring'])], fill=(255, v_ >> 8, v_ & 255, nb_ + 1))
+        out_.append({'k': nb_, 'rank': prims_[i_][10], 'c': [round(prims_[i_][15], 5), round(prims_[i_][16], 5)], 'lost': L_[i_] if L_ else 0}); nb_ += 1
+    e['basins'] = out_
+BASIN_MAP = {'file': 'data/basins.png', 'lo': BAS_LO, 'hi': BAS_HI, 'k': round(F.scale * _tex, 9)} if bmap_ is not None else None
+if bmap_ is not None: bmap_.save(LAYOUT.data(D, 'basins.png'))
+elif os.path.exists(LAYOUT.data(D, 'basins.png')): os.remove(LAYOUT.data(D, 'basins.png'))
 # a city taken back by a contracting ring: the camera comes down with the ring (docs/STAGING.md 9g), from where it is when the
 # ring reaches the city to the next key after the ring has closed (the ruins). The ring stays whole on screen all the way: the
 # camera comes no nearer than the distance that frames the ring as it is at that moment, so it always moves slower than the
@@ -1866,7 +1887,7 @@ film = {
     'decals': decals_out, 'satellite': sat_out(sat),
     'footage': footage_out, 'end': end, 'ev': evs, 'music': FM.get('music', {}),
     'labels': labels_out,
-    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, 'night': night_keys, 'routes': routes_out,
+    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],

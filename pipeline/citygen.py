@@ -94,6 +94,7 @@ class Builder:
         self.F, self.ground_m, self.gex, self.hex = F, ground_m, gex, hex_
         self.ox, self.oy = origin_xy
         self.prims = []
+        self.basins = []   # dug pools: their rim (UTM), water top (metres) and building group (compile's basin map)
         self.rng = random.Random(seed)
         self.det = DETAIL.get(detail, 1)
         self.skirt = 3.0   # metres of foundation below grade, so nothing floats where the plate and the DEM sample differ (2.5 left four Qin pieces on the 北阪 edge 0.2 m short once the plate lost its fine bumps)
@@ -1376,7 +1377,7 @@ def extent(spec, F, osm_rings=None):
     parts += [LineString([F.to_utm.transform(*q) for q in st['pts']]).buffer(st.get('w_m', 14) / 2) for st in spec.get('streets', [])]
     return unary_union(parts) if parts else Polygon()
 
-def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None):
+def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None):
     """spec (dict from city.yaml, lon/lat) -> primitive list. Spec keys:
     origin [lon, lat]; theta_deg (grid rotation, CCW from east); detail (low | medium | high); exaggeration (building heights,
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
@@ -1442,7 +1443,17 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                     B.kiln(kx, ky, a_, g=ground_m(kx, ky))
                 else: B.gable_house(kx, ky, th + B.rng.uniform(-.4, .4), B.rng.uniform(9, 16), B.rng.uniform(5, 7), B.rng.uniform(4, 5.5), part=FAB)
             continue
-        elif k == 'pool': B._emit(BOX, x, y, th, 0, L['w_m'], L['d_m'], .3, part=WATER)
+        elif k == 'pool':   # a dug basin: its water at the lowest point of its rim, the ground inside lowered below it (compile's basin map)
+            P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']; ring_ = [P(-w_ / 2, -d_ / 2), P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2), P(-w_ / 2, d_ / 2)]
+            rim = [B.ground_m(a[0] + (b[0] - a[0]) * i / n_, a[1] + (b[1] - a[1]) * i / n_) for a, b in zip(ring_, ring_[1:] + ring_[:1])
+                   for n_ in [max(2, math.ceil(math.hypot(b[0] - a[0], b[1] - a[1]) / 8))] for i in range(n_)]
+            top = min(rim) - .3; bank = max(rim) - top
+            if bank > float(L.get('banks_m', 6.0)):
+                raise SystemExit(f"citygen: pool {L.get('id') or L.get('name') or ''} at {L['lon']:.5f}, {L['lat']:.5f}: today's ground rises {bank:.1f} m round it "
+                                 f"(its rim from {min(rim):.1f} to {max(rim):.1f} m): dug there, it would stand in a {bank:.0f} m pit. Check its place and size against "
+                                 f"the source (today's ground is not the ancient one: docs/MODEL.md); a basin truly dug that deep writes banks_m with its basis")
+            B._emit(BOX, x, y, th, 0, w_, d_, .3, part=WATER, g_m=top - .3); B.found = 0.0
+            B.basins.append({'ring': ring_, 'top_m': round(top, 3), 'gid': B.gid})
         elif k == 'platform':   # a bare rammed-earth platform (e.g. the Epang front hall: never finished), walls on the given sides
             gp_ = B.gsite(x, y, th, L['w_m'], L['d_m']); B._emit(FRUSTUM, x, y, th, 0, L['w_m'], L['d_m'], L['h_m'], L['w_m'] * .985, L['d_m'] * .97, part=EARTH, g_m=gp_); B.found = 0.0
             P = B.frame(x, y, th); hw, hd = L['w_m'] * .49, L['d_m'] * .48
@@ -1513,6 +1524,18 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
             if k in ('armoury', 'market', 'court'): hw += 2; hd += 2
             lm_foot.append(Polygon([P(-hw, -hd), P(hw, -hd), P(hw, hd), P(-hw, hd)]).buffer(6))
     B.hex = HEX0
+    if len(B.basins) > 1:   # one body of water, one level: pools that touch (an L-shaped lake drawn as two) take the lowest top among them
+        polys_ = [Polygon(b['ring']).buffer(2) for b in B.basins]; grp_ = list(range(len(B.basins)))
+        root_ = lambda i: i if grp_[i] == i else root_(grp_[i])
+        for i in range(len(polys_)):
+            for j in range(i):
+                if polys_[i].intersects(polys_[j]): grp_[root_(i)] = root_(j)
+        for r_ in {root_(i) for i in range(len(grp_))}:
+            mem_ = [B.basins[i] for i in range(len(grp_)) if root_(i) == r_]; lo_ = min(b['top_m'] for b in mem_)
+            for b in mem_:
+                dy_ = (lo_ - b['top_m']) * F.scale * B.gex; b['top_m'] = lo_
+                for p_, (gid_, _) in zip(B.prims, B.meta):
+                    if gid_ == b['gid'] and p_[11] == WATER: p_[4] = round(p_[4] + dy_, 7); p_[12] = round(p_[12] + dy_, 7)
     lm_union = unary_union(lm_foot) if lm_foot else None
     shop_feet = []
     # lanes first (a paved grid inside the walls or a region, stopping at compound walls), then main streets with their shop rows
@@ -1608,4 +1631,5 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                     off = tr.get('offset_m', 9) * side
                     q = line.interpolate(min(line.length, line.project(p) + 1)); th = math.atan2(q.y - p.y, q.x - p.x)
                     plant(p.x - math.sin(th) * off, p.y + math.cos(th) * off, tr)
+    if basins is not None: basins.extend(B.basins)   # (compile lowers the plate in them: its basin map)
     return B.finish(spec.get('rank_noise', .08), meta)

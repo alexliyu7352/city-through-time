@@ -13,7 +13,8 @@ import { buildProp, makeTally, buildEra } from './props.js';
 
 const lin = h => new THREE.Color(h);
 export const NMAX = 8;
-export const LMAX = 4;   // the parts one period city can lose while the rest stands (compile LOSE_MAX; record kind 4.. in aData.w)
+export const LMAX = 4;
+export const BMAX = 32;   // dug pools in a film (compile BASIN_MAX): the plate is lowered in each while it stands   // the parts one period city can lose while the rest stands (compile LOSE_MAX; record kind 4.. in aData.w)
 export const EMAX = 12;   // epoch mask channels: data/layers1-3.png, RGBA each (compile shares a channel between masks apart in time and place)
 const YLN = 48;   // points of the modern year line the shaders read (compile: grow.yl)
 
@@ -75,6 +76,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uPhoto: { value: null }, uPhotoA: { value: 0 }, uPhotoSweep: { value: 2 }, uPhotoSweep0: { value: -1 },
     // node colour wave: the old colour (Col0, A0) outside a ring of radius R around C, the new one inside, a light front on the ring
     uNodeCol0: { value: new THREE.Color(1, 1, 1) }, uNodeA0: { value: 0 }, uNodeC: { value: new THREE.Vector2(0, 0) }, uNodeR: { value: 99 }, uNodeFront: { value: 0 },
+    uBasin: { value: null }, uBasinA: { value: Array(BMAX).fill(0) }, uBasinLo: { value: 0 }, uBasinHi: { value: 1 }, uBasinK: { value: 0 },
     uDimToday: { value: 0 }, uDimToday0: { value: 0 }, uEraGlow: { value: 0 }, uEdge: { value: null }, uEdge2: { value: null }, uEdgeGain: { value: 1 },
     // per era channel (the hide masks): era time (0..1 over its rise, -1 off), grow share, the taking-back ring (centre, radius, in/out, width),
     // the edge (alpha, crop of its distance field, falloff); the ring/edge colour is uHideCol
@@ -334,6 +336,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform float uHideT[8], uHideG[8], uHideFR[8], uHideFI[8], uHideFW[8]; uniform vec2 uHideO[8];
   uniform float uEraT, uEraSpan, uEraGrow, uEraFallR, uEraFallIn, uEraFallW; uniform vec2 uEraO;
   uniform float uLossR[${LMAX}], uLossIn[${LMAX}], uLossW[${LMAX}]; uniform vec2 uLossO[${LMAX}];   // a part of the city lost (lose:): its ring
+  uniform sampler2D uBasin; uniform float uBasinA[${BMAX}], uBasinLo, uBasinHi, uBasinK, uPlateTop;   // dug pools (compile basin map): the plate lowered in them
   // a ring that takes a city back: contracting (in) it takes what lies outside it, growing (out) what lies inside. R is the
   // ring now, R1 where it was a sink-time ago: a building the ring passed sinks over that time (0 standing .. 1 gone)
   float fallK(vec2 o, float R, float fin, float R1){ float d = length(aCtr - o);
@@ -364,7 +367,12 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
      for (int k = 0; k < ${LMAX}; k++) if (abs(aData.w - 4. - float(k)) < .5) ry *= 1. - fallK(uLossO[k], uLossR[k], uLossIn[k], uLossW[k]);   // a lost part goes with its own ring
      if (ry < .002) ry = -1.; }
    vUp = max(ry, 0.); vBase = aBase; aCtrV = aCtr; vGrowT = aGrowT;
-   transformed.y = ry < 0. ? aBase - .02 : aBase + (transformed.y - aBase) * max(ry, .0005); }`;
+   transformed.y = ry < 0. ? aBase - .02 : aBase + (transformed.y - aBase) * max(ry, .0005);
+   if (uPlateTop > .5 && uBasinK > 0.) {   // the plate in a dug pool: below its water while the pool stands, back when it is taken back or lost
+     vec4 bs = texture2D(uBasin, transformed.xz / uPlateV + .5);
+     if (bs.r > .5) { int k = int(bs.a * 255. + .5) - 1; float on = 0.; for (int i = 0; i < ${BMAX}; i++) if (i == k) on = uBasinA[i];
+       float wy = (uBasinLo + (bs.g * 65280. + bs.b * 255.) / 65535. * (uBasinHi - uBasinLo)) * uBasinK;
+       transformed.y = mix(transformed.y, min(transformed.y, wy - .6 * uBasinK), on); } } }`;
   // the same deformation for depth-only passes (ambient-occlusion normals/depth, shadow maps), so they see the city the camera sees
   function deformMaterial(m, extra = null) {
     m.onBeforeCompile = sh => {
@@ -727,6 +735,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
 
   const blank = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1); blank.needsUpdate = true;
   function setTex(k, t, srgb = false) { if (!t) { U[k].value = blank; return; } t.flipY = false; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; t.anisotropy = 4; U[k].value = t; }
+  function setBasins(t, map) { t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.magFilter = t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true;
+    U.uBasin.value = t; U.uBasinLo.value = map.lo; U.uBasinHi.value = map.hi; U.uBasinK.value = map.k; }
   function setHideCols(cols) { cols.forEach((c, i) => { if (i < 8) U.uHideCol.value[i].copy(lin(c)); }); }
   function setHide(t, t2, e, e2) { for (const [k, x] of [['uHide', t], ['uHide2', t2], ['uEdge', e], ['uEdge2', e2]]) { x.flipY = false; x.colorSpace = THREE.NoColorSpace; x.magFilter = x.minFilter = THREE.LinearFilter; x.generateMipmaps = false; U[k].value = x; } }
   // cities apart in time share a channel (compile: era channels). In a film that has them the four channel textures become
@@ -764,7 +774,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     city.customDepthMaterial = deformMaterial(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }));
     city.castShadow = city.receiveShadow = true; scene.add(city);
     const RIM = .05, PT = .022;
-    const plateTop = new THREE.Mesh(plateGeometry(), projMaterial(1, { color: plateCol, roughness: .9 }));
+    const plateTop = new THREE.Mesh(plateGeometry(), projMaterial(1, { color: plateCol, roughness: .9 }, { uPlateTop: { value: 1 } }));
+    plateTop.customDepthMaterial = deformMaterial(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), { uPlateTop: { value: 1 } });   // (its shadow lowered in a pool too)
     plateTop.receiveShadow = true; plateTop.castShadow = !!HF; scene.add(plateTop);
     const plateBox = new THREE.Mesh(zero(new THREE.BoxGeometry(PW + RIM * 2, PT, PD + RIM * 2)), projMaterial(1, { color: PAL.plateSide || '#e9e6e0', roughness: .9 }));
     plateBox.position.y = -PT / 2 - .0005; plateBox.receiveShadow = true; scene.add(plateBox);
@@ -849,5 +860,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     vertexShader: 'varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
     fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA; varying vec3 vW; void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(texture2D(uPI, u).rgb, uA); }' }));
   liveSky.visible = false; liveSky.renderOrder = -1; liveSky.frustumCulled = false; scene.add(liveSky);
-  return { renderer, scene, camera, post, U, liveSky, addContext, setContext, setHide, setHideCols, shareChannels, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { renderer, scene, camera, post, U, liveSky, addContext, setContext, setHide, setHideCols, shareChannels, setBasins, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

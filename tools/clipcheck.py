@@ -16,6 +16,8 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
   floating            primitives whose base sits above the plate's surface and not on a lot's platform (the plate is sampled
                       like the engine does)
   terrain_cut         bodies the plate rises through: under the footprint the ground climbs more than half the body's height
+  water_under_plate   pools and ditches the plate rises through: over more than a twentieth of the water the ground stands above its
+                      top by more than 0.3 m (a flat basin laid on a slope: the hill shows through the water)
                       above the ground the body stands on (a long wall or a big hall on a slope)
   cross_era           bodies of a city that overlap bodies of another city standing at the same time (the empire over Qin)
   paving_under        paving (roads, lanes, yards) the plate rises through by more than 0.3 m: a road comes out in dashes
@@ -195,6 +197,18 @@ def main():
             rise_ = max(plate_y(x, z) - (gx * (x - p[1]) + gz * (z - p[2])) for x, z in pts) - p[12]
             if rise_ > max(.5 * hb, 1.0 * S * tex): cut.append(p)
         R['terrain_cut'] = len(cut); R['terrain_cut_at'] = [[round(p[1], 4), round(p[2], 4)] for p in cut[:5]]
+        wet = []   # water: a grid over each pool or ditch piece, the plate against its top (a plane when laid along a slope)
+        dug_ = {(round(b['c'][0], 5), round(b['c'][1], 5)) for b in e.get('basins') or []}   # (a dug pool: the engine lowers the plate in it)
+        for p in ground:
+            if p[11] != WATER or p[0] != 0 or (len(p) > 16 and (round(p[15], 5), round(p[16], 5)) in dug_): continue
+            P = rect(p); x0_, z0_, x1_, z1_ = P.bounds; gx, gz = (p[13], p[14]) if len(p) > 14 else (0.0, 0.0); n_ = up_ = 0
+            for i in range(12):
+                for j in range(12):
+                    x, z = x0_ + (i + .5) / 12 * (x1_ - x0_), z0_ + (j + .5) / 12 * (z1_ - z0_)
+                    if not P.contains(shapely.Point(x, z)): continue
+                    n_ += 1; up_ += plate_y(x, z) > p[4] + p[7] + gx * (x - p[1]) + gz * (z - p[2]) + .3 * S * tex
+            if n_ and up_ > .05 * n_: wet.append((p, up_ / n_))
+        R['water_under_plate'] = len(wet); R['water_under_plate_at'] = [[round(p[1], 4), round(p[2], 4), round(k_, 2)] for p, k_ in wet[:5]]
         pu = []
         for p in prims:   # the top of each paving piece (a plane when laid along a slope) against the plate, corners, edge middles, centre
             if p[11] != PAVE or p[0] != 0: continue

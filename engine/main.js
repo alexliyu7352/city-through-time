@@ -120,6 +120,10 @@ if (SHARE.length) {
   for (const e of [...SHARE].sort((a, b) => b.occupy[0][0] - a.occupy[0][0])) holding[e.hide] = e;   // (the earliest last: it wins)
   for (const e of Object.values(holding)) if (e.edgeRect) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; }
 }
+if (FILM.basinMap) S.setBasins(await tex(B + FILM.basinMap.file), FILM.basinMap);   // dug pools: the plate lowered in them while they stand
+// a basin follows its pool: up as the pool rises (its rank in its city's rise), taken back with its city's ring or its loss's
+const ringK = (c, q, t, sd) => { if (!q) return 0; const R = curveAt(q.curve, t), R1 = curveAt(q.curve, t - sd), d = Math.hypot(c[0] - q.o[0], c[1] - q.o[1]);
+  const a = q.mode === 'in' ? (d - R) / Math.max(R1 - R, 1e-5) : (R - d) / Math.max(R - R1, 1e-5); return ss(Math.min(1, Math.max(0, a))); };   // (studio fallK)
 const takeChannel = e => { if (!CH || !e.occupy || holding[e.hide] === e) return; CH.put(e.hide, ...e._own); holding[e.hide] = e;
   if (e.edgeRect) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; } };
 const inChannel = e => !e.occupy || holding[e.hide] === e;
@@ -368,6 +372,8 @@ function setLayers(t) {
     E.mesh.visible = tE > -.01 && !gone;
     E.u.uEraT.value = tE; E.u.uEraSpan.value = e.span; E.u.uEraGrow.value = e.grow;
     E.u.uEraFallR.value = fr; E.u.uEraFallIn.value = fin ? 1 : 0; E.u.uEraFallW.value = fr1; E.u.uEraO.value.set(fo[0], fo[1]);
+    for (const b of e.basins || []) { const st = e.on + b.rank * e.span;
+      U.uBasinA.value[b.k] = ss(seg(t, st, st + e.grow)) * (1 - ringK(b.c, FR, t, SD)) * (1 - (b.lost ? ringK(b.c, e.losses[b.lost - 1], t, SD) : 0)); }
     (e.losses || []).forEach((q, j) => {   // a part of the city lost while the rest stands (compile lose:): its own ring, its own fire
       E.u.uLossR.value[j] = curveAt(q.curve, t); E.u.uLossW.value[j] = curveAt(q.curve, t - SD); E.u.uLossIn.value[j] = q.mode === 'in' ? 1 : 0;
       E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0; });
