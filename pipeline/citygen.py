@@ -1613,17 +1613,22 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     if spec.get('trees'):   # (every kind of body, its court or arena left open: a garden inside a portico is planted)
         S_ = F.scale
         whole = lambda p: p[:15] + [p[1], p[2]] + p[15:]   # (a record as finish leaves it: the centre before a shape, where footprint reads it)
-        rects = [solid_plan(whole(p)) for p in B.prims if p[0] in (BOX, FRUSTUM, REVOLVE, PRISM) and p[11] in (FAB, LMK, EARTH) and p[7] > 1.0 * S_ * B.hex]
-        bodies = (shapely.STRtree(rects), rects) if rects else None
-        dk = [p for p in B.prims if p[0] == BOX and p[11] == PLINTH]   # the platforms a lot or a court stands on (lot_site)
-        decks = (shapely.STRtree([Polygon(footprint(p)) for p in dk]), dk, [Polygon(footprint(p)) for p in dk]) if dk else None
+        bi_ = [i for i, p in enumerate(B.prims) if p[0] in (BOX, FRUSTUM, REVOLVE, PRISM) and p[11] in (FAB, LMK, EARTH) and p[7] > 1.0 * S_ * B.hex]
+        rects = [solid_plan(whole(B.prims[i])) for i in bi_]
+        bodies = (shapely.STRtree(rects), rects, [B.meta[i][1][0] == 'fabric' for i in bi_]) if rects else None
+        di_ = [i for i, p in enumerate(B.prims) if p[0] == BOX and p[11] == PLINTH]; dk = [B.prims[i] for i in di_]   # the platforms a lot or a court stands on (lot_site)
+        decks = (shapely.STRtree([Polygon(footprint(p)) for p in dk]), dk, [Polygon(footprint(p)) for p in dk], [B.meta[i][1][0] == 'fabric' for i in di_]) if dk else None
+    cleared_ = unary_union([lm_foot[k] for k in drop_]) if drop_ else None   # (the sites of landmarks built later where houses stood, metres)
     def plant(tx_, ty_, tr):   # one tree, unless it would stand in a building; on a platform (a lot's or a court's 台基), on its top
         pt = Point(*F.model(tx_, ty_)); g = None
-        if bodies is not None and any(bodies[1][j].buffer(1.5 * F.scale).contains(pt) for j in bodies[0].query(pt.buffer(2 * F.scale))):
+        # on the site of a landmark built later where houses stood, the houses do not keep a tree out: they are gone before
+        # the landmark (lose for), and clipcheck's trees_in_houses still counts a tree that rises while one stands
+        on_site = cleared_ is not None and cleared_.contains(Point(tx_, ty_))
+        if bodies is not None and any(not (on_site and bodies[2][j]) and bodies[1][j].buffer(1.5 * F.scale).contains(pt) for j in bodies[0].query(pt.buffer(2 * F.scale))):
             for _ in range(3): B.rng.random()   # the draws tree() would take: the rest of the city stays as it was
             return
         if decks is not None:   # (a court on a hillside stands on its platform: its trees grew from the slope inside it)
-            on = [decks[1][j] for j in decks[0].query(pt) if decks[2][j].contains(pt)]
+            on = [decks[1][j] for j in decks[0].query(pt) if decks[2][j].contains(pt) and not (on_site and decks[3][j])]
             if on: g = max((q[12] + q[13] * (pt.x - q[1]) + q[14] * (pt.y - q[2])) / (S_ * B.gex) for q in on) + .05 * B.hex / B.gex
         B.group(); B.tree(tx_, ty_, tr.get('h_m', 11), tr.get('r_m', 4), tr.get('kind', 'willow'), g=g)
     for ti, tr in enumerate(spec.get('trees', [])):

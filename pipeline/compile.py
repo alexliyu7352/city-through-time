@@ -430,7 +430,7 @@ def lost_parts(prims, meta, cs, node_id):
                 if li not in SITES[node_id]: raise SystemExit(f'compile: era {node_id}: lose {L[j - 1]["id"]}: for {cs["landmarks"][li].get("id")}: citygen gave no site for it')
                 site = Sm(SITES[node_id][li]); on_[li] = []
                 for gid, (tag, c) in G.items():   # (on it: any piece of the building over the site; a lane is one piece across the city: never)
-                    if tag[0] in ('streets', 'lanes', 'walls') or (tag[0] == 'landmarks' and tag[1] == li): continue
+                    if tag[0] in ('streets', 'lanes', 'walls', 'trees') or (tag[0] == 'landmarks' and tag[1] == li): continue   # (trees go only when named, here too: the new precinct's garden is planted after)
                     if not (drapes_[gid].intersects(SITES[node_id][li]) if gid in drapes_ else
                             c.distance(site) <= 200 * F.scale and any(_sh.Polygon(citygen.footprint(p)).intersects(site) for p in parts_[gid])): continue
                     on_[li].append(gid)   # (another landmark built later on this site: never cleared here; when a loss names it, li rises after it goes)
