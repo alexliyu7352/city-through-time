@@ -4,27 +4,35 @@
 // turn, a double click to look at that point. Two looks: 成片 (film: the era's colour in the light, its glow and edge line, depth
 // of field, the key light beside the camera as in the film) and 檢查 (check: plain white in white light, everything sharp, the key
 // light fixed in the room, so a face is seen to turn from lit to shade as the camera goes round: a face drawn inside out shows at once).
+// Each city stands as it does at a moment of the film: a city that loses parts while it stands (lose:) has no moment with every
+// part up (a house and the forum laid where it stood), so it has several moments (engine/eralife.js), the buttons 時刻 1, 2 .. under
+// it; a city that loses nothing, one, once all of it has risen.
 // URL: &eras=qin,han (ticked; default the first), &look=check, &today, &bare (no panel), &quality=low (faster, no shadows of the
-// period cities). window.VIEW({ eras, look, today, target: <era id> | [x, z] (on the ground) | [x, y, z], az, el, d }) sets it from a script and draws
-// (tools/eraview.mjs); window.VIEWINFO() lists the period cities with their centres and sizes; a target 'qin:dense' is the densest
-// 200 m square of that city, where its houses stand closest.
+// period cities), &at=<seconds> (every city ticked as it stands at that moment of the film instead).
+// window.VIEW({ eras, look, today, at, target: <era id> | [x, z] (on the ground) | [x, y, z], az, el, d }) sets it from a script and draws
+// (tools/eraview.mjs; at: a moment of the film, null for each city's own); window.VIEWINFO() lists the period cities with their
+// centres, sizes and moments ({ t, dense }); a target 'qin:dense' is the densest 200 m square of that city at its moment, where its
+// houses stand closest.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const FIXED_AZ = 355, WHITE = new THREE.Color(1, 1, 1);   // check: the key light (50 degrees left of this bearing, 45 up) stands in the south-west of the room (bearings as the camera keys count them: 0 south, 90 east)
 
 export function startView(X) {
-  const { S, FILM, QS, W, H, setLight, setLayers, lens, cityMesh, eraBox, setDist, quiet, scale, takeChannel } = X;   // (takeChannel: a city ticked takes its shared channel; two ticked sharing one: the later)
+  const { S, FILM, QS, W, H, setLight, setLayers, eraShape, lens, cityMesh, eraBox, setDist, quiet, scale, takeChannel } = X;   // (takeChannel: a city ticked takes its shared channel; two ticked sharing one: the later)
   const { U, camera, post, renderer } = S;
   const LOOK = FILM.era_look || {}, LT = FILM.light, ERAS = (FILM.eras || []).filter(e => S.eras[e.id]);
   const TV = LT.lamp + 4;   // a moment with the projector on; what else the film shows then is cleared (quiet)
   const label = id => ((FILM.nodes || []).find(n => n.id === id) || {}).label || id;
   const ink = id => ((FILM.nodes || []).find(n => n.id === id) || {}).ink || 0;
   // a period city's centre and half-diagonal; 'id:dense' its densest 200 m square, where its houses stand closest
-  const info = key => { const [id, part] = key.split(':'), { box: b, dense } = eraBox[id], [x, z] = part === 'dense' ? dense : [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2];
+  const moment = id => eraBox[id].moments[Math.min(st.k[id] || 0, eraBox[id].moments.length - 1)];   // the city's moment chosen
+  const timeOf = id => st.at ?? moment(id).t;
+  const info = key => { const [id, part] = key.split(':'), b = eraBox[id].box, [x, z] = part === 'dense' ? moment(id).dense : [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2];
     return { x, y: S.ground(x, z), z, r: Math.hypot(b[2] - b[0], b[3] - b[1]) / 2 }; };
   let hud = null;   // (the panel's camera readout)
-  const st = { on: new Set(QS.get('eras') ? QS.get('eras').split(',') : ERAS.slice(0, 1).map(e => e.id)), look: QS.get('look') === 'check' ? 'check' : 'film', today: QS.has('today') };
+  const st = { on: new Set(QS.get('eras') ? QS.get('eras').split(',') : ERAS.slice(0, 1).map(e => e.id)), look: QS.get('look') === 'check' ? 'check' : 'film', today: QS.has('today'),
+    at: QS.has('at') ? +QS.get('at') : null, k: {} };   // (k: each city's moment, by its number)
 
   // fit the 1920x1080 picture to the window
   const stage = document.getElementById('stage');
@@ -48,9 +56,9 @@ export function startView(X) {
       E.mesh.visible = on;
       if (S.edges[e.id]) S.edges[e.id].set(on && film ? LOOK.line ?? 1 : 0, E.base, 1);
       if (S.fires[e.id]) S.fires[e.id].set(0, TV, 1e3, [0, 0]);
-      if (!on) continue;
-      const u = E.u;   // standing whole, in its own node's colour
-      u.uEraT.value = 1e6; u.uEraSpan.value = e.span; u.uEraGrow.value = e.grow; u.uEraFallR.value = -1; u.uEraFallIn.value = 0; u.uEraFallW.value = -1;
+      if (!on) { for (const b of e.basins || []) U.uBasinA.value[b.k] = 0; continue; }
+      const u = E.u;   // as it stands at its moment (its fires out), in its own node's colour
+      eraShape(e, timeOf(e.id)); u.uLossBurn.value.fill(0); u.uEraFallR.value = -1; u.uEraFallIn.value = 0; u.uEraFallW.value = -1;
       u.uEraA.value = film ? e.tint : 1; u.uEraBurn.value = 0; u.uEraGlow.value = film ? LOOK.glow ?? 1 : 0;   // check: the projector's light white at full strength
       u.uEraCol.value.copy(film ? E.base : WHITE); u.uEraCol0.value.copy(u.uEraCol.value); u.uEraInk.value = u.uEraInk0.value = film ? ink(e.id) : 0;
       if (e.hide != null) { takeChannel(e); U.uEdgeA.value[e.hide] = film ? 1 : 0; U.uHideCol.value[e.hide].copy(E.base); U.uHideT.value[e.hide] = st.today ? 1e3 : -1; }   // today's buildings step aside where it stands
@@ -67,7 +75,8 @@ export function startView(X) {
     S.followShadow(t.x, t.y, t.z, d, film ? az : FIXED_AZ);
     lens(d); if (!film) post.dof.aper = 0;
     renderer.shadowMap.needsUpdate = true; post.composer.render();
-    if (hud) hud.textContent = `az ${az.toFixed(0)}  el ${el.toFixed(0)}  d ${(d / scale).toFixed(0)} m`;
+    const id0 = [...st.on][0];
+    if (hud) hud.textContent = `az ${az.toFixed(0)}  el ${el.toFixed(0)}  d ${(d / scale).toFixed(0)} m` + (id0 && eraBox[id0] ? `  ${timeOf(id0).toFixed(1)} s` : '');
   }
   const ask = () => { if (!pending) { pending = true; requestAnimationFrame(draw); } };
   controls.addEventListener('change', ask);
@@ -92,7 +101,7 @@ export function startView(X) {
       font:13px/1.45 system-ui,"PingFang TC","Noto Sans TC",sans-serif;border:1px solid oklch(0.95 0.006 85 / .14);border-radius:8px;user-select:none}
       .vw h1{margin:0 0 10px;font:600 14px/1.3 "Noto Serif TC",Georgia,serif;letter-spacing:.04em}
       .vw .seg{display:flex;gap:6px;margin:0 0 10px}.vw .seg button{flex:1;min-height:30px;border:1px solid oklch(0.95 0.006 85 / .25);border-radius:6px;background:none;color:inherit;font:inherit;cursor:pointer}
-      .vw .seg button[aria-pressed=true]{background:oklch(0.86 0.11 80);border-color:transparent;color:oklch(0.2 0.02 80);font-weight:600}
+      .vw .seg button[aria-pressed=true],.vw .row button[aria-pressed=true]{background:oklch(0.86 0.11 80);border-color:transparent;color:oklch(0.2 0.02 80);font-weight:600}
       .vw label{display:flex;align-items:center;gap:8px;min-height:28px;cursor:pointer;flex:1}.vw .row{display:flex;align-items:center}
       .vw .row button{min-height:26px;padding:0 9px;border:1px solid oklch(0.95 0.006 85 / .22);border-radius:5px;background:none;color:inherit;font:12px/1 inherit;cursor:pointer}
       .vw .row button:hover,.vw .seg button:hover{border-color:oklch(0.95 0.006 85 / .55)}.vw button:focus-visible{outline:2px solid oklch(0.86 0.11 80);outline-offset:2px}
@@ -103,7 +112,8 @@ export function startView(X) {
     const q = new URLSearchParams(location.search), low = q.get('quality') === 'low'; low ? q.delete('quality') : q.set('quality', 'low');
     box.innerHTML = `<h1>古城檢視 · ${(FILM.identity?.l1 || '').split(' · ')[0]}</h1>
       <div class="seg"><button type="button" data-look="film">成片</button><button type="button" data-look="check">檢查</button></div>
-      ${ERAS.map(e => `<div class="row"><label><input type="checkbox" data-era="${e.id}">${label(e.id)} <small style="display:inline">${e.id}</small></label><button type="button" data-go="${e.id}" title="整座城">全</button><button type="button" data-go="${e.id}:dense" title="房子最密的地方，近看" style="margin-left:4px">近</button></div>`).join('')}
+      ${ERAS.map(e => `<div class="row"><label><input type="checkbox" data-era="${e.id}">${label(e.id)} <small style="display:inline">${e.id}</small></label><button type="button" data-go="${e.id}" title="整座城">全</button><button type="button" data-go="${e.id}:dense" title="房子最密的地方，近看" style="margin-left:4px">近</button></div>`
+        + (eraBox[e.id].moments.length > 1 ? `<div class="row mo"><small style="flex:1">時刻</small>${eraBox[e.id].moments.map((m, k) => `<button type="button" data-mo="${e.id}:${k}" title="影片第 ${m.t} 秒" style="margin-left:4px">${k + 1}</button>`).join('')}</div>` : '')).join('')}
       <hr><div class="row"><label><input type="checkbox" data-today>今天的城（暗）</label></div><hr>
       <small>拖曳轉動 · 右鍵拖曳平移 · 滾輪遠近 · 方向鍵轉動 · 雙擊看那一點</small>
       <small><a href="?${q}">${low ? '成片畫質（較慢，有影子）' : '快速（低畫質，古城無影子）'}</a></small><div class="hud"></div>`;
@@ -111,11 +121,13 @@ export function startView(X) {
     const sync = () => {
       for (const b of box.querySelectorAll('[data-look]')) b.setAttribute('aria-pressed', String(b.dataset.look === st.look));
       for (const c of box.querySelectorAll('[data-era]')) c.checked = st.on.has(c.dataset.era);
+      for (const b of box.querySelectorAll('[data-mo]')) { const [id, k] = b.dataset.mo.split(':'); b.setAttribute('aria-pressed', String(st.at == null && (st.k[id] || 0) === +k)); }
       box.querySelector('[data-today]').checked = st.today;
     };
     box.addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return;
       if (b.dataset.look) st.look = b.dataset.look;
+      if (b.dataset.mo) { const [id, k] = b.dataset.mo.split(':'); st.k[id] = +k; st.at = null; st.on.add(id); }
       if (b.dataset.go) { st.on.add(b.dataset.go.split(':')[0]); goTo(b.dataset.go); }
       sync(); ask();
     });
@@ -127,9 +139,9 @@ export function startView(X) {
     sync(); window.__viewSync = sync;
   }
 
-  window.VIEWINFO = () => ERAS.map(e => ({ id: e.id, label: label(e.id), ...info(e.id), dense: [info(e.id + ':dense').x, info(e.id + ':dense').z] }));
+  window.VIEWINFO = () => ERAS.map(e => ({ id: e.id, label: label(e.id), ...info(e.id), dense: [info(e.id + ':dense').x, info(e.id + ':dense').z], moments: eraBox[e.id].moments }));
   window.VIEW = async (o = {}) => {
-    if (o.eras) st.on = new Set(o.eras.map(k => k.split(':')[0])); if (o.look) st.look = o.look; if (o.today != null) st.today = !!o.today;
+    if (o.eras) st.on = new Set(o.eras.map(k => k.split(':')[0])); if (o.look) st.look = o.look; if (o.today != null) st.today = !!o.today; if ('at' in o) st.at = o.at ?? null;
     if (o.target) { const t = o.target, c = typeof t === 'string' ? info(t) : t.length === 2 ? { x: t[0], y: S.ground(t[0], t[1]), z: t[1] } : { x: t[0], y: t[1], z: t[2] }; controls.target.set(c.x, c.y, c.z); }
     const w = where(); place(o.az ?? w.az, o.el ?? w.el, o.d ?? w.d);
     if (window.__viewSync) window.__viewSync();

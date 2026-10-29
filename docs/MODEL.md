@@ -34,9 +34,12 @@ outside, so a near wall goes missing and the inner side of the far wall shows th
 densest houses from eight bearings at two heights, its four largest landmarks from four bearings each (where a stair, a tree or a road meets a big building)
 and the whole city from four, in the film's look and in a check look (plain white, everything sharp, the key light fixed in the room, so a face
 is seen to turn from lit to shade as the camera goes round), one sheet per city and look in `build/review/eraview/`. Look at every sheet before reporting: a fault on one side of a house does not
-show in a still from the other side. The same scene is a page for looking round by hand, with the user or alone: `play.html?city=<slug>&view` (printed by `tools/preview.mjs`; drag to turn,
+show in a still from the other side. Each city is shown as it stands at a moment of the film, never with a part and what replaced it at once: a city that loses parts while
+it stands (`lose:`) at the fewest moments that between them show every part of it whole (just before each loss that takes a part not yet shown, and once its last part has
+risen), one set of sheets each (`<era>_m<k>_<look>.jpg`); `--at <seconds>` takes one moment of the film instead. The same scene is a page for looking round by hand, with the user or alone: `play.html?city=<slug>&view` (printed by `tools/preview.mjs`; drag to turn,
 right-drag to move, the wheel to come closer, the arrow keys to turn, a double click to look at a point; tick the period cities to show, each at its place on the plate; 全 / 近 for the whole city or
-its houses up close; 成片 / 檢查 for the two looks; `&quality=low` is faster and leaves out the period cities' shadows).
+its houses up close; 成片 / 檢查 for the two looks; 時刻 1, 2 .. for the moments of a city that loses parts; `&at=<seconds>` shows every city ticked at that moment of the film;
+`&quality=low` is faster and leaves out the period cities' shadows).
 **Every compile checks the period cities' models** (geocheck, and clipcheck: things standing in one another, a tree in a house, a street stopping short) and stops when
 one fails, after writing the film, naming the check and its log (`build/logs/geocheck.log`, `clipcheck.log`); fix the model and compile again, never set the check to warn
 for the film (`CT_MODELCHECK=warn` is for model studies, tools/modelview.py). **A street ends at something:** another street, a gate, the foot of the stair or the face of

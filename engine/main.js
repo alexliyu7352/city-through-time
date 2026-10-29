@@ -5,6 +5,7 @@ import { clamp, lerp, seg, ss, eio, eo, ei, track } from './lib.js';
 import { makeStudio, NMAX, EMAX } from './studio.js';
 import { makeOverlay, W, H, SUB, font, setFonts, setUI, REPO } from './overlay.js';
 import * as L from './load.js';
+import { moments as eraMoments, whole as standsWhole } from './eralife.js';
 
 const QS = new URLSearchParams(location.search);
 const CITY = QS.get('city');
@@ -75,13 +76,16 @@ const CTXK = FILM.context && FILM.context.keys.length ? track(FILM.context.keys)
 for (const p of FILM.props || []) S.addProp(p);
 for (const r of FILM.routes || []) S.addRoute(r.id, r.pts, r.col, r.w);
 // era cities: one generated city per period
-const ERABOX = {};   // each period city's extent on the plate [x0, z0, x1, z1] and its densest 200 m square [x, z] (the viewer, ?view)
+const ERABOX = {};   // each period city's extent on the plate [x0, z0, x1, z1]; for the viewer (?view) the moments it is shown at (engine/eralife.js), each with its densest 200 m square [x, z] then
 for (const e of FILM.eras || []) {
   const J = await L.json(B + e.file); S.addEra(e.id, J.prims, e.col, J.lost || null);
   const b = J.prims.reduce((b, p) => [Math.min(b[0], p[1]), Math.min(b[1], p[2]), Math.max(b[2], p[1]), Math.max(b[3], p[2])], [Infinity, Infinity, -Infinity, -Infinity]);
-  const cell = 200 * M.scale, n = new Map(); let top = null;
-  for (const p of J.prims) { const k = `${Math.floor(p[1] / cell)},${Math.floor(p[2] / cell)}`, c = (n.get(k) || 0) + 1; n.set(k, c); if (!top || c > top[1]) top = [k, c]; }
-  ERABOX[e.id] = { box: b, dense: top ? top[0].split(',').map(v => (+v + .5) * cell) : [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2] };
+  ERABOX[e.id] = { box: b };
+  if (QS.has('view')) ERABOX[e.id].moments = eraMoments(e, J.prims, J.lost).map(t => {
+    const cell = 200 * M.scale, n = new Map(); let top = null;
+    J.prims.forEach((p, i) => { if (!standsWhole(e, p[10], J.lost ? J.lost[i] : 0, t)) return;
+      const k = `${Math.floor(p[1] / cell)},${Math.floor(p[2] / cell)}`, c = (n.get(k) || 0) + 1; n.set(k, c); if (!top || c > top[1]) top = [k, c]; });
+    return { t, dense: top ? top[0].split(',').map(v => (+v + .5) * cell) : [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2] }; });
   if (e.sinkStyle === 'burn') { const seen = new Set(), cs = [];   // one spark source per building
     for (const p of J.prims) { const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`; if (p[11] === 4 || p[11] === 5 || p[11] === 7 || seen.has(k)) continue; seen.add(k); cs.push([p[15] ?? p[1], p[16] ?? p[2]]); }
     S.addFire(e.id, cs, S.ground); }
@@ -279,6 +283,20 @@ function epochAlpha(t, e) {
   }
   return a;
 }
+// a period city's own shape at a moment of the film: each building's rise (its stage), its pools, the parts it has lost
+// (setLayers; the viewer, ?view, at the moment it shows the city)
+function eraShape(e, t) {
+  const E = S.eras[e.id], SD = e.fallDur || 1.4, FR = e.fallR;
+  E.u.uEraT.value = t - e.on; E.u.uEraSpan.value = e.span; E.u.uEraGrow.value = e.grow;
+  for (const b of e.basins || []) { const st = e.on + b.rank * e.span, q = b.lost ? e.losses[b.lost - 1] : null;
+    U.uBasinA.value[b.k] = ss(seg(t, st, st + e.grow)) * (1 - ringK(b.c, FR, t, SD)) * (1 - (q && !b.draped ? ringK(b.c, q, t, SD) : 0));
+    if (b.draped && q) {   // a draped pool is the plate: its water goes point by point as its loss's ring passes (studio wmask)
+      const R = curveAt(q.curve, t), R1 = curveAt(q.curve, t - SD);
+      U.uBasinL.value[b.k].set(q.o[0], q.o[1], R, q.mode === 'in' ? Math.max(R1, R + 1e-5) : Math.min(R1, R - 1e-5)); } }   // (which side of R tells the ring's way)
+  (e.losses || []).forEach((q, j) => {   // a part of the city lost while the rest stands (compile lose:): its own ring, its own fire
+    E.u.uLossR.value[j] = curveAt(q.curve, t); E.u.uLossW.value[j] = curveAt(q.curve, t - SD); E.u.uLossIn.value[j] = q.mode === 'in' ? 1 : 0;
+    E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0; });
+}
 function setLayers(t) {
   { let sk = 0, sp = null;   // spot (film.spots): the light falls on one subject, the rest of the room goes dark
     for (const q of FILM.spots || []) { const a = ss(seg(t, q.t0, q.t0 + q.fade)) * (1 - ss(seg(t, q.t1 - q.fade, q.t1))); if (a > sk) { sk = a; sp = q; } }
@@ -373,16 +391,8 @@ function setLayers(t) {
     const fr = FR ? curveAt(FR.curve, t) : (fin ? 1e3 : -1), fr1 = FR ? curveAt(FR.curve, t - SD) : fr;
     const gone = FR != null && t > FR.gone;
     E.mesh.visible = tE > -.01 && !gone;
-    E.u.uEraT.value = tE; E.u.uEraSpan.value = e.span; E.u.uEraGrow.value = e.grow;
+    eraShape(e, t);
     E.u.uEraFallR.value = fr; E.u.uEraFallIn.value = fin ? 1 : 0; E.u.uEraFallW.value = fr1; E.u.uEraO.value.set(fo[0], fo[1]);
-    for (const b of e.basins || []) { const st = e.on + b.rank * e.span, q = b.lost ? e.losses[b.lost - 1] : null;
-      U.uBasinA.value[b.k] = ss(seg(t, st, st + e.grow)) * (1 - ringK(b.c, FR, t, SD)) * (1 - (q && !b.draped ? ringK(b.c, q, t, SD) : 0));
-      if (b.draped && q) {   // a draped pool is the plate: its water goes point by point as its loss's ring passes (studio wmask)
-        const R = curveAt(q.curve, t), R1 = curveAt(q.curve, t - SD);
-        U.uBasinL.value[b.k].set(q.o[0], q.o[1], R, q.mode === 'in' ? Math.max(R1, R + 1e-5) : Math.min(R1, R - 1e-5)); } }   // (which side of R tells the ring's way)
-    (e.losses || []).forEach((q, j) => {   // a part of the city lost while the rest stands (compile lose:): its own ring, its own fire
-      E.u.uLossR.value[j] = curveAt(q.curve, t); E.u.uLossW.value[j] = curveAt(q.curve, t - SD); E.u.uLossIn.value[j] = q.mode === 'in' ? 1 : 0;
-      E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0; });
     E.u.uEraA.value = Math.max(e.tint, later(e, nodes_[ci]) ? (nodes_[ci].era_tint ?? nodes_[ci].tint) : 0) * (1 - .5 * today);   // a later node recolours at its own strength
     const burn = e.sinkStyle === 'burn' && e.off != null ? ss(seg(t, e.off - e.burn, e.off - e.burn * .55)) : 0;   // the city catches fire, then falls
     const up = upAt(e, t);
@@ -605,7 +615,7 @@ window.render(QS.has('t') ? +QS.get('t') : 0);
 // the period cities' viewer (?view, engine/view.js): this scene and light without the timeline, the camera the viewer's
 if (QS.has('view')) {
   document.getElementById('ov').style.display = 'none';
-  (await import('./view.js')).startView({ S, FILM, QS, W, H, scale: M.scale, setLight, setLayers, lens, cityMesh: CITYMESH, eraBox: ERABOX, takeChannel,
+  (await import('./view.js')).startView({ S, FILM, QS, W, H, scale: M.scale, setLight, setLayers, eraShape, lens, cityMesh: CITYMESH, eraBox: ERABOX, takeChannel,
     setDist: (d, el) => { camDist = d; camElev = el; },
     quiet: () => {   // what setLayers lays at a moment of the film that is not the period cities: off
       for (let i = 0; i < EMAX; i++) U.uEpA.value[i] = 0;
