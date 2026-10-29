@@ -1443,6 +1443,14 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                     B.kiln(kx, ky, a_, g=ground_m(kx, ky))
                 else: B.gable_house(kx, ky, th + B.rng.uniform(-.4, .4), B.rng.uniform(9, 16), B.rng.uniform(5, 7), B.rng.uniform(4, 5.5), part=FAB)
             continue
+        elif k == 'pool' and L.get('level') == 'draped':   # where it was, not how high: its water laid on today's ground, tile by tile along the slope
+            P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']; nu, nv = max(1, math.ceil(w_ / 16)), max(1, math.ceil(d_ / 16)); tu, tv = w_ / nu, d_ / nv
+            for i in range(nu):
+                for j in range(nv):
+                    cx_, cy_ = P(-w_ / 2 + (i + .5) * tu, -d_ / 2 + (j + .5) * tv); h_ = 2.0
+                    gx_ = (B.ground_m(cx_ + h_, cy_) - B.ground_m(cx_ - h_, cy_)) / (2 * h_); gy_ = (B.ground_m(cx_, cy_ + h_) - B.ground_m(cx_, cy_ - h_)) / (2 * h_)
+                    s0_ = B.slope; B.slope = (gx_, gy_); B._emit(BOX, cx_, cy_, th, 0, tu + .05, tv + .05, .3, part=WATER); B.slope = s0_
+            B.found = 0.0
         elif k == 'pool':   # a dug basin: its water at the lowest point of its rim, the ground inside lowered below it (compile's basin map)
             P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']; ring_ = [P(-w_ / 2, -d_ / 2), P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2), P(-w_ / 2, d_ / 2)]
             rim = [B.ground_m(a[0] + (b[0] - a[0]) * i / n_, a[1] + (b[1] - a[1]) * i / n_) for a, b in zip(ring_, ring_[1:] + ring_[:1])
@@ -1451,7 +1459,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
             if bank > float(L.get('banks_m', 6.0)):
                 raise SystemExit(f"citygen: pool {L.get('id') or L.get('name') or ''} at {L['lon']:.5f}, {L['lat']:.5f}: today's ground rises {bank:.1f} m round it "
                                  f"(its rim from {min(rim):.1f} to {max(rim):.1f} m): dug there, it would stand in a {bank:.0f} m pit. Check its place and size against "
-                                 f"the source (today's ground is not the ancient one: docs/MODEL.md); a basin truly dug that deep writes banks_m with its basis")
+                                 f"the source (today's ground is not the ancient one: docs/MODEL.md); a basin truly dug that deep writes banks_m with its basis; one whose ancient ground is lost writes level: draped")
             B._emit(BOX, x, y, th, 0, w_, d_, .3, part=WATER, g_m=top - .3); B.found = 0.0
             B.basins.append({'ring': ring_, 'top_m': round(top, 3), 'gid': B.gid})
         elif k == 'platform':   # a bare rammed-earth platform (e.g. the Epang front hall: never finished), walls on the given sides
