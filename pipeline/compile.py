@@ -376,7 +376,7 @@ def match(sel, tag):
     v = sel.get(tag[0]); return v is True or (isinstance(v, list) and tag[1] in v)
 
 LOSE_KEYS = {'id', 'at', 'select', 'region', 'keep', 'style', 'ring', 'from', 'dur', 'burn', 'for'}
-LOSE_MAX = 4   # (engine/studio.js LMAX: the losses one city can have)
+LOSE_MAX = 8   # (engine/studio.js LMAX: the losses one city can have)
 
 def lost_parts(prims, meta, cs, node_id):
     """which part of the city each `lose:` takes (docs/MODEL.md "A part of a city lost"): per primitive 0 (stays) or the
