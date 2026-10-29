@@ -66,6 +66,8 @@ Subagents and parallel work
 - **Models:** a subagent runs on the main agent's own model or on the one a tier below it (the same provider's next lighter model), never on a stronger one, and never two tiers
   below. A stronger model, or a level above the main agent's, can spend the user's whole quota on one piece. When a piece seems to need a stronger model than the main
   agent's, ask the user first, with the reason; do not start it.
+- **Wait for the subagents in the same turn.** After starting them, wait for each to finish (the environment's wait call), then collect, review and report, all before the turn
+  ends: a session that ends its turn while its subagents work may not wake when they finish, and their work sits until someone writes to it.
 - **Review before merging.** The main agent checks each piece against its step's done line and the rules before it goes into the film; a piece sent back goes to the same subagent with the
   reason (it keeps its context), not to a new one. The user's approvals (★ in the table) are asked by the main agent.
 
