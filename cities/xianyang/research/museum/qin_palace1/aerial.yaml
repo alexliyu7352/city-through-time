@@ -1,0 +1,20 @@
+# Scene card: museum page qin_palace1, viewpoint aerial (tools/living.py qin_palace1/aerial; docs/MUSEUM.md). Every detail from
+# research/qin_palaces.md (§1-A, 1-B, 1-C, §2, §7) unless marked; the model's own estimates are drawn as the model has them.
+place: Palace No. 1 of the Qin palace at Xianyang (咸阳宫一号宫殿), two matching terrace halls side by side on the edge of the loess terrace north of the Wei river, joined by a covered gallery
+when: the Qin capital Xianyang in the late 3rd century BCE, under the Qin dynasty, a clear dry day, soft morning sun
+picture: |
+  Seen from high above the south, looking down on both terrace halls and the gallery between them.
+  Each hall: a broad platform of rammed yellow-brown loess earth about 6 m high; round its foot a covered walk under a sloping roof of grey fired-clay tiles carried on plain timber posts, the walk's outer edge a strip of river pebbles bordered with square grey bricks.
+  On each platform's top: an open terrace of smoothed earth on the south side behind a low earthen wall; single-storey rooms with grey tiled roofs round a small court on the north side; in the middle the two-storey main hall with a deep tiled eave over its lower floor and a broad grey tiled roof on top.
+  A stair of earth and large grey hollow bricks climbs each platform's south face.
+  Between the two halls, a long covered timber gallery with a grey tiled roof bridges the open way at the height of the platforms' tops, on two earthen piers.
+  Around them, level open ground of trodden loess, bare and dry, with a few footpaths. The light from the south-east casts the halls' shadows to the north-west.
+  A few small figures in long dark robes on the terraces.
+avoid: upturned or curving roof corners and curved ridges, yellow or green or blue glazed tiles, red-lacquered or painted columns, carved stone or marble balustrades, white marble terraces, dragon or animal figures on the ridges, pagodas, crenellated brick walls, gardens or trees on the terraces, other buildings close round the halls, horses or carts, any modern thing, text, signs
+sources:
+  - research/qin_palaces.md §1-A (platform 6 m, 60 x 45 m half, twin halves 177 m, rammed earth)
+  - research/qin_palaces.md §1-B (rooms in and on the platform; the two-storey main hall and its open terrace)
+  - research/qin_palaces.md §1-C (the covered walk round the platform; pebble drip-paving bordered with square bricks, S5)
+  - research/qin_palaces.md §2 (Yang Hongxun's reconstruction: rooms round the top, the open terrace to the south, the gallery joining the two halves)
+  - research/qin_palaces.md §7 (pottery roof tiles and round eave tiles; large hollow bricks for steps)
+  - 《史记·秦始皇本纪》「衣服旄旌节旗皆上黑」 (black dress under the Qin dynasty, as city.yaml's empire node)

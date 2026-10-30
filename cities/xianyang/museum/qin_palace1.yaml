@@ -1,0 +1,170 @@
+# A museum page for one landmark (docs/MUSEUM.md): Palace No. 1 of the Qin palace at Xianyang, the twin terrace hall of the qin
+# node (city.yaml, kind taixie). tools/museum.py builds it into build/museum/; museum.html?city=xianyang&id=qin_palace1 shows it.
+# Facts: research/qin_palaces.md §0-2, §7 and research/qin_layout.md Q2; the codes in cite: are the sources below.
+id: qin_palace1
+node: qin
+landmark: { kind: taixie, lon: 108.8575, lat: 34.4143 }
+exaggeration: 1           # the heights as built: the platform's 6 m is 6 m (the film draws this landmark 1.25 times as tall)
+stage_m: [700, 600]       # the flat stand it is shown on, wide enough to fill every viewpoint's ground (the gully that cuts the site today formed after Qin: L1)
+
+name: { zh: 咸阳宫一号宫殿, en: Palace No. 1 of the Xianyang Palace }
+era: { zh: 战国中晚期始建，此后多次维修、改建, en: "Built in the mid to late Warring States period, repaired and rebuilt many times after" }
+where: { zh: 秦都咸阳宫城的北部，咸阳原的原边上（今牛羊沟西侧）, en: "In the north of the palace city of Qin Xianyang, on the edge of the loess terrace (beside today's Niuyang gully)" }
+
+label:   # the museum label: what it was, what we know and how; plain words, every fact from the sources (cite)
+  - head: { zh: 这是什么, en: What it was }
+    text:
+      zh: 一号宫殿是秦都咸阳宫城里的一座高台宫殿。先用夯土筑起一座高约 6 米的大台，台的里面、台的上面都盖着房子，台顶正中是一座两层楼的主殿。整组宫殿东西长约 177 米，左右两半对称，平面像一个「凹」字。考古学家推断它始建于战国中晚期，以后多次维修、改建。公元前 206 年，项羽进咸阳，「烧秦宫室，火三月不灭」。
+      en: >-
+        Palace No. 1 was a terrace palace in the palace city of the Qin capital, Xianyang. A great platform of rammed earth,
+        about 6 m high, was built first; rooms were set into it and built on top of it, and in the middle of the top stood a
+        two-storey main hall. The whole group ran about 177 m from east to west, in two matching halves, shaped like a wide U.
+        Archaeologists date it to the middle or late Warring States period, with many repairs and rebuildings after that. In
+        206 BCE Xiang Yu took Xianyang and "burned the palaces of Qin; the fire did not die for three months".
+    cite: [L1, S1, S2, S3, SJ]
+  - head: { zh: 我们怎么知道, en: How we know }
+    text:
+      zh: 秦咸阳宫的考古从 1973 年开始。一号宫殿的台基被后来冲出的牛羊沟从中间切开：沟东已成平地，沟西还剩一段长 31 米、高 6 米的夯土台。考古队只清理了西半座：西半座台约东西 60、南北 45 米，台里南面 5 间、北面 2 间房，台顶主殿约 13.4 × 12 米，地面涂成朱红色，房里有壁画碎片、壁炉、陶地漏和排水管。最早的发掘简报登在《文物》1976 年第 11 期，我们没能读到原文；这里的数字来自转述它的论文和文章。台顶房间的布局、屋顶的样子和两半之间的飞阁，都按杨鸿勋的复原推测。
+      en: >-
+        Digging at the Qin palace began in 1973. A gully cut later through the middle of Palace No. 1: east of it the ground is
+        now flat, and west of it a stretch of rammed earth 31 m long and 6 m high survives. Only the western half was cleared.
+        That half is about 60 m east to west and 45 m north to south, with five rooms let into its south side and two into its
+        north side; the main hall on top was about 13.4 by 12 m, its floor painted red, and the rooms held fragments of wall
+        paintings, a fireplace, a pottery floor drain and drain pipes. The first excavation report appeared in Wenwu 1976 no. 11;
+        we could not read it, and the figures here come from papers and articles that relay it. The layout of the rooms on top,
+        the roofs and the gallery between the two halves follow Yang Hongxun's reconstruction.
+    cite: [L1, S2, S3, S1, R1, R2]
+  - head: { zh: 这座模型, en: This model }
+    text:
+      zh: 白模由程序按上面的尺寸生成，高度照原样，没有放大。有考古或文献依据的部分和按复原推测的部分可以分开看：打开「有据 / 推测」，再点任何一个构件，就能看到史料怎么说。地面画成平的：今天切开遗址的牛羊沟，是秦亡以后才冲出来的。
+      en: >-
+        The white model is generated from the sizes above, at its true height, not stretched. The parts that rest on
+        excavation or texts can be told from the parts estimated from the reconstruction: turn on "Sourced / estimated", then
+        click any part to see what the sources say. The ground is drawn flat: the gully that cuts the site today formed after
+        the fall of Qin.
+    cite: [L1]
+
+life:   # life in that time: what the rooms held, and the Qin pictures the film already has
+  text:
+    zh: 宫里的日子，从遗址里的东西看得出几分。台南一排房间，西边四间是卧室，出土了壁画残片和陶纺轮，可能住着宫中的女子；最东一间有取暖的壁炉、大陶地漏和排水管，应是浴室，角落里还挖了储存食物的窖穴。宫里有让肉不容易坏的冷藏窖。宫室的地面先铺红烧土、抹粗草泥和细糠泥，再用卵石磨光，最后涂一层朱砂。屋檐下的瓦当，九成以上是云纹。
+    en: >-
+      The finds hint at daily life in the palace. In the row of rooms on the south side, the four to the west were bedrooms,
+      with fragments of wall paintings and pottery spindle whorls: perhaps the rooms of palace women. The easternmost room had
+      a fireplace for warmth, a large pottery floor drain and drain pipes: a bathroom, with a pit for storing food dug in one
+      corner. The palace also had cold pits that kept meat from spoiling. Floors were laid in burnt red earth, coated with
+      straw mud and fine husk mud, polished with pebbles and painted with cinnabar. Over nine in ten of the round
+      eave tiles carry cloud patterns.
+  cite: [S2, S8, S7]
+  pictures:   # the film's imagined Qin scenes (city.yaml footage f_qin_build, f_qin_market), with their labels
+    - { file: assets/imagined/qin_build.jpg, zh: 商鞅营建咸阳 · 根据史料想象, en: "Building the new capital, 350 BCE (imagined from the sources)", credit: { zh: 根据《史记》与考古资料想象 · AI 生成（Codex）, en: "Imagined from the Shiji and the archaeology · AI-generated (Codex)" } }
+    - { file: assets/imagined/qin_market.jpg, zh: 咸阳的市集与统一的量器 · 根据史料想象, en: "A Xianyang market and its standard measures (imagined from the sources)", credit: { zh: 根据《史记》与考古资料想象 · AI 生成（Codex）, en: "Imagined from the Shiji and the archaeology · AI-generated (Codex)" } }
+  photo:   # how we know: the 1962 excavation (public domain)
+    { file: assets/photos_cc/qin_dig_1962.jpg, zh: 1962 年，陕西发掘咸阳秦代遗址, en: "Excavating the Qin capital at Xianyang, 1962", credit: { zh: 《人民画报》1962-05 · Wikimedia Commons · 公有领域, en: "China Pictorial, May 1962 · Wikimedia Commons · public domain" } }
+
+# the model's parts: each record goes to the first part whose labels (citygen's taixie: west/east twin, then its sections) and
+# kinds (roof: the roofs) it matches. status: sourced (an excavation report or a text relaying it says so) or estimated (from a
+# reconstruction, or a guess); where it is unclear, estimated
+parts:
+  - id: roofs
+    labels: [west/*, gallery]
+    kinds: [roof]
+    status: estimated
+    name: { zh: 屋顶, en: Roofs }
+    note:
+      zh: 屋顶没有留下来，文字里也没写屋顶是什么式样。出土的瓦当多是云纹圆瓦当。模型的屋顶式样是照杨鸿勋复原图推测的。
+      en: No roof survives and no text gives the roof forms. The eave tiles found are mostly round, with cloud patterns. The roof forms of the model are estimated from Yang Hongxun's reconstruction drawings.
+    cite: [S1, S3, R2]
+  - id: twin
+    labels: [east/*]
+    status: estimated
+    name: { zh: 东半座, en: The eastern half }
+    note:
+      zh: 整组宫殿跨在今天牛羊沟的两侧，左右对称，但只清理了西半部；沟东今天已是平地。模型把东半座画成西半座的镜像。
+      en: The group spans both sides of today's gully and is symmetrical, but only the western half was cleared; east of the gully the ground is now flat. The model draws the eastern half as a mirror image of the western one.
+    cite: [S3, L1]
+  - id: platform
+    labels: [west/platform]
+    status: sourced
+    name: { zh: 夯土台基, en: The rammed-earth platform }
+    note:
+      zh: 台高 6 米。西半座台约东西 60、南北 45 米，平面略呈 L 形；宫殿先从地面以下整体夯土，深可达 4 米。模型把台画成长方形，L 形的缺角没有画出来。
+      en: The platform is 6 m high. The western half is about 60 m east to west and 45 m north to south, roughly L-shaped; the rammed earth begins below the ground, up to 4 m deep. The model draws it as a rectangle, without the L's missing corner.
+    cite: [L1, S2, S8]
+  - id: rooms
+    labels: [west/rooms]
+    status: sourced
+    name: { zh: 台里的房间, en: Rooms inside the platform }
+    note:
+      zh: 下层的房间都在台体里面：南侧 5 间，北侧 2 间。南排西边 4 间是卧室；最东一间有壁炉、陶地漏和排水管，应是浴室。模型只画出房门，门的位置和大小是推测的。
+      en: The lower rooms are all inside the platform, five on the south side and two on the north. The four western rooms on the south were bedrooms; the easternmost had a fireplace, a pottery floor drain and drain pipes, likely a bathroom. The model shows only their doors, whose places and sizes are estimated.
+    cite: [S1, S2]
+  - id: walk
+    labels: [west/walk]
+    status: sourced
+    name: { zh: 回廊, en: The covered walk }
+    note:
+      zh: 台基四周修有回廊，环绕全台，廊外沿铺着用方砖镶边的卵石散水。也有文章说回廊只在南、西、北三面；模型按四面画。廊顶的样子是推测的。
+      en: A covered walk ran round the whole platform, its outer edge paved with pebbles bordered by square bricks to carry off the rain. Another account gives it on three sides only (south, west, north); the model draws all four. Its roof is estimated.
+    cite: [S1, S5, S2]
+  - id: terrace
+    labels: [west/terrace]
+    status: sourced
+    name: { zh: 台顶与露台, en: The top and its open terrace }
+    note:
+      zh: 主殿前面有露台。杨鸿勋的复原在台面南部留出宽大的露台。台边的矮墙是推测的。
+      en: An open terrace lay in front of the main hall; Yang Hongxun's reconstruction leaves a wide terrace on the south of the top. The low wall at its edge is estimated.
+    cite: [S1, R2]
+  - id: halls
+    labels: [west/halls]
+    status: estimated
+    name: { zh: 台顶四周的房间, en: Rooms round the top }
+    note:
+      zh: 文章说主殿东边连着一间有壁炉的小房间，西边有慢道上楼。杨鸿勋复原：台顶西部 2 间、东南角 1 间、东北部是转角敞厅，四周绕着回廊。模型画成围着主殿的一圈单层房屋，具体布局是推测的。
+      en: Accounts give a small room with a fireplace east of the main hall, and a ramp up to its upper floor on the west. Yang Hongxun's reconstruction has two rooms on the west, one in the south-east corner and an open corner hall in the north-east, all with walks round them. The model draws a ring of single-storey rooms round the main hall; their layout is estimated.
+    cite: [S1, R2]
+  - id: main
+    labels: [west/main]
+    status: sourced
+    name: { zh: 主殿, en: The main hall }
+    note:
+      zh: 台基中央的主殿东西 13.4 米、南北 12 米，南、北墙各开两道门，东墙一道；正中有一根直径 60 厘米的「都柱」，地面涂成朱红色，殿上还有一层楼。模型的主殿连同四周的走廊一起画，比 13.4 × 12 米的殿室大。
+      en: The main hall in the middle of the platform measured 13.4 m east to west and 12 m north to south, with two doors in the south and north walls and one in the east wall; a central post 60 cm across stood in the middle, the floor was painted red, and there was an upper floor. The model draws the hall with the walks round it, larger than the 13.4 by 12 m room.
+    cite: [S2, S1]
+  - id: stair
+    labels: [west/stair]
+    status: estimated
+    name: { zh: 台阶, en: The stair }
+    note:
+      zh: 文章说楼梯设在东西两端，又说西侧有慢道上楼；踏步用大型空心砖。模型在台的南面画了一道台阶，位置是推测的。
+      en: Accounts put the stairs at the east and west ends, and a ramp on the west; the steps were large hollow bricks. The model draws one stair up the south face; its place is estimated.
+    cite: [S6, S1, S3]
+  - id: gallery
+    labels: [gallery]
+    status: estimated
+    name: { zh: 飞阁, en: The flying gallery }
+    note:
+      zh: 复原研究认为，两座高台之间有一道跨过谷道的飞阁把它们连成一体。飞阁的长短、高低和下面的墩子都是推测的。
+      en: The reconstruction joins the two terraces with a gallery bridging the way between them. Its length, height and the piers under it are estimated.
+    cite: [S3, R2]
+
+# the viewpoints: each a camera round the building's centre (az as the film's camera keys count it: 0 the camera south of it,
+# 90 east; el up from level; d_m the distance; at_m [east, north, up] metres from the centre to what it looks at), 50 degrees
+# or more apart. Each has a picture (tools/living.py, its scene card research/museum/qin_palace1/<id>.yaml); main: the page opens there
+viewpoints:
+  - { id: front, main: true, at_m: [-10, 0, 9], az: 328, el: 17, d_m: 262, fov: 38, name: { zh: 西南望, en: From the south-west } }
+  - { id: aerial, at_m: [0, 0, 6], az: 15, el: 55, d_m: 300, fov: 36, name: { zh: 高处俯瞰, en: From above } }
+  - { id: northwest, at_m: [-30, 0, 8], az: 222, el: 14, d_m: 200, fov: 38, name: { zh: 西北望, en: From the north-west } }
+  - { id: street, at_m: [-50, -5, 9], az: 30, el: -6.5, d_m: 62, fov: 50, name: { zh: 台下, en: At the foot } }
+
+sources:   # cite codes: research/qin_palaces.md (its source table) and the primary texts; short: how a note names it
+  L1: { short: { zh: "桑广书 2005", en: "Sang 2005" }, zh: 桑广书〈秦末以来秦都咸阳地貌演变〉，《地理科学》25(6)，2005（数据由秦咸阳宫遗址博物馆提供）, en: "Sang Guangshu, 'Landform changes at the Qin capital Xianyang since the end of Qin', Scientia Geographica Sinica 25(6), 2005", url: "https://www.sciengine.com/doi/pdf/36CB7AB137A94D54AED85EE6F31B2C87" }
+  S1: { short: { zh: "〈空前宏伟的宫殿〉", en: "“An unprecedented palace”" }, zh: 〈空前宏伟的宫殿〉（考古百年·秦代文明，网站文字）, en: "'An unprecedented palace' (A Century of Archaeology: Qin, web text)", url: "http://rongwp.com/kaogu/kaoC1.html" }
+  S2: { short: { zh: "翟德芳 2025", en: "Zhai 2025" }, zh: 翟德芳〈秦都咸阳：世界最早的开放性大城〉，2025-02-13, en: "Zhai Defang, 'Qin Xianyang: the earliest open city', 2025-02-13", url: "https://finance.sina.com.cn/stock/wbstock/2025-02-13/doc-inekhpws8797610.shtml" }
+  S3: { short: { zh: "遗址公园词条", en: "Park entry" }, zh: 秦咸阳城咸阳宫国家考古遗址公园（买购网词条；中国华夏文化遗产基金会页面文字相同）, en: "Xianyang Palace National Archaeological Park (maigoo entry; the same text on the China Foundation for Cultural Heritage page)", url: "https://m.maigoo.com/citiao/139064.html" }
+  S5: { short: { zh: "新浪博客 2020", en: "Sina blog 2020" }, zh: 新浪博客「二叶舞鹤草」〈秦咸阳城遗址〉，2020, en: "'The Qin Xianyang city site', Sina blog, 2020", url: "https://blog.sina.com.cn/s/blog_65ac3c910102z0y6.html" }
+  S6: { short: { zh: "新法家网 2006", en: "xinfajia 2006" }, zh: 〈伟大的秦汉建筑〉，新法家网转载，2006, en: "'The great buildings of Qin and Han', xinfajia.net, 2006", url: "https://www.xinfajia.net/1811.html" }
+  S7: { short: { zh: "陕西历史博物馆", en: "Shaanxi History Museum" }, zh: 陕西历史博物馆〈文物说说——寻踪系列（十二）：秦咸阳城遗址〉, en: "Shaanxi History Museum, 'Tracing the sites (12): Qin Xianyang'", url: "https://www.sohu.com/a/625599046_121119019" }
+  S8: { short: { zh: "咸阳博物院", en: "Xianyang Museum" }, zh: 咸阳博物院〈《大秦赋》里的咸阳宫原貌是这样的……〉, en: "Xianyang Museum, 'What Xianyang Palace really looked like'", url: "https://www.sohu.com/a/439150617_695009" }
+  R1: { short: { zh: "发掘简报 1976", en: "Excavation report 1976" }, zh: 秦都咸阳考古工作站〈秦都咸阳第一号宫殿建筑遗址简报〉，《文物》1976 年第 11 期，12–24 页（未读到原文）, en: "Qin Capital Xianyang Archaeological Station, 'Brief report on the site of Palace No. 1', Wenwu 1976 no. 11, pp. 12-24 (not read)" }
+  R2: { short: { zh: "杨鸿勋 1976", en: "Yang 1976" }, zh: 陶复（杨鸿勋）〈秦咸阳宫第一号遗址复原问题的初步探讨〉，《文物》1976 年第 11 期；复原图见《北京规划建设》2018〈我国高台建筑的源起与消失〉转载, en: "Tao Fu (Yang Hongxun), 'A first study of the reconstruction of Site No. 1 of the Xianyang Palace', Wenwu 1976 no. 11; drawings as reprinted in Beijing Planning Review 2018", url: "https://www.sohu.com/a/250474040_651721" }
+  SJ: { short: { zh: "《史记》", en: "Shiji" }, zh: 《史记·项羽本纪》：「烧秦宫室，火三月不灭」, en: "Shiji, Annals of Xiang Yu: 'burned the palaces of Qin; the fire did not die for three months'", url: "https://zh.wikisource.org/wiki/史記/卷007" }
