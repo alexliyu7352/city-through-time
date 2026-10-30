@@ -241,7 +241,10 @@ def main():
         fb = [p for p in ground if p[0] == 0 and p[11] in (FAB, LMK) and p[8] != 1 and not (p[13] or p[14]) and min(p[5], p[6]) >= 2 * S]
         fr = np.array([[max(0.0, p[12] - p[4] - SKIRT * S * tex), top[(p[15], p[16]) if len(p) > 16 else (p[1], p[2])] - p[12]] for p in fb]).reshape(-1, 2)
         fr = fr[fr[:, 1] > 0]; ratio = fr[:, 0] / fr[:, 1] if len(fr) else np.zeros(0)
-        p90 = float(np.percentile(ratio, 90)) if len(ratio) else 0.0
+        # (the share is of the era's houses and halls: one laid along its sloping lot (sheared) shows no foundation of its own, so it
+        # counts as none; without them a hill city's few level bodies were all there was, and one stadium end decided it)
+        flat0 = np.zeros(sum(1 for p in ground if p[0] == 0 and p[11] in (FAB, LMK) and p[8] != 1 and (p[13] or p[14]) and min(p[5], p[6]) >= 2 * S))
+        p90 = float(np.percentile(np.concatenate([ratio, flat0]), 90)) if len(ratio) else 0.0
         R['tall_foundation'] = int((ratio > FOUND_MAX).sum()) if p90 > FOUND_MAX else 0
         sug = None
         if fields is not None and len(fb):
@@ -251,7 +254,7 @@ def main():
             la, fi = fields(pts[..., 0], pts[..., 1])
             fall = lambda ex: (la * ex + fi).max(axis=1) - (la * ex + fi).min(axis=1)
             now = fall(tex) + .1   # (+ 0.1 m: a body the nine points find flat keeps its ratio)
-            ok = [ex for ex in np.arange(1.0, 10.01, .5) if np.percentile(ratio * (fall(ex) + .1) / now, 90) <= FOUND_MAX]
+            ok = [ex for ex in np.arange(1.0, 10.01, .5) if np.percentile(np.concatenate([ratio * (fall(ex) + .1) / now, flat0]), 90) <= FOUND_MAX]
             sug = max(ok) if ok else 1.0
         notes[e['id']] = f'foundations: top tenth {p90:.0%} of the height' + (f', within {FOUND_MAX:.0%} up to x{sug:g}' if sug else '')
         xb_ = body((FAB, LMK, WALL, EARTH))
@@ -259,16 +262,16 @@ def main():
             if p[11] not in (WALL, LMK) or min(p[5], p[6]) > 8 * S or max(p[5], p[6]) < 3 * min(p[5], p[6]): return None
             L_, t_ = max(p[5], p[6]) / 2, p[3] + (0 if p[5] >= p[6] else math.pi / 2)
             return [shapely.Point(p[1] + k * L_ * math.cos(t_), p[2] + k * L_ * math.sin(t_)) for k in (-1, 1)]
-        bodies_by_era[e['id']] = (e, [rect(p, .3 * S) for p in xb_], [span_[id(p)][1] for p in xb_], [wall_ends(p) for p in xb_])   # (each body until its city's end or its loss)
+        bodies_by_era[e['id']] = (e, [rect(p, .3 * S) for p in xb_], [span_[id(p)][1] for p in xb_], [wall_ends(p) for p in xb_], [span_[id(p)][0] for p in xb_])   # (each body from its own rise, its stage's, until its city's end or its loss)
         # (a wall of one city running into a tower, a gate or a fort of another it ends at, one end in, one out, is a joint as built, as
         # walls_through lets a wall end in its own gate house: the medieval wall joining the Castel that stood before it)
         joint = lambda we, q: we is not None and sum(q.contains(pt) for pt in we) == 1
-        for oid, (oe, ob, oend, owe) in bodies_by_era.items():
+        for oid, (oe, ob, oend, owe, ost) in bodies_by_era.items():
             if oid == e['id'] or not ob: continue
             if not (oe['on'] < (e.get('off') or 1e9) and e['on'] < (oe.get('off') or 1e9)): continue
             tree = STRtree(ob); n = 0
-            for a, aend, awe in zip(*bodies_by_era[e['id']][1:]):
-                if any(oe['on'] < aend and e['on'] < oend[j] and a.intersection(ob[j]).area > min_area and not joint(awe, ob[j]) and not joint(owe[j], a)
+            for a, aend, awe, ast in zip(*bodies_by_era[e['id']][1:]):
+                if any(ost[j] < aend and ast < oend[j] and a.intersection(ob[j]).area > min_area and not joint(awe, ob[j]) and not joint(owe[j], a)
                        for j in tree.query(a, predicate='intersects')): n += 1
             R['cross_era'] = R.get('cross_era', 0) + n
         report[e['id']] = R
