@@ -106,6 +106,11 @@ async function loadEra(e) {   // (all of them, in order, for the film; the walk-
   if (e.sinkStyle === 'burn') { const seen = new Set(), cs = [];   // one spark source per building
     for (const p of J.prims) { const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`; if (p[11] === 4 || p[11] === 5 || p[11] === 7 || seen.has(k)) continue; seen.add(k); cs.push([p[15] ?? p[1], p[16] ?? p[2]]); }
     S.addFire(e.id, cs, S.ground); }
+  (e.losses || []).forEach((q, j) => { if (!q.burn || !J.lost) return;   // a part of the city that burns (lose: style burn): sparks of its own, from its own parts' floors
+    const at = new Map(); let r = 0;
+    J.prims.forEach((p, i) => { if (J.lost[i] !== j + 1 || p[11] === 4 || p[11] === 5 || p[11] === 7) return; const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`, c = at.get(k);
+      if (!c) at.set(k, [p[15] ?? p[1], p[16] ?? p[2], p[4]]); else c[2] = Math.min(c[2], p[4]); r = Math.max(r, Math.hypot(p[1] - (p[15] ?? p[1]), p[2] - (p[16] ?? p[2])) + Math.max(p[5], p[6]) / 2); });
+    if (at.size) S.addFire(`${e.id}:${j}`, [...at.values()], S.ground, { n: 1500, h: Math.min(.009, Math.max(.0015, r * .6)) }); });   // (as many sparks as a street's, spread over the building, not a city's reach)
 }
 const ERALOAD = {};
 if (!FREE) for (const e of FILM.eras || []) await loadEra(e);
@@ -311,7 +316,8 @@ function eraShape(e, t) {
       U.uBasinL.value[b.k].set(q.o[0], q.o[1], R, q.mode === 'in' ? Math.max(R1, R + 1e-5) : Math.min(R1, R - 1e-5)); } }   // (which side of R tells the ring's way)
   (e.losses || []).forEach((q, j) => {   // a part of the city lost while the rest stands (compile lose:): its own ring, its own fire
     E.u.uLossR.value[j] = curveAt(q.curve, t); E.u.uLossW.value[j] = curveAt(q.curve, t - SD); E.u.uLossIn.value[j] = q.mode === 'in' ? 1 : 0;
-    E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0; });
+    E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0;
+    const lf = S.fires[`${e.id}:${j}`]; if (lf) lf.set(E.u.uLossBurn.value[j] * U.uProj.value, t, q.mode === 'in' ? E.u.uLossR.value[j] : 1e3, q.o); });
 }
 function setLayers(t) {
   { let sk = 0, sp = null;   // spot (film.spots): the light falls on one subject, the rest of the room goes dark

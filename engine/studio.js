@@ -936,12 +936,12 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // that live longer and drift high; each cools from yellow to red and fades; buildings already taken back by the contracting
   // ring (outside it) stop sending them
   const fires = {};
-  function addFire(id, centres, ground) {
-    const N = Math.min(24000, centres.length * 4), pos = new Float32Array(N * 3), seed = new Float32Array(N);
+  function addFire(id, centres, ground, o = {}) {   // o.n: at least this many sparks (one building burning alone), o.h: their spread and rise (model units; a city's .009)
+    const N = Math.min(24000, Math.max(centres.length * 4, o.n || 0)), pos = new Float32Array(N * 3), seed = new Float32Array(N);
     let sd = 11; const rnd = () => { sd = (sd * 16807) % 2147483647; return sd / 2147483647; };
-    for (let i = 0; i < N; i++) { const c = centres[Math.floor(rnd() * centres.length)]; pos[i * 3] = c[0]; pos[i * 3 + 1] = ground(c[0], c[1]); pos[i * 3 + 2] = c[1]; seed[i] = rnd(); }
+    for (let i = 0; i < N; i++) { const c = centres[Math.floor(rnd() * centres.length)]; pos[i * 3] = c[0]; pos[i * 3 + 1] = c.length > 2 ? c[2] : ground(c[0], c[1]); pos[i * 3 + 2] = c[1]; seed[i] = rnd(); }   // (a centre's third value: the height the sparks rise from, a burning upper storey's floor)
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('aSeed', new THREE.BufferAttribute(seed, 1));
-    const u = { uT: { value: 0 }, uA: { value: 0 }, uH: { value: .009 }, uR: { value: 1e3 }, uO: { value: new THREE.Vector2() }, uPxH: { value: H * .5 } };
+    const u = { uT: { value: 0 }, uA: { value: 0 }, uH: { value: o.h || .009 }, uR: { value: 1e3 }, uO: { value: new THREE.Vector2() }, uPxH: { value: H * .5 } };
     const mat = new THREE.ShaderMaterial({ uniforms: u, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
       vertexShader: `attribute float aSeed; uniform float uT, uH, uR, uPxH; uniform vec2 uO; varying float vK, vA, vE, vL;
         void main(){ float em = step(fract(aSeed * 13.7), .25);   // an ember: longer, higher, drifting
