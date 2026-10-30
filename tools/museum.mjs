@@ -33,10 +33,14 @@ if (cmd === 'still') {   // (several viewpoints, a,b,c: one page, each in turn)
     await at(P, `${tag}_15deg.jpg`, { turn: 15 });
     await at(P, `${tag}_30deg.jpg`, { turn: 30 });
     if (tag === 'desktop') {
-      await P.click('#tones'); await at(P, `${tag}_tones.jpg`, { turn: 40, up: 8 });
-      await P.click('[data-part="main"]'); await at(P, `${tag}_part.jpg`);
+      await P.click('#tones'); await at(P, `${tag}_tones.jpg`, { turn: 25, up: 15 });
+      const xy = await P.evaluate(() => {   // a click on the model itself, on the main hall (its middle, on screen)
+        const S = window.MUSEUM.m.studio, g = S.eras.main.mesh.geometry; g.computeBoundingSphere();
+        const c = g.boundingSphere.center.clone().project(S.camera), r = S.renderer.domElement.getBoundingClientRect();
+        return [r.left + (c.x * .5 + .5) * r.width, r.top + (-c.y * .5 + .5) * r.height]; });
+      await P.mouse.click(xy[0], xy[1]); await at(P, `${tag}_part.jpg`);
     } else {
-      await P.evaluate(() => { const t = document.getElementById('tones'); t.click(); }); await at(P, `${tag}_tones.jpg`, { turn: 40, up: 8 });
+      await P.evaluate(() => { const t = document.getElementById('tones'); t.click(); }); await at(P, `${tag}_tones.jpg`, { turn: 25, up: 15 });
       await P.evaluate(() => document.querySelector('[data-part="main"]').click()); await at(P, `${tag}_part.jpg`);
       await P.evaluate(() => scrollTo(0, 0)); await P.screenshot({ path: path.join(dir, `${tag}_label.jpg`), type: 'jpeg', quality: 85, fullPage: true }); console.log(path.join(dir, `${tag}_label.jpg`));
     }

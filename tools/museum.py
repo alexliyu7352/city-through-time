@@ -5,7 +5,7 @@ viewpoints whose imagined pictures are projected back onto it (tools/living.py <
 usage: uv run python -I tools/museum.py cities/<slug> [<page> ...]      every page of the city when none is named
 
   reads   cities/<slug>/museum/<page>.yaml (the landmark: node and kind and place; parts, label, life, viewpoints, sources),
-          city.yaml (the node's city: the landmark as the film builds it), assets/museum/<page>/<viewpoint>.png and its record
+          city.yaml (the node's city: the landmark as the film builds it), assets/museum/<page>/<viewpoint>.jpg and its record
   writes  build/museum/<page>.json           the page: its words, its parts' notes and status, the viewpoints and their pictures
           build/museum/<page>/model.json     the model: its records part by part, and the stand (engine/props.js buildEra reads them)
           build/museum/<page>/<vp>.jpg       each viewpoint's picture as the page loads it (and the life pictures, smaller)
@@ -111,7 +111,7 @@ def apart(a, b):
 
 def picture(D, page, vp, cam, out_dir, notes):
     """a viewpoint's picture as the page loads it (a JPEG beside the model), if it is made and still belongs to this viewpoint"""
-    src, rec = (os.path.join(D, 'assets', 'museum', page, vp + x) for x in ('.png', '.json'))
+    src, rec = (os.path.join(D, 'assets', 'museum', page, vp + x) for x in ('.jpg', '.json'))
     if not os.path.exists(src): notes.append(f'{vp}: no picture yet (uv run python -I tools/living.py ref {os.path.relpath(D, ROOT)} {page}/{vp}, then gen)'); return None
     if not os.path.exists(rec): notes.append(f'{vp}: its picture has no record of the camera it was made from: tools/living.py adopt {page}/{vp} once it is checked'); return None
     made = json.load(open(rec, encoding='utf-8')).get('cam', [])

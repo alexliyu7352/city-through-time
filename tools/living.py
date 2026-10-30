@@ -4,7 +4,7 @@ model, today's city sunk, no lines, no blur), edited by an image tool into the p
 describes it, so that every wall and street lands where the model has it.
 A museum page's viewpoint (docs/MUSEUM.md) is named <page>/<viewpoint> and made the same way: its still is the page's model
 alone at that camera (tools/museum.mjs still, after tools/museum.py), its scene card research/museum/<page>/<viewpoint>.yaml,
-its picture and record assets/museum/<page>/<viewpoint>.png and .json, its review files build/review/living/<page>/.
+its picture and record assets/museum/<page>/<viewpoint>.jpg and .json, its review files build/review/living/<page>/.
 
 usage: uv run python -I tools/living.py ref    cities/<slug> [<id> ...]   the shot's still and the prompt (after compile)
        uv run python -I tools/living.py gen    cities/<slug> <id> ...     the picture, with the Codex CLI (if it is installed)
@@ -46,11 +46,12 @@ Look: natural colours, documentary realism, like a well-lit film still; people s
 """
 # what the still shows, for a film's shot and for a museum page's viewpoint (the model alone on its stand)
 STILL = {'living': 'The attached image is a plain white 3D model of {place}, {when}. Some of it only helps the model stand and is not a building: square slabs under monuments are the ground they stand on, dark bands at the foot of walls are shadow, flat grey strips are streets. The empty dark ground and the black sky are to be filled.',
-         'museum': 'The attached image is a plain white 3D model standing alone on a flat grey stand: {place}; the moment: {when}. The grey stand is the level ground round the building: paint it as that ground. The plain dark background beyond the stand is not part of the place: fill it with the land beyond and the sky, as the description says. Dark slits and openings are doorways; thin vertical sticks are timber posts.'}
+         'museum': 'The attached image is a plain white 3D model standing alone on a flat grey stand: {place}; the moment: {when}. The grey stand is the level ground round the building: paint it as that ground; its straight edges are not a step, a wall or a cliff: the ground runs on, level, beyond them. The plain dark background beyond the stand is not part of the place: fill it with the land beyond and the sky, as the description says. Dark slits and openings are doorways; thin vertical sticks are timber posts.'}
 
 
 def kind(m): return 'museum' if '/' in m['id'] else 'living'   # (a museum page's viewpoint, <page>/<viewpoint>, or a film's moment)
-def picture(D, m, ext='.png'): return os.path.join(D, 'assets', kind(m), m['id'] + ext)
+def picture(D, m, ext=None):   # (a museum page's picture is kept as a JPEG at 92: it ships from the repository, a tenth of the PNG)
+    return os.path.join(D, 'assets', kind(m), m['id'] + (ext or ('.jpg' if kind(m) == 'museum' else '.png')))
 
 
 def city_paths(city):
@@ -146,7 +147,7 @@ def cmd_gen(D, R, ids):
             out = os.path.join(W, os.path.basename(m['id']) + '.png')
             if not os.path.exists(out): sys.exit(f'{m["id"]}: codex made no picture:\n{r.stdout[-1500:]}{r.stderr[-800:]}')
             os.makedirs(os.path.dirname(picture(D, m)), exist_ok=True)
-            Image.open(out).convert('RGB').save(picture(D, m))
+            Image.open(out).convert('RGB').save(picture(D, m), **({'quality': 92} if picture(D, m).endswith('.jpg') else {}))
         record(D, R, m, 'codex')
         print(f'{m["id"]}: {picture(D, m)} (look at its sheet before using it)')
         cmd_sheet(D, R, [m['id']])
