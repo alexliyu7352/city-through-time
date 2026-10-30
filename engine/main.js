@@ -18,21 +18,34 @@ const newImage = () => Object.assign(new Image(), { crossOrigin: 'anonymous' });
 // every file is asked for at once (engine/load.js counts them for the loading screen, and none waits for the one before); a
 // bundle's bundle.json (tools/web.py) gives their sizes
 const PLAY = QS.has('play');
-L.want(['film.json', 'data/model.json', 'data/stats.json', 'data/lines.json', 'data/water.png', 'data/layers1.png', 'data/layers2.png', 'data/layers3.png',
-  'data/hide.png', 'data/hide2.png', 'data/edge.png', 'data/edge2.png'].map(f => B + f));
-L.want([B + 'data/locator.png'], { optional: true });
+// the viewer's public mode (?view&free, engine/view.js) takes only what a period hall needs, so a phone can open it: the plate and its
+// relief (build/museum/plate.json, the model less today's buildings, tools/museum.py; the whole model where there is none), and each
+// hall's period cities when it is chosen (startView loadEra); not today's city, the lines, decals, plates, footage, pictures, fonts or sound
+const FREE = QS.has('view') && QS.has('free');
+if (FREE) {
+  L.want(['film.json', 'data/stats.json', 'data/water.png', 'data/layers1.png', 'data/layers2.png', 'data/layers3.png', 'data/hide.png', 'data/hide2.png',
+    'data/edge.png', 'data/edge2.png'].map(f => B + f));
+  L.want([B + 'museum/plate.json'], { optional: true });
+} else {
+  L.want(['film.json', 'data/model.json', 'data/stats.json', 'data/lines.json', 'data/water.png', 'data/layers1.png', 'data/layers2.png', 'data/layers3.png',
+    'data/hide.png', 'data/hide2.png', 'data/edge.png', 'data/edge2.png'].map(f => B + f));
+  L.want([B + 'data/locator.png'], { optional: true });
+}
 if (BUNDLE) L.take(base + 'bundle.json', { optional: true }).then(b => b && b.text()).then(t => t && L.sizes(Object.fromEntries(JSON.parse(t).files.map(f => [base + f.path, f.bytes])))).catch(() => {});
 const FILM = await L.json(B + 'film.json');
-L.want([...(FILM.decals || []).map(d => B + d.file), FILM.satellite && B + FILM.satellite.file, FILM.grow && FILM.grow.tfile && B + FILM.grow.tfile,
-  ...(FILM.eras || []).map(e => B + e.file), ...(FILM.footage || []).map(f => base + f.file)]);
-if (FILM.context && !QS.has('flat')) L.want([B + FILM.context.file], { optional: true });
-L.want((FILM.living || []).map(v => base + v.file), { optional: true });   // (a living moment's picture: missing until tools/living.py has made it)
-L.sizes(Object.fromEntries(FILM.fonts.faces.filter(f => f.bytes).map(f => [f.file, f.bytes])));   // (the fonts come from this page's server)
-L.want(FILM.fonts.faces.map(f => f.file));
+if (!FREE) {
+  L.want([...(FILM.decals || []).map(d => B + d.file), FILM.satellite && B + FILM.satellite.file, FILM.grow && FILM.grow.tfile && B + FILM.grow.tfile,
+    ...(FILM.eras || []).map(e => B + e.file), ...(FILM.footage || []).map(f => base + f.file)]);
+  if (FILM.context && !QS.has('flat')) L.want([B + FILM.context.file], { optional: true });
+  L.want((FILM.living || []).map(v => base + v.file), { optional: true });   // (a living moment's picture: missing until tools/living.py has made it)
+  L.sizes(Object.fromEntries(FILM.fonts.faces.filter(f => f.bytes).map(f => [f.file, f.bytes])));   // (the fonts come from this page's server)
+  L.want(FILM.fonts.faces.map(f => f.file));
+}
 const SOUND = PLAY ? [FILM.voice && FILM.voice.file, FILM.score && FILM.score.file, FILM.sfx && FILM.sfx.file, FILM.score && FILM.score.loop].map(f => f && B + f) : [];
 L.want(SOUND, { optional: true });   // (the live page plays them: the loading screen waits for them too, so ▶ never plays silent)
 L.plan();
-const [M, ST, LN] = await Promise.all([L.json(B + 'data/model.json'), L.json(B + 'data/stats.json'), L.json(B + 'data/lines.json')]);
+const [M, ST, LN] = FREE ? [await L.take(B + 'museum/plate.json', { optional: true }).then(b => b ? b.text().then(JSON.parse) : L.json(B + 'data/model.json')), await L.json(B + 'data/stats.json'), {}]
+  : await Promise.all([L.json(B + 'data/model.json'), L.json(B + 'data/stats.json'), L.json(B + 'data/lines.json')]);
 if (M.terrain && !QS.has('flat')) L.want([B + 'data/terrain16.png'], { optional: true });   // (16-bit relief; terrain.png is asked for only without it)
 // a picture from its file: a texture, or an image (null for an optional one that is missing)
 const tex = async u => { const o = await L.address(u); try { return await TL.loadAsync(o); } finally { URL.revokeObjectURL(o); } };
@@ -47,12 +60,12 @@ const DUR = FILM.dur; window.DUR = DUR;
 const yearAs = (y, tick) => { const Y = FILM.years; if (!Y) return null; const r = Math.round(y); return (r < 0 ? (tick ? Y.tick_bce || Y.bce : Y.bce) : (tick ? Y.tick_ce || Y.ce : Y.ce)).replace('{y}', Math.abs(r)); };
 if (FILM.bar) for (const tk of FILM.bar.ticks) tk.yearLabel = yearAs(tk.year, true) ?? (FILM.yearFmt === 'en' ? (tk.year < 0 ? `${-tk.year} BCE` : `${tk.year}`) : (tk.year < 0 ? `前${-tk.year}` : `${tk.year}`));
 
-const LOW = QS.get('quality') === 'low' || QS.has('play');
+const LOW = QS.get('quality') === 'low' || QS.has('play') || (QS.has('free') && matchMedia('(pointer: coarse)').matches);   // (the viewer's public mode on a phone: no period-city shadows)
 const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high' });
 const { U, camera, post, renderer, house, hemi, scene } = S;
 const TL = new THREE.TextureLoader();
-const decalTex = await Promise.all((FILM.decals || []).map(d => tex(B + d.file)));
-const photoTex = FILM.satellite ? await tex(B + FILM.satellite.file) : null;
+const decalTex = FREE ? [] : await Promise.all((FILM.decals || []).map(d => tex(B + d.file)));
+const photoTex = FILM.satellite && !FREE ? await tex(B + FILM.satellite.file) : null;
 let terrain = null;
 if (M.terrain && !QS.has('flat')) {
   let img = await image(B + 'data/terrain16.png', true); const sixteen = !!img;   // 16-bit relief in R/G; the 8-bit file is the fallback
@@ -61,13 +74,13 @@ if (M.terrain && !QS.has('flat')) {
   terrain = { img, info: M.terrain };
 }
 if (FILM.change) S.setRenew(FILM.change.renew, FILM.change.early);
-if (FILM.grow && FILM.grow.tfile) S.setGrowT(await L.json(B + FILM.grow.tfile));   // buildings that wait until the camera sees them
+if (FILM.grow && FILM.grow.tfile && !FREE) S.setGrowT(await L.json(B + FILM.grow.tfile));   // buildings that wait until the camera sees them
 if (FILM.grow && FILM.grow.yl) {   // the modern year line: today's buildings rise when the counter first reaches their year
   FILM.grow.yl.forEach(([t, y], i) => { S.U.uYLt.value[i] = t; S.U.uYLy.value[i] = y; }); S.U.uYLn.value = FILM.grow.yl.length;
 }
 const CITYMESH = S.build(await tex(B + 'data/water.png'), await tex(B + 'data/layers1.png'), await tex(B + 'data/layers2.png'), await tex(B + 'data/layers3.png'), decalTex, photoTex, terrain);
 // the land beyond the plate (terrain.context): relief for a mountain or river off the plate, shown in the nodes that ask for it
-if (FILM.context && !QS.has('flat')) {
+if (FILM.context && !QS.has('flat') && !FREE) {
   const im = await image(B + FILM.context.file, true);
   if (im) S.addContext(im, FILM.context);
 }
@@ -77,7 +90,7 @@ for (const p of FILM.props || []) S.addProp(p);
 for (const r of FILM.routes || []) S.addRoute(r.id, r.pts, r.col, r.w);
 // era cities: one generated city per period
 const ERABOX = {};   // each period city's extent on the plate [x0, z0, x1, z1]; for the viewer (?view) the moments it is shown at (engine/eralife.js), each with its densest 200 m square [x, z] then
-for (const e of FILM.eras || []) {
+async function loadEra(e) {   // (all of them, in order, for the film; the walk-round view's hall by hall)
   const J = await L.json(B + e.file); S.addEra(e.id, J.prims, e.col, J.lost || null);
   const b = J.prims.reduce((b, p) => [Math.min(b[0], p[1]), Math.min(b[1], p[2]), Math.max(b[2], p[1]), Math.max(b[3], p[2])], [Infinity, Infinity, -Infinity, -Infinity]);
   ERABOX[e.id] = { box: b };
@@ -94,6 +107,8 @@ for (const e of FILM.eras || []) {
     for (const p of J.prims) { const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`; if (p[11] === 4 || p[11] === 5 || p[11] === 7 || seen.has(k)) continue; seen.add(k); cs.push([p[15] ?? p[1], p[16] ?? p[2]]); }
     S.addFire(e.id, cs, S.ground); }
 }
+const ERALOAD = {};
+if (!FREE) for (const e of FILM.eras || []) await loadEra(e);
 const LOOK = FILM.era_look || {}; S.U.uEdgeGain.value = LOOK.edge ?? 1; S.U.uEdgeLight.value = (LOOK.light_m ?? 45) * M.scale; S.U.uEdgeHalo.value = (LOOK.halo_m ?? 14) * M.scale;
 for (const e of FILM.eras || []) {   // each standing city's edge: its distance field crop, and the neon line on its outline
   if (e.hide != null && e.edgeRect && !e.occupy) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; }   // (a shared channel: set by the city it holds)
@@ -154,7 +169,7 @@ U.uNightDeep.value = (FILM.night_look && FILM.night_look.deep) || 0;   // film.n
 // projected back onto it from the shot's own camera. The camera arrives and stops (the projection is exact only from there: it may
 // zoom, never move), today's city sinks, a ring of light spreads from the viewer and turns the white model into the living town,
 // the sky and the far land come with it; it holds (a slow zoom, weather), dissolves back to the model, and the camera goes on
-const LIVING = FILM.living || [], LIVETEX = {}, PCAM = new THREE.PerspectiveCamera();
+const LIVING = FREE ? [] : FILM.living || [], LIVETEX = {};
 for (const v of LIVING) { try { const t_ = await tex(base + v.file); t_.colorSpace = THREE.SRGBColorSpace; t_.anisotropy = 8; LIVETEX[v.id] = t_; } catch { /* no picture yet: compile said so */ } }
 let LV = null;   // this frame's moment: { L, cam: the shot's share of the camera, k: the scene's (today sunk, lines out), pa: the picture, r: the ring, sky, zoom }
 function liveAt(t) {
@@ -172,32 +187,28 @@ function setLiving(t) {
   const Wp = post.weather, L = LV && LV.L, tx_ = L && LIVETEX[L.id];
   U.uLiveSink.value = LV ? LV.k : 0; U.uEdgeGain.value = (LOOK.edge ?? 1) * (1 - (LV ? LV.k : 0));
   if (!tx_) { U.uPA.value = 0; S.liveSky.visible = false; Wp.enabled = false; return; }   // (no moment now, or its picture is not made yet: the white model holds the shot)
-  const [px, py, pz, paz, pel, pd, pfov] = L.cam, a = THREE.MathUtils.degToRad(paz), e = THREE.MathUtils.degToRad(pel);   // the projector: the shot's camera, no drift, no zoom
-  PCAM.fov = pfov; PCAM.aspect = W / H; PCAM.near = Math.min(.02, Math.max(.0003, pd * .04)); PCAM.far = camera.far;
-  PCAM.position.set(px + pd * Math.sin(a) * Math.cos(e), py + pd * Math.sin(e), pz + pd * Math.cos(a) * Math.cos(e)); PCAM.lookAt(px, py, pz);
-  PCAM.updateProjectionMatrix(); PCAM.updateMatrixWorld(); U.uPM.value.multiplyMatrices(PCAM.projectionMatrix, PCAM.matrixWorldInverse); U.uPI.value = tx_;
+  S.aimProjector(L.cam, W / H); U.uPI.value = tx_;   // the projector: the shot's camera, no drift, no zoom (and the sky card behind the town)
+  const pd = L.cam[5];
   U.uPA.value = LV.pa; U.uPRC.value.set(L.origin[0], L.origin[1]); U.uPRR.value = LV.r; U.uPF.value = LV.sky; U.uPF0.value = 5 * pd; U.uPF1.value = 8 * pd;
-  const dist = .3, hh = 2 * dist * Math.tan(THREE.MathUtils.degToRad(pfov / 2)), fwd = new THREE.Vector3(); PCAM.getWorldDirection(fwd);   // the sky card behind the town
-  S.liveSky.position.copy(PCAM.position).addScaledVector(fwd, dist); S.liveSky.quaternion.copy(PCAM.quaternion); S.liveSky.scale.set(hh * PCAM.aspect * 1.6, hh * 1.6, 1);
   S.liveSky.material.uniforms.uA.value = LV.sky * LV.pa; S.liveSky.visible = LV.sky * LV.pa > 0;
   const wk = LV.sky * LV.pa; Wp.enabled = wk > 0 && (L.rain > 0 || L.mist > 0);
   Wp.uniforms.uRain.value = L.rain * wk; Wp.uniforms.uMist.value = L.mist * wk; Wp.uniforms.uMistY.value = L.mistY; Wp.uniforms.uT.value = t;
 }
 // real footage: one <video> per clip, seeked deterministically to the frame's time
 const VID = {};
-for (const f of FILM.footage || []) {
+for (const f of FREE ? [] : FILM.footage || []) {
   if (/\.(jpe?g|png|webp)$/i.test(f.file)) { VID[f.id] = await image(base + f.file); continue; }
   const v = document.createElement('video'); v.src = await L.address(base + f.file); v.muted = true; v.preload = 'auto';   // (the whole clip in memory: seeks never wait on the network)
   await new Promise((res, rej) => { v.onloadeddata = res; v.onerror = () => rej(new Error('footage: ' + f.file)); v.load(); });
   VID[f.id] = v;
 }
-const LOC = await image(B + 'data/locator.png', true) || newImage();
+const LOC = FREE ? newImage() : await image(B + 'data/locator.png', true) || newImage();
 const seekTo = (v, time) => new Promise(res => { if (Math.abs(v.currentTime - time) < 1 / 60) return res(); const done = () => { v.removeEventListener('seeked', done); res(); }; v.addEventListener('seeked', done); v.currentTime = time; });
 const OV = makeOverlay(document.getElementById('ov'));
 
 // projected lines: groups of OSM / custom polylines
 const lineA = {};
-for (const L of FILM.lines || []) {
+for (const L of FREE ? [] : FILM.lines || []) {
   let pls;
   if (L.src === 'custom') pls = L.pts;
   else {
@@ -575,7 +586,7 @@ window.EV = EV;
 // frame the 3D scene is not drawn. Stills, scrubbing and the offline render seek every frame exactly (deterministic).
 let PLAYING = false;
 const fullCover = t => (FILM.footage || []).some(f => (f.mode || 'full') === 'full' && t >= f.on + f.fin && t <= f.on + f.dur - f.fout);
-const renderSync = t => { const s = sceneAt(t); LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); S.groundsNow(); setLiving(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } if (!QS.has('clean')) drawOverlay(t); else OV.begin(); };   // clean: the model alone (tools/living.py's reference)
+const renderSync = t => { const s = sceneAt(t); LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); S.groundsNow(); setLiving(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } if (!QS.has('clean') && !FREE) drawOverlay(t); else OV.begin(); };   // clean: the model alone (tools/living.py's reference)
 window.render = (FILM.footage || []).length ? async t => {
   for (const f of FILM.footage) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;
@@ -600,11 +611,13 @@ window.DRAWN = () => OV.drawn();   // every text of the frame TEXTS last drew (t
 window.CAMAT = t => { setCamera(t); return { p: camera.position.toArray(), tg: tgt.toArray(), near: camera.near, d: camDist, fov: camera.fov }; };
 
 // the film's fonts (FILM.fonts: the faces compile found in fonts/ for each job), all loaded before the first frame
-for (const f of FILM.fonts.faces) document.fonts.add(await new FontFace(f.alias, await (await L.take(f.file)).arrayBuffer(), { weight: f.weight }).load());
-await document.fonts.ready;
-await Promise.all(Object.values(FILM.fonts.roles).map(r => document.fonts.load(r.replace('{}', 20), '城0')));
-setFonts(FILM.fonts.roles); setUI(FILM.ui, FILM.sub);
-{   // single-line subtitle check with the real fonts (tools/subcheck.mjs reads this)
+if (!FREE) {
+  for (const f of FILM.fonts.faces) document.fonts.add(await new FontFace(f.alias, await (await L.take(f.file)).arrayBuffer(), { weight: f.weight }).load());
+  await document.fonts.ready;
+  await Promise.all(Object.values(FILM.fonts.roles).map(r => document.fonts.load(r.replace('{}', 20), '城0')));
+  setFonts(FILM.fonts.roles); setUI(FILM.ui, FILM.sub);
+}
+if (!FREE) {   // single-line subtitle check with the real fonts (tools/subcheck.mjs reads this)
   const c = document.createElement('canvas').getContext('2d'), m = (s, k) => { if (!s) return 0; c.font = font(...SUB[k]); return Math.ceil(c.measureText(s).width); };
   const cues = (FILM.cues || []).map(q => { const wa = m(q.a, 'a'), wb = m(q.b, 'b'); return { id: q.id, a: q.a, b: q.b, wa, wb, ok: wa <= SUB.safe && wb <= SUB.safe }; });
   window.SUBCHECK = { safe: SUB.safe, cues, ok: cues.every(q => q.ok) };
@@ -620,7 +633,8 @@ window.render(QS.has('t') ? +QS.get('t') : 0);
 // the period cities' viewer (?view, engine/view.js): this scene and light without the timeline, the camera the viewer's
 if (QS.has('view')) {
   document.getElementById('ov').style.display = 'none';
-  (await import('./view.js')).startView({ S, FILM, QS, W, H, scale: M.scale, setLight, setLayers, eraShape, lens, cityMesh: CITYMESH, eraBox: ERABOX, takeChannel,
+  await (await import('./view.js')).startView({ S, FILM, QS, W, H, B, base, scale: M.scale, setLight, setLayers, eraShape, lens, cityMesh: CITYMESH, eraBox: ERABOX, takeChannel,
+    names: M.labels ? { city: M.name, halls: M.labels } : null, loadEra: e => ERALOAD[e.id] ||= loadEra(e),   // (each period city once)
     setDist: (d, el) => { camDist = d; camElev = el; },
     quiet: () => {   // what setLayers lays at a moment of the film that is not the period cities: off
       for (let i = 0; i < EMAX; i++) U.uEpA.value[i] = 0;

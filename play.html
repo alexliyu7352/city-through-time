@@ -30,6 +30,6 @@
   <div class="ld"><p class="ld-brand">一城春秋 · A City Through Time</p><div class="ld-track"><i id="ld-bar"></i></div>
   <p class="ld-line"><span id="ld-what" role="status"></span><span id="ld-pct"></span></p><button id="ld-retry" type="button" hidden></button></div>
 </div>
-<script>if (new URLSearchParams(location.search).has('play')) document.getElementById('load').hidden = false;</script>
+<script>{ const q = new URLSearchParams(location.search); if (q.has('play') || q.has('free')) document.getElementById('load').hidden = false; }</script>
 <script type="module" src="engine/load.js"></script>
 <script type="module" src="engine/main.js"></script></body></html>

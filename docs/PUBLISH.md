@@ -45,7 +45,8 @@ The steps shown to the user are in `CONTRIBUTING.zh-Hant.md`. The repository tak
   with `tools/site.mjs`; do not edit them by hand. The canonical addresses, share images and the full addresses in the sitemap are fixed when the site is generated: after setting or changing the domain, deploy once more;
   the share cards of social sites cannot be verified from here, so ask the user to paste the link once and look;
 - Try locally first: `node tools/preview.mjs` (it first generates the site into `_site/`), then open `http://127.0.0.1:8765/<slug>/`, then try the player bundle with
-  `play.html?city=<slug>&play=1&bundle=<address>`;
+  `play.html?city=<slug>&play=1&bundle=<address>`; a city with museum pages (MUSEUM.md) runs `tools/museum.py` before packing, and the bundle carries them:
+  `play.html?city=<slug>&view&free&bundle=<address>` and `museum.html?city=<slug>&id=<page>&bundle=<address>`;
 - Submitting a pull request: include only the text files in `cities/<slug>/` (entry.json, city.yaml, script.yaml, CREDITS, the .md files, the text notes in research/,
   and material descriptions such as assets/README.md); no pictures, music or video, which the PR check blocks (`tools/registry.mjs --check --base`).
   The exception is this project's example city Xianyang: it keeps its pictures, posters and web player bundle in full (`cities/xianyang/web/`, copied there after repacking, with the bundle in entry.json pointing to it,

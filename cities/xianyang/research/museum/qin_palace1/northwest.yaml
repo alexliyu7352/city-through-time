@@ -1,0 +1,20 @@
+# Scene card: museum page qin_palace1, viewpoint northwest (tools/living.py qin_palace1/northwest; docs/MUSEUM.md). Every detail
+# from research/qin_palaces.md (§1-A, 1-B, 1-C, §2, §7) unless marked; the model's own estimates are drawn as the model has them.
+place: Palace No. 1 of the Qin palace at Xianyang (咸阳宫一号宫殿), two matching terrace halls side by side on the edge of the loess terrace north of the Wei river, joined by a covered gallery
+when: the Qin capital Xianyang in the late 3rd century BCE, under the Qin dynasty, a clear dry day, soft morning sun from behind the halls
+picture: |
+  Seen from the north-west, a little above the ground, toward the backs of the halls. Nearest, on the right, the western terrace hall; on the left, farther off, the eastern one, with the long covered timber gallery between them on two earthen piers, at the height of the platforms' tops.
+  Each hall: a broad platform of rammed yellow-brown loess earth about 6 m high; round its foot a covered walk of plain unpainted timber posts under a sloping roof of grey fired-clay tiles, its outer edge a strip of river pebbles bordered with square grey bricks; behind the posts the dark doorways of the rooms cut into the platform's north face.
+  On top: single-storey rooms with earthen walls and grey tiled roofs along the north edge, and rising behind them the two-storey main hall with its deep tiled eave and broad grey tiled roof. Round grey eave tiles with a cloud pattern at the ends of the tile rows.
+  The halls' north faces are in soft shade, the sun behind them to the south-east.
+  Around them level open ground of trodden loess, bare and dry; far beyond, the land falling away to the south toward the Wei river plain, hazy under a pale sky.
+  Two or three attendants in long dark robes walking under the covered walk, small in the frame.
+avoid: upturned or curving roof corners and curved ridges, yellow or green or blue glazed tiles, red-lacquered or painted columns, carved stone or marble balustrades, white marble terraces, elaborate bracket clusters under the eaves, dragon or animal figures on the ridges, lanterns, pagodas, crenellated brick walls, trees on the terraces, horses or carts, any modern thing, text, signs
+sources:
+  - research/qin_palaces.md §1-A (platform 6 m, 60 x 45 m half, twin halves 177 m; rammed earth; walls cut from rammed earth with mud brick above, S8)
+  - research/qin_palaces.md §1-B (two rooms let into the north side of the platform; the two-storey main hall)
+  - research/qin_palaces.md §1-C (the covered walk round the platform; pebble drip-paving bordered with square bricks, S5)
+  - research/qin_palaces.md §2 (Yang Hongxun's reconstruction: rooms round the top, the gallery joining the two halves)
+  - research/qin_palaces.md §7 (pottery roof tiles and round eave tiles with cloud patterns)
+  - research/qin_layout.md Q2-6, FACTS.md 02 (the palace on the edge of the loess terrace, the Wei river plain to the south)
+  - 《史记·秦始皇本纪》「衣服旄旌节旗皆上黑」 (black dress under the Qin dynasty, as city.yaml's empire node)

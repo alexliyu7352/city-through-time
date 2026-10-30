@@ -65,12 +65,12 @@ function takeSlot(what) {
 }
 const warned = new Set();   // each optional file warns once per process (video.mjs opens several pages)
 const FATAL = new Set(['script', 'document']);   // module imports are scripts too
-export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = false } = {}) {
+export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = false, html = 'play.html', view = { width: 1920, height: 1080 }, dpr = null, onPage = null } = {}) {   // (html, view, dpr: another page, at another size, tools/museum.mjs; onPage: told of the page before it loads)
   const { port } = await server();
   const release = await takeSlot(`page ${city} ${q}`.slice(0, 160));
   const browser = await chromium.launch({ executablePath: localPath('chrome') || undefined, args: ARGS });
   browser.on('disconnected', release);
-  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: w / 1920 });   // (takeSize: 16:9)
+  const page = await browser.newPage({ viewport: view, deviceScaleFactor: dpr ?? w / 1920 });   // (takeSize: 16:9)
   const log = [];   // the latest problems, printed with the hint when READY is slow
   const note = s => { log.push(s); if (log.length > 8) log.shift(); console.error(s); };
   page.on('console', m => {
@@ -78,6 +78,7 @@ export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = fa
     if (m.type() === 'error' && /^Failed to load resource/.test(t)) return;   // the response handler prints it with its URL
     if (m.type() === 'error' || (warnings && m.type() === 'warning')) note('[page] ' + t.slice(0, 300));
   });
+  if (onPage) onPage(page);
   page.on('pageerror', e => { console.error('[pageerror]', e.message); process.exit(1); });   // stop rather than make a broken film
   page.on('response', r => {
     if (r.status() < 400) return;
@@ -87,7 +88,7 @@ export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = fa
     if (!warned.has(u)) { warned.add(u); note(`[page] optional file missing: ${u} (${r.status()}, ${type}; fine if the page has a fallback)`); }
   });
   page.on('requestfailed', r => { if (!/favicon/.test(r.url()) && r.failure()?.errorText !== 'net::ERR_ABORTED') note(`[page] request failed ${r.url()} (${r.failure()?.errorText})`); });
-  await page.goto(pageURL(port, `city=${encodeURIComponent(city)}` + (q ? '&' + q : '')));
+  await page.goto(pageURL(port, `city=${encodeURIComponent(city)}` + (q ? '&' + q : ''), html));
   const hint = setTimeout(() => console.error('still waiting for window.READY after 60 s' + (log.length ? '; problems so far:\n    ' + log.join('\n    ') : '')), 60000);
   const t0 = Date.now();
   try { await page.waitForFunction(() => window.READY === true, null, { timeout: 180000 }); }

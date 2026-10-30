@@ -20,6 +20,10 @@ IMAGES
 - Imagined scenes (assets/imagined/: qin_build, qin_market, empire_migrants, burn_fire on screen; empire_palaces, empire_bridge
   made but unused): generated for this film on 2026-10-21 with the image generation built into OpenAI's Codex CLI, from prompts
   grounded in 《史记》《三辅黄图》 and the archaeology of the Qin palaces. Labelled 想象图 · 根据史料想象 · AI 生成 on screen.
+- Museum page of Palace No. 1 (museum.html, museum/qin_palace1.yaml): its imagined reconstructions (assets/museum/qin_palace1/: front,
+  aerial, northwest, street) were generated on 2026-10-30 with the image generation built into OpenAI's Codex CLI, each an edit of a still
+  of this project's own white model from that viewpoint, by scene cards (research/museum/qin_palace1/) grounded in research/qin_palaces.md.
+  Labelled AI 想象复原 · 据史料 on the page. The page also shows qin_build, qin_market and the 1962 excavation photo, credited above and below.
 
 FOOTAGE AND PHOTOS ("today" echoes, labelled 实拍 on screen)
 - Xi'an Xianyang Airport T5 Aerial.jpg — Derxxxxx, 2024-09-01, Wikimedia Commons, CC0 1.0 (assets/photos_cc/airport_t5_aerial.jpg).

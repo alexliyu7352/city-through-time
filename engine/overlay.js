@@ -17,10 +17,12 @@ export const font = (k, px) => { if (!F[k]) throw new Error(`no font for the job
 export const SUB = { a: ['zh_strong', 38], b: ['en', 30], safe: 1500 };
 const SUBTOP = H - 145;   // the subtitle strip starts here: pins and labels keep out of it
 
-export function makeOverlay(canvas) {
-  const g = canvas.getContext('2d');
+// size: the layer's size in its own pixels, the film's 1920 x 1080 picture unless a page that fills its window (engine/view.js's
+// public mode) draws its pins on a layer of the window's size
+export function makeOverlay(canvas, size = { w: W, h: H }) {
+  const g = canvas.getContext('2d'), LW = size.w, LH = size.h, LSUB = LH - 145;   // (LSUB: SUBTOP on this layer)
   let TX = [], DRAWN = [];   // DRAWN: every text drawn opaque, named or not, its letters' band (tools/readcheck.mjs: texts over texts)
-  const begin = () => { g.clearRect(0, 0, W, H); TX = []; DRAWN = []; };
+  const begin = () => { g.clearRect(0, 0, LW, LH); TX = []; DRAWN = []; };
   function txt(id, s, x, y, k, px, col, a = 1, o = {}) {
     if (a <= .001 || !s) return 0;
     g.save(); g.globalAlpha = a; g.font = font(k, px); g.fillStyle = col; g.textBaseline = 'alphabetic';
@@ -103,15 +105,15 @@ export function makeOverlay(canvas) {
   // a tag on the model, one look for every label on the map (pins and place names): a dot, a pole straight up that becomes
   // the edge of a small dark box with the name (and a second line). The pole's length and the side of the box are laid out
   // by compile (pipeline/tags.py: tags clear of each other and of the subtitles, readout and locator). a: alpha; grow: 0..1
-  // how far the pole has drawn.
+  // how far the pole has drawn. Returns where its box is drawn ({ x, y, w, h }: a page that makes it a link puts the link there)
   const TAG = { a: ['zh_strong', 20], b: ['en_strong', 14], pad: 11, top: 128 };
   function tag(x, y, o, a, grow = 1) {
     const boxH = o.sub ? 50 : 32, col = o.col || '#ffffff';
     let L = (o.len || 160), yTop = y - L - boxH;
-    yTop = Math.min(yTop, SUBTOP - 14 - boxH); yTop = Math.max(yTop, TAG.top); L = y - yTop - boxH; if (L < 24) return;   // clear of the subtitles and the timeline
+    yTop = Math.min(yTop, LSUB - 14 - boxH); yTop = Math.max(yTop, TAG.top); L = y - yTop - boxH; if (L < 24) return;   // clear of the subtitles and the timeline
     const ta = a * (o.ta ?? 1);
     let w = width(o.text, TAG.a[0], TAG.a[1], 1); if (o.sub) w = Math.max(w, width(o.sub, TAG.b[0], TAG.b[1], .3)); w += 2 * TAG.pad;
-    const left = o.left != null ? !!o.left : x + w > W - 40;
+    const left = o.left != null ? !!o.left : x + w > LW - 40;
     const yPole = y - (y - yTop) * grow;
     g.save(); g.globalAlpha = a * .35; g.fillStyle = col; g.beginPath(); g.arc(x, y, 7, 0, 7); g.fill(); g.restore();   // the dot, with a halo
     g.save(); g.globalAlpha = a;
@@ -126,12 +128,13 @@ export function makeOverlay(canvas) {
     const tx_ = left ? x - TAG.pad : x + TAG.pad;
     txt(o.id, o.text, tx_, yTop + 23, TAG.a[0], TAG.a[1], '#ffffff', ta, { shadow: 8, right: left, ls: 1 });
     if (o.sub) txt(o.id ? o.id + 's' : null, o.sub, tx_, yTop + 42, TAG.b[0], TAG.b[1], 'rgba(240,242,245,.85)', ta, { shadow: 6, right: left, ls: .3 });
+    return { x: bx, y: yTop, w, h: boxH };
   }
   function pin(t, p, o, k = 1) {
     if (!p) return;
-    const edge = ss(seg(Math.min(p[0], W - p[0]), 0, 90)) * ss(seg(p[1], 20, 110));   // its building leaving the frame: the pin goes with it
-    const a = env(t, o.t0, o.t1, .3, .3) * (1 - ss(seg(p[1], SUBTOP - 10, SUBTOP + 50))) * edge * k; if (a <= 0) return;   // an anchor down in the subtitles: no pin
-    tag(p[0], p[1], { ...o, ta: seg(t, o.t0 + .15, o.t0 + .4) }, a, eo(seg(t, o.t0, o.t0 + .45)));
+    const edge = ss(seg(Math.min(p[0], LW - p[0]), 0, 90)) * ss(seg(p[1], 20, 110));   // its building leaving the frame: the pin goes with it
+    const a = env(t, o.t0, o.t1, .3, .3) * (1 - ss(seg(p[1], LSUB - 10, LSUB + 50))) * edge * k; if (a <= 0) return;   // an anchor down in the subtitles: no pin
+    return tag(p[0], p[1], { ...o, ta: seg(t, o.t0 + .15, o.t0 + .4) }, a, eo(seg(t, o.t0, o.t0 + .45)));
   }
 
 

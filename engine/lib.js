@@ -7,6 +7,14 @@ export const eio = t => { t = clamp(t); return t < .5 ? 4 * t * t * t : 1 - Math
 export const eo = t => 1 - Math.pow(1 - clamp(t), 3);
 export const ei = t => Math.pow(clamp(t), 3);
 
+// where a picture of aspect A lands on a stage w x h (a museum page: engine/museum.js and the page's first picture, site/museum.js):
+// as wide as the stage or as tall as it, whichever covers it, but at most crop stage widths wide (a phone held upright then sees a
+// band across its stage, the picture's edges feathered, not a sliver of its middle) -> { w, h, x, y } in stage pixels
+export function frameOf(w, h, A, crop = 1.6) {
+  const pw = Math.min(Math.max(w, h * A), crop * w), ph = pw / A;
+  return { w: pw, h: ph, x: (w - pw) / 2, y: (h - ph) / 2 };
+}
+
 // monotone cubic interpolation (Fritsch-Carlson)
 export function monotone(keys) {
   const n = keys.length, xs = keys.map(k => k[0]), ys = keys.map(k => k[1]);

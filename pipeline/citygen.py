@@ -106,6 +106,7 @@ class Builder:
         self.site = None   # the lot being built on, made one plane (lot_site): (x, y, height there, slope, foundation)
         self.lot_slope = .04   # the steepest a lot's plane leans (ground metres per metre, before the plate's exaggeration): a house tilts with a gentle slope; on a steeper one it stands on a terrace (a whole house sheared along a hillside reads as falling over, and its roof slopes cross)
         self.gid, self.tag, self.meta = 0, ('misc', 0), []   # building groups (a building rises whole) and what each came from (stages)
+        self.label, self.labels = (), []   # what part of its building each record is (labelled): beside the records, never in them (a museum page's parts)
         self.types = {}    # the declared house types a fabric can name (house_types), name -> complete type
 
     # ------------------------------------------------------------------ low level
@@ -147,7 +148,7 @@ class Builder:
             rec += [round(self.slope[0] * self.gex, 6), round(-self.slope[1] * self.gex, 6)]
         else: rec += [0, 0]
         if shape is not None: rec.append(shape)   # (finish puts the building's centre before it)
-        self.prims.append(rec); self.meta.append((self.gid, self.tag))
+        self.prims.append(rec); self.meta.append((self.gid, self.tag)); self.labels.append('/'.join(self.label))
 
     def revolve(self, x, y, theta, z0, w, d, h, prof, sides=32, part=LMK, g_m=None, sweep=1.0, inset=False):
         """a solid of revolution (engine Geo.revolve): `prof` its section, [(r, y), ...] with r a share of the half width and y of
@@ -184,6 +185,14 @@ class Builder:
             sh = [[[round(u * S, 7), round(-v * S, 7)] for u, v in r] for r in R_]   # (model z points south)
             w = 2 * max(abs(u) for r in R_ for u, _ in r); dd = 2 * max(abs(v) for r in R_ for _, v in r)
             self._emit(PRISM, x, y, theta, z0, w, dd, h, max(0.0, min(1.0, float(top))), 0, part=part, g_m=g_m, shape=sh)
+
+    @contextmanager
+    def labelled(self, name):
+        """the records emitted inside are that part of the building (nested: 'west/platform'). The film never reads it: a
+        museum page's model (tools/museum.py) groups its parts by it, so a generator labels the sections it draws"""
+        l0 = self.label; self.label = l0 + (name,)
+        try: yield
+        finally: self.label = l0
 
     def group(self, tag=None):
         """start a new building group: its primitives rise and fall together (one house, one hall, one wall piece)"""
@@ -537,18 +546,19 @@ class Builder:
         the two joined by a flying gallery (飞阁) at the upper level."""
         for sx in ((-1, 1) if mirror > 0 else (0,)):
             cx_, cy_ = self.frame(x, y, th)(sx * (w / 2 + mirror / 2), 0) if mirror > 0 else (x, y)
-            self._taixie_one(cx_, cy_, th, w, d, h, rooms, upper, part, roof_main, flip=sx > 0)
+            with self.labelled({-1: 'west', 0: 'centre', 1: 'east'}[sx]): self._taixie_one(cx_, cy_, th, w, d, h, rooms, upper, part, roof_main, flip=sx > 0)
         if mirror > 0:   # the flying gallery (飞阁) across the gap at the platform's height: a covered walk, posts and a roof
-            g = self.gsite(x, y, th, mirror + 4, 7); self.found = 0.0; L_ = mirror + 8
-            self._emit(BOX, x, y, th, h - .2, L_, 6.5, 1.0, part=part, g_m=g)                      # its deck
-            P_ = self.frame(x, y, th); n_ = max(3, int(L_ // 4.5))
-            for i in range(n_ + 1):
-                for k in (-1, 1):
-                    px, py = P_(-L_ / 2 + L_ * i / n_, k * 2.8); self._emit(BOX, px, py, th, h + .8, .5, .5, 3.4, part=part, g_m=g)
-            self._emit(BOX, x, y, th, h + 1.6, L_ * .98, .3, 1.0, part=DARK, g_m=g)
-            self.roof(x, y, th, h + 4.2, L_, 6.5, 2.2, 'gable', part=LROOF, g=g, o=1.0, ornaments=False)
-            for k in (-1, 1):   # the piers that carry it over the road between the platforms
-                px, py = P_(k * mirror * .22, 0); self._emit(BOX, px, py, th, 0, 3.0, 5.0, h - .2, part=EARTH, g_m=g)
+            with self.labelled('gallery'):
+                g = self.gsite(x, y, th, mirror + 4, 7); self.found = 0.0; L_ = mirror + 8
+                self._emit(BOX, x, y, th, h - .2, L_, 6.5, 1.0, part=part, g_m=g)                      # its deck
+                P_ = self.frame(x, y, th); n_ = max(3, int(L_ // 4.5))
+                for i in range(n_ + 1):
+                    for k in (-1, 1):
+                        px, py = P_(-L_ / 2 + L_ * i / n_, k * 2.8); self._emit(BOX, px, py, th, h + .8, .5, .5, 3.4, part=part, g_m=g)
+                self._emit(BOX, x, y, th, h + 1.6, L_ * .98, .3, 1.0, part=DARK, g_m=g)
+                self.roof(x, y, th, h + 4.2, L_, 6.5, 2.2, 'gable', part=LROOF, g=g, o=1.0, ornaments=False)
+                for k in (-1, 1):   # the piers that carry it over the road between the platforms
+                    px, py = P_(k * mirror * .22, 0); self._emit(BOX, px, py, th, 0, 3.0, 5.0, h - .2, part=EARTH, g_m=g)
 
     def _taixie_one(self, x, y, th, w, d, h, rooms, upper, part, roof_main, flip=False):
         """one of the twin pavilions, after Yang Hongxun's elevation and sections (research/qin_refs/ref_4): low and wide, three
@@ -556,39 +566,44 @@ class Builder:
         let into the platform behind it); on the platform a ring of lower halls round a small court (the second skirt); in the
         middle the two-storey main hall, its first-floor eave and a broad hip-gable roof on top. An open terrace (露台) south."""
         P = self.frame(x, y, th); g = self.gsite(x, y, th, w, d); self.found = 0.0
-        self._emit(FRUSTUM, x, y, th, 0, w, d, h, w * .96, d * .95, part=EARTH, g_m=g)
+        with self.labelled('platform'): self._emit(FRUSTUM, x, y, th, 0, w, d, h, w * .96, d * .95, part=EARTH, g_m=g)
         # rooms in the platform's faces, seen as dark doors behind the walk
-        for face, n in ((-1, rooms[0]), (1, rooms[1])):
-            for i in range(n):
-                rx = -w * .4 + w * .8 * (i + .5) / n; px, py = P(rx, face * (d / 2 * .985 + .05))
-                self._emit(BOX, px, py, th, .2, min(3.2, w * .8 / n * .4), .3, min(3.6, h * .6), part=DARK, g_m=g)
+        with self.labelled('rooms'):
+            for face, n in ((-1, rooms[0]), (1, rooms[1])):
+                for i in range(n):
+                    rx = -w * .4 + w * .8 * (i + .5) / n; px, py = P(rx, face * (d / 2 * .985 + .05))
+                    self._emit(BOX, px, py, th, .2, min(3.2, w * .8 / n * .4), .3, min(3.6, h * .6), part=DARK, g_m=g)
         # the lowest skirt: a deep covered walk all round the foot, its roof just under the platform's edge
-        self.arcade(x, y, th, w * .985, d * .975, 0, depth=5.2, h=min(4.4, h * .72), part=part, g=g, bay=4.2)
+        with self.labelled('walk'): self.arcade(x, y, th, w * .985, d * .975, 0, depth=5.2, h=min(4.4, h * .72), part=part, g=g, bay=4.2)
         # on the platform: the south half an open terrace with a parapet; a ring of lower halls round the north part
         uw, ud = w * .9, d * .6; uy = d * .17; z = h + .6
-        ux, uy_ = P(0, uy); self._emit(BOX, ux, uy_, th, h, uw, ud, .6, part=EARTH, g_m=g)
-        for k in (-1, 1):
-            px, py = P(k * (w * .47), -d * .2); self._emit(BOX, px, py, th + math.pi / 2, h, d * .5, .5, 1.1, part=part, g_m=g)
-        px, py = P(0, -d * .46); self._emit(BOX, px, py, th, h, w * .94, .5, 1.1, part=part, g_m=g)
+        with self.labelled('terrace'):
+            ux, uy_ = P(0, uy); self._emit(BOX, ux, uy_, th, h, uw, ud, .6, part=EARTH, g_m=g)
+            for k in (-1, 1):
+                px, py = P(k * (w * .47), -d * .2); self._emit(BOX, px, py, th + math.pi / 2, h, d * .5, .5, 1.1, part=part, g_m=g)
+            px, py = P(0, -d * .46); self._emit(BOX, px, py, th, h, w * .94, .5, 1.1, part=part, g_m=g)
         rh_ = 4.6   # the second skirt: halls along the north edge and down both sides, single storey, broad low roofs
-        nx_, ny_ = P(0, uy + ud / 2 - 4.5); self.hall(nx_, ny_, th, uw, 9.0, rh_, roof='xieshan', z0=z, part=part, g=g, cols=False)
-        for k in (-1, 1):
-            sx_, sy_ = P(k * (uw / 2 - 4.5), uy - 2.0); self.hall(sx_, sy_, th + math.pi / 2, ud - 13.0, 9.0, rh_, roof='xieshan', z0=z, part=part, g=g, cols=False)
+        with self.labelled('halls'):
+            nx_, ny_ = P(0, uy + ud / 2 - 4.5); self.hall(nx_, ny_, th, uw, 9.0, rh_, roof='xieshan', z0=z, part=part, g=g, cols=False)
+            for k in (-1, 1):
+                sx_, sy_ = P(k * (uw / 2 - 4.5), uy - 2.0); self.hall(sx_, sy_, th + math.pi / 2, ud - 13.0, 9.0, rh_, roof='xieshan', z0=z, part=part, g=g, cols=False)
         # the main hall in the middle: two storeys, the first-floor eave, a broad hip-gable roof (13.4 x 12 m core at No. 1,
         # its upper storey wider with the walks round it)
         mw, md = min(uw * .48, 26.0), min(ud * .55, 17.0); mx, my = P(0, uy - 1.0)
-        self._emit(BOX, mx, my, th, z, mw, md, 5.6, part=part, g_m=g)
-        if self.det >= 1:
-            for k in (-1, 0, 1):
-                dx_, dy_ = P(k * mw * .25, uy - 1.0 - md / 2 - .05); self._emit(BOX, dx_, dy_, th, z + .3, 2.2, .25, 3.6, part=DARK, g_m=g)
-        self.roof(mx, my, th, z + 5.6, mw, md, 1.6, 'flat', part=LROOF, g=g, o=2.4)   # the first floor's eave, deep
-        self._emit(BOX, mx, my, th, z + 6.2, mw * .78, md * .78, 4.0, part=part, g_m=g)
-        if self.det >= 1: self._emit(BOX, mx, my, th, z + 7.6, mw * .79, md * .79, 1.2, part=DARK, g_m=g)
-        self.roof(mx, my, th, z + 10.2, mw * .78, md * .78, 3.8, 'xieshan' if roof_main == 'hip' else roof_main, part=LROOF, g=g, o=2.0)
-        for b in (upper or []):   # extra halls in the platform's frame: (fx, fy, w, d, h, roof)
-            bx, by = P(b[0] * w, b[1] * d); self.hall(bx, by, th, b[2], b[3], b[4], roof=b[5], z0=z, part=part, g=g)
+        with self.labelled('main'):
+            self._emit(BOX, mx, my, th, z, mw, md, 5.6, part=part, g_m=g)
+            if self.det >= 1:
+                for k in (-1, 0, 1):
+                    dx_, dy_ = P(k * mw * .25, uy - 1.0 - md / 2 - .05); self._emit(BOX, dx_, dy_, th, z + .3, 2.2, .25, 3.6, part=DARK, g_m=g)
+            self.roof(mx, my, th, z + 5.6, mw, md, 1.6, 'flat', part=LROOF, g=g, o=2.4)   # the first floor's eave, deep
+            self._emit(BOX, mx, my, th, z + 6.2, mw * .78, md * .78, 4.0, part=part, g_m=g)
+            if self.det >= 1: self._emit(BOX, mx, my, th, z + 7.6, mw * .79, md * .79, 1.2, part=DARK, g_m=g)
+            self.roof(mx, my, th, z + 10.2, mw * .78, md * .78, 3.8, 'xieshan' if roof_main == 'hip' else roof_main, part=LROOF, g=g, o=2.0)
+        with self.labelled('halls'):
+            for b in (upper or []):   # extra halls in the platform's frame: (fx, fy, w, d, h, roof)
+                bx, by = P(b[0] * w, b[1] * d); self.hall(bx, by, th, b[2], b[3], b[4], roof=b[5], z0=z, part=part, g=g)
         # a stair up the south face, toward the twin's side
-        self.stair(P, -w * .3 if not flip else w * .3, -d * .95 / 2, th, 5.0, h * .98, d * .025 + 5.2 + h * 1.05, g)
+        with self.labelled('stair'): self.stair(P, -w * .3 if not flip else w * .3, -d * .95 / 2, th, 5.0, h * .98, d * .025 + 5.2 + h * 1.05, g)
 
     def front_hall(self, x, y, th, w=200.0, d=400.0, tiers=((140, 200, 3.0), (120, 180, 8.0), (110, 165, 15.0)), part=LMK):
         """the front hall of Weiyang (未央宫前殿, han_changan.md §4-B): a platform rising in three terraces from south to north
@@ -1509,7 +1524,7 @@ def landmark_site(L, F, theta_deg=0.0):
     return x, y, th, L, [Polygon([P(-hw, -hd), P(hw, -hd), P(hw, hd), P(-hw, hd)]).buffer(6)]
 
 
-def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None, sites=None, empty=None):
+def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None, sites=None, empty=None, labels=None):
     """spec (dict from city.yaml, lon/lat) -> primitive list. Spec keys:
     origin [lon, lat]; theta_deg (grid rotation, CCW from east); detail (low | medium | high); exaggeration (building heights,
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
@@ -1796,4 +1811,5 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         B._emit(BOX, mk.x, mk.y, 0.0, 0, .5, .5, .03, part=WATER); B.found = 0.0
         B.basins.append({'rings': [[list(q.exterior.coords)[:-1]] + [list(h.coords)[:-1] for h in q.interiors] for q in polys], 'top_m': None, 'gid': B.gid, 'surface': gd['surface'], 'name': gd.get('id') or gd.get('group') or f'#{gi}'})
     if basins is not None: basins.extend(B.basins)   # (compile lowers the plate in them: its basin map; a ground: its ground map)
+    if labels is not None: labels.extend(B.labels)   # (each record's part, in the records' order: Builder.labelled)
     return B.finish(spec.get('rank_noise', .08), meta)
