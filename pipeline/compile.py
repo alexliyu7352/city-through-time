@@ -1807,7 +1807,7 @@ else:   # cities apart in time share a channel: the engine loads the one in use 
 # dug pools (citygen): one map for the film, each basin's outline, water top and number; the engine lowers the plate inside
 # a basin below its water while the basin stands (its number's uniform follows its pool rising, taken back or lost), so a
 # pool on uneven ground is water from rim to rim; the ground comes back when the pool is taken back or lost
-BAS_LO, BAS_HI, BASIN_MAX = -100.0, 6000.0, 32   # (metres a water top may stand at, in 16 bits; engine/studio.js uBasinA)
+BAS_LO, BAS_HI, BASIN_MAX = -100.0, 6000.0, 64   # (metres a water top may stand at, in 16 bits; engine/studio.js uBasinA: 32 slots, as many as a film needs up to 64)
 # a draped pool (where it was, not how high: the plate is its water) is kept in the map as its distance to its edge (texels, +
 # inside) in a band of BAS_BAND texels round it, alpha 128 + its number: the engine blends that distance between texels, so the
 # water's edge follows the drawn outline and not the texels' steps (a texel is about 11 m on a city's plate)
@@ -2156,7 +2156,7 @@ film = {
     'decals': decals_out, 'satellite': sat_out(sat),
     'footage': footage_out, 'end': end, 'ev': evs, 'music': FM.get('music', {}),
     'labels': labels_out,
-    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
+    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinSlots': nb_} if nb_ > 32 else {}), **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],

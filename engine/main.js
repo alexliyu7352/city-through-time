@@ -61,7 +61,7 @@ const yearAs = (y, tick) => { const Y = FILM.years; if (!Y) return null; const r
 if (FILM.bar) for (const tk of FILM.bar.ticks) tk.yearLabel = yearAs(tk.year, true) ?? (FILM.yearFmt === 'en' ? (tk.year < 0 ? `${-tk.year} BCE` : `${tk.year}`) : (tk.year < 0 ? `前${-tk.year}` : `${tk.year}`));
 
 const LOW = QS.get('quality') === 'low' || QS.has('play') || (QS.has('free') && matchMedia('(pointer: coarse)').matches);   // (the viewer's public mode on a phone: no period-city shadows)
-const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high' });
+const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots });   // (pools and grounds past the engine's 32 slots: compile basinSlots)
 const { U, camera, post, renderer, house, hemi, scene } = S;
 const TL = new THREE.TextureLoader();
 const decalTex = FREE ? [] : await Promise.all((FILM.decals || []).map(d => tex(B + d.file)));

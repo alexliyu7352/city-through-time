@@ -14,12 +14,13 @@ import { buildProp, makeTally, buildEra } from './props.js';
 const lin = h => new THREE.Color(h);
 export const NMAX = 8;
 export const LMAX = 16;
-export const BMAX = 32;   // dug pools in a film (compile BASIN_MAX): the plate is lowered in each while it stands   // the parts one period city can lose while the rest stands (compile LOSE_MAX; record kind 4.. in aData.w)
+const BMAX0 = 32;   // dug pools and grounds in a film (compile BASIN_MAX): the plate is lowered in each while it stands; a film needing more says so (film.basinSlots, up to 64: opts.bmax)   // the parts one period city can lose while the rest stands (compile LOSE_MAX; record kind 4.. in aData.w)
 export const GMAX = 8;   // period cities whose open ground (compile ground map) the plate shows at one moment: the most standing at once
 export const EMAX = 12;   // epoch mask channels: data/layers1-3.png, RGBA each (compile shares a channel between masks apart in time and place)
 const YLN = 48;   // points of the modern year line the shaders read (compile: grow.yl)
 
 export function makeStudio(W, H, M, PAL, opts = {}) {
+  const BMAX = Math.max(BMAX0, opts.bmax || 0);   // (the shaders' uniform arrays: more than 32 only for a film that needs them, small devices have few)
   const LOW = !!opts.low;   // live preview: pixel ratio 1, no supersampling
   const renderer = new THREE.WebGLRenderer({ antialias: LOW, preserveDrawingBuffer: true });
   renderer.setPixelRatio(LOW ? 1 : 2); renderer.setSize(W, H);
