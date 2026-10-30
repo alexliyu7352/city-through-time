@@ -9,18 +9,25 @@
 // it; a city that loses nothing, one, once all of it has risen.
 // URL: &eras=qin,han (ticked; default the first), &look=check, &today, &bare (no panel), &quality=low (faster, no shadows of the
 // period cities), &at=<seconds> (every city ticked as it stands at that moment of the film instead).
+// &free: the public mode, for visitors (with the film's bundle, &bundle=): one period at a time, chosen like a hall of a museum
+// (&era=<id>; the cities standing at its moment, an imperial capital over the city it grew from), in the film's look but sharp
+// (no depth of field, no vignette), the whole window, mouse and touch, down to a low eye over the streets; a landmark with a
+// museum page (build/museum/index.json, tools/museum.py) is marked and opens it. No timeline, no film camera: that is the film.
 // window.VIEW({ eras, look, today, at, target: <era id> | [x, z] (on the ground) | [x, y, z], az, el, d }) sets it from a script and draws
 // (tools/eraview.mjs; at: a moment of the film, null for each city's own); window.VIEWINFO() lists the period cities with their
 // centres, sizes and moments ({ t, dense }); a target 'qin:dense' is the densest 200 m square of that city at its moment, where its
 // houses stand closest.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { words } from '../site/i18n.js';
+import { REPO } from './overlay.js';
 
 const FIXED_AZ = 355, WHITE = new THREE.Color(1, 1, 1);   // check: the key light (50 degrees left of this bearing, 45 up) stands in the south-west of the room (bearings as the camera keys count them: 0 south, 90 east)
 
 export function startView(X) {
-  const { S, FILM, QS, W, H, setLight, setLayers, eraShape, lens, cityMesh, eraBox, setDist, quiet, scale, takeChannel } = X;   // (takeChannel: a city ticked takes its shared channel; two ticked sharing one: the later)
+  const { S, FILM, QS, W, H, B, setLight, setLayers, eraShape, lens, cityMesh, eraBox, setDist, quiet, scale, takeChannel } = X;   // (takeChannel: a city ticked takes its shared channel; two ticked sharing one: the later)
   const { U, camera, post, renderer } = S;
+  const FREE = QS.has('free'), EYE = 4 * scale;   // (free: the lowest eye, 4 m over the ground: the period cities stand twice or more their height)
   const LOOK = FILM.era_look || {}, LT = FILM.light, ERAS = (FILM.eras || []).filter(e => S.eras[e.id]);
   const TV = LT.lamp + 4;   // a moment with the projector on; what else the film shows then is cleared (quiet)
   const label = id => ((FILM.nodes || []).find(n => n.id === id) || {}).label || id;
@@ -36,11 +43,13 @@ export function startView(X) {
 
   // fit the 1920x1080 picture to the window
   const stage = document.getElementById('stage');
-  const fit = () => { const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transformOrigin = 'top left'; stage.style.transform = `scale(${k})`; };
+  const fit = () => { if (FREE) { S.resize(innerWidth, innerHeight, Math.min(devicePixelRatio || 1, 2)); return; }   // (free: the whole window, at the screen's pixels)
+    const k = Math.min(innerWidth / W, innerHeight / H); stage.style.transformOrigin = 'top left'; stage.style.transform = `scale(${k})`; };
   fit(); window.addEventListener('resize', () => { fit(); ask(); });
 
   const controls = new OrbitControls(camera, renderer.domElement);
   Object.assign(controls, { enableDamping: false, screenSpacePanning: false, zoomToCursor: true, minDistance: .004, maxDistance: 4, maxPolarAngle: THREE.MathUtils.degToRad(88), rotateSpeed: .6 });
+  if (FREE) Object.assign(controls, { minDistance: .0012, maxPolarAngle: THREE.MathUtils.degToRad(90) });   // (down to a street: 12 m from what it looks at, level)
   const sph = new THREE.Spherical();
   const where = () => { const v = camera.position.clone().sub(controls.target); sph.setFromVector3(v); return { az: THREE.MathUtils.radToDeg(Math.atan2(v.x, v.z)), el: 90 - THREE.MathUtils.radToDeg(sph.phi), d: sph.radius }; };
   const place = (az, el, d) => { const a = THREE.MathUtils.degToRad(az), e = THREE.MathUtils.degToRad(Math.max(1, Math.min(88, el))), t = controls.target;
@@ -70,11 +79,17 @@ export function startView(X) {
   function draw() {
     pending = false;
     const { az, el, d } = where(), t = controls.target, film = st.look === 'film';
-    camera.fov = FILM.fov || 30; camera.near = Math.min(.02, Math.max(.0003, d * .04)); camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+    if (FREE) {   // the eye stays over the ground, what it looks at on it
+      const t0 = controls.target, gt = S.ground(t0.x, t0.z), p = camera.position, gp = S.ground(p.x, p.z);
+      if (t0.y < gt) t0.y = gt; if (p.y < gp + EYE) p.y = gp + EYE; camera.lookAt(t0);
+    }
+    camera.fov = FILM.fov || 30; camera.near = FREE ? Math.min(.02, Math.max(.00005, d * .04)) : Math.min(.02, Math.max(.0003, d * .04)); camera.updateProjectionMatrix(); camera.updateMatrixWorld();
     setDist(d, el); setLight(TV); setLayers(TV); apply(); S.groundsNow();
     S.followShadow(t.x, t.y, t.z, d, film ? az : FIXED_AZ);
     lens(d); if (!film) post.dof.aper = 0;
+    if (FREE) { post.dof.aper = 0; post.dof.maxCoc = 0; }   // (everything sharp: the film's focus on its subject is the film's)
     renderer.shadowMap.needsUpdate = true; post.composer.render();
+    if (pins) pins();
     const id0 = [...st.on][0];
     if (hud) hud.textContent = `az ${az.toFixed(0)}  el ${el.toFixed(0)}  d ${(d / scale).toFixed(0)} m` + (id0 && eraBox[id0] ? `  ${timeOf(id0).toFixed(1)} s` : '');
   }
@@ -95,7 +110,9 @@ export function startView(X) {
   });
 
   // the panel
-  if (!QS.has('bare')) {
+  let pins = null;
+  if (FREE) pins = freePanel();
+  else if (!QS.has('bare')) {
     const css = document.createElement('style');
     css.textContent = `.vw{position:fixed;left:16px;top:16px;z-index:9;width:250px;padding:14px 14px 12px;background:oklch(0.17 0.01 250 / .9);color:oklch(0.95 0.006 85);
       font:13px/1.45 system-ui,"PingFang TC","Noto Sans TC",sans-serif;border:1px solid oklch(0.95 0.006 85 / .14);border-radius:8px;user-select:none}
@@ -148,5 +165,90 @@ export function startView(X) {
     draw(); await new Promise(r => requestAnimationFrame(r));
     return where();
   };
-  goTo([...st.on][0] || ERAS[0].id); draw();
+  if (FREE) { post.vig.uniforms.amt.value = 0; hall(ERAS.some(e => e.id === QS.get('era')) ? QS.get('era') : ERAS[0].id); }
+  else goTo([...st.on][0] || ERAS[0].id);
+  draw();
+
+  // the public mode: a period chosen like a hall, the cities standing at its moment, its museum pages marked
+  function hall(id) {
+    const e = ERAS.find(q => q.id === id), m = eraBox[id].moments, t = m[m.length - 1].t;   // (its last moment: every part that stands has risen)
+    st.at = t; st.on = new Set(ERAS.filter(q => q.on <= t && (q.off == null || t < q.off)).map(q => q.id)); st.on.add(e.id); st.hall = id;
+    goTo(id); if (window.__viewSync) window.__viewSync();
+  }
+  function freePanel() {
+    const lang = (QS.get('lang') || navigator.language || 'en').toLowerCase().startsWith('zh') ? 'zh' : 'en', Wd = words(lang === 'zh' ? 'zh-Hans' : 'en');
+    const node = id => (FILM.nodes || []).find(n => n.id === id) || {}, name = id => lang === 'zh' ? node(id).label || id : node(id).label2 || node(id).label || id;
+    const of = o => (o && (o[lang] || o.en)) || '';
+    const city = QS.get('city'), bundle = QS.get('bundle'), keep = `&lang=${lang}${bundle ? '&bundle=' + encodeURIComponent(bundle) : ''}`;
+    const css = document.createElement('style');
+    css.textContent = `#stage canvas{touch-action:none}
+      .fv{position:fixed;z-index:9;color:oklch(0.955 0.006 85);font:14px/1.45 "Albert Sans",system-ui,"PingFang SC","Noto Sans SC",sans-serif;-webkit-font-smoothing:antialiased}
+      .fv a{color:inherit}.fv button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+      .fv :focus-visible{outline:2px solid oklch(0.865 0.115 80);outline-offset:3px;border-radius:6px}
+      .fv-top{left:0;right:0;top:0;display:flex;align-items:flex-start;gap:14px;padding:max(14px,env(safe-area-inset-top)) 18px 0;pointer-events:none}.fv-top>*{pointer-events:auto}
+      .fv-name{margin:0;padding:10px 16px;border-radius:12px;background:oklch(0.155 0.014 255 / .72);backdrop-filter:blur(10px)}
+      .fv-name b{display:block;font:700 19px/1.25 "Noto Serif SC",serif;letter-spacing:.08em}.fv-name span{color:oklch(0.80 0.012 250);font-size:13px}
+      .fv-tools{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+      .fv-pill{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;background:oklch(0.155 0.014 255 / .72);backdrop-filter:blur(10px);text-decoration:none;font-size:13.5px}
+      .fv-pill input{accent-color:oklch(0.865 0.115 80);width:16px;height:16px;margin:0}
+      .fv-bot{left:0;right:0;bottom:0;padding:0 18px max(14px,env(safe-area-inset-bottom));pointer-events:none}.fv-bot>*{pointer-events:auto}
+      .fv-hint{margin:0 0 10px;color:oklch(0.80 0.012 250);font-size:13px;text-shadow:0 1px 2px #000}
+      .fv-credit{display:block;margin:8px 0 0;color:oklch(0.80 0.012 250);font-size:12px;text-decoration:none;text-shadow:0 1px 2px #000;width:max-content}.fv-credit:hover{color:oklch(0.955 0.006 85)}
+      .fv-halls{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.fv-halls::-webkit-scrollbar{display:none}
+      .fv-halls button{flex:none;min-height:52px;padding:7px 14px;border-radius:12px;background:oklch(0.155 0.014 255 / .72);backdrop-filter:blur(10px);text-align:left;border:1px solid oklch(0.955 0.006 85 / .12)}
+      .fv-halls button small{display:block;color:oklch(0.80 0.012 250);font-size:12px;font-variant-numeric:tabular-nums}
+      .fv-halls button b{font-weight:600;font-size:14.5px}
+      .fv-halls button[aria-pressed=true]{background:oklch(0.865 0.115 80);color:oklch(0.22 0.035 75);border-color:transparent}.fv-halls button[aria-pressed=true] small{color:oklch(0.33 0.04 75)}
+      .fv-pin{position:fixed;z-index:8;left:0;top:0;display:flex;align-items:center;gap:8px;translate:-11px -50%;padding:0;text-decoration:none;color:oklch(0.22 0.035 75);font:600 13.5px/1.3 "Albert Sans","PingFang SC","Noto Sans SC",sans-serif}
+      .fv-pin i{width:22px;height:22px;border-radius:50%;background:oklch(0.865 0.115 80);box-shadow:0 0 0 5px oklch(0.865 0.115 80 / .3);flex:none}
+      .fv-pin span{padding:6px 11px;border-radius:999px;background:oklch(0.955 0.006 85 / .94);white-space:nowrap}.fv-pin:hover span{background:#fff}
+      .fv-name b,.fv-pill{white-space:nowrap}
+      @media (max-width:640px){.fv-hint{display:none}.fv-name{padding:8px 12px}.fv-name b{font-size:16px}.fv-pill{min-height:36px;padding:0 11px;font-size:12.5px}.fv-tools{gap:6px}
+        .fv-top{padding:max(10px,env(safe-area-inset-top)) 10px 0}.fv-bot{padding:0 10px max(10px,env(safe-area-inset-bottom))}}`;
+    document.head.appendChild(css);
+    const top = document.createElement('div'); top.className = 'fv fv-top';
+    top.innerHTML = `<p class="fv-name"><b>${Wd.t('walkTitle')}</b><span>${lang === 'zh' ? (FILM.identity?.l1 || '').split(' · ')[0] : city}</span></p>
+      <div class="fv-tools"><label class="fv-pill"><input type="checkbox" data-today>${Wd.t('walkToday')}</label>
+      <a class="fv-pill" href="?city=${encodeURIComponent(city)}&view&free&era=${'{era}'}&lang=${lang === 'zh' ? 'en' : 'zh'}${bundle ? '&bundle=' + encodeURIComponent(bundle) : ''}" data-lang>${lang === 'zh' ? 'EN' : '中文'}</a>
+      <a class="fv-pill" href="${lang === 'zh' ? 'zh-hans/' : ''}${encodeURIComponent(city)}/">${Wd.t('walkFilm')}</a></div>`;
+    const bot = document.createElement('div'); bot.className = 'fv fv-bot';
+    bot.innerHTML = `<p class="fv-hint">${Wd.t('walkHint')}</p><nav class="fv-halls" aria-label="${Wd.t('walkPeriods')}">${ERAS.map(e => `<button type="button" data-hall="${e.id}"><small>${Wd.year(Math.round((node(e.id).years || [0])[0]))}</small><b>${name(e.id)}</b></button>`).join('')}</nav>
+      <a class="fv-credit" href="${REPO}" target="_blank" rel="noopener">一城春秋 · A City Through Time</a>`;   // (LICENSE, condition 2c)
+    document.body.append(top, bot);
+    const sync = () => {
+      for (const b of bot.querySelectorAll('[data-hall]')) b.setAttribute('aria-pressed', String(b.dataset.hall === st.hall));
+      top.querySelector('[data-today]').checked = st.today;
+      const a = top.querySelector('[data-lang]'); a.href = a.href.replace(/era=[^&]*/, 'era=' + st.hall);
+    };
+    window.__viewSync = sync;
+    bot.addEventListener('click', e => { const b = e.target.closest('[data-hall]'); if (b) { hall(b.dataset.hall); ask(); } });
+    top.addEventListener('change', e => { if ('today' in e.target.dataset) { st.today = e.target.checked; ask(); } });
+    // the museum pages: a mark over each landmark that has one, while its period stands; a click on it (or on the building) opens it
+    const marks = [];
+    fetch(B + 'museum/index.json').then(r => r.ok ? r.json() : []).catch(() => []).then(list => {
+      for (const m of list) {
+        const a = document.createElement('a'); a.className = 'fv-pin'; a.hidden = true;
+        a.href = `museum.html?city=${encodeURIComponent(city)}&id=${encodeURIComponent(m.id)}${keep}`;
+        a.innerHTML = `<i></i><span>${Wd.fmt('walkMuseum', { name: of(m.name) })}</span>`; document.body.appendChild(a); marks.push({ m, a });
+      }
+      ask();
+    });
+    const v = new THREE.Vector3(), ray = new THREE.Raycaster(); let down = null;
+    renderer.domElement.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; });
+    renderer.domElement.addEventListener('pointerup', e => {   // a click (not a drag) on a building that has a museum page
+      if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
+      const r = renderer.domElement.getBoundingClientRect();
+      ray.setFromCamera(new THREE.Vector2((e.clientX - r.left) / r.width * 2 - 1, 1 - (e.clientY - r.top) / r.height * 2), camera);
+      const hit = ray.intersectObjects(ERAS.filter(q => st.on.has(q.id)).map(q => S.eras[q.id].mesh), false)[0]; if (!hit) return;
+      const k = marks.find(({ m }) => st.on.has(m.node) && Math.hypot(hit.point.x - m.x, hit.point.z - m.z) < m.r); if (k) location.href = k.a.href;
+    });
+    return () => {   // after each frame: the marks follow their landmarks, seen from above (low in the streets a mark would show through the walls)
+      const p = camera.position, high = p.y - S.ground(p.x, p.z) > 60 * scale;
+      for (const { m, a } of marks) {
+        const on = st.on.has(m.node) && (high || Math.hypot(p.x - m.x, p.z - m.z) < 3 * m.r); v.set(m.x, S.ground(m.x, m.z) + 25 * scale * 2, m.z).project(camera);
+        a.hidden = !on || v.z > 1 || Math.abs(v.x) > 1.05 || Math.abs(v.y) > 1.05;
+        if (!a.hidden) a.style.transform = `translate(${(v.x * .5 + .5) * innerWidth}px, ${(-v.y * .5 + .5) * innerHeight}px)`;
+      }
+    };
+  }
 }
