@@ -31,7 +31,10 @@ export function serve(port = 0, { overlay } = {}) {
         if (!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(q.headers.host || '')) return send(403, 'bad host');
         const x = resolveRequest(q.url);
         if (x.status) return send(x.status, x.status === 403 ? 'outside root' : 'bad request');
-        const o = overlay && resolveRequest(q.url, overlay), file = o && o.path && fs.existsSync(o.path) ? o.path : x.path;
+        const o = overlay && resolveRequest(q.url, overlay);
+        // (a city's packed bundle, cities/<slug>/dist/web/, answers for cities/<slug>/web/ where the folder is not: where the site has it, tools/registry.mjs)
+        const p = !fs.existsSync(x.path) && resolveRequest(q.url.replace(/^\/(cities\/[^/]+\/)web\//, '/$1dist/web/'));
+        const file = o && o.path && fs.existsSync(o.path) ? o.path : p && p.path && fs.existsSync(p.path) ? p.path : x.path;
         if (fs.existsSync(file) && fs.statSync(file).isDirectory()) { r.writeHead(301, { Location: q.url.split('?')[0] + '/' }); return r.end(); }
         fs.readFile(file, (e, d) => {
           if (e) return send(404, 'not found');

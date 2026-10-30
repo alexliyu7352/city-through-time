@@ -1,5 +1,6 @@
 """A city's web bundle: what play.html needs to play the film in a browser, from another server (docs/PUBLISH.md).
-usage: python -I tools/web.py cities/<slug>            -> cities/<slug>/dist/web/ (+ bundle.json: every file, its size and SHA-256;
+usage: python -I tools/web.py cities/<slug> [--split-mib 20]
+                                                    -> cities/<slug>/dist/web/ (+ bundle.json: every file, its size and SHA-256;
                                                        poster.jpg 1280 wide and poster_thumb.webp 640 wide, for the entry page)
        python -I tools/web.py cities/<slug> --entry    a draft of cities/<slug>/entry.json (the entry page lists the city from it:
                                                        tools/registry.mjs), from the film: where it is, its years, length,
@@ -11,7 +12,12 @@ pools' and grounds' maps, the narration, score and sound-effect tracks as m4a, t
 tools/museum.py), laid out as in the city folder: build/... and assets/.... It stops when film.json names a file of the build that is
 not in that list (the page would stop on it).
 Nothing else does: no WAV, no internal test plates (satellite_hr), no reference pictures. The footage is re-encoded for streaming. The fonts are not in it: the page loads
-them from the project's fonts/ (a city that uses a new font brings it to fonts/ in its pull request)."""
+them from the project's fonts/ (a city that uses a new font brings it to fonts/ in its pull request).
+A file over --split-mib (20 MiB: Cloudflare Pages takes no file over 25 MiB) goes as numbered parts beside it, <name>.part1<ext>...,
+with a small index of them at its own address, {"split": "tools/web.py", "bytes": ..., "parts": [...]}: engine/load.js finds the
+index where it asked for the file and joins the parts, so the rest of the page gets the file whole; bundle.json gives the whole
+file's size and SHA-256, and its parts. The museum pages' files (build/museum/) are read by address, not through engine/load.js,
+so one of them over the size stops the packing instead. A file under the size is written as before."""
 import hashlib, json, os, shutil, subprocess, sys
 
 
@@ -64,8 +70,20 @@ def entry(D):
             'ai': [], 'license': 'CC BY-SA 4.0', 'added': __import__('datetime').date.today().isoformat()}
 
 
+def split(out, f, limit):
+    """a file over the limit as numbered parts beside it, and the index of them at its own address; the parts' paths"""
+    src = os.path.join(out, f); stem, ext = os.path.splitext(os.path.basename(src))
+    data = open(src, 'rb').read(); names = []
+    for i in range(0, len(data), limit):
+        names.append(f'{stem}.part{len(names) + 1}{ext}')   # (the file's own extension: a host serves a part as its kind, JSON compressed)
+        open(os.path.join(os.path.dirname(src), names[-1]), 'wb').write(data[i:i + limit])
+    open(src, 'w', encoding='utf-8').write(json.dumps({'split': 'tools/web.py', 'bytes': len(data), 'parts': names}))   # (its start is the mark engine/load.js looks for)
+    return [os.path.join(os.path.dirname(f), n) for n in names]
+
+
 def main():
     D = os.path.abspath(sys.argv[1]); out = os.path.join(D, 'dist', 'web')
+    limit = int(float(sys.argv[sys.argv.index('--split-mib') + 1]) * 2 ** 20) if '--split-mib' in sys.argv else 20 * 2 ** 20
     if '--entry' in sys.argv:
         f = os.path.join(D, 'entry.json'), json.dumps(entry(D), ensure_ascii=False, indent=2) + '\n'
         if os.path.exists(f[0]): return print(f[1] + f'(cities/{os.path.basename(D)}/entry.json exists: the draft above was not written)')
@@ -83,6 +101,9 @@ def main():
         else: shutil.copy2(os.path.join(D, f), dst)
         h = hashlib.sha256(open(dst, 'rb').read()).hexdigest()
         man.append({'path': f, 'bytes': os.path.getsize(dst), 'sha256': h})
+        if man[-1]['bytes'] > limit:
+            if f.startswith('build/museum/'): raise SystemExit(f'web: {f} is {man[-1]["bytes"] / 2 ** 20:.1f} MiB, over {limit / 2 ** 20:g} MiB: museum.html reads it by its address and cannot join parts; make it smaller (tools/museum.py)')
+            man[-1]['parts'] = split(out, f, limit)
     poster = os.path.join(D, 'dist', 'poster.jpg')   # (the entry page shows these: entry.json poster and thumb)
     if os.path.exists(poster):
         for name, w, args in (('poster.jpg', 1280, ['-q:v', '3', '-fflags', '+bitexact', '-flags:v', '+bitexact']), ('poster_thumb.webp', 640, ['-c:v', 'libwebp', '-quality', '80'])):
@@ -92,7 +113,7 @@ def main():
     total = sum(m['bytes'] for m in man)
     json.dump({'slug': os.path.basename(D), 'files': man, 'bytes': total}, open(os.path.join(out, 'bundle.json'), 'w', encoding='utf-8'), indent=1)
     print(f'web bundle: {len(man)} files, {total / 1e6:.0f} MB -> {os.path.relpath(out)}')
-    for m in sorted(man, key=lambda m: -m['bytes'])[:5]: print(f"  {m['bytes'] / 1e6:6.1f} MB  {m['path']}")
+    for m in sorted(man, key=lambda m: -m['bytes'])[:5]: print(f"  {m['bytes'] / 1e6:6.1f} MB  {m['path']}" + (f"  (in {len(m['parts'])} parts)" if 'parts' in m else ''))
 
 
 if __name__ == '__main__':

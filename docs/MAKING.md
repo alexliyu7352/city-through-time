@@ -59,4 +59,4 @@ The agent works in the order below and stops after every step to show you. When 
 
 ## 7. When it is done
 
-To add it to the entry page, follow [`CONTRIBUTING.md`](../CONTRIBUTING.md): upload the film, optionally publish a web bundle, and open a pull request.
+To add it to the entry page, follow [`CONTRIBUTING.md`](../CONTRIBUTING.md): upload the film, optionally publish a web bundle, and open a pull request. For a site of your own, a free Cloudflare account is enough: `node tools/deploy.mjs --project <name>` publishes the entry page and your city at `https://<name>.pages.dev/` (step 3 of the same file).

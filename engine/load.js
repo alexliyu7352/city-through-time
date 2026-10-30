@@ -4,6 +4,7 @@
 // A file's size comes from a manifest where there is one (a bundle's bundle.json, compile's fonts.faces bytes), else from its
 // Content-Length when the body arrives as sent. A host that gzips gives the packed size while the body arrives unpacked: such a
 // file weighs its Content-Length and counts when it is done. The bar never moves back, and reaches the end only when all are in.
+// A bundle's file over a host's size limit comes in parts (tools/web.py), joined here: the page gets it whole.
 import { LANGS, pick, words } from '../site/i18n.js';
 
 const QS = new URLSearchParams(location.search);
@@ -42,15 +43,36 @@ function paint() {
 }
 const tick = () => { if (live && !frame) frame = requestAnimationFrame(paint); };
 
+// a bundle's file packed in parts (tools/web.py: a file over the host's size limit): at its address, a small index of its parts
+// beside it, which starts with this
+const SPLIT = '{"split": "tools/web.py"';
+function index(chunks) {
+  const n = chunks.reduce((s, c) => s + c.length, 0); if (n > 4096) return null;
+  const all = new Uint8Array(n); let o = 0; for (const c of chunks) { all.set(c, o); o += c.length; }
+  const t = new TextDecoder().decode(all); return t.startsWith(SPLIT) ? JSON.parse(t) : null;
+}
+
 function start(url, optional) {
   const f = { size: known.get(url) || 0, exact: known.has(url), got: 0, done: false };
-  f.p = (async () => {
-    const r = await fetch(url).catch(() => { throw new Error(short(url)); });
-    if (!r.ok) throw new Error(`${short(url)} (${r.status})`);
-    if (!f.size) { const n = +r.headers.get('content-length'); if (n) { f.size = n; f.exact = !r.headers.get('content-encoding'); } }
+  const body = async (u, first) => {   // an address's body, its chunks counted as they arrive
+    const r = await fetch(u).catch(() => { throw new Error(short(u)); });
+    if (!r.ok) throw new Error(`${short(u)} (${r.status})`);
+    if (first && !f.size) { const n = +r.headers.get('content-length'); if (n) { f.size = n; f.exact = !r.headers.get('content-encoding'); } }
     const rd = r.body.getReader(), parts = [];
     for (;;) { const { done, value } = await rd.read(); if (done) break; parts.push(value); f.got += value.length; tick(); }
-    return new Blob(parts, { type: r.headers.get('content-type') || '' });
+    return { parts, type: r.headers.get('content-type') || '' };
+  };
+  f.p = (async () => {
+    let { parts, type } = await body(url, true);
+    const ix = index(parts);
+    if (ix) {   // the parts, all at once, joined in order: the page gets the file whole
+      f.size = ix.bytes; f.exact = true; f.got = 0;
+      const at = new URL(url, location.href);
+      parts = (await Promise.all(ix.parts.map(p => body(new URL(p, at).href)))).flatMap(b => b.parts);
+      const n = parts.reduce((s, c) => s + c.length, 0);
+      if (n !== ix.bytes) throw new Error(`${short(url)} (${n} of ${ix.bytes} bytes in its parts)`);
+    }
+    return new Blob(parts, { type });
   })().then(b => { f.done = true; tick(); return b; },
             e => { if (!optional) throw e; f.size = 0; f.done = true; tick(); return null; });   // (an optional file that is not there: null)
   files.set(url, f); tick();
