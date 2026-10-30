@@ -6,6 +6,7 @@ a reader takes only the tiles that cover its city's area (one, or two to four fo
 import os, urllib.request
 
 EPOCHS = [1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025, 2030]
+OBSERVED = 2020   # the last epoch measured from imagery: 2025 and 2030 are R2023A's projections
 URL = ('https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_BUILT_{k}_GLOBE_R2023A/GHS_BUILT_{k}_E{y}_GLOBE_R2023A_54009_100/V1-0/tiles/'
        'GHS_BUILT_{k}_E{y}_GLOBE_R2023A_54009_100_V1_0_{tile}.zip')
 

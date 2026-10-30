@@ -42,7 +42,8 @@ CMAB download: the provincial zips of figshare article 27992417 (Shaanxi = `shan
 4. The screen and FACTS.md must say: "Years are estimates from GHSL 5-year built-up periods, accuracy 100 m".
 5. A building's period is when its cell was first built up: it went up some time in the five years before. `prep.py` spreads each building over those five years
    by its place (the same every run), so a period's buildings come up through it instead of all in one second at a fixed camera (`buildings.epoch_spread: false` keeps
-   the periods' own years). The bands and counts stay by period.
+   the periods' own years). The bands and counts stay by period. GHSL's 2025 and 2030 are projections, not measurements: a building first built up in them
+   was not there in 2020's imagery and stands in today's footprints, so it is spread over 2020-2025, never dated by the projection.
 
 ## Maps (OpenStreetMap, ODbL)
 
