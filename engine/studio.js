@@ -76,7 +76,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uPhoto: { value: null }, uPhotoA: { value: 0 }, uPhotoSweep: { value: 2 }, uPhotoSweep0: { value: -1 },
     // node colour wave: the old colour (Col0, A0) outside a ring of radius R around C, the new one inside, a light front on the ring
     uNodeCol0: { value: new THREE.Color(1, 1, 1) }, uNodeA0: { value: 0 }, uNodeC: { value: new THREE.Vector2(0, 0) }, uNodeR: { value: 99 }, uNodeFront: { value: 0 },
-    uBasin: { value: null }, uBasinA: { value: Array(BMAX).fill(0) }, uBasinL: { value: Array.from({ length: BMAX }, () => new THREE.Vector4(0, 0, 1e9, 2e9)) }, uBasinLo: { value: 0 }, uBasinHi: { value: 1 }, uBasinK: { value: 0 }, uBasinBand: { value: 4 },
+    uBasin: { value: null }, uBasinA: { value: Array(BMAX).fill(0) }, uBasinL: { value: Array.from({ length: BMAX }, () => new THREE.Vector4(0, 0, 1e9, 2e9)) }, uBasinLo: { value: 0 }, uBasinHi: { value: 1 }, uBasinK: { value: 0 }, uBasinBand: { value: 4 }, uWaterRip: { value: .022 }, uWaterGlint: { value: 1.2 }, uWaterShore: { value: .35 },
     uDimToday: { value: 0 }, uDimToday0: { value: 0 }, uEraGlow: { value: 0 }, uEdge: { value: null }, uEdge2: { value: null }, uEdgeGain: { value: 1 },
     // per era channel (the hide masks): era time (0..1 over its rise, -1 off), grow share, the taking-back ring (centre, radius, in/out, width),
     // the edge (alpha, crop of its distance field, falloff); the ring/edge colour is uHideCol
@@ -181,7 +181,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   vec3 photoAt(vec2 uv){ vec3 p = texture2D(uPhoto, uv).rgb; p = pow(p, vec3(1.08)) * 1.18; float l = dot(p, vec3(.299, .587, .114)); p = mix(vec3(l), p, 1.12); return p * vec3(1.02, 1., .97) * uPhotoK; }
   bool onPlate(vec2 uv){ return all(greaterThanEqual(uv, vec2(0.))) && all(lessThanEqual(uv, vec2(1.))); }
-  uniform sampler2D uBasin; uniform float uBasinA[${BMAX}], uBasinBand; uniform vec4 uBasinL[${BMAX}];   // (a draped pool's loss ring: origin, radius now, radius a moment ago)
+  uniform sampler2D uBasin; uniform float uBasinA[${BMAX}], uBasinBand, uWaterRip, uWaterGlint, uWaterShore; uniform vec4 uBasinL[${BMAX}];   // (a draped pool's loss ring: origin, radius now, radius a moment ago)
   float wDrapedK = 0.;   // this fragment's share of a draped pool (wmask sets it): no edge lines are drawn on it (post, the plate's alpha)
   float wmask(){ vec2 uv = plateUV(); if (!onPlate(uv)) return 0.; float w = texture2D(uWater, uv).r;
     // a draped pool (alpha 128 + its number in the basin map): the plate is its water while it stands. Round its edge the map
@@ -196,6 +196,32 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     for (int i = 0; i < ${BMAX}; i++) if (i == k) { vec4 L = uBasinL[i];
       wDrapedK = uBasinA[i] * smoothstep(-aa, aa, sd) * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); }   // (lost where its ring has passed, as main.js ringK)
     return max(w, wDrapedK); }
+  // water's surface (where wmask is): long swells and short ripples running across it with the wind, in metres and film seconds,
+  // each fading out once it is finer than a few pixels (a wide shot keeps the swells, a far one is a still mirror). Its slope
+  // tilts the plate's normal, so the room's light and its reflection move on the water as it does on water
+  vec2 waterSlope(vec2 P, float px){
+    P += (vec2(vnoise(P * .011), vnoise(P * .011 + 17.)) - .5) * 60.;   // (crests bent, not ruled)
+    vec2 s = vec2(0.);
+    float gust = .35 + 1.3 * vnoise(P * .0045 + vec2(uNow * .02, 0.));   // (the wind uneven over the water: calm patches, rougher ones)
+    for (int i = 0; i < 6; i++) {
+      float fi = float(i), L = 2.5 * pow(1.7, fi), k = 6.2832 / L, a = .35 + (fract(fi * .618) - .5) * 1.6;   // 2.5 .. 35 m, within 45 degrees of the wind
+      vec2 d = vec2(cos(a), sin(a));
+      s += d * sin(dot(d, P) * k - sqrt(9.8 * k) * uNow + fi * 2.1) * (1. - smoothstep(L * .04, L * .12, px));   // (a wave goes before it is under 8 pixels: no moire)
+    }
+    return s * uWaterRip * gust;
+  }
+  // light caught on the ripples: small points that flare and go, sparse, on water only, at three sizes (a close shot sees
+  // the small ones, a wider one the larger), none smaller than a pixel or two
+  float waterGlint(vec2 P, float px){
+    float g = 0.;
+    for (int j = 0; j < 3; j++) {
+      float c = j == 0 ? 6. : j == 1 ? 22. : 70.; vec2 q = P / c, i = floor(q), o = vec2(h21(i + 3.1), h21(i + 7.7));
+      float h = h21(i), r = length(q - i - .2 - .6 * o) * c, sz = c * .1;
+      float tw = pow(max(sin(uNow * (1.3 + 2.1 * h) + h * 31.), 0.), 18.) * step(.72, h);   // (one cell in four has a glint, flaring for a moment now and then)
+      g += tw * (1. - smoothstep(sz * .3, sz, r)) * (1. - smoothstep(sz * .6, sz * 1.2, px));
+    }
+    return g;
+  }
   float layerAt(vec2 uv, int i){ if (!onPlate(uv)) return 0.; vec4 m = i < 4 ? texture2D(uL1, uv) : i < 8 ? texture2D(uL2, uv) : texture2D(uL3, uv); int k = i - (i < 4 ? 0 : i < 8 ? 4 : 8); return k == 0 ? m.r : k == 1 ? m.g : k == 2 ? m.b : m.a; }
   // today's buildings inside an epoch's mask (an area the narration names) take its colour in their own material, as a period city
   // takes its node's: the projector light alone was washed out by the lit white walls (the ground showed the colour, the houses not)
@@ -406,12 +432,15 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <fog_vertex>', `#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz; vWN = normalize(mat3(modelMatrix) * objectNormal);`);
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>\n${HEAD}`)
-        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(diffuseColor.rgb, cWater, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * eraBurnK()); if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
+        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(diffuseColor.rgb, cWater * .72, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * eraBurnK()); if (abs(vData.y - 5.) < .5 && normalize(vWN).y > .7) diffuseColor.rgb = cWater * .72; if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
         // a period city's colour is in the light that falls on it, not in its plaster: the lamps' direct light (key, fill, rim) takes
         // the era's colour, the room's soft light stays neutral, so its walls are warm where lit and grey in the shade
         .replace('#include <aomap_fragment>', `#include <aomap_fragment>${kind === 0 ? '\n reflectedLight.directDiffuse *= eraKeyT;' : ''}`)
-        .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, .32, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .55;' : ''}`)
+        // water, the plate's (wmask) and a period city's own (its pools' and moats' tops, part 5): its ripples tilt the normal
+        .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>${kind < 2 ? `\n float wq_ = ${kind === 1 ? 'wm' : '(vData.w > 2.5 && abs(vData.y - 5.) < .5 ? step(.7, normalize(vWN).y) : 0.)'}; vec2 wP_ = vWP.xz / uScaleM; float wPx_ = length(fwidth(wP_)), wEdge_ = fwidth(wm); vec2 wSl_ = wq_ > 0. ? waterSlope(wP_, wPx_) * wq_ : vec2(0.); normal = normalize(normal + (viewMatrix * vec4(-wSl_.x, 0., -wSl_.y, 0.)).xyz);` : ''}`)
+        .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, .28, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .28;' : ''}`)
         .replace('#include <opaque_fragment>', `outgoingLight += projLight(${kind}.0, wm) * mix(diffuseColor.rgb, vec3(1.), ${kind === 1 ? 'uPlateEmit' : '.1'}) * 1.35;
+ ${kind < 2 ? '{ float sl_ = (1. - smoothstep(0., 1.5 * max(wEdge_, 1e-5), abs(wm - .5))) * smoothstep(.001, .006, wEdge_) * uWaterShore, wg_ = wq_ > .8 ? waterGlint(wP_, wPx_) * smoothstep(.8, .97, wq_) * uWaterGlint : 0.; outgoingLight += vec3(.78, .9, 1.) * sl_ * (.25 + uProj) * .5 + vec3(1., .96, .88) * wg_ * (.35 + uProj); }   // water: a fine lit line along its shore (a pixel or so wide at any distance; none inside a pool fading as a whole), and light caught on its ripples' : ''}
  ${kind === 1 ? '{ float sh_ = clamp((dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01), -1., 1.) * (1. - wm) * step(.5, normalize(vWN).y); vec3 tn_ = uShadeC / max(max(uShadeC.r, uShadeC.g), max(uShadeC.b, .001)); outgoingLight = outgoingLight * (sh_ < 0. ? max(.5, 1. + .35 * uShadeK * sh_) : 1.) + tn_ * .5 * uShadeK * max(sh_, 0.); }   // terrain.shade: a fixed low sun on the plate top (not its sides): a slope turned to it lit in the plate\'s own hue (at most .5 k, a steel blue on a dark blue plate), a slope turned away darker, flat ground and water as they are; a white light added on the dark plate read as snow on the hills' : ''}
  ${kind === 0 ? `if (vData.w > -.5 && abs(vData.w - 1.) > .5 && abs(normalize(vWN).y) < .5 && !(vData.w > 2.5 && abs(vData.y - 11.) < .5)) {   // a wall darkens toward its foot, where the street and its neighbours hide the room's light: the city stands on the plate instead of floating over it (a period house's plinth is that foot already, and keeps its light). The band is uFootM metres (main.js: a few metres up close, a few pixels' worth from afar)
    float fh_ = (vWP.y - vBase) / uScaleH; outgoingLight *= mix(.62, 1., smoothstep(0., uFootM, fh_)); }

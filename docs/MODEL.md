@@ -192,7 +192,10 @@ clipcheck's `paving_under` checks whether the paving and yards are covered by th
 **The dark room is the brightness ratio between the subject and the plate, not how black the plate is:** lift the plate with a blue tint, make the lit faces of the white model bright, and make the ring of light and the buildings of the current period the brightest,
 most saturated small areas in the picture; lift the mid-tones with a curve and leave the black level alone; do not raise the whole thing to grey. On a phone in bright surroundings the dark parts smear together, and platform compression hurts dark gradients most.
 For thresholds and how to measure, see CHECKS.md "Brightness".
-Dark plate (`palette.plate/plateSide/water/plateEmit`), ivory model, edge lines (`film.edges`); three separate height exaggerations: `terrain.exaggeration` (terrain),
+Dark plate (`palette.plate/plateSide/water/plateEmit`), ivory model, edge lines (`film.edges`). Water (rivers, draped and dug pools, moats) is told from the
+ground by how it moves, not by its colour alone: it is darker than `palette.water` and glossy, fine ripples run across it with the wind and carry the room's light,
+a thin lit line follows its shore, and small glints flare on it now and then; the ripples and glints that would be finer than a pixel or two are left out, so a wide
+shot shows a still, sheened surface and a close one a moving one (engine/studio.js waterSlope, waterGlint). Three separate height exaggerations: `terrain.exaggeration` (terrain),
 `buildings.exaggeration` (today's buildings), `city.exaggeration` (period cities, default 2). **Set the terrain exaggeration by slope; do not hard-code it:**
 the foundation on a slope on screen is "actual drop × terrain exaggeration", and a house is "height × building exaggeration"; example: with terrain ×6 and buildings ×2,
 the foundation of a courtyard on a slope is as tall as the walls, and the house looks stretched. `pipeline/terrain.py` measures the slope inside each dynasty city's extent and prints
