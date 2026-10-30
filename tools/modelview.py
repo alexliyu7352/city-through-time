@@ -18,9 +18,10 @@ usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,
             row eastward from --at along a street (give a flat open place), one still of each block at the close-up distance
             (from az 335 unless --az: the fronts and the lit west sides) and one of them all, and sheet.jpg with them side by
             side (named by type)
-  --name    the folder of the stills under build/review/modelview/ (default: the era's id)
+  --name    the study's folder under build/review/modelview/ (default: the era's id): its city, its build and its stills. Studies
+            run at the same time (subagents, one per period) need names of their own: a name in use stops the second run
 
-What it does: writes a study city at build/review/modelview/<slug>/ (a city folder of its own: a city.yaml with the film's
+What it does: writes a study city at build/review/modelview/<name>/ (a city folder of its own: a city.yaml with the film's
 settings and the one node, or that node after the earlier cities it stands on, avoid_eras; copies of the prepared data; links to
 research/ and assets/), compiles it (compile runs the model checks, tools/geocheck.mjs and tools/clipcheck.py, and reports them without stopping), and takes the stills once the city has risen
 (render/still.mjs with ?bundle= on the study folder, the camera fixed and still). It prints each still and the address that
@@ -143,10 +144,10 @@ def study_film(C, era, spec, shots_, fov, year=None, sheet=False):
     return S
 
 
-def study_folder(city, slug):
-    """build/review/modelview/<slug>/: a city folder (pipeline/layout.py) that compile reads and writes instead of the city's own.
+def study_folder(city, name):
+    """build/review/modelview/<name>/ (the study's): a city folder (pipeline/layout.py) that compile reads and writes instead of the city's own.
     The prepared data is copied, not linked: compile writes into build/data, and a link would carry a write into the real one."""
-    S = LAYOUT.review(city, 'modelview', slug)
+    S = LAYOUT.review(city, 'modelview', name)
     os.makedirs(LAYOUT.data(S), exist_ok=True)
     for f in sorted(os.listdir(LAYOUT.data(city))):
         p = LAYOUT.data(city, f)
@@ -177,7 +178,6 @@ def main():
         if getattr(args, k) is None: setattr(args, k, base[k])
     city = os.path.abspath(args.city); slug = os.path.basename(os.path.normpath(city))
     if args.sheet and not args.name: args.name = f'{args.era}_sheet'
-    if (args.name or args.era) == slug: raise SystemExit(f'modelview: build/review/modelview/{slug}/ is the study city itself: give the stills another --name')
     if not os.path.isfile(os.path.join(city, 'city.yaml')): raise SystemExit(f'modelview: {args.city}: no city.yaml here (give the city folder, cities/<slug>)')
     if not os.path.isfile(LAYOUT.data(city, 'model.json')): raise SystemExit(f'modelview: {args.city} has not been prepared: run pipeline/prep.py first')
     try: os.nice(10)   # (compile and the browser after it: the desktop stays usable)
@@ -193,7 +193,11 @@ def main():
     if args.sheet:
         if len(sh) != 1: raise SystemExit('modelview: --sheet takes one --at, where the row of blocks starts (a flat open place)')
         spec, sh = sheet_city(C, args.era, spec, sh[0]['ll'], Fr, city, C['scale'], args.d, az_given, args.el)
-    S = study_folder(city, slug)
+    S = LAYOUT.review(city, 'modelview', args.name or args.era); os.makedirs(S, exist_ok=True)
+    import fcntl; lock_ = open(os.path.join(S, '.study.lock'), 'a')   # (held while this study runs: two runs of one name would write over each other)
+    try: fcntl.flock(lock_, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError: raise SystemExit(f'modelview: the study {os.path.relpath(S, ROOT)} is being made by another run: give this one its own --name')
+    study_folder(city, args.name or args.era)
     import slots; slots.take(f'study {S}')   # one machine slot for the study, its compile and its stills (pipeline/slots.py)
     yaml.safe_dump(study_film(C, args.era, spec, sh, args.fov, args.year, sheet=args.sheet), open(os.path.join(S, 'city.yaml'), 'w', encoding='utf-8'), allow_unicode=True, sort_keys=False)
     env = {**{k: v for k, v in os.environ.items() if k not in ('CT_SCRIPT', 'CT_PLAN', 'CT_PASS')},   # (a draft script or a plan of the real film is not the study's)
@@ -217,7 +221,7 @@ def main():
         cams.append(k)
     for l_ in r.stdout.splitlines():   # (compile runs the model checks, geocheck and clipcheck, and keeps their logs)
         if l_.strip().startswith(('geocheck:', 'clipcheck:')): print(l_.strip() + f'  ({os.path.relpath(LAYOUT.logs(S), ROOT)})')
-    out = LAYOUT.review(city, 'modelview', args.name or args.era); os.makedirs(out, exist_ok=True)
+    out = S   # (the stills beside the study city they were taken of)
     bundle = os.path.relpath(S, ROOT).replace(os.sep, '/') + '/'
     files = []
     for i, (s, v) in enumerate(zip(sh, cams), 1):
