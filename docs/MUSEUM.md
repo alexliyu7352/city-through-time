@@ -17,8 +17,8 @@ They show the film's own models, but they are not the film: no timeline, no film
 ## Walking the old cities
 
 `play.html?city=<slug>&view&free` (with `&bundle=` on the site): the viewer's public mode (engine/view.js). One period at a time, chosen like a hall
-(`&era=<id>`: the cities standing at its moment, an imperial capital over the city it grew from), in the film's look but sharp, the whole window,
-mouse and touch, down to an eye a few metres over the streets; `&cam=tx,ty,tz,az,el,d` where to stand. It loads only the plate
+(`&era=<id>`, else the period of the city's first museum page, else its last: the cities standing at its moment, an imperial
+capital over the city it grew from), in the film's look but sharp, the whole window, mouse and touch, down to an eye a few metres over the streets; `&cam=tx,ty,tz,az,el,d` where to stand. It loads only the plate
 (`build/museum/plate.json`: the model without today's buildings, written by tools/museum.py) and each hall's period cities when the hall
 is chosen: a phone can open it. A landmark that has a museum page carries the film's pin (engine/overlay.js: a dot on the building's top,
 a pole up to its name) while seen from above or near; the pin and the building open the page in the same tab, which leads back to the same

@@ -3,8 +3,8 @@
  "files": [
   {
    "path": "build/film.json",
-   "bytes": 1542946,
-   "sha256": "a3f77c62ce7821745c5967d3aa4eaeea76537f95c5ea04385b069cd35e198b32"
+   "bytes": 1543753,
+   "sha256": "3aafaaca68a95a677839a14ee02686ff7477e89a14a47d34aa8c52de2d8e4586"
   },
   {
    "path": "build/data/model.json",
@@ -43,23 +43,23 @@
   },
   {
    "path": "build/data/hide.png",
-   "bytes": 220801,
-   "sha256": "afe9d3cc924ad8d8de8723baa7fc2724c9fb5f6b9c5617734b764d6f1b8964f8"
+   "bytes": 211871,
+   "sha256": "4d1c2577afdeb3bb2945e8cb9145a931fee1d0038395c1973c35fb5b08366d5f"
   },
   {
    "path": "build/data/hide2.png",
-   "bytes": 76755,
-   "sha256": "3f768d61f6945bddd4679cc3b9e3557df7c8b9ce41f6522ef896fc81be4c95a3"
+   "bytes": 76723,
+   "sha256": "c73b88f778d4b3a3e4e9deac012bd6f0f2a1e76a95c59d91239498ad45a7b4ba"
   },
   {
    "path": "build/data/edge.png",
-   "bytes": 284370,
-   "sha256": "6ef25bd06c89fe6b91d1a38c878833999e6974a496d344d1188916c3a35fd444"
+   "bytes": 280605,
+   "sha256": "52fb6fa568a7126297a4c4be4b7b28cfaf91054a6319a543ac8a6d06fc26a819"
   },
   {
    "path": "build/data/edge2.png",
-   "bytes": 486587,
-   "sha256": "855e781f2e52b97d58688e5f1195637d19bf3b708ee919f8ab0e4ad7594198ef"
+   "bytes": 486253,
+   "sha256": "c7d30e1663ab8a807094c4e20c7d62723c3f3cc6355be1a6c469876bf2f62521"
   },
   {
    "path": "build/data/locator.png",
@@ -73,8 +73,8 @@
   },
   {
    "path": "build/data/decal_0.png",
-   "bytes": 293591,
-   "sha256": "c54d50b0747edfdfe739b756589b714313ae5a2b6f9b840d872156d6d91fda96"
+   "bytes": 295819,
+   "sha256": "ed78a5fe548c368b209dad1721e2c8bda76d187d2b96bd11863b9c0e3fce0db5"
   },
   {
    "path": "build/data/satellite.png",
@@ -98,33 +98,33 @@
   },
   {
    "path": "build/data/era_qin.json",
-   "bytes": 4002937,
-   "sha256": "9a11f304e752affcd23b552768a68900e94a67aaab82264555ed2782096c8b20"
+   "bytes": 3475956,
+   "sha256": "ca2eaa7100107ec037e51a699606c90a9a97dfe0e2742218f71ac114f606a616"
   },
   {
    "path": "build/data/era_empire.json",
-   "bytes": 5250363,
-   "sha256": "1196b9a45c3cda242430abf093bfce04ae7d5d63e74a1b3a8e7ac24e9855a34b"
+   "bytes": 4821027,
+   "sha256": "2a891fbb80ddfdfb5710e5fac8de7b058feca4115e6b43bae7f6651e36347a73"
   },
   {
    "path": "build/data/era_han.json",
-   "bytes": 12229124,
-   "sha256": "4bfb053d0a7899f90c01105397564afe1ff10265f3b9ee1ac5132d4aeba52381"
+   "bytes": 12242488,
+   "sha256": "1ce20b0832b4126cf180e143f15a349420006be5b4567c59b09da43fe51713a8"
   },
   {
    "path": "build/data/era_tang.json",
-   "bytes": 1470251,
-   "sha256": "afd7c4d8b11cf972c922de0c90b5efa6a18c3f7d942d28a7dea8ad3abf16cdf6"
+   "bytes": 1467505,
+   "sha256": "d864fbf91ce8597937e64f6a0826165cce00ad8d4fd43b9c3d60ade8dbb34ce4"
   },
   {
    "path": "build/data/era_ming.json",
-   "bytes": 3086549,
-   "sha256": "cf3315fb1f75a9d64c72e19952ed690494c9dd7c66ac8eb788a6751a7fcf15c6"
+   "bytes": 3091133,
+   "sha256": "7ab4372a8efe061892f5d95edfd28e80bbe9c599298cbf3f30e5be2174dd7bba"
   },
   {
    "path": "build/data/era_rail.json",
-   "bytes": 3023768,
-   "sha256": "5867f54978bf07ed17c0ec4d3e3ed95d98183adf5adcaa6659a60d4ebbcd4f80"
+   "bytes": 3250330,
+   "sha256": "85219290ae46f60573409163cf278935b51333e626d5920c4174188abfa8436c"
   },
   {
    "path": "build/data/era_mills.json",
@@ -327,5 +327,5 @@
    "sha256": "5ec6504d47393f4be70f6f4b40d78787c9ddbb465c80b1cf31fe74f25d6114eb"
   }
  ],
- "bytes": 125720752
+ "bytes": 124996173
 }

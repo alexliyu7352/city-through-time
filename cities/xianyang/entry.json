@@ -28,7 +28,7 @@
   "poster": "cities/xianyang/poster.jpg",
   "thumb": "cities/xianyang/poster_thumb.webp",
   "watch": [{ "site": "YouTube", "url": "https://www.youtube.com/watch?v=Z17apk9c2a8" }],
-  "bundle": { "url": "cities/xianyang/web/", "mb": 126 },
+  "bundle": { "url": "cities/xianyang/web/", "mb": 125 },
   "download": null,
   "ai": [
     "narration",

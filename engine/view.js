@@ -10,11 +10,12 @@
 // URL: &eras=qin,han (ticked; default the first), &look=check, &today, &bare (no panel), &quality=low (faster, no shadows of the
 // period cities), &at=<seconds> (every city ticked as it stands at that moment of the film instead).
 // &free: the public mode, for visitors (with the film's bundle, &bundle=): one period at a time, chosen like a hall of a museum
-// (&era=<id>; the cities standing at its moment, an imperial capital over the city it grew from, each loaded when its hall is
-// chosen: engine/main.js loads no more), in the film's look but sharp (no depth of field, no vignette), the whole window, mouse and
-// touch, down to a low eye over the streets; &cam=tx,ty,tz,az,el,d where to stand (a museum page's way back); &lang=zh-Hans,
-// zh-Hant or en. A landmark with a museum page (build/museum/index.json, tools/museum.py) carries the film's pin, its pole down to
-// the building, and opens the page. No timeline, no film camera: that is the film.
+// (&era=<id>, else the period of the city's first museum page, else its last; the cities standing at its moment, an imperial
+// capital over the city it grew from, each loaded when its hall is chosen: engine/main.js loads no more), in the film's look but
+// sharp (no depth of field, no vignette), the whole window, mouse and touch, down to a low eye over the streets;
+// &cam=tx,ty,tz,az,el,d where to stand (a museum page's way back); &lang=zh-Hans, zh-Hant or en. A landmark with a museum page
+// (build/museum/index.json, tools/museum.py) carries the film's pin, its pole down to the building, and opens the page. No
+// timeline, no film camera: that is the film.
 // window.VIEW({ eras, look, today, at, target: <era id> | [x, z] (on the ground) | [x, y, z], az, el, d }) sets it from a script and draws
 // (tools/eraview.mjs; at: a moment of the film, null for each city's own); window.VIEWINFO() lists the period cities with their
 // centres, sizes and moments ({ t, dense }); a target 'qin:dense' is the densest 200 m square of that city at its moment, where its
@@ -113,8 +114,10 @@ export async function startView(X) {
     const off = camera.position.clone().sub(controls.target); controls.target.copy(hit.point); camera.position.copy(hit.point).add(off.multiplyScalar(.6)); controls.update();
   });
 
-  // the panel
+  // the panel; in the public mode, the city's museum pages (build/museum/index.json, tools/museum.py), read once: their pins and the
+  // hall to open on
   let pins = null;
+  const MUSEUMS = FREE ? fetch(B + 'museum/index.json').then(r => r.ok ? r.json() : []).catch(() => []) : null;
   if (FREE) pins = freePanel();
   else if (!QS.has('bare')) {
     const css = document.createElement('style');
@@ -170,7 +173,9 @@ export async function startView(X) {
     return where();
   };
   if (FREE) {
-    post.vig.uniforms.amt.value = 0; await hall(ERAS.some(e => e.id === QS.get('era')) ? QS.get('era') : ERAS[0].id);
+    // the hall to open on: the address's (&era), else the period of the city's first museum page, else its last period
+    const first = (await MUSEUMS)[0], opening = [QS.get('era'), first && first.node].find(id => ERAS.some(e => e.id === id));
+    post.vig.uniforms.amt.value = 0; await hall(opening || ERAS[ERAS.length - 1].id);
     const c = (QS.get('cam') || '').split(',').map(Number);   // (where the visitor stood before a museum page)
     if (c.length === 6 && c.every(Number.isFinite)) { controls.target.set(c[0], c[1], c[2]); place(c[3], c[4], c[5]); }
   }
@@ -250,7 +255,7 @@ export async function startView(X) {
       Object.assign(ov.style, { display: 'block', width: innerWidth + 'px', height: innerHeight + 'px' }); OV = makeOverlay(ov, { w: innerWidth, h: innerHeight }); };
     layer(); addEventListener('resize', () => { layer(); ask(); });
     const marks = [];
-    fetch(B + 'museum/index.json').then(r => r.ok ? r.json() : []).catch(() => []).then(list => {
+    MUSEUMS.then(list => {
       for (const m of list) {
         const a = document.createElement('a'); a.className = 'fv-tag'; a.hidden = true; a.setAttribute('aria-label', `${of(m.name)} · ${Wd.t('walkMuseum')}`);
         document.body.appendChild(a); marks.push({ m, a });
