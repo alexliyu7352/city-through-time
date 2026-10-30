@@ -273,7 +273,7 @@ def era_boundary(prims, cs):
     regs = [t['region'] for t in cs.get('trees', []) if 'region' in t] + [d['region'] for d in cs.get('grounds', [])]
     if regs:
         import numpy as _np
-        g = g.union(_sh.union_all([_sh.transform(citygen.region_utm(F, r, osm_rings), lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2)) for r in regs]))
+        g = g.union(_sh.union_all([model_shape(citygen.region_utm(F, r, osm_rings)) for r in regs]))
     polys = [q for q in getattr(g, 'geoms', [g]) if q.area >= (cs.get('boundary_min_m', 140) * S) ** 2]
     return [[[round(x, 5), round(z, 5)] for x, z in q.simplify(8 * S).exterior.coords] for q in polys]
 
@@ -751,6 +751,14 @@ def expand_areas(node):
 PRIMS, IMPACT, FOLLOW, FOLLOW_KEYS = {}, {}, [], []
 LOST = {}   # era id -> per primitive: 0 (stays) or the number of the loss that takes it (lost_parts)
 BASINS = {}   # era id -> its dug pools (citygen: rim, water top, building group)
+def model_shape(g):
+    """a shape in UTM metres (a region, a ground) in model units, made valid again: the scaling moves points that lay a hair
+    apart (two grounds cut along one edge) onto each other, and an edge then crosses itself; its polygons only"""
+    import numpy as _np, shapely as _sh
+    m = _sh.make_valid(_sh.transform(g, lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2)))
+    return m if m.geom_type in ('Polygon', 'MultiPolygon') else _sh.union_all([q for q in getattr(m, 'geoms', []) if q.geom_type in ('Polygon', 'MultiPolygon')])
+
+
 def basin_utm(b):
     """a pool's rim or a ground's region (citygen grounds: rings with holes, several) as one shape, UTM metres"""
     import shapely as _sh
@@ -1801,7 +1809,7 @@ GND_BAND, GND_PX, GND_MIN_M, GND_ATLAS = 4, 1024, 2.0, 4096   # (a crop's long s
 GROUND_MAP = None
 if gnd_:
     import numpy as _np, shapely as _sh, itertools as _it
-    Mg_ = lambda g: _sh.transform(g, lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2))
+    Mg_ = lambda g: model_shape(g)
     geo_ = {eid_: [(k_, b_, Mg_(basin_utm(b_))) for k_, b_ in lst_] for eid_, lst_ in gnd_.items()}
     for eid_, lst_ in geo_.items():
         for (_, ba_, ga_), (_, bb_, gb_) in _it.combinations(lst_, 2):
