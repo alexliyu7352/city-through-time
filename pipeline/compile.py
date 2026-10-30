@@ -382,8 +382,11 @@ LOSE_MAX = 16   # (engine/studio.js LMAX: the losses one city can have)
 def lost_parts(prims, meta, cs, node_id):
     """which part of the city each `lose:` takes (docs/MODEL.md "A part of a city lost"): per primitive 0 (stays) or the
     loss's number (1..). A loss takes the parts its `select` names (all when absent), whose building centre is inside its
-    `region` (when given) and outside its `keep` (when given); a building is taken whole. A part in two losses, a loss that
-    takes nothing, or more losses than the engine draws stops compile.
+    `region` (when given) and outside its `keep` (when given); a building is taken whole. A street, lane or wall the select does
+    not name one by one runs on past a region: only its stretch inside goes (each piece by its own centre), not all or none of
+    it by where its middle falls. keep is a ring (or rings, osm:<name>), or {landmarks: [ids], .., region: ring}: the parts it
+    names stand whatever the region. A part in two losses, a loss that takes nothing, or more losses than the engine draws stops
+    compile.
     `for`: the landmarks (id or group) built later where houses stood. citygen laid the houses over their sites; the loss takes
     every building on a site that no other loss takes (whatever its select and region; its keep still holds), never the landmark
     itself; without a region it takes only that. The landmark must rise after its site has gone (checked with the loss times).
@@ -395,9 +398,9 @@ def lost_parts(prims, meta, cs, node_id):
     def area(v):
         rings = [v] if isinstance(v, str) or (isinstance(v[0], (list, tuple)) and isinstance(v[0][0], (int, float))) else v   # (one ring, or a list of rings / osm: names)
         return _sh.union_all([_sh.Polygon([F.model_lonlat(*q) for q in (osm_rings(r[4:])[0] if isinstance(r, str) and r.startswith('osm:') else r)]) for r in rings])
-    G = {}
-    for p, (gid, tag, _) in zip(prims, meta): G.setdefault(gid, (tag, _sh.Point(p[15], p[16])))
-    of, kept_ = {}, {}
+    G, idx_ = {}, {}
+    for i, (p, (gid, tag, _)) in enumerate(zip(prims, meta)): G.setdefault(gid, (tag, _sh.Point(p[15], p[16]))); idx_.setdefault(gid, []).append(i)
+    of, kept_, piece_ = {}, {}, {}   # (piece_: a stretch of a street, lane or wall inside a region, by primitive)
     for j, ls in enumerate(L, 1):
         bad = set(ls) - LOSE_KEYS
         if bad or 'id' not in ls or 'at' not in ls:
@@ -411,13 +414,26 @@ def lost_parts(prims, meta, cs, node_id):
         named = set(sel['landmarks']) if sel and isinstance(sel.get('landmarks'), list) else set()
         if named & set(fo[j]): raise SystemExit(f'compile: era {node_id}: lose {ls["id"]} both clears the ground for and takes '
                                                 f'{", ".join(cs["landmarks"][li].get("id", str(li)) for li in sorted(named & set(fo[j])))}: one or the other')
-        inside = area(ls['region']) if ls.get('region') else None; kept_[j] = kept = area(ls['keep']) if ls.get('keep') else None
+        inside = area(ls['region']) if ls.get('region') else None; kp = ls.get('keep')
+        if isinstance(kp, dict):   # (parts named to stand, and a ring)
+            keep_sel = select_parts({k: v for k, v in kp.items() if k != 'region'}, cs, node_id, 'lose keep') if set(kp) - {'region'} else None
+            kept = area(kp['region']) if kp.get('region') else None
+        else: keep_sel, kept = None, area(kp) if kp else None
+        kept_[j] = (kept, keep_sel)
         if fo[j] and inside is None: continue   # (only the sites: below)
         for gid, (tag, c) in G.items():
             if tag[0] == 'trees' and not sel: continue   # (trees go only when named: a garden outlives the houses round it)
-            if (sel and not match(sel, tag)) or (inside is not None and not inside.contains(c)) or (kept is not None and kept.contains(c)): continue
+            if (sel and not match(sel, tag)) or (keep_sel is not None and match(keep_sel, tag)): continue
+            if inside is not None and tag[0] in ('streets', 'lanes', 'walls') and not (sel and isinstance(sel.get(tag[0]), list)):   # (its stretch inside)
+                for i in idx_[gid]:
+                    q = _sh.Point(prims[i][1], prims[i][2])
+                    if not inside.contains(q) or (kept is not None and kept.contains(q)): continue
+                    if i in piece_ or gid in of: raise SystemExit(f'compile: era {node_id}: a stretch of {tag[0]} is in two losses; a part is lost once')
+                    piece_[i] = j
+                continue
+            if (inside is not None and not inside.contains(c)) or (kept is not None and kept.contains(c)): continue
             if tag[0] == 'landmarks' and tag[1] in later_ and tag[1] not in named: continue
-            if gid in of: raise SystemExit(f'compile: era {node_id}: a building is in two losses ({L[of[gid] - 1]["id"]}, {ls["id"]}); a part is lost once')
+            if gid in of or any(i in piece_ for i in idx_[gid]): raise SystemExit(f'compile: era {node_id}: a building is in two losses ({L[of[gid] - 1]["id"] if gid in of else "a stretch"}, {ls["id"]}); a part is lost once')
             of[gid] = j
     if later_:   # the sites of what is built later where houses stood: every building on one goes, by its own loss or by this one
         import numpy as _np
@@ -435,10 +451,11 @@ def lost_parts(prims, meta, cs, node_id):
                     if not (drapes_[gid].intersects(SITES[node_id][li]) if gid in drapes_ else
                             c.distance(site) <= 200 * F.scale and any(_sh.Polygon(citygen.footprint(p)).intersects(site) for p in parts_[gid])): continue
                     on_[li].append(gid)   # (another landmark built later on this site: never cleared here; when a loss names it, li rises after it goes)
-                    if not (tag[0] == 'landmarks' and tag[1] in later_) and gid not in of and not (kept_[j] is not None and kept_[j].contains(c)): of[gid] = j
+                    k_, ks_ = kept_[j]
+                    if not (tag[0] == 'landmarks' and tag[1] in later_) and gid not in of and not (k_ is not None and k_.contains(c)) and not (ks_ is not None and match(ks_, tag)): of[gid] = j
     for j, ls in enumerate(L, 1):
-        if j not in of.values(): raise SystemExit(f'compile: era {node_id}: lose {ls["id"]} takes nothing (its select, region, keep' + (' and its sites: another loss takes what stood there' if fo[j] else ' leave no building') + ')')
-    return [of.get(m[0], 0) for m in meta]
+        if j not in of.values() and j not in piece_.values(): raise SystemExit(f'compile: era {node_id}: lose {ls["id"]} takes nothing (its select, region, keep' + (' and its sites: another loss takes what stood there' if fo[j] else ' leave no building') + ')')
+    return [piece_.get(i) or of.get(m[0], 0) for i, m in enumerate(meta)]
 
 def stage_parts(prims, meta, cs, node_id):
     """the city's buildings by stage: G {group id: {tag, c (model xz centre)}} and [(stage, first, [group ids]), ...] in the
