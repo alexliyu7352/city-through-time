@@ -1229,7 +1229,8 @@ for i, node in enumerate(FM['nodes']):
     r = node.get('readout', {})
     if r is not False and r.get('continues'):
         if set(r) - {'continues', 't1'}: raise SystemExit(f"compile: node {node['id']}: readout continues: only t1 goes with it (the chapter's name, label and note are the node's before)")
-        if len(nodes_out) < 2 or not readouts or readouts[-1]['id'] != 'r_' + nodes_out[-2]['id']: raise SystemExit(f"compile: node {node['id']}: readout continues, but the node before has no readout to go on")
+        if len(nodes_out) < 2 or not readouts or not (readouts[-1]['id'] == 'r_' + nodes_out[-2]['id'] or nodes_out[-2].get('continues')):   # (the node before has its readout, or goes on with one itself: a chapter over three nodes)
+            raise SystemExit(f"compile: node {node['id']}: readout continues, but the node before has no readout to go on")
         readouts[-1]['t1'] = T(r.get('t1', 'end')) - .2; nodes_out[-1]['continues'] = True
     elif r is not False:
         d = {'id': 'r_' + node['id'], 't0': T(r.get('t0', 0.4)), 't1': T(r.get('t1', 'end')) - .2, 'idx': f'{len(readouts) + 1:02d}', 'name': pick(r.get('name')) or ab(node.get('label', {}))[0] or node['id'],
