@@ -1206,13 +1206,19 @@ def traced(spec, F, city_dir):
                                           run with the block as drawn, not with the city's grid
       landmark  Point/Polygon  landmarks  {kind: properties.type, lon, lat, ...}; a polygon gives its centre, w_m (the long side),
                                           d_m and theta_deg, which properties written on the feature override
+    properties.provenance (where it was traced from, its basis: pipeline/register.py writes it) rides along and is not the
+    model's. A layout may keep the entry's keys apart, under properties.model ({kind: the landmark's class, ...}), with its id
+    and group beside them: every other property is then provenance.
     Returns {walls, streets, fabric, landmarks}: lists to add to the spec's own (written entries and traced ones build alike)."""
     import json, os
     paths = spec.get('trace') or []
     out = {'walls': [], 'streets': [], 'fabric': [], 'landmarks': []}
     for path in ([paths] if isinstance(paths, str) else paths):
         for f in json.load(open(os.path.join(city_dir, path), encoding='utf-8')).get('features', []):
-            pr = dict(f.get('properties') or {}); kind = pr.pop('kind', None); g = f.get('geometry') or {}; t, c = g.get('type'), g.get('coordinates')
+            pr = dict(f.get('properties') or {}); kind = pr.pop('kind', None); pr.pop('provenance', None); g = f.get('geometry') or {}; t, c = g.get('type'), g.get('coordinates')
+            if isinstance(pr.get('model'), dict):   # (the entry's keys under model, the rest provenance)
+                pr = {**pr['model'], **{k: pr[k] for k in ('id', 'group') if k in pr}}
+                if kind == 'landmark' and 'kind' in pr: pr['type'] = pr.pop('kind')
             ring = None
             if t == 'Polygon':
                 ring = [list(q[:2]) for q in c[0]]
