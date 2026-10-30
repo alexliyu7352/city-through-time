@@ -82,10 +82,14 @@ for (const e of FILM.eras || []) {
   const b = J.prims.reduce((b, p) => [Math.min(b[0], p[1]), Math.min(b[1], p[2]), Math.max(b[2], p[1]), Math.max(b[3], p[2])], [Infinity, Infinity, -Infinity, -Infinity]);
   ERABOX[e.id] = { box: b };
   if (QS.has('view')) ERABOX[e.id].moments = eraMoments(e, J.prims, J.lost).map(t => {
-    const cell = 200 * M.scale, n = new Map(); let top = null;   // (the square's records' centre, not the square's: a few buildings in it stand off its middle)
-    J.prims.forEach((p, i) => { if (!standsWhole(e, p[10], J.lost ? J.lost[i] : 0, t)) return;
-      const k = `${Math.floor(p[1] / cell)},${Math.floor(p[2] / cell)}`, c = n.get(k) || [0, 0, 0]; c[0]++; c[1] += p[1]; c[2] += p[2]; n.set(k, c); if (!top || c[0] > top[0]) top = c; });
-    return { t, dense: top ? [top[1] / top[0], top[2] / top[0]] : [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2] }; });
+    const cell = 200 * M.scale, n = new Map(); let top = null, kt = null;   // (aimed at a building there, the one nearest its buildings' centre: not the
+    const up = (p, i) => standsWhole(e, p[10], J.lost ? J.lost[i] : 0, t);                    //  square's middle, nor a gap between two rows)
+    J.prims.forEach((p, i) => { if (!up(p, i)) return;
+      const k = `${Math.floor(p[1] / cell)},${Math.floor(p[2] / cell)}`, c = n.get(k) || [0, 0, 0]; c[0]++; c[1] += p[1]; c[2] += p[2]; n.set(k, c); if (!top || c[0] > top[0]) { top = c; kt = k; } });
+    if (!top) return { t, dense: [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2] };
+    const cx = top[1] / top[0], cz = top[2] / top[0]; let best = null, bd = Infinity;
+    J.prims.forEach((p, i) => { if (!up(p, i) || `${Math.floor(p[1] / cell)},${Math.floor(p[2] / cell)}` !== kt) return; const d = Math.hypot(p[1] - cx, p[2] - cz); if (d < bd) { bd = d; best = [p[1], p[2]]; } });
+    return { t, dense: best }; });
   if (e.sinkStyle === 'burn') { const seen = new Set(), cs = [];   // one spark source per building
     for (const p of J.prims) { const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`; if (p[11] === 4 || p[11] === 5 || p[11] === 7 || seen.has(k)) continue; seen.add(k); cs.push([p[15] ?? p[1], p[16] ?? p[2]]); }
     S.addFire(e.id, cs, S.ground); }
