@@ -428,7 +428,19 @@ def lost_parts(prims, meta, cs, node_id):
     fo = {j: select_parts({'landmarks': ls['for']}, cs, node_id, 'lose for')['landmarks'] if ls.get('for') else [] for j, ls in enumerate(L, 1)}
     later_ = {li for v in fo.values() for li in v}   # (they rise after a loss: taken only by one that names them)
     for j, ls in enumerate(L, 1):
-        sel = select_parts(ls['select'], cs, node_id, 'lose') if ls.get('select') else None
+        sel_ = dict(ls['select']) if ls.get('select') else None; subs_ = []   # (<landmark>.<part>: that named part of a landmark of parts)
+        if sel_ and isinstance(sel_.get('landmarks'), list) and any('.' in str(n_) for n_ in sel_['landmarks']):
+            subs_ = [str(n_).split('.', 1) for n_ in sel_['landmarks'] if '.' in str(n_)]; sel_['landmarks'] = [n_ for n_ in sel_['landmarks'] if '.' not in str(n_)]
+        sel = select_parts(sel_, cs, node_id, 'lose') if sel_ else None
+        for lm_, pt_ in subs_:
+            lis_ = select_parts({'landmarks': [lm_]}, cs, node_id, 'lose')['landmarks']; lab_ = LABELS.get(node_id) or []; n_ = 0
+            for gid, (tag, c) in G.items():
+                if tag[0] != 'landmarks' or tag[1] not in lis_: continue
+                for i in idx_[gid]:
+                    if pt_ not in (lab_[i].split('/') if i < len(lab_) else []): continue
+                    if i in piece_ or gid in of: raise SystemExit(f'compile: era {node_id}: {lm_}.{pt_} is in two losses; a part is lost once')
+                    piece_[i] = j; n_ += 1
+            if not n_: raise SystemExit(f"compile: era {node_id}: lose {ls['id']}: {lm_}.{pt_}: no part {pt_!r} in {lm_} (a part of a landmark of parts is named by its own id)")
         named = set(sel['landmarks']) if sel and isinstance(sel.get('landmarks'), list) else set()
         if named & set(fo[j]): raise SystemExit(f'compile: era {node_id}: lose {ls["id"]} both clears the ground for and takes '
                                                 f'{", ".join(cs["landmarks"][li].get("id", str(li)) for li in sorted(named & set(fo[j])))}: one or the other')
@@ -756,6 +768,7 @@ def expand_areas(node):
 PRIMS, IMPACT, FOLLOW, FOLLOW_KEYS = {}, {}, [], []
 LOST = {}   # era id -> per primitive: 0 (stays) or the number of the loss that takes it (lost_parts)
 BASINS = {}   # era id -> its dug pools (citygen: rim, water top, building group)
+LABELS = {}   # era id -> per primitive, the part of its building it is ('/'-joined: Builder.labelled; a landmark's named parts)
 def model_shape(g):
     """a shape in UTM metres (a region, a ground) in model units, made valid again: the scaling moves points that lay a hair
     apart (two grounds cut along one edge) onto each other, and an edge then crosses itself; its polygons only"""
@@ -792,7 +805,8 @@ def gen_city(node):
                 if p[11] == 4 or gone_[i_]: continue   # (a part lost by this node leaves its ground free)
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
-    meta_, bas_, sites_, empty_ = [], [], {}, []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_)
+    meta_, bas_, sites_, empty_, lab_ = [], [], {}, [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_)
+    LABELS[node['id']] = lab_
     if empty_: WARN.append(f"era {node['id']}: fabric {', '.join(map(str, empty_[:8]))}{' ..' if len(empty_) > 8 else ''} ({len(empty_)}) builds no house: its region is smaller than one "
                            f"lot, or streets, walls and landmarks cover it (citygen fill lays whole lots only); give it a smaller lot or a larger region, or leave it out")
     BASINS[node['id']] = bas_; SITES[node['id']] = sites_
