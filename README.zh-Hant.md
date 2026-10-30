@@ -49,6 +49,8 @@ ln -s "$PWD/city-through-time" ~/.claude/skills/city-through-time   # 讓 Claude
 2. 想讓大家在入口頁直接播放，就把網頁播放包（`tools/web.py` 打包）放到 Hugging Face 資料集，或你自己的 GitHub Pages。
 3. 開一個 pull request：只放城市資料夾裡的文字檔，包括入口頁用的 `entry.json`。
 
+也可以架一個自己的網站：有免費的 Cloudflare 帳號就行，`node tools/deploy.mjs --project <名字>` 一條指令把入口頁、你的城市和播放包發布到 `https://<名字>.pages.dev/`。
+
 步驟、欄位和審核標準：[`CONTRIBUTING.zh-Hant.md`](CONTRIBUTING.zh-Hant.md)。
 
 ## 專案結構

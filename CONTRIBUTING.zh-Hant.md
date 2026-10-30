@@ -26,7 +26,7 @@ uv run python -I tools/web.py cities/<城市>
 
 它會把播放器需要的檔案打包到 `cities/<城市>/dist/web/`（咸陽約 121 MB），只收頁面真的會讀的檔：沒有 WAV，也沒有內部測試用的圖。海報也在裡面：`poster.jpg`（1280 寬）和 `poster_thumb.webp`（640 寬，館藏和搜尋用）。只放影片、不做播放包時，就把這兩張圖單獨放上去。包裡的 `bundle.json` 記著每個檔的大小，播放器的載入畫面照它算進度，要跟著一起放上去。字型不在包裡，播放器會從本專案的 `fonts/` 讀（用了新字型的城市，要在 pull request 裡把字型加進 `fonts/`）。
 
-放播放包的地方必須**允許網頁跨網域讀取**。以下兩種都可以：
+放播放包的地方必須**允許網頁跨網域讀取**。以下三種都可以：
 
 **Hugging Face 資料集（建議）**：公開資料集免費，大檔沒問題。
 
@@ -40,6 +40,16 @@ uvx --from huggingface_hub hf upload <你的帳號>/city-through-time-bundles ci
 **你自己的 GitHub 倉庫，開 GitHub Pages**：建一個公開倉庫，把 `dist/web/` 裡的東西放進 `<城市>/` 資料夾，在倉庫的 Settings → Pages 選從 main 分支發布。限制：單一檔案 100 MB 以內、整個網站 1 GB 以內。
 
 播放包網址：`https://<你的帳號>.github.io/<倉庫名>/<城市>/`
+
+**你自己的網站，Cloudflare Pages**：有免費的 Cloudflare 帳號就行，不用自己的網域。一條指令把整個網站（入口頁、你的城市頁、播放器、播放包）發布到 `https://<專案名>.pages.dev/`。先準備一次：Cloudflare 帳號；一個 API token（My Profile → API Tokens → Create Token → Custom token，權限只要 Account · Cloudflare Pages · Edit）；帳號 ID（Workers & Pages 頁面的 Account details）。`entry.json` 的播放包和海報寫成網站裡的路徑，跟咸陽一樣（`cities/<城市>/web/`），先打包，再執行（要 Node 22 以上）：
+
+```sh
+export CLOUDFLARE_API_TOKEN=<token> CLOUDFLARE_ACCOUNT_ID=<帳號 ID>
+node tools/deploy.mjs --project <專案名> --dry-run   # 只建好、檢查，不上傳
+node tools/deploy.mjs --project <專案名>
+```
+
+播放包網址（給入口頁的 pull request 用）：`https://<專案名>.pages.dev/cities/<城市>/web/`。單一檔案超過 20 MiB 時，`tools/web.py` 會自動切成幾份，播放器讀的時候再拼回來。細節在 [`docs/PUBLISH.md`](docs/PUBLISH.md)。
 
 其他靜態主機（例如 Cloudflare R2）也可以，只要回應帶 `Access-Control-Allow-Origin`。
 

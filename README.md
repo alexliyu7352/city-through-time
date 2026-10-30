@@ -49,6 +49,8 @@ Full guide: [`docs/MAKING.md`](docs/MAKING.md).
 2. To let people play it straight from the entry page, put the web bundle (packed with `tools/web.py`) on a Hugging Face dataset or your own GitHub Pages.
 3. Open a pull request with only the text files in the city folder, including `entry.json` for the entry page.
 
+You can also run a site of your own: with a free Cloudflare account, `node tools/deploy.mjs --project <name>` publishes the entry page, your city and its web bundle at `https://<name>.pages.dev/` in one command.
+
 Steps, fields and review criteria: [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Project structure

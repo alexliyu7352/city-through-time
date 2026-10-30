@@ -26,7 +26,7 @@ uv run python -I tools/web.py cities/<city>
 
 It packs the files the player needs into `cities/<city>/dist/web/` (about 121 MB for Xianyang). Only files the page really reads are included: no WAV files and no internal test images. The posters are in there too: `poster.jpg` (1280 wide) and `poster_thumb.webp` (640 wide, used by the collection and search). If you upload only the film and no web bundle, host these two images on their own. The `bundle.json` inside the bundle records the size of each file, and the player's loading screen computes its progress from it, so upload it together with the rest. Fonts are not in the bundle; the player reads them from this project's `fonts/` (a city that uses a new font must add it to `fonts/` in its pull request).
 
-The place that hosts the web bundle must **allow cross-origin reads by web pages**. Both of these work:
+The place that hosts the web bundle must **allow cross-origin reads by web pages**. All three of these work:
 
 **Hugging Face dataset (recommended)**: public datasets are free and large files are fine.
 
@@ -40,6 +40,16 @@ Web bundle address: `https://huggingface.co/datasets/<your-account>/city-through
 **Your own GitHub repository with GitHub Pages**: create a public repository, put the contents of `dist/web/` in a `<city>/` folder, and in the repository's Settings → Pages choose to publish from the main branch. Limits: each file under 100 MB, the whole site under 1 GB.
 
 Web bundle address: `https://<your-account>.github.io/<repo-name>/<city>/`
+
+**Your own site on Cloudflare Pages**: a free Cloudflare account is enough, no domain of your own needed. One command publishes the whole site (the entry page, your city's page, the player, the web bundle) at `https://<project>.pages.dev/`. Prepare once: a Cloudflare account; an API token (My Profile → API Tokens → Create Token → Custom token, with the single permission Account · Cloudflare Pages · Edit); your account ID (Account details on the Workers & Pages page). In `entry.json`, write the web bundle and posters as paths in the site, as Xianyang does (`cities/<city>/web/`), pack the bundle, then run (Node 22 or newer):
+
+```sh
+export CLOUDFLARE_API_TOKEN=<token> CLOUDFLARE_ACCOUNT_ID=<account ID>
+node tools/deploy.mjs --project <project> --dry-run   # build and check only, upload nothing
+node tools/deploy.mjs --project <project>
+```
+
+Web bundle address (for a pull request to the entry page): `https://<project>.pages.dev/cities/<city>/web/`. `tools/web.py` cuts a file over 20 MiB into a few parts, and the player joins them again as it reads. Details in [`docs/PUBLISH.md`](docs/PUBLISH.md).
 
 Other static hosts (for example Cloudflare R2) also work, as long as the response carries `Access-Control-Allow-Origin`.
 

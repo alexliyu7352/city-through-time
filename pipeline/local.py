@@ -11,6 +11,8 @@ local/                       this machine (in .gitignore); by default everything
 
 chrome  a Chrome binary for rendering when Playwright's own headless shell will not install ("" = Playwright's own)
 workers how many pages render at once
+cloudflare  (optional, not in the template) the user's own site on Cloudflare Pages, tools/deploy.mjs: {"api_token", "account_id",
+            "project"}; the environment's CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID come first (docs/PUBLISH.md)
 
 The file is read only when a key is asked for: scripts that need no path run without it.
 usage from a shell: python -I pipeline/local.py <key>      prints the value (a path key resolved)"""

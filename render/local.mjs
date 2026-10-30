@@ -4,13 +4,14 @@ import fs from 'fs'; import os from 'os'; import path from 'path'; import { file
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 let cfg = null;
-export function local(key) {
+// an optional key (pipeline/local.py) gives `fallback` when the file or the key is not there; any other stops the tool
+export function local(key, ...fallback) {
   if (!cfg) {
     const f = path.join(ROOT, 'local', 'config.json');
-    if (!fs.existsSync(f)) { console.error("no local/config.json: copy templates/local.json there and set this machine's paths (docs/SETUP.md)"); process.exit(2); }
+    if (!fs.existsSync(f)) { if (fallback.length) return fallback[0]; console.error("no local/config.json: copy templates/local.json there and set this machine's paths (docs/SETUP.md)"); process.exit(2); }
     cfg = JSON.parse(fs.readFileSync(f, 'utf8'));
   }
-  if (!(key in cfg)) { console.error(`local/config.json has no "${key}" (templates/local.json lists every key)`); process.exit(2); }
+  if (!(key in cfg)) { if (fallback.length) return fallback[0]; console.error(`local/config.json has no "${key}" (templates/local.json lists every key)`); process.exit(2); }
   return cfg[key];
 }
 // a path key: relative to the project root, ~ for the home folder, '' stays ''

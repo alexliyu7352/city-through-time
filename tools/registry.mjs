@@ -22,7 +22,10 @@ const EXAMPLE = 'xianyang';   // the project's own example: kept whole, pictures
 // a city's page is <site>/<slug>/ (tools/site.mjs): a slug may not be a name the site already has at its root, nor a language's
 const RESERVED = new Set([...fs.readdirSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')).map(n => n.toLowerCase()), ...LANGS.map(l => l.toLowerCase()), 'en']);
 const https = u => typeof u === 'string' && /^https:\/\/\S+$/.test(u);
-const local = u => typeof u === 'string' && !u.startsWith('/') && !u.includes('..') && fs.existsSync(path.join(ROOT, u));   // (a path in this repository: the example city's)
+// a path in this repository (the example city's), or in a city's packed web bundle: cities/<slug>/web/... is its
+// cities/<slug>/dist/web/... (tools/web.py), which tools/deploy.mjs publishes at that path
+const packed = u => u.replace(/^(cities\/[^/]+\/)web\//, '$1dist/web/');
+const local = u => typeof u === 'string' && !u.startsWith('/') && !u.includes('..') && (fs.existsSync(path.join(ROOT, u)) || fs.existsSync(path.join(ROOT, packed(u))));
 const image = u => https(u) || local(u);
 // what a city's text must not carry: the author's paths, account ids and keys stay on their machine (local/config.json, internal/;
 // docs/SOUND.md: the voice's id never in git)

@@ -31,8 +31,9 @@ The steps shown to the user are in `CONTRIBUTING.zh-Hant.md`. The repository tak
   store the ordinary watch address and remove parameters such as `&t=`; confirm that a test video is still there, because a player reports a string of errors for a video that was taken down); a separate download (`download`) can also be put up;
 - The web player bundle: `uv run python -I tools/web.py cities/<slug>` packs it into `dist/web/`, taking only files the page reads (no WAV, no internal test pictures),
   and the posters `poster.jpg` (1280 wide) and `poster_thumb.webp` (640 wide) are in it too; `bundle.json` records the size of each file, and the player's loading screen computes its progress from it,
-  so the whole folder goes up as it is. The place it goes must allow cross-origin reads by web pages: Hugging Face datasets are recommended
-  (free, and big files are no problem); or the user's own GitHub repository with Pages (single file 100 MB, site within 1 GB); for other static hosts confirm there is
+  so the whole folder goes up as it is. A file over 20 MiB is packed as numbered parts beside it, with a small index of them under its own name, and the player joins them
+  (so no file exceeds a host's limit; the rest stay as they are: Xianyang's largest, `model.json` at 19.2 MB, is whole). The place it goes must allow cross-origin reads by web pages: Hugging Face datasets are recommended
+  (free, and big files are no problem); or the user's own GitHub repository with Pages (single file 100 MB, site within 1 GB); or the user's own site on Cloudflare Pages ("A site of the user's own" below); for other static hosts confirm there is
   `Access-Control-Allow-Origin`. Write the address into `bundle.url` and the size into `bundle.mb`; when no player bundle is made, the two poster images must also go outside.
   Before uploading, confirm that the terms of the voice and music services allow public distribution of the generated audio, and write it into CREDITS; for the part that does not allow commercial use (Xianyang: MiniMax narration is for personal, non-commercial use only),
   state in `LICENSE-CONTENT.md` that it is not under the CC BY-SA licence, because CC BY-SA lets others use it commercially;
@@ -51,3 +52,29 @@ The steps shown to the user are in `CONTRIBUTING.zh-Hant.md`. The repository tak
   and material descriptions such as assets/README.md); no pictures, music or video, which the PR check blocks (`tools/registry.mjs --check --base`).
   The exception is this project's example city Xianyang: it keeps its pictures, posters and web player bundle in full (`cities/xianyang/web/`, copied there after repacking, with the bundle in entry.json pointing to it,
   so the portal plays directly from GitHub Pages; `.gitignore` and the check make an exception for it), while the modelling reference pictures and the original footage still stay out of git.
+
+## A site of the user's own (Cloudflare Pages)
+
+The portal is one shared site; a user can also publish their own copy of it, with their cities in it, on a free Cloudflare account and no domain:
+`node tools/deploy.mjs --project <name>` builds the site as CI builds the portal (`tools/site.mjs --copy`: the entry page and every city's page in five languages,
+the player, the museum pages, the fonts), adds each city's web bundle, checks it, and uploads it with Cloudflare's `wrangler` (the exact version is pinned in the tool;
+it needs Node 22 or newer). The site is `https://<name>.pages.dev/`; when another Cloudflare account already has the name, Cloudflare adds a suffix, and the tool builds
+the canonical addresses with the real one and prints it.
+- **What the user makes, once:** a Cloudflare account (free); an API token (My Profile → API Tokens → Create Token → Custom token) with the single permission
+  Account · Cloudflare Pages · Edit, on that account only, which is all a deploy needs; and the account ID (Workers & Pages → Account details). They go in the
+  environment (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`) or in `local/config.json` as `"cloudflare": { "api_token": "…", "account_id": "…", "project": "<name>" }`
+  (this machine's, never committed); never in a city's files, a commit or a report, since the token can replace the site. The project is created on the first deploy.
+- **A deploy is an upload:** it needs the user's go-ahead on that occasion. First `node tools/deploy.mjs --project <name> --dry-run`: it checks the entries as CI does,
+  builds the site and checks what Pages refuses (a file over 25 MiB, more than 20,000 files) and that every bundle has the files its `bundle.json` lists, and uploads nothing.
+  `--out <folder>` keeps the built site to look at: `npx wrangler@<version> pages dev <folder>` runs Pages locally (its runtime needs glibc 2.35 or newer on Linux; elsewhere
+  any static server shows the pages, without Pages' headers).
+- **A city's bundle on that site:** `entry.json` points into the site as Xianyang's does, `"bundle": { "url": "cities/<slug>/web/", … }`, `"poster": "cities/<slug>/web/poster.jpg"`,
+  `"thumb": "cities/<slug>/web/poster_thumb.webp"`; the tool publishes the city's packed `dist/web/` there (pack it first; `tools/registry.mjs` accepts the path once `dist/web/` exists,
+  and the local preview serves it there too). A city with `"bundle": null` gets only its posters, since a bundle can hold sound whose terms do not allow the web.
+- **The same site serves the shared portal:** its `_headers` lets any site read a bundle (`Access-Control-Allow-Origin: *`), so a pull request to the portal writes the
+  full address, `https://<name>.pages.dev/cities/<slug>/web/` (and the posters under it): the portal's check refuses a path that is not in the repository. The tool takes
+  its own site's full address as the path, so the bundle stays on the site through later deploys either way.
+- **Caching (`_headers`):** a bundle's data, sound, footage and pictures, and the fonts, are kept a day; the pages, the code, `film.json`, `bundle.json`, the museum pages'
+  words and the entries are asked again on every visit. A bundle's files keep their names when it is packed again, so a longer life would hand a returning viewer old files
+  beside a new `film.json`; after a published city changes, a returning viewer can see old files for up to a day (a reload without the cache shows the new ones).
+- The portal itself stays on GitHub Pages (`.github/workflows/pages.yml`); this tool does not touch it.
