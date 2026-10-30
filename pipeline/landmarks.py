@@ -42,6 +42,7 @@ COMMON = {
     'group': ('str', None, None, 'a name it shares with the others a stage selects together'),
     'exaggeration': ('num', (.5, 5), None, 'its heights\' exaggeration (when absent the city\'s, fading as the landmark gets taller: see exaggeration(); 1: true, for one drawn after a true elevation)'),
     'z_m': ('num', (0, 300), 0.0, 'metres above its ground (a part standing on another: a dome on a hall\'s crossing)'),
+    'site': ('enum', ('raised', 'cut'), 'raised', 'on a slope: raised, a monument levelled at the highest ground under it, a platform below on the downhill side; cut, a small building let into the slope, levelled half-way (the uphill half cut, the downhill half filled: a hut, a house on a hillside)'),
 }
 PART = {   # what a part of `parts` adds
     'at': ('pair', (-2000, 2000), None, '[x, y] metres from the whole\'s centre, in its frame (x along it, y to its back)'),
@@ -890,7 +891,7 @@ def build(B, L, x, y, th):
             # slope read wrong)
             s0, p0 = B.lot_slope, B.plinth; B.lot_slope = 0.0; B.plinth = max(B.plinth, .02 * min(w, d))
             try:
-                with B.lot_site(sx, sy, th, w, d):
+                with B.lot_site(sx, sy, th, w, d, mid=L.get('site') == 'cut'):
                     g = B.gsite(sx, sy, th, w, d)
                     draw(Draw(B, g), L, x, y, th)
             finally: B.lot_slope, B.plinth = s0, p0

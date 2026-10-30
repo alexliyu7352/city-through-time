@@ -222,7 +222,7 @@ class Builder:
         return max(gs)
 
     @contextmanager
-    def lot_site(self, x, y, th, w, d):
+    def lot_site(self, x, y, th, w, d, mid=False):
         """a house's lot made one plane before it is built on (平整土地): the plane fitted to the ground under the w x d lot,
         raised just enough that the ground nowhere pokes through it, level where the ground is level and tilted with the hill
         where it is not (up to lot_slope; steeper, the house stands on a terrace whose foundation takes the rest). Where the plane
@@ -231,7 +231,8 @@ class Builder:
         steep slope stood behind a wall as tall as a city's. Every part of the house (its wings, walls, gate, court) then stands on that plane (gsite, strip and
         gable_house take it, the pieces are sheared along it), so a house is one piece on the slope: its wings no longer stand
         each on its own level against the walls and the court, nor on plinths of their own. Inside a lot already made one plane
-        (a mansion's courts) the plane is the mansion's."""
+        (a mansion's courts) the plane is the mansion's. mid: the plane half-way between the highest and the lowest ground
+        under it, the building let into the slope (cut on the uphill side, filled on the downhill), not raised over it."""
         if self.site is not None: yield; return
         P = self.frame(x, y, th); n = max(3, min(12, int(math.ceil(max(w, d) / 6)) + 1)); pts = []
         for i in range(n):
@@ -240,7 +241,7 @@ class Builder:
         A = np.array([[1.0, a, b] for a, b, _ in pts]); z = np.array([g for _, _, g in pts])
         c0, bx, by = np.linalg.lstsq(A, z, rcond=None)[0]
         k = min(1.0, self.lot_slope / max(math.hypot(bx, by), 1e-9)); bx, by = bx * k, by * k   # steeper than lot_slope: a terrace, its foundation taking the rest
-        res = z - A @ np.array([0.0, bx, by]); c0 = 0.0; lift = float(res.max()) + self.clear
+        res = z - A @ np.array([0.0, bx, by]); c0 = 0.0; lift = (float(res.max() + res.min()) / 2 if mid else float(res.max())) + self.clear
         s0, f0 = self.slope, self.found
         g0, sl, fd = float(c0) + lift, (float(bx), float(by)), lift - float(res.min())
         self.slope = sl
