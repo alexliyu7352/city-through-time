@@ -521,12 +521,28 @@ class Builder:
         s0 = self.slope; self.slope = (dy[0] * k, dy[1] * k)
         self._emit(BOX, x, y, th, z0 - drop / 2 - t, w, d, t, part=part, g_m=g); self.slope = s0
 
-    def arcade(self, x, y, th, w, d, z0, depth=3.6, h=3.4, part=LMK, g=None, sides=(1, 1, 1, 1), bay=3.6):
+    def arcade(self, x, y, th, w, d, z0, depth=3.6, h=3.4, part=LMK, g=None, sides=(1, 1, 1, 1), bay=3.6, gaps=()):
         """a covered walk (回廊) around a w x d body standing at z0: posts every `bay`, a lean-to roof sloping outward from the
-        body's wall. sides: south, east, north, west (local -y, +x, +y, -x)"""
+        body's wall. sides: south, east, north, west (local -y, +x, +y, -x). gaps: (side, middle, width) where the walk opens
+        (a stair climbing through it, a gallery crossing over it), middle along the side in the body's frame (x on s and n, y
+        on e and w): its roof, posts and beam stop either side"""
         P = self.frame(x, y, th)
         for side, on in zip(('s', 'e', 'n', 'w'), sides):
             if not on: continue
+            gs_ = [(m_ - gw_ / 2, m_ + gw_ / 2) for sd_, m_, gw_ in gaps if sd_ == side]
+            if gs_:   # the side in stretches between its gaps, in the body's frame (its middle line `out` from the wall)
+                L = w + 2 * depth if side in 'sn' else d; out = (d / 2 + depth / 2) if side in 'sn' else (w / 2 + depth / 2)
+                at = (lambda a_, o_: P(a_, (-1 if side == 's' else 1) * o_)) if side in 'sn' else (lambda a_, o_: P((1 if side == 'e' else -1) * o_, a_))
+                ang = {'n': th, 's': th + math.pi, 'e': th - math.pi / 2, 'w': th + math.pi / 2}[side]
+                cuts = sorted(gs_); stops = [-L / 2] + [v for c in cuts for v in c] + [L / 2]
+                for a_, b_ in zip(stops[::2], stops[1::2]):
+                    a_, b_ = max(a_, -L / 2), min(b_, L / 2)
+                    if b_ - a_ < 1.0: continue
+                    self.lean(*at((a_ + b_) / 2, out), ang, b_ - a_, depth + .8, z0 + h + 1.1, 1.1, part=LROOF, g=g)
+                    n = max(1, int((b_ - a_) // bay))
+                    for i in range(n + 1): self._emit(BOX, *at(a_ + (b_ - a_) * i / n, out + depth / 2 - .3), ang, z0, .55, .55, h, part=part, g_m=g)
+                    self._emit(BOX, *at((a_ + b_) / 2, out + depth / 2 - .3), ang, z0 + h - .5, b_ - a_, .6, .5, part=part, g_m=g)
+                continue
             if side in 's n':
                 L = w + 2 * depth; sgn = -1 if side == 's' else 1; cx_, cy_ = P(0, sgn * (d / 2 + depth / 2)); ang = th if side == 'n' else th + math.pi
             else:
@@ -546,21 +562,24 @@ class Builder:
         the two joined by a flying gallery (飞阁) at the upper level."""
         for sx in ((-1, 1) if mirror > 0 else (0,)):
             cx_, cy_ = self.frame(x, y, th)(sx * (w / 2 + mirror / 2), 0) if mirror > 0 else (x, y)
-            with self.labelled({-1: 'west', 0: 'centre', 1: 'east'}[sx]): self._taixie_one(cx_, cy_, th, w, d, h, rooms, upper, part, roof_main, flip=sx > 0)
+            with self.labelled({-1: 'west', 0: 'centre', 1: 'east'}[sx]): self._taixie_one(cx_, cy_, th, w, d, h, rooms, upper, part, roof_main, flip=sx > 0,
+                                                                                         gallery={-1: 'e', 0: None, 1: 'w'}[sx])
         if mirror > 0:   # the flying gallery (飞阁) across the gap at the platform's height: a covered walk, posts and a roof
             with self.labelled('gallery'):
-                g = self.gsite(x, y, th, mirror + 4, 7); self.found = 0.0; L_ = mirror + 8
-                self._emit(BOX, x, y, th, h - .2, L_, 6.5, 1.0, part=part, g_m=g)                      # its deck
-                P_ = self.frame(x, y, th); n_ = max(3, int(L_ // 4.5))
+                # (from one platform's top edge to the other's: their faces lean in, the tops 2 % of w inside the feet; the deck
+                # flush with the tops, the roof's eaves ending over the edges: none of it inside the upper tiers' halls and parapets)
+                g = self.gsite(x, y, th, mirror + 4, 7); self.found = 0.0; L_ = mirror + .04 * w; Lr_ = L_ - 2.0
+                self._emit(BOX, x, y, th, h - 1.0, L_ + 1.0, 6.5, 1.0, part=part, g_m=g)                # its deck, seated .5 m on each top
+                P_ = self.frame(x, y, th); n_ = max(3, int(Lr_ // 4.5))
                 for i in range(n_ + 1):
                     for k in (-1, 1):
-                        px, py = P_(-L_ / 2 + L_ * i / n_, k * 2.8); self._emit(BOX, px, py, th, h + .8, .5, .5, 3.4, part=part, g_m=g)
-                self._emit(BOX, x, y, th, h + 1.6, L_ * .98, .3, 1.0, part=DARK, g_m=g)
-                self.roof(x, y, th, h + 4.2, L_, 6.5, 2.2, 'gable', part=LROOF, g=g, o=1.0, ornaments=False)
+                        px, py = P_(-Lr_ / 2 + Lr_ * i / n_, k * 2.8); self._emit(BOX, px, py, th, h, .5, .5, 3.4, part=part, g_m=g)
+                self._emit(BOX, x, y, th, h + .8, Lr_ * .98, .3, 1.0, part=DARK, g_m=g)
+                self.roof(x, y, th, h + 3.4, Lr_, 6.5, 2.2, 'gable', part=LROOF, g=g, o=1.0, ornaments=False)
                 for k in (-1, 1):   # the piers that carry it over the road between the platforms
-                    px, py = P_(k * mirror * .22, 0); self._emit(BOX, px, py, th, 0, 3.0, 5.0, h - .2, part=EARTH, g_m=g)
+                    px, py = P_(k * mirror * .22, 0); self._emit(BOX, px, py, th, 0, 3.0, 5.0, h - 1.0, part=EARTH, g_m=g)
 
-    def _taixie_one(self, x, y, th, w, d, h, rooms, upper, part, roof_main, flip=False):
+    def _taixie_one(self, x, y, th, w, d, h, rooms, upper, part, roof_main, flip=False, gallery=None):
         """one of the twin pavilions, after Yang Hongxun's elevation and sections (research/qin_refs/ref_4): low and wide, three
         eave lines stepping down: a deep covered walk round the foot of the platform (its lean-to roof the lowest skirt, rooms
         let into the platform behind it); on the platform a ring of lower halls round a small court (the second skirt); in the
@@ -574,7 +593,9 @@ class Builder:
                     rx = -w * .4 + w * .8 * (i + .5) / n; px, py = P(rx, face * (d / 2 * .985 + .05))
                     self._emit(BOX, px, py, th, .2, min(3.2, w * .8 / n * .4), .3, min(3.6, h * .6), part=DARK, g_m=g)
         # the lowest skirt: a deep covered walk all round the foot, its roof just under the platform's edge
-        with self.labelled('walk'): self.arcade(x, y, th, w * .985, d * .975, 0, depth=5.2, h=min(4.4, h * .72), part=part, g=g, bay=4.2)
+        # (open where the stair climbs through it and where the flying gallery crosses over it: neither runs through its roof)
+        gaps_ = [('s', -w * .3 if not flip else w * .3, 5.0 + 1.2)] + ([(gallery, 0.0, 6.5 + 1.2)] if gallery else [])
+        with self.labelled('walk'): self.arcade(x, y, th, w * .985, d * .975, 0, depth=5.2, h=min(4.4, h * .72), part=part, g=g, bay=4.2, gaps=gaps_)
         # on the platform: the south half an open terrace with a parapet; a ring of lower halls round the north part
         uw, ud = w * .9, d * .6; uy = d * .17; z = h + .6
         with self.labelled('terrace'):
