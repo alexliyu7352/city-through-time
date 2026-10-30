@@ -7,7 +7,8 @@ usage: python -I tools/web.py cities/<slug>            -> cities/<slug>/dist/web
 Upload the folder as it is (a Hugging Face dataset, a GitHub repository served by GitHub Pages, any host that allows cross-origin
 reads) and give its URL as the city's `bundle` in cities.json; the page then plays play.html?city=<slug>&bundle=<url>.
 Only what the page loads goes in (engine/main.js: the timeline, the model and its masks, the era cities, the decals and plates, the
-narration, score and sound-effect tracks as m4a, the footage and pictures), laid out as in the city folder: build/... and assets/....
+narration, score and sound-effect tracks as m4a, the footage and pictures; museum.html: the museum pages, tools/museum.py), laid out as
+in the city folder: build/... and assets/....
 Nothing else does: no WAV, no internal test plates (satellite_hr), no reference pictures. The footage is re-encoded for streaming. The fonts are not in it: the page loads
 them from the project's fonts/ (a city that uses a new font brings it to fonts/ in its pull request)."""
 import hashlib, json, os, shutil, subprocess, sys
@@ -26,6 +27,13 @@ def files(D):
     out += ['build/' + f for f in built if f]
     out += [f['file'] for f in F.get('footage') or []]   # (relative to the city folder: assets/...)
     out += [v['file'] for v in F.get('living') or []]   # living moments' pictures (assets/living/)
+    M = os.path.join(B, 'museum')   # museum pages (tools/museum.py): what museum.html and the viewer's public mode load
+    if os.path.exists(os.path.join(M, 'index.json')):
+        out.append('build/museum/index.json')
+        for e in json.load(open(os.path.join(M, 'index.json'), encoding='utf-8')):
+            P = json.load(open(os.path.join(M, e['id'] + '.json'), encoding='utf-8'))
+            out += [f'build/museum/{e["id"]}.json', P['model']] + [v['picture']['file'] for v in P['viewpoints'] if v.get('picture')]
+            out += [q['file'] for q in (P.get('life') or {}).get('pictures') or []] + ([P['life']['photo']['file']] if (P.get('life') or {}).get('photo') else [])
     return list(dict.fromkeys(out))
 
 

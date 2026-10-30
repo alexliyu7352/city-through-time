@@ -13,7 +13,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeStudio } from './studio.js';
 import { ss, seg, lerp, clamp, frameOf } from './lib.js';
 
-const FULL_DEG = 10, GONE_DEG = 25;          // the picture by the angle from its camera
+const FULL_DEG = 10, GONE_DEG = 25, SKY_DEG = 14;   // the picture by the angle from its camera (its sky: SKY_DEG)
 const FULL_D = .14, GONE_D = .45;            // and by the distance (|ln| of the ratio to its own: within 15 %, gone past about 50 %)
 const EYE_M = 1.6, FLY_S = 1.4;              // the lowest the eye goes over the ground; a flight's seconds
 const KEY_AZ = 95;                           // the key light: 50 degrees left of this bearing (studio followShadow), 45 up: from the south-east
@@ -103,7 +103,9 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
     camera.near = clamp(d * .04, .00002, .002); camera.updateProjectionMatrix(); camera.updateMatrixWorld();   // (close up to the walls the near plane follows)
     const P = clean ? { v: null, a: 0 } : pictureNow();
     if (P.v && P.v !== shown) { S.aimProjector(P.v.cam, P.v.A); U.uPI.value = P.v.tex; shown = P.v; }
-    U.uPA.value = P.v ? P.a : 0; S.liveSky.material.uniforms.uA.value = U.uPA.value; S.liveSky.visible = U.uPA.value > 0;
+    U.uPA.value = P.v ? P.a : 0;
+    const sky = U.uPA.value * (1 - ss(seg(P.ang ?? 0, 4, SKY_DEG)));   // (the far land and sky, on a card far behind the model, part from it soonest: gone by SKY_DEG)
+    S.liveSky.material.uniforms.uA.value = sky; S.liveSky.visible = sky > 0;
     U.uPE.value = .035;   // (the picture's edges feathered: on a narrow stage the band of the picture shows them)
     edge.value = .55 * (1 - U.uPA.value);   // fine lines on the white model, none over the picture
     S.followShadow(t.x, t.y, t.z, Math.max(d, 60 * SC), KEY_AZ);   // the key light fixed in the room
