@@ -51,7 +51,7 @@ The steps shown to the user are in `CONTRIBUTING.zh-Hant.md`. The repository tak
 - Submitting a pull request: include only the text files in `cities/<slug>/` (entry.json, city.yaml, script.yaml, CREDITS, the .md files, the text notes in research/,
   and material descriptions such as assets/README.md); no pictures, music or video, which the PR check blocks (`tools/registry.mjs --check --base`).
   The exception is this project's example city Xianyang: it keeps its pictures, posters and web player bundle in full (`cities/xianyang/web/`, copied there after repacking, with the bundle in entry.json pointing to it,
-  so the portal plays directly from GitHub Pages; `.gitignore` and the check make an exception for it), while the modelling reference pictures and the original footage still stay out of git.
+  so the portal plays it from its own site; `.gitignore` and the check make an exception for it), while the modelling reference pictures and the original footage still stay out of git.
 
 ## A site of the user's own city (Cloudflare Pages)
 
@@ -96,4 +96,5 @@ already has the name, Cloudflare adds a suffix, and the tool builds the canonica
 - **Caching (`_headers`):** a bundle's data, sound, footage and pictures, and the fonts, are kept a day; the pages, the code, `film.json`, `bundle.json`, the museum pages'
   words and the entries are asked again on every visit. A bundle's files keep their names when it is packed again, so a longer life would hand a returning viewer old files
   beside a new `film.json`; after a published city changes, a returning viewer can see old files for up to a day (a reload without the cache shows the new ones).
-- The portal itself stays on GitHub Pages (`.github/workflows/pages.yml`); this tool does not touch it.
+- The portal itself is Cloudflare Pages connected to the repository (its build above, with `node tools/registry.mjs --check &&` before it, so a push with a broken
+  entry leaves the last site standing); this tool does not touch it.

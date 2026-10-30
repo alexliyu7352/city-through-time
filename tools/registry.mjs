@@ -1,6 +1,6 @@
 // The registry of cities: every cities/<slug>/entry.json -> cities.json, the small index the entry page reads at load (each city's
 // full entry is read only when it is opened). cities.json is generated, never committed: CI writes it when it publishes GitHub
-// Pages (.github/workflows/pages.yml), tools/preview.mjs writes it for the local preview.
+// Pages (connected to the repository: docs/PUBLISH.md), tools/preview.mjs writes it for the local preview.
 //   node tools/registry.mjs                          write cities.json
 //   node tools/registry.mjs --check [--base <ref>] [--online]
 //                                                    check every entry (CONTRIBUTING.md has the fields); a city's text files

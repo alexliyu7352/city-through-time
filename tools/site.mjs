@@ -1,7 +1,7 @@
-// The site as GitHub Pages serves it: the entry page in each language and every city's own page in each language, each with its
+// The site as Cloudflare Pages serves it (built there from the repository: docs/PUBLISH.md): the entry page in each language and every city's own page in each language, each with its
 // own title, description, link preview (Open Graph) and video data, its words already in the HTML (search engines and link
-// previews do not run the page's script), and sitemap.xml, robots.txt, 404.html. Generated, never committed: CI writes it on every
-// push (.github/workflows/pages.yml), tools/preview.mjs for the local preview.
+// previews do not run the page's script), and sitemap.xml, robots.txt, 404.html. Generated, never committed: Cloudflare's build writes it on
+// every push (tools/site.mjs --copy --headers), tools/preview.mjs for the local preview.
 //   node tools/site.mjs [--out _site] [--origin https://cities.go5.si] [--copy] [--city <slug>|auto] [--headers]
 // --origin is where the site is served (CI passes what Pages reports); --copy also copies the repository's files (git ls-files)
 // into --out, the whole site in one folder as CI publishes it.

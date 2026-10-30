@@ -1,7 +1,10 @@
-# A pull request: every entry.json must be complete and valid, and a city brings text only (tools/registry.mjs --check).
+# A pull request: every entry.json must be complete and valid, and a city brings text only (tools/registry.mjs --check). A push to main:
+# the entries checked as the site's build reads them (the site is built and served by Cloudflare Pages, connected to the repository).
 name: Check
 on:
   pull_request:
+  push:
+    branches: [main]
 permissions:
   contents: read
 jobs:
@@ -15,4 +18,4 @@ jobs:
         with:
           node-version: 24
       - name: Check the entries and the files under cities/
-        run: node tools/registry.mjs --check --base origin/${{ github.base_ref }}
+        run: node tools/registry.mjs --check ${{ github.base_ref && format('--base origin/{0}', github.base_ref) || '' }}

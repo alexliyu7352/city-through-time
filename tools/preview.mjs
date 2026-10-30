@@ -1,5 +1,5 @@
 // Live preview: serves the project and prints the URLs to open in Chrome (the film, and the site: the entry page and the cities'
-// own pages, generated into _site/ as CI does for GitHub Pages, tools/site.mjs).
+// own pages, generated into _site/ as Cloudflare's build does, tools/site.mjs).
 //   node tools/preview.mjs <city_slug> [port]
 // The page runs the real render(t) with a transport bar: space = play/pause, ←/→ = one frame, shift+←/→ = 5 s.
 // quality=low (default in play mode) renders without supersampling and without the period cities' shadows; add &quality=high to compare.
