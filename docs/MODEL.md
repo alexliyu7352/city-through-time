@@ -27,7 +27,10 @@ moved an approved sample without a word), and `tools/freeze.py check <frozen fol
 Do the close-up for the city with the fullest sources first; close-up camera distance 0.035–0.06 (about 0.1 m per pixel), elevation 10–15°, gliding along the main street inside the walls (`fov: 40–44`),
 and lay the other periods only once the houses are recognisable as houses. Take these stills with `uv run python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>`
 (a city not in city.yaml yet: `--spec <file> --year <y>`): it compiles that city alone in a study folder beside the film and shows it in the film's own palette and light, with the camera landed on the ground
-(by default the close-up above); city.yaml, script.yaml and build/ stay as they are, so never copy or swap them to take model stills. For a city with no schematic, first send a research subagent to find the archaeological and documentary layout (written into `research/`); do not fill in with grid cells.
+(by default the close-up above); city.yaml, script.yaml and build/ stay as they are, so never copy or swap them to take model stills. When the disk holding the project
+runs short, a study folder (or a candidate copy of the city) may live on another disk: make it there and link it in where the tools look (`build/review/modelview/<name>`
+as a symbolic link); compile, the checks and the stills follow the link. Keep only what can be made again on such a disk (a temporary disk is emptied on a restart),
+never an approved or frozen study or the city's own build. For a city with no schematic, first send a research subagent to find the archaeological and documentary layout (written into `research/`); do not fill in with grid cells.
 Every historic period needs at least one low-angle close-up (elevation 10–15°) so that the audience sees that houses are houses; the wide shot is used only to see the colour change and the growth.
 For a part made from the sources, check the model against that drawing item by item: position, orientation, tiers, size; no error from compile or clipcheck does not mean it is right
 (example: the three tiers of a platform were stacked in the wrong direction, and no check will report that).
