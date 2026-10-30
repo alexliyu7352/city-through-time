@@ -407,8 +407,14 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
       g.strokeStyle = 'rgba(255,255,255,.85)'; g.setLineDash([3, 3]); g.lineWidth = 1.2; g.stroke(); g.setLineDash([]);
     }
     g.restore();
-    txt(null, UI.locator, X, Y - 14, plain(UI.locator) ? 'mono' : 'zh', 12, 'rgba(225,230,236,.55)', a, { ls: 3 });
-    if (eraName) txt(null, eraName, X + Wm, Y - 14, 'zh', 14, 'rgba(240,242,245,.85)', a, { right: true, ls: 2 });
+    // the era's name right of the word LOCATOR, in the room left between them: a long name is set smaller (down to 11 px); one too
+    // long even then takes the box's whole width without the word (down to 9 px), never over it
+    const lk = plain(UI.locator) ? 'mono' : 'zh', room = Wm - width(UI.locator, lk, 12, 3) - 18;
+    let ep = 14, word = true;
+    while (eraName && ep > 11 && width(eraName, 'zh', ep, 2) > room) ep -= .5;
+    if (eraName && width(eraName, 'zh', ep, 2) > room) { word = false; ep = 14; while (ep > 9 && width(eraName, 'zh', ep, 2) > Wm) ep -= .5; }
+    if (word) txt(null, UI.locator, X, Y - 14, lk, 12, 'rgba(225,230,236,.55)', a, { ls: 3 });
+    if (eraName) txt(null, eraName, X + Wm, Y - 14, 'zh', ep, 'rgba(240,242,245,.85)', a, { right: true, ls: 2 });
     txt(null, 'N ↑', X + Wm - 4, Y + 16, 'mono', 12, 'rgba(240,242,245,.7)', a, { right: true });
   }
 
