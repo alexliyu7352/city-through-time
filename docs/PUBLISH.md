@@ -78,6 +78,11 @@ already has the name, Cloudflare adds a suffix, and the tool builds the canonica
   environment (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`) or in `local/config.json` as `"cloudflare": { "api_token": "…", "account_id": "…", "city": "<slug>" }`
   (this machine's, never committed; `"project": "<name>"` beside them names that city's project); never in a city's files, a commit or a report, since the token can
   replace the site. The project is created on the first deploy.
+- **Built by Cloudflare from a GitHub repository** (Pages connected to it: no token in the repository, a build on every push, a preview address for each
+  branch and pull request): framework preset none, root directory the repository's, output directory `_site`, the variable `NODE_VERSION` `22`, and as the build command
+  `node tools/site.mjs --copy --headers --out _site --origin <the site's address>`: the portal with every city (its address, https://cities.go5.si), or with
+  `--city auto` the city of a user's own fork alone. `--headers` writes the `_headers` the deploy tool writes. Such a build sees only what is committed: a user's city
+  commits its packed bundle at `cities/<slug>/web/` (as Xianyang's is), since `dist/` is not committed.
 - **A deploy is an upload:** it needs the user's go-ahead on that occasion. First `node tools/deploy.mjs --city <slug> --dry-run`: it checks the entries as CI does,
   builds the site and checks what Pages refuses (a file over 25 MiB, more than 20,000 files) and that every bundle has the files its `bundle.json` lists, and uploads nothing.
   `--out <folder>` keeps the built site to look at: `npx wrangler@<version> pages dev <folder>` runs Pages locally (its runtime needs glibc 2.35 or newer on Linux; elsewhere

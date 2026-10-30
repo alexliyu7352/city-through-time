@@ -2,7 +2,7 @@
 // own title, description, link preview (Open Graph) and video data, its words already in the HTML (search engines and link
 // previews do not run the page's script), and sitemap.xml, robots.txt, 404.html. Generated, never committed: CI writes it on every
 // push (.github/workflows/pages.yml), tools/preview.mjs for the local preview.
-//   node tools/site.mjs [--out _site] [--origin https://cities.go5.si] [--copy] [--city <slug>|auto]
+//   node tools/site.mjs [--out _site] [--origin https://cities.go5.si] [--copy] [--city <slug>|auto] [--headers]
 // --origin is where the site is served (CI passes what Pages reports); --copy also copies the repository's files (git ls-files)
 // into --out, the whole site in one folder as CI publishes it.
 // Addresses: <origin>/ and <origin>/<slug>/ in English, <origin>/<lang>/ and <origin>/<lang>/<slug>/ in the others (ja, zh-hant,
@@ -166,11 +166,26 @@ export function site({ out = path.join(ROOT, '_site'), origin, copy = false, cit
   return { reg, pages: pages.length, out, city, origin };
 }
 
+// Cloudflare's response headers (Pages, and a Worker's static assets: tools/deploy.mjs, or --headers for a build Cloudflare runs from the
+// repository) (_headers: a path, at most one splat, and its headers; a file takes the headers of every rule it
+// matches, so no two rules here set the same header). A city's web bundle may be read by any site: the shared entry page plays a
+// bundle from the host it is on. Its heavy files (the model and its maps, the period cities, the sound, the footage, the museum
+// pages' models and pictures) and the fonts are kept a day: they keep their names when a city is packed again, so a longer life
+// would give a returning viewer old files beside a new film.json. The rest (the pages, the code, film.json, bundle.json, the
+// museum pages' words, cities.json, the entries) is asked again on every visit, Pages' own `max-age=0, must-revalidate`.
+const DAY = 'Cache-Control: public, max-age=86400';
+export const HEADERS = '# Cloudflare\'s response headers (_headers), written by tools/site.mjs --headers and tools/deploy.mjs\n' + [
+  ['/cities/:slug/web/*', 'Access-Control-Allow-Origin: *'],
+  ['/cities/:slug/web/build/data/*', DAY], ['/cities/:slug/web/build/audio/*', DAY], ['/cities/:slug/web/assets/*', DAY],
+  ['/cities/:slug/web/build/museum/:page/*', DAY], ['/fonts/*', DAY],
+].map(([u, h]) => `${u}\n  ${h}\n`).join('');
+
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2), arg = k => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
   try {
     if (args.includes('--city') && !/^[^-]/.test(arg('--city') || '')) throw new Error('--city takes a city\'s folder name, or auto');
     const r = site({ out: arg('--out') ? path.resolve(arg('--out')) : undefined, origin: arg('--origin') || undefined, copy: args.includes('--copy'), city: arg('--city') });
+    if (args.includes('--headers')) fs.writeFileSync(path.join(r.out, '_headers'), HEADERS);   // (a build Cloudflare runs from the repository: Pages connected to it, or the Deploy button)
     console.log(r.city ? `site: ${r.pages} pages (${r.city} alone, in ${LANGS.length} languages, for ${r.origin}/) -> ${path.relative(ROOT, r.out) || '.'}`
       : `site: ${r.pages} pages (the entry page and ${r.reg.cities.length} cit${r.reg.cities.length === 1 ? "y" : "ies"}, in ${LANGS.length} languages) -> ${path.relative(ROOT, r.out) || '.'}`);
   } catch (e) { console.error(`site: ${e.message}`); process.exitCode = 1; }

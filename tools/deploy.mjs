@@ -18,23 +18,11 @@
 // Pages, Edit.
 import fs from 'fs'; import os from 'os'; import path from 'path'; import { execFileSync, spawnSync } from 'child_process';
 import { ROOT } from './registry.mjs';
-import { site, bundles, pickCity } from './site.mjs';
+import { site, bundles, pickCity, HEADERS } from './site.mjs';
 import { local } from '../render/local.mjs';
 
 const WRANGLER = '4.150.0';   // Cloudflare's upload tool, the exact version npx fetches (it needs Node 22 or newer)
 const MiB = 2 ** 20, FILE_MAX = 25 * MiB, FILES_MAX = 20000;   // what Pages takes: no file over 25 MiB, at most 20,000 files
-// Pages' response headers (_headers: a path, at most one splat, and its headers; a file takes the headers of every rule it
-// matches, so no two rules here set the same header). A city's web bundle may be read by any site: the shared entry page plays a
-// bundle from the host it is on. Its heavy files (the model and its maps, the period cities, the sound, the footage, the museum
-// pages' models and pictures) and the fonts are kept a day: they keep their names when a city is packed again, so a longer life
-// would give a returning viewer old files beside a new film.json. The rest (the pages, the code, film.json, bundle.json, the
-// museum pages' words, cities.json, the entries) is asked again on every visit, Pages' own `max-age=0, must-revalidate`.
-const DAY = 'Cache-Control: public, max-age=86400';
-const HEADERS = '# Cloudflare Pages\' response headers, written by tools/deploy.mjs\n' + [
-  ['/cities/:slug/web/*', 'Access-Control-Allow-Origin: *'],
-  ['/cities/:slug/web/build/data/*', DAY], ['/cities/:slug/web/build/audio/*', DAY], ['/cities/:slug/web/assets/*', DAY],
-  ['/cities/:slug/web/build/museum/:page/*', DAY], ['/fonts/*', DAY],
-].map(([u, h]) => `${u}\n  ${h}\n`).join('');
 
 const args = process.argv.slice(2), arg = k => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
 const dry = args.includes('--dry-run'), keep = arg('--out') && path.resolve(arg('--out'));
