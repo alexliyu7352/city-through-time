@@ -1377,6 +1377,15 @@ def extent(spec, F, osm_rings=None):
     parts += [LineString([F.to_utm.transform(*q) for q in st['pts']]).buffer(st.get('w_m', 14) / 2) for st in spec.get('streets', [])]
     return unary_union(parts) if parts else Polygon()
 
+def region_utm(F, rg, osm_rings=None):
+    """a region of the spec as a polygon in UTM: a ring [[lon, lat], ..]; a ring with holes [[ring], [hole], ..] (a garden round a
+    pavilion's court); several of either [[[ring], [hole], ..], ..]; or osm:<name>"""
+    if isinstance(rg, str) and rg.startswith('osm:'): return Polygon(to_utm_ring(F, osm_rings(rg[4:])[0]))
+    if isinstance(rg[0][0], (int, float)): return Polygon(to_utm_ring(F, rg))
+    if isinstance(rg[0][0][0], (int, float)): return Polygon(to_utm_ring(F, rg[0]), [to_utm_ring(F, h) for h in rg[1:]])
+    return unary_union([region_utm(F, p, osm_rings) for p in rg])
+
+
 NO_SITE = {'paifang', 'kilns', 'corridor', 'bridge', 'boats', 'village'}   # landmarks that keep no ground of their own clear
 
 
@@ -1607,7 +1616,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         B.group(('fabric', fi))
         if fb.get('region', 'walls') == 'walls': reg = inside
         elif isinstance(fb['region'], str) and fb['region'].startswith('osm:'): reg = Polygon(to_utm_ring(F, osm_rings(fb['region'][4:])[0])).buffer(-10)
-        else: reg = Polygon(to_utm_ring(F, fb['region']))
+        else: reg = region_utm(F, fb['region'], osm_rings)
         if reg is None: continue
         if wall_strips is not None and not wall_strips.is_empty: reg = reg.difference(wall_strips)   # no house on or against a city wall
         th = math.radians(fb.get('theta_deg', spec.get('theta_deg', 0)))
@@ -1653,7 +1662,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         if 'region' in tr:   # trees over the whole area about step_m apart, never on a street or in a building, scattered as a grove
             # grows: each at a random place kept .7 step_m off the ones before it (as many as a grid; a grid, even shaken, read as
             # the rows of an orchard)
-            rg = tr['region']; reg = Polygon(to_utm_ring(F, osm_rings(rg[4:])[0] if isinstance(rg, str) and rg.startswith('osm:') else rg))
+            reg = region_utm(F, tr['region'], osm_rings)
             sm_ = tr.get('step_m', 16); x0_, y0_, x1_, y1_ = reg.bounds; clear_ = streets.buffer(tr.get('r_m', 4)) if not streets.is_empty else None
             d_, near_ = .7 * sm_, {}
             for _ in range(int(4 * (x1_ - x0_) * (y1_ - y0_) / (sm_ * sm_))):
