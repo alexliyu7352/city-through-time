@@ -150,20 +150,22 @@ def main():
             R['landmarks_overlap'] = n; R['landmarks_overlap_at'] = ex_lm[:40]
         # a wall through a building: a thin long piece (a court's or a city's wall, citygen strip) across a hall or a house body,
         # in the same court too (parts of one court are let touch in landmarks_overlap, so a wall through its own side hall passed)
-        # (across: the wall covers the building's whole width along its line; a wall running into a gate house or a corner hall
-        # it ends at goes in part way, as built)
+        # (across: the wall's middle line crosses the building's whole width inside its walls; a wall running into a gate house or a
+        # corner hall it ends at goes in part way, as built, and a wall laid along a building's face (a front arcade before the aisles'
+        # ends, a clerestory on the aisle's inner side) has its middle line on that face, not inside)
         wp_ = [p for p in body((LMK, WALL)) if min(p[5], p[6]) <= 2.5 * S and max(p[5], p[6]) > 8 * S]
         bp_ = [p for p in body((LMK, FAB)) if min(p[5], p[6]) > 2.5 * S]
         n = 0; ex = []
         if wp_ and bp_:
             br_ = [rect(p, .3 * S) for p in bp_]; btree = STRtree(br_)
             for p in wp_:
-                a = rect(p, .3 * S); ang = p[3] + (0 if p[5] >= p[6] else math.pi / 2); ux, uz = math.cos(ang), math.sin(ang)
-                span = lambda g: (lambda v: max(v) - min(v))([x * ux + z * uz for x, z in g.exterior.coords]) if not g.is_empty and g.geom_type == 'Polygon' else 0.0
+                ang = p[3] + (0 if p[5] >= p[6] else math.pi / 2); ux, uz = math.cos(ang), math.sin(ang); L_ = max(p[5], p[6]) / 2
+                a = shapely.LineString([(p[1] - L_ * ux, p[2] - L_ * uz), (p[1] + L_ * ux, p[2] + L_ * uz)])   # (its middle line)
+                span = lambda g: (lambda v: max(v) - min(v) if v else 0.0)([x * ux + z * uz for x, z in shapely.get_coordinates(g)])
                 for j in btree.query(a, predicate='intersects'):
                     if not both(p, bp_[j]): continue
                     q = a.intersection(br_[j])
-                    if q.area > min_area and span(q) >= .9 * span(br_[j]): n += 1; c_ = q.centroid; ex.append([round(c_.x, 4), round(c_.y, 4)]); break
+                    if q.length > 0 and q.length >= .9 * span(br_[j]): n += 1; c_ = q.centroid; ex.append([round(c_.x, 4), round(c_.y, 4)]); break
         R['walls_through'] = n; R['walls_through_at'] = ex[:10]
         # a street that stops short: one end of a road (paving marked a road, field 8) that meets no other road and points at a
         # landmark, an earthwork or a wall within street_m, without reaching it (an avenue that ends 80 m before the palace it

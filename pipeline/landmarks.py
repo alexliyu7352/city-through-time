@@ -103,7 +103,7 @@ FIELDS = {
         'aisles': ('obj', {'n': ('int', (1, 3), 1, 'aisles on each side'), 'w_m': ('num', (1, 60), REQ, 'each aisle\'s width'), 'h_m': ('num', (1, 100), REQ, 'height of their walls')}, None, 'lower side aisles under lean-to roofs, the nave rising above them (a basilica, a church)'),
         'apse': ('obj', {'at': ('enum', ('back', 'front', 'both'), 'back', 'which end'), 'r_m': ('num', (1, 100), None, 'its radius (half the nave\'s width when absent)'), 'h_m': ('num', (1, 120), None, 'its wall (the nave\'s when absent)')}, None, 'a half round end under a half dome'),
         'transept': ('obj', {'span_m': ('num', (2, 400), REQ, 'its length across'), 'w_m': ('num', (2, 200), None, 'its width (the nave\'s when absent)'), 'at': ('num', (0, 1), .72, 'where it crosses, a share of the length from the front'), 'h_m': ('num', (1, 120), None, 'its walls (the nave\'s when absent)')}, None, 'an arm across (a cross plan)'),
-        'colonnade': ('obj', {'at': ('enum', ('around', 'front', 'front_back'), 'around', 'round all four sides (a peripteral temple), the front (a portico, a stoa\'s long front), front and back'), 'n_front': ('int', (2, 40), 6, 'columns across the front'), 'h_m': ('num', (1, 120), None, 'their height (the walls\' when absent)'), 'depth_m': ('num', (1, 40), None, 'from the columns to the wall behind (a portico two bays deep when absent)')}, None, 'columns under the roof\'s edge'),
+        'colonnade': ('obj', {'at': ('enum', ('around', 'front', 'front_back'), 'around', 'round all four sides (a peripteral temple), the front (a portico, a stoa\'s long front), front and back'), 'n_front': ('int', (2, 40), 6, 'columns across the front'), 'h_m': ('num', (1, 120), None, 'their height (the walls\' when absent)'), 'depth_m': ('num', (1, 40), None, 'from the columns to the wall behind (a portico two bays deep when absent, one round all sides; the hall behind keeping at least a quarter of its depth)')}, None, 'columns under the roof\'s edge'),
         'podium': ('obj', {'h_m': ('num', (.2, 30), REQ, 'its height'), 'stair': ('enum', ('front', 'around', 'none'), 'front', 'front: one flight (a Roman temple); around: steps all round (a Greek temple\'s stylobate)')}, None, 'a platform under it'),
         'buttresses': ('obj', {'n': ('int', (2, 60), None, 'on each side (one every 7 m when absent)'), 'depth_m': ('num', (.5, 10), 2.5, 'how far each stands out'), 'flying': ('bool', None, False, 'flying buttresses over the aisles to the nave\'s wall (Gothic)')}, None, 'piers against the long walls'),
     }, 'a long rectangular hall under one roof: temples, basilicas, churches and cathedrals, stoas, market halls, prayer halls, palace halls'),
@@ -253,6 +253,10 @@ def check(L, src, part=False):
         if 'from' not in out and not part and 'lon' not in out: raise Bad(f'{src}: lon and lat are missing (or give from and to)')
         tier = out['h_m'] - out['attic_m']
         if tier <= 0: raise Bad(f'{src}: attic_m {out["attic_m"]:g} leaves no room for the arches under h_m {out["h_m"]:g}')
+    if k == 'long_hall' and (out.get('colonnade') or {}).get('depth_m'):
+        c_ = out['colonnade']; dep = c_['depth_m']
+        body = out['d_m'] - dep if c_['at'] == 'front' else (out['d_m'] if c_['at'] == 'front_back' else min(out['w_m'], out['d_m'])) - 2 * dep
+        if body < 1: raise Bad(f'{src}.colonnade.depth_m: {dep:g} leaves no hall behind the columns (d_m {out["d_m"]:g}{", w_m " + format(out["w_m"], "g") if c_["at"] == "around" else ""})')
     if k == 'column':
         if 'stages' in out and ('w_m' in out or 'h_m' in out): raise Bad(f'{src}: stages give the widths and heights: no w_m or h_m with them')
         if 'stages' not in out and ('w_m' not in out or 'h_m' not in out): raise Bad(f'{src}: w_m and h_m are missing (or give stages)')
@@ -538,7 +542,10 @@ def colonnade_depth(L):
     if not c: return 0.0
     if c.get('depth_m'): return c['depth_m']
     bay = L['w_m'] / max(1, c['n_front'] - 1)
-    return bay * (1.0 if c['at'] == 'around' else 2.0)
+    # (a shallow hall's portico: the body behind keeps at least a quarter of the hall's depth, its width too round all sides;
+    # two bays of a wide front were deeper than the whole hall)
+    if c['at'] == 'around': return min(bay, min(L['w_m'], L['d_m']) * .375)
+    return min(bay * 2.0, L['d_m'] * (.75 if c['at'] == 'front' else .375))
 
 
 def placed(L):
