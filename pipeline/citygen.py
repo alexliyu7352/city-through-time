@@ -1377,6 +1377,40 @@ def extent(spec, F, osm_rings=None):
     parts += [LineString([F.to_utm.transform(*q) for q in st['pts']]).buffer(st.get('w_m', 14) / 2) for st in spec.get('streets', [])]
     return unary_union(parts) if parts else Polygon()
 
+NO_SITE = {'paifang', 'kilns', 'corridor', 'bridge', 'boats', 'village'}   # landmarks that keep no ground of their own clear
+
+
+def landmark_site(L, F, theta_deg=0.0):
+    """Where a landmark stands and the ground it keeps clear of the houses, in UTM metres: (x, y, th, L, [polygons]). build_city
+    lays the fabric off this ground; a layout made outside citygen (lots, streets, gardens, a loss's region round a landmark) takes
+    the same ground from here, never works it out again (a box round the anchor instead of what the landmark covers put houses on
+    the side of a temple's platform). A class of landmarks.py: what it covers (landmarks.bounds) and 6 m; a ditch: its line; a large
+    palace: its halls and its wall; any other: its rectangle and an apron. L comes back with what a run between two points adds
+    (arches: its length); theta_deg: the city's, for a landmark that gives none."""
+    import landmarks as LMK_
+    if 'lon' in L: x, y = F.to_utm.transform(L['lon'], L['lat'])
+    elif 'from' in L: x, y = F.to_utm.transform(*L['from'])
+    else: x, y = F.to_utm.transform(*L['pts'][0])
+    th = math.radians(L.get('theta_deg', theta_deg)); k = L['kind']
+    if k in LMK_.KINDS:
+        if k == 'arches' and 'from' in L:   # a run between two points
+            a_, b_ = F.to_utm.transform(*L['from']), F.to_utm.transform(*L['to'])
+            L = {**L, 'length_m': math.hypot(b_[0] - a_[0], b_[1] - a_[1])}; x, y = (a_[0] + b_[0]) / 2, (a_[1] + b_[1]) / 2; th = math.atan2(b_[1] - a_[1], b_[0] - a_[0])
+        P = Builder.frame(x, y, th); x0_, y0_, x1_, y1_ = LMK_.bounds(L)   # (the box of what it covers, not round its anchor: parts set off to one side)
+        return x, y, th, L, [Polygon([P(x0_, y0_), P(x1_, y0_), P(x1_, y1_), P(x0_, y1_)]).buffer(6)]
+    if k == 'ditch': return x, y, th, L, [LineString([F.to_utm.transform(*q) for q in L['pts']]).buffer(L.get('w_m', 12) / 2 + 8)]
+    if k in NO_SITE: return x, y, th, L, []
+    P = Builder.frame(x, y, th)
+    if k == 'palace' and L.get('w_m', 0) > 400:   # a large palace city: keep only its halls clear, its courts get filled with buildings
+        foot = [Point(*P(0, ly * L['d_m'])).buffer(max(fw * L['w_m'], fd * L['d_m']) * .8) for ly, fw, fd, hh, roof in L.get('halls', [])]
+        return x, y, th, L, foot + [Polygon([P(-L['w_m'] / 2, -L['d_m'] / 2), P(L['w_m'] / 2, -L['d_m'] / 2), P(L['w_m'] / 2, L['d_m'] / 2), P(-L['w_m'] / 2, L['d_m'] / 2)]).exterior.buffer(14)]
+    hw, hd = L.get('w_m', 30) / 2, L.get('d_m', L.get('w_m', 30)) / 2   # the landmark's own rectangle (rotated) plus a small apron
+    if k == 'taixie': hw = hw * (2 if L.get('mirror_m') else 1) + L.get('mirror_m', 0) / 2 + 4; hd += L.get('h_m', 6) * 1.1 + 4   # the twin, the walks, the stair
+    if k == 'front_hall': hw += 12; hd += 14
+    if k in ('armoury', 'market', 'court'): hw += 2; hd += 2
+    return x, y, th, L, [Polygon([P(-hw, -hd), P(hw, -hd), P(hw, hd), P(-hw, hd)]).buffer(6)]
+
+
 def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None, sites=None):
     """spec (dict from city.yaml, lon/lat) -> primitive list. Spec keys:
     origin [lon, lat]; theta_deg (grid rotation, CCW from east); detail (low | medium | high); exaggeration (building heights,
@@ -1411,18 +1445,10 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     for li, L in enumerate(spec.get('landmarks', [])):
         lm_at.append(len(lm_foot))
         B.group(('landmarks', li))   # one landmark rises as one piece (kilns, huts, boats: one piece each, below)
-        if 'lon' in L: x, y = F.to_utm.transform(L['lon'], L['lat'])
-        elif 'from' in L: x, y = F.to_utm.transform(*L['from'])
-        else: x, y = F.to_utm.transform(*L['pts'][0])
-        th = math.radians(L.get('theta_deg', spec.get('theta_deg', 0)))
-        k = L['kind']
+        x, y, th, L, foot_ = landmark_site(L, F, spec.get('theta_deg', 0)); k = L['kind']
         B.hex = float(L.get('exaggeration', HEX0))   # a landmark built after a drawn elevation can keep nearer its true proportions
         if k in LMK_.KINDS:   # a class of any region (pipeline/landmarks.py), drawn level on its own site
-            if k == 'arches' and 'from' in L:   # a run between two points
-                a_, b_ = F.to_utm.transform(*L['from']), F.to_utm.transform(*L['to'])
-                L = {**L, 'length_m': math.hypot(b_[0] - a_[0], b_[1] - a_[1])}; x, y = (a_[0] + b_[0]) / 2, (a_[1] + b_[1]) / 2; th = math.atan2(b_[1] - a_[1], b_[0] - a_[0])
-            LMK_.build(B, L, x, y, th); P = B.frame(x, y, th); x0_, y0_, x1_, y1_ = LMK_.bounds(L)   # (the box of what it covers, not round its anchor: parts set off to one side)
-            lm_foot.append(Polygon([P(x0_, y0_), P(x1_, y0_), P(x1_, y1_), P(x0_, y1_)]).buffer(6)); continue
+            LMK_.build(B, L, x, y, th); lm_foot += foot_; continue
         if k == 'temple': B.compound(x, y, th, L.get('w_m', 70), L.get('d_m', 130), L.get('halls', [(-.25, .5, .16, 9, 'xieshan'), (.05, .6, .2, 13, 'double'), (.32, .55, .16, 10, 'xieshan')]))
         elif k == 'office': B.compound(x, y, th, L.get('w_m', 80), L.get('d_m', 110), L.get('halls', [(-.2, .55, .18, 8, 'xieshan'), (.15, .6, .2, 9, 'hip')]))
         elif k == 'palace': B.compound(x, y, th, L.get('w_m', 160), L.get('d_m', 200), L.get('halls', [(-.25, .5, .16, 12, 'xieshan'), (.05, .6, .2, 16, 'double_hip'), (.3, .5, .16, 12, 'xieshan')]), wall_h=L.get('wall_h', 6), side_halls=L.get('w_m', 160) < 400)
@@ -1470,7 +1496,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         elif k == 'ditch':   # a dug ditch along a polyline (dark water-like strip)
             pts_ = [F.to_utm.transform(*q) for q in L['pts']]
             for a, b in zip(pts_[:-1], pts_[1:]): B.strip(a, b, L.get('w_m', 12), .25, part=WATER)
-            lm_foot.append(LineString(pts_).buffer(L.get('w_m', 12) / 2 + 8)); continue
+            lm_foot += foot_; continue
         elif k == 'factory': B.factory(x, y, th, L['w_m'], L['d_m'], L.get('bays', 8), L.get('h_m', 10))
         elif k == 'chimney': B.chimney(x, y, L.get('h_m', 55))
         elif k == 'station':
@@ -1517,19 +1543,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                     B.group(); a_ = B.rng.random() * math.tau; r_ = L.get('r_m', 140) * 1.05
                     B._emit(CYL, x + r_ * math.cos(a_), y + r_ * math.sin(a_), 0, 0, 2.2, 0, 1.6, part=EARTH)
             continue
-        if k == 'palace' and L.get('w_m', 0) > 400:   # a large palace city: keep only its halls clear, its courts get filled with buildings
-            P = B.frame(x, y, th)
-            for ly, fw, fd, hh, roof in L.get('halls', []):
-                hx, hy = P(0, ly * L['d_m'])
-                lm_foot.append(Point(hx, hy).buffer(max(fw * L['w_m'], fd * L['d_m']) * .8))
-            corners = [P(-L['w_m'] / 2, -L['d_m'] / 2), P(L['w_m'] / 2, -L['d_m'] / 2), P(L['w_m'] / 2, L['d_m'] / 2), P(-L['w_m'] / 2, L['d_m'] / 2)]
-            lm_foot.append(Polygon(corners).exterior.buffer(14))
-        else:   # the landmark's own rectangle (rotated) plus a small apron
-            P = B.frame(x, y, th); hw, hd = L.get('w_m', 30) / 2, L.get('d_m', L.get('w_m', 30)) / 2
-            if k == 'taixie': hw = hw * (2 if L.get('mirror_m') else 1) + L.get('mirror_m', 0) / 2 + 4; hd += L.get('h_m', 6) * 1.1 + 4   # the twin, the walks, the stair
-            if k == 'front_hall': hw += 12; hd += 14
-            if k in ('armoury', 'market', 'court'): hw += 2; hd += 2
-            lm_foot.append(Polygon([P(-hw, -hd), P(hw, -hd), P(hw, hd), P(-hw, hd)]).buffer(6))
+        lm_foot += foot_   # (landmark_site: its halls and wall for a large palace, else its rectangle and an apron)
     B.hex = HEX0
     lm_at.append(len(lm_foot))
     # a landmark built later where houses stood (a loss's `for`): the houses are laid over its site and stay until that loss takes

@@ -183,7 +183,9 @@ When changing a threshold, avoid the batch the user has just seen and approved; 
 **Lay out blocks from an old map or an archaeological plan** (`city.trace`): first register the map (georeferencing in QGIS), then trace on it the walls (polygons), streets (lines), blocks (polygons)
 and landmarks (points or polygons), save them as GeoJSON in `research/`, write `kind` of each shape as wall, street, block or landmark, and the other properties are the settings of that item
 (`lot`, `typ`, `w_m`, `shops`, the landmark's `type`…); houses in a block line up along the block's own long side, not the city-wide grid (`traced` in `pipeline/citygen.py`).
-What is traced is built together with what is written in `city:`, and the two can be mixed. No city has used this feature yet; the first time, show the user a small piece first.
+What is traced is built together with what is written in `city:`, and the two can be mixed; the first time, show the user a small piece first. A layout worked out beside the
+model (lots, streets, gardens or a loss's region laid round landmarks) takes each landmark's ground from `citygen.landmark_site`, the ground citygen itself keeps clear, never a box of
+its own round the anchor (that put houses on one side of a temple's platform).
 **Shops along a street** form a row wall to wall, of similar height, with a back yard behind each shop body and the yard walls joined in one line (with gaps between shops, uneven heights and open backs, a row looks like a row of teeth when seen obliquely from behind). Not built yet: houses on steep slopes lined up along contour lines (see "Ground and terrain").
 clipcheck's `paving_under` checks whether the paving and yards are covered by the plate (more than 0.3 m counts), and it must be 0. A new quarter needs streets and lanes (`streets`, `lanes: {region}`); it cannot be only a field of houses.
 
