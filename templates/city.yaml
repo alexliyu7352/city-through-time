@@ -128,6 +128,7 @@ film:
       #   kilns, village, bridge, boats, factory, chimney, station, platform, ditch, pool (a dug basin: lon, lat, w_m, d_m; banks_m when truly cut deeper than 6 m; level: draped when its ancient ground is lost), corridor (elevated corridor); fabric typ: courtyard / dwelling / hut / slab / wards (lǘlǐ residential wards).
       #   wall style: tower (Ming-Qing gate towers and barbicans) / hip / han3 (one gate with three passages, the third number of gates = width of the partition wall) / none; moat_w_m, moat_off_m; streets lanes3: true = Han-style three-lane main street.
       #   For sizes look up the archaeological reports first (research/<topic>.md, a source for every number); only where there is none, show schematically by the custom of the same period.
+      #   one landmark written for several periods or places: landmark_types: { <name>: { kind, ... } } at the top of city.yaml (or files), then { template: <name>, lon, lat, ... }
       #   houses of other regions and periods: types: { <name>: { where, when, basis, form, storeys, roof: { shape }, ... } } at the top of city.yaml (all periods) or in city: (this one),
       #   or a library type, types/<name>.yaml; a fabric names it, typ: <name>, with its lot and no h_m (docs/MODEL.md "House types"); look at them first: tools/modelview.py --sheet.
       routes:                                 # light lines: moving a capital, moving house, river changes, distances. [km] fills in the distance between the two points automatically; label "schematic" when positions are estimates

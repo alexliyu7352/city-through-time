@@ -274,6 +274,31 @@ def check(L, src, part=False):
     return out
 
 
+def library(C, city_dir):
+    """the city's landmark templates, name -> entry: city.yaml `landmark_types`, a mapping (name -> a landmark without its place),
+    or a file (or a list of files) under the city's folder holding such a mapping or {landmarks: [{name, ...}]}"""
+    import yaml
+    v = (C or {}).get('landmark_types') or {}; out = {}
+    for src in ([v] if isinstance(v, (dict, str)) else v):
+        d = yaml.safe_load(open(os.path.join(city_dir, src), encoding='utf-8')) if isinstance(src, str) else src
+        items = {L['name']: L for L in d['landmarks']} if isinstance(d, dict) and isinstance(d.get('landmarks'), list) else d
+        if not isinstance(items, dict): raise SystemExit(f'citygen: landmark_types {src}: a mapping name -> landmark, or {{landmarks: [{{name, ..}}]}}')
+        out.update(items)
+    return out
+
+
+def templated(spec, lib, label='city'):
+    """landmarks written `template: <name>`: the template's keys (not its place), then the landmark's own over them, so one kind
+    of building is written once and each copy gives its place and what differs; in place, before they are checked"""
+    import copy
+    for i, L in enumerate(spec.get('landmarks') or []):
+        if isinstance(L, dict) and 'template' in L:
+            if L['template'] not in lib: raise SystemExit(f'citygen: {label}: landmarks[{i}]: template {L["template"]!r} is not in landmark_types ({", ".join(sorted(lib)) or "none declared"})')
+            base = {k: v for k, v in copy.deepcopy(lib[L['template']]).items() if k not in ('lon', 'lat', 'at', 'from', 'to', 'pts')}
+            spec['landmarks'][i] = {**base, **{k: v for k, v in L.items() if k != 'template'}}
+    return spec
+
+
 def checked(spec, label='city'):
     """the city's landmarks of KINDS checked and completed in place (others are the generator's own kinds, left as they are);
     stops compile with what to write"""

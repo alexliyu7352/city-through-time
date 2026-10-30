@@ -1211,6 +1211,7 @@ def traced(spec, F, city_dir):
     and group beside them: every other property is then provenance.
     Returns {walls, streets, fabric, landmarks}: lists to add to the spec's own (written entries and traced ones build alike)."""
     import json, os
+    lk = lambda pr: {'kind': pr.pop('type')} if 'type' in pr else {} if 'template' in pr else {'kind': 'hall'}   # (a template gives its own kind)
     paths = spec.get('trace') or []
     out = {'walls': [], 'streets': [], 'fabric': [], 'landmarks': []}
     for path in ([paths] if isinstance(paths, str) else paths):
@@ -1230,10 +1231,10 @@ def traced(spec, F, city_dir):
             if kind == 'wall' and t == 'Polygon': out['walls'].append({'ring': ring, **pr})
             elif kind == 'street' and t == 'LineString': out['streets'].append({'pts': [list(q[:2]) for q in c], **pr})
             elif kind == 'block' and t == 'Polygon': out['fabric'].append({'region': ring, 'theta_deg': round(long_deg, 2), **pr})
-            elif kind == 'landmark' and t == 'Point': out['landmarks'].append({'kind': pr.pop('type', 'hall'), 'lon': c[0], 'lat': c[1], **pr})
+            elif kind == 'landmark' and t == 'Point': out['landmarks'].append({**lk(pr), 'lon': c[0], 'lat': c[1], **pr})
             elif kind == 'landmark' and t == 'Polygon':
                 cx, cy = F.to_wgs.transform(*r_.centroid.coords[0])
-                out['landmarks'].append({'kind': pr.pop('type', 'hall'), 'lon': round(cx, 6), 'lat': round(cy, 6), 'w_m': round(math.hypot(*lo), 1),
+                out['landmarks'].append({**lk(pr), 'lon': round(cx, 6), 'lat': round(cy, 6), 'w_m': round(math.hypot(*lo), 1),
                                          'd_m': round(math.hypot(*sh), 1), 'theta_deg': round(long_deg, 2), **pr})
             else: raise SystemExit(f'citygen: {path}: a feature of kind {kind!r} on a {t}: wall (Polygon), street (LineString), block (Polygon), landmark (Point or Polygon)')
     return out

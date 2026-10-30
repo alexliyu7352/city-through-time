@@ -116,6 +116,7 @@ for a_, b_ in zip(FM['nodes'], FM['nodes'][1:]):
 
 # a period city drawn over an old map or a site plan (city.trace, pipeline/citygen.py traced): its features join the city's own
 # walls, streets, blocks and landmarks for every step that reads them (the reads still count on the city as written: Seen)
+LMK_LIB = landmarks.library(C, D)   # (landmark templates: city.yaml landmark_types)
 for nd in FM['nodes']:
     cs = nd.get('city')
     if cs and cs.get('trace'):
@@ -127,7 +128,7 @@ for nd in FM['nodes']:
     if cs:
         types_ = citygen.house_types(nd['city'], C.get('types'), f'node {nd.get("id")}')
         if types_: nd['city']['types'] = types_
-        landmarks.checked(nd['city'], f'node {nd.get("id")}')   # its landmarks of the classes of any region: checked and completed once, here
+        landmarks.checked(landmarks.templated(nd['city'], LMK_LIB, f'node {nd.get("id")}'), f'node {nd.get("id")}')   # its landmarks (a template's keys first): checked and completed once, here
 
 # ------------------------------------------------------------------ text templates and positions
 def _ns(o): return SimpleNamespace(**{str(k): _ns(v) for k, v in dict.items(o)}) if isinstance(o, dict) else [_ns(v) for v in o] if isinstance(o, list) else o

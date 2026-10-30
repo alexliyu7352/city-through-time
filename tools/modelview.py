@@ -68,7 +68,7 @@ def sheet_city(C, era, spec, at, Fr, city, scale, d, az=None, el=12.0):
     nodes = {n['id']: n for n in C['film']['nodes']}
     cs = spec if spec is not None else (nodes.get(era) or {}).get('city')
     if not cs: raise SystemExit(f'modelview: --sheet: {era} has no city: block (give one with --spec)')
-    cs_t = citygen.with_trace(cs, Fr, city)
+    cs_t = landmarks.templated(citygen.with_trace(copy.deepcopy(cs), Fr, city), landmarks.library(C, city), f'node {era}')
     tps = citygen.house_types(cs_t, C.get('types'), f'node {era}')
     show = []   # (type, lot, h_m for a built-in one)
     for fb in cs_t.get('fabric', []):

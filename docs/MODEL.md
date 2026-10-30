@@ -83,7 +83,9 @@ the city, quarter by quarter; a share written "schematic" with no basis decides 
 ## Landmarks of any region
 
 The generator's own landmark kinds (`hall`, `terrace`, `palace`, `pagoda`, `court`…) are north China's. Elsewhere a landmark is one of a few classes of massing, written as data in
-the node's `city.landmarks` with its sizes in metres from the research (`pipeline/landmarks.py`); the classes reach the monuments of most traditions, so a city never needs code of its own:
+the node's `city.landmarks` with its sizes in metres from the research (`pipeline/landmarks.py`); the classes reach the monuments of most traditions, so a city never needs code of its own.
+A building that stands in several periods or several places (a temple kept through three stations, a type of insula block) is written once in city.yaml's `landmark_types` (name -> the
+landmark without its place, or files holding such a mapping or `{landmarks: [{name, ..}]}`); each copy is `{template: <name>, lon, lat, ..}` with what differs, a traced one too:
 
 - `ring`: seats or rooms round an open floor. Amphitheatres (`plan: oval`: the band of seats keeps one depth all round, so the arena is the narrower oval it is), theatres (`half`, `sweep_deg`, a `stage`), circuses and stadia (`u`, `obround`, a `spina`), round houses (`round`, `section: building`).
 - `dome`: a round or polygonal building under a dome: rotundas, mausoleums, domed churches and mosques, baptisteries, stupas. A `base` block, a `drum`, the dome's `shape` (hemisphere, saucer, pointed, onion, bulbous, helmet, bell, cone), a `lantern`, an `oculus`, a `peristyle`; `sweep_deg: 180` is a half dome.
