@@ -180,9 +180,15 @@ A single courtyard cannot fill a large plot, leaving only a few thin houses at t
 Likewise, a market must have rows of shops in every cell, and a workshop area must be drawn as courtyards one by one as excavated (`workshops`), not a single row along the street or scattered points: from afar they look like empty frames and grains of sand.
 The sizes hard-coded in a generator (house depth, number of stall rows, number of courtyard sequences) must be tried on the largest plot in the city's settings: a large plot that cannot be filled gets only an outline, which is an empty frame at low detail.
 When changing a threshold, avoid the batch the user has just seen and approved; do not let half of them change and half not.
-**Lay out blocks from an old map or an archaeological plan** (`city.trace`): first register the map (georeferencing in QGIS), then trace on it the walls (polygons), streets (lines), blocks (polygons)
-and landmarks (points or polygons), save them as GeoJSON in `research/`, write `kind` of each shape as wall, street, block or landmark, and the other properties are the settings of that item
-(`lot`, `typ`, `w_m`, `shops`, the landmark's `type`…); houses in a block line up along the block's own long side, not the city-wide grid (`traced` in `pipeline/citygen.py`).
+**Lay out blocks from an old map or an archaeological plan** (`city.trace`): register the picture and trace on it with `pipeline/register.py`, never with conversions of your own
+(written by hand they mirrored pictures, took 111,320 m a degree everywhere and read projected rasters as lon/lat). A GeoTIFF carries its registration; a figure without one is fitted
+to control points read off it (`{image, controls: [{id, pixel, lonlat}], method: similarity | affine}`: each point's residual and its error when left out are printed, a mirrored fit
+is refused), a plan with a scale bar to one known point (`{image, origin, m_per_px, north_deg}`). Read the walls (polygons), streets (lines), blocks (polygons) and landmarks (points or
+polygons) off it as pixels in a YAML (`id`, `kind`, `pixels`, the entry's keys, and `provenance: {basis, ...}`), then `uv run python -I pipeline/register.py trace cities/<slug> <file.yaml>
+--overlay <png>` writes the GeoJSON in `research/` and draws it back over the picture: look at the overlay before building. `kind` is wall, street, block or landmark, and the other
+properties are the settings of that item (`lot`, `typ`, `w_m`, `shops`, the landmark's `type`…); `provenance` rides along and the model ignores it. In Python, `register.outline_landmark`
+makes a traced outline a prism of the classes and `register.fit_circle` measures a rim (QGIS's georeferencer is fine where it can be used). Houses in a block line up along the block's
+own long side, not the city-wide grid (`traced` in `pipeline/citygen.py`).
 What is traced is built together with what is written in `city:`, and the two can be mixed; the first time, show the user a small piece first. A layout worked out beside the
 model (lots, streets, gardens or a loss's region laid round landmarks) takes each landmark's ground from `citygen.landmark_site`, the ground citygen itself keeps clear, never a box of
 its own round the anchor (that put houses on one side of a temple's platform).
