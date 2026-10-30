@@ -18,7 +18,7 @@ const LANGS = ['en', 'ja', 'zh-Hant', 'zh-Hans', 'es'];
 const AI = ['narration', 'music', 'imagined'];
 const TEXT = new Set(['.json', '.yaml', '.yml', '.md', '.txt', '.csv', '.geojson', '.py', '.sh']);   // what a city may bring
 const NAMED = new Set(['CREDITS', 'LICENSE']);
-const EXAMPLE = 'xianyang';   // the project's own example: kept whole, pictures and poster included
+export const EXAMPLE = 'xianyang';   // the project's own example: kept whole, pictures and poster included
 // a city's page is <site>/<slug>/ (tools/site.mjs): a slug may not be a name the site already has at its root, nor a language's
 const RESERVED = new Set([...fs.readdirSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')).map(n => n.toLowerCase()), ...LANGS.map(l => l.toLowerCase()), 'en']);
 const https = u => typeof u === 'string' && /^https:\/\/\S+$/.test(u);

@@ -2,7 +2,9 @@
 // (site/globe.js), the search, the language menu, the collection, and a city opened in a drawer (a sheet from below on a phone),
 // its full entry read when it opens. Every city has its own address, in every language (tools/site.mjs writes those pages):
 // <root>/<slug>/ in English, <root>/zh-hant/<slug>/ and so on; the address bar follows the open city and the language.
-import { LANGS, pick, words } from './i18n.js';
+// A site of one city alone (tools/site.mjs --city; its pages carry <html data-city="<slug>">) is that city's page: at <root>/ and
+// <root>/<lang>/, the city open for good, with no globe, search or collection (the page has none of them), and the project's credit.
+import { LANGS, pick, words, credit } from './i18n.js';
 import { embed } from './video.js';
 
 const $ = id => document.getElementById(id);
@@ -13,6 +15,7 @@ const ROOT = new URL('../', import.meta.url).href;   // the site's root: a page 
 const at = u => /^(https?:|data:|\/)/.test(u) ? u : ROOT + u;   // a path in the site (cities.json, a city's files) as an address
 const REG = await fetch(at('cities.json')).then(r => r.json());
 const CITIES = REG.cities || [], REPO = REG.repo;
+const SINGLE = document.documentElement.dataset.city || null;   // (a site of this one city)
 
 // ---------------------------------------------------------------- addresses: [language/][city/] under the site's root
 const BASE = new URL(ROOT).pathname;   // ('/' on the site's own domain)
@@ -21,9 +24,9 @@ function route(path = location.pathname) {
   const parts = (path.startsWith(BASE) ? path.slice(BASE.length) : '').replace(/index\.html$/, '').split('/').filter(Boolean);
   const l = LANGS.find(([k]) => k.toLowerCase() === parts[0]);
   if (l) parts.shift();
-  return { lang: l ? l[0] : null, slug: parts[0] || null };
+  return { lang: l ? l[0] : null, slug: SINGLE || parts[0] || null };
 }
-const address = (slug = open) => BASE + PREFIX[lang] + (slug ? slug + '/' : '');
+const address = (slug = open) => BASE + PREFIX[lang] + (slug && !SINGLE ? slug + '/' : '');
 const cityURL = slug => location.origin + address(slug);
 const R = route();
 // the address's language; else the one chosen before, the browser's, English. An address without one is the English page: a reader
@@ -147,15 +150,17 @@ function combobox(input, list, { onPick, always }) {
   return { render };
 }
 const q = $('q'), q2 = $('q2'), sheet = $('search-sheet');
-combobox(q, $('results'), { onPick: c => { q.value = ''; q.blur(); show(c.slug, q); } });
-const inSheet = combobox(q2, $('results2'), { always: true, onPick: c => { sheet.close(); q2.value = ''; show(c.slug, $('search-open')); } });
-$('search-open').onclick = () => { sheet.showModal(); inSheet.render(true); q2.focus(); };
-$('sheet-close').onclick = () => sheet.close();
-addEventListener('keydown', e => {   // "/" starts a search from anywhere
-  if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey || /input|textarea|select/i.test(document.activeElement.tagName)) return;
-  e.preventDefault();
-  if (getComputedStyle($('search-open')).display !== 'none') $('search-open').click(); else q.focus();
-});
+if (!SINGLE) {
+  combobox(q, $('results'), { onPick: c => { q.value = ''; q.blur(); show(c.slug, q); } });
+  const inSheet = combobox(q2, $('results2'), { always: true, onPick: c => { sheet.close(); q2.value = ''; show(c.slug, $('search-open')); } });
+  $('search-open').onclick = () => { sheet.showModal(); inSheet.render(true); q2.focus(); };
+  $('sheet-close').onclick = () => sheet.close();
+  addEventListener('keydown', e => {   // "/" starts a search from anywhere
+    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey || /input|textarea|select/i.test(document.activeElement.tagName)) return;
+    e.preventDefault();
+    if (getComputedStyle($('search-open')).display !== 'none') $('search-open').click(); else q.focus();
+  });
+}
 
 // ---------------------------------------------------------------- the collection: each city a poster and its label; the empty plinth last
 const PLINTH = '<svg viewBox="0 0 200 150" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M100 6 66 96M100 6l34 90" stroke-opacity=".45"/><ellipse cx="100" cy="98" rx="58" ry="11"/><path d="M42 98v24c0 6 26 11 58 11s58-5 58-11V98"/></svg>';
@@ -182,7 +187,7 @@ function renderCollection() {
       el('span', { className: 'more', textContent: W.t('emptyLink') })))));
   $('more-cities').hidden = shown >= CITIES.length;
 }
-$('more-cities').onclick = () => { const first = shown; shown += PAGE; renderCollection(); $('exhibits').children[first]?.querySelector('.ex')?.focus(); };
+if (!SINGLE) $('more-cities').onclick = () => { const first = shown; shown += PAGE; renderCollection(); $('exhibits').children[first]?.querySelector('.ex')?.focus(); };
 
 // ---------------------------------------------------------------- a city, opened
 const panel = $('panel'), scrim = $('scrim');
@@ -239,12 +244,13 @@ async function show(slug, from, push = true) {
   $('source').href = sourceURL(c);
   panel.hidden = false; panel.removeAttribute('inert'); panel.scrollTop = 0; panel.style.removeProperty('--drag'); document.documentElement.classList.add('city-open');
   requestAnimationFrame(() => panel.classList.add('open'));
+  if (SINGLE) return;   // (the page itself: no scrim, nothing to close)
   if (narrow.matches) { scrim.hidden = false; requestAnimationFrame(() => scrim.classList.add('on')); document.documentElement.style.overflow = 'hidden'; }
   if (globe) { globe.focus(slug); globe.hold(true, narrow.matches ? 0 : panel.offsetWidth); }
   setTimeout(() => $('close').focus({ preventScroll: true }), 60);
 }
 function hide(push = true) {
-  if (!open) return; open = null; shareMenu(false);
+  if (!open || SINGLE) return; open = null; shareMenu(false);
   document.title = `一城春秋 · ${W.t('tagline')}`;
   if (push) { if (history.state?.inPage) history.back(); else history.pushState(null, '', address()); }   // (back to where the city was opened from)
   panel.classList.remove('open'); panel.setAttribute('inert', ''); scrim.classList.remove('on'); document.documentElement.classList.remove('city-open');
@@ -253,10 +259,9 @@ function hide(push = true) {
   if (globe) globe.hold(false);
   if (opener && opener.isConnected) opener.focus({ preventScroll: true });
 }
-panel.setAttribute('inert', '');
-$('close').onclick = () => hide(); scrim.onclick = () => hide();
+if (!SINGLE) { panel.setAttribute('inert', ''); $('close').onclick = () => hide(); scrim.onclick = () => hide(); }
 addEventListener('keydown', e => {
-  if (e.key !== 'Escape' || !open || !langList.hidden || sheet.open || player.open) return;
+  if (e.key !== 'Escape' || !open || !langList.hidden || sheet?.open || player.open) return;
   if (!$('share-menu').hidden) { shareMenu(false); $('share').focus(); } else hide();
 });
 addEventListener('popstate', () => {
@@ -301,7 +306,7 @@ shareBtn.onclick = async () => {
   renderShare(); shareMenu(shareList.hidden);
 };
 addEventListener('pointerdown', e => { if (!shareList.hidden && !e.target.closest('.share')) shareMenu(false); });
-{   // on a phone: drag the sheet down to put it away
+if (!SINGLE) {   // on a phone: drag the sheet down to put it away
   const grab = $('grab'); let y0 = null, dy = 0;
   grab.addEventListener('pointerdown', e => { y0 = e.clientY; dy = 0; panel.classList.add('dragging'); grab.setPointerCapture(e.pointerId); });
   grab.addEventListener('pointermove', e => { if (y0 == null) return; dy = Math.max(0, e.clientY - y0); panel.style.setProperty('--drag', `${dy}px`); });
@@ -330,11 +335,14 @@ function paint() {
   for (const n of document.querySelectorAll('[data-t]')) n.textContent = W.t(n.dataset.t);
   for (const n of document.querySelectorAll('[data-alt]')) n.alt = W.t(n.dataset.alt);
   for (const a of document.querySelectorAll('[data-guide]')) a.href = guideURL(a.dataset.guide);
-  q.placeholder = q2.placeholder = W.t('searchPlaceholder'); q.setAttribute('aria-label', W.t('searchLabel')); q2.setAttribute('aria-label', W.t('searchLabel'));
-  $('gh').href = $('repo').href = $('repo-cta').href = REPO; $('gh').title = W.t('github');
-  $('caption-text').textContent = W.fmt('exhibitText', { n: W.num(globe ? globe.blocks : 63253) });
+  if (!SINGLE) {   // (the gallery's own parts)
+    q.placeholder = q2.placeholder = W.t('searchPlaceholder'); q.setAttribute('aria-label', W.t('searchLabel')); q2.setAttribute('aria-label', W.t('searchLabel'));
+    $('gh').href = $('repo').href = $('repo-cta').href = REPO; $('gh').title = W.t('github');
+    $('caption-text').textContent = W.fmt('exhibitText', { n: W.num(globe ? globe.blocks : 63253) });
+  }
   document.title = open ? `${W.of(CITIES.find(x => x.slug === open).name)} · ${brand()}` : `一城春秋 · ${W.t('tagline')}`;
-  renderLangs(); renderCollection(); renderPins();
+  renderLangs();
+  if (SINGLE) $('credit').innerHTML = credit(W, REPO); else { renderCollection(); renderPins(); }
   if (open) { show(open, null, false); renderShare(); }
 }
 
@@ -343,24 +351,27 @@ addEventListener('scroll', () => bar.classList.toggle('scrolled', scrollY > 8), 
 if (!reduced) document.documentElement.classList.add('intro');
 if (R.slug && !CITIES.some(c => c.slug === R.slug)) R.slug = null;   // (an address of no city: the page itself)
 { const sp = new URLSearchParams(location.search); sp.delete('lang');   // (?lang= from older links: now the address says it)
-  if ((R.lang || 'en') !== lang || location.search.includes('lang=') || route().slug !== R.slug) history.replaceState(null, '', address(R.slug) + (sp.size ? '?' + sp : '') + location.hash); }
+  if ((R.lang || 'en') !== lang || location.search.includes('lang=') || route().slug !== R.slug || (SINGLE && location.pathname !== address())) history.replaceState(null, '', address(R.slug) + (sp.size ? '?' + sp : '') + location.hash); }
 paint();
 if (R.slug) show(R.slug, null, false);   // the city's own page opens on its city
 
-// the globe loading: a line where it will stand, in steps that can be told (three.js arrived, the land read, the model built)
+// the globe loading: a line where it will stand, in steps that can be told (three.js arrived, the land read, the model built); the
+// gallery's alone (a single city's site has no globe)
 const globeWait = $('globe-wait'), waitAt = p => { globeWait.classList.remove('wait'); globeWait.style.setProperty('--p', p); $('globe-pct').textContent = `${Math.floor(p * 100)}%`; };
-try {
-  const { makeGlobe } = await import('./globe.js');
-  waitAt(.4);
-  const small = narrow.matches || (navigator.hardwareConcurrency || 8) <= 4 || new URLSearchParams(location.search).has('lite');   // (?lite: the phone version, to compare)
-  globe = await makeGlobe($('globe'), CITIES, { reduced, small, onPick: slug => show(slug), onHover: () => {}, onFrame: follow, onLoad: p => waitAt(.4 + .55 * p) });
-  waitAt(1); globeWait.classList.add('gone'); setTimeout(() => { globeWait.hidden = true; }, reduced ? 0 : 700);
-  if (open) { globe.focus(open); globe.hold(true, narrow.matches ? 0 : panel.offsetWidth); }   // (a city opened before the globe was ready)
-  const room = () => globe.setRoom(document.querySelector('.hero-copy').getBoundingClientRect().right + 32);   // (the globe keeps clear of the words)
-  room(); new ResizeObserver(room).observe(document.querySelector('.hero-copy')); document.fonts.ready.then(room);
-  $('caption-text').textContent = W.fmt('exhibitText', { n: W.num(globe.blocks) });
-} catch (e) {
-  console.warn('globe:', e);
-  document.documentElement.classList.add('no-gl');
-  $('hint').dataset.t = 'noGL'; $('hint').textContent = W.t('noGL');
+if (!SINGLE) {
+  try {
+    const { makeGlobe } = await import('./globe.js');
+    waitAt(.4);
+    const small = narrow.matches || (navigator.hardwareConcurrency || 8) <= 4 || new URLSearchParams(location.search).has('lite');   // (?lite: the phone version, to compare)
+    globe = await makeGlobe($('globe'), CITIES, { reduced, small, onPick: slug => show(slug), onHover: () => {}, onFrame: follow, onLoad: p => waitAt(.4 + .55 * p) });
+    waitAt(1); globeWait.classList.add('gone'); setTimeout(() => { globeWait.hidden = true; }, reduced ? 0 : 700);
+    if (open) { globe.focus(open); globe.hold(true, narrow.matches ? 0 : panel.offsetWidth); }   // (a city opened before the globe was ready)
+    const room = () => globe.setRoom(document.querySelector('.hero-copy').getBoundingClientRect().right + 32);   // (the globe keeps clear of the words)
+    room(); new ResizeObserver(room).observe(document.querySelector('.hero-copy')); document.fonts.ready.then(room);
+    $('caption-text').textContent = W.fmt('exhibitText', { n: W.num(globe.blocks) });
+  } catch (e) {
+    console.warn('globe:', e);
+    document.documentElement.classList.add('no-gl');
+    $('hint').dataset.t = 'noGL'; $('hint').textContent = W.t('noGL');
+  }
 }

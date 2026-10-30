@@ -59,4 +59,4 @@ ln -s "$PWD/city-through-time" ~/.claude/skills/city-through-time
 
 ## 7. 做好之後
 
-想把它加到入口頁，照 [`CONTRIBUTING.zh-Hant.md`](../CONTRIBUTING.zh-Hant.md) 做：上傳影片、（可選）放網頁播放包、開 pull request。想要一個自己的網站，有免費的 Cloudflare 帳號就行：`node tools/deploy.mjs --project <名字>` 把入口頁和你的城市發布到 `https://<名字>.pages.dev/`（同一份文件第 3 步）。
+想把它加到入口頁，照 [`CONTRIBUTING.zh-Hant.md`](../CONTRIBUTING.zh-Hant.md) 做：上傳影片、（可選）放網頁播放包、開 pull request。想給它一個自己的網站，有免費的 Cloudflare 帳號就行：`node tools/deploy.mjs --city <城市>` 把你的城市發布到 `https://<城市>.pages.dev/`，只有這座城，不帶入口頁和別的城市（同一份文件第 3 步）。

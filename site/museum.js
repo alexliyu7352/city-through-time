@@ -5,7 +5,7 @@
 // the walk-round view opened this page (&era=, &from=tx,ty,tz,az,el,d); opened on its own, at the building.
 // ?clean&vp=<viewpoint>: the model alone at that viewpoint, the whole window, the reference look (tools/museum.mjs still, for
 // tools/living.py ref); window.READY once drawn, window.MUSEUM(o) turns it for the report's stills (engine/museum.js view).
-import { words, pick } from './i18n.js';
+import { words, pick, cityPage } from './i18n.js';
 import { frameOf } from '../engine/lib.js';
 import { REPO } from '../engine/overlay.js';
 
@@ -51,7 +51,7 @@ function words_() {
   $('ai-text').textContent = W.t('museumAi'); $('part-x').setAttribute('aria-label', W.t('close'));
   if (!ready) $('wait').textContent = W.t('museumLoading');
   for (const b of document.querySelectorAll('.langs button')) b.setAttribute('aria-pressed', String(b.dataset.lang === LANG));
-  const alt = LANG === 'en' ? meta.name[nav === 'zh-Hant' ? 'zh-Hant' : 'zh'] : meta.name.en, film = `${LANG === 'en' ? '' : LANG.toLowerCase() + '/'}${meta.city}/`;
+  const alt = LANG === 'en' ? meta.name[nav === 'zh-Hant' ? 'zh-Hant' : 'zh'] : meta.name.en, film = cityPage(LANG, meta.city, document.documentElement.dataset.city);
   const [what, how, ...rest] = meta.label;
   $('label').innerHTML = `<h1>${esc(of(meta.name))}</h1><p class="alt">${esc(alt)}</p>
     <div class="facts"><p>${esc(of(meta.era))}</p><p>${esc(of(meta.where))}</p></div>

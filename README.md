@@ -49,7 +49,7 @@ Full guide: [`docs/MAKING.md`](docs/MAKING.md).
 2. To let people play it straight from the entry page, put the web bundle (packed with `tools/web.py`) on a Hugging Face dataset or your own GitHub Pages.
 3. Open a pull request with only the text files in the city folder, including `entry.json` for the entry page.
 
-You can also run a site of your own: with a free Cloudflare account, `node tools/deploy.mjs --project <name>` publishes the entry page, your city and its web bundle at `https://<name>.pages.dev/` in one command.
+You can also give your city a site of its own: with a free Cloudflare account, `node tools/deploy.mjs --city <city>` publishes it (its page, the 3D player, the walk through the old city, the museum pages and the web bundle) at `https://<city>.pages.dev/` in one command. It publishes your city alone, not the whole entry page.
 
 Steps, fields and review criteria: [`CONTRIBUTING.md`](CONTRIBUTING.md).
 

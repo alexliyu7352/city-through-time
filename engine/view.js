@@ -22,7 +22,7 @@
 // houses stand closest.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { words, pick } from '../site/i18n.js';
+import { words, pick, cityPage } from '../site/i18n.js';
 import { REPO, makeOverlay, setFonts } from './overlay.js';
 
 const FIXED_AZ = 355, WHITE = new THREE.Color(1, 1, 1);   // check: the key light (50 degrees left of this bearing, 45 up) stands in the south-west of the room (bearings as the camera keys count them: 0 south, 90 east)
@@ -235,7 +235,7 @@ export async function startView(X) {
     const top = document.createElement('div'); top.className = 'fv fv-top';
     top.innerHTML = `<p class="fv-name"><b>${Wd.t('walkTitle')}</b><span>${of(N.city) || (FILM.identity?.l1 || '').split(' · ')[0] || city}</span></p>
       <div class="fv-tools"><nav class="fv-langs" aria-label="Language">${LANGS.map(([l, t]) => `<a data-lang="${l}" lang="${l}" aria-current="${l === lang}">${t}</a>`).join('')}</nav>
-      <a class="fv-pill" href="${lang === 'en' ? '' : lang.toLowerCase() + '/'}${encodeURIComponent(city)}/">${Wd.t('walkFilm')}</a></div>`;
+      <a class="fv-pill" href="${cityPage(lang, city, document.documentElement.dataset.city)}">${Wd.t('walkFilm')}</a></div>`;
     const bot = document.createElement('div'); bot.className = 'fv fv-bot';
     bot.innerHTML = `<p class="fv-hint">${Wd.t('walkHint')}</p><nav class="fv-halls" aria-label="${Wd.t('walkPeriods')}">${ERAS.map(e => `<button type="button" data-hall="${e.id}"><small>${Wd.year(Math.round((node(e.id).years || [0])[0]))}</small><b>${name(e.id)}</b></button>`).join('')}</nav>
       <a class="fv-credit" href="${REPO}" target="_blank" rel="noopener">一城春秋 · A City Through Time</a>`;   // (LICENSE, condition 2c)

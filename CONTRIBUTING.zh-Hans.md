@@ -41,15 +41,15 @@ uvx --from huggingface_hub hf upload <你的帐号>/city-through-time-bundles ci
 
 播放包网址：`https://<你的帐号>.github.io/<仓库名>/<城市>/`
 
-**你自己的网站，Cloudflare Pages**：有免费的 Cloudflare 帐号就行，不用自己的域名。一条命令把整个网站（入口页、你的城市页、播放器、播放包）发布到 `https://<项目名>.pages.dev/`。先准备一次：Cloudflare 帐号；一个 API token（My Profile → API Tokens → Create Token → Custom token，权限只要 Account · Cloudflare Pages · Edit）；帐号 ID（Workers & Pages 页面的 Account details）。`entry.json` 的播放包和海报写成网站里的路径，跟咸阳一样（`cities/<城市>/web/`），先打包，再运行（要 Node 22 以上）：
+**你这座城自己的网站，Cloudflare Pages**：有免费的 Cloudflare 帐号就行，不用自己的域名。一条命令把你的城市发布成一个网站：首页就是这座城的页面（五种语言），带 3D 播放器、古城漫游、展馆和播放包，页脚一行小字注明用一城春秋制作；不带入口页、地球仪和别的城市（入口页是本项目自己的网站，不必复制一份）。网址是 `https://<城市>.pages.dev/`。先准备一次：Cloudflare 帐号；一个 API token（My Profile → API Tokens → Create Token → Custom token，权限只要 Account · Cloudflare Pages · Edit）；帐号 ID（Workers & Pages 页面的 Account details）。`entry.json` 的播放包和海报写成网站里的路径，跟咸阳一样（`cities/<城市>/web/`），先打包，再运行（要 Node 22 以上）：
 
 ```sh
 export CLOUDFLARE_API_TOKEN=<token> CLOUDFLARE_ACCOUNT_ID=<帐号 ID>
-node tools/deploy.mjs --project <项目名> --dry-run   # 只构建、检查，不上传
-node tools/deploy.mjs --project <项目名>
+node tools/deploy.mjs --city <城市> --dry-run   # 只构建、检查，不上传
+node tools/deploy.mjs --city <城市>
 ```
 
-播放包网址（给入口页的 pull request 用）：`https://<项目名>.pages.dev/cities/<城市>/web/`。单个文件超过 20 MiB 时，`tools/web.py` 会自动切成几份，播放器读取时再拼回来。细节在 [`docs/PUBLISH.md`](docs/PUBLISH.md)。
+Pages 项目名默认就是城市的文件夹名，想换一个就加 `--project <项目名>`。播放包网址（给入口页的 pull request 用）：`https://<项目名>.pages.dev/cities/<城市>/web/`。单个文件超过 20 MiB 时，`tools/web.py` 会自动切成几份，播放器读取时再拼回来。细节在 [`docs/PUBLISH.md`](docs/PUBLISH.md)。
 
 其他静态主机（例如 Cloudflare R2）也可以，只要响应带 `Access-Control-Allow-Origin`。
 

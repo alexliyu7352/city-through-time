@@ -55,6 +55,7 @@ const T = {
     footLicence: 'Code under the MIT licence. Films and city material under CC BY-SA 4.0; material by others keeps its own licence, listed in each city’s CREDITS.',
     footEarth: 'The globe is built from Natural Earth and NOAA ETOPO1, both public domain.',
     noGL: 'This browser cannot draw the globe. The cities are all in the collection below.',
+    madeWith: 'Made with {site}',   // (a single city's site, tools/site.mjs --city: its credit, {site} the project's name linked to the gallery)
     loading: 'Loading the film', loadPrep: 'Setting up the model', loadFail: 'The film could not load: {what}', loadRetry: 'Try again', loadCode: 'the player’s program', loadGlobe: 'Loading the globe',
     // the old cities to walk round (play.html?view&free, engine/view.js) and a museum page (museum.html, site/museum.js)
     walkTitle: 'Walk the old cities', walkPeriods: 'Periods', walkFilm: 'Back to the film', walkBack: 'Back to the old city',
@@ -108,6 +109,7 @@ const T = {
     footLicence: 'コードは MIT ライセンス。映画と街の資料は CC BY-SA 4.0。他者の素材はそれぞれのライセンスに従い、各街の CREDITS に記載しています。',
     footEarth: '地球儀は Natural Earth と NOAA ETOPO1（いずれもパブリックドメイン）から作っています。',
     noGL: 'このブラウザでは地球儀を描けません。街はすべて下のコレクションにあります。',
+    madeWith: '{site} で制作',
     loading: '映画を読み込んでいます', loadPrep: '模型を組み立てています', loadFail: '映画を読み込めませんでした：{what}', loadRetry: 'もう一度読み込む', loadCode: 'プレーヤーのプログラム', loadGlobe: '地球儀を読み込んでいます',
   },
   'zh-Hant': {
@@ -152,6 +154,7 @@ const T = {
     footLicence: '程式碼採 MIT 授權。影片與城市資料採 CC BY-SA 4.0；他人的素材依各自授權，列在每座城的 CREDITS。',
     footEarth: '地球儀依 Natural Earth 與 NOAA ETOPO1（皆為公有領域）製作。',
     noGL: '這個瀏覽器畫不出地球儀。所有城市都在下面的館藏裡。',
+    madeWith: '以{site} 製作',
     loading: '正在載入影片', loadPrep: '正在組裝模型', loadFail: '影片載入失敗：{what}', loadRetry: '重新載入', loadCode: '播放器程式', loadGlobe: '正在載入地球儀',
     walkTitle: '走進古城', walkPeriods: '年代', walkFilm: '回到影片', walkBack: '回到古城漫遊',
     walkHint: '拖動轉動，右鍵或雙指平移，滾輪或雙指縮放。雙擊走到那裡。', walkMuseum: '進入展館',
@@ -203,6 +206,7 @@ const T = {
     footLicence: '代码采用 MIT 许可。影片与城市资料采用 CC BY-SA 4.0；他人的素材依各自许可，列在每座城的 CREDITS。',
     footEarth: '地球仪依 Natural Earth 与 NOAA ETOPO1（均为公有领域）制作。',
     noGL: '这个浏览器画不出地球仪。所有城市都在下面的馆藏里。',
+    madeWith: '以{site} 制作',
     loading: '正在加载影片', loadPrep: '正在组装模型', loadFail: '影片加载失败：{what}', loadRetry: '重新加载', loadCode: '播放器程序', loadGlobe: '正在加载地球仪',
     walkTitle: '走进古城', walkPeriods: '年代', walkFilm: '回到影片', walkBack: '回到古城漫游',
     walkHint: '拖动转动，右键或双指平移，滚轮或双指缩放。双击走到那里。', walkMuseum: '进入展馆',
@@ -255,6 +259,7 @@ const T = {
     footLicence: 'Código bajo licencia MIT. Películas y material de las ciudades bajo CC BY-SA 4.0; el material de terceros mantiene su licencia, detallada en los CREDITS de cada ciudad.',
     footEarth: 'El globo está hecho con Natural Earth y NOAA ETOPO1, ambos de dominio público.',
     noGL: 'Este navegador no puede dibujar el globo. Todas las ciudades están en la colección de abajo.',
+    madeWith: 'Hecho con {site}',
     loading: 'Cargando la película', loadPrep: 'Montando la maqueta', loadFail: 'No se pudo cargar la película: {what}', loadRetry: 'Volver a intentarlo', loadCode: 'el programa del reproductor', loadGlobe: 'Cargando el globo',
   },
 };
@@ -274,6 +279,20 @@ export const GUIDES = {
   making: { en: 'docs/MAKING.md', 'zh-Hant': 'docs/MAKING.zh-Hant.md', 'zh-Hans': 'docs/MAKING.zh-Hans.md' },
   submit: { en: 'CONTRIBUTING.md', 'zh-Hant': 'CONTRIBUTING.zh-Hant.md', 'zh-Hans': 'CONTRIBUTING.zh-Hans.md' },
 };
+
+// the project's gallery, credited on a single city's site (tools/site.mjs --city)
+export const PORTAL = 'https://cities.go5.si/';
+
+// a city's page from the site's root: <slug>/ in English, <lang>/<slug>/ in the others; on a site of that one city alone (its pages
+// name it: <html data-city>, tools/site.mjs --city) the root itself, ./ and <lang>/
+export const cityPage = (lang, slug, single) => ((lang === 'en' ? '' : lang.toLowerCase() + '/') + (slug === single ? '' : encodeURIComponent(slug) + '/')) || './';
+
+// a single city's credit, as HTML: "Made with" the project's name, linked to its gallery, and its source
+export function credit(W, repo) {
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const site = `<a href="${PORTAL}" target="_blank" rel="noopener">一城春秋 · A City Through Time</a>`;
+  return W.fmt('madeWith', { site: '\0' }).split('\0').map(esc).join(site) +` · <a href="${esc(repo)}" target="_blank" rel="noopener">${esc(W.t('github'))}</a>`;
+}
 
 export function words(lang) {
   const t = T[lang] || T.en;

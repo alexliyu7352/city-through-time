@@ -41,15 +41,15 @@ Web bundle address: `https://huggingface.co/datasets/<your-account>/city-through
 
 Web bundle address: `https://<your-account>.github.io/<repo-name>/<city>/`
 
-**Your own site on Cloudflare Pages**: a free Cloudflare account is enough, no domain of your own needed. One command publishes the whole site (the entry page, your city's page, the player, the web bundle) at `https://<project>.pages.dev/`. Prepare once: a Cloudflare account; an API token (My Profile → API Tokens → Create Token → Custom token, with the single permission Account · Cloudflare Pages · Edit); your account ID (Account details on the Workers & Pages page). In `entry.json`, write the web bundle and posters as paths in the site, as Xianyang does (`cities/<city>/web/`), pack the bundle, then run (Node 22 or newer):
+**Your city's own site on Cloudflare Pages**: a free Cloudflare account is enough, no domain of your own needed. One command publishes your city as a site of its own: its home page is your city's page (in five languages), with the 3D player, the walk through the old city, the museum pages and the web bundle, and one small line at the foot saying it was made with 一城春秋; no entry page, globe or other cities (the entry page is the project's own site, not one to copy). The address is `https://<city>.pages.dev/`. Prepare once: a Cloudflare account; an API token (My Profile → API Tokens → Create Token → Custom token, with the single permission Account · Cloudflare Pages · Edit); your account ID (Account details on the Workers & Pages page). In `entry.json`, write the web bundle and posters as paths in the site, as Xianyang does (`cities/<city>/web/`), pack the bundle, then run (Node 22 or newer):
 
 ```sh
 export CLOUDFLARE_API_TOKEN=<token> CLOUDFLARE_ACCOUNT_ID=<account ID>
-node tools/deploy.mjs --project <project> --dry-run   # build and check only, upload nothing
-node tools/deploy.mjs --project <project>
+node tools/deploy.mjs --city <city> --dry-run   # build and check only, upload nothing
+node tools/deploy.mjs --city <city>
 ```
 
-Web bundle address (for a pull request to the entry page): `https://<project>.pages.dev/cities/<city>/web/`. `tools/web.py` cuts a file over 20 MiB into a few parts, and the player joins them again as it reads. Details in [`docs/PUBLISH.md`](docs/PUBLISH.md).
+The Pages project takes the city's folder name; `--project <project>` gives it another. Web bundle address (for a pull request to the entry page): `https://<project>.pages.dev/cities/<city>/web/`. `tools/web.py` cuts a file over 20 MiB into a few parts, and the player joins them again as it reads. Details in [`docs/PUBLISH.md`](docs/PUBLISH.md).
 
 Other static hosts (for example Cloudflare R2) also work, as long as the response carries `Access-Control-Allow-Origin`.
 
