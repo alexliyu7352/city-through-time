@@ -60,7 +60,7 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
     m.transparent = true;
     m.onBeforeCompile = (sh, r) => { own(sh, r); sh.uniforms.uFade = fadeU;
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade;')
-        .replace('#include <opaque_fragment>', 'diffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y)); if (diffuseColor.a < .004) discard;\n#include <opaque_fragment>'); };
+        .replace('#include <opaque_fragment>', 'diffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
     m.customProgramCacheKey = () => 'proj0fade';
   }
   // the viewpoints and their pictures (the main one is on screen already, as the page's first picture)
