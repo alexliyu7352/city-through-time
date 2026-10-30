@@ -43,7 +43,7 @@ COMMON = {
     'group': ('str', None, None, 'a name it shares with the others a stage selects together'),
     'exaggeration': ('num', (.5, 5), None, 'its heights\' exaggeration (when absent the city\'s, fading as the landmark gets taller: see exaggeration(); 1: true, for one drawn after a true elevation)'),
     'z_m': ('num', (0, 300), 0.0, 'metres above its ground (a part standing on another: a dome on a hall\'s crossing)'),
-    'site': ('enum', ('raised', 'cut', 'parts'), 'raised', 'on a slope: raised, a monument levelled at the highest ground under it, a platform below on the downhill side; cut, a small building let into the slope, levelled half-way (the uphill half cut, the downhill half filled: a hut, a house on a hillside), its walls reaching down to the ground on the downhill side, no platform; parts (a landmark of parts only), each part levelled on its own ground, as the buildings of a chain stepping down a hill (one plane under a long chain stood its low end on a tall basement)'),
+    'site': ('enum', ('raised', 'cut', 'parts'), 'raised', 'on a slope: raised, a monument levelled at the highest ground under it, a platform below on the downhill side; cut, a small building let into the slope, levelled half-way (the uphill half cut, the downhill half filled: a hut, a house on a hillside), its walls reaching down to the ground on the downhill side, no platform; parts (a landmark of parts only), each part levelled on its own ground, raised or cut as the part\'s own site says, as the buildings of a chain stepping down a hill (one plane under a long chain stood its low end on a tall basement)'),
 }
 PART = {   # what a part of `parts` adds
     'at': ('pair', (-2000, 2000), None, '[x, y] metres from the whole\'s centre, in its frame (x along it, y to its back)'),
@@ -275,6 +275,7 @@ def check(L, src, part=False):
     if k == 'parts':
         out['parts'] = [check(q, f'{src}.parts[{i}]', part=True) for i, q in enumerate(out['parts'])]
         if any(q['kind'] == 'parts' for q in out['parts']): raise Bad(f'{src}: a part is one of the classes, not parts again')
+        if out.get('site') != 'parts' and any(q.get('site') == 'cut' for q in out['parts']): raise Bad(f'{src}: a part\'s site counts under the landmark\'s site: parts only (one level ground for all parts otherwise)')
         for i, q in enumerate(out['parts']):
             if q.get('atop') is not None and not q['atop'] < i: raise Bad(f'{src}.parts[{i}].atop: {q["atop"]}: an earlier part (0 to {i - 1})')
     if part and 'repeat' in out and len(out['repeat']) != 1: raise Bad(f'{src}.repeat: one of mirror, ring, line, corners')
@@ -575,7 +576,7 @@ def draw(D, L, x, y, th, z=0.0):
     if k == 'parts':   # a part on another stands on the top the other was drawn to (measured from its pieces, in the metres the
         # walls are exaggerated from: a dome keeps its true curve), not on an estimate of it (a flat column was counted a crown high)
         tops, B, gs = [], D.B, []
-        each = D.g is None   # (site: parts: each part levelled on its own ground, a part atop another on that one's)
+        each = D.g is None   # (site: parts: each part levelled on its own ground as a landmark of its own, raised or cut as its own site says; a part atop another on that one's)
         for q in L['parts']:
             z_ = tops[q['atop']] if q.get('atop') is not None else z
             n0 = len(B.prims); g_ = None
@@ -585,8 +586,11 @@ def draw(D, L, x, y, th, z=0.0):
                     if q.get('atop') is not None: g_ = gs[q['atop']]; draw(Draw(B, g_), q, *P(px, py), th + pth, z_); continue
                     x0_, y0_, x1_, y1_ = bounds(q); qx, qy = P(px, py); w_, d_ = x1_ - x0_, y1_ - y0_
                     sx_, sy_ = D.frame(qx, qy, th + pth)((x0_ + x1_) / 2, (y0_ + y1_) / 2)
-                    with B.lot_site(sx_, sy_, th + pth, w_, d_):
-                        g_ = B.gsite(sx_, sy_, th + pth, w_, d_); draw(Draw(B, g_), q, qx, qy, th + pth, z_)
+                    cut_, p0_ = q.get('site') == 'cut', B.plinth; B.plinth = 1e9 if cut_ or q['kind'] == 'ring' else max(p0_, .02 * min(w_, d_))   # (as build: a platform, or walls down to the ground; a ring's oval on a square plate read wrong)
+                    try:
+                        with B.lot_site(sx_, sy_, th + pth, w_, d_, mid=cut_, regroup=False):   # (the landmark stays one building)
+                            g_ = B.gsite(sx_, sy_, th + pth, w_, d_); draw(Draw(B, g_), q, qx, qy, th + pth, z_)
+                    finally: B.plinth = p0_
             gs.append(g_); tops.append(max(((r[4] + r[7] - r[12]) / (B.F.scale * B.hex) for r in B.prims[n0:]), default=z_))
         return
     {'ring': _ring, 'dome': _dome, 'long_hall': _long_hall, 'column': _column, 'stepped': _stepped, 'arches': _arches, 'revolve': _revolve, 'prism': _prism}[k](D, L, P, th, z)
@@ -953,15 +957,23 @@ def build(B, L, x, y, th):
 def _run(B, L, x, y, th, hd):
     """a long run of arches (an aqueduct, a bridge): its top straight from one end to the other, h_m above the ground at each
     end, laid in pieces of 80 m or less whose arches reach down to the ground under them (a valley's arches are the taller).
-    Pieces each standing h_m above their own ground stepped up and down with it, a saw along the top"""
+    Pieces each standing h_m above their own ground stepped up and down with it, a saw along the top.
+    Where the ground between the ends rises through a piece's arches by more than half their height (a hump the straight line
+    cuts into: a viaduct over a rise), that piece's two ends are raised until its arches clear the ground: the top bends over the
+    hump there, still straight within each piece"""
     Lm = L['length_m']; n = math.ceil(Lm / 80); seg = Lm / n; P = C.Builder.frame(x, y, th)
     tot = L.get('bays') or max(1, round(Lm / max(1.0, (L['h_m'] - L['attic_m']) / L['tiers'] * .9)))
     ga, gb = B.ground_m(*P(-Lm / 2, 0)), B.ground_m(*P(Lm / 2, 0)); gr = (gb - ga) / Lm   # the line's ground, metres per metre along
+    zj = [ga + gr * seg * i for i in range(n + 1)]; bent = False   # (the line at the pieces' ends)
+    for i in range(n):
+        rise = max(B.ground_m(*P(-Lm / 2 + seg * (i + k / 6), v)) - (zj[i] + (zj[i + 1] - zj[i]) * k / 6) for k in range(7) for v in (-hd, 0.0, hd))
+        if rise * B.gex > .5 * L['h_m'] * B.hex: zj[i] += rise; zj[i + 1] += rise; bent = True   # (the ground in metres of relief, drawn x gex)
     s0 = B.slope; B.slope = (gr * math.cos(th), gr * math.sin(th))   # (every piece sheared along it: one straight top)
     try:
         for i in range(n):
-            c = -Lm / 2 + (i + .5) * seg; gl = ga + gr * (c + Lm / 2); sx, sy = P(c, 0)
-            under = [gl + gr * (u - c) - B.ground_m(*P(u, v)) for u in [c - seg / 2 + seg * k / 6 for k in range(7)] for v in (-hd, 0.0, hd)]
+            c = -Lm / 2 + (i + .5) * seg; gl = ga + gr * (c + Lm / 2); sx, sy = P(c, 0); gr_ = gr
+            if bent: gl, gr_ = (zj[i] + zj[i + 1]) / 2, (zj[i + 1] - zj[i]) / seg; B.slope = (gr_ * math.cos(th), gr_ * math.sin(th))
+            under = [gl + gr_ * (u - c) - B.ground_m(*P(u, v)) for u in [c - seg / 2 + seg * k / 6 for k in range(7)] for v in (-hd, 0.0, hd)]
             B.found = max(0.0, max(under))   # (its foundation: down to the lowest ground under it)
             draw(Draw(B, gl), {**L, 'length_m': seg, 'bays': max(1, round(tot / n))}, sx, sy, th)
     finally: B.slope = s0

@@ -91,8 +91,10 @@ A building that stands in several periods or several places (a temple kept throu
 landmark without its place, or files holding such a mapping or `{landmarks: [{name, ..}]}`); each copy is `{template: <name>, lon, lat, ..}` with what differs, a traced one too. On a slope a landmark is levelled at the highest ground under it with a
 platform below, as a monument stands; a small building let into the hill (a hut, a house on a hillside) writes `site: cut`: levelled half-way, cut on the uphill side and filled on the
 downhill, so it does not stand on a podium half its own height (today's ground and the terrain's exaggeration make every slope steeper than the ancient one). A
-`kind: parts` landmark of separate buildings joined in a chain or a group (a housing estate's blocks, a row of linked pavilions) writes `site: parts`: each part is levelled on
-its own ground (a part `atop` another on that one's), as such buildings step down a hill, instead of one plane for the whole group that stands its low end on a tall basement
+`kind: parts` landmark of separate buildings joined in a chain or a group (a housing estate's blocks, a row of linked pavilions, a stadium's stands and the buildings at its
+ends) writes `site: parts`: each part is levelled on its own ground as a landmark of its own, raised or cut as the part's own `site` says (a part `atop` another on that one's;
+a ring part, a stadium's oval, never stands on a square plate: raised, its walls reach down to the ground),
+as such buildings step down a hill, instead of one plane for the whole group that stands its low end on a tall basement
 and hides an open ground floor:
 
 - `ring`: seats or rooms round an open floor. Amphitheatres (`plan: oval`: the band of seats keeps one depth all round, so the arena is the narrower oval it is), theatres (`half`, `sweep_deg`, a `stage`), circuses and stadia (`u`, `obround`, a `spina`), round houses (`round`, `section: building`).

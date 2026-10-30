@@ -231,7 +231,7 @@ class Builder:
         return max(gs)
 
     @contextmanager
-    def lot_site(self, x, y, th, w, d, mid=False):
+    def lot_site(self, x, y, th, w, d, mid=False, regroup=True):
         """a house's lot made one plane before it is built on (平整土地): the plane fitted to the ground under the w x d lot,
         raised just enough that the ground nowhere pokes through it, level where the ground is level and tilted with the hill
         where it is not (up to lot_slope; steeper, the house stands on a terrace whose foundation takes the rest). Where the plane
@@ -241,7 +241,9 @@ class Builder:
         gable_house take it, the pieces are sheared along it), so a house is one piece on the slope: its wings no longer stand
         each on its own level against the walls and the court, nor on plinths of their own. Inside a lot already made one plane
         (a mansion's courts) the plane is the mansion's. mid: the plane half-way between the highest and the lowest ground
-        under it, the building let into the slope (cut on the uphill side, filled on the downhill), not raised over it."""
+        under it, the building let into the slope (cut on the uphill side, filled on the downhill), not raised over it.
+        regroup False: a platform does not start a building group of its own (a part of a landmark levelled on its own ground: the
+        landmark stays one building)."""
         if self.site is not None: yield; return
         P = self.frame(x, y, th); n = max(3, min(12, int(math.ceil(max(w, d) / 6)) + 1)); pts = []
         for i in range(n):
@@ -255,7 +257,8 @@ class Builder:
         g0, sl, fd = float(c0) + lift, (float(bx), float(by)), lift - float(res.min())
         self.slope = sl
         if fd > self.plinth:   # the platform: a thin top on the plane, its foundation down to the lowest ground under the lot
-            self.group(); self.found = fd; self._emit(BOX, x, y, th, 0, w, d, .05, part=PLINTH, g_m=g0); fd = 0.0
+            if regroup: self.group()
+            self.found = fd; self._emit(BOX, x, y, th, 0, w, d, .05, part=PLINTH, g_m=g0); fd = 0.0
         self.site = (x, y, g0, sl, fd); self.found = fd
         try: yield
         finally: self.site = None; self.slope, self.found = s0, f0
