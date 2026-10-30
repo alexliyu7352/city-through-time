@@ -201,7 +201,7 @@ export function startView(X) {
       .fv-halls button[aria-pressed=true]{background:oklch(0.865 0.115 80);color:oklch(0.22 0.035 75);border-color:transparent}.fv-halls button[aria-pressed=true] small{color:oklch(0.33 0.04 75)}
       .fv-pin{position:fixed;z-index:8;left:0;top:0;display:flex;align-items:center;gap:8px;translate:-11px -50%;padding:0;text-decoration:none;color:oklch(0.22 0.035 75);font:600 13.5px/1.3 "Albert Sans","PingFang SC","Noto Sans SC",sans-serif}
       .fv-pin i{width:22px;height:22px;border-radius:50%;background:oklch(0.865 0.115 80);box-shadow:0 0 0 5px oklch(0.865 0.115 80 / .3);flex:none}
-      .fv-pin span{padding:6px 11px;border-radius:999px;background:oklch(0.955 0.006 85 / .94);white-space:nowrap}.fv-pin:hover span{background:#fff}
+      .fv-pin span{padding:6px 11px;border-radius:999px;background:oklch(0.955 0.006 85 / .94);white-space:nowrap}.fv-pin:hover span{background:#fff}.fv-pin[hidden]{display:none}
       .fv-name b,.fv-pill{white-space:nowrap}
       @media (max-width:640px){.fv-hint{display:none}.fv-name{padding:8px 12px}.fv-name b{font-size:16px}.fv-pill{min-height:36px;padding:0 11px;font-size:12.5px}.fv-tools{gap:6px}
         .fv-top{padding:max(10px,env(safe-area-inset-top)) 10px 0}.fv-bot{padding:0 10px max(10px,env(safe-area-inset-bottom))}}`;
