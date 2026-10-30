@@ -4,6 +4,7 @@ usage: python -I tools/clipcheck.py cities/<slug> [--max 0]      exit 1 if any c
 Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
   houses_vs_walls     ordinary house bodies (part 0) overlapping the city wall, a landmark or the moat
   houses_vs_streets   house bodies standing on a main street or lane (paving, part 7)
+  houses_overlap      two houses (bodies of different buildings) standing in each other
   trees_in_houses     a tree trunk inside a house, landmark or earthwork body (at any height: a hall on a podium too), or
                       standing below the top of the platform it is on (a court's on a hillside); a court or an arena is open
   landmarks_overlap   two different landmark bodies overlapping (beyond touching)
@@ -107,6 +108,20 @@ def main():
             R[label] = n; R[label + '_at'] = ex[:5]
         overlaps(houses, hard, 'houses_vs_walls', hp_, wp0_)
         overlaps(houses, streets, 'houses_vs_streets', hp_, sp_)
+        # two houses standing in each other: bodies of different buildings (a building: its records' centre) overlapping
+        def _sides(g):   # the two sides of a shape's smallest enclosing rectangle
+            r_ = list(shapely.minimum_rotated_rectangle(g).exterior.coords)
+            return [math.dist(r_[0], r_[1]), math.dist(r_[1], r_[2])] if len(r_) >= 3 else [0.0, 0.0]
+        if houses:
+            bk_ = [(round(p[15], 5), round(p[16], 5)) if len(p) > 16 else (p[1], p[2]) for p in hp_]; tree_ = STRtree(houses); n_ = 0; ex_ = []
+            for i, a in enumerate(houses):
+                for j in tree_.query(a, predicate='intersects'):
+                    if j <= i or bk_[i] == bk_[j] or not both(hp_[i], hp_[j]): continue
+                    x_ = a.intersection(houses[j])   # (two row houses sharing a wall meet in a sliver: not one standing in the other)
+                    if x_.area > min_area and min(_sides(x_)) > 1.0 * S:
+                        n_ += 1; ex_.append([round(a.centroid.x, 4), round(a.centroid.y, 4)]); break
+            R['houses_overlap'] = n_; R['houses_overlap_at'] = ex_[:5]
+        else: R['houses_overlap'] = 0
         # a trunk inside a body: the ground it stands on below the body's top (along the body's slope), inside where the body
         # stands (a hall on a podium starts above grade, so every body counts, at any height; a tree on top of a terrace stands
         # at its top and is not inside it; a court or an arena is open: solid_plan). A platform counts too: a tree in a court on

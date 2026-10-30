@@ -1261,16 +1261,26 @@ class Builder:
         frac = shapely.area(shapely.intersection(cells, R)) / (lw * ld)
         keep = np.nonzero(frac > .985)[0]   # whole lots only: no house straddles a lane or a street
         c, s = math.cos(theta), math.sin(theta); n = 0
+        placed = {}   # scattered lots by grid cell: a lot moved or turned off its cell must not land on a neighbour's
         for i in keep:
             if self.rng.random() < empty: continue
             self.group()
-            lx, ly = X[i] + lw / 2 - cx, Y[i] + ld / 2 - cy
+            lx, ly = X[i] + lw / 2 - cx, Y[i] + ld / 2 - cy; lx0, ly0 = lx, ly
             if scatter: lx += (self.rng.random() - .5) * lw * scatter * .6; ly += (self.rng.random() - .5) * ld * scatter * .6
             px, py = cx + lx * c - ly * s, cy + lx * s + ly * c
             if scatter: theta_i = theta + (self.rng.random() - .5) * .7 * scatter
             else: theta_i = theta
             j = self.rng.random
             w_, d_ = lw * (1 - jitter * j()), ld * (1 - jitter * j())
+            if scatter:   # (its yard against the lots already placed round its cell: back on its cell, square to the grid, or left empty)
+                ci_ = (int(i % len(xs)), int(i // len(xs)))
+                near_ = [placed[(ci_[0] + a_, ci_[1] + b_)] for a_ in (-1, 0, 1) for b_ in (-1, 0, 1) if (ci_[0] + a_, ci_[1] + b_) in placed]
+                foot_ = lambda X_, Y_, T_: Polygon([self.frame(X_, Y_, T_)(u_ * w_ / 2, v_ * d_ / 2) for u_, v_ in ((-1, -1), (1, -1), (1, 1), (-1, 1))])
+                f_ = foot_(px, py, theta_i)
+                if any(f_.intersects(q_) for q_ in near_) or not region.buffer(1.0).contains(f_):   # (nor out of its region: onto the next fabric's lots)
+                    px, py, theta_i = cx + lx0 * c - ly0 * s, cy + lx0 * s + ly0 * c, theta; f_ = foot_(px, py, theta_i)
+                    if any(f_.intersects(q_) for q_ in near_): continue
+                placed[ci_] = f_
             with self.lot_site(px, py, theta_i, lw, ld): self._lot(typ, px, py, theta_i, lw, ld, w_, d_, h, part, j)
             n += 1
         return n
@@ -1278,12 +1288,14 @@ class Builder:
     def _lot(self, typ, px, py, theta_i, lw, ld, w_, d_, h, part, j):
         """one lot of a fabric (fill): its house, on the lot made one plane (lot_site)"""
         if typ == 'courtyard': self.courtyard(px, py, theta_i, w_ * .96, d_ * .96, h * (.85 + .3 * j()), part=part)
-        elif typ == 'dwelling':   # one or two small gable wings in a walled yard (commoners' houses, workshops)
-            self.gable_house(px, py + d_ * .18, theta_i, w_ * .8, d_ * .4, h * (.8 + .4 * j()), part=part, front=-1)
-            if j() < .55: self.gable_house(px - w_ * .28, py - d_ * .18, theta_i + math.pi / 2, d_ * .3, w_ * .3, h * .75, part=part, front=-1)
-            if self.det >= 1:
+        elif typ == 'dwelling':   # one or two small gable wings in a walled yard (commoners' houses, workshops), placed in the lot's own frame
+            Q = self.frame(px, py, theta_i)   # (offsets along the map's axes put a turned lot's wings across its own wall and into the next yard)
+            self.gable_house(*Q(0, d_ * .18), theta_i, w_ * .8, d_ * .4, h * (.8 + .4 * j()), part=part, front=-1)
+            if j() < .55: self.gable_house(*Q(-w_ * .28, -d_ * .18), theta_i + math.pi / 2, d_ * .3, w_ * .3, h * .75, part=part, front=-1)
+            if self.det >= 1:   # the yard walled all round, its gate in the front wall (three sides read as a broken wall)
                 P = self.frame(px, py, theta_i)
-                for (a, b) in ((P(-w_ / 2, -d_ / 2), P(w_ * .1, -d_ / 2)), (P(w_ * .3, -d_ / 2), P(w_ / 2, -d_ / 2)), (P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2)), (P(-w_ / 2, -d_ / 2), P(-w_ / 2, d_ / 2))):
+                for (a, b) in ((P(-w_ / 2, -d_ / 2), P(w_ * .1, -d_ / 2)), (P(w_ * .3, -d_ / 2), P(w_ / 2, -d_ / 2)), (P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2)),
+                               (P(-w_ / 2, -d_ / 2), P(-w_ / 2, d_ / 2)), (P(-w_ / 2, d_ / 2), P(w_ / 2, d_ / 2))):
                     self.strip(a, b, .4, 2.0, part=part)
         elif typ == 'hut': self.hut(px, py, min(lw, ld) * .32, h, part=part)
         elif typ == 'slab': self.slab(px, py, theta_i, w_ * .8, d_ * .35, h, part=part)
@@ -1615,9 +1627,12 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                 B.group()
                 a_ = B.rng.random() * math.tau; r_ = math.sqrt(B.rng.random()) * L.get('r_m', 150); kx, ky = x + r_ * math.cos(a_), y + r_ * math.sin(a_)
                 if B.rng.random() < .55:
-                    B.kiln(kx, ky, a_, g=ground_m(kx, ky))
-                else: B.gable_house(kx, ky, th + B.rng.uniform(-.4, .4), B.rng.uniform(9, 16), B.rng.uniform(5, 7), B.rng.uniform(4, 5.5), part=FAB)
-            continue
+                    B.kiln(kx, ky, a_, g=ground_m(kx, ky)); lm_foot.append(Point(kx, ky).buffer(9))
+                else:
+                    t_, w_, d_ = th + B.rng.uniform(-.4, .4), B.rng.uniform(9, 16), B.rng.uniform(5, 7)
+                    B.gable_house(kx, ky, t_, w_, d_, B.rng.uniform(4, 5.5), part=FAB)
+                    lm_foot.append(Polygon([B.frame(kx, ky, t_)(u * w_ / 2, v * d_ / 2) for u, v in ((-1, -1), (1, -1), (1, 1), (-1, 1))]).buffer(3))
+            continue   # (no site of its own, but each kiln and shed keeps its ground: the fabric round it is laid off them)
         elif k == 'pool' and L.get('level') == 'draped':   # where it was, not how high: the plate is its water (compile's basin map), a 1 m mark carries its timing
             P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']
             B._emit(BOX, x, y, th, 0, 1, 1, .05, part=WATER); B.found = 0.0
@@ -1747,7 +1762,9 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                 for k_ in (-1, 1):
                     o_ = k_ * (st.get('w_m', 14) / 2 + 1.2); B.strip((a[0] + nx_ * o_, a[1] + ny_ * o_), (b[0] + nx_ * o_, b[1] + ny_ * o_), 1.6, .1, part=WATER)
             if st.get('shops'):
-                for side in (1, -1): shop_feet.extend(B.shophouses(a, b, depth=st.get('shop_depth', 14), frontage=st.get('frontage', 7), h=st.get('shop_h', 7.5), side=side, gap=.08, street_w=st.get('w_m', 14), avoid=shop_avoid))
+                for side in (1, -1):   # (off the shops already standing too: two streets' rows meet at a crossing, a bent street's rows at the bend)
+                    av_ = unary_union(([shop_avoid] if shop_avoid is not None else []) + shop_feet) if shop_feet else shop_avoid
+                    shop_feet.extend(B.shophouses(a, b, depth=st.get('shop_depth', 14), frontage=st.get('frontage', 7), h=st.get('shop_h', 7.5), side=side, gap=.08, street_w=st.get('w_m', 14), avoid=av_))
     streets = unary_union(street_geoms) if street_geoms else Polygon()
     avoid = unary_union(fab_foot + shop_feet + [streets] + ([extra_avoid] if extra_avoid is not None else [])) if (fab_foot or shop_feet or not streets.is_empty or extra_avoid is not None) else None
     wall_strips = unary_union([wall_line(F, w).buffer(w.get('t_m', 10) * 1.2 + 10) for w in spec.get('walls', []) if 'ring' in w or 'pts' in w]) if spec.get('walls') else None
