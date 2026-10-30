@@ -253,13 +253,21 @@ def main():
             sug = max(ok) if ok else 1.0
         notes[e['id']] = f'foundations: top tenth {p90:.0%} of the height' + (f', within {FOUND_MAX:.0%} up to x{sug:g}' if sug else '')
         xb_ = body((FAB, LMK, WALL, EARTH))
-        bodies_by_era[e['id']] = (e, [rect(p, .3 * S) for p in xb_], [span_[id(p)][1] for p in xb_])   # (each body until its city's end or its loss)
-        for oid, (oe, ob, oend) in bodies_by_era.items():
+        def wall_ends(p):   # a wall piece's two ends (a thin long piece of a city's or a court's wall), else None
+            if p[11] not in (WALL, LMK) or min(p[5], p[6]) > 8 * S or max(p[5], p[6]) < 3 * min(p[5], p[6]): return None
+            L_, t_ = max(p[5], p[6]) / 2, p[3] + (0 if p[5] >= p[6] else math.pi / 2)
+            return [shapely.Point(p[1] + k * L_ * math.cos(t_), p[2] + k * L_ * math.sin(t_)) for k in (-1, 1)]
+        bodies_by_era[e['id']] = (e, [rect(p, .3 * S) for p in xb_], [span_[id(p)][1] for p in xb_], [wall_ends(p) for p in xb_])   # (each body until its city's end or its loss)
+        # (a wall of one city running into a tower, a gate or a fort of another it ends at, one end in, one out, is a joint as built, as
+        # walls_through lets a wall end in its own gate house: the medieval wall joining the Castel that stood before it)
+        joint = lambda we, q: we is not None and sum(q.contains(pt) for pt in we) == 1
+        for oid, (oe, ob, oend, owe) in bodies_by_era.items():
             if oid == e['id'] or not ob: continue
             if not (oe['on'] < (e.get('off') or 1e9) and e['on'] < (oe.get('off') or 1e9)): continue
             tree = STRtree(ob); n = 0
-            for a, aend in zip(bodies_by_era[e['id']][1], bodies_by_era[e['id']][2]):
-                if any(oe['on'] < aend and e['on'] < oend[j] and a.intersection(ob[j]).area > min_area for j in tree.query(a, predicate='intersects')): n += 1
+            for a, aend, awe in zip(*bodies_by_era[e['id']][1:]):
+                if any(oe['on'] < aend and e['on'] < oend[j] and a.intersection(ob[j]).area > min_area and not joint(awe, ob[j]) and not joint(owe[j], a)
+                       for j in tree.query(a, predicate='intersects')): n += 1
             R['cross_era'] = R.get('cross_era', 0) + n
         report[e['id']] = R
         bad = sum(v for k, v in R.items() if isinstance(v, int))
