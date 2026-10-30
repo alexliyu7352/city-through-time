@@ -1152,7 +1152,7 @@ class Builder:
         """subdivide a region (shapely polygon, UTM) into an oriented grid of lots and put a house in each lot"""
         if region.is_empty: return 0
         if avoid is not None and not avoid.is_empty: region = region.difference(avoid)
-        if region.is_empty or region.area < lot[0] * lot[1]: return 0
+        if region.is_empty or region.area < lot[0] * lot[1] * .985: return 0   # (as a whole lot is counted below: a lot drawn the size of its region is built)
         cx, cy = region.centroid.x, region.centroid.y
         R = affinity.rotate(region, -theta, origin=(cx, cy), use_radians=True)
         x0, y0, x1, y1 = R.bounds; lw, ld = lot
@@ -1411,7 +1411,7 @@ def landmark_site(L, F, theta_deg=0.0):
     return x, y, th, L, [Polygon([P(-hw, -hd), P(hw, -hd), P(hw, hd), P(-hw, hd)]).buffer(6)]
 
 
-def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None, sites=None):
+def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None, sites=None, empty=None):
     """spec (dict from city.yaml, lon/lat) -> primitive list. Spec keys:
     origin [lon, lat]; theta_deg (grid rotation, CCW from east); detail (low | medium | high); exaggeration (building heights,
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
@@ -1612,6 +1612,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         if wall_strips is not None and not wall_strips.is_empty: reg = reg.difference(wall_strips)   # no house on or against a city wall
         th = math.radians(fb.get('theta_deg', spec.get('theta_deg', 0)))
         det0 = B.det; B.det = DETAIL.get(fb.get('detail'), det0)   # a fabric seen only from the air can drop the doors and yard walls
+        n_ = 0
         if fb.get('typ') == 'wards':   # walled wards (闾里) on a grid of `ward_m` squares, streets between them
             wm = fb.get('ward_m', 300); sw = fb.get('ward_street_m', 14); x0_, y0_, x1_, y1_ = reg.bounds
             for wx in np.arange(x0_, x1_ - wm * .5, wm + sw):
@@ -1619,9 +1620,10 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                     cell = shapely.box(wx, wy, wx + wm, wy + wm).intersection(reg)
                     if avoid is not None: cell = cell.difference(avoid)
                     if cell.is_empty or cell.area < .55 * wm * wm or cell.geom_type != 'Polygon': continue
-                    B.group(('fabric', fi)); B.ward(cell, th, tuple(fb.get('lot', [22, 28])), fb.get('h_m', 6), empty=fb.get('empty', .08))
+                    B.group(('fabric', fi)); B.ward(cell, th, tuple(fb.get('lot', [22, 28])), fb.get('h_m', 6), empty=fb.get('empty', .08)); n_ += 1
         else:
-            B.fill(reg, th, tuple(fb.get('lot', [18, 26])), fb.get('typ', 'courtyard'), fb.get('h_m', 6), fb.get('empty', .06), avoid=avoid, scatter=fb.get('scatter', 0.0))
+            n_ = B.fill(reg, th, tuple(fb.get('lot', [18, 26])), fb.get('typ', 'courtyard'), fb.get('h_m', 6), fb.get('empty', .06), avoid=avoid, scatter=fb.get('scatter', 0.0))
+        if not n_ and empty is not None: empty.append(fb.get('id') or f'#{fi}')   # (a fabric that builds nothing: compile names it)
         B.det = det0
     bodies = decks = None   # what stands on the ground by now (model xz): a row of trees steps over a house, a hall or a terrace on its line
     if spec.get('trees'):   # (every kind of body, its court or arena left open: a garden inside a portico is planted)

@@ -742,7 +742,9 @@ def gen_city(node):
                 if p[11] == 4 or gone_[i_]: continue   # (a part lost by this node leaves its ground free)
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
-    meta_, bas_, sites_ = [], [], {}; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_)
+    meta_, bas_, sites_, empty_ = [], [], {}, []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_)
+    if empty_: WARN.append(f"era {node['id']}: fabric {', '.join(map(str, empty_[:8]))}{' ..' if len(empty_) > 8 else ''} ({len(empty_)}) builds no house: its region is smaller than one "
+                           f"lot, or streets, walls and landmarks cover it (citygen fill lays whole lots only); give it a smaller lot or a larger region, or leave it out")
     BASINS[node['id']] = bas_; SITES[node['id']] = sites_
     CITY_META[node['id']] = meta_
     LOST[node['id']] = lost_parts(PRIMS[node['id']], meta_, cs, node['id'])
