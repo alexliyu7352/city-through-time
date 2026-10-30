@@ -391,6 +391,28 @@ def select_parts(sel, cs, node_id, what):
         out[cat] = idx
     return out
 
+def split_parts(meta, labels, cs, node_id):
+    """a stage that names a part of a landmark of parts (`<landmark>.<part>`, the part's own id): that part's records become a
+    building of their own (a group id of their own, in place in meta), so it rises in its stage while the rest of the landmark
+    rises in another (a dome raised on a drum built decades before) on the landmark's one level ground; a loss naming the
+    landmark still takes it whole. -> {name: [its group ids]} (one per landmark the name selects)"""
+    names = [n for st in cs.get('stages') or [] for n in ((st.get('select') or {}).get('landmarks') or []) if isinstance(n, str) and '.' in n]
+    if not names: return {}
+    if len(set(names)) < len(names): raise SystemExit(f'compile: era {node_id}: stage select landmarks: {sorted(n for n in set(names) if names.count(n) > 1)[0]} is in two stages; a part rises once')
+    first = nxt = max(m[0] for m in meta) + 1; out = {}
+    for n in names:
+        lm, pt = n.split('.', 1); lis = select_parts({'landmarks': [lm]}, cs, node_id, 'stage')['landmarks']; new = {}
+        for i, m in enumerate(meta):
+            if m[1][0] != 'landmarks' or m[1][1] not in lis or pt not in (labels[i].split('/') if i < len(labels) and labels[i] else []): continue
+            if m[0] >= first: raise SystemExit(f'compile: era {node_id}: stage select landmarks: {n} lies inside a part another stage names; a part rises once')
+            if m[0] not in new: new[m[0]] = nxt; nxt += 1
+            meta[i] = (new[m[0]],) + tuple(m[1:])
+        if not new: raise SystemExit(f"compile: era {node_id}: stage select landmarks: {n}: no part {pt!r} in {lm} (a part of a landmark of parts is named by its own id)")
+        out[n] = list(new.values())
+    return out
+
+SUBS = {}   # era id -> {<landmark>.<part>: [group ids]}: the parts a stage raises apart from their landmark (split_parts)
+
 def match(sel, tag):
     v = sel.get(tag[0]); return v is True or (isinstance(v, list) and tag[1] in v)
 
@@ -495,11 +517,15 @@ def stage_parts(prims, meta, cs, node_id):
     G = {}
     for p, (gid, tag, _) in zip(prims, meta):
         G.setdefault(gid, {'tag': tag, 'c': (p[15], p[16])})
-    resolve = lambda sel: select_parts(sel, cs, node_id, 'stage')
-    stages = [dict(st, select=resolve(st['select'])) if st.get('select') else st for st in stages]
+    sub_ = SUBS.get(node_id) or {}   # (<landmark>.<part>: a part raised apart, a building of its own: split_parts)
+    whole_ = lambda sel: dict(sel, landmarks=[n for n in sel['landmarks'] if '.' not in str(n)]) if isinstance(sel.get('landmarks'), list) else sel
+    own_ = lambda sel: {g for n in (sel.get('landmarks') if isinstance(sel.get('landmarks'), list) else []) if '.' in str(n) for g in sub_.get(n, [])}
+    resolve = lambda sel: select_parts(whole_(sel), cs, node_id, 'stage')
+    stages = [dict(st, select=resolve(st['select']), **({'_own': own_(st['select'])} if own_(st['select']) else {})) if st.get('select') else st for st in stages]
+    apart = {g for v in sub_.values() for g in v}   # (a stage naming the whole landmark leaves them to the stage naming them)
     taken, order = set(), []
     for st in [x for x in stages if x.get('select')] + [x for x in stages if not x.get('select')]:
-        gids = [g for g, v in G.items() if g not in taken and (not st.get('select') or match(st['select'], v['tag']))]
+        gids = [g for g, v in G.items() if g not in taken and (not st.get('select') or g in st.get('_own', ()) or (g not in apart and match(st['select'], v['tag'])))]
         if not gids: continue
         taken.update(gids); order.append((st, st is stages[0], gids))
     left = sorted({G[g]['tag'] for g in G if g not in taken}, key=str)
@@ -806,7 +832,7 @@ def gen_city(node):
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
     meta_, bas_, sites_, empty_, lab_ = [], [], {}, [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_)
-    LABELS[node['id']] = lab_
+    LABELS[node['id']] = lab_; SUBS[node['id']] = split_parts(meta_, lab_, cs, node['id'])
     if empty_: WARN.append(f"era {node['id']}: fabric {', '.join(map(str, empty_[:8]))}{' ..' if len(empty_) > 8 else ''} ({len(empty_)}) builds no house: its region is smaller than one "
                            f"lot, or streets, walls and landmarks cover it (citygen fill lays whole lots only); give it a smaller lot or a larger region, or leave it out")
     BASINS[node['id']] = bas_; SITES[node['id']] = sites_

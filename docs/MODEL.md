@@ -176,7 +176,10 @@ A ground is open space, not the ground under a built-up quarter: the lanes, yard
 A later ground in the list is laid over an earlier one (a yard written after its field cuts its place out of it); each period city keeps its own, so one place can be a field in one period and a lawn in the next.
 Stages and losses name a ground by `id` or `group` as any part (a loss takes a ground only when it names it: open ground outlives the houses round it); the grounds and pools of one film share 32 slots, so grounds of one city that come and go together are one entry whose region has several rings.
 A region may cover a building with a court (a portico, a cloister: the court is planted, the walls are not) and a court on a platform (its trees stand on the platform's top); a garden is part of the city's outline.
-`stages` select parts by name (`id` / `group`), never by index: the index breaks whenever the list changes.
+`stages` select parts by name (`id` / `group`), never by index: the index breaks whenever the list changes. A stage may name a part of a landmark of parts `<landmark id>.<part id>`
+(the part's own `id`): that part rises in that stage, the rest of the landmark in the stage naming the landmark (or the one without a select), all on the landmark's one level
+ground (a church's drum built first, its dome decades later, its nave last); a part is named by one stage only. A part `atop` another stands on it: raise it in the same
+stage as the part under it or a later one, or it hangs in the air until that part rises.
 Generate large numbers of buildings from the research list with a generator (example: `cities/xianyang/research/han_gen.py`, coordinates in metres with the front hall as origin), noting the basis for each item;
 run clipcheck afterwards, and overlaps and clipping must be 0. A single building made from a reconstruction drawing (Qin Palace No. 1) may use `exaggeration` to lower the height exaggeration and keep its original proportions.
 Roads must be continuous and textured: lay a road on a slope in segments, with adjacent segments taking the same height at the seam and meeting end to end without overlapping (a height difference leaves a thin shadow, and two overlapping faces flicker,
