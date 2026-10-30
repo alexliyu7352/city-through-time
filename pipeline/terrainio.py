@@ -49,7 +49,10 @@ def bilinear(arr, u, v):
     return float(a * (1 - fv) + b * fv)
 
 
-def plate_mesh(arr, PW, PD, nx=640):
+NX = 640   # the plate mesh's cells across (studio.js plateGeometry)
+
+
+def plate_mesh(arr, PW, PD, nx=NX):
     """the plate as the engine draws it (studio.js plateGeometry): an nx-cell mesh over the PW x PD plate (model units) through
     the heightfield, two flat triangles a cell (THREE.PlaneGeometry: the diagonal from a cell's south-west corner to its
     north-east one). Where the ground dips between the mesh's corners the plate stands above the sampled ground: anything thin

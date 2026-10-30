@@ -249,6 +249,8 @@ a valley filled, a hillside cut back), write `level: draped`: the plate itself i
 was and not how high it stood; label it schematic on screen. Its water's edge is its outline exactly as drawn (compile keeps the distance to it in the pool map,
 so it is smooth at any size and does not step with the map's texels), so the outline is what the audience sees: trace it from the source's plan, not a box round it. Today's buildings step aside from its whole outline as it rises; a loss's ring spans its outline (any pool's)
 and takes its water point by point as it passes. clipcheck's `water_under_plate` finds water the ground rises through (a ditch on a slope).
+A dug pool narrower than two of the plate mesh's cells (the plate width / 640: about 36 m on a 23 km plate) is drawn draped by itself: the plate is lowered at
+the mesh's corners, and a pool smaller than that showed a corner of water, not its outline.
 **Today's buildings stand on the lowest ground under them:** `prep.py` puts each building's base on the lowest point of the plate under its footprint (the plate as the engine draws it, `terrainio.plate_mesh`)
 and its top where its height puts it above the ground at its centroid, so a building on a slope reaches down to the ground on its downhill side instead of hanging in the air.
 clipcheck's `today floating` counts any building that does not, which is how a model prepared on an older terrain shows: after `terrain.py`, run `prep.py` again.

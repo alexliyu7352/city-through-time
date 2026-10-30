@@ -31,6 +31,7 @@ from shapely.geometry import Polygon, LineString, Point
 from shapely.geometry.polygon import orient
 from shapely.ops import unary_union
 from shapely import affinity
+import terrainio
 
 BOX, GABLE, FRUSTUM, CYL, CONE, REVOLVE, PRISM = 0, 1, 2, 3, 4, 5, 6   # REVOLVE, PRISM carry their shape after the building's centre (record field 17)
 FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH = range(11)
@@ -1636,7 +1637,10 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                     B.gable_house(kx, ky, t_, w_, d_, B.rng.uniform(4, 5.5), part=FAB)
                     lm_foot.append(Polygon([B.frame(kx, ky, t_)(u * w_ / 2, v * d_ / 2) for u, v in ((-1, -1), (1, -1), (1, 1), (-1, 1))]).buffer(3))
             continue   # (no site of its own, but each kiln and shed keeps its ground: the fabric round it is laid off them)
-        elif k == 'pool' and L.get('level') == 'draped':   # where it was, not how high: the plate is its water (compile's basin map), a 1 m mark carries its timing
+        elif k == 'pool' and (L.get('level') == 'draped' or min(L['w_m'], L['d_m']) < 2 * F.size[0] / F.scale / terrainio.NX):
+            # where it was, not how high: the plate is its water (compile's basin map), a 1 m mark carries its timing. A dug pool
+            # narrower than two of the plate mesh's cells is drawn so too: the plate is lowered at the mesh's corners, and in it
+            # only a corner or two went down (a 50 x 25 m pool showed a triangle of water); its water is at the ground anyway
             P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']
             B._emit(BOX, x, y, th, 0, 1, 1, .05, part=WATER); B.found = 0.0
             B.basins.append({'ring': [P(-w_ / 2, -d_ / 2), P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2), P(-w_ / 2, d_ / 2)], 'top_m': None, 'gid': B.gid})
