@@ -1132,7 +1132,7 @@ for i, node in enumerate(FM['nodes']):
         taus_ = [q['tau'] for q in node['_ins']]
         fw_ = [(node_time(node, r_.get('at', 0)) - follow_shot(r_, node, cam)['lead'] - .05, node_time(node, r_.get('at', 0)) + follow_shot(r_, node, cam)['end'] + .05)
                for r_ in node.get('routes', []) if r_.get('follow')]   # (a hand key inside a beam follow goes: the follow owns its window)
-        seq_ = [(node_time(node, k['t']), camv(k), bisect.bisect_right(taus_, float(k['t']) + 1e-3), float(k['t']) + 1e-3, None) for k in hk_
+        seq_ = [(node_time(node, k['t']), camv(k), bisect.bisect_left(taus_, float(k['t']) + 1e-3), float(k['t']) + 1e-3, None) for k in hk_   # (time after a hand key goes before what was inserted after it: a hold starting as the key arrives)
                 if not any(w0 <= node_time(node, k['t']) <= w1 for w0, w1 in fw_)]
         for qi_, q in enumerate(node['_ins']):
             at_ = node_time(node, q['tau']) + sum(o['delta'] for o in node['_ins'][:qi_] if o['tau'] == q['tau'])
