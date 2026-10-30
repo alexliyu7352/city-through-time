@@ -36,6 +36,14 @@ const AZ = [0, 45, 90, 135, 180, 225, 270, 315];
 // height [x, z, size, y, h] (model units): seen from as far as its width and its height both need, aimed at its middle
 const folder = city.includes('/') ? path.resolve(city) : null, at = (...p) => folder ? path.join(folder, 'build', ...p) : buildDir(city, ...p);
 const FILM = JSON.parse(fs.readFileSync(at('film.json'), 'utf8'));
+const MSCALE = JSON.parse(fs.readFileSync(at('data', 'model.json'), 'utf8')).scale;   // (model units a metre)
+// the buildings standing whole at t within 25 m of x, z: their ground and the tallest one's height [y, h] (model units), so the
+// close-ups are aimed at their middle and see a tall house whole, its roof too, not the ground at its foot
+function standing(id, t, x, z) {
+  const e = FILM.eras.find(q => q.id === id), J = JSON.parse(fs.readFileSync(at(e.file), 'utf8')), r = 25 * MSCALE; let g = 1e9, top = -1e9;
+  for (const [i, p] of J.prims.entries()) if (Math.hypot(p[1] - x, p[2] - z) <= r && whole(e, p[10], J.lost ? J.lost[i] : 0, t)) { g = Math.min(g, p[12]); top = Math.max(top, p[4] + p[7]); }
+  return g < 1e9 ? [g, Math.max(0, top - g)] : null;
+}
 function landmarks(id, t) {
   const e = FILM.eras.find(q => q.id === id), J = JSON.parse(fs.readFileSync(at(e.file), 'utf8')), g = new Map();
   for (const [i, p] of J.prims.entries()) if ([1, 9, 10].includes(p[11]) && whole(e, p[10], J.lost ? J.lost[i] : 0, t)) {
@@ -56,7 +64,8 @@ for (const e of eras) for (const [mi, m] of (AT != null ? [{ t: +AT, dense: e.de
     const dc = Math.min(D, Math.max(.003, e.r * .8)), dw = Math.min(2.8, Math.max(.04, e.r * 2.2));   // (a hamlet of huts a few metres across: close enough to see them)
     // the landmarks: 16 views, four bearings of each of the four largest (fewer landmarks: more bearings of each)
     const lm = landmarks(e.id, m.t), lmv = lm.length ? [...Array(16).keys()].map(i => { const k = i % lm.length, j = Math.floor(i / lm.length); return [lm[k], (30 + j * 360 / Math.ceil(16 / lm.length)) % 360, k]; }) : [];
-    const rows = [[AIM || m.dense, 12, dc, AZ, 'close'], [AIM || m.dense, 35, dc, AZ, 'close'], ...lmv.map(([L, az, k]) => [[L[0], L[3] + L[4] / 2, L[1]], 30, Math.min(.3, Math.max(.0012, L[2] * 1.4, L[4] * 2.6)), [az], `landmark${k + 1}`]), [e.id, 30, dw, [0, 90, 180, 270], 'whole']];
+    const cxz = AIM || m.dense, st = standing(e.id, m.t, cxz[0], cxz[1]), ctg = st ? [cxz[0], st[0] + st[1] / 2, cxz[1]] : cxz, cd = st ? Math.max(dc, st[1] * 2.6) : dc;   // (a tall house whole)
+    const rows = [[ctg, 12, cd, AZ, 'close'], [ctg, 35, cd, AZ, 'close'], ...lmv.map(([L, az, k]) => [[L[0], L[3] + L[4] / 2, L[1]], 30, Math.min(.3, Math.max(.0012, L[2] * 1.4, L[4] * 2.6)), [az], `landmark${k + 1}`]), [e.id, 30, dw, [0, 90, 180, 270], 'whole']];
     const files = [];
     for (const [target, el, d, azs, what] of rows) for (const az of azs) {
       await page.evaluate(o => window.VIEW(o), { eras: [e.id], look, today: false, at: m.t, target, az, el, d });
