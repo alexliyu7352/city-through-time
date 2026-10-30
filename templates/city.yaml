@@ -93,7 +93,7 @@ film:
           - { at: 4.4, dur: 4.6, select: { landmarks: [north_palaces] }, sweep: [[<lon>, <lat>], [<lon>, <lat>]], noise: 0.05 }   # sweeps along a line
           - { dur: 5.0, from: [<lon>, <lat>], noise: 0.1 }        # outward from a point; large ones use a ring, small ones refresh within the area (mode: ring | scan can force it)
         grow: 1.6                             # seconds for each building to grow
-        # lose: a part of the city taken while the rest stands (MODEL.md "A part of a city lost"); at most 8; select / region / keep pick it, at: node seconds, { with: <line> } or { node: <later node id>, at: ... }
+        # lose: a part of the city taken while the rest stands (MODEL.md "A part of a city lost"); at most 16; select / region / keep pick it, at: node seconds, { with: <line> } or { node: <later node id>, at: ... }
         #   - { id: fire, at: 12, select: { fabric: [east_quarter] }, style: burn, ring: out, from: [<lon>, <lat>], dur: 4 }   # catches fire, then falls as the fire spreads
         #   - { id: shrink, at: { node: <later node id>, at: 3 }, keep: [[<lon>, <lat>], ...], dur: 6 }                        # everything outside keep sinks, the ring contracting to the core
         #   - { id: forum_site, at: { with: <line> }, for: [<landmark id>], dur: 3 }   # a landmark built later where houses stood: they stand on its site until this takes them; its stage comes after

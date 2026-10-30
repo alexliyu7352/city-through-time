@@ -141,7 +141,7 @@ destroyed and rebuilt. A loss names what it takes as a stage does (`select` by i
 its `keep` (a ring of `[lon, lat]`, several, or `osm:<name>`), and when: `at` in the city's own node (seconds or `{with: <line>}`), or `{node: <id>, at: ...}` in a later
 node while the city still stands (`until`). `style: sink` (the default) or `burn` (the part catches fire for `burn` seconds first); `ring: in` (from outside toward `from`,
 the default: a city shrinking to its core) or `out` (from `from` outward: a fire spreading); `dur` seconds. Each building goes whole as the ring passes it; the rest does
-not move. compile refuses a part lost before it has risen, after the city is taken back, in two losses, or a loss that takes nothing; at most eight per city. A city laid later
+not move. compile refuses a part lost before it has risen, after the city is taken back, in two losses, or a loss that takes nothing; at most sixteen per city. A city laid later
 over the old one (`avoid_eras`) may build where a part was lost by its node (fields where houses were: a `trees` region there); clipcheck counts a lost part and what rises
 where it stood as never standing together. **A landmark built later where houses stood** (a forum cut through a quarter, a palace raised on a burnt one) is named in the
 loss that clears its ground (`for: [<id>]`): citygen lays the houses over its site instead of leaving it empty from the city's start, the loss takes every building on
