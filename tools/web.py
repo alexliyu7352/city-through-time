@@ -7,8 +7,9 @@ usage: python -I tools/web.py cities/<slug>            -> cities/<slug>/dist/web
 Upload the folder as it is (a Hugging Face dataset, a GitHub repository served by GitHub Pages, any host that allows cross-origin
 reads) and give its URL as the city's `bundle` in cities.json; the page then plays play.html?city=<slug>&bundle=<url>.
 Only what the page loads goes in (engine/main.js: the timeline, the model and its masks, the era cities, the decals and plates, the
-narration, score and sound-effect tracks as m4a, the footage and pictures; museum.html: the museum pages, tools/museum.py), laid out as
-in the city folder: build/... and assets/....
+pools' and grounds' maps, the narration, score and sound-effect tracks as m4a, the footage and pictures; museum.html: the museum pages,
+tools/museum.py), laid out as in the city folder: build/... and assets/.... It stops when film.json names a file of the build that is
+not in that list (the page would stop on it).
 Nothing else does: no WAV, no internal test plates (satellite_hr), no reference pictures. The footage is re-encoded for streaming. The fonts are not in it: the page loads
 them from the project's fonts/ (a city that uses a new font brings it to fonts/ in its pull request)."""
 import hashlib, json, os, shutil, subprocess, sys
@@ -23,7 +24,7 @@ def files(D):
     out.append('build/data/terrain16.png' if os.path.exists(os.path.join(B, 'data', 'terrain16.png')) else 'build/data/terrain.png')
     built = [d.get('file') for d in F.get('decals') or []] + [(F.get('satellite') or {}).get('file'), (F.get('context') or {}).get('file'),
              (F.get('grow') or {}).get('tfile')] + [e.get('file') for e in F.get('eras') or []]
-    built += [(F.get(k) or {}).get('file') for k in ('voice', 'score', 'sfx')] + [(F.get('score') or {}).get('loop')]
+    built += [(F.get(k) or {}).get('file') for k in ('voice', 'score', 'sfx', 'basinMap', 'groundMap')] + [(F.get('score') or {}).get('loop')]
     out += ['build/' + f for f in built if f]
     out += [f['file'] for f in F.get('footage') or []]   # (relative to the city folder: assets/...)
     out += [v['file'] for v in F.get('living') or []]   # living moments' pictures (assets/living/)
@@ -34,6 +35,15 @@ def files(D):
             P = json.load(open(os.path.join(M, e['id'] + '.json'), encoding='utf-8'))
             out += [f'build/museum/{e["id"]}.json', P['model']] + [v['picture']['file'] for v in P['viewpoints'] if v.get('picture')]
             out += [q['file'] for q in (P.get('life') or {}).get('pictures') or []] + ([P['life']['photo']['file']] if (P.get('life') or {}).get('photo') else [])
+    # every file of the build that film.json names (a `file` or `tfile`, at any depth) must be in: the page loads it by that name, and
+    # a texture added to the film but not to this list left the bundle's player stopped on a missing file
+    def named(o):
+        if isinstance(o, dict):
+            for k, v in o.items(): yield from ([v] if k in ('file', 'tfile') and isinstance(v, str) else named(v))
+        elif isinstance(o, list):
+            for v in o: yield from named(v)
+    left = sorted({'build/' + f for f in named(F) if os.path.isfile(os.path.join(B, f))} - set(out))
+    if left: raise SystemExit(f'web: film.json names {", ".join(left)}, which the bundle would leave out: add it to files() in tools/web.py (the page loads it)')
     return list(dict.fromkeys(out))
 
 

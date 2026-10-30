@@ -3,28 +3,28 @@
  "files": [
   {
    "path": "build/film.json",
-   "bytes": 3138900,
-   "sha256": "fa1c14f312b217b12d650aab32ff3bbb5fd3173b6a214d8c4b27816928c46c47"
+   "bytes": 1542946,
+   "sha256": "a3f77c62ce7821745c5967d3aa4eaeea76537f95c5ea04385b069cd35e198b32"
   },
   {
    "path": "build/data/model.json",
-   "bytes": 19040977,
-   "sha256": "79e6af697ebb6b7e5c76fef648513bea08081a8bfe8d35177abd5db14c77bbdb"
+   "bytes": 19248568,
+   "sha256": "2178aa589b5c063656ea5dd68cb8684b911102756150dd651a5404ea069915e2"
   },
   {
    "path": "build/data/stats.json",
-   "bytes": 8874,
-   "sha256": "44f84d35155a759e54c3e66cc1545ec965c8f612694a93acaac085d96c16a631"
+   "bytes": 8797,
+   "sha256": "5181fa105433b668db0083267f480f6ea716bd346369d06e9a0e76a3f32cf8a5"
   },
   {
    "path": "build/data/lines.json",
-   "bytes": 762507,
-   "sha256": "e8dae96e9b93f427e559b12ee7faafbb5684f7d6708ddc4c0fc43dc65804856f"
+   "bytes": 799173,
+   "sha256": "21000e06d390e866836cfb5c75d46a4ece457d01afc5bff7d3464dad8de71273"
   },
   {
    "path": "build/data/water.png",
-   "bytes": 161516,
-   "sha256": "b79dbe52b1ab6997f5a9fad781d38c5b3fcff87793f216efb64b2ae182f6ddef"
+   "bytes": 153648,
+   "sha256": "2a74d3386473802539de1417061d9d367f0037050f0aba77a7b287de9667797c"
   },
   {
    "path": "build/data/layers1.png",
@@ -43,38 +43,38 @@
   },
   {
    "path": "build/data/hide.png",
-   "bytes": 222366,
-   "sha256": "457c188794a238f27613979cf9160e89cc8e92b944e90672432d15cf89946bd4"
+   "bytes": 220801,
+   "sha256": "afe9d3cc924ad8d8de8723baa7fc2724c9fb5f6b9c5617734b764d6f1b8964f8"
   },
   {
    "path": "build/data/hide2.png",
-   "bytes": 76181,
-   "sha256": "9409d57758c2007cd4080ca5788ccd387d76b1447d6b9875f1d0e0501008bfd0"
+   "bytes": 76755,
+   "sha256": "3f768d61f6945bddd4679cc3b9e3557df7c8b9ce41f6522ef896fc81be4c95a3"
   },
   {
    "path": "build/data/edge.png",
-   "bytes": 283266,
-   "sha256": "819f87446c410cf91ef49e230d1415c68e2a35e6687d2567467683f3294a0514"
+   "bytes": 284370,
+   "sha256": "6ef25bd06c89fe6b91d1a38c878833999e6974a496d344d1188916c3a35fd444"
   },
   {
    "path": "build/data/edge2.png",
-   "bytes": 470715,
-   "sha256": "0be5a455085e8895ec3922841c1796de114f25ed6f75fb4b7edfe754f63d4880"
+   "bytes": 486587,
+   "sha256": "855e781f2e52b97d58688e5f1195637d19bf3b708ee919f8ab0e4ad7594198ef"
   },
   {
    "path": "build/data/locator.png",
-   "bytes": 70271,
-   "sha256": "5939aa1f9496c367aee24c5cd8ba94d41db5b4f86bbeeaa7bfd07fedcac7edf0"
+   "bytes": 69949,
+   "sha256": "11a91fa5347ad62d83c3bcd1524502ee6ac97702687371d572d0e60edcde39fa"
   },
   {
    "path": "build/data/terrain16.png",
-   "bytes": 1049395,
-   "sha256": "f308f96a3b3f79cfc4b1bdbc7f7c45f894fbcf670cabd832d1db9b7c8e32a0b5"
+   "bytes": 1043819,
+   "sha256": "3544eb68623bc802c3f8018bb3f1062b28d4ec50996e11bf164f6a0e18c99af9"
   },
   {
    "path": "build/data/decal_0.png",
-   "bytes": 291353,
-   "sha256": "57c5806b24dbe26415df51cc4e85841004436ade28f94cdc09d2ee093a00b62e"
+   "bytes": 293591,
+   "sha256": "c54d50b0747edfdfe739b756589b714313ae5a2b6f9b840d872156d6d91fda96"
   },
   {
    "path": "build/data/satellite.png",
@@ -88,63 +88,68 @@
   },
   {
    "path": "build/data/grow_t.json",
-   "bytes": 813583,
-   "sha256": "fb0fb1e727f35c2d73b6122a04b4fee61615ad400066a420508636291764e410"
+   "bytes": 800780,
+   "sha256": "0c448bab0ab07903dc784c70d9e839b50a25cad9c0144a6641df5358d3f40d88"
   },
   {
    "path": "build/data/era_neolithic.json",
-   "bytes": 22142,
-   "sha256": "ad05824e221704426697fac1c3671c7a1e88df14322525fdc62453ba2f9e8f25"
+   "bytes": 22150,
+   "sha256": "fa411043d4ad24428ba062c6aa09d65dd73183ed92fd556c8c6a63417e110767"
   },
   {
    "path": "build/data/era_qin.json",
-   "bytes": 4701944,
-   "sha256": "0ac71a8c270490670b3acad9667a73674f8ff74850f80460635bf059c97d34d1"
+   "bytes": 4002937,
+   "sha256": "9a11f304e752affcd23b552768a68900e94a67aaab82264555ed2782096c8b20"
   },
   {
    "path": "build/data/era_empire.json",
-   "bytes": 5057614,
-   "sha256": "82bda76f03b56df8cc0339febdc47cb4bdb277c94c7ed31741a6f758590e4eb0"
+   "bytes": 5250363,
+   "sha256": "1196b9a45c3cda242430abf093bfce04ae7d5d63e74a1b3a8e7ac24e9855a34b"
   },
   {
    "path": "build/data/era_han.json",
-   "bytes": 11529005,
-   "sha256": "59568354808ddc982a80b132b6a768598879570a912518484275dfd95bb4a1ef"
+   "bytes": 12229124,
+   "sha256": "4bfb053d0a7899f90c01105397564afe1ff10265f3b9ee1ac5132d4aeba52381"
   },
   {
    "path": "build/data/era_tang.json",
-   "bytes": 1304615,
-   "sha256": "e8ddebb130907c8ad5d0eff1d7629092f9946d4173d5fee306cb6b50d5c3a801"
+   "bytes": 1470251,
+   "sha256": "afd7c4d8b11cf972c922de0c90b5efa6a18c3f7d942d28a7dea8ad3abf16cdf6"
   },
   {
    "path": "build/data/era_ming.json",
-   "bytes": 2737602,
-   "sha256": "b626d0283d43ed6a3bbaf86efb27bee7e00e1370dead988ff9d79d3fc7b5c703"
+   "bytes": 3086549,
+   "sha256": "cf3315fb1f75a9d64c72e19952ed690494c9dd7c66ac8eb788a6751a7fcf15c6"
   },
   {
    "path": "build/data/era_rail.json",
-   "bytes": 2741887,
-   "sha256": "19517c95438c0b3bdee7dc45280cee8b4d1978f738130cc6f613aa7db21f4895"
+   "bytes": 3023768,
+   "sha256": "5867f54978bf07ed17c0ec4d3e3ed95d98183adf5adcaa6659a60d4ebbcd4f80"
   },
   {
    "path": "build/data/era_mills.json",
-   "bytes": 289781,
-   "sha256": "18ffd16658d8756c1dbef211d7b01a3254169dd97a638d925778501782e9f705"
+   "bytes": 3603094,
+   "sha256": "b83ec0f6ee677be2c7152d1e94831622340435d42a95f71af3ea1acb720b04df"
   },
   {
    "path": "build/audio/voice/track_zh.m4a",
-   "bytes": 7439660,
-   "sha256": "d0f1d881b98d2b16a94efe0c70e61295fd3a6fd11106140e2258aee742784741"
+   "bytes": 7446002,
+   "sha256": "f0cdabe1a0b98f286b23631d3f0fbbcf7279b7d1586e848f61622fa5fcd114b5"
   },
   {
    "path": "build/audio/music/score.m4a",
-   "bytes": 15310859,
-   "sha256": "9eb67ed567205ce3e19d121aa062e4503496acc10a0f697032fa45f4aad31c5d"
+   "bytes": 15317725,
+   "sha256": "2335d82e10d943736d69051668611c6010005818ee361fe74b2e9c657d0e63a2"
   },
   {
    "path": "build/audio/sfx_track.m4a",
-   "bytes": 577649,
-   "sha256": "fead589b078a6b7be5578fc6cdc7bb1d1575194dfc952ac45e34e19dc07d1ff6"
+   "bytes": 575859,
+   "sha256": "5d4cf4918457a2565109ea455272b87bf912246a0225e03bc549792f772fbd05"
+  },
+  {
+   "path": "build/data/basins.png",
+   "bytes": 11839,
+   "sha256": "d40185e818a8e73686270fb10ac44482ddd6b826216f2297ca02f1bd016c21ff"
   },
   {
    "path": "build/audio/music/loop.m4a",
@@ -257,6 +262,61 @@
    "sha256": "5883959198138f64c1df9c2ebdaab0615e2c04f8ba5390425e3bde1aefceb236"
   },
   {
+   "path": "build/museum/index.json",
+   "bytes": 290,
+   "sha256": "42ee3db57ab3c5cfd67f4e24f41bc2c9b7247d1b9fc02ac64b5d4e0699105c93"
+  },
+  {
+   "path": "build/museum/plate.json",
+   "bytes": 1054,
+   "sha256": "cedc2df8739ca0d794b7a55917d83d6c578f67b37e1d4e94545ceb21f300ba83"
+  },
+  {
+   "path": "build/museum/qin_palace1.json",
+   "bytes": 22814,
+   "sha256": "4bf9c6478dbcddbe1ac4b2a67f5c45eb7189230a2e3e70e5297852a306a3b0da"
+  },
+  {
+   "path": "build/museum/qin_palace1/model.json",
+   "bytes": 26121,
+   "sha256": "d9cd25cfeae941621e30663b88825cea29e9c2f8ddfb6ea0d5d6748a84ea3220"
+  },
+  {
+   "path": "build/museum/qin_palace1/front.jpg",
+   "bytes": 450596,
+   "sha256": "5f575dfe6218cf654e27e4dd99878419cac16cd86638d0752b9956615cb915fc"
+  },
+  {
+   "path": "build/museum/qin_palace1/aerial.jpg",
+   "bytes": 440361,
+   "sha256": "0cb3892d0b5b362aed6f934c03bd2a5c59f232ec6a05ddd2810d5961c14910c0"
+  },
+  {
+   "path": "build/museum/qin_palace1/northwest.jpg",
+   "bytes": 380103,
+   "sha256": "4e0ced7111253a33f205a63206de222d224698768d4dbf85baa6c3dc5777e62d"
+  },
+  {
+   "path": "build/museum/qin_palace1/street.jpg",
+   "bytes": 287386,
+   "sha256": "c08b893d9e5e3c17ab1e14a71b0745f0041bf2ac0c5655ce6b2a888962e61eee"
+  },
+  {
+   "path": "build/museum/qin_palace1/life_0.jpg",
+   "bytes": 221072,
+   "sha256": "a6ab02e1cb29b6efea7060a308f634c9fd1103f278304bb797c556a5252350c7"
+  },
+  {
+   "path": "build/museum/qin_palace1/life_1.jpg",
+   "bytes": 225588,
+   "sha256": "60cca151d4b10ced2a39516747df27d832aba8b5ad5dd54c56371725a8ed404e"
+  },
+  {
+   "path": "build/museum/qin_palace1/photo.jpg",
+   "bytes": 71052,
+   "sha256": "82476fe946ea8a77188f18f4e217b9270e1f55f70af85d1905c0f619dfa59551"
+  },
+  {
    "path": "poster.jpg",
    "bytes": 162320,
    "sha256": "51b67017659d057be2a1cec50e9cccb5d8db26450b290b269cfd784374f9d566"
@@ -267,5 +327,5 @@
    "sha256": "5ec6504d47393f4be70f6f4b40d78787c9ddbb465c80b1cf31fe74f25d6114eb"
   }
  ],
- "bytes": 120627532
+ "bytes": 125720752
 }

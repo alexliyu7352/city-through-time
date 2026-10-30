@@ -63,7 +63,7 @@ const T = {
     museumSourcedNote: 'rests on excavation or texts', museumEstimatedNote: 'estimated from a reconstruction', museumFly: 'Show the reconstruction',
     museumHint: 'Drag to turn, scroll or pinch to zoom. Click a part to see what the sources say.', museumLoading: 'Loading the 3D model',
     museumParts: 'The parts of the model', museumLife: 'Life in that time', museumSources: 'Sources', museumCite: 'Sources: {list}',
-    museumWalk: 'Walk the old city', museumFilm: 'The film of {city}', museumStage: '3D model of {name}', museumFail: 'The model could not load: {what}',
+    museumWalk: 'Walk the old city', museumPages: 'Museum', museumFilm: 'The film of {city}', museumStage: '3D model of {name}', museumFail: 'The model could not load: {what}',
   },
   ja: {
     tagline: '街の時をたどる',
@@ -84,6 +84,7 @@ const T = {
     by: '制作：{who}',
     years: '年代', length: '長さ', narration: 'ナレーション', subtitles: '字幕', made: '制作',
     watchFilm: '映画を観る', videoSites: '動画サイト', watchOn: '{site}で観る', play: '3D 版をブラウザで再生', playNote: '模型そのものをその場で描きます。約 {mb} MB、パソコン向けです。',
+    museumWalk: '古都を歩く', museumPages: '展示室',
     download: '映画をダウンロード', source: '資料とクレジット',
     pending: '映画は公開準備中です。資料はすでに公開しています。',
     ai: 'AI で生成したもの：{list}。史実にはすべて FACTS.md に出典があります。',
@@ -158,7 +159,7 @@ const T = {
     museumSourcedNote: '有考古或文獻依據', museumEstimatedNote: '按復原推測', museumFly: '看復原圖',
     museumHint: '拖動轉動，滾輪或雙指縮放。點一個構件，看史料怎麼說。', museumLoading: '正在載入三維模型',
     museumParts: '模型的構件', museumLife: '那時的生活', museumSources: '資料來源', museumCite: '據：{list}',
-    museumWalk: '走進古城', museumFilm: '{city}的影片', museumStage: '{name}的三維模型', museumFail: '模型載入失敗：{what}',
+    museumWalk: '走進古城', museumPages: '展館', museumFilm: '{city}的影片', museumStage: '{name}的三維模型', museumFail: '模型載入失敗：{what}',
   },
   'zh-Hans': {
     tagline: 'A City Through Time',
@@ -209,7 +210,7 @@ const T = {
     museumSourcedNote: '有考古或文献依据', museumEstimatedNote: '按复原推测', museumFly: '看复原图',
     museumHint: '拖动转动，滚轮或双指缩放。点一个构件，看史料怎么说。', museumLoading: '正在载入三维模型',
     museumParts: '模型的构件', museumLife: '那时的生活', museumSources: '资料来源', museumCite: '据：{list}',
-    museumWalk: '走进古城', museumFilm: '{city}的影片', museumStage: '{name}的三维模型', museumFail: '模型载入失败：{what}',
+    museumWalk: '走进古城', museumPages: '展馆', museumFilm: '{city}的影片', museumStage: '{name}的三维模型', museumFail: '模型载入失败：{what}',
   },
   es: {
     tagline: 'Una ciudad a través del tiempo',
@@ -230,6 +231,7 @@ const T = {
     by: 'De {who}',
     years: 'Años', length: 'Duración', narration: 'Narración', subtitles: 'Subtítulos', made: 'Autoría',
     watchFilm: 'Ver la película', videoSites: 'Sitios de vídeo', watchOn: 'Ver en {site}', play: 'Reproducir en 3D en el navegador', playNote: 'La maqueta misma, dibujada en vivo: unos {mb} MB; mejor en un ordenador.',
+    museumWalk: 'Recorrer la ciudad antigua', museumPages: 'Museo',
     download: 'Descargar la película', source: 'Fuentes y créditos',
     pending: 'La película se está publicando. Sus fuentes ya son públicas.',
     ai: 'Hecho con IA: {list}. Cada dato histórico tiene su fuente en FACTS.md.',

@@ -43,6 +43,9 @@ const icon = (id, cls = 'ico') => { const s = document.createElementNS('http://w
 const sourceURL = e => /^https?:/.test(e.source || '') ? e.source : `${REPO}/tree/main/cities/${e.slug}`;
 const ENTRY = new Map();   // the full entries read so far
 const entry = slug => ENTRY.get(slug) || ENTRY.set(slug, fetch(at(`cities/${slug}/entry.json`)).then(r => { if (!r.ok) throw new Error(slug); return r.json(); })).get(slug);
+// a city's museum pages: the index in its web bundle (none: an empty list)
+const MUSEUMS = new Map();
+const museums = c => MUSEUMS.get(c.slug) || MUSEUMS.set(c.slug, fetch(at(c.bundle.url + 'build/museum/index.json')).then(r => r.ok ? r.json() : []).catch(() => [])).get(c.slug);
 const PAGE = 24;           // the collection shows this many at a time
 const player = $('player');
 // the film on one of its sites; when it is on several, the others are a click away in the player (a site can be out of reach in some countries)
@@ -209,6 +212,17 @@ async function show(slug, from, push = true) {
   if (c.bundle && c.bundle.url) {
     acts.push(el('a', { className: 'btn ' + (acts.length ? 'btn-line' : 'btn-main'), href: at('play.html') + `?city=${encodeURIComponent(c.slug)}&play=1&lang=${lang}&bundle=${encodeURIComponent(c.bundle.url)}`, target: '_blank', rel: 'noopener' }, el('span', { textContent: W.t('play') })));
     if (c.bundle.mb) acts.push(el('p', { className: 'small', textContent: W.fmt('playNote', { mb: Math.round(c.bundle.mb) }) }));
+    // the old city to walk round, period by period (play.html?view&free: engine/view.js; it loads only the period it shows), and
+    // the museum pages its bundle holds (build/museum/index.json: tools/museum.py), added when the index has been read
+    const keep = `&lang=${lang}&bundle=${encodeURIComponent(c.bundle.url)}`;
+    const walk = el('a', { className: 'btn btn-line', href: at('play.html') + `?city=${encodeURIComponent(c.slug)}&view&free${keep}`, target: '_blank', rel: 'noopener' }, el('span', { textContent: W.t('museumWalk') }));
+    acts.push(walk);
+    museums(c).then(list => {
+      if (open !== slug || !list.length) return;
+      const key = lang === 'zh-Hans' ? 'zh' : lang;   // (a museum page's own words: zh, zh-Hant, en)
+      walk.after(el('p', { className: 'sites museums' }, el('span', { textContent: W.t('museumPages') }), ...list.map(m => el('a', {
+        href: at('museum.html') + `?city=${encodeURIComponent(c.slug)}&id=${encodeURIComponent(m.id)}${keep}`, target: '_blank', rel: 'noopener', textContent: m.name[key] || m.name.en }))));
+    });
   }
   const links = (inPage ? sites : sites.slice(1)).map(v => el('a', { href: v.url, target: '_blank', rel: 'noopener', textContent: W.fmt('watchOn', { site: v.site }) }));
   if (links.length) acts.push(el('p', { className: 'sites' }, ...links));

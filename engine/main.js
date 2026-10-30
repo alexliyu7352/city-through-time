@@ -657,6 +657,7 @@ if (PLAY) {
   bar.innerHTML = `<button id="pp" style="width:56px;height:30px;background:#1e222a;color:#fff;border:1px solid #444;border-radius:4px;cursor:pointer">▶</button>
     <span id="tm" style="min-width:150px"></span><input id="sc" type="range" min="0" max="${DUR}" step="0.02" value="0" style="flex:1">
     <span id="yr" style="min-width:90px;text-align:right"></span><span id="fps" style="min-width:60px;text-align:right;opacity:.6"></span>
+    <a id="walk" target="_blank" rel="noopener" style="color:#c9d2de;white-space:nowrap;text-underline-offset:4px"></a>
     <a href="${REPO}" target="_blank" rel="noopener" style="color:#c9d2de;text-decoration:none;white-space:nowrap">一城春秋 · A City Through Time</a>`;   // (LICENSE, condition 2c)
   document.body.appendChild(bar);
   // fit the 1920x1080 picture above the bar, whatever the window size
@@ -671,6 +672,14 @@ if (PLAY) {
   document.body.appendChild(marks); under(); window.addEventListener('resize', under);
   let cur = QS.has('t') ? +QS.get('t') : 0, playing = false, t0 = 0, c0 = 0, frames = 0, ft = performance.now();
   const show = () => { sc.value = cur; tm.textContent = `${cur.toFixed(2)} s / ${DUR}`; yr.textContent = fmtYear(yearAt(cur)); };
+  // the old city to walk round (engine/view.js), at the latest period the film has come to; the site's language and bundle kept
+  const { words, pick } = await import('../site/i18n.js'), lang = QS.get('lang') || pick(navigator.languages), walk = bar.querySelector('#walk');
+  walk.textContent = words(lang).t('museumWalk');
+  const walkTo = () => {
+    const e = (FILM.eras || []).filter(q => q.on <= cur).sort((p, q) => p.on - q.on).pop();
+    walk.href = `?city=${encodeURIComponent(CITY)}&view&free${e ? '&era=' + e.id : ''}&lang=${lang}${QS.get('bundle') ? '&bundle=' + encodeURIComponent(QS.get('bundle')) : ''}`;
+  };
+  walkTo(); walk.onpointerdown = walk.onfocus = walkTo;
   // the narration and the score (compile: film.voice, every voiced line laid at its time; film.score, the music laid by node and
   // dipped under the voice): each loaded whole (the preview server answers no range requests: seeking in a file still loading cut
   // the start of lines and clicked), heard while playing, kept in step by speed within half a second (a seek while playing drops

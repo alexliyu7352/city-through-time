@@ -1,0 +1,19 @@
+[
+ {
+  "id": "qin_palace1",
+  "node": "qin",
+  "x": 0.82183,
+  "z": -0.7777,
+  "r": 0.010598,
+  "anchor": [
+   0.81507,
+   0.002788,
+   -0.77837
+  ],
+  "name": {
+   "zh": "咸阳宫一号宫殿",
+   "en": "Palace No. 1 of the Xianyang Palace",
+   "zh-Hant": "咸陽宮一號宮殿"
+  }
+ }
+]

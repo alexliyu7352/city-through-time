@@ -12,6 +12,7 @@ They show the film's own models, but they are not the film: no timeline, no film
 - A still with the ground ending in a hard edge → the image tool paints the edge as a cliff or a plateau; the stand fades out toward the
   horizon in every still (engine/museum.js), the prompt says the ground runs on.
 - The walk-round view loading the whole film (about 100 MB, today's city, footage, fonts) → it loads the plate and one hall's cities.
+- Museum pages built but the site shows none → the site reads them from the web bundle: tools/museum.py, then tools/web.py, then publish the bundle.
 
 ## Walking the old cities
 
@@ -22,6 +23,14 @@ mouse and touch, down to an eye a few metres over the streets; `&cam=tx,ty,tz,az
 is chosen: a phone can open it. A landmark that has a museum page carries the film's pin (engine/overlay.js: a dot on the building's top,
 a pole up to its name) while seen from above or near; the pin and the building open the page in the same tab, which leads back to the same
 hall and the same place (`&era`, `&from`): one tab is easier to follow on a phone than two.
+
+## Where visitors find them
+
+The site (site/app.js) offers both on a city's panel when the city has a web bundle: a link to the walk-round view, and a line of the
+museum pages listed in the bundle's `build/museum/index.json` (read when the panel opens; a bundle without one shows none). The film
+player's bar (`&play`) links to the walk-round view at the latest period the film has come to. Each opens in a new tab, as the player
+does, so the site or the film stays where it was. The site finds museum pages only in the bundle: run tools/museum.py before
+tools/web.py packs it (PUBLISH.md).
 
 ## A museum page
 

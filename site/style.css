@@ -273,6 +273,7 @@ kbd { font: 500 12px/1 var(--text); color: var(--ink-3); border: 1px solid var(-
 .sites { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 20px; margin: 2px 0 0; font-size: 14px; }
 .sites a { color: var(--ink-2); text-underline-offset: 4px; }
 .sites a:hover { color: var(--ink); }
+.museums span { color: var(--ink-3); }   /* (the line's label: the museum pages after it) */
 
 /* the search sheet (narrow screens) */
 .search-sheet { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: env(safe-area-inset-top) 0 0; border: 0; background: var(--night); color: var(--ink); }
