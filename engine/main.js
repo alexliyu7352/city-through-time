@@ -47,7 +47,7 @@ const DUR = FILM.dur; window.DUR = DUR;
 const yearAs = (y, tick) => { const Y = FILM.years; if (!Y) return null; const r = Math.round(y); return (r < 0 ? (tick ? Y.tick_bce || Y.bce : Y.bce) : (tick ? Y.tick_ce || Y.ce : Y.ce)).replace('{y}', Math.abs(r)); };
 if (FILM.bar) for (const tk of FILM.bar.ticks) tk.yearLabel = yearAs(tk.year, true) ?? (FILM.yearFmt === 'en' ? (tk.year < 0 ? `${-tk.year} BCE` : `${tk.year}`) : (tk.year < 0 ? `前${-tk.year}` : `${tk.year}`));
 
-const LOW = QS.get('quality') === 'low' || QS.has('play');
+const LOW = QS.get('quality') === 'low' || QS.has('play') || (QS.has('free') && matchMedia('(pointer: coarse)').matches);   // (the viewer's public mode on a phone: no period-city shadows)
 const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high' });
 const { U, camera, post, renderer, house, hemi, scene } = S;
 const TL = new THREE.TextureLoader();
@@ -154,7 +154,7 @@ U.uNightDeep.value = (FILM.night_look && FILM.night_look.deep) || 0;   // film.n
 // projected back onto it from the shot's own camera. The camera arrives and stops (the projection is exact only from there: it may
 // zoom, never move), today's city sinks, a ring of light spreads from the viewer and turns the white model into the living town,
 // the sky and the far land come with it; it holds (a slow zoom, weather), dissolves back to the model, and the camera goes on
-const LIVING = FILM.living || [], LIVETEX = {}, PCAM = new THREE.PerspectiveCamera();
+const LIVING = FILM.living || [], LIVETEX = {};
 for (const v of LIVING) { try { const t_ = await tex(base + v.file); t_.colorSpace = THREE.SRGBColorSpace; t_.anisotropy = 8; LIVETEX[v.id] = t_; } catch { /* no picture yet: compile said so */ } }
 let LV = null;   // this frame's moment: { L, cam: the shot's share of the camera, k: the scene's (today sunk, lines out), pa: the picture, r: the ring, sky, zoom }
 function liveAt(t) {
@@ -172,13 +172,9 @@ function setLiving(t) {
   const Wp = post.weather, L = LV && LV.L, tx_ = L && LIVETEX[L.id];
   U.uLiveSink.value = LV ? LV.k : 0; U.uEdgeGain.value = (LOOK.edge ?? 1) * (1 - (LV ? LV.k : 0));
   if (!tx_) { U.uPA.value = 0; S.liveSky.visible = false; Wp.enabled = false; return; }   // (no moment now, or its picture is not made yet: the white model holds the shot)
-  const [px, py, pz, paz, pel, pd, pfov] = L.cam, a = THREE.MathUtils.degToRad(paz), e = THREE.MathUtils.degToRad(pel);   // the projector: the shot's camera, no drift, no zoom
-  PCAM.fov = pfov; PCAM.aspect = W / H; PCAM.near = Math.min(.02, Math.max(.0003, pd * .04)); PCAM.far = camera.far;
-  PCAM.position.set(px + pd * Math.sin(a) * Math.cos(e), py + pd * Math.sin(e), pz + pd * Math.cos(a) * Math.cos(e)); PCAM.lookAt(px, py, pz);
-  PCAM.updateProjectionMatrix(); PCAM.updateMatrixWorld(); U.uPM.value.multiplyMatrices(PCAM.projectionMatrix, PCAM.matrixWorldInverse); U.uPI.value = tx_;
+  S.aimProjector(L.cam, W / H); U.uPI.value = tx_;   // the projector: the shot's camera, no drift, no zoom (and the sky card behind the town)
+  const pd = L.cam[5];
   U.uPA.value = LV.pa; U.uPRC.value.set(L.origin[0], L.origin[1]); U.uPRR.value = LV.r; U.uPF.value = LV.sky; U.uPF0.value = 5 * pd; U.uPF1.value = 8 * pd;
-  const dist = .3, hh = 2 * dist * Math.tan(THREE.MathUtils.degToRad(pfov / 2)), fwd = new THREE.Vector3(); PCAM.getWorldDirection(fwd);   // the sky card behind the town
-  S.liveSky.position.copy(PCAM.position).addScaledVector(fwd, dist); S.liveSky.quaternion.copy(PCAM.quaternion); S.liveSky.scale.set(hh * PCAM.aspect * 1.6, hh * 1.6, 1);
   S.liveSky.material.uniforms.uA.value = LV.sky * LV.pa; S.liveSky.visible = LV.sky * LV.pa > 0;
   const wk = LV.sky * LV.pa; Wp.enabled = wk > 0 && (L.rain > 0 || L.mist > 0);
   Wp.uniforms.uRain.value = L.rain * wk; Wp.uniforms.uMist.value = L.mist * wk; Wp.uniforms.uMistY.value = L.mistY; Wp.uniforms.uT.value = t;
@@ -620,7 +616,7 @@ window.render(QS.has('t') ? +QS.get('t') : 0);
 // the period cities' viewer (?view, engine/view.js): this scene and light without the timeline, the camera the viewer's
 if (QS.has('view')) {
   document.getElementById('ov').style.display = 'none';
-  (await import('./view.js')).startView({ S, FILM, QS, W, H, scale: M.scale, setLight, setLayers, eraShape, lens, cityMesh: CITYMESH, eraBox: ERABOX, takeChannel,
+  (await import('./view.js')).startView({ S, FILM, QS, W, H, B, scale: M.scale, setLight, setLayers, eraShape, lens, cityMesh: CITYMESH, eraBox: ERABOX, takeChannel,
     setDist: (d, el) => { camDist = d; camElev = el; },
     quiet: () => {   // what setLayers lays at a moment of the film that is not the period cities: off
       for (let i = 0; i < EMAX; i++) U.uEpA.value[i] = 0;

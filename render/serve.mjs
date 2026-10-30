@@ -12,7 +12,7 @@ const T = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charse
   '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.otf': 'font/otf',
   '.wav': 'audio/wav', '.m4a': 'audio/mp4', '.mp3': 'audio/mpeg', '.mp4': 'video/mp4', '.webm': 'video/webm' };
 
-export const pageURL = (port, q = '') => `http://127.0.0.1:${port}/play.html${q ? '?' + q : ''}`;
+export const pageURL = (port, q = '', html = 'play.html') => `http://127.0.0.1:${port}/${html}${q ? '?' + q : ''}`;   // (html: another page of the project, museum.html)
 
 // URL path -> file on disk; { status } when it leaves the root, does not decode, or holds a NUL
 export function resolveRequest(url, root = ROOT) {

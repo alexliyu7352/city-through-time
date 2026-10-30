@@ -68,6 +68,9 @@ class DofScenePass extends Pass {
       this.aoAmt = o.aoAmt ?? .85;
     }
   }
+  // a page that fills its window (studio resize; the film's picture is always 1920 x 1080). Not setSize: the composer calls that
+  // with its pixel ratio on top of the supersampling when the pass is added, and the film's pass keeps the size it was made at
+  resize(w, h) { this.rt.setSize(w, h); this.rtC.setSize(w, h); this.gat.material.uniforms.res.value.set(w, h); if (this.ao) this.ao.setSize(w, h); }
   render(renderer, writeBuffer) {
     renderer.setRenderTarget(this.rt); renderer.clear(); renderer.render(this.scene, this.camera);
     if (this.ao && this.aoAmt > 0) this.ao.render(renderer, null, null);
