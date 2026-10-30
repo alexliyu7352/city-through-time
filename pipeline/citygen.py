@@ -1444,7 +1444,8 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
     trace: GeoJSON drawn over an old map or a site plan (traced; the callers join it: compile, terrain.py);
     walls: [{ring|osm, h_m, t_m, gates: [[lon,lat],...], towers, style: tower|hip|none, moat}];
-    streets: [{pts, w_m, shops, path}] (path: a footpath between huts or fields, thin and without ruts); lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
+    streets: [{pts, w_m, shops, path, surface}] (path: a footpath between huts or fields, thin and without ruts; surface: asphalt,
+    a modern road, smooth and darker, no ruts); lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
     (typ: a built-in house or one of `types`, complete: house_types);
     landmarks: [{kind, lon, lat, ...}] (the generator's own kinds, or the classes of pipeline/landmarks.py); trees: [{pts, step_m, h_m, r_m, both, offset_m}].
     A landmark a loss clears the ground for (`lose: [{for: [<id>]}]`) is built later over the houses: the fabric is laid over its site,
@@ -1621,7 +1622,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         for a, b in zip(pts[:-1], pts[1:]):
             B.group(('streets', si))
             if st.get('path'): B.strip(a, b, st.get('w_m', 2), .03, part=PAVE, piece=3.0, road=False, drape=True)   # a footpath: trodden earth, a film on the ground in short pieces, no ruts
-            else: B.strip(a, b, st.get('w_m', 14), .14, part=PAVE)
+            else: B.strip(a, b, st.get('w_m', 14), .14, part=PAVE, road=2.0 if st.get('surface') == 'asphalt' else None)   # (asphalt: smooth and dark, no ruts)
             if st.get('lanes3'):   # a Han avenue in three lanes (the middle one the emperor's): a lighter middle lane, side ditches (han_changan.md §3)
                 B.strip(a, b, st.get('w_m', 14) / 3, .2, part=EARTH)
                 L_ = math.hypot(b[0] - a[0], b[1] - a[1]) or 1; nx_, ny_ = -(b[1] - a[1]) / L_, (b[0] - a[0]) / L_

@@ -156,12 +156,13 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   float vnoise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f);
     return mix(mix(h21(i), h21(i + vec2(1., 0.)), f.x), mix(h21(i + vec2(0., 1.)), h21(i + vec2(1., 1.)), f.x), f.y); }
   // paving of a period city seen from above: rammed earth, soft patches and fine grain; a road piece (vData.x > 5: 10 + its
-  // direction, citygen strip) also carries cart ruts along it, a pair of tracks 1.4 m apart in every 4.2 m lane, worn more in
+  // direction, citygen strip) also carries cart ruts along it (an asphalt one, 30 + its direction: smooth and darker, no ruts), a pair of tracks 1.4 m apart in every 4.2 m lane, worn more in
   // places. Every detail fades out where one pixel covers more ground than it shows (no shimmer from afar)
   float paveTex(){
     if (normalize(vWN).y < .7) return 1.;
     vec2 P = vWP.xz / uScaleM; float px = length(fwidth(P));   // metres; metres per pixel
     float g = (vnoise(P * .08) - .5) * .5 + (vnoise(P * .6) - .5) * .35 * (1. - smoothstep(.3, 1.2, px)) + (vnoise(P * 2.7) - .5) * .25 * (1. - smoothstep(.08, .35, px));
+    if (vData.x > 20.) return .58 + .04 * g;   // asphalt (a street with surface: asphalt): darker, smooth, no ruts
     float k = 1. + .16 * g;
     if (vData.x > 5.) {
       float a = vData.x - 10.; vec2 d = vec2(cos(a), sin(a)), n = vec2(-d.y, d.x);

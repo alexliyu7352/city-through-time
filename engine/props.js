@@ -343,7 +343,7 @@ export function buildEra(prims, year = 0, lost = null) {
   const G = new Geo();
   for (const [i, p] of prims.entries()) {
     const [t, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx = 0, gz = 0, bx = cx, bz = cz] = p;
-    const data = [t === 0 && d === 1 ? 10 + rot : year, part, rank, 3 + (lost ? lost[i] : 0)];   // a road piece carries its direction (the engine draws ruts along it)
+    const data = [t === 0 && d === 1 ? 10 + rot : t === 0 && d === 2 ? 30 + rot : year, part, rank, 3 + (lost ? lost[i] : 0)];   // a road piece carries its direction (the engine draws ruts along it); an asphalt one 30 + it (smooth, no ruts)
     G.gx = gx; G.gz = gz;   // a piece laid along a slope (citygen: walls, corridors, paving)
     G.cc = [bx, bz];        // the building it belongs to: rises and falls as one
     if (t === 0) G.box(cx, y0, cz, a, c, b, rot, data, g);
