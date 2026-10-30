@@ -191,7 +191,10 @@ is refused), a plan with a scale bar to one known point (`{image, origin, m_per_
 polygons) off it as pixels in a YAML (`id`, `kind`, `pixels`, the entry's keys, and `provenance: {basis, ...}`), then `uv run python -I pipeline/register.py trace cities/<slug> <file.yaml>
 --overlay <png>` writes the GeoJSON in `research/` and draws it back over the picture: look at the overlay before building. `kind` is wall, street, block or landmark, and the other
 properties are the settings of that item (`lot`, `typ`, `w_m`, `shops`, the landmark's `type`…); `provenance` rides along and the model ignores it. In Python, `register.outline_landmark`
-makes a traced outline a prism of the classes and `register.fit_circle` measures a rim (QGIS's georeferencer is fine where it can be used). Houses in a block line up along the block's
+makes a traced outline a prism of the classes and `register.fit_circle` measures a rim (QGIS's georeferencer is fine where it can be used). **The houses of a quarter between its traced
+streets** are laid by `uv run python -I tools/parcels.py cities/<slug> <parcels.yaml>`, never by a packer of your own: from the built-up ground less landmark sites, gardens, water,
+walls and shop rows, it cuts blocks along the streets, splits a large block by a bent lane, fills each with whole courtyard houses turned to their street and rows of
+shop-houses along the fronts, and writes them as a trace with a report (lot sizes, bearings, the share built, the ground left); the types, sizes and storeys are the city's research. Houses in a block line up along the block's
 own long side, not the city-wide grid (`traced` in `pipeline/citygen.py`).
 What is traced is built together with what is written in `city:`, and the two can be mixed; the first time, show the user a small piece first. A layout worked out beside the
 model (lots, streets, gardens or a loss's region laid round landmarks) takes each landmark's ground from `citygen.landmark_site`, the ground citygen itself keeps clear, never a box of
