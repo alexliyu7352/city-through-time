@@ -455,6 +455,12 @@ def stage_parts(prims, meta, cs, node_id):
         gids = [g for g, v in G.items() if g not in taken and (not st.get('select') or match(st['select'], v['tag']))]
         if not gids: continue
         taken.update(gids); order.append((st, st is stages[0], gids))
+    left = sorted({G[g]['tag'] for g in G if g not in taken}, key=str)
+    if left:   # every stage selects, and these parts are in none: they would never rise
+        lm_ = cs.get('landmarks') or []
+        nm = lambda t: (lm_[t[1]].get('id') or f"{lm_[t[1]].get('kind')} #{t[1]}") if t[0] == 'landmarks' and t[1] < len(lm_) else f'{t[0]} #{t[1]}'
+        raise SystemExit(f"compile: era {node_id}: no stage takes {', '.join(nm(t) for t in left[:8])}{' ..' if len(left) > 8 else ''} "
+                         f"({len(left)} parts): name them in a stage's select, or give one stage no select (it takes the rest)")
     return G, order
 
 LOOK_NEVER = {'ditch', 'pool', 'pool_ring', 'kilns', 'boats', 'corridor', 'chimney', 'village', 'paifang'}   # not a building to look at
