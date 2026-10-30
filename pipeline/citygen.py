@@ -1471,11 +1471,19 @@ def extent(spec, F, osm_rings=None):
     return unary_union(parts) if parts else Polygon()
 
 def region_utm(F, rg, osm_rings=None):
-    """a region of the spec as a polygon in UTM: a ring [[lon, lat], ..]; a ring with holes [[ring], [hole], ..] (a garden round a
-    pavilion's court); several of either [[[ring], [hole], ..], ..]; or osm:<name>"""
+    """a region of the spec as a polygon in UTM: a ring [[lon, lat], ..]; a list of rings [ring, ring, ..], where a ring inside
+    the first is a hole in it (a garden round a pavilion's court) and a ring apart from it another area (several gardens: the
+    same list a loss's region is); several of either [[ring, hole, ..], ..]; or osm:<name>"""
     if isinstance(rg, str) and rg.startswith('osm:'): return Polygon(to_utm_ring(F, osm_rings(rg[4:])[0]))
     if isinstance(rg[0][0], (int, float)): return Polygon(to_utm_ring(F, rg))
-    if isinstance(rg[0][0][0], (int, float)): return Polygon(to_utm_ring(F, rg[0]), [to_utm_ring(F, h) for h in rg[1:]])
+    if isinstance(rg[0][0][0], (int, float)):
+        shell = Polygon(to_utm_ring(F, rg[0])); holes, apart = [], []
+        for r in rg[1:]:
+            P_ = Polygon(to_utm_ring(F, r))
+            if shell.contains(P_): holes.append(to_utm_ring(F, r))
+            elif not shell.intersects(P_): apart.append(P_)
+            else: raise SystemExit(f'citygen: a region\'s ring crosses its first ring: a hole lies inside the first, another area apart from it ({r[0]} ..)')
+        return unary_union([Polygon(to_utm_ring(F, rg[0]), holes)] + apart) if apart else Polygon(to_utm_ring(F, rg[0]), holes)
     return unary_union([region_utm(F, p, osm_rings) for p in rg])
 
 

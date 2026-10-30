@@ -268,12 +268,12 @@ def era_boundary(prims, cs):
     g = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in feet], R, join_style='mitre')).buffer(-R * .7, join_style='mitre')
     if cs.get('outline'):   # an outline the buildings do not give (a village's ditch): joined into the city's outline
         g = g.union(_sh.union_all([_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in r]) for r in cs['outline']]))
-    gardens = [t['region'] for t in cs.get('trees', []) if 'region' in t]   # (a garden is the city's ground, a row along a road is not)
-    if gardens:
-        g = g.union(_sh.union_all([_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in (osm_rings(r[4:])[0] if isinstance(r, str) and r.startswith('osm:') else r)]) for r in gardens]))
-    if cs.get('grounds'):   # (open ground drawn as what it is: the city's ground too)
+    # gardens (trees over a region) and open ground: the city's ground too (a row of trees along a road is not); a region read
+    # as citygen reads it (a ring, holes, several areas, osm:)
+    regs = [t['region'] for t in cs.get('trees', []) if 'region' in t] + [d['region'] for d in cs.get('grounds', [])]
+    if regs:
         import numpy as _np
-        g = g.union(_sh.union_all([_sh.transform(citygen.region_utm(F, d['region'], osm_rings), lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2)) for d in cs['grounds']]))
+        g = g.union(_sh.union_all([model_shape(citygen.region_utm(F, r, osm_rings)) for r in regs]))
     polys = [q for q in getattr(g, 'geoms', [g]) if q.area >= (cs.get('boundary_min_m', 140) * S) ** 2]
     return [[[round(x, 5), round(z, 5)] for x, z in q.simplify(8 * S).exterior.coords] for q in polys]
 
@@ -751,6 +751,14 @@ def expand_areas(node):
 PRIMS, IMPACT, FOLLOW, FOLLOW_KEYS = {}, {}, [], []
 LOST = {}   # era id -> per primitive: 0 (stays) or the number of the loss that takes it (lost_parts)
 BASINS = {}   # era id -> its dug pools (citygen: rim, water top, building group)
+def model_shape(g):
+    """a shape in UTM metres (a region, a ground) in model units, made valid again: the scaling moves points that lay a hair
+    apart (two grounds cut along one edge) onto each other, and an edge then crosses itself; its polygons only"""
+    import numpy as _np, shapely as _sh
+    m = _sh.make_valid(_sh.transform(g, lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2)))
+    return m if m.geom_type in ('Polygon', 'MultiPolygon') else _sh.union_all([q for q in getattr(m, 'geoms', []) if q.geom_type in ('Polygon', 'MultiPolygon')])
+
+
 def basin_utm(b):
     """a pool's rim or a ground's region (citygen grounds: rings with holes, several) as one shape, UTM metres"""
     import shapely as _sh
@@ -1801,12 +1809,19 @@ GND_BAND, GND_PX, GND_MIN_M, GND_ATLAS = 4, 1024, 2.0, 4096   # (a crop's long s
 GROUND_MAP = None
 if gnd_:
     import numpy as _np, shapely as _sh, itertools as _it
-    Mg_ = lambda g: _sh.transform(g, lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2))
+    Mg_ = lambda g: model_shape(g)
     geo_ = {eid_: [(k_, b_, Mg_(basin_utm(b_))) for k_, b_ in lst_] for eid_, lst_ in gnd_.items()}
     for eid_, lst_ in geo_.items():
         for (_, ba_, ga_), (_, bb_, gb_) in _it.combinations(lst_, 2):
             if ga_.intersection(gb_).area > max((5 * F.scale) ** 2, .01 * min(ga_.area, gb_.area)):
                 raise SystemExit(f"compile: era {eid_}: grounds {ba_['name']} and {bb_['name']} overlap: a place has one surface (citygen cuts a later one out of an earlier one: a fault there)")
+    for eid_, lst_ in geo_.items():   # a ground is open space: one under a built-up quarter hides its houses (docs/MODEL.md)
+        fab_ = [p for p in PRIMS[eid_] if p[0] == citygen.BOX and p[11] == citygen.FAB and p[4] <= p[12] + 1e-9]
+        if not fab_: continue
+        X_, Z_, A_ = _np.array([p[1] for p in fab_]), _np.array([p[2] for p in fab_]), _np.array([p[5] * p[6] for p in fab_])
+        for _, b_, g_ in lst_:
+            share_ = float(A_[_sh.contains_xy(g_, X_, Z_)].sum()) / max(g_.area, 1e-12)
+            if share_ > .25: print(f"  WARN era {eid_}: ground {b_['name']}: houses cover {share_:.0%} of it: a ground is open space, the ground between the houses of a quarter stays the plate (docs/MODEL.md)")
     px_ = GND_PX
     while True:
         crops_ = []

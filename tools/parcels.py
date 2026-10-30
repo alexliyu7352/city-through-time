@@ -176,6 +176,9 @@ def main():
     if not roads: sys.exit('parcels: no streets: a quarter is laid along its streets (streets: a trace file, or inline)')
     B = {'max_m2': 10000, 'min_width_m': 43, 'lane_m': 4.2, 'bend_m': 10, **(S.get('blocks') or {})}
     blocks, lanes = blocks_of(domain, roads, B['max_m2'], B['min_width_m'], B['lane_m'], B['bend_m'])
+    if reserve:   # (a lane's width keeps off what is reserved, not only its line: a lane ending at a kept lot cut into it)
+        off = unary_union(reserve).buffer(B['lane_m'] / 2 + .5)
+        lanes = [q for seg in lanes for q in pieces(seg.difference(off), 'LineString') if q.length >= 8]
     court = {'min_m': 13, 'max_m': 34, 'min_m2': 240, **S['court']} if S.get('court') else None
     front = {'unit_m': 11, 'min_unit_m': 6, 'depth_m': [8, 20], 'min_m2': 55, **S['front']} if S.get('front') else None
     feats, report = [], {'id': pid, 'domain_m2': round(domain.area), 'blocks': [], 'lanes': len(lanes)}
