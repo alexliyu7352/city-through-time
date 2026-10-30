@@ -118,6 +118,7 @@ def _lab(h):
 for a_, b_ in zip(FM['nodes'], FM['nodes'][1:]):
     if not (a_.get('col') and b_.get('col')): continue
     d_ = math.dist(_lab(a_['col']), _lab(b_['col']))
+    if d_ == 0 and (b_.get('readout') if isinstance(b_.get('readout'), dict) else {}).get('continues'): continue   # (the chapter before goes on in its colour: one chapter, one colour)
     if 0 < d_ < 25 or (d_ < 25 and 'city' in a_ and 'city' in b_):
         WARN.append(f'{a_["id"]} {a_["col"]} and {b_["id"]} {b_["col"]} are {d_:.0f} apart (Lab ΔE, 25 or more reads): the colour ring '
                     f'into {b_["id"]} will not show; move them apart, or give them one colour if they are one chapter')
