@@ -510,7 +510,7 @@ class Builder:
         steps, each a slab from the face outward, so it reads as a stair from any side. P is the frame of what it climbs, (fx, fy)
         the middle of the face's top edge in that frame, out the side the stair leads off to (-1: local y down). (A frustum
         with its top centred over its base stood as a free blade in front of the face, not as a ramp up to it)"""
-        n = max(3, min(10, round(h / 1.6)))
+        n = max(3, min(24, round(h * self.hex / 1.6)))   # (steps of about 1.6 m as shown: counted on the height after exaggeration, or three tall blocks)
         for i in range(n):
             dep = run * (n - i) / n; sx, sy = P(fx, fy + out * dep / 2)
             self._emit(BOX, sx, sy, th, z0 + h * i / n, w, dep, h / n, part=part, g_m=g)
@@ -824,12 +824,17 @@ class Builder:
             sw = max(6, w * .1)
             self.stair(P, 0, -d * top / 2, th, sw, h * .98, d * (1 - top) / 2 + h * 1.05, g)
         tw, td = w * top, d * top
-        if gallery and self.det >= 1:   # a corridor ring on the top edge
-            for (lx0, ly0, lx1, ly1) in sides:
-                a = P(lx0 * tw * .47, ly0 * td * .47); b = P(lx1 * tw * .47, ly1 * td * .47)
-                L = math.hypot(b[0] - a[0], b[1] - a[1]); ang = math.atan2(b[1] - a[1], b[0] - a[0]); m = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
-                self._emit(BOX, m[0], m[1], ang, h, L, 3.4, 3.0, part=LMK, g_m=g)
-                self.roof(m[0], m[1], ang, h + 3.0, L, 3.4, 1.8, 'gable', part=LROOF, g=g, o=.6, ornaments=False)
+        if gallery and self.det >= 1:   # a corridor ring on the top edge, open on the south where the stair arrives
+            gate = (max(6, w * .1) + 4.0) / 2 if stairs else 0.0
+            for si, (lx0, ly0, lx1, ly1) in enumerate(sides):
+                runs = [(lx0 * tw * .47, -gate), (gate, lx1 * tw * .47)] if si == 0 and gate else [(lx0 * tw * .47, lx1 * tw * .47)]
+                for u0, u1 in runs:
+                    a = P(u0, ly0 * td * .47) if si == 0 and gate else P(lx0 * tw * .47, ly0 * td * .47)
+                    b = P(u1, ly1 * td * .47) if si == 0 and gate else P(lx1 * tw * .47, ly1 * td * .47)
+                    L = math.hypot(b[0] - a[0], b[1] - a[1]); ang = math.atan2(b[1] - a[1], b[0] - a[0]); m = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
+                    if L < 2: continue
+                    self._emit(BOX, m[0], m[1], ang, h, L, 3.4, 3.0, part=LMK, g_m=g)
+                    self.roof(m[0], m[1], ang, h + 3.0, L, 3.4, 1.8, 'gable', part=LROOF, g=g, o=.6, ornaments=False)
         for hx, hy, hw, hd, hh, roof in halls:   # hall offsets in the terrace's local frame, fractions of the top size
             px, py = P(hx * tw, hy * td)
             self.hall(px, py, th, hw * tw, hd * td, hh, roof=roof, z0=h, part=LMK, g=g, podium=1.2)
