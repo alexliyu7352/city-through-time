@@ -38,6 +38,7 @@ _SeenLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _see
 WARN = []   # warnings on the settings, said once at the end (compile runs again for each pass of the stage plan)
 
 D = os.path.abspath(sys.argv[1])
+import slots; slots.take('compile ' + D)   # (at most two heavy jobs at once on this machine, across agents: pipeline/slots.py)
 C = yaml.load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'), Loader=_SeenLoader)
 import layout as LAYOUT
 ST = json.load(open(LAYOUT.data(D, 'stats.json'), encoding='utf-8'))

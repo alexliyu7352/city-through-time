@@ -194,6 +194,7 @@ def main():
         if len(sh) != 1: raise SystemExit('modelview: --sheet takes one --at, where the row of blocks starts (a flat open place)')
         spec, sh = sheet_city(C, args.era, spec, sh[0]['ll'], Fr, city, C['scale'], args.d, az_given, args.el)
     S = study_folder(city, slug)
+    import slots; slots.take(f'study {S}')   # one machine slot for the study, its compile and its stills (pipeline/slots.py)
     yaml.safe_dump(study_film(C, args.era, spec, sh, args.fov, args.year, sheet=args.sheet), open(os.path.join(S, 'city.yaml'), 'w', encoding='utf-8'), allow_unicode=True, sort_keys=False)
     env = {**{k: v for k, v in os.environ.items() if k not in ('CT_SCRIPT', 'CT_PLAN', 'CT_PASS')},   # (a draft script or a plan of the real film is not the study's)
            'CT_STUDY': '1', 'CT_DEADAIR': 'warn', 'CT_MODELCHECK': 'warn'}   # (compile: the city rises without the camera; a film without words; a study is looked at even when its model checks fail)

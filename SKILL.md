@@ -57,8 +57,10 @@ Subagents and parallel work
 - **The brief is all the subagent knows.** Write: the goal and its done line (the workflow table); the files it owns (for a period city: `research/<period>_*` and its study spec, built with
   `tools/modelview.py --spec` under its own name) and the files it must not touch; what to read in full first (this file, the step's doc, `FACTS.md`, the approved types); what to deliver
   first (MODEL.md: one quarter before the whole city); and how to report (paths of stills, the checks' lines, open questions, short). It does not ask the user anything; it asks the main agent.
-- **Run in parallel what shares no files:** period cities two or three at a time. Heavy jobs stay one at a time across all agents (rendering, mixing, music generation, whole-film checks);
-  studies and stills run at most two at once. The main agent merges one piece at a time into `city.yaml`, after review.
+- **Run in parallel what shares no files:** every period city at once, each its own subagent, when the environment can run that many (and every research question). The machine
+  is shared: heavy jobs stay one at a time across all agents (rendering, mixing, music generation, whole-film checks), and a city's compile, a model study and every page a tool opens
+  take one of two machine slots (`pipeline/slots.py`) and wait for a free one, so many subagents at work queue there instead of freezing the machine. The main agent merges one
+  piece at a time into `city.yaml`, after review.
 - **Reasoning effort by the kind of work**, set when starting the subagent (the model and effort options of the spawn call), measured from the main agent's own level: that level for
   research, the story and the script, and for reviewing and judging pictures; one level below for laying out a city from approved sources and types and for running checks and fixing
   what they find; the lowest for mechanical edits (moving files, renaming, formatting). Never above the main agent's level: the levels above it mostly add time, and time is what the

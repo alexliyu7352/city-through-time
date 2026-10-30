@@ -4,9 +4,11 @@
 // The browser: this machine's `chrome` (local/config.json) when set, else Playwright's own headless shell. The GPU is used
 // when there is one; macOS asks for Metal (newer headless shells fall back to software GL with --use-angle=gl, ~6x slower).
 import fs from 'fs';
+import path from 'path';
+import { spawn } from 'child_process';
 import { chromium } from 'playwright-core';
 import { serve, pageURL } from './serve.mjs';
-import { localPath } from './local.mjs';
+import { localPath, ROOT } from './local.mjs';
 
 const ARGS = [...(process.platform === 'darwin' ? ['--use-angle=metal'] : []), '--enable-gpu', '--ignore-gpu-blocklist', '--font-render-hinting=none', '--force-color-profile=srgb'];
 let srv = null;
@@ -51,11 +53,23 @@ async function warnIfSoftwareGL(page) {
   } catch {}
 }
 
+// a machine slot for one browser (pipeline/slots.py: at most two heavy jobs at once on this machine, across agents); it is let go
+// when the browser closes or this process ends. A tool started by a job that holds one (CT_SLOT) takes none.
+function takeSlot(what) {
+  if (process.env.CT_SLOT) return Promise.resolve(() => {});
+  const p = spawn('python3', ['-I', path.join(ROOT, 'pipeline', 'slots.py'), 'hold', what], { stdio: ['pipe', 'pipe', 'inherit'] });
+  return new Promise((res, rej) => {
+    p.once('error', rej); p.once('exit', c => rej(new Error(`pipeline/slots.py ended before it held a slot (${c})`)));
+    p.stdout.once('data', () => { p.unref(); p.stdin.unref(); p.stdout.unref(); res(() => p.stdin.end()); });
+  });
+}
 const warned = new Set();   // each optional file warns once per process (video.mjs opens several pages)
 const FATAL = new Set(['script', 'document']);   // module imports are scripts too
 export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = false } = {}) {
   const { port } = await server();
+  const release = await takeSlot(`page ${city} ${q}`.slice(0, 160));
   const browser = await chromium.launch({ executablePath: localPath('chrome') || undefined, args: ARGS });
+  browser.on('disconnected', release);
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: w / 1920 });   // (takeSize: 16:9)
   const log = [];   // the latest problems, printed with the hint when READY is slow
   const note = s => { log.push(s); if (log.length > 8) log.shift(); console.error(s); };
