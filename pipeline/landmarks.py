@@ -10,6 +10,7 @@ is the one source of what can be written; print it with
 
     uv run python -I pipeline/landmarks.py [kind]
 """
+import contextlib
 import math, os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -241,7 +242,7 @@ def check(L, src, part=False):
     com = dict(COMMON)
     if part:
         com.update(PART); com['basis'] = ('str', None, None, COMMON['basis'][3])
-        for q in ('lon', 'lat', 'id', 'group'): com.pop(q)   # (a stage selects a whole landmark, not one of its parts)
+        for q in ('lon', 'lat', 'group'): com.pop(q)   # (a stage selects a whole landmark; a part's id names it for a loss: <landmark>.<part>)
     out = _fields(L, {**com, **spec_}, src)
     if not part and k != 'arches' and ('lon' not in out or 'lat' not in out): raise Bad(f'{src}: lon and lat are missing: its centre')
     if k == 'arches':
@@ -450,9 +451,9 @@ def extent(L):
         ws = [s_['w_m'] + 2 * (s_.get('eave') or {}).get('overhang_m', 0) + 2 * s_['balcony_m'] for s_ in L['stages']] if L.get('stages') else [L['w_m']]
         p = L.get('pedestal') or {}; w = max(ws + [p.get('w_m', 0)])
         return w / 2, max(w, (L.get('d_m') or 0), p.get('d_m') or 0) / 2
-    if k == 'stepped':
-        hw, hd = L['w_m'] / 2, (L.get('d_m') or L['w_m']) / 2
-        return hw + 1, hd + 1
+    if k == 'stepped':   # (its flights' reach too: in front, or on every side)
+        hw, hd = L['w_m'] / 2, (L.get('d_m') or L['w_m']) / 2; r_ = _stair_reach(L)
+        return hw + 1 + (r_ if (L.get('stair') or {}).get('at') == 'all' else 0), hd + 1 + r_
     if k == 'arches':
         return L['length_m'] / 2, max(L['depth_m'], L['deck_m']) / 2
     if k == 'revolve':
@@ -496,6 +497,9 @@ def bounds(L):
         xs, ys = [q[0] for q in L['plan_m']], [q[1] for q in L['plan_m']]
         return min(xs), min(ys), max(xs), max(ys)
     if k == 'revolve' and L['sweep_deg'] < 360: return _sector(L)
+    if k == 'stepped':   # (a flight up the front reaches out on the front only: local -y)
+        hw, hd = L['w_m'] / 2 + 1, (L.get('d_m') or L['w_m']) / 2 + 1; r_ = _stair_reach(L); all_ = (L.get('stair') or {}).get('at') == 'all'
+        return -hw - (r_ if all_ else 0), -hd - r_, hw + (r_ if all_ else 0), hd + (r_ if all_ else 0)
     hw, hd = extent(L); return -hw, -hd, hw, hd
 
 
@@ -566,7 +570,8 @@ def draw(D, L, x, y, th, z=0.0):
         for q in L['parts']:
             z_ = tops[q['atop']] if q.get('atop') is not None else z
             n0 = len(B.prims)
-            for _, (px, py, pth) in placed({'parts': [q]}): draw(D, q, *P(px, py), th + pth, z_)
+            with (B.labelled(q['id']) if q.get('id') else contextlib.nullcontext()):   # (a named part's records: a loss may take just it)
+                for _, (px, py, pth) in placed({'parts': [q]}): draw(D, q, *P(px, py), th + pth, z_)
             tops.append(max(((r[4] + r[7] - r[12]) / (B.F.scale * B.hex) for r in B.prims[n0:]), default=z_))
         return
     {'ring': _ring, 'dome': _dome, 'long_hall': _long_hall, 'column': _column, 'stepped': _stepped, 'arches': _arches, 'revolve': _revolve, 'prism': _prism}[k](D, L, P, th, z)
@@ -775,6 +780,25 @@ def _column(D, L, P, th, z):
         D.turn(P, th, 0, 0, z + th_ * .6, tw * .6, tw * .6, tw * .3, profile('hemisphere'), 0, part=C.LROOF, true=True)
 
 
+def _stair_run(L):
+    """a stepped landmark's flight to the top: (how far the top's edge stands in from the foot, how far out from that edge the
+    flight runs, metres). It runs from the top platform's edge down past every tier's outer corner (a straight line from the top
+    edge to the foot passes inside the corners of the tiers, which then cut the stair into dashes)"""
+    w = L['w_m']; h, n, top = L['h_m'], L['tiers'], L['top']; ws = [1 - (1 - top) * i / n for i in range(n + 1)]
+    step_in = w * (1 - top) / 2
+    corners = [((w * ws[i] - w * top) / 2 if L['slope'] == 'vertical' or n == 1 else (w * (ws[i] + ws[i + 1]) / 2 - w * top) / 2, h * (i + 1) / n) for i in range(n)]
+    return step_in, max([step_in] + [cx_ / (1 - cy_ / h) for cx_, cy_ in corners if cy_ < h - 1e-6]) + .5
+
+
+def _stair_reach(L):
+    """how far a stepped landmark's flights reach out past its foot, metres (its site covers them: a flight beyond the levelled
+    ground hung over the slope and ran into the houses laid round it)"""
+    st = L.get('stair') or {}
+    if st.get('at', 'none') == 'none': return 0.0
+    if L['slope'] == 'vertical' and L['tiers'] > 1: return max(.6, min(L['h_m'] / L['tiers'] * 1.6, L['w_m'] * .1) * .9)   # (the lowest flight, up the first wall)
+    step_in, run = _stair_run(L); return max(0.0, run - step_in)
+
+
 def _stepped(D, L, P, th, z):
     w = L['w_m']; d = L.get('d_m') or w; h, n, top = L['h_m'], L['tiers'], L['top']; plan = L['plan']
     ws = [1 - (1 - top) * i / n for i in range(n + 1)]   # each tier's foot, as a share of the foot; ws[n] the top
@@ -800,9 +824,7 @@ def _stepped(D, L, P, th, z):
         sw = st.get('w_m') or w * .15
         # the flight runs from the top platform's edge down past every tier's outer corner (a straight line from the top edge to
         # the foot passes inside the corners of the tiers, which then cut the stair into dashes)
-        step_in = w * (1 - top) / 2   # how far the top's edge stands in from the foot
-        corners = [((w * ws[i] - w * top) / 2 if L['slope'] == 'vertical' or n == 1 else (w * (ws[i] + ws[i + 1]) / 2 - w * top) / 2, h * (i + 1) / n) for i in range(n)]
-        run = max([step_in] + [cx_ / (1 - cy_ / h) for cx_, cy_ in corners if cy_ < h - 1e-6]) + .5
+        step_in, run = _stair_run(L)
         sides_ = [0] if st['at'] == 'front' else [0, 1, 2, 3]
         for k in sides_:
             ang = th + k * math.pi / 2; dd = d if k % 2 == 0 else w   # (the tiers step in by the same metres on every side)
