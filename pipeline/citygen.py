@@ -1403,6 +1403,8 @@ def region_utm(F, rg, osm_rings=None):
     return unary_union([region_utm(F, p, osm_rings) for p in rg])
 
 
+SURFACES = ('earth', 'grass', 'gravel', 'paved')   # open ground (grounds:): trodden earth, grass, gravel, a hard paved yard (compile's ground map, the engine's plate)
+
 NO_SITE = {'paifang', 'kilns', 'corridor', 'bridge', 'boats', 'village'}   # landmarks that keep no ground of their own clear
 
 
@@ -1447,7 +1449,8 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     streets: [{pts, w_m, shops, path, surface}] (path: a footpath between huts or fields, thin and without ruts; surface: asphalt,
     a modern road, smooth and darker, no ruts); lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
     (typ: a built-in house or one of `types`, complete: house_types);
-    landmarks: [{kind, lon, lat, ...}] (the generator's own kinds, or the classes of pipeline/landmarks.py); trees: [{pts, step_m, h_m, r_m, both, offset_m}].
+    landmarks: [{kind, lon, lat, ...}] (the generator's own kinds, or the classes of pipeline/landmarks.py); trees: [{pts, step_m, h_m, r_m, both, offset_m}];
+    grounds: [{region, surface}] (open ground as what it is: a field, a yard, a works ground, a parade ground; surface one of SURFACES).
     A landmark a loss clears the ground for (`lose: [{for: [<id>]}]`) is built later over the houses: the fabric is laid over its site,
     and `sites` (when given) gets {landmark index: its site} (metres; what the fabric would have kept clear) for compile's loss"""
     import landmarks as LMK_
@@ -1656,7 +1659,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         if not n_ and empty is not None: empty.append(fb.get('id') or f'#{fi}')   # (a fabric that builds nothing: compile names it)
         B.det = det0
     bodies = decks = None   # what stands on the ground by now (model xz): a row of trees steps over a house, a hall or a terrace on its line
-    if spec.get('trees'):   # (every kind of body, its court or arena left open: a garden inside a portico is planted)
+    if spec.get('trees') or spec.get('grounds'):   # (every kind of body, its court or arena left open: a garden inside a portico is planted)
         S_ = F.scale
         whole = lambda p: p[:15] + [p[1], p[2]] + p[15:]   # (a record as finish leaves it: the centre before a shape, where footprint reads it)
         bi_ = [i for i, p in enumerate(B.prims) if p[0] in (BOX, FRUSTUM, REVOLVE, PRISM) and p[11] in (FAB, LMK, EARTH) and p[7] > 1.0 * S_ * B.hex]
@@ -1701,5 +1704,22 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                     off = tr.get('offset_m', 9) * side
                     q = line.interpolate(min(line.length, line.project(p) + 1)); th = math.atan2(q.y - p.y, q.x - p.x)
                     plant(p.x - math.sin(th) * off, p.y + math.cos(th) * off, tr)
-    if basins is not None: basins.extend(B.basins)   # (compile lowers the plate in them: its basin map)
+    for gi, gd in enumerate(spec.get('grounds', [])):
+        if 'region' not in gd or gd.get('surface') not in SURFACES:
+            raise SystemExit(f'citygen: grounds[{gi}]: write region and surface ({", ".join(SURFACES)})')
+    greg = [region_utm(F, gd['region'], osm_rings) for gd in spec.get('grounds', [])]
+    for gi, gd in enumerate(spec.get('grounds', [])):   # open ground drawn as what it is: the plate takes its surface (compile's ground map)
+        B.group(('grounds', gi))   # (a later one is laid over an earlier one: a yard written after its field cuts its place out of it)
+        reg = greg[gi].difference(unary_union(greg[gi + 1:])) if gi + 1 < len(greg) else greg[gi]
+        polys = [q for q in getattr(reg, 'geoms', [reg]) if isinstance(q, Polygon) and q.area > 1]
+        if not polys: raise SystemExit(f'citygen: grounds[{gi}]: an empty region (or one the grounds after it cover)')
+        reg = unary_union(polys)
+        # its timing: a half-metre mark on the ground inside it (stages and losses take it as they take a pool's), off any
+        # building (a ground round houses, the earth of a village, has them on it; clipcheck counts a mark inside one)
+        x0_, y0_, x1_, y1_ = reg.bounds; cand = [reg.representative_point()] + [Point(x0_ + (x1_ - x0_) * (i + .5) / 24, y0_ + (y1_ - y0_) * (j + .5) / 24) for i in range(24) for j in range(24)]
+        free = lambda q: bodies is None or not any(bodies[1][j].buffer(2 * F.scale).contains(Point(*F.model(q.x, q.y))) for j in bodies[0].query(Point(*F.model(q.x, q.y)).buffer(3 * F.scale)))
+        mk = next((q for q in cand if reg.contains(q) and free(q)), cand[0])
+        B._emit(BOX, mk.x, mk.y, 0.0, 0, .5, .5, .03, part=WATER); B.found = 0.0
+        B.basins.append({'rings': [[list(q.exterior.coords)[:-1]] + [list(h.coords)[:-1] for h in q.interiors] for q in polys], 'top_m': None, 'gid': B.gid, 'surface': gd['surface'], 'name': gd.get('id') or gd.get('group') or f'#{gi}'})
+    if basins is not None: basins.extend(B.basins)   # (compile lowers the plate in them: its basin map; a ground: its ground map)
     return B.finish(spec.get('rank_noise', .08), meta)

@@ -114,6 +114,7 @@ film:
         landmarks:                            # kind: temple | office | palace | belltower | pagoda | terrace | hall | paifang | factory | chimney | station | tower | corridor | bridge | boats | village | kilns | workshops | market | pool | platform | ditch
           - { kind: temple, lon: 0, lat: 0, w_m: 62, d_m: 120 }
         trees: [{ pts: [[lon, lat], [lon, lat]], step_m: 22, h_m: 12, both: false }]   # a row along a line; a garden, park or grove: { region: [[lon, lat], ...] or osm:<name>, step_m: 16 } fills the area ([[ring], [hole], ..] leaves a clearing)
+        grounds: [{ id: works_yard, region: [[lon, lat], ...], surface: earth }]   # open ground drawn as what it is: earth, grass, gravel or paved (a field, a yard, a sports ground, a garden's lawn); a later one cuts its place out of an earlier one
         hide: [[[lon, lat], ...]]             # extra areas where today's buildings give way (for periods without walls)
       footage:                                # the same place today (live-footage echo). mode: full (4K full frame 7–9 s) | panel (photo in the right panel) | card (low-resolution small card + anchor leader line) | doc (old map / archive photo document card)
         - { id: <f>, file: assets/footage/<clip>.mp4, mode: full, at: 20.0, dur: 8.0, zh: <place name>, en: <place, today>, credit: "<author · source · licence>" }

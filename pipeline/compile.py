@@ -271,6 +271,9 @@ def era_boundary(prims, cs):
     gardens = [t['region'] for t in cs.get('trees', []) if 'region' in t]   # (a garden is the city's ground, a row along a road is not)
     if gardens:
         g = g.union(_sh.union_all([_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in (osm_rings(r[4:])[0] if isinstance(r, str) and r.startswith('osm:') else r)]) for r in gardens]))
+    if cs.get('grounds'):   # (open ground drawn as what it is: the city's ground too)
+        import numpy as _np
+        g = g.union(_sh.union_all([_sh.transform(citygen.region_utm(F, d['region'], osm_rings), lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2)) for d in cs['grounds']]))
     polys = [q for q in getattr(g, 'geoms', [g]) if q.area >= (cs.get('boundary_min_m', 140) * S) ** 2]
     return [[[round(x, 5), round(z, 5)] for x, z in q.simplify(8 * S).exterior.coords] for q in polys]
 
@@ -310,7 +313,8 @@ def hide_layer(prims, cs, bnd=()):
     im = Image.new('L', (HW, HH), 0); dr = ImageDraw.Draw(im)
     from shapely.geometry import Polygon as _P
     era_ = cs.get('_id', ''); shapes = [(p[10], citygen.footprint(p, pad)) for p in prims]
-    drapes = [(prims[basin_piece(era_, b)][10], _P([F.model(*q) for q in b['ring']])) for b in BASINS.get(era_, []) if b['top_m'] is None]   # (a draped
+    drapes = [(prims[basin_piece(era_, b)][10], _P([F.model(*q) for q in r])) for b in BASINS.get(era_, []) if b['top_m'] is None
+              for r in ([b['ring']] if 'ring' in b else [r_[0] for r_ in b['rings']])]   # (a draped
     shapes += [(r_, list(g_.buffer(pad, join_style=2).exterior.coords)) for r_, g_ in drapes]   # pool is the plate, its piece a 1 m mark: its outline)
     for r_, pts_ in sorted(shapes, key=lambda q: -q[0]):   # the earliest rank wins where footprints overlap: drawn last
         dr.polygon([U_(x, z) for x, z in pts_], fill=code(r_))
@@ -431,7 +435,7 @@ def lost_parts(prims, meta, cs, node_id):
         kept_[j] = (kept, keep_sel)
         if fo[j] and inside is None: continue   # (only the sites: below)
         for gid, (tag, c) in G.items():
-            if tag[0] == 'trees' and not sel: continue   # (trees go only when named: a garden outlives the houses round it)
+            if tag[0] in ('trees', 'grounds') and not sel: continue   # (trees and grounds go only when named: a garden outlives the houses round it)
             if (sel and not match(sel, tag)) or (keep_sel is not None and match(keep_sel, tag)): continue
             if inside is not None and tag[0] in ('streets', 'lanes', 'walls') and not (sel and isinstance(sel.get(tag[0]), list)):   # (its stretch inside)
                 for i in idx_[gid]:
@@ -450,13 +454,13 @@ def lost_parts(prims, meta, cs, node_id):
         parts_ = {}
         for p, (gid, tag, _) in zip(prims, meta): parts_.setdefault(gid, []).append(p)
         SITE_ON[node_id] = on_ = {}
-        drapes_ = {b['gid']: _sh.Polygon(b['ring']) for b in BASINS.get(node_id, []) if b['top_m'] is None}   # (a draped pool's piece is a 1 m mark: its outline, metres)
+        drapes_ = {b['gid']: basin_utm(b) for b in BASINS.get(node_id, []) if b['top_m'] is None}   # (a draped pool's piece is a 1 m mark: its outline, metres)
         for j, lis in fo.items():
             for li in lis:
                 if li not in SITES[node_id]: raise SystemExit(f'compile: era {node_id}: lose {L[j - 1]["id"]}: for {cs["landmarks"][li].get("id")}: citygen gave no site for it')
                 site = Sm(SITES[node_id][li]); on_[li] = []
                 for gid, (tag, c) in G.items():   # (on it: any piece of the building over the site; a lane is one piece across the city: never)
-                    if tag[0] in ('streets', 'lanes', 'walls', 'trees') or (tag[0] == 'landmarks' and tag[1] == li): continue   # (trees go only when named, here too: the new precinct's garden is planted after)
+                    if tag[0] in ('streets', 'lanes', 'walls', 'trees', 'grounds') or (tag[0] == 'landmarks' and tag[1] == li): continue   # (trees go only when named, here too: the new precinct's garden is planted after)
                     if not (drapes_[gid].intersects(SITES[node_id][li]) if gid in drapes_ else
                             c.distance(site) <= 200 * F.scale and any(_sh.Polygon(citygen.footprint(p)).intersects(site) for p in parts_[gid])): continue
                     on_[li].append(gid)   # (another landmark built later on this site: never cleared here; when a loss names it, li rises after it goes)
@@ -747,6 +751,13 @@ def expand_areas(node):
 PRIMS, IMPACT, FOLLOW, FOLLOW_KEYS = {}, {}, [], []
 LOST = {}   # era id -> per primitive: 0 (stays) or the number of the loss that takes it (lost_parts)
 BASINS = {}   # era id -> its dug pools (citygen: rim, water top, building group)
+def basin_utm(b):
+    """a pool's rim or a ground's region (citygen grounds: rings with holes, several) as one shape, UTM metres"""
+    import shapely as _sh
+    return _sh.Polygon(b['ring']) if 'ring' in b else _sh.union_all([_sh.Polygon(r[0], r[1:]) for r in b['rings']])
+def basin_outline(b):
+    """the points of a pool's rim or a ground's outer rings (UTM)"""
+    return b['ring'] if 'ring' in b else [q for r in b['rings'] for q in r[0]]
 def basin_piece(era_id, b):
     """the index of a pool's water among its era's pieces (a dug pool's water, a draped pool's 1 m mark that times it)"""
     return next(i for i, (m_, p_) in enumerate(zip(CITY_META[era_id], PRIMS[era_id])) if m_[0] == b['gid'] and p_[11] == citygen.WATER)
@@ -1692,7 +1703,7 @@ for e in eras_out:   # a part of a city lost while the rest stands (lose:): a ri
         o_ = F.model_lonlat(*ls['from']) if 'from' in ls else tuple(e['fallC'])
         mine = [i for i, k in enumerate(L_) if k == j]
         dd = [math.hypot(prims_[i][15] - o_[0], prims_[i][16] - o_[1]) for i in mine]; pad_ = 20 * F.scale
-        dd += [math.hypot(x - o_[0], z - o_[1]) for b in BASINS.get(e['id'], []) if L_[basin_piece(e['id'], b)] == j for x, z in (F.model(*q) for q in b['ring'])]   # (a pool: its outline, not its centre)
+        dd += [math.hypot(x - o_[0], z - o_[1]) for b in BASINS.get(e['id'], []) if L_[basin_piece(e['id'], b)] == j for x, z in (F.model(*q) for q in basin_outline(b))]   # (a pool: its outline, not its centre)
         late = max(e['on'] + prims_[i][10] * e['span'] + e['grow'] for i in mine)
         if late > t_ - .3: raise SystemExit(f"compile: era {e['id']}: lose {ls['id']} at {t_:.1f} s takes buildings still rising until {late:.1f} s; a part is lost after it stands")
         if e.get('off') is not None and t_ >= e['off']: raise SystemExit(f"compile: era {e['id']}: lose {ls['id']} at {t_:.1f} s comes after the city is taken back ({e['off']:.1f} s)")
@@ -1742,13 +1753,18 @@ BAS_LO, BAS_HI, BASIN_MAX = -100.0, 6000.0, 32   # (metres a water top may stand
 # inside) in a band of BAS_BAND texels round it, alpha 128 + its number: the engine blends that distance between texels, so the
 # water's edge follows the drawn outline and not the texels' steps (a texel is about 11 m on a city's plate)
 BAS_BAND = 4
-bmap_, nb_, drp_ = None, 0, []
+bmap_, nb_, drp_, gnd_ = None, 0, [], {}
 for e in eras_out:
     if not BASINS.get(e['id']): continue
     meta_, prims_, L_ = CITY_META[e['id']], PRIMS[e['id']], LOST.get(e['id']); out_ = []
     for b in BASINS[e['id']]:
         i_ = basin_piece(e['id'], b)
-        if nb_ >= BASIN_MAX: raise SystemExit(f"compile: era {e['id']}: more than {BASIN_MAX} pools in a film (each is a basin the plate is lowered in)")
+        if nb_ >= BASIN_MAX: raise SystemExit(f"compile: era {e['id']}: more than {BASIN_MAX} pools and grounds in a film (each is timed by one of the engine's slots; "
+                                              "grounds of one city that come and go together are one entry, its region several rings)")
+        if 'rings' in b:   # (a ground: the ground map, below)
+            gnd_.setdefault(e['id'], []).append((nb_, b))
+            out_.append({'k': nb_, 'rank': prims_[i_][10], 'c': [round(prims_[i_][15], 5), round(prims_[i_][16], 5)], 'lost': L_[i_] if L_ else 0, 'draped': True, 'ground': True}); nb_ += 1
+            continue
         if bmap_ is None: bmap_ = Image.new('RGBA', (MW, MH), (0, 0, 0, 0)); bdr_ = ImageDraw.Draw(bmap_)
         ring_ = [((mx_ / F.size[0] + .5) * MW, (mz_ / F.size[1] + .5) * MH) for mx_, mz_ in (F.model(*q) for q in b['ring'])]
         if b['top_m'] is None: drp_.append((nb_, ring_))
@@ -1775,6 +1791,55 @@ if drp_:   # the draped pools' bands, where no dug pool is; two bands meeting: t
 BASIN_MAP = {'file': 'data/basins.png', 'lo': BAS_LO, 'hi': BAS_HI, 'k': round(F.scale * _tex, 9), **({'band': BAS_BAND} if drp_ else {})} if bmap_ is not None else None
 if bmap_ is not None: bmap_.save(LAYOUT.data(D, 'basins.png'))
 elif os.path.exists(LAYOUT.data(D, 'basins.png')): os.remove(LAYOUT.data(D, 'basins.png'))
+# open ground (citygen grounds): the plate takes its surface while it stands. Each city's grounds are drawn over a crop of the
+# plate of their own, the crops packed into one map: the engine reads the crops of the cities standing at a moment (studio
+# GMAX), so two cities' grounds at one place (a garden kept from one period to the next) each keep theirs. A texel holds the
+# surface (R: citygen.SURFACES index + 1), the distance to the nearest ground's edge (G: texels, + inside, GND_BAND either
+# side, blended between texels as a draped pool's) and the slot that times it (B: its number + 1). In one city a place has one
+# surface (citygen cut a later ground out of an earlier one); two that still overlap are refused
+GND_BAND, GND_PX, GND_MIN_M, GND_ATLAS = 4, 1024, 2.0, 4096   # (a crop's long side at most GND_PX texels, a texel at least GND_MIN_M)
+GROUND_MAP = None
+if gnd_:
+    import numpy as _np, shapely as _sh, itertools as _it
+    Mg_ = lambda g: _sh.transform(g, lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2))
+    geo_ = {eid_: [(k_, b_, Mg_(basin_utm(b_))) for k_, b_ in lst_] for eid_, lst_ in gnd_.items()}
+    for eid_, lst_ in geo_.items():
+        for (_, ba_, ga_), (_, bb_, gb_) in _it.combinations(lst_, 2):
+            if ga_.intersection(gb_).area > max((5 * F.scale) ** 2, .01 * min(ga_.area, gb_.area)):
+                raise SystemExit(f"compile: era {eid_}: grounds {ba_['name']} and {bb_['name']} overlap: a place has one surface (citygen cuts a later one out of an earlier one: a fault there)")
+    px_ = GND_PX
+    while True:
+        crops_ = []
+        for eid_, lst_ in geo_.items():
+            x0_, z0_, x1_, z1_ = _sh.union_all([g_ for _, _, g_ in lst_]).bounds; pad_ = GND_BAND + 2
+            t_ = max(GND_MIN_M * F.scale, max(x1_ - x0_, z1_ - z0_) / (px_ - 2 * pad_))
+            nx_, nz_ = math.ceil((x1_ - x0_) / t_) + 2 * pad_, math.ceil((z1_ - z0_) / t_) + 2 * pad_; X0_, Z0_ = x0_ - pad_ * t_, z0_ - pad_ * t_
+            crops_.append([eid_, X0_, Z0_, t_, nx_, nz_, 0, 0])
+        x_ = y_ = h_ = 0   # shelves, the tallest first, a texel apart
+        for c_ in sorted(crops_, key=lambda c: -c[5]):
+            if x_ + c_[4] > GND_ATLAS: y_ += h_ + 1; x_ = h_ = 0
+            c_[6], c_[7] = x_, y_; x_ += c_[4] + 1; h_ = max(h_, c_[5])
+        if y_ + h_ <= GND_ATLAS: break
+        px_ //= 2   # (more than one map holds: every crop coarser)
+    AW_, AH_ = max(c[6] + c[4] for c in crops_), max(c[7] + c[5] for c in crops_)
+    a_ = _np.zeros((AH_, AW_, 4), _np.uint8)
+    for eid_, X0_, Z0_, t_, nx_, nz_, ax_, ay_ in crops_:
+        best_ = _np.full((nz_, nx_), -_np.inf); blk_ = a_[ay_:ay_ + nz_, ax_:ax_ + nx_]
+        for k_, b_, g_ in geo_[eid_]:
+            gx0_, gz0_, gx1_, gz1_ = g_.bounds
+            i0_, j0_ = max(0, math.floor((gx0_ - X0_) / t_) - GND_BAND), max(0, math.floor((gz0_ - Z0_) / t_) - GND_BAND)
+            i1_, j1_ = min(nx_, math.ceil((gx1_ - X0_) / t_) + GND_BAND + 1), min(nz_, math.ceil((gz1_ - Z0_) / t_) + GND_BAND + 1)
+            I_, J_ = _np.meshgrid(X0_ + (_np.arange(i0_, i1_) + .5) * t_, Z0_ + (_np.arange(j0_, j1_) + .5) * t_)   # (texel centres)
+            s_ = _sh.distance(g_.boundary, _sh.points(I_, J_)) / t_ * _np.where(_sh.contains_xy(g_, I_, J_), 1, -1)
+            w_ = (s_ > -GND_BAND) & (s_ > best_[j0_:j1_, i0_:i1_])   # (two grounds meeting: the nearer one's)
+            v_ = _np.round((_np.clip(s_, -GND_BAND, GND_BAND) / GND_BAND * .5 + .5) * 255).astype(_np.uint8)
+            px4_ = _np.stack([_np.full_like(v_, citygen.SURFACES.index(b_['surface']) + 1), v_, _np.full_like(v_, k_ + 1), _np.full_like(v_, 255)], -1)
+            blk_[j0_:j1_, i0_:i1_][w_] = px4_[w_]; best_[j0_:j1_, i0_:i1_][w_] = s_[w_]
+        next(e for e in eras_out if e['id'] == eid_)['ground'] = {'m': [round(X0_, 6), round(Z0_, 6), round(1 / t_, 4)], 'a': [ax_, ay_, nx_, nz_]}
+    Image.fromarray(a_, 'RGBA').save(LAYOUT.data(D, 'grounds.png'))
+    GROUND_MAP = {'file': 'data/grounds.png', 'band': GND_BAND}
+    print(f"  ground map: {len(crops_)} cit{'y' if len(crops_) == 1 else 'ies'}, {sum(len(v) for v in gnd_.values())} grounds, {AW_} x {AH_}")
+elif os.path.exists(LAYOUT.data(D, 'grounds.png')): os.remove(LAYOUT.data(D, 'grounds.png'))
 # a city taken back by a contracting ring: the camera comes down with the ring (docs/STAGING.md 9g), from where it is when the
 # ring reaches the city to the next key after the ring has closed (the ruins). The ring stays whole on screen all the way: the
 # camera comes no nearer than the distance that frames the ring as it is at that moment, so it always moves slower than the
@@ -2014,7 +2079,7 @@ film = {
     'decals': decals_out, 'satellite': sat_out(sat),
     'footage': footage_out, 'end': end, 'ev': evs, 'music': FM.get('music', {}),
     'labels': labels_out,
-    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), 'night': night_keys, 'routes': routes_out,
+    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],

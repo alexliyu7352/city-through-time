@@ -15,6 +15,7 @@ const lin = h => new THREE.Color(h);
 export const NMAX = 8;
 export const LMAX = 16;
 export const BMAX = 32;   // dug pools in a film (compile BASIN_MAX): the plate is lowered in each while it stands   // the parts one period city can lose while the rest stands (compile LOSE_MAX; record kind 4.. in aData.w)
+export const GMAX = 8;   // period cities whose open ground (compile ground map) the plate shows at one moment: the most standing at once
 export const EMAX = 12;   // epoch mask channels: data/layers1-3.png, RGBA each (compile shares a channel between masks apart in time and place)
 const YLN = 48;   // points of the modern year line the shaders read (compile: grow.yl)
 
@@ -76,6 +77,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uPhoto: { value: null }, uPhotoA: { value: 0 }, uPhotoSweep: { value: 2 }, uPhotoSweep0: { value: -1 },
     // node colour wave: the old colour (Col0, A0) outside a ring of radius R around C, the new one inside, a light front on the ring
     uNodeCol0: { value: new THREE.Color(1, 1, 1) }, uNodeA0: { value: 0 }, uNodeC: { value: new THREE.Vector2(0, 0) }, uNodeR: { value: 99 }, uNodeFront: { value: 0 },
+    uGround: { value: null }, uGroundM: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) }, uGroundA: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) },
+    uGroundC0: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) }, uGroundC: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) }, uGroundN: { value: 0 }, uGroundBand: { value: 4 },
     uBasin: { value: null }, uBasinA: { value: Array(BMAX).fill(0) }, uBasinL: { value: Array.from({ length: BMAX }, () => new THREE.Vector4(0, 0, 1e9, 2e9)) }, uBasinLo: { value: 0 }, uBasinHi: { value: 1 }, uBasinK: { value: 0 }, uBasinBand: { value: 4 }, uWaterRip: { value: .022 }, uWaterGlint: { value: 1.2 }, uWaterShore: { value: .35 },
     uDimToday: { value: 0 }, uDimToday0: { value: 0 }, uEraGlow: { value: 0 }, uEdge: { value: null }, uEdge2: { value: null }, uEdgeGain: { value: 1 },
     // per era channel (the hide masks): era time (0..1 over its rise, -1 off), grow share, the taking-back ring (centre, radius, in/out, width),
@@ -197,6 +200,48 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     for (int i = 0; i < ${BMAX}; i++) if (i == k) { vec4 L = uBasinL[i];
       wDrapedK = uBasinA[i] * smoothstep(-aa, aa, sd) * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); }   // (lost where its ring has passed, as main.js ringK)
     return max(w, wDrapedK); }
+  // open ground of the period cities standing (compile ground map, a crop per city): earth, grass, gravel or a paved yard,
+  // drawn as the era's paving is, in light and grain only, under its city's light (eraKeyT): earth as its streets, a paved yard
+  // as an asphalt road. A later city's over an earlier one's; water over all (wmask, after). Per crop (bound by groundsNow):
+  // plate xz -> its texels (origin, texels per unit) and the city's colour strength, where it lies in the map (texel origin,
+  // size), the city's colour and ink before and after the node's ring (as uEraCol0 / uEraInk0, uEraCol / uEraInk)
+  uniform sampler2D uGround; uniform vec4 uGroundM[${GMAX}], uGroundA[${GMAX}], uGroundC0[${GMAX}], uGroundC[${GMAX}]; uniform float uGroundN, uGroundBand;
+  float groundTex(int sf, vec2 P, float px){   // P metres, px metres per pixel: grain that would shimmer fades out
+    float g = (vnoise(P * .08) - .5) * .5 + (vnoise(P * .6) - .5) * .35 * (1. - smoothstep(.3, 1.2, px)) + (vnoise(P * 2.7) - .5) * .25 * (1. - smoothstep(.08, .35, px));
+    if (sf == 1) return .3 * (1. + .16 * g);   // earth: the streets' rammed earth, no ruts
+    if (sf == 2) return .17 * (1. + .3 * (vnoise(P * .05) - .5) + .3 * (vnoise(P * .25) - .5) * (1. - smoothstep(.5, 1.5, px)) + .3 * (vnoise(P * 1.1) - .5) * (1. - smoothstep(.12, .35, px)));   // grass: darker, in soft patches and tufts
+    if (sf == 3) return .38 * (1. + .05 * g + .35 * (h21(floor(P * 2.)) - .5) * (1. - smoothstep(.06, .2, px)));   // gravel: lighter, a fine speckle
+    return .3 * (.58 + .04 * g);   // paved: an asphalt road's (paveTex)
+  }
+  // a ground's distance to its edge here (texels, + inside) from the four nearest texels: its own texels as they are, another
+  // ground's as their own distance turned round (where two meet the one's edge is the other's: no seam between them), none's
+  // as far outside
+  float groundSd(int k, float s[4], int kq[4], vec2 f){
+    float t[4]; for (int q = 0; q < 4; q++) t[q] = kq[q] == k ? s[q] : kq[q] >= 0 ? -s[q] : -uGroundBand;
+    return mix(mix(t[0], t[1], f.x), mix(t[2], t[3], f.x), f.y); }
+  float groundOn(int k){ float on = 0.;   // its slot: up as its mark rises, lost where its loss's ring has passed
+    for (int j = 0; j < ${BMAX}; j++) if (j == k) { vec4 L = uBasinL[j]; on = uBasinA[j] * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); }
+    return on; }
+  vec3 grounds(vec3 col){
+    if (uGroundN < .5) return col;
+    vec2 ts = vec2(textureSize(uGround, 0)), P = vWP.xz / uScaleM; float px = length(fwidth(P)), wp = length(fwidth(vWP.xz));
+    float iw = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC));   // (inside the node's ring: as the city's own parts)
+    for (int i = 0; i < ${GMAX}; i++) { if (float(i) >= uGroundN) break;
+      vec4 M = uGroundM[i], A = uGroundA[i]; vec2 l = (vWP.xz - M.xy) * M.z;
+      if (any(lessThan(l, vec2(1.))) || any(greaterThan(l, A.zw - 1.))) continue;   // (off its crop; its edge texels hold nothing)
+      vec2 p = A.xy + l - .5, f = fract(p), c0 = (floor(p) + .5) / ts; float s[4]; int kq[4], sq[4], k = -1, k2 = -1, sf = 0, sf2 = 0; float top = -1e9, top2 = -1e9;
+      for (int q = 0; q < 4; q++) { vec4 b = texture2D(uGround, c0 + vec2(float(q % 2), float(q / 2)) / ts); s[q] = -uGroundBand; kq[q] = -1; sq[q] = 0;
+        if (b.b > .5 / 255.) { kq[q] = int(b.b * 255. + .5) - 1; sq[q] = int(b.r * 255. + .5); s[q] = (b.g - .5) * 2. * uGroundBand; } }
+      for (int q = 0; q < 4; q++) if (kq[q] >= 0 && s[q] > top) { top = s[q]; k = kq[q]; sf = sq[q]; }
+      if (k < 0) continue;
+      for (int q = 0; q < 4; q++) if (kq[q] >= 0 && kq[q] != k && s[q] > top2) { top2 = s[q]; k2 = kq[q]; sf2 = sq[q]; }
+      vec4 C = mix(uGroundC0[i], uGroundC[i], iw); vec3 kt = mix(vec3(1.), C.rgb / max(max(C.r, C.g), max(C.b, .001)), M.w * .85 * (1. - C.a));
+      vec3 base = vec3(.9) * kt * (1. - .84 * C.a); float aa = max(wp * M.z, .3);
+      if (k2 >= 0) col = mix(col, base * groundTex(sf2, P, px), groundOn(k2) * smoothstep(-aa, aa, groundSd(k2, s, kq, f)));   // (the other ground at a meeting, under)
+      col = mix(col, base * groundTex(sf, P, px), groundOn(k) * smoothstep(-aa, aa, groundSd(k, s, kq, f)));
+    }
+    return col;
+  }
   // water's surface (where wmask is): long swells and short ripples running across it with the wind, in metres and film seconds,
   // each fading out once it is finer than a few pixels (a wide shot keeps the swells, a far one is a still mirror). Its slope
   // tilts the plate's normal, so the room's light and its reflection move on the water as it does on water
@@ -433,7 +478,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <fog_vertex>', `#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz; vWN = normalize(mat3(modelMatrix) * objectNormal);`);
       sh.fragmentShader = sh.fragmentShader
         .replace('#include <common>', `#include <common>\n${HEAD}`)
-        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(diffuseColor.rgb, cWater * .72, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * eraBurnK()); if (abs(vData.y - 5.) < .5 && normalize(vWN).y > .7) diffuseColor.rgb = cWater * .72; if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
+        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(${kind === 1 ? 'grounds(diffuseColor.rgb)' : 'diffuseColor.rgb'}, cWater * .72, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * eraBurnK()); if (abs(vData.y - 5.) < .5 && normalize(vWN).y > .7) diffuseColor.rgb = cWater * .72; if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
         // a period city's colour is in the light that falls on it, not in its plaster: the lamps' direct light (key, fill, rim) takes
         // the era's colour, the room's soft light stays neutral, so its walls are warm where lit and grey in the shade
         .replace('#include <aomap_fragment>', `#include <aomap_fragment>${kind === 0 ? '\n reflectedLight.directDiffuse *= eraKeyT;' : ''}`)
@@ -781,6 +826,17 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   function setTex(k, t, srgb = false) { if (!t) { U[k].value = blank; return; } t.flipY = false; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; t.anisotropy = 4; U[k].value = t; }
   function setBasins(t, map) { t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.magFilter = t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true;
     U.uBasin.value = t; U.uBasinLo.value = map.lo; U.uBasinHi.value = map.hi; U.uBasinK.value = map.k; U.uBasinBand.value = map.band ?? 4; }
+  // open ground (compile ground map): the cities that have some, in film order; each frame the crops of those standing are bound
+  let GROUNDS = [];
+  function setGrounds(t, map, eraList) { t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.magFilter = t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true;
+    U.uGround.value = t; U.uGroundBand.value = map.band ?? 4; GROUNDS = eraList.filter(e => e.ground); }
+  function groundsNow() {   // after the cities' shapes and colours (eraShape, setLayers / the viewer's apply), before drawing
+    let n = 0;
+    for (const e of GROUNDS) {
+      if (n >= GMAX || !eras[e.id] || !e.basins.some(b => b.ground && U.uBasinA.value[b.k] > 0)) continue;
+      const u = eras[e.id].u, c0 = u.uEraCol0.value, c = u.uEraCol.value; U.uGroundM.value[n].set(e.ground.m[0], e.ground.m[1], e.ground.m[2], u.uEraA.value); U.uGroundA.value[n].set(...e.ground.a);
+      U.uGroundC0.value[n].set(c0.r, c0.g, c0.b, u.uEraInk0.value); U.uGroundC.value[n].set(c.r, c.g, c.b, u.uEraInk.value); n++; }
+    U.uGroundN.value = n; }
   function setHideCols(cols) { cols.forEach((c, i) => { if (i < 8) U.uHideCol.value[i].copy(lin(c)); }); }
   function setHide(t, t2, e, e2) { for (const [k, x] of [['uHide', t], ['uHide2', t2], ['uEdge', e], ['uEdge2', e2]]) { x.flipY = false; x.colorSpace = THREE.NoColorSpace; x.magFilter = x.minFilter = THREE.LinearFilter; x.generateMipmaps = false; U[k].value = x; } }
   // cities apart in time share a channel (compile: era channels). In a film that has them the four channel textures become
@@ -904,5 +960,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     vertexShader: 'varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
     fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA; varying vec3 vW; void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(texture2D(uPI, u).rgb, uA); }' }));
   liveSky.visible = false; liveSky.renderOrder = -1; liveSky.frustumCulled = false; scene.add(liveSky);
-  return { renderer, scene, camera, post, U, liveSky, addContext, setContext, setHide, setHideCols, shareChannels, setBasins, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { renderer, scene, camera, post, U, liveSky, addContext, setContext, setHide, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

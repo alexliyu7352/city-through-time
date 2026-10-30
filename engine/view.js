@@ -71,7 +71,7 @@ export function startView(X) {
     pending = false;
     const { az, el, d } = where(), t = controls.target, film = st.look === 'film';
     camera.fov = FILM.fov || 30; camera.near = Math.min(.02, Math.max(.0003, d * .04)); camera.updateProjectionMatrix(); camera.updateMatrixWorld();
-    setDist(d, el); setLight(TV); setLayers(TV); apply();
+    setDist(d, el); setLight(TV); setLayers(TV); apply(); S.groundsNow();
     S.followShadow(t.x, t.y, t.z, d, film ? az : FIXED_AZ);
     lens(d); if (!film) post.dof.aper = 0;
     renderer.shadowMap.needsUpdate = true; post.composer.render();

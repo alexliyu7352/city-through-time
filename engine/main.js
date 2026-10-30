@@ -133,6 +133,7 @@ if (SHARE.length) {
   for (const e of Object.values(holding)) if (e.edgeRect) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; }
 }
 if (FILM.basinMap) S.setBasins(await tex(B + FILM.basinMap.file), FILM.basinMap);   // dug pools: the plate lowered in them while they stand
+if (FILM.groundMap) S.setGrounds(await tex(B + FILM.groundMap.file), FILM.groundMap, FILM.eras);   // open ground: the plate takes its surface while it stands
 // a basin follows its pool: up as the pool rises (its rank in its city's rise), taken back with its city's ring or its loss's
 const ringK = (c, q, t, sd) => { if (!q) return 0; const R = curveAt(q.curve, t), R1 = curveAt(q.curve, t - sd), d = Math.hypot(c[0] - q.o[0], c[1] - q.o[1]);
   const a = q.mode === 'in' ? (d - R) / Math.max(R1 - R, 1e-5) : (R - d) / Math.max(R - R1, 1e-5); return ss(Math.min(1, Math.max(0, a))); };   // (studio fallK)
@@ -574,7 +575,7 @@ window.EV = EV;
 // frame the 3D scene is not drawn. Stills, scrubbing and the offline render seek every frame exactly (deterministic).
 let PLAYING = false;
 const fullCover = t => (FILM.footage || []).some(f => (f.mode || 'full') === 'full' && t >= f.on + f.fin && t <= f.on + f.dur - f.fout);
-const renderSync = t => { const s = sceneAt(t); LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); setLiving(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } if (!QS.has('clean')) drawOverlay(t); else OV.begin(); };   // clean: the model alone (tools/living.py's reference)
+const renderSync = t => { const s = sceneAt(t); LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); S.groundsNow(); setLiving(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } if (!QS.has('clean')) drawOverlay(t); else OV.begin(); };   // clean: the model alone (tools/living.py's reference)
 window.render = (FILM.footage || []).length ? async t => {
   for (const f of FILM.footage) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;
