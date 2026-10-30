@@ -1825,6 +1825,10 @@ for e in eras_out:
             continue
         if bmap_ is None: bmap_ = Image.new('RGBA', (MW, MH), (0, 0, 0, 0)); bdr_ = ImageDraw.Draw(bmap_)
         ring_ = [((mx_ / F.size[0] + .5) * MW, (mz_ / F.size[1] + .5) * MH) for mx_, mz_ in (F.model(*q) for q in b['ring'])]
+        import shapely as _sh; _mr = _sh.Polygon(ring_).minimum_rotated_rectangle; _ms = sorted(math.dist(*q) for q in zip(_mr.exterior.coords, list(_mr.exterior.coords)[1:]))[0] if _mr.geom_type == 'Polygon' else 0.0
+        if _ms < 1.0:   # (the water map's texel: a pool narrower than one has no texel inside it, its water a faint edge at most)
+            WARN.append(f"era {e['id']}: a pool at {b['ring'][0][0]:.0f}, {b['ring'][0][1]:.0f} (UTM) is {_ms * F.size[0] / F.scale / MW:.1f} m across at its narrowest, under one texel of the "
+                        f"water map ({F.size[0] / F.scale / MW:.1f} m): its water cannot show; draw its rim (a fountain's basin), and say the water in its basis")
         if b['top_m'] is None: drp_.append((nb_, ring_))
         else:
             v_ = max(1, min(65535, round((b['top_m'] - BAS_LO) / (BAS_HI - BAS_LO) * 65535)))
