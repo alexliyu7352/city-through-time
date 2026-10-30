@@ -456,6 +456,7 @@ def extent(L):
     if k == 'arches':
         return L['length_m'] / 2, max(L['depth_m'], L['deck_m']) / 2
     if k == 'revolve':
+        if L['sweep_deg'] < 360: x0, y0, x1, y1 = _sector(L); return max(-x0, x1), max(-y0, y1)
         r = max(p[0] for p in L['profile_m']); return r, r * L['oval']
     if k == 'prism':
         pts = L['plan_m'] if 'plan_m' in L else None
@@ -468,6 +469,16 @@ def extent(L):
             hw = max(hw, abs(px) + a * c + b * s); hd = max(hd, abs(py) + a * s + b * c)
         return hw, hd
     raise ValueError(k)
+
+
+def _sector(L):
+    """a revolve turned through part of a circle (sweep_deg, centred on its back, +y): the box of the band it covers, its own
+    frame, metres (the whole circle's box laid a platform out over ground a short arc never reaches)"""
+    pr = L['profile_m']; r0, r1 = min(p[0] for p in pr), max(p[0] for p in pr); s = math.radians(L['sweep_deg']) / 2; xs, ys = [], []
+    for i in range(65):
+        a = math.pi / 2 - s + 2 * s * i / 64
+        for r in (r0, r1): xs.append(r * math.cos(a)); ys.append(r * L['oval'] * math.sin(a))
+    return min(xs), min(ys), max(xs), max(ys)
 
 
 def bounds(L):
@@ -484,6 +495,7 @@ def bounds(L):
     if k == 'prism' and 'plan_m' in L:
         xs, ys = [q[0] for q in L['plan_m']], [q[1] for q in L['plan_m']]
         return min(xs), min(ys), max(xs), max(ys)
+    if k == 'revolve' and L['sweep_deg'] < 360: return _sector(L)
     hw, hd = extent(L); return -hw, -hd, hw, hd
 
 
