@@ -328,7 +328,12 @@ def hide_layer(prims, cs, bnd=()):
                 ring = b[2][0]
                 if len(ring) < 3: continue
                 hit = tree.query(_P(ring), predicate='intersects')
-                if len(hit): dr.polygon([U_(x, z) for x, z in ring], fill=code(float(rk[hit].min())))
+                if len(hit):
+                    dr.polygon([U_(x, z) for x, z in ring], fill=code(float(rk[hit].min())))
+                    # the engine reads the mask at the mean of the ring's points (studio.js aCtr), which a bent or hollow
+                    # building has outside its own outline: that point too, or it stays standing in the old city
+                    cu_, cv_ = U_(sum(x for x, _ in ring) / len(ring), sum(z for _, z in ring) / len(ring))
+                    dr.point((cu_, cv_), fill=code(float(rk[hit].min())))   # (one pixel: the region's margin below takes it as it takes an edge)
     except Exception as ex:
         print('hide: today-overlap pass skipped', ex)
     reg = Image.new('L', (HW, HH), 0); dg = ImageDraw.Draw(reg)

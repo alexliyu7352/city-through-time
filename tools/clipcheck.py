@@ -67,7 +67,7 @@ def main():
         return 0.0 if plate_ is None else plate_(x, z) * S * tex
     # today's buildings as footprints
     today = [Polygon(r[2][0]) for r in M['p'] if len(r[2][0]) >= 3]
-    today_ctr = np.array([[p.centroid.x, p.centroid.y] for p in today]) if today else np.zeros((0, 2))
+    today_ctr = np.array([np.mean(r[2][0], axis=0) for r in M['p'] if len(r[2][0]) >= 3]) if today else np.zeros((0, 2))   # (where the engine reads the masks: the mean of the ring's points, studio.js aCtr)
     hide = [np.asarray(Image.open(os.path.join(D, f)).convert('RGBA')) for f in ('hide.png', 'hide2.png') if os.path.exists(os.path.join(D, f))]
     report, total, notes = {}, 0, {}
     fields = None   # the ground's two scales (terrain.py) at model points -> (landforms, fine relief) in metres
