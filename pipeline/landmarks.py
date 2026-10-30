@@ -43,7 +43,7 @@ COMMON = {
     'group': ('str', None, None, 'a name it shares with the others a stage selects together'),
     'exaggeration': ('num', (.5, 5), None, 'its heights\' exaggeration (when absent the city\'s, fading as the landmark gets taller: see exaggeration(); 1: true, for one drawn after a true elevation)'),
     'z_m': ('num', (0, 300), 0.0, 'metres above its ground (a part standing on another: a dome on a hall\'s crossing)'),
-    'site': ('enum', ('raised', 'cut'), 'raised', 'on a slope: raised, a monument levelled at the highest ground under it, a platform below on the downhill side; cut, a small building let into the slope, levelled half-way (the uphill half cut, the downhill half filled: a hut, a house on a hillside), its walls reaching down to the ground on the downhill side, no platform'),
+    'site': ('enum', ('raised', 'cut', 'parts'), 'raised', 'on a slope: raised, a monument levelled at the highest ground under it, a platform below on the downhill side; cut, a small building let into the slope, levelled half-way (the uphill half cut, the downhill half filled: a hut, a house on a hillside), its walls reaching down to the ground on the downhill side, no platform; parts (a landmark of parts only), each part levelled on its own ground, as the buildings of a chain stepping down a hill (one plane under a long chain stood its low end on a tall basement)'),
 }
 PART = {   # what a part of `parts` adds
     'at': ('pair', (-2000, 2000), None, '[x, y] metres from the whole\'s centre, in its frame (x along it, y to its back)'),
@@ -244,6 +244,7 @@ def check(L, src, part=False):
         com.update(PART); com['basis'] = ('str', None, None, COMMON['basis'][3])
         for q in ('lon', 'lat', 'group'): com.pop(q)   # (a stage selects a whole landmark; a part's id names it for a loss: <landmark>.<part>)
     out = _fields(L, {**com, **spec_}, src)
+    if out.get('site') == 'parts' and k != 'parts': raise Bad(f'{src}: site: parts is for a landmark of parts (each part levelled on its own ground)')
     if not part and k != 'arches' and ('lon' not in out or 'lat' not in out): raise Bad(f'{src}: lon and lat are missing: its centre')
     if k == 'arches':
         if ('from' in out) != ('to' in out): raise Bad(f'{src}: from and to go together (a run between two points)')
@@ -566,13 +567,20 @@ def draw(D, L, x, y, th, z=0.0):
     k = L['kind']; P = D.frame(x, y, th); z = z + (L.get('z_m') or 0.0)
     if k == 'parts':   # a part on another stands on the top the other was drawn to (measured from its pieces, in the metres the
         # walls are exaggerated from: a dome keeps its true curve), not on an estimate of it (a flat column was counted a crown high)
-        tops, B = [], D.B
+        tops, B, gs = [], D.B, []
+        each = D.g is None   # (site: parts: each part levelled on its own ground, a part atop another on that one's)
         for q in L['parts']:
             z_ = tops[q['atop']] if q.get('atop') is not None else z
-            n0 = len(B.prims)
+            n0 = len(B.prims); g_ = None
             with (B.labelled(q['id']) if q.get('id') else contextlib.nullcontext()):   # (a named part's records: a loss may take just it)
-                for _, (px, py, pth) in placed({'parts': [q]}): draw(D, q, *P(px, py), th + pth, z_)
-            tops.append(max(((r[4] + r[7] - r[12]) / (B.F.scale * B.hex) for r in B.prims[n0:]), default=z_))
+                for _, (px, py, pth) in placed({'parts': [q]}):
+                    if not each: draw(D, q, *P(px, py), th + pth, z_); continue
+                    if q.get('atop') is not None: g_ = gs[q['atop']]; draw(Draw(B, g_), q, *P(px, py), th + pth, z_); continue
+                    x0_, y0_, x1_, y1_ = bounds(q); qx, qy = P(px, py); w_, d_ = x1_ - x0_, y1_ - y0_
+                    sx_, sy_ = D.frame(qx, qy, th + pth)((x0_ + x1_) / 2, (y0_ + y1_) / 2)
+                    with B.lot_site(sx_, sy_, th + pth, w_, d_):
+                        g_ = B.gsite(sx_, sy_, th + pth, w_, d_); draw(Draw(B, g_), q, qx, qy, th + pth, z_)
+            gs.append(g_); tops.append(max(((r[4] + r[7] - r[12]) / (B.F.scale * B.hex) for r in B.prims[n0:]), default=z_))
         return
     {'ring': _ring, 'dome': _dome, 'long_hall': _long_hall, 'column': _column, 'stepped': _stepped, 'arches': _arches, 'revolve': _revolve, 'prism': _prism}[k](D, L, P, th, z)
 
@@ -923,11 +931,13 @@ def build(B, L, x, y, th):
             # level: a monument is built level, on a platform where the ground falls away under it by more than 2 % of its width
             # (less: its own walls reach down, as the foundation every body has; a square plate under a round building on a gentle
             # slope read wrong)
-            s0, p0 = B.lot_slope, B.plinth; B.lot_slope = 0.0; B.plinth = max(B.plinth, .02 * min(w, d)) if L.get('site') != 'cut' else 1e9   # (let into the slope: its walls reach down to the ground, no square plate under a round hut)
+            s0, p0 = B.lot_slope, B.plinth; B.lot_slope = 0.0; B.plinth = max(B.plinth, .02 * min(w, d)) if L.get('site') not in ('cut', 'parts') else 1e9 if L.get('site') == 'cut' else B.plinth   # (let into the slope: its walls reach down to the ground, no square plate under a round hut)
             try:
-                with B.lot_site(sx, sy, th, w, d, mid=L.get('site') == 'cut'):
-                    g = B.gsite(sx, sy, th, w, d)
-                    draw(Draw(B, g), L, x, y, th)
+                if L.get('site') == 'parts' and L['kind'] == 'parts': draw(Draw(B, None), L, x, y, th)   # (each part on its own ground: draw)
+                else:
+                    with B.lot_site(sx, sy, th, w, d, mid=L.get('site') == 'cut'):
+                        g = B.gsite(sx, sy, th, w, d)
+                        draw(Draw(B, g), L, x, y, th)
             finally: B.lot_slope, B.plinth = s0, p0
     finally: B.hex = hx0; B.found = 0.0
     return hw, hd
