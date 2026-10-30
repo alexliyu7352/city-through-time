@@ -72,7 +72,7 @@ already has the name, Cloudflare adds a suffix, and the tool builds the canonica
 - **One page code for both:** a city's site is its gallery page made the whole page (`site/app.js` reads `<html data-city="<slug>">`, which `tools/site.mjs --city`
   writes on the pages, `play.html` and `museum.html`, so every link back to the film's page leads to the site's root). `index.html` marks what only the gallery has
   (`<!-- gallery -->` … `<!-- /gallery -->`) and what only a city's site has (`<!-- city -->` … `<!-- /city -->`); a new part of the entry page goes inside a gallery
-  mark, or every city's site shows it. The gallery's pages do not change with the marks: `tools/site.mjs` without `--city` writes them byte for byte as before.
+  mark, or every city's site shows it. Without `--city`, `tools/site.mjs` takes out the city parts and the marks alone, so the gallery's pages do not depend on them.
 - **What the user makes, once:** a Cloudflare account (free); an API token (My Profile → API Tokens → Create Token → Custom token) with the single permission
   Account · Cloudflare Pages · Edit, on that account only, which is all a deploy needs; and the account ID (Workers & Pages → Account details). They go in the
   environment (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`) or in `local/config.json` as `"cloudflare": { "api_token": "…", "account_id": "…", "city": "<slug>" }`

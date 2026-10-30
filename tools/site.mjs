@@ -31,7 +31,8 @@ const GALLERY_ONLY = ['site/globe.js', 'site/land.bin', 'site/img/'];
 // --city auto: the user's own city, the one folder in cities/ that is not the example's; with none, the example (a demo)
 export function pickCity(city) {
   if (city !== 'auto') return city;
-  const own = fs.readdirSync(path.join(ROOT, 'cities'), { withFileTypes: true }).filter(d => d.isDirectory() && !d.name.startsWith('.') && d.name !== EXAMPLE).map(d => d.name).sort();
+  const dir = path.join(ROOT, 'cities');   // (a city's folder may be a link to another disk: stat follows it)
+  const own = fs.readdirSync(dir).filter(n => !n.startsWith('.') && n !== EXAMPLE && fs.existsSync(path.join(dir, n)) && fs.statSync(path.join(dir, n)).isDirectory()).sort();
   if (own.length > 1) throw new Error(`--city auto: cities/ has ${own.length} cities besides the example (${own.join(', ')}): name one, --city <slug>`);
   return own[0] || EXAMPLE;
 }
@@ -78,7 +79,7 @@ export function site({ out = path.join(ROOT, '_site'), origin, copy = false, cit
   }
 
   put('cities.json', JSON.stringify(reg) + '\n');
-  // the template's parts for this kind of site, the marks taken out (the gallery's pages are as they were before index.html had them)
+  // the template's parts for this kind of site, the marks taken out (whole lines: the pages do not depend on them)
   const kind = city ? 'city' : 'gallery';
   let template = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8')
     .replace(/^[ \t]*<!-- (gallery|city)\b.*?-->\n[^]*?^[ \t]*<!-- \/\1 -->\n/gm, (part, k) => k === kind ? part : '')
