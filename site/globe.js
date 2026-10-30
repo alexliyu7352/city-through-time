@@ -212,8 +212,11 @@ export async function makeGlobe(canvas, cities, { onPick, onHover, onFrame, onLo
   function resize() {
     const w = el.clientWidth, h = el.clientHeight; if (!w || !h) return; W = w; Hh = h;
     renderer.setSize(w, h, false); if (composer) composer.setSize(w, h);
-    camera.aspect = w / h; wide = w / h > 1.1; place();
+    camera.aspect = w / h; wide = beside(); place();
   }
+  // the words beside the globe (a wide page) or above and below it (a narrow one: the words span the page): from where the page
+  // says they end, not the canvas's shape (a tablet held upright has a wide canvas over the words, and the globe went off its edge)
+  const beside = () => room == null ? W / Hh > 1.1 : room < W * .75;
   // the camera. Wide screens: the globe fills the space right of the words (or, with a city open, left of the panel), never under
   // either; it is sized to that space and to the height. Narrow screens: centred, far enough back that the ring fits the width.
   function aim() {
@@ -272,7 +275,7 @@ export async function makeGlobe(canvas, cities, { onPick, onHover, onFrame, onLo
       goal = { yaw: y, elev: THREE.MathUtils.clamp(Math.atan2(Math.cos(TILT) * Math.sin(la), Math.cos(la)) * .55, -.3, .42) }; idle = 0; vy = 0;
     },
     hold(on, width = 0) { held = on; panelW = width; },   // an open city: no idle turning; on wide screens the globe moves left of its panel
-    setRoom(left) { room = left; },                         // where the words end (px from the left), so the globe stays clear of them
+    setRoom(left) { room = left; wide = beside(); },                         // where the words end (px from the left), so the globe stays clear of them
     blocks: count,
   };
 }
