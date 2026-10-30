@@ -1069,11 +1069,18 @@ class Builder:
             self.prism(x, y, th + math.pi / 2, z0, [sec], L, along=True, part=ROOF, g_m=g)
 
     # ------------------------------------------------------------------ walls
-    def walls(self, ring, h=10.0, t=10.0, gates=(), towers=True, part=WALL, gate_style='tower', moat=None, bastion_m=80.0, moat_w=16.0, moat_off=None):
+    def walls(self, ring, h=10.0, t=10.0, gates=(), towers=True, part=WALL, gate_style='tower', moat=None, bastion_m=80.0, moat_w=16.0, moat_off=None,
+              closed=True, tower_every=None, tower_pts=(), tower_shape='square'):
         """a city wall along a closed ring (UTM points): battered rammed-earth body, merlons on the outer parapet, bastions
-        (马面), corner towers, gate towers over dark passages, barbicans (瓮城) and a moat with bridges"""
-        poly = orient(Polygon(ring), 1.0)            # counter-clockwise: the outside is to the right of the direction
-        ring = list(poly.exterior.coords)
+        (马面), corner towers, gate towers over dark passages, barbicans (瓮城) and a moat with bridges.
+        closed=False: an open run (a wall ending at a river or a cliff), the city on its left as on a ring's inside.
+        gate_style 'curtain': a masonry curtain wall (Roman, medieval European, and the many like them): an upright body
+        with a crenellated parapet, flat-topped towers projecting outward (square or round, tower_shape) at the corners,
+        every tower_every metres and at tower_pts (UTM), each gate a dark passage between two such towers; no roofs"""
+        if closed:
+            poly = orient(Polygon(ring), 1.0)            # counter-clockwise: the outside is to the right of the direction
+            ring = list(poly.exterior.coords)
+        else: poly = None; ring = [tuple(q) for q in ring]
         line = LineString(ring); L = line.length
         gl = sorted([(line.project(Point(g_[0], g_[1])), (g_[2] if len(g_) > 2 else 4.0)) for g_ in gates])   # (position, pier width)
         gpos = [gp for gp, _ in gl]
@@ -1093,7 +1100,7 @@ class Builder:
         spans = []; prev = 0.0
         for c0, c1 in cuts: spans.append((prev, max(prev, c0))); prev = c1
         spans.append((prev, L))
-        tower = gate_style == 'tower'
+        tower = gate_style == 'tower'; curtain = gate_style == 'curtain'
         npc = 0   # wall pieces so far: a bastion (马面) on every other piece's middle
         for s0, s1 in spans:
             for pa, pb in pieces(s0, s1, most=min(60.0, bastion_m * .75)):
@@ -1101,9 +1108,10 @@ class Builder:
                 th = math.atan2(pb.y - pa.y, pb.x - pa.x); mx, my = (pa.x + pb.x) / 2, (pa.y + pb.y) / 2; ln = math.hypot(pb.x - pa.x, pb.y - pa.y)
                 g, self.slope, self.found = self.lay((pa.x, pa.y), (pb.x, pb.y), t)   # the wall runs along the slope, no steps
                 ox_, oy_ = math.sin(th), -math.cos(th)                       # outward normal (right of the direction)
-                self._emit(FRUSTUM, mx, my, th, 0, ln + t * .2, t, h, ln + t * .1, t * .66, part=part, g_m=g)
-                if tower:
-                    po = t * .66 / 2 - .4
+                if curtain: self._emit(BOX, mx, my, th, 0, ln + t * .2, t, h, part=part, g_m=g)   # (masonry: upright, not battered)
+                else: self._emit(FRUSTUM, mx, my, th, 0, ln + t * .2, t, h, ln + t * .1, t * .66, part=part, g_m=g)
+                if tower or curtain:
+                    po = (t if curtain else t * .66) / 2 - .4
                     self._emit(BOX, mx - ox_ * po, my - oy_ * po, th, h, ln, .5, 1.0, part=part, g_m=g)                  # inner parapet
                     if self.det >= 1:
                         self._emit(BOX, mx + ox_ * po, my + oy_ * po, th, h, ln, .8, .9, part=part, g_m=g)              # outer parapet
@@ -1115,9 +1123,43 @@ class Builder:
                 if tower and self.det >= 1 and npc % 2 == 0 and ln > 20:                                                # bastions, each on its own ground
                     bx_, by_ = mx + ox_ * (t * .5 + 3.5), my + oy_ * (t * .5 + 3.5)
                     gb_ = self.gsite(bx_, by_, th, 13, 9); self._emit(FRUSTUM, bx_, by_, th, 0, 13, 9, h, 12, 7.5, part=part, g_m=gb_); self.found = 0.0
-        if towers:   # corner towers (角楼)
-            for i in range(len(ring) - 1):
-                x, y = ring[i]; self.group(); g = self.gsite(x, y, 0, t * 1.9, t * 1.9)
+        tw = t * 2.1   # (a curtain wall's tower: its side, projecting half of it outward)
+        def ctower(d, hh):   # a flat-topped tower astride the wall at distance d along it, merlons round its top
+            p = line.interpolate(d); q = line.interpolate(min(L, d + 1.0)) if d + 1.0 <= L else line.interpolate(max(0.0, d - 1.0))
+            th = math.atan2(q.y - p.y, q.x - p.x) if d + 1.0 <= L else math.atan2(p.y - q.y, p.x - q.x)
+            x, y = p.x + math.sin(th) * tw * .25, p.y - math.cos(th) * tw * .25
+            self.group(); g = self.gsite(x, y, th, tw, tw)
+            if tower_shape == 'round': self._emit(CYL, x, y, 0, 0, tw / 2, 0, hh, part=part, g_m=g)
+            else: self._emit(BOX, x, y, th, 0, tw, tw, hh, part=part, g_m=g)
+            if self.det >= 1:
+                if tower_shape == 'round':
+                    n = max(6, int(math.pi * tw / 2.8))
+                    for i in range(n):
+                        a = 2 * math.pi * (i + .5) / n; self._emit(BOX, x + math.cos(a) * (tw / 2 - .4), y + math.sin(a) * (tw / 2 - .4), a + math.pi / 2, hh, 1.4, .8, 1.0, part=part, g_m=g)
+                else:
+                    for sx, sy, sa in ((0, -1, 0), (0, 1, 0), (-1, 0, math.pi / 2), (1, 0, math.pi / 2)):
+                        n = max(2, int(tw // 2.8))
+                        for i in range(n):
+                            k = (i + .5) / n - .5; lx, ly = (k * tw, sy * (tw / 2 - .4)) if sx == 0 else (sx * (tw / 2 - .4), k * tw)
+                            self._emit(BOX, x + lx * math.cos(th) - ly * math.sin(th), y + lx * math.sin(th) + ly * math.cos(th), th + sa, hh, 1.4, .8, 1.0, part=part, g_m=g)
+            self.found = 0.0
+        if curtain:   # towers along the run: every tower_every metres between the gates (from each stretch's start), and where named
+            at = [line.project(Point(q[0], q[1])) for q in tower_pts]
+            if tower_every:
+                for s0, s1 in spans:
+                    n = int((s1 - s0) // tower_every)
+                    at += [s0 + (s1 - s0) * (k + .5) / max(1, n) for k in range(n)] if n else []
+            fixed = ([line.project(Point(x, y)) for x, y in (ring[:-1] if closed else ring[1:-1])] if towers else []) + [gp + k * (gw / 2 + tw / 2) for gp in gpos for k in (-1, 1)]
+            keep = max(1.5 * tw, .5 * (tower_every or 0))   # (a tower in the run keeps off the corner and gate towers)
+            for d in sorted(at):
+                if all(abs(d - v) > keep for v in fixed) and all(not (c0 < d < c1) for c0, c1 in cuts): ctower(d, h * 1.3)
+        corners = (ring[:-1] if closed else ring[1:-1]) if towers else []
+        if curtain:
+            for x, y in corners: ctower(line.project(Point(x, y)), h * 1.3)
+            corners = []
+        if corners:   # corner towers (角楼)
+            for x, y in corners:
+                self.group(); g = self.gsite(x, y, 0, t * 1.9, t * 1.9)
                 self._emit(BOX, x, y, 0, 0, t * 1.9, t * 1.9, h * 1.04, part=part, g_m=g)
                 if tower and self.det >= 1: self.hall(x, y, math.pi / 4, t * 1.1, t * 1.1, h * .9, roof='xieshan', z0=h * 1.04, part=LMK, g=g, cols=False)
                 else: self._emit(FRUSTUM, x, y, 0, h * 1.04, t * 1.7, t * 1.7, h * .35, t * .6, t * .6, part=LROOF, g_m=g)
@@ -1128,7 +1170,13 @@ class Builder:
             for k in (-1, 0, 1):
                 qx, qy = p.x + math.cos(th) * k * (8 + pw), p.y + math.sin(th) * k * (8 + pw); self._emit(BOX, qx, qy, th, 0, 7.6, D + .4, min(7.5, h * .62), part=DARK, g_m=g)
             self.hall(p.x, p.y, th, W * .86, D * .7, 11, roof='double_hip' if pw > 8 else 'hip', z0=h, part=LMK, g=g, front=1)
-        for gp in (gpos if gate_style not in ('none', 'han3') else []):   # gate towers (城楼) over the passages, barbicans outward
+        for gp in (gpos if curtain else []):   # a curtain wall's gate: a dark passage through its gatehouse, a tower either side
+            p = line.interpolate(gp); q = line.interpolate(min(L, gp + 1.0)); th = math.atan2(q.y - p.y, q.x - p.x)
+            self.group(); g = self.gsite(p.x, p.y, th, gw, t * 1.2)
+            self._emit(BOX, p.x, p.y, th, 0, gw + .4, t * 1.2, h * 1.1, part=part, g_m=g)
+            self._emit(BOX, p.x, p.y, th, 0, 5.5, t * 1.2 + .4, min(7, h * .7), part=DARK, g_m=g); self.found = 0.0   # the passage
+            for k in (-1, 1): ctower(min(L, max(0.0, gp + k * (gw / 2 + tw / 2))), h * 1.35)
+        for gp in (gpos if gate_style not in ('none', 'han3', 'curtain') else []):   # gate towers (城楼) over the passages, barbicans outward
             p = line.interpolate(gp); q = line.interpolate(min(L, gp + 1.0)); th = math.atan2(q.y - p.y, q.x - p.x)
             self.group(); g = self.gsite(p.x, p.y, th, gw * 2.2, t * 1.3); ox_, oy_ = math.sin(th), -math.cos(th)
             self._emit(BOX, p.x, p.y, th, 0, gw * 2.2, t * 1.3, h, part=part, g_m=g)
@@ -1146,8 +1194,7 @@ class Builder:
                     self.hall(fx, fy, th, gw * 1.6, t * .6, h * .8, roof='xieshan', z0=h * .9, part=LMK, g=g, cols=False, front=1)
         if (moat if moat is not None else tower):   # a moat ring outside, with a bridge at each gate
             d0 = t * .5 + moat_off + moat_w / 2 if moat_off is not None else t * .5 + (t * 3.8 + 14 if tower else 18)
-            mo = poly.buffer(d0, join_style=2)
-            mring = list(mo.exterior.coords)
+            mring = list(poly.buffer(d0, join_style=2).exterior.coords if closed else line.offset_curve(-d0, join_style=2).coords)   # (outside: right)
             for a, b in zip(mring[:-1], mring[1:]):
                 self.strip(a, b, moat_w, .25, part=WATER)
             for gp in gpos:
@@ -1379,10 +1426,24 @@ def _lines(geom):
     return [g for g in getattr(geom, 'geoms', []) if isinstance(g, LineString)]
 
 
+WALL_STYLES = ('tower', 'hip', 'han3', 'none', 'curtain')   # (Builder.walls)
+
+
+def wall_shape(F, w, osm_rings=None):
+    """a wall of the spec, UTM: a closed one (ring, osm) as its polygon, an open run (pts) as its line"""
+    if 'pts' in w: return LineString([F.to_utm.transform(*p) for p in w['pts']])
+    return Polygon(to_utm_ring(F, w['ring']) if 'ring' in w else to_utm_ring(F, osm_rings(w['osm'])[0]))
+
+
+def wall_line(F, w):
+    """the line a wall of the spec runs along (UTM): a ring's outline, an open run itself (osm: its ring's outline)"""
+    return LineString([F.to_utm.transform(*p) for p in w['pts']]) if 'pts' in w else Polygon(to_utm_ring(F, w['ring'])).exterior
+
+
 def extent(spec, F, osm_rings=None):
     """where a period city builds (UTM): its walls' rings, its fabric regions, its landmarks' rectangles (30 m round a point
     without a size), its streets (terrain.py measures the ground there)"""
-    parts = [Polygon(to_utm_ring(F, w['ring']) if 'ring' in w else to_utm_ring(F, osm_rings(w['osm'])[0])) for w in spec.get('walls', [])]
+    parts = [wall_shape(F, w, osm_rings).buffer(w.get('t_m', 10) * 2 + 20) if 'pts' in w else wall_shape(F, w, osm_rings) for w in spec.get('walls', [])]
     for fb in spec.get('fabric', []):
         r = fb.get('region', 'walls')
         if r != 'walls': parts.append(Polygon(to_utm_ring(F, osm_rings(r[4:])[0]) if isinstance(r, str) else to_utm_ring(F, r)))
@@ -1464,11 +1525,16 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     wall_polys = []
     for wi, w in enumerate(spec.get('walls', [])):
         B.group(('walls', wi))
-        ring = to_utm_ring(F, w['ring']) if 'ring' in w else to_utm_ring(F, osm_rings(w['osm'])[0])
+        if sum(k in w for k in ('ring', 'osm', 'pts')) != 1: raise SystemExit(f'citygen: walls[{wi}]: write ring (closed), pts (an open run) or osm, one of them')
+        if w.get('style', 'tower') not in WALL_STYLES: raise SystemExit(f'citygen: walls[{wi}]: style {w["style"]!r}: one of {", ".join(WALL_STYLES)}')
+        if (w.get('tower_every_m') or w.get('tower_pts') or 'tower_shape' in w) and w.get('style') != 'curtain':
+            raise SystemExit(f'citygen: walls[{wi}]: tower_every_m, tower_pts and tower_shape are a curtain wall\'s (style: curtain)')
+        ring = [F.to_utm.transform(*p) for p in w['pts']] if 'pts' in w else to_utm_ring(F, w['ring']) if 'ring' in w else to_utm_ring(F, osm_rings(w['osm'])[0])
         gates = [tuple(F.to_utm.transform(*g[:2])) + tuple(g[2:]) for g in w.get('gates', [])]   # [lon, lat] or [lon, lat, pier width m]
         B.walls(ring, h=w.get('h_m', 10), t=w.get('t_m', 10), gates=gates, towers=w.get('towers', True), gate_style=w.get('style', 'tower'), moat=w.get('moat'),
-                moat_w=w.get('moat_w_m', 16.0), moat_off=w.get('moat_off_m'))
-        wall_polys.append(Polygon(ring))
+                moat_w=w.get('moat_w_m', 16.0), moat_off=w.get('moat_off_m'), closed='pts' not in w, tower_every=w.get('tower_every_m'),
+                tower_pts=[F.to_utm.transform(*q) for q in w.get('tower_pts', [])], tower_shape=w.get('tower_shape', 'square'))
+        if 'pts' not in w: wall_polys.append(Polygon(ring))   # (an open run has no inside: fabric: walls takes the rings')
     inside = unary_union([p.buffer(-14) for p in wall_polys]) if wall_polys else None
     # landmarks first (their footprints are kept clear of fabric)
     lm_foot, lm_at = [], []   # (lm_at: where each landmark's footprints start in lm_foot)
@@ -1616,7 +1682,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
             grid = unary_union([l.buffer(lw / 2, cap_style=2) for l in ls])
             street_geoms.append(affinity.rotate(grid, th, origin=(cx, cy), use_radians=True).intersection(reg))
     main_streets = [LineString([F.to_utm.transform(*p) for p in st['pts']]).buffer(st.get('w_m', 14) / 2, cap_style=2) for st in spec.get('streets', [])]
-    wall_bands = [Polygon(to_utm_ring(F, w['ring'])).exterior.buffer(w.get('t_m', 10) * 1.6 + 6) for w in spec.get('walls', []) if 'ring' in w]
+    wall_bands = [wall_line(F, w).buffer(w.get('t_m', 10) * 1.6 + 6) for w in spec.get('walls', []) if 'ring' in w or 'pts' in w]
     shop_avoid = unary_union(([lm_union] if lm_union is not None else []) + street_geoms + main_streets + wall_bands + ([extra_avoid] if extra_avoid is not None else [])) if (lm_union is not None or street_geoms or main_streets or wall_bands or extra_avoid is not None) else None
     # streets: explicit main streets (paved, optional shop rows) + an oriented lane grid (paved) inside the walls or a region
     for si, st in enumerate(spec.get('streets', [])):
@@ -1635,7 +1701,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
                 for side in (1, -1): shop_feet.extend(B.shophouses(a, b, depth=st.get('shop_depth', 14), frontage=st.get('frontage', 7), h=st.get('shop_h', 7.5), side=side, gap=.08, street_w=st.get('w_m', 14), avoid=shop_avoid))
     streets = unary_union(street_geoms) if street_geoms else Polygon()
     avoid = unary_union(fab_foot + shop_feet + [streets] + ([extra_avoid] if extra_avoid is not None else [])) if (fab_foot or shop_feet or not streets.is_empty or extra_avoid is not None) else None
-    wall_strips = unary_union([Polygon(to_utm_ring(F, w['ring'])).exterior.buffer(w.get('t_m', 10) * 1.2 + 10) for w in spec.get('walls', []) if 'ring' in w]) if spec.get('walls') else None
+    wall_strips = unary_union([wall_line(F, w).buffer(w.get('t_m', 10) * 1.2 + 10) for w in spec.get('walls', []) if 'ring' in w or 'pts' in w]) if spec.get('walls') else None
     for fi, fb in enumerate(spec.get('fabric', [])):
         B.group(('fabric', fi))
         if fb.get('region', 'walls') == 'walls': reg = inside

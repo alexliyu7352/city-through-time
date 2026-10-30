@@ -106,7 +106,7 @@ film:
         theta_deg: 0                          # street grid direction (degrees, counter-clockwise from east)
         detail: high                          # low | medium | high (close-ups need high; large cities with hundreds of thousands of parts use low / medium)
         exaggeration: 2.0                     # height exaggeration of period buildings (the ground uses the terrain exaggeration)
-        walls: [{ ring: [[lon, lat], ...], h_m: 10, t_m: 11, gates: [[lon, lat], ...], style: tower }]   # style: tower (gate towers, barbicans, crenellations, bastions, moat) | hip | none (earth walls, ditches)
+        walls: [{ ring: [[lon, lat], ...], h_m: 10, t_m: 11, gates: [[lon, lat], ...], style: tower }]   # style: tower (gate towers, barbicans, crenellations, bastions, moat) | hip | none (earth walls, ditches) | curtain (masonry: upright, crenellated, flat-topped towers: tower_every_m, tower_pts, tower_shape: square | round; each gate a passage between two towers); pts instead of ring: an open run ending at a river or a cliff, the city on its left
         streets: [{ pts: [[lon, lat], [lon, lat]], w_m: 16, shops: true }]                                 # shops: two-storey shopfronts along the street; path: true, a footpath (huts, fields: thin on the ground, no ruts, w_m 2); surface: asphalt, a modern road (smooth, darker, no ruts)
         lanes: { spacing_m: 85, w_m: 5 }      # lane network inside the city (region: walls or a lon/lat ring)
         fabric: [{ region: walls, lot: [17, 25], typ: courtyard, h_m: 6, empty: 0.05 }]                  # typ: courtyard | dwelling | hut | slab (north China's), or a house type (types:, below); scatter: 1 = scattered without a grid (when there is no evidence of wards)

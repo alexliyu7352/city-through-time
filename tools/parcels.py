@@ -158,7 +158,7 @@ def main():
     cs = landmarks.checked(landmarks.templated(citygen.with_trace(copy.deepcopy(cs), F, D), landmarks.library(C, D), f'parcels {pid}'), f'parcels {pid}')   # (completed as compile completes them: landmark_site reads their sizes)
     sites = [g for L in cs.get('landmarks') or [] for g in citygen.landmark_site(L, F, cs.get('theta_deg', 0))[4]]   # (each landmark's own ground)
     # the ground citygen keeps for the era's walls (a band along them) and for the shop rows of its streets with shops
-    walls = [Polygon([F.to_utm.transform(*p) for p in w['ring']]).exterior.buffer(w.get('t_m', 10) * 1.2 + 10) for w in cs.get('walls') or [] if 'ring' in w]
+    walls = [citygen.wall_line(F, w).buffer(w.get('t_m', 10) * 1.2 + 10) for w in cs.get('walls') or [] if 'ring' in w or 'pts' in w]
     shops = [LineString([F.to_utm.transform(*p) for p in st['pts']]).buffer(st.get('w_m', 14) / 2 + st.get('shop_depth', 14) + .5, cap_style=2) for st in cs.get('streets') or [] if st.get('shops')]
     reserve = shapes(S.get('reserve')) + sites + walls + shops
     if S.get('water'):
