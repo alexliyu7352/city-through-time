@@ -176,6 +176,9 @@ No rule sets a sentence length: write as speech; subtitle length is handled when
   the Common Era year is already on the year panel on the left of the screen, and keeping the original dating gives the flavour of the period.
   Write the exceptions into `film.copy.keep` in city.yaml, and the copy check stops mentioning them.
 - The readout (left column) holds only one big number (the year counter or one statistic), one label line, one source line.
+  Each node opens a chapter (its number and name on the readout). A node that only splits one chapter's city in two for its timing (an early and a late city told
+  as one story) writes `readout: {continues: true}`: the readout before runs on through it, no second chapter card with the same name; a chapter split in two
+  that tells two stories needs a name of its own.
 - Timing rule: a line of narration takes as long as it is said in the voiced language, and only that: a subtitle in any language is read faster than it is heard, so the second language never holds a line ("Subtitles and the timeline").
   Text nobody says (pins, readouts, source notes, title cards) needs its reading time: Chinese characters ÷ 4.5 + letters ÷ 15 + 1.5 seconds, at least 1.8 seconds; stretch the film rather than delete facts.
 
