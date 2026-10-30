@@ -46,6 +46,16 @@ else:
 # ------------------------------------------------------------------ buildings (heights exaggerated like the terrain so the massing reads at 1:10000)
 BEX = float(C.get('buildings', {}).get('exaggeration', C.get('terrain', {}).get('exaggeration', 3.0)))   # today's buildings; the plate has its own factor
 bands = C['bands']   # [{lo, hi, zh, en}], years; lo inclusive, hi exclusive; buildings with no year go to band -1
+def spread(year, how, c):
+    """a GHSL year (overture_ghsl: how 'epoch') is the first 5-year period the building's 100 m cell is built up in: it went up
+    some time in the five years before. Each is spread over them by its place (the same every run), so a period's buildings come
+    up through it, not all at once (at a fixed camera a period rose as one burst, a tower and its street in the same second);
+    the screen still says the years are 5-year estimates. buildings.epoch_spread: false keeps the periods' own years"""
+    import ghsl, hashlib
+    if how != 'epoch' or year is None or year <= ghsl.EPOCHS[0] or C['buildings'].get('epoch_spread', True) is False: return year
+    u = int(hashlib.md5(f'{c.x:.0f},{c.y:.0f}'.encode()).hexdigest()[:8], 16) / 2 ** 32
+    return round(year - 5 * u, 2)
+
 def band_of(y):
     if y is None: return -1
     for i, b in enumerate(bands):
@@ -66,7 +76,7 @@ tallest = []
 for poly, h, year, how, func in it:
     bi = len(B)
     b = band_of(year)
-    B.append([year if year is not None else 0, round(h, 1)])
+    B.append([spread(year, how, poly.centroid) if year is not None else 0, round(h, 1)])
     rings = [[F.model(x, y) for x, y in poly.exterior.coords[:-1]]] + [[F.model(x, y) for x, y in r.coords[:-1]] for r in poly.interiors]
     c = poly.centroid
     hh, base = seat(rings, h * F.scale * BEX, F.model(c.x, c.y))
@@ -85,7 +95,7 @@ if C['buildings'].get('fill') == 'overture_ghsl':
         c = poly.centroid; k = (int(c.x // gap), int(c.y // gap))
         if any((k[0] + dx, k[1] + dy) in occ for dx in (-1, 0, 1) for dy in (-1, 0, 1)): continue
         bi = len(B); b = band_of(year)
-        B.append([year if year is not None else 0, round(h, 1)])
+        B.append([spread(year, how, c) if year is not None else 0, round(h, 1)])
         rings = [[F.model(x, y) for x, y in poly.exterior.coords[:-1]]] + [[F.model(x, y) for x, y in r.coords[:-1]] for r in poly.interiors]
         hh, base = seat(rings, h * F.scale * BEX, F.model(c.x, c.y))
         P.append([bi, round(hh, 6), rings, round(base, 6)])

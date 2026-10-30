@@ -40,6 +40,9 @@ CMAB download: the provincial zips of figshare article 27992417 (Shaanxi = `shan
 2. GHSL: download the tiles of GHS_BUILT_S_E{1975..2030}_GLOBE_R2023A_54009_100 that cover the city's area (JRC open data; `pipeline/overture_ghsl.py ghsl cities/<slug>`: one tile, or two to four for a box across a tile edge); `prep.py` takes each building centroid's first built-up period from them.
 3. The bands of `prep.py` use 5-year periods: `[already there in 1975, 1980–1989, 1990–1999, 2000–2009, 2010–2019, after 2020]`.
 4. The screen and FACTS.md must say: "Years are estimates from GHSL 5-year built-up periods, accuracy 100 m".
+5. A building's period is when its cell was first built up: it went up some time in the five years before. `prep.py` spreads each building over those five years
+   by its place (the same every run), so a period's buildings come up through it instead of all in one second at a fixed camera (`buildings.epoch_spread: false` keeps
+   the periods' own years). The bands and counts stay by period.
 
 ## Maps (OpenStreetMap, ODbL)
 
