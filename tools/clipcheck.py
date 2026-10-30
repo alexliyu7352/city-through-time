@@ -69,7 +69,7 @@ def main():
     # today's buildings as footprints
     today = [Polygon(r[2][0]) for r in M['p'] if len(r[2][0]) >= 3]
     today_ctr = np.array([np.mean(r[2][0], axis=0) for r in M['p'] if len(r[2][0]) >= 3]) if today else np.zeros((0, 2))   # (where the engine reads the masks: the mean of the ring's points, studio.js aCtr)
-    hide = [np.asarray(Image.open(os.path.join(D, f)).convert('RGBA')) for f in ('hide.png', 'hide2.png') if os.path.exists(os.path.join(D, f))]
+    hide = [np.asarray(Image.open(os.path.join(D, f)).convert('RGBA')) for f in ('hide.png', 'hide2.png', 'hide3.png') if os.path.exists(os.path.join(D, f))]
     report, total, notes = {}, 0, {}
     fields = None   # the ground's two scales (terrain.py) at model points -> (landforms, fine relief) in metres
     ttrue, _ = terrainio.load(city, true=True)

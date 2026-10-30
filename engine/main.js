@@ -61,7 +61,7 @@ const yearAs = (y, tick) => { const Y = FILM.years; if (!Y) return null; const r
 if (FILM.bar) for (const tk of FILM.bar.ticks) tk.yearLabel = yearAs(tk.year, true) ?? (FILM.yearFmt === 'en' ? (tk.year < 0 ? `${-tk.year} BCE` : `${tk.year}`) : (tk.year < 0 ? `前${-tk.year}` : `${tk.year}`));
 
 const LOW = QS.get('quality') === 'low' || QS.has('play') || (QS.has('free') && matchMedia('(pointer: coarse)').matches);   // (the viewer's public mode on a phone: no period-city shadows)
-const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots });   // (pools and grounds past the engine's 32 slots: compile basinSlots)
+const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, slots: FILM.eraSlots });   // (pools and grounds past the engine's 32 slots: compile basinSlots)
 const { U, camera, post, renderer, house, hemi, scene } = S;
 const TL = new THREE.TextureLoader();
 const decalTex = FREE ? [] : await Promise.all((FILM.decals || []).map(d => tex(B + d.file)));
@@ -140,7 +140,7 @@ const DIM0 = new Map(); const dimBefore = n => { if (!DIM0.has(n.id)) DIM0.set(n
 const curveAt = (c, t) => { if (!c || !c.length) return -1; if (t <= c[0][0]) return c[0][1]; const n = c.length; if (t >= c[n - 1][0]) return c[n - 1][1];
   let lo = 0, hi = n - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (c[m][0] <= t) lo = m; else hi = m; } return c[lo][1] + (c[hi][1] - c[lo][1]) * (t - c[lo][0]) / ((c[hi][0] - c[lo][0]) || 1e-9); };
 const ringR = (n, t) => n.ring && t < n.ring.curve[n.ring.curve.length - 1][0] ? curveAt(n.ring.curve, t) : 99;
-S.setHide(...await Promise.all(['hide', 'hide2', 'edge', 'edge2'].map(f => tex(B + `data/${f}.png`))));
+S.setHide(...await Promise.all(['hide', 'hide2', 'edge', 'edge2', ...(FILM.eraSlots > 8 ? ['hide3', 'edge3'] : [])].map(f => tex(B + `data/${f}.png`))));   // (hide3, edge3: a film with more than 8 cities standing at once)
 // cities apart in time share a channel (compile: era channels): a shared channel holds, at any moment, the city in use then
 // (its intervals in `occupy`), drawn in from its own files when it takes the channel over (studio shareChannels); the
 // files hold each channel's first city. Only the city a channel holds sets that channel's uniforms.
@@ -160,7 +160,7 @@ const ringK = (c, q, t, sd) => { if (!q) return 0; const R = curveAt(q.curve, t)
 const takeChannel = e => { if (!CH || !e.occupy || holding[e.hide] === e) return; CH.put(e.hide, ...e._own); holding[e.hide] = e;
   if (e.edgeRect) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; } };
 const inChannel = e => !e.occupy || holding[e.hide] === e;
-{ const cols = Array(8).fill('#ffffff'); for (const e of FILM.eras || []) if (e.hide != null) cols[e.hide] = e.col; S.setHideCols(cols); }
+{ const cols = Array(Math.max(8, FILM.eraSlots || 0)).fill('#ffffff'); for (const e of FILM.eras || []) if (e.hide != null) cols[e.hide] = e.col; S.setHideCols(cols); }
 S.U.uScaleH.value = M.scale * (M.bex || (M.terrain && M.terrain.exaggeration) || 3);   // window floors follow the buildings' own exaggeration
 S.U.uScaleM.value = M.scale;   // model units per metre (textures drawn at their real size)
 // terrain.shade: a fixed low sun on the plate: the slopes turned to it lighter in the plate's own colour, those turned away darker,
@@ -645,7 +645,7 @@ if (QS.has('view')) {
     quiet: () => {   // what setLayers lays at a moment of the film that is not the period cities: off
       for (let i = 0; i < EMAX; i++) U.uEpA.value[i] = 0;
       for (let i = 0; i < 4; i++) U.uDA.value[i] = 0;
-      for (let i = 0; i < 8; i++) { U.uRiseA.value[i] = 0; U.uHideFA.value[i] = 0; U.uEdgeA.value[i] = 0; U.uHideT.value[i] = -1; U.uHideFR.value[i] = -1; U.uHideFI.value[i] = 0; U.uHideFW.value[i] = -1; }
+      for (let i = 0; i < U.uHideT.value.length; i++) { U.uRiseA.value[i] = 0; U.uHideFA.value[i] = 0; U.uEdgeA.value[i] = 0; U.uHideT.value[i] = -1; U.uHideFR.value[i] = -1; U.uHideFI.value[i] = 0; U.uHideFW.value[i] = -1; }
       U.uPhotoA.value = 0; U.uRingN.value = 0; U.uPulse.value = 0; U.uShockA.value = 0; U.uNodeFront.value = 0; U.uNodeR.value = 99;
       U.uNodeA.value = U.uNodeA0.value = 0; U.uPickOn.value = 0; U.uHgtOn.value = 0; U.uResetR.value = -1; U.uResetY.value = 0;
       for (const k in lineA) lineA[k].value = 0;

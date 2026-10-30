@@ -21,6 +21,7 @@ def files(D):
     F = json.load(open(os.path.join(B, 'film.json'), encoding='utf-8'))
     out = ['build/film.json'] + [f'build/data/{n}' for n in ('model.json', 'stats.json', 'lines.json', 'water.png', 'layers1.png', 'layers2.png',
                                                               'layers3.png', 'hide.png', 'hide2.png', 'edge.png', 'edge2.png', 'locator.png')]
+    if (F.get('eraSlots') or 8) > 8: out += ['build/data/hide3.png', 'build/data/edge3.png']   # (a film with more than 8 cities at once)
     out.append('build/data/terrain16.png' if os.path.exists(os.path.join(B, 'data', 'terrain16.png')) else 'build/data/terrain.png')
     built = [d.get('file') for d in F.get('decals') or []] + [(F.get('satellite') or {}).get('file'), (F.get('context') or {}).get('file'),
              (F.get('grow') or {}).get('tfile')] + [e.get('file') for e in F.get('eras') or []]

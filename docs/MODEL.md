@@ -159,8 +159,10 @@ where it stood as never standing together. **A landmark built later where houses
 loss that clears its ground (`for: [<id>]`): citygen lays the houses over its site instead of leaving it empty from the city's start, the loss takes every building on
 the site (the ground citygen would have kept clear; with a `region`, that too), and compile stops when the landmark's stage starts before they are gone. Such a landmark goes later only by a loss that names it in its `select` (a lake drained before the arena on its ground: the arena waits for the water too). Trees on the site stay unless a loss names them, and the houses there do not keep a tree out, so the new precinct's garden is planted where they stood; clipcheck counts a tree that rises before the house under it is gone. Without `for`
 a landmark's site is empty from the start, which is right only for what stood there before the houses. The city's outline and the ground where today's buildings stepped aside stay as they were (a shrunken city's walls usually stand).
-**How many period cities:** as many as the history has. At most eight stand or are drawn (a ghost outline) at the same moment, each lighting one channel (where today's buildings
-step aside, its front and its edge); cities apart in time share a channel, and compile says which (`era channels`) or stops at a ninth at once.
+**How many period cities:** as many as the history has. At most twelve stand or are drawn (a ghost outline) at the same moment, each lighting one channel (where today's buildings
+step aside, its front and its edge); cities apart in time share a channel, and compile says which (`era channels`) or stops at a thirteenth at once. A film that fits in eight
+keeps eight (the engine's uniforms as small as they can be); one with more takes twelve (`hide3.png`, `edge3.png`, `film.eraSlots`): a city with a long history keeps the
+survivors of many periods standing together (a temple of one, a church of another, a palace of a third).
 
 The boundary is computed automatically from the generated buildings; for a boundary the buildings cannot give (a village moat) add `outline:`, and the footprints of the historic cities at the end are also drawn from it;
 a city laid over the previous period writes `avoid_eras: [<id>]`, so the new quarters go around the old city. Walls, elevated corridors and street surfaces on slopes tilt with the slope (citygen `lay`); do not make them into steps segment by segment.

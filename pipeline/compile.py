@@ -279,8 +279,9 @@ def era_boundary(prims, cs):
 
 EW = 1024   # edge distance fields: one era per channel, each over its own crop of the plate (edge.png, edge2.png)
 HIDE_BY, EDGE_BY = {}, {}   # per era: where today's buildings step aside (hide_layer), the distance field to its outline (edge_sdf)
-SLOTS = 8   # channels of hide.png / hide2.png and edge.png / edge2.png (engine/studio.js); cities apart in time share one
-if os.environ.get('CT_ERA_SLOTS'): SLOTS = int(os.environ['CT_ERA_SLOTS'])   # (fewer, to test the sharing on a film that needs none)
+SLOTS, SLOTS_MAX = 8, 12   # channels of hide.png / hide2.png and edge.png / edge2.png (engine/studio.js); cities apart in time share one; a film with
+                           # more standing at once takes 12 (hide3.png, edge3.png: film.eraSlots, the engine sizes its uniforms to it)
+if os.environ.get('CT_ERA_SLOTS'): SLOTS = SLOTS_MAX = int(os.environ['CT_ERA_SLOTS'])   # (fewer, to test the sharing on a film that needs none)
 
 def edge_sdf(bnd, D):
     """distance to the era's outline, in units of D (0 on the line, 1 at D or beyond), over the outline's bounding box (+D).
@@ -1789,22 +1790,31 @@ def occupancy(e):
     a = min([e['on']] + [f['curve'][0][0] for f in e.get('fronts') or []]) - 1.0
     iv = [[a, (e['fallR']['gone'] if e.get('fallR') else DUR) + 1.0]]
     return iv + [[n['arrive'] - 1.0, n['t1'] + 1.0] for n in nodes_out if e['id'] in (n.get('ghost') or [])]
-SLOT_HELD = [[] for _ in range(SLOTS)]   # per channel, the eras that hold it, in time order
-if len(eras_out) <= SLOTS:   # one channel each, in the order of the film
-    for i_, e in enumerate(eras_out): e['hide'] = i_; SLOT_HELD[i_].append(e['id'])
-else:   # cities apart in time share a channel: the engine loads the one in use (engine/main.js slots)
-    occ_ = {e['id']: occupancy(e) for e in eras_out}
-    meet = lambda A, B: any(a0 < b1 and b0 < a1 for a0, a1 in A for b0, b1 in B)
+occ_ = {e['id']: occupancy(e) for e in eras_out}
+meet = lambda A, B: any(a0 < b1 and b0 < a1 for a0, a1 in A for b0, b1 in B)
+def assign_slots(n):
+    """per channel, the eras that hold it, in time order: one each in the order of the film when they fit, else cities apart in time
+    share a channel (the engine loads the one in use: engine/main.js slots). -> (held, None), or (None, (era, from, with)) when n will not do"""
+    held = [[] for _ in range(n)]
+    if len(eras_out) <= n:
+        for i_, e in enumerate(eras_out): held[i_].append(e['id'])
+        return held, None
     for e in sorted(eras_out, key=lambda e: min(a for a, _ in occ_[e['id']])):
-        h = next((k for k in range(SLOTS) if not any(meet(occ_[e['id']], occ_[o]) for o in SLOT_HELD[k])), None)
-        if h is None:
-            t_ = min(a for a, _ in occ_[e['id']]); with_ = [o for k in range(SLOTS) for o in SLOT_HELD[k] if meet(occ_[e['id']], occ_[o])]
-            raise SystemExit(f"compile: era {e['id']}: more than {SLOTS} period cities stand or are drawn at once from {t_:.1f} s (with {', '.join(with_)}); "
-                             f"the engine lights {SLOTS} at a time: take one back earlier (until, off_at) or tell a change inside a city with stages and lose:")
-        e['hide'] = h; SLOT_HELD[h].append(e['id'])
-    for e in eras_out:
-        if len(SLOT_HELD[e['hide']]) > 1: e['occupy'] = [[round(a, 3), round(b, 3)] for a, b in occ_[e['id']]]
-    print('  era channels: ' + ', '.join(f'{k}: {"/".join(v)}' for k, v in enumerate(SLOT_HELD) if v))
+        h = next((k for k in range(n) if not any(meet(occ_[e['id']], occ_[o]) for o in held[k])), None)
+        if h is None: return None, (e['id'], min(a for a, _ in occ_[e['id']]), [o for k in range(n) for o in held[k] if meet(occ_[e['id']], occ_[o])])
+        held[h].append(e['id'])
+    return held, None
+for SLOTS in sorted({SLOTS, SLOTS_MAX}):   # (8 when they fit: the engine's uniforms as small as they can be)
+    SLOT_HELD, clash_ = assign_slots(SLOTS)
+    if SLOT_HELD: break
+if not SLOT_HELD:
+    raise SystemExit(f"compile: era {clash_[0]}: more than {SLOTS} period cities stand or are drawn at once from {clash_[1]:.1f} s (with {', '.join(clash_[2])}); "
+                     f"the engine lights {SLOTS} at a time: take one back earlier (until, off_at) or tell a change inside a city with stages and lose:")
+slot_of_ = {oid: k for k, v in enumerate(SLOT_HELD) for oid in v}
+for e in eras_out:
+    e['hide'] = slot_of_[e['id']]
+    if len(SLOT_HELD[e['hide']]) > 1: e['occupy'] = [[round(a, 3), round(b, 3)] for a, b in occ_[e['id']]]
+if len(eras_out) > SLOTS: print(f'  era channels ({SLOTS}): ' + ', '.join(f'{k}: {"/".join(v)}' for k, v in enumerate(SLOT_HELD) if v))
 # dug pools (citygen): one map for the film, each basin's outline, water top and number; the engine lowers the plate inside
 # a basin below its water while the basin stands (its number's uniform follows its pool rising, taken back or lost), so a
 # pool on uneven ground is water from rim to rim; the ground comes back when the pool is taken back or lost
@@ -2053,7 +2063,7 @@ if grow and grow.get('yl'):
           f'{int(np.isnan(seen_).sum())} are never in view before the end (they rise with the counter, unseen)')
 # masks -> two RGBA textures
 hch = [HIDE_BY[v[0]] if v else Image.new('L', (HW, HH), 0) for v in SLOT_HELD]   # (a shared channel holds its first city; the others in their own files)
-while len(hch) < 8: hch.append(Image.new('L', (HW, HH), 0))
+while len(hch) < SLOTS: hch.append(Image.new('L', (HW, HH), 0))
 own_ = {oid for v in SLOT_HELD if len(v) > 1 for oid in v}
 for oid in own_: HIDE_BY[oid].save(LAYOUT.data(D, f'hide_{oid}.png')); EDGE_BY[oid].save(LAYOUT.data(D, f'edge_{oid}.png'))
 for f_ in os.listdir(LAYOUT.data(D, '')):   # (a city's own files left from a build that shared its channel)
@@ -2074,8 +2084,11 @@ except Exception as ex:
     print('locator: skipped', ex)
 Image.merge('RGBA', hch[4:8]).save(LAYOUT.data(D, 'hide2.png'))
 ech = [EDGE_BY[v[0]] if v else Image.new('L', (EW, EW), 255) for v in SLOT_HELD]
-while len(ech) < 8: ech.append(Image.new('L', (EW, EW), 255))
+while len(ech) < SLOTS: ech.append(Image.new('L', (EW, EW), 255))
 Image.merge('RGBA', ech[:4]).save(LAYOUT.data(D, 'edge.png')); Image.merge('RGBA', ech[4:8]).save(LAYOUT.data(D, 'edge2.png'))
+for f_, ch_ in (('hide3.png', hch[8:12]), ('edge3.png', ech[8:12])):   # (a film with more than 8 cities at once; none left from an older build)
+    if SLOTS > 8: Image.merge('RGBA', ch_).save(LAYOUT.data(D, f_))
+    elif os.path.exists(LAYOUT.data(D, f_)): os.remove(LAYOUT.data(D, f_))
 while len(mask_chans) < 12: mask_chans.append(Image.new('L', (MW, MH), 0))
 Image.merge('RGBA', mask_chans[0:4]).save(LAYOUT.data(D, 'layers1.png'))
 Image.merge('RGBA', mask_chans[4:8]).save(LAYOUT.data(D, 'layers2.png'))
@@ -2157,7 +2170,7 @@ film = {
     'decals': decals_out, 'satellite': sat_out(sat),
     'footage': footage_out, 'end': end, 'ev': evs, 'music': FM.get('music', {}),
     'labels': labels_out,
-    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinSlots': nb_} if nb_ > 32 else {}), **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
+    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinSlots': nb_} if nb_ > 32 else {}), **({'eraSlots': SLOTS} if SLOTS > 8 else {}), **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],

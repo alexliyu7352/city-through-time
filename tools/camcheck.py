@@ -44,10 +44,10 @@ def main():
         tp.append(ring); tb.append(r[3] if len(r) > 3 else 0.0); tt.append((r[3] if len(r) > 3 else 0.0) + r[1])
     today = np.array([shapely.Polygon(r) for r in tp]); tb = np.array(tb); tt = np.array(tt)
     ctr = shapely.get_coordinates(shapely.centroid(today))
-    hide = [np.asarray(Image.open(os.path.join(D, f)).convert('RGBA')).astype(np.float32) / 255 for f in ('hide.png', 'hide2.png')]
+    hide = [np.asarray(Image.open(os.path.join(D, f)).convert('RGBA')).astype(np.float32) / 255 for f in ('hide.png', 'hide2.png', 'hide3.png') if f != 'hide3.png' or os.path.exists(os.path.join(D, f))]   # (hide3: film.eraSlots 12)
     Hh, Hw = hide[0].shape[:2]
     u = np.clip(((ctr[:, 0] / PW + .5) * Hw).astype(int), 0, Hw - 1); v = np.clip(((ctr[:, 1] / PD + .5) * Hh).astype(int), 0, Hh - 1)
-    hm = np.concatenate([hide[0][v, u], hide[1][v, u]], axis=1)          # n x 8
+    hm = np.concatenate([h_[v, u] for h_ in hide], axis=1)          # n x 8 (or 12)
     ttree = shapely.STRtree(today)
     eras = []
     for e in FILM.get('eras', []):
