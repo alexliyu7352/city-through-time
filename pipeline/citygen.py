@@ -1362,6 +1362,14 @@ def with_trace(spec, F, city_dir):
 
 BUILTIN_LANDMARKS = ('temple', 'office', 'palace', 'belltower', 'pagoda', 'front_hall', 'court', 'armoury', 'market', 'workshops', 'pool_ring', 'taixie', 'terrace', 'hall',
                      'paifang', 'kilns', 'pool', 'platform', 'ditch', 'factory', 'chimney', 'station', 'tower', 'corridor', 'bridge', 'boats', 'village')   # the generator's own landmark kinds (build_city): one region's (north China), and its modern ones
+def pool_ring(P, L):
+    """a pool's outline (UTM, through the frame P at its centre): its w_m x d_m rectangle, or with shape: round the ellipse in it
+    (a fountain's basin, a round tank: its water's edge is the outline exactly as drawn, compile's basin map)"""
+    w_, d_, sh = L['w_m'], L['d_m'], L.get('shape', 'rect')
+    if sh == 'rect': return [P(-w_ / 2, -d_ / 2), P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2), P(-w_ / 2, d_ / 2)]
+    if sh == 'round': return [P(w_ / 2 * math.cos(2 * math.pi * i / 32), d_ / 2 * math.sin(2 * math.pi * i / 32)) for i in range(32)]
+    raise SystemExit(f"citygen: pool {L.get('id') or L.get('name') or ''}: shape {sh!r}: rect (default) or round")
+
 BUILTIN_TYPES = ('courtyard', 'dwelling', 'hut', 'slab', 'wards')   # the generator's own houses: one region's (north China)
 TYPES_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'types')   # the shared library of house types
 FORMS = ('detached', 'row', 'court', 'compound')
@@ -1643,9 +1651,9 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
             # only a corner or two went down (a 50 x 25 m pool showed a triangle of water); its water is at the ground anyway
             P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']
             B._emit(BOX, x, y, th, 0, 1, 1, .05, part=WATER); B.found = 0.0
-            B.basins.append({'ring': [P(-w_ / 2, -d_ / 2), P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2), P(-w_ / 2, d_ / 2)], 'top_m': None, 'gid': B.gid})
+            B.basins.append({'ring': pool_ring(P, L), 'top_m': None, 'gid': B.gid})
         elif k == 'pool':   # a dug basin: its water at the lowest point of its rim, the ground inside lowered below it (compile's basin map)
-            P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']; ring_ = [P(-w_ / 2, -d_ / 2), P(w_ / 2, -d_ / 2), P(w_ / 2, d_ / 2), P(-w_ / 2, d_ / 2)]
+            P = B.frame(x, y, th); w_, d_ = L['w_m'], L['d_m']; ring_ = pool_ring(P, L)
             rim = [B.ground_m(a[0] + (b[0] - a[0]) * i / n_, a[1] + (b[1] - a[1]) * i / n_) for a, b in zip(ring_, ring_[1:] + ring_[:1])
                    for n_ in [max(2, math.ceil(math.hypot(b[0] - a[0], b[1] - a[1]) / 8))] for i in range(n_)]
             top = min(rim) - .3; bank = max(rim) - top

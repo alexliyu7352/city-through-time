@@ -240,7 +240,7 @@ Mountain cities have big slopes and can mostly take only ×1–1.5 (the mountain
 (it does not use "data height minus building height": a cell mixes roofs and streets and the building height is an estimate, so the subtraction comes out pitted).
 Tombs, loess plateaus and river banks are not buildings and stay as they are. `terrain.bare: false` does not level.
 Not built yet (wait for the first mountain city): houses on steep slopes lined up along contour lines, and no houses where it is too steep.
-**A pool is a dug basin** (`kind: pool`): its water stands at the lowest point of its rim, and the plate inside it is lowered below the water while it stands
+**A pool is a dug basin** (`kind: pool`, its `w_m` x `d_m` rectangle, or with `shape: round` the ellipse in it: a fountain's basin, a round tank): its water stands at the lowest point of its rim, and the plate inside it is lowered below the water while it stands
 (back when it is taken back or lost), so a lake on uneven ground is water from bank to bank. Pools that touch (an L-shaped lake drawn as two) share one level.
 When today's ground rises more than `banks_m` (6 m) round a pool, compile stops: dug there it would stand in a pit, and the place or the size is usually wrong
 (today's ground is not the ancient one; a pool drawn across the foot of a hill); move it within what its source allows, and say so in its note, or, for a basin
