@@ -1700,6 +1700,7 @@ if NEWPLAN:
     json.dump(PLAN, open(LAYOUT.logs(D, 'plan.json'), 'w'), ensure_ascii=False, indent=1)   # what the algorithm inserted (for reading)
     sys.stdout.flush(); os.environ['CT_PLAN'] = json.dumps(PLAN); os.environ['CT_PASS'] = str(PASS + 1)
     os.execv(sys.executable, [sys.executable, '-I', os.path.abspath(__file__), D])
+if not STUDY: json.dump(PLAN, open(LAYOUT.logs(D, 'plan.json'), 'w'), ensure_ascii=False, indent=1)   # (the plan this compile ran with, also when it added nothing: an older file read as current put back an obsolete hold)
 if PLAN: print(f'  plan: {sum(len(v) for v in PLAN.values())} insertions after {PASS} passes, ' + ', '.join(f'{k} +{sum(q["delta"] for q in v):.1f} s' for k, v in PLAN.items()))
 # one front at a time: the engine draws a single front per city (engine/main.js: the stage growing now), so a second stage running
 # at the same time rises with no light ahead of it (e.g. new quarters coming up before the sweep reaches them)
