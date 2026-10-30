@@ -93,9 +93,9 @@ Pictures in the film have two uses: each historic node ends with "the same place
 - Pins or labels of schematic polygons get "（示意）" ("schematic"); estimated positions get "（位置示意）" ("location schematic").
 - End card lines two and three: data sources and licences; "heights and years are estimates"; "historical sources: see FACTS.md".
 
-## Modern "growing taller": GHSL built volume (`pipeline/ghsl_change.py`)
+## Modern change: GHSL built-up series (`pipeline/ghsl_change.py`)
 
 - Data: GHS-BUILT-V R2023A, 100 m cells, every 5 years 1975–2030 (2025 and 2030 are projections; only up to 2020 is read), CC BY 4.0. Download: `uv run python -I pipeline/ghsl_change.py fetch cities/<slug>` (the 1000 km tiles that cover the box, one or more; 12 periods, about 220 MB a tile).
-- Use: for each of today's buildings take the volume series of its cell; if the building already exists later and the cell's volume grew by 1.5 times or more, treat it as "rebuilt taller": it first appears at the height of f0 (= volume then / volume in 2020), and grows to today's height in the periods where the volume grew most. `grow.change: ghsl`.
+- What it holds: when each cell's **built-up ground** grew, not how tall it grew. Its volume for every epoch is that epoch's built surface times the cell's 2018 height (GHSL Data Package 2023, §2.3): a cell's volume over its surface stays the same from 1975 to 2020 (checked over Xianyang: 2,299 growing cells, spread 0.003 % at the median). So it dates when a plot became built-up (the first layer of a building dataset that says only "there by 1987", spread over 1975–1987 by its cell's growth) and counts the new buildings per year; **never show a building growing taller from it** (an earlier version did, for a third of Xianyang's buildings, from growth that was all ground). `grow.change: ghsl`.
 - What it cannot do: **demolition.** The observed volume of R2023A never decreases in any cell (checked over the whole Xianyang extent: no cell decreased between two periods), and no public data records demolished buildings. The film does not talk about demolition.
 - On-screen label: "GHSL 建成体积 · 100 m · 5 年 · 估算" (GHSL built volume · 100 m · 5 years · estimate).

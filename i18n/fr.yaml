@@ -18,7 +18,6 @@ words:
   later_imagining: Imaginé plus tard
   ai: Générée par IA
   new: neufs
-  taller: rehaussés
   chapter: "CHAPITRE {n}"
   locator: LOCALISATION
   credit_author: Auteur     # end-card credits (city.yaml end.credits)

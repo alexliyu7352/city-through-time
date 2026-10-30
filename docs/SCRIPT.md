@@ -229,7 +229,7 @@ and thin strokes do not flicker with compression; the real problem is that Engli
 
 **Languages** (`film.lang`, one or two, any language that has a language pack, not limited to Chinese and English). Language packs are in `i18n/<code>.yaml`
 (existing: zh, zh-Hant, en, ja, ko, fr): script, the maximum length of a subtitle, number rules, how years are written (前 350, 紀元前350年, 기원전 350년, 350 BCE),
-and the words the program itself puts on screen (今天 (today), 實拍 (live footage), 想像圖 (imagined picture), 新建 (new), 長高 (taller), CHAPTER, LOCATOR). New language: copy a language pack and translate it, and check with `uv run python -I pipeline/i18n.py`.
+and the words the program itself puts on screen (今天 (today), 實拍 (live footage), 想像圖 (imagined picture), 新建 (new), CHAPTER, LOCATOR). New language: copy a language pack and translate it, and check with `uv run python -I pipeline/i18n.py`.
 - The city's own words: every line of narration needs every language (script.yaml); pins, place names and card titles are written per language (`zh:`, `ja:`…); readouts, identity, end card, sections and sources
   can be written in one language (the first) or per language (`{ ja: ..., en: ... }`). If any text on screen lacks a language, compile lists it and stops.
 - Reading time by script (text nobody says): Chinese characters and kana 4.5 characters per second, Hangul 6 syllables per second, letters 15 per second. Speaking rate per language pack (`speak`, the voiced language needs it:

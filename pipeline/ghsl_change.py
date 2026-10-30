@@ -1,9 +1,10 @@
 """What changed where, 1975-2030: the GHSL built-up volume series (GHS-BUILT-V R2023A, 100 m cells, every 5 years, CC BY 4.0)
 read against today's buildings (CMAB or Overture). Building datasets know only today's footprints and heights and, at best, when
-a plot first became built-up; the volume series adds what they cannot know:
-  taller   a cell whose volume kept growing after its buildings were already there: rebuilt or added to (平房 -> 高楼).
-           Its buildings rise first low (f0 of today's height) and reach today's height over the epochs of that growth.
-Demolition cannot be read: in R2023A the observed volume (1975-2020) never decreases in a cell (checked over Xianyang: no cell
+a plot first became built-up; the series adds when each cell's built-up ground grew. It holds no history of heights: R2023A's
+volume for every epoch is that epoch's built surface times the cell's 2018 height (GHSL Data Package 2023, §2.3), so a cell's
+volume over its surface stays the same from 1975 to 2020 (checked over Xianyang: 2,299 cells built by 1975 and growing, the
+ratio's spread 0.003 % at the median). A cell whose volume grew grew in ground, not in height: no building is shown growing
+taller from it (an earlier version did, for a third of Xianyang's buildings, without a basis). Demolition cannot be read: in R2023A the observed volume (1975-2020) never decreases in a cell (checked over Xianyang: no cell
 loses volume between any two epochs), and no open dataset records buildings that are gone. The film can only say what grew.
 Everything here is an estimate at 100 m x 5 years, labelled so on screen (docs/DATA.md).
 
@@ -14,7 +15,7 @@ Everything here is an estimate at 100 m x 5 years, labelled so on screen (docs/D
 
   python -I pipeline/ghsl_change.py fetch <city_dir>     download the volume tiles that cover the city's area (~220 MB a tile)
                                                        to raw/ghsl/ (raw/: this machine's raw root, pipeline/local.py; pipeline/ghsl.py)
-  change(raw, frame, model) -> {'renew': [[i, f0, yA, yB], ...], 'early': [[i, year], ...], 'counts': [[year, new, taller], ...]}
+  change(raw, frame, model) -> {'renew': [] (none: see above), 'early': [[i, year], ...], 'counts': [[year, new], ...]}
 """
 import json, math, os, sys
 import numpy as np
@@ -24,7 +25,7 @@ import ghsl
 EPOCHS = ghsl.EPOCHS
 LAST_OBSERVED = 2020   # the later epochs of R2023A are projections: change is read up to here
 FIRST_LAYER = 1987     # CMAB's earliest layer ("already there in 1987"): dated within 1975..1987 from the cell's volume
-VERSION = 2            # the cache's layout (bump when the output changes)
+VERSION = 3            # the cache's layout (bump when the output changes)
 
 
 def cube(raw, box):
@@ -56,9 +57,9 @@ def cube(raw, box):
     return np.array(V), T
 
 
-def change(raw, frame, model, cache=None, grow=1.5):
-    """per building of today (model['p'], model['b']): renewal [i, f0, yA, yB] where its cell's volume grew `grow` times or more
-    after the building was first there; yearly counts (cumulative)"""
+def change(raw, frame, model, cache=None):
+    """per building of today (model['p'], model['b']): the first layer dated from its cell's growth (early); yearly counts of new
+    buildings (cumulative); renew stays empty (the volume holds no history of heights: the module's docstring)"""
     if cache and os.path.exists(cache):
         c_ = json.load(open(cache))
         if c_.get('version') == VERSION and c_.get('n') == len(model['p']): return c_   # (buildings added or removed: computed again)
@@ -69,25 +70,10 @@ def change(raw, frame, model, cache=None, grow=1.5):
     def cell(xm, ym):   # Mollweide -> (row, col) or None
         c, r = ~T * (xm, ym); r, c = int(r), int(c)
         return (r, c) if 0 <= r < V.shape[1] and 0 <= c < V.shape[2] else None
-    # today's buildings: centroid (UTM) -> cell; renewal where the cell grew after the building was there
-    renew = []
+    # today's buildings: centroid (UTM) -> cell
     cx_ = [sum(p[0] for p in rec[2][0]) / len(rec[2][0]) for rec in model['p']]; cz_ = [sum(p[1] for p in rec[2][0]) / len(rec[2][0]) for rec in model['p']]
     ux = [x / S + frame.cx for x in cx_]; uy = [-z / S + frame.cy for z in cz_]
     mx, my = to_moll.transform(ux, uy)
-    for i, (rec, a, b) in enumerate(zip(model['p'], mx, my)):
-        rc = cell(a, b)
-        if rc is None: continue
-        yr = model['b'][rec[0]][0] or 1987
-        ser = V[:iL + 1, rc[0], rc[1]]
-        e0 = max(0, min(iL, ei.get(min(EPOCHS, key=lambda y: abs(y - max(yr, 1975))), 0)))
-        v0, vL = ser[e0], ser[iL]
-        if v0 <= 0 or vL < v0 * grow: continue
-        d = np.diff(ser[e0:])   # the epochs of growth: from the first to the last with a third of the largest step
-        if not len(d) or d.max() <= 0: continue
-        big = np.nonzero(d >= d.max() / 3)[0]
-        yA, yB = EPOCHS[e0 + big[0]], EPOCHS[e0 + big[-1] + 1]
-        f0 = max(.15, min(.8, v0 / vL))
-        renew.append([i, round(f0, 3), yA, yB])
     # the first layer dated from the cell's volume, 1975-1987
     early = []; i75, i80, i85, i90 = ei[1975], ei[1980], ei[1985], ei[1990]
     for i, (rec, a, b) in enumerate(zip(model['p'], mx, my)):
@@ -106,12 +92,12 @@ def change(raw, frame, model, cache=None, grow=1.5):
         else: y = 1985 + (FIRST_LAYER - 1985) * (r - f85) / max(1 - f85, 1e-6)
         early.append([i, round(y, 2)])
     eff = {i: y for i, y in early}
-    # yearly counts (cumulative from 1975): new buildings by their (estimated) first year, taller ones by the end of their growth
+    # yearly counts (cumulative from 1975): new buildings by their (estimated) first year
     years = list(range(1975, 2025)); counts = []
     by = [eff.get(i, model['b'][rec[0]][0]) for i, rec in enumerate(model['p'])]
     for Y in years:
-        counts.append([Y, sum(1 for y in by if y and 1975 < y <= Y), sum(1 for q in renew if q[3] <= Y + 2.5)])
-    out = {'version': VERSION, 'n': len(model['p']), 'renew': renew, 'early': early, 'counts': counts, 'note': 'GHS-BUILT-V R2023A, 100 m, 5-year epochs, estimate'}
+        counts.append([Y, sum(1 for y in by if y and 1975 < y <= Y)])
+    out = {'version': VERSION, 'n': len(model['p']), 'renew': [], 'early': early, 'counts': counts, 'note': 'GHS-BUILT-V R2023A, 100 m, 5-year epochs, estimate'}
     if cache: json.dump(out, open(cache, 'w'), separators=(',', ':'))
     return out
 

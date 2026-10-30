@@ -19,7 +19,6 @@ words:
   later_imagining: 後人想像
   ai: AI 生成
   new: 新建
-  taller: 長高
   chapter: "第 {n} 章"
   locator: 定位
   credit_author: 作者     # end-card credits (city.yaml end.credits)

@@ -18,7 +18,6 @@ words:
   later_imagining: 후대의 상상
   ai: AI 생성
   new: 신축
-  taller: 증축
   chapter: "제{n}장"
   locator: 위치
   credit_author: 작가     # end-card credits (city.yaml end.credits)

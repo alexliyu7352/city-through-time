@@ -517,10 +517,10 @@ function drawOverlay(t) {
     const q = proj3(Hh.topPos[0], h, Hh.topPos[1]);
     if (q) { OV.txt(null, `${Math.round(h / M.scale)} m`, q[0] + 26, q[1] + 7, 'en_strong', 24, '#ffffff', a, { shadow: 10 }); g.save(); g.globalAlpha = a; g.fillStyle = '#fff'; g.fillRect(q[0] + 8, q[1] - 1, 12, 2); g.restore(); }
   }
-  if (FILM.grow && FILM.grow.counters && FILM.change) {   // new and taller buildings so far (cumulative, by the year counter)
+  if (FILM.grow && FILM.grow.counters && FILM.change) {   // the buildings new so far (cumulative, by the year counter): one column per label
     const C = FILM.grow.counters, cs = FILM.change.counts, Y = yearAt(t), i = Math.max(0, Math.min(cs.length - 2, Math.floor(Y - cs[0][0]))), f = Math.max(0, Math.min(1, Y - cs[i][0]));
     const rdy = Math.max(0, ...(FILM.readouts || []).map(q => ((q.legend ? q.legend.length * 32 : 0) + (q.bar ? 50 : 0) + OV.noteDrop(q.note)) * OV.env(t, q.t0 - .6, q.t1 + .6, .6, .6)));   // (eased: no jump)
-    OV.counters(t, C, [1, 2].map(j => cs[i][j] + (cs[i + 1][j] - cs[i][j]) * f), OV.env(t, C.t0, C.t1, .6, .6) * (1 - fa), rdy);
+    OV.counters(t, C, (C.a || C.zh).map((_, k) => cs[i][k + 1] + (cs[i + 1][k + 1] - cs[i][k + 1]) * f), OV.env(t, C.t0, C.t1, .6, .6) * (1 - fa), rdy);
   }
   if (ffull < .99) for (const p of FILM.pins || []) OV.pin(t, at([p.pos[0], p.pos[1], (p.pos[2] || 0) + .002]), p, 1 - ffull);   // (no pins over a full-screen clip)
   for (const m of FILM.marks || []) OV.mark(t, at([m.pos[0], m.pos[1], (m.pos[2] || 0) + .001]), m);

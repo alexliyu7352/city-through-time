@@ -18,7 +18,6 @@ words:
   later_imagining: 後世の想像
   ai: AI生成
   new: 新築
-  taller: 高層化
   chapter: "第{n}章"
   locator: 位置
   credit_author: 作者     # end-card credits (city.yaml end.credits)

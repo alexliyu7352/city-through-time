@@ -789,7 +789,7 @@ def lost_by(era_id, node_index):
     if not L: return [0] * len(PRIMS[era_id])
     by = {j: FM['nodes'].index(lose_node(era_id, ls)) <= node_index for j, ls in enumerate(cs['lose'], 1)}
     return [bool(j) and by[j] for j in L]
-CHANGE = None   # what grew taller where (ghsl_change), when a node asks for it   # era primitives by id; a node's landing beam; camera follow windows (hand keys must stay out)
+CHANGE = None   # the first layer dated and the yearly counts (ghsl_change), when a node asks for it   # era primitives by id; a node's landing beam; camera follow windows (hand keys must stay out)
 PROP_MARKS = {}   # prop id -> [x, z, top_y] so pins can anchor on props
 MW = 2048; MH = round(MW * F.size[1] / F.size[0])
 mask_chans = []; MASK_USE = []   # epoch mask channels and what uses each (on, off, shape, wash disk)
@@ -1254,10 +1254,10 @@ for i, node in enumerate(FM['nodes']):
         grow = {'on': T(G.get('at', 0)), 'mono': bool(G.get('mono', False)), 'warm': float(G.get('warm', 0)), 'bands': [{'band': k, 't': T(b['t']), '_traw': b['t'], 'spread': b.get('spread', 1.0)} for k, b in enumerate(G['bands'])]}
         if 'dim' in G: grow['dim'] = {'t': T(G['dim']['t']), '_traw': G['dim']['t'], 'to': G['dim'].get('to', .4)}
         assert len(grow['bands']) == len(bands), 'grow.bands must list one entry per band'
-        if G.get('change') == 'ghsl':   # what grew taller where (GHSL built-up volume, pipeline/ghsl_change.py); counters per year
+        if G.get('change') == 'ghsl':   # the first layer dated and the new buildings counted per year (GHSL built-up, pipeline/ghsl_change.py)
             import ghsl_change
             CHANGE = ghsl_change.change(local.raw(), F, _MODEL, cache=LAYOUT.data(D, 'ghsl_change.json'))
-            grow['counters'] = {'t0': T(G.get('counters_at', 1.0)), 't1': node['_t1'], '_until': G.get('counters_until'), 'a': [i18n.word(LANG[0], 'new'), i18n.word(LANG[0], 'taller')], 'b': [i18n.word(LANG[-1], 'new'), i18n.word(LANG[-1], 'taller')] if len(LANG) > 1 else None, 'note': tx(G.get('counters_note', 'GHSL 建成体积 · 100 m · 5 年 · 估算'))}
+            grow['counters'] = {'t0': T(G.get('counters_at', 1.0)), 't1': node['_t1'], '_until': G.get('counters_until'), 'a': [i18n.word(LANG[0], 'new')], 'b': [i18n.word(LANG[-1], 'new')] if len(LANG) > 1 else None, 'note': tx(G.get('counters_note', 'GHSL 建成体积 · 100 m · 5 年 · 估算'))}
         if 'follow_change' in node:   # the camera flies over where the city changed most, window by window (docs/STAGING.md)
             fc = node['follow_change']; y0_, y1_ = node['_years']; K = int(fc.get('windows', 5))
             Mb = _MODEL['b']; ev = []   # (year, x, z, weight)
@@ -1266,9 +1266,6 @@ for i, node in enumerate(FM['nodes']):
             for i_, rec in enumerate(_MODEL['p']):
                 yr_ = Mb[rec[0]][0]; ring = rec[2][0]; x_ = sum(p[0] for p in ring) / len(ring); z_ = sum(p[1] for p in ring) / len(ring)
                 if yr_ and y0_ < yr_ <= y1_ and (reg_ is None or reg_.contains(_Pt(x_, z_))): ev.append((yr_, x_, z_, rec[1]))
-            for i_, f0_, yA_, yB_ in (CHANGE or {}).get('renew', []):
-                ring = _MODEL['p'][i_][2][0]; x_ = sum(p[0] for p in ring) / len(ring); z_ = sum(p[1] for p in ring) / len(ring)
-                if reg_ is None or reg_.contains(_Pt(x_, z_)): ev.append(((yA_ + yB_) / 2, x_, z_, _MODEL['p'][i_][1] * (1 - f0_)))
             ty = lambda Y: node['_t0'] + (Y - y0_) / ((y1_ - y0_) or 1) * (node['_t1'] - node['_t0'])
             az_ = float(fc.get('az0', 50)); daz = float(fc.get('az_step', -10))
             for k_ in range(K):

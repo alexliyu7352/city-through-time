@@ -311,7 +311,7 @@ export function makeOverlay(canvas) {
     if (bTxt) txt(null, bTxt, x + 18, y + 52, 'en_strong', 14, 'rgba(235,238,242,.85)', a, { ls: 1 });
   }
 
-  // counters under the readout: what changed so far (e.g. new / taller buildings), numbers rolling with the year
+  // counters under the readout: what changed so far (e.g. new buildings), numbers rolling with the year
   function counters(t, C, vals, a, dy = 0) {   // dy: below a readout's legend or bar (they share the left column)
     if (a <= 0) return;
     const X = 96, Y = 724 + dy;

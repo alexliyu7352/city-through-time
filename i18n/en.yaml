@@ -19,7 +19,6 @@ words:
   later_imagining: A later imagining
   ai: AI-generated
   new: new
-  taller: taller
   chapter: "CHAPTER {n}"
   locator: LOCATOR
   credit_author: Author     # end-card credits (city.yaml end.credits)
