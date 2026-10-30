@@ -9,12 +9,19 @@ They show the film's own models, but they are not the film: no timeline, no film
 - A part shown as known that the sources only guess at (a roof form, a stair's place, the half that was never dug) → every part is sourced or estimated, and an unclear one is estimated ("Parts").
 - A picture whose roofs and walls do not sit on the model, or a viewpoint moved after its picture was made → look at the `sheet` before using it; tools/museum.py drops a picture whose viewpoint moved.
 - Two viewpoints close together → 50 degrees or more apart: one picture shows at a time.
+- A still with the ground ending in a hard edge → the image tool paints the edge as a cliff or a plateau; the stand fades out toward the
+  horizon in every still (engine/museum.js), the prompt says the ground runs on.
+- The walk-round view loading the whole film (about 100 MB, today's city, footage, fonts) → it loads the plate and one hall's cities.
 
 ## Walking the old cities
 
 `play.html?city=<slug>&view&free` (with `&bundle=` on the site): the viewer's public mode (engine/view.js). One period at a time, chosen like a hall
 (`&era=<id>`: the cities standing at its moment, an imperial capital over the city it grew from), in the film's look but sharp, the whole window,
-mouse and touch, down to an eye a few metres over the streets. A landmark that has a museum page is marked, and opens it.
+mouse and touch, down to an eye a few metres over the streets; `&cam=tx,ty,tz,az,el,d` where to stand. It loads only the plate
+(`build/museum/plate.json`: the model without today's buildings, written by tools/museum.py) and each hall's period cities when the hall
+is chosen: a phone can open it. A landmark that has a museum page carries the film's pin (engine/overlay.js: a dot on the building's top,
+a pole up to its name) while seen from above or near; the pin and the building open the page in the same tab, which leads back to the same
+hall and the same place (`&era`, `&from`): one tab is easier to follow on a phone than two.
 
 ## A museum page
 
@@ -39,6 +46,12 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
   shows it full within 10 degrees of it and none past 25 (and as the distance leaves it), it comes back near any viewpoint by itself, and
   while it shows a label says it is an AI reconstruction from the sources. The page opens on the main picture as a plain image and the
   model takes over on the same camera, so the visitor sees the picture at once.
+- **Languages:** Chinese as the film writes it (`zh`), Traditional Chinese for Taiwan and English (`&lang=zh-Hans|zh-Hant|en`). The
+  `zh-Hant` texts are converted, not written: `uv run --with opencc python -I tools/hant.py cities/<slug>` (OpenCC s2twp) writes every zh text
+  of the pages and the periods' names into `museum/zh-Hant.yaml`; read it through (OpenCC can take a historical word for a modern one: 谷道
+  became 穀道, 镜像 映象, 陕西历史 陝西曆史) and correct it there, where a correction stays. tools/museum.py stops on a zh text without one.
+- **The way back:** a museum page opened from the walk-round view returns to it on the same hall, where the visitor stood; opened on its
+  own, to its building's hall, looking at it.
 - **Publishable only:** the page ships the model, its pictures and the life pictures, small; never a non-CC picture, a reference drawing
   or an internal plate. The pictures are AI-generated: list them in CREDITS with their date and tool.
 - **Check:** `node tools/museum.mjs shots <slug> <page>` (desktop and phone: the main picture, turned 15 and 30 degrees, the two tones,

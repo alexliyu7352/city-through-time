@@ -5,7 +5,7 @@ id: qin_palace1
 node: qin
 landmark: { kind: taixie, lon: 108.8575, lat: 34.4143 }
 exaggeration: 1           # the heights as built: the platform's 6 m is 6 m (the film draws this landmark 1.25 times as tall)
-stage_m: [700, 600]       # the flat stand it is shown on, wide enough to fill every viewpoint's ground (the gully that cuts the site today formed after Qin: L1)
+stage_m: [40000, 40000]   # the flat ground it is shown on, faded out round it (engine/museum.js), to the horizon: no viewpoint sees its edge (the gully that cuts the site today formed after Qin: L1)
 
 name: { zh: 咸阳宫一号宫殿, en: Palace No. 1 of the Xianyang Palace }
 era: { zh: 战国中晚期始建，此后多次维修、改建, en: "Built in the mid to late Warring States period, repaired and rebuilt many times after" }
@@ -152,7 +152,7 @@ parts:
 # or more apart. Each has a picture (tools/living.py, its scene card research/museum/qin_palace1/<id>.yaml); main: the page opens there
 viewpoints:
   - { id: front, main: true, at_m: [-10, 0, 9], az: 328, el: 17, d_m: 262, fov: 38, name: { zh: 西南望, en: From the south-west } }
-  - { id: aerial, at_m: [0, 0, 6], az: 15, el: 55, d_m: 300, fov: 36, name: { zh: 高处俯瞰, en: From above } }
+  - { id: aerial, at_m: [0, 0, 8], az: 60, el: 38, d_m: 300, fov: 36, name: { zh: 高处俯瞰, en: From above } }
   - { id: northwest, at_m: [-30, 0, 8], az: 222, el: 14, d_m: 200, fov: 38, name: { zh: 西北望, en: From the north-west } }
   - { id: street, at_m: [-50, -5, 9], az: 30, el: -6.5, d_m: 62, fov: 50, name: { zh: 台下, en: At the foot } }
 

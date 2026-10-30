@@ -65,7 +65,7 @@ function takeSlot(what) {
 }
 const warned = new Set();   // each optional file warns once per process (video.mjs opens several pages)
 const FATAL = new Set(['script', 'document']);   // module imports are scripts too
-export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = false, html = 'play.html', view = { width: 1920, height: 1080 }, dpr = null } = {}) {   // (html, view, dpr: another page, at another size, tools/museum.mjs)
+export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = false, html = 'play.html', view = { width: 1920, height: 1080 }, dpr = null, onPage = null } = {}) {   // (html, view, dpr: another page, at another size, tools/museum.mjs; onPage: told of the page before it loads)
   const { port } = await server();
   const release = await takeSlot(`page ${city} ${q}`.slice(0, 160));
   const browser = await chromium.launch({ executablePath: localPath('chrome') || undefined, args: ARGS });
@@ -78,6 +78,7 @@ export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = fa
     if (m.type() === 'error' && /^Failed to load resource/.test(t)) return;   // the response handler prints it with its URL
     if (m.type() === 'error' || (warnings && m.type() === 'warning')) note('[page] ' + t.slice(0, 300));
   });
+  if (onPage) onPage(page);
   page.on('pageerror', e => { console.error('[pageerror]', e.message); process.exit(1); });   // stop rather than make a broken film
   page.on('response', r => {
     if (r.status() < 400) return;

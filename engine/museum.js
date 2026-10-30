@@ -18,7 +18,7 @@ const FULL_D = .14, GONE_D = .45;            // and by the distance (|ln| of the
 const EYE_M = 1.6, FLY_S = 1.4;              // the lowest the eye goes over the ground; a flight's seconds
 const KEY_AZ = 95;                           // the key light: 50 degrees left of this bearing (studio followShadow), 45 up: from the south-east
 const TONE = { sourced: '#e9c08a', estimated: '#8fa6c6' }, WHITE = '#f4f2ee', PICK = new THREE.Color('#ffb347');
-const STAND = { look: '#efede8', clean: '#8c8c8c' };   // the stand: a light floor in the room; mid grey in the reference, so the model stands clear of it
+const STAND = { look: '#efede8', clean: '#8c8c8c' }, FADE_M = [130, 300];   // (FADE_M: the stand whole within 130 m of the building's middle, gone by 300 m)   // the stand: a light floor in the room; mid grey in the reference, so the model stands clear of it
 const ROOM = { look: [['#eef0f1', 0], ['#e3e6e8', .55], ['#d2d6da', 1]], clean: [['#3a3f47', 0], ['#22262c', 1]] };   // the room behind: exhibition, reference
 
 export async function startMuseum({ stage, base, meta, model, clean = false, vp: vp0 = null, on = {} }) {
@@ -51,6 +51,18 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
     parts.push({ id: p.id, mesh: E.mesh, status: (meta.parts.find(q => q.id === p.id) || {}).status });
   }
   const pickable = parts.filter(p => p.id !== '_stand');
+  // the stand's fade: round the building's middle (x..y, the room's floor), and up the picture toward the horizon (z..w, in pixels:
+  // a reference still's ground receding into the dark in a straight band, as land into haze; any fade on the ground, round the
+  // middle or by the distance from the eye, reads there as the rim of a round platform)
+  const fadeU = { value: clean ? new THREE.Vector4(1e3, 2e3, 1e5, 2e5) : new THREE.Vector4(FADE_M[0] * SC, FADE_M[1] * SC, 1e5, 2e5) };
+  { // the stand fades out round the building, into the room (no square edge: in a still an image tool reads a slab's edge as a cliff)
+    const m = parts.find(p => p.id === '_stand').mesh.material, own = m.onBeforeCompile;
+    m.transparent = true;
+    m.onBeforeCompile = (sh, r) => { own(sh, r); sh.uniforms.uFade = fadeU;
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade;')
+        .replace('#include <opaque_fragment>', 'diffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y)); if (diffuseColor.a < .004) discard;\n#include <opaque_fragment>'); };
+    m.customProgramCacheKey = () => 'proj0fade';
+  }
   // the viewpoints and their pictures (the main one is on screen already, as the page's first picture)
   const VP = meta.viewpoints.map(v => ({ ...v, tex: null, A: v.picture ? v.picture.w / v.picture.h : 16 / 9 }));
   const loader = new THREE.TextureLoader(); loader.setCrossOrigin('anonymous');
@@ -101,6 +113,11 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
     keep(); camera.lookAt(controls.target);
     const { t, d } = pose();
     camera.near = clamp(d * .04, .00002, .002); camera.updateProjectionMatrix(); camera.updateMatrixWorld();   // (close up to the walls the near plane follows)
+    if (clean) {   // (the horizon: where a point far ahead at the eye's height lands; the ground fades over the quarter of the picture under it)
+      const f = new THREE.Vector3(), k = H * renderer.getPixelRatio(); camera.getWorldDirection(f); f.y = 0; f.normalize();
+      const y = (camera.position.clone().addScaledVector(f, 1).project(camera).y * .5 + .5) * k;
+      fadeU.value.set(1e3, 2e3, y - .25 * k, y);
+    }
     const P = clean ? { v: null, a: 0 } : pictureNow();
     if (P.v && P.v !== shown) { S.aimProjector(P.v.cam, P.v.A); U.uPI.value = P.v.tex; shown = P.v; }
     U.uPA.value = P.v ? P.a : 0;

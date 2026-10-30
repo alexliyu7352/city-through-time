@@ -1,21 +1,25 @@
-// A museum page (museum.html?city=<slug>&id=<page>[&lang=zh|en][&bundle=<url>]; docs/MUSEUM.md): the page's words and its first
-// picture at once, then the model (engine/museum.js), which takes over from the picture on the same camera. Built by
+// A museum page (museum.html?city=<slug>&id=<page>[&lang=zh-Hans|zh-Hant|en][&bundle=<url>]; docs/MUSEUM.md): the page's words and
+// its first picture at once, then the model (engine/museum.js), which takes over from the picture on the same camera. Built by
 // tools/museum.py into build/museum/<page>.json (the words, the parts' notes, the viewpoints and their pictures).
+// The way back is a link to the old city it stands in (play.html?view&free): the same period, and where the visitor stood when
+// the walk-round view opened this page (&era=, &from=tx,ty,tz,az,el,d); opened on its own, at the building.
 // ?clean&vp=<viewpoint>: the model alone at that viewpoint, the whole window, the reference look (tools/museum.mjs still, for
 // tools/living.py ref); window.READY once drawn, window.MUSEUM(o) turns it for the report's stills (engine/museum.js view).
-import { words } from './i18n.js';
+import { words, pick } from './i18n.js';
 import { frameOf } from '../engine/lib.js';
 import { REPO } from '../engine/overlay.js';
 
 const QS = new URLSearchParams(location.search);
 const CITY = QS.get('city'), ID = QS.get('id'), BUNDLE = QS.get('bundle'), CLEAN = QS.has('clean');
 const base = BUNDLE ? BUNDLE.replace(/\/?$/, '/') : `cities/${CITY}/`;
-// the page's languages: the text is written in Chinese (Simplified, as the film) and English
-const LANG = (QS.get('lang') || navigator.language || 'en').toLowerCase().startsWith('zh') ? 'zh' : 'en';
-const W = words(LANG === 'zh' ? 'zh-Hans' : 'en'), of = o => (o && (o[LANG] || o.en)) || '';
+// the page's languages: Chinese as the film writes it (Simplified, its texts' zh), Traditional (Taiwan, zh-Hant: tools/hant.py) and English
+const ql = (QS.get('lang') || '').toLowerCase(), nav = pick(navigator.languages);
+const LANG = ql === 'en' ? 'en' : ql === 'zh-hant' ? 'zh-Hant' : ql.startsWith('zh') ? 'zh-Hans' : nav.startsWith('zh') ? nav : 'en';
+const KEY = { 'zh-Hans': 'zh', 'zh-Hant': 'zh-Hant', en: 'en' }[LANG];
+const W = words(LANG), of = o => (o && (o[KEY] || o.zh || o.en)) || '';
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-document.documentElement.lang = LANG === 'zh' ? 'zh-Hans' : 'en';
+document.documentElement.lang = LANG;
 if (CLEAN) document.documentElement.classList.add('clean');
 
 const meta = await (await fetch(base + `build/museum/${ID}.json`)).json();
@@ -31,20 +35,23 @@ function placeFirst() {
 }
 if (!CLEAN && main.picture) { first.src = base + main.picture.file; first.alt = of(meta.name); placeFirst(); addEventListener('resize', placeFirst); }
 
+// the way back to the old city: the period the page's building stands in, where the visitor stood (else at the building)
+const from = (QS.get('from') || '').split(',').map(Number), at = meta.at || [0, 0];
+const walk = `play.html?city=${encodeURIComponent(meta.city)}&view&free&era=${encodeURIComponent(QS.get('era') || meta.node)}&lang=${LANG}${BUNDLE ? '&bundle=' + encodeURIComponent(BUNDLE) : ''}`
+  + `&cam=${from.length === 6 && from.every(Number.isFinite) ? from.join(',') : `${at[0]},0,${at[1]},330,28,0.035`}`;
 // the words
 const cite = list => list && list.length ? `<p class="cite">${esc(W.fmt('museumCite', { list: '' }))}${list.map(k => `<a href="#src-${k}">${esc(of(meta.sources[k].short))}</a>`).join(W.cjk ? '、' : ', ')}</p>` : '';
 const fig = q => q ? `<figure><img src="${esc(base + q.file)}" alt="${esc(of(q.caption))}" loading="lazy"><figcaption>${esc(of(q.caption))}<small>${esc(of(q.credit))}</small></figcaption></figure>` : '';
 function words_() {
   document.title = `${of(meta.name)} · 一城春秋`;
   stage.setAttribute('aria-label', W.fmt('museumStage', { name: of(meta.name) }));
-  $('back').href = `${LANG === 'zh' ? 'zh-hans/' : ''}${meta.city}/`; $('back-text').textContent = W.fmt('museumFilm', { city: of(meta.cityName) });
+  $('back').href = walk; $('back-text').textContent = W.t('walkBack');
   $('tones-text').textContent = W.t('museumTones'); $('fly-text').textContent = W.t('museumFly'); $('hint').textContent = W.t('museumHint');
   $('lg-s').textContent = `${W.t('museumSourced')}: ${W.t('museumSourcedNote')}`; $('lg-e').textContent = `${W.t('museumEstimated')}: ${W.t('museumEstimatedNote')}`;
   $('ai-text').textContent = W.t('museumAi'); $('part-x').setAttribute('aria-label', W.t('close'));
   if (!ready) $('wait').textContent = W.t('museumLoading');
   for (const b of document.querySelectorAll('.langs button')) b.setAttribute('aria-pressed', String(b.dataset.lang === LANG));
-  const alt = LANG === 'zh' ? meta.name.en : meta.name.zh;
-  const walk = `play.html?city=${encodeURIComponent(meta.city)}&view&free&era=${encodeURIComponent(meta.node)}&lang=${LANG}${BUNDLE ? '&bundle=' + encodeURIComponent(BUNDLE) : ''}`;
+  const alt = LANG === 'en' ? meta.name[nav === 'zh-Hant' ? 'zh-Hant' : 'zh'] : meta.name.en, film = `${LANG === 'en' ? '' : LANG.toLowerCase() + '/'}${meta.city}/`;
   const [what, how, ...rest] = meta.label;
   $('label').innerHTML = `<h1>${esc(of(meta.name))}</h1><p class="alt">${esc(alt)}</p>
     <div class="facts"><p>${esc(of(meta.era))}</p><p>${esc(of(meta.where))}</p></div>
@@ -53,7 +60,7 @@ function words_() {
     ${rest.map(s => `<h2>${esc(of(s.head))}</h2><p class="t">${esc(of(s.text))}</p>${cite(s.cite)}`).join('')}
     <h2>${esc(W.t('museumParts'))}</h2><ul class="parts">${meta.parts.map(p => `<li><button type="button" data-part="${esc(p.id)}" aria-pressed="false"><span>${esc(of(p.name))}</span><span class="chip ${p.status}">${esc(W.t(p.status === 'sourced' ? 'museumSourced' : 'museumEstimated'))}</span></button></li>`).join('')}</ul>
     <h2>${esc(W.t('museumSources'))}</h2><ul class="sources">${Object.entries(meta.sources).map(([k, s]) => `<li id="src-${esc(k)}"><b>${esc(of(s.short))}</b>${esc(of(s))}${s.url ? `<br><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url)}</a>` : ''}</li>`).join('')}</ul>
-    <p class="foot"><a href="${esc(walk)}">${esc(W.t('museumWalk'))}</a> · <a href="${REPO}" target="_blank" rel="noopener">一城春秋 · A City Through Time</a> · CC BY-SA 4.0</p>`;
+    <p class="foot"><a href="${esc(walk)}">${esc(W.t('museumWalk'))}</a> · <a href="${esc(film)}">${esc(W.fmt('museumFilm', { city: of(meta.cityName) }))}</a> · <a href="${REPO}" target="_blank" rel="noopener">一城春秋 · A City Through Time</a> · CC BY-SA 4.0</p>`;
   showPart(picked);
 }
 

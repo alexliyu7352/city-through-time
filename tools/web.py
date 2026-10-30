@@ -29,7 +29,7 @@ def files(D):
     out += [v['file'] for v in F.get('living') or []]   # living moments' pictures (assets/living/)
     M = os.path.join(B, 'museum')   # museum pages (tools/museum.py): what museum.html and the viewer's public mode load
     if os.path.exists(os.path.join(M, 'index.json')):
-        out.append('build/museum/index.json')
+        out += ['build/museum/index.json'] + (['build/museum/plate.json'] if os.path.exists(os.path.join(M, 'plate.json')) else [])
         for e in json.load(open(os.path.join(M, 'index.json'), encoding='utf-8')):
             P = json.load(open(os.path.join(M, e['id'] + '.json'), encoding='utf-8'))
             out += [f'build/museum/{e["id"]}.json', P['model']] + [v['picture']['file'] for v in P['viewpoints'] if v.get('picture')]

@@ -9,8 +9,12 @@ usage: uv run python -I tools/museum.py cities/<slug> [<page> ...]      every pa
   writes  build/museum/<page>.json           the page: its words, its parts' notes and status, the viewpoints and their pictures
           build/museum/<page>/model.json     the model: its records part by part, and the stand (engine/props.js buildEra reads them)
           build/museum/<page>/<vp>.jpg       each viewpoint's picture as the page loads it (and the life pictures, smaller)
-          build/museum/index.json            every page: where its landmark stands in the film's model (the viewer's public mode
-                                             opens a page from there: engine/view.js)
+          build/museum/index.json            every page: where its landmark stands in the film's model and the spot its mark
+                                             points at (the viewer's public mode opens a page from there: engine/view.js)
+          build/museum/plate.json            the plate without today's buildings (model.json less them) and the periods' names:
+                                             what the walk-round view loads in place of the 19 MB model (engine/main.js)
+Traditional Chinese: every zh text of the pages and the periods' names has its zh-Hant in museum/zh-Hant.yaml (tools/hant.py,
+OpenCC s2twp, read through by a person); a zh text without one stops the build (it changed since).
 The model is the film's own generator (pipeline/citygen.py) run for the one landmark on level ground, with the exaggeration the
 page gives (1: true heights). Each record goes to the first part whose `labels` (the paths the generator labels its sections
 with: Builder.labelled) and `kinds` (roof: roofs) it matches; a record no part takes stops the build, so every piece of the model
@@ -36,10 +40,17 @@ MIN_APART = 50.0   # degrees between two viewpoints: one picture at a time, each
 def stop(page, m): raise SystemExit(f'museum {page}: {m}')
 
 
+HANT = {}   # Simplified -> Traditional (Taiwan), museum/zh-Hant.yaml
+
+
 def words(page, v, what, need=('zh', 'en')):
-    """a text in the page's languages"""
+    """a text in the page's languages (zh-Hant from the city's zh-Hant.yaml)"""
     if not isinstance(v, dict) or any(not str(v.get(k) or '').strip() for k in need): stop(page, f'{what}: give it in {", ".join(need)} ({{zh: .., en: ..}})')
-    return {k: str(v[k]).strip() for k in need}
+    out = {k: str(v[k]).strip() for k in need}
+    if 'zh' in out:
+        if out['zh'] not in HANT: stop(page, f'{what}: no zh-Hant for "{out["zh"][:30]}" in museum/zh-Hant.yaml: run uv run --with opencc python -I tools/hant.py <city> and read it through')
+        out['zh-Hant'] = HANT[out['zh']]
+    return out
 
 
 def find_landmark(C, D, P, page):
@@ -61,7 +72,7 @@ def find_landmark(C, D, P, page):
 def build_model(F, cs, L, P, page):
     """the landmark alone on level ground, centred on its place: its records, each record's label, and the stand"""
     lon, lat = (L['lon'], L['lat']) if 'lon' in L else L['from']
-    L = {**copy.deepcopy(L), 'exaggeration': float(P.get('exaggeration', 1))}
+    L0, L = L, {**copy.deepcopy(L), 'exaggeration': float(P.get('exaggeration', 1))}
     level = lambda x, y: 0.0
     spec = {'origin': [lon, lat], 'theta_deg': cs.get('theta_deg', 0), 'detail': cs.get('detail', 'medium'), 'exaggeration': L['exaggeration'], 'landmarks': [L]}
     labels = []
@@ -76,9 +87,11 @@ def build_model(F, cs, L, P, page):
         q = list(p); q[1] = round(q[1] - mx, 7); q[2] = round(q[2] - mz, 7); q[10] = 0.0
         if len(q) > 16: q[15] = round(q[15] - mx, 7); q[16] = round(q[16] - mz, 7)
         return q
+    film_ = citygen.build_city({**spec, 'exaggeration': cs.get('exaggeration', 2.0), 'landmarks': [L0]}, F, level, 1.0)   # (as the film draws it: its top, for the walk-round view's mark)
+    top = max(film_, key=lambda q: q[4] + q[7]); anchor = [round(top[1], 6), round(top[4] + top[7], 6), round(top[2], 6)]
     site = citygen.landmark_site(L, F, cs.get('theta_deg', 0))[4]
     x0, y0, x1, y1 = site[0].bounds if site else (ox - 50, oy - 50, ox + 50, oy + 50)
-    return [centred(p) for p in prims], labels, [centred(p) for p in stand], (mx, mz), math.hypot(x1 - x0, y1 - y0) / 2 * F.scale, F.scale
+    return [centred(p) for p in prims], labels, [centred(p) for p in stand], (mx, mz), math.hypot(x1 - x0, y1 - y0) / 2 * F.scale, F.scale, anchor
 
 
 def assign(prims, labels, parts, page):
@@ -139,7 +152,7 @@ def build_page(D, C, page):
     for k in ('node', 'landmark', 'name', 'parts', 'viewpoints', 'sources', 'label'):
         if k not in P: stop(page, f'{k} is missing')
     F, cs, L = find_landmark(C, D, P, page)
-    prims, labels, stand, (mx, mz), r, scale = build_model(F, cs, L, P, page)
+    prims, labels, stand, (mx, mz), r, scale, anchor = build_model(F, cs, L, P, page)
     srcs = {k: {**words(page, v, f'sources.{k}'), 'short': words(page, v.get('short'), f'sources.{k}.short'), **({'url': v['url']} if v.get('url') else {})} for k, v in P['sources'].items()}
     cites = lambda c, what: [x if x in srcs else stop(page, f'{what}: cite {x!r} is not in sources ({", ".join(srcs)})') for x in (c or [])]
     parts = []
@@ -165,7 +178,7 @@ def build_page(D, C, page):
     if sum(v['main'] for v in vps) != 1: stop(page, 'viewpoints: exactly one is main: true (the page opens there)')
     life = P.get('life') or {}
     meta = {'id': page, 'city': os.path.basename(D), 'cityName': words(page, C.get('name'), 'city.yaml name'), 'node': P['node'], 'name': words(page, P['name'], 'name'), 'era': words(page, P.get('era'), 'era'),
-            'where': words(page, P.get('where'), 'where'), 'model': f'build/museum/{page}/model.json',
+            'where': words(page, P.get('where'), 'where'), 'model': f'build/museum/{page}/model.json', 'at': [mx, mz],   # (at: where it stands in the film's model, for the way back)
             'label': [{'head': words(page, s.get('head'), 'label head'), 'text': words(page, s.get('text'), 'label text'), 'cite': cites(s.get('cite'), 'label')} for s in P['label']],
             'life': {'text': words(page, life.get('text'), 'life text'), 'cite': cites(life.get('cite'), 'life'),
                      'pictures': [{'file': small(D, q['file'], out, f'life_{i}.jpg'), 'caption': words(page, q, f'life picture {i}'), 'credit': words(page, q.get('credit'), f'life picture {i}: credit')}
@@ -178,19 +191,28 @@ def build_page(D, C, page):
     print(f'{page}: {n} records in {len(parts)} parts ({", ".join(f"{p["id"]} {len(by[p["id"]])}" for p in parts)}), {len(vps)} viewpoints, '
           f'{sum(1 for v in vps if v["picture"])} with a picture -> build/museum/{page}.json')
     for m in notes: print('  ' + m)
-    return {'id': page, 'node': P['node'], 'x': mx, 'z': mz, 'r': round(r, 6), 'name': meta['name']}
+    return {'id': page, 'node': P['node'], 'x': mx, 'z': mz, 'r': round(r, 6), 'anchor': anchor, 'name': meta['name']}
 
 
 def main():
     if len(sys.argv) < 2: sys.exit(__doc__)
     D = os.path.abspath(sys.argv[1]); M = os.path.join(D, 'museum')
     C = yaml.safe_load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'))
-    pages = sys.argv[2:] or sorted(f[:-5] for f in os.listdir(M) if f.endswith('.yaml')) if os.path.isdir(M) else []
+    hf = os.path.join(M, 'zh-Hant.yaml')
+    if os.path.exists(hf): HANT.update({e['zh']: e['zh-Hant'] for e in yaml.safe_load(open(hf, encoding='utf-8')) or []})
+    pages = sys.argv[2:] or sorted(f[:-5] for f in os.listdir(M) if f.endswith('.yaml') and f != 'zh-Hant.yaml') if os.path.isdir(M) else []
     if not pages: sys.exit(f'museum: {M}: no pages (museum/<page>.yaml, docs/MUSEUM.md)')
     built = [build_page(D, C, p) for p in pages]
     idx = os.path.join(D, 'build', 'museum', 'index.json'); old = json.load(open(idx, encoding='utf-8')) if os.path.exists(idx) else []
     keep = [e for e in old if e['id'] not in {b['id'] for b in built} and os.path.exists(os.path.join(M, e['id'] + '.yaml'))]
     json.dump(sorted(keep + built, key=lambda e: e['id']), open(idx, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    mf = os.path.join(D, 'build', 'data', 'model.json')   # the walk-round view's plate: the model less today's buildings, and the periods' names
+    if os.path.exists(mf):
+        plate = {k: v for k, v in json.load(open(mf, encoding='utf-8')).items() if k not in ('p', 'b', 'mounds')}
+        plate.update(p=[], b=[], mounds=[], name=words('plate', C.get('name'), 'city.yaml name'),
+                     labels={n['id']: words('plate', n['label'], f'node {n["id"]}: label') for n in C['film']['nodes'] if n.get('city') and isinstance(n.get('label'), dict)})
+        json.dump(plate, open(os.path.join(D, 'build', 'museum', 'plate.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+    else: print(f'  (no build/data/model.json: the walk-round view loads the whole model; compile, then run this again)')
 
 
 if __name__ == '__main__':

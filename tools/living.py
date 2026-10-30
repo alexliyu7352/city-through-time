@@ -46,7 +46,7 @@ Look: natural colours, documentary realism, like a well-lit film still; people s
 """
 # what the still shows, for a film's shot and for a museum page's viewpoint (the model alone on its stand)
 STILL = {'living': 'The attached image is a plain white 3D model of {place}, {when}. Some of it only helps the model stand and is not a building: square slabs under monuments are the ground they stand on, dark bands at the foot of walls are shadow, flat grey strips are streets. The empty dark ground and the black sky are to be filled.',
-         'museum': 'The attached image is a plain white 3D model standing alone on a flat grey stand: {place}; the moment: {when}. The grey stand is the level ground round the building: paint it as that ground; its straight edges are not a step, a wall or a cliff: the ground runs on, level, beyond them. The plain dark background beyond the stand is not part of the place: fill it with the land beyond and the sky, as the description says. Dark slits and openings are doorways; thin vertical sticks are timber posts.'}
+         'museum': 'The attached image is a plain white 3D model standing alone on flat grey ground: {place}; the moment: {when}. The grey ground is the level ground round the building: paint it as that ground, running on, level, to the horizon; where it fades into the dark it only goes farther away, it does not end, drop or rise. The plain dark background is not part of the place: fill it with the land beyond and the sky, as the description says. Dark slits and openings are doorways; thin vertical sticks are timber posts.'}
 
 
 def kind(m): return 'museum' if '/' in m['id'] else 'living'   # (a museum page's viewpoint, <page>/<viewpoint>, or a film's moment)
