@@ -151,6 +151,7 @@ def study_folder(city, name):
     os.makedirs(LAYOUT.data(S), exist_ok=True)
     for f in sorted(os.listdir(LAYOUT.data(city))):
         p = LAYOUT.data(city, f)
+        if re.match(r'(era|hide|edge)_.+\.(json|png)$', f): continue   # (the city's own period cities and their channel files: the study compiles its own; a copy of each, tens of MB, in every study filled the disk)
         if os.path.isfile(p): shutil.copy2(p, LAYOUT.data(S, f))
     for d in ('research', 'assets'):   # read only: traces, areas, outlines
         link, real = os.path.join(S, d), os.path.join(city, d)
