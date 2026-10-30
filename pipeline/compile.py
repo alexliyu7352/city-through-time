@@ -38,6 +38,14 @@ _SeenLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _see
 WARN = []   # warnings on the settings, said once at the end (compile runs again for each pass of the stage plan)
 
 D = os.path.abspath(sys.argv[1])
+# the files of the city this compile reads (its research and assets: traces, landmark libraries, areas, pictures): written to
+# build/logs/inputs.json with their sha256, so a study approved as it stands can be frozen with exactly them (tools/freeze.py)
+INPUTS = set()
+def _seen(ev, a):
+    if ev == 'open' and isinstance(a[0], str) and (len(a) < 2 or a[1] is None or 'r' in str(a[1]) or a[1] == 0):
+        p_ = os.path.abspath(a[0])
+        if p_.startswith(D + os.sep) and not p_.startswith(os.path.join(D, 'build') + os.sep) and os.path.isfile(p_): INPUTS.add(os.path.relpath(p_, D))
+sys.addaudithook(_seen)
 import slots; slots.take('compile ' + D)   # (at most two heavy jobs at once on this machine, across agents: pipeline/slots.py)
 C = yaml.load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'), Loader=_SeenLoader)
 import layout as LAYOUT
@@ -2180,6 +2188,8 @@ if PRO:   # the prologue for the page: its length, its closing black, and from e
     if _sc[0][0] > 0 or _sc[-1][0] >= PD: raise SystemExit('compile: film.prologue.scene: the first key at t 0, all before the prologue ends')
     film['prologue'] = {'dur': PD, 'fade': float(PRO.get('fade', .8)), 'scene': _sc}
 json.dump(film, open(LAYOUT.build(D, 'film.json'), 'w'), ensure_ascii=False, indent=1)
+import hashlib
+json.dump({'study': STUDY, 'inputs': {p_: hashlib.sha256(open(os.path.join(D, p_), 'rb').read()).hexdigest() for p_ in sorted(INPUTS)}}, open(LAYOUT.logs(D, 'inputs.json'), 'w'), indent=1)   # (study: compiled as a model study, CT_STUDY: its timing is the study's)
 # the words on the final timeline, written out (subtitles in every language, the timed script for voice work: pipeline/subtitles.py)
 import subtitles as SUBS
 SUBS.write(LAYOUT.export(D), os.path.basename(D), cues, LANG, end_t)

@@ -21,6 +21,8 @@ palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, 
 house types and their share and storeys, the streets and lots of its quarters, its open ground, each item sourced or marked estimate, written into `research/<period>_*`. Periods are independent here:
 one research subagent per period, in parallel (SKILL.md "Subagents and parallel work"). Research done only when a sample is sent back costs a round each time.
 **Every period city starts with one quarter:** lay one quarter from its sources, show its low close-up and a wide shot, and lay the rest of the city only after it is approved (a whole city laid on a wrong idea is redone whole; a quarter is redone in a round).
+Once a study is approved, freeze it: `uv run python -I tools/freeze.py <study folder>` keeps it with exactly the files its compile read (a study links research/ live, so an edited trace
+moved an approved sample without a word), and `tools/freeze.py check <frozen folder>` later says whether the code of the day still builds it the same, before it is merged or built on.
 Do the close-up for the city with the fullest sources first; close-up camera distance 0.035–0.06 (about 0.1 m per pixel), elevation 10–15°, gliding along the main street inside the walls (`fov: 40–44`),
 and lay the other periods only once the houses are recognisable as houses. Take these stills with `uv run python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>`
 (a city not in city.yaml yet: `--spec <file> --year <y>`): it compiles that city alone in a study folder beside the film and shows it in the film's own palette and light, with the camera landed on the ground
