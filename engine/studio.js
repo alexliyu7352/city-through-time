@@ -21,7 +21,8 @@ const YLN = 48;   // points of the modern year line the shaders read (compile: g
 
 export function makeStudio(W, H, M, PAL, opts = {}) {
   const BMAX = Math.max(BMAX0, opts.bmax || 0);
-  const HMAX = Math.max(8, opts.slots || 0), H3 = HMAX > 8;   // era channels (hide, edge maps): 8, or 12 for a film with more cities standing at once (film.eraSlots: hide3, edge3)   // (the shaders' uniform arrays: more than 32 only for a film that needs them, small devices have few)
+  const HMAX = Math.max(8, opts.slots || 0), H3 = HMAX > 8;
+  const K = !!opts.keep;   // keep maps (film.keepMaps: a city with today_from): what of it still stands, where today's city steps aside once it comes back round it   // era channels (hide, edge maps): 8, or 12 for a film with more cities standing at once (film.eraSlots: hide3, edge3)   // (the shaders' uniform arrays: more than 32 only for a film that needs them, small devices have few)
   const LOW = !!opts.low;   // live preview: pixel ratio 1, no supersampling
   const renderer = new THREE.WebGLRenderer({ antialias: LOW, preserveDrawingBuffer: true });
   renderer.setPixelRatio(LOW ? 1 : 2); renderer.setSize(W, H);
@@ -82,7 +83,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uGround: { value: null }, uGroundM: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) }, uGroundA: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) },
     uGroundC0: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) }, uGroundC: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) }, uGroundN: { value: 0 }, uGroundBand: { value: 4 },
     uBasin: { value: null }, uBasinA: { value: Array(BMAX).fill(0) }, uBasinL: { value: Array.from({ length: BMAX }, () => new THREE.Vector4(0, 0, 1e9, 2e9)) }, uBasinLo: { value: 0 }, uBasinHi: { value: 1 }, uBasinK: { value: 0 }, uBasinBand: { value: 4 }, uWaterRip: { value: .022 }, uWaterGlint: { value: 1.2 }, uWaterShore: { value: .35 },
-    uDimToday: { value: 0 }, uDimToday0: { value: 0 }, uEraGlow: { value: 0 }, uEdge: { value: null }, uEdge2: { value: null }, uEdge3: { value: null }, uHide3: { value: null }, uEdgeGain: { value: 1 },
+    uDimToday: { value: 0 }, uDimToday0: { value: 0 }, uEraGlow: { value: 0 }, uEdge: { value: null }, uEdge2: { value: null }, uEdge3: { value: null }, uHide3: { value: null }, uKeep: { value: null }, uKeep2: { value: null }, uKeep3: { value: null }, uHideKeep: { value: Array(HMAX).fill(0) }, uEdgeGain: { value: 1 },
     // per era channel (the hide masks): era time (0..1 over its rise, -1 off), grow share, the taking-back ring (centre, radius, in/out, width),
     // the edge (alpha, crop of its distance field, falloff); the ring/edge colour is uHideCol
     uHideT: { value: Array(HMAX).fill(-1) }, uHideG: { value: Array(HMAX).fill(.1) }, uHideO: { value: Array.from({ length: HMAX }, () => new THREE.Vector2()) }, uHideFR: { value: Array(HMAX).fill(-1) }, uHideFI: { value: Array(HMAX).fill(0) }, uHideFW: { value: Array(HMAX).fill(.01) },
@@ -433,7 +434,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
 
   const RISE_DECL = `${YL_GLSL}
   uniform float uNow; attribute vec4 aData; attribute float aBase; varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase; uniform float uToday, uGrowRise, uYear, uGhost, uLiveSink; uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''}; uniform vec2 uPlateV; attribute vec2 aCtr; uniform vec2 uResetC; uniform float uResetR, uResetY; varying vec2 aCtrV; attribute vec3 aGrowH; attribute float aGrowT; varying float vGrowT;
-  uniform float uHideT[${HMAX}], uHideG[${HMAX}], uHideFR[${HMAX}], uHideFI[${HMAX}], uHideFW[${HMAX}]; uniform vec2 uHideO[${HMAX}];
+  uniform float uHideT[${HMAX}], uHideG[${HMAX}], uHideFR[${HMAX}], uHideFI[${HMAX}], uHideFW[${HMAX}]; uniform vec2 uHideO[${HMAX}];${K ? ` uniform sampler2D uKeep, uKeep2${H3 ? ', uKeep3' : ''}; uniform float uHideKeep[${HMAX}];` : ''}
   uniform float uEraT, uEraSpan, uEraGrow, uEraFallR, uEraFallIn, uEraFallW; uniform vec2 uEraO;
   uniform float uLossR[${LMAX}], uLossIn[${LMAX}], uLossW[${LMAX}]; uniform vec2 uLossO[${LMAX}];   // a part of the city lost (lose:): its ring
   uniform sampler2D uBasin; uniform float uBasinA[${BMAX}], uBasinLo, uBasinHi, uBasinK, uPlateTop;   // dug pools (compile basin map): the plate lowered in them
@@ -457,7 +458,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
      ry = max(max(uToday, uGrowRise * by * hf), keep);
      vec2 huv = aCtr / uPlateV + .5; vec4 h1 = texture2D(uHide, huv), h2 = texture2D(uHide2, huv)${H3 ? ', h3 = texture2D(uHide3, huv)' : ''};   // where an era city stands, today's buildings step aside,
      float hm[${HMAX}]; hm[0] = h1.r; hm[1] = h1.g; hm[2] = h1.b; hm[3] = h1.a; hm[4] = h2.r; hm[5] = h2.g; hm[6] = h2.b; hm[7] = h2.a;${H3 ? ' hm[8] = h3.r; hm[9] = h3.g; hm[10] = h3.b; hm[11] = h3.a;' : ''}
-     float hk = 0.; for (int i = 0; i < ${HMAX}; i++) hk = max(hk, hideK(hm[i], i));   // with the same front that raises the era
+     ${K ? `vec4 k1 = texture2D(uKeep, huv), k2 = texture2D(uKeep2, huv)${H3 ? ', k3 = texture2D(uKeep3, huv)' : ''};   // (a city with today_from: from its node, today's city comes back round what of it still stands)
+     float km[${HMAX}]; km[0] = k1.r; km[1] = k1.g; km[2] = k1.b; km[3] = k1.a; km[4] = k2.r; km[5] = k2.g; km[6] = k2.b; km[7] = k2.a;${H3 ? ' km[8] = k3.r; km[9] = k3.g; km[10] = k3.b; km[11] = k3.a;' : ''}
+     float hk = 0.; for (int i = 0; i < ${HMAX}; i++) hk = max(hk, mix(hideK(hm[i], i), hideK(km[i], i), uHideKeep[i]));   // with the same front that raises the era` : `float hk = 0.; for (int i = 0; i < ${HMAX}; i++) hk = max(hk, hideK(hm[i], i));   // with the same front that raises the era`}
      ry *= (1. - hk) * (1. - uLiveSink);   // (a living moment: today's city sinks while the period's picture is shown)
      if (hk > .985 || ry < .002) ry = -1.;   // fully stepped aside: below the plate, not a bright sliver of roof on the ground
    }
@@ -853,6 +856,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       U.uGroundC0.value[n].set(c0.r, c0.g, c0.b, u.uEraInk0.value); U.uGroundC.value[n].set(c.r, c.g, c.b, u.uEraInk.value); u.uGroundSelf.value = n; n++; }
     U.uGroundN.value = n; }
   function setHideCols(cols) { cols.forEach((c, i) => { if (i < HMAX) U.uHideCol.value[i].copy(lin(c)); }); }
+  function setKeep(k, k2, k3) { for (const [n, x] of [['uKeep', k], ['uKeep2', k2], ...(H3 ? [['uKeep3', k3]] : [])]) { x.flipY = false; x.colorSpace = THREE.NoColorSpace; x.magFilter = x.minFilter = THREE.LinearFilter; x.generateMipmaps = false; U[n].value = x; } }
   function setHide(t, t2, e, e2, t3, e3) { for (const [k, x] of [['uHide', t], ['uHide2', t2], ['uEdge', e], ['uEdge2', e2], ...(H3 ? [['uHide3', t3], ['uEdge3', e3]] : [])]) { x.flipY = false; x.colorSpace = THREE.NoColorSpace; x.magFilter = x.minFilter = THREE.LinearFilter; x.generateMipmaps = false; U[k].value = x; } }
   // cities apart in time share a channel (compile: era channels). In a film that has them the four channel textures become
   // render targets holding what the files hold; a city taking a channel over is drawn into it from its own files (hide_<id>,
@@ -871,11 +875,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       copy.blendColor.setRGB(k === 0 ? 1 : 0, k === 1 ? 1 : 0, k === 2 ? 1 : 0); copy.blendAlpha = k === 3 ? 1 : 0;
       const was = renderer.getRenderTarget(), ac = renderer.autoClear; renderer.autoClear = false; renderer.setRenderTarget(rt); renderer.render(qs, qc); renderer.setRenderTarget(was); renderer.autoClear = ac; };   // (no clear: the other channels stay)
     const rts = {};
-    for (const k of ['uHide', 'uHide2', 'uEdge', 'uEdge2', ...(H3 ? ['uHide3', 'uEdge3'] : [])]) {
+    for (const k of ['uHide', 'uHide2', 'uEdge', 'uEdge2', ...(H3 ? ['uHide3', 'uEdge3'] : []), ...(K ? ['uKeep', 'uKeep2', ...(H3 ? ['uKeep3'] : [])] : [])]) {
       const src = U[k].value, rt = new THREE.WebGLRenderTarget(src.image.width, src.image.height, { depthBuffer: false, generateMipmaps: false, magFilter: THREE.LinearFilter, minFilter: THREE.LinearFilter });
       rt.texture.colorSpace = THREE.NoColorSpace; rt.texture.flipY = false; draw(rt, src, -1); rts[k] = rt; U[k].value = rt.texture;
     }
-    chans = { put(h, hide, edge) { const n = ['', '2', '3'][h >> 2]; draw(rts['uHide' + n], hide, h % 4); draw(rts['uEdge' + n], edge, h % 4); } };
+    chans = { put(h, hide, edge, keep) { const n = ['', '2', '3'][h >> 2]; draw(rts['uHide' + n], hide, h % 4); draw(rts['uEdge' + n], edge, h % 4); if (keep && K) draw(rts['uKeep' + n], keep, h % 4); } };
     return chans;
   }
   function build(water, l1, l2, l3, decals = [], photo = null, terrain = null) {
@@ -997,5 +1001,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     post.composer.setPixelRatio(1); post.composer.setSize(iw, ih); post.dof.resize(iw, ih);
     m.uniforms.res.value.set(iw, ih); m.uniforms.edgeW.value = k; post.dof.s = k;   // (the crisp edges: one CSS pixel wide)
   }
-  return { renderer, scene, camera, post, U, liveSky, aimProjector, resize, addContext, setContext, setHide, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { renderer, scene, camera, post, U, liveSky, aimProjector, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

@@ -279,7 +279,7 @@ def era_boundary(prims, cs):
     return [[[round(x, 5), round(z, 5)] for x, z in q.simplify(8 * S).exterior.coords] for q in polys]
 
 EW = 1024   # edge distance fields: one era per channel, each over its own crop of the plate (edge.png, edge2.png)
-HIDE_BY, EDGE_BY = {}, {}   # per era: where today's buildings step aside (hide_layer), the distance field to its outline (edge_sdf)
+HIDE_BY, EDGE_BY, KEEP_BY = {}, {}, {}   # per era: where today's buildings step aside (hide_layer), the distance field to its outline (edge_sdf)
 SLOTS, SLOTS_MAX = 8, 12   # channels of hide.png / hide2.png and edge.png / edge2.png (engine/studio.js); cities apart in time share one; a film with
                            # more standing at once takes 12 (hide3.png, edge3.png: film.eraSlots, the engine sizes its uniforms to it)
 if os.environ.get('CT_ERA_SLOTS'): SLOTS = SLOTS_MAX = int(os.environ['CT_ERA_SLOTS'])   # (fewer, to test the sharing on a film that needs none)
@@ -300,6 +300,32 @@ def edge_sdf(bnd, D):
     img = Image.fromarray((_np.clip(d / D, 0, 1) * 255).round().astype(_np.uint8).reshape(EW, EW), 'L')
     PWm, PDm = F.size
     return img, [round(x0 / PWm + .5, 6), round(z0 / PDm + .5, 6), round(x1 / PWm + .5, 6), round(z1 / PDm + .5, 6)]
+
+def keep_layer(prims, lost, cs):
+    """a city with today_from: what of it still stands once its losses have gone (the parts no loss takes), where today's buildings
+    keep stepping aside from that node on: those parts' padded footprints and today's buildings that touch them, drawn as
+    hide_layer draws them, without the city's outline, its walls' ring or its hide regions, which go back to today's city (a
+    palace and a church carried into the present, the streets round them taken down: today's streets come back)"""
+    PWm, PDm = F.size
+    pad = cs.get('hide_buffer_m', 14) * F.scale
+    U_ = lambda X, Z: ((X / PWm + .5) * HW, (Z / PDm + .5) * HH)
+    code = lambda r: max(10, int(round((.04 + .96 * r) * 255)))
+    im = Image.new('L', (HW, HH), 0); dr = ImageDraw.Draw(im)
+    keep = [p for i, p in enumerate(prims) if not (lost and lost[i])]
+    for p in sorted(keep, key=lambda p: -p[10]): dr.polygon([U_(x, z) for x, z in citygen.footprint(p, pad)], fill=code(p[10]))
+    from shapely.geometry import Polygon as _P
+    from shapely.strtree import STRtree as _T
+    ground = [p for p in keep if p[4] <= p[12] + 1e-9 and p[11] not in (4, 5, 7)]
+    if ground:
+        tree = _T([_P(citygen.footprint(p)) for p in ground]); rk = [p[10] for p in ground]
+        for b in _MODEL['p']:
+            ring = b[2][0]
+            if len(ring) < 3: continue
+            hit = tree.query(_P(ring), predicate='intersects')
+            if len(hit):
+                v = code(float(min(rk[j] for j in hit))); dr.polygon([U_(x, z) for x, z in ring], fill=v)
+                dr.point(U_(sum(x for x, _ in ring) / len(ring), sum(z for _, z in ring) / len(ring)), fill=v)   # (where the engine reads it: hide_layer)
+    return im
 
 def hide_layer(prims, cs, bnd=()):
     """where an era city stands, today's buildings step aside. The value is .04 + .96 x the rank (start time, 0..1 over the
@@ -1725,6 +1751,11 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
     e['_dist'] = [math.hypot(p[15] - fx_, p[16] - fz_) for p in prims]; e['_bc'] = [(p[15], p[16]) for p in prims]
     cs_ = Seen(dict.items(cs)); cs_.read, cs_.mine = cs.read, set(); cs_['_id'] = node['id']   # (what hide_layer reads, read on cs)
     HIDE_BY[e['id']] = hide_layer(prims, cs_, pd['bnd'])
+    if cs.get('today_from'):   # from that node, today's city comes back round what of this city still stands (keep_layer)
+        tf_ = next((n for n in FM['nodes'] if n['id'] == cs['today_from']), None)
+        if tf_ is None or FM['nodes'].index(tf_) <= FM['nodes'].index(node):
+            raise SystemExit(f"compile: era {e['id']}: today_from {cs['today_from']!r}: a later node's id (from it, today's city comes back round what of this city still stands)")
+        KEEP_BY[e['id']] = keep_layer(prims, LOST.get(e['id']), cs_); e['todayFrom'] = round(tf_['_t0'], 3)
     ED = float(FM.get('era_look', {}).get('edge_m', 150)) * F.scale; img_, rect_ = edge_sdf(pd['bnd'], ED); EDGE_BY[e['id']] = img_; e['edgeRect'] = rect_; e['edgeD'] = round(ED, 6)
 for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's colour ring, sent when its change starts (docs/STAGING.md 1)
     imp = IMPACT.get(node['id']); era_ = next((e for e in eras_out if e['id'] == node['id']), None)
@@ -2067,9 +2098,10 @@ hch = [HIDE_BY[v[0]] if v else Image.new('L', (HW, HH), 0) for v in SLOT_HELD]  
 while len(hch) < SLOTS: hch.append(Image.new('L', (HW, HH), 0))
 own_ = {oid for v in SLOT_HELD if len(v) > 1 for oid in v}
 for oid in own_: HIDE_BY[oid].save(LAYOUT.data(D, f'hide_{oid}.png')); EDGE_BY[oid].save(LAYOUT.data(D, f'edge_{oid}.png'))
+for oid in own_ & set(KEEP_BY): KEEP_BY[oid].save(LAYOUT.data(D, f'keep_{oid}.png'))
 for f_ in os.listdir(LAYOUT.data(D, '')):   # (a city's own files left from a build that shared its channel)
-    m_ = re.match(r'(hide|edge)_(.+)\.png$', f_)
-    if m_ and m_.group(2) not in own_: os.remove(LAYOUT.data(D, f_))
+    m_ = re.match(r'(hide|edge|keep)_(.+)\.png$', f_)
+    if m_ and (m_.group(2) not in own_ or (m_.group(1) == 'keep' and m_.group(2) not in KEEP_BY)): os.remove(LAYOUT.data(D, f_))
 Image.merge('RGBA', hch[:4]).save(LAYOUT.data(D, 'hide.png'))
 try:   # locator base: today's footprints (grey) and the river (blue) on a dark ground
     import numpy as _np
@@ -2089,6 +2121,11 @@ while len(ech) < SLOTS: ech.append(Image.new('L', (EW, EW), 255))
 Image.merge('RGBA', ech[:4]).save(LAYOUT.data(D, 'edge.png')); Image.merge('RGBA', ech[4:8]).save(LAYOUT.data(D, 'edge2.png'))
 for f_, ch_ in (('hide3.png', hch[8:12]), ('edge3.png', ech[8:12])):   # (a film with more than 8 cities at once; none left from an older build)
     if SLOTS > 8: Image.merge('RGBA', ch_).save(LAYOUT.data(D, f_))
+    elif os.path.exists(LAYOUT.data(D, f_)): os.remove(LAYOUT.data(D, f_))
+kch = [KEEP_BY[v[0]] if v and v[0] in KEEP_BY else Image.new('L', (HW, HH), 0) for v in SLOT_HELD]   # keep maps: a city with today_from (keep_layer)
+while len(kch) < SLOTS: kch.append(Image.new('L', (HW, HH), 0))
+for f_, ch_ in (('keep.png', kch[:4]), ('keep2.png', kch[4:8]), ('keep3.png', kch[8:12])):
+    if KEEP_BY and (f_ != 'keep3.png' or SLOTS > 8): Image.merge('RGBA', ch_).save(LAYOUT.data(D, f_))
     elif os.path.exists(LAYOUT.data(D, f_)): os.remove(LAYOUT.data(D, f_))
 while len(mask_chans) < 12: mask_chans.append(Image.new('L', (MW, MH), 0))
 Image.merge('RGBA', mask_chans[0:4]).save(LAYOUT.data(D, 'layers1.png'))
@@ -2171,7 +2208,7 @@ film = {
     'decals': decals_out, 'satellite': sat_out(sat),
     'footage': footage_out, 'end': end, 'ev': evs, 'music': FM.get('music', {}),
     'labels': labels_out,
-    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinSlots': nb_} if nb_ > 32 else {}), **({'eraSlots': SLOTS} if SLOTS > 8 else {}), **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
+    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinSlots': nb_} if nb_ > 32 else {}), **({'eraSlots': SLOTS} if SLOTS > 8 else {}), **({'keepMaps': True} if KEEP_BY else {}), **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],

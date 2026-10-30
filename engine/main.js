@@ -61,7 +61,7 @@ const yearAs = (y, tick) => { const Y = FILM.years; if (!Y) return null; const r
 if (FILM.bar) for (const tk of FILM.bar.ticks) tk.yearLabel = yearAs(tk.year, true) ?? (FILM.yearFmt === 'en' ? (tk.year < 0 ? `${-tk.year} BCE` : `${tk.year}`) : (tk.year < 0 ? `前${-tk.year}` : `${tk.year}`));
 
 const LOW = QS.get('quality') === 'low' || QS.has('play') || (QS.has('free') && matchMedia('(pointer: coarse)').matches);   // (the viewer's public mode on a phone: no period-city shadows)
-const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, slots: FILM.eraSlots });   // (pools and grounds past the engine's 32 slots: compile basinSlots)
+const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps });   // (pools and grounds past the engine's 32 slots: compile basinSlots)
 const { U, camera, post, renderer, house, hemi, scene } = S;
 const TL = new THREE.TextureLoader();
 const decalTex = FREE ? [] : await Promise.all((FILM.decals || []).map(d => tex(B + d.file)));
@@ -140,7 +140,8 @@ const DIM0 = new Map(); const dimBefore = n => { if (!DIM0.has(n.id)) DIM0.set(n
 const curveAt = (c, t) => { if (!c || !c.length) return -1; if (t <= c[0][0]) return c[0][1]; const n = c.length; if (t >= c[n - 1][0]) return c[n - 1][1];
   let lo = 0, hi = n - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (c[m][0] <= t) lo = m; else hi = m; } return c[lo][1] + (c[hi][1] - c[lo][1]) * (t - c[lo][0]) / ((c[hi][0] - c[lo][0]) || 1e-9); };
 const ringR = (n, t) => n.ring && t < n.ring.curve[n.ring.curve.length - 1][0] ? curveAt(n.ring.curve, t) : 99;
-S.setHide(...await Promise.all(['hide', 'hide2', 'edge', 'edge2', ...(FILM.eraSlots > 8 ? ['hide3', 'edge3'] : [])].map(f => tex(B + `data/${f}.png`))));   // (hide3, edge3: a film with more than 8 cities standing at once)
+S.setHide(...await Promise.all(['hide', 'hide2', 'edge', 'edge2', ...(FILM.eraSlots > 8 ? ['hide3', 'edge3'] : [])].map(f => tex(B + `data/${f}.png`))));
+if (FILM.keepMaps) S.setKeep(...await Promise.all(['keep', 'keep2', ...(FILM.eraSlots > 8 ? ['keep3'] : [])].map(f => tex(B + `data/${f}.png`))));   // (a city with today_from: what of it still stands)   // (hide3, edge3: a film with more than 8 cities standing at once)
 // cities apart in time share a channel (compile: era channels): a shared channel holds, at any moment, the city in use then
 // (its intervals in `occupy`), drawn in from its own files when it takes the channel over (studio shareChannels); the
 // files hold each channel's first city. Only the city a channel holds sets that channel's uniforms.
@@ -148,7 +149,7 @@ const SHARE = (FILM.eras || []).filter(e => e.occupy && e.hide != null), holding
 let CH = null;
 if (SHARE.length) {
   CH = S.shareChannels();
-  for (const e of SHARE) e._own = await Promise.all([tex(B + `data/hide_${e.id}.png`), tex(B + `data/edge_${e.id}.png`)]);
+  for (const e of SHARE) e._own = await Promise.all([tex(B + `data/hide_${e.id}.png`), tex(B + `data/edge_${e.id}.png`), ...(e.todayFrom != null ? [tex(B + `data/keep_${e.id}.png`)] : [])]);
   for (const e of [...SHARE].sort((a, b) => b.occupy[0][0] - a.occupy[0][0])) holding[e.hide] = e;   // (the earliest last: it wins)
   for (const e of Object.values(holding)) if (e.edgeRect) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; }
 }
@@ -433,6 +434,7 @@ function setLayers(t) {
     if (e.hide != null && inChannel(e)) {
       const h = e.hide;
       U.uHideT.value[h] = tE < -.01 || gone ? -1 : tE / e.span; U.uHideG.value[h] = e.grow / e.span;
+      U.uHideKeep.value[h] = e.todayFrom != null ? ss(seg(t, e.todayFrom, e.todayFrom + 3)) : 0;   // (today_from: today's city comes back round what still stands)
       U.uHideO.value[h].set(fo[0], fo[1]); U.uHideFR.value[h] = fr; U.uHideFI.value[h] = fin ? 1 : 0; U.uHideFW.value[h] = fr1;
       U.uHideFA.value[h] = FR && fin && t >= FR.hit && !gone ? ss(seg(t, FR.hit, FR.hit + .4)) * (1 - ss(seg(t, FR.gone - .5, FR.gone))) : 0;
       U.uHideCol.value[h].copy(gA > edgeA ? S.eras[e.id].base : E.u.uEraCol.value);
