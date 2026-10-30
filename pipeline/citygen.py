@@ -1560,7 +1560,8 @@ def landmark_site(L, F, theta_deg=0.0):
             a_, b_ = F.to_utm.transform(*L['from']), F.to_utm.transform(*L['to'])
             L = {**L, 'length_m': math.hypot(b_[0] - a_[0], b_[1] - a_[1])}; x, y = (a_[0] + b_[0]) / 2, (a_[1] + b_[1]) / 2; th = math.atan2(b_[1] - a_[1], b_[0] - a_[0])
         P = Builder.frame(x, y, th); x0_, y0_, x1_, y1_ = LMK_.bounds(L)   # (the box of what it covers, not round its anchor: parts set off to one side)
-        return x, y, th, L, [Polygon([P(x0_, y0_), P(x1_, y0_), P(x1_, y1_), P(x0_, y1_)]).buffer(6)]
+        ap_ = L.get('apron_m'); ap_ = 6 if ap_ is None else ap_   # (apron_m 0: a house in a row, its neighbours' lots abut it)
+        return x, y, th, L, [Polygon([P(x0_, y0_), P(x1_, y0_), P(x1_, y1_), P(x0_, y1_)]).buffer(ap_) if ap_ else Polygon([P(x0_, y0_), P(x1_, y0_), P(x1_, y1_), P(x0_, y1_)])]
     if k == 'ditch': return x, y, th, L, [LineString([F.to_utm.transform(*q) for q in L['pts']]).buffer(L.get('w_m', 12) / 2 + 8)]
     if k in NO_SITE: return x, y, th, L, []
     P = Builder.frame(x, y, th)

@@ -42,6 +42,7 @@ COMMON = {
     'id': ('str', None, None, 'its name for a stage to select it by (stages name parts by id or group, never by index)'),
     'group': ('str', None, None, 'a name it shares with the others a stage selects together'),
     'exaggeration': ('num', (.5, 5), None, 'its heights\' exaggeration (when absent the city\'s, fading as the landmark gets taller: see exaggeration(); 1: true, for one drawn after a true elevation)'),
+    'apron_m': ('num', (0, 60), None, 'the ground kept clear of the houses round what it covers (6 m when absent); 0 for a house in a row, its neighbours\' lots abutting it (a domus without a gap to the next)'),
     'z_m': ('num', (0, 300), 0.0, 'metres above its ground (a part standing on another: a dome on a hall\'s crossing)'),
     'site': ('enum', ('raised', 'cut', 'parts'), 'raised', 'on a slope: raised, a monument levelled at the highest ground under it, a platform below on the downhill side; cut, a small building let into the slope, levelled half-way (the uphill half cut, the downhill half filled: a hut, a house on a hillside), its walls reaching down to the ground on the downhill side, no platform; parts (a landmark of parts only), each part levelled on its own ground, raised or cut as the part\'s own site says, as the buildings of a chain stepping down a hill (one plane under a long chain stood its low end on a tall basement)'),
 }

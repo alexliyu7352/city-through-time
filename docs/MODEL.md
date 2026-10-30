@@ -180,6 +180,8 @@ A ground is open space, not the ground under a built-up quarter: the lanes, yard
 A later ground in the list is laid over an earlier one (a yard written after its field cuts its place out of it); each period city keeps its own, so one place can be a field in one period and a lawn in the next.
 Stages and losses name a ground by `id` or `group` as any part (a loss takes a ground only when it names it: open ground outlives the houses round it); the grounds and pools of one film share the engine's slots (32, as many as a film needs up to 64: past 32 each costs uniforms a small device has few of), so grounds of one city that come and go together are one entry whose region has several rings.
 A region may cover a building with a court (a portico, a cloister: the court is planted, the walls are not) and a court on a platform (its trees stand on the platform's top); a garden is part of the city's outline.
+A landmark keeps 6 m of ground clear of the houses round what it covers (`citygen.landmark_site`); a house in a row (a domus traced from its excavation, its
+neighbours from a house type) writes `apron_m: 0`, so the neighbours' lots abut it instead of leaving a lane the sources do not have.
 `stages` select parts by name (`id` / `group`), never by index: the index breaks whenever the list changes. A stage may name a part of a landmark of parts `<landmark id>.<part id>`
 (the part's own `id`): that part rises in that stage, the rest of the landmark in the stage naming the landmark (or the one without a select), all on the landmark's one level
 ground (a church's drum built first, its dome decades later, its nave last); a part is named by one stage only. A part `atop` another stands on it: raise it in the same
