@@ -272,17 +272,26 @@ class Builder:
         lift = max(0.0, max(res)) + self.clear
         return (ga + gb) / 2 + lift, (s * ux, s * uy), lift - min(res)
 
-    def strip(self, a, b, w, h=.12, part=PAVE, z0=0.0, piece=30.0, g=None, road=None):
+    def strip(self, a, b, w, h=.12, part=PAVE, z0=0.0, piece=30.0, g=None, road=None, drape=False):
         """a straight strip from a to b (paving, a wall, a moat) laid along the ground (lay), in pieces of at most `piece`
         metres where the slope changes; g: a level strip at that ground instead (on top of a terrace or a platform).
         Neighbouring pieces meet at one height (the higher of the two they were laid at), end to end: the surface runs on
         without steps or overlaps (a step casts a hairline shadow and two overlapping tops flicker: a road looked dashed).
-        A paved strip is marked a road (field 8): the engine draws its ruts along it; road=False for a paved court."""
+        A paved strip is marked a road (field 8): the engine draws its ruts along it; road=False for a paved court.
+        drape: a film on the ground (a footpath): each short piece through the ground at its ends, a few centimetres over it,
+        no foundation and no lift over the highest ground across it (where the ground rises beside it the plate covers its edge)."""
         L = math.hypot(b[0] - a[0], b[1] - a[1])
         if L < .5: return
         th = math.atan2(b[1] - a[1], b[0] - a[0]); road = (1.0 if part == PAVE else 0.0) if road is None else float(road)
         if g is None and self.site is not None: g = self.gsite((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, th, L, w)   # on a lot made one plane: along it (sheared)
         if g is not None: self._emit(BOX, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2, th, z0, L, w, h, road, part=part, g_m=g); return
+        if drape:
+            n = max(1, math.ceil(L / piece)); f0 = self.found; self.found = 0.0; ux, uy = (b[0] - a[0]) / L, (b[1] - a[1]) / L
+            for i in range(n):
+                p, q = (a[0] + (b[0] - a[0]) * i / n, a[1] + (b[1] - a[1]) * i / n), (a[0] + (b[0] - a[0]) * (i + 1) / n, a[1] + (b[1] - a[1]) * (i + 1) / n)
+                gp, gq = self.ground_m(*p), self.ground_m(*q); sl = (gq - gp) / (L / n); self.slope = (sl * ux, sl * uy)
+                self._emit(BOX, (p[0] + q[0]) / 2, (p[1] + q[1]) / 2, th, z0, L / n, w, h, road, part=part, g_m=(gp + gq) / 2 + .04)
+            self.slope = None; self.found = f0; return
         g3 = (self.ground_m(*a), self.ground_m(*b), self.ground_m((a[0] + b[0]) / 2, (a[1] + b[1]) / 2))
         n = max(1, math.ceil(L / piece)) if max(g3) - min(g3) > .25 else 1
         f0 = self.found; ux, uy = (b[0] - a[0]) / L, (b[1] - a[1]) / L; Ln = L / n
@@ -1434,7 +1443,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
     trace: GeoJSON drawn over an old map or a site plan (traced; the callers join it: compile, terrain.py);
     walls: [{ring|osm, h_m, t_m, gates: [[lon,lat],...], towers, style: tower|hip|none, moat}];
-    streets: [{pts, w_m, shops}]; lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
+    streets: [{pts, w_m, shops, path}] (path: a footpath between huts or fields, thin and without ruts); lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
     (typ: a built-in house or one of `types`, complete: house_types);
     landmarks: [{kind, lon, lat, ...}] (the generator's own kinds, or the classes of pipeline/landmarks.py); trees: [{pts, step_m, h_m, r_m, both, offset_m}].
     A landmark a loss clears the ground for (`lose: [{for: [<id>]}]`) is built later over the houses: the fabric is laid over its site,
@@ -1609,7 +1618,9 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         pts = [F.to_utm.transform(*p) for p in st['pts']]
         street_geoms.append(LineString(pts).buffer(st.get('w_m', 14) / 2, cap_style=2))
         for a, b in zip(pts[:-1], pts[1:]):
-            B.group(('streets', si)); B.strip(a, b, st.get('w_m', 14), .14, part=PAVE)
+            B.group(('streets', si))
+            if st.get('path'): B.strip(a, b, st.get('w_m', 2), .03, part=PAVE, piece=3.0, road=False, drape=True)   # a footpath: trodden earth, a film on the ground in short pieces, no ruts
+            else: B.strip(a, b, st.get('w_m', 14), .14, part=PAVE)
             if st.get('lanes3'):   # a Han avenue in three lanes (the middle one the emperor's): a lighter middle lane, side ditches (han_changan.md §3)
                 B.strip(a, b, st.get('w_m', 14) / 3, .2, part=EARTH)
                 L_ = math.hypot(b[0] - a[0], b[1] - a[1]) or 1; nx_, ny_ = -(b[1] - a[1]) / L_, (b[0] - a[0]) / L_
