@@ -31,6 +31,8 @@ if (!has('--no-data') || !fs.existsSync(path.join(B, 'data', 'model.json'))) {
   const r = py(['-I', 'pipeline/prep.py', CITY]); fs.writeFileSync(path.join(B, 'logs', 'prep.log'), r.out); console.log(tail(r.out, 3));
 }
 console.log(head(py(['-I', 'pipeline/compile.py', CITY]).out, 1));
+{ const still = fs.readFileSync(path.join(B, 'logs', 'deadair.txt'), 'utf8').split('\n').filter(l => l.startsWith('still picture'));   // (compile only reports these: a film being made has them)
+  if (still.length) { console.error('build: the picture stands still under the words (docs/STAGING.md 5c), give these stations their change before rendering:\n  ' + still.join('\n  ')); process.exit(1); } }
 console.log(tail(node(['render/events.mjs', slug]).out, 1));
 const CODE = (JSON.parse(fs.readFileSync(path.join(B, 'film.json'), 'utf8')).music || {}).source === 'code';   // film.music.source
 if (CODE) console.log(tail(py(['-I', 'audio/codescore.py', CITY]).out, 2));   // (it reads the events, and lays itself)

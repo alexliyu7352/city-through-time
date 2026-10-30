@@ -341,7 +341,7 @@ TIMING = {'ring_view': 2.8, 'ring_out': 1.6, 'min_stage': 4.0, 'min_stage_small'
           'hold_after': 2.5, 'look_size': .4, 'look_secs': 3.5, 'look_focus_m': 400.0, 'look_min_n': 30,
           'ring_fit_x': .9, 'ring_fit_y': .85, 'ruins_d': .3, 'contract_in': 2.0,
           'see_rate': .002, 'see_min': 2.0, 'see_max': 12.0,
-          'dead_air_s': 3.0, 'word_gap_s': 5.0}   # today's buildings that come into view together rise one after another
+          'dead_air_s': 3.0, 'word_gap_s': 5.0, 'still_s': 20.0}   # today's buildings that come into view together rise one after another
                                                               # over see_rate s each, see_min..see_max s in all
 # time the algorithm inserts into nodes (docs/STAGING.md 9e): {node id: [{tau: node seconds, delta: s, keys: [[offset s, key]], why}]};
 # compile re-runs itself with the plan until nothing more is needed
@@ -2169,7 +2169,8 @@ _finds = COPY.check(film, FM.get('copy'), _quiet, LANG[0])
 # dead air (docs/STAGING.md 5c): (a) a stretch longer than dead_air_s with no line spoken, nothing changing on the model, no picture
 # up and the camera all but still; (b) a gap between two lines longer than word_gap_s that nothing declares (a quiet stretch or a
 # pause), no full-screen clip fills, and that is not the next line waiting for its picture while the picture moves (the next line
-# is its node's first, or follows a picture: with). The planner's holds can cause (b).
+# is its node's first, or follows a picture: with). The planner's holds can cause (b). (c) the picture still for more than
+# still_s even while lines are spoken: the words carry on over a view where nothing happens.
 _LINE = {c_['id']: c_ for n_ in FM['nodes'] for c_ in n_.get('cues', []) if 'id' in c_}
 _FIRST = {next((c_['id'] for c_ in n_.get('cues', []) if 'id' in c_), None) for n_ in FM['nodes']}
 _pict = [(x['on'], x['on'] + x['dur']) for x in footage_out]
@@ -2201,6 +2202,20 @@ def _dead_air():
         nd_ = next((n for n in nodes_out if n['t0'] <= a_ < n['t1']), None)
         prv = max((c for c in cues if c['t1'] <= a_ + .3), key=lambda c: c['t1'], default=None); nxt = min((c for c in cues if c['t0'] >= b_ - .3), key=lambda c: c['t0'], default=None)
         out.append(f"nothing at all {a_:7.2f}-{b_:7.2f} s ({b_ - a_:.1f} s) in {nd_['id'] if nd_ else '-'}: after {prv['id'] if prv else '-'}, before {nxt['id'] if nxt else '-'}")
+    # (c) the picture still while the words run on: nothing changes on the model, no picture is up and the camera all but stops
+    # for more than still_s, lines or no lines (a station whose city is not built yet, told over a fixed view)
+    t, s_ = light['lamp'], None
+    while t <= hi + step:
+        if t <= hi and not _moving(t):
+            s_ = t if s_ is None else s_
+        elif s_ is not None:
+            if t - s_ > TIMING['still_s']:
+                nd_ = next((n for n in nodes_out if n['t0'] <= s_ < n['t1']), None)
+                said_ = [c['id'] for c in cues if c['t0'] < t and c['t1'] > s_]
+                out.append(f"still picture {s_:7.2f}-{t:7.2f} s ({t - s_:.1f} s) in {nd_['id'] if nd_ else '-'}: the model, the pictures and the camera do not change "
+                           f"under {len(said_)} line(s){(' (' + ', '.join(said_[:3]) + (' ..' if len(said_) > 3 else '') + ')') if said_ else ''}")
+            s_ = None
+        t += step
     for c_, n_ in zip(cues, cues[1:]):   # (b)
         g0_, g1_ = c_['t1'], n_['t0']; L_ = g1_ - g0_
         if L_ <= TIMING['word_gap_s']: continue
@@ -2244,9 +2259,10 @@ for m_ in LIVING_BAD: print('  ' + m_)
 _dead = _dead_air()
 open(LAYOUT.logs(D, 'deadair.txt'), 'w', encoding='utf-8').write('\n'.join(_dead) + '\n')
 print(f'  dead air: {len(_dead)} stretch(es)' + ''.join('\n    ' + d_ for d_ in _dead))
-if _dead and os.environ.get('CT_DEADAIR') != 'warn':   # (CT_DEADAIR=warn: report only, while a city is being written)
+_dead_stop = [d_ for d_ in _dead if not d_.startswith('still picture')]   # (a still picture is reported while a film is being made: a station not built yet has one; tools/build.mjs will not render it)
+if _dead_stop and os.environ.get('CT_DEADAIR') != 'warn':   # (CT_DEADAIR=warn: report only, while a city is being written)
     raise SystemExit(f'compile: dead air (docs/STAGING.md 5c; build/logs/deadair.txt): let a line follow the one before, have it wait for the '
-                     f'picture it speaks of (with:), shorten the hold, or declare a pause: ' + '; '.join(_dead))
+                     f'picture it speaks of (with:), shorten the hold, or declare a pause: ' + '; '.join(_dead_stop))
 # the timeline for voice, music and sound (design phase 4): every line, every change on the model, the pictures over it, the
 # silences meant to be there, and each node's feeling; seconds of the final film (build/export/timeline.json)
 _tl = {'dur': DUR, 'langs': LANG, 'voice': {'lang': VOICE_LANG, 'dir': os.path.relpath(VOICE_DIR, D)},
