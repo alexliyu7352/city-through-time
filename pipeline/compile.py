@@ -1807,6 +1807,13 @@ if gnd_:
         for (_, ba_, ga_), (_, bb_, gb_) in _it.combinations(lst_, 2):
             if ga_.intersection(gb_).area > max((5 * F.scale) ** 2, .01 * min(ga_.area, gb_.area)):
                 raise SystemExit(f"compile: era {eid_}: grounds {ba_['name']} and {bb_['name']} overlap: a place has one surface (citygen cuts a later one out of an earlier one: a fault there)")
+    for eid_, lst_ in geo_.items():   # a ground is open space: one under a built-up quarter hides its houses (docs/MODEL.md)
+        fab_ = [p for p in PRIMS[eid_] if p[0] == citygen.BOX and p[11] == citygen.FAB and p[4] <= p[12] + 1e-9]
+        if not fab_: continue
+        X_, Z_, A_ = _np.array([p[1] for p in fab_]), _np.array([p[2] for p in fab_]), _np.array([p[5] * p[6] for p in fab_])
+        for _, b_, g_ in lst_:
+            share_ = float(A_[_sh.contains_xy(g_, X_, Z_)].sum()) / max(g_.area, 1e-12)
+            if share_ > .25: print(f"  WARN era {eid_}: ground {b_['name']}: houses cover {share_:.0%} of it: a ground is open space, the ground between the houses of a quarter stays the plate (docs/MODEL.md)")
     px_ = GND_PX
     while True:
         crops_ = []
