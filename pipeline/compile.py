@@ -1821,11 +1821,18 @@ if gnd_:
             if ga_.intersection(gb_).area > max((5 * F.scale) ** 2, .01 * min(ga_.area, gb_.area)):
                 raise SystemExit(f"compile: era {eid_}: grounds {ba_['name']} and {bb_['name']} overlap: a place has one surface (citygen cuts a later one out of an earlier one: a fault there)")
     for eid_, lst_ in geo_.items():   # a ground is open space: one under a built-up quarter hides its houses (docs/MODEL.md)
-        fab_ = [p for p in PRIMS[eid_] if p[0] == citygen.BOX and p[11] == citygen.FAB and p[4] <= p[12] + 1e-9]
-        if not fab_: continue
+        e_ = next(e for e in eras_out if e['id'] == eid_); L_ = LOST.get(eid_); off_ = e_.get('off') or 1e9
+        end_ = lambda j: e_['losses'][j - 1]['gone'] if j else off_   # (when a piece lost by loss j, or none, is gone)
+        fi_ = [i for i, p in enumerate(PRIMS[eid_]) if p[0] == citygen.BOX and p[11] == citygen.FAB and p[4] <= p[12] + 1e-9]
+        if not fi_: continue
+        fab_ = [PRIMS[eid_][i] for i in fi_]
         X_, Z_, A_ = _np.array([p[1] for p in fab_]), _np.array([p[2] for p in fab_]), _np.array([p[5] * p[6] for p in fab_])
-        for _, b_, g_ in lst_:
-            share_ = float(A_[_sh.contains_xy(g_, X_, Z_)].sum()) / max(g_.area, 1e-12)
+        T0_ = _np.array([e_['on'] + p[10] * e_['span'] for p in fab_]); T1_ = _np.array([end_(L_[i] if L_ else 0) for i in fi_])
+        slot_ = {b['k']: b for b in e_['basins'] if b.get('ground')}
+        for k_, b_, g_ in lst_:   # (only the houses standing while it does: a garden laid where houses were lost does not count them)
+            s_ = slot_[k_]; g0_, g1_ = e_['on'] + s_['rank'] * e_['span'], end_(s_['lost'])
+            both_ = (T0_ < g1_) & (g0_ < T1_)
+            share_ = float(A_[_sh.contains_xy(g_, X_, Z_) & both_].sum()) / max(g_.area, 1e-12)
             if share_ > .25: print(f"  WARN era {eid_}: ground {b_['name']}: houses cover {share_:.0%} of it: a ground is open space, the ground between the houses of a quarter stays the plate (docs/MODEL.md)")
     px_ = GND_PX
     while True:
