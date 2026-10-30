@@ -201,7 +201,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       wDrapedK = uBasinA[i] * smoothstep(-aa, aa, sd) * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); }   // (lost where its ring has passed, as main.js ringK)
     return max(w, wDrapedK); }
   // open ground of the period cities standing (compile ground map, a crop per city): earth, grass, gravel or a paved yard,
-  // drawn as the era's paving is, in light and grain only, under its city's light (eraKeyT): earth as its streets, a paved yard
+  // drawn as the era's paving is, in light and grain only, lit as its paving (its key light tinted, eraKeyT; its projector colour): earth as its streets, a paved yard
   // as an asphalt road. A later city's over an earlier one's; water over all (wmask, after). Per crop (bound by groundsNow):
   // plate xz -> its texels (origin, texels per unit) and the city's colour strength, where it lies in the map (texel origin,
   // size), the city's colour and ink before and after the node's ring (as uEraCol0 / uEraInk0, uEraCol / uEraInk)
@@ -225,6 +225,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   float groundOn(int k){ float on = 0.;   // its slot: up as its mark rises, lost where its loss's ring has passed
     for (int j = 0; j < ${BMAX}; j++) if (j == k) { vec4 L = uBasinL[j]; on = uBasinA[j] * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); }
     return on; }
+  float gCover = 0., gEraA = 0., gInk = 0.; vec3 gEcol = vec3(0.), gKeyT = vec3(1.);   // the plate's share of a ground here and its city's light: lit as the city's own paving (projLight, the key light as eraKeyT)
   vec3 grounds(vec3 col, int only, bool tint){
     if (uGroundN < .5) return col;
     vec2 ts = vec2(textureSize(uGround, 0)), P = vWP.xz / uScaleM; float px = length(fwidth(P)), wp = length(fwidth(vWP.xz));
@@ -240,9 +241,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       if (k < 0) continue;
       for (int q = 0; q < 4; q++) if (kq[q] >= 0 && kq[q] != k && s[q] > top2) { top2 = s[q]; k2 = kq[q]; sf2 = sq[q]; }
       vec4 C = mix(uGroundC0[i], uGroundC[i], iw); vec3 kt = mix(vec3(1.), C.rgb / max(max(C.r, C.g), max(C.b, .001)), M.w * .85 * (1. - C.a));
-      vec3 base = tint ? vec3(.9) * kt * (1. - .84 * C.a) : vec3(.9); float aa = max(wp * M.z, .3);
+      vec3 base = tint ? vec3(.9) * (1. - .84 * C.a) : vec3(.9); float aa = max(wp * M.z, .3);
       if (k2 >= 0) col = mix(col, base * groundTex(sf2, P, px), groundOn(k2) * smoothstep(-aa, aa, groundSd(k2, s, kq, f)));   // (the other ground at a meeting, under)
-      col = mix(col, base * groundTex(sf, P, px), groundOn(k) * smoothstep(-aa, aa, groundSd(k, s, kq, f)));
+      float ck = groundOn(k) * smoothstep(-aa, aa, groundSd(k, s, kq, f));
+      col = mix(col, base * groundTex(sf, P, px), ck);
+      if (ck > 0.) { gCover = max(gCover * (1. - ck), ck); gEcol = C.rgb; gEraA = M.w; gInk = C.a; gKeyT = kt; }
     }
     return col;
   }
@@ -308,7 +311,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     float yr = vData.x;
     vec3 c = cBlack * uBase;
     // plate: a faint grid once the projector is on, brightened by the node pulse
-    if (kind > .5 && kind < 1.5) c += (cBlack * .5 + vec3(.010, .014, .024) * (1. + 3. * uPulse) * (aaLine(vWP.x, .1, .0005) + aaLine(vWP.z, .1, .0005))) * uBase;
+    if (kind > .5 && kind < 1.5) c += (cBlack * .5 + vec3(.010, .014, .024) * (1. + 3. * uPulse) * (aaLine(vWP.x, .1, .0005) + aaLine(vWP.z, .1, .0005))) * uBase * (1. - gCover);   // (a period city's ground covers it, as its paving would)
     // the rings of the city: one fine ring per century, spreading from the old town as the counter runs
     if (kind < 1.5 && uRingN > 0.) {
       float rr = length(vWP.xz - uRingC) / uRingS;                    // ring index at this point
@@ -397,6 +400,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       c += ecol * fl * .9 * uEraA + vec3(.4) * fl * uEraA;
       c *= 1. - .9 * eraBurnK();   // charred (the flames are added as emission, see eraFire)
     }
+    // a period city's open ground on the plate (grounds): the projector colours it as it does that city's paving (eraShade .3)
+    if (kind > .5 && kind < 1.5 && gCover > 0.) c = mix(c, mix(c, gEcol * .3 * .45, gEraA * (1. - gInk)), gCover);
     // decals: graphics projected on the plate (and the things standing on it): emblem, star map, plan, rings
     if (kind < 1.5) {
       for (int i = 0; i < 4; i++) {
@@ -485,13 +490,13 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(${kind === 1 ? 'grounds(diffuseColor.rgb, -1, true)' : 'diffuseColor.rgb'}, cWater * .72, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * eraBurnK()); if (abs(vData.y - 5.) < .5 && normalize(vWN).y > .7) diffuseColor.rgb = cWater * .72; if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); if (abs(vData.y - 11.) < .5 && uGroundSelf > -.5 && normalize(vWN).y > .7) diffuseColor.rgb = grounds(diffuseColor.rgb, int(uGroundSelf + .5), false); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
         // a period city's colour is in the light that falls on it, not in its plaster: the lamps' direct light (key, fill, rim) takes
         // the era's colour, the room's soft light stays neutral, so its walls are warm where lit and grey in the shade
-        .replace('#include <aomap_fragment>', `#include <aomap_fragment>${kind === 0 ? '\n reflectedLight.directDiffuse *= eraKeyT;' : ''}`)
+        .replace('#include <aomap_fragment>', `#include <aomap_fragment>${kind === 0 ? '\n reflectedLight.directDiffuse *= eraKeyT;' : kind === 1 ? '\n reflectedLight.directDiffuse *= mix(vec3(1.), gKeyT, gCover);' : ''}`)
         // water, the plate's (wmask) and a period city's own (its pools' and moats' tops, part 5): its ripples tilt the normal
         .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>${kind < 2 ? `\n float wq_ = ${kind === 1 ? 'wm' : '(vData.w > 2.5 && abs(vData.y - 5.) < .5 ? step(.7, normalize(vWN).y) : 0.)'}; vec2 wP_ = vWP.xz / uScaleM; float wPx_ = length(fwidth(wP_)), wEdge_ = fwidth(wm); vec2 wSl_ = wq_ > 0. ? waterSlope(wP_, wPx_) * wq_ : vec2(0.); normal = normalize(normal + (viewMatrix * vec4(-wSl_.x, 0., -wSl_.y, 0.)).xyz);` : ''}`)
         .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, .28, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .28;' : ''}`)
         .replace('#include <opaque_fragment>', `outgoingLight += projLight(${kind}.0, wm) * mix(diffuseColor.rgb, vec3(1.), ${kind === 1 ? 'uPlateEmit' : '.1'}) * 1.35;
  ${kind < 2 ? '{ float sl_ = (1. - smoothstep(0., 1.5 * max(wEdge_, 1e-5), abs(wm - .5))) * smoothstep(.001, .006, wEdge_) * uWaterShore, wg_ = wq_ > .8 ? waterGlint(wP_, wPx_) * smoothstep(.8, .97, wq_) * uWaterGlint : 0.; outgoingLight += vec3(.78, .9, 1.) * sl_ * (.25 + uProj) * .5 + vec3(1., .96, .88) * wg_ * (.35 + uProj); }   // water: a fine lit line along its shore (a pixel or so wide at any distance; none inside a pool fading as a whole), and light caught on its ripples' : ''}
- ${kind === 1 ? '{ float sh_ = clamp((dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01), -1., 1.) * (1. - wm) * step(.5, normalize(vWN).y); vec3 tn_ = uShadeC / max(max(uShadeC.r, uShadeC.g), max(uShadeC.b, .001)); outgoingLight = outgoingLight * (sh_ < 0. ? max(.5, 1. + .35 * uShadeK * sh_) : 1.) + tn_ * .5 * uShadeK * max(sh_, 0.); }   // terrain.shade: a fixed low sun on the plate top (not its sides): a slope turned to it lit in the plate\'s own hue (at most .5 k, a steel blue on a dark blue plate), a slope turned away darker, flat ground and water as they are; a white light added on the dark plate read as snow on the hills' : ''}
+ ${kind === 1 ? '{ float sh_ = clamp((dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01), -1., 1.) * (1. - wm) * step(.5, normalize(vWN).y); vec3 tn_ = mix(uShadeC / max(max(uShadeC.r, uShadeC.g), max(uShadeC.b, .001)), diffuseColor.rgb / max(max(diffuseColor.r, diffuseColor.g), max(diffuseColor.b, .001)), gCover); outgoingLight = outgoingLight * (sh_ < 0. ? max(.5, 1. + .35 * uShadeK * sh_) : 1.) + tn_ * .5 * uShadeK * max(sh_, 0.); }   // terrain.shade: a fixed low sun on the plate top (not its sides): a slope turned to it lit in the plate\'s own hue (a period city\'s ground: in the ground\'s) (at most .5 k, a steel blue on a dark blue plate), a slope turned away darker, flat ground and water as they are; a white light added on the dark plate read as snow on the hills' : ''}
  ${kind === 0 ? `if (vData.w > -.5 && abs(vData.w - 1.) > .5 && abs(normalize(vWN).y) < .5 && !(vData.w > 2.5 && abs(vData.y - 11.) < .5)) {   // a wall darkens toward its foot, where the street and its neighbours hide the room's light: the city stands on the plate instead of floating over it (a period house's plinth is that foot already, and keeps its light). The band is uFootM metres (main.js: a few metres up close, a few pixels' worth from afar)
    float fh_ = (vWP.y - vBase) / uScaleH; outgoingLight *= mix(.62, 1., smoothstep(0., uFootM, fh_)); }
  if (vData.w > 2.5) { float eb_ = eraBurnK(); if (eb_ > 0.) outgoingLight += eraFire() * eb_ * 1.7 * uProj * vUp; }   // a building that has fallen no longer burns
