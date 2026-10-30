@@ -268,12 +268,12 @@ def era_boundary(prims, cs):
     g = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in feet], R, join_style='mitre')).buffer(-R * .7, join_style='mitre')
     if cs.get('outline'):   # an outline the buildings do not give (a village's ditch): joined into the city's outline
         g = g.union(_sh.union_all([_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in r]) for r in cs['outline']]))
-    gardens = [t['region'] for t in cs.get('trees', []) if 'region' in t]   # (a garden is the city's ground, a row along a road is not)
-    if gardens:
-        g = g.union(_sh.union_all([_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in (osm_rings(r[4:])[0] if isinstance(r, str) and r.startswith('osm:') else r)]) for r in gardens]))
-    if cs.get('grounds'):   # (open ground drawn as what it is: the city's ground too)
+    # gardens (trees over a region) and open ground: the city's ground too (a row of trees along a road is not); a region read
+    # as citygen reads it (a ring, holes, several areas, osm:)
+    regs = [t['region'] for t in cs.get('trees', []) if 'region' in t] + [d['region'] for d in cs.get('grounds', [])]
+    if regs:
         import numpy as _np
-        g = g.union(_sh.union_all([_sh.transform(citygen.region_utm(F, d['region'], osm_rings), lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2)) for d in cs['grounds']]))
+        g = g.union(_sh.union_all([_sh.transform(citygen.region_utm(F, r, osm_rings), lambda q: _np.array([F.model(x, y) for x, y in q]).reshape(-1, 2)) for r in regs]))
     polys = [q for q in getattr(g, 'geoms', [g]) if q.area >= (cs.get('boundary_min_m', 140) * S) ** 2]
     return [[[round(x, 5), round(z, 5)] for x, z in q.simplify(8 * S).exterior.coords] for q in polys]
 
