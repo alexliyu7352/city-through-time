@@ -155,7 +155,7 @@ def main():
         return out
     pid = S['id']; nodes = {n['id']: n for n in C['film']['nodes']}
     cs = (nodes.get(S.get('era')) or {}).get('city') or {}
-    cs = landmarks.templated(citygen.with_trace(copy.deepcopy(cs), F, D), landmarks.library(C, D), f'parcels {pid}')
+    cs = landmarks.checked(landmarks.templated(citygen.with_trace(copy.deepcopy(cs), F, D), landmarks.library(C, D), f'parcels {pid}'), f'parcels {pid}')   # (completed as compile completes them: landmark_site reads their sizes)
     sites = [g for L in cs.get('landmarks') or [] for g in citygen.landmark_site(L, F, cs.get('theta_deg', 0))[4]]   # (each landmark's own ground)
     # the ground citygen keeps for the era's walls (a band along them) and for the shop rows of its streets with shops
     walls = [Polygon([F.to_utm.transform(*p) for p in w['ring']]).exterior.buffer(w.get('t_m', 10) * 1.2 + 10) for w in cs.get('walls') or [] if 'ring' in w]

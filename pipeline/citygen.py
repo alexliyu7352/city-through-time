@@ -1412,7 +1412,8 @@ def landmark_site(L, F, theta_deg=0.0):
     the same ground from here, never works it out again (a box round the anchor instead of what the landmark covers put houses on
     the side of a temple's platform). A class of landmarks.py: what it covers (landmarks.bounds) and 6 m; a ditch: its line; a large
     palace: its halls and its wall; any other: its rectangle and an apron. L comes back with what a run between two points adds
-    (arches: its length); theta_deg: the city's, for a landmark that gives none."""
+    (arches: its length); theta_deg: the city's, for a landmark that gives none. L is a landmark as compile completes it
+    (landmarks.checked, after templated): a class's sizes come from its defaults."""
     import landmarks as LMK_
     if 'lon' in L: x, y = F.to_utm.transform(L['lon'], L['lat'])
     elif 'from' in L: x, y = F.to_utm.transform(*L['from'])
