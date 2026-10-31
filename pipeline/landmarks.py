@@ -107,6 +107,9 @@ FIELDS = {
         'transept': ('obj', {'span_m': ('num', (2, 400), REQ, 'its length across'), 'w_m': ('num', (2, 200), None, 'its width (the nave\'s when absent)'), 'at': ('num', (0, 1), .72, 'where it crosses, a share of the length from the front'), 'h_m': ('num', (1, 120), None, 'its walls (the nave\'s when absent)')}, None, 'an arm across (a cross plan)'),
         'colonnade': ('obj', {'at': ('enum', ('around', 'front', 'front_back'), 'around', 'round all four sides (a peripteral temple), the front (a portico, a stoa\'s long front), front and back'), 'n_front': ('int', (2, 40), 6, 'columns across the front'), 'h_m': ('num', (1, 120), None, 'their height (the walls\' when absent)'), 'depth_m': ('num', (1, 40), None, 'from the columns to the wall behind (a portico two bays deep when absent, one round all sides; the hall behind keeping at least a quarter of its depth)')}, None, 'columns under the roof\'s edge'),
         'podium': ('obj', {'h_m': ('num', (.2, 30), REQ, 'its height'), 'stair': ('enum', ('front', 'around', 'none'), 'front', 'front: one flight (a Roman temple); around: steps all round (a Greek temple\'s stylobate)')}, None, 'a platform under it'),
+        'storeys': ('int', (0, 12), 0, 'storeys behind its walls, a row of windows on each and a ledge under the eaves (a palace, a town hall, a college, a hospital); 0: one tall room (a temple, a church)'),
+        'bay_m': ('num', (2, 15), 4.5, 'storeys: a window every this many metres along a wall'),
+        'ground_floor': ('enum', ('windows', 'arcade', 'closed'), 'windows', 'storeys: its ground storey with windows as above, an open arcade along its front (a loggia), or closed (a plain base)'),
         'buttresses': ('obj', {'n': ('int', (2, 60), None, 'on each side (one every 7 m when absent)'), 'depth_m': ('num', (.5, 10), 2.5, 'how far each stands out'), 'flying': ('bool', None, False, 'flying buttresses over the aisles to the nave\'s wall (Gothic)')}, None, 'piers against the long walls'),
     }, 'a long rectangular hall under one roof: temples, basilicas, churches and cathedrals, stoas, market halls, prayer halls, palace halls'),
     'column': ({
@@ -259,6 +262,8 @@ def check(L, src, part=False):
         c_ = out['colonnade']; dep = c_['depth_m']
         body = out['d_m'] - dep if c_['at'] == 'front' else (out['d_m'] if c_['at'] == 'front_back' else min(out['w_m'], out['d_m'])) - 2 * dep
         if body < 1: raise Bad(f'{src}.colonnade.depth_m: {dep:g} leaves no hall behind the columns (d_m {out["d_m"]:g}{", w_m " + format(out["w_m"], "g") if c_["at"] == "around" else ""})')
+    if k == 'long_hall' and out.get('storeys') and (out.get('aisles') or out.get('transept')):
+        raise Bad(f'{src}.storeys: a hall with aisles or a transept is one tall room (a church); storeys are for a palace, a town hall, a college')
     if k == 'column':
         if 'stages' in out and ('w_m' in out or 'h_m' in out): raise Bad(f'{src}: stages give the widths and heights: no w_m or h_m with them')
         if 'stages' not in out and ('w_m' not in out or 'h_m' not in out): raise Bad(f'{src}: w_m and h_m are missing (or give stages)')
@@ -713,6 +718,21 @@ def _long_hall(D, L, P, th, z):
             if B.det >= 1 and h - ai['h_m'] > 3:   # the clerestory's windows
                 k_ = max(2, int(bd / 6))
                 for i in range(k_): D.box(P, th, side * (nw / 2 + .05), cy - bd / 2 + (i + .5) * bd / k_, z + ai['h_m'] + (h - ai['h_m']) * .45, .3, bd / k_ * .45, (h - ai['h_m']) * .35, part=C.DARK)
+    ns = L['storeys']
+    if ns and B.det >= 1:   # a storeyed hall: a row of windows on each storey round its walls, a ledge under the eaves
+        sh, bay, gf = h / ns, L['bay_m'], L['ground_floor']; wh = min(2.6, sh * .45); yf = cy - bd / 2
+        for s in range(0 if gf == 'windows' else 1, ns):
+            zz = z + s * sh + sh * .32
+            for side in (-1, 1):   # the long walls, then the ends
+                k_ = max(1, int(bd / bay))
+                for i in range(k_): D.box(P, th, side * (nw / 2 + .05), yf + (i + .5) * bd / k_, zz, .3, min(1.6, bd / k_ * .4), wh, part=C.DARK)
+                k_ = max(1, int(nw / bay))
+                for i in range(k_): D.box(P, th, -nw / 2 + (i + .5) * nw / k_, cy + side * (bd / 2 + .05), zz, min(1.6, nw / k_ * .4), .3, wh, part=C.DARK)
+        if gf == 'arcade':   # the open arcade along the front: its dark depth behind a row of piers
+            k_ = max(2, int(nw / bay))
+            D.box(P, th, 0, yf - .05, z + .1, nw * .96, .3, sh * .78, part=C.DARK)
+            for i in range(k_ + 1): D.box(P, th, -nw / 2 + .5 + (nw - 1) * i / k_, yf - .3, z, 1.0, .6, sh * .9)
+        D.box(P, th, 0, cy, z + h - .5, nw + .8, bd + .8, .5)   # the ledge
     if col:   # the columns: on the roof's edge line
         n_f = col['n_front']; ch = col.get('h_m') or h; dia = min(2.4, w / max(1, n_f - 1) * .35)
         xs = [-w / 2 + dia / 2 + i * (w - dia) / (n_f - 1) for i in range(n_f)]; sp = (w - dia) / (n_f - 1)
