@@ -66,10 +66,11 @@ const LOW = QS.get('quality') === 'low' || QS.has('play') || (QS.has('free') && 
 // what this film uses of the engine's slots: where the graphics cannot link the full shaders (a phone's), they are sized to it (studio.js)
 const most = list => Math.max(0, ...list);
 const FIT = { basins: most((FILM.eras || []).flatMap(e => (e.basins || []).map(b => b.k + 1))), losses: most((FILM.eras || []).map(e => (e.losses || []).length)),
+  rings: (FILM.eras || []).reduce((n, e) => n + new Set((e.basins || []).filter(b => b.draped && b.lost).map(b => b.lost)).size, 0),
   epochs: most((FILM.epochs || []).map(e => e.i + 1)), grounds: (FILM.eras || []).filter(e => e.ground).length, bands: (FILM.bands || []).length,
   yl: FILM.grow && FILM.grow.yl ? FILM.grow.yl.length : 0, decals: most((FILM.decals || []).map(d => d.i + 1)), living: !FREE && (FILM.living || []).length > 0 };
 let S;
-try { S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps, fit: FIT }); }   // (pools and grounds past the engine's 32 slots: compile basinSlots)
+try { S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, gmax: FILM.groundSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps, fit: FIT }); }   // (pools and grounds past the engine's 32 slots: compile basinSlots)
 catch (e) { if (L.unable('gpuNone', e.message)) await new Promise(() => {}); throw e; }   // (no WebGL context after all)
 // what the graphics could not do, said on the page instead of a black city (live pages; renders and checks stop on the error)
 const GPU = S.gpu, gpuNote = () => `${GPU.path}; ${GPU.targets ? `${GPU.targets.half ? 'half-float' : '8-bit'}, ${GPU.targets.samples}x, depth ${GPU.targets.depth}` : 'no target'}; ${JSON.stringify(GPU.limits || {})}`;
@@ -79,6 +80,8 @@ if (GPU.fail) { if (L.unable('gpuWeak', `${GPU.fail}: ${GPU.fails[0] || ''} (${g
 GPU.onFail = e => L.unable('gpuWeak', e);
 S.renderer.domElement.addEventListener('webglcontextlost', () => L.unable('gpuLost'));
 const { U, camera, post, renderer, house, hemi, scene } = S;
+// each loss that takes a draped pool or a ground: one ring (studio uBasinL, eraShape), its slots pointing to it (uBasinRi)
+{ let r = 0; for (const e of FILM.eras || []) { const of = {}; for (const b of e.basins || []) if (b.draped && b.lost) { b.ring = of[b.lost] ??= ++r; U.uBasinRi.value[b.k] = b.ring; } } }
 const TL = new THREE.TextureLoader();
 const decalTex = FREE ? [] : await Promise.all((FILM.decals || []).map(d => tex(B + d.file)));
 const photoTex = FILM.satellite && !FREE ? await tex(B + FILM.satellite.file) : null;
@@ -333,7 +336,7 @@ function eraShape(e, t) {
     U.uBasinA.value[b.k] = ss(seg(t, st, st + e.grow)) * (1 - ringK(b.c, FR, t, SD)) * (1 - (q && !b.draped ? ringK(b.c, q, t, SD) : 0));
     if (b.draped && q) {   // a draped pool is the plate: its water goes point by point as its loss's ring passes (studio wmask)
       const R = curveAt(q.curve, t), R1 = curveAt(q.curve, t - SD);
-      U.uBasinL.value[b.k].set(q.o[0], q.o[1], R, q.mode === 'in' ? Math.max(R1, R + 1e-5) : Math.min(R1, R - 1e-5)); } }   // (which side of R tells the ring's way)
+      U.uBasinL.value[b.ring].set(q.o[0], q.o[1], R, q.mode === 'in' ? Math.max(R1, R + 1e-5) : Math.min(R1, R - 1e-5)); } }   // (which side of R tells the ring's way)
   (e.losses || []).forEach((q, j) => {   // a part of the city lost while the rest stands (compile lose:): its own ring, its own fire
     E.u.uLossR.value[j] = curveAt(q.curve, t); E.u.uLossW.value[j] = curveAt(q.curve, t - SD); E.u.uLossIn.value[j] = q.mode === 'in' ? 1 : 0;
     E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0;

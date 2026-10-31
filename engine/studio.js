@@ -12,15 +12,17 @@ import { makePost, targets } from './post.js';
 import { buildProp, makeTally, buildEra } from './props.js';
 
 const lin = h => new THREE.Color(h);
-export const NMAX = 8;
-export const LMAX = 16;
-const BMAX0 = 32;   // dug pools and grounds in a film (compile BASIN_MAX): the plate is lowered in each while it stands; a film needing more says so (film.basinSlots, up to compile's 127: opts.bmax)   // the parts one period city can lose while the rest stands (compile LOSE_MAX; record kind 4.. in aData.w)
-export const GMAX = 8;   // period cities whose open ground (compile ground map) the plate shows at one moment: the most standing at once
-export const EMAX = 12;   // epoch mask channels: data/layers1-3.png, RGBA each (compile shares a channel between masks apart in time and place)
+// the sizes the shaders are built with at least; a film that uses more is drawn with its own (makeStudio opts: what it uses)
+const NMAX = 8;   // year bands of today's buildings (film.bands)
+const LMAX = 16;   // the parts one period city can lose while the rest stands (its losses, the most of any city; record kind 4.. in aData.w)
+const BMAX0 = 32;   // dug pools and grounds in a film (compile BASIN_MAX): the plate is lowered in each while it stands (film.basinSlots, up to compile's 127)
+const GMAX = 8;   // period cities whose open ground (compile ground map) the plate shows at one moment: the most standing at once (film.groundSlots)
+const EMAX = 12;   // epoch mask channels: data/layers1-3.png, RGBA each (compile shares a channel between masks apart in time and place; a 13th stops it)
 const YLN = 48;   // points of the modern year line the shaders read (compile: grow.yl)
 
 export function makeStudio(W, H, M, PAL, opts = {}) {
-  const BMAX = Math.max(BMAX0, opts.bmax || 0);
+  const need = opts.fit || {};   // (what the film uses: main.js FIT)
+  const BMAX = Math.max(BMAX0, opts.bmax || 0), LM = Math.max(LMAX, need.losses || 0), GM = Math.max(GMAX, opts.gmax || 0), NM = Math.max(NMAX, need.bands || 0), YM = Math.max(YLN, need.yl || 0), RM = 1 + (need.rings || 0);
   const HMAX = Math.max(8, opts.slots || 0), H3 = HMAX > 8;
   const K = !!opts.keep;   // keep maps (film.keepMaps: a city with today_from): what of it still stands, where today's city steps aside once it comes back round it   // era channels (hide, edge maps): 8, or 12 for a film with more cities standing at once (film.eraSlots: hide3, edge3)   // (the shaders' uniform arrays: more than 32 only for a film that needs them, small devices have few)
   const LOW = !!opts.low;   // live preview: pixel ratio 1, no supersampling
@@ -93,18 +95,18 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uPhoto: { value: null }, uPhotoA: { value: 0 }, uPhotoSweep: { value: 2 }, uPhotoSweep0: { value: -1 },
     // node colour wave: the old colour (Col0, A0) outside a ring of radius R around C, the new one inside, a light front on the ring
     uNodeCol0: { value: new THREE.Color(1, 1, 1) }, uNodeA0: { value: 0 }, uNodeC: { value: new THREE.Vector2(0, 0) }, uNodeR: { value: 99 }, uNodeFront: { value: 0 },
-    uGround: { value: null }, uGroundM: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) }, uGroundA: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) },
-    uGroundC0: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) }, uGroundC: { value: Array.from({ length: GMAX }, () => new THREE.Vector4()) }, uGroundN: { value: 0 }, uGroundBand: { value: 4 },
-    uBasin: { value: null }, uBasinA: { value: Array(BMAX).fill(0) }, uBasinL: { value: Array.from({ length: BMAX }, () => new THREE.Vector4(0, 0, 1e9, 2e9)) }, uBasinLo: { value: 0 }, uBasinHi: { value: 1 }, uBasinK: { value: 0 }, uBasinBand: { value: 4 }, uWaterRip: { value: .022 }, uWaterGlint: { value: 1.2 }, uWaterShore: { value: .35 },
+    uGround: { value: null }, uGroundM: { value: Array.from({ length: GM }, () => new THREE.Vector4()) }, uGroundA: { value: Array.from({ length: GM }, () => new THREE.Vector4()) },
+    uGroundC0: { value: Array.from({ length: GM }, () => new THREE.Vector4()) }, uGroundC: { value: Array.from({ length: GM }, () => new THREE.Vector4()) }, uGroundN: { value: 0 }, uGroundBand: { value: 4 },
+    uBasin: { value: null }, uBasinA: { value: Array(BMAX).fill(0) }, uBasinRi: { value: Array(BMAX).fill(0) }, uBasinL: { value: Array.from({ length: RM }, () => new THREE.Vector4(0, 0, 1e9, 2e9)) }, uBasinLo: { value: 0 }, uBasinHi: { value: 1 }, uBasinK: { value: 0 }, uBasinBand: { value: 4 }, uWaterRip: { value: .022 }, uWaterGlint: { value: 1.2 }, uWaterShore: { value: .35 },
     uDimToday: { value: 0 }, uDimToday0: { value: 0 }, uEraGlow: { value: 0 }, uEdge: { value: null }, uEdge2: { value: null }, uEdge3: { value: null }, uHide3: { value: null }, uKeep: { value: null }, uKeep2: { value: null }, uKeep3: { value: null }, uHideKeep: { value: Array(HMAX).fill(0) }, uEdgeGain: { value: 1 },
     // per era channel (the hide masks): era time (0..1 over its rise, -1 off), grow share, the taking-back ring (centre, radius, in/out, width),
     // the edge (alpha, crop of its distance field, falloff); the ring/edge colour is uHideCol
     uHideT: { value: Array(HMAX).fill(-1) }, uHideG: { value: Array(HMAX).fill(.1) }, uHideO: { value: Array.from({ length: HMAX }, () => new THREE.Vector2()) }, uHideFR: { value: Array(HMAX).fill(-1) }, uHideFI: { value: Array(HMAX).fill(0) }, uHideFW: { value: Array(HMAX).fill(.01) },
     uEdgeA: { value: Array(HMAX).fill(0) }, uEdgeD: { value: Array(HMAX).fill(.015) }, uEdgeRect: { value: Array.from({ length: HMAX }, () => new THREE.Vector4(0, 0, 1, 1)) }, uEdgeLight: { value: .0045 }, uEdgeHalo: { value: .0014 }, uGrowWarm: { value: 0 }, uShockA: { value: 0 }, uShockR: { value: 0 }, uShockC: { value: new THREE.Vector2() }, uHideFA: { value: Array(HMAX).fill(0) }, uRiseA: { value: Array(HMAX).fill(0) }, uRiseMode: { value: Array(HMAX).fill(0) }, uRiseW: { value: Array(HMAX).fill(0) }, uRiseO: { value: Array.from({ length: HMAX }, () => new THREE.Vector2()) }, uRiseDir: { value: Array.from({ length: HMAX }, () => new THREE.Vector2()) }, uRiseR: { value: Array(HMAX).fill(-1) },
-    uResetC: { value: new THREE.Vector2(0, 0) }, uResetR: { value: -1 }, uResetY: { value: 0 }, uGrowMono: { value: 0 }, uYLt: { value: arr(YLN, 1e6) }, uYLy: { value: arr(YLN, 1e6) }, uYLn: { value: 0 }, uGrowDur: { value: 1.8 },   // while a period city stands: today's city dims, its ground glows, a band of light along its edge
+    uResetC: { value: new THREE.Vector2(0, 0) }, uResetR: { value: -1 }, uResetY: { value: 0 }, uGrowMono: { value: 0 }, uYLt: { value: arr(YM, 1e6) }, uYLy: { value: arr(YM, 1e6) }, uYLn: { value: 0 }, uGrowDur: { value: 1.8 },   // while a period city stands: today's city dims, its ground glows, a band of light along its edge
     cEp: { value: cols(PAL.epochs || [], EMAX) },
-    uGrowOn: { value: 0 }, uGT: { value: arr(NMAX, 99999) }, uGS: { value: arr(NMAX, 1) }, uBLo: { value: arr(NMAX, 1e9) }, uNB: { value: 0 }, uGrowDim: { value: 1 },
-    cBand: { value: cols(PAL.bands || [], NMAX) },
+    uGrowOn: { value: 0 }, uGT: { value: arr(NM, 99999) }, uGS: { value: arr(NM, 1) }, uBLo: { value: arr(NM, 1e9) }, uNB: { value: 0 }, uGrowDim: { value: 1 },
+    cBand: { value: cols(PAL.bands || [], NM) },
     uHgtF: { value: -1 }, uHgtOn: { value: 0 }, uHgtBand: { value: 0 }, uHgtMax: { value: 100 }, cH: { value: cols(PAL.hgt || ['#1a1440', '#5a35d6', '#e2509a', '#ffe7c4'], 4) },
     uPickOn: { value: 0 }, uPickPos: { value: new THREE.Vector2(9, 9) }, uPickR: { value: .02 }, cPick: { value: lin(PAL.pick || '#ffd27a') },
     cBlack: { value: lin(PAL.black || '#0b0f18') },
@@ -125,9 +127,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // graphics that cannot link shaders that large (a phone's: 16 textures a shader and 224 to 256 uniform vectors a stage, where
   // Xianyang's full ones read 18 and pack into about 250) Z is the film's own (fitOf: what opts.fit says it uses), the same
   // picture without the slots it leaves empty (linkTest below; tools/phonecheck.mjs measures them)
-  const FULL = { B: BMAX, L: LMAX, E: EMAX, G: GMAX, N: NMAX, Y: YLN, D: 4, live: true, ground: true };
-  const fitOf = f => ({ B: Math.max(1, f.basins), L: Math.max(1, f.losses), E: Math.max(1, Math.min(EMAX, f.epochs)), G: Math.max(1, Math.min(GMAX, f.grounds)),
-    N: Math.max(1, Math.min(NMAX, f.bands)), Y: Math.max(2, Math.min(YLN, f.yl)), D: Math.max(1, Math.min(4, f.decals)), live: !!f.living, ground: f.grounds > 0 });
+  const FULL = { B: BMAX, R: RM, L: LM, E: EMAX, G: GM, N: NM, Y: YM, D: 4, live: true, ground: true };
+  const fitOf = f => ({ B: Math.max(1, f.basins), R: 1 + (f.rings || 0), L: Math.max(1, f.losses), E: Math.max(1, Math.min(EMAX, f.epochs)), G: Math.max(1, Math.min(GM, f.grounds)),
+    N: Math.max(1, f.bands), Y: Math.max(2, f.yl), D: Math.max(1, Math.min(4, f.decals)), live: !!f.living, ground: f.grounds > 0 });
   let Z = FULL;   // (the sizes the shaders are built with now: projMaterial and deformMaterial read it when three.js builds their programs)
   const decalTex = Z => { let e = `texture2D(uD${Z.D - 1}, duv)`; for (let k = Z.D - 2; k >= 0; k--) e = `i == ${k} ? texture2D(uD${k}, duv) : ${e}`; return e; };   // (one sampler per decal the film has)
   // the film's year line from the modern growth on (compile: grow.yl): when the counter first reaches a year. Today's buildings
@@ -213,7 +215,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   vec3 photoAt(vec2 uv){ vec3 p = texture2D(uPhoto, uv).rgb; p = pow(p, vec3(1.08)) * 1.18; float l = dot(p, vec3(.299, .587, .114)); p = mix(vec3(l), p, 1.12); return p * vec3(1.02, 1., .97) * uPhotoK; }
   bool onPlate(vec2 uv){ return all(greaterThanEqual(uv, vec2(0.))) && all(lessThanEqual(uv, vec2(1.))); }
-  uniform sampler2D uBasin; uniform float uBasinA[${Z.B}], uBasinBand, uWaterRip, uWaterGlint, uWaterShore; uniform vec4 uBasinL[${Z.B}];   // (a draped pool's loss ring: origin, radius now, radius a moment ago)
+  // the loss rings of the draped pools and grounds (origin, radius now, radius a moment ago), one per city's loss that takes any
+  // (uBasinRi: a slot's ring, 0 none: ring 0 never passes): a ring each, not one each slot, as a phone has few uniform vectors
+  uniform sampler2D uBasin; uniform float uBasinA[${Z.B}], uBasinRi[${Z.B}], uBasinBand, uWaterRip, uWaterGlint, uWaterShore; uniform vec4 uBasinL[${Z.R}];
+  vec4 basinRing(float r){ vec4 L = uBasinL[0]; for (int j = 1; j < ${Z.R}; j++) if (abs(float(j) - r) < .5) L = uBasinL[j]; return L; }
   float wDrapedK = 0.;   // this fragment's share of a draped pool (wmask sets it): no edge lines are drawn on it (post, the plate's alpha)
   float wmask(){ vec2 uv = plateUV(); if (!onPlate(uv)) return 0.; float w = texture2D(uWater, uv).r;
     // a draped pool (alpha 128 + its number in the basin map): the plate is its water while it stands. Round its edge the map
@@ -225,7 +230,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     if (k < 0) return w;
     for (int q = 0; q < 4; q++) if (kq[q] != k) s[q] = -uBasinBand;   // (two pools' bands meeting: the nearer pool's)
     float sd = mix(mix(s[0], s[1], f.x), mix(s[2], s[3], f.x), f.y), aa = max(fwidth(sd), .3);
-    for (int i = 0; i < ${Z.B}; i++) if (i == k) { vec4 L = uBasinL[i];
+    for (int i = 0; i < ${Z.B}; i++) if (i == k) { vec4 L = basinRing(uBasinRi[i]);
       wDrapedK = uBasinA[i] * smoothstep(-aa, aa, sd) * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); }   // (lost where its ring has passed, as main.js ringK)
     return max(w, wDrapedK); }
   // open ground of the period cities standing (compile ground map, a crop per city): earth, grass, gravel or a paved yard,
@@ -251,7 +256,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     float t[4]; for (int q = 0; q < 4; q++) t[q] = kq[q] == k ? s[q] : kq[q] >= 0 ? -s[q] : -uGroundBand;
     return mix(mix(t[0], t[1], f.x), mix(t[2], t[3], f.x), f.y); }
   float groundOn(int k){ float on = 0.;   // its slot: up as its mark rises, lost where its loss's ring has passed
-    for (int j = 0; j < ${Z.B}; j++) if (j == k) { vec4 L = uBasinL[j]; on = uBasinA[j] * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); }
+    for (int j = 0; j < ${Z.B}; j++) if (j == k) { vec4 L = basinRing(uBasinRi[j]); on = uBasinA[j] * (1. - smoothstep(0., 1., clamp((distance(vWP.xz, L.xy) - L.z) / (L.w - L.z), 0., 1.))); }
     return on; }
   float gCover = 0., gEraA = 0., gInk = 0.; vec3 gEcol = vec3(0.), gKeyT = vec3(1.);   // the plate's share of a ground here and its city's light: lit as the city's own paving (projLight, the key light as eraKeyT)
   ${Z.ground ? `vec3 grounds(vec3 col, int only, bool tint){
@@ -1039,7 +1044,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   // the uniform arrays cut to the film's sizes, as long as the shaders' (each upload exactly the array it fills)
   const fitTo = z => { for (const [n, ks] of [[z.E, ['uEpA', 'uEpY0', 'uEpY1', 'uEpB', 'uEpC', 'uEpR', 'uEpRim', 'uEpW', 'cEp']], [z.D, ['uDA', 'uDG', 'uDrect']], [z.G, ['uGroundM', 'uGroundA', 'uGroundC0', 'uGroundC']],
-    [z.B, ['uBasinA', 'uBasinL']], [z.Y, ['uYLt', 'uYLy']], [z.N, ['uGT', 'uGS', 'uBLo', 'cBand']]]) for (const k of ks) U[k].value.length = n; };
+    [z.B, ['uBasinA', 'uBasinRi']], [z.R, ['uBasinL']], [z.Y, ['uYLt', 'uYLy']], [z.N, ['uGT', 'uGS', 'uBLo', 'cBand']]]) for (const k of ks) U[k].value.length = n; };
   if (gpu.targets) {
     const g = renderer.getContext(), roomy = g.getParameter(g.MAX_TEXTURE_IMAGE_UNITS) >= 32 && g.getParameter(g.MAX_FRAGMENT_UNIFORM_VECTORS) >= 1024;
     const tries = [...(!opts.fit || (roomy && FORCE !== 'fit') ? [FULL] : []), ...(opts.fit ? [fitOf(opts.fit)] : [])];

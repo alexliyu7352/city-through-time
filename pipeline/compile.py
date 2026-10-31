@@ -445,7 +445,6 @@ def match(sel, tag):
     v = sel.get(tag[0]); return v is True or (isinstance(v, list) and tag[1] in v)
 
 LOSE_KEYS = {'id', 'at', 'select', 'region', 'keep', 'style', 'ring', 'from', 'dur', 'burn', 'for', 'rest'}
-LOSE_MAX = 16   # (engine/studio.js LMAX: the losses one city can have)
 
 def lost_parts(prims, meta, cs, node_id):
     """which part of the city each `lose:` takes (docs/MODEL.md "A part of a city lost"): per primitive 0 (stays) or the
@@ -453,8 +452,8 @@ def lost_parts(prims, meta, cs, node_id):
     `region` (when given) and outside its `keep` (when given); a building is taken whole. A street, lane or wall the select does
     not name one by one runs on past a region: only its stretch inside goes (each piece by its own centre), not all or none of
     it by where its middle falls. keep is a ring (or rings, osm:<name>), or {landmarks: [ids], .., region: ring}: the parts it
-    names stand whatever the region. A part in two losses, a loss that takes nothing, or more losses than the engine draws stops
-    compile.
+    names stand whatever the region. A part in two losses or a loss that takes nothing stops compile (the engine sizes its
+    rings by the film's most losses in one city: studio.js LMAX).
     `for`: the landmarks (id or group) built later where houses stood. citygen laid the houses over their sites; the loss takes
     every building on a site that no other loss takes (whatever its select and region; its keep still holds), never the landmark
     itself; without a region it takes only that. The landmark must rise after its site has gone (checked with the loss times).
@@ -463,7 +462,6 @@ def lost_parts(prims, meta, cs, node_id):
     other loss whatever its place in the list: a city's last loss, its survivors kept (a basilica carried into the present)."""
     L = cs.get('lose') or []
     if not L: return None
-    if len(L) > LOSE_MAX: raise SystemExit(f'compile: era {node_id}: {len(L)} losses; a city has at most {LOSE_MAX} (one ring each)')
     import shapely as _sh
     def area(v):
         rings = [v] if isinstance(v, str) or (isinstance(v[0], (list, tuple)) and isinstance(v[0][0], (int, float))) else v   # (one ring, or a list of rings / osm: names)
@@ -1342,7 +1340,8 @@ for i, node in enumerate(FM['nodes']):
         if idx is None:
             idx = len(mask_chans)
             if idx >= 12: print('   mask channels:', [[(u_['id'], u_['on'], uoff_(u_)) for u_ in ch_] for ch_ in MASK_USE], 'wanted by', e['id'], on_, off)
-            assert idx < 12, 'at most 12 epoch mask channels in a film (masks that do not overlap in time and place share one)'
+            if idx >= 12: raise SystemExit(f"compile: {e['id']}: a 13th epoch mask channel (layers1-3.png hold four each; studio.js EMAX): masks apart in time "
+                                           "and place already share one (the list above); end one sooner (off), or let two neighbouring masks be one")
             mask_chans.append(blur_); MASK_USE.append([])
         else: mask_chans[idx] = ImageChops.lighter(mask_chans[idx], blur_)
         MASK_USE[idx].append({'id': e['id'], 'on': on_, 'off': off, 'shape': shape_, 'disk': disk_})   # (off: seconds, None = to the end, or the node it lasts until)
@@ -1539,7 +1538,9 @@ for i, node in enumerate(FM['nodes']):
                     y_ = nd['years'][0]; lz, le = ab(nd.get('label', {}))
                     FM.setdefault('labels', []).append({'lon': lon_, 'lat': lat_, **{l_: P_['year']['label'].format(name=nm_, year=i18n.year(l_, y_)) for l_, P_, nm_ in zip(LANG, PACK, (lz, le))},
                                                         'size': 1.0, 'dmin': 0, 't0': T(dc.get('at', 0)) + 1.0, 't1': node['_t1'] + 1.0})
-        k = len(decals_out); assert k < 4, 'at most 4 decals'
+        k = len(decals_out)
+        if k >= 4: raise SystemExit(f"compile: node {nd['id']}: a fifth decal: the plate's shader samples each as a texture of its own, and a phone gives a "
+                                    "shader 16 (docs/PUBLISH.md); draw two decals that show together as one picture")
         png = DEC.render(dc, F, ST, C, LAYOUT.data(D, f'decal_{k}.png'), OSM)
         decals_out.append({'i': k, 'id': dc['id'], 'file': f'data/decal_{k}.png', 'on': T(dc.get('at', 0)), 'fade': dc.get('fade', 1.5), 'off': T(dc.get('off_at')) if 'off_at' in dc else (None if dc.get('persist') else T('end')),
                            'offStyle': dc.get('offStyle', 'fade'), 'offDur': dc.get('offDur', 1.2), 'gain': dc.get('gain', 1.0), 'uv': png['uv'], 'glow': dc.get('glow', 1.0), 'photo_dim': dc.get('photo_dim', 0)})
@@ -1595,7 +1596,6 @@ if grow:   # the growth's {year} times and its counters' end, on the whole year 
     # the year line from the growth on, for the engine: today's buildings rise when the counter first reaches their year
     yl_ = [[ta, ya] for ta, ya in yearline if ta >= grow['on'] - 1.0]
     yl_ = [p_ for i_, p_ in enumerate(yl_) if i_ == 0 or p_ != yl_[i_ - 1]]
-    assert len(yl_) <= 48, f'the modern year line has {len(yl_)} points; the engine reads 48 (studio.js YLN)'
     grow['yl'] = [[round(ta, 3), round(ya, 3)] for ta, ya in yl_]
     for b in grow['bands']:
         tr_ = b.pop('_traw', None)
@@ -1922,6 +1922,15 @@ elif os.path.exists(LAYOUT.data(D, 'basins.png')): os.remove(LAYOUT.data(D, 'bas
 # surface (citygen cut a later ground out of an earlier one); two that still overlap are refused
 GND_BAND, GND_PX, GND_MIN_M, GND_ATLAS = 4, 1024, 2.0, 4096   # (a crop's long side at most GND_PX texels, a texel at least GND_MIN_M)
 GROUND_MAP = None
+# the cities whose grounds stand at once (studio.js GMAX 8, film.groundSlots past it): a city's grounds are on from its first
+# ground's rise to its fall ring gone (main.js eraShape: a ground's slot stays on once risen; a loss takes its surface point by point)
+GROUND_SLOTS = 0
+if gnd_:
+    iv_ = []
+    for eid_, lst_ in gnd_.items():
+        e_ = next(e for e in eras_out if e['id'] == eid_); sl_ = {b['k']: b for b in e_['basins'] if b.get('ground')}
+        iv_.append((e_['on'] + min(sl_[k_]['rank'] for k_, _ in lst_) * e_['span'], e_['fallR']['gone'] if e_.get('fallR') else 1e9))
+    GROUND_SLOTS = max(sum(1 for a_, b_ in iv_ if a_ <= t_ < b_) for t_, _ in iv_)
 if gnd_:
     import numpy as _np, shapely as _sh, itertools as _it
     Mg_ = lambda g: model_shape(g)
@@ -2225,7 +2234,7 @@ film = {
     'decals': decals_out, 'satellite': sat_out(sat),
     'footage': footage_out, 'end': end, 'ev': evs, 'music': FM.get('music', {}),
     'labels': labels_out,
-    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinSlots': nb_} if nb_ > 32 else {}), **({'eraSlots': SLOTS} if SLOTS > 8 else {}), **({'keepMaps': True} if KEEP_BY else {}), **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
+    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinSlots': nb_} if nb_ > 32 else {}), **({'groundSlots': GROUND_SLOTS} if GROUND_SLOTS > 8 else {}), **({'eraSlots': SLOTS} if SLOTS > 8 else {}), **({'keepMaps': True} if KEEP_BY else {}), **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],

@@ -52,7 +52,8 @@ The steps shown to the user are in `CONTRIBUTING.zh-Hant.md`. The repository tak
   (a desktop's give 32 and 1024); a shader over them is refused, and the buildings and the plate then go black while the lines and the dust
   still show. The engine tries what links (`engine/studio.js`: the full shaders, else ones sized to what the film uses, the same picture)
   and what it can draw into (half-float, else 8-bit), and says on the page what is missing instead of drawing black. Before publishing a
-  film with more than Xianyang's (more decals, period cities standing at once past 8, epoch channels), run `node tools/phonecheck.mjs <slug>`:
+  film with more than Xianyang's (more pools and grounds, more cities with grounds standing at once, more losses in one city, more
+  decals or epoch channels), run `node tools/phonecheck.mjs <slug>`:
   OVER means the page would only say, on a phone, that it cannot draw the film. `&gpu` on the page's address shows what it chose;
   `&gpu=fit` and `&gpu=8bit` force those fallbacks on a computer, to see the film, the walk-round and the museum pages as a phone draws them;
   on a touch screen the player and the walk-round go full screen and sideways on a tap (`engine/phone.js`);
