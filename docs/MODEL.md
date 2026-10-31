@@ -164,7 +164,8 @@ the site (the ground citygen would have kept clear; with a `region`, that too), 
 a landmark's site is empty from the start, which is right only for what stood there before the houses. The city's outline and the ground where today's buildings stepped aside stay as they were (a shrunken city's walls usually stand); a city whose survivors stand on into the present (a basilica, its colonnade and its obelisk carried through to today while the streets round
 them are taken down) writes `today_from: <node id>`: from that node, today's buildings come back everywhere except round what of the city still stands (the parts no loss
 takes, and today's buildings that touch them), its outline, its walls' ring and its lost parts going back to today's city, so the survivors stand on without sinking
-and rising again as a city of their own.
+and rising again as a city of their own; its last loss, which takes all the rest, writes `rest: true` (with `keep:` naming the survivors): it takes what no other loss of the city takes,
+whatever its place in the list, so the parts earlier losses took are passed over instead of refused as lost twice.
 **How many period cities:** as many as the history has. At most twelve stand or are drawn (a ghost outline) at the same moment, each lighting one channel (where today's buildings
 step aside, its front and its edge); cities apart in time share a channel, and compile says which (`era channels`) or stops at a thirteenth at once. A film that fits in eight
 keeps eight (the engine's uniforms as small as they can be); one with more takes twelve (`hide3.png`, `edge3.png`, `film.eraSlots`): a city with a long history keeps the
