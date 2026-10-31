@@ -2260,7 +2260,8 @@ def _changes():   # (t0, t1, what, places or None for the whole frame)
         if e.get('off'): yield (e['off'] - (e.get('burn') or 0), e['off'] + e.get('sink', 2.5), f"era {e['id']} {'burning and ' if e.get('burn') else ''}going",
                                 [(c_, r_) for era_, _, c_, r_, _ in PLACES if era_ == e['id']] or None)
         for q in e.get('losses') or []:   # a part of the city lost while the rest stands (lose:): its own ring, burning first
-            yield ((q['burn'] or [q['curve'][0][0]])[0], q['gone'], f"era {e['id']} losing {q['id']}", [(tuple(q['o']), max(R_ for _, R_ in q['curve']))])
+            ox_, oz_ = q['o']   # (a ring's origin is (x, z) on the plate; a place is a point in space)
+            yield ((q['burn'] or [q['curve'][0][0]])[0], q['gone'], f"era {e['id']} losing {q['id']}", [((ox_, model_ground(ox_, oz_), oz_), max(R_ for _, R_ in q['curve']))])
     for ep in epochs: yield ep['on'], ep['on'] + (ep.get('fade') or 1), f"area {ep['id']} lighting up", None
     for b in (grow or {}).get('bands', []): yield b['t'] - b['spread'] / 2, b['t'] + b['spread'] / 2, f"today's buildings of band {b['band']} rising", None
     if film.get('sky'): yield film['sky']['on'], film['sky']['off'], 'the sky plan', None
