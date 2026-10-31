@@ -249,6 +249,14 @@ import osmgeo
 import local
 OSM = osmgeo.elements(LAYOUT.raw(D), F.area)
 def osm_rings(name): return osmgeo.rings(OSM, name)
+_WATER = []
+def WATER_SHOWN():   # the water the film draws (prep's water.png, osmgeo.water) as one shape in ground metres, None for none
+    if not _WATER:
+        import shapely as _sh
+        w_ = osmgeo.water(LAYOUT.raw(D), F.area, F.to_utm.transform); u_ = _sh.union_all(w_) if w_ else None
+        if u_ is not None: _sh.prepare(u_)
+        _WATER.append(u_)
+    return _WATER[0]
 
 _MODEL = json.load(open(LAYOUT.data(D, 'model.json')))
 FOOT = {}
@@ -873,6 +881,18 @@ def gen_city(node):
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
     meta_, bas_, sites_, empty_, lab_ = [], [], {}, [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_)
     LABELS[node['id']] = lab_; SUBS[node['id']] = split_parts(meta_, lab_, cs, node['id'])
+    wet_ = {}   # houses (fabric, shop rows) whose centre is on the water the film draws: on screen they stand in the river
+    for p, (gid, tag, _) in zip(PRIMS[node['id']], meta_):
+        if isinstance(tag, tuple) and tag[0] in ('fabric', 'streets') and p[11] in (citygen.FAB, citygen.ROOF) and gid not in wet_:
+            wet_[gid] = (tag, p[15] / F.scale + F.cx, -p[16] / F.scale + F.cy)
+    if wet_ and WATER_SHOWN() is not None:
+        import shapely as _sh
+        on_ = [(tag, x, y) for (tag, x, y), w in zip(wet_.values(), _sh.contains_xy(WATER_SHOWN(), [v[1] for v in wet_.values()], [v[2] for v in wet_.values()])) if w]
+        if on_:
+            lon_, lat_ = F.to_wgs.transform(on_[0][1], on_[0][2])
+            WARN.append(f"era {node['id']}: {len(on_)} houses stand on the water the film draws ({', '.join(sorted({f'{t[0]} {t[1]}' for t, _, _ in on_}))}; the first near {lon_:.5f}, {lat_:.5f}): "
+                        f"keep them off it (tools/parcels.py keeps the water clear; a fabric region: cut the river out of it). Where the sources say the river "
+                        f"ran elsewhere then, the houses are right, but they still stand in today's water on screen: tell the user")
     if empty_: WARN.append(f"era {node['id']}: fabric {', '.join(map(str, empty_[:8]))}{' ..' if len(empty_) > 8 else ''} ({len(empty_)}) builds no house: its region is smaller than one "
                            f"lot, or streets, walls and landmarks cover it (citygen fill lays whole lots only); give it a smaller lot or a larger region, or leave it out")
     BASINS[node['id']] = bas_; SITES[node['id']] = sites_

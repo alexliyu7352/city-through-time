@@ -120,30 +120,6 @@ def osm_elements(theme):
     if not f: print(f'warning: no OSM {theme} file; skipping'); return []
     return json.load(open(f, encoding='utf-8'))['elements']
 
-def el_polys(el):
-    """closed ways and multipolygon relations -> list of shapely polygons in ground metres"""
-    out = []
-    if el['type'] == 'way' and el.get('geometry') and el['geometry'][0] == el['geometry'][-1]:
-        pts = [F.to_utm.transform(p['lon'], p['lat']) for p in el['geometry']]
-        if len(pts) >= 4: out.append(Polygon(pts))
-    elif el['type'] == 'relation':
-        outers, inners = [], []
-        for m in el.get('members', []):
-            if m.get('type') != 'way' or not m.get('geometry'): continue
-            pts = [F.to_utm.transform(p['lon'], p['lat']) for p in m['geometry']]
-            (outers if m.get('role') != 'inner' else inners).append(LineString(pts))
-        from shapely.ops import polygonize, linemerge
-        try:
-            ol = list(polygonize(unary_union(linemerge(outers)))) if outers else []
-            il = list(polygonize(unary_union(linemerge(inners)))) if inners else []
-            for o in ol:
-                for i in il:
-                    if o.contains(i): o = o.difference(i)
-                out.append(o)
-        except Exception:   # noqa: BLE001
-            pass
-    return [p.buffer(0) for p in out if not p.is_empty]
-
 def el_line(el):
     if el['type'] == 'way' and el.get('geometry'):
         return LineString([F.to_utm.transform(p['lon'], p['lat']) for p in el['geometry']])
@@ -153,20 +129,11 @@ MW = 4096; MH = round(MW * F.size[1] / F.size[0])
 water = Image.new('L', (MW, MH), 0); dw = ImageDraw.Draw(water)
 PX = lambda ring: [(F.uv(x, y)[0] * MW, F.uv(x, y)[1] * MH) for x, y in ring]
 n_water = 0
-for el in osm_elements('water'):
-    tags = el.get('tags', {})
-    if tags.get('waterway') in ('river', 'canal') and not (el['type'] == 'way' and el['geometry'][0] == el['geometry'][-1]):
-        ln = el_line(el)
-        if ln is not None and tags.get('waterway') == 'river':
-            wmin = 60 if 'name' in tags else 25
-            for g in getattr(ln.buffer(wmin / 2), 'geoms', [ln.buffer(wmin / 2)]):
-                dw.polygon(PX(g.exterior.coords), fill=255); n_water += 1
-        continue
-    for p in el_polys(el):
-        if p.area < 2000: continue
-        dw.polygon(PX(p.exterior.coords), fill=255)
-        for i in p.interiors: dw.polygon(PX(i.coords), fill=0)
-        n_water += 1
+import osmgeo
+for p in (osmgeo.water(LAYOUT.raw(D), F.area, F.to_utm.transform) if osm_file('water') else []):   # (the shapes parcels keeps houses off)
+    dw.polygon(PX(p.exterior.coords), fill=255)
+    for i in p.interiors: dw.polygon(PX(i.coords), fill=0)
+    n_water += 1
 water.filter(ImageFilter.GaussianBlur(1.0)).save(LAYOUT.data(D, 'water.png'))
 print('water features drawn:', n_water)
 

@@ -12,7 +12,9 @@ parcels.yaml:
   era: <node id>                                # its landmarks keep their ground (citygen.landmark_site), traced ones too
   domain: [[lon, lat], ..] | research/<f>.geojson   # where houses stood: rings, or a file's polygons (kind: coverage, if it says)
   reserve: [[[lon, lat], ..], .., research/<f>.geojson]   # what stood instead: gardens, open ground, precincts (rings or files)
-  water: {osm: <name>, buffer_m: 12}            # optional: a river kept clear
+  water: {buffer_m: 12, osm: <name>}            # the water the film draws is always kept clear (pipeline/osmgeo.py water), by
+                                                # buffer_m (12); osm: also a named ring it does not draw; water: false where the
+                                                # quarter stood on ground a river has since taken
   streets: [research/<trace>.geojson, ..]        # its street features (w_m); and/or inline [{pts: [[lon, lat], ..], w_m}]; none: the era's
   (the era's walls and the shop rows of its streets with shops keep their ground, as citygen keeps it)
   blocks: {max_m2: 10000, min_width_m: 43, lane_m: 4.2, bend_m: 10}
@@ -161,10 +163,12 @@ def main():
     walls = [citygen.wall_line(F, w).buffer(w.get('t_m', 10) * 1.2 + 10) for w in cs.get('walls') or [] if 'ring' in w or 'pts' in w]
     shops = [LineString([F.to_utm.transform(*p) for p in st['pts']]).buffer(st.get('w_m', 14) / 2 + st.get('shop_depth', 14) + .5, cap_style=2) for st in cs.get('streets') or [] if st.get('shops')]
     reserve = shapes(S.get('reserve')) + sites + walls + shops
-    if S.get('water'):
+    if S.get('water', True) is not False:   # (the water the film draws, as prep draws it: a river mapped without a name included)
         import layout, osmgeo
-        W = S['water']; rings = osmgeo.rings(osmgeo.elements(layout.raw(D), F.area), W['osm'])
-        reserve.append(unary_union([Polygon([F.to_utm.transform(*p) for p in r]) for r in rings if len(r) > 3 and r[0] == r[-1]]).buffer(W.get('buffer_m', 12)))
+        W = S.get('water') if isinstance(S.get('water'), dict) else {}
+        wet = osmgeo.water(layout.raw(D), F.area, F.to_utm.transform)
+        if W.get('osm'): wet += [Polygon([F.to_utm.transform(*p) for p in r]) for r in osmgeo.rings(osmgeo.elements(layout.raw(D), F.area), W['osm']) if len(r) > 3 and r[0] == r[-1]]
+        if wet: reserve.append(unary_union(wet).buffer(W.get('buffer_m', 12)))
     domain = shapely.make_valid(unary_union(shapes(S['domain'], ('coverage',))).difference(unary_union(reserve) if reserve else Polygon()))
     roads = []
     for it in S.get('streets') or [{'pts': st['pts'], 'w_m': st.get('w_m', 14)} for st in cs.get('streets') or []]:   # (none given: the era's own)

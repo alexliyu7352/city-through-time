@@ -226,7 +226,7 @@ polygons) off it as pixels in a YAML (`id`, `kind`, `pixels`, the entry's keys, 
 --overlay <png>` writes the GeoJSON in `research/` and draws it back over the picture: look at the overlay before building. `kind` is wall, street, block or landmark, and the other
 properties are the settings of that item (`lot`, `typ`, `w_m`, `shops`, the landmark's `type`…); `provenance` rides along and the model ignores it. In Python, `register.outline_landmark`
 makes a traced outline a prism of the classes and `register.fit_circle` measures a rim (QGIS's georeferencer is fine where it can be used). **The houses of a quarter between its traced
-streets** are laid by `uv run python -I tools/parcels.py cities/<slug> <parcels.yaml>`, never by a packer of your own: from the built-up ground less landmark sites, gardens, water,
+streets** are laid by `uv run python -I tools/parcels.py cities/<slug> <parcels.yaml>`, never by a packer of your own: from the built-up ground less landmark sites, gardens, the water the film draws (named or not),
 walls and shop rows, it cuts blocks along the streets, splits a large block by a bent lane, fills each with whole courtyard houses turned to their street and rows of
 shop-houses along the fronts, and writes them as a trace with a report (lot sizes, bearings, the share built, the ground left); the types, sizes and storeys are the city's research. Houses in a block line up along the block's
 own long side, not the city-wide grid (`traced` in `pipeline/citygen.py`).
