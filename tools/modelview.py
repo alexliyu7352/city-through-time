@@ -156,7 +156,8 @@ def study_folder(city, name):
     for d in ('research', 'assets'):   # read only: traces, areas, outlines
         link, real = os.path.join(S, d), os.path.join(city, d)
         if os.path.lexists(link): os.remove(link)
-        if os.path.isdir(real): os.symlink(os.path.relpath(real, S), link)
+        # (relative from where the study really is: a study on another disk is a link under build/review/modelview, MODEL.md)
+        if os.path.isdir(real): os.symlink(os.path.relpath(os.path.realpath(real), os.path.realpath(S)), link)
     if os.path.exists(os.path.join(S, 'script.yaml')): os.remove(os.path.join(S, 'script.yaml'))   # (cues from city.yaml: none)
     return S
 
