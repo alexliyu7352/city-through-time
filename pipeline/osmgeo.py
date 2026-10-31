@@ -65,3 +65,14 @@ def water(city_raw, area, to_utm):
             continue
         out += [p for p in polys(el, to_utm) if p.area >= 2000]
     return out
+
+def mask(polys, F, size, img=None):
+    """polygons (ground metres) drawn into a water mask of `size` (pipeline/prep.py: data/water.png): each outline filled, its
+    holes cleared, in order; into `img` (an 'L' image) when given. Unblurred: the caller blurs it as the file it writes"""
+    from PIL import Image, ImageDraw
+    MW, MH = size; img = img or Image.new('L', (MW, MH), 0); dw = ImageDraw.Draw(img)
+    PX = lambda ring: [(F.uv(x, y)[0] * MW, F.uv(x, y)[1] * MH) for x, y in ring]
+    for p in polys:
+        dw.polygon(PX(p.exterior.coords), fill=255)
+        for i in p.interiors: dw.polygon(PX(i.coords), fill=0)
+    return img

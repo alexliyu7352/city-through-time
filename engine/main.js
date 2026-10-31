@@ -37,7 +37,7 @@ if (BUNDLE) L.take(base + 'bundle.json', { optional: true }).then(b => b && b.te
 const FILM = await L.json(B + 'film.json');
 if (!FREE) {
   L.want([...(FILM.decals || []).map(d => B + d.file), FILM.satellite && B + FILM.satellite.file, FILM.grow && FILM.grow.tfile && B + FILM.grow.tfile,
-    ...(FILM.eras || []).map(e => B + e.file), ...(FILM.footage || []).map(f => base + f.file)]);
+    ...(FILM.eras || []).map(e => B + e.file), ...(FILM.footage || []).map(f => base + f.file), FILM.waterThen && B + FILM.waterThen.file]);
   if (FILM.context && !QS.has('flat')) L.want([B + FILM.context.file], { optional: true });
   L.want((FILM.living || []).map(v => base + v.file), { optional: true });   // (a living moment's picture: missing until tools/living.py has made it)
   L.sizes(Object.fromEntries(FILM.fonts.faces.filter(f => f.bytes).map(f => [f.file, f.bytes])));   // (the fonts come from this page's server)
@@ -70,7 +70,7 @@ const FIT = { basins: most((FILM.eras || []).flatMap(e => (e.basins || []).map(b
   epochs: most((FILM.epochs || []).map(e => e.i + 1)), grounds: (FILM.eras || []).filter(e => e.ground).length, bands: (FILM.bands || []).length,
   yl: FILM.grow && FILM.grow.yl ? FILM.grow.yl.length : 0, decals: most((FILM.decals || []).map(d => d.i + 1)), living: !FREE && (FILM.living || []).length > 0 };
 let S;
-try { S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, gmax: FILM.groundSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps, fit: FIT }); }   // (pools and grounds past the engine's 32 slots: compile basinSlots)
+try { S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, gmax: FILM.groundSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps, then: !FREE && !!FILM.waterThen, fit: FIT }); }   // (pools and grounds past the engine's 32 slots: compile basinSlots)
 catch (e) { if (L.unable('gpuNone', e.message)) await new Promise(() => {}); throw e; }   // (no WebGL context after all)
 // what the graphics could not do, said on the page instead of a black city (live pages; renders and checks stop on the error)
 const GPU = S.gpu, gpuNote = () => `${GPU.path}; ${GPU.targets ? `${GPU.targets.half ? 'half-float' : '8-bit'}, ${GPU.targets.samples}x, depth ${GPU.targets.depth}` : 'no target'}; ${JSON.stringify(GPU.limits || {})}`;
@@ -97,7 +97,7 @@ if (FILM.grow && FILM.grow.tfile && !FREE) S.setGrowT(await L.json(B + FILM.grow
 if (FILM.grow && FILM.grow.yl) {   // the modern year line: today's buildings rise when the counter first reaches their year
   FILM.grow.yl.forEach(([t, y], i) => { S.U.uYLt.value[i] = t; S.U.uYLy.value[i] = y; }); S.U.uYLn.value = FILM.grow.yl.length;
 }
-const CITYMESH = S.build(await tex(B + 'data/water.png'), await tex(B + 'data/layers1.png'), await tex(B + 'data/layers2.png'), await tex(B + 'data/layers3.png'), decalTex, photoTex, terrain);
+const CITYMESH = S.build(await tex(B + (!FREE && FILM.waterThen ? FILM.waterThen.file : 'data/water.png')), await tex(B + 'data/layers1.png'), await tex(B + 'data/layers2.png'), await tex(B + 'data/layers3.png'), decalTex, photoTex, terrain);
 // the land beyond the plate (terrain.context): relief for a mountain or river off the plate, shown in the nodes that ask for it
 if (FILM.context && !QS.has('flat') && !FREE) {
   const im = await image(B + FILM.context.file, true);
@@ -346,6 +346,9 @@ function setLayers(t) {
   { let sk = 0, sp = null;   // spot (film.spots): the light falls on one subject, the rest of the room goes dark
     for (const q of FILM.spots || []) { const a = ss(seg(t, q.t0, q.t0 + q.fade)) * (1 - ss(seg(t, q.t1 - q.fade, q.t1))); if (a > sk) { sk = a; sp = q; } }
     U.uSpotK.value = sp ? lerp(1, sp.k, sk) : 1; U.uSpotB.value = sp ? lerp(1, sp.b, sk) : 1; if (sp) { U.uSpotC.value.set(sp.c[0], sp.c[1]); U.uSpotR.value = sp.r; } }
+  if (FILM.waterThen) { const k = [0, 0, 0];   // the water as it was (compile water_then): a state comes in with its node and goes as the next one comes
+    for (const w of FILM.waterThen.states) k[w.c] = ss(seg(t, w.on, w.on + w.fade)) * (1 - ss(seg(t, w.off, w.off + w.fade)));
+    U.uWThenK.value.set(k[0], k[1], k[2]); }
   for (let i = 0; i < U.uEpA.value.length; i++) { U.uEpA.value[i] = 0; U.uEpY0.value[i] = 1e9; U.uEpY1.value[i] = -1e9; U.uEpB.value[i] = 0; U.uEpR.value[i] = 9; U.uEpW.value[i] = 1; }
   for (const e of FILM.epochs || []) {   // (masks that share a channel never overlap in time: the one showing sets it)
     const fl = (e.flash || []).reduce((m, tf) => Math.max(m, Math.exp(-(((t - tf) / .45) ** 2))), 0);   // an area flares as it is named

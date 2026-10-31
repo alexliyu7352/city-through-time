@@ -126,14 +126,9 @@ def el_line(el):
     return None
 
 MW = 4096; MH = round(MW * F.size[1] / F.size[0])
-water = Image.new('L', (MW, MH), 0); dw = ImageDraw.Draw(water)
-PX = lambda ring: [(F.uv(x, y)[0] * MW, F.uv(x, y)[1] * MH) for x, y in ring]
-n_water = 0
 import osmgeo
-for p in (osmgeo.water(LAYOUT.raw(D), F.area, F.to_utm.transform) if osm_file('water') else []):   # (the shapes parcels keeps houses off)
-    dw.polygon(PX(p.exterior.coords), fill=255)
-    for i in p.interiors: dw.polygon(PX(i.coords), fill=0)
-    n_water += 1
+W_ = osmgeo.water(LAYOUT.raw(D), F.area, F.to_utm.transform) if osm_file('water') else []   # (the shapes parcels keeps houses off)
+water = osmgeo.mask(W_, F, (MW, MH)); n_water = len(W_)   # (compile draws the water as it was the same way: water_then)
 water.filter(ImageFilter.GaussianBlur(1.0)).save(LAYOUT.data(D, 'water.png'))
 print('water features drawn:', n_water)
 

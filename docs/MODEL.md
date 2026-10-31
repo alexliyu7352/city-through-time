@@ -270,6 +270,16 @@ so it is smooth at any size and does not step with the map's texels), so the out
 and takes its water point by point as it passes. clipcheck's `water_under_plate` finds water the ground rises through (a ditch on a slope).
 A dug pool narrower than two of the plate mesh's cells (the plate width / 640: about 36 m on a 23 km plate) is drawn draped by itself: the plate is lowered at
 the mesh's corners, and a pool smaller than that showed a corner of water, not its outline.
+**Water as it was** (`film.water_then`): where the sources put a river, a lake or the shore elsewhere in a period (a river that has moved since, land made since),
+draw it there, or the period's houses stand in today's river on screen. It is a timeline: each state from its node until the next state's node (or its `until:`),
+at most three in a film (the water map holds three besides today's; join the periods the sources do not tell apart). A state has its `water` and its `stretch`
+(rings, or a GeoJSON file whose features say `kind: water` or `kind: stretch`, and `state: <id>` when one file holds several): in the stretch today's water gives
+way to the period's, outside it today's stays. Draw the stretch round today's channel and the land between it and the old one, so a tributary ends at the old river,
+and let the old course run into today's where the stretch ends; compile warns where today's water crosses the stretch's edge and the old water does not meet it
+(a river ending in mid-plate). The state comes in over `fade` seconds (3) as its node begins and goes as the next one comes; today's buildings standing in its
+water step aside meanwhile. A course known to a few hundred metres is drawn where the sources put it and labelled schematic on screen, as a draped pool is; its
+basis (the sources, the anchors it was placed by, how far it is uncertain) goes in the research note its file comes from. Houses are checked against the water
+shown while they stand: compile warns of any whose centre is on it, today's or the period's.
 **Today's buildings stand on the lowest ground under them:** `prep.py` puts each building's base on the lowest point of the plate under its footprint (the plate as the engine draws it, `terrainio.plate_mesh`)
 and its top where its height puts it above the ground at its centroid, so a building on a slope reaches down to the ground on its downhill side instead of hanging in the air.
 clipcheck's `today floating` counts any building that does not, which is how a model prepared on an older terrain shows: after `terrain.py`, run `prep.py` again.

@@ -249,14 +249,6 @@ import osmgeo
 import local
 OSM = osmgeo.elements(LAYOUT.raw(D), F.area)
 def osm_rings(name): return osmgeo.rings(OSM, name)
-_WATER = []
-def WATER_SHOWN():   # the water the film draws (prep's water.png, osmgeo.water) as one shape in ground metres, None for none
-    if not _WATER:
-        import shapely as _sh
-        w_ = osmgeo.water(LAYOUT.raw(D), F.area, F.to_utm.transform); u_ = _sh.union_all(w_) if w_ else None
-        if u_ is not None: _sh.prepare(u_)
-        _WATER.append(u_)
-    return _WATER[0]
 
 _MODEL = json.load(open(LAYOUT.data(D, 'model.json')))
 FOOT = {}
@@ -881,18 +873,6 @@ def gen_city(node):
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
     meta_, bas_, sites_, empty_, lab_ = [], [], {}, [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_)
     LABELS[node['id']] = lab_; SUBS[node['id']] = split_parts(meta_, lab_, cs, node['id'])
-    wet_ = {}   # houses (fabric, shop rows) whose centre is on the water the film draws: on screen they stand in the river
-    for p, (gid, tag, _) in zip(PRIMS[node['id']], meta_):
-        if isinstance(tag, tuple) and tag[0] in ('fabric', 'streets') and p[11] in (citygen.FAB, citygen.ROOF) and gid not in wet_:
-            wet_[gid] = (tag, p[15] / F.scale + F.cx, -p[16] / F.scale + F.cy)
-    if wet_ and WATER_SHOWN() is not None:
-        import shapely as _sh
-        on_ = [(tag, x, y) for (tag, x, y), w in zip(wet_.values(), _sh.contains_xy(WATER_SHOWN(), [v[1] for v in wet_.values()], [v[2] for v in wet_.values()])) if w]
-        if on_:
-            lon_, lat_ = F.to_wgs.transform(on_[0][1], on_[0][2])
-            WARN.append(f"era {node['id']}: {len(on_)} houses stand on the water the film draws ({', '.join(sorted({f'{t[0]} {t[1]}' for t, _, _ in on_}))}; the first near {lon_:.5f}, {lat_:.5f}): "
-                        f"keep them off it (tools/parcels.py keeps the water clear; a fabric region: cut the river out of it). Where the sources say the river "
-                        f"ran elsewhere then, the houses are right, but they still stand in today's water on screen: tell the user")
     if empty_: WARN.append(f"era {node['id']}: fabric {', '.join(map(str, empty_[:8]))}{' ..' if len(empty_) > 8 else ''} ({len(empty_)}) builds no house: its region is smaller than one "
                            f"lot, or streets, walls and landmarks cover it (citygen fill lays whole lots only); give it a smaller lot or a larger region, or leave it out")
     BASINS[node['id']] = bas_; SITES[node['id']] = sites_
@@ -2245,6 +2225,72 @@ for p in pins:   # one place, two tags at once: a pin named like a place name (f
         if _core(p['text']) and _core(p['text']) == _core(L['a']) and both_:
             WARN.append(f'pin {p["id"]} and the place name "{L["a"]}" show together {both_[0][0]:.1f}-{both_[0][1]:.1f} s: one place, two tags; '
                         f'drop the pin or give it what the name does not say')
+# the water as it was (docs/MODEL.md "Water as it was"): from a node on, a stretch of today's water gives way to the period's own
+# (a river that has moved since, a shore filled in since) until a later node. Each state is drawn as prep draws today's water
+# (osmgeo.mask: today's outside its stretch, the period's inside) into a channel of data/water_then.png (R today's, G B A the
+# states, at most three); the engine mixes each in as its node comes and goes, and today's buildings under it step aside
+import shapely as _sh
+_TODAY = osmgeo.water(LAYOUT.raw(D), F.area, F.to_utm.transform); _TODAY_U = _sh.union_all(_TODAY) if _TODAY else _sh.Polygon()
+def _wt_shapes(v, kind, sid):   # rings, or the polygons of a GeoJSON file of this kind (water: none or 'water') and state (where one is named)
+    out = []
+    for it in (v if isinstance(v, list) and v and not isinstance(v[0][0], (int, float)) else [v]) if v else []:
+        if isinstance(it, str):
+            for f_ in json.load(open(os.path.join(D, it), encoding='utf-8'))['features']:
+                pr_ = f_.get('properties') or {}
+                if f_['geometry']['type'] in ('Polygon', 'MultiPolygon') and pr_.get('kind', 'water') == kind and pr_.get('state', sid) == sid:
+                    g_ = _sh.transform(_sh.geometry.shape(f_['geometry']), lambda q: [F.to_utm.transform(*p_) for p_ in q]); out += list(getattr(g_, 'geoms', [g_]))
+        else: out.append(_sh.Polygon([F.to_utm.transform(*p_) for p_ in it]))
+    return out
+WT_, WT_STATES = FM.get('water_then') or [], []
+if len(WT_) > 3: raise SystemExit(f'compile: water_then has {len(WT_)} states; the water map holds three (G, B, A): join the ones the sources do not tell apart')
+_t0_of = {n['id']: n['t0'] for n in nodes_out}
+for i_, w_ in enumerate(WT_):
+    sid_ = w_.get('id', f'water_then_{i_}'); nxt_ = w_.get('until') or (WT_[i_ + 1]['from'] if i_ + 1 < len(WT_) else None)
+    for k_ in (w_.get('from'), nxt_):
+        if k_ is not None and k_ not in _t0_of: raise SystemExit(f'compile: water_then {sid_}: no node {k_!r}')
+    on_, off_ = _t0_of[w_['from']], _t0_of[nxt_] if nxt_ else DUR
+    if off_ <= on_ or (WT_STATES and on_ < WT_STATES[-1]['off']): raise SystemExit(f'compile: water_then {sid_}: from {w_["from"]} to {nxt_ or "the end"}: the states follow one another, in node order')
+    wa_, st_ = _wt_shapes(w_.get('water'), 'water', sid_), _wt_shapes(w_.get('stretch') or w_.get('water'), 'stretch', sid_)
+    if not wa_ or not st_: raise SystemExit(f'compile: water_then {sid_}: no {"water" if not wa_ else "stretch"} (polygons: rings, or a file whose features say kind: water / stretch)')
+    WU_, SU_ = _sh.union_all(wa_), _sh.union_all(st_)
+    # where today's water crosses the stretch's edge on the plate, the period's must meet it, or the river ends in mid-plate
+    plate_ = _sh.box(F.x0 + 50, F.y0 + 50, F.x1 - 50, F.y1 - 50); cut_ = SU_.boundary.intersection(_TODAY_U).intersection(plate_)
+    for g_ in getattr(cut_, 'geoms', [cut_]) if not cut_.is_empty else []:
+        if g_.length > 20 and not g_.intersects(WU_.buffer(10)):
+            lo_, la_ = F.to_wgs.transform(*g_.interpolate(.5, normalized=True).coords[0])
+            WARN.append(f'water_then {sid_}: today\'s water crosses the stretch\'s edge near {lo_:.5f}, {la_:.5f} and the water as it was does not meet it there: '
+                        f'the river ends in mid-plate; reach the period\'s water to it, or draw the stretch round that water')
+    WT_STATES.append({'id': sid_, 'on': round(on_, 3), 'off': round(off_, 3), 'fade': float(w_.get('fade', 3.0)), 'c': len(WT_STATES), '_shown': _TODAY_U.difference(SU_).union(WU_), '_draw': (st_, wa_)})
+    print(f"  water as it was: {sid_}, {w_['from']} to {nxt_ or 'the end'} ({on_:.1f}-{off_:.1f} s), {WU_.area / 1e6:.1f} km² of water in a {SU_.area / 1e6:.1f} km² stretch")
+if WT_STATES:
+    R_ = Image.open(LAYOUT.data(D, 'water.png')).convert('L'); ch_ = [R_] * 4; MW_, MH_ = R_.size
+    for s_ in WT_STATES:
+        st_, wa_ = s_.pop('_draw'); m_ = osmgeo.mask(_TODAY, F, R_.size); dr_ = ImageDraw.Draw(m_)
+        for g_ in st_:   # today's water cleared in the stretch (but in a hole of it), the period's drawn in
+            dr_.polygon([(F.uv(x, y)[0] * MW_, F.uv(x, y)[1] * MH_) for x, y in g_.exterior.coords], fill=0)
+            for h_ in g_.interiors:
+                k_ = _TODAY_U.intersection(_sh.Polygon(h_)); osmgeo.mask([q_ for q_ in getattr(k_, 'geoms', [k_]) if q_.geom_type == 'Polygon'], F, R_.size, m_)
+        ch_[s_['c'] + 1] = osmgeo.mask(wa_, F, R_.size, m_).filter(ImageFilter.GaussianBlur(1.0))
+    Image.merge('RGBA', ch_).save(LAYOUT.data(D, 'water_then.png'))
+elif os.path.exists(LAYOUT.data(D, 'water_then.png')): os.remove(LAYOUT.data(D, 'water_then.png'))
+# houses (fabric, shop rows) whose centre is on the water the film shows while they stand: on screen they stand in the river
+for e in eras_out:
+    a_, b_ = e['on'], e['off'] if e.get('off') is not None else DUR
+    sets_ = [(s_['id'], s_['_shown']) for s_ in WT_STATES if s_['on'] < b_ and s_['off'] > a_]
+    cov_ = sum(min(b_, s_['off']) - max(a_, s_['on']) for s_ in WT_STATES if s_['on'] < b_ and s_['off'] > a_)
+    if cov_ < b_ - a_ - .5 and not _TODAY_U.is_empty: sets_.append(("today's", _TODAY_U))
+    hs_ = {}
+    for p, (gid, tag, _) in zip(PRIMS[e['id']], CITY_META[e['id']]):
+        if isinstance(tag, tuple) and tag[0] in ('fabric', 'streets') and p[11] in (citygen.FAB, citygen.ROOF) and gid not in hs_:
+            hs_[gid] = (tag, p[15] / F.scale + F.cx, -p[16] / F.scale + F.cy)
+    for nm_, W_ in sets_:
+        on_ = [v_ for v_, w_ in zip(hs_.values(), _sh.contains_xy(W_, [v_[1] for v_ in hs_.values()], [v_[2] for v_ in hs_.values()])) if w_] if hs_ else []
+        if on_:
+            lo_, la_ = F.to_wgs.transform(on_[0][1], on_[0][2])
+            WARN.append(f"era {e['id']}: {len(on_)} houses stand on the water the film draws ({nm_}; {', '.join(sorted({f'{t[0]} {t[1]}' for t, _, _ in on_}))}; the first near {lo_:.5f}, {la_:.5f}): "
+                        f"keep them off it (tools/parcels.py keeps today's water clear; a fabric region: cut the river out of it), or, where the sources put the river "
+                        f"elsewhere then, draw it there (film.water_then)")
+for s_ in WT_STATES: s_.pop('_shown')
 film = {
     'dur': DUR, 'fov': FM.get('fov', 30), 'yearFmt': FM.get('yearFmt', 'zh'), 'identity': {'l1': pick(FM['identity']['l1']), 'l2': pick(FM['identity']['l2'])},
     'palette': FM['palette'], 'light': {**light, 'base': FM.get('light', {}).get('base', 0.28)},
@@ -2259,6 +2305,7 @@ film = {
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],
     'spots': spots_out,
+    **({'waterThen': {'file': 'data/water_then.png', 'states': WT_STATES}} if WT_STATES else {}),
     'night_look': NIGHT_LOOK,
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),

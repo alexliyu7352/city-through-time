@@ -34,7 +34,7 @@ def files(D):
     out.append('build/data/terrain16.png' if os.path.exists(os.path.join(B, 'data', 'terrain16.png')) else 'build/data/terrain.png')
     built = [d.get('file') for d in F.get('decals') or []] + [(F.get('satellite') or {}).get('file'), (F.get('context') or {}).get('file'),
              (F.get('grow') or {}).get('tfile')] + [e.get('file') for e in F.get('eras') or []]
-    built += [(F.get(k) or {}).get('file') for k in ('voice', 'score', 'sfx', 'basinMap', 'groundMap')] + [(F.get('score') or {}).get('loop')]
+    built += [(F.get(k) or {}).get('file') for k in ('voice', 'score', 'sfx', 'basinMap', 'groundMap', 'waterThen')] + [(F.get('score') or {}).get('loop')]
     out += ['build/' + f for f in built if f]
     out += [f['file'] for f in F.get('footage') or []]   # (relative to the city folder: assets/...)
     out += [v['file'] for v in F.get('living') or []]   # living moments' pictures (assets/living/)
