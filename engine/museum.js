@@ -23,8 +23,9 @@ const ROOM = { look: [['#eef0f1', 0], ['#e3e6e8', .55], ['#d2d6da', 1]], clean: 
 
 export async function startMuseum({ stage, base, meta, model, clean = false, vp: vp0 = null, on = {} }) {
   const W0 = Math.max(1, stage.clientWidth), H0 = Math.max(1, stage.clientHeight);
-  // (fit: a building alone uses none of the film's slots, so a phone that cannot link the film's full shaders draws it with the smallest)
-  const S = makeStudio(W0, H0, { size: model.size, scale: model.scale }, {}, { low: false, fit: { basins: 0, losses: 0, epochs: 0, grounds: 0, bands: 0, yl: 0, decals: 0, living: false } });
+  // (fit: a building alone uses none of the film's slots but the projector, which lays the pictures on it (living): graphics that cannot
+  // link the film's full shaders, a phone's or a computer's with 16 texture units, draw it with the smallest that still project)
+  const S = makeStudio(W0, H0, { size: model.size, scale: model.scale }, {}, { low: false, fit: { basins: 0, losses: 0, epochs: 0, grounds: 0, bands: 0, yl: 0, decals: 0, living: true } });
   if (S.gpu && S.gpu.fail) throw new Error(`graphics: ${S.gpu.fail}`);   // (site/museum.js says so; the first picture stays)
   const { U, camera, post, renderer, scene, house, hemi } = S, SC = model.scale;
   renderer.toneMapping = THREE.NoToneMapping;   // (the picture shows as it is: its pixels in, its pixels out)
