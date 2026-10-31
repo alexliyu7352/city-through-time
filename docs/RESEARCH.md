@@ -98,6 +98,10 @@ Record not only "what happened" but also what makes it a story, in `research/sto
   Example: Xianyang and Xi'an are too close and their history is too entangled. After the 029 merger in 2006, Xianyang people hoped the two cities would become one and the old glory would return; in 2017 the Xixian New Area was handed to Xi'an to administer,
   the finest piece of land went to Xi'an, and a merger would never happen. So the 2017 line is wistful, not a neutral administrative change.
   These feelings decide the narrator's emotion and also how the ending closes (Xianyang: the two cities did not merge, yet grew together).
+- **The decades of living memory as people lived them:** for these stations the figures (built-up area, population, households, visitors) say what
+  changed, not what it was like. Collect how residents met the change: what a new estate, a closed factory, a crowded flat or an emptied street
+  meant to the people in it, from interviews, local news, oral histories and memoirs. Without them a modern station has no fate to tell, and its
+  narration falls back on a report's wording.
 - **Poems and allusions:** poems, idioms and legends about this place (Xianyang: Wang Wei's 《送元二使安西》 (Seeing Yuan the Second Off to Anxi) and its 「渭城朝雨」 ("morning rain at Weicheng")). Mark legends as "legend".
 - **Scenes worth a picture:** the city at its most prosperous, the scenes of major events, the mood of a poem; note the source where there is a picture, and mark the scene even where there is none (DATA.md "Pictures and footage").
 - **Threads that can echo:** an early event and a later one that can be set against each other (Xianyang: in Qin times the two banks of the Wei were one Xianyang; over 2,000 years later Xianyang and Xi'an grew into one city across the Wei).
