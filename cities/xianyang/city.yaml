@@ -101,6 +101,10 @@ film:
     - { lon: 108.860, lat: 34.432, zh: 咸阳原, en: Xianyang Plateau, size: 1.1, dmin: 1.0 }
     - { lon: 108.722, lat: 34.338, zh: 今咸阳老城, en: today's old town, size: .9, dmin: 1.2 }
     - { lon: 108.925, lat: 34.278, zh: 西安 →, en: Xi'an, size: .9, dmin: 1.2 }
+  water_then:   # the Wei as it ran before it moved north (research/wei_courses.md; research/wei_courses.py draws the file)
+    - { id: wei_ancient, from: qin, water: research/wei_courses.geojson }   # Qin to Tang: about 3.6 km south of today's at the bridges
+    - { id: wei_1661, from: ming, water: research/wei_courses.geojson }   # 順治: 2 km south (桑廣書 2005 表1); south of the county town's wall
+    - { id: wei_1936, from: rail, until: mills, water: research/wei_courses.geojson }   # the 1930s: today's, but south of the town's wall
   opening:
     dur: 8.0
     camera: [{ t: 0.0, ll: [108.72, 34.342], az: 30, el: 8, d: 0.6 }, { t: 8.0, ll: [108.70, 34.37], az: 32, el: 11, d: 2.0 }]   # low over the Wei, looking north-north-west: the river in front, the city, the plateau, 九嵕山 on the horizon
@@ -147,7 +151,7 @@ film:
       dur: 51.9
       label: { zh: 秦都, en: The Qin capital }
       col: '#ffb070'
-      readout: { label: "秦孝公迁都咸阳，公元前 350 年", note: "宫区在北、郭区在南（考古布局）· 宫城周长约 2.7 km · 至今未发现外郭城墙 · 平面示意" }
+      readout: { label: "秦孝公迁都咸阳，公元前 350 年", note: "宫区在北、郭区在南（考古布局）· 宫城周长约 2.7 km · 至今未发现外郭城墙 · 平面与渭河古道示意" }
       city:
         origin: [108.8590, 34.4123]
         col: '#ffd2a0'
@@ -208,7 +212,7 @@ film:
       label: { zh: 帝都, en: The imperial capital }
       col: '#ffd24a'   # imperial gold: its colour ring repaints the Qin city it was built around
       ink: 0.85   # 秦尚黑 (《史记·秦始皇本纪》衣服旄旌节旗皆上黑): the capital goes dark, its walls, palaces and streets lit gold
-      readout: { label: "秦并天下，咸阳为帝都，公元前 221 年", note: "《史记·秦始皇本纪》《三辅黄图》 · 六国宫室、新街区、渭南诸宫、横桥位置与星官形状为示意 · 阿房宫前殿台基 1270 × 426 m" }
+      readout: { label: "秦并天下，咸阳为帝都，公元前 221 年", note: "《史记·秦始皇本纪》《三辅黄图》 · 六国宫室、新街区、渭南诸宫、横桥位置、渭河古道与星官形状为示意 · 阿房宫前殿台基 1270 × 426 m" }
       city:   # what 221 BCE added to the Qin city of 350 BCE (which stays up under it): FACTS.md 史记·秦始皇本纪
         origin: [108.8590, 34.4123]
         col: '#ffe69b'
@@ -302,7 +306,7 @@ film:
       routes:
         - { id: r_south, from: [108.8626, 34.4160], to: [108.8570, 34.3000], at: 1.4, draw: 3.0, arc: 0.18, col: '#ffd59a', impact: true, follow: { el: 42, land_d: 1.15 }, zh: "都城南移 · 约 [km] 公里", en: "The capital moves about [km] km south" }
         - { id: r_wei, from: [108.8700, 34.3570], to: [108.8700, 34.3920], at: 31.0, draw: 2.5, hold: 4.5, arc: 0.12, col: '#8fb8ff', zh: "渭河北移 · 约 4 公里", en: "The Wei moved about 4 km north" }
-      readout: { label: "汉都长安在河南，咸阳成了对岸的渭城", note: "城墙依 1997 年测定 · 宫殿依考古报告与《三辅黄图》· 殿院、里坊、渭城多为示意" }
+      readout: { label: "汉都长安在河南，咸阳成了对岸的渭城", note: "城墙依 1997 年测定 · 宫殿依考古报告与《三辅黄图》· 殿院、里坊、渭城、渭河古道多为示意" }
       city:   # Han Chang'an after research/han_fill.md (x east, y north in metres from the Weiyang front hall; every item marked 發掘 / 文獻 / 影視 / 想像)
         origin: [108.8576, 34.3046]
         detail: medium
@@ -675,7 +679,7 @@ film:
       dur: 46
       label: { zh: 明清县城, en: The walled town }
       col: '#9fd8e8'
-      readout: { label: "洪武四年（1371），县城西迁到今天的老城", note: "城墙九门依乾隆十六年《咸阳县志·县城图》 · 示意" }
+      readout: { label: "洪武四年（1371），县城西迁到今天的老城", note: "城墙九门、南临渭河依乾隆十六年《咸阳县志·县城图》 · 河道示意" }
       routes:
         - { id: r_ming, from: [108.7480, 34.3490], to: [108.7215, 34.3348], at: 0.6, draw: 2.4, arc: 0.3, col: '#ffe6cc', zh: "县城西迁 · 约 [km] 公里 · 示意", en: "The town moves about [km] km west (schematic)" }
       city:
@@ -736,7 +740,7 @@ film:
       footage:
         - { id: f_train, file: assets/footage/longhai_train_commons.mp4, mode: full, at: 12.0, dur: 8.5, in: 1.0, out: 1.0, zh: "陇海铁路渭河桥", en: "A train on the Longhai Railway bridge over the Wei, today", credit: "Wikimedia Commons · Liuxingy · CC BY-SA 4.0", pan: 0.2 }
         - { id: f_station, file: assets/photos_cc/station_full.jpg, mode: panel, at: 21.5, dur: 6.0, in: 1.0, out: 1.0, kicker: "今天 · TODAY · 照片", zh: "咸阳站", en: "Xianyang Station, today", credit: "Wikimedia Commons · Liuxingy · CC BY-SA 4.0" }
-      readout: { label: "1936 年陇海铁路设咸阳站", note: "维基 · 咸阳发布 2023 · 线路为今日 OpenStreetMap 陇海线 · 站前街区为示意" }
+      readout: { label: "1936 年陇海铁路设咸阳站", note: "维基 · 咸阳发布 2023 · 线路为今日 OpenStreetMap 陇海线 · 站前街区与县城南的河道为示意" }
       lines:
         - { id: longhai, src: rail, filter: "陇海线", col: '#ffd27a', width: 0.0024, at: 0.6, fade: 2.0, persist: true, gain: 1.0, flow: 0.5 }
       city:
