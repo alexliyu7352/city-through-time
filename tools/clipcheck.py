@@ -41,6 +41,18 @@ from shapely.strtree import STRtree
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'pipeline'))
 from citygen import footprint, plan, solid_plan
 
+
+def ring_past(q, xz, sd):
+    """when a loss's ring has taken the part whose building centre is xz: as the engine draws it (studio.js fallK at aCtr),
+    where the ring of sd seconds ago reaches it, not when the whole loss is gone (a city handed over place by place: the part
+    goes just before what is built there rises)"""
+    c, inm = q['curve'], q['mode'] == 'in'; d = math.hypot(xz[0] - q['o'][0], xz[1] - q['o'][1])
+    past = lambda r: r <= d if inm else r >= d
+    if past(c[0][1]): return min(c[0][0] + sd, q['gone'])
+    for (t0, r0), (t1, r1) in zip(c, c[1:]):
+        if past(r1): return min(t0 + (t1 - t0) * min(1., max(0., (d - r0) / ((r1 - r0) or 1e-9))) + sd, q['gone'])
+    return q['gone']
+
 FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH, PLINTH = range(12)
 STREET_M, SHORT_M, STREET_W = 150.0, 20.0, 10.0   # how far a road's end looks for what it leads to; a gap under SHORT_M is near enough; roads this wide or wider (metres)
 SKIRT = 3.0       # metres every body reaches below grade (citygen Builder.skirt)
@@ -83,10 +95,11 @@ def main():
     bodies_by_era = {}
     for e in FILM.get('eras', []):
         J_ = json.load(open(os.path.join(city, 'build', e['file']))); prims = J_['prims']
-        # when each record stands: from its rise to the city's end, or to its loss (lose:): a part lost and what is built where it
-        # stood never stand together, so they are not an overlap (within the city: from each record's own rise)
+        # when each record stands: from its rise to the city's end, or to the moment its loss (lose:) has taken it: a part lost and
+        # what is built where it stood never stand together, so they are not an overlap (within the city: from each record's own rise)
         lost_ = J_.get('lost') or [0] * len(prims); off_ = e.get('off') or 1e9
-        span_ = {id(p): (e['on'] + p[10] * e['span'], e['losses'][k - 1]['gone'] if k else off_) for p, k in zip(prims, lost_)}
+        span_ = {id(p): (e['on'] + p[10] * e['span'], ring_past(e['losses'][k - 1], (p[15], p[16]) if len(p) > 16 else (p[1], p[2]), e.get('fallDur', 1.4)) if k else off_)
+                 for p, k in zip(prims, lost_)}
         both = lambda a, b: span_[id(a)][0] < span_[id(b)][1] and span_[id(b)][0] < span_[id(a)][1]
         ground = [p for p in prims if p[4] <= p[12] + 1e-9 and p[11] != PLINTH]   # primitives that start at (or below) grade, not plinths
         body = lambda parts: [p for p in ground if p[11] in parts and p[0] in SOLID]
