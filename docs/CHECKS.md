@@ -8,7 +8,8 @@
 ## Preview
 
 `uv run python -I pipeline/compile.py cities/<slug>`;
-`node tools/preview.mjs <slug>` starts a local server, and the user opens in Chrome the `play.html?city=<slug>&play=1` it prints to play live; show the user each node when it is done, then lay the next one.
+`node tools/preview.mjs <slug>` starts a local server, and the user opens in Chrome the `play.html?city=<slug>&play=1` it prints to play live; judge each node yourself when it is done (the audience pass below), then lay the next one,
+and show the user long stretches of the film (SKILL.md workflow).
 Also produce contact sheets (`node render/still.mjs <slug> --range a:b:step` + `tools/sheet.py`) and check section by section: whether pins are out of frame, whether layers are visible, whether the camera is aimed at the subject.
 A period city that has no place in the film yet is looked at with `tools/modelview.py` (MODEL.md), its house types with `--sheet` (MODEL.md "House types"); every period city of the film from every side with `tools/eraview.mjs` and the `play.html?city=<slug>&view` page (MODEL.md).
 Before showing the user, follow "Acceptance and reporting" below: the server is still running, you have taken a screenshot yourself to confirm it is the new version, remind the user to refresh, and speak only of what the preview really has.
@@ -40,6 +41,8 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
 
 ## Acceptance and reporting
 
+- **The audience pass:** play the stretch at speed, with the subtitles, as a viewer who does not know the city, then write down what it leaves (SKILL.md "Judge as the audience").
+  A key beat that leaves nothing, or a line pointing at a place the picture does not mark, is restaged, whatever the checks say.
 - **Before showing the user:** confirm the preview server is still running (after a power cut or reboot, run `node tools/preview.mjs` again); take a screenshot yourself to confirm it is already the new version, and remind the user to "look again after refreshing"
   (an open page may have been loaded halfway through a change); speak only of what the preview really has (example: when the preview cannot play sound yet, do not ask the user to "listen in the preview").
 - **Accept on the thing the user pointed at:** confirm by screenshot at that second and on that object, not on something beside it (example: for an area's colouring look at the houses changing colour, not only the ground);

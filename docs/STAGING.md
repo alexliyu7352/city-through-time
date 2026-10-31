@@ -7,6 +7,7 @@ sound and light in sync. The white-model projection is only a starting point, no
 ## The most common mistakes in this step
 
 - The whole city changes colour at once, changes happen off camera, a whole area pops up at once, the camera cuts hard → rules 1–9.
+- Key beats told over a white city standing still, with no place marked and no picture → "A picture for every key beat".
 - Non-CC pictures and videos get mixed into the preview shown to the user → on screen use only CC, public domain or the user's own material; if there is none, use a labelled imagined picture ("Footage and pictures").
 
 ## Basic grammar
@@ -145,6 +146,15 @@ No hard cuts between nodes: do not write the next node's first camera keyframe a
    For an area for which research found only a representative point and no boundary (example: the five new towns of Xixian New Area have no boundary in OSM or in public documents), put only the name on the point and do not draw a self-made frame;
    a number in a subtitle uses only a number with a named source (「遺址保護範圍縮到二十多平方公里」 ("the site protection area was reduced to over twenty square kilometres") rests only on one unnamed official's statement and does not go on screen).
    If the boundary is not official, label it "schematic". The part beyond the plate's boundary is naturally cut off.
+
+## A picture for every key beat
+
+Every key beat of the detailed outline (SCRIPT.md) is carried by something the audience sees: the model's own change (a city rising, burning, shrinking, growing year by year
+under the year counter), a place name or a coloured area (`pins`, `labels`, `areas`, `epochs`), a line or a beam (`routes`, `lines`), a picture, found or imagined ("Footage and
+pictures"), a living moment, or the city's own idea (`sky:`). A key beat told over a white city standing still, with nothing marked, is not staged: a model the audience cannot
+read is an empty model, however fine. A line that points at a place ("that first hillside", "across the river", "where the palace stood") has the place marked as it is said.
+Before step 5 is done, write in TREATMENT.md the table key beat → what carries it, and set the film's density beside the example's (`cities/xianyang/city.yaml`: count its
+place names, areas, lines and beams, and pictures per minute); a film well below it reads as a model, not a story.
 
 ## Footage and pictures
 

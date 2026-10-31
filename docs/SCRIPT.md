@@ -8,6 +8,7 @@
 - Writing seconds by hand, so one change breaks everything → compile schedules the narration and the changes ("Subtitles and the timeline"; STAGING.md 9a, 9e).
 - Making every station the same length, or fixing the total length first and squeezing things in → nodes have different weight ("Treatment and nodes").
 - Discovering halfway that there is no story to tell, and going back to research → before writing the script, read the story material collected in research (`research/stories.md`, RESEARCH.md §3).
+- Every step confirmed and every check passed, and still a film the audience forgets → test the outline and review the draft as a listener before showing them ("The director fixes the story first", steps 1 and 4).
 
 ## The director fixes the story first
 
@@ -15,7 +16,7 @@ In this step you are the director of the film, not a data clerk: the data is mat
 Do the following in order; go on only when the user confirms each step:
 
 1. **Story outline:** read `research/stories.md` and the confirmed station list, and write an outline for the user to read:
-   - One sentence: what kind of city the film is about and what story (Xianyang: a city that was once the centre of the world, burned into fields, shrank to a small town, and two thousand years later grew into one city with Chang'an across the river);
+   - One sentence: what kind of city the film is about and what story, a fate with a turn that the audience could retell, not a list of eras (Xianyang: a city that was once the centre of the world, burned into fields, shrank to a small town, and two thousand years later grew into one city with Chang'an across the river);
    - The arc of the story: which stations carry the beginning, development, turn and close;
    - The longest passages: for the most important events and people of the city, what is told in each and why it matters, and what the protagonist achieved (RESEARCH.md §2);
    - For each part: what is told, who the protagonist is, the narrator's feeling, and its weight (big or short). Minutes at this stage are guesses, not a plan:
@@ -29,6 +30,12 @@ Do the following in order; go on only when the user confirms each step:
      (RESEARCH.md §6); leave out only what no source supports;
    - Prologue: which moment the opening shows the audience first, with which lines, and the question it ends on ("Prologue");
    - Pictures: which scenes get pictures, and whether to use found pictures or generated imagined ones ("Pictures").
+
+   Before showing it, test it yourself. Read the one sentence, then only the column "what the city becomes", station by station: each station moves the fate the
+   sentence tells; a run of stations that only lists events gives the audience no question to follow (Xianyang's modern half follows one: will it become one city with
+   Xi'an?). For each big passage name what the audience will carry away (Xianyang's imperial capital: 「二世三世至於萬世」 and then 「只撐了15年」; 120,000 households
+   moved in; 「火三月不滅」); a big passage with nothing to carry away is not ready. The city's most memorable events and people (RESEARCH.md §2, question 2) have the
+   most room, and its fall or loss has a line as strong as its rise.
 
    Until the user confirms the outline, write no narration and arrange no picture.
 2. **Detailed outline:** break every station of the confirmed outline into beats. A beat is one thing the audience learns or feels, with the picture that carries it
@@ -53,6 +60,9 @@ Do the following in order; go on only when the user confirms each step:
 4. **Narration draft:** write the continuous narration for the whole film from the confirmed detailed outline, a key beat told as a scene and a one-line beat
    in passing ("Copy"); then estimate its length from the speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
    plus the pauses, the prologue, the opening and the picture holds the outline needs (compile times the lines the same way until the voice is recorded: "Subtitles and the timeline").
+   Before showing it, review it as a listener (SKILL.md "Judge as the audience"): read it all aloud, then write down what you remember. Set the draft's rise, peak, fall,
+   return and ending beside the example film's lines for the same moments and rewrite what is vaguer. Each person named changes the city's fate or is the audience's eyes at
+   a key beat; a name heard once that changes nothing becomes a description ("a young water-polo player") or goes.
    - About the length, or a little over: show the draft and its estimate to the user.
    - Clearly over: adjust the detailed outline (a key beat becomes one line, beats merge, a beat goes) and show the user every change, why, and the time it
      saves, with the new estimate. Only after the user confirms, rework the narration from the adjusted detailed outline (do not just strike sentences out of

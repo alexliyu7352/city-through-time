@@ -22,6 +22,14 @@ After a context compaction, an agent change or a few days' break, first work out
 Working with the user
 - **Propose first, then act.** Before changing code, a data format, the engine or the workflow, state the reason and the approach, and change it only after the user agrees. When the user says "let's discuss first", only look things up and take screenshots; change no files.
   A new request made midway goes into the plan with a note of which step it falls in; do not do it on the spot.
+- **The user judges the story and the film; you judge the steps towards them.** The user's approvals are the ★ in the workflow table: the story, the narration, the scale,
+  the film in the preview, the music, the render and what is published. House types, quarters, samples, a station's camera and timing are yours: judge them against the
+  step's done line and the example city, and go on. Do not wait for an approval no ★ asks for: each such round stalls the work and leaves the user judging details while
+  nobody judges the film as a whole.
+- **Judge as the audience, not only by the checks.** Checks at zero say the film is not broken, not that it works. Before showing anything, watch and listen to it as someone
+  who does not know the city, and write down what they would remember of it: the story in one sentence, and for each big passage a line, a number or a picture. Set it beside
+  the same moment of the example film (`cities/xianyang/`: its rise, peak, fall, return and ending); a stretch weaker or vaguer than the example is not done, whatever the
+  checks say. The main agent reviews a subagent's piece the same way.
 - **Change only what was named.** Redo only the part the user sent back. If you find a better setting, use it only where named and add one line ("this works elsewhere too") for the user to decide.
   **The problem the user points at is an example:** find the same defect in the same picture or the same generator yourself, and list it for the user before fixing.
 - **Small batch first, then the whole film.** Fix the few spots pointed at and test only those; apply the same fix to the whole film only after the user confirms it in the preview.
@@ -78,6 +86,8 @@ Honesty
   Copy the user writes or edits is used as is without demanding a source; raise it only when it contradicts data you found.
 - Label schematic as schematic and estimated as estimated: the period cities are schematic models; building years are not construction years (CMAB gives the first year an impervious surface appears; GHSL gives built-up area in 5-year periods),
   and there is no building-by-building data before 1975. Do not put a dot on a site with no public coordinates, or label it "location schematic".
+- Careful means checked, not left out. A well-known story, saying or figure the film needs is looked up and verified like any fact; one that cannot be verified is told as
+  legend, with "about", or as the range the sources give. Leaving a city's most memorable material out because it needed checking makes a film nobody remembers.
 - On screen, use third-party material only if it is CC, public domain, or something the user has the right to license. AI-generated narration, music and imagined pictures are labelled on screen and in the end card.
 
 Writing rules
@@ -94,15 +104,16 @@ Writing rules
 | 0 | First use: local paths, install the environment | `docs/SETUP.md` | `local/config.json` written; `uv sync` and `npm ci` have run |
 | 1 | Research: timeline, choice of stations, through-line, sources | `docs/RESEARCH.md` | `FACTS.md` and `research/` (including story material `stories.md`, the picture list `images.md` and the period cities' survey `period_cities.md`); ★ the story and the station list |
 | 2 | Extent and data: frame, scale, map, buildings, terrain | `docs/DATA.md` | extent and data sources in `city.yaml`, `prep.py` has run; ★ one white-model still to check the scale |
-| 3 | Script: story outline, detailed outline, treatment, copy, timeline, pictures | `docs/SCRIPT.md` | `TREATMENT.md`, nodes, `script.yaml`; ★ story outline, ★ detailed outline, ★ narration draft |
-| 4 | Period cities and terrain | `docs/MODEL.md` | one whole city per period, generated from the sources, clipcheck at zero |
-| 5 | Staging: rings, camera, tags, pictures, footage | `docs/STAGING.md` | compile has no errors, every warning handled |
-| 6 | Preview and checks | `docs/CHECKS.md` | checks at zero for every station the change touched; ★ the user has seen this station in the preview |
+| 3 | Script: story outline, detailed outline, treatment, copy, timeline, pictures | `docs/SCRIPT.md` | `TREATMENT.md`, nodes, `script.yaml`; ★ story outline, ★ detailed outline, ★ narration draft, each shown after your own listener review (SCRIPT.md) |
+| 4 | Period cities and terrain | `docs/MODEL.md` | one whole city per period, generated from the sources, clipcheck at zero; its quarters and type sheets judged by you (no ★) |
+| 5 | Staging: rings, camera, tags, pictures, footage | `docs/STAGING.md` | compile has no errors, every warning handled; every key beat has its picture (STAGING.md "A picture for every key beat") |
+| 6 | Preview and checks | `docs/CHECKS.md` | checks at zero for every station the change touched; your audience pass on it; ★ the user has seen the film in the preview, in long stretches |
 | 7 | Sound: voice, music, effects | `docs/SOUND.md` | `VOICE.md`, `MUSIC.md`, all three tracks audible in the preview; ★ each piece of music |
 | 8 | Render and deliver | `docs/DELIVER.md` | ★ render only after the user approves the preview; `dist/` has video, subtitles, description; whole-film checks and brightness pass the thresholds |
 | 9 | Publish: cover, upload, portal page (only when the user wants it public) | `docs/PUBLISH.md` | ★ cover concept; ★ every upload and push has the user's go-ahead on that occasion |
 
-Do steps 3–6 node by node: finish one station, show it to the user, then lay the next. Sound comes after picture: copy final → picture → preview → voice → compile again
+Steps 4–6 go node by node: finish a station and judge it yourself (the done lines of steps 5 and 6, the audience pass) before laying the next. Show the user long
+stretches (a third of the film, or all of it) rather than each station: the user judges how the film plays as a whole, which no single station shows. Sound comes after picture: copy final → picture → preview → voice → compile again
 (timeline final) → music and effects → render.
 
 ## Which step are we on

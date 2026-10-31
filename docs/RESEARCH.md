@@ -102,6 +102,9 @@ Record not only "what happened" but also what makes it a story, in `research/sto
   changed, not what it was like. Collect how residents met the change: what a new estate, a closed factory, a crowded flat or an emptied street
   meant to the people in it, from interviews, local news, oral histories and memoirs. Without them a modern station has no fate to tell, and its
   narration falls back on a report's wording.
+- **What the audience will remember:** the city's best-known stories, sayings and images (the ones a viewer may already know, or will retell afterwards), and the
+  magnitudes that make a change felt: how many lived there at its height and its lowest, how far it spread, how long a fire or a siege lasted, how many left and how many came back.
+  Verify them like any fact (SKILL.md "Careful means checked, not left out").
 - **Poems and allusions:** poems, idioms and legends about this place (Xianyang: Wang Wei's 《送元二使安西》 (Seeing Yuan the Second Off to Anxi) and its 「渭城朝雨」 ("morning rain at Weicheng")). Mark legends as "legend".
 - **Scenes worth a picture:** the city at its most prosperous, the scenes of major events, the mood of a poem; note the source where there is a picture, and mark the scene even where there is none (DATA.md "Pictures and footage").
 - **Threads that can echo:** an early event and a later one that can be set against each other (Xianyang: in Qin times the two banks of the Wei were one Xianyang; over 2,000 years later Xianyang and Xi'an grew into one city across the Wei).

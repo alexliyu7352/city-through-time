@@ -6,7 +6,8 @@
 - A hard-coded terrain exaggeration, so the foundation on a slope is taller than the house → measure by slope ("Appearance and height").
 - Houses of another region or period drawn with the built-in houses (north China's courtyards), or a city's own code drawing its houses → declare the house types from the research and look at them on the sheet first ("House types").
 - A landmark of another region drawn with the generator's own kinds (a Chinese hall for a temple, a box for a dome) → one of the classes for any region, its sizes from the sources ("Landmarks of any region").
-- A whole city laid in one go and sent back whole → one quarter first: its low close-up and a wide shot, approved, then the rest the same way ("A whole city for each period").
+- A whole city laid in one go and sent back whole → one quarter first: judge its low close-up and a wide shot yourself, then the rest the same way ("A whole city for each period").
+- Weeks spent on detail no shot of the film shows, while the story and staging wait → judge a period city at the film's own distances ("A whole city for each period").
 - Lots stamped over a district in a few fixed sizes, one bearing per district: from afar the city reads as tiled fields with stepped edges → blocks traced from the map, houses along each block's own streets ("Lay out blocks from an old map").
 - A share of house types or a storey count with no basis, labelled "schematic" (a made-up ratio decides what the whole city looks like) → the share and the storey range written from the sources first ("House types").
 - Open ground left as bare plate (gardens, a palace hill, the ground between public buildings): in a built-up city it reads as a lake → drawn as what it is, or filled by the sources ("No empty cities").
@@ -21,7 +22,11 @@ palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, 
 **Every period city starts from its research:** from the survey of step 1 (`research/period_cities.md`), research what the model needs before laying anything: the plans and positions of its buildings, the
 house types and their share and storeys, the streets and lots of its quarters, its open ground, each item sourced or marked estimate, written into `research/<period>_*`. Periods are independent here:
 one research subagent per period, in parallel (SKILL.md "Subagents and parallel work"). Research done only when a sample is sent back costs a round each time.
-**Every period city starts with one quarter:** lay one quarter from its sources, show its low close-up and a wide shot, and lay the rest of the city only after it is approved (a whole city laid on a wrong idea is redone whole; a quarter is redone in a round).
+**Every period city starts with one quarter:** lay one quarter from its sources, judge its low close-up and a wide shot against the sources and the example city (the main agent
+judges a subagent's quarter), and lay the rest of the city once it holds (a whole city laid on a wrong idea is redone whole; a quarter is redone in a round). The user sees the
+period city in the film, not each quarter (SKILL.md "The user judges the story and the film").
+**Judge a period city at the film's own distances:** what reads in the film's shots of it must be right (storeys and windows on a palace, roofs, streets, open ground, the
+city's extent); precision no shot of the film shows is not worth a round. The story and the staging are what the audience remembers; the model serves them.
 Once a study is approved, freeze it: `uv run python -I tools/freeze.py <study folder>` keeps it with exactly the files its compile read (a study links research/ live, so an edited trace
 moved an approved sample without a word), and `tools/freeze.py check <frozen folder>` later says whether the code of the day still builds it the same, before it is merged or built on.
 Do the close-up for the city with the fullest sources first; close-up camera distance 0.035–0.06 (about 0.1 m per pixel), elevation 10–15°, gliding along the main street inside the walls (`fov: 40–44`),
@@ -81,7 +86,7 @@ exaggerated (a stretched dome reads as an egg). A pitched roof keeps its pitch t
 `court` or `detached` on a lot the size of the block, `storeys` a single number. `row` is for a street built house by house, each on its own narrow lot, where a `storeys` range gives the street its uneven skyline.
 On the sheet, a row whose units step up and down shows each unit's gable end standing above its lower neighbour: when the sources describe the block as one building, that sawtooth is wrong.
 Look at the types before laying the city: `uv run python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat>` (a flat open place) builds a block of each type the period
-declares or its fabric names, at the film's close-up distance, in its palette and light, and puts the stills side by side in `sheet.jpg`. Show the user the sheet, and lay the city once
+declares or its fabric names, at the film's close-up distance, in its palette and light, and puts the stills side by side in `sheet.jpg`. Judge the sheet yourself, and lay the city once
 each type reads as itself.
 **How much of a quarter each type takes is a fact too:** write the share and its basis (a count in the sources, an excavated quarter, a named comparison) beside the layout before laying
 the city, quarter by quarter; a share written "schematic" with no basis decides what the whole city looks like. Heights vary between buildings as the sources' storey range says, not by copying one block in rows.
@@ -147,7 +152,7 @@ elevation); a dome keeps its true curve in any case (`dome.keep_curve`): stretch
 are a few pixels wide at a kilometre and vanish in the wide shots; look at the period city's wide still (eraview) and say so when the film relies on one.
 
 **Look before laying the city:** `modelview --sheet` builds every landmark of these classes the period declares, each from four sides at a distance that fits its size, beside its
-house types, and puts the stills in `sheet.jpg`; show the user the sheet. **Not drawn yet** (say so rather than stand in a solid): open frames of thin members (iron towers,
+house types, and puts the stills in `sheet.jpg`; look at the sheet before laying the city. **Not drawn yet** (say so rather than stand in a solid): open frames of thin members (iron towers,
 gasholder frames, truss bridges: a solid shape reads as an obelisk), buildings below the ground (rock-hewn churches, stepwells), helical ramps (a stepped cone stands in), ribs and
 flutes on domes and shafts. A form the classes cannot make is added to them, as a key of a class (its line in `FIELDS` and its drawing) or a new class, never as code in a city.
 
@@ -225,7 +230,7 @@ streets** are laid by `uv run python -I tools/parcels.py cities/<slug> <parcels.
 walls and shop rows, it cuts blocks along the streets, splits a large block by a bent lane, fills each with whole courtyard houses turned to their street and rows of
 shop-houses along the fronts, and writes them as a trace with a report (lot sizes, bearings, the share built, the ground left); the types, sizes and storeys are the city's research. Houses in a block line up along the block's
 own long side, not the city-wide grid (`traced` in `pipeline/citygen.py`).
-What is traced is built together with what is written in `city:`, and the two can be mixed; the first time, show the user a small piece first. A layout worked out beside the
+What is traced is built together with what is written in `city:`, and the two can be mixed; the first time, build and look at a small piece first. A layout worked out beside the
 model (lots, streets, gardens or a loss's region laid round landmarks) takes each landmark's ground from `citygen.landmark_site`, the ground citygen itself keeps clear, never a box of
 its own round the anchor (that put houses on one side of a temple's platform).
 **Shops along a street** form a row wall to wall, of similar height, with a back yard behind each shop body and the yard walls joined in one line (with gaps between shops, uneven heights and open backs, a row looks like a row of teeth when seen obliquely from behind). Not built yet: houses on steep slopes lined up along contour lines (see "Ground and terrain").

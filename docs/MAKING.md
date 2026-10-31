@@ -2,7 +2,7 @@
 
 English · [繁體中文](MAKING.zh-Hant.md) · [简体中文](MAKING.zh-Hans.md)
 
-This guide takes you from zero to a city film, using the A City Through Time skill. Claude Code (the coding agent) makes the film. You set the direction and check every step in the browser. The rules are in [`SKILL.md`](../SKILL.md) and the step guides it points to (`docs/`), and the agent follows them.
+This guide takes you from zero to a city film, using the A City Through Time skill. Claude Code (the coding agent) makes the film. You decide the story and watch the film in the browser. The rules are in [`SKILL.md`](../SKILL.md) and the step guides it points to (`docs/`), and the agent follows them.
 
 ## 1. Watch one first
 
@@ -40,13 +40,13 @@ Tell the agent: "Use A City Through Time to make <city>, starting from <era>." T
 
 ## 5. The workflow
 
-The agent works in the order below and stops after every step to show you. When it needs to change code or switch approach, it first explains the reason and the approach and only goes ahead once you agree; for a problem you name, it changes only those places, and it finds similar problems itself and lists them for you:
+The agent works in the order below. It stops for your go-ahead on the story outline, the detailed outline, the narration draft, the scale still, the film in the preview, the music and the final render; the steps between (the past cities, camera, pacing) it judges itself against the example film, watching as an audience would before showing you. When it needs to change code or switch approach, it first explains the reason and the approach and only goes ahead once you agree; for a problem you name, it changes only those places, and it finds similar problems itself and lists them for you:
 
 1. **Research**: a timeline, the source and original text of every fact (`FACTS.md`), and the turning points chosen for this city.
 2. **Data**: set the area (about 20–30 km square), fetch OpenStreetMap, buildings, terrain and satellite imagery, then render one white-model still so you can check the scale.
 3. **Past cities**: generate the city of each era from archaeological reports and historical sources, marked "schematic" on screen.
 4. **Script and timeline**: first write one continuous narration, then let the picture follow its sentences.
-5. **Preview**: `node tools/preview.mjs <city>` starts a local server; open the address it prints in Chrome to play the film. Watch each section as it is done, and tell the agent about any problem.
+5. **Preview**: `node tools/preview.mjs <city>` starts a local server; open the address it prints in Chrome to play the film. The agent shows you long stretches (about a third of the film, or all of it) as they are done; tell it about any problem.
 6. **Narration, music and sound effects**: the agent first asks which way to go: record it yourself, an online service (for example MiniMax), a local model (for example Stable Audio 3), a CC music library, or code-written music (no model, offline, free, as a fallback). The chosen way and its terms of use (whether it may be made public, whether it may be used commercially) are written to the city's `VOICE.md` and `MUSIC.md`. Sound effects (the moments a light column lands, the city burns, the lights go out) can be picked or left out; all three can be heard in the preview.
 7. **Finished film**: only after you approve in the preview does it render: `node tools/build.mjs <city>`. It runs all the checks and delivers the film, bilingual subtitles, cover and description in `dist/`.
 
