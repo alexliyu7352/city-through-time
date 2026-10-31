@@ -8,7 +8,7 @@ usage: python -I tools/rangecheck.py <city_slug | city folder> (--stations id[,i
   a city folder: a model study's or any folder under cities/ (tools/geocheck.mjs takes the same)
 writes build/review/range_<from>_<to>/ (the stills, sheet_NN.jpg, report.json) and build/logs/range_<step>.log; exit 1 when a
 check fails."""
-import argparse, json, os, subprocess, sys
+import argparse, json, math, os, subprocess, sys
 import numpy as np
 from PIL import Image
 
@@ -64,9 +64,13 @@ def main():
             c = np.asarray(Image.open(os.path.join(out, f)).convert('RGB').resize((320, 180)), dtype=float)
             Y.append((float(f[2:-4]), 16 + float((65.481 * c[..., 0] + 128.553 * c[..., 1] + 24.966 * c[..., 2]).mean()) / 255))
         n60 = max(1, round(60 / A.step)); win = [sum(y for _, y in Y[i:i + n60]) / len(Y[i:i + n60]) for i in range(max(1, len(Y) - n60 + 1))] if Y else []
-        report.update({'stills': len(ims), 'sheets': sheets, 'yavg': round(sum(y for _, y in Y) / len(Y), 1) if Y else None,
-                       'yavg_lowest_minute': round(min(win), 1) if win else None, 'yavg_per_still': [[t, round(y, 1)] for t, y in Y]})
-        if Y: print(f"  brightness: YAVG {report['yavg']} (lowest minute {report['yavg_lowest_minute']}; the film's mean wants 80 and any minute 60)", flush=True)
+        # (the threshold judged on the unrounded value and shown cut down, never rounded up: a minute of 59.996 printed as 60.0 read as a pass)
+        cut = lambda v: math.floor(v * 100) / 100
+        report.update({'stills': len(ims), 'sheets': sheets, 'yavg': cut(sum(y for _, y in Y) / len(Y)) if Y else None,
+                       'yavg_lowest_minute': cut(min(win)) if win else None, 'minute_below_60': min(win) < 60 if win else None,
+                       'yavg_per_still': [[t, round(y, 1)] for t, y in Y]})
+        if Y: print(f"  brightness: YAVG {report['yavg']} (lowest minute {report['yavg_lowest_minute']}{': BELOW 60' if report['minute_below_60'] else ''};"
+                    " the film's mean wants 80 and any minute 60)", flush=True)
         print(f'  look at every sheet: {", ".join(sheets)}', flush=True)
     json.dump(report, open(os.path.join(out, 'report.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     bad = [k for k, v in steps.items() if not v['ok']]
