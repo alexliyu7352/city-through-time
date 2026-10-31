@@ -1866,7 +1866,8 @@ if len(eras_out) > SLOTS: print(f'  era channels ({SLOTS}): ' + ', '.join(f'{k}:
 # dug pools (citygen): one map for the film, each basin's outline, water top and number; the engine lowers the plate inside
 # a basin below its water while the basin stands (its number's uniform follows its pool rising, taken back or lost), so a
 # pool on uneven ground is water from rim to rim; the ground comes back when the pool is taken back or lost
-BAS_LO, BAS_HI, BASIN_MAX = -100.0, 6000.0, 64   # (metres a water top may stand at, in 16 bits; engine/studio.js uBasinA: 32 slots, as many as a film needs up to 64)
+BAS_LO, BAS_HI, BASIN_MAX = -100.0, 6000.0, 127   # (metres a water top may stand at, in 16 bits; engine/studio.js uBasinA: 32 slots, as many as a film needs past
+# that (film.basinSlots); 127 is the map's own bound: a dug pool's number + 1 in alpha below 128, a draped one's 129 + it up to 255)
 # a draped pool (where it was, not how high: the plate is its water) is kept in the map as its distance to its edge (texels, +
 # inside) in a band of BAS_BAND texels round it, alpha 128 + its number: the engine blends that distance between texels, so the
 # water's edge follows the drawn outline and not the texels' steps (a texel is about 11 m on a city's plate)
@@ -1877,8 +1878,8 @@ for e in eras_out:
     meta_, prims_, L_ = CITY_META[e['id']], PRIMS[e['id']], LOST.get(e['id']); out_ = []
     for b in BASINS[e['id']]:
         i_ = basin_piece(e['id'], b)
-        if nb_ >= BASIN_MAX: raise SystemExit(f"compile: era {e['id']}: more than {BASIN_MAX} pools and grounds in a film (each is timed by one of the engine's slots; "
-                                              "grounds of one city that come and go together are one entry, its region several rings)")
+        if nb_ >= BASIN_MAX: raise SystemExit(f"compile: era {e['id']}: more than {BASIN_MAX} pools and grounds in a film (each is timed by one of the engine's slots, numbered in the "
+                                              "basin map's alpha; grounds of one city that come and go together are one entry, its region several rings)")
         if 'rings' in b:   # (a ground: the ground map, below)
             gnd_.setdefault(e['id'], []).append((nb_, b))
             out_.append({'k': nb_, 'rank': prims_[i_][10], 'c': [round(prims_[i_][15], 5), round(prims_[i_][16], 5)], 'lost': L_[i_] if L_ else 0, 'draped': True, 'ground': True}); nb_ += 1
