@@ -32,7 +32,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // what this browser's graphics can do, tried rather than taken from what it reports (S.gpu; main.js says what is missing):
   // targets, the kind of picture the scene is drawn into (targets() below); path, the shaders' size ('full', or 'fit': the
   // film's own, linkTest below); fails, every shader that did not link; onFail, told of one that fails later
-  const gpu = { targets: targets(renderer), path: 'full', fails: [], onFail: null, fail: null };
+  // `gpu=fit` or `gpu=8bit` in the page's address forces that fallback on any page that draws the film, to look at it on graphics
+  // with room for the full path (CONTRIBUTING: a fallback is looked at on every page that uses it)
+  const FORCE = new URLSearchParams(location.search).get('gpu') || '';
+  const gpu = { targets: targets(renderer, FORCE === '8bit'), path: 'full', fails: [], onFail: null, fail: null };
   if (!gpu.targets) gpu.fail = 'targets';
   renderer.debug.onShaderError = (gl, program, vs, fs) => {
     const e = [gl.getProgramInfoLog(program), gl.getShaderInfoLog(vs), gl.getShaderInfoLog(fs)].map(s => (s || '').trim()).filter(Boolean).join(' / ').slice(0, 400) || 'link failed';
@@ -1039,7 +1042,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     [z.B, ['uBasinA', 'uBasinL']], [z.Y, ['uYLt', 'uYLy']], [z.N, ['uGT', 'uGS', 'uBLo', 'cBand']]]) for (const k of ks) U[k].value.length = n; };
   if (gpu.targets) {
     const g = renderer.getContext(), roomy = g.getParameter(g.MAX_TEXTURE_IMAGE_UNITS) >= 32 && g.getParameter(g.MAX_FRAGMENT_UNIFORM_VECTORS) >= 1024;
-    const tries = [...(roomy || !opts.fit ? [FULL] : []), ...(opts.fit ? [fitOf(opts.fit)] : [])];
+    const tries = [...(!opts.fit || (roomy && FORCE !== 'fit') ? [FULL] : []), ...(opts.fit ? [fitOf(opts.fit)] : [])];
     if (!tries.some(z => { Z = z; gpu.path = z === FULL ? 'full' : 'fit'; if (z !== FULL) fitTo(z); return linkTest(); })) gpu.fail = 'shaders';
     gpu.limits = { textures: g.getParameter(g.MAX_TEXTURE_IMAGE_UNITS), fragment: g.getParameter(g.MAX_FRAGMENT_UNIFORM_VECTORS), vertex: g.getParameter(g.MAX_VERTEX_UNIFORM_VECTORS), size: g.getParameter(g.MAX_TEXTURE_SIZE) };
   }

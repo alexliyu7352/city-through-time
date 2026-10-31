@@ -54,6 +54,7 @@ The steps shown to the user are in `CONTRIBUTING.zh-Hant.md`. The repository tak
   and what it can draw into (half-float, else 8-bit), and says on the page what is missing instead of drawing black. Before publishing a
   film with more than Xianyang's (more decals, period cities standing at once past 8, epoch channels), run `node tools/phonecheck.mjs <slug>`:
   OVER means the page would only say, on a phone, that it cannot draw the film. `&gpu` on the page's address shows what it chose;
+  `&gpu=fit` and `&gpu=8bit` force those fallbacks on a computer, to see the film, the walk-round and the museum pages as a phone draws them;
   on a touch screen the player and the walk-round go full screen and sideways on a tap (`engine/phone.js`);
 - Submitting a pull request: include only the text files in `cities/<slug>/` (entry.json, city.yaml, script.yaml, CREDITS, the .md files, the text notes in research/,
   and material descriptions such as assets/README.md); no pictures, music or video, which the PR check blocks (`tools/registry.mjs --check --base`).

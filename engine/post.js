@@ -145,7 +145,7 @@ export function makePost(renderer, scene, camera, w, h, o = {}) {
 // colour, 4x multisampled, a float depth texture), else without multisampling, else in 8-bit colour. Each is drawn into with a
 // colour at a known depth and read back through an 8-bit copy -> { type, samples, half, depth } (depth: its depth texture reads
 // right), the first whose colour and depth both read right, else the first whose colour does; null when none draws at all
-export function targets(renderer) {
+export function targets(renderer, only8 = false) {   // (only8: the 8-bit fallback forced, gpu=8bit)
   const v = 'void main(){ gl_Position = vec4(position.xy, 0., 1.); }';
   const draw = new FullScreenQuad(new THREE.ShaderMaterial({ vertexShader: v, fragmentShader: 'void main(){ gl_FragColor = vec4(.25, .5, .75, 1.); }' }));
   const read = new FullScreenQuad(new THREE.ShaderMaterial({ uniforms: { c: { value: null }, d: { value: null }, k: { value: 0 } }, vertexShader: v, depthTest: false, depthWrite: false,
@@ -154,7 +154,7 @@ export function targets(renderer) {
   const reads = (k, rt, want) => { const u = read.material.uniforms; u.c.value = rt.texture; u.d.value = rt.depthTexture; u.k.value = k;
     renderer.setRenderTarget(out); read.render(renderer); px.fill(0); renderer.readRenderTargetPixels(out, 1, 1, 1, 1, px); return want.every((w, i) => Math.abs(px[i] - w) <= 3); };
   const found = [];
-  for (const [type, samples] of [[THREE.HalfFloatType, 4], [THREE.HalfFloatType, 0], [THREE.UnsignedByteType, 4], [THREE.UnsignedByteType, 0]]) {
+  for (const [type, samples] of [[THREE.HalfFloatType, 4], [THREE.HalfFloatType, 0], [THREE.UnsignedByteType, 4], [THREE.UnsignedByteType, 0]].filter(([t]) => !only8 || t !== THREE.HalfFloatType)) {
     const rt = new THREE.WebGLRenderTarget(4, 4, { type, samples, depthTexture: new THREE.DepthTexture(4, 4, THREE.FloatType) });
     try { renderer.setRenderTarget(rt); draw.render(renderer);
       const colour = reads(0, rt, [64, 128, 191, 255]); if (colour) found.push({ type, samples, half: type === THREE.HalfFloatType, depth: reads(1, rt, [128, 128, 128]) }); }
