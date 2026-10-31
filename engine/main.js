@@ -132,7 +132,10 @@ const DIMK = FILM.dim && FILM.dim.length ? track(FILM.dim) : null;
 const upAt = (e, t) => { const FR = e.fallR; if (FR != null && t > FR.gone) return 0;
   const [a, b] = e.up || [e.on, e.on + e.span + e.grow];
   return ss(seg(t, a, b)) * (FR ? 1 - ss(seg(t, FR.hit, FR.gone)) : 1); };
-const eraUpAt = t => Math.max(0, ...(FILM.eras || []).map(e => upAt(e, t)));
+// a city with today_from: from its node, what of it still stands is part of today's city, which no longer steps back for it (the same 3 s
+// as its keep map: uHideKeep)
+const nowK = (e, t) => e.todayFrom != null ? ss(seg(t, e.todayFrom, e.todayFrom + 3)) : 0;
+const eraUpAt = t => Math.max(0, ...(FILM.eras || []).map(e => upAt(e, t) * (1 - nowK(e, t))));
 const dimAt = (t, up = eraUpAt(t)) => Math.max((LOOK.dim ?? .8) * up, DIMK ? DIMK(t)[0] : 0);
 const DIM0 = new Map(); const dimBefore = n => { if (!DIM0.has(n.id)) DIM0.set(n.id, dimAt(ringT0(n) - .01)); return DIM0.get(n.id); };
 // a node's colour ring: radius at time t (the plate's far corner from its origin is reached after wave_dur seconds)
@@ -420,7 +423,7 @@ function setLayers(t) {
     const burn = e.sinkStyle === 'burn' && e.off != null ? ss(seg(t, e.off - e.burn, e.off - e.burn * .55)) : 0;   // the city catches fire, then falls
     const up = upAt(e, t);
     E.u.uEraBurn.value = burn; E.u.uEraGlow.value = up * (LOOK.glow ?? 1);
-    eraUp = Math.max(eraUp, up);
+    eraUp = Math.max(eraUp, up * (1 - nowK(e, t)));
     E.u.uEraCol.value.copy(eraTint(e, nodes_[ci])); E.u.uEraCol0.value.copy(ci > 0 ? eraTint(e, nodes_[ci - 1]) : E.base);
     E.u.uEraInk.value = eraInk(e, nodes_[ci]); E.u.uEraInk0.value = ci > 0 ? eraInk(e, nodes_[ci - 1]) : eraInk(e, null);
     const offStart = !FR ? Infinity : e.sinkStyle === 'burn' ? e.off - e.burn : FR.hit;
@@ -434,7 +437,7 @@ function setLayers(t) {
     if (e.hide != null && inChannel(e)) {
       const h = e.hide;
       U.uHideT.value[h] = tE < -.01 || gone ? -1 : tE / e.span; U.uHideG.value[h] = e.grow / e.span;
-      U.uHideKeep.value[h] = e.todayFrom != null ? ss(seg(t, e.todayFrom, e.todayFrom + 3)) : 0;   // (today_from: today's city comes back round what still stands)
+      U.uHideKeep.value[h] = nowK(e, t);   // (today_from: today's city comes back round what still stands)
       U.uHideO.value[h].set(fo[0], fo[1]); U.uHideFR.value[h] = fr; U.uHideFI.value[h] = fin ? 1 : 0; U.uHideFW.value[h] = fr1;
       U.uHideFA.value[h] = FR && fin && t >= FR.hit && !gone ? ss(seg(t, FR.hit, FR.hit + .4)) * (1 - ss(seg(t, FR.gone - .5, FR.gone))) : 0;
       U.uHideCol.value[h].copy(gA > edgeA ? S.eras[e.id].base : E.u.uEraCol.value);
