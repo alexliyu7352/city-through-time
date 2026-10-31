@@ -178,7 +178,8 @@ No rule sets a sentence length: write as speech; subtitle length is handled when
 - The readout (left column) holds only one big number (the year counter or one statistic), one label line, one source line.
   Each node opens a chapter (its number and name on the readout). A node that only splits one chapter's city in two for its timing (an early and a late city told
   as one story) writes `readout: {continues: true}`: the readout before runs on through it, no second chapter card with the same name; a chapter split in two
-  that tells two stories needs a name of its own.
+  that tells two stories needs a name of its own. Where each node shows another phase, give it `note:` beside `continues` (the sources of what is on screen
+  now): the source line changes as that node begins; the name, label and year counter run on.
 - Timing rule: a line of narration takes as long as it is said in the voiced language, and only that: a subtitle in any language is read faster than it is heard, so the second language never holds a line ("Subtitles and the timeline").
   Text nobody says (pins, readouts, source notes, title cards) needs its reading time: Chinese characters ÷ 4.5 + letters ÷ 15 + 1.5 seconds, at least 1.8 seconds; stretch the film rather than delete facts.
 

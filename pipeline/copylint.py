@@ -91,6 +91,7 @@ def _screen_texts(film):
     """[(t, what, text)]: the film's text on screen other than the subtitles"""
     out = [(p['t0'], 'pin', p.get(k)) for p in film.get('pins', []) for k in ('text', 'sub')]
     out += [(r.get('t0', r.get('on', 0)), 'readout', r.get(k)) for r in film.get('readouts', []) for k in ('label', 'note')]
+    out += [(n['t'], 'readout', n['note']) for r in film.get('readouts', []) for n in r.get('notes', [])]
     out += [(L.get('t0', 0), 'place name', L.get(k)) for L in film.get('labels', []) for k in ('a', 'b')]
     out += [(f['on'], 'caption', f.get(k)) for f in film.get('footage', []) for k in ('title', 'sub', 'kicker')]
     out += [(r['on'], 'beam label', r.get(k)) for r in film.get('routes', []) for k in ('a', 'b')]

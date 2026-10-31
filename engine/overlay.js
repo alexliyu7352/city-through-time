@@ -63,6 +63,16 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     return [...out, cur];
   }
   const noteDrop = s => Math.max(0, noteLines(s).length - 1) * NOTE_LH;
+  // a readout's room below its source line: the longest of its notes, so the legend stays put when the note changes
+  const notesDrop = o => Math.max(noteDrop(o.note), ...(o.notes || []).map(n => noteDrop(n.note)));
+  // the source note at t and its fade: a chapter told over several nodes changes it where a node begins (compile: readout continues
+  // with a note), the old one out over the .3 s before, the new one in over the .3 s after
+  function noteAt(o, t) {
+    if (!o.notes) return [o.note, 1];
+    let i = -1; while (i + 1 < o.notes.length && t >= o.notes[i + 1].t) i++;
+    const nx = o.notes[i + 1];
+    return [i < 0 ? o.note : o.notes[i].note, Math.min(nx ? 1 - seg(t, nx.t - .3, nx.t) : 1, i < 0 ? 1 : seg(t, o.notes[i].t, o.notes[i].t + .3))];
+  }
 
   // readout: index + layer name, one figure (+unit), one label, one source line, legend rows [{col, text, text2}]
   function readout(t, o) {
@@ -84,9 +94,9 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     if (o.label) txt(o.id + 'l', o.label, X, Y + 58, 'zh', 30, '#f4f1ea', a, { shadow: 10, ls: 1 });
     // the source note: bright enough and shadowed to read over a lit map or the satellite plate, in lines;
     // readcheck reads it as one text, the whole note (it sets how short the stop may be: docs/STAGING.md 5d)
-    const nl = noteLines(o.note), dn = noteDrop(o.note);
-    nl.forEach((q, i) => txt(null, q, X, Y + 94 + i * NOTE_LH, 'mono', 16, 'rgba(225,230,236,.85)', a, { ls: 1, shadow: 8 }));
-    if (nl.length && a > .98) TX.push({ id: o.id + 's', text: o.note, x0: X, y0: Y + 94 - 16 * .9, x1: X + Math.max(...nl.map(q => width(q, 'mono', 16, 1))), y1: Y + 94 + dn + 16 * .25 });
+    const [note, nk] = noteAt(o, t), nl = noteLines(note), dn = notesDrop(o);
+    nl.forEach((q, i) => txt(null, q, X, Y + 94 + i * NOTE_LH, 'mono', 16, 'rgba(225,230,236,.85)', a * nk, { ls: 1, shadow: 8 }));
+    if (nl.length && a * nk > .98) TX.push({ id: o.id + 's', text: note, x0: X, y0: Y + 94 - 16 * .9, x1: X + Math.max(...nl.map(q => width(q, 'mono', 16, 1))), y1: Y + 94 + noteDrop(note) + 16 * .25 });
     if (o.legend) o.legend.forEach((row, i) => {
       const ra = a * (row.t0 != null ? seg(t, row.t0, row.t0 + .25) : 1); if (ra <= 0) return;
       const yy = Y + 128 + dn + i * 32;
@@ -442,5 +452,5 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     txt('end_credit', CREDIT, X, y + 22, 'mono', 20, 'rgba(225,230,236,.66)', a, { ls: 1 });
   }
 
-  return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, noteDrop };
+  return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, notesDrop };
 }

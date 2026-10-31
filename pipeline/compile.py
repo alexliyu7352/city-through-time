@@ -1267,13 +1267,15 @@ for i, node in enumerate(FM['nodes']):
                       'reset': float(node['reset']['year']) if 'reset' in node else None, 'ink': float(node.get('ink', 0)), 'era_tint': float(node.get('era_tint', node.get('tint', FM.get('node_tint', .5)))),
                       'arrive': round(node['_t0'] + node.get('_tourA', 0), 3), 'ghost': node.get('ghost', []), 'mood': node['_mood']})   # ghost: earlier cities whose outline is drawn again while this node is told   # today's city takes this colour while the node is told
     # readout (left column); a node without `readout: false` gets one with the year counter. `readout: {continues: true}`: the node
-    # goes on telling the chapter before (one city split in two nodes for its timing): that readout runs on, no new chapter card
+    # goes on telling the chapter before (one city split in two nodes for its timing): that readout runs on, no new chapter card;
+    # a `note` of its own replaces the source line from this node on (each phase's sources under one chapter: readouts[].notes)
     r = node.get('readout', {})
     if r is not False and r.get('continues'):
-        if set(r) - {'continues', 't1'}: raise SystemExit(f"compile: node {node['id']}: readout continues: only t1 goes with it (the chapter's name, label and note are the node's before)")
+        if set(r) - {'continues', 't1', 'note'}: raise SystemExit(f"compile: node {node['id']}: readout continues: only t1 and note go with it (the chapter's name and label are the node's before)")
         if len(nodes_out) < 2 or not readouts or not (readouts[-1]['id'] == 'r_' + nodes_out[-2]['id'] or nodes_out[-2].get('continues')):   # (the node before has its readout, or goes on with one itself: a chapter over three nodes)
             raise SystemExit(f"compile: node {node['id']}: readout continues, but the node before has no readout to go on")
         readouts[-1]['t1'] = T(r.get('t1', 'end')) - .2; nodes_out[-1]['continues'] = True
+        if 'note' in r: readouts[-1].setdefault('notes', []).append({'t': round(T(0), 3), 'note': pick(r['note'])})
     elif r is not False:
         d = {'id': 'r_' + node['id'], 't0': T(r.get('t0', 0.4)), 't1': T(r.get('t1', 'end')) - .2, 'idx': f'{len(readouts) + 1:02d}', 'name': pick(r.get('name')) or ab(node.get('label', {}))[0] or node['id'],
              'big': r.get('big', {'year': True}) if isinstance(r.get('big', {'year': True}), dict) else tx(str(r['big'])), 'unit': tx(r.get('unit')), 'col': r.get('col', node.get('col', '#ffffff')),
