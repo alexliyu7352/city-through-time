@@ -48,6 +48,13 @@ The steps shown to the user are in `CONTRIBUTING.zh-Hant.md`. The repository tak
 - Try locally first: `node tools/preview.mjs` (it first generates the site into `_site/`), then open `http://127.0.0.1:8765/<slug>/`, then try the player bundle with
   `play.html?city=<slug>&play=1&bundle=<address>`; a city with museum pages (MUSEUM.md) runs `tools/museum.py` before packing, and the bundle carries them:
   `play.html?city=<slug>&view&free&bundle=<address>` and `museum.html?city=<slug>&id=<page>&bundle=<address>`;
+- **On a phone:** the player and the walk-round draw on a phone's graphics, which give a shader 16 textures and 224 to 256 uniform vectors
+  (a desktop's give 32 and 1024); a shader over them is refused, and the buildings and the plate then go black while the lines and the dust
+  still show. The engine tries what links (`engine/studio.js`: the full shaders, else ones sized to what the film uses, the same picture)
+  and what it can draw into (half-float, else 8-bit), and says on the page what is missing instead of drawing black. Before publishing a
+  film with more than Xianyang's (more decals, period cities standing at once past 8, epoch channels), run `node tools/phonecheck.mjs <slug>`:
+  OVER means the page would only say, on a phone, that it cannot draw the film. `&gpu` on the page's address shows what it chose;
+  on a touch screen the player and the walk-round go full screen and sideways on a tap (`engine/phone.js`);
 - Submitting a pull request: include only the text files in `cities/<slug>/` (entry.json, city.yaml, script.yaml, CREDITS, the .md files, the text notes in research/,
   and material descriptions such as assets/README.md); no pictures, music or video, which the PR check blocks (`tools/registry.mjs --check --base`).
   The exception is this project's example city Xianyang: it keeps its pictures, posters and web player bundle in full (`cities/xianyang/web/`, copied there after repacking, with the bundle in entry.json pointing to it,

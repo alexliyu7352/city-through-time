@@ -24,6 +24,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { words, pick, cityPage } from '../site/i18n.js';
 import { REPO, makeOverlay, setFonts } from './overlay.js';
+import { phone, touch, FULL as FULLICON } from './phone.js';
 
 const FIXED_AZ = 355, WHITE = new THREE.Color(1, 1, 1);   // check: the key light (50 degrees left of this bearing, 45 up) stands in the south-west of the room (bearings as the camera keys count them: 0 south, 90 east)
 
@@ -107,11 +108,21 @@ export async function startView(X) {
     e.preventDefault(); const w = where(); place(w.az + k[0], w.el + k[1], w.d);
   });
   const ray = new THREE.Raycaster();
-  renderer.domElement.addEventListener('dblclick', e => {
+  const lookAt = e => {
     const r = renderer.domElement.getBoundingClientRect();
     ray.setFromCamera(new THREE.Vector2((e.clientX - r.left) / r.width * 2 - 1, 1 - (e.clientY - r.top) / r.height * 2), camera);
     const hit = ray.intersectObjects(S.scene.children.filter(o => o.isMesh && o.visible), false)[0]; if (!hit) return;
     const off = camera.position.clone().sub(controls.target); controls.target.copy(hit.point); camera.position.copy(hit.point).add(off.multiplyScalar(.6)); controls.update();
+  };
+  renderer.domElement.addEventListener('dblclick', lookAt);
+  // a double tap on a touch screen, which sends no double click where the page takes the touches (touch-action: none): two taps
+  // within 350 ms and 30 px, neither a drag
+  let tap = null, downAt = null;
+  renderer.domElement.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') downAt = [e.clientX, e.clientY]; });
+  renderer.domElement.addEventListener('pointerup', e => {
+    if (e.pointerType !== 'touch' || !downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 10) return;
+    const now = performance.now();
+    if (tap && now - tap.t < 350 && Math.hypot(e.clientX - tap.x, e.clientY - tap.y) < 30) { tap = null; lookAt(e); } else tap = { t: now, x: e.clientX, y: e.clientY };
   });
 
   // the panel; in the public mode, the city's museum pages (build/museum/index.json, tools/museum.py), read once: their pins and the
@@ -227,7 +238,14 @@ export async function startView(X) {
       .fv-name b,.fv-pill{white-space:nowrap}
       @media (max-width:640px){.fv-hint{display:none}.fv-name{padding:8px 12px}.fv-name b{font-size:16px}.fv-pill{min-height:36px;padding:0 11px;font-size:12.5px}.fv-tools{gap:6px}
         .fv-langs a{min-width:32px;min-height:30px;padding:0 8px}.fv-top{padding:max(10px,env(safe-area-inset-top)) 10px 0}.fv-bot{padding:0 10px max(10px,env(safe-area-inset-bottom))}}
-      @media (prefers-reduced-motion:reduce){.fv-halls button[aria-busy=true]{animation:none;opacity:.6}}`;
+      @media (prefers-reduced-motion:reduce){.fv-halls button[aria-busy=true]{animation:none;opacity:.6}}
+      .fv .fv-full{gap:0;padding:0;width:44px;justify-content:center;background:oklch(0.155 0.014 255 / .72)}.fv-full svg{width:20px;height:20px}
+      @media (pointer:coarse){.fv-pill{min-height:44px}.fv-langs a{min-height:38px}.fv-credit{padding:6px 0}.fv,.fv button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}}
+      @media (max-height:500px){.fv-top{padding:max(8px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 0 max(10px,env(safe-area-inset-left))}
+        .fv-bot{padding:0 max(10px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}
+        .fv-name{padding:6px 12px}.fv-name b{display:inline;font-size:15px}.fv-name span{margin-left:8px;font-size:12px}
+        .fv-hint{margin:0 0 6px;padding:4px 10px;font-size:12px}.fv-halls button{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 12px}
+        .fv-halls button small{display:inline}.fv-credit{margin-top:2px}}`;
     document.head.appendChild(css);
     // where the visitor stands, for a link that comes back here: the camera as tx,ty,tz,az,el,d (main.js's cam)
     const camQ = () => { const t = controls.target, w = where(); return `&cam=${[t.x, t.y, t.z].map(v => v.toFixed(5)).join(',')},${w.az.toFixed(1)},${w.el.toFixed(1)},${w.d.toFixed(5)}`; };
@@ -236,8 +254,17 @@ export async function startView(X) {
     top.innerHTML = `<p class="fv-name"><b>${Wd.t('walkTitle')}</b><span>${of(N.city) || (FILM.identity?.l1 || '').split(' · ')[0] || city}</span></p>
       <div class="fv-tools"><nav class="fv-langs" aria-label="Language">${LANGS.map(([l, t]) => `<a data-lang="${l}" lang="${l}" aria-current="${l === lang}">${t}</a>`).join('')}</nav>
       <a class="fv-pill" href="${cityPage(lang, city, document.documentElement.dataset.city)}">${Wd.t('walkFilm')}</a></div>`;
+    // a touch screen (engine/phone.js): a phone held upright is asked to turn sideways (its button there goes full screen and turns
+    // the picture where the browser can), and the tools have a full-screen button where the page can go full screen
+    const PH = phone({ words: Wd });
+    if (PH && PH.fullscreen) {
+      const fb = Object.assign(document.createElement('button'), { type: 'button', className: 'fv-pill fv-full', innerHTML: FULLICON });
+      const label = () => fb.setAttribute('aria-label', Wd.t(PH.isFull() ? 'fullExit' : 'walkFull'));
+      fb.onclick = () => PH.full(!PH.isFull()); label(); document.addEventListener('fullscreenchange', label); document.addEventListener('webkitfullscreenchange', label);
+      top.querySelector('.fv-tools').appendChild(fb);
+    }
     const bot = document.createElement('div'); bot.className = 'fv fv-bot';
-    bot.innerHTML = `<p class="fv-hint">${Wd.t('walkHint')}</p><nav class="fv-halls" aria-label="${Wd.t('walkPeriods')}">${ERAS.map(e => `<button type="button" data-hall="${e.id}"><small>${Wd.year(Math.round((node(e.id).years || [0])[0]))}</small><b>${name(e.id)}</b></button>`).join('')}</nav>
+    bot.innerHTML = `<p class="fv-hint">${Wd.t(touch ? 'walkHintTouch' : 'walkHint')}</p><nav class="fv-halls" aria-label="${Wd.t('walkPeriods')}">${ERAS.map(e => `<button type="button" data-hall="${e.id}"><small>${Wd.year(Math.round((node(e.id).years || [0])[0]))}</small><b>${name(e.id)}</b></button>`).join('')}</nav>
       <a class="fv-credit" href="${REPO}" target="_blank" rel="noopener">一城春秋 · A City Through Time</a>`;   // (LICENSE, condition 2c)
     document.body.append(top, bot);
     const sync = () => {
@@ -252,7 +279,9 @@ export async function startView(X) {
     setFonts({ zh_strong: '700 {}px "PingFang SC","Hiragino Sans GB","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif', en_strong: '600 {}px "Albert Sans",system-ui,sans-serif' });   // (the page's own faces: the film's are not loaded here)
     const ov = document.getElementById('ov'); let OV = null, dpr = 1;
     const layer = () => { dpr = Math.min(devicePixelRatio || 1, 2); ov.width = Math.round(innerWidth * dpr); ov.height = Math.round(innerHeight * dpr);
-      Object.assign(ov.style, { display: 'block', width: innerWidth + 'px', height: innerHeight + 'px' }); OV = makeOverlay(ov, { w: innerWidth, h: innerHeight }); };
+      // (a touch screen: the pins keep clear of the page's own bars, not of the film's, so a phone held sideways still has room for them)
+      const bars = touch ? { top: top.getBoundingClientRect().bottom + 8, bottom: innerHeight - bot.getBoundingClientRect().top + 8 } : {};
+      Object.assign(ov.style, { display: 'block', width: innerWidth + 'px', height: innerHeight + 'px' }); OV = makeOverlay(ov, { w: innerWidth, h: innerHeight, ...bars }); };
     layer(); addEventListener('resize', () => { layer(); ask(); });
     const marks = [];
     MUSEUMS.then(list => {

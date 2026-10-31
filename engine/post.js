@@ -1,7 +1,8 @@
 // Post-processing (adapted from lemo-opuscar core/three/post.js, MIT, (c) 2026 LemoLab; see NOTICE): scene -> (MSAA + depth) ->
 // [GTAO ambient occlusion] -> physical depth of field (CoC ~ |1/f - 1/z|, spiral sampling) -> bloom -> grade / vignette -> tone mapping -> dither.
-// makePost(renderer, scene, camera, w, h, { ssaa: 2, ao: true }): ssaa is the internal supersampling factor (the canvas shows at its
-// CSS size; the browser scales it down in the screenshot)
+// makePost(renderer, scene, camera, w, h, { ssaa: 2, ao: true, ...targets(renderer) }): ssaa is the internal supersampling factor (the
+// canvas shows at its CSS size; the browser scales it down in the screenshot); the targets' kind as targets() found it (by default the
+// film's: half-float, 4x multisampled, a depth texture)
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { Pass, FullScreenQuad } from 'three/addons/postprocessing/Pass.js';
@@ -54,8 +55,11 @@ const gatherShader = {
 class DofScenePass extends Pass {
   constructor(scene, camera, w, h, o = {}) {
     super(); this.scene = scene; this.camera = camera; this.needsSwap = true; this.s = o.ssaa || 1;
-    this.rt = new THREE.WebGLRenderTarget(w, h, { samples: 4, type: THREE.HalfFloatType, depthTexture: new THREE.DepthTexture(w, h, THREE.FloatType) });
-    this.rtC = new THREE.WebGLRenderTarget(w, h, { type: THREE.HalfFloatType });
+    const type = o.type ?? THREE.HalfFloatType;
+    this.rt = new THREE.WebGLRenderTarget(w, h, { samples: o.samples ?? 4, type, depthTexture: new THREE.DepthTexture(w, h, THREE.FloatType) });
+    this.rtC = new THREE.WebGLRenderTarget(w, h, { type });
+    // no depth of field where the blur's signed size cannot be kept (8-bit targets), nor it or the edge lines without a depth texture that reads right
+    this.flat = o.half === false || o.depth === false; this.noDepth = o.depth === false;
     this.coc = new FullScreenQuad(new THREE.ShaderMaterial(cocShader));
     this.gat = new FullScreenQuad(new THREE.ShaderMaterial(gatherShader));
     this.gat.material.uniforms.res.value.set(w, h);
@@ -78,8 +82,9 @@ class DofScenePass extends Pass {
     u.tColor.value = this.rt.texture; u.tDepth.value = this.rt.depthTexture; u.focus.value = this.focus; u.aper.value = this.aper * this.s; u.maxCoc.value = this.maxCoc * this.s;
     u.near.value = this.camera.near; u.far.value = this.camera.far;
     u.tAO.value = this.ao ? this.ao.gtaoMap : null; u.aoDebug.value = this.aoDebug ? 1 : 0; u.aoAmt.value = this.ao ? this.aoAmt : 0;
+    if (this.flat) u.maxCoc.value = 0; if (this.noDepth && u.edgeAmt) u.edgeAmt.value = 0;
     renderer.setRenderTarget(this.rtC); this.coc.render(renderer);
-    const g = this.gat.material.uniforms; g.tIn.value = this.rtC.texture; g.maxCoc.value = this.maxCoc * this.s;
+    const g = this.gat.material.uniforms; g.tIn.value = this.rtC.texture; g.maxCoc.value = this.flat ? 0 : this.maxCoc * this.s;
     renderer.setRenderTarget(this.renderToScreen ? null : writeBuffer); this.gat.render(renderer);
   }
 }
@@ -124,12 +129,39 @@ const weatherShader = {
 
 export function makePost(renderer, scene, camera, w, h, o = {}) {
   const s = o.ssaa || 1, W = w * s, H = h * s;
-  const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType }));
+  const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(W, H, { type: o.type ?? THREE.HalfFloatType }));
   const dof = new DofScenePass(scene, camera, W, H, o);
   const bloom = new UnrealBloomPass(new THREE.Vector2(W, H), .2, .5, 1.6);
+  if (o.half === false) bloom.enabled = false;   // (its own targets are half-float; and in 8 bits nothing is brighter than white)
   const vig = new ShaderPass(vignetteShader);
   const weather = new ShaderPass(weatherShader); weather.enabled = false;
   const out = new OutputPass();
   composer.addPass(dof); composer.addPass(bloom); composer.addPass(weather); composer.addPass(vig); composer.addPass(out); composer.addPass(new ShaderPass(ditherShader));
   return { composer, dof, bloom, vig, weather };
+}
+
+// what kind of target this browser can draw the scene into, tried rather than taken from what it reports (a browser can claim
+// what it cannot do, and a target it cannot draw into stays black, with all that is drawn through it): the film's (half-float
+// colour, 4x multisampled, a float depth texture), else without multisampling, else in 8-bit colour. Each is drawn into with a
+// colour at a known depth and read back through an 8-bit copy -> { type, samples, half, depth } (depth: its depth texture reads
+// right), the first whose colour and depth both read right, else the first whose colour does; null when none draws at all
+export function targets(renderer) {
+  const v = 'void main(){ gl_Position = vec4(position.xy, 0., 1.); }';
+  const draw = new FullScreenQuad(new THREE.ShaderMaterial({ vertexShader: v, fragmentShader: 'void main(){ gl_FragColor = vec4(.25, .5, .75, 1.); }' }));
+  const read = new FullScreenQuad(new THREE.ShaderMaterial({ uniforms: { c: { value: null }, d: { value: null }, k: { value: 0 } }, vertexShader: v, depthTest: false, depthWrite: false,
+    fragmentShader: 'uniform sampler2D c, d; uniform float k; void main(){ gl_FragColor = k < .5 ? texture2D(c, vec2(.5)) : vec4(texture2D(d, vec2(.5)).x); }' }));
+  const out = new THREE.WebGLRenderTarget(4, 4), px = new Uint8Array(4), was = renderer.getRenderTarget();
+  const reads = (k, rt, want) => { const u = read.material.uniforms; u.c.value = rt.texture; u.d.value = rt.depthTexture; u.k.value = k;
+    renderer.setRenderTarget(out); read.render(renderer); px.fill(0); renderer.readRenderTargetPixels(out, 1, 1, 1, 1, px); return want.every((w, i) => Math.abs(px[i] - w) <= 3); };
+  const found = [];
+  for (const [type, samples] of [[THREE.HalfFloatType, 4], [THREE.HalfFloatType, 0], [THREE.UnsignedByteType, 4], [THREE.UnsignedByteType, 0]]) {
+    const rt = new THREE.WebGLRenderTarget(4, 4, { type, samples, depthTexture: new THREE.DepthTexture(4, 4, THREE.FloatType) });
+    try { renderer.setRenderTarget(rt); draw.render(renderer);
+      const colour = reads(0, rt, [64, 128, 191, 255]); if (colour) found.push({ type, samples, half: type === THREE.HalfFloatType, depth: reads(1, rt, [128, 128, 128]) }); }
+    catch { /* (this kind: not drawable here) */ }
+    rt.depthTexture.dispose(); rt.dispose();
+    if (found.length && found[found.length - 1].depth) break;
+  }
+  renderer.setRenderTarget(was); out.dispose(); for (const q of [draw, read]) { q.material.dispose(); q.dispose(); }
+  return found.find(f => f.depth) || found[0] || null;
 }

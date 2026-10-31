@@ -5,7 +5,7 @@
 // Content-Length when the body arrives as sent. A host that gzips gives the packed size while the body arrives unpacked: such a
 // file weighs its Content-Length and counts when it is done. The bar never moves back, and reaches the end only when all are in.
 // A bundle's file over a host's size limit comes in parts (tools/web.py), joined here: the page gets it whole.
-import { LANGS, pick, words } from '../site/i18n.js';
+import { LANGS, pick, words, cityPage } from '../site/i18n.js';
 
 const QS = new URLSearchParams(location.search);
 const lang = LANGS.some(([k]) => k === QS.get('lang')) ? QS.get('lang') : pick(navigator.languages);
@@ -107,4 +107,26 @@ function fail(what) {
   if (!live || over) return;
   over = true; box.classList.remove('wait'); box.classList.add('failed');
   $('ld-what').textContent = W.fmt('loadFail', { what }); $('ld-pct').textContent = ''; $('ld-retry').hidden = false;
+}
+// the film cannot be drawn here (i18n gpuNone, gpuWeak, gpuLost): what is missing, what to do (another browser, a computer) and
+// the film's page, never a black page; at any time, the loading screen gone or not. detail: the technical cause, small.
+// -> false on a page without the loading screen (renders and checks stop on the error instead)
+export function unable(key, detail = '') {
+  if (!live) return false;
+  over = true; box.hidden = false; box.classList.remove('wait', 'gone'); box.classList.add('failed', 'unable');
+  $('ld-what').textContent = W.t(key); $('ld-pct').textContent = '';
+  $('ld-tip').textContent = W.t('gpuTry'); $('ld-tip').hidden = false;
+  $('ld-why').textContent = detail; $('ld-why').hidden = !detail;
+  const film = $('ld-film'); film.textContent = W.t('gpuFilm'); film.href = cityPage(lang, QS.get('city') || '', document.documentElement.dataset.city); film.hidden = false;
+  $('ld-retry').hidden = false;
+  return true;
+}
+// can this browser draw the film at all? Asked before anything is downloaded: a WebGL 2 context. What its graphics can draw
+// into and link is tried once the scene is made (engine/studio.js gpu)
+export function drawable() {
+  if (!live) return true;
+  let g = null; try { g = document.createElement('canvas').getContext('webgl2'); } catch { /* none */ }
+  if (!g) { unable('gpuNone', 'WebGL 2'); return false; }
+  g.getExtension('WEBGL_lose_context')?.loseContext();   // (the page's own context comes next: phones allow few at once)
+  return true;
 }
