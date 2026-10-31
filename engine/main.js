@@ -638,7 +638,7 @@ window.render = (FILM.footage || []).length ? async t => {
 window.TEXTS = async t => { await window.render(t); return OV.texts(); };
 window.DRAWN = () => OV.drawn();   // every text of the frame TEXTS last drew (tools/readcheck.mjs: texts over texts)
 // tools/camcheck.mjs: the camera at time t without drawing (position, target, near plane, distance)
-window.CAMAT = t => { setCamera(t); return { p: camera.position.toArray(), tg: tgt.toArray(), near: camera.near, d: camDist, fov: camera.fov }; };
+window.CAMAT = t => { LV = liveAt(t); setCamera(t); return { p: camera.position.toArray(), tg: tgt.toArray(), near: camera.near, d: camDist, fov: camera.fov }; };   // (the camera render(t) sets, a living moment's shot included, whatever was drawn last)
 
 // the film's fonts (FILM.fonts: the faces compile found in fonts/ for each job), all loaded before the first frame
 if (!FREE) {
