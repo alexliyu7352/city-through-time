@@ -20,7 +20,7 @@ const SUBTOP = H - 145;   // the subtitle strip starts here: pins and labels kee
 // size: the layer's size in its own pixels, the film's 1920 x 1080 picture unless a page that fills its window (engine/view.js's
 // public mode) draws its pins on a layer of the window's size
 export function makeOverlay(canvas, size = { w: W, h: H }) {
-  const g = canvas.getContext('2d'), LW = size.w, LH = size.h, LSUB = LH - 145;   // (LSUB: SUBTOP on this layer)
+  const g = canvas.getContext('2d'), LW = size.w, LH = size.h, LSUB = LH - (size.bottom ?? 145), LTOP = size.top ?? 128;   // (LSUB: SUBTOP on this layer; size.top, .bottom: a page's own bars instead of the film's timeline and subtitles)
   let TX = [], DRAWN = [];   // DRAWN: every text drawn opaque, named or not, its letters' band (tools/readcheck.mjs: texts over texts)
   const begin = () => { g.clearRect(0, 0, LW, LH); TX = []; DRAWN = []; };
   function txt(id, s, x, y, k, px, col, a = 1, o = {}) {
@@ -106,7 +106,7 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
   // the edge of a small dark box with the name (and a second line). The pole's length and the side of the box are laid out
   // by compile (pipeline/tags.py: tags clear of each other and of the subtitles, readout and locator). a: alpha; grow: 0..1
   // how far the pole has drawn. Returns where its box is drawn ({ x, y, w, h }: a page that makes it a link puts the link there)
-  const TAG = { a: ['zh_strong', 20], b: ['en_strong', 14], pad: 11, top: 128 };
+  const TAG = { a: ['zh_strong', 20], b: ['en_strong', 14], pad: 11, top: LTOP };
   function tag(x, y, o, a, grow = 1) {
     const boxH = o.sub ? 50 : 32, col = o.col || '#ffffff';
     let L = (o.len || 160), yTop = y - L - boxH;

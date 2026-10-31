@@ -1,6 +1,7 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><title>一城春秋 · A City Through Time</title>
-<style>html,body{margin:0;background:#050607;overflow:hidden}#stage,#ov{position:absolute;left:0;top:0}canvas{display:block}
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>一城春秋 · A City Through Time</title>
+<style>html,body{margin:0;background:#050607;overflow:hidden}#stage,#ov{position:fixed;left:0;top:0}canvas{display:block}
 /* the loading screen (?play; engine/load.js): what is loading, how far, and why it stopped */
 .load{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:#050607;color:oklch(0.955 0.006 85);
   font:14px/1.5 system-ui,-apple-system,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;transition:opacity .6s cubic-bezier(.22,1,.36,1)}
@@ -15,7 +16,12 @@
 @keyframes ld-wait{from{translate:-100% 0}to{translate:360% 0}}
 .failed .ld-track{display:none}.failed .ld-line{color:oklch(0.955 0.006 85)}
 #ld-retry{margin-top:18px;min-height:44px;padding:0 22px;border:1px solid oklch(0.955 0.006 85 / .3);border-radius:999px;background:none;color:inherit;font:inherit;cursor:pointer}
-#ld-retry:hover{border-color:oklch(0.955 0.006 85 / .6)}#ld-retry:focus-visible{outline:2px solid oklch(0.865 0.115 80);outline-offset:3px}
+#ld-retry:hover{border-color:oklch(0.955 0.006 85 / .6)}#ld-retry:focus-visible,#ld-film:focus-visible{outline:2px solid oklch(0.865 0.115 80);outline-offset:3px}
+/* the film cannot be drawn here (engine/load.js unable): what is missing, what to do, the film's page */
+.unable{z-index:30}.unable .ld{width:min(440px,86vw)}
+.ld-tip{margin:10px 0 0;color:oklch(0.955 0.006 85 / .72)}.ld-why{margin:10px 0 0;font:12px/1.4 ui-monospace,monospace;color:oklch(0.955 0.006 85 / .45);overflow-wrap:anywhere}
+.ld-acts{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px}
+#ld-film{display:inline-flex;align-items:center;margin-top:18px;min-height:44px;color:oklch(0.865 0.115 80);text-underline-offset:4px}#ld-film[hidden]{display:none}
 @media (prefers-reduced-motion:reduce){.load,.ld-track i{transition:none}.wait .ld-track i{animation:none;width:100%;opacity:.25}}
 </style>
 <script>
@@ -28,7 +34,8 @@
 </head><body><div id="stage"></div><canvas id="ov" width="1920" height="1080"></canvas>
 <div class="load wait" id="load" hidden>
   <div class="ld"><p class="ld-brand">一城春秋 · A City Through Time</p><div class="ld-track"><i id="ld-bar"></i></div>
-  <p class="ld-line"><span id="ld-what" role="status"></span><span id="ld-pct"></span></p><button id="ld-retry" type="button" hidden></button></div>
+  <p class="ld-line"><span id="ld-what" role="status"></span><span id="ld-pct"></span></p><p class="ld-tip" id="ld-tip" hidden></p><p class="ld-why" id="ld-why" hidden></p>
+  <div class="ld-acts"><button id="ld-retry" type="button" hidden></button><a id="ld-film" hidden></a></div></div>
 </div>
 <script>{ const q = new URLSearchParams(location.search); if (q.has('play') || q.has('free')) document.getElementById('load').hidden = false; }</script>
 <script type="module" src="engine/load.js"></script>

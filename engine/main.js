@@ -2,9 +2,10 @@
 // render(t) is a pure function of t: camera from keys, projection state from the film's timeline, numbers from stats.json.
 import * as THREE from 'three';
 import { clamp, lerp, seg, ss, eio, eo, ei, track } from './lib.js';
-import { makeStudio, NMAX, EMAX } from './studio.js';
+import { makeStudio } from './studio.js';
 import { makeOverlay, W, H, SUB, font, setFonts, setUI, REPO } from './overlay.js';
 import * as L from './load.js';
+import { phone, touch as TOUCH, FULL as FULLICON } from './phone.js';
 import { moments as eraMoments, whole as standsWhole } from './eralife.js';
 
 const QS = new URLSearchParams(location.search);
@@ -18,6 +19,7 @@ const newImage = () => Object.assign(new Image(), { crossOrigin: 'anonymous' });
 // every file is asked for at once (engine/load.js counts them for the loading screen, and none waits for the one before); a
 // bundle's bundle.json (tools/web.py) gives their sizes
 const PLAY = QS.has('play');
+if (!L.drawable()) await new Promise(() => {});   // (no WebGL 2 here: the loading screen says so, and nothing is downloaded)
 // the viewer's public mode (?view&free, engine/view.js) takes only what a period hall needs, so a phone can open it: the plate and its
 // relief (build/museum/plate.json, the model less today's buildings, tools/museum.py; the whole model where there is none), and each
 // hall's period cities when it is chosen (startView loadEra); not today's city, the lines, decals, plates, footage, pictures, fonts or sound
@@ -61,7 +63,21 @@ const yearAs = (y, tick) => { const Y = FILM.years; if (!Y) return null; const r
 if (FILM.bar) for (const tk of FILM.bar.ticks) tk.yearLabel = yearAs(tk.year, true) ?? (FILM.yearFmt === 'en' ? (tk.year < 0 ? `${-tk.year} BCE` : `${tk.year}`) : (tk.year < 0 ? `前${-tk.year}` : `${tk.year}`));
 
 const LOW = QS.get('quality') === 'low' || QS.has('play') || (QS.has('free') && matchMedia('(pointer: coarse)').matches);   // (the viewer's public mode on a phone: no period-city shadows)
-const S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps });   // (pools and grounds past the engine's 32 slots: compile basinSlots)
+// what this film uses of the engine's slots: where the graphics cannot link the full shaders (a phone's), they are sized to it (studio.js)
+const most = list => Math.max(0, ...list);
+const FIT = { basins: most((FILM.eras || []).flatMap(e => (e.basins || []).map(b => b.k + 1))), losses: most((FILM.eras || []).map(e => (e.losses || []).length)),
+  epochs: most((FILM.epochs || []).map(e => e.i + 1)), grounds: (FILM.eras || []).filter(e => e.ground).length, bands: (FILM.bands || []).length,
+  yl: FILM.grow && FILM.grow.yl ? FILM.grow.yl.length : 0, decals: most((FILM.decals || []).map(d => d.i + 1)), living: !FREE && (FILM.living || []).length > 0 };
+let S;
+try { S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps, fit: FIT }); }   // (pools and grounds past the engine's 32 slots: compile basinSlots)
+catch (e) { if (L.unable('gpuNone', e.message)) await new Promise(() => {}); throw e; }   // (no WebGL context after all)
+// what the graphics could not do, said on the page instead of a black city (live pages; renders and checks stop on the error)
+const GPU = S.gpu, gpuNote = () => `${GPU.path}; ${GPU.targets ? `${GPU.targets.half ? 'half-float' : '8-bit'}, ${GPU.targets.samples}x, depth ${GPU.targets.depth}` : 'no target'}; ${JSON.stringify(GPU.limits || {})}`;
+console.info('studio: graphics ' + gpuNote());
+if (QS.has('gpu')) document.body.append(Object.assign(document.createElement('pre'), { textContent: 'gpu: ' + gpuNote(), style: 'position:fixed;left:8px;top:8px;z-index:40;margin:0;padding:4px 6px;font:11px/1.3 ui-monospace,monospace;color:#cfd6df;background:#000a;white-space:pre-wrap;max-width:90vw' }));
+if (GPU.fail) { if (L.unable('gpuWeak', `${GPU.fail}: ${GPU.fails[0] || ''} (${gpuNote()})`)) await new Promise(() => {}); throw new Error('graphics: ' + GPU.fail + ' ' + (GPU.fails[0] || '')); }
+GPU.onFail = e => L.unable('gpuWeak', e);
+S.renderer.domElement.addEventListener('webglcontextlost', () => L.unable('gpuLost'));
 const { U, camera, post, renderer, house, hemi, scene } = S;
 const TL = new THREE.TextureLoader();
 const decalTex = FREE ? [] : await Promise.all((FILM.decals || []).map(d => tex(B + d.file)));
@@ -327,7 +343,7 @@ function setLayers(t) {
   { let sk = 0, sp = null;   // spot (film.spots): the light falls on one subject, the rest of the room goes dark
     for (const q of FILM.spots || []) { const a = ss(seg(t, q.t0, q.t0 + q.fade)) * (1 - ss(seg(t, q.t1 - q.fade, q.t1))); if (a > sk) { sk = a; sp = q; } }
     U.uSpotK.value = sp ? lerp(1, sp.k, sk) : 1; U.uSpotB.value = sp ? lerp(1, sp.b, sk) : 1; if (sp) { U.uSpotC.value.set(sp.c[0], sp.c[1]); U.uSpotR.value = sp.r; } }
-  for (let i = 0; i < EMAX; i++) { U.uEpA.value[i] = 0; U.uEpY0.value[i] = 1e9; U.uEpY1.value[i] = -1e9; U.uEpB.value[i] = 0; U.uEpR.value[i] = 9; U.uEpW.value[i] = 1; }
+  for (let i = 0; i < U.uEpA.value.length; i++) { U.uEpA.value[i] = 0; U.uEpY0.value[i] = 1e9; U.uEpY1.value[i] = -1e9; U.uEpB.value[i] = 0; U.uEpR.value[i] = 9; U.uEpW.value[i] = 1; }
   for (const e of FILM.epochs || []) {   // (masks that share a channel never overlap in time: the one showing sets it)
     const fl = (e.flash || []).reduce((m, tf) => Math.max(m, Math.exp(-(((t - tf) / .45) ** 2))), 0);   // an area flares as it is named
     const a = epochAlpha(t, e) * (e.gain ?? 1) * (e.dimAt != null && t > e.dimAt ? lerp(1, e.dimTo ?? .5, ss(seg(t, e.dimAt, e.dimAt + .8))) : 1) * (1 + 1.4 * fl);
@@ -648,8 +664,7 @@ if (QS.has('view')) {
     names: M.labels ? { city: M.name, halls: M.labels } : null, loadEra: e => ERALOAD[e.id] ||= loadEra(e),   // (each period city once)
     setDist: (d, el) => { camDist = d; camElev = el; },
     quiet: () => {   // what setLayers lays at a moment of the film that is not the period cities: off
-      for (let i = 0; i < EMAX; i++) U.uEpA.value[i] = 0;
-      for (let i = 0; i < 4; i++) U.uDA.value[i] = 0;
+      U.uEpA.value.fill(0); U.uDA.value.fill(0);
       for (let i = 0; i < U.uHideT.value.length; i++) { U.uRiseA.value[i] = 0; U.uHideFA.value[i] = 0; U.uEdgeA.value[i] = 0; U.uHideT.value[i] = -1; U.uHideFR.value[i] = -1; U.uHideFI.value[i] = 0; U.uHideFW.value[i] = -1; }
       U.uPhotoA.value = 0; U.uRingN.value = 0; U.uPulse.value = 0; U.uShockA.value = 0; U.uNodeFront.value = 0; U.uNodeR.value = 99;
       U.uNodeA.value = U.uNodeA0.value = 0; U.uPickOn.value = 0; U.uHgtOn.value = 0; U.uResetR.value = -1; U.uResetY.value = 0;
@@ -661,6 +676,22 @@ if (QS.has('view')) {
 window.READY = true;
 if (!PLAY) L.done();
 
+// the transport bar on a touch screen (over its inline desktop style)
+const TPCSS = `.tp{height:auto!important;flex-wrap:wrap;gap:2px 14px!important;padding:2px max(12px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))!important;
+  background:linear-gradient(rgba(10,11,14,0),rgba(10,11,14,.82) 30%)!important;font-size:13px!important;transition:opacity .3s,transform .3s;-webkit-tap-highlight-color:transparent}
+  .tp.tp-hide{opacity:0;transform:translateY(10px);pointer-events:none}.tp-marks{transition:opacity .3s}.tp-marks.tp-hide{opacity:0}
+  .tp #sc{order:-1;flex:1 1 100%!important;height:36px;margin:0;-webkit-appearance:none;appearance:none;background:none;touch-action:none}
+  .tp #sc::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,#ffd27a var(--p,0%),rgba(232,236,242,.3) var(--p,0%))}
+  .tp #sc::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(90deg,#ffd27a var(--p,0%),rgba(232,236,242,.3) var(--p,0%))}
+  .tp #sc::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-9px;border:0;border-radius:50%;background:#f4f1ea;box-shadow:0 1px 4px #0008}
+  .tp #sc::-moz-range-thumb{width:22px;height:22px;border:0;border-radius:50%;background:#f4f1ea}
+  .tp #pp,.tp .tp-full{width:48px!important;height:44px!important;font-size:17px;touch-action:manipulation}.tp #fps{display:none}
+  .tp #tm{min-width:0!important;font-variant-numeric:tabular-nums}.tp #yr{min-width:0!important;margin-right:auto}
+  .tp a{display:inline-flex;align-items:center;min-height:44px}
+  .tp .tp-full{display:grid;place-items:center;padding:0;background:#1e222a;color:#fff;border:1px solid #444;border-radius:4px;cursor:pointer}.tp .tp-full svg{width:20px;height:20px}
+  .tp a:last-of-type{order:9}
+  @media (max-width:520px){.tp{column-gap:10px!important}.tp #yr{display:none}.tp #walk{margin-left:auto}.tp a:last-of-type{flex-basis:100%;min-height:28px;justify-content:center}}`;
+
 // ------------------------------------------------------------------ live preview: ?play=1 (a transport bar; space = play/pause, arrows = step, M = narration on/off, B = music on/off, N = sound effects on/off)
 if (PLAY) {
   const bar = document.createElement('div');
@@ -671,18 +702,25 @@ if (PLAY) {
     <a id="walk" target="_blank" rel="noopener" style="color:#c9d2de;white-space:nowrap;text-underline-offset:4px"></a>
     <a href="${REPO}" target="_blank" rel="noopener" style="color:#c9d2de;text-decoration:none;white-space:nowrap">一城春秋 · A City Through Time</a>`;   // (LICENSE, condition 2c)
   document.body.appendChild(bar);
-  // fit the 1920x1080 picture above the bar, whatever the window size
-  const fit = () => { const k = Math.min(innerWidth / W, (innerHeight - 56) / H); for (const id of ['stage', 'ov']) { const el = document.getElementById(id); el.style.transformOrigin = 'top left'; el.style.transform = `scale(${k})`; } };
+  // on a touch screen (engine/phone.js) the bar is for a thumb: the scrubber a row of its own, targets a finger wide, clear of a
+  // notch; it lies over the picture, which fills the screen, and goes while the film plays (a tap on the picture brings it back)
+  if (TOUCH) { bar.classList.add('tp'); document.head.appendChild(Object.assign(document.createElement('style'), { textContent: TPCSS })); }
+  // fit the 1920x1080 picture above the bar, whatever the window size (a touch screen: the whole screen, centred)
+  const fit = () => { const k = Math.min(innerWidth / W, (innerHeight - (TOUCH ? 0 : 56)) / H), x = TOUCH ? (innerWidth - W * k) / 2 : 0, y = TOUCH ? (innerHeight - H * k) / 2 : 0;
+    for (const id of ['stage', 'ov']) { const el = document.getElementById(id); el.style.transformOrigin = 'top left'; el.style.transform = TOUCH ? `translate(${x}px, ${y}px) scale(${k})` : `scale(${k})`; } };
   fit(); window.addEventListener('resize', fit);
   const sc = bar.querySelector('#sc'), pp = bar.querySelector('#pp'), tm = bar.querySelector('#tm'), yr = bar.querySelector('#yr'), fpsEl = bar.querySelector('#fps');
   // markers under the scrubber: every cue and the light events
   const marks = document.createElement('div'); marks.style.cssText = 'position:fixed;bottom:50px;height:6px;pointer-events:none;z-index:9';
-  const under = () => { const r = sc.getBoundingClientRect(); marks.style.left = r.left + 'px'; marks.style.width = r.width + 'px'; };   // (the scrubber's own span, whatever else the bar holds)
+  const under = () => { const r = sc.getBoundingClientRect(); marks.style.left = r.left + 'px'; marks.style.width = r.width + 'px';   // (the scrubber's own span, whatever else the bar holds)
+    if (TOUCH) { marks.className = 'tp-marks'; marks.style.bottom = 'auto'; marks.style.top = r.top + r.height / 2 + 6 + 'px'; } };   // (a touch bar: under its track)
   for (const c of FILM.cues || []) { const m = document.createElement('i'); m.style.cssText = `position:absolute;left:${c.t0 / DUR * 100}%;width:2px;height:6px;background:#ffd27a`; marks.appendChild(m); }
   for (const t of [LT.lightsOut, LT.lamp, LT.lights, FILM.end.t]) { const m = document.createElement('i'); m.style.cssText = `position:absolute;left:${t / DUR * 100}%;width:2px;height:6px;background:#6fdcff`; marks.appendChild(m); }
   document.body.appendChild(marks); under(); window.addEventListener('resize', under);
+  if (TOUCH) new ResizeObserver(under).observe(bar);   // (a touch bar wraps: its track moves as it gains a row)
   let cur = QS.has('t') ? +QS.get('t') : 0, playing = false, t0 = 0, c0 = 0, frames = 0, ft = performance.now();
-  const show = () => { sc.value = cur; tm.textContent = `${cur.toFixed(2)} s / ${DUR}`; yr.textContent = fmtYear(yearAt(cur)); };
+  const mmss = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  const show = () => { sc.value = cur; tm.textContent = TOUCH ? `${mmss(cur)} / ${mmss(DUR)}` : `${cur.toFixed(2)} s / ${DUR}`; yr.textContent = fmtYear(yearAt(cur)); if (TOUCH) sc.style.setProperty('--p', cur / DUR * 100 + '%'); };
   // the old city to walk round (engine/view.js), at the latest period the film has come to; the site's language and bundle kept
   const { words, pick } = await import('../site/i18n.js'), lang = QS.get('lang') || pick(navigator.languages), walk = bar.querySelector('#walk');
   walk.textContent = words(lang).t('museumWalk');
@@ -691,6 +729,23 @@ if (PLAY) {
     walk.href = `?city=${encodeURIComponent(CITY)}&view&free${e ? '&era=' + e.id : ''}&lang=${lang}${QS.get('bundle') ? '&bundle=' + encodeURIComponent(QS.get('bundle')) : ''}`;
   };
   walkTo(); walk.onpointerdown = walk.onfocus = walkTo;
+  // a touch screen: full screen and sideways on the start button's tap (engine/phone.js), a full-screen button in the bar, the bar
+  // gone while playing and back on a tap; a phone turned upright pauses
+  const PH = phone({ words: words(lang), start: true, onUpright: () => { if (playing) toggle(); } });
+  let idle = 0;
+  const wake = () => { bar.classList.remove('tp-hide'); marks.classList.remove('tp-hide'); clearTimeout(idle);
+    if (PH && playing) idle = setTimeout(() => { if (playing) { bar.classList.add('tp-hide'); marks.classList.add('tp-hide'); } }, 3000); };
+  if (PH) {
+    if (PH.fullscreen) {
+      const fb = Object.assign(document.createElement('button'), { type: 'button', className: 'tp-full', innerHTML: FULLICON });
+      const label = () => fb.setAttribute('aria-label', words(lang).t(PH.isFull() ? 'fullExit' : 'walkFull'));
+      fb.onclick = () => PH.full(!PH.isFull()); label(); document.addEventListener('fullscreenchange', label); document.addEventListener('webkitfullscreenchange', label);
+      pp.after(fb);
+    }
+    PH.start(words(lang).t(PH.fullscreen ? 'startFull' : 'startPlay'), () => { if (!playing) toggle(); });
+    bar.addEventListener('pointerdown', wake);
+    addEventListener('pointerup', e => { if (e.target.closest('.tp, .ph-start, .ph-turn, .load')) return; if (bar.classList.contains('tp-hide')) wake(); else if (playing) { clearTimeout(idle); bar.classList.add('tp-hide'); marks.classList.add('tp-hide'); } });
+  }
   // the narration and the score (compile: film.voice, every voiced line laid at its time; film.score, the music laid by node and
   // dipped under the voice): each loaded whole (the preview server answers no range requests: seeking in a file still loading cut
   // the start of lines and clicked), heard while playing, kept in step by speed within half a second (a seek while playing drops
@@ -727,12 +782,12 @@ if (PLAY) {
     cur = Math.min(DUR, c0 + (performance.now() - t0) / 1000);
     if (!busy) { busy = true; Promise.resolve(window.render(cur)).finally(() => { busy = false; }); show(); }
     if (++frames % 12 === 0) { const n = performance.now(); fpsEl.textContent = `${(12000 / (n - ft)).toFixed(0)} fps`; ft = n; voSync(); }
-    if (cur >= DUR) { playing = PLAYING = false; pp.textContent = '▶'; voSync(); afterOn(true); return; }
+    if (cur >= DUR) { playing = PLAYING = false; pp.textContent = '▶'; voSync(); afterOn(true); wake(); return; }
     requestAnimationFrame(loop);
   };
-  const toggle = () => { afterOn(false); playing = !playing; PLAYING = playing; pp.textContent = playing ? '❚❚' : '▶'; if (playing) { if (cur >= DUR) cur = 0; t0 = performance.now(); c0 = cur; voSync(); requestAnimationFrame(loop); } else draw(); };
+  const toggle = () => { afterOn(false); playing = !playing; PLAYING = playing; pp.textContent = playing ? '❚❚' : '▶'; if (playing) { if (cur >= DUR) cur = 0; t0 = performance.now(); c0 = cur; voSync(); requestAnimationFrame(loop); } else draw(); wake(); };
   pp.onclick = toggle;
-  sc.oninput = () => { afterOn(false); playing = PLAYING = false; pp.textContent = '▶'; cur = +sc.value; draw(); };
+  sc.oninput = () => { afterOn(false); playing = PLAYING = false; pp.textContent = '▶'; cur = +sc.value; draw(); wake(); };
   window.addEventListener('keydown', e => {
     if (e.code === 'Space') { e.preventDefault(); toggle(); }
     for (const t of tracks) if (e.code === t.key) { t.a.muted = !t.a.muted; if (t.key === 'KeyB' && after) after.muted = t.a.muted; }
