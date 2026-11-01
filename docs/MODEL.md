@@ -277,11 +277,12 @@ at most three in a film (the water map holds three besides today's; join the per
 way to the period's, outside it today's stays. Draw the stretch round today's channel and the land between it and the old one, so a tributary ends at the old river,
 and let the old course run into today's where the stretch ends; compile warns where today's water crosses the stretch's edge and the old water does not meet it
 (a river ending in mid-plate). A state comes in as its node begins, `at:` seconds into it, or as a route of that node draws (`with: <route>`), over `move`
-seconds (3), and goes as the next one comes; today's buildings standing in its water step aside meanwhile. **Let the audience see the river move:** a fade between
-two bands kilometres apart, at a moment the camera looks elsewhere, goes unseen. Give each state its course (a `kind: course` LineString with `width_m`, one
-a state, and one for today's with `state: today`): a change between two courses is the river sliding from the one to the other. Stage it where the camera holds
-that reach, with a route that says what moved and how far, the first time the river is somewhere else. `glimpse: {with: <route>, course: <state or today>}`
-slides the river to another course and back while that route shows: a look ahead (where it will run) while the film's own time stays. A course known to a few hundred metres is drawn where the sources put it and labelled schematic on screen, as a draped pool is; its
+seconds (3), and goes as the next one comes; today's buildings standing in its water step aside meanwhile. A change runs down the river as a front, as a line
+is drawn: upstream of it the new state's water, below it the old one's, so the new course fills from upstream while the old one runs dry behind it (downstream
+is the lower end of the stretches the change touches; `flow: [[lon, lat], [lon, lat]]`, upstream first, where the plate is too flat to say). A river moved
+sideways as a whole looks like no river ever did, and a fade between two channels kilometres apart, while the camera looks elsewhere, goes unseen. **Stage it**
+where the camera holds that reach, with a route that says what moved and how far, the first time the river is somewhere else. `glimpse: {with: <route>, to:
+<state, or today>}` runs that water down the river and back while the route shows: a look ahead (where it will run) while the film's own time stays. A course known to a few hundred metres is drawn where the sources put it and labelled schematic on screen, as a draped pool is; its
 basis (the sources, the anchors it was placed by, how far it is uncertain) goes in the research note its file comes from. Houses are checked against the water
 shown while they stand: compile warns of any whose centre is on it, today's or the period's.
 **Today's buildings stand on the lowest ground under them:** `prep.py` puts each building's base on the lowest point of the plate under its footprint (the plate as the engine draws it, `terrainio.plate_mesh`)

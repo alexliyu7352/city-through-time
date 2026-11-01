@@ -2247,7 +2247,7 @@ _nd_of, _rt_of = {n['id']: n for n in FM['nodes']}, {r['id']: r for r in routes_
 def _wt_when(sid, w):   # a change happens as a route of its node draws (with:), or at seconds into its node (at:) over move: (start, seconds)
     if w.get('with'):
         if w['with'] not in _rt_of: raise SystemExit(f"compile: water_then {sid}: with: {w['with']!r} is not a route")
-        return _rt_of[w['with']]['on'], _rt_of[w['with']]['draw']
+        return _rt_of[w['with']]['on'], float(w.get('move', _rt_of[w['with']]['draw']))
     if w.get('from') not in _nd_of: raise SystemExit(f"compile: water_then {sid}: no node {w.get('from')!r}")
     return node_time(_nd_of[w['from']], w.get('at', 0)), float(w.get('move', 3.0))
 _on = [_wt_when(w_.get('id', f'water_then_{i_}'), w_) for i_, w_ in enumerate(WT_)]
@@ -2267,78 +2267,49 @@ for i_, w_ in enumerate(WT_):
             WARN.append(f'water_then {sid_}: today\'s water crosses the stretch\'s edge near {lo_:.5f}, {la_:.5f} and the water as it was does not meet it there: '
                         f'the river ends in mid-plate; reach the period\'s water to it, or draw the stretch round that water')
     WT_STATES.append({'id': sid_, 'on': round(on_, 3), 'move': round(mv_, 3), 'off': round(off_, 3), 'fade': float(w_.get('fade', 3.0)), 'c': len(WT_STATES),
-                      '_shown': _TODAY_U.difference(SU_).union(WU_), '_draw': (st_, wa_), '_w': w_})
+                      '_shown': _TODAY_U.difference(SU_).union(WU_), '_draw': (st_, wa_), '_w': w_, '_su': SU_})
     print(f"  water as it was: {sid_}, {on_:.1f}-{off_:.1f} s, {WU_.area / 1e6:.1f} km² of water in a {SU_.area / 1e6:.1f} km² stretch")
-# a river's course (a line with its width, kind: course, state: <id>, or today for today's): where two states both have one, the
-# change between them is the river sliding from the one to the other, not one river fading into another; a glimpse (glimpse:
-# {with: <route>, course: <state or today>}) slides it to another course and back while that route shows (a look ahead)
-WT_COURSE, _rows = None, {}
-if WT_STATES:
-    _files = {f_ for w_ in WT_ for k_ in ('water', 'stretch') for f_ in ([w_.get(k_)] if isinstance(w_.get(k_), str) else [x_ for x_ in (w_.get(k_) or []) if isinstance(x_, str)])}
-    _lines = {}
-    for f_ in sorted(_files):
-        for ft_ in json.load(open(os.path.join(D, f_), encoding='utf-8'))['features']:
-            pr_ = ft_.get('properties') or {}
-            if pr_.get('kind') == 'course' and ft_['geometry']['type'] == 'LineString':
-                pts_ = [F.to_utm.transform(*p_) for p_ in ft_['geometry']['coordinates']]; wd_ = pr_.get('width_m', 300)
-                _lines[pr_.get('state')] = (pts_, wd_ if isinstance(wd_, list) else [wd_] * len(pts_))
-    if _lines:
-        import numpy as _np
-        ext_ = [(max(p_[0] for p_ in L_[0]) - min(p_[0] for p_ in L_[0]), max(p_[1] for p_ in L_[0]) - min(p_[1] for p_ in L_[0])) for L_ in _lines.values()]
-        AX_ = 0 if sum(e_[0] for e_ in ext_) >= sum(e_[1] for e_ in ext_) else 1   # (0: along the plate's width, the band across it in v)
-        NC_, bands_ = 1024, {}
-        for k_, (pts_, wd_) in _lines.items():
-            a_ = [p_[AX_] for p_ in pts_]
-            if not (all(x < y for x, y in zip(a_, a_[1:])) or all(x > y for x, y in zip(a_, a_[1:]))):
-                raise SystemExit(f"compile: water_then course {k_}: it turns back on itself along the plate's {'width' if AX_ == 0 else 'depth'}; a course crosses the plate one way (a line per river reach)")
-            xs_, ys_ = _np.array([p_[0] for p_ in pts_]), _np.array([p_[1] for p_ in pts_]); ws_ = _np.array(wd_, float)
-            dx_, dy_ = _np.gradient(xs_), _np.gradient(ys_); n_ = _np.hypot(dx_, dy_); nx_, ny_ = -dy_ / n_, dx_ / n_
-            bands_[k_] = _sh.make_valid(_sh.Polygon(list(zip(xs_ + nx_ * ws_ / 2, ys_ + ny_ * ws_ / 2)) + list(zip(xs_ - nx_ * ws_ / 2, ys_ - ny_ * ws_ / 2))[::-1]))
-        span_ = (F.x0, F.x1) if AX_ == 0 else (F.y1, F.y0); across_ = (F.y0, F.y1) if AX_ == 0 else (F.x0, F.x1)
-        cols_ = {}
-        for k_, g_ in bands_.items():   # each column: the band's middle and half its width, as fractions of the plate across
-            row_ = []
-            for c_ in range(NC_):
-                a_ = span_[0] + (c_ + .5) / NC_ * (span_[1] - span_[0])
-                cut_ = g_.intersection(_sh.LineString([(a_, across_[0]), (a_, across_[1])] if AX_ == 0 else [(across_[0], a_), (across_[1], a_)]))
-                if cut_.is_empty: row_.append(None); continue
-                lo_, hi_ = (cut_.bounds[1], cut_.bounds[3]) if AX_ == 0 else (cut_.bounds[0], cut_.bounds[2])
-                v_ = (lambda y: (F.y1 - y) / (F.y1 - F.y0)) if AX_ == 0 else (lambda x: (x - F.x0) / (F.x1 - F.x0))
-                row_.append(((v_(lo_) + v_(hi_)) / 2, abs(v_(hi_) - v_(lo_)) / 2))
-            cols_[k_] = row_
-        HM_ = max(h_ for r_ in cols_.values() for q_ in r_ if q_ for h_ in [q_[1]]) * 1.02
-        img_ = Image.new('RGB', (NC_, len(cols_)))
-        for r_, (k_, row_) in enumerate(cols_.items()):
-            _rows[k_] = r_
-            for c_, q_ in enumerate(row_):
-                cv_ = int(round((q_[0] if q_ else 0) * 65535)) if q_ else 0
-                img_.putpixel((c_, r_), (cv_ >> 8, cv_ & 255, int(round(q_[1] / HM_ * 255)) if q_ else 0))
-        img_.save(LAYOUT.data(D, 'water_course.png'))
-        WT_COURSE = {'file': 'data/water_course.png', 'n': NC_, 'rows': len(cols_), 'axis': AX_, 'hmax': round(HM_, 6)}
-        print(f"  courses of the water as it was: {', '.join(cols_)}")
-if not WT_COURSE and os.path.exists(LAYOUT.data(D, 'water_course.png')): os.remove(LAYOUT.data(D, 'water_course.png'))
-WT_EVENTS = []   # the changes: (t0, t1) the slide or fade from channel a to b (0 today's, 1.. the states), courses ra to rb (-1 none)
+# a change runs down the river as a front: upstream of it the water is the new state's, downstream the old one's, so the new
+# course fills from upstream while the old one runs dry behind the same front (as a river taking a new channel). Downstream is
+# where the plate is lower along the long side of the stretches the change touches (or flow: [[lon, lat] upstream, [lon, lat]])
+def _wt_front(sid, sus, flow):   # (direction in model x z, the front's start and end along it)
+    U_ = _sh.union_all(sus).intersection(_sh.box(F.x0, F.y0, F.x1, F.y1))
+    if flow: (ux_, uz_), (dx_, dz_) = F.model_lonlat(*flow[0]), F.model_lonlat(*flow[1])
+    else:
+        R_ = list(U_.minimum_rotated_rectangle.exterior.coords)[:4]
+        s0_, s1_ = (R_[0], R_[1]) if math.dist(R_[0], R_[1]) >= math.dist(R_[1], R_[2]) else (R_[1], R_[2])   # (the long side)
+        c_ = U_.minimum_rotated_rectangle.centroid; vx_, vy_ = s1_[0] - s0_[0], s1_[1] - s0_[1]
+        ends_ = [F.model(c_.x + k_ * .4 * vx_, c_.y + k_ * .4 * vy_) for k_ in (-1, 1)]
+        (ux_, uz_), (dx_, dz_) = sorted(ends_, key=lambda m_: -model_ground(*m_))   # (the higher end upstream)
+    L_ = math.hypot(dx_ - ux_, dz_ - uz_) or 1e-9; d_ = ((dx_ - ux_) / L_, (dz_ - uz_) / L_)
+    pr_ = [m_[0] * d_[0] + m_[1] * d_[1] for g_ in getattr(U_, 'geoms', [U_]) for m_ in (F.model(x, y) for x, y in g_.exterior.coords)]
+    e_ = 250 * F.scale
+    return [round(d_[0], 5), round(d_[1], 5)], [round(min(pr_) - 2 * e_, 5), round(max(pr_) + 2 * e_, 5)]
+WT_EVENTS = []   # the changes: (t0, t1) a front running down the river from channel a to b (0 today's, 1.. the states)
 for i_, s_ in enumerate(WT_STATES):
     prev_ = WT_STATES[i_ - 1] if i_ and abs(WT_STATES[i_ - 1]['off'] - s_['on']) < 1e-3 else None
-    pk_, nk_ = (prev_['id'] if prev_ else 'today'), s_['id']
-    WT_EVENTS.append({'t0': s_['on'], 't1': round(s_['on'] + s_['move'], 3), 'a': prev_['c'] + 1 if prev_ else 0, 'b': s_['c'] + 1, 'ra': _rows.get(pk_, -1), 'rb': _rows.get(nk_, -1)})
+    fl_ = s_['_w'].get('flow')
+    dir_, f_ = _wt_front(s_['id'], [s_['_su']] + ([prev_['_su']] if prev_ else []), fl_)
+    WT_EVENTS.append({'t0': s_['on'], 't1': round(s_['on'] + s_['move'], 3), 'a': prev_['c'] + 1 if prev_ else 0, 'b': s_['c'] + 1, 'dir': dir_, 'f': f_})
     nxt_ = WT_STATES[i_ + 1] if i_ + 1 < len(WT_STATES) else None
     if not (nxt_ and abs(nxt_['on'] - s_['off']) < 1e-3) and s_['off'] < DUR:
-        WT_EVENTS.append({'t0': s_['off'], 't1': round(s_['off'] + s_['fade'], 3), 'a': s_['c'] + 1, 'b': 0, 'ra': _rows.get(nk_, -1), 'rb': _rows.get('today', -1)})
+        dir_, f_ = _wt_front(s_['id'], [s_['_su']], fl_)
+        WT_EVENTS.append({'t0': s_['off'], 't1': round(s_['off'] + s_['fade'], 3), 'a': s_['c'] + 1, 'b': 0, 'dir': dir_, 'f': f_})
     g_ = s_['_w'].get('glimpse')
-    if g_:
+    if g_:   # a look ahead: the water of a later state (or today's) runs down the river and back while a route of the state's time shows
         r_ = _rt_of.get(g_.get('with'))
-        if r_ is None: raise SystemExit(f"compile: water_then {nk_}: glimpse with: {g_.get('with')!r} is not a route")
-        if _rows.get(nk_, -1) < 0 or _rows.get(g_.get('course', 'today'), -1) < 0: raise SystemExit(f"compile: water_then {nk_}: a glimpse slides the river from its course to another: both need a course")
-        back_ = float(g_.get('back', 1.5))
-        if not (s_['on'] + s_['move'] <= r_['on'] and r_['off'] <= s_['off']): raise SystemExit(f"compile: water_then {nk_}: its glimpse ({r_['on']:.1f}-{r_['off']:.1f} s) is not inside it")
-        WT_EVENTS.append({'t0': r_['on'], 't1': round(r_['on'] + r_['draw'], 3), 'back0': round(r_['off'] - back_, 3), 'back1': r_['off'], 'a': s_['c'] + 1, 'b': 0,
-                          'ra': _rows[nk_], 'rb': _rows[g_.get('course', 'today')]})
-for e_ in WT_EVENTS: e_['slide'] = e_['ra'] >= 0 and e_['rb'] >= 0
+        if r_ is None: raise SystemExit(f"compile: water_then {s_['id']}: glimpse with: {g_.get('with')!r} is not a route")
+        to_ = next((q_ for q_ in WT_STATES if q_['id'] == g_.get('to', 'today')), None)
+        if g_.get('to', 'today') != 'today' and to_ is None: raise SystemExit(f"compile: water_then {s_['id']}: glimpse to: {g_['to']!r} is not a state")
+        if not (s_['on'] + s_['move'] <= r_['on'] and r_['off'] <= s_['off']): raise SystemExit(f"compile: water_then {s_['id']}: its glimpse ({r_['on']:.1f}-{r_['off']:.1f} s) is not inside it")
+        dir_, f_ = _wt_front(s_['id'], [s_['_su']] + ([to_['_su']] if to_ else []), fl_)
+        WT_EVENTS.append({'t0': r_['on'], 't1': round(r_['on'] + r_['draw'], 3), 'back0': round(r_['off'] - float(g_.get('back', 1.5)), 3), 'back1': r_['off'],
+                          'a': s_['c'] + 1, 'b': to_['c'] + 1 if to_ else 0, 'dir': dir_, 'f': f_})
+WT_EDGE = round(250 * F.scale, 6)
 if WT_STATES:
     R_ = Image.open(LAYOUT.data(D, 'water.png')).convert('L'); ch_ = [R_] * 4; MW_, MH_ = R_.size
     for s_ in WT_STATES:
-        st_, wa_ = s_.pop('_draw'); s_.pop('_w'); m_ = osmgeo.mask(_TODAY, F, R_.size); dr_ = ImageDraw.Draw(m_)
+        st_, wa_ = s_.pop('_draw'); s_.pop('_w'); s_.pop('_su'); m_ = osmgeo.mask(_TODAY, F, R_.size); dr_ = ImageDraw.Draw(m_)
         for g_ in st_:   # today's water cleared in the stretch (but in a hole of it), the period's drawn in
             dr_.polygon([(F.uv(x, y)[0] * MW_, F.uv(x, y)[1] * MH_) for x, y in g_.exterior.coords], fill=0)
             for h_ in g_.interiors:
@@ -2378,7 +2349,7 @@ film = {
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],
     'spots': spots_out,
-    **({'waterThen': {'file': 'data/water_then.png', 'states': WT_STATES, 'events': WT_EVENTS, **({'course': WT_COURSE} if WT_COURSE else {})}} if WT_STATES else {}),
+    **({'waterThen': {'file': 'data/water_then.png', 'states': WT_STATES, 'events': WT_EVENTS, 'edge': WT_EDGE}} if WT_STATES else {}),
     'night_look': NIGHT_LOOK,
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),

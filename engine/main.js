@@ -37,7 +37,7 @@ if (BUNDLE) L.take(base + 'bundle.json', { optional: true }).then(b => b && b.te
 const FILM = await L.json(B + 'film.json');
 if (!FREE) {
   L.want([...(FILM.decals || []).map(d => B + d.file), FILM.satellite && B + FILM.satellite.file, FILM.grow && FILM.grow.tfile && B + FILM.grow.tfile,
-    ...(FILM.eras || []).map(e => B + e.file), ...(FILM.footage || []).map(f => base + f.file), FILM.waterThen && B + FILM.waterThen.file, FILM.waterThen && FILM.waterThen.course && B + FILM.waterThen.course.file]);
+    ...(FILM.eras || []).map(e => B + e.file), ...(FILM.footage || []).map(f => base + f.file), FILM.waterThen && B + FILM.waterThen.file]);
   if (FILM.context && !QS.has('flat')) L.want([B + FILM.context.file], { optional: true });
   L.want((FILM.living || []).map(v => base + v.file), { optional: true });   // (a living moment's picture: missing until tools/living.py has made it)
   L.sizes(Object.fromEntries(FILM.fonts.faces.filter(f => f.bytes).map(f => [f.file, f.bytes])));   // (the fonts come from this page's server)
@@ -175,7 +175,6 @@ if (SHARE.length) {
   for (const e of [...SHARE].sort((a, b) => b.occupy[0][0] - a.occupy[0][0])) holding[e.hide] = e;   // (the earliest last: it wins)
   for (const e of Object.values(holding)) if (e.edgeRect) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; }
 }
-if (!FREE && FILM.waterThen && FILM.waterThen.course) S.setCourses(await tex(B + FILM.waterThen.course.file), FILM.waterThen.course);   // (the rivers' courses: a change slides them)
 if (FILM.basinMap) S.setBasins(await tex(B + FILM.basinMap.file), FILM.basinMap);   // dug pools: the plate lowered in them while they stand
 if (FILM.groundMap) S.setGrounds(await tex(B + FILM.groundMap.file), FILM.groundMap, FILM.eras);   // open ground: the plate takes its surface while it stands
 // a basin follows its pool: up as the pool rises (its rank in its city's rise), taken back with its city's ring or its loss's
@@ -347,12 +346,12 @@ function setLayers(t) {
   { let sk = 0, sp = null;   // spot (film.spots): the light falls on one subject, the rest of the room goes dark
     for (const q of FILM.spots || []) { const a = ss(seg(t, q.t0, q.t0 + q.fade)) * (1 - ss(seg(t, q.t1 - q.fade, q.t1))); if (a > sk) { sk = a; sp = q; } }
     U.uSpotK.value = sp ? lerp(1, sp.k, sk) : 1; U.uSpotB.value = sp ? lerp(1, sp.b, sk) : 1; if (sp) { U.uSpotC.value.set(sp.c[0], sp.c[1]); U.uSpotR.value = sp.r; } }
-  if (FILM.waterThen) { let v = null;   // the water as it was (compile water_then): a state, or a change between two (a slide where both have a course)
+  if (FILM.waterThen) { let v = null;   // the water as it was (compile water_then): a state, or a change running down the river from one to the next
     for (const e of FILM.waterThen.events) { if (t < e.t0 || t > (e.back1 ?? e.t1)) continue;
-      const s = e.back1 == null || t < e.t1 ? ss(seg(t, e.t0, e.t1)) : 1 - ss(seg(t, e.back0, e.back1));   // (a glimpse: out, held, back)
-      v = [e.a, e.b, s, e.back1 != null ? 3 : e.slide ? 2 : 1, e.ra, e.rb]; break; }
-    if (!v) { const st = FILM.waterThen.states.find(w => t >= w.on && t < w.off); v = [st ? st.c + 1 : 0, 0, 0, 0, -1, -1]; }
-    U.uWT.value.set(v[0], v[1], v[2], v[3]); U.uWTRow.value.x = v[4]; U.uWTRow.value.y = v[5]; }
+      const s = e.back1 == null || t < e.t1 ? seg(t, e.t0, e.t1) : 1 - seg(t, e.back0, e.back1);   // (a glimpse: out, held, back)
+      v = [e.a, e.b, s, 1]; U.uWTF.value.set(e.dir[0], e.dir[1], e.f[0], e.f[1]); break; }
+    if (!v) { const st = FILM.waterThen.states.find(w => t >= w.on && t < w.off); v = [st ? st.c + 1 : 0, 0, 0, 0]; }
+    U.uWT.value.set(...v); U.uWTE.value = FILM.waterThen.edge; }
   for (let i = 0; i < U.uEpA.value.length; i++) { U.uEpA.value[i] = 0; U.uEpY0.value[i] = 1e9; U.uEpY1.value[i] = -1e9; U.uEpB.value[i] = 0; U.uEpR.value[i] = 9; U.uEpW.value[i] = 1; }
   for (const e of FILM.epochs || []) {   // (masks that share a channel never overlap in time: the one showing sets it)
     const fl = (e.flash || []).reduce((m, tf) => Math.max(m, Math.exp(-(((t - tf) / .45) ** 2))), 0);   // an area flares as it is named
