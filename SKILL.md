@@ -26,8 +26,11 @@ Working with the user
   the film in the preview, the music, the render and what is published. House types, quarters, samples, a station's camera and timing are yours: judge them against the
   step's done line and the example city, and go on. Do not wait for an approval no ★ asks for: each such round stalls the work and leaves the user judging details while
   nobody judges the film as a whole.
-- **Judge as the audience, not only by the checks.** Checks at zero say the film is not broken, not that it works. Before showing anything, watch and listen to it as someone
-  who does not know the city, and write down what they would remember of it: the story in one sentence, and for each big passage a line, a number or a picture. Set it beside
+- **The audience is the world.** The film is for viewers anywhere: people who know neither the city nor its country, many of them reading the subtitles in a second
+  language. Neither the city's own people nor native speakers are the measure. The film itself tells what the story needs: when it happens, who holds the city, who a
+  person is and why something changes; nothing may rely on what a local, a historian or a native speaker already knows.
+- **Judge as the audience, not only by the checks.** Checks at zero say the film is not broken, not that it works. Before showing anything, watch and listen to it as that
+  viewer, in every language the film shows (each is read on its own), and write down what they would remember of it: the story in one sentence, and for each big passage a line, a number or a picture. Set it beside
   the same moment of the example film (`cities/xianyang/`: its rise, peak, fall, return and ending); a stretch weaker or vaguer than the example is not done, whatever the
   checks say. The main agent reviews a subagent's piece the same way.
 - **Change only what was named.** Redo only the part the user sent back. If you find a better setting, use it only where named and add one line ("this works elsewhere too") for the user to decide.

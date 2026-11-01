@@ -4,6 +4,9 @@
 
 - Writing the narration without agreeing with the user what story to tell → first produce a story outline, and write the narration and subtitles only after the user confirms it ("The director fixes the story first").
 - Reporting facts one by one → tell the whole story as its storyteller, with your own feeling ("Copy").
+- People called "a ruler" or "a later emperor", and jumps in time with no year or ruler → the audience cannot follow the story; name the cast and say when and who holds the city where it changes ("Cast" and "Time and power" in step 4).
+- Writing a draft or a rewrite to a length set in advance → the writer drops names, years and reasons; write it whole, then time it (step 4).
+- One language written first and the others translated line by line → each language is read on its own ("Every language is read on its own").
 - Narration that sounds like AI (lines that only say what something means, the tone of a report, stock phrases) → read it aloud and rewrite ("Copy").
 - Writing seconds by hand, so one change breaks everything → compile schedules the narration and the changes ("Subtitles and the timeline"; STAGING.md 9a, 9e).
 - Making every station the same length, or fixing the total length first and squeezing things in → nodes have different weight ("Treatment and nodes").
@@ -60,9 +63,23 @@ Do the following in order; go on only when the user confirms each step:
 4. **Narration draft:** write the continuous narration for the whole film from the confirmed detailed outline, a key beat told as a scene and a one-line beat
    in passing ("Copy"); then estimate its length from the speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
    plus the pauses, the prologue, the opening and the picture holds the outline needs (compile times the lines the same way until the voice is recorded: "Subtitles and the timeline").
-   Before showing it, review it as a listener (SKILL.md "Judge as the audience"): read it all aloud, then write down what you remember. Set the draft's rise, peak, fall,
-   return and ending beside the example film's lines for the same moments and rewrite what is vaguer. Each person named changes the city's fate or is the audience's eyes at
-   a key beat; a name heard once that changes nothing becomes a description ("a young water-polo player") or goes.
+   Before showing it, review it as a listener (SKILL.md "Judge as the audience"): read it all aloud, in every language the film shows, then write down what you remember. Set the draft's rise, peak, fall,
+   return and ending beside the example film's lines for the same moments and rewrite what is vaguer.
+   - **Cast.** The city is the protagonist. The people who drive its fate (rulers, builders, invaders, artists, the person a station's story is about) are its leading and
+     supporting roles: name them, with a few words of who they are the first time (Xianyang: "In 350 BCE Duke Xiao of Qin moved his capital here. The man who built it was
+     Shang Yang, then remaking the state with his reforms."). "A ruler" or "a later emperor" where the record has a name is not done: a story whose actors have no names
+     cannot be followed. Only the crowd goes unnamed (a traveller at the ferry, a mill worker, a resident); a name heard once that changes nothing becomes such a description
+     ("a young water-polo player") or goes. A figure known worldwide gets room for what made them famous, and something the audience did not know.
+   - **Time and power.** The audience must always know roughly when they are and who holds the city. Say it where it changes: at the start, at a jump in time, when the
+     ruler, the state or the age changes (Xianyang: 「公元前350年，秦孝公把都城遷到這裡」 ("In 350 BCE Duke Xiao of Qin moved his capital here"), 「漢朝在渭河南岸另築長安」
+     ("The Han built Chang'an on the south bank")). Feature films do this with a title card or a line of voice-over although their sets and costumes already show the
+     period: from the picture alone the audience cannot tell whether a cut skips a day or a century, so it cannot tell cause from effect or feel how fast things changed,
+     and a white model looks much the same in every century. It is not a formula for every line or every station; where the audience already knows when and who, go on.
+     The year on screen marks one moment of a station; the jumps inside it are told in the narration. The writer knows the timeline and does not notice when it is
+     missing, so read for it on purpose.
+
+   Write the whole draft first and time it after. Never set a length for a draft or a rewrite in advance: held to a length, the writer drops the names, years and
+   reasons the audience needs, and the narration stops making sense. A draft clearly over is shortened through the outline (below), not by thinning its lines.
    - About the length, or a little over: show the draft and its estimate to the user.
    - Clearly over: adjust the detailed outline (a key beat becomes one line, beats merge, a beat goes) and show the user every change, why, and the time it
      saves, with the new estimate. Only after the user confirms, rework the narration from the adjusted detailed outline (do not just strike sentences out of
@@ -169,6 +186,12 @@ Signs of AI writing, to recognise when reading aloud, not a list to tick off:
   every sentence in the same rhythm, facts strung along in outline order, a sentence the listener loses track of.
 - Talking to the audience, saying what you feel, an "I": these are not signs of AI but the storyteller's own moves; keep them. They become a habit only when
   the same move comes back again and again ("imagine…", "look…" every few lines), or when a line names a feeling the picture already shows.
+
+**Every language is read on its own.** Each subtitle language is a full telling for its readers, whichever language was written first. It may be translated, but not
+line by line: say the same thing the way that language says it, with the names its readers use for people and places, its own word order and number style, and drop
+what only works in the source language (Xianyang's 「唐武德二年」 ("the second year of the Wude era of the Tang") is "Early in the Tang" in English). Many readers read the
+subtitles in their second language, so understatement, idiom and allusion that need a native ear are said outright, in every language. Read the whole film in each
+language before showing it.
 
 No rule sets a sentence length: write as speech; subtitle length is handled when the confirmed narration is cut into subtitles ("Writing subtitles and readouts").
 

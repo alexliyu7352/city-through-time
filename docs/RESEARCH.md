@@ -48,8 +48,8 @@ Test: if this station is removed, does the audience understand a piece less of "
 A world event that only took place in the city (a treaty signed there, a match played there) passes this test only if the city or its people changed because of it;
 otherwise it is a line of narration or a short transition.
 
-**Know the audience.** Decide who will watch (the city's own people, the country, the world) before choosing. Places and moments the audience already knows are
-anchors: use them, and give them what they did not know about those places. A topic few of them know needs a reason to be in the film and must say at once why it matters.
+**Know the audience.** The audience is the world (SKILL.md): viewers who know neither the city nor its country. Places, people and moments known worldwide (a famous
+ruler, a war, a film) are anchors: use them by name, and give them what they did not know about them. A topic few of them know needs a reason to be in the film and must say at once why it matters.
 
 **The story is the city's arc, not an argument.** The theme comes out of what the city won, lost and became. A thesis of your own (a social or political point the film
 would prove) is offered to the user as an option; it does not steer the choice of stations unless the user takes it.
