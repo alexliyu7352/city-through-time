@@ -102,7 +102,7 @@ film:
     - { lon: 108.722, lat: 34.338, zh: 今咸阳老城, en: today's old town, size: .9, dmin: 1.2 }
     - { lon: 108.925, lat: 34.278, zh: 西安 →, en: Xi'an, size: .9, dmin: 1.2 }
   water_then:   # the Wei as it ran before it moved north (research/wei_courses.md; research/wei_courses.py draws the file)
-    - { id: wei_ancient, from: qin, with: r_weiqin, water: research/wei_courses.geojson, glimpse: { with: r_wei, course: today } }   # Qin to Tang: about 3.8 km south of today's at the bridges; in Han a look ahead, north to today's course with r_wei and back
+    - { id: wei_ancient, from: qin, with: r_weiqin, move: 4.0, water: research/wei_courses.geojson, glimpse: { with: r_wei } }   # Qin to Tang: about 3.8 km south of today's at the bridges; in Han a look ahead to today's river with r_wei, and back
     - { id: wei_1661, from: ming, water: research/wei_courses.geojson }   # 順治: 2 km south (桑廣書 2005 表1); south of the county town's wall
     - { id: wei_1936, from: rail, until: mills, water: research/wei_courses.geojson }   # the 1930s: today's, but south of the town's wall
   opening:
