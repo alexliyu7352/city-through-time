@@ -24,7 +24,28 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const need = opts.fit || {};   // (what the film uses: main.js FIT)
   const BMAX = Math.max(BMAX0, opts.bmax || 0), LM = Math.max(LMAX, need.losses || 0), GM = Math.max(GMAX, opts.gmax || 0), NM = Math.max(NMAX, need.bands || 0), YM = Math.max(YLN, need.yl || 0), RM = 1 + (need.rings || 0);
   const HMAX = Math.max(8, opts.slots || 0), H3 = HMAX > 8;
-  const T = !!opts.then;   // the water as it was (film.waterThen): the water map's G B A hold its states, mixed in by uWThenK
+  const T = !!opts.then;   // the water as it was (film.waterThen): the water map's G B A hold its states (WTHEN)
+  // the water as it was (engine/main.js sets the uniforms each frame): the water map's R is today's water, G B A the states. uWT:
+  // channel a, channel b, progress, mode (0 a; 1 a fading into b; 2 the river sliding from a's course to b's; 3 a glimpse, sliding
+  // to b's course over the water the two share, and back); uWTRow: the two courses' rows, the rows, the axis (0: the courses run
+  // along the plate's width). Each course is a column per plate column (compile water_course.png): its middle and half its width
+  const WTHEN = `
+  uniform sampler2D uCourse; uniform vec4 uWT, uWTRow; uniform float uWTHmax, uWTN;
+  float wCh(vec4 w4, float c){ return c < .5 ? w4.r : c < 1.5 ? w4.g : c < 2.5 ? w4.b : w4.a; }
+  vec2 wCourse(float row, float a){   // a course's middle and half-width across the plate at a along it, between two columns
+    float x = a * uWTN - .5, f = fract(x), y = (row + .5) / uWTRow.z, c0 = clamp((floor(x) + .5) / uWTN, .5 / uWTN, 1. - .5 / uWTN), c1 = clamp(c0 + 1. / uWTN, .5 / uWTN, 1. - .5 / uWTN);
+    vec3 p = texture2D(uCourse, vec2(c0, y)).rgb, q = texture2D(uCourse, vec2(c1, y)).rgb;
+    return mix(vec2((p.r * 65280. + p.g * 255.) / 65535., p.b * uWTHmax), vec2((q.r * 65280. + q.g * 255.) / 65535., q.b * uWTHmax), f); }
+  float wThen(vec2 uv){ vec4 w4 = texture2D(uWater, uv); float a = wCh(w4, uWT.x);
+    if (uWT.w < .5) return a;
+    float b = wCh(w4, uWT.y), s = uWT.z;
+    if (uWT.w < 1.5) return mix(a, b, s);
+    float al = uWTRow.w < .5 ? uv.x : uv.y, ac = uWTRow.w < .5 ? uv.y : uv.x;
+    vec2 A = wCourse(uWTRow.x, al), B = wCourse(uWTRow.y, al);
+    if (A.y <= 0.) A.x = B.x; if (B.y <= 0.) B.x = A.x;   // (where one course is not, the other grows or shrinks in place)
+    vec2 C = mix(A, B, s); float e = 1. / float(uWTRow.w < .5 ? textureSize(uWater, 0).y : textureSize(uWater, 0).x);
+    float mid = max(min(a, b), C.y > 0. ? 1. - smoothstep(C.y - e, C.y + e, abs(ac - C.x)) : 0.);
+    return mix(mix(a, mid, smoothstep(0., .12, s)), b, uWT.w < 2.5 ? smoothstep(.88, 1., s) : 0.); }`;
   const K = !!opts.keep;   // keep maps (film.keepMaps: a city with today_from): what of it still stands, where today's city steps aside once it comes back round it   // era channels (hide, edge maps): 8, or 12 for a film with more cities standing at once (film.eraSlots: hide3, edge3)   // (the shaders' uniform arrays: more than 32 only for a film that needs them, small devices have few)
   const LOW = !!opts.low;   // live preview: pixel ratio 1, no supersampling
   const renderer = new THREE.WebGLRenderer({ antialias: LOW, preserveDrawingBuffer: true });
@@ -87,7 +108,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const U = {
     uProj: { value: 0 }, uNow: { value: 0 }, uYear: { value: -9999 }, uToday: { value: 1 }, uGrowRise: { value: 0 }, uGhost: { value: 0 }, uPulse: { value: 0 },
     uRingC: { value: new THREE.Vector2(0, 0) }, uRingS: { value: .035 }, uRingN: { value: 0 }, uRingA: { value: 0 }, uProjPos: { value: new THREE.Vector3(0, 1.3 * DIAG, .2 * DIAG) }, uKeyDir: { value: new THREE.Vector3(0, 1, 0) },
-    uPlate: { value: new THREE.Vector2(PW, PD) }, uWater: { value: null }, uWThenK: { value: new THREE.Vector3() }, uL1: { value: null }, uL2: { value: null }, uL3: { value: null },
+    uPlate: { value: new THREE.Vector2(PW, PD) }, uWater: { value: null }, uWT: { value: new THREE.Vector4() }, uWTRow: { value: new THREE.Vector4(-1, -1, 1, 0) }, uCourse: { value: null }, uWTHmax: { value: 0 }, uWTN: { value: 1 }, uL1: { value: null }, uL2: { value: null }, uL3: { value: null },
     uBase: { value: 0 },                                          // the plate's faint grid under the projector (0..1)
     uEpA: { value: arr(EMAX, 0) }, uEpY0: { value: arr(EMAX, 1e9) }, uEpY1: { value: arr(EMAX, -1e9) }, uEpB: { value: arr(EMAX, 0) },
     uEpC: { value: Array.from({ length: EMAX }, () => new THREE.Vector2(0, 0)) }, uEpR: { value: arr(EMAX, 9) }, uEpRim: { value: arr(EMAX, 1) }, uEpW: { value: arr(EMAX, 1) },
@@ -161,7 +182,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform float uGrowMono;
   uniform vec3 uEraCol0;   // a period city's colour outside the current node's colour ring (inside it: uEraCol)
   uniform vec3 cEp[${Z.E}], cBand[${Z.N}], cH[4], cPick, cBlack;
-  uniform vec2 uPlate, uPickPos; uniform vec3 uProjPos, uKeyDir; uniform sampler2D uWater, uL1, uL2, uL3;${T ? ' uniform vec3 uWThenK;' : ''}
+  uniform vec2 uPlate, uPickPos; uniform vec3 uProjPos, uKeyDir; uniform sampler2D uWater, uL1, uL2, uL3;${T ? WTHEN : ''}
   uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uFootM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[${HMAX}];
   uniform vec3 uShadeL, uShadeC; uniform float uShadeK, uNightDeep;
   uniform float uSpotR, uSpotK, uSpotB; uniform vec2 uSpotC;
@@ -221,7 +242,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform sampler2D uBasin; uniform float uBasinA[${Z.B}], uBasinRi[${Z.B}], uBasinBand, uWaterRip, uWaterGlint, uWaterShore; uniform vec4 uBasinL[${Z.R}];
   vec4 basinRing(float r){ vec4 L = uBasinL[0]; for (int j = 1; j < ${Z.R}; j++) if (abs(float(j) - r) < .5) L = uBasinL[j]; return L; }
   float wDrapedK = 0.;   // this fragment's share of a draped pool (wmask sets it): no edge lines are drawn on it (post, the plate's alpha)
-  float wmask(){ vec2 uv = plateUV(); if (!onPlate(uv)) return 0.; ${T ? 'vec4 w4 = texture2D(uWater, uv); float w = w4.r + dot(uWThenK, w4.gba - w4.rrr);   // (today\'s, or a state of the water as it was as it shows)' : 'float w = texture2D(uWater, uv).r;'}
+  float wmask(){ vec2 uv = plateUV(); if (!onPlate(uv)) return 0.; ${T ? 'float w = wThen(uv);   // (today\'s, or the water as it was as it shows)' : 'float w = texture2D(uWater, uv).r;'}
     // a draped pool (alpha 128 + its number in the basin map): the plate is its water while it stands. Round its edge the map
     // holds the distance to it (texels, + inside, compile BAS_BAND), blended between the four nearest texels, so the edge
     // follows the drawn outline, not the texels' steps (the map is read exactly, nearest, for the dug pools' water tops)
@@ -465,7 +486,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform float uHideT[${HMAX}], uHideG[${HMAX}], uHideFR[${HMAX}], uHideFI[${HMAX}], uHideFW[${HMAX}]; uniform vec2 uHideO[${HMAX}];${K ? ` uniform sampler2D uKeep, uKeep2${H3 ? ', uKeep3' : ''}; uniform float uHideKeep[${HMAX}];` : ''}
   uniform float uEraT, uEraSpan, uEraGrow, uEraFallR, uEraFallIn, uEraFallW; uniform vec2 uEraO;
   uniform float uLossR[${Z.L}], uLossIn[${Z.L}], uLossW[${Z.L}]; uniform vec2 uLossO[${Z.L}];   // a part of the city lost (lose:): its ring
-  uniform sampler2D uBasin; uniform float uBasinA[${Z.B}], uBasinLo, uBasinHi, uBasinK, uPlateTop;   // dug pools (compile basin map): the plate lowered in them${T ? '\n  uniform sampler2D uWater; uniform vec3 uWThenK;   // the water as it was (its states in the water map\'s G B A)' : ''}
+  uniform sampler2D uBasin; uniform float uBasinA[${Z.B}], uBasinLo, uBasinHi, uBasinK, uPlateTop;   // dug pools (compile basin map): the plate lowered in them${T ? '\n  uniform sampler2D uWater;' + WTHEN : ''}
   // a ring that takes a city back: contracting (in) it takes what lies outside it, growing (out) what lies inside. R is the
   // ring now, R1 where it was a sink-time ago: a building the ring passed sinks over that time (0 standing .. 1 gone)
   float fallK(vec2 o, float R, float fin, float R1){ float d = length(aCtr - o);
@@ -489,7 +510,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
      ${K ? `vec4 k1 = texture2D(uKeep, huv), k2 = texture2D(uKeep2, huv)${H3 ? ', k3 = texture2D(uKeep3, huv)' : ''};   // (a city with today_from: from its node, today's city comes back round what of it still stands)
      float km[${HMAX}]; km[0] = k1.r; km[1] = k1.g; km[2] = k1.b; km[3] = k1.a; km[4] = k2.r; km[5] = k2.g; km[6] = k2.b; km[7] = k2.a;${H3 ? ' km[8] = k3.r; km[9] = k3.g; km[10] = k3.b; km[11] = k3.a;' : ''}
      float hk = 0.; for (int i = 0; i < ${HMAX}; i++) hk = max(hk, mix(hideK(hm[i], i), hideK(km[i], i), uHideKeep[i]));   // with the same front that raises the era` : `float hk = 0.; for (int i = 0; i < ${HMAX}; i++) hk = max(hk, hideK(hm[i], i));   // with the same front that raises the era`}
-     ${T ? `vec4 wt_ = texture2D(uWater, huv); hk = max(hk, dot(uWThenK, smoothstep(.35, .65, wt_.gba)) * (1. - smoothstep(.35, .65, wt_.r)));   // (under the water as it was: it steps aside while that water shows)
+     ${T ? `float wt_ = wThen(huv), wr_ = texture2D(uWater, huv).r; hk = max(hk, smoothstep(.35, .65, wt_) * (1. - smoothstep(.35, .65, wr_)));   // (under the water as it was, or a river sliding over it: it steps aside)
      ` : ''}ry *= (1. - hk) * (1. - uLiveSink);   // (a living moment: today's city sinks while the period's picture is shown)
      if (hk > .985 || ry < .002) ry = -1.;   // fully stepped aside: below the plate, not a bright sliver of roof on the ground
    }
@@ -870,6 +891,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
 
   const blank = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1); blank.needsUpdate = true;
   function setTex(k, t, srgb = false) { if (!t) { U[k].value = blank; return; } t.flipY = false; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; t.anisotropy = 4; U[k].value = t; }
+  function setCourses(t, c) { t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.magFilter = t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true;
+    U.uCourse.value = t; U.uWTN.value = c.n; U.uWTHmax.value = c.hmax; U.uWTRow.value.z = c.rows; U.uWTRow.value.w = c.axis; }   // (the water as it was: its rivers' courses)
   function setBasins(t, map) { t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.magFilter = t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true;
     U.uBasin.value = t; U.uBasinLo.value = map.lo; U.uBasinHi.value = map.hi; U.uBasinK.value = map.k; U.uBasinBand.value = map.band ?? 4; }
   // open ground (compile ground map): the cities that have some, in film order; each frame the crops of those standing are bound
@@ -1053,5 +1076,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     if (!tries.some(z => { Z = z; gpu.path = z === FULL ? 'full' : 'fit'; if (z !== FULL) fitTo(z); return linkTest(); })) gpu.fail = 'shaders';
     gpu.limits = { textures: g.getParameter(g.MAX_TEXTURE_IMAGE_UNITS), fragment: g.getParameter(g.MAX_FRAGMENT_UNIFORM_VECTORS), vertex: g.getParameter(g.MAX_VERTEX_UNIFORM_VECTORS), size: g.getParameter(g.MAX_TEXTURE_SIZE) };
   }
-  return { gpu, renderer, scene, camera, post, U, liveSky, aimProjector, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { gpu, renderer, scene, camera, post, U, liveSky, aimProjector, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setCourses, setGrounds, groundsNow, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

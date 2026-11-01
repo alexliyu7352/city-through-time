@@ -63,7 +63,7 @@ film:
   labels:                                     # geographic labels (shown automatically in wide shots): rivers, plateaus, the old town, directions of neighbouring cities
     - { lon: 0, lat: 0, zh: <river name>, en: <River>, size: 1.2, dmin: 1.0 }
   # water_then:                               # optional: the water as it was where the sources put it elsewhere (a river that has moved, a shore filled in since; docs/MODEL.md "Water as it was")
-  #   - { id: <river>_<period>, from: <node>, water: research/<river>_courses.geojson }   # from that node until the next state's (or until: <node>); at most three
+  #   - { id: <river>_<period>, from: <node>, with: <route>, water: research/<river>_courses.geojson }   # from that node (as the route draws) until the next state's (or until: <node>); at most three
   # prologue:                                 # optional: a 15–25 s passage before the opening, over the film's own city (docs/SCRIPT.md "Prologue")
   #   dur: 20
   #   mood: { feel: grief, level: 3 }
