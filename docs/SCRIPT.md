@@ -48,11 +48,14 @@ Do the following in order; go on only when the user confirms each step:
      is in the wrong place.
 
    **The city is the film's protagonist:** the story follows the city's fate, and its people, heroes included, are how the audience feels it.
+   Its history is the plot: the ages, the states that held it and the people who ruled, built, took or left it are what its fate is told through, and each turn
+   of the city is told with its time and its people (Xianyang: Qin capital, then the Han across the river, a Tang ferry town, a Ming county town). Take them out and
+   what is left (people built, it burned, they built again) could be any city.
    Keep the people and the city's change in one thread, not a passage about a person followed by a passage of city data (Xianyang: the cotton mills make it a textile city, the mills decline,
    the old mill becomes a museum, 「一代紡織人的青春，就留在了這裡」 ("a generation of textile workers left their youth here")). Where no person stands out, often in
    recent decades, the city's own fate is the story: what it became, what it hoped for, what it lost (Xianyang: it hoped to merge with Xi'an, the new district was put
    under Xi'an instead, the hope came to nothing, and seen from above the two cities are growing into one). Not every station needs a person.
-   - What the audience should feel at a key beat is a feeling about the city's fate, not information to deliver.
+   - What the audience should feel at a key beat is a feeling about the city's fate, not information to deliver; the when and who of that fate are part of the telling, not information to drop.
    - A research note (how a figure was estimated, what the data does not show) is not a beat; it goes on screen or in the notes.
    - A one-line beat about the city's change is told as the cause or the result of the scene beside it, not added after the scene's peak.
 
