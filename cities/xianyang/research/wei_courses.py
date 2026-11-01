@@ -88,6 +88,11 @@ for sid, (yc, width, (la_, lb_), basis) in STATES.items():
     if sid != 'wei_ancient': print(f'  {sid}: the river {water.distance(ming):.0f} m off the town wall')
     move = y_today - yc; at = lambda lon: f'{lon}: {np.interp(lon, LON, move):.0f} m'
     print(f'{sid}: moved {", ".join(at(lo) for lo in (108.70, 108.72, 108.75, 108.78, 108.83, 108.86, 108.87, 108.90))}; water {water.area / 1e6:.1f} km², stretch {stretch.area / 1e6:.1f} km²')
+# each course as a line with its width, the whole plate across (compile slides the river from one to the next, film.water_then):
+# the states', and today's (its smoothed centreline, 350 m)
+course = lambda sid, yc, width: {'type': 'Feature', 'geometry': {'type': 'LineString', 'coordinates': [[round(v, 6) for v in W(x, y)] for x, y in zip(E[::4], yc[::4])]},
+                                 'properties': {'kind': 'course', 'state': sid, 'width_m': [round(float(w), 1) for w in width[::4]]}}
+feats += [course(sid, yc, width) for sid, (yc, width, _, _) in STATES.items()] + [course('today', y_today, np.full(len(E), TOWNW))]
 out = os.path.join(D, 'research', 'wei_courses.geojson')
 json.dump({'type': 'FeatureCollection', 'features': feats}, open(out, 'w', encoding='utf-8'), ensure_ascii=False)
 print('->', os.path.relpath(out, D))

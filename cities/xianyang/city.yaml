@@ -102,7 +102,7 @@ film:
     - { lon: 108.722, lat: 34.338, zh: 今咸阳老城, en: today's old town, size: .9, dmin: 1.2 }
     - { lon: 108.925, lat: 34.278, zh: 西安 →, en: Xi'an, size: .9, dmin: 1.2 }
   water_then:   # the Wei as it ran before it moved north (research/wei_courses.md; research/wei_courses.py draws the file)
-    - { id: wei_ancient, from: qin, water: research/wei_courses.geojson }   # Qin to Tang: about 3.6 km south of today's at the bridges
+    - { id: wei_ancient, from: qin, with: r_weiqin, water: research/wei_courses.geojson, glimpse: { with: r_wei, course: today } }   # Qin to Tang: about 3.8 km south of today's at the bridges; in Han a look ahead, north to today's course with r_wei and back
     - { id: wei_1661, from: ming, water: research/wei_courses.geojson }   # 順治: 2 km south (桑廣書 2005 表1); south of the county town's wall
     - { id: wei_1936, from: rail, until: mills, water: research/wei_courses.geojson }   # the 1930s: today's, but south of the town's wall
   opening:
@@ -152,6 +152,8 @@ film:
       label: { zh: 秦都, en: The Qin capital }
       col: '#ffb070'
       readout: { label: "秦孝公迁都咸阳，公元前 350 年", note: "宫区在北、郭区在南（考古布局）· 宫城周长约 2.7 km · 至今未发现外郭城墙 · 平面与渭河古道示意" }
+      routes:   # the Wei in Qin times: the river slides south to its course as this draws (film.water_then wei_ancient; research/wei_courses.md)
+        - { id: r_weiqin, from: [108.8350, 34.3760], to: [108.8350, 34.3430], at: 3.7, draw: 2.8, hold: 2.6, arc: 0.12, col: '#8fb8ff', zh: "秦时渭河 · 在今河道以南约 4 公里 · 示意", en: "The Wei in Qin times · about 4 km south of today's · schematic" }
       city:
         origin: [108.8590, 34.4123]
         col: '#ffd2a0'
@@ -200,7 +202,7 @@ film:
       pins:
         - { id: p_hall6, lon: 108.8626, lat: 34.4160, h_m: 30, t0: 28.2, t1: 31.9, zh: "6号宫殿 · 高 11.3 米", en: "Palace No. 6, a terrace 11.3 m high", len: 140, dx: 40 }
       camera:   # the colour ring leaves the village (wide), the flight east to the plateau (Shang Yang), held on the plateau while the city rises and 宫殿筑在渭北的高台上 is told (no wordless hold), a dive under the building scene, a glide up the 50 m avenue to Palace No. 6 (its line on the way) and a short turn there, the workshops, the whole city as Qin grows strong
-        [{ t: 3, ll: [108.70, 34.345], az: 100, el: 46, d: 1.7 }, { t: 8.5, ll: [108.853, 34.407], az: 15, el: 36, d: 0.6 }, { t: 18.3, ll: [108.853, 34.407], az: 12, el: 36, d: 0.58 },
+        [{ t: 3.6, ll: [108.81, 34.366], az: 26, el: 52, d: 1.65 }, { t: 6.8, ll: [108.815, 34.369], az: 23, el: 52, d: 1.6 }, { t: 9.6, ll: [108.853, 34.407], az: 15, el: 36, d: 0.6 },   # (the plain held while the Wei slides to its Qin course, r_weiqin) { t: 18.3, ll: [108.853, 34.407], az: 12, el: 36, d: 0.58 },
          { t: 23.4, shot: glide, ll: [108.8626, 34.4082], az: 6, el: 11, d: 0.038, fov: 44 }, { t: 27.9, ll: [108.8626, 34.4158], y: 0.004, az: 2, el: 12, d: 0.065, fov: 44 },
          { t: 30.4, ll: [108.8626, 34.4158], y: 0.004, az: -6, el: 13, d: 0.075, fov: 44 },
          { t: 34.4, ll: [108.828, 34.399], az: 20, el: 34, d: 0.42, fov: 34 }, { t: 38.9, ll: [108.845, 34.404], az: 8, el: 50, d: 0.95, fov: 32 },
