@@ -220,7 +220,9 @@ Signs of AI writing, to recognise when reading aloud, not a list to tick off:
 - The same shape coming back: one sentence pattern, one kind of paragraph ending, one device, line after line. This is the surest sign; it comes from applying a
   device or a rule everywhere instead of where the story needs it.
 - A sentence that only says what something means, with nothing to see or feel ("unification brought a common order"; Xianyang says 「文字、車軌、尺和秤，從此全天下一樣」).
-- A reason the audience already has, said again: the cause told earlier, or the motive the next action already shows, explained in a line of its own.
+- A line that tells the audience what they already have: a cause told earlier, a motive the next action shows, a step the next fact makes obvious ("work went on"
+  before the year it was finished), the same event said again in other words. Ask of every sentence what the audience learns or feels from it that they did not
+  have; a sentence with no answer goes, however smoothly it links.
 - A point said, then explained, then summed up (Xianyang's fall is four lines, 「然而，它只撐了15年。項羽引兵入咸陽，燒秦宮室。火三月不滅。如今，那裡只剩一片田野。」
   ("It lasted 15 years. Xiang Yu took Xianyang and set the palaces alight. The fire burned for three months. Today only fields remain."), and none explains what it meant).
 - The tone of a report: who recorded it, how it was estimated, that it is still a plan. These go on screen (the source line, the label on the picture or card, the end card);
