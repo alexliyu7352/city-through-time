@@ -90,7 +90,8 @@ Do the following in order; go on only when the user confirms each step:
    sweeping one kind of sentence out of the whole film (every name, every year, every gloss, every closing line), or by giving a writer one directive to take something
    out: a sweep swings the draft to the opposite fault, and the next review swings it back. Before each rewrite, restate the whole target, then the fault: the city's
    history (its times, rulers and people) is the plot, told as one story by a storyteller with feeling. A story without its times and people only a local can follow;
-   a chronicle read out, a year and an event per sentence, nobody remembers. The film needs both at once.
+   a chronicle read out, a year and an event per sentence, nobody remembers. The film needs both at once. A draft from elsewhere that reads better is a reference
+   for how it links, never a text to adopt: it brings its own faults (invented detail, drama, dropped beats), and adopting it is one more swing.
 
    Write the whole draft first and time it after. Never set a length for a draft or a rewrite in advance: held to a length, the writer drops the names, years and
    reasons the audience needs, and the narration stops making sense. A draft clearly over is shortened through the outline (below), not by thinning its lines.
@@ -194,6 +195,11 @@ or burns, hopeful when a new city grows. Your own feelings, judgements and assoc
   state with his reforms")), not as a tag stuck on the name; a name known worldwide needs none.
 - Long sentences carry the story forward; a short one lands the weight (「火三月不滅。」 ("The fire burned for three months.")). Plain means exact verbs and real sizes,
   not childish words: a line emptied to sound simple ("there was work again", "food and lodging became a problem") is as dead as a stock phrase.
+- The narrator feels; the events are told in the record's terms. Feeling lives in what you choose to tell, in a turn or a judgement of one line, and in a word
+  (「好在2025年，宮殿區約7平方公里建成國家考古遺址公園」 ("Fortunately, in 2025 the palace area of about 7 square kilometres became a national archaeological park")).
+  The action itself is not dramatized, graded or enlarged beyond the sources: the burning of the Qin palaces is 「火三月不滅」, four characters and no adjective.
+  A line that grades a move ("a deadly blow", "a stroke of genius in despair"), piles up colour words, or makes an event bigger than the record belongs to a novel,
+  not a documentary, and is as false as an invented fact.
 
 On a story told this way, a few devices give the strongest moments their shape. Each is strong because it is rare, a few times in a film: the audience notices the
 shape the second time, and by the fourth it hears a formula ("A was done, yet B"), which sounds machine-made. Some ways Xianyang uses them:
