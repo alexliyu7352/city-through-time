@@ -154,10 +154,11 @@ Every key beat of the detailed outline (SCRIPT.md) is carried by something the a
 under the year counter), a place name or a coloured area (`pins`, `labels`, `areas`, `epochs`), a line or a beam (`routes`, `lines`), a picture, found or imagined ("Footage and
 pictures"), a living moment, or the city's own idea (`sky:`). A key beat told over a white city standing still, with nothing marked, is not staged: a model the audience cannot
 read is an empty model, however fine. A line that points at a place ("that first hillside", "across the river", "where the palace stood") has the place marked as it is said.
-A place beyond the plate (a country, a sea, a far province or city) is shown where it is as it is named, drawn on the map the way the plate marks its own places: on the land
-beyond the plate, the place as a coloured area with its name (as Xianyang draws 秦都區 and 渭城區), a march or a route as a line across it. A map picture (`footage`, `mode: doc`
-or `panel`) can add to it; a small card after the line, or the city standing in for the place, does not show the audience where it is. (Pins already stand on the land beyond the
-plate, `terrain.context`; an area or a route beyond the plate is cut at its edge until the engine draws them there.)
+A place beyond the plate (a country, a sea, a far province or city) is shown where it is as it is named, marked the way the plate marks its own places: the place as a coloured
+area with its name and a pin (as Xianyang draws 秦都區 and 渭城區), a march or a route as a line drawn across the map. Areas and routes are cut at the plate's edge (pins may stand
+on the land beyond it, `terrain.context`), so a place far beyond it goes on a full- or half-screen map (`footage`, `mode: full` or `panel`: a public-domain or Natural Earth base
+with those marks, best animated, the area lighting and the march drawing itself as the line is said). A small card after the line, or the city standing in for the place, does not
+show the audience where it is.
 Every change on the model is readable: what changed is shown as it happens, by the line that tells it or on screen, a tag, an area, the readout (Xianyang: the six palaces rise as
 「那時，每滅一國，就照它的宮殿在北阪上再造一座」 is said). The narration need not name every change, and a model is not cut for want of a line; a change nothing on screen explains reads as noise.
 Before step 5 is done, write in TREATMENT.md the table key beat → what carries it, rebuilt from the final narration whenever it changes, and set the film's
