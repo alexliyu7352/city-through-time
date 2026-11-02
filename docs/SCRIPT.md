@@ -3,11 +3,13 @@
 ## The most common mistakes in this step
 
 - Writing the narration without agreeing with the user what story to tell → first produce a story outline, and write the narration and subtitles only after the user confirms it ("The director fixes the story first").
-- Reporting facts one by one → tell the whole story as its storyteller, with your own feeling ("Copy").
+- Reporting facts one by one, a year and an event per sentence (a chronicle read out) → tell the whole story as its storyteller, sentences and scenes linked by cause,
+  time and what people wanted, with your own feeling ("Copy"). The opposite fault is a story without its times, places and people, which only a local can follow.
+  The film needs both at once; fixing one by swinging to the other is the same mistake (step 4, "Fixing a draft").
 - People called "a ruler" or "a later emperor", and jumps in time with no year or ruler → the audience cannot follow the story; name the cast and say when and who holds the city where it changes ("Cast" and "Time and power" in step 4).
 - Writing a draft or a rewrite to a length set in advance → the writer drops names, years and reasons; write it whole, then time it (step 4).
 - One language written first and the others translated line by line → each language is read on its own ("Every language is read on its own").
-- Narration that sounds like AI (lines that only say what something means, the tone of a report, stock phrases) → read it aloud and rewrite ("Copy").
+- Narration that sounds like AI (the same sentence shape again and again, lines that only say what something means, the tone of a report, stock phrases) → read it aloud and rewrite ("Copy").
 - Writing seconds by hand, so one change breaks everything → compile schedules the narration and the changes ("Subtitles and the timeline"; STAGING.md 9a, 9e).
 - Making every station the same length, or fixing the total length first and squeezing things in → nodes have different weight ("Treatment and nodes").
 - Discovering halfway that there is no story to tell, and going back to research → before writing the script, read the story material collected in research (`research/stories.md`, RESEARCH.md §3).
@@ -67,19 +69,28 @@ Do the following in order; go on only when the user confirms each step:
    in passing ("Copy"); then estimate its length from the speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
    plus the pauses, the prologue, the opening and the picture holds the outline needs (compile times the lines the same way until the voice is recorded: "Subtitles and the timeline").
    Before showing it, review it as a listener (SKILL.md "Judge as the audience"): read it all aloud, in every language the film shows, then write down what you remember. Set the draft's rise, peak, fall,
-   return and ending beside the example film's lines for the same moments and rewrite what is vaguer.
+   return and ending beside the example film's lines for the same moments and rewrite what is vaguer. Then read it for the links ("Copy"): each sentence follows from
+   the one before, each scene hands on to the next, and no one sentence shape keeps coming back.
    - **Cast.** The city is the protagonist. The people who drive its fate (rulers, builders, invaders, artists, the person a station's story is about) are its leading and
-     supporting roles: name them, with a few words of who they are the first time (Xianyang: "In 350 BCE Duke Xiao of Qin moved his capital here. The man who built it was
-     Shang Yang, then remaking the state with his reforms."). "A ruler" or "a later emperor" where the record has a name is not done: a story whose actors have no names
+     supporting roles: name them, and the first time let the audience know who they are, through what they do in the story where you can (Xianyang: "In 350 BCE Duke
+     Xiao of Qin moved his capital here. The man who built it was Shang Yang, then remaking the state with his reforms."), not with a tag stuck on the name; a name
+     known worldwide needs no tag. "A ruler" or "a later emperor" where the record has a name is not done: a story whose actors have no names
      cannot be followed. Only the crowd goes unnamed (a traveller at the ferry, a mill worker, a resident); a name heard once that changes nothing becomes such a description
      ("a young water-polo player") or goes. A figure known worldwide gets room for what made them famous, and something the audience did not know.
    - **Time and power.** The audience must always know roughly when they are and who holds the city. Say it where it changes: at the start, at a jump in time, when the
      ruler, the state or the age changes (Xianyang: 「公元前350年，秦孝公把都城遷到這裡」 ("In 350 BCE Duke Xiao of Qin moved his capital here"), 「漢朝在渭河南岸另築長安」
      ("The Han built Chang'an on the south bank")). Feature films do this with a title card or a line of voice-over although their sets and costumes already show the
      period: from the picture alone the audience cannot tell whether a cut skips a day or a century, so it cannot tell cause from effect or feel how fast things changed,
-     and a white model looks much the same in every century. It is not a formula for every line or every station; where the audience already knows when and who, go on.
+     and a white model looks much the same in every century. It is not a formula for every line or every station; where the audience already knows when and who, go on. Nor is it a year at the head of every
+     sentence: turning points carry their year, and between them time moves by span and sequence ("Copy").
      The year on screen marks one moment of a station; the jumps inside it are told in the narration. The writer knows the timeline and does not notice when it is
      missing, so read for it on purpose.
+
+   **Fixing a draft.** A fault found, by you, a reviewer or the user, is fixed where it is: rewrite the passages that have it and keep what works. Never fix it by
+   sweeping one kind of sentence out of the whole film (every name, every year, every gloss, every closing line), or by giving a writer one directive to take something
+   out: a sweep swings the draft to the opposite fault, and the next review swings it back. Before each rewrite, restate the whole target, then the fault: the city's
+   history (its times, rulers and people) is the plot, told as one story by a storyteller with feeling. A story without its times and people only a local can follow;
+   a chronicle read out, a year and an event per sentence, nobody remembers. The film needs both at once.
 
    Write the whole draft first and time it after. Never set a length for a draft or a rewrite in advance: held to a length, the writer drops the names, years and
    reasons the audience needs, and the narration stops making sense. A draft clearly over is shortened through the outline (below), not by thinning its lines.
@@ -168,7 +179,24 @@ If `emblem: none` but tally keyframes are written, compile stops.
 Write the narration for the whole film from the confirmed detailed outline, and cut it into subtitles after the user confirms it.
 **You are the storyteller.** Tell the city's whole story as its director would, with your own feeling: proud when the city rises and its heroes appear, grieving when it falls
 or burns, hopeful when a new city grows. Your own feelings, judgements and associations are part of the telling (「這份執念，從咸陽開始」 ("that resolve began in Xianyang"),
-「盼了 10 多年的合一，就此落了空」 ("the union hoped for over 10 years came to nothing")): this is a work, not a news broadcast. How to tell it is your choice; some ways Xianyang uses:
+「盼了 10 多年的合一，就此落了空」 ("the union hoped for over 10 years came to nothing")): this is a work, not a news broadcast.
+
+**Tell it as one story, not a list of events.** The audience follows a story by its links; facts without links are heard as a chronicle read out, and forgotten.
+- Each sentence follows from the one before: by cause and result, or by what someone wanted, feared or decided (the First Emperor said his throne would pass on
+  「二世三世至於萬世」 ("to ten thousand generations"), and that want is what his fall answers).
+- Time moves the way a storyteller says it. Turning points carry their year ("Time and power"); between them, say how much later, which also lets the audience feel
+  the pace (「商鞅統一了秦國的尺、斗和秤，秦一天天強大起來。100多年後，秦用10年掃平六國。」 ("Shang Yang unified Qin's rulers, measures and scales, and Qin grew stronger
+  day by day. Over 100 years later, Qin took 10 years to sweep away the six states."); 「此後500多年」 ("for over 500 years after")). A paragraph whose sentences each
+  open on their own year, and could be read in any order, is a table, not a story.
+- Between scenes, a line hands the story on: it closes one turn and opens the next, so the audience knows where it is going and why the next scene matters
+  (「然而，它只撐了15年。」 ("Yet it lasted only 15 years."); 「20世紀90年代後，紡織城陷入了低谷。」 ("After the 1990s the textile city fell into decline.")).
+- Who someone is comes through what they do in the story (「主持營建新都的，是正在變法的商鞅」 ("The man who built the new capital was Shang Yang, then remaking the
+  state with his reforms")), not as a tag stuck on the name; a name known worldwide needs none.
+- Long sentences carry the story forward; a short one lands the weight (「火三月不滅。」 ("The fire burned for three months.")). Plain means exact verbs and real sizes,
+  not childish words: a line emptied to sound simple ("there was work again", "food and lodging became a problem") is as dead as a stock phrase.
+
+On a story told this way, a few devices give the strongest moments their shape. Each is strong because it is rare, a few times in a film: the audience notices the
+shape the second time, and by the fourth it hears a formula ("A was done, yet B"), which sounds machine-made. Some ways Xianyang uses them:
 - Contrast: set two things side by side so the audience feels the gap by themselves (the First Emperor wanted 「二世三世至於萬世」 ("second generation, third generation, to ten thousand generations"), and the next line is 「然而，它只撐了15年」 ("Yet it lasted only 15 years")).
 - Echo: plant a line early and take it back later (Han: 「帝王長眠的高原」 ("the plateau where emperors sleep") → 1991: 「帝王長眠的高原，成了飛向遠方的起點」 ("the plateau where emperors sleep became the starting point of flights to far places");
   Qin capital: 「商鞅統一了秦國的尺、斗和秤」 ("Shang Yang unified Qin's rulers, measures and scales") → imperial capital: 「文字、車軌、尺和秤，從此全天下一樣」 ("writing, axle widths, rulers and scales, from now the same under all heaven");
@@ -180,6 +208,8 @@ or burns, hopeful when a new city grows. Your own feelings, judgements and assoc
 Checking the beats, the sources and the timing does not show that the telling works: read the whole film aloud as a listener, and wherever you do not care what happens
 to the city, tell that scene again.
 Signs of AI writing, to recognise when reading aloud, not a list to tick off:
+- The same shape coming back: one sentence pattern, one kind of paragraph ending, one device, line after line. This is the surest sign; it comes from applying a
+  device or a rule everywhere instead of where the story needs it.
 - A sentence that only says what something means, with nothing to see or feel ("unification brought a common order"; Xianyang says 「文字、車軌、尺和秤，從此全天下一樣」).
 - A point said, then explained, then summed up (Xianyang's fall is four lines, 「然而，它只撐了15年。項羽引兵入咸陽，燒秦宮室。火三月不滅。如今，那裡只剩一片田野。」
   ("It lasted 15 years. Xiang Yu took Xianyang and set the palaces alight. The fire burned for three months. Today only fields remain."), and none explains what it meant).
@@ -187,7 +217,8 @@ Signs of AI writing, to recognise when reading aloud, not a list to tick off:
   the voice names a record only when it is part of the story (an eyewitness's shock), and carries doubt in one word (「傳說」 ("legend"), "it is said").
 - Stock phrases (「見證了」 "a testament to", 「不僅……更是……」 "not only … but also", 「另一種」 "another kind of"), a moral at the end of every paragraph,
   every sentence in the same rhythm, facts strung along in outline order, a sentence the listener loses track of.
-- Talking to the audience, saying what you feel, an "I": these are not signs of AI but the storyteller's own moves; keep them. They become a habit only when
+- Talking to the audience, saying what you feel, an "I", a judgement of your own, a line that hands one scene to the next, saying why someone acted: these are not
+  signs of AI but the storyteller's own work; keep them. Stripped out, they leave a chronicle read out. They become a habit only when
   the same move comes back again and again ("imagine…", "look…" every few lines), or when a line names a feeling the picture already shows.
 
 **Every language is read on its own.** Each subtitle language is a full telling for its readers, whichever language was written first. It may be translated, but not
