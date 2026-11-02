@@ -184,9 +184,10 @@ or burns, hopeful when a new city grows. Your own feelings, judgements and assoc
 
 **Tell it as one story, not a list of events.** The audience follows a story by its links; facts without links are heard as a chronicle read out, and forgotten.
 - Each sentence follows from the one before: by cause and result, or by what someone wanted, feared or decided (the First Emperor said his throne would pass on
-  「二世三世至於萬世」 ("to ten thousand generations"), and that want is what his fall answers). Most links are sequence and cause; contrast ("but", "yet",
-  "still", "and yet the walls stayed") is one kind of link and belongs to the few real turns of the film. Made the default link, it becomes the formula under
-  whatever word carries it, so when checking a draft, look for the shape, not the word.
+  「二世三世至於萬世」 ("to ten thousand generations"), and that want is what his fall answers). A "but" that carries the story on to
+  what happened next is an ordinary link (「然而，它只撐了15年。」). The formula is something else: a closing line of two balanced clauses whose second half turns
+  against the first ("the road grew wide, and the neighbours were gone"), set at the end of paragraph after paragraph, with "but", "yet", "still" or no word at
+  all. Look for that shape, not for the word, and rewrite only the lines that have it.
 - Time moves the way a storyteller says it. Turning points carry their year ("Time and power"); between them, say how much later, which also lets the audience feel
   the pace (「商鞅統一了秦國的尺、斗和秤，秦一天天強大起來。100多年後，秦用10年掃平六國。」 ("Shang Yang unified Qin's rulers, measures and scales, and Qin grew stronger
   day by day. Over 100 years later, Qin took 10 years to sweep away the six states."); 「此後500多年」 ("for over 500 years after")). A paragraph whose sentences each
@@ -197,11 +198,11 @@ or burns, hopeful when a new city grows. Your own feelings, judgements and assoc
   state with his reforms")), not as a tag stuck on the name; a name known worldwide needs none.
 - Long sentences carry the story forward; a short one lands the weight (「火三月不滅。」 ("The fire burned for three months.")). Plain means exact verbs and real sizes,
   not childish words: a line emptied to sound simple ("there was work again", "food and lodging became a problem") is as dead as a stock phrase.
-- The narrator feels; the events are told in the record's terms. Feeling lives in what you choose to tell, in a turn or a judgement of one line, and in a word
-  (「好在2025年，宮殿區約7平方公里建成國家考古遺址公園」 ("Fortunately, in 2025 the palace area of about 7 square kilometres became a national archaeological park")).
-  The action itself is not dramatized, graded or enlarged beyond the sources: the burning of the Qin palaces is 「火三月不滅」, four characters and no adjective.
-  A line that grades a move ("a deadly blow", "a stroke of genius in despair"), piles up colour words, or makes an event bigger than the record belongs to a novel,
-  not a documentary, and is as false as an invented fact.
+- Colour and judgement are part of the telling, kept to a documentary narrator's restraint. The narrator may paint a moment and judge what happened, in a word or
+  a line (「這份執念，從咸陽開始」; 「好在2025年，宮殿區約7平方公里建成國家考古遺址公園」 ("Fortunately, in 2025 the palace area of about 7 square kilometres became a
+  national archaeological park")). What does not belong is the novel's way of telling: close-up detail and drama nobody recorded (a commander's "stroke of genius
+  in despair", "a deadly blow", a gasp in the crowd), colour words heaped on one event, an event made bigger than the sources. These break the documentary voice
+  and are as false as an invented fact. Restraint is not a flat voice: take the colour out of every line and the film is a report again.
 
 On a story told this way, a few devices give the strongest moments their shape. Each is strong because it is rare, a few times in a film: the audience notices the
 shape the second time, and by the fourth it hears a formula ("A was done, yet B"), which sounds machine-made. Some ways Xianyang uses them:
