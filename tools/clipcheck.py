@@ -9,7 +9,8 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
                       standing below the top of the platform it is on (a court's on a hillside); a court or an arena is open
   landmarks_overlap   two different landmark bodies overlapping (beyond touching)
   walls_through       a wall (a thin long piece) right across a hall or a house (its whole width), in the same court too;
-                      a wall running part way into the gate house it ends at is as built
+                      a wall running part way into the gate house it ends at is as built, and one laid along a face (its middle
+                      line on it, or its outer side on it: a facade skin) is not across
   streets_short       the end of a street (a road 10 m wide or more) that meets no other road within 20 m and points at a
                       landmark, earthwork or wall 20-150 m ahead without reaching it (an avenue stopping short of the palace
                       it leads to)
@@ -165,7 +166,9 @@ def main():
         # in the same court too (parts of one court are let touch in landmarks_overlap, so a wall through its own side hall passed)
         # (across: the wall's middle line crosses the building's whole width inside its walls; a wall running into a gate house or a
         # corner hall it ends at goes in part way, as built, and a wall laid along a building's face (a front arcade before the aisles'
-        # ends, a clerestory on the aisle's inner side) has its middle line on that face, not inside)
+        # ends, a clerestory on the aisle's inner side) has its middle line on that face, not inside; a wall set just inside the
+        # face, its outer side on it (a facade skin carrying the windows of a plain body), is laid along the face too: the
+        # building is read shrunk by the wall's half-thickness)
         wp_ = [p for p in body((LMK, WALL)) if min(p[5], p[6]) <= 2.5 * S and max(p[5], p[6]) > 8 * S]
         bp_ = [p for p in body((LMK, FAB)) if min(p[5], p[6]) > 2.5 * S]
         n = 0; ex = []
@@ -177,8 +180,10 @@ def main():
                 span = lambda g: (lambda v: max(v) - min(v) if v else 0.0)([x * ux + z * uz for x, z in shapely.get_coordinates(g)])
                 for j in btree.query(a, predicate='intersects'):
                     if not both(p, bp_[j]): continue
-                    q = a.intersection(br_[j])
-                    if q.length > 0 and q.length >= .9 * span(br_[j]): n += 1; c_ = q.centroid; ex.append([round(c_.x, 4), round(c_.y, 4)]); break
+                    g_ = rect(bp_[j], .3 * S + min(p[5], p[6]) / 2)
+                    if g_.is_empty: continue
+                    q = a.intersection(g_)
+                    if q.length > 0 and q.length >= .9 * span(g_): n += 1; c_ = q.centroid; ex.append([round(c_.x, 4), round(c_.y, 4)]); break
         R['walls_through'] = n; R['walls_through_at'] = ex[:10]
         # a street that stops short: one end of a road (paving marked a road, field 8) that meets no other road and points at a
         # landmark, an earthwork or a wall within street_m, without reaching it (an avenue that ends 80 m before the palace it
