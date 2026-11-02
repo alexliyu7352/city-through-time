@@ -220,13 +220,14 @@ Signs of AI writing, to recognise when reading aloud, not a list to tick off:
 - The same shape coming back: one sentence pattern, one kind of paragraph ending, one device, line after line. This is the surest sign; it comes from applying a
   device or a rule everywhere instead of where the story needs it.
 - A sentence that only says what something means, with nothing to see or feel ("unification brought a common order"; Xianyang says 「文字、車軌、尺和秤，從此全天下一樣」).
+- A reason the audience already has, said again: the cause told earlier, or the motive the next action already shows, explained in a line of its own.
 - A point said, then explained, then summed up (Xianyang's fall is four lines, 「然而，它只撐了15年。項羽引兵入咸陽，燒秦宮室。火三月不滅。如今，那裡只剩一片田野。」
   ("It lasted 15 years. Xiang Yu took Xianyang and set the palaces alight. The fire burned for three months. Today only fields remain."), and none explains what it meant).
 - The tone of a report: who recorded it, how it was estimated, that it is still a plan. These go on screen (the source line, the label on the picture or card, the end card);
   the voice names a record only when it is part of the story (an eyewitness's shock), and carries doubt in one word (「傳說」 ("legend"), "it is said").
 - Stock phrases (「見證了」 "a testament to", 「不僅……更是……」 "not only … but also", 「另一種」 "another kind of"), a moral at the end of every paragraph,
   every sentence in the same rhythm, facts strung along in outline order, a sentence the listener loses track of.
-- Talking to the audience, saying what you feel, an "I", a judgement of your own, a line that hands one scene to the next, saying why someone acted: these are not
+- Talking to the audience, saying what you feel, an "I", a judgement of your own, a line that hands one scene to the next, saying why someone acted where the audience could not tell: these are not
   signs of AI but the storyteller's own work; keep them. Stripped out, they leave a chronicle read out. They become a habit only when
   the same move comes back again and again ("imagine…", "look…" every few lines), or when a line names a feeling the picture already shows.
 
