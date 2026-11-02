@@ -1784,7 +1784,8 @@ for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's co
     pv_ = nodes_out[i_ - 1] if i_ else None   # nothing changes inside it (same colour, no city, no reset): drawn without a front
     silent = bool(pv_ and nd['col'] == pv_['col'] and nd['tint'] == pv_['tint'] and not era_ and nd['reset'] is None and 'dim_today' not in node)
     if grows_ and (not imp or imp['follow']) and f0_['mode'] == 'ring': silent = True   # the city's own ring draws the front (two fronts on one spot made a glowing disc)
-    nd['ring'] = {'o': nd['wave'], 't0': t0, 'impact': bool(imp), 'shock': [imp['land'], round(imp['end'][0], 5), round(imp['end'][1], 5), round(.9 * view_r(imp['land'], imp['end']), 5)] if imp else None,   # (sized on the landing shot) 'silent': silent,
+    nd['ring'] = {'o': nd['wave'], 't0': t0, 'impact': bool(imp), 'shock': [imp['land'], round(imp['end'][0], 5), round(imp['end'][1], 5), round(.9 * view_r(imp['land'], imp['end']), 5)] if imp else None,   # (sized on the landing shot)
+                  # ('silent' is not sent: the approved look draws every node's front; sending it drops the front of 16 of Xianyang's 22 nodes)
                   'curve': stagecraft.ring_curve(t0, view_r(t0, o), far_corner(o), TIMING['ring_view'], TIMING['ring_out'])}
 for e in eras_out:   # how each city is taken back: contracting from its edge (in) or by the next node's colour ring (out)
     if e.get('off') is None: e['fallR'] = None; continue
@@ -2365,7 +2366,8 @@ def _hidden(t, c, r):   # share of a place's on-screen points (its centre and ei
     q = [v for v in (CAMERA.project(t, p_) for p_ in pts) if v and abs(v[0]) <= 1 and abs(v[1]) <= 1]
     return sum(v[0] > PANEL_NDC for v in q) / len(q) if q else 0.0
 def _changes():   # (t0, t1, what, places or None for the whole frame)
-    for n in nodes_out: yield n.get('arrive', n['t0']), n.get('arrive', n['t0']) + film['wave_dur'], f"{n['id']}'s colour ring", None
+    for n in nodes_out:   # each node's colour ring, from when it really starts (its city's start, its beam's landing) until its front is gone
+        r_ = n['ring']; yield r_['t0'], max(r_['t0'] + film['wave_dur'], r_['curve'][-1][0]), f"{n['id']}'s colour ring", None
     for era_, (a_, b_), c_, r_, _ in PLACES: yield a_, b_, f'era {era_} growing', [(c_, r_)]
     for e in eras_out:
         if e.get('off'): yield (e['off'] - (e.get('burn') or 0), e['off'] + e.get('sink', 2.5), f"era {e['id']} {'burning and ' if e.get('burn') else ''}going",
