@@ -8,6 +8,7 @@ sound and light in sync. The white-model projection is only a starting point, no
 
 - The whole city changes colour at once, changes happen off camera, a whole area pops up at once, the camera cuts hard → rules 1–9.
 - Key beats told over a white city standing still, with no place marked and no picture → "A picture for every key beat".
+- The narration and the city come apart: the city rebuilds under lines about something else, and a far country or sea is named with nothing to show where it is → "A picture for every key beat".
 - Non-CC pictures and videos get mixed into the preview shown to the user → on screen use only CC, public domain or the user's own material; if there is none, use a labelled imagined picture ("Footage and pictures").
 
 ## Basic grammar
@@ -153,8 +154,15 @@ Every key beat of the detailed outline (SCRIPT.md) is carried by something the a
 under the year counter), a place name or a coloured area (`pins`, `labels`, `areas`, `epochs`), a line or a beam (`routes`, `lines`), a picture, found or imagined ("Footage and
 pictures"), a living moment, or the city's own idea (`sky:`). A key beat told over a white city standing still, with nothing marked, is not staged: a model the audience cannot
 read is an empty model, however fine. A line that points at a place ("that first hillside", "across the river", "where the palace stood") has the place marked as it is said.
-Before step 5 is done, write in TREATMENT.md the table key beat → what carries it, and set the film's density beside the example's (`cities/xianyang/city.yaml`: count its
-place names, areas, lines and beams, and pictures per minute); a film well below it reads as a model, not a story.
+A place beyond the plate (a country, a sea, a far province or city) cannot be marked on the model: show it on a map picture (`footage`, `mode: doc` or `panel`: a public-domain
+or Natural Earth map with the place marked) while the line names it. The audience must know where it is, and a small card after the line, or the city standing in for the place, does not tell them.
+It works the other way too: every change on the model is told. A city rebuilt, a quarter rising, a building appearing plays under the line that names that change (Xianyang: the six
+palaces rise as 「那時，每滅一國，就照它的宮殿在北阪上再造一座」 is said) or carries a tag saying what it is. A change no line names reads as noise, and the narration and the city come
+apart. When the narration is rewritten, a model state the final lines no longer speak of is merged into the one before or after, or cut; it is not kept for the work it took.
+Before step 5 is done, write in TREATMENT.md the table key beat → what carries it, line by line from the final narration (rebuilt whenever the narration changes), and set the film's
+density beside the example's (`cities/xianyang/city.yaml`: count its place names, areas, lines and beams, and pictures per minute); a film well below it reads as a model, not a story.
+"The city carries it" is a carrier only when the city visibly changes the way the line says; a city standing there while the line tells a war is not one. Review the table against
+the frames: for each line, what is on screen while it is said.
 
 ## Footage and pictures
 
