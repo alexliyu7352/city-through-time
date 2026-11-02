@@ -184,7 +184,9 @@ or burns, hopeful when a new city grows. Your own feelings, judgements and assoc
 
 **Tell it as one story, not a list of events.** The audience follows a story by its links; facts without links are heard as a chronicle read out, and forgotten.
 - Each sentence follows from the one before: by cause and result, or by what someone wanted, feared or decided (the First Emperor said his throne would pass on
-  「二世三世至於萬世」 ("to ten thousand generations"), and that want is what his fall answers).
+  「二世三世至於萬世」 ("to ten thousand generations"), and that want is what his fall answers). Most links are sequence and cause; contrast ("but", "yet",
+  "still", "and yet the walls stayed") is one kind of link and belongs to the few real turns of the film. Made the default link, it becomes the formula under
+  whatever word carries it, so when checking a draft, look for the shape, not the word.
 - Time moves the way a storyteller says it. Turning points carry their year ("Time and power"); between them, say how much later, which also lets the audience feel
   the pace (「商鞅統一了秦國的尺、斗和秤，秦一天天強大起來。100多年後，秦用10年掃平六國。」 ("Shang Yang unified Qin's rulers, measures and scales, and Qin grew stronger
   day by day. Over 100 years later, Qin took 10 years to sweep away the six states."); 「此後500多年」 ("for over 500 years after")). A paragraph whose sentences each
