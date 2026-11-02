@@ -8,7 +8,7 @@ usage: python -I tools/rangecheck.py <city_slug | city folder> (--stations id[,i
   a city folder: a model study's or any folder under cities/ (tools/geocheck.mjs takes the same)
 writes build/review/range_<from>_<to>/ (the stills, sheet_NN.jpg, report.json) and build/logs/range_<step>.log; exit 1 when a
 check fails."""
-import argparse, json, math, os, subprocess, sys
+import argparse, json, math, os, signal, subprocess, sys
 import numpy as np
 from PIL import Image
 
@@ -40,13 +40,15 @@ def main():
     def run(name, cmd):
         log = os.path.join(logs, f'range_{name}.log')
         with open(log, 'w', encoding='utf-8') as f: r = subprocess.run(cmd, cwd=ROOT, stdout=f, stderr=subprocess.STDOUT)
+        if r.returncode < 0:   # killed by a signal (a crash leaves the log empty; a Python step's traceback is faulthandler's, above)
+            with open(log, 'a', encoding='utf-8') as f: f.write(f'\nrangecheck: {name} was killed by {signal.Signals(-r.returncode).name}: run it again; a second crash on the same input: report it with this log and the kernel log line (dmesg)\n')
         last = ([l for l in open(log, encoding='utf-8').read().splitlines() if l.strip()] or [''])[-1]
         steps[name] = {'ok': r.returncode == 0, 'log': os.path.relpath(log, ROOT), 'last': last[:300]}
         print(f"  {'ok  ' if r.returncode == 0 else 'FAIL'} {name}: {last[:160]}", flush=True)
 
     rng = ['--from', f'{a:g}', '--to', f'{b:g}']
     run('camdump', ['node', 'tools/camcheck.mjs', slug, *rng])
-    run('camcheck', [sys.executable, '-I', 'tools/camcheck.py', D])
+    run('camcheck', [sys.executable, '-I', '-X', 'faulthandler', 'tools/camcheck.py', D])
     run('readcheck', ['node', 'tools/readcheck.mjs', slug, *rng])
     report = {'city': slug, 'from': a, 'to': b, 'steps': steps}
     if not A.no_stills:
@@ -57,7 +59,7 @@ def main():
         sheets = []
         for i in range(0, len(ims), 16):
             s = os.path.join(out, f'sheet_{i // 16:02d}.jpg'); sheets.append(os.path.relpath(s, ROOT))
-            run(f'sheet_{i // 16:02d}', [sys.executable, '-I', 'tools/sheet.py', s, *[os.path.join(out, f) for f in ims[i:i + 16]], '--cols', '4', '--w', '480'])
+            run(f'sheet_{i // 16:02d}', [sys.executable, '-I', '-X', 'faulthandler', 'tools/sheet.py', s, *[os.path.join(out, f) for f in ims[i:i + 16]], '--cols', '4', '--w', '480'])
         # brightness: Y of each still on the video scale (black 16, white 235), as signalstats YAVG reads the rendered film
         Y = []
         for f in ims:

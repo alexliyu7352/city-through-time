@@ -2598,10 +2598,10 @@ def _dead_air():
 def _model_checks():
     import subprocess
     root_ = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); bad_ = []
-    for name_, cmd_ in (('geocheck', ['node', os.path.join(root_, 'tools', 'geocheck.mjs'), D]), ('clipcheck', [sys.executable, '-I', os.path.join(root_, 'tools', 'clipcheck.py'), D])):
+    for name_, cmd_ in (('geocheck', ['node', os.path.join(root_, 'tools', 'geocheck.mjs'), D]), ('clipcheck', [sys.executable, '-I', '-X', 'faulthandler', os.path.join(root_, 'tools', 'clipcheck.py'), D])):
         r_ = subprocess.run(cmd_, cwd=root_, capture_output=True, text=True)
         open(LAYOUT.logs(D, f'{name_}.log'), 'w', encoding='utf-8').write(r_.stdout + r_.stderr)
-        print('  ' + ((r_.stdout.strip().splitlines() or [f'{name_}: no output ({r_.stderr.strip()[-200:]})'])[-1]))
+        print('  ' + ((r_.stdout.strip().splitlines() or [f'{name_}: no output ({r_.stderr.strip()[-200:]})'])[-1]) + (f'  (killed by signal {-r_.returncode}: a crash, run compile again)' if r_.returncode < 0 else ''))
         if r_.returncode: bad_.append(name_)
     return bad_
 _bad = _model_checks()
