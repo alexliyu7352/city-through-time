@@ -962,7 +962,7 @@ def line_anchor(node, ln):
     elif kind_ == 'shot':
         k_ = next((k for k in node.get('camera', []) if k.get('shot') == name_), None)
         if k_ is None: raise SystemExit(f'compile: line {ln["id"]}: no camera key with shot: {name_} in node {node["id"]}')
-        tau_ = float(k_['t'])
+        tau_ = k_['t']   # (a key timed by a line has no time of its own: said below)
     elif kind_ in ('pin', 'card', 'route'):
         L_ = {'pin': node.get('pins', []), 'card': node.get('footage', []), 'route': node.get('routes', [])}[kind_]
         it_ = next((q for q in L_ if q.get('id') == name_), None)
