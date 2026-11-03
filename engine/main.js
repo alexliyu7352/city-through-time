@@ -623,8 +623,8 @@ window.EV = EV;
 let PLAYING = false;
 const fullCover = t => (FILM.footage || []).some(f => (f.mode || 'full') === 'full' && t >= f.on + f.fin && t <= f.on + f.dur - f.fout);
 const renderSync = t => { const s = sceneAt(t); LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); S.groundsNow(); setLiving(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } if (!QS.has('clean') && !FREE) drawOverlay(t); else OV.begin(); };   // clean: the model alone (tools/living.py's reference)
-window.render = (FILM.footage || []).length ? async t => {
-  for (const f of FILM.footage) {
+const seekFootage = async t => {
+  for (const f of FILM.footage || []) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;
     const target = Math.max(0, Math.min(v.duration - .05, f.start + t - f.on));
     if (PLAY && PLAYING) {
@@ -639,9 +639,11 @@ window.render = (FILM.footage || []).length ? async t => {
       if (t >= f.on - .5 && t <= f.on + f.dur + .5) await seekTo(v, target);
     }
   }
-  renderSync(t);
-} : renderSync;
-window.TEXTS = async t => { await window.render(t); return OV.texts(); };
+};
+window.render = (FILM.footage || []).length ? async t => { await seekFootage(t); renderSync(t); } : renderSync;
+// tools/readcheck.mjs: the words of frame t, the scene not drawn (the overlay reads the camera and the clips, never the 3D frame:
+// the scene drawn for every sample was nearly all of the check's time: Xianyang 0-260 s, 194 s before, 15 s now, the same report)
+window.TEXTS = async t => { await seekFootage(t); LV = liveAt(t); setCamera(t); if (!QS.has('clean') && !FREE) drawOverlay(t); else OV.begin(); return OV.texts(); };
 window.DRAWN = () => OV.drawn();   // every text of the frame TEXTS last drew (tools/readcheck.mjs: texts over texts)
 // tools/camcheck.mjs: the camera at time t without drawing (position, target, near plane, distance)
 window.CAMAT = t => { LV = liveAt(t); setCamera(t); return { p: camera.position.toArray(), tg: tgt.toArray(), near: camera.near, d: camDist, fov: camera.fov }; };   // (the camera render(t) sets, a living moment's shot included, whatever was drawn last)
