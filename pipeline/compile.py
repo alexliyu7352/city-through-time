@@ -685,7 +685,7 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
         fronts.append({'mode': mode, 'o': [round(o[0], 6), round(o[1], 6)], 'dir': [round(v, 6) for v in dirv] if dirv else None,
                        'curve': curve_,
                        'w': round(w, 6), 'a': [round(t0 - TIMING['fade'], 3), round(max(t1 + grow * .5, curve_[-1][0]), 3)], 'n': len(gids),
-                       '_plan': {'t_from': t_from, 't0': t0, 't_end': round(t0 + dur + grow, 3), 'centre': centre, 'rad': rad_, 'n': len(gids),
+                       '_plan': {'t_from': t_from, 't0': t0, 't_end': round((start[gids[0]] if len(gids) == 1 else t0 + dur) + grow, 3), 'centre': centre, 'rad': rad_, 'n': len(gids),   # (one building rises at once, not over the stage's time)
                                  'focus': look_target(G, gids, cs, node_id, mode == 'scan')}})   # for plan_stages (popped)
         study_next = fronts[-1]['a'][1] + .5
     st_p = [start[gid] for gid, _, _ in meta]
