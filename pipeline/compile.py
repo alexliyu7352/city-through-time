@@ -705,6 +705,9 @@ def camv(k):
 def footage_item(ft, on, nid):
     """a picture or clip of a node (or of the prologue, nid None) as film.json shows it, from `on` seconds"""
     a_, b_ = ab(ft)
+    if 'kicker' not in ft and ft.get('mode', 'full') != 'full':   # the default label is a film of the place today: a card, map or photo says what it is
+        raise SystemExit(f"compile: footage {ft['id']} (mode: {ft['mode']}) has no kicker: it would be labelled {KICKER_TODAY!r}, a film of the place "
+                         f"today; write what the picture is (kicker: a photograph and its year, a map, a card, an imagined picture ..)")
     return {'id': ft['id'], 'file': ft['file'], 'on': on, 'dur': float(ft['dur']), 'start': float(ft.get('start', 0)), 'fin': ft.get('in', 1.0), 'fout': ft.get('out', 1.0),
             'title': a_, 'sub': b_, 'kicker': pick(ft['kicker']) if 'kicker' in ft else KICKER_TODAY, 'credit': pick(ft.get('credit', '')), 'pan': ft.get('pan', 0),
             'mode': ft.get('mode', 'full'), 'side': ft.get('side', 'right'),

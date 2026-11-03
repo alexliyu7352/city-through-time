@@ -175,7 +175,9 @@ the frames: for each line, what is on screen while it is said.
 ## Footage and pictures
 
 Each historic node ends with "the same place today" (`footage:`, `mode: full | panel | card | doc`): 4K video full frame for 7–9 seconds, high-resolution photos in the right-hand panel,
-low-resolution material as a small card with a leader line (`anchor`), a document card for old maps; do not let footage flash by. **On-screen third-party material is only CC or public domain** (Wikimedia Commons);
+low-resolution material as a small card with a leader line (`anchor`), a document card for old maps; do not let footage flash by. The `kicker` above the title says
+what the picture is (a photograph and its year, a map, a portrait, an imagined picture): without one, full-frame video is labelled as film of the place today and compile
+stops on a card, panel or document card. **On-screen third-party material is only CC or public domain** (Wikimedia Commons);
 the user's own shots or material the user has the right to license may also be used, with the licence stated in CREDITS. If there is none of these, a scene worth a picture gets an imagined picture based on the sources (which scenes get pictures and how to generate them: SCRIPT.md "Pictures"; label the card "根據史料想像" ("imagined from the sources"), and state it in CREDITS).
 An imagined picture in the film uses `mode: panel` (right half, blended into the map) with the kicker 「想象图 · IMAGINED · 据史料」 ("imagined picture · IMAGINED · from the sources"), placed when nothing is growing on the model; non-CC material is allowed only for pipeline tests on the local machine,
 not stored in the repository, and not in the preview shown to the user.
