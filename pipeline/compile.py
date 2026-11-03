@@ -2677,6 +2677,15 @@ def _unread(o, path=''):
         for i, v in enumerate(o): yield from _unread(v, f'{path}[{dict.get(v, "id", i) if isinstance(v, dict) else i}]')
 _nobody = list(_unread(C))
 if _nobody: WARN.append('city.yaml keys nothing reads (a typo, a key in the wrong place, or one this version does not have): ' + ', '.join(_nobody))
+# a word run into a number in the words the film shows ("by1900", "rule15days", "Porta Pia ·1870"): a space lost where a script made the text
+def _glued(o):
+    if isinstance(o, dict): o = list(o.values())
+    if isinstance(o, list):
+        for v in o: yield from _glued(v)
+    elif isinstance(o, str) and ' ' in o:
+        yield from (o[max(0, m.start() - 12):m.end() + 6] for m in re.finditer(r'(?<![\w/.#-])[A-Za-z][a-z]+\d|\d[a-z]{4,}\b|[A-Za-z0-9]·|·[A-Za-z0-9]', o))
+_gl = list(dict.fromkeys(_glued(film)))
+if _gl: WARN.append('a word runs into a number in the text on screen (a space lost): ' + '; '.join(f'"{g_}"' for g_ in _gl[:12]) + (f' and {len(_gl) - 12} more' if len(_gl) > 12 else ''))
 for w_ in WARN: print('warning: ' + w_, file=sys.stderr)
 if LIVING_BAD and os.environ.get('CT_LIVING') != 'warn':   # (CT_LIVING=warn: report only, while the pictures are being made: tools/living.py ref reads film.json)
     raise SystemExit('compile: living moments (docs/STAGING.md "Living moments"): ' + '; '.join(LIVING_BAD))
