@@ -1248,6 +1248,9 @@ for i, node in enumerate(FM['nodes']):
     dur = dur * k_ + sum(q['delta'] for q in node['_ins'])
     node['_t0'] = round(cursor, 3); node['_t1'] = round(cursor + dur, 3)
     ys = node.get('years') or [node['year'], node['year']]; node['_years'] = [float(ys[0]), float(ys[1])]
+    if i > 1 and node['_years'][0] < FM['nodes'][i - 1]['_years'][1]:   # (the first stop may span the whole story: a name, an overview)
+        raise SystemExit(f"compile: node {node['id']} starts at year {node['_years'][0]:g}, before {FM['nodes'][i - 1]['_years'][1]:g} where "
+                         f"{FM['nodes'][i - 1]['id']} ended: the year counter would run backward. Tell an earlier event in words under the later year, or put the stops in order (docs/STAGING.md \"Basic grammar\")")
     if first_year is None: first_year = node['_years'][0]
     yearline += node_years(node)
     T = lambda v, d=None, _n=node: node_time(_n, v, d)
