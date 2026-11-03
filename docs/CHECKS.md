@@ -58,6 +58,7 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
   `build/film.json` before and after the change (framing is computed from pins, areas and lines, so removing one tag also moves the composition). When a test fails, first examine the test itself (a mistyped URL, a missing file),
   then draw a conclusion.
 - **Report in proportion to the change:** a small fix reports what changed, the link, and the checks of the stretch it touched; time spent on proofs, receipts and
-  repeated reviews of unchanged parts is time the user waits. Iterate on the touched station with its neighbours (a candidate of those stations only), then put it back.
+  repeated reviews of unchanged parts is time the user waits. To verify is to run the check and give its result in a line; it is not to write a receipt, an audit
+  script or an equivalence file for it. Iterate on the touched station with its neighbours (a candidate of those stations only), then put it back.
 - **State the scope of the effect:** one building, one station, one city, or the whole film and all cities. When changing a judgement shared by all nodes, compile the whole film and compare each station's duration, `build/logs/plan.json` and
   `build/logs/deadair.txt`, not only the stretch where the problem appeared.
