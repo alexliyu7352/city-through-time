@@ -52,6 +52,8 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
   (an open page may have been loaded halfway through a change); speak only of what the preview really has (example: when the preview cannot play sound yet, do not ask the user to "listen in the preview").
 - **Accept on the thing the user pointed at:** confirm by screenshot at that second and on that object, not on something beside it (example: for an area's colouring look at the houses changing colour, not only the ground);
   when replacing an effect, look once at the farthest and once at the nearest camera: "not deleted" does not mean "visible" (example: sparks shrunk to 3 pixels cannot be seen even up close).
+- **A fault the user names is one of a kind:** fix it, then go through every line of the film for the same fault before handing back (example: one far place
+  named without a map means checking every place each line names, not only the one pointed at). The user should never have to find the second one.
 - **When the user says "it changed", compare before reasoning about the cause:** rebuild the commit before the change (`git worktree add`, or `git archive` into a temp folder), and compare screenshots at the same second;
   find the cause by elimination: paint each part a different colour, remove them one by one, and see which one the defect follows; do not decide the cause first.
 - **Verify before you say it:** before saying "the program does it this way", read the program; "checks pass" must be run on the state after the last change, stating which stretch was run; before saying "the picture is unchanged", compare
