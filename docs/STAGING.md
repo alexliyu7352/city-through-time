@@ -47,9 +47,9 @@ No hard cuts between nodes: do not write the next node's first camera keyframe a
    - A full-frame video (`mode: full`) covers the whole picture. The 3D clock does not stop (the preview just does not draw 3D under the video), so the covered time counts as "the camera is not looking":
      city growth automatically waits until the video ends (compile's `covered`).
      Changes that span the whole picture (colour-change ring, satellite transition, area lighting) do not wait by themselves, and compile blocks them.
-   - A half-screen picture (`mode: panel`, the right 64%) may coincide with a change as long as the change happens on the left of the picture and no more than a third is covered (compile checks by projection every 0.25 seconds).
-     Changes that span the whole picture (the node's colour-change ring, the growth wave of modern buildings, the satellite transition, area lighting) count as covered.
-   - When covered, in order: compose the shot so the change falls on the left → move the picture to after the change ends within the same narration (example: the picture of Shang Yang's construction is moved to after the Qin capital has finished growing, matched with 「宫殿筑在渭北的高台上」 ("the palaces were built on the high terraces north of the Wei"))
+   - A half-screen picture (`mode: panel`, the right 64%) does not go up while the model changes, even when the change falls on its left: the eye goes to the picture, and a city
+     rising beside it is missed. A change and a picture take turns.
+   - When they meet, in order: move the picture to before or after the change within the same narration (example: the picture of Shang Yang's construction is moved to after the Qin capital has finished growing, matched with 「宫殿筑在渭北的高台上」 ("the palaces were built on the high terraces north of the Wei"))
      → turn it into a small card (`card`, not restricted; example: the picture of Xiang Yu burning the palaces, followed by 「如今只剩一片田野」 ("now only fields are left"); delayed, it would not match).
      A half-screen picture works better than a small card, so use it where possible.
    - Do not lengthen a node to place a picture, or leave a gap in the narration; pace comes first. A document card (`doc`) on the right must not cover the part that is growing.
@@ -161,6 +161,8 @@ with those marks, best animated, the area lighting and the march drawing itself 
 show the audience where it is.
 Every change on the model is readable: what changed is shown as it happens, by the line that tells it or on screen, a tag, an area, the readout (Xianyang: the six palaces rise as
 「那時，每滅一國，就照它的宮殿在北阪上再造一座」 is said). The narration need not name every change, and a model is not cut for want of a line; a change nothing on screen explains reads as noise.
+A change is also seen: the camera is close enough to tell what is new, its tag can be read at that size, and no picture is up beside it (5b). A tag the size of a subtitle's
+comma, on a city rising in a far, dark shot, is there on paper only.
 Before step 5 is done, write in TREATMENT.md the table key beat → what carries it, rebuilt from the final narration whenever it changes, and set the film's
 density beside the example's (`cities/xianyang/city.yaml`: count its place names, areas, lines and beams, and pictures per minute); a film well below it reads as a model, not a story.
 "The city carries it" is a carrier only when the city visibly changes the way the line says; a city standing there while the line tells a war is not one. Review the table against

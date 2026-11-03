@@ -269,7 +269,9 @@ No rule sets a sentence length: write as speech; subtitle length is handled when
 - A line that talks about a particular picture gets `with:` and is spoken only when that picture appears: `shot:<shot name of a camera keyframe>`, `pin:<tag>`, `card:<card>`, `stage[:<stage name>]`, `node`;
   `lead:` brings it forward by some seconds (a negative number delays it).
 - Other lines have no time: they follow when the line before has been said (0.35 seconds between), and may run into the camera's hold; the first line of a node comes 0.5 seconds after the node is reached.
-- `{ pause: seconds, why: "..." }`: a deliberate silence (it does not count as dead air).
+- `{ pause: seconds, why: "..." }`: a deliberate silence (it does not count as dead air). A pause is for the audience: a breath after a heavy line, a moment with the music alone,
+  a change watched in silence for the few seconds it takes. It is not for showing the model: phases of a city rising play under the lines that tell them, and a long silence
+  makes the film drag.
 - Pictures can also follow lines: cards, routes, areas, map lines, projections and a city's growth stages get `with: <line id>` (`plus:` is some seconds later);
   tags and sections with `with:` show from the start of that line to its end (or `until: <line id>`) plus `hold` seconds. "The end of that line" is the subtitle's own length,
   without the 0.4 seconds (`extra`) the subtitle stays after being read: to close together with the subtitle, add 0.4 to `hold`.

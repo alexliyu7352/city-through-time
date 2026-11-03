@@ -43,6 +43,11 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
 
 - **The audience pass:** play the stretch at speed, with the subtitles, as a viewer who does not know the city, then write down what it leaves (SKILL.md "Judge as the audience").
   A key beat that leaves nothing, or a line pointing at a place the picture does not mark, is restaged, whatever the checks say.
+  For each change on the model, ask whether a first-time viewer sees it happen and can read what is new, at that camera distance: a tag too small to read, or a city rising
+  while the eye is on a picture, is not seen, however correct the data behind it. Compare a revised stretch with its previous version, frame beside frame: a beat that read
+  better before is a regression, and goes back.
+  Set each station's length against its voice (film seconds over the voiced lines' seconds; the example runs about 1.25×): a station well above it is gathering silences;
+  list every gap over 8 seconds and what is on screen during it.
 - **Before showing the user:** confirm the preview server is still running (after a power cut or reboot, run `node tools/preview.mjs` again); take a screenshot yourself to confirm it is already the new version, and remind the user to "look again after refreshing"
   (an open page may have been loaded halfway through a change); speak only of what the preview really has (example: when the preview cannot play sound yet, do not ask the user to "listen in the preview").
 - **Accept on the thing the user pointed at:** confirm by screenshot at that second and on that object, not on something beside it (example: for an area's colouring look at the houses changing colour, not only the ground);

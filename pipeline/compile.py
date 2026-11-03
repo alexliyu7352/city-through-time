@@ -2360,11 +2360,6 @@ film = {
 # city that grows or burns on the left of the frame; it may not cover more than a third of that place on screen, sampled four times
 # a second. Changes across the whole frame (a node's colour ring, today's buildings rising, the satellite plate's sweeps, an area
 # lighting up, the sky plan drawn over the city) count as covered. A small card may sit over any change.
-PANEL_NDC = .36 * 2 - 1 + 130 / 960
-def _hidden(t, c, r):   # share of a place's on-screen points (its centre and eight round its edge) under the panel at t
-    pts = [c] + [(c[0] + r * math.cos(k * math.pi / 4), c[1], c[2] + r * math.sin(k * math.pi / 4)) for k in range(8)]
-    q = [v for v in (CAMERA.project(t, p_) for p_ in pts) if v and abs(v[0]) <= 1 and abs(v[1]) <= 1]
-    return sum(v[0] > PANEL_NDC for v in q) / len(q) if q else 0.0
 def _changes():   # (t0, t1, what, places or None for the whole frame)
     for n in nodes_out:   # each node's colour ring, from when it really starts (its city's start, its beam's landing) until its front is gone
         r_ = n['ring']; yield r_['t0'], max(r_['t0'] + film['wave_dur'], r_['curve'][-1][0]), f"{n['id']}'s colour ring", None
@@ -2384,14 +2379,8 @@ def _changes():   # (t0, t1, what, places or None for the whole frame)
 def _covers(x):   # the changes a picture hides while it is fully up: [(from, to, what)]
     m_ = x.get('mode', 'full'); x0_, x1_ = x['on'] + x.get('fin', 1.0), x['on'] + x['dur'] - x.get('fout', 1.0)   # (the fades leave the map seen)
     out_ = []
-    for a, b, w, places_ in _changes():
-        if not (a < x1_ and b > x0_): continue
-        if m_ == 'panel' and places_:
-            ts_ = [max(a, x0_) + k * .25 for k in range(int((min(b, x1_) - max(a, x0_)) / .25) + 1)]
-            worst_ = max(_hidden(t_, c_, r_) for t_ in ts_ for c_, r_ in places_)
-            if worst_ <= 1 / 3: continue
-            w = f'{w}, {worst_:.0%} of it under the panel'
-        out_.append((a, b, w))
+    for a, b, w, _ in _changes():   # (a panel blocks a change beside it too: the eye goes to the picture, and the change is missed)
+        if a < x1_ and b > x0_: out_.append((a, b, w))
     return out_
 _cover = []
 for x in footage_out:
