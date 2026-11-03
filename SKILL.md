@@ -39,6 +39,9 @@ Working with the user
 - **Praised passages are the baseline.** Record them in TREATMENT.md (seconds, what works), and check every later batch of changes against them; they must not regress.
 - **Reports must be checkable.** Give film time (mm:ss), node and file name; if only half is done, say which parts are still wrong; record deferred problems as a list and pick it up in the next round without being asked;
   if the previous report was wrong, correct it first in the next one. Before saying "checks pass" or "the picture is unchanged", actually run and compare (CHECKS.md).
+- **The record is git and the checks, not documents.** Commit the city folder when a step is done and after each round of changes, the message saying what changed and
+  the checks' own result lines; the checks are programs (compile's, `tools/rangecheck.py`'s report). Do not write receipts, audits or proof files: the user neither reads
+  nor needs them, and they cost the time the film needs.
 - **Use the tool as it actually is.** Before asking the user to operate a tool, look at its real interface (ask the user for a screenshot if you cannot get it); look up a model's parameters in the code of the exact version that will run.
   For a design you are unsure about (timeline, music workflow, staging), look at how comparable works and open-source projects do it, then propose.
 - **Pushing, uploading and publishing each need the user's go-ahead on that occasion.** Consent for the last one covers only the last one; after a commit, report "not pushed yet".
