@@ -1,10 +1,11 @@
 """After a change, every check of the stretch it touched in one command (docs/CHECKS.md "After every change"): the camera
 (tools/camcheck.mjs, then camcheck.py), the text (tools/readcheck.mjs), a still every --step seconds (render/still.mjs) laid out
-in contact sheets of 16 (tools/sheet.py), and the stills' brightness (YAVG as docs/CHECKS.md "Brightness" counts it). The steps
-run one after another, each into its own log; a failed one does not stop the rest. The checks cannot see composition, speed or
-darkness: look at every sheet.
-usage: python -I tools/rangecheck.py <city_slug | city folder> (--stations id[,id..] | --from s --to s) [--step 1] [--size 960x540] [--no-stills]
+in contact sheets of 16 (tools/sheet.py) and line by line (tools/linesheet.py: each line's stills under its words), and the stills'
+brightness (YAVG as docs/CHECKS.md "Brightness" counts it). The steps run one after another, each into its own log; a failed one does
+not stop the rest. The checks cannot see composition, speed or darkness: look at every sheet.
+usage: python -I tools/rangecheck.py <city_slug | city folder> (--stations id[,id..] | --from s --to s) [--step 1] [--size 960x540] [--no-stills] [--against <city>]
   --stations  those stations and one before and one after each, the range a change touches (docs/CHECKS.md)
+  --against   the previous version (a candidate, a model study): the line sheets show its stills of each line beside this one's
   a city folder: a model study's or any folder under cities/ (tools/geocheck.mjs takes the same)
 writes build/review/range_<from>_<to>/ (the stills, sheet_NN.jpg, report.json) and build/logs/range_<step>.log; exit 1 when a
 check fails."""
@@ -18,7 +19,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def main():
     ap = argparse.ArgumentParser(description='every check of one stretch of the film (tools/rangecheck.py docstring)')
     ap.add_argument('city'); ap.add_argument('--stations'); ap.add_argument('--from', dest='a', type=float); ap.add_argument('--to', dest='b', type=float)
-    ap.add_argument('--step', type=float, default=1.0); ap.add_argument('--size', default='960x540'); ap.add_argument('--no-stills', action='store_true')
+    ap.add_argument('--step', type=float, default=1.0); ap.add_argument('--size', default='960x540'); ap.add_argument('--no-stills', action='store_true'); ap.add_argument('--against')
     A = ap.parse_args()
     D = os.path.abspath(A.city) if '/' in A.city else os.path.join(ROOT, 'cities', A.city)
     slug = os.path.relpath(D, os.path.join(ROOT, 'cities'))   # (the Node tools take a city by its folder under cities/)
@@ -60,6 +61,9 @@ def main():
         for i in range(0, len(ims), 16):
             s = os.path.join(out, f'sheet_{i // 16:02d}.jpg'); sheets.append(os.path.relpath(s, ROOT))
             run(f'sheet_{i // 16:02d}', [sys.executable, '-I', '-X', 'faulthandler', 'tools/sheet.py', s, *[os.path.join(out, f) for f in ims[i:i + 16]], '--cols', '4', '--w', '480'])
+        run('lines', [sys.executable, '-I', '-X', 'faulthandler', 'tools/linesheet.py', D, *rng, '--stills', out, '--size', A.size, *(['--against', os.path.abspath(A.against) if '/' in A.against else A.against] if A.against else [])])
+        lines_ = os.path.join(D, 'build', 'review', f'lines_{a:g}_{b:g}')
+        sheets += sorted(os.path.relpath(os.path.join(lines_, f), ROOT) for f in os.listdir(lines_) if f.startswith('lines_') and f.endswith('.jpg')) if os.path.isdir(lines_) else []
         # brightness: Y of each still on the video scale (black 16, white 235), as signalstats YAVG reads the rendered film
         Y = []
         for f in ims:

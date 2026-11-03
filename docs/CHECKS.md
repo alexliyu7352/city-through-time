@@ -22,7 +22,8 @@ two period cities existing at the same time overlapping, floating, trees inside 
 (camera clipping: camera underground, inside a building, line of sight blocked), `node tools/readcheck.mjs <slug> --from <a> --to <b>` (text dwell time), and look at screenshots second by second
 (`node render/still.mjs <slug> --range <a>:<b>:1` + `uv run python -I tools/sheet.py`): problems the checks cannot find (composition, too fast, too dark) are caught by this step.
 **One command runs them all for the range:** `uv run python -I tools/rangecheck.py <slug> --stations <id>[,<id>..]` (those stations and one before and after each; or `--from <a> --to <b>`;
-a model study's folder works too): camcheck, readcheck, a still a second in contact sheets of 16, and the stills' brightness, each step logged, a failed step does not stop the
+a model study's folder works too): camcheck, readcheck, a still a second in contact sheets of 16 and line by line (`build/review/lines_<a>_<b>/`: each line's stills under
+its words; with `--against <previous version>`, that version's stills of the same line beside them), and the stills' brightness, each step logged, a failed step does not stop the
 others, and `build/review/range_<a>_<b>/report.json` holds the results. Do not write a script of your own for this; then look at every sheet.
 A film with living moments: after any change to the model, the terrain or a living shot, `uv run python -I tools/living.py check cities/<slug>` (each shot rendered again and compared with the still its picture was made from; over 6 per pixel the picture no longer fits: make it again), and look at each moment's `sheet`.
 Whole-film screenshots, camcheck and readcheck freeze the user's computer so they cannot type; run them only in the round that fixes the whole film and before rendering the final film, and ask the user first (DELIVER.md).
@@ -44,9 +45,9 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
 - **The audience pass:** play the stretch at speed, with the subtitles, as a viewer who does not know the city, then write down what it leaves (SKILL.md "Judge as the audience").
   Then go through it line by line against the storyboard: each line carried by what is on screen as it is said, a far place on a map as it is named (STAGING.md "A picture
   for every key beat"); each change on the model seen happening and read at that camera distance, with no picture beside it (STAGING.md 5b); the year counter only forward
-  (STAGING.md "Basic grammar"); tags in plain words, readable at their size. Compare a revised stretch with its previous version, frame beside frame: what read better
-  before goes back. Set each station's length against its voice (the example runs about 1.25×); a station well above it is gathering silences: list every gap over
-  8 seconds and what is on screen. What fails here is restaged, whatever the checks say; a station handed over with one of these left costs the user a round.
+  (STAGING.md "Basic grammar"); tags in plain words, readable at their size. Compare a revised stretch with its previous version, frame beside frame (the line sheets
+  of `tools/rangecheck.py --against <previous version>`), every stretch the revision touched, the camera moves made to fix a check too: what read better before goes back.
+  Set each station's length against its voice (the example runs about 1.25×); a station well above it is gathering silences: list every gap over 8 seconds and what is on screen. What fails here is restaged, whatever the checks say; a station handed over with one of these left costs the user a round.
 - **Hand over whole:** show the user a round when all of it is done, not station by station while the rest is still being fixed.
 - **Before showing the user:** confirm the preview server is still running (after a power cut or reboot, run `node tools/preview.mjs` again); take a screenshot yourself to confirm it is already the new version, and remind the user to "look again after refreshing"
   (an open page may have been loaded halfway through a change); speak only of what the preview really has (example: when the preview cannot play sound yet, do not ask the user to "listen in the preview").
