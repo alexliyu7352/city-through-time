@@ -1815,7 +1815,11 @@ for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's co
                   # ('silent' is not sent: the approved look draws every node's front; sending it drops the front of 16 of Xianyang's 22 nodes)
                   'curve': stagecraft.ring_curve(t0, view_r(t0, o), far_corner(o), TIMING['ring_view'], TIMING['ring_out'])}
 for e in eras_out:   # how each city is taken back: contracting from its edge (in) or by the next node's colour ring (out)
-    if e.get('off') is None: e['fallR'] = None; continue
+    if e.get('off') is None:
+        if e.get('todayFrom') is None:
+            WARN.append(f"era {e['id']}: persist: true with no until, today_from or off_at: its houses stand in their period colour to the last frame, over "
+                        f"today's city (until: the node it lasts to; today_from: the node from which what still stands is part of today's city)")
+        e['fallR'] = None; continue
     if e['fall'] == 'in':   # cities that burn together share one ring
         same = [q for q in eras_out if q['fall'] == 'in' and q.get('off') == e['off'] and q['fallC'] == e['fallC']]
         maxd = max(max(q['_dist']) for q in same) + 30 * F.scale
