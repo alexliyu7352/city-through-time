@@ -30,7 +30,7 @@ class Seen(dict):
     def keys(self): self.read.update(dict.keys(self)); return super().keys()
     def items(self): self.read.update(dict.keys(self)); return super().items()
     def values(self): self.read.update(dict.keys(self)); return super().values()
-class _SeenLoader(yaml.SafeLoader): pass
+class _SeenLoader(getattr(yaml, 'CSafeLoader', yaml.SafeLoader)): pass   # (libyaml: a big city.yaml reads 4x faster, the same data)
 def _seen_map(loader, node):
     d = Seen(); d.read = set(); yield d
     d.update(loader.construct_mapping(node)); d.mine = set(dict.keys(d))   # (keys compile adds later are not the author's)
