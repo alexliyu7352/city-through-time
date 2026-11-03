@@ -21,6 +21,8 @@ The plate is a deep blue, not black (`palette.plate`, Xianyang `#3a4757`): in a 
 The events with the most room need a close, brightly lit camera with the subject filling the frame, not only dark wide shots (for the brightness threshold see CHECKS.md "Brightness").
 The year counter is the film's clock and only runs forward: a stop starts no earlier than the year the one before ended on (compile stops). An earlier event is told in words
 under the later year, as a look back, never by turning the counter back; only the first stop, which may sum up the place, spans the whole story.
+A building with a known date rises while the counter is inside its documented building years (begun to finished); one shown already standing under a later year carries a tag
+with its date, and the line or tag says it was already there.
 No hard cuts between nodes: do not write the next node's first camera keyframe at t 0 (let the camera fly from the last position of the previous node), and a node that changes colour needs a wide shot in which the whole city can be seen.
 
 ## Rules

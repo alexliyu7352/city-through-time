@@ -48,6 +48,11 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
   better before is a regression, and goes back.
   Set each station's length against its voice (film seconds over the voiced lines' seconds; the example runs about 1.25×): a station well above it is gathering silences;
   list every gap over 8 seconds and what is on screen during it.
+  Before a station goes to the user, run through it once more for the faults that cost the most rounds (each rule is where the link points):
+  every line carried by what is on screen as it is said, a far place on a map as it is named (STAGING.md "A picture for every key beat"); every change seen and read, no
+  picture beside it (STAGING.md 5b); the year counter only forward, a dated building rising inside its documented years (STAGING.md "Basic grammar"); no pause for showing
+  the model (SCRIPT.md, `pause`); tags in plain words, readable at their size. A station handed over with one of these left costs the user a round.
+- **Hand over whole:** show the user a round when all of it is done, not station by station while the rest is still being fixed.
 - **Before showing the user:** confirm the preview server is still running (after a power cut or reboot, run `node tools/preview.mjs` again); take a screenshot yourself to confirm it is already the new version, and remind the user to "look again after refreshing"
   (an open page may have been loaded halfway through a change); speak only of what the preview really has (example: when the preview cannot play sound yet, do not ask the user to "listen in the preview").
 - **Accept on the thing the user pointed at:** confirm by screenshot at that second and on that object, not on something beside it (example: for an area's colouring look at the houses changing colour, not only the ground);
