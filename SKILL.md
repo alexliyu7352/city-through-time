@@ -107,8 +107,8 @@ Writing rules
 | 0 | First use: local paths, install the environment | `docs/SETUP.md` | `local/config.json` written; `uv sync` and `npm ci` have run |
 | 1 | Research: timeline, choice of stations, through-line, sources | `docs/RESEARCH.md` | `FACTS.md` and `research/` (including story material `stories.md`, the picture list `images.md` and the period cities' survey `period_cities.md`); ★ the story and the station list |
 | 2 | Extent and data: frame, scale, map, buildings, terrain | `docs/DATA.md` | extent and data sources in `city.yaml`, `prep.py` has run; ★ one white-model still to check the scale |
-| 3 | Script: story outline, detailed outline, treatment, copy, timeline, pictures | `docs/SCRIPT.md` | `TREATMENT.md`, nodes, `script.yaml`; ★ story outline, ★ detailed outline, ★ narration draft, each shown after your own listener review (SCRIPT.md) |
-| 4 | Period cities and terrain | `docs/MODEL.md` | one whole city per period, generated from the sources, clipcheck at zero; its quarters and type sheets judged by you (no ★) |
+| 3 | Script: story outline, detailed outline, treatment, copy, timeline, pictures | `docs/SCRIPT.md` | `TREATMENT.md`, nodes, `script.yaml`; ★ story outline, ★ detailed outline, ★ narration draft, each shown after your own listener review (SCRIPT.md); ★ the storyboard (each line → what is on screen) |
+| 4 | Period cities and terrain | `docs/MODEL.md` | one whole city per period, generated from the sources, only what the storyboard uses and within the budget (compile warns), clipcheck at zero; its quarters and type sheets judged by you (no ★) |
 | 5 | Staging: rings, camera, tags, pictures, footage | `docs/STAGING.md` | compile has no errors, every warning handled; every key beat has its picture (STAGING.md "A picture for every key beat") |
 | 6 | Preview and checks | `docs/CHECKS.md` | checks at zero for every station the change touched; your audience pass on it; ★ the user has seen the film in the preview, in long stretches |
 | 7 | Sound: voice, music, effects | `docs/SOUND.md` | `VOICE.md`, `MUSIC.md`, all three tracks audible in the preview; ★ each piece of music |

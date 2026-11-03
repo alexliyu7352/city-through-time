@@ -167,7 +167,7 @@ Every change on the model is readable: what changed is shown as it happens, by t
 「那時，每滅一國，就照它的宮殿在北阪上再造一座」 is said). The narration need not name every change, and a model is not cut for want of a line; a change nothing on screen explains reads as noise.
 A change is also seen: the camera is close enough to tell what is new, its tag can be read at that size, and no picture is up beside it (5b). A tag the size of a subtitle's
 comma, on a city rising in a far, dark shot, is there on paper only.
-Before step 5 is done, write in TREATMENT.md the table key beat → what carries it, rebuilt from the final narration whenever it changes, and set the film's
+The table key beat → what carries it is the storyboard (SCRIPT.md, step 3, item 6), approved before the period cities are built; staging follows it. Set the film's
 density beside the example's (`cities/xianyang/city.yaml`: count its place names, areas, lines and beams, and pictures per minute); a film well below it reads as a model, not a story.
 "The city carries it" is a carrier only when the city visibly changes the way the line says; a city standing there while the line tells a war is not one. Review the table against
 the frames: for each line, what is on screen while it is said.

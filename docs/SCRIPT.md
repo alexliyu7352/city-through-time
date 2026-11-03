@@ -104,6 +104,11 @@ Do the following in order; go on only when the user confirms each step:
    watch change (Xianyang: 604 seconds of voice in a film of 750 seconds; the copy check flags long silences). Only after the user confirms the draft, cut it into subtitles and write it into `script.yaml`;
    compile then gives the exact length.
 5. **Emotional line:** fix the narrator's feeling at each station from the outline (`mood`, "Emblem and emotional line"); the style of the music also comes from the outline and the emotional line (SOUND.md).
+6. **Storyboard:** once the narration is confirmed, and before any period city is built (step 4), write in `TREATMENT.md`, line by line, what is on screen as each line
+   is said: which city rises or changes and what says so (the line, a tag), which place is marked or drawn on a map, which picture or living moment (STAGING.md
+   "A picture for every key beat"). Show it to the user (★). Step 4 builds what the storyboard uses, at the detail a viewer reads in the seconds it is on screen,
+   and nothing else; when the narration changes, the storyboard changes first. A model built ahead of the story gets pushed into the film, shows changes no line
+   explains, and makes every later fix slow.
 
 If the direction of the story has to change midway, go back to the outline and confirm it again with the user; do not patch it piecemeal on the subtitles.
 

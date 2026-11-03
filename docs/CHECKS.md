@@ -42,16 +42,11 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
 ## Acceptance and reporting
 
 - **The audience pass:** play the stretch at speed, with the subtitles, as a viewer who does not know the city, then write down what it leaves (SKILL.md "Judge as the audience").
-  A key beat that leaves nothing, or a line pointing at a place the picture does not mark, is restaged, whatever the checks say.
-  For each change on the model, ask whether a first-time viewer sees it happen and can read what is new, at that camera distance: a tag too small to read, or a city rising
-  while the eye is on a picture, is not seen, however correct the data behind it. Compare a revised stretch with its previous version, frame beside frame: a beat that read
-  better before is a regression, and goes back.
-  Set each station's length against its voice (film seconds over the voiced lines' seconds; the example runs about 1.25×): a station well above it is gathering silences;
-  list every gap over 8 seconds and what is on screen during it.
-  Before a station goes to the user, run through it once more for the faults that cost the most rounds (each rule is where the link points):
-  every line carried by what is on screen as it is said, a far place on a map as it is named (STAGING.md "A picture for every key beat"); every change seen and read, no
-  picture beside it (STAGING.md 5b); the year counter only forward, a dated building rising inside its documented years (STAGING.md "Basic grammar"); no pause for showing
-  the model (SCRIPT.md, `pause`); tags in plain words, readable at their size. A station handed over with one of these left costs the user a round.
+  Then go through it line by line against the storyboard: each line carried by what is on screen as it is said, a far place on a map as it is named (STAGING.md "A picture
+  for every key beat"); each change on the model seen happening and read at that camera distance, with no picture beside it (STAGING.md 5b); the year counter only forward
+  (STAGING.md "Basic grammar"); tags in plain words, readable at their size. Compare a revised stretch with its previous version, frame beside frame: what read better
+  before goes back. Set each station's length against its voice (the example runs about 1.25×); a station well above it is gathering silences: list every gap over
+  8 seconds and what is on screen. What fails here is restaged, whatever the checks say; a station handed over with one of these left costs the user a round.
 - **Hand over whole:** show the user a round when all of it is done, not station by station while the rest is still being fixed.
 - **Before showing the user:** confirm the preview server is still running (after a power cut or reboot, run `node tools/preview.mjs` again); take a screenshot yourself to confirm it is already the new version, and remind the user to "look again after refreshing"
   (an open page may have been loaded halfway through a change); speak only of what the preview really has (example: when the preview cannot play sound yet, do not ask the user to "listen in the preview").

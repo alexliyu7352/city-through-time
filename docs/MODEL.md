@@ -16,6 +16,10 @@
 
 ## A whole city for each period
 
+**Build what the storyboard uses, within the budget.** A period city is built for the lines and tags the storyboard gives it (SCRIPT.md, step 3, item 6), at the
+detail a viewer reads in the seconds it is on screen. Compile warns when a period city passes 150,000 parts or all of them 400,000 (the example's largest has about
+100,000, the whole film about 250,000). Every part costs compile time on every change, and memory on every phone. A warning is answered with what the extra parts show.
+
 **Every historic period is a 3D model of a whole city:** write a `city:` spec in the node, and `pipeline/citygen.py` generates it (walls, gates and barbicans, main streets and lane network, courtyard / dwelling / dormitory plots,
 palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, cotton mills, stations, bridges, boats, trees; the houses of other regions and periods: "House types"). Follow the sources where there are sources (archaeological plans, gazetteer city maps, OSM site outlines); where there are none, follow the custom of contemporary cities of the same kind and label the picture "schematic".
 **Walls of any tradition:** `style: tower` (and `hip`, `han3`) builds the Chinese wall: a battered rammed-earth body, bastions (马面), gate towers with roofs, barbicans and a moat; `style: curtain` builds the masonry curtain wall of Rome, medieval Europe, the Islamic world and the like: an upright crenellated body, flat-topped towers projecting outward (`tower_shape: square | round`) at its corners, every `tower_every_m` along it and at `tower_pts`, each gate a dark passage between two towers, no roofs and no moat unless `moat: true`. A regular spacing written in a source (the Aurelian wall's 100 Roman feet) is a basis; one read off a map is an estimate, labelled so. A wall that does not close (one ending at a river or a cliff on both sides) is `pts:` instead of `ring:`, run with the city on its left; it has no inside, so a fabric on `region: walls` takes only the closed rings.

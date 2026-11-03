@@ -857,10 +857,24 @@ SITES = {}   # era id -> {landmark index: its site (metres)} for the landmarks a
 SITE_ON = {}   # era id -> {landmark index: the building groups on its site} (lost_parts; they must be gone before it rises)
 CITY_META = {}
 
+# the cities of this run, as generated: a later pass of the stage plan (the same inputs, a new plan) reads them back instead of building
+# them again (on a large city most of a pass). Bound to this run by a token, so another run never reads them
+import pickle
+GEN_PATH = LAYOUT.logs(D, 'gen_cities.pkl'); GEN_TOKEN = os.environ.get('CT_GEN') or f'{os.getpid()}-{random.Random().random()}'
+GEN_SAVED = {}
+GEN_READ = None
+if os.environ.get('CT_GEN') and os.path.exists(GEN_PATH):
+    with open(GEN_PATH, 'rb') as f_: tok_, GEN_READ = pickle.load(f_)
+    if tok_ != GEN_TOKEN: GEN_READ = None
+
 def gen_city(node):
     """a whole period city, generated from its spec (pipeline/citygen.py) at the top of its node: the camera planning (a beam
     that lands on it, docs/STAGING.md 9c) needs where its buildings are"""
     cs = node['city']; xa = None
+    if GEN_READ and node['id'] in GEN_READ:   # (a later pass of this run: the city as pass 1 built it)
+        prims_, meta_, lab_, bas_, sites_, empty_ = pickle.loads(GEN_READ[node['id']])
+        PRIMS[node['id']] = prims_; GEN_SAVED[node['id']] = GEN_READ[node['id']]
+        return _gen_done(node, cs, meta_, lab_, bas_, sites_, empty_)
     if cs.get('avoid_eras'):   # quarters added on top of an earlier city that still stands: keep clear of its footprints
         import shapely as _sh
         fx = []
@@ -872,6 +886,10 @@ def gen_city(node):
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
     meta_, bas_, sites_, empty_, lab_ = [], [], {}, [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_)
+    GEN_SAVED[node['id']] = pickle.dumps((PRIMS[node['id']], meta_, lab_, bas_, sites_, empty_), protocol=pickle.HIGHEST_PROTOCOL)   # (as built, before anything touches it)
+    _gen_done(node, cs, meta_, lab_, bas_, sites_, empty_)
+
+def _gen_done(node, cs, meta_, lab_, bas_, sites_, empty_):
     LABELS[node['id']] = lab_; SUBS[node['id']] = split_parts(meta_, lab_, cs, node['id'])
     if empty_: WARN.append(f"era {node['id']}: fabric {', '.join(map(str, empty_[:8]))}{' ..' if len(empty_) > 8 else ''} ({len(empty_)}) builds no house: its region is smaller than one "
                            f"lot, or streets, walls and landmarks cover it (citygen fill lays whole lots only); give it a smaller lot or a larger region, or leave it out")
@@ -1746,7 +1764,10 @@ if NEWPLAN:
     if PASS >= int(os.environ.get('CT_MAX_PASS') or 6): raise SystemExit(f'compile: the stage plan did not settle in {PASS} passes')
     json.dump(PLAN, open(LAYOUT.logs(D, 'plan.json'), 'w'), ensure_ascii=False, indent=1)   # what the algorithm inserted (for reading)
     sys.stdout.flush(); os.environ['CT_PLAN'] = json.dumps(PLAN); os.environ['CT_PASS'] = str(PASS + 1)
+    with open(GEN_PATH, 'wb') as f_: pickle.dump((GEN_TOKEN, GEN_SAVED), f_, protocol=pickle.HIGHEST_PROTOCOL)
+    os.environ['CT_GEN'] = GEN_TOKEN   # (the next pass reads the cities of this one)
     os.execv(sys.executable, [sys.executable, '-I', os.path.abspath(__file__), D])
+if os.path.exists(GEN_PATH): os.remove(GEN_PATH)   # (the plan settled: no later pass reads the cities)
 if not STUDY: json.dump(PLAN, open(LAYOUT.logs(D, 'plan.json'), 'w'), ensure_ascii=False, indent=1)   # (the plan this compile ran with, also when it added nothing: an older file read as current put back an obsolete hold)
 if PLAN: print(f'  plan: {sum(len(v) for v in PLAN.values())} insertions after {PASS} passes, ' + ', '.join(f'{k} +{sum(q["delta"] for q in v):.1f} s' for k, v in PLAN.items()))
 # one front at a time: the engine draws a single front per city (engine/main.js: the stage growing now), so a second stage running
@@ -1758,6 +1779,12 @@ for e in eras_out:
             raise SystemExit(f"compile: era {e['id']}: two stages grow at once ({p_['mode']} {p_['a'][0]:.1f}-{p_['a'][1]:.1f} s, {q_['mode']} "
                              f"{q_['a'][0]:.1f}-{q_['a'][1]:.1f} s); the engine lights one front per city: run them one after another or make them one stage")
 PLACES = []   # where each city changes and when (era, [t0, t1], centre, radius): may a half-screen picture show then (演出文法 5b)
+# the model's budget: every compile, every change and every phone pays for each part (the example, cities/xianyang: its largest period city
+# about 100,000 parts, the whole film about 250,000). Over it: build what the storyboard shows, at the detail it is seen (docs/MODEL.md)
+_parts = {e['id']: len(pd['prims']) for e, pd, _ in TIMED}
+for k_, v_ in _parts.items():
+    if v_ > 150000: WARN.append(f'era {k_} has {v_:,} parts, over the budget of 150,000 (the example\'s largest has about 100,000): build what the storyboard shows, at the detail it is seen (docs/MODEL.md)')
+if sum(_parts.values()) > 400000: WARN.append(f'the period cities have {sum(_parts.values()):,} parts in all, over the budget of 400,000 (the example has about 250,000): every compile is slower and phones run short of memory (docs/MODEL.md)')
 for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and edge fields
     cs, node, prims = pd['cs'], pd['node'], pd['prims']
     for f in e['fronts']:
