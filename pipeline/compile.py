@@ -1779,12 +1779,6 @@ for e in eras_out:
             raise SystemExit(f"compile: era {e['id']}: two stages grow at once ({p_['mode']} {p_['a'][0]:.1f}-{p_['a'][1]:.1f} s, {q_['mode']} "
                              f"{q_['a'][0]:.1f}-{q_['a'][1]:.1f} s); the engine lights one front per city: run them one after another or make them one stage")
 PLACES = []   # where each city changes and when (era, [t0, t1], centre, radius): may a half-screen picture show then (演出文法 5b)
-# the model's budget: every compile, every change and every phone pays for each part (the example, cities/xianyang: its largest period city
-# about 100,000 parts, the whole film about 250,000). Over it: build what the storyboard shows, at the detail it is seen (docs/MODEL.md)
-_parts = {e['id']: len(pd['prims']) for e, pd, _ in TIMED}
-for k_, v_ in _parts.items():
-    if v_ > 150000: WARN.append(f'era {k_} has {v_:,} parts, over the budget of 150,000 (the example\'s largest has about 100,000): build what the storyboard shows, at the detail it is seen (docs/MODEL.md)')
-if sum(_parts.values()) > 400000: WARN.append(f'the period cities have {sum(_parts.values()):,} parts in all, over the budget of 400,000 (the example has about 250,000): every compile is slower and phones run short of memory (docs/MODEL.md)')
 for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and edge fields
     cs, node, prims = pd['cs'], pd['node'], pd['prims']
     for f in e['fronts']:

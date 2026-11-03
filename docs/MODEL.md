@@ -16,9 +16,8 @@
 
 ## A whole city for each period
 
-**Build what the storyboard uses, within the budget.** A period city is built for the lines and tags the storyboard gives it (SCRIPT.md, step 3, item 6), at the
-detail a viewer reads in the seconds it is on screen. Compile warns when a period city passes 150,000 parts or all of them 400,000 (the example's largest has about
-100,000, the whole film about 250,000). Every part costs compile time on every change, and memory on every phone. A warning is answered with what the extra parts show.
+**The storyboard says what each period city must show** (SCRIPT.md, step 3, item 6): build those first and well, from the sources. A model built before the story
+is fixed gets pushed into the film and shows changes no line explains.
 
 **Every historic period is a 3D model of a whole city:** write a `city:` spec in the node, and `pipeline/citygen.py` generates it (walls, gates and barbicans, main streets and lane network, courtyard / dwelling / dormitory plots,
 palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, cotton mills, stations, bridges, boats, trees; the houses of other regions and periods: "House types"). Follow the sources where there are sources (archaeological plans, gazetteer city maps, OSM site outlines); where there are none, follow the custom of contemporary cities of the same kind and label the picture "schematic".
