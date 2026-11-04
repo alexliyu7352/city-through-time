@@ -2108,7 +2108,7 @@ for p in pins:   # a pin points at something on the plate, or on the land beyond
         if dark: raise SystemExit(f'compile: pin {p["id"]} ({p["_node"]}) stands on the land beyond the plate, which is not shown at {dark[0]:.1f} s: show it (context keys) for the pin\'s whole time')
 for p in pins:
     if p['_offok']: continue
-    X = (p['pos'][0], p['pos'][2] + .002, p['pos'][1]); n_ = ok_ = 0; t = p['t0'] + .4
+    X = (p['pos'][0], p['pos'][2], p['pos'][1]); n_ = ok_ = 0; t = p['t0'] + .4   # (its anchor, the place itself: a point lifted 20 m leaves a close shot's frame)
     while t <= p['t1'] - .4:
         q = CAMERA.project(t, X); n_ += 1; ok_ += 1 if (q is not None and abs(q[0]) <= .92 and abs(q[1]) <= .92) else 0; t += .25
     if n_ and ok_ / n_ < .7: off_.append(p)
@@ -2246,7 +2246,7 @@ for ln, nd in _see_of:
             p_ = next((p for p in pins if p['id'] == name_), None)
             if p_ is None: raise SystemExit(f'compile: {where_}: no pin {name_!r}')
             if p_['t0'] > t1_: _see_bad.append(f'{where_}: the pin first shows at {p_["t0"]:.1f} s: name the place by the time the line speaks of it'); continue
-            Xs_ = [(p_['pos'][0], p_['pos'][2] + .002, p_['pos'][1])]
+            Xs_ = [(p_['pos'][0], p_['pos'][2], p_['pos'][1])]
         elif kind_ == 'stage':
             if nd is None: raise SystemExit(f'compile: {where_}: a line of the prologue or the opening has no city of its own: see a pin or a card')
             Xs_ = [c_ for e_, st_, c_ in STAGE_AT if e_ == nd['id'] and (not name_ or st_ == name_)]
