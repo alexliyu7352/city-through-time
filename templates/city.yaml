@@ -158,7 +158,7 @@ film:
         scrim: 0.5
         groups:   # kind: enclosure (wall: centre, rx_m, ry_m, n: [left, right], gap_deg, star) | band (Heavenly River: pts, w_m, n) | asterism (at_ll, stars: east/north metre offsets, lines) | line (from, to, n)
           - { id: ziwei, kind: enclosure, at: 14.0, draw: 2.0, centre: [<lon>, <lat>], rx_m: 1900, ry_m: 1100, n: [8, 7], gap_deg: 32, label_ll: [<lon>, <lat>], zh: "紫宫 · 咸阳宫", en: "Purple Palace · Xianyang Palace" }
-      grow: { at: 0, bands: [{ t: {year: 1987}, spread: 1.6 }, ...], dim: { t: 25, to: 0 }, mono: true, warm: 1.6, change: ghsl }   # modern: grows with the years; mono = all white; warm = seconds a newly grown building stays warm-coloured (Xianyang 4); change: ghsl = rebuilt taller (staging rule 9d)
+      grow: { at: 0, bands: [{ t: {year: 1987}, spread: 1.6 }, ...], dim: { t: 25, to: 0 }, mono: true, warm: 1.6, change: ghsl }   # modern: grows with the years; mono = all white; warm = seconds a newly grown building stays warm-coloured (Xianyang 4); dim = the grown city's light from t on (a list [{ t, to, dur }, ...] changes it again: staging rule 7); change: ghsl = rebuilt taller (staging rule 9d)
       follow_change: { windows: 6, d: 0.5, el: 30, region: [[<lon>, <lat>], ...], end: { ll: [<lon>, <lat>], el: 58, d: 2.2 } }   # the camera flies to where change is densest in each stretch of time (do not write camera)
       picks: [{ id: <pk>, mark: <id>, r: .06, at: 1, off_at: 'end' }]
       # tally: [{ t: 4.0, lon: 0, lat: 0, lift: 0.05, rot: 210, scale: 0.5, split: 0, glow: 0.9 }]   # emblem keyframes (optional: film.emblem is not none, and written only in the nodes listed in emblem.nodes); split 1 = split in two halves

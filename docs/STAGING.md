@@ -79,6 +79,8 @@ No hard cuts between nodes: do not write the next node's first camera keyframe a
    **Buildings grow only when they are in the picture:** if the camera is not looking at it when the year arrives, wait until it first enters the picture (time covered by full-screen footage does not count) before it grows; a batch entering the picture together
    grows within a few seconds in order of year (2 seconds per thousand buildings, at least 2 seconds, at most 12 seconds: `see_*` in compile's `TIMING`). compile writes the buildings that have to wait into `data/grow_t.json`, and the rest grow with the year.
    Key places use only one warm yellow light (`epochs:`).
+   `grow.dim: { t, to }` sets the grown city's light from a moment on (0.4 by default; it eases in over `dur`, 0.8 s). Bright enough for the growth to read in a wide shot is too bright for a close shot of today's streets after it
+   (white blocks fill the frame, lit faces past the 140–190 of CHECKS.md, white text on them unreadable): give a list of keys in time order, e.g. full while the growth is the subject, lower from the first close shot, up again for a closing wide shot.
    The camera rises from above the old town and pulls out to an oblique overview; do not squeeze everything together with a telephoto, and do not look straight down so that the city becomes small dots.
    **Building data must have no large blank areas:** where the main data (CMAB) is missing (villages and towns, some new towns), fill with Overture building outlines (`buildings.fill: overture_ghsl`,
    filled only where no main-data building lies within `fill_gap_m`, the year taken from the GHSL built-up area and labelled estimate; licences OSM ODbL + Shi et al. 2023 CC BY 4.0).

@@ -386,7 +386,8 @@ function setLayers(t) {
     U.uNB.value = FILM.bands.length;
     FILM.bands.forEach((b, i) => { U.uBLo.value[i] = b.lo; });
     for (const b of G.bands) { U.uGT.value[b.band] = b.t; U.uGS.value[b.band] = b.spread; }
-    U.uGrowDim.value = (G.dim ? lerp(1, G.dim.to, ss(seg(t, G.dim.t, G.dim.t + .8))) : 1) * (1 - .6 * nightAt(t)) * (1 - satOn);
+    const dimK = Array.isArray(G.dim) ? G.dim : G.dim ? [G.dim] : [];   // (compile: one key, or keys in time order, each easing from the last)
+    U.uGrowDim.value = dimK.reduce((v, k) => lerp(v, k.to, ss(seg(t, k.t, k.t + (k.dur ?? .8)))), 1) * (1 - .6 * nightAt(t)) * (1 - satOn);
   } else U.uGrowOn.value = 0;
   const Hh = FILM.height;
   if (Hh) {

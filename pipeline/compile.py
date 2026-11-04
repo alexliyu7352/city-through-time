@@ -1389,7 +1389,9 @@ for i, node in enumerate(FM['nodes']):
         G = node['grow']
         # the growth runs on the film's year counter, across the nodes that follow: a {year} is placed on the whole year line (below)
         grow = {'on': T(G.get('at', 0)), 'mono': bool(G.get('mono', False)), 'warm': float(G.get('warm', 0)), 'bands': [{'band': k, 't': T(b['t']), '_traw': b['t'], 'spread': b.get('spread', 1.0)} for k, b in enumerate(G['bands'])]}
-        if 'dim' in G: grow['dim'] = {'t': T(G['dim']['t']), '_traw': G['dim']['t'], 'to': G['dim'].get('to', .4)}
+        if 'dim' in G:   # the grown city's light from a moment on; a list of such keys changes it again later (each eases from the last over dur)
+            dim_ = lambda k: {'t': T(k['t']), '_traw': k['t'], 'to': k.get('to', .4), **({'dur': float(k['dur'])} if 'dur' in k else {})}
+            grow['dim'] = [dim_(k) for k in G['dim']] if isinstance(G['dim'], list) else dim_(G['dim'])
         assert len(grow['bands']) == len(bands), 'grow.bands must list one entry per band'
         if G.get('change') == 'ghsl':   # the first layer dated and the new buildings counted per year (GHSL built-up, pipeline/ghsl_change.py)
             import ghsl_change
@@ -1625,8 +1627,12 @@ if grow:   # the growth's {year} times and its counters' end, on the whole year 
         tr_ = b.pop('_traw', None)
         if isinstance(tr_, dict) and 'year' in tr_: b['t'] = round(year_time(float(tr_['year'])) + float(tr_.get('plus', 0)), 3)
     if 'dim' in grow:
-        tr_ = grow['dim'].pop('_traw', None)
-        if isinstance(tr_, dict) and 'year' in tr_: grow['dim']['t'] = year_time(float(tr_['year']))
+        dk_ = grow['dim'] if isinstance(grow['dim'], list) else [grow['dim']]
+        for k_ in dk_:
+            tr_ = k_.pop('_traw', None)
+            if isinstance(tr_, dict) and 'year' in tr_: k_['t'] = year_time(float(tr_['year']))
+        if any(b_['t'] < a_['t'] + a_.get('dur', .8) for a_, b_ in zip(dk_, dk_[1:])):
+            raise SystemExit(f"compile: grow.dim: each key starts after the one before it has eased in (t: {', '.join(str(round(k_['t'], 2)) for k_ in dk_)}; dur: 0.8 s unless written)")
     if grow.get('counters'):
         u_ = grow['counters'].pop('_until', None)
         if u_: grow['counters']['t1'] = next(n['_t1'] for n in FM['nodes'] if n['id'] == u_)
