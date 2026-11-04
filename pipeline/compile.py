@@ -1802,8 +1802,8 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
     HIDE_BY[e['id']] = hide_layer(prims, cs_, pd['bnd'])
     if cs.get('today_from'):   # from that node, today's city comes back round what of this city still stands (keep_layer)
         tf_ = next((n for n in FM['nodes'] if n['id'] == cs['today_from']), None)
-        if tf_ is None or FM['nodes'].index(tf_) <= FM['nodes'].index(node):
-            raise SystemExit(f"compile: era {e['id']}: today_from {cs['today_from']!r}: a later node's id (from it, today's city comes back round what of this city still stands)")
+        if tf_ is None or FM['nodes'].index(tf_) < FM['nodes'].index(node):   # (its own node: a city of the present day, which today's city never steps back for)
+            raise SystemExit(f"compile: era {e['id']}: today_from {cs['today_from']!r}: this node's id or a later one's (from it, today's city comes back round what of this city still stands)")
         KEEP_BY[e['id']] = keep_layer(prims, LOST.get(e['id']), cs_); e['todayFrom'] = round(tf_['_t0'], 3)
     ED = float(FM.get('era_look', {}).get('edge_m', 150)) * F.scale; img_, rect_ = edge_sdf(pd['bnd'], ED); EDGE_BY[e['id']] = img_; e['edgeRect'] = rect_; e['edgeD'] = round(ED, 6)
 for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's colour ring, sent when its change starts (docs/STAGING.md 1)

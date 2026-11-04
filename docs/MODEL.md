@@ -177,6 +177,7 @@ them are taken down) writes `today_from: <node id>`: from that node, today's bui
 takes, and today's buildings that touch them), its outline, its walls' ring and its lost parts going back to today's city, so the survivors stand on without sinking
 and rising again as a city of their own; its last loss, which takes all the rest, writes `rest: true` (with `keep:` naming the survivors): it takes what no other loss of the city takes,
 whatever its place in the list, so the parts earlier losses took are passed over instead of refused as lost twice.
+A city of the present day staged as a node of its own (a new square, paving and trees, built in the film's last years) writes `today_from` with its own node: it is part of today's city from the start, so today's city neither dims nor steps back for it as for a city of the past.
 **How many period cities:** as many as the history has. At most twelve stand or are drawn (a ghost outline) at the same moment, each lighting one channel (where today's buildings
 step aside, its front and its edge); cities apart in time share a channel, and compile says which (`era channels`) or stops at a thirteenth at once. A film that fits in eight
 keeps eight (the engine's uniforms as small as they can be); one with more takes twelve (`hide3.png`, `edge3.png`, `film.eraSlots`): a city with a long history keeps the
