@@ -167,6 +167,9 @@ with those marks, best animated, the area lighting and the march drawing itself 
 show the audience where it is.
 Every change on the model is readable: what changed is shown as it happens, by the line that tells it or on screen, a tag, an area, the readout (Xianyang: the six palaces rise as
 「那時，每滅一國，就照它的宮殿在北阪上再造一座」 is said). The narration need not name every change, and a model is not cut for want of a line; a change nothing on screen explains reads as noise.
+A building that stands out from the houses round it (far larger or higher, on a podium of its own) is named the first time it is seen close, by the line or a tag: left unnamed
+under a line that names another building or body (the Senate said over a temple no tag names), it is taken for that one. A tag here is enough; it is not a picture's beat.
+Not every landmark gets one: a building the line names, or one the eye does not pick out of the city, needs none.
 A change is also seen: the camera is close enough to tell what is new, its tag can be read at that size, and no picture is up beside it (5b). A tag the size of a subtitle's
 comma, on a city rising in a far, dark shot, is there on paper only. A change of height (a wall raised, a tower or dome topped) is seen only close, the piece large in the
 frame: from a shot of the whole city a wall raised by six metres is a few pixels, a ring of light passing over a line; start such a change in the close shot (a ring from there).
