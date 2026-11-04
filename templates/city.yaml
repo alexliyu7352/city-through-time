@@ -31,7 +31,7 @@ film:
   # sfx: [relay, lamp, burn, lights]        # kept sound effects (page events, render/events.mjs; Xianyang uses these four): first make the single sounds with audio/mix.py <city> --kit, then compile; if not written there are no effects
   identity: { l1: "<city> · 1:10000 白模", l2: "{stats.centre_wgs[1]:.3f}°N  {stats.centre_wgs[0]:.3f}°E  ·  <data source>" }
   light: { base: 0.62 }                       # the gallery's base light in the projection stage, so the city can be seen; a dark plate needs it brighter (Xianyang 0.62; compile uses 0.28 if not written)
-  rise: { sinkDur: 2.4, ghost: 1.0 }          # 1 = today's white-model city is there throughout the film; the period cities replace it in place
+  rise: { sinkDur: 2.4, ghost: 1.0 }          # ghost: the height today's city keeps after the lamp (1 = there throughout the film; the period cities replace it in place); sinkDur: how long it takes to sink to it
   satellite_source: sentinel                  # sentinel (releasable) | hr (Esri level 15, internal testing only, pipeline/imagery_tiles.py)
   node_tint: 0.5                              # how strongly each node tints today's city with the node's colour; a node can override it with tint (set 0 in the modern section)
   # rings_motif: { centre: [<lon>, <lat>], spacing_m: 380, from: -4000, gain: 0.3 }   # tree-ring light rings, one per century: present from the lights coming on to the ending; in the ancient section they look like noise, so not recommended (Xianyang does not use it)

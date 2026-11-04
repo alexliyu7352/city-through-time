@@ -396,11 +396,11 @@ function setLayers(t) {
     U.uHgtF.value = lerp(-.003, Hh.top + .005, eo(seg(t, Hh.t0, Hh.t1)) * .5 + ss(seg(t, Hh.t0, Hh.t1)) * .5);
     U.uHgtBand.value = ss(seg(t, Hh.t0, Hh.t0 + .4)) * (1 - ss(seg(t, Hh.t1 - .1, Hh.t1 + .4)));
   }
-  // the model's height: full "today" (house light), sunk after the lamp, then rising by year from the growth node
+  // the model's height: full "today" (house light), sunk after the lamp down to rise.ghost, then rising by year from the growth node
   const R = FILM.rise || {};
   const today = Math.max(1 - ss(seg(t, R.sinkAt ?? LT.lamp, (R.sinkAt ?? LT.lamp) + (R.sinkDur ?? 2.0))), ss(seg(t, LT.lights - .2, LT.lights + 1.2)));
   U.uToday.value = today; U.uGrowRise.value = FILM.grow ? ss(seg(t, FILM.grow.on - .5, FILM.grow.on + .5)) : 0;
-  U.uGhost.value = (R.ghost ?? .05) * ss(seg(t, LT.lamp + 1.5, LT.lamp + 4));
+  U.uGhost.value = R.ghost ?? .05;   // the floor it sinks to, there from the start (ghost 1: it stays up; a floor that came after the sink read as the city falling and growing again)
   for (const p of FILM.props || []) {
     const mesh = S.props[p.id]; if (!mesh) continue;
     const a = epochAlpha(t, p); mesh.visible = a > 0.002; mesh.scale.y = Math.max(.002, a);
