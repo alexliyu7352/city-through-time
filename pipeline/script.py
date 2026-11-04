@@ -8,7 +8,7 @@ voice), in the order shown; city.yaml holds none. One line:
          stage[:<name>] or node (the node's arrival); lead: seconds before it. Pictures can follow a line in turn (with: <line id>)
   see    what the viewer must see while the line is said (the storyboard): pin:<id>, stage[:<name>] of the node's city or
          card:<footage id>, or a list of them; compile holds the picture to it (the place in the frame for most
-         of the line, the pin named by its end, the card up). A node's lines only
+         of the line, the pin named by its end, the card up). The prologue's and the opening's: a pin or a card
   t      seconds from the start of the node's picture (moves with every hold the camera planner inserts); the
          opening line counts from the opening's start (the film's start, or the prologue's end)
          With neither, a line follows the one before as soon as it has been read, through any hold of the camera.
@@ -42,8 +42,6 @@ def load(city, langs, node_ids):
         if nid not in node_ids: raise bad(f'node {nid!r} is not in city.yaml (nodes: {", ".join(node_ids)})')
     for ln in S.get('prologue') or []:
         if 'pause' in ln or 'with' in ln: raise bad(f'prologue: a line is placed by t or follows the one before (no pause, no with): {ln}')
-    for ln in (S.get('prologue') or []) + (S.get('opening') or []):
-        if 'see' in ln: raise bad(f'line {ln.get("id")}: see: is for a node\'s lines (the prologue and the opening have no node of their own)')
     for where, lines in [('prologue', S.get('prologue') or []), ('opening', S.get('opening') or [])] + [(f'node {k}', v or []) for k, v in nodes.items()]:
         for ln in lines:
             if 'pause' in ln:

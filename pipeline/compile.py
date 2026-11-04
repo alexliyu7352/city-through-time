@@ -2114,46 +2114,6 @@ for p in pins:
     if n_ and ok_ / n_ < .7: off_.append(p)
 for p in off_: print(f'  {"error" if p["_tour"] else "warning"}: pin {p["id"]} ({p["_node"]}, {p["t0"]:.1f}-{p["t1"]:.1f} s) is off screen most of its time')
 if any(p['_tour'] for p in off_) and not os.environ.get('CT_PINWARN'): raise SystemExit('compile: a tour stop shows a pin whose place is not on screen: frame it (tour_subjects) or mark it offscreen_ok')
-# a line's storyboard (script.yaml see:, docs/SCRIPT.md step 6): what the viewer must see while it is said. No program reads what the
-# words are about, so the author names it, and the picture is held to it: the place of a pin or of a stage of the node's city in the
-# frame for most of the line (as a pin's own check), the pin shown by the line's end, a card up for most of it. A thing, not a camera
-# key: a moving shot passes its key's target, the thing it shows stays in the frame
-# CT_SEE=warn: report only
-def _in_frame(t0, t1, Xs):   # the share of t0..t1 (four times a second) in which one of the points Xs is in the frame
-    n_ = ok_ = 0; t = t0
-    while t <= t1:
-        n_ += 1; ok_ += any((q_ := CAMERA.project(t, X)) is not None and abs(q_[0]) <= .92 and abs(q_[1]) <= .92 for X in Xs); t += .25
-    return ok_ / max(1, n_)
-_cue_at, _see_bad, _see_n, _lines_n = {c['id']: c for c in cues}, [], 0, 0
-for nd in FM['nodes']:
-    for ln in nd.get('cues', []):
-        if 'id' not in ln: continue   # (a pause)
-        _lines_n += 1
-        if not ln.get('see'): continue
-        _see_n += 1; t0_, t1_ = _cue_at[ln['id']]['t0'], _cue_at[ln['id']]['t1']
-        for s_ in [ln['see']] if isinstance(ln['see'], str) else ln['see']:
-            kind_, _, name_ = str(s_).partition(':'); where_ = f"line {ln['id']} ({t0_:.1f}-{t1_:.1f} s), see {s_}"
-            if kind_ == 'pin':
-                p_ = next((p for p in pins if p['id'] == name_), None)
-                if p_ is None: raise SystemExit(f'compile: {where_}: no pin {name_!r}')
-                if p_['t0'] > t1_: _see_bad.append(f'{where_}: the pin first shows at {p_["t0"]:.1f} s: name the place by the time the line speaks of it'); continue
-                Xs_ = [(p_['pos'][0], p_['pos'][2] + .002, p_['pos'][1])]
-            elif kind_ == 'stage':
-                Xs_ = [c_ for e_, st_, c_ in STAGE_AT if e_ == nd['id'] and (not name_ or st_ == name_)]
-                if not Xs_: raise SystemExit(f'compile: {where_}: node {nd["id"]}\'s city has no stage {name_ or "(any)"}')
-            elif kind_ == 'card':
-                x_ = next((x for x in footage_out if x['id'] == name_), None)
-                if x_ is None: raise SystemExit(f'compile: {where_}: no footage {name_!r}')
-                up_ = max(0.0, min(t1_, x_['on'] + x_['dur']) - max(t0_, x_['on'])) / max(1e-6, t1_ - t0_)
-                if up_ < .7: _see_bad.append(f'{where_}: the card is up for {up_:.0%} of the line')
-                continue
-            else: raise SystemExit(f'compile: {where_}: see: pin:<id>, stage[:<name>] or card:<footage id>')
-            k_ = _in_frame(t0_, t1_, Xs_)
-            if k_ < .7: _see_bad.append(f'{where_}: in the frame {k_:.0%} of the line')
-print(f'  storyboard: {_see_n} of {_lines_n} lines say what is on screen as they are said (see:)')
-for b_ in _see_bad: print('  error: ' + b_)
-if _see_bad and os.environ.get('CT_SEE') != 'warn':
-    raise SystemExit(f'compile: {len(_see_bad)} lines do not show what their see: names: frame it while the line is said (docs/SCRIPT.md step 6)')
 for p in pins:
     for k_ in ('_node', '_tour', '_offok'): p.pop(k_, None)
 # today's buildings rise when they can be seen (docs/STAGING.md 7): at the moment the counter reaches a building's year, or, if
@@ -2262,6 +2222,48 @@ if PRO:   # the prologue's lines: each at its t or after the one before has been
         room_ = _pc[i_ + 1]['t0'] - .08 if i_ + 1 < len(_pc) else PD - float(PRO.get('fade', .8))
         c_['t1'] = round(max(c_['t1'], min(c_['t0'] + max(hold(c_['a']), hold(c_['b'])) + .4, room_)), 3)
     cues[0:0] = _pc
+# a line's storyboard (script.yaml see:, docs/SCRIPT.md step 6): what the viewer must see while it is said. No program reads what the
+# words are about, so the author names it, and the picture is held to it: the place of a pin or of a stage of the node's city in the
+# frame for most of the line (as a pin's own check), the pin shown by the line's end, a card up for most of it. A thing, not a camera
+# key: a moving shot passes its key's target, the thing it shows stays in the frame. The prologue's and the opening's lines have no
+# city of their own: a pin or a card. CT_SEE=warn: report only
+def _in_frame(t0, t1, Xs):   # the share of t0..t1 (four times a second) in which one of the points Xs is in the frame
+    n_ = ok_ = 0; t = t0
+    while t <= t1:
+        n_ += 1; ok_ += any((q_ := CAMERA.project(t, X)) is not None and abs(q_[0]) <= .92 and abs(q_[1]) <= .92 for X in Xs); t += .25
+    return ok_ / max(1, n_)
+_cue_at, _see_bad, _see_n, _lines_n = {c['id']: c for c in cues}, [], 0, 0
+_see_of = [(ln, None) for ln in (SCR['prologue'] if SCR and PRO else [])] + ([({**op_cue, 'id': op_cue.get('id', 'opening')}, None)] if op_cue else []) \
+    + [(ln, nd) for nd in FM['nodes'] for ln in nd.get('cues', [])]
+for ln, nd in _see_of:
+    if 'id' not in ln: continue   # (a pause)
+    _lines_n += 1
+    if not ln.get('see'): continue
+    _see_n += 1; t0_, t1_ = _cue_at[ln['id']]['t0'], _cue_at[ln['id']]['t1']
+    for s_ in [ln['see']] if isinstance(ln['see'], str) else ln['see']:
+        kind_, _, name_ = str(s_).partition(':'); where_ = f"line {ln['id']} ({t0_:.1f}-{t1_:.1f} s), see {s_}"
+        if kind_ == 'pin':
+            p_ = next((p for p in pins if p['id'] == name_), None)
+            if p_ is None: raise SystemExit(f'compile: {where_}: no pin {name_!r}')
+            if p_['t0'] > t1_: _see_bad.append(f'{where_}: the pin first shows at {p_["t0"]:.1f} s: name the place by the time the line speaks of it'); continue
+            Xs_ = [(p_['pos'][0], p_['pos'][2] + .002, p_['pos'][1])]
+        elif kind_ == 'stage':
+            if nd is None: raise SystemExit(f'compile: {where_}: a line of the prologue or the opening has no city of its own: see a pin or a card')
+            Xs_ = [c_ for e_, st_, c_ in STAGE_AT if e_ == nd['id'] and (not name_ or st_ == name_)]
+            if not Xs_: raise SystemExit(f'compile: {where_}: node {nd["id"]}\'s city has no stage {name_ or "(any)"}')
+        elif kind_ == 'card':
+            x_ = next((x for x in footage_out if x['id'] == name_), None)
+            if x_ is None: raise SystemExit(f'compile: {where_}: no footage {name_!r}')
+            up_ = max(0.0, min(t1_, x_['on'] + x_['dur']) - max(t0_, x_['on'])) / max(1e-6, t1_ - t0_)
+            if up_ < .7: _see_bad.append(f'{where_}: the card is up for {up_:.0%} of the line')
+            continue
+        else: raise SystemExit(f'compile: {where_}: see: pin:<id>, stage[:<name>] or card:<footage id>')
+        k_ = _in_frame(t0_, t1_, Xs_)
+        if k_ < .7: _see_bad.append(f'{where_}: in the frame {k_:.0%} of the line')
+print(f'  storyboard: {_see_n} of {_lines_n} lines say what is on screen as they are said (see:)')
+for b_ in _see_bad: print('  error: ' + b_)
+if _see_bad and os.environ.get('CT_SEE') != 'warn':
+    raise SystemExit(f'compile: {len(_see_bad)} lines do not show what their see: names: frame it while the line is said (docs/SCRIPT.md step 6)')
 sat = FM.get('_satellite')
 def sat_out(sat):
     """the satellite plate: the higher-resolution mosaic (pipeline/imagery_tiles.py, internal tests only) when the film asks for it,
