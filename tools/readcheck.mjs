@@ -19,7 +19,7 @@ const { browser, page } = await openFilm(city);
 const RES = [];
 for (const [FROM, TO] of SPANS) RES.push(await page.evaluate(async ({ STEP, FROM, TO }) => {
   if (typeof window.TEXTS !== 'function' || !(window.DUR > 0)) return { none: true };
-  const W = innerWidth, H = innerHeight, seen = {}, partial = {}, low = {}, over = {};
+  const W = innerWidth, H = innerHeight, seen = {}, partial = {}, low = {}, over = {}; let drew = 0;
   const end = TO == null ? window.DUR : Math.min(window.DUR, +TO);
   for (let t = FROM; t <= end; t += STEP) {
     const vis = new Set();
@@ -33,6 +33,7 @@ for (const [FROM, TO] of SPANS) RES.push(await page.evaluate(async ({ STEP, FROM
     }
     for (const k in seen) if (!vis.has(k)) seen[k].done = true;
     const D = window.DRAWN ? window.DRAWN() : [];   // (the frame TEXTS just drew)
+    if (D.length) drew++;
     for (let i = 0; i < D.length; i++) for (let j = i + 1; j < D.length; j++) {
       const a = D[i], b = D[j], w = Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0), h = Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0);
       if (w <= 2 || h <= 2) continue;
@@ -41,15 +42,18 @@ for (const [FROM, TO] of SPANS) RES.push(await page.evaluate(async ({ STEP, FROM
   }
   for (const k in partial) if (seen[k]) delete partial[k];
   if (FROM > 0 || TO != null) for (const k in seen) { const s = seen[k]; if (s.t0 <= FROM + STEP / 2 || s.t0 + s.run >= end - STEP / 2) s.edge = true; }   // cut by the range: not judged
-  return { seen: Object.values(seen), partial: Object.values(partial), low: Object.values(low), over: Object.values(over) };
+  return { seen: Object.values(seen), partial: Object.values(partial), low: Object.values(low), over: Object.values(over), drew };
 }, { STEP, FROM, TO }));
 await browser.close(); closeServer();
 const FILM = JSON.parse(fs.readFileSync(buildDir(city, 'film.json'), 'utf8'));
 const isCJK = ch => /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(ch);
 const need = text => { let c = 0, o = 0; for (const ch of text) { if (/\s/.test(ch)) continue; isCJK(ch) ? c++ : o++; } return Math.max(MIN, c / CJK + o / LATIN + PAD); };
 function judge(res, FROM, TO) {   // one stretch: [exit code, the lines it prints]
-  if (res.none || (!res.seen.length && !res.partial.length)) return [2, ['readcheck: NOT CHECKED (no window.TEXTS / DUR, or no text at all). This is not a pass.']];
+  // nothing drawn at all: the page draws no text (no window.TEXTS / DUR, or an overlay that never drew); a stretch whose only
+  // text is the subtitles (a prologue with no picture) has nothing to time, and is still checked for texts over texts and pins
+  if (res.none || (!res.seen.length && !res.partial.length && !res.drew)) return [2, ['readcheck: NOT CHECKED (no window.TEXTS / DUR, or no text at all). This is not a pass.']];
   let bad = 0; const L = [];
+  if (!res.seen.length && !res.partial.length) L.push('--  no named text in this stretch (its words are the subtitles, which follow the narration): nothing to time');
   for (const s of res.seen) {
     if (s.edge) { L.push(`--  ${s.id.padEnd(18)} at ${s.t0.toFixed(2)}s  runs past the checked range: not judged`); continue; }
     const n = need(s.text), ok = s.run >= n - STEP; if (!ok) bad++;   // one step of slack for the sampling grid
