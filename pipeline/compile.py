@@ -2671,6 +2671,13 @@ if PRO:   # the prologue for the page: its length, its closing black, and from e
         _sc.append([float(k_['t']), node_time(_nd[k_['node']], float(k_.get('at', 0)))])
     _sc.sort()
     if _sc[0][0] > 0 or _sc[-1][0] >= PD: raise SystemExit('compile: film.prologue.scene: the first key at t 0, all before the prologue ends')
+    # the prologue is one moment and closes on black (docs/SCRIPT.md "Prologue"): a key that takes the film back in time is a
+    # hard cut into another period (the engine plays each key on from its time, with no transition), and its closing question
+    # answered by pictures the opening shows again seconds later
+    for (ta_, sa_), (tb_, sb_) in zip(_sc, _sc[1:]):
+        if sb_ < sa_ + (tb_ - ta_) - 1.0:
+            fault(f'film.prologue.scene: at {tb_:g} s the prologue goes back from the film\'s {sa_ + tb_ - ta_:.1f} s to {sb_:.1f} s, a hard cut into another '
+                  f'period: the prologue stays with its one moment and ends on black; the question it ends on is answered by the opening, not shown in it (docs/SCRIPT.md "Prologue")')
     film['prologue'] = {'dur': PD, 'fade': float(PRO.get('fade', .8)), 'scene': _sc}
 json.dump(film, open(LAYOUT.build(D, 'film.json'), 'w'), ensure_ascii=False, indent=1)
 import hashlib

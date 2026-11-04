@@ -131,6 +131,9 @@ if the first 30 seconds do not say why this city is worth watching, the audience
 - Use the event with the most room and the strongest picture in the outline (Xianyang: the golden light of the imperial capital and the fire that burned the city). The camera is close and brighter than in the main film, with the subject filling the frame.
 - Mostly real scenes drawn by the engine (about 70%), with one or two imagined pictures mixed in to supply the people and scenes a white model cannot give. What appears in the prologue must be seen in the main film:
   the prologue and the cover are promises to the audience.
+- The prologue's lines are said over its one moment: the question it ends on is answered by the opening of the main film, so do not show the
+  answer in the prologue (a cut back to today's city or the first huts is a hard cut into another period, and gives away the opening
+  seconds before it plays); a `see:` on those lines names the prologue's own pin or card, or nothing.
 - Two or three lines of narration, ending on a question (Xianyang: 「它從哪裡來？又怎樣活到今天？」 ("Where did it come from? And how did it live to today?")); do not give away the main film's reversal in advance (Xianyang: do not say 「只撐了15年」 ("it lasted only 15 years")).
 - The music uses the same voice as in the main film (Xianyang: the drums of the imperial capital), and one sound effect from the main film may be added.
 - Test: if this moment appears once more in the main film, is it better or worse? If worse, choose another moment.
