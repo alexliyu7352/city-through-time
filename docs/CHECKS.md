@@ -25,6 +25,11 @@ two period cities existing at the same time overlapping, floating, trees inside 
 a model study's folder works too): camcheck, readcheck, a still a second in contact sheets of 16 and line by line (`build/review/lines_<a>_<b>/`: each line's stills under
 its words; with `--against <previous version>`, that version's stills of the same line beside them), and the stills' brightness, each step logged, a failed step does not stop the
 others, and `build/review/range_<a>_<b>/report.json` holds the results. Do not write a script of your own for this; then look at every sheet.
+**Give it every stretch the change touched in one command** (`--from <a> --to <b>` once for each, or every station in `--stations`), not one command a stretch:
+each tool loads the film once for all of them, and on a long film the load, not the stretch, is most of a short stretch's time; each stretch is still checked on its own
+(its own folder, sheets, report and verdict), and stretches that overlap or touch are checked as one. **Never run two checks of one city at once** (two rangechecks,
+two camchecks, the tools by hand beside its rangecheck): the same tool writes the same files (camcheck's camera dump, a stretch's stills), and one run's results would
+be read as the other's. A second rangecheck of a city waits for the first.
 A film with living moments: after any change to the model, the terrain or a living shot, `uv run python -I tools/living.py check cities/<slug>` (each shot rendered again and compared with the still its picture was made from; over 6 per pixel the picture no longer fits: make it again), and look at each moment's `sheet`.
 Whole-film screenshots, camcheck and readcheck freeze the user's computer so they cannot type; run them only in the round that fixes the whole film and before rendering the final film, and ask the user first (DELIVER.md).
 Screenshots default to 1920×1080; `--size` accepts only 16:9 (for example 960x540), and the whole picture is scaled in proportion;
@@ -47,7 +52,7 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
   for every key beat"); each change on the model seen happening and read at that camera distance, with no picture beside it (STAGING.md 5b); the year counter only forward
   (STAGING.md "Basic grammar"); tags in plain words, readable at their size. Compare a revised stretch with its previous version, frame beside frame, every stretch the
   revision touched, the camera moves made to fix a check too: `uv run python -I tools/filmdiff.py <previous version> <slug>` lists them (camera, lines, panels, tags, routes,
-  fronts, light: a light lowered or raised for one stretch can drown the subject of another, the whole wall's line in a city grown too bright) and prints the `tools/rangecheck.py --against <previous version>` command for each, whose line sheets lay the two versions side by side: what read better before goes back.
+  fronts, light: a light lowered or raised for one stretch can drown the subject of another, the whole wall's line in a city grown too bright) and prints one `tools/rangecheck.py --against <previous version>` command for all of them, whose line sheets lay the two versions side by side: what read better before goes back.
   Set each station's length against its voice (the example runs about 1.25×); a station well above it is gathering silences: list every gap over 8 seconds and what is on screen. What fails here is restaged, whatever the checks say; a station handed over with one of these left costs the user a round.
 - **Hand over whole:** show the user a round when all of it is done, not station by station while the rest is still being fixed.
 - **Before showing the user:** confirm the preview server is still running (after a power cut or reboot, run `node tools/preview.mjs` again); take a screenshot yourself to confirm it is already the new version, and remind the user to "look again after refreshing"

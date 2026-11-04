@@ -1,5 +1,8 @@
 """Camera check: the camera must never be inside or under anything, and nothing solid may stand between it and what it looks at.
-usage: python -I tools/camcheck.py cities/<slug> [--max 0]      (run tools/camcheck.mjs first: it writes build/logs/cam.json)
+usage: python -I tools/camcheck.py cities/<slug> [--max 0] [--cam file] [--out file] [--json file]
+  (run tools/camcheck.mjs first: it writes build/logs/cam.json, or its --out, read here with --cam)
+  --out   the intervals (default build/logs/camcheck.json)
+  --json  each stretch's result on its own: [{from, to, ok, lines, intervals}] (tools/rangecheck.py)
 
 For every camera sample (out/cam.json, the film's real camera with drift and near plane):
   below_ground  the camera is closer to the plate than 2 near planes
@@ -11,6 +14,8 @@ For every camera sample (out/cam.json, the film's real camera with drift and nea
   ring_unseen   a node's colour ring starts where the camera does not look (its origin out of frame for its first 1.5 s)
 Today's buildings count only where the era hide masks have not stepped them aside (the engine's hideK at the centroid);
 period cities only while standing (risen, not yet taken back). Flagged samples are merged into intervals: out/camcheck.json.
+A dump of several stretches (tools/camcheck.mjs --from/--to more than once) is checked stretch by stretch, each as if dumped alone,
+and only the period cities that stand or rise in one of them are built (the setup is most of the time a short stretch takes).
 """
 import json, math, os, sys
 import numpy as np
@@ -28,9 +33,13 @@ def sstep(e0, e1, x): return ss((x - e0) / (e1 - e0)) if e1 != e0 else float(x >
 
 
 def main():
-    city = sys.argv[1]; mx = int(sys.argv[sys.argv.index('--max') + 1]) if '--max' in sys.argv else 0
+    city = sys.argv[1]; arg = lambda k, d=None: sys.argv[sys.argv.index(k) + 1] if k in sys.argv else d
+    mx = int(arg('--max', 0)); outf = arg('--out', os.path.join(city, 'build', 'logs', 'camcheck.json')); jsonf = arg('--json')
     D = os.path.join(city, 'build', 'data'); FILM = json.load(open(os.path.join(city, 'build', 'film.json'))); M = json.load(open(os.path.join(D, 'model.json')))   # (pipeline/layout.py)
-    CAM = json.load(open(os.path.join(city, 'build', 'logs', 'cam.json')))['rows']
+    CJ = json.load(open(arg('--cam', os.path.join(city, 'build', 'logs', 'cam.json')))); CAM = CJ['rows']
+    parts, i = [], 0   # each stretch's rows (a dump before ranges were written: one stretch)
+    for _, _, n in CJ.get('ranges') or [[None, None, len(CAM)]]: parts.append(CAM[i:i + n]); i += n
+    def meets(a, b): return any(max(a, P[0][0]) <= min(b, P[-1][0]) for P in parts if P)   # (closed: a sample at either end counts)
     S = M['scale']; PW, PD = M['size']
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'pipeline'))
     import terrainio
@@ -51,11 +60,14 @@ def main():
     ttree = shapely.STRtree(today)
     eras = []
     for e in FILM.get('eras', []):
+        own = None   # a city sharing its channel with others apart in time has its own mask (compile era channels)
+        if e.get('occupy'): own = np.asarray(Image.open(os.path.join(D, f"hide_{e['id']}.png")).convert('L')).astype(np.float32)[v, u] / 255
+        # its solids only where some stretch has it standing (the sets below) or rising (offscreen); today's city steps aside for every one
+        if not (meets(e['on'], math.inf if e.get('off') is None else e['off'] + e['sink'] + 5) or meets(e['on'], e['on'] + e['span'] + e['grow'])):
+            eras.append({'e': e, 'own': own}); continue
         J_ = json.load(open(os.path.join(city, 'build', e['file']))); lost_ = J_.get('lost') or [0] * len(J_['prims'])
         keep_ = [(p, k) for p, k in zip(J_['prims'], lost_) if p[11] not in (WATER, PAVE)]
         prims = [p for p, _ in keep_]
-        own = None   # a city sharing its channel with others apart in time has its own mask (compile era channels)
-        if e.get('occupy'): own = np.asarray(Image.open(os.path.join(D, f"hide_{e['id']}.png")).convert('L')).astype(np.float32)[v, u] / 255
         polys, base, top = [], [], []
         start = np.array([e['on'] + p[10] * e['span'] for p in prims]); bc = np.array([[p[15], p[16]] if len(p) > 16 else [p[1], p[2]] for p in prims])
         for p in prims:
@@ -108,91 +120,103 @@ def main():
             ok = (z > 1e-6) & (np.abs((V @ r_) / (z * th * 16 / 9)) <= 1) & (np.abs((V @ u_) / (z * th)) <= 1)
         if any(a <= row[0] <= b for a, b in FULL): ok[:] = False
         return ok
-    rows = np.array([r[:10] if len(r) >= 10 else r + [30] for r in CAM])
-    T0, DT = rows[0][0], rows[1][0] - rows[0][0]; T1 = rows[-1][0]   # cam.json may cover only a stretch (--from/--to)
-    row_at = lambda t: rows[min(len(rows) - 1, max(0, int(round((t - T0) / DT))))]
-    offs = []
-    for E in eras:   # change only on screen: the buildings rising at each moment must be (mostly) in view
-        e = E['e']; t = max(e['on'], T0); _, first = np.unique(E['bc'].round(7), axis=0, return_index=True)
-        st0, bc0, gy0 = E['start'][first], E['bc'][first], E['gy'][first]
-        while t <= min(e['on'] + e['span'] + e['grow'], T1):
-            rising = (st0 <= t) & (t <= st0 + e['grow'])
-            row = row_at(t)
-            for F_ in e.get('fronts', []):   # a ring that has left the frame speeds up out there (演出文法 9a): what rises beyond the frame is not counted
-                if F_['mode'] == 'ring' and F_['curve'][0][0] <= t <= F_['curve'][-1][0] + e['grow']:
-                    o = F_['o']; p_ = np.array(row[1:4]); z_ = np.linalg.norm(p_ - np.array([o[0], row[5], o[1]])); vr = z_ * math.tan(math.radians(row[9]) / 2)
-                    rising &= np.hypot(bc0[:, 0] - o[0], bc0[:, 1] - o[1]) <= vr
-            if rising.sum() >= 3:
-                fr = float(in_frame(row, bc0[rising, 0], gy0[rising], bc0[rising, 1]).mean())
-                if fr < .6: offs.append((f"offscreen:{e['id']}", t, round(fr, 2)))
-            t += .1
-    for i, n in enumerate(nodes):   # a node's colour ring must start in view
-        rg = n.get('ring')
-        if i == 0 or not n.get('tint') or not rg or not (T0 <= rg['t0'] <= T1): continue
-        seen = False; t = rg['t0']
-        while t <= rg['t0'] + 1.5:
-            row = row_at(t)
-            if in_frame(row, np.array([rg['o'][0]]), np.array([row[5]]), np.array([rg['o'][1]]))[0]: seen = True; break
-            t += .1
-        if not seen: offs.append((f"ring_unseen:{n['id']}", rg['t0'], 0.0))
-
     # spins: camera keys are interpolated value by value, so 0 -> 357 degrees turns the whole way round: write -3
     pd_ = (FILM.get('prologue') or {}).get('dur', 0)   # (the prologue is cut like a trailer, and closes on black)
     spins = [(t0, t1, a[3], b[3]) for (t0, a), (t1, b) in zip(FILM['camera'][:-1], FILM['camera'][1:]) if abs(b[3] - a[3]) > 120 and t1 > pd_ + .6]
-    for t0, t1, a0, a1 in spins: print(f'spin                   {t0:7.2f}-{t1:7.2f}s  azimuth {a0} -> {a1}')
-    NS = 40; flags = []
-    for row in CAM:
-        t, px, py, pz, gx, gy, gz, near, d = row[:9]
-        mrg = max(near * 1.5, .0002)
-        bad = []
-        if py - plate_y(px, pz) < max(2 * near, .0003): bad.append(('below_ground', py - plate_y(px, pz)))
-        # solids standing at t: today (not stepped aside) and period cities between rise and sink
-        sets = []
-        sets.append(('today', ttree, today, tb, tt, today_standing))
-        for E in eras:
-            e = E['e']
-            if t >= e['on'] and not (e.get('off') is not None and t > e['off'] + e['sink'] + 5): sets.append((e['id'], E['tree'], E['g'], E['base'], E['top'], lambda idx, t_, E=E: era_standing(E, idx, t_)))
-        cam_pt = shapely.Point(px, pz)
-        ks = np.linspace(.04, .88, NS)
-        seg_pts = shapely.points(np.c_[px + (gx - px) * ks, pz + (gz - pz) * ks]); seg_y = py + (gy - py) * ks
-        for name, tree, geoms, base, top, standing in sets:
-            # inside: the camera within mrg of a footprint, between its base and top (+ margin)
-            hit = tree.query(cam_pt, predicate='dwithin', distance=mrg)
-            if len(hit):
-                ok = (base[hit] - mrg < py) & (py < top[hit] + mrg)
-                if standing is not None and ok.any(): ok[ok] = standing(hit[ok], t)
-                if ok.any(): bad.append(('inside', name))
-            # blocked: sight-line samples inside a footprint below its top
-            pi, gi = tree.query(seg_pts, predicate="intersects")
-            if len(pi):
-                ok = (seg_y[pi] < top[gi]) & (seg_y[pi] > base[gi] - mrg)
-                if standing is not None and ok.any(): ok[ok] = standing(gi[ok], t)
-                if ok.any(): bad.append(('blocked', name, round(float(len(set(pi[ok]))) / NS, 2)))
-        if bad: flags.append((t, bad))
-    # merge into intervals per (kind, what)
-    iv = {}
-    for key, t, fr in offs:
-        L = iv.setdefault(key, [])
-        if L and t - L[-1][1] <= .25: L[-1][1] = t; L[-1][2] = min(L[-1][2], fr)
-        else: L.append([t, t, fr])
-    for t, bad in flags:
-        for b in bad:
-            key = b[0] + (':' + b[1] if b[0] != 'below_ground' else '')
-            val = b[2] if b[0] == 'blocked' else 1.0
+    spin_lines = [f'spin                   {t0:7.2f}-{t1:7.2f}s  azimuth {a0} -> {a1}' for t0, t1, a0, a1 in spins]   # (the whole film's: every stretch counts them)
+    def check(CAM):   # one stretch's rows -> (intervals, the lines it prints, how many count)
+        if not CAM: return {}, ['camcheck: no camera samples in this stretch'], mx + 1
+        rows = np.array([r[:10] if len(r) >= 10 else r + [30] for r in CAM])
+        T0, DT = rows[0][0], rows[1][0] - rows[0][0] if len(rows) > 1 else CJ['step']; T1 = rows[-1][0]   # cam.json may cover only a stretch (--from/--to)
+        row_at = lambda t: rows[min(len(rows) - 1, max(0, int(round((t - T0) / DT))))]
+        offs = []
+        for E in eras:   # change only on screen: the buildings rising at each moment must be (mostly) in view
+            e = E['e']; t = max(e['on'], T0)
+            if t > min(e['on'] + e['span'] + e['grow'], T1): continue   # (not rising in this stretch)
+            if 'first' not in E: E['first'] = np.unique(E['bc'].round(7), axis=0, return_index=True)[1]   # (once for every stretch)
+            first = E['first']; st0, bc0, gy0 = E['start'][first], E['bc'][first], E['gy'][first]
+            while t <= min(e['on'] + e['span'] + e['grow'], T1):
+                rising = (st0 <= t) & (t <= st0 + e['grow'])
+                row = row_at(t)
+                for F_ in e.get('fronts', []):   # a ring that has left the frame speeds up out there (演出文法 9a): what rises beyond the frame is not counted
+                    if F_['mode'] == 'ring' and F_['curve'][0][0] <= t <= F_['curve'][-1][0] + e['grow']:
+                        o = F_['o']; p_ = np.array(row[1:4]); z_ = np.linalg.norm(p_ - np.array([o[0], row[5], o[1]])); vr = z_ * math.tan(math.radians(row[9]) / 2)
+                        rising &= np.hypot(bc0[:, 0] - o[0], bc0[:, 1] - o[1]) <= vr
+                if rising.sum() >= 3:
+                    fr = float(in_frame(row, bc0[rising, 0], gy0[rising], bc0[rising, 1]).mean())
+                    if fr < .6: offs.append((f"offscreen:{e['id']}", t, round(fr, 2)))
+                t += .1
+        for i, n in enumerate(nodes):   # a node's colour ring must start in view
+            rg = n.get('ring')
+            if i == 0 or not n.get('tint') or not rg or not (T0 <= rg['t0'] <= T1): continue
+            seen = False; t = rg['t0']
+            while t <= rg['t0'] + 1.5:
+                row = row_at(t)
+                if in_frame(row, np.array([rg['o'][0]]), np.array([row[5]]), np.array([rg['o'][1]]))[0]: seen = True; break
+                t += .1
+            if not seen: offs.append((f"ring_unseen:{n['id']}", rg['t0'], 0.0))
+
+        NS = 40; flags = []
+        for row in CAM:
+            t, px, py, pz, gx, gy, gz, near, d = row[:9]
+            mrg = max(near * 1.5, .0002)
+            bad = []
+            if py - plate_y(px, pz) < max(2 * near, .0003): bad.append(('below_ground', py - plate_y(px, pz)))
+            # solids standing at t: today (not stepped aside) and period cities between rise and sink
+            sets = []
+            sets.append(('today', ttree, today, tb, tt, today_standing))
+            for E in eras:
+                e = E['e']
+                if t >= e['on'] and not (e.get('off') is not None and t > e['off'] + e['sink'] + 5): sets.append((e['id'], E['tree'], E['g'], E['base'], E['top'], lambda idx, t_, E=E: era_standing(E, idx, t_)))
+            cam_pt = shapely.Point(px, pz)
+            ks = np.linspace(.04, .88, NS)
+            seg_pts = shapely.points(np.c_[px + (gx - px) * ks, pz + (gz - pz) * ks]); seg_y = py + (gy - py) * ks
+            for name, tree, geoms, base, top, standing in sets:
+                # inside: the camera within mrg of a footprint, between its base and top (+ margin)
+                hit = tree.query(cam_pt, predicate='dwithin', distance=mrg)
+                if len(hit):
+                    ok = (base[hit] - mrg < py) & (py < top[hit] + mrg)
+                    if standing is not None and ok.any(): ok[ok] = standing(hit[ok], t)
+                    if ok.any(): bad.append(('inside', name))
+                # blocked: sight-line samples inside a footprint below its top
+                pi, gi = tree.query(seg_pts, predicate="intersects")
+                if len(pi):
+                    ok = (seg_y[pi] < top[gi]) & (seg_y[pi] > base[gi] - mrg)
+                    if standing is not None and ok.any(): ok[ok] = standing(gi[ok], t)
+                    if ok.any(): bad.append(('blocked', name, round(float(len(set(pi[ok]))) / NS, 2)))
+            if bad: flags.append((t, bad))
+        # merge into intervals per (kind, what)
+        iv = {}
+        for key, t, fr in offs:
             L = iv.setdefault(key, [])
-            if L and t - L[-1][1] <= .15: L[-1][1] = t; L[-1][2] = max(L[-1][2], val)
-            else: L.append([t, t, val])
-    out = {k: [[round(a, 2), round(b, 2), round(w, 2)] for a, b, w in v] for k, v in iv.items()}
-    json.dump(out, open(os.path.join(city, 'build', 'logs', 'camcheck.json'), 'w'), indent=1)
-    n = 0
-    for k, v in sorted(out.items()):
-        for a, b, w in v:
-            if k.startswith('blocked') and w < .08: continue   # a corner grazing the sight line for a sample or two
-            if k.startswith('offscreen') and b - a < .35: continue   # a moment, not a scene
-            n += 1; print(f'{k:22s} {a:7.2f}-{b:7.2f}s' + (f'  blocks {w:.0%} of the sight line' if k.startswith('blocked') else f'  {w:.0%} of the rising buildings in view' if k.startswith('offscreen') else ''))
-    n += len(spins)
-    print('camcheck:', 'ok' if n <= mx else f'{n} intervals (see out/camcheck.json)')
-    sys.exit(0 if n <= mx else 1)
+            if L and t - L[-1][1] <= .25: L[-1][1] = t; L[-1][2] = min(L[-1][2], fr)
+            else: L.append([t, t, fr])
+        for t, bad in flags:
+            for b in bad:
+                key = b[0] + (':' + b[1] if b[0] != 'below_ground' else '')
+                val = b[2] if b[0] == 'blocked' else 1.0
+                L = iv.setdefault(key, [])
+                if L and t - L[-1][1] <= .15: L[-1][1] = t; L[-1][2] = max(L[-1][2], val)
+                else: L.append([t, t, val])
+        out = {k: [[round(a, 2), round(b, 2), round(w, 2)] for a, b, w in v] for k, v in iv.items()}
+        lines = list(spin_lines); n = 0
+        for k, v in sorted(out.items()):
+            for a, b, w in v:
+                if k.startswith('blocked') and w < .08: continue   # a corner grazing the sight line for a sample or two
+                if k.startswith('offscreen') and b - a < .35: continue   # a moment, not a scene
+                n += 1; lines.append(f'{k:22s} {a:7.2f}-{b:7.2f}s' + (f'  blocks {w:.0%} of the sight line' if k.startswith('blocked') else f'  {w:.0%} of the rising buildings in view' if k.startswith('offscreen') else ''))
+        n += len(spins)
+        return out, lines + ['camcheck: ' + ('ok' if n <= mx else f'{n} intervals (see out/camcheck.json)')], n
+    res = [check(P) for P in parts]
+    for P, (_, lines, _) in zip(parts, res):
+        if len(parts) > 1: print(f"camcheck {P[0][0]:g}-{P[-1][0]:g} s:" if P else 'camcheck: an empty stretch:')
+        print('\n'.join(lines))
+    allout = {}   # (the stretches apart in time: their intervals side by side)
+    for out, _, _ in res:
+        for k, v in out.items(): allout.setdefault(k, []).extend(v)
+    json.dump(allout, open(outf, 'w'), indent=1)
+    if jsonf: json.dump([{'from': P[0][0] if P else None, 'to': P[-1][0] if P else None, 'ok': n <= mx, 'lines': lines, 'intervals': out} for P, (out, lines, n) in zip(parts, res)], open(jsonf, 'w'), indent=1)
+    sys.exit(0 if all(n <= mx for _, _, n in res) else 1)
 
 
 if __name__ == '__main__':

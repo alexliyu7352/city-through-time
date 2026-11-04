@@ -2,18 +2,23 @@
 every half second, each line (by id), each panel, tag, route, drawn line and spot (by id), each era's fronts, losses and today_from,
 the light the film data sets (the grown city's grow.dim, today's city's dim keys and the night keys every half second; era_look,
 night_look and shade for the whole film: a light changed for one stretch can drown another's subject), and the
-stretches that differ printed, each with what changed there and the tools/rangecheck.py command that compares it with the previous
-version line by line. A stretch whose picture and lines only moved together (a station before it grew or shrank) is listed apart:
-its lines still meet the same picture, so it needs no comparison unless its timing was the point.
+stretches that differ printed, each with what changed there, and one tools/rangecheck.py command that compares them all with the
+previous version line by line (one command: the film is loaded once for every stretch). Each time is compared with the film's shift
+at that time (the nearest line both versions have), so a part that only moved with its lines did not change; a long item (a
+chapter's readout) that changed is placed where it differs. A stretch whose picture and lines only moved together (a station before
+it grew or shrank) is listed apart: its lines still meet the same picture, so it needs no comparison unless its timing was the point.
 usage: python -I tools/filmdiff.py <previous: city_slug | city folder> <this: city_slug | city folder>"""
-import bisect, json, os, sys
+import bisect, json, math, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STEP = 0.5     # camera sampled this often
 EPS = 1e-3     # a camera value closer than this is the same
 JOIN = 2.0     # changes closer than this make one stretch
 PAD = 1.0      # each stretch compared with this much either side
-TIMES = ('on', 'off', 't0', 't1', 'gone')
+WHOLE = 60.0   # an item on screen this long or shorter that changed is compared whole (a tag's reading time is judged whole); a longer
+               # one (a chapter's readout, a drawn line) only where it differs, so one note does not mark a whole chapter
+TIMES = ('on', 'off', 't0', 't1', 'gone', 't', 'a', 'burn', 'flash')   # times at any depth: a number or a list of them ([a, b]) under these keys; a curve's points start with one
+TOL = .011     # two times this close are the same (kept to the cent, some to the ms: rounded apart, they can differ by one)
 NAME = {'lines': 'drawn-line', 'footage': 'panel', 'pins': 'tag', 'routes': 'route', 'readouts': 'readout', 'spots': 'spot', 'fronts': 'front', 'losses': 'loss', 'today': 'today_from'}
 LOOKS = ('era_look', 'night_look', 'shade')   # the film's light settings with no time of their own: for the whole film
 
@@ -46,13 +51,31 @@ def light(f, t):   # the grown city's light (grow.dim: one key or keys, each eas
 def same_light(f, g, t, d=0.0): return max(abs(x - y) for x, y in zip(light(f, t), light(g, t - d))) < EPS
 
 
-def moved(x, d):   # x with its times taken back by d: equal to the previous version's item when only the time moved
-    x = dict(x)
-    for k in TIMES:
-        if isinstance(x.get(k), (int, float)): x[k] = round(x[k] - d, 2)
-    if isinstance(x.get('a'), list) and len(x['a']) == 2: x['a'] = [round(v - d, 2) for v in x['a']]
-    if isinstance(x.get('curve'), list): x['curve'] = [[round(p[0] - d, 2), *p[1:]] for p in x['curve']]
-    return json.dumps(x, sort_keys=True)
+def num(v): return isinstance(v, (int, float)) and not isinstance(v, bool)
+def own(x): return [t for k, v in x.items() if k in TIMES for t in (v if isinstance(v, list) else [v]) if num(t)] if isinstance(x, dict) else []
+
+
+def diff(x, o, sh, at, k=None):
+    """where x (this version) differs from o (the previous) once each time of x is taken back by the film's shift at that time
+    (sh(t)): [(a, b), ..] in this version's seconds, [] when x only moved. A time that differs is placed at its own seconds; any
+    other difference at the part holding it that has times of its own (a readout's note, not the whole readout), else at `at`"""
+    if isinstance(x, dict) and isinstance(o, dict):
+        if k is not None and own(x): at = (min(own(x)), max(own(x)))
+        return [w for q in sorted(x.keys() | o.keys()) for w in (diff(x[q], o[q], sh, at, q) if q in x and q in o else [at])]
+    if k in TIMES and num(x) and num(o): return [] if abs(x - sh(x) - o) <= TOL else [(min(x, o + sh(x)), max(x, o + sh(x)))]
+    if not (isinstance(x, list) and isinstance(o, list)): return [] if x == o else [at]
+    if k == 'curve':   # [[t, value..], ..]: each point at its time
+        if len(x) != len(o): return [(min(x[0][0], o[0][0] + sh(x[0][0])), max(x[-1][0], o[-1][0] + sh(x[-1][0])))] if x and o else [at]
+        same = lambda p, q: len(p) == len(q) and all(math.isclose(u, v, rel_tol=1e-3) for u, v in zip(p[1:], q[1:]))   # (a ring's radius recomputed off frame: a thousandth is no change)
+        return [w for p, q in zip(x, o) for w in diff(p[0], q[0], sh, at, 't') + ([] if same(p, q) else [(p[0], p[0])])]
+    if len(x) == len(o): return [w for p, q in zip(x, o) for w in diff(p, q, sh, at, k)]
+    if not all(isinstance(v, dict) for v in x + o): return [at]
+    left, out = list(o), []   # parts added or taken away (a readout's notes): each one without a twin, at its own time
+    for p in x:
+        q = next((q for q in left if not diff(p, q, sh, at, k)), None)
+        if q is None: out.append((min(own(p)), max(own(p))) if own(p) else at)
+        else: left.remove(q)
+    return out + [(min(own(q)) + sh(min(own(q))), max(own(q)) + sh(max(own(q)))) if own(q) else at for q in left]
 
 
 def span(kind, x):
@@ -101,14 +124,16 @@ def main():
         if c['id'] not in ids: changed.append((c['t0'], c['t1'], f"line {c['id']} (gone; previous version's time)"))
     I, J = items(P), items(N); matched = set()   # a front keyed by its start: one that moved is gone under its old key and new under its new one
     for k, x in J.items():
-        o = I.get(k); a, b = span(k[0], x)
+        o = I.get(k); a, b = span(k[0], x); name = f'{NAME[k[0]]} {k[1]}'
         if o is not None and json.dumps(o, sort_keys=True) == json.dumps(x, sort_keys=True): continue
-        d = shift(a)
-        if o is not None and d and moved(x, d) == moved(o, 0): slid.append((a, b, f'{NAME[k[0]]} {k[1]}')); continue
-        twin = next((kk for kk, oo in I.items() if o is None and d and kk[0] == k[0] == 'fronts' and kk not in J and kk not in matched
-                     and kk[1].split()[0] == k[1].split()[0] and moved(x, d) == moved(oo, 0)), None)
-        if twin: matched.add(twin); slid.append((a, b, f'{NAME[k[0]]} {k[1]}')); continue
-        changed.append((a, b, f"{NAME[k[0]]} {k[1]}{' (new)' if o is None else ''}"))
+        if o is None and k[0] == 'fronts':
+            twin = next((kk for kk, oo in I.items() if kk[0] == 'fronts' and kk not in J and kk not in matched and kk[1].split()[0] == k[1].split()[0]
+                         and not diff(x, oo, shift, (a, b))), None)
+            if twin: matched.add(twin); slid.append((a, b, name)); continue
+        if o is None: changed.append((a, b, name + ' (new)')); continue
+        w = diff(x, o, shift, (a, b))
+        if w: changed += [(p, q, name) for p, q in w + ([(a, b)] if b - a <= WHOLE else [])]
+        else: slid += [(p, q, name) for p, q in diff(x, o, lambda t: 0.0, (a, b))]   # (where it moved; none: the same to the cent)
     for k, o in I.items():
         if k not in J and k not in matched: a, b = span(k[0], o); changed.append((a, b, f"{NAME[k[0]]} {k[1]} (gone; previous version's time)"))
     def merged(xs):
@@ -126,8 +151,8 @@ def main():
     for a, b, ws in ch: print(f'  {a:8.2f}-{b:8.2f}  {said(ws)}')
     if sl: print('only moved (lines and picture together; compare if the timing was the point):')
     for a, b, ws in sl: print(f'  {a:8.2f}-{b:8.2f}  moved {shift(a):+.2f} s: {said(ws)}')
-    if ch: print('compare each changed stretch with the previous version, line by line:')
-    for a, b, _ in ch: print(f'  uv run python -I tools/rangecheck.py {nname} --from {max(0, a - PAD):.2f} --to {min(N["dur"], b + PAD):.2f} --against {pname}')
+    if ch: print('compare the changed stretches with the previous version, line by line, all in one command:')
+    if ch: print(f'  uv run python -I tools/rangecheck.py {nname} ' + ' '.join(f'--from {max(0, a - PAD):.2f} --to {min(N["dur"], b + PAD):.2f}' for a, b, _ in ch) + f' --against {pname}')
 
 
 if __name__ == '__main__':
