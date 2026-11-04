@@ -331,15 +331,23 @@ def keep_layer(prims, lost, cs):
     from shapely.strtree import STRtree as _T
     ground = [p for p in keep if p[4] <= p[12] + 1e-9 and p[11] not in (4, 5, 7)]
     if ground:
-        tree = _T([_P(citygen.footprint(p)) for p in ground]); rk = [p[10] for p in ground]
-        for b in _MODEL['p']:
-            ring = b[2][0]
-            if len(ring) < 3: continue
-            hit = tree.query(_P(ring), predicate='intersects')
-            if len(hit):
-                v = code(float(min(rk[j] for j in hit))); dr.polygon([U_(x, z) for x, z in ring], fill=v)
-                dr.point(U_(sum(x for x, _ in ring) / len(ring), sum(z for _, z in ring) / len(ring)), fill=v)   # (where the engine reads it: hide_layer)
+        import numpy as _np
+        tree = _T([_P(citygen.footprint(p)) for p in ground]); rk = _np.array([p[10] for p in ground])
+        rings_, geoms_ = today_polys(); ii_, tt_ = tree.query(geoms_, predicate='intersects')   # (every building of today at once)
+        low_ = _np.full(len(rings_), _np.inf); _np.minimum.at(low_, ii_, rk[tt_])
+        for k_ in _np.nonzero(_np.isfinite(low_))[0]:
+            ring = rings_[k_]; v = code(float(low_[k_])); dr.polygon([U_(x, z) for x, z in ring], fill=v)
+            dr.point(U_(sum(x for x, _ in ring) / len(ring), sum(z for _, z in ring) / len(ring)), fill=v)   # (where the engine reads it: hide_layer)
     return im
+
+_TODAY = []
+def today_polys():
+    """today's buildings (rings of 3 points or more, in order) and their shapely polygons, made once for every era city"""
+    if not _TODAY:
+        from shapely.geometry import Polygon as _P
+        import numpy as _np
+        rings_ = [b[2][0] for b in _MODEL['p'] if len(b[2][0]) >= 3]; _TODAY.extend([rings_, _np.array([_P(r) for r in rings_], dtype=object)])
+    return _TODAY
 
 def hide_layer(prims, cs, bnd=()):
     """where an era city stands, today's buildings step aside. The value is .04 + .96 x the rank (start time, 0..1 over the
@@ -366,16 +374,16 @@ def hide_layer(prims, cs, bnd=()):
         ground = [p for p in prims if p[4] <= p[12] + 1e-9 and p[11] not in (4, 5, 7)]
         if ground or drapes:
             tree = _T([_P(citygen.footprint(p)) for p in ground] + [g_ for _, g_ in drapes]); rk = _np.array([p[10] for p in ground] + [r_ for r_, _ in drapes])
-            for b in _MODEL['p']:
-                ring = b[2][0]
-                if len(ring) < 3: continue
-                hit = tree.query(_P(ring), predicate='intersects')
-                if len(hit):
-                    dr.polygon([U_(x, z) for x, z in ring], fill=code(float(rk[hit].min())))
-                    # the engine reads the mask at the mean of the ring's points (studio.js aCtr), which a bent or hollow
-                    # building has outside its own outline: that point too, or it stays standing in the old city
-                    cu_, cv_ = U_(sum(x for x, _ in ring) / len(ring), sum(z for _, z in ring) / len(ring))
-                    dr.point((cu_, cv_), fill=code(float(rk[hit].min())))   # (one pixel: the region's margin below takes it as it takes an edge)
+            rings_, geoms_ = today_polys()
+            ii_, tt_ = tree.query(geoms_, predicate='intersects')   # (every building of today at once)
+            low_ = _np.full(len(rings_), _np.inf); _np.minimum.at(low_, ii_, rk[tt_])
+            for k_ in _np.nonzero(_np.isfinite(low_))[0]:   # (in today's order, as each was drawn over the last)
+                ring = rings_[k_]
+                dr.polygon([U_(x, z) for x, z in ring], fill=code(float(low_[k_])))
+                # the engine reads the mask at the mean of the ring's points (studio.js aCtr), which a bent or hollow
+                # building has outside its own outline: that point too, or it stays standing in the old city
+                cu_, cv_ = U_(sum(x for x, _ in ring) / len(ring), sum(z for _, z in ring) / len(ring))
+                dr.point((cu_, cv_), fill=code(float(low_[k_])))   # (one pixel: the region's margin below takes it as it takes an edge)
     except Exception as ex:
         print('hide: today-overlap pass skipped', ex)
     reg = Image.new('L', (HW, HH), 0); dg = ImageDraw.Draw(reg)
@@ -416,6 +424,27 @@ def model_ground(x, z):
     """the plate's height (model units) under a model point"""
     return ground_m_xy(x / F.scale + F.cx, -z / F.scale + F.cy) * F.scale * _tex
 
+class _Ix(list):
+    """part indices a select names (a list, in order) that answers `in` at once: each building is looked up in a stage or a loss
+    naming thousands of parts"""
+    def __contains__(self, x):
+        if getattr(self, '_n', -1) != len(self): self._s = set(self); self._n = len(self)
+        return x in self._s
+
+_PART_IX = {}   # id of a spec's list of parts -> (the list, its items' ids, {id or group: [indices]})
+def _part_index(items):
+    """the parts of a list by name: built once per list (a scan per name was minutes on a city of thousands of parts that its
+    stages and losses name by the thousand), again if the list has changed"""
+    ids_ = tuple(map(id, items)); ix = _PART_IX.get(id(items))
+    if ix is None or ix[0] is not items or ix[1] != ids_:
+        m = {}
+        for i, it in enumerate(items):
+            if isinstance(it, dict):
+                for k_ in dict.fromkeys((it.get('id'), it.get('group'))):
+                    if k_ is not None: m.setdefault(k_, []).append(i)
+        ix = _PART_IX[id(items)] = (items, ids_, m)
+    return ix[2]
+
 def select_parts(sel, cs, node_id, what):
     """a `select` ({landmarks: [names], fabric: [...], walls/streets/lanes/trees: true or names}) -> {category: True or
     [indices]}. Parts are named by `id` or `group` (list indices shift when a part is added: refused)"""
@@ -423,14 +452,14 @@ def select_parts(sel, cs, node_id, what):
     for cat, v in sel.items():
         if v is True: out[cat] = True; continue
         items = cs.get(cat) if isinstance(cs.get(cat), list) else []
-        idx = []
+        idx = []; ix_ = _part_index(items) if v else {}
         for name in v:
             if not isinstance(name, str):
                 raise SystemExit(f'compile: era {node_id}: {what} select {cat}: {name!r} is an index; give the part an id (or group) and name it')
-            hit = [i for i, it in enumerate(items) if isinstance(it, dict) and name in (it.get('id'), it.get('group'))]
+            hit = ix_.get(name, [])
             if not hit: raise SystemExit(f'compile: era {node_id}: {what} select {cat}: no part with id or group {name!r}')
             idx += hit
-        out[cat] = idx
+        out[cat] = _Ix(idx)
     return out
 
 def split_parts(meta, labels, cs, node_id):
@@ -515,6 +544,8 @@ def lost_parts(prims, meta, cs, node_id):
             keep_sel = select_parts({k: v for k, v in kp.items() if k != 'region'}, cs, node_id, 'lose keep') if set(kp) - {'region'} else None
             kept = area(kp['region']) if kp.get('region') else None
         else: keep_sel, kept = None, area(kp) if kp else None
+        for g_ in (inside, kept):
+            if g_ is not None: _sh.prepare(g_)   # (tested against every building of the city)
         kept_[j] = (kept, keep_sel)
         if fo[j] and inside is None: return   # (only the sites: below)
         for gid, (tag, c) in G.items():
@@ -2721,8 +2752,10 @@ def _dead_air():
 def _model_checks():
     import subprocess
     root_ = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); bad_ = []
-    for name_, cmd_ in (('geocheck', ['node', os.path.join(root_, 'tools', 'geocheck.mjs'), D]), ('clipcheck', [sys.executable, '-I', '-X', 'faulthandler', os.path.join(root_, 'tools', 'clipcheck.py'), D])):
-        r_ = subprocess.run(cmd_, cwd=root_, capture_output=True, text=True)
+    jobs_ = [(name_, subprocess.Popen(cmd_, cwd=root_, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)) for name_, cmd_ in   # (the two at once:
+             (('geocheck', ['node', os.path.join(root_, 'tools', 'geocheck.mjs'), D]), ('clipcheck', [sys.executable, '-I', '-X', 'faulthandler', os.path.join(root_, 'tools', 'clipcheck.py'), D]))]   # two workers, a minute each on a large city)
+    for name_, j_ in jobs_:
+        out_, err_ = j_.communicate(); r_ = SimpleNamespace(stdout=out_, stderr=err_, returncode=j_.returncode)
         open(LAYOUT.logs(D, f'{name_}.log'), 'w', encoding='utf-8').write(r_.stdout + r_.stderr)
         print('  ' + ((r_.stdout.strip().splitlines() or [f'{name_}: no output ({r_.stderr.strip()[-200:]})'])[-1]) + (f'  (killed by signal {-r_.returncode}: a crash, run compile again)' if r_.returncode < 0 else ''))
         if r_.returncode: bad_.append(name_)
