@@ -169,6 +169,8 @@ To generate imagined pictures: first ask the user which image-generation tools t
 If the user has the Codex CLI, it can be used: `codex exec --skip-git-repo-check -` reads the prompt from stdin; tell it to draw one 16:9 picture with its built-in image generation and copy it to
 `assets/imagined/<name>.png` (in practice 1672×941, about two minutes each, can run in parallel). Each prompt states the scene and the period details (buildings, clothes, objects, terrain,
 following the sources in the picture list); use one common style and negative prompt for the whole film so that the pictures look like a set.
+A person's portrait goes where the person enters the story (the first line that names them), on a shot that holds, up long enough to read; a face
+flashed at a later mention while the camera flies off is not seen.
 For people with no portrait from their time: a later portrait must be labelled "後人想像" ("imagined by later generations"); photos of modern statues mostly look bad, so do not use them.
 
 ## Emblem and emotional line
