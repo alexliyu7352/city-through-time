@@ -245,6 +245,14 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     if (!sw) return; const s0 = Math.max(w / sw, h / sh) * z, dw = sw * s0, dh = sh * s0;
     gg.drawImage(src, x + (w - dw) / 2 + panX * (dw - w) / 2, y + (h - dh) / 2 + panY * (dh - h) / 2, dw, dh);
   }
+  // the caption's left edge: x, or further left as far as its widest line (and the credit under it) needs to end inside the frame's
+  // right margin, where a card on the right side ends (a long title under a narrow card ran off the frame)
+  function captionX(f, x, o = {}) {
+    const ws = [width(f.kicker || '今天 · TODAY · 实拍', 'mono', 14, 4), width(f.title || '', 'zh_strong', o.big ? 40 : 32, 3)];
+    if (f.sub) ws.push(width(f.sub, 'en', o.big ? 22 : 19));
+    if (f.credit) ws.push(width(f.credit, 'mono', 13));
+    return Math.max(96, Math.min(x, W - 120 - Math.max(...ws)));
+  }
   function caption(f, x, y, a, o = {}) {
     if (a <= 0) return;
     txt(null, f.kicker || '今天 · TODAY · 实拍', x, y, 'mono', 14, 'rgba(240,242,245,.78)', a, { ls: 4, shadow: 8 });
@@ -285,8 +293,9 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
       const sh = o.createLinearGradient(0, H - 380, 0, H); sh.addColorStop(0, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,0,.6)');
       o.fillStyle = sh; o.fillRect(px0 + slide + 200, H - 380, pw, 380);
       g.save(); g.globalAlpha = vis; g.drawImage(oc, 0, 0); g.restore();
-      caption(f, px0 + slide + 240, H - 330, ta);
-      if (f.credit) txt(null, f.credit, px0 + slide + 240, H - 236, 'mono', 13, 'rgba(225,230,236,.75)', ta, { shadow: 8 });
+      const capX = captionX(f, px0 + 240) + slide;
+      caption(f, capX, H - 330, ta);
+      if (f.credit) txt(null, f.credit, capX, H - 236, 'mono', 13, 'rgba(225,230,236,.75)', ta, { shadow: 8 });
       return;
     }
     // card and doc: a framed picture with a shadow
@@ -309,8 +318,9 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     g.beginPath(); g.rect(cx, cy + lift, cw, chh); g.clip();
     cover(g, src, cx, cy + lift, cw, chh, 1.0 + .05 * e.k);
     g.restore();
-    caption(f, cx, cy + lift + chh + 44, ta);
-    if (f.credit) txt(null, f.credit, cx, cy + lift + chh + (f.sub ? 140 : 110), 'mono', 12, 'rgba(225,230,236,.72)', ta, { shadow: 8 });
+    const capX = captionX(f, cx);
+    caption(f, capX, cy + lift + chh + 44, ta);
+    if (f.credit) txt(null, f.credit, capX, cy + lift + chh + (f.sub ? 140 : 110), 'mono', 12, 'rgba(225,230,236,.72)', ta, { shadow: 8 });
   }
 
   // a route's label: a dark pill with a coloured rule, sitting just above the arc
