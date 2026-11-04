@@ -176,6 +176,11 @@ the frames: for each line, what is on screen while it is said. The camera serves
 the thing it shows or is in the frame with it. A change goes with the line that tells it; one no line tells is carried by its tag under a line
 that needs the camera nowhere else, never under a line about another place, nor under one its picture contradicts (a dome standing complete
 as the words say it reached only its base; a state of 1871 under "still the capital of the Papal States").
+Before staging a stretch where the city changes more than once, add up what it needs against the seconds of the lines that tell it: a city's
+stages grow one after another, each is seen for about two seconds by a camera that stays (`timing.settle_need`), a part is lost only once it
+stands, and each flight takes its move time. When it does not fit, make the stages the words do not tell apart one stage (their years can stay
+on the tag), or declare a pause; finding it compile by compile costs a whole compile per constraint (when the stage plan cannot fit, compile
+prints the node's time round it: lines, stages, camera keys, the holds it inserted).
 
 ## Footage and pictures
 

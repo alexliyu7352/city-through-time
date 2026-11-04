@@ -1708,6 +1708,22 @@ for e in eras_out:   # each city: when every building rises (stages, settle) and
     e.update({'on': round(on_, 3), 'span': round(span_, 3), 'grow': grow_, 'rise': round(span_ + grow_, 3), 'fronts': fronts_, **({'up': up_} if up_ else {})})
     print(f'  city {node["id"]}: {len(prims)} primitives, rises {on_:.1f}-{on_ + span_ + grow_:.1f} s, ' + ', '.join(f'{f_["mode"]} {f_["curve"][0][0]:.1f}-{f_["curve"][1][0]:.1f}' for f_ in fronts_))
 
+def node_timeline(node, t, span=10.0):
+    """when a stage plan does not fit: the node's time round t in one table (its lines, each stage's light and rise, the camera
+    keys, the holds already inserted), so that what has to fit can be set out at once rather than found one compile at a time"""
+    print(f'    node {node["id"]} round {t:.1f} s:')
+    rows = [(a_, f'line   {lid}  {a_:.2f}-{b_:.2f}') for lid, (a_, b_) in node.get('_line_t', {}).items() if a_ < t + span and b_ > t - span]
+    for e_ in eras_out:
+        if e_['id'] != node['id']: continue
+        for f_ in e_['fronts']:
+            P_ = f_.get('_plan') or {}
+            if f_['a'][0] < t + span and f_['a'][1] > t - span:
+                rows.append((f_['a'][0], f'stage  {P_.get("stage") or "-"}  light {f_["a"][0]:.2f}-{f_["a"][1]:.2f}' + (f', up by {P_["t_end"]:.2f}' if 't_end' in P_ else '')))
+    rows += [(k_[0], f'camera key  {k_[0]:.2f}') for k_ in cam if t - span <= k_[0] <= t + span]
+    rows += [(node_time(node, q_['tau']), f'inserted  {q_.get("kind", "")} +{q_["delta"]:.1f} s at {node_time(node, q_["tau"]):.2f}: {q_.get("why", "")}') for q_ in PLAN.get(node['id'], [])
+             if abs(node_time(node, q_['tau']) - t) <= span]
+    for _, r_ in sorted(rows): print('      ' + r_)
+
 def plan_stages():
     """docs/STAGING.md 9e: what the camera must still give each stage, as time inserted into its node.
     (a) a stage starts on the first camera key that frames its place: the camera stops there (a hold) rather than the stage
@@ -1766,11 +1782,17 @@ if NEWPLAN:
     for node, q in NEWPLAN:
         print(f'  plan (pass {PASS}): node {node["id"]} +{q["delta"]:.1f} s at {q["tau"]:.2f}: {q["why"]}')
         if any(abs(o['tau'] - q['tau']) < .05 and o.get('kind') == q['kind'] for o in PLAN.get(node['id'], [])):
-            raise SystemExit(f'compile: the stage plan repeats itself in node {node["id"]} ({q["why"]}): the inserted keys do not give what the stage needs')
+            node_timeline(node, node_time(node, q['tau']))
+            raise SystemExit(f'compile: the stage plan repeats itself in node {node["id"]} ({q["why"]}): the time it inserted is taken again (most often a '
+                             f'camera key written after it, or the next line\'s picture, moves the camera off before the stage has been seen). In the table above, '
+                             f'set out what has to fit: move that key, give the stage more of its line, make stages the words do not tell apart one stage, '
+                             f'or declare a pause (docs/STAGING.md "A change goes with the line that tells it")')
         if q['kind'] == 'start':   # the stage moves to an earlier key: what was planned after it was planned for the old start
             PLAN[node['id']] = [o for o in PLAN.get(node['id'], []) if not (o.get('kind') in ('hold', 'look') and o['tau'] > q['tau'])]
         PLAN.setdefault(node['id'], []).append(q)
-    if PASS >= int(os.environ.get('CT_MAX_PASS') or 6): raise SystemExit(f'compile: the stage plan did not settle in {PASS} passes')
+    if PASS >= int(os.environ.get('CT_MAX_PASS') or 6):
+        for node, q in NEWPLAN: node_timeline(node, node_time(node, q['tau']))
+        raise SystemExit(f'compile: the stage plan did not settle in {PASS} passes: each pass needed more time somewhere (the tables above)')
     json.dump(PLAN, open(LAYOUT.logs(D, 'plan.json'), 'w'), ensure_ascii=False, indent=1)   # what the algorithm inserted (for reading)
     sys.stdout.flush(); os.environ['CT_PLAN'] = json.dumps(PLAN); os.environ['CT_PASS'] = str(PASS + 1)
     with open(GEN_PATH, 'wb') as f_: pickle.dump((GEN_TOKEN, GEN_SAVED), f_, protocol=pickle.HIGHEST_PROTOCOL)
@@ -1785,6 +1807,7 @@ for e in eras_out:
     fr_ = sorted(e['fronts'], key=lambda q: q['a'][0])
     for p_, q_ in zip(fr_, fr_[1:]):
         if q_['a'][0] < p_['a'][1] - .5:
+            node_timeline(next(n for n in FM['nodes'] if n['id'] == e['id']), q_['a'][0])
             raise SystemExit(f"compile: era {e['id']}: two stages grow at once ({p_['mode']} {p_['a'][0]:.1f}-{p_['a'][1]:.1f} s, {q_['mode']} "
                              f"{q_['a'][0]:.1f}-{q_['a'][1]:.1f} s); the engine lights one front per city: run them one after another or make them one stage")
 PLACES = []   # where each city changes and when (era, [t0, t1], centre, radius): may a half-screen picture show then (演出文法 5b)
