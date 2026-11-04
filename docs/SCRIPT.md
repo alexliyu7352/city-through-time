@@ -107,6 +107,10 @@ Do the following in order; go on only when the user confirms each step:
 6. **Storyboard:** once the narration is confirmed, and before any period city is built (step 4), write in `TREATMENT.md`, line by line, what is on screen as each line
    is said: which city rises or changes and what says so (the line, a tag), which place is marked or drawn on a map, which picture or living moment (STAGING.md
    "A picture for every key beat"). Show it to the user (★). Step 4 builds what the storyboard asks for; when the narration changes, the storyboard changes first.
+   What each line shows also goes into script.yaml as the line's `see:` (a pin, a stage of the node's city, a card: the thing, not a camera key; TREATMENT.md keeps
+   the why), and compile holds the picture to it: it stops when the place is out of the frame for most of the line, the tag is not yet shown or the card is not up.
+   No program reads what the words are about: a line that speaks of a place or says "here" without `see:` is checked by nothing but the review. A stage tied to a
+   line (`at: {with: <line>}`) goes with the line that tells that change: under a line about another place it takes the camera away from what the line shows.
    A model built ahead of the story gets pushed into the film and shows changes no line explains, and staging it after the fact costs round after round.
 
 If the direction of the story has to change midway, go back to the outline and confirm it again with the user; do not patch it piecemeal on the subtitles.

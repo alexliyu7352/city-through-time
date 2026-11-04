@@ -54,6 +54,8 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
   (an open page may have been loaded halfway through a change); speak only of what the preview really has (example: when the preview cannot play sound yet, do not ask the user to "listen in the preview").
 - **Accept on the thing the user pointed at:** confirm by screenshot at that second and on that object, not on something beside it (example: for an area's colouring look at the houses changing colour, not only the ground);
   when replacing an effect, look once at the farthest and once at the nearest camera: "not deleted" does not mean "visible" (example: sparks shrunk to 3 pixels cannot be seen even up close).
+- **A review rule adopted midway runs over the whole film** before the next handover, not only over the stretches changed since: a stretch that never changed
+  was never seen under the new rule (it passes every comparison with the version before it).
 - **A fault the user names is one of a kind:** fix it, then go through every line of the film for the same fault before handing back (example: one far place
   named without a map means checking every place each line names, not only the one pointed at). The user should never have to find the second one.
 - **When the user says "it changed", compare before reasoning about the cause:** rebuild the commit before the change (`git worktree add`, or `git archive` into a temp folder), and compare screenshots at the same second;

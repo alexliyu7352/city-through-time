@@ -685,7 +685,7 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
         fronts.append({'mode': mode, 'o': [round(o[0], 6), round(o[1], 6)], 'dir': [round(v, 6) for v in dirv] if dirv else None,
                        'curve': curve_,
                        'w': round(w, 6), 'a': [round(t0 - TIMING['fade'], 3), round(max(t1 + grow * .5, curve_[-1][0]), 3)], 'n': len(gids),
-                       '_plan': {'t_from': t_from, 't0': t0, 't_end': round((start[gids[0]] if len(gids) == 1 else t0 + dur) + grow, 3), 'centre': centre, 'rad': rad_, 'n': len(gids),   # (one building rises at once, not over the stage's time)
+                       '_plan': {'t_from': t_from, 't0': t0, 't_end': round((start[gids[0]] if len(gids) == 1 else t0 + dur) + grow, 3), 'centre': centre, 'rad': rad_, 'n': len(gids), 'stage': st.get('name') or st.get('id'),   # (one building rises at once, not over the stage's time)
                                  'focus': look_target(G, gids, cs, node_id, mode == 'scan')}})   # for plan_stages (popped)
         study_next = fronts[-1]['a'][1] + .5
     st_p = [start[gid] for gid, _, _ in meta]
@@ -988,12 +988,12 @@ def line_anchor(node, ln):
         L_ = {'pin': node.get('pins', []), 'card': node.get('footage', []), 'route': node.get('routes', [])}[kind_]
         it_ = next((q for q in L_ if q.get('id') == name_), None)
         if it_ is None: raise SystemExit(f'compile: line {ln["id"]}: no {kind_} {name_!r} in node {node["id"]}')
-        tau_ = it_.get('t0' if kind_ == 'pin' else 'at', 0)
+        tau_ = it_['with'] if 'with' in it_ else it_.get('t0' if kind_ == 'pin' else 'at', 0)   # (one that follows a line has no time of its own: said below)
     elif kind_ == 'stage':
         st_ = (node.get('city') or {}).get('stages') or []
         it_ = next((q for q in st_ if not name_ or q.get('name') == name_), None)
         if it_ is None: raise SystemExit(f'compile: line {ln["id"]}: no stage {name_ or "(first)"} in node {node["id"]}')
-        tau_ = it_.get('at', 0)
+        tau_ = it_['with'] if 'with' in it_ else it_.get('at', 0)
     else: raise SystemExit(f'compile: line {ln["id"]}: with: {w_!r} (shot:<name>, pin:<id>, card:<id>, route:<id>, stage[:<name>] or node)')
     if not isinstance(tau_, (int, float)): raise SystemExit(f'compile: line {ln["id"]}: {w_} has no time of its own to wait for (it follows a line itself?)')
     return node_time(node, float(tau_)) - float(ln.get('lead', 0)), float(tau_)
@@ -1788,11 +1788,13 @@ for e in eras_out:
             raise SystemExit(f"compile: era {e['id']}: two stages grow at once ({p_['mode']} {p_['a'][0]:.1f}-{p_['a'][1]:.1f} s, {q_['mode']} "
                              f"{q_['a'][0]:.1f}-{q_['a'][1]:.1f} s); the engine lights one front per city: run them one after another or make them one stage")
 PLACES = []   # where each city changes and when (era, [t0, t1], centre, radius): may a half-screen picture show then (演出文法 5b)
+STAGE_AT = []   # where each stage of a city grows: (era, stage name or id, centre), for a line's see: stage
 for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and edge fields
     cs, node, prims = pd['cs'], pd['node'], pd['prims']
     for f in e['fronts']:
         P_ = f.pop('_plan', None)
         if P_: PLACES.append((e['id'], f['a'], P_['centre'], P_['rad'], [f['a'][0], P_['t_end']]))   # (a: the front's light, to its run-off; then while buildings rise)
+        if P_: STAGE_AT.append((e['id'], P_.get('stage'), P_['centre']))
     for p, r in zip(prims, ranks_): p[10] = round(r, 5)
     json.dump({'prims': prims, **({'lost': LOST[e['id']]} if LOST.get(e['id']) else {})}, open(LAYOUT.build(D, e['file']), 'w'), separators=(',', ':'))   # (film.json's file references are relative to build/)
     fx_, fz_ = F.model_lonlat(*(cs.get('fall_from') or cs['origin']))
@@ -2112,6 +2114,46 @@ for p in pins:
     if n_ and ok_ / n_ < .7: off_.append(p)
 for p in off_: print(f'  {"error" if p["_tour"] else "warning"}: pin {p["id"]} ({p["_node"]}, {p["t0"]:.1f}-{p["t1"]:.1f} s) is off screen most of its time')
 if any(p['_tour'] for p in off_) and not os.environ.get('CT_PINWARN'): raise SystemExit('compile: a tour stop shows a pin whose place is not on screen: frame it (tour_subjects) or mark it offscreen_ok')
+# a line's storyboard (script.yaml see:, docs/SCRIPT.md step 6): what the viewer must see while it is said. No program reads what the
+# words are about, so the author names it, and the picture is held to it: the place of a pin or of a stage of the node's city in the
+# frame for most of the line (as a pin's own check), the pin shown by the line's end, a card up for most of it. A thing, not a camera
+# key: a moving shot passes its key's target, the thing it shows stays in the frame
+# CT_SEE=warn: report only
+def _in_frame(t0, t1, Xs):   # the share of t0..t1 (four times a second) in which one of the points Xs is in the frame
+    n_ = ok_ = 0; t = t0
+    while t <= t1:
+        n_ += 1; ok_ += any((q_ := CAMERA.project(t, X)) is not None and abs(q_[0]) <= .92 and abs(q_[1]) <= .92 for X in Xs); t += .25
+    return ok_ / max(1, n_)
+_cue_at, _see_bad, _see_n, _lines_n = {c['id']: c for c in cues}, [], 0, 0
+for nd in FM['nodes']:
+    for ln in nd.get('cues', []):
+        if 'id' not in ln: continue   # (a pause)
+        _lines_n += 1
+        if not ln.get('see'): continue
+        _see_n += 1; t0_, t1_ = _cue_at[ln['id']]['t0'], _cue_at[ln['id']]['t1']
+        for s_ in [ln['see']] if isinstance(ln['see'], str) else ln['see']:
+            kind_, _, name_ = str(s_).partition(':'); where_ = f"line {ln['id']} ({t0_:.1f}-{t1_:.1f} s), see {s_}"
+            if kind_ == 'pin':
+                p_ = next((p for p in pins if p['id'] == name_), None)
+                if p_ is None: raise SystemExit(f'compile: {where_}: no pin {name_!r}')
+                if p_['t0'] > t1_: _see_bad.append(f'{where_}: the pin first shows at {p_["t0"]:.1f} s: name the place by the time the line speaks of it'); continue
+                Xs_ = [(p_['pos'][0], p_['pos'][2] + .002, p_['pos'][1])]
+            elif kind_ == 'stage':
+                Xs_ = [c_ for e_, st_, c_ in STAGE_AT if e_ == nd['id'] and (not name_ or st_ == name_)]
+                if not Xs_: raise SystemExit(f'compile: {where_}: node {nd["id"]}\'s city has no stage {name_ or "(any)"}')
+            elif kind_ == 'card':
+                x_ = next((x for x in footage_out if x['id'] == name_), None)
+                if x_ is None: raise SystemExit(f'compile: {where_}: no footage {name_!r}')
+                up_ = max(0.0, min(t1_, x_['on'] + x_['dur']) - max(t0_, x_['on'])) / max(1e-6, t1_ - t0_)
+                if up_ < .7: _see_bad.append(f'{where_}: the card is up for {up_:.0%} of the line')
+                continue
+            else: raise SystemExit(f'compile: {where_}: see: pin:<id>, stage[:<name>] or card:<footage id>')
+            k_ = _in_frame(t0_, t1_, Xs_)
+            if k_ < .7: _see_bad.append(f'{where_}: in the frame {k_:.0%} of the line')
+print(f'  storyboard: {_see_n} of {_lines_n} lines say what is on screen as they are said (see:)')
+for b_ in _see_bad: print('  error: ' + b_)
+if _see_bad and os.environ.get('CT_SEE') != 'warn':
+    raise SystemExit(f'compile: {len(_see_bad)} lines do not show what their see: names: frame it while the line is said (docs/SCRIPT.md step 6)')
 for p in pins:
     for k_ in ('_node', '_tour', '_offok'): p.pop(k_, None)
 # today's buildings rise when they can be seen (docs/STAGING.md 7): at the moment the counter reaches a building's year, or, if

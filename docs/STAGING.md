@@ -172,7 +172,8 @@ comma, on a city rising in a far, dark shot, is there on paper only.
 The table key beat → what carries it is the storyboard (SCRIPT.md, step 3, item 6), approved before the period cities are built; staging follows it. Set the film's
 density beside the example's (`cities/xianyang/city.yaml`: count its place names, areas, lines and beams, and pictures per minute); a film well below it reads as a model, not a story.
 "The city carries it" is a carrier only when the city visibly changes the way the line says; a city standing there while the line tells a war is not one. Review the table against
-the frames: for each line, what is on screen while it is said.
+the frames: for each line, what is on screen while it is said. The camera serves the line's `see:` (SCRIPT.md step 6); a city that changes under that line is
+the thing it shows or is in the frame with it.
 
 ## Footage and pictures
 

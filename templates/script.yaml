@@ -1,8 +1,10 @@
 # Narration of one city: every line, in order of appearance (pipeline/script.py). The picture is in city.yaml; only the words are here.
-# One line = { id, <language>..., with, lead, year, later, note }; compile schedules the time (docs/SCRIPT.md, docs/STAGING.md 5c)
+# One line = { id, <language>..., see, with, lead, year, later, note }; compile schedules the time (docs/SCRIPT.md, docs/STAGING.md 5c)
 #   id     the line's name, unique in the whole film, lowercase letters, digits, underscores (voice files, exports and the picture elements that follow this line all use it)
 #   with   write it when the line talks about a picture: it is spoken only when that picture appears. shot:<shot name of a camera keyframe> | pin:<tag id> | card:<card id> | stage[:<stage name>] | node
 #   lead   seconds earlier than that picture (negative: later)
+#   see    the storyboard (docs/SCRIPT.md step 6): what the viewer must see while the line is said, one or a list: pin:<tag id> | stage[:<stage name>] | card:<card id> (a thing, not a camera key).
+#          Compile stops when it is not there: the place out of the frame for most of the line, the tag not yet shown, the card not up. Write it for every line that speaks of a place or a change ("here", "this island")
 #          without with: the line follows when the line before has been said, and may run into the camera's hold (the first line of a node comes 0.5 seconds after the node is reached)
 #   t      old form: the second of the node's picture (pushed later when the planner inserts holds); use it only to wait deliberately for a breath
 #   { pause: seconds, why: "..." }   a deliberate silence (it does not count as dead air)
@@ -23,7 +25,7 @@ opening:   # the first line on the opening title (seconds counted from the start
 nodes:
   <node_id>:
     - { id: <node_id>_intro, zh: "<Chinese subtitle>", en: "<subtitle>" }
-    - { id: <node_id>_place, with: "shot:<shot name>", zh: "<Chinese subtitle about that picture>", en: "<subtitle>" }
+    - { id: <node_id>_place, with: "shot:<shot name>", see: "pin:<tag id>", zh: "<Chinese subtitle about that picture>", en: "<subtitle>" }
     - { pause: 4, why: "<why the silence>" }
 
 quiet:     # stretches of deliberate silence that need no text (node seconds): the copy check does not suggest "add a line" here

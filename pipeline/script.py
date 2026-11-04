@@ -6,6 +6,9 @@ voice), in the order shown; city.yaml holds none. One line:
   id     stable name of the line (unique in the film): voice files, exports and anything on screen that follows a line use it
   with   the picture the line waits for (compile's schedule_lines): shot:<camera key shot>, pin:<id>, card:<footage id>,
          stage[:<name>] or node (the node's arrival); lead: seconds before it. Pictures can follow a line in turn (with: <line id>)
+  see    what the viewer must see while the line is said (the storyboard): pin:<id>, stage[:<name>] of the node's city or
+         card:<footage id>, or a list of them; compile holds the picture to it (the place in the frame for most
+         of the line, the pin named by its end, the card up). A node's lines only
   t      seconds from the start of the node's picture (moves with every hold the camera planner inserts); the
          opening line counts from the opening's start (the film's start, or the prologue's end)
          With neither, a line follows the one before as soon as it has been read, through any hold of the camera.
@@ -39,6 +42,8 @@ def load(city, langs, node_ids):
         if nid not in node_ids: raise bad(f'node {nid!r} is not in city.yaml (nodes: {", ".join(node_ids)})')
     for ln in S.get('prologue') or []:
         if 'pause' in ln or 'with' in ln: raise bad(f'prologue: a line is placed by t or follows the one before (no pause, no with): {ln}')
+    for ln in (S.get('prologue') or []) + (S.get('opening') or []):
+        if 'see' in ln: raise bad(f'line {ln.get("id")}: see: is for a node\'s lines (the prologue and the opening have no node of their own)')
     for where, lines in [('prologue', S.get('prologue') or []), ('opening', S.get('opening') or [])] + [(f'node {k}', v or []) for k, v in nodes.items()]:
         for ln in lines:
             if 'pause' in ln:
@@ -53,6 +58,9 @@ def load(city, langs, node_ids):
             for lg in langs:
                 if not ln.get(lg): raise bad(f'{where}: line {ln["id"]} has no {lg} text')
             if not isinstance(ln.get('t', 0), (int, float)): raise bad(f'{where}: line {ln["id"]}: t must be seconds')
+            for s_ in [ln['see']] if isinstance(ln.get('see'), str) else ln.get('see') or []:
+                if not re.fullmatch(r'(pin|card):[A-Za-z0-9_.-]+|stage(:[A-Za-z0-9_.-]+)?', str(s_)):
+                    raise bad(f'{where}: line {ln["id"]}: see: {s_!r}: pin:<id>, stage[:<name>] or card:<footage id> (a thing, not a camera key)')
     return {'prologue': S.get('prologue') or [], 'opening': S.get('opening') or [], 'nodes': {k: v or [] for k, v in nodes.items()}, 'quiet': S.get('quiet') or {}}
 
 
