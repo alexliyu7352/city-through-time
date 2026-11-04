@@ -7,7 +7,10 @@ previous version line by line (one command: the film is loaded once for every st
 at that time (the nearest line both versions have), so a part that only moved with its lines did not change; a long item (a
 chapter's readout) that changed is placed where it differs. A stretch whose picture and lines only moved together (a station before
 it grew or shrank) is listed apart: its lines still meet the same picture, so it needs no comparison unless its timing was the point.
-usage: python -I tools/filmdiff.py <previous: city_slug | city folder> <this: city_slug | city folder>"""
+Then the lines the camera now shows from much farther than before (at the line's closest moment, over FARTHER times the distance): what
+was seen close is often what read better (a wall raised, a street lived in), so look at those lines first in the line sheets.
+usage: python -I tools/filmdiff.py <previous: city_slug | city folder> <this: city_slug | city folder> [--json out.json]
+  --json  the changed stretches (padded as rangecheck takes them) and the farther lines, for tools/round.py"""
 import bisect, json, math, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,6 +18,7 @@ STEP = 0.5     # camera sampled this often
 EPS = 1e-3     # a camera value closer than this is the same
 JOIN = 2.0     # changes closer than this make one stretch
 PAD = 1.0      # each stretch compared with this much either side
+FARTHER = 2.0  # a line whose camera is this many times farther away than before at its closest is listed
 WHOLE = 60.0   # an item on screen this long or shorter that changed is compared whole (a tag's reading time is judged whole); a longer
                # one (a chapter's readout, a drawn line) only where it differs, so one note does not mark a whole chapter
 TIMES = ('on', 'off', 't0', 't1', 'gone', 't', 'a', 'burn', 'flash')   # times at any depth: a number or a list of them ([a, b]) under these keys; a curve's points start with one
@@ -98,8 +102,10 @@ def items(f):   # (kind, key) -> item, every timed thing on screen
 
 
 def main():
-    if len(sys.argv) != 3: sys.exit(__doc__.split('usage: ')[1])
-    (P, pname), (N, nname) = load(sys.argv[1]), load(sys.argv[2])
+    args = sys.argv[1:]; out_json = None
+    if '--json' in args: i = args.index('--json'); out_json = args[i + 1]; del args[i:i + 2]
+    if len(args) != 2: sys.exit(__doc__.split('usage: ')[1])
+    (P, pname), (N, nname) = load(args[0]), load(args[1])
     pc = {c['id']: c for c in P['cues']}; both = sorted((c['t0'], c['t0'] - pc[c['id']]['t0']) for c in N['cues'] if c['id'] in pc)
     def shift(t):   # how far the film moved here: the nearest line both versions have
         i = bisect.bisect_left(both, (t,)); near = [both[j] for j in (i - 1, i) if 0 <= j < len(both)]
@@ -151,8 +157,22 @@ def main():
     for a, b, ws in ch: print(f'  {a:8.2f}-{b:8.2f}  {said(ws)}')
     if sl: print('only moved (lines and picture together; compare if the timing was the point):')
     for a, b, ws in sl: print(f'  {a:8.2f}-{b:8.2f}  moved {shift(a):+.2f} s: {said(ws)}')
+    # the camera's distance (a key's sixth value) at the line's closest moment, this version against the last
+    near_ = lambda f, a, b: min(cam(f, a + (b - a) * k / 6)[5] for k in range(7))
+    far = []
+    for c in N['cues']:
+        o = pc.get(c['id'])
+        if o is None or c.get('node') is None: continue   # (the prologue is cut like a trailer)
+        dn, do = near_(N, c['t0'], c['t1']), near_(P, o['t0'], o['t1'])
+        if do > 0 and dn / do > FARTHER: far.append((c['id'], c['t0'], do, dn))
+    if far:
+        print(f'lines the camera now shows from over {FARTHER:g}x farther than before (at their closest): what was seen close often read better, look at these first:')
+        for id_, t_, do, dn in far: print(f'  {id_:10s} {t_:8.2f} s  distance {do:.3f} -> {dn:.3f}')
+    spans = [[round(max(0, a - PAD), 2), round(min(N['dur'], b + PAD), 2)] for a, b, _ in ch]
     if ch: print('compare the changed stretches with the previous version, line by line, all in one command:')
-    if ch: print(f'  uv run python -I tools/rangecheck.py {nname} ' + ' '.join(f'--from {max(0, a - PAD):.2f} --to {min(N["dur"], b + PAD):.2f}' for a, b, _ in ch) + f' --against {pname}')
+    if ch: print(f'  uv run python -I tools/rangecheck.py {nname} ' + ' '.join(f'--from {a:.2f} --to {b:.2f}' for a, b in spans) + f' --against {pname}')
+    if out_json: json.dump({'previous': pname, 'this': nname, 'stretches': spans, 'what': [said(ws) for _, _, ws in ch],
+                            'farther': [{'line': i_, 't': t_, 'before': round(do, 4), 'now': round(dn, 4)} for i_, t_, do, dn in far]}, open(out_json, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 
 if __name__ == '__main__':

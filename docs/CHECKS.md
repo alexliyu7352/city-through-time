@@ -25,6 +25,11 @@ two period cities existing at the same time overlapping, floating, trees inside 
 a model study's folder works too): camcheck, readcheck, a still a second in contact sheets of 16 and line by line (`build/review/lines_<a>_<b>/`: each line's stills under
 its words; with `--against <previous version>`, that version's stills of the same line beside them), and the stills' brightness, each step logged, a failed step does not stop the
 others, and `build/review/range_<a>_<b>/report.json` holds the results. Do not write a script of your own for this; then look at every sheet.
+**A round of changes, in one command:** `uv run python -I tools/round.py <slug> --against <the approved version the round started from>` compiles,
+lists with filmdiff every stretch that changed, runs one rangecheck over all of them and reports compile's faults, each stretch's verdict, the lines the camera
+now shows from much farther than before (look at those first: what was seen close often read better) and every line sheet. It runs to the end by itself:
+make every change on the round's list first, then start it once and wait for it once (it says how long the last round took). Run the steps by hand only
+to look into one of them.
 **Give it every stretch the change touched in one command** (`--from <a> --to <b>` once for each, or every station in `--stations`), not one command a stretch:
 each tool loads the film once for all of them, and on a long film the load, not the stretch, is most of a short stretch's time; each stretch is still checked on its own
 (its own folder, sheets, report and verdict), and stretches that overlap or touch are checked as one. **Never run two checks of one city at once** (two rangechecks,
