@@ -49,7 +49,10 @@ Working with the user
 Computer and files
 - Local paths and settings live only in `local/config.json` (SETUP.md); always run Python as `uv run python -I …`.
 - **One heavy job at a time:** do not run rendering, mixing, music generation, DuckDB scans and whole-film screenshots at the same time. Render with 2 workers and nice by default. Write the progress of long jobs to a log file
-  and read it with a separate command; do not pipe into `| tail`. To wait for a background job, wait on its PID or output file, not on the process name (`pgrep` matches its own shell). Whole-film screenshots and checks freeze the user's computer so they cannot type:
+  and read it with a separate command; do not pipe into `| tail`. To wait for a background job, wait on its PID or output file, not on the process name (`pgrep` matches its own shell).
+  **Wait once, for as long as the job takes** (compile says at its start how long the last one took): a single sleep or blocking wait of that length, or a
+  notification when it ends, never a look every half-minute. Each look is a whole turn of yours, which in a long conversation takes longer than the half-minute
+  it waits: a ten-minute compile watched that way costs twenty turns. Whole-film screenshots and checks freeze the user's computer so they cannot type:
   normally check only the stations you changed; run the whole film only in the round that fixes the whole film and before rendering the final film, and ask the user first.
 - **Try things on a copy.** For A/B tests and removing a part to see the effect, use a temporary folder or a git worktree. If you touched `build/` or a city's settings, restore it afterwards and confirm it is back to what it was.
   Undo changes by hand; do not use `git checkout --` or `git reset --hard` (they also throw away other uncommitted changes). Try new languages and new ways of writing things in a copied

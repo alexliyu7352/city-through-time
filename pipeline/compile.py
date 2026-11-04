@@ -36,6 +36,12 @@ def _seen_map(loader, node):
     d.update(loader.construct_mapping(node)); d.mine = set(dict.keys(d))   # (keys compile adds later are not the author's)
 _SeenLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _seen_map)
 WARN = []   # warnings on the settings, said once at the end (compile runs again for each pass of the stage plan)
+# faults of the film as made (a check of what is on screen, not a setting that cannot be read): each is printed when found and
+# compile goes on, so one run lists every fault, and it stops at the end. Stopping at the first cost a whole compile for each fault
+# in turn (a long film: minutes each). A setting compile cannot go on without still stops at once
+FAULTS = []
+def fault(msg):
+    FAULTS.append(msg); print(f'  FAULT {len(FAULTS)}: {msg}', flush=True)
 
 D = os.path.abspath(sys.argv[1])
 # the files of the city this compile reads (its research and assets: traces, landmark libraries, areas, pictures): written to
@@ -47,6 +53,14 @@ def _seen(ev, a):
         if p_.startswith(D + os.sep) and not p_.startswith(os.path.join(D, 'build') + os.sep) and os.path.isfile(p_): INPUTS.add(os.path.relpath(p_, D))
 sys.addaudithook(_seen)
 import slots; slots.take('compile ' + D)   # (at most two heavy jobs at once on this machine, across agents: pipeline/slots.py)
+# how long a compile of this city takes, said at its start (build/logs/compile_time.json, the last whole compile): whoever waits
+# for it waits once for about that long, not a look every half-minute (each look costs whoever waits a turn of their own)
+import time as _time
+_T0 = float(os.environ.get('CT_T0') or _time.time()); os.environ['CT_T0'] = str(_T0)   # (from the first pass of the stage plan)
+_TF = os.path.join(D, 'build', 'logs', 'compile_time.json')
+if not os.environ.get('CT_PASS') and os.path.exists(_TF):
+    try: print(f"compile: the last compile of this city took {json.load(open(_TF))['seconds'] / 60:.1f} min", flush=True)
+    except (ValueError, KeyError, OSError): pass
 C = yaml.load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'), Loader=_SeenLoader)
 import layout as LAYOUT
 ST = json.load(open(LAYOUT.data(D, 'stats.json'), encoding='utf-8'))
@@ -668,15 +682,29 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
                 n_ = math.hypot(dx, dz) or 1; dx, dz = dx / n_, dz / n_
                 pr = [(x - cx_) * dx + (z - cz_) * dz for x, z in C]; p0, p1 = min(pr), max(pr)
                 u = [(v - p0) / ((p1 - p0) or 1) for v in pr]; o, dirv, r0, r1, length = [cx_, cz_], [dx, dz], p0, p1, p1 - p0
-        big = len(gids) >= 30
-        dur = stagecraft.stage_duration(cam, t0, centre, length, float(st.get('dur', 0)), TIMING['min_stage'] if big else TIMING['min_stage_small'], TIMING['frames_per_s'])
+        big = len(gids) >= 30; min_ = TIMING['min_stage'] if big else TIMING['min_stage_small']
+        dur = stagecraft.stage_duration(cam, t0, centre, length, float(st.get('dur', 0)), min_, TIMING['frames_per_s'])
         nz = float(st.get('noise', .12))
-        for g, uu in zip(gids, u):
-            h = random.Random(g * 7919 + 13).random(); start[g] = t0 + (uu * (1 - nz) + h * nz) * dur
-        t1 = t0 + dur * (1 - nz)
-        w = (r1 - r0) * TIMING['scan_w'] if mode == 'scan' else 0.0
-        curve_ = [[round(t0, 3), round(r0 - (w if mode == 'scan' else 0), 6)], [round(t1, 3), round(r1 + (w if mode == 'scan' else 0), 6)]]
-        if mode == 'ring':   # past the last building the ring runs on, gathering speed, until no part of it is on screen
+        # a ring reaching far beyond the frame (a city's wall raised, seen from a close shot of one stretch): paced as above only
+        # as far as the frame reaches, then out of sight it gathers speed to the last building in ring_out seconds, each building
+        # rising as the ring passes it. Paced on its whole length, a ring from a close shot took the time of crossing the frame
+        # many times over (a wall's circuit from one stretch: over 20 s)
+        r_in = min(stagecraft.ring_exit(cam, t0 + k_ * .5, o, model_ground(*o), far_corner(o)) for k_ in range(4)) if mode == 'ring' else 0.0
+        if mode == 'ring' and d0 < r_in < r1 / 1.05:
+            dur = stagecraft.stage_duration(cam, t0, centre, r_in - d0, float(st.get('dur', 0)), min_, TIMING['frames_per_s'])
+            t_in = t0 + dur * (1 - nz); T_ = TIMING['ring_out']
+            for g, v in zip(gids, d):
+                h = random.Random(g * 7919 + 13).random()
+                start[g] = t0 + ((v - d0) / (r_in - d0) * (1 - nz) + h * nz) * dur if v <= r_in else t_in + T_ * math.sqrt((v - r_in) / (r1 - r_in))
+            t1 = t_in + T_; dur = max(dur, t1 - t0); w = 0.0
+            curve_ = [[round(t0, 3), round(r0, 6)], [round(t_in, 3), round(r_in, 6)]] + [[round(t_in + T_ * k / 8, 3), round(r_in + (r1 - r_in) * (k / 8) ** 2, 6)] for k in range(1, 9)]
+        else:
+            for g, uu in zip(gids, u):
+                h = random.Random(g * 7919 + 13).random(); start[g] = t0 + (uu * (1 - nz) + h * nz) * dur
+            t1 = t0 + dur * (1 - nz)
+            w = (r1 - r0) * TIMING['scan_w'] if mode == 'scan' else 0.0
+            curve_ = [[round(t0, 3), round(r0 - (w if mode == 'scan' else 0), 6)], [round(t1, 3), round(r1 + (w if mode == 'scan' else 0), 6)]]
+        if mode == 'ring' and len(curve_) == 2:   # past the last building the ring runs on, gathering speed, until no part of it is on screen
             r_off = max(stagecraft.ring_exit(cam, t1 + k_, o, model_ground(*o), far_corner(o)) for k_ in (0.0, TIMING['ring_out'] / 2, TIMING['ring_out'])); v1 = (r1 - r0) / max(t1 - t0, 1e-3)
             if r_off > r1 * 1.01:
                 T_ = TIMING['ring_out'] if r1 + v1 * TIMING['ring_out'] < r_off else (r_off - r1) / max(v1, 1e-6)
@@ -1808,8 +1836,8 @@ for e in eras_out:
     for p_, q_ in zip(fr_, fr_[1:]):
         if q_['a'][0] < p_['a'][1] - .5:
             node_timeline(next(n for n in FM['nodes'] if n['id'] == e['id']), q_['a'][0])
-            raise SystemExit(f"compile: era {e['id']}: two stages grow at once ({p_['mode']} {p_['a'][0]:.1f}-{p_['a'][1]:.1f} s, {q_['mode']} "
-                             f"{q_['a'][0]:.1f}-{q_['a'][1]:.1f} s); the engine lights one front per city: run them one after another or make them one stage")
+            fault(f"era {e['id']}: two stages grow at once ({p_['mode']} {p_['a'][0]:.1f}-{p_['a'][1]:.1f} s, {q_['mode']} "
+                  f"{q_['a'][0]:.1f}-{q_['a'][1]:.1f} s); the engine lights one front per city: run them one after another or make them one stage")
 PLACES = []   # where each city changes and when (era, [t0, t1], centre, radius): may a half-screen picture show then (演出文法 5b)
 STAGE_AT = []   # where each stage of a city grows: (era, stage name or id, centre), for a line's see: stage
 for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and edge fields
@@ -1877,8 +1905,8 @@ for e in eras_out:   # a part of a city lost while the rest stands (lose:): a ri
         dd = [math.hypot(prims_[i][15] - o_[0], prims_[i][16] - o_[1]) for i in mine]; pad_ = 20 * F.scale
         dd += [math.hypot(x - o_[0], z - o_[1]) for b in BASINS.get(e['id'], []) if L_[basin_piece(e['id'], b)] == j for x, z in (F.model(*q) for q in basin_outline(b))]   # (a pool: its outline, not its centre)
         late = max(e['on'] + prims_[i][10] * e['span'] + e['grow'] for i in mine)
-        if late > t_ - .3: raise SystemExit(f"compile: era {e['id']}: lose {ls['id']} at {t_:.1f} s takes buildings still rising until {late:.1f} s; a part is lost after it stands")
-        if e.get('off') is not None and t_ >= e['off']: raise SystemExit(f"compile: era {e['id']}: lose {ls['id']} at {t_:.1f} s comes after the city is taken back ({e['off']:.1f} s)")
+        if late > t_ - .3: fault(f"era {e['id']}: lose {ls['id']} at {t_:.1f} s takes buildings still rising until {late:.1f} s; a part is lost after it stands")
+        if e.get('off') is not None and t_ >= e['off']: fault(f"era {e['id']}: lose {ls['id']} at {t_:.1f} s comes after the city is taken back ({e['off']:.1f} s)")
         dur_ = float(ls.get('dur', 6.0)); burn_ = float(ls.get('burn', 3.0)) if ls.get('style') == 'burn' else 0.0
         r0, r1 = (max(dd) + pad_, max(0.0, min(dd) - pad_)) if ls.get('ring', 'in') == 'in' else (max(0.0, min(dd) - pad_), max(dd) + pad_)
         curve = stagecraft.sweep_curve(t_ + burn_ * .45, r0, r1, dur_)   # (burning: the fire takes hold first, then the ring brings it down)
@@ -1892,8 +1920,8 @@ for e in eras_out:   # a part of a city lost while the rest stands (lose:): a ri
         rise_ = min(e['on'] + p[10] * e['span'] for p, m in zip(prims_, M_) if m[1][0] == 'landmarks' and m[1][1] == li)
         gone_ = max((out_[L_[i] - 1]['gone'] for i, m in enumerate(M_) if m[0] in gs_ and L_[i]), default=None)
         if gone_ is not None and rise_ < gone_ - .05:
-            raise SystemExit(f"compile: era {e['id']}: {cs_['landmarks'][li].get('id')} starts to rise at {rise_:.1f} s, but the buildings on its site "
-                             f"are gone only at {gone_:.1f} s: its stage later, or the loss that takes them earlier")
+            fault(f"era {e['id']}: {cs_['landmarks'][li].get('id')} starts to rise at {rise_:.1f} s, but the buildings on its site "
+                  f"are gone only at {gone_:.1f} s: its stage later, or the loss that takes them earlier")
 for e in eras_out: e.pop('_dist', None); e.pop('_bc', None)
 def occupancy(e):
     """when an era's channel is in use: from its first light (its fronts, its rise) to its last (taken back, or the film's end),
@@ -2091,7 +2119,7 @@ if jumps:
         print(f'    jump at {j_[0]} s: target {j_[1]} frames, turn {j_[2]} deg, zoom {j_[3]} doublings in 0.5 s')
         for k in cam:
             if j_[0] - 3 <= k[0] <= j_[0] + 3 and k[0] not in seen_: seen_.add(k[0]); print(f'        key {k[0]:8.2f}  ' + ' '.join(f'{v:.4f}' if isinstance(v, float) else str(v) for v in k[1]))
-    raise SystemExit(f'compile: the camera jumps {len(jumps)} times (more than a frame, 60 degrees or 1.5 zoom doublings in half a second): give the move time')
+    fault(f'the camera jumps {len(jumps)} times (more than a frame, 60 degrees or 1.5 zoom doublings in half a second): give the move time')
 # a pin shows only what is on screen (docs/STAGING.md 9h): its place in the picture for most of its time. A tour stop frames its
 # pins (tour_subjects), so there an error; elsewhere still a warning (the film-wide pass)
 off_ = []
@@ -2126,9 +2154,9 @@ for p in pins:   # a pin points at something on the plate, or on the land beyond
     if abs(p['pos'][0]) > F.size[0] / 2 or abs(p['pos'][1]) > F.size[1] / 2:
         on_ctx = CTX_RECT and CTX_RECT[0] <= p['pos'][0] <= CTX_RECT[1] and CTX_RECT[2] <= p['pos'][1] <= CTX_RECT[3]
         if not on_ctx:
-            raise SystemExit(f'compile: pin {p["id"]} ({p["_node"]}) is anchored off the plate: point it at the part of the place that lies on the plate (or give the city a terrain.context that covers it)')
+            fault(f'pin {p["id"]} ({p["_node"]}) is anchored off the plate: point it at the part of the place that lies on the plate (or give the city a terrain.context that covers it)'); continue
         dark = [p['t0'] + i * .25 for i in range(int((p['t1'] - p['t0']) / .25) + 1) if _ctx_a(p['t0'] + i * .25) < .5]
-        if dark: raise SystemExit(f'compile: pin {p["id"]} ({p["_node"]}) stands on the land beyond the plate, which is not shown at {dark[0]:.1f} s: show it (context keys) for the pin\'s whole time')
+        if dark: fault(f'pin {p["id"]} ({p["_node"]}) stands on the land beyond the plate, which is not shown at {dark[0]:.1f} s: show it (context keys) for the pin\'s whole time')
 for p in pins:
     if p['_offok']: continue
     X = (p['pos'][0], p['pos'][2], p['pos'][1]); n_ = ok_ = 0; t = p['t0'] + .4   # (its anchor, the place itself: a point lifted 20 m leaves a close shot's frame)
@@ -2136,7 +2164,7 @@ for p in pins:
         q = CAMERA.project(t, X); n_ += 1; ok_ += 1 if (q is not None and abs(q[0]) <= .92 and abs(q[1]) <= .92) else 0; t += .25
     if n_ and ok_ / n_ < .7: off_.append(p)
 for p in off_: print(f'  {"error" if p["_tour"] else "warning"}: pin {p["id"]} ({p["_node"]}, {p["t0"]:.1f}-{p["t1"]:.1f} s) is off screen most of its time')
-if any(p['_tour'] for p in off_) and not os.environ.get('CT_PINWARN'): raise SystemExit('compile: a tour stop shows a pin whose place is not on screen: frame it (tour_subjects) or mark it offscreen_ok')
+if any(p['_tour'] for p in off_) and not os.environ.get('CT_PINWARN'): fault('a tour stop shows a pin whose place is not on screen: frame it (tour_subjects) or mark it offscreen_ok')
 for p in pins:
     for k_ in ('_node', '_tour', '_offok'): p.pop(k_, None)
 # today's buildings rise when they can be seen (docs/STAGING.md 7): at the moment the counter reaches a building's year, or, if
@@ -2286,7 +2314,7 @@ for ln, nd in _see_of:
 print(f'  storyboard: {_see_n} of {_lines_n} lines say what is on screen as they are said (see:)')
 for b_ in _see_bad: print('  error: ' + b_)
 if _see_bad and os.environ.get('CT_SEE') != 'warn':
-    raise SystemExit(f'compile: {len(_see_bad)} lines do not show what their see: names: frame it while the line is said (docs/SCRIPT.md step 6)')
+    fault(f'{len(_see_bad)} lines do not show what their see: names (the errors above): frame it while the line is said (docs/SCRIPT.md step 6)')
 sat = FM.get('_satellite')
 def sat_out(sat):
     """the satellite plate: the higher-resolution mosaic (pipeline/imagery_tiles.py, internal tests only) when the film asks for it,
@@ -2508,8 +2536,8 @@ for x in footage_out:
         _cover.append(say_(hits_[0]) + f' (moved past the change it would leave {ln_ or "its line"})')
         continue
     _cover += [say_(h_) for h_ in hits_]
-if _cover: raise SystemExit('compile: a picture hides a change (docs/STAGING.md 5b: compose the shot so the change is on the left, move the '
-                           'picture to another line, make it a card, or give it force: true if hiding that change does not matter): ' + '; '.join(_cover))
+if _cover: fault('a picture hides a change (docs/STAGING.md 5b: compose the shot so the change is on the left, move the '
+                 'picture to another line, make it a card, or give it force: true if hiding that change does not matter): ' + '; '.join(_cover))
 # the film's type (docs/SCRIPT.md): one font per job, by family name and weight (film.fonts), looked up in <root>/fonts
 # (pipeline/fonts.py); a family or weight that is not there, or a character of the copy a font cannot draw, stops the build: the
 # browser would draw it in a system font (one subtitle line in two weights, as once happened)
@@ -2556,7 +2584,7 @@ _px = lambda sc_, first: (38 if sc_ in ('cjk', 'hangul') else 34) if first else 
 film['sub'] = {'a': ['zh_strong', _px(SCRIPTS[0], True)], 'b': ['en', _px(SCRIPTS[-1], False)]}
 if MISSING:
     _m = list(dict.fromkeys(MISSING))
-    raise SystemExit(f'compile: {len(_m)} text(s) on screen have no {", ".join(sorted({l_ for l_, _ in _m}))} version (film.lang {LANG}): ' + '; '.join(f'{l_}: {w_}' for l_, w_ in _m[:12]))
+    fault(f'{len(_m)} text(s) on screen have no {", ".join(sorted({l_ for l_, _ in _m}))} version (film.lang {LANG}): ' + '; '.join(f'{l_}: {w_}' for l_, w_ in _m[:12]))
 # the silences meant to be there: script.yaml quiet stretches and pauses (film seconds)
 _quiet = []
 for nid_, rs_ in ((SCR or {}).get('quiet') or {}).items():
@@ -2701,9 +2729,9 @@ def _model_checks():
     return bad_
 _bad = _model_checks()
 if _bad and os.environ.get('CT_MODELCHECK') != 'warn':
-    raise SystemExit(f'compile: the model fails {" and ".join(_bad)} (build/logs/{_bad[0]}.log): a period city: fix it (pipeline/citygen.py, '
-                     f'the city\'s spec) and compile again, tools/eraview.mjs and play.html?view show where; "today floating": today\'s '
-                     f'buildings were prepared on another terrain or seated another way: run pipeline/prep.py again (docs/MODEL.md, Ground and terrain)')
+    fault(f'the model fails {" and ".join(_bad)} (build/logs/{_bad[0]}.log): a period city: fix it (pipeline/citygen.py, '
+          f'the city\'s spec) and compile again, tools/eraview.mjs and play.html?view show where; "today floating": today\'s '
+          f'buildings were prepared on another terrain or seated another way: run pipeline/prep.py again (docs/MODEL.md, Ground and terrain)')
 # living moments: one at a time, never with another picture (footage, a panel, a card); each needs its picture, made from its own shot
 _lw = sorted([(x_['on'] - x_['arrive'], x_['on'] + x_['reveal'] + x_['hold'] + x_['out'] + x_['back'], x_['id']) for x_ in living_out])
 for (a0_, a1_, ai_), (b0_, b1_, bi_) in zip(_lw, _lw[1:]):
@@ -2717,8 +2745,8 @@ open(LAYOUT.logs(D, 'deadair.txt'), 'w', encoding='utf-8').write('\n'.join(_dead
 print(f'  dead air: {len(_dead)} stretch(es)' + ''.join('\n    ' + d_ for d_ in _dead))
 _dead_stop = [d_ for d_ in _dead if not d_.startswith('still picture')]   # (a still picture is reported while a film is being made: a station not built yet has one; tools/build.mjs will not render it)
 if _dead_stop and os.environ.get('CT_DEADAIR') != 'warn':   # (CT_DEADAIR=warn: report only, while a city is being written)
-    raise SystemExit(f'compile: dead air (docs/STAGING.md 5c; build/logs/deadair.txt): let a line follow the one before, have it wait for the '
-                     f'picture it speaks of (with:), shorten the hold, or declare a pause: ' + '; '.join(_dead_stop))
+    fault(f'dead air (docs/STAGING.md 5c; build/logs/deadair.txt): let a line follow the one before, have it wait for the '
+          f'picture it speaks of (with:), shorten the hold, or declare a pause: ' + '; '.join(_dead_stop))
 # the timeline for voice, music and sound (design phase 4): every line, every change on the model, the pictures over it, the
 # silences meant to be there, and each node's feeling; seconds of the final film (build/export/timeline.json)
 _tl = {'dur': DUR, 'langs': LANG, 'voice': {'lang': VOICE_LANG, 'dir': os.path.relpath(VOICE_DIR, D)},
@@ -2768,4 +2796,8 @@ _gl = list(dict.fromkeys(_glued(film)))
 if _gl: WARN.append('a word runs into a number in the text on screen (a space lost): ' + '; '.join(f'"{g_}"' for g_ in _gl[:12]) + (f' and {len(_gl) - 12} more' if len(_gl) > 12 else ''))
 for w_ in WARN: print('warning: ' + w_, file=sys.stderr)
 if LIVING_BAD and os.environ.get('CT_LIVING') != 'warn':   # (CT_LIVING=warn: report only, while the pictures are being made: tools/living.py ref reads film.json)
-    raise SystemExit('compile: living moments (docs/STAGING.md "Living moments"): ' + '; '.join(LIVING_BAD))
+    fault('living moments (docs/STAGING.md "Living moments"): ' + '; '.join(LIVING_BAD))
+json.dump({'seconds': round(_time.time() - _T0, 1), 'passes': PASS}, open(_TF, 'w'))
+print(f'compile: {(_time.time() - _T0) / 60:.1f} min, {PASS} pass{"es" if PASS > 1 else ""} of the stage plan')
+if FAULTS:   # (film.json and the logs are written: the faults can be looked at in the preview and the stills)
+    raise SystemExit(f'compile: {len(FAULTS)} fault(s), all of them listed above as FAULT 1..{len(FAULTS)}: fix them together and compile once')
