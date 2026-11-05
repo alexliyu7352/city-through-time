@@ -2198,6 +2198,17 @@ for p in off_: print(f'  {"error" if p["_tour"] else "warning"}: pin {p["id"]} (
 if any(p['_tour'] for p in off_) and not os.environ.get('CT_PINWARN'): fault('a tour stop shows a pin whose place is not on screen: frame it (tour_subjects) or mark it offscreen_ok')
 for p in pins:
     for k_ in ('_node', '_tour', '_offok'): p.pop(k_, None)
+# the modern section is one timeline (docs/STAGING.md 9i): while lines are said, the counter runs at most the tour's rate, so the
+# years the lines tell are on screen as they are told. Faster under a line, decades pass in seconds and the lines that follow
+# speak of years the counter has left behind (1975 -> 2020 in 9 s, then the 1970s' new estates under "2020"): a tour stop for
+# each time the lines tell. (A step of a year or two is a counter's tick.)
+if grow and grow.get('yl'):
+    rate_ = float(FM.get('tour', {}).get('rate', 1.0))
+    for (ta_, ya_), (tb_, yb_) in zip(grow['yl'], grow['yl'][1:]):
+        if tb_ - ta_ < 1e-3 or yb_ - ya_ <= 2 or (yb_ - ya_) / (tb_ - ta_) <= rate_ * 1.05: continue
+        said_ = [c['id'] for c in cues if c['t0'] < tb_ and ta_ < c['t1']]
+        if said_: fault(f'the year counter runs {ya_:g} -> {yb_:g} in {tb_ - ta_:.1f} s ({(yb_ - ya_) / (tb_ - ta_):.1f} years a second, the rate is {rate_:g}) '
+                        f'under {", ".join(said_)}: the modern section is a tour, a stop for each time the lines tell (docs/STAGING.md 9i)')
 # today's buildings rise when they can be seen (docs/STAGING.md 7): at the moment the counter reaches a building's year, or, if
 # the camera is not looking there then, the first moment after it that the building is in the frame (and no full-screen clip
 # covers the picture). Buildings that come into view together rise over a few seconds in the order of their years, not in one
@@ -2772,6 +2783,28 @@ if _bad and os.environ.get('CT_MODELCHECK') != 'warn':
     fault(f'the model fails {" and ".join(_bad)} (build/logs/{_bad[0]}.log): a period city: fix it (pipeline/citygen.py, '
           f'the city\'s spec) and compile again, tools/eraview.mjs and play.html?view show where; "today floating": today\'s '
           f'buildings were prepared on another terrain or seated another way: run pipeline/prep.py again (docs/MODEL.md, Ground and terrain)')
+# a pin's dot on what it names (docs/STAGING.md 9h): clipcheck measures how high each dot stands above the top of what is under it;
+# on screen that height is the gap between the dot and anything it could name. A gap over PIN_GAP_PX at some moment is listed
+# (build/logs/pins_off.json, and tools/round.py's report) to be looked at in that stretch's stills: a dot put at a gate's real place
+# that the model's wall misses, or given a height above the wall's top, points at the air. A list, not a fault: what the pin names
+# is not known here (a district's name over its roofs in a wide shot reads as on it), and a dot beside its subject at the right
+# height has no gap at all
+PIN_GAP_PX = 20
+try: _above = dict(map(tuple, json.load(open(LAYOUT.logs(D, 'clipcheck.json'), encoding='utf-8')).get('pins', {}).get('above_m', [])))
+except (OSError, ValueError): _above = {}
+_pins_off = []
+for p in pins:
+    if p['id'] not in _above: continue
+    X1 = (p['pos'][0], p['pos'][2], p['pos'][1]); X0 = (X1[0], X1[1] - _above[p['id']] * F.scale, X1[2]); gaps_ = []; t = p['t0'] + .4
+    while t <= p['t1'] - .4:
+        q1, q0 = CAMERA.project(t, X1), CAMERA.project(t, X0)
+        if q1 and q0 and abs(q1[0]) <= 1 and abs(q1[1]) <= 1: gaps_.append((math.hypot((q1[0] - q0[0]) * 960, (q1[1] - q0[1]) * 540), t))
+        t += .25
+    if gaps_ and max(gaps_)[0] > PIN_GAP_PX:
+        g_, t_ = max(gaps_); _pins_off.append({'pin': p['id'], 't': round(t_, 2), 'px': round(g_), 'above_m': _above[p['id']]})
+        print(f'  warning: pin {p["id"]}: its dot stands {_above[p["id"]]:g} m above anything under it, {g_:.0f} px off it at {t_:.1f} s: '
+              f'look at it there (on what it names? docs/STAGING.md 9h)')
+json.dump(_pins_off, open(LAYOUT.logs(D, 'pins_off.json'), 'w', encoding='utf-8'), indent=1)
 # living moments: one at a time, never with another picture (footage, a panel, a card); each needs its picture, made from its own shot
 _lw = sorted([(x_['on'] - x_['arrive'], x_['on'] + x_['reveal'] + x_['hold'] + x_['out'] + x_['back'], x_['id']) for x_ in living_out])
 for (a0_, a1_, ai_), (b0_, b1_, bi_) in zip(_lw, _lw[1:]):

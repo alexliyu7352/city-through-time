@@ -14,7 +14,9 @@ sound and light in sync. The white-model projection is only a starting point, no
 ## Basic grammar
 
 Today's white-model city is there from start to finish (`rise.ghost: 1`); each node tints the whole city with that node's colour (node `tint`); a period city replaces that piece of today's city in place
-(today's buildings sink with a ring of light spreading from the origin, and the old city rises); moving a capital, moving house, river changes and distances use light lines (`routes:`, `[km]` fills in the distance automatically).
+(today's buildings sink with a ring of light spreading from the origin, and the old city rises); moving a capital, moving house, river changes and distances use light lines (`routes:`, `[km]` fills in the distance automatically). A light line floats above the ground and lands
+only on a city (`impact`): it is for a far place in a wide shot. What happens at one place (a gate broken, a street repaired) is marked on the model, by a pin on it, a spot,
+an area or the model changing, not by a short line hanging over it in a close shot.
 While a period city stands, today's city keeps about a fifth of its light (`era_look.dim: 0.8`): the period city is the figure, and in the later periods today's city is dense and tall around a small old town (at half its light it took the frame).
 A city that rises in stages stands once its first stage is up, so a landmark built later in the node does not keep today's city bright, and the city unlit, until it rises.
 The plate is a deep blue, not black (`palette.plate`, Xianyang `#3a4757`): in a wide shot most of the frame is plate, so the plate sets how dark the film feels.
@@ -189,7 +191,9 @@ prints the node's time round it: lines, stages, camera keys, the holds it insert
 ## Footage and pictures
 
 Each historic node ends with "the same place today" (`footage:`, `mode: full | panel | card | doc`): 4K video full frame for 7–9 seconds, high-resolution photos in the right-hand panel,
-low-resolution material as a small card with a leader line (`anchor`), a document card for old maps; do not let footage flash by. The `kicker` above the title says
+low-resolution material as a small card with a leader line (`anchor`), a document card for old maps; do not let footage flash by. A card holds a picture: a photograph,
+a painting or a drawing, a map, a document of its time, or an imagined picture. Words the film sets in type are not one: what they say belongs to the narration or a tag,
+and a card of them over the model shows the audience nothing (a person gets a portrait, an event a picture of it, found or imagined: SCRIPT.md "Pictures"). The `kicker` above the title says
 what the picture is (a photograph and its year, a map, a portrait, an imagined picture): without one, full-frame video is labelled as film of the place today and compile
 stops on a card, panel or document card. **On-screen third-party material is only CC or public domain** (Wikimedia Commons);
 the user's own shots or material the user has the right to license may also be used, with the licence stated in CREDITS. If there is none of these, a scene worth a picture gets an imagined picture based on the sources (which scenes get pictures and how to generate them: SCRIPT.md "Pictures"; label the card "根據史料想像" ("imagined from the sources"), and state it in CREDITS).

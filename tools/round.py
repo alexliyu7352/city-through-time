@@ -80,9 +80,14 @@ def main():
     if FD['farther']:
         print('round: lines now seen from much farther than before (look at them first in the line sheets):', flush=True)
         for f in FD['farther']: print(f"  {f['line']:10s} {f['t']:8.2f} s  {f['before']:.3f} -> {f['now']:.3f}", flush=True)
+    try: off = json.load(open(os.path.join(logs, 'pins_off.json'), encoding='utf-8'))
+    except (OSError, ValueError): off = []
+    if off:
+        print('round: pins whose dot stands well above anything under it (is it on what it names? look at it there):', flush=True)
+        for f in off: print(f"  {f['pin']:28s} {f['t']:8.2f} s  {f['above_m']:g} m up, {f['px']} px off", flush=True)
     print('round: the sheets, line by line beside the previous version (the checks cannot see composition: look at every one):', flush=True)
     for s in out: print('  ' + ', '.join(x for x in s['sheets'] if '/lines_' in x), flush=True)
-    done(1 if any(s['failed'] for s in out) else 0, stretches=out, farther=FD['farther'])
+    done(1 if any(s['failed'] for s in out) else 0, stretches=out, farther=FD['farther'], pins_off=off)
 
 
 if __name__ == '__main__':

@@ -68,6 +68,9 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
   was never seen under the new rule (it passes every comparison with the version before it).
 - **A fault the user names is one of a kind:** fix it, then go through every line of the film for the same fault before handing back (example: one far place
   named without a map means checking every place each line names, not only the one pointed at). The user should never have to find the second one.
+- **A check passes when the picture is right, not when the model is shaped to its exception:** an exception (a wall ending in a tower is a joint, a pin
+  marked `offscreen_ok`) is for the case it names. A model bent to fit one (a vertex set inside another wall so a crossing reads as a joint) hides the fault the
+  check was written for: fix what is on screen, and when a check is wrong for a real case, say so in the handover instead.
 - **When the user says "it changed", compare before reasoning about the cause:** rebuild the commit before the change (`git worktree add`, or `git archive` into a temp folder), and compare screenshots at the same second;
   find the cause by elimination: paint each part a different colour, remove them one by one, and see which one the defect follows; do not decide the cause first.
 - **Verify before you say it:** before saying "the program does it this way", read the program; "checks pass" must be run on the state after the last change, stating which stretch was run; before saying "the picture is unchanged", compare

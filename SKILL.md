@@ -71,7 +71,9 @@ Subagents and parallel work
 - **A round of revisions starts with a fresh context.** Once a round's list is set (the user's notes, frozen: later notes go to the next round), write the
   handoff (`templates/handoff.md`, into the city's `research/`) and do the round in a new session or a subagent with a fresh context started from it. The old
   conversation is looked up, not carried: it holds withdrawn rulings and earlier versions, which a long context takes for current (a lost close shot put back
-  wide, a base chosen from the wrong version), and every action in it costs more.
+  wide, a base chosen from the wrong version), and every action in it costs more. The fetches of a round that do not wait on each other (the sources a note
+  needs, the pictures to find and check for their licence) start at once in parallel subagents, each returning its file, its source and its licence; the
+  staging waits only for what it uses.
 - **A piece** is work with its own inputs and its own files: one period city (step 4, once the research, the extent and the approved house types exist), one research question (step 1),
   the candidates for one music cue (step 7). Not a piece: what the user decides, the stations' staging (step 5 goes station by station, each building on the last), and a change to
   files several pieces share (the engine, the pipeline, types shared by periods, the shared keys of `city.yaml`): those stay with the main agent.

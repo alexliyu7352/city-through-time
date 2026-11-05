@@ -21,7 +21,9 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
   water_under_plate   pools and ditches the plate rises through: over more than a twentieth of the water the ground stands above its
                       top by more than 0.3 m (a flat basin laid on a slope: the hill shows through the water)
                       above the ground the body stands on (a long wall or a big hall on a slope)
-  cross_era           bodies of a city that overlap bodies of another city standing at the same time (the empire over Qin)
+  cross_era           bodies of a city that overlap bodies of another city standing at the same time (the empire over Qin);
+                      a wall that ends in another's tower, gate or wall (one end in, one out) is a joint as built: only where
+                      the wall's line ends, not at a bend of it (a vertex set inside the other wall leaves a crossing a crossing)
   paving_under        paving (roads, lanes, yards) the plate rises through by more than 0.3 m: a road comes out in dashes
   tall_foundation     houses and halls whose foundation on screen is over 30% of the building's height, counted only when
                       they are more than a tenth of the era's buildings: then the plate's exaggeration is too high for this
@@ -31,6 +33,8 @@ Checks on today's buildings (data/model.json):
   today floating      buildings whose base stands more than 1 m (times the plate's exaggeration) above the lowest plate point
                       under the footprint: prep.py seats each one on that point, so a count here means the model was prepared
                       on another terrain (terrain.py run again, prep.py not) or seated another way
+Measured for compile (not a case here): pins.above_m, how high each pin's dot stands above the top of what is under it while
+it shows (a period city's body, today's building not hidden then, a mound, or the ground); compile judges it on screen.
 Footprints are the primitives' rotated rectangles in model units; overlaps under 2 m2 (rounding at shared edges) are ignored.
 """
 import json, math, os, sys
@@ -93,7 +97,7 @@ def main():
             i0, j0 = u.astype(int), v.astype(int); fu, fv = u - i0, v - j0
             bl = lambda a: (a[j0, i0] * (1 - fu) + a[j0, i0 + 1] * fu) * (1 - fv) + (a[j0 + 1, i0] * (1 - fu) + a[j0 + 1, i0 + 1] * fu) * fv
             return bl(large_), bl(fine_)
-    bodies_by_era = {}
+    bodies_by_era, tops_, hid_ = {}, [], []
     for e in FILM.get('eras', []):
         J_ = json.load(open(os.path.join(city, 'build', e['file']))); prims = J_['prims']
         # when each record stands: from its rise to the city's end, or to the moment its loss (lose:) has taken it: a part lost and
@@ -211,6 +215,7 @@ def main():
             img = np.asarray(Image.open(os.path.join(D, f"hide_{e['id']}.png")).convert('L')) if e.get('occupy') else hide[e['hide'] // 4][..., e['hide'] % 4]; Hh, Ww = img.shape   # (a shared channel: the city's own mask)
             u = np.clip(((today_ctr[:, 0] / PW + .5) * Ww).astype(int), 0, Ww - 1); v = np.clip(((today_ctr[:, 1] / PD + .5) * Hh).astype(int), 0, Hh - 1)
             up = [today[k] for k in np.nonzero(img[v, u] < 5)[0]]
+            hid_.append((e['on'], e.get('off') or 1e9, img[v, u] >= 5))   # (for the pins: today's buildings this city hides while it stands)
             era_all = [rect(p) for p in ground if p[11] not in (PAVE, WATER, TREE)]
             overlaps(up, era_all, 'today_vs_era')
         # floating: base above the plate by more than 1 m (exaggerated)
@@ -280,7 +285,15 @@ def main():
             if p[11] not in (WALL, LMK) or min(p[5], p[6]) > 8 * S or max(p[5], p[6]) < 3 * min(p[5], p[6]): return None
             L_, t_ = max(p[5], p[6]) / 2, p[3] + (0 if p[5] >= p[6] else math.pi / 2)
             return [shapely.Point(p[1] + k * L_ * math.cos(t_), p[2] + k * L_ * math.sin(t_)) for k in (-1, 1)]
-        bodies_by_era[e['id']] = (e, [rect(p, .3 * S) for p in xb_], [span_[id(p)][1] for p in xb_], [wall_ends(p) for p in xb_], [span_[id(p)][0] for p in xb_])   # (each body from its own rise, its stage's, until its city's end or its loss)
+        # (only where a wall ends is a joint: a piece's end that meets the next piece of a wall is a bend in its line, so a vertex
+        # set inside another wall leaves the crossing a crossing)
+        we_ = [wall_ends(p) for p in xb_]; ends_ = [(i, q) for i, w in enumerate(we_) if w for q in w]
+        if ends_:
+            etree = STRtree([q for _, q in ends_])
+            we_ = [None if w is None else [q for q in w if not any(ends_[j][0] != i for j in etree.query(q.buffer(min(xb_[i][5], xb_[i][6]))))]
+                   for i, w in enumerate(we_)]
+        bodies_by_era[e['id']] = (e, [rect(p, .3 * S) for p in xb_], [span_[id(p)][1] for p in xb_], we_, [span_[id(p)][0] for p in xb_])   # (each body from its own rise, its stage's, until its city's end or its loss)
+        tops_ += [(rect(p), p[4] + p[7], *span_[id(p)]) for p in prims if p[0] in SOLID + (1,)]   # (for the pins: what stands where, how high, when)
         # (a wall of one city running into a tower, a gate or a fort of another it ends at, one end in, one out, is a joint as built, as
         # walls_through lets a wall end in its own gate house: the medieval wall joining the Castel that stood before it)
         joint = lambda we, q: we is not None and sum(q.contains(pt) for pt in we) == 1
@@ -290,7 +303,8 @@ def main():
             tree = STRtree(ob); n = 0
             for a, aend, awe, ast in zip(*bodies_by_era[e['id']][1:]):
                 if any(ost[j] < aend and ast < oend[j] and a.intersection(ob[j]).area > min_area and not joint(awe, ob[j]) and not joint(owe[j], a)
-                       for j in tree.query(a, predicate='intersects')): n += 1
+                       for j in tree.query(a, predicate='intersects')):
+                    n += 1; c_ = a.centroid; R.setdefault('cross_era_at', []).append([round(c_.x, 4), round(c_.y, 4), oid])
             R['cross_era'] = R.get('cross_era', 0) + n
         report[e['id']] = R
         bad = sum(v for k, v in R.items() if isinstance(v, int))
@@ -301,6 +315,27 @@ def main():
         report['today'] = {'floating': len(fl), 'floating_at': [[round(sum(p[0] for p in r[2][0]) / len(r[2][0]), 4), round(sum(p[1] for p in r[2][0]) / len(r[2][0]), 4)] for r in fl[:5]]}
         total += len(fl)
         print(f"{'today':10s} floating {len(fl)}")
+    # how high each pin's dot stands above what is under it while it shows (docs/STAGING.md 9h: the dot on the top of what it
+    # names): the top of a period city's body, of today's building (one a period city standing then hides is not there), of a
+    # mound, or the ground, within PIN_R. Not a case here: compile judges it on screen (a dot 40 m over a district in a wide shot
+    # is on it; 18 m beside a wall in a close shot points at the air). The land beyond the plate: nothing is modelled there.
+    PIN_R = 15.0 * S
+    ttree_ = STRtree(today) if today else None; ttop_ = [r[3] + r[1] for r in M['p'] if len(r[2][0]) >= 3]
+    mnd_ = [(Polygon(m_['base']), m_['g'] + m_['h']) for m_ in M.get('mounds', [])]
+    etree_ = STRtree([g for g, *_ in tops_]) if tops_ else None
+    above_ = []
+    for p in FILM.get('pins', []):
+        x_, z_, y_ = p['pos']
+        if abs(x_) > PW / 2 or abs(z_) > PD / 2: continue
+        disc = shapely.Point(x_, z_).buffer(PIN_R); top = plate_y(x_, z_)
+        if etree_ is not None:
+            top = max([top] + [tops_[j][1] for j in etree_.query(disc, predicate='intersects') if tops_[j][2] < p['t1'] and p['t0'] < tops_[j][3]])
+        if ttree_ is not None:   # (today's buildings a period city standing then hides are not there)
+            tm_ = (p['t0'] + p['t1']) / 2; gone_ = [h_ for a_, b_, h_ in hid_ if a_ <= tm_ < b_]
+            top = max([top] + [ttop_[j] for j in ttree_.query(disc, predicate='intersects') if not any(h_[j] for h_ in gone_)])
+        top = max([top] + [t_ for g_, t_ in mnd_ if g_.intersects(disc)])
+        if y_ - top > 1.0 * S: above_.append([p['id'], round((y_ - top) / S, 1)])
+    report['pins'] = {'above_m': above_}
     json.dump(report, open(os.path.join(city, 'build', 'logs', 'clipcheck.json'), 'w'), indent=1)
     print('clipcheck:', 'ok' if total <= mx else f'{total} cases (see build/logs/clipcheck.json)')
     sys.exit(0 if total <= mx else 1)
