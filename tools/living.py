@@ -25,6 +25,9 @@ usage: uv run python -I tools/living.py ref    cities/<slug> [<id> ...]   the sh
          picture: the buildings, walls and streets must sit on the model's (a picture that drew another view smears when projected).
   check  renders each shot again and compares it with the still the picture was made from (mean difference per pixel, 0-255):
          over 6 the model under the picture has changed (a new terrain, a rebuilt city): make the picture again.
+         (The still is taken with the water, glints and lit windows at rest, so it does not change when the moment moves in the
+         film. A still recorded with moving water differs by the waves alone: if the sheet shows the buildings still sitting,
+         take the still again with ref and record it with adopt, keeping the picture.)
 """
 import json, os, shutil, subprocess, sys, tempfile, hashlib, datetime
 import yaml

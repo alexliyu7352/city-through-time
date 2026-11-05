@@ -308,7 +308,7 @@ function setLight(t) {
   const strike = seg(t, LT.lamp, LT.lamp + .12), flick = t > LT.lamp && t < LT.lamp + .25 ? .75 + .25 * Math.sin((t - LT.lamp) * 90) : 1;
   U.uProj.value = strike * flick * (1 - darkK(t)) * (1 - ss(seg(t, LT.lights, LT.lights + .8)));
   S.setBeam(U.uProj.value, ((FILM.epochs || []).some(e => e.offStyle === 'burn' && t >= e.off && t < e.off + (e.offDur ?? 1.2) + 1.5) || (FILM.eras || []).some(e => e.sinkStyle === 'burn' && t >= e.off - e.burn * .6 && t < e.off + e.sink)) ? 1 : 0, t);
-  U.uNow.value = t; U.uYear.value = yearAt(t);
+  U.uNow.value = t; U.uWave.value = QS.has('clean') ? 0 : t; U.uYear.value = yearAt(t);   // (waves, glints, lit windows: still in the living reference, so it does not change with when the moment falls)
   U.uBase.value = ss(seg(t, LT.lamp, LT.lamp + 1.2));
   // the century rings around the old town: one ring per century of the counter, drawn by the projector
   if (FILM.rings_motif) { const R = FILM.rings_motif; U.uRingC.value.set(R.centre[0], R.centre[1]); U.uRingS.value = R.spacing; U.uRingN.value = Math.max(0, (yearAt(t) - R.from) / 100) * ss(seg(t, LT.lamp + .5, LT.lamp + 2)) * (1 - ss(seg(t, LT.lights - .5, LT.lights + .5))); U.uRingA.value = R.gain ?? .5; }

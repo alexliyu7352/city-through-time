@@ -95,7 +95,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const cols = (list, n) => { const out = list.map(lin); while (out.length < n) out.push(lin('#000000')); return out.slice(0, n); };
   // ---------------------------------------------------------------- projection uniforms (shared by every surface)
   const U = {
-    uProj: { value: 0 }, uNow: { value: 0 }, uYear: { value: -9999 }, uToday: { value: 1 }, uGrowRise: { value: 0 }, uGhost: { value: 0 }, uPulse: { value: 0 },
+    uProj: { value: 0 }, uNow: { value: 0 }, uWave: { value: 0 }, uYear: { value: -9999 }, uToday: { value: 1 }, uGrowRise: { value: 0 }, uGhost: { value: 0 }, uPulse: { value: 0 },
     uRingC: { value: new THREE.Vector2(0, 0) }, uRingS: { value: .035 }, uRingN: { value: 0 }, uRingA: { value: 0 }, uProjPos: { value: new THREE.Vector3(0, 1.3 * DIAG, .2 * DIAG) }, uKeyDir: { value: new THREE.Vector3(0, 1, 0) },
     uPlate: { value: new THREE.Vector2(PW, PD) }, uWater: { value: null }, uWT: { value: new THREE.Vector4() }, uWTF: { value: new THREE.Vector4() }, uWTE: { value: 0 }, uL1: { value: null }, uL2: { value: null }, uL3: { value: null },
     uBase: { value: 0 },                                          // the plate's faint grid under the projector (0..1)
@@ -152,7 +152,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const HEAD = Z => /* glsl */`
   ${YL_GLSL(Z)}
   varying float vGrowT;
-  uniform float uProj, uNow, uYear, uBase, uGrowOn, uGrowDim, uHgtF, uHgtOn, uHgtBand, uHgtMax, uPickOn, uPickR, uNB, uPulse, uRingS, uRingN, uRingA;
+  uniform float uProj, uNow, uWave, uYear, uBase, uGrowOn, uGrowDim, uHgtF, uHgtOn, uHgtBand, uHgtMax, uPickOn, uPickR, uNB, uPulse, uRingS, uRingN, uRingA;
   uniform vec2 uRingC;
   uniform float uEpA[${Z.E}], uEpY0[${Z.E}], uEpY1[${Z.E}], uEpB[${Z.E}], uEpR[${Z.E}], uEpRim[${Z.E}], uEpW[${Z.E}], uGT[${Z.N}], uGS[${Z.N}], uBLo[${Z.N}];
   uniform vec2 uEpC[${Z.E}];
@@ -219,9 +219,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   // fire on a burning era city: flames licking up from each part's base, every part flickering on its own
   vec3 eraFire(){   // a building burns for a while and then smoulders: about a third alight at any moment, the fire moving through the city
-    float hb = fract(sin(dot(aCtrV, vec2(127.1, 311.7))) * 43758.5453), alight = smoothstep(.62, .78, fract(hb * 3.7 + uNow * .23)) * smoothstep(1., .9, fract(hb * 3.7 + uNow * .23));
+    float hb = fract(sin(dot(aCtrV, vec2(127.1, 311.7))) * 43758.5453), alight = smoothstep(.62, .78, fract(hb * 3.7 + uWave * .23)) * smoothstep(1., .9, fract(hb * 3.7 + uWave * .23));
     float hh = clamp((vWP.y - vBase) / (uScaleH * 14.), 0., 1.);
-    float n = fract(sin(vData.z * 931.7 + floor(uNow * 11.) * 1.37) * 43758.5453), n2 = fract(sin(vData.z * 377.1 + floor(uNow * 5.) * 2.11) * 24634.6345);
+    float n = fract(sin(vData.z * 931.7 + floor(uWave * 11.) * 1.37) * 43758.5453), n2 = fract(sin(vData.z * 377.1 + floor(uWave * 5.) * 2.11) * 24634.6345);
     return mix(vec3(1., .42, .08), vec3(.75, .07, .01), hh) * (1.25 - hh) * (.25 + .75 * n * n) * (.5 + .5 * n2) * (.12 + 1.6 * alight);
   }
   vec3 photoAt(vec2 uv){ vec3 p = texture2D(uPhoto, uv).rgb; p = pow(p, vec3(1.08)) * 1.18; float l = dot(p, vec3(.299, .587, .114)); p = mix(vec3(l), p, 1.12); return p * vec3(1.02, 1., .97) * uPhotoK; }
@@ -299,11 +299,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   vec2 waterSlope(vec2 P, float px){
     P += (vec2(vnoise(P * .011), vnoise(P * .011 + 17.)) - .5) * 60.;   // (crests bent, not ruled)
     vec2 s = vec2(0.);
-    float gust = .35 + 1.3 * vnoise(P * .0045 + vec2(uNow * .02, 0.));   // (the wind uneven over the water: calm patches, rougher ones)
+    float gust = .35 + 1.3 * vnoise(P * .0045 + vec2(uWave * .02, 0.));   // (the wind uneven over the water: calm patches, rougher ones)
     for (int i = 0; i < 6; i++) {
       float fi = float(i), L = 2.5 * pow(1.7, fi), k = 6.2832 / L, a = .35 + (fract(fi * .618) - .5) * 1.6;   // 2.5 .. 35 m, within 45 degrees of the wind
       vec2 d = vec2(cos(a), sin(a));
-      s += d * sin(dot(d, P) * k - sqrt(9.8 * k) * uNow + fi * 2.1) * (1. - smoothstep(L * .04, L * .12, px));   // (a wave goes before it is under 8 pixels: no moire)
+      s += d * sin(dot(d, P) * k - sqrt(9.8 * k) * uWave + fi * 2.1) * (1. - smoothstep(L * .04, L * .12, px));   // (a wave goes before it is under 8 pixels: no moire)
     }
     return s * uWaterRip * gust;
   }
@@ -314,7 +314,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     for (int j = 0; j < 3; j++) {
       float c = j == 0 ? 6. : j == 1 ? 22. : 70.; vec2 q = P / c, i = floor(q), o = vec2(h21(i + 3.1), h21(i + 7.7));
       float h = h21(i), r = length(q - i - .2 - .6 * o) * c, sz = c * .1;
-      float tw = pow(max(sin(uNow * (1.3 + 2.1 * h) + h * 31.), 0.), 18.) * step(.72, h);   // (one cell in four has a glint, flaring for a moment now and then)
+      float tw = pow(max(sin(uWave * (1.3 + 2.1 * h) + h * 31.), 0.), 18.) * step(.72, h);   // (one cell in four has a glint, flaring for a moment now and then)
       g += tw * (1. - smoothstep(sz * .3, sz, r)) * (1. - smoothstep(sz * .6, sz * 1.2, px));
     }
     return g;
