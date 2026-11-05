@@ -804,8 +804,9 @@ def living_item(lv, on, nid):
     else:
         c_ = yaml.safe_load(open(card_, encoding='utf-8')) or {}; src_ = [str(x_) for x_ in (c_.get('sources') or [])]
         if not src_ or not c_.get('picture'): LIVING_BAD.append(f'living {id_}: research/living/{id_}.yaml needs picture and sources')
+    if lv.get('today') not in (None, 'keep', 'sink'): raise SystemExit(f'{where_}: today: keep or sink (got {lv.get("today")})')
     a2_, b2_ = ab(lv) if any(k_ in lv for k_ in LANG) else ('', None)
-    return {'id': id_, 'file': file_, 'on': on, 'cam': cam_, 'origin': org_, **{k_: float(lv.get(k_, v_)) for k_, v_ in LIVE_T.items()},
+    return {'_today': lv.get('today'), 'id': id_, 'file': file_, 'on': on, 'cam': cam_, 'origin': org_, **{k_: float(lv.get(k_, v_)) for k_, v_ in LIVE_T.items()},
             'zoom': float(lv.get('zoom', .94)), 'rain': float(w_.get('rain', 0)), 'mist': float(w_.get('mist', 0)), 'mistY': float(w_.get('mist_y', .7)),
             'kicker': pick(lv['kicker']) if 'kicker' in lv else KICKER_LIVING, 'title': a2_ or '', 'sub': b2_ or '', 'sources': src_, '_node': nid}
 
@@ -2574,6 +2575,8 @@ for e in eras_out:
                         f"keep them off it (tools/parcels.py keeps today's water clear; a fabric region: cut the river out of it), or, where the sources put the river "
                         f"elsewhere then, draw it there (film.water_then)")
 for s_ in WT_STATES: s_.pop('_shown')
+for x_ in living_out:   # today's city sinks under a period's moment; in the modern section it is the town the picture shows, so it stays
+    x_['sink'] = 0 if x_['_today'] == 'keep' or (x_['_today'] is None and grow and x_['on'] >= grow['on']) else 1
 film = {
     'dur': DUR, 'fov': FM.get('fov', 30), 'yearFmt': FM.get('yearFmt', 'zh'), 'identity': {'l1': pick(FM['identity']['l1']), 'l2': pick(FM['identity']['l2'])},
     'palette': FM['palette'], 'light': {**light, 'base': FM.get('light', {}).get('base', 0.28)},

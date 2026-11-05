@@ -214,7 +214,7 @@ function liveAt(t) {
 }
 function setLiving(t) {
   const Wp = post.weather, L = LV && LV.L, tx_ = L && LIVETEX[L.id];
-  U.uLiveSink.value = LV ? LV.k : 0; U.uEdgeGain.value = (LOOK.edge ?? 1) * (1 - (LV ? LV.k : 0));
+  U.uLiveSink.value = LV ? LV.k * (LV.L.sink ?? 1) : 0;   // (a moment in the modern section keeps today's city: compile's sink) U.uEdgeGain.value = (LOOK.edge ?? 1) * (1 - (LV ? LV.k : 0));
   if (!tx_) { U.uPA.value = 0; S.liveSky.visible = false; Wp.enabled = false; return; }   // (no moment now, or its picture is not made yet: the white model holds the shot)
   S.aimProjector(L.cam, W / H); U.uPI.value = tx_;   // the projector: the shot's camera, no drift, no zoom (and the sky card behind the town)
   const pd = L.cam[5];

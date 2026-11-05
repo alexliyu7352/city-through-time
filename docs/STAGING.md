@@ -215,7 +215,7 @@ CREDITS); compile does not compare them.
 **Footage:** during preview playback the video plays natively and is corrected only when out of sync, and 3D is not drawn when full-screen footage covers the picture; the final film is still positioned exactly frame by frame. Full screen uses only video of 1600×900 or higher; lower resolution becomes a small card.
 
 **Living moments** (node `living:`): a picture of the period made from one shot of the model and projected back onto it from that shot's own camera. The camera arrives at the shot and stops,
-today's city sinks, a thin ring of light spreads from the viewer's feet and turns the white model into the living town, the sky and the far land come with it; it holds (a slow zoom, mist, rain),
+today's city sinks (in the modern section it stays, being the town the picture shows; `today: keep | sink` on the moment says otherwise), a thin ring of light spreads from the viewer's feet and turns the white model into the living town, the sky and the far land come with it; it holds (a slow zoom, mist, rain),
 dissolves back to the model, and the camera goes on. It shows what the plate cannot: the daily life of the place at one moment, on the model the audience has been watching, not beside it.
 - **Use a few a film** (two or three in a quarter of an hour, about one in seven or eight minutes in a longer film), on key beats that can be told as one moment of life (a street the morning after rain, a market, a crowd going to the games), with the line that tells it (`with:`).
   Never over a change on the model, never with another picture at the same time (compile stops). A scene that only needs to be seen, not lived in, stays an imagined panel.
@@ -232,7 +232,7 @@ dissolves back to the model, and the camera goes on. It shows what the plate can
 - **Label and credit:** the kicker 「AI 生成重现 · AI-GENERATED RECONSTRUCTION · 据史料」 shows while the picture is up (written by compile from the language packs); the card's sources go into CREDITS,
   and the platforms' AI-content declarations are made when the film is published (PUBLISH.md).
 - Keys: `{ id, with | at, shot: { ll, az, el, d, fov, y }, arrive: 2.5, reveal: 3.5, hold: 6, out: 1.5, back: 2, zoom: 0.94, from: viewer | [lon, lat], weather: { rain: 0..1, mist: 0..1, mist_y: 0.7 },
-  file: assets/living/<id>.png, zh, en }` (zh/en: an optional title under the kicker).
+  file: assets/living/<id>.png, today: keep | sink, zh, en }` (zh/en: an optional title under the kicker).
 
 **Spot** (node `spot:`): when the narration speaks of one place in a wide shot (the palaces on the north slope, a market, a gate), the light falls on it and the rest of the room goes dark:
 `{ ll: [lon, lat], r_m: 600, with | at, until, hold, dur, dim: 0.16, boost: 1.35, fade: 0.8 }`. The eye goes to the subject at once without the camera moving; keep it for the beats where a wide shot has to stay wide.
