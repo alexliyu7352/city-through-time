@@ -46,7 +46,7 @@ one plate width from the plate and the far-terrain extent (mostly longitude and 
 
 - How to measure: `ffmpeg -ss <a> -t <seconds> -i <video> -vf "fps=2,scale=640:-2,signalstats,metadata=mode=print:file=<output>" -f null -`, and read YAVG (mean),
   YLOW, YHIGH (8-bit, black 16, white 235); in the preview stage measure the screenshots of `render/still.mjs`. Normally measure only the changed stretches, and the whole film only before rendering the final film (ask the user first).
-- Thresholds: whole-film mean YAVG ≥ 80; the mean of any one minute ≥ 60; the event with the most room must not be darker than the whole-film mean. Reference values: YHIGH of the lit faces of the subject about 140–190,
+- Thresholds: whole-film mean YAVG ≥ 80; the mean of any one minute ≥ 60 (except the closing night city, STAGING.md 9i, whose lit windows carry the frame); the event with the most room must not be darker than the whole-film mean. Reference values: YHIGH of the lit faces of the subject about 140–190,
   plate 26–38 (visibly dark blue, not black), black level 18–24; the white of subtitles and interface does not exceed 235 (check with `signalstats=stat=brng`).
 - Finally look on a phone: lights on indoors, or by a window in daytime, screen brightness about half; building outlines can be told apart, the wide shots have not smeared into one, the subtitles are not glaring.
 
