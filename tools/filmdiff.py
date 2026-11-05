@@ -1,7 +1,7 @@
 """Where a revision changed the film (docs/CHECKS.md "Acceptance and reporting"): two versions' build/film.json compared, the camera
 every half second, each line (by id), each panel, tag, route, drawn line and spot (by id), each era's fronts, losses and today_from,
-the light the film data sets (the grown city's grow.dim, today's city's dim keys and the night keys every half second; era_look,
-night_look and shade for the whole film: a light changed for one stretch can drown another's subject), and the
+the light the film data sets (the grown city's grow.dim, today's city's dim keys and the night keys every half second; era_look
+and shade for the whole film, night_look where the night is on: a light changed for one stretch can drown another's subject), and the
 stretches that differ printed, each with what changed there, and one tools/rangecheck.py command that compares them all with the
 previous version line by line (one command: the film is loaded once for every stretch). Each time is compared with the film's shift
 at that time (the nearest line both versions have), so a part that only moved with its lines did not change; a long item (a
@@ -24,7 +24,7 @@ WHOLE = 60.0   # an item on screen this long or shorter that changed is compared
 TIMES = ('on', 'off', 't0', 't1', 'gone', 't', 'a', 'burn', 'flash')   # times at any depth: a number or a list of them ([a, b]) under these keys; a curve's points start with one
 TOL = .011     # two times this close are the same (kept to the cent, some to the ms: rounded apart, they can differ by one)
 NAME = {'lines': 'drawn-line', 'footage': 'panel', 'pins': 'tag', 'routes': 'route', 'arrows': 'arrow', 'readouts': 'readout', 'spots': 'spot', 'fronts': 'front', 'losses': 'loss', 'today': 'today_from'}
-LOOKS = ('era_look', 'night_look', 'shade')   # the film's light settings with no time of their own: for the whole film
+LOOKS = ('era_look', 'night_look', 'shade')   # the film's light settings with no time of their own: for the whole film (night_look: where the night is on)
 
 
 def load(c):
@@ -50,6 +50,12 @@ def light(f, t):   # the grown city's light (grow.dim: one key or keys, each eas
     for k in (D if isinstance(D, list) else [D] if D else []):
         u = min(1.0, max(0.0, (t - k['t']) / k.get('dur', .8))); v += (k['to'] - v) * u * u * (3 - 2 * u)
     return [v] + [keys_at(f[k], t)[0] if f.get(k) else 0.0 for k in ('dim', 'night')]
+
+
+def night_on(F):   # [(a, b)] where the film's night is above 0 (film.night keys, held before the first and after the last): night_look acts there only
+    ks = F.get('night') or []; out = [(0.0, ks[0][0])] if ks and ks[0][1][0] > 0 else []
+    out += [(a, b) for (a, va), (b, vb) in zip(ks, ks[1:]) if va[0] > 0 or vb[0] > 0]
+    return out + ([(ks[-1][0], F['dur'])] if ks and ks[-1][1][0] > 0 else [])
 
 
 def same_light(f, g, t, d=0.0): return max(abs(x - y) for x, y in zip(light(f, t), light(g, t - d))) < EPS
@@ -117,7 +123,9 @@ def main():
         if not same_light(N, P, t): (slid if (d := shift(t)) and same_light(N, P, t, d) else changed).append((t, t, 'light'))
         t = round(t + STEP, 2)
     for k in LOOKS:
-        if json.dumps(P.get(k), sort_keys=True) != json.dumps(N.get(k), sort_keys=True): changed.append((0.0, N['dur'], f'light {k} (whole film)'))
+        if json.dumps(P.get(k), sort_keys=True) == json.dumps(N.get(k), sort_keys=True): continue
+        if k == 'night_look': changed += [(a, b, 'light night_look') for a, b in night_on(N)] + [(a, b, "light night_look (previous version's time)") for a, b in night_on(P)]
+        else: changed.append((0.0, N['dur'], f'light {k} (whole film)'))
     for c in N['cues']:
         o = pc.get(c['id'])
         if o is None: changed.append((c['t0'], c['t1'], f"line {c['id']} (new)")); continue
