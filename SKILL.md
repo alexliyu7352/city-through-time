@@ -74,6 +74,10 @@ Subagents and parallel work
   wide, a base chosen from the wrong version), and every action in it costs more. The fetches of a round that do not wait on each other (the sources a note
   needs, the pictures to find and check for their licence) start at once in parallel subagents, each returning its file, its source and its licence; the
   staging waits only for what it uses.
+- **Sort a long list before the round starts.** Quick fixes (a tag moved, a label, a picture found or swapped, a line's binding) make one round, handed over
+  first; rebuilds (a section restaged as a tour, a model re-traced from new sources, a new picture generated) the next. One round for both keeps the user
+  waiting for the slowest item while the quick ones sit done. Research for a note stops when the picture is right; the rest goes to the notes for later.
+  A tool wanted in the middle of a round is built for the next one, unless the round would have to redo work without it.
 - **A piece** is work with its own inputs and its own files: one period city (step 4, once the research, the extent and the approved house types exist), one research question (step 1),
   the candidates for one music cue (step 7). Not a piece: what the user decides, the stations' staging (step 5 goes station by station, each building on the last), and a change to
   files several pieces share (the engine, the pipeline, types shared by periods, the shared keys of `city.yaml`): those stay with the main agent.
