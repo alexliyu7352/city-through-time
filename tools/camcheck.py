@@ -12,8 +12,10 @@ For every camera sample (out/cam.json, the film's real camera with drift and nea
   offscreen     a period city changes where the viewer cannot see it: while its buildings rise, fewer than 60 % of the
                 rising ones are in the frame (or a full-screen clip covers it). Change only on screen (docs/STAGING.md).
   ring_unseen   a node's colour ring starts where the camera does not look (its origin out of frame for its first 1.5 s)
-Today's buildings count only where the era hide masks have not stepped them aside (the engine's hideK at the centroid);
-period cities only while standing (risen, not yet taken back). Flagged samples are merged into intervals: out/camcheck.json.
+Today's buildings count at the height the engine gives them at that moment: sunk after the lamp to rise.ghost, taken back by a
+reset ring, rising with the year counter (or when the camera first sees them, data/grow_t.json), stepped aside by the era hide
+masks (hideK at the centre) and sunk by a living moment (its sink); a water_then stage is not followed (it only takes buildings
+away, so the check errs on the side of a flag). Period cities only while standing (risen, not yet taken back). Flagged samples are merged into intervals: out/camcheck.json.
 A dump of several stretches (tools/camcheck.mjs --from/--to more than once) is checked stretch by stretch, each as if dumped alone,
 and only the period cities that stand or rise in one of them are built (the setup is most of the time a short stretch takes).
 """
@@ -46,13 +48,13 @@ def main():
     timg, _ = terrainio.load(city); tex = M['terrain'].get('exaggeration', 3) if M.get('terrain') else 3
     plate_y = lambda x, z: 0.0 if timg is None else terrainio.bilinear(timg, x / PW + .5, z / PD + .5) * S * tex
     # today's buildings: footprint, base, top, hide mask values at the centroid (8 channels)
-    tp, tb, tt, tc = [], [], [], []
-    for r in M['p']:
+    tp, tb, tt, tpi = [], [], [], []
+    for i, r in enumerate(M['p']):
         ring = r[2][0]
         if len(ring) < 3: continue
-        tp.append(ring); tb.append(r[3] if len(r) > 3 else 0.0); tt.append((r[3] if len(r) > 3 else 0.0) + r[1])
+        tp.append(ring); tb.append(r[3] if len(r) > 3 else 0.0); tt.append((r[3] if len(r) > 3 else 0.0) + r[1]); tpi.append(i)
     today = np.array([shapely.Polygon(r) for r in tp]); tb = np.array(tb); tt = np.array(tt)
-    ctr = shapely.get_coordinates(shapely.centroid(today))
+    ctr = np.array([np.mean(r, axis=0)[:2] for r in tp])   # (the engine's aCtr: the mean of the outline's points)
     hide = [np.asarray(Image.open(os.path.join(D, f)).convert('RGBA')).astype(np.float32) / 255 for f in ('hide.png', 'hide2.png', 'hide3.png') if f != 'hide3.png' or os.path.exists(os.path.join(D, f))]   # (hide3: film.eraSlots 12)
     Hh, Hw = hide[0].shape[:2]
     u = np.clip(((ctr[:, 0] / PW + .5) * Hw).astype(int), 0, Hw - 1); v = np.clip(((ctr[:, 1] / PD + .5) * Hh).astype(int), 0, Hh - 1)
@@ -95,6 +97,42 @@ def main():
             if t - .5 * e.get('fallDur', 1.4) < q['curve'][0][0]: continue
             ok &= ~((E['lost'][idx] == j) & taken(E['bc'][idx], (curve_at(q['curve'], t - .5 * e.get('fallDur', 1.4)), q['o'], q['mode'] == 'in')))
         return ok
+    # today's height (the engine's rise, studio.js RISE): up "today", sunk after the lamp to rise.ghost, a reset ring takes back
+    # what came after its year, then each building rises when the counter reaches its year or the camera first sees it
+    G, R_, LT = FILM.get('grow') or {}, FILM.get('rise') or {}, FILM['light']; CH = FILM.get('change') or {}
+    early = dict(map(tuple, CH.get('early') or [])); renew = {r[0]: r[1:] for r in CH.get('renew') or []}
+    gt_ = dict(map(tuple, json.load(open(os.path.join(city, 'build', G['tfile']))))) if G.get('tfile') else {}
+    ty = np.array([early.get(i, M['b'][M['p'][i][0]][0]) for i in tpi], float)
+    hf0, hfA, hfB = np.array([renew.get(i, (1, 0, 0)) for i in tpi], float).T
+    YLg = G.get('yl') or []
+    def t_of_year(y):   # (the engine's tOfYear)
+        for (t0_, y0_), (t1_, y1_) in zip(YLg, YLg[1:]):
+            if y1_ >= y: return t0_ if y0_ >= y else t0_ + (t1_ - t0_) * (y - y0_) / max(y1_ - y0_, 1e-4)
+        return 1e6
+    ton = np.array([gt_.get(i) or t_of_year(y - .5) for i, y in zip(tpi, ty)]) if len(YLg) > 1 else None
+    YLn = FILM.get('yearline') or [[0, 0]]; year_at = lambda t: float(np.interp(t, [a for a, _ in YLn], [b for _, b in YLn]))
+    vss = lambda x: (lambda c: c * c * (3 - 2 * c))(np.clip(x, 0, 1))
+    reset = next((n for n in nodes if n.get('reset') is not None), None)
+    def live_sink(t):   # a living moment sinks today's city by its sink (the engine's liveAt k)
+        for L in FILM.get('living') or []:
+            a0, o1 = L['on'] - L['arrive'], L['on'] + L['reveal'] + L['hold'] + L['out']
+            if a0 <= t <= o1 + L['back']: return (ss(seg(t, a0 + L['arrive'] * .3, L['on'])) if t < L['on'] else 1.0 if t <= o1 else 1 - ss(seg(t, o1, o1 + L['back']))) * L.get('sink', 1)
+        return 0.0
+    def today_rise(idx, t):
+        """how far up each of today's buildings stands at t (0: down): the engine's rise, times hideK at its centre"""
+        Y = year_at(t); y_ = ty[idx]
+        hf = np.where(hf0[idx] < .999, hf0[idx] + (1 - hf0[idx]) * vss((Y - hfA[idx]) / np.maximum(hfB[idx] - hfA[idx], 1e-6)), 1.0)
+        by = np.where(y_ > 0, vss((t - ton[idx]) / 1.8) if ton is not None else vss((Y - y_ + .5) / 3), vss((Y - 1985) / 3))   # (studio.js uGrowDur 1.8 s)
+        keep = np.full(len(idx), float(R_.get('ghost', .05)))
+        if reset is not None and t >= (reset['ring']['t0'] if reset.get('ring') else reset['t0']):
+            rg = reset['ring']; Rr = curve_at(rg['curve'], t) if t < rg['curve'][-1][0] else 99
+            inR = vss((Rr - np.hypot(ctr[idx, 0] - rg['o'][0], ctr[idx, 1] - rg['o'][1]) + .02) / .06)
+            keep *= np.where(y_ > reset['reset'], 1 - inR, 1 + (hf - 1) * inR)
+        sink0 = R_.get('sinkAt', LT['lamp'])
+        up = max(1 - ss(seg(t, sink0, sink0 + R_.get('sinkDur', 2.0))), ss(seg(t, LT.get('lights', math.inf) - .2, LT.get('lights', math.inf) + 1.2)))
+        ry = np.maximum(np.maximum(up, (ss(seg(t, G['on'] - .5, G['on'] + .5)) if G else 0) * by * hf), keep)
+        ry = ry * today_standing(idx, t) * (1 - live_sink(t))
+        return np.where(ry < .002, 0.0, ry)
     def today_standing(idx, t):
         """the engine's hideK at the building's centroid: stepped aside just before the era building beside it rises, back
         where the era is taken back"""
@@ -164,25 +202,25 @@ def main():
             if py - plate_y(px, pz) < max(2 * near, .0003): bad.append(('below_ground', py - plate_y(px, pz)))
             # solids standing at t: today (not stepped aside) and period cities between rise and sink
             sets = []
-            sets.append(('today', ttree, today, tb, tt, today_standing))
+            sets.append(('today', ttree, today, tb, tt, today_rise))
             for E in eras:
                 e = E['e']
-                if t >= e['on'] and not (e.get('off') is not None and t > e['off'] + e['sink'] + 5): sets.append((e['id'], E['tree'], E['g'], E['base'], E['top'], lambda idx, t_, E=E: era_standing(E, idx, t_)))
+                if t >= e['on'] and not (e.get('off') is not None and t > e['off'] + e['sink'] + 5): sets.append((e['id'], E['tree'], E['g'], E['base'], E['top'], lambda idx, t_, E=E: era_standing(E, idx, t_).astype(float)))
             cam_pt = shapely.Point(px, pz)
             ks = np.linspace(.04, .88, NS)
             seg_pts = shapely.points(np.c_[px + (gx - px) * ks, pz + (gz - pz) * ks]); seg_y = py + (gy - py) * ks
-            for name, tree, geoms, base, top, standing in sets:
+            for name, tree, geoms, base, top, rise in sets:   # (rise: how far up each one stands at t, 0 down .. 1 its full height)
                 # inside: the camera within mrg of a footprint, between its base and top (+ margin)
                 hit = tree.query(cam_pt, predicate='dwithin', distance=mrg)
                 if len(hit):
                     ok = (base[hit] - mrg < py) & (py < top[hit] + mrg)
-                    if standing is not None and ok.any(): ok[ok] = standing(hit[ok], t)
+                    if ok.any(): h_ = hit[ok]; k_ = rise(h_, t); ok[ok] = (k_ > 0) & (py < base[h_] + (top[h_] - base[h_]) * k_ + mrg)
                     if ok.any(): bad.append(('inside', name))
                 # blocked: sight-line samples inside a footprint below its top
                 pi, gi = tree.query(seg_pts, predicate="intersects")
                 if len(pi):
                     ok = (seg_y[pi] < top[gi]) & (seg_y[pi] > base[gi] - mrg)
-                    if standing is not None and ok.any(): ok[ok] = standing(gi[ok], t)
+                    if ok.any(): g_ = gi[ok]; k_ = rise(g_, t); ok[ok] = (k_ > 0) & (seg_y[pi[ok]] < base[g_] + (top[g_] - base[g_]) * k_)
                     if ok.any(): bad.append(('blocked', name, round(float(len(set(pi[ok]))) / NS, 2)))
             if bad: flags.append((t, bad))
         # merge into intervals per (kind, what)
