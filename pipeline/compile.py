@@ -2124,11 +2124,11 @@ elif os.path.exists(LAYOUT.data(D, 'grounds.png')): os.remove(LAYOUT.data(D, 'gr
 # ring reaches the city to the next key after the ring has closed (the ruins). The ring stays whole on screen all the way: the
 # camera comes no nearer than the distance that frames the ring as it is at that moment, so it always moves slower than the
 # ring (the distance shrinks as the root of the ring, the ring shrinks on screen too); target, azimuth and elevation ease over.
-done_ = set()
+done_ = set(); RING_WIN = []
 for e in eras_out:
     FR = e.get('fallR')
     if not FR or FR['mode'] != 'in' or (FR['hit'], tuple(FR['o'])) in done_: continue
-    done_.add((FR['hit'], tuple(FR['o']))); curve = FR['curve']; ts, te = FR['hit'], curve[-1][0]
+    done_.add((FR['hit'], tuple(FR['o']))); curve = FR['curve']; ts, te = FR['hit'], curve[-1][0]; RING_WIN.append((ts - .05, te + 1.55))
     nxt = [k for k in cam if te < k[0] <= te + 8]
     S0 = CAMERA.state(ts); ox_, oz_ = FR['o']; oy_ = model_ground(ox_, oz_)
     E_ = list(nxt[0][1]) if nxt else [ox_, oy_, oz_, S0[3] + 12, 30.0, TIMING['ruins_d'], S0[6]]
@@ -2163,6 +2163,35 @@ if jumps:
         for k in cam:
             if j_[0] - 3 <= k[0] <= j_[0] + 3 and k[0] not in seen_: seen_.add(k[0]); print(f'        key {k[0]:8.2f}  ' + ' '.join(f'{v:.4f}' if isinstance(v, float) else str(v) for v in k[1]))
     fault(f'the camera jumps {len(jumps)} times (more than a frame, 60 degrees or 1.5 zoom doublings in half a second): give the move time')
+# every move at the pace of 9f, on the camera as it ends up: the pacing before the line schedule sees keys set in seconds and the
+# inserted ones, not keys tied to a line, nor a move a hold was later inserted into (the rest of it then has what time is left).
+# And a close (or wide) view the camera turns back from is held long enough to look at. Flights, beam follows, staged skies, a
+# closing ring and full-screen clips keep their own pacing
+paced_ = RING_WIN + [w for _, _, w in FOLLOW] + [w for n_ in FM['nodes'] for w in n_.get('_owned', [])] \
+    + [(n_['_t0'] - .05, n_['_t0'] + n_['_tourA'] + .05) for n_ in FM['nodes'] if n_.get('_tourA')]
+free_ = lambda a, b: a >= PD + .6 and not any(w0 < b and a < w1 for w0, w1 in paced_) and not covered(a) and not covered(b)
+rush = []
+cam_s_ = sorted(cam, key=lambda k: k[0])   # (keys are appended node by node, inserted ones after the hand-set)
+for (ta, va), (tb, vb) in zip(cam_s_, cam_s_[1:]):
+    vb = list(vb); vb[3] = stagecraft.unwrap(vb[3], va[3])
+    if tb - ta < .3 or max(abs(x_ - y_) for x_, y_ in zip(va, vb)) < 1e-6 or not free_(ta, tb): continue
+    need_ = stagecraft.move_time(va, vb, speed=.6, t_min=0.0)
+    if tb - ta < need_ - .1: rush.append((ta, tb, need_))
+for ta, tb, need_ in rush[:12]: print(f'    move {ta:.2f}-{tb:.2f} s: {tb - ta:.1f} s, it needs {need_:.1f} s')
+if rush: fault(f'{len(rush)} camera moves are faster than 9f allows (0.6 frames a second: travel, zoom, turn, tilt): give each the time it needs, or leave the move out')
+ts_ = [PD + .6 + .1 * i for i in range(max(0, int((DUR - PD - 1.2) * 10)))]
+lz_ = [math.log2(max(CAMERA.state(t)[5], 1e-5)) for t in ts_]; brief = []
+for i in range(1, len(lz_) - 1):
+    for s_, what_ in ((1, 'close'), (-1, 'wide')):   # the nearest view (distance at a low) or the widest (at a high)
+        if not (s_ * lz_[i] <= s_ * lz_[i - 1] and s_ * lz_[i] < s_ * lz_[i + 1] - 1e-9): continue
+        ia_, ib_ = i, i   # the time within one doubling of it
+        while ia_ > 0 and abs(lz_[ia_ - 1] - lz_[i]) < 1: ia_ -= 1
+        while ib_ < len(lz_) - 1 and abs(lz_[ib_ + 1] - lz_[i]) < 1: ib_ += 1
+        came_ = max(s_ * (lz_[j] - lz_[i]) for j in range(max(0, i - 300), i + 1)); goes_ = max(s_ * (lz_[j] - lz_[i]) for j in range(i, min(len(lz_), i + 301)))
+        if came_ >= 1.5 and goes_ >= 1.5 and (ib_ - ia_) * .1 < TIMING['look_secs'] and free_(ts_[ia_], ts_[ib_]) and not any(abs(x_[0] - ts_[i]) < 1 for x_ in brief):
+            brief.append((ts_[i], what_, (ib_ - ia_) * .1))
+for t_, what_, s_ in brief: print(f'    {what_} view at {t_:.1f} s: {s_:.1f} s within one zoom doubling of it, between moves of 1.5 doublings or more')
+if brief: fault(f'the camera turns back {len(brief)} times within {TIMING["look_secs"]:g} s of reaching a close or wide view: hold the view it went to, or do not go there')
 # a pin shows only what is on screen (docs/STAGING.md 9h): its place in the picture for most of its time. A tour stop frames its
 # pins (tour_subjects), so there an error; elsewhere still a warning (the film-wide pass)
 off_ = []
@@ -2276,6 +2305,12 @@ if grow and grow.get('yl'):
     grow['tfile'] = 'data/grow_t.json'
     print(f'  growth: {len(ids_)} buildings rise with the counter; {len(out_)} wait until the camera sees them, '
           f'{int(np.isnan(seen_).sum())} are never in view before the end (they rise with the counter, unseen)')
+    if int(np.isnan(seen_).sum()) > len(ids_) / 3:   # (the growth is the modern section's background: the film shows the city growing)
+        fault(f'{int(np.isnan(seen_).sum())} of the {len(ids_)} buildings that rise with the counter are never in view: the city is not seen growing '
+              '(docs/STAGING.md 9i): while the counter runs, frame where the city grows, its edge as well as its centre')
+    if not any(t_ >= grow['on'] and v_[0] >= .8 for t_, v_ in night_keys):   # (the lights grow with the city: today's city ends lit)
+        fault('the modern section never comes to night (docs/STAGING.md 9i): its stations write `night:` rising with the city, to 0.8 or '
+              'more by the last one, so the film comes to today\'s city with its lights on')
 # masks -> two RGBA textures
 hch = [HIDE_BY[v[0]] if v else Image.new('L', (HW, HH), 0) for v in SLOT_HELD]   # (a shared channel holds its first city; the others in their own files)
 while len(hch) < SLOTS: hch.append(Image.new('L', (HW, HH), 0))
