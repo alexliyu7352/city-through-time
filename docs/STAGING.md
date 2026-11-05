@@ -14,9 +14,12 @@ sound and light in sync. The white-model projection is only a starting point, no
 ## Basic grammar
 
 Today's white-model city is there from start to finish (`rise.ghost: 1`); each node tints the whole city with that node's colour (node `tint`); a period city replaces that piece of today's city in place
-(today's buildings sink with a ring of light spreading from the origin, and the old city rises); moving a capital, moving house, river changes and distances use light lines (`routes:`, `[km]` fills in the distance automatically). A light line floats above the ground and lands
-only on a city (`impact`): it is for a far place in a wide shot. What happens at one place (a gate broken, a street repaired) is marked on the model, by a pin on it, a spot,
-an area or the model changing, not by a short line hanging over it in a close shot.
+(today's buildings sink with a ring of light spreading from the origin, and the old city rises); moving a capital, moving house, river changes and distances use light lines (`routes:`, `[km]` fills in the distance automatically). A light line is the beam: it arcs above the ground and lands
+only on a city (`impact`), for a far place seen in a wide shot. A movement or the way to a place (an army coming in at a gate, people going out to the edge, the way to the
+studios) is a light arrow (`arrows:`): it lies on the ground, is drawn from its tail to its head, and keeps one width on screen from any distance, so it reads in a close shot
+as in a wide one (`pts` tail first; `draw`, `hold` or `off_at`, `col`, `w`, a name `en`/`zh` shown at the head; a line names it with `see: arrow:<id>`; compile stops on one
+that runs off the plate and warns when its head is out of the frame). The two are not used for each other. What happens at one place and does not move (a gate broken, a
+street repaired) is marked on the model: a pin on it, a spot, an area, the model changing.
 While a period city stands, today's city keeps about a fifth of its light (`era_look.dim: 0.8`): the period city is the figure, and in the later periods today's city is dense and tall around a small old town (at half its light it took the frame).
 A city that rises in stages stands once its first stage is up, so a landmark built later in the node does not keep today's city bright, and the city unlit, until it rises.
 The plate is a deep blue, not black (`palette.plate`, Xianyang `#3a4757`): in a wide shot most of the frame is plate, so the plate sets how dark the film feels.
@@ -159,7 +162,7 @@ No hard cuts between nodes: do not write the next node's first camera keyframe a
 ## A picture for every key beat
 
 Every key beat of the detailed outline (SCRIPT.md) is carried by something the audience sees: the model's own change (a city rising, burning, shrinking, growing year by year
-under the year counter), a place name or a coloured area (`pins`, `labels`, `areas`, `epochs`), a line or a beam (`routes`, `lines`), a picture, found or imagined ("Footage and
+under the year counter), a place name or a coloured area (`pins`, `labels`, `areas`, `epochs`), a line, an arrow or a beam (`lines`, `arrows`, `routes`), a picture, found or imagined ("Footage and
 pictures"), a living moment, or the city's own idea (`sky:`). A key beat told over a white city standing still, with nothing marked, is not staged: a model the audience cannot
 read is an empty model, however fine. A line that points at a place ("that first hillside", "across the river", "where the palace stood") has the place marked as it is said.
 A place beyond the plate (a country, a sea, a far province or city) is shown where it is as it is named, marked the way the plate marks its own places: the place as a coloured

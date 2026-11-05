@@ -878,6 +878,70 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     return mat.uniforms.uA;
   }
 
+  // light arrows: a movement or the way to a place (an army coming in at a gate, people going out to the edge, the way to the
+  // studios), lying on the ground and drawn from the tail to the head: a ribbon with a bright core and an arrowhead riding its
+  // front; once drawn, chevrons of light run along it to the head. Not a beam (a route): no arc in the air, no comet, no landing.
+  // Its centre line lies on the ground; its width is laid across it on the screen (the same width from any angle and distance,
+  // a mark on the map read like one), and it is drawn over the city, so a close shot shows it where it points as a wide one does
+  const arrows = {};
+  const AHW = .012;   // half the ribbon's width, as a share of half the frame's height (about 6.5 px of a 1080 frame, at w 1)
+  const SCREEN_SIDE = `uniform float uHW, uTanF; varying float vHW;   // (the frame's half-height as 1: x scaled by the aspect)
+    vec4 across(vec3 p, vec2 dir, vec2 off){   // p, moved on the screen by off (along, across its direction there) half-widths
+      vec4 c0 = projectionMatrix * modelViewMatrix * vec4(p, 1.), c1 = projectionMatrix * modelViewMatrix * vec4(p + vec3(dir.x, 0., dir.y) * .001, 1.);
+      float asp = projectionMatrix[1][1] / projectionMatrix[0][0]; vec2 k = vec2(asp, 1.);
+      vec2 d = normalize((c1.xy / c1.w - c0.xy / c0.w) * k + 1e-9), n = vec2(-d.y, d.x);
+      vHW = uHW * uTanF * distance(cameraPosition, (modelMatrix * vec4(p, 1.)).xyz);   // (the half-width in model units there)
+      c0.xy += (d * off.x + n * off.y) * uHW / k * c0.w; return c0; }`;
+  function addArrow(id, pts, col, w = 1) {
+    const pos = [], idx = [], arc = [], dir = [], sd = []; let len = 0;
+    for (let i = 0; i < pts.length; i++) {
+      if (i) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+      const [x0, z0] = pts[Math.max(0, i - 1)], [x1, z1] = pts[Math.min(pts.length - 1, i + 1)];
+      const L = Math.hypot(x1 - x0, z1 - z0) || 1, [x, z] = pts[i], gy = ground(x, z);
+      pos.push(x, gy, z, x, gy, z); dir.push((x1 - x0) / L, (z1 - z0) / L, (x1 - x0) / L, (z1 - z0) / L); sd.push(1, -1); arc.push(len, len);
+      if (i) { const b = i * 2; idx.push(b - 2, b - 1, b, b - 1, b + 1, b); }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('aArc', new THREE.Float32BufferAttribute(arc, 1));
+    g.setAttribute('aDir', new THREE.Float32BufferAttribute(dir, 2)); g.setAttribute('aS', new THREE.Float32BufferAttribute(sd, 1)); g.setIndex(idx);
+    const u = { uA: { value: 0 }, uFront: { value: 0 }, uDrawn: { value: 0 }, uCol: { value: lin(col) }, uNow: U.uNow, uHW: { value: AHW * w }, uTanF: { value: .38 },
+      uHead: { value: new THREE.Vector3() }, uHeadDir: { value: new THREE.Vector2(1, 0) } };
+    const mat = new THREE.ShaderMaterial({ uniforms: u, transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
+      vertexShader: `attribute float aArc, aS; attribute vec2 aDir; varying float vArc, vS; ${SCREEN_SIDE}
+        void main(){ vArc = aArc; vS = aS; gl_Position = across(position, aDir, vec2(0., aS)); }`,
+      fragmentShader: `uniform float uA, uFront, uDrawn, uNow; uniform vec3 uCol; varying float vArc, vS, vHW;
+        void main(){ if (vArc > uFront) discard;
+          float s = abs(vS), body = 1. - smoothstep(.55, 1., s), core = exp(-pow(s * 2.2, 2.));
+          float lead = exp(-pow((uFront - vArc) / (vHW * 8.), 2.)) * (1. - uDrawn);                          // the drawing front
+          float ph = fract((vArc + s * vHW * 1.8) / (vHW * 7.) - uNow * 1.1);                                  // chevrons pointing at the head
+          float chev = uDrawn * exp(-pow((ph - .5) * 5., 2.)) * body;
+          gl_FragColor = vec4(uCol * (body * .5 + core * .6 + lead * 1.2 + chev) * uA, 1.); }` });
+    const mesh = new THREE.Mesh(g, mat); mesh.renderOrder = 7; mesh.frustumCulled = false; mesh.visible = false; scene.add(mesh);
+    const hg = new THREE.BufferGeometry();   // the head: a triangle on the screen, its base on the front (half-widths: 3 to each side, 5 ahead)
+    hg.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0, 0, 0, 0, 0, 0, 0], 3)); hg.setAttribute('aOff', new THREE.Float32BufferAttribute([0, 3, 0, -3, 5, 0], 2));
+    const hm = new THREE.ShaderMaterial({ uniforms: u, transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
+      vertexShader: `attribute vec2 aOff; uniform vec3 uHead; uniform vec2 uHeadDir; ${SCREEN_SIDE}
+        void main(){ gl_Position = across(uHead, uHeadDir, aOff); }`,
+      fragmentShader: `uniform float uA; uniform vec3 uCol; void main(){ gl_FragColor = vec4(uCol * 1.3 * uA, 1.); }` });
+    const head = new THREE.Mesh(hg, hm); head.renderOrder = 8; head.frustumCulled = false; head.visible = false; scene.add(head);
+    const at = s => {   // the point s along the arrow and its direction there
+      let acc = 0;
+      for (let i = 1; i < pts.length; i++) {
+        const L = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+        if (acc + L >= s || i === pts.length - 1) { const k = L ? Math.min(1, (s - acc) / L) : 1, [x0, z0] = pts[i - 1], [x1, z1] = pts[i];
+          return [x0 + (x1 - x0) * k, z0 + (z1 - z0) * k, (x1 - x0) / (L || 1), (z1 - z0) / (L || 1)]; }
+        acc += L;
+      }
+      return [pts[0][0], pts[0][1], 1, 0];
+    };
+    arrows[id] = { u, len, set(prog, a, drawn = 0) {   // drawn: 0..1 once the head has arrived (the chevrons come in)
+      u.uA.value = a; u.uFront.value = prog * len; u.uDrawn.value = drawn; u.uTanF.value = Math.tan(camera.fov * Math.PI / 360);
+      mesh.visible = head.visible = a > .002 && prog > .001;
+      if (!head.visible) return;
+      const [x, z, dx, dz] = at(prog * len); u.uHead.value.set(x, ground(x, z), z); u.uHeadDir.value.set(dx, dz); } };
+    return arrows[id];
+  }
+
   const blank = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1); blank.needsUpdate = true;
   function setTex(k, t, srgb = false) { if (!t) { U[k].value = blank; return; } t.flipY = false; t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace; t.anisotropy = 4; U[k].value = t; }
   function setBasins(t, map) { t.flipY = false; t.colorSpace = THREE.NoColorSpace; t.magFilter = t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true;
@@ -1063,5 +1127,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     if (!tries.some(z => { Z = z; gpu.path = z === FULL ? 'full' : 'fit'; if (z !== FULL) fitTo(z); return linkTest(); })) gpu.fail = 'shaders';
     gpu.limits = { textures: g.getParameter(g.MAX_TEXTURE_IMAGE_UNITS), fragment: g.getParameter(g.MAX_FRAGMENT_UNIFORM_VECTORS), vertex: g.getParameter(g.MAX_VERTEX_UNIFORM_VECTORS), size: g.getParameter(g.MAX_TEXTURE_SIZE) };
   }
-  return { gpu, renderer, scene, camera, post, U, liveSky, aimProjector, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { gpu, renderer, scene, camera, post, U, liveSky, aimProjector, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

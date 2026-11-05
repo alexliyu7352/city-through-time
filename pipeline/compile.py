@@ -822,6 +822,7 @@ yearline = []
 nodes_out = []
 epochs, lines, pins, marks, picks, ranges, readouts, cues, cam, decals_out, footage_out, grow, height, evs = [], [], [], [], [], [], [], [], [], [], [], None, None, []
 props_out, tally_keys, sections, eras_out, hide_regions, night_keys, routes_out, dim_keys = [], [], [], [], [], [], [], []
+arrows_out = []
 living_out = []
 spots_out = []
 ctx_keys = []   # the land beyond the plate (terrain.context): [t, [opacity]]
@@ -1043,8 +1044,8 @@ def line_anchor(node, ln):
         k_ = next((k for k in node.get('camera', []) if k.get('shot') == name_), None)
         if k_ is None: raise SystemExit(f'compile: line {ln["id"]}: no camera key with shot: {name_} in node {node["id"]}')
         tau_ = k_['t']   # (a key timed by a line has no time of its own: said below)
-    elif kind_ in ('pin', 'card', 'route'):
-        L_ = {'pin': node.get('pins', []), 'card': node.get('footage', []), 'route': node.get('routes', [])}[kind_]
+    elif kind_ in ('pin', 'card', 'route', 'arrow'):
+        L_ = {'pin': node.get('pins', []), 'card': node.get('footage', []), 'route': node.get('routes', []), 'arrow': node.get('arrows', [])}[kind_]
         it_ = next((q for q in L_ if q.get('id') == name_), None)
         if it_ is None: raise SystemExit(f'compile: line {ln["id"]}: no {kind_} {name_!r} in node {node["id"]}')
         tau_ = it_['with'] if 'with' in it_ else it_.get('t0' if kind_ == 'pin' else 'at', 0)   # (one that follows a line has no time of its own: said below)
@@ -1122,7 +1123,7 @@ def bind_pictures(node):
     until: <line id>) plus hold seconds. An area hands its with on to the outline and name it becomes (expand_areas). The time
     itself is node_time's {with: ...}"""
     W_ = lambda it, plus: {'with': it['with'], 'plus': float(it.get('plus', plus))}
-    for lst in (node.get('footage', []), node.get('living', []), node.get('routes', []), node.get('epochs', []), node.get('lines', []), node.get('decals', []),
+    for lst in (node.get('footage', []), node.get('living', []), node.get('routes', []), node.get('arrows', []), node.get('epochs', []), node.get('lines', []), node.get('decals', []),
                 (node.get('city') or {}).get('stages', [])):
         for it in lst:
             if 'with' not in it: continue
@@ -1135,6 +1136,7 @@ def bind_pictures(node):
 
 LEAD_K = .15       # a beam-following camera aims this far along the beam ahead of its head
 FOLLOW_LIFT = .5   # ... and lifts its aim by this share of the head's height above the ground (the arc stays in the picture)
+ARROW_STEP_M = 25.0   # a light arrow's points, this far apart on the ground (it follows the plate's slopes between them)
 
 def route_pts3(rt):
     """a light path: its lon/lat points in model [x, z, ground y] and the arc drawn through them in model xyz (each hop arcs
@@ -1593,6 +1595,15 @@ for i, node in enumerate(FM['nodes']):
                                   'arrive': round(on_r + fs_['end'], 3) if rt.get('follow') else round(on_r + draw_r, 3)}
         routes_out.append({'id': rt['id'], 'pts': [[round(v, 5) for v in q] for q in pts3], 'col': rt.get('col', node.get('col', '#ffffff')), 'w': rt.get('w', .0011),
                            'on': on_r, 'draw': draw_r, 'impact': bool(rt.get('impact')), 'off': T(rt['off_at']) if 'off_at' in rt else round(on_r + float(rt.get('draw', 2.5)) + float(rt.get('hold', 3.5)), 3), 'a': fill(a_), 'b': fill(b_), 'lab': [mid[0], mid[2], mid[1]], 'km': round(km, 2)})
+    for ar in node.get('arrows', []):      # a light arrow: a movement or the way to a place, on the ground, drawn from its tail to its head
+        P_ = [F.model_lonlat(*q) for q in ar['pts']]; pts_ = []   # (lon/lat points, tail first; every ARROW_STEP_M on the plate, so it lies on the slopes)
+        for (ax_, az_), (bx_, bz_) in zip(P_[:-1], P_[1:]):
+            n_ = max(1, math.ceil(math.hypot(bx_ - ax_, bz_ - az_) / (ARROW_STEP_M * F.scale)))
+            pts_ += [[round(ax_ + (bx_ - ax_) * j_ / n_, 5), round(az_ + (bz_ - az_) * j_ / n_, 5)] for j_ in range(n_)]
+        pts_.append([round(P_[-1][0], 5), round(P_[-1][1], 5)])
+        a_, b_ = ab(ar); on_a = T(ar.get('at', 0)); draw_a = float(ar.get('draw', 2.0))
+        arrows_out.append({'id': ar['id'], 'pts': pts_, 'col': ar.get('col', node.get('col', '#ffffff')), 'w': float(ar.get('w', 1.0)), 'on': on_a, 'draw': draw_a,
+                           'off': T(ar['off_at']) if 'off_at' in ar else round(on_a + draw_a + float(ar.get('hold', 3.0)), 3), 'a': a_, 'b': b_})
     for sc in node.get('sections', []):    # a terrain profile along a line (lon/lat endpoints), with labels at fractions of the line
         sections.append({'id': sc['id'], 'a': F.model_lonlat(*sc['from']), 'b': F.model_lonlat(*sc['to']), 't0': T(sc.get('t0', 0)), 't1': T(sc.get('t1', 'end')),
                          'title': pick(sc.get('title', '')), 'sub': pick(sc.get('sub', '')), 'l0': pick(sc.get('l0', '')), 'l1': pick(sc.get('l1', '')), 'labels': [{'k': L['k'], 'text': pick(L['text'])} for L in sc.get('labels', [])], **section_profile(sc['from'], sc['to'])})
@@ -2198,6 +2209,18 @@ for p in off_: print(f'  {"error" if p["_tour"] else "warning"}: pin {p["id"]} (
 if any(p['_tour'] for p in off_) and not os.environ.get('CT_PINWARN'): fault('a tour stop shows a pin whose place is not on screen: frame it (tour_subjects) or mark it offscreen_ok')
 for p in pins:
     for k_ in ('_node', '_tour', '_offok'): p.pop(k_, None)
+# a light arrow lies on the plate (on the land beyond it only while that is shown), and its head, where it points, is in the frame
+# while it is drawn and held: an arrow that runs off the frame points at nothing the audience sees
+for r in arrows_out:
+    out_ = [q for q in r['pts'] if abs(q[0]) > F.size[0] / 2 or abs(q[1]) > F.size[1] / 2]
+    if out_ and not (CTX_RECT and all(CTX_RECT[0] <= q[0] <= CTX_RECT[1] and CTX_RECT[2] <= q[1] <= CTX_RECT[3] for q in out_)):
+        fault(f'arrow {r["id"]} runs off the plate: draw it on the plate (or give the city a terrain.context that covers it)'); continue
+    if out_ and (dark := [t_ for t_ in (r['on'] + i * .25 for i in range(int((r['off'] - r['on']) / .25) + 1)) if _ctx_a(t_) < .5]):
+        fault(f'arrow {r["id"]} runs onto the land beyond the plate, which is not shown at {dark[0]:.1f} s: show it (context keys) for the arrow\'s whole time'); continue
+    X = (r['pts'][-1][0], model_ground(*r['pts'][-1]), r['pts'][-1][1]); n_ = ok_ = 0; t = r['on'] + r['draw']
+    while t <= r['off'] - .4:
+        q = CAMERA.project(t, X); n_ += 1; ok_ += 1 if (q is not None and abs(q[0]) <= .92 and abs(q[1]) <= .92) else 0; t += .25
+    if n_ and ok_ / n_ < .7: print(f'  warning: arrow {r["id"]} ({r["on"]:.1f}-{r["off"]:.1f} s): its head is off screen most of the time it is up')
 # the modern section is one timeline (docs/STAGING.md 9i): while lines are said, the counter runs at most the tour's rate, so the
 # years the lines tell are on screen as they are told. Faster under a line, decades pass in seconds and the lines that follow
 # speak of years the counter has left behind (1975 -> 2020 in 9 s, then the 1970s' new estates under "2020"): a tour stop for
@@ -2344,13 +2367,18 @@ for ln, nd in _see_of:
             if nd is None: raise SystemExit(f'compile: {where_}: a line of the prologue or the opening has no city of its own: see a pin or a card')
             Xs_ = [c_ for e_, st_, c_ in STAGE_AT if e_ == nd['id'] and (not name_ or st_ == name_)]
             if not Xs_: raise SystemExit(f'compile: {where_}: node {nd["id"]}\'s city has no stage {name_ or "(any)"}')
+        elif kind_ == 'arrow':   # (its head, where it points, from when it is drawn)
+            r_ = next((r for r in arrows_out if r['id'] == name_), None)
+            if r_ is None: raise SystemExit(f'compile: {where_}: no arrow {name_!r}')
+            if r_['on'] + r_['draw'] > t1_: _see_bad.append(f'{where_}: the arrow is drawn only by {r_["on"] + r_["draw"]:.1f} s: draw it while the line is said'); continue
+            Xs_ = [(r_['pts'][-1][0], model_ground(*r_['pts'][-1]), r_['pts'][-1][1])]
         elif kind_ == 'card':
             x_ = next((x for x in footage_out if x['id'] == name_), None)
             if x_ is None: raise SystemExit(f'compile: {where_}: no footage {name_!r}')
             up_ = max(0.0, min(t1_, x_['on'] + x_['dur']) - max(t0_, x_['on'])) / max(1e-6, t1_ - t0_)
             if up_ < .7: _see_bad.append(f'{where_}: the card is up for {up_:.0%} of the line')
             continue
-        else: raise SystemExit(f'compile: {where_}: see: pin:<id>, stage[:<name>] or card:<footage id>')
+        else: raise SystemExit(f'compile: {where_}: see: pin:<id>, stage[:<name>], card:<footage id> or arrow:<id>')
         k_ = _in_frame(t0_, t1_, Xs_)
         if k_ < .7: _see_bad.append(f'{where_}: in the frame {k_:.0%} of the line')
 print(f'  storyboard: {_see_n} of {_lines_n} lines say what is on screen as they are said (see:)')
@@ -2519,7 +2547,7 @@ film = {
     'decals': decals_out, 'satellite': sat_out(sat),
     'footage': footage_out, 'end': end, 'ev': evs, 'music': FM.get('music', {}),
     'labels': labels_out,
-    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinSlots': nb_} if nb_ > 32 else {}), **({'groundSlots': GROUND_SLOTS} if GROUND_SLOTS > 8 else {}), **({'eraSlots': SLOTS} if SLOTS > 8 else {}), **({'keepMaps': True} if KEEP_BY else {}), **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out,
+    'props': props_out, 'tally': {'keys': tally_keys}, 'rise': FM.get('rise', {}), 'drift': FM.get('drift', 1.0), 'sections': sections, 'eras': eras_out, **({'basinSlots': nb_} if nb_ > 32 else {}), **({'groundSlots': GROUND_SLOTS} if GROUND_SLOTS > 8 else {}), **({'eraSlots': SLOTS} if SLOTS > 8 else {}), **({'keepMaps': True} if KEEP_BY else {}), **({'basinMap': BASIN_MAP} if BASIN_MAP else {}), **({'groundMap': GROUND_MAP} if GROUND_MAP else {}), 'night': night_keys, 'routes': routes_out, **({'arrows': arrows_out} if arrows_out else {}),
     'era_look': {k_: FM.get('era_look', {}).get(k_, d_) for k_, d_ in (('dim', .5), ('glow', 1.0), ('edge', 1.0), ('line', 1.0), ('light_m', 45), ('halo_m', 14))},
     'wave_dur': FM.get('wave_dur', 3.2), 'dim': dim_keys, 'sky': sky_out, 'context': CTX_OUT, 'shade': SHADE_OUT,
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],
@@ -2708,7 +2736,7 @@ _LINE = {c_['id']: c_ for n_ in FM['nodes'] for c_ in n_.get('cues', []) if 'id'
 _FIRST = {next((c_['id'] for c_ in n_.get('cues', []) if 'id' in c_), None) for n_ in FM['nodes']}
 _pict = [(x['on'], x['on'] + x['dur']) for x in footage_out]
 _pict += [(a_, b_) for a_, b_, w_, _ in _changes() if 'growing' not in w_] + [(a_, b_) for _, _, _, _, (a_, b_) in PLACES]   # (a city: while its buildings rise)
-_pict += [(r['on'], r['on'] + r.get('draw', 0) + .5) for r in routes_out]
+_pict += [(r['on'], r['on'] + r.get('draw', 0) + .5) for r in routes_out + arrows_out]
 _pict += [(q['on'], q['on'] + (q.get('fade') or 1)) for q in lines] + [(q['on'], q['on'] + (q.get('fade') or 1)) for q in decals_out]
 _pict += [(p_['t0'], p_['t0'] + 1.0) for p_ in pins] + [(s_['t0'], s_['t1']) for s_ in sections]   # (a terrain section: a panel, as a photo)
 def _moving(t, step=.25):   # the picture moves: something changes, a picture is up, or the camera travels

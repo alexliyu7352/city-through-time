@@ -23,7 +23,7 @@ WHOLE = 60.0   # an item on screen this long or shorter that changed is compared
                # one (a chapter's readout, a drawn line) only where it differs, so one note does not mark a whole chapter
 TIMES = ('on', 'off', 't0', 't1', 'gone', 't', 'a', 'burn', 'flash')   # times at any depth: a number or a list of them ([a, b]) under these keys; a curve's points start with one
 TOL = .011     # two times this close are the same (kept to the cent, some to the ms: rounded apart, they can differ by one)
-NAME = {'lines': 'drawn-line', 'footage': 'panel', 'pins': 'tag', 'routes': 'route', 'readouts': 'readout', 'spots': 'spot', 'fronts': 'front', 'losses': 'loss', 'today': 'today_from'}
+NAME = {'lines': 'drawn-line', 'footage': 'panel', 'pins': 'tag', 'routes': 'route', 'arrows': 'arrow', 'readouts': 'readout', 'spots': 'spot', 'fronts': 'front', 'losses': 'loss', 'today': 'today_from'}
 LOOKS = ('era_look', 'night_look', 'shade')   # the film's light settings with no time of their own: for the whole film
 
 
@@ -84,7 +84,7 @@ def diff(x, o, sh, at, k=None):
 
 def span(kind, x):
     if kind == 'footage': return x['on'], x['on'] + x.get('dur', 0)
-    if kind in ('routes', 'lines'): return x['on'], x.get('off') or x['on']
+    if kind in ('routes', 'arrows', 'lines'): return x['on'], x.get('off') or x['on']
     if kind == 'fronts': return tuple(x['a'])
     if kind == 'losses': c = x.get('curve') or [[x['gone']]]; return c[0][0], x['gone']
     return x['t0'], x['t1']
@@ -92,7 +92,7 @@ def span(kind, x):
 
 def items(f):   # (kind, key) -> item, every timed thing on screen
     out = {}
-    for kind in ('footage', 'pins', 'routes', 'lines', 'readouts', 'spots'):
+    for kind in ('footage', 'pins', 'routes', 'arrows', 'lines', 'readouts', 'spots'):
         for i, x in enumerate(f.get(kind) or []): out[(kind, x.get('id') or f'#{i}')] = x
     for e in f.get('eras') or []:
         if e.get('todayFrom') is not None: out[('today', e['id'])] = {'t0': e['todayFrom'], 't1': e.get('off') or f['dur']}   # (today's city no longer dims for it)

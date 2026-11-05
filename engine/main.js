@@ -107,6 +107,7 @@ const CTXK = FILM.context && FILM.context.keys.length ? track(FILM.context.keys)
 // props: schematic models per node
 for (const p of FILM.props || []) S.addProp(p);
 for (const r of FILM.routes || []) S.addRoute(r.id, r.pts, r.col, r.w);
+for (const r of FILM.arrows || []) S.addArrow(r.id, r.pts, r.col, r.w);
 // era cities: one generated city per period
 const ERABOX = {};   // each period city's extent on the plate [x0, z0, x1, z1]; for the viewer (?view) the moments it is shown at (engine/eralife.js), each with its densest 200 m square [x, z] then
 async function loadEra(e) {   // (all of them, in order, for the film; the walk-round view's hall by hall)
@@ -483,6 +484,8 @@ function setLayers(t) {
   U.uDimToday0.value = ci >= 0 ? dimBefore(nodes_[ci]) * (1 - today) : U.uDimToday.value;
   for (const r of FILM.routes || []) { const R = S.routes[r.id]; const land = r.on + r.draw;   // a landing beam flashes where it lands
     if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - (LV ? LV.k : 0)), r.impact && t >= land ? Math.exp(-(t - land) / .35) : 0); }
+  for (const r of FILM.arrows || []) { const R = S.arrows[r.id];   // a light arrow: drawn tail to head, then its chevrons run
+    if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - (LV ? LV.k : 0)), ss(seg(t, r.on + r.draw, r.on + r.draw + .8))); }
   const NT = FILM.night && FILM.night.length ? track(FILM.night)(t)[0] : 0; U.uNight.value = NT;
   S.setContext(CTXK ? Math.max(0, Math.min(1, CTXK(t)[0])) : 0);
   if (TK) { const [x, y, z, ry, sc, split, glow, vis] = TK(t); S.tally.visible = vis > .5; S.tally.position.set(x, y, z); S.tally.rotation.y = THREE.MathUtils.degToRad(ry); S.tally.scale.setScalar(sc); S.tally.setState(split, glow); S.tally.setLight(sc * sc * (vis > .5 ? 1 : 0)); }
@@ -509,6 +512,11 @@ function drawOverlay(t) {
     OV.footage(VID[f.id], e, f, anc);
     const v = ss(e.in) * (1 - ss(e.out)); fa = Math.max(fa, (f.mode || 'full') === 'full' ? v : .6 * v); if ((f.mode || 'full') === 'full') ffull = Math.max(ffull, v);
     if (f.mode === 'panel' || (f.mode === 'doc' && f.side !== 'left')) fcorner = Math.max(fcorner, v);
+  }
+  for (const r of FILM.arrows || []) {   // an arrow's name, at its head once it has arrived
+    if (!r.a) continue;
+    const a = ss(seg(t, r.on + r.draw, r.on + r.draw + .5)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - fa), [hx, hz] = r.pts[r.pts.length - 1];
+    if (a > 0) OV.routeLabel(proj3(hx, S.ground(hx, hz), hz), a, r.a, r.b, r.col);
   }
   for (const r of FILM.routes || []) {
     if (!r.a) continue;
@@ -682,6 +690,7 @@ if (QS.has('view')) {
       U.uNodeA.value = U.uNodeA0.value = 0; U.uPickOn.value = 0; U.uHgtOn.value = 0; U.uResetR.value = -1; U.uResetY.value = 0;
       for (const k in lineA) lineA[k].value = 0;
       for (const r of Object.values(S.routes)) r.set(0, 0);
+      for (const r of Object.values(S.arrows)) r.set(0, 0);
       S.tally.visible = false;
     } });
 }
