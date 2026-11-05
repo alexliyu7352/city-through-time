@@ -1257,14 +1257,15 @@ for i, node in enumerate(FM['nodes']):
             node['_ins'].append({'tau': round(at_ - 1e-3, 4), 'delta': round(need_ - t_, 2), 'keys': [], 'kind': 'approach', 'why': f'the camera needs {A_:.1f} s to get behind the origin of {rt["id"]}'})
             node['_ins'].sort(key=lambda q: q['tau']); print(f'  route {rt["id"]}: launches {need_ - t_:.1f} s later: the camera needs {A_:.1f} s to get behind its origin')
     if node.get('tour') and cam:   # a beat of a tour (docs/STAGING.md 9i): the camera flies here from the last beat while the
-        TC = {'rate': 1.0, 'fly_spin': 5.0, 'spin': 1.0, 'push': .08, **FM.get('tour', {})}   # counter runs (at most `rate` years a second), then holds
+        TC = {'rate': 1.0, 'fly_max': 12.0, 'fly_spin': 5.0, 'spin': 1.0, 'push': .08, **FM.get('tour', {})}   # counter runs (at most `rate` years a second), then holds
+        # (a long stretch of years the telling skips is crossed in `fly_max` seconds, not a second a year: a silent flight, no line is said)
         tr_ = node['tour']; prev_ = max(cam, key=lambda k: k[0]); pv_ = list(prev_[1])
         ys_ = node.get('years') or [node['year'], node['year']]
         tx_, tz_ = F.model_lonlat(*tr_['ll']); fov_ = tr_.get('fov', FM.get('fov', 30))
         V1 = [tx_, model_ground(tx_, tz_), tz_, pv_[3], float(tr_.get('el', 36)), float(tr_['d']), fov_]
         subj_ = tour_subjects(node)   # what the stop talks about (its pins, its named areas): the arrival view frames them all
         for _ in range(2):   # (the flight's length turns the camera, the turn changes the framing: twice settles it)
-            A_ = max(1.3 * stagecraft.move_time(pv_, V1, speed=.8, t_max=9), (float(ys_[1]) - float(ys_[0])) / TC['rate'], 2.0)   # x1.3: eased in and out
+            A_ = max(1.3 * stagecraft.move_time(pv_, V1, speed=.8, t_max=9), min((float(ys_[1]) - float(ys_[0])) / TC['rate'], TC['fly_max']), 2.0)   # x1.3: eased in and out
             V1[3] = pv_[3] + float(tr_.get('fly_spin', TC['fly_spin'])) * A_   # the camera keeps turning round the city as it flies
             if 'az' in tr_: V1[3] = stagecraft.unwrap(float(tr_['az']), pv_[3])   # (or turns to a side that suits the place: the plate's edge behind it)
             if subj_:   # framed from the side that frames them closest (within 60 degrees of where the flight turns the camera to)
