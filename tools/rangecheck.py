@@ -18,6 +18,8 @@ import numpy as np
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from linesheet import STAMP, stamp
 
 
 def main():
@@ -92,8 +94,10 @@ def main():
     if not A.no_stills:
         for out in outs:
             for f in os.listdir(out):
-                if f.startswith(('t_', 'sheet_')) and f.endswith('.jpg'): os.remove(os.path.join(out, f))   # (a range checked again: the last run's stills only)
-        run('stills', ['node', 'render/still.mjs', slug, *[x for (a, b), out in zip(SP, outs) for x in ('--range', f'{a:g}:{b:g}:{A.step:g}', '--out', out)], '--size', A.size, '--prefix', 't_'])
+                if f.startswith(('t_', 'sheet_')) and f.endswith('.jpg') or f == STAMP: os.remove(os.path.join(out, f))   # (a range checked again: the last run's stills only)
+        made = stamp(D)   # (the version the stills are of: tools/linesheet.py takes a folder's stills only for that version as it is then)
+        if run('stills', ['node', 'render/still.mjs', slug, *[x for (a, b), out in zip(SP, outs) for x in ('--range', f'{a:g}:{b:g}:{A.step:g}', '--out', out)], '--size', A.size, '--prefix', 't_'])['ok']:
+            for out in outs: open(os.path.join(out, STAMP), 'w').write(made + '\n')
         IMS = []
         for i, out in enumerate(outs):
             ims = sorted((f for f in os.listdir(out) if f.startswith('t_') and f.endswith('.jpg')), key=lambda f: float(f[2:-4])); IMS.append(ims)

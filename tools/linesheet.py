@@ -8,9 +8,13 @@ usage: python -I tools/linesheet.py <city_slug | city folder> --from s --to s [-
   --stills   the stills of this version, one stretch only (default: build/review/range_<from>_<to>/, which tools/rangecheck.py makes)
   --against  the previous version (a model study's folder too): its stills are taken from its build/review/range_*/ folders, and the
              seconds none of them has are rendered (render/still.mjs, into this version's lines folder)
+A folder of stills is used only if its stills.stamp names the version as it is now (stamp(): its film.json and build/data, its
+assets by name, size and time), so a still rendered from an earlier compile of a version never stands for this one: tools/rangecheck.py
+stamps the folders it renders, and the previous version's renders here are cleared and made again when that version was compiled since.
+(The engine is not in the stamp: both versions' stills may come from different engines, and the renders here use today's.)
   --json     each stretch's result: [{from, to, ok, lines}] (tools/rangecheck.py)
 writes build/review/lines_<from>_<to>/lines_NN.jpg; exit 1 when a stretch could not be sheeted."""
-import argparse, json, os, subprocess, sys
+import argparse, hashlib, json, os, subprocess, sys
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,9 +31,29 @@ def city_dir(c):
     return D, slug
 
 
-def stills_in(*dirs):   # {second: path} of the t_<s>.jpg stills in these folders
+STAMP = 'stills.stamp'
+
+
+def stamp(D):   # what a city's stills are rendered from: its film and data (by content), its assets (by name, size and time)
+    h = hashlib.blake2b(digest_size=12)
+    for top, by_content in ((os.path.join(D, 'build', 'film.json'), True), (os.path.join(D, 'build', 'data'), True), (os.path.join(D, 'assets'), False)):
+        fs = [top] if os.path.isfile(top) else sorted(os.path.join(r, f) for r, _, n in os.walk(top, followlinks=True) for f in n)
+        for f in fs:
+            h.update(os.path.relpath(f, D).encode())
+            if by_content: h.update(open(f, 'rb').read())
+            else: st = os.stat(f); h.update(f'{st.st_size} {st.st_mtime_ns}'.encode())
+    return h.hexdigest()
+
+
+def stamped(d, s):   # the folder's stills were rendered from that version as it is now
+    try: return open(os.path.join(d, STAMP)).read().strip() == s
+    except OSError: return False
+
+
+def stills_in(*dirs, stamp=None):   # {second: path} of the t_<s>.jpg stills in these folders (with stamp: those stamped so only)
     have = {}
     for d in dirs:
+        if stamp is not None and not stamped(d, stamp): continue
         for f in os.listdir(d) if os.path.isdir(d) else []:
             if f.startswith('t_') and f.endswith('.jpg'):
                 try: have.setdefault(float(f[2:-4]), os.path.join(d, f))
@@ -73,17 +97,19 @@ def main():
     if len(A.a) != len(A.b): sys.exit('linesheet: give --from and --to in pairs, one pair a stretch')
     if A.stills and len(A.a) > 1: sys.exit('linesheet: --stills is for one stretch (several: each from its own build/review/range_<from>_<to>/)')
     D, _ = city_dir(A.city)
-    cues = json.load(open(os.path.join(D, 'build', 'film.json'), encoding='utf-8'))['cues']
+    cues = json.load(open(os.path.join(D, 'build', 'film.json'), encoding='utf-8'))['cues']; S1 = None if A.stills else stamp(D)
     if A.against:
-        D2, slug2 = city_dir(A.against)
+        D2, slug2 = city_dir(A.against); S2 = stamp(D2)
         prev = {c['id']: c for c in json.load(open(os.path.join(D2, 'build', 'film.json'), encoding='utf-8'))['cues']}
         rev = os.path.join(D2, 'build', 'review'); ranges2 = [os.path.join(rev, d) for d in sorted(os.listdir(rev)) if d.startswith('range_')] if os.path.isdir(rev) else []
     S = []   # each stretch: what its sheets need, or why it has none
     for a, b in zip(A.a, A.b):
         a, b = round(a, 2), round(b, 2); st = {'from': a, 'to': b, 'lines': []}; S.append(st)
         sdir = A.stills or os.path.join(D, 'build', 'review', f'range_{a:g}_{b:g}')
-        st['have'] = stills_in(sdir)
-        if not st['have']: st['fail'] = f'linesheet: no stills in {sdir}: run tools/rangecheck.py --from {a:g} --to {b:g} first, or give --stills'; continue
+        st['have'] = stills_in(sdir, stamp=S1)
+        if not st['have']:
+            st['fail'] = (f'linesheet: no stills in {sdir}' if not stills_in(sdir) else f'linesheet: the stills in {sdir} are not stamped as of this compile (an earlier compile, or their render failed)') + \
+                f': run tools/rangecheck.py --from {a:g} --to {b:g} first, or give --stills'; continue
         out = st['out'] = os.path.join(D, 'build', 'review', f'lines_{a:g}_{b:g}'); os.makedirs(out, exist_ok=True)
         for f in os.listdir(out):
             if f.startswith('lines_') and f.endswith('.jpg'): os.remove(os.path.join(out, f))   # (a stretch sheeted again: this run's sheets only)
@@ -93,8 +119,11 @@ def main():
             for kind, key, *_ in rows:
                 if kind == 'line' and key in prev: old[key] = (prev[key]['t0'], prev[key]['t1'])
                 elif kind == 'gap' and key[0] in prev and key[1] in prev: old[key] = (prev[key[0]]['t1'], prev[key[1]]['t0'])
-            st['adir'] = os.path.join(out, 'against', slug2.replace('/', '_'))   # (renders kept per previous version)
-            st['have2'] = stills_in(st['adir'], *ranges2)
+            st['adir'] = adir = os.path.join(out, 'against', slug2.replace('/', '_'))   # (renders kept per previous version)
+            if os.path.isdir(adir) and not stamped(adir, S2):   # (that version compiled since: its renders here are of another film)
+                for f in os.listdir(adir):
+                    if f.startswith('t_') and f.endswith('.jpg') or f == STAMP: os.remove(os.path.join(adir, f))
+            st['have2'] = stills_in(adir, *ranges2, stamp=S2)
             st['want'] = sorted({f'{t:.2f}' for t0, t1 in old.values() for t in seconds(t0, t1) if nearest(st['have2'], t) is None})
     todo = [st for st in S if st.get('want')]
     if todo:   # the previous version's missing stills, every stretch's on one page load, each into its own lines folder
@@ -102,7 +131,7 @@ def main():
         r = subprocess.run(['node', 'render/still.mjs', slug2, *[x for st in todo for x in (*st['want'], '--out', st['adir'])], '--size', A.size, '--prefix', 't_'], cwd=ROOT, stdout=subprocess.DEVNULL)
         for st in todo:
             if r.returncode: st['fail'] = f'linesheet: render/still.mjs {slug2} failed ({r.returncode})'
-            else: st['have2'] = {**st['have2'], **stills_in(st['adir'])}
+            else: open(os.path.join(st['adir'], STAMP), 'w').write(S2 + '\n'); st['have2'] = {**st['have2'], **stills_in(st['adir'], stamp=S2)}
     for st in S:
         if 'fail' in st: st['lines'].append(st['fail']); print(st['fail'], file=sys.stderr, flush=True); continue
         rows, old, have, have2, out = st['rows'], st['old'], st['have'], st.get('have2'), st['out']

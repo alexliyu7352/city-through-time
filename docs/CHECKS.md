@@ -23,7 +23,7 @@ two period cities existing at the same time overlapping, floating, trees inside 
 (`node render/still.mjs <slug> --range <a>:<b>:1` + `uv run python -I tools/sheet.py`): problems the checks cannot find (composition, too fast, too dark) are caught by this step.
 **One command runs them all for the range:** `uv run python -I tools/rangecheck.py <slug> --stations <id>[,<id>..]` (those stations and one before and after each; or `--from <a> --to <b>`;
 a model study's folder works too): camcheck, readcheck, a still a second in contact sheets of 16 and line by line (`build/review/lines_<a>_<b>/`: each line's stills under
-its words; with `--against <previous version>`, that version's stills of the same line beside them), and the stills' brightness, each step logged, a failed step does not stop the
+its words; with `--against <previous version>`, that version's stills of the same line beside them, only stills rendered from that version as it is now: a folder of stills carries a `stills.stamp`), and the stills' brightness, each step logged, a failed step does not stop the
 others, and `build/review/range_<a>_<b>/report.json` holds the results. Do not write a script of your own for this; then look at every sheet.
 **A round of changes, in one command:** `uv run python -I tools/round.py <slug> --against <the approved version the round started from>` compiles,
 lists with filmdiff every stretch that changed, runs one rangecheck over all of them and reports compile's faults, each stretch's verdict, the lines the camera
