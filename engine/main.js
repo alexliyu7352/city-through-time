@@ -292,7 +292,7 @@ const LT = FILM.light;
 const PRO = FILM.prologue;
 const sceneAt = t => { if (!PRO || t >= PRO.dur) return t; let s = t; for (const [k, at] of PRO.scene) if (t >= k) s = at + (t - k); return s; };
 const darkAt = t => (LT.darks || []).some(([a, b]) => t >= a && t < b);
-const NTRACK = FILM.night && FILM.night.length ? track(FILM.night) : null; const nightAt = t => NTRACK ? NTRACK(t)[0] : 0;
+const NTRACK = FILM.night && FILM.night.length ? track(FILM.night) : null; const nightAt = t => NTRACK && !QS.has('clean') ? NTRACK(t)[0] : 0;   // (none in the living reference: a moment's still does not change with the night it falls in)
 const darkK = t => { let k = 0; for (const [a, b] of (LT.darks || [])) k = Math.max(k, ss(seg(t, a, a + .35)) * (1 - ss(seg(t, b - .1, b + .4)))); return k; };
 function setLight(t) {
   const off = ss(seg(t, LT.lightsOut, LT.lightsOut + .25));
@@ -486,7 +486,7 @@ function setLayers(t) {
     if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - (LV ? LV.k : 0)), r.impact && t >= land ? Math.exp(-(t - land) / .35) : 0); }
   for (const r of FILM.arrows || []) { const R = S.arrows[r.id];   // a light arrow: drawn tail to head, then its chevrons run
     if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - (LV ? LV.k : 0)), ss(seg(t, r.on + r.draw, r.on + r.draw + .8))); }
-  const NT = FILM.night && FILM.night.length ? track(FILM.night)(t)[0] : 0; U.uNight.value = NT;
+  U.uNight.value = nightAt(t);
   S.setContext(CTXK ? Math.max(0, Math.min(1, CTXK(t)[0])) : 0);
   if (TK) { const [x, y, z, ry, sc, split, glow, vis] = TK(t); S.tally.visible = vis > .5; S.tally.position.set(x, y, z); S.tally.rotation.y = THREE.MathUtils.degToRad(ry); S.tally.scale.setScalar(sc); S.tally.setState(split, glow); S.tally.setLight(sc * sc * (vis > .5 ? 1 : 0)); }
   else S.tally.visible = false;

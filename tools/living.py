@@ -23,11 +23,14 @@ usage: uv run python -I tools/living.py ref    cities/<slug> [<id> ...]   the sh
   adopt  records the shot and the still for a picture put in assets/living/ by hand (compile refuses a picture with no record).
   sheet  build/review/living/<id>_check.jpg: the still, the picture, and the two halfway blended. Look at it before using a
          picture: the buildings, walls and streets must sit on the model's (a picture that drew another view smears when projected).
-  check  renders each shot again and compares it with the still the picture was made from (mean difference per pixel, 0-255):
-         over 6 the model under the picture has changed (a new terrain, a rebuilt city): make the picture again.
-         (The still is taken with the water, glints and lit windows at rest, so it does not change when the moment moves in the
-         film. A still recorded with moving water differs by the waves alone: if the sheet shows the buildings still sitting,
-         take the still again with ref and record it with adopt, keeping the picture.)
+  check  renders each shot again and compares it with the still the picture was made from (mean difference per pixel, 0-255,
+         over the whole frame and over each of its 16 x 9 parts): over 6 over the frame (a new terrain, a rebuilt city) or over 12
+         in one part (a rebuilt landmark, a building added: a small part of the frame) the model under the picture has changed:
+         make the picture again.
+         (The still is taken with the water, glints and lit windows at rest and no night (film.night), so it does not change when
+         the moment moves in the film or the night is set again. A still recorded with moving water or under a night differs by
+         the light alone: if the sheet shows the buildings still sitting, take the still again with ref and record it with
+         adopt, keeping the picture.)
 """
 import json, os, shutil, subprocess, sys, tempfile, hashlib, datetime
 import yaml
@@ -181,8 +184,10 @@ def cmd_check(D, R, ids):
             if not os.path.exists(old): print(f'{m["id"]}: no picture recorded yet'); bad += 1; continue
             new = shoot(D, m, W, os.path.basename(m['id']) + '_')
             x, y = (np.asarray(Image.open(f).convert('L').resize((960, 540))).astype(float) for f in (old, new))
-            d = float(np.abs(x - y).mean()); bad += d > 6
-            print(f'{m["id"]}: the shot now differs from the still the picture was made from by {d:.1f} per pixel' + (' : make the picture again' if d > 6 else ''))
+            a_ = np.abs(x - y); d = float(a_.mean()); P = a_.reshape(9, 60, 16, 60).mean(axis=(1, 3)); r_, c_ = np.unravel_index(P.argmax(), P.shape)
+            ch = d > 6 or P.max() > 12; bad += ch   # (a rebuilt landmark moves the frame's mean little: the part it stands in a lot)
+            print(f'{m["id"]}: the shot now differs from the still the picture was made from by {d:.1f} per pixel, {P.max():.1f} in its most '
+                  f'changed part ({c_ / 16:.0%} across, {r_ / 9:.0%} down)' + (': look at it (ref, sheet): buildings changed under the picture: make it again; the light alone: adopt the new still, keeping the picture' if ch else ''))
     sys.exit(1 if bad else 0)
 
 
