@@ -88,6 +88,7 @@ FIELDS = {
         'finial_m': ('num', (0, 40), 0.0, 'a mast on top (a cross, a crescent, a kalasha)'),
         'oculus_m': ('num', (0, 60), 0.0, 'a dark round opening at the top (the Pantheon\'s 9 m)'),
         'sweep_deg': ('num', (60, 360), 360.0, '180: a half dome, its open side to the front (against a bigger dome or a hall)'),
+        'ribs': ('obj', {'n': ('int', (4, 64), REQ, 'how many (St Peter\'s 16; on a polygon dome a multiple of its sides stands on its corners)'), 'w_m': ('num', (.2, 12), 2.0, 'a rib\'s width'), 'h_m': ('num', (.1, 6), 1.0, 'how far it stands out of the shell')}, None, 'raised ribs up the dome from its foot to its top, in the walls\' colour on the roof\'s (St Peter\'s, Florence); a whole dome only'),
         'peristyle': ('obj', {'n': ('int', (4, 120), REQ, 'columns'), 'h_m': ('num', (1, 120), None, 'their height (the drum\'s when absent)'), 'gap_m': ('num', (.5, 30), 3.0, 'from the drum to the columns\' line'), 'col_m': ('num', (.2, 5), .9, 'a column\'s thickness')}, None, 'a ring of columns round the drum (a tholos, St Peter\'s drum)'),
     }, 'a round or polygonal building under a dome: rotundas, mausoleums, domed mosques and churches, stupas, baptisteries'),
     'long_hall': ({
@@ -678,6 +679,12 @@ def _dome(D, L, P, th, z):
     dw = dm.get('d_m') or L['d_m'] / NECK.get(shape, 1.0); dwW = D.poly_w(dw, n)
     rise = dm.get('rise_m') or RISE[shape] * dw
     D.turn(P, th, 0, 0, z, dwW, dwW, rise, profile(shape, rise / dw), n, part=C.LROOF, sweep=sw, true=dm['keep_curve'])
+    rb = L.get('ribs')
+    if rb and sw == 1 and B.det >= 1:   # raised ribs: each a thin slice of the shell made h_m larger, so it stands out along the whole curve
+        Ro = dwW / 2 + rb['h_m']; a0 = math.pi / n if n and rb['n'] % n == 0 else 0.0   # (on a polygon dome: its corners, as D.turn turns a face to the front)
+        for i in range(rb['n']):   # (a slice is centred on its frame's back, +y)
+            D.turn(P, th + a0 + i / rb['n'] * math.tau - math.pi / 2, 0, 0, z, 2 * Ro, 2 * Ro, rise + rb['h_m'], profile(shape, rise / dw), 0,
+                   part=C.LMK, sweep=min(.25, rb['w_m'] / (math.tau * Ro)), true=dm['keep_curve'], steps=2)
     top = z + rise / (B.hex if dm['keep_curve'] else 1)   # metres before the walls' exaggeration (z is too)
     if L['oculus_m'] and sw == 1: D.B._emit(C.CYL, *P(0, 0), 0, top - .03 * rise / (B.hex if dm['keep_curve'] else 1), L['oculus_m'] / 2, 0, .4, part=C.DARK, g_m=D.g)
     ln = L.get('lantern')

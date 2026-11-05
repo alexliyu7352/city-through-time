@@ -137,7 +137,7 @@ def study_film(C, era, spec, shots_, fov, year=None, sheet=False):
     dur = float(target['dur'])
     target['camera'] = [{'t': round(dur * (k + 1) / (len(shots_) + 1), 2), 'll': s['ll'], **({'y': s['y']} if s.get('y') else {}), 'az': s['az'], 'el': s['el'], 'd': s['d'], 'fov': fov} for k, s in enumerate(shots_)]
     S = copy.deepcopy(C); SF = S['film']
-    for k in ('prologue', 'voice', 'music', 'sfx'): SF.pop(k, None)
+    for k in ('prologue', 'voice', 'music', 'sfx', 'water_then'): SF.pop(k, None)   # (water_then's stages are tied to the film's nodes and routes)
     SF.update(drift=0, opening={'dur': 0}, closing={'lights_after': 0, 'end_after': 0, 'end_hold': .2}, nodes=study)   # (drift 0: stills of one view frame alike)
     if sheet:   # the type blocks stand within a few dozen metres of their little city's edge: its edge light and line would flood every
         SF['era_look'] = {**(SF.get('era_look') or {}), 'edge': 0, 'line': 0}   # one, where a house of the film stands well inside its city
