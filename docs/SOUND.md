@@ -56,7 +56,7 @@ Xianyang: Stable Audio 3 Medium generated locally, 11 sections. Songs on the int
   NC and ND are out (a film score is an adaptation, and a non-commercial piece cannot sit in a work others may sell), and so are "royalty free", "free for YouTube" and a platform's own audio library (their terms bind to a platform or a buyer, not to a CC film).
 - Where to look: Wikimedia Commons, Musopen, the Internet Archive, the Free Music Archive, ccMixter and similar, judging every track by its own page, never by the site (one site carries all licences). Write for each piece in `MUSIC.md`:
   title, composer, performer, page URL, licence of the work and of the recording, the date checked, and the file's sha256; its credit line goes into `CREDITS` and the end card as the licence asks.
-- Fit before licence is the wrong order only for listening time: first narrow by licence, then by the period and the section's emotion from the research, then by the cut: the piece must carry the section's length (or loop cleanly) and have a start that lands on a hit.
+- Order: narrow by licence first (no listening time spent on what cannot be used), then by the period and the section's emotion from the research, then by the cut: the piece must carry the section's length (or loop cleanly) and have a start that lands on a hit.
   Recordings with audience noise, a bad tape hiss or a speaking voice are left out (the narration is the only voice).
 - Lay it as a take: convert to 48 kHz WAV as `build/audio/music/cand/<cue id>_<take>.wav` (the file comes back from its URL, so `build/` may lose it); the measures of generated candidates (silence, gaps, loudness) apply,
   and the user hears two or three candidates per section before one is laid.
