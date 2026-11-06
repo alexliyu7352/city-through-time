@@ -815,6 +815,11 @@ def spot_item(sp, t0, t1, nid):
     if 'll' not in sp: raise SystemExit(f'compile: node {nid}: spot: ll: [lon, lat] (the subject) and r_m (the lit radius)')
     return {'t0': t0, 't1': t1, 'fade': float(sp.get('fade', .8)), 'c': F.model_lonlat(*sp['ll']), 'r': float(sp.get('r_m', 600)) * F.scale,
             'k': float(sp.get('dim', .16)), 'b': float(sp.get('boost', 1.35))}
+# film.night_look: { deep: 0..1 }: the night city (engine: at night today's walls go dark, fewer windows burn brighter, the plate dims)
+NIGHT_LOOK = None; _nl = FM.get('night_look')
+if _nl is not None:
+    if not isinstance(_nl, dict) or set(_nl) - {'deep'} or not 0 <= float(_nl.get('deep', 1)) <= 1: raise SystemExit(f'compile: film.night_look: {{ deep: 0..1 }} (got {_nl})')
+    NIGHT_LOOK = {'deep': float(_nl.get('deep', 1))}
 # ------------------------------------------------------------------ layout: opening -> nodes -> closing
 OP = FM.get('opening', {'dur': 5.0}); CL = FM.get('closing', {})
 cursor = PD + float(OP.get('dur', 5.0))
@@ -1550,10 +1555,10 @@ for i, node in enumerate(FM['nodes']):
         node.setdefault('_owned', []).append((sky_out['on'], sky_out['off']))
     if 'dim_today' in node:                # today's city dims under something drawn on it (the finale's footprints)
         dt_ = node['dim_today']; dim_keys.extend([[T(dt_.get('at', 0)), [0.0]], [round(T(dt_.get('at', 0)) + 1.5, 3), [float(dt_.get('to', .5))]], [node['_t1'], [float(dt_.get('to', .5))]], [round(node['_t1'] + 1.5, 3), [0.0]]])
-    if 'night' in node:                    # night state for this node (lit windows, flowing roads), eased in over 2.5 s
-        night_keys.append([node['_t0'], night_keys[-1][1] if night_keys else [0.0]]); night_keys.append([round(node['_t0'] + 2.5, 3), [float(node['night'])]])
-    elif night_keys and night_keys[-1][1][0] > 0:
-        night_keys.append([node['_t0'], night_keys[-1][1]]); night_keys.append([round(node['_t0'] + 2.5, 3), [0.0]])
+    if 'night' in node or (night_keys and night_keys[-1][1][0] > 0):   # night state for this node (lit windows, flowing roads), eased in over 2.5 s;
+        v0_, v1_ = night_keys[-1][1][0] if night_keys else 0.0, float(node.get('night', 0.0))   # the night city (night_look.deep) falls like dusk:
+        ez_ = min(2.5 + 10 * (NIGHT_LOOK or {'deep': 0})['deep'] * abs(v1_ - v0_), max(2.5, node['_t1'] - node['_t0']))   # up to 10 s more for the whole step, within the node
+        night_keys.append([node['_t0'], [v0_]]); night_keys.append([round(node['_t0'] + ez_, 3), [v1_]])
     if 'city' in node:                     # a whole period city (generated at the top of the node: gen_city)
         cs = node['city']; prims, meta_ = PRIMS[node['id']], CITY_META[node['id']]
         bnd = era_boundary(prims, cs)
@@ -2213,11 +2218,6 @@ elif ctx_keys: print('warning: context keys but no build/data/context.json (run 
 # az from north, clockwise (default 325, from the north-west; the room light turns with the camera, this sun stays put), el above the
 # horizon, k its strength (a slope facing it lit up to .5 k in the plate's hue, one facing away darker, to .65 at k 1), col its hue
 # (the plate's colour unless written)
-# film.night_look: { deep: 0..1 }: the night city (engine: at night today's walls go dark, fewer windows burn brighter, the plate dims)
-NIGHT_LOOK = None; _nl = FM.get('night_look')
-if _nl is not None:
-    if not isinstance(_nl, dict) or set(_nl) - {'deep'} or not 0 <= float(_nl.get('deep', 1)) <= 1: raise SystemExit(f'compile: film.night_look: {{ deep: 0..1 }} (got {_nl})')
-    NIGHT_LOOK = {'deep': float(_nl.get('deep', 1))}
 SHADE_OUT = None; _sh = (C.get('terrain') or {}).get('shade')
 if _sh is not None:
     if not isinstance(_sh, dict) or set(_sh) - {'az', 'el', 'k', 'col'}: raise SystemExit(f'compile: terrain.shade: {{ az, el, k, col }} (got {_sh})')
