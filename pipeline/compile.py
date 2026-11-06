@@ -408,9 +408,14 @@ TIMING = {'ring_view': 2.8, 'ring_out': 1.6, 'min_stage': 4.0, 'min_stage_small'
           'settle_need': 2.0, 'ring_m': 1000.0, 'ring_q': .35, 'scan_w': .12, 'fade': .4, 'fall_dur': 1.4,
           'hold_after': 2.5, 'look_size': .4, 'look_secs': 3.5, 'look_focus_m': 400.0, 'look_min_n': 30,
           'ring_fit_x': .9, 'ring_fit_y': .85, 'ruins_d': .3, 'contract_in': 2.0,
-          'see_rate': .002, 'see_min': 2.0, 'see_max': 12.0,
+          'see_rate': .002, 'see_min': 2.0, 'see_max': 12.0, 'see_px': 6.0, 'see_n': 5, 'see_share': 2 / 3,
           'dead_air_s': 3.0, 'word_gap_s': 5.0, 'still_s': 20.0}   # today's buildings that come into view together rise one after another
-                                                              # over see_rate s each, see_min..see_max s in all
+                                                              # over see_rate s each, see_min..see_max s in all; a building is in view
+                                                              # (a viewer can watch it rise) when it stands see_px or more tall in the
+                                                              # 1080-line frame: smaller it is a speck that video compression and a
+                                                              # phone screen blur into the plate's grain. see_n or more rising in view
+                                                              # at once read as the city growing (one or two as single buildings), and
+                                                              # the growth is seen so for see_share of the time the counter runs
 # time the algorithm inserts into nodes (docs/STAGING.md 9e): {node id: [{tau: node seconds, delta: s, keys: [[offset s, key]], why}]};
 # compile re-runs itself with the plan until nothing more is needed
 PLAN = json.loads(os.environ.get('CT_PLAN') or '{}'); PASS = int(os.environ.get('CT_PASS') or 1)
@@ -2264,9 +2269,12 @@ if grow and grow.get('yl'):
         if said_: fault(f'the year counter runs {ya_:g} -> {yb_:g} in {tb_ - ta_:.1f} s ({(yb_ - ya_) / (tb_ - ta_):.1f} years a second, the rate is {rate_:g}) '
                         f'under {", ".join(said_)}: the modern section is a tour, a stop for each time the lines tell (docs/STAGING.md 9i)')
 # today's buildings rise when they can be seen (docs/STAGING.md 7): at the moment the counter reaches a building's year, or, if
-# the camera is not looking there then, the first moment after it that the building is in the frame (and no full-screen clip
-# covers the picture). Buildings that come into view together rise over a few seconds in the order of their years, not in one
-# burst. data/grow_t.json lists only the buildings that wait; the rest rise with the counter (the engine's tOfYear)
+# the camera is not looking there then, the first moment after it that the building is in the frame and stands see_px or more
+# tall on screen (and no full-screen clip covers the picture): a rise a viewer can watch, not a speck inside the frustum (from a
+# shot of the whole plate a building is a pixel or two; one only ever seen that small rises with the counter, unseen). The wait
+# ends with the growth: a building not seen by then has risen with the counter, so nothing grows in the scenes after it.
+# Buildings that come into view together rise over a few seconds in the order of their years, not in one burst. data/grow_t.json
+# lists only the buildings that wait; the rest rise with the counter (the engine's tOfYear)
 if grow and grow.get('yl'):
     import numpy as np
     yl_ = grow['yl']
@@ -2276,39 +2284,61 @@ if grow and grow.get('yl'):
         return 1e6
     early_ = {i_: y_ for i_, y_ in (CHANGE or {}).get('early', [])}
     reset_y = next((float(n['reset']['year']) for n in FM['nodes'] if n.get('reset')), -1e9)
-    ids_, pts_, yrs_ = [], [], []
+    ids_, pts_, yrs_, hs_ = [], [], [], []
     for i_, (bi_, h_, rings_, base_) in enumerate(_MODEL['p']):
         y_ = early_.get(i_, _MODEL['b'][bi_][0])
         if not y_ or y_ <= reset_y: continue   # (standing before the growth starts, or undated)
-        r_ = rings_[0]; ids_.append(i_); yrs_.append(y_)
+        r_ = rings_[0]; ids_.append(i_); yrs_.append(y_); hs_.append(h_)
         pts_.append((sum(q[0] for q in r_) / len(r_), (base_ or 0) + h_ * .5, sum(q[1] for q in r_) / len(r_)))
     P_ = np.array(pts_); ty_ = np.array([t_of_year(y_ - .5) for y_ in yrs_]); seen_ = np.full(len(ids_), np.nan)
-    t_end = next(n['_t0'] for n in FM['nodes'] if n['id'] == 'today') if any(n['id'] == 'today' for n in FM['nodes']) else DUR
+    Hh_ = np.outer(np.array(hs_) * .5, (0., 1., 0.))   # (half its height up and down: its foot and its top)
+    # the growth ends where today begins, or (without a today node) with the station in which the counter passes the year by which
+    # all but a hundredth of these buildings stand: the few dated after the data's last survey do not stretch it into the scenes after
+    td_ = next((n for n in FM['nodes'] if n['id'] == 'today'), None); t_q = t_of_year(float(np.percentile(yrs_, 99))) if len(yrs_) else DUR
+    t_end = td_['_t0'] if td_ else next((n['_t1'] for n in FM['nodes'] if n['_t0'] <= t_q < n['_t1']), DUR)
+    def big_(t, k_):   # which of the buildings k_ a viewer can watch rise at t: in the frame and see_px or more tall on screen
+        p_, g_, fov_, _ = CAMERA.at(t)
+        f_ = np.subtract(g_, p_); f_ /= np.linalg.norm(f_); r_ = np.array([-f_[2], 0., f_[0]]); r_ /= np.linalg.norm(r_); u_ = np.cross(r_, f_)
+        th_ = math.tan(math.radians(fov_) / 2)
+        def ndc_(Q_):
+            V_ = Q_ - p_; z_ = V_ @ f_
+            with np.errstate(divide='ignore', invalid='ignore'): return (V_ @ r_) / (z_ * th_ * stagecraft.ASPECT), (V_ @ u_) / (z_ * th_), z_
+        x_, y_, z_ = ndc_(P_[k_]); (xb_, yb_, _), (xt_, yt_, _) = ndc_(P_[k_] - Hh_[k_]), ndc_(P_[k_] + Hh_[k_])
+        px_ = np.hypot((xt_ - xb_) * 960, (yt_ - yb_) * 540)   # (its height on screen, foot to top, in pixels of the 1920 x 1080 frame)
+        return (z_ > 1e-4) & (np.abs(x_) < .92) & (np.abs(y_) < .85) & (px_ >= TIMING['see_px'])
     t = float(ty_.min()) if len(ty_) else t_end
     while t <= t_end + 1e-6 and np.isnan(seen_).any():
-        if not covered(t):
-            p_, g_, fov_, _ = CAMERA.at(t)
-            f_ = np.subtract(g_, p_); f_ /= np.linalg.norm(f_); r_ = np.array([-f_[2], 0., f_[0]]); r_ /= np.linalg.norm(r_); u_ = np.cross(r_, f_)
-            V_ = P_ - p_; z_ = V_ @ f_; th_ = math.tan(math.radians(fov_) / 2)
-            with np.errstate(divide='ignore', invalid='ignore'):
-                x_ = (V_ @ r_) / (z_ * th_ * stagecraft.ASPECT); y_ = (V_ @ u_) / (z_ * th_)
-            vis_ = (z_ > 1e-4) & (np.abs(x_) < .92) & (np.abs(y_) < .85) & np.isnan(seen_) & (ty_ <= t + .125)
-            seen_[vis_] = t
+        if not covered(t): k_ = np.where(np.isnan(seen_) & (ty_ <= t + .125))[0]; seen_[k_[big_(t, k_)]] = t
         t += .25
     late_ = ~np.isnan(seen_) & (seen_ > ty_ + .5)
-    out_ = []
+    out_ = []; rs_ = ty_.copy()   # (when each rises: its year on the counter, or when the camera comes to see it)
     for t_ in np.unique(seen_[late_]):   # those entering the frame together: oldest first, longer for more (a whole district, up to see_max)
         k_ = np.where(late_ & (seen_ == t_))[0]; k_ = k_[np.argsort(np.array(yrs_)[k_], kind='stable')]
         sp_ = min(TIMING['see_max'], max(TIMING['see_min'], TIMING['see_rate'] * len(k_)))
-        out_ += [[ids_[j_], round(float(t_) + sp_ * n_ / max(1, len(k_)), 3)] for n_, j_ in enumerate(k_)]
+        for n_, j_ in enumerate(k_): rs_[j_] = round(float(t_) + sp_ * n_ / max(1, len(k_)), 3); out_.append([ids_[j_], float(rs_[j_])])
     json.dump(out_, open(LAYOUT.data(D, 'grow_t.json'), 'w'), separators=(',', ':'))
     GROW_T = sorted(t_ for _, t_ in out_)   # (for the dead-air check: today's buildings rising as the camera finds them)
     grow['tfile'] = 'data/grow_t.json'
-    print(f'  growth: {len(ids_)} buildings rise with the counter; {len(out_)} wait until the camera sees them, '
-          f'{int(np.isnan(seen_).sum())} are never in view before the end (they rise with the counter, unseen)')
-    if int(np.isnan(seen_).sum()) > len(ids_) / 3:   # (the growth is the modern section's background: the film shows the city growing)
-        fault(f'{int(np.isnan(seen_).sum())} of the {len(ids_)} buildings that rise with the counter are never in view: the city is not seen growing '
-              '(docs/STAGING.md 9i): while the counter runs, frame where the city grows, its edge as well as its centre')
+    # what the viewer sees of it (docs/STAGING.md 9i): at each step while the counter runs (not the holds at the stations, where the
+    # year stops for the telling), the buildings rising then (the engine's rise, uGrowDur: 1.8 s) in the frame and see_px or more
+    # tall; see_n or more at once read as the city growing, one or two as single buildings. A full-screen clip shows none
+    run_ = []; t = yl_[0][0]
+    while t <= t_end + 1e-6:
+        if any(t0_ <= t < t1_ and y1_ > y0_ for (t0_, y0_), (t1_, y1_) in zip(yl_, yl_[1:])):
+            k_ = np.where((rs_ <= t) & (t < rs_ + 1.8))[0]; run_.append((t, not covered(t) and int(big_(t, k_).sum()) >= TIMING['see_n']))
+        t += .25
+    share_ = sum(s_ for _, s_ in run_) / max(1, len(run_)); st_ = []
+    for t_, s_ in run_:   # (the stretches that show it: which shots carry the growth)
+        if s_ and st_ and t_ - st_[-1][1] < .01: st_[-1][1] = t_ + .25
+        elif s_: st_.append([t_, t_ + .25])
+    print(f'  growth: {len(ids_)} buildings rise with the counter; {len(out_)} wait until the camera sees them, {int(np.isnan(seen_).sum())} are never '
+          f'seen rising by the growth\'s end at {t_end:.1f} s (never {TIMING["see_px"]:g} px tall in the frame: they rise with the counter, unseen)')
+    print(f'  growth seen: {share_:.0%} of the {len(run_) * .25:.1f} s the counter runs shows {TIMING["see_n"]:g}+ buildings rising in view, at '
+          + (', '.join(f'{a_:.1f}-{b_:.1f}' for a_, b_ in st_[:12]) + (', ...' if len(st_) > 12 else '') + ' s' if st_ else 'no moment'))
+    if run_ and share_ < TIMING['see_share']:   # (the growth is the modern section's background: the film shows the city growing)
+        fault(f'the city is seen growing {share_:.0%} of the {len(run_) * .25:.1f} s the counter runs, under {TIMING["see_share"]:.0%} (docs/STAGING.md 9i: a moment '
+              f'shows growth when {TIMING["see_n"]:g} or more buildings rise in the frame at once, each {TIMING["see_px"]:g} px tall or more): while the counter '
+              'runs, fly near where the city grows, its edge as well as its centre (a shot of the whole plate shows each building a pixel or two)')
     if not any(t_ >= grow['on'] and v_[0] >= .8 for t_, v_ in night_keys):   # (the lights grow with the city: today's city ends lit)
         fault('the modern section never comes to night (docs/STAGING.md 9i): its stations write `night:` rising with the city, to 0.8 or '
               'more by the last one, so the film comes to today\'s city with its lights on')
