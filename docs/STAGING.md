@@ -37,7 +37,10 @@ No hard cuts between nodes: do not write the next node's first camera keyframe a
    when it is replaced by the next node, it is taken back along with the next node's colour-change ring (`fall: out`, the default). **An expanding ring always runs out of the picture before it disappears:** the city's ring keeps accelerating outward after the last
    building, until the whole ring is outside the picture (compile's `stagecraft.ring_exit`: the farthest ground visible at the picture edge) and only then fades out; it must not stop and go out in the middle of the picture.
 2. **While change happens, only the ring glows.** Do not light whole plots; once the city has settled, a thin neon line lights up at its outer edge, lighting only the buildings beside the line (`era_look.line/light_m/halo_m`),
-   and this line goes out first when a change begins.
+   and this line goes out first when a change begins. The line marks the city's extent and where it meets today's city: an island of the outline that holds one building alone
+   on ground the city clears of today's buildings anyway (inside its walls or `hide` regions) gets no line and no light (compile's `edge_rings`), since round one building on
+   empty ground they read as the rim of a pit it stands in; among today's buildings the same island keeps its line, where the past stands in today's town. Today's buildings
+   still step aside there as everywhere inside the outline.
 3. **Every big node gets a clearly different colour, and everything the ring sweeps over turns into this colour, including the old city still standing.** The colours of two adjacent nodes must not be close (orange and gold cannot be told apart);
    better still if the colour has a source (after the Qin unification "上黑" (honouring black) → the imperial capital uses ink-gold: `ink`). The old city in later nodes uses that node's colour and strength (node `tint`).
 4. **Change happens only where the audience can see it.** If a beam points at the new city, wait for the beam to land before it grows; with no beam, wait until the camera has arrived. A hand-written `at` is only "the earliest":

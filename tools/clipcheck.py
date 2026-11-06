@@ -29,6 +29,9 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
                       they are more than a tenth of the era's buildings: then the plate's exaggeration is too high for this
                       ground (a slope's fall shows times the exaggeration, the building times its own); the line says the
                       highest exaggeration that would pass. Plinths (citygen PLINTH: a body's base on a slope) are not bodies here.
+Listed, not counted (the era's line and clipcheck.json; compile names them):
+  tall_platform_at    landmarks levelled on a slope whose platform (site: raised) shows over 30% of the landmark's height: a podium
+                      or a terrace as built, or a building let into the hill that writes site: cut (docs/MODEL.md, Landmarks)
 Checks on today's buildings (data/model.json):
   today floating      buildings whose base stands more than 1 m (times the plate's exaggeration) above the lowest plate point
                       under the footprint: prep.py seats each one on that point, so a count here means the model was prepared
@@ -280,6 +283,19 @@ def main():
             ok = [ex for ex in np.arange(1.0, 10.01, .5) if np.percentile(np.concatenate([ratio * (fall(ex) + .1) / now, flat0]), 90) <= FOUND_MAX]
             sug = max(ok) if ok else 1.0
         notes[e['id']] = f'foundations: top tenth {p90:.0%} of the height' + (f', within {FOUND_MAX:.0%} up to x{sug:g}' if sug else '')
+        # tall_platform_at (a list, not a fault): a landmark levelled on a slope (site: raised) stands on a platform down to the lowest
+        # ground under it (citygen lot_site, a PLINTH); one that shows over FOUND_MAX of the landmark's height above it reads as a
+        # foundation dug out and built up. Raised as it was built (a podium, a terrace) or let into the hill (site: cut) is the
+        # sources' to say, so each is listed, never counted: [building centre x, z, platform / height, platform m, height m on screen],
+        # the tallest platform of each landmark (site: parts has one a part), a metre or more of ground under a landmark 3 m tall or more
+        lk_, tp_ = {(p[15], p[16]) if len(p) > 16 else (p[1], p[2]) for p in prims if p[11] in (LMK, EARTH)}, {}   # (a landmark's bodies, an earthwork's too)
+        for p in prims:
+            k_ = (p[15], p[16]) if len(p) > 16 else (p[1], p[2])
+            if p[11] != PLINTH or p[0] != 0 or k_ not in lk_: continue
+            f_, h_ = p[12] - p[4] - SKIRT * S * tex, top[k_] - p[12]
+            if f_ >= S * tex and h_ >= 3 * S and f_ > FOUND_MAX * h_ and f_ / h_ > tp_.get(k_, (0,))[0]: tp_[k_] = (f_ / h_, f_, h_)
+        R['tall_platform_at'] = [[x_, z_, round(r_, 2), round(f_ / S, 1), round(h_ / S, 1)] for (x_, z_), (r_, f_, h_) in sorted(tp_.items(), key=lambda q: -q[1][0])]
+        if tp_: notes[e['id']] += f'; {len(tp_)} landmark(s) on a platform over {FOUND_MAX:.0%} of their height (tall_platform_at)'
         xb_ = body((FAB, LMK, WALL, EARTH))
         def wall_ends(p):   # a wall piece's two ends (a thin long piece of a city's or a court's wall), else None
             if p[11] not in (WALL, LMK) or min(p[5], p[6]) > 8 * S or max(p[5], p[6]) < 3 * min(p[5], p[6]): return None

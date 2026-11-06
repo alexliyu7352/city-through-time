@@ -100,8 +100,12 @@ The generator's own landmark kinds (`hall`, `terrace`, `palace`, `pagoda`, `cour
 the node's `city.landmarks` with its sizes in metres from the research (`pipeline/landmarks.py`); the classes reach the monuments of most traditions, so a city never needs code of its own.
 A building that stands in several periods or several places (a temple kept through three stations, a type of insula block) is written once in city.yaml's `landmark_types` (name -> the
 landmark without its place, or files holding such a mapping or `{landmarks: [{name, ..}]}`); each copy is `{template: <name>, lon, lat, ..}` with what differs, a traced one too. On a slope a landmark is levelled at the highest ground under it with a
-platform below, as a monument stands; a small building let into the hill (a hut, a house on a hillside) writes `site: cut`: levelled half-way, cut on the uphill side and filled on the
-downhill, so it does not stand on a podium half its own height (today's ground and the terrain's exaggeration make every slope steeper than the ancient one). A
+platform below (`site: raised`, the default); `site: cut` levels it half-way, cut on the uphill side and filled on the downhill, its walls reaching down to the ground with no
+platform. **Choose the site from how the building was built, not from its size:** builders who cut into the hillside and filled the slope below (a basilica laid across a hill, a
+hut, a house on a hillside) give `cut`, however large the building; a temple raised on its podium or a palace on a built terrace is `raised` (the podium or terrace itself is
+written as part of the landmark where the sources give it). On a slope a building follows the ground: a platform the sources do not give reads as a foundation dug out and built
+up, and today's ground and the terrain's exaggeration make every slope steeper than the ancient one, so a raised landmark stands on a taller platform than it ever had. clipcheck
+lists each landmark whose platform shows over 30% of its height (`tall_platform_at`; compile prints them by name, a list, not a fault): decide each from the sources. A
 `kind: parts` landmark of separate buildings joined in a chain or a group (a housing estate's blocks, a row of linked pavilions, a stadium's stands and the buildings at its
 ends) writes `site: parts`: each part is levelled on its own ground as a landmark of its own, raised or cut as the part's own `site` says (a part `atop` another on that one's;
 a ring part, a stadium's oval, never stands on a square plate: raised, its walls reach down to the ground),
@@ -297,7 +301,7 @@ small relief below 150 m keeps its original height (×1). Copernicus GLO-30 is a
 exaggerating them by the large-terrain factor (for example ×6) makes 4 m of relief 24 m on screen, much taller than a 5 m dwelling, and the ancient city looks as if built on a heap of rubble. The true terrain is stored separately as `terrain_true16.png`;
 take from it anything that prints metres (sections). After changing, rerun `pipeline/terrain.py` and `pipeline/prep.py`, then compile.
 The two scales have a cost: steep scarps narrower than `below_m` (plateau edges, river banks) are flattened too, so the drop drawn at the foot of a landmark on a slope gets larger; changing `below_m` only moves the problem to another city.
-After the change, look at clipcheck's `tall_foundation`, then take a close-up still of the landmarks on slopes (`tools/modelview.py`).
+After the change, look at clipcheck's `tall_foundation` and the landmarks it lists in `tall_platform_at`, then take a close-up still of the landmarks on slopes (`tools/modelview.py`).
 **Hills on the plate:** the plate is dark and the room light is high, so a hill reads only where light rakes across it; when the story stands on hills (the list below is not empty), write
 `terrain.shade: { k: 1 }`: one fixed low sun (default `az: 325, el: 25`, from the north-west; the room light turns with the camera, this sun stays put): a slope turned to it is lit in the plate's own hue
 (a steel blue on a dark blue plate), a slope turned away darker, flat ground and water keep the plate's colour. Never a white light: white added on the dark plate read as snow lying on the hills.

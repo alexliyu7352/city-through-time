@@ -292,6 +292,26 @@ def era_boundary(prims, cs):
     polys = [q for q in getattr(g, 'geoms', [g]) if q.area >= (cs.get('boundary_min_m', 140) * S) ** 2]
     return [[[round(x, 5), round(z, 5)] for x, z in q.simplify(8 * S).exterior.coords] for q in polys]
 
+def hide_rings(cs):
+    """the ground a period city clears of today's buildings beyond its own outline: inside its walls and its hide regions (lon/lat rings)"""
+    return [w['ring'] for w in cs.get('walls', []) if 'ring' in w] + cs.get('hide', [])
+
+def edge_rings(bnd, prims, cs):
+    """the rings of the period city's outline its edge is drawn on (the neon line and the light along it, edge_sdf): every ring
+    but an island that holds one building alone (a basilica outside the walls, with its forecourt) on ground the city clears of
+    today's buildings anyway (hide_rings: a centre shown bare). Such a ring marks neither the city's extent nor where the city
+    meets today's, and its line and light round one building on empty ground read as the rim of a pit the building stands in;
+    among today's buildings the same ring keeps its edge, the line between the past and the present round it (a row of tombs
+    in today's town). A city that is only such islands keeps them all. The hide mask, the locator and the footprints take every ring"""
+    import numpy as _np, shapely as _sh
+    if len(bnd) < 2 or not hide_rings(cs): return bnd
+    clear = _sh.union_all([_sh.make_valid(_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in r])) for r in hide_rings(cs)])
+    body = [p for p in prims if p[4] <= p[12] + 1e-9 and p[11] not in (4, 5, 7)]   # (the bodies era_boundary grows the outline from)
+    X, Z = _np.array([p[1] for p in body]), _np.array([p[2] for p in body]); K = [(p[15], p[16]) if len(p) > 16 else (p[1], p[2]) for p in body]
+    def lone(r):   # one building's centre in it (a landmark of parts is one), lying mostly on the cleared ground
+        q = _sh.Polygon(r); return len({K[i] for i in _np.nonzero(_sh.contains_xy(q, X, Z))[0]}) == 1 and q.intersection(clear).area > .5 * q.area
+    return [r for r in bnd if not lone(r)] or bnd
+
 EW = 1024   # edge distance fields: one era per channel, each over its own crop of the plate (edge.png, edge2.png)
 HIDE_BY, EDGE_BY, KEEP_BY = {}, {}, {}   # per era: where today's buildings step aside (hide_layer), the distance field to its outline (edge_sdf)
 SLOTS, SLOTS_MAX = 8, 12   # channels of hide.png / hide2.png and edge.png / edge2.png (engine/studio.js); cities apart in time share one; a film with
@@ -387,7 +407,7 @@ def hide_layer(prims, cs, bnd=()):
     except Exception as ex:
         print('hide: today-overlap pass skipped', ex)
     reg = Image.new('L', (HW, HH), 0); dg = ImageDraw.Draw(reg)
-    for r in [w['ring'] for w in cs.get('walls', []) if 'ring' in w] + cs.get('hide', []): dg.polygon([U_(*F.model_lonlat(lon, lat)) for lon, lat in r], fill=255)
+    for r in hide_rings(cs): dg.polygon([U_(*F.model_lonlat(lon, lat)) for lon, lat in r], fill=255)
     for r in bnd: dg.polygon([U_(x, z) for x, z in r], fill=255)
     val = _np.asarray(im).astype(_np.float32); region = (_np.asarray(reg) > 0) | (val > 0)
     region = _np.asarray(Image.fromarray(region.astype(_np.uint8) * 255).filter(ImageFilter.MaxFilter(3))) > 0   # one pixel of margin: a building whose centre sits on the edge
@@ -1566,7 +1586,7 @@ for i, node in enumerate(FM['nodes']):
         night_keys.append([node['_t0'], [v0_]]); night_keys.append([round(node['_t0'] + ez_, 3), [v1_]])
     if 'city' in node:                     # a whole period city (generated at the top of the node: gen_city)
         cs = node['city']; prims, meta_ = PRIMS[node['id']], CITY_META[node['id']]
-        bnd = era_boundary(prims, cs)
+        bnd = era_boundary(prims, cs); ebnd = edge_rings(bnd, prims, cs)   # (the outline; the rings its edge is drawn on)
         def at_of(v, _n=node):
             """an explicit era or stage start: node seconds or {after: route} (when the beam lands)"""
             if isinstance(v, dict) and 'after' in v:
@@ -1580,12 +1600,12 @@ for i, node in enumerate(FM['nodes']):
              'off': T(cs['off_at']) if 'off_at' in cs else (None if cs.get('persist') else T('end'))}
         if 'until' in cs: e['off'] = ('t0', next(x for x in FM['nodes'] if x['id'] == cs['until']), float(cs.get('until_plus', 0)))
         if e['sinkStyle'] == 'burn': e['burn'] = cs.get('burn', 3.0)
-        e['boundary'] = bnd
+        e['boundary'] = ebnd   # (the engine's neon line)
         e['outline'] = [[[round(x / F.size[0] + .5, 4), round(z / F.size[1] + .5, 4)] for x, z in r] for r in bnd]   # the locator's frame (plate uv)
         if 'reuse' in cs: e['reuse'] = cs['reuse']
         e['hide'] = None   # its channel (where today's buildings step aside, its front and its edge are lit): given once the timing is known (era_slots)
-        e['_pend'] = {'cs': cs, 'node': node, 'prims': prims, 'meta': meta_, 'at_of': at_of, 'bnd': bnd}
-        eras_out.append(e); print(f'  city {node["id"]}: {len(prims)} primitives')
+        e['_pend'] = {'cs': cs, 'node': node, 'prims': prims, 'meta': meta_, 'at_of': at_of, 'bnd': bnd, 'ebnd': ebnd}
+        eras_out.append(e); print(f'  city {node["id"]}: {len(prims)} primitives' + (f'; its edge leaves out {len(bnd) - len(ebnd)} island(s) of one building on cleared ground (edge_rings)' if len(ebnd) < len(bnd) else ''))
     for rt in node.get('routes', []):      # a light path: a move, a shift, a distance (lon/lat points; each hop arcs up by `arc` x its length)
         ll = rt['pts'] if 'pts' in rt else [rt['from'], rt['to']]
         P3, pts3 = route_pts3(rt)
@@ -1639,7 +1659,7 @@ for i, node in enumerate(FM['nodes']):
                 if not rings_: continue
                 era_e = next((e for e in eras_out if e['id'] == nd['id']), None)
                 mask_ = FOOT.get(nd['id'])
-                bnd_ = [[[(x / F.size[0] + .5), (z / F.size[1] + .5)] for x, z in r] for r in era_e['boundary']] if era_e and era_e.get('boundary') else None
+                bnd_ = [[[(x / F.size[0] + .5), (z / F.size[1] + .5)] for x, z in r] for r in era_e['_pend']['bnd']] if era_e and era_e['_pend']['bnd'] else None   # (every ring, its edge's or not)
                 dc['eras'].append({'col': dc.get('palette', {}).get(nd['id'], nd.get('col', '#ffffff')), 'rings': rings_, 'mask': None if bnd_ else mask_, 'uv_rings': bnd_})
                 if dc.get('labels', True):
                     lon_ = sum(p_[0] for p_ in rings_[0]) / len(rings_[0]); lat_ = max(p_[1] for r_ in rings_ for p_ in r_)
@@ -1912,7 +1932,7 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
         if tf_ is None or FM['nodes'].index(tf_) < FM['nodes'].index(node):   # (its own node: a city of the present day, which today's city never steps back for)
             raise SystemExit(f"compile: era {e['id']}: today_from {cs['today_from']!r}: this node's id or a later one's (from it, today's city comes back round what of this city still stands)")
         KEEP_BY[e['id']] = keep_layer(prims, LOST.get(e['id']), cs_); e['todayFrom'] = round(tf_['_t0'], 3)
-    ED = float(FM.get('era_look', {}).get('edge_m', 150)) * F.scale; img_, rect_ = edge_sdf(pd['bnd'], ED); EDGE_BY[e['id']] = img_; e['edgeRect'] = rect_; e['edgeD'] = round(ED, 6)
+    ED = float(FM.get('era_look', {}).get('edge_m', 150)) * F.scale; img_, rect_ = edge_sdf(pd['ebnd'], ED); EDGE_BY[e['id']] = img_; e['edgeRect'] = rect_; e['edgeD'] = round(ED, 6)
 for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's colour ring, sent when its change starts (docs/STAGING.md 1)
     imp = IMPACT.get(node['id']); era_ = next((e for e in eras_out if e['id'] == node['id']), None)
     grows_ = bool(era_ and era_.get('fronts')); f0_ = min(era_['fronts'], key=lambda f_: f_['curve'][0][0]) if grows_ else None
@@ -2902,6 +2922,22 @@ for p in pins:
         print(f'  warning: pin {p["id"]}: its dot stands {_above[p["id"]]:g} m above anything under it, {g_:.0f} px off it at {t_:.1f} s: '
               f'look at it there (on what it names? docs/STAGING.md 9h)')
 json.dump(_pins_off, open(LAYOUT.logs(D, 'pins_off.json'), 'w', encoding='utf-8'), indent=1)
+# a landmark levelled on a slope (site: raised) stands on a platform down to the lowest ground under it; clipcheck lists those whose
+# platform shows over 30 % of the landmark's height (tall_platform_at), named here by the landmark each building centre belongs to.
+# A list, not a fault: a podium or a terrace as built stays raised, a building its builders let into the hill writes site: cut
+# (docs/MODEL.md, Landmarks), which the sources say, not the measure
+try: _plat = json.load(open(LAYOUT.logs(D, 'clipcheck.json'), encoding='utf-8'))
+except (OSError, ValueError): _plat = {}
+for e in eras_out:
+    pl_ = (_plat.get(e['id']) or {}).get('tall_platform_at') or []
+    if not pl_: continue
+    lm_ = next(n_ for n_ in FM['nodes'] if n_['id'] == e['id'])['city'].get('landmarks') or []; who_ = {}
+    for p_, m_ in zip(PRIMS[e['id']], CITY_META[e['id']]):
+        if m_[1][0] == 'landmarks' and len(p_) > 16 and m_[1][1] < len(lm_):
+            L_ = lm_[m_[1][1]]; who_.setdefault((p_[15], p_[16]), L_.get('id') or L_.get('template') or f"{L_.get('kind')} #{m_[1][1]}")
+    print(f'  landmarks on a platform over 30% of their height (raised as built, or let into the hill: site: cut? docs/MODEL.md, Landmarks) in {e["id"]}: '
+          + ', '.join(f'{who_.get((x_, z_), f"at {x_:.4f},{z_:.4f}")} {r_:.0%} ({f_:g} m under {h_:g} m)' for x_, z_, r_, f_, h_ in sorted(pl_, key=lambda q_: -q_[2])[:8])
+          + (f' and {len(pl_) - 8} more (logs/clipcheck.json)' if len(pl_) > 8 else ''))   # (the tallest first; a city of many slopes would fill the log)
 # living moments: one at a time, never with another picture (footage, a panel, a card); each needs its picture, made from its own shot
 _lw = sorted([(x_['on'] - x_['arrive'], x_['on'] + x_['reveal'] + x_['hold'] + x_['out'] + x_['back'], x_['id']) for x_ in living_out])
 for (a0_, a1_, ai_), (b0_, b1_, bi_) in zip(_lw, _lw[1:]):
