@@ -1759,7 +1759,7 @@ for i, c in enumerate(cues):
 # a sentence read in one take is not broken by a wait (docs/SOUND.md "takes"): when a line that runs on from the line before it in its
 # take (that line ends inside a sentence) waits for its picture, the silence falls in the middle of the words. The picture waits
 # before the sentence instead (with: on its first line, or the shot sooner). A {pause: s} written between the two is meant.
-_said = {ln['id']: tx(ln.get(VOICE_LANG)) or '' for ln in SCR.get('prologue') or []}
+_said = {ln['id']: tx(ln.get(VOICE_LANG)) or '' for ln in (SCR or {}).get('prologue') or []}   # (no script: a model study)
 _meant = set()
 for nd_ in FM['nodes']:
     cl_ = nd_.get('cues', [])
