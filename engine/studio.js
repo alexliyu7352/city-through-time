@@ -552,6 +552,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    float gold = p2 < .5 ? .05 : p2 < 3.5 ? .7 : p2 < 6.5 ? 0. : p2 < 7.5 ? .35 : p2 < 8.5 ? .12 : p2 < 9.5 ? .8 : .25;
    outgoingLight += ec2 * gold * ik2 * (.35 + .65 * max(normalize(vWN).y, 0.)) * .55 * uProj * (1. - eraBurnK()); }
  if (vData.w > 2.5) outgoingLight += diffuseColor.rgb * uEraCol * uEraGlow * .2 * uProj * (1. - eraBurnK()) * vUp * keyK(normalize(vWN));   // the period city glows a little (it is the subject), more on the faces the key light finds
+ if (vData.w > 2.5 && uNightDeep * uNight > 0.) { float ndE_ = uNightDeep * uNight, lE_ = dot(outgoingLight, vec3(.2126, .7152, .0722));   // the night city: what of the past stands in today's town (today_from)
+   outgoingLight = mix(outgoingLight, vec3(lE_), min(1., 1.6 * ndE_)) * (1. - .85 * ndE_) * mix(vec3(1.), vec3(.72, .84, 1.08), min(1., 1.6 * ndE_)); }   // goes into the night with it: its period colour and glow put out, dark as today's walls (lilac palaces and gold ruins floated in the lit city)
  if (uNight > 0. && vData.w > -.5 && vData.w < .5) {   // night: lit windows on the facades of today's buildings, roofs dark
    vec3 Nn = normalize(vWN); float fl = (vWP.y - vBase) / (uScaleH * 3.2);           // floors of 3.2 m
    float nd_ = uNightDeep * uNight; vec3 dusk_ = mix(vec3(1.), vec3(.72, .84, 1.08), min(1., 1.6 * nd_));   // the deep night falls blue (the hour after sunset), not grey
