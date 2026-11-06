@@ -1753,8 +1753,8 @@ cues.sort(key=lambda c: c['t0'])
 for i, c in enumerate(cues):
     h = c['say']; nxt = cues[i + 1]['t0'] if i + 1 < len(cues) else end_t
     c['t1'] = round(min(c['t0'] + max(h, hold(c['a']), hold(c['b'])) + c['extra'], nxt - 0.08), 3)
-    on_ = i + 1 < len(cues) and joins(c['id'], cues[i + 1]['id'])   # (the next line goes straight on in its take: the blank between the two subtitles falls in the take's own pause)
-    if c['t1'] < c['t0'] + h - (0.08 if on_ else 0) - 1e-6: print(f'warning: cue {c["id"]} at {c["t0"]:.2f}s needs {h:.1f}s but has {c["t1"] - c["t0"]:.1f}s: give its node more seconds', file=sys.stderr)
+    on_ = i + 1 < len(cues) and joins(c['id'], cues[i + 1]['id'])   # (the next line goes straight on in its take: the blank between the two subtitles falls in the take's own pause); t0, say and the next t0 are each rounded to the millisecond
+    if c['t1'] < c['t0'] + h - (0.08 if on_ else 0) - .002: print(f'warning: cue {c["id"]} at {c["t0"]:.2f}s needs {h:.1f}s but has {c["t1"] - c["t0"]:.1f}s: give its node more seconds', file=sys.stderr)
     c.pop('extra', None)
 # camera: opening keys, then the nodes' keys; a node without keys drifts gently from the previous key
 op_keys = [[PD + float(k['t']), camv(k)] for k in OP.get('camera', [])] + [[float(k['t']), camv(k)] for k in (PRO.get('camera', []) if PRO else [])]
