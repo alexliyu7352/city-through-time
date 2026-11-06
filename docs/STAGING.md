@@ -228,7 +228,10 @@ dissolves back to the model, and the camera goes on. It shows what the plate can
 - **The picture follows the sources:** write the scene card `research/living/<id>.yaml` (`place`, `when`, `picture`: what the moment shows, each detail from the sources; `avoid`: what the sources rule out,
   later or modern things; `sources`: the notes and FACTS lines). Then compile (`CT_LIVING=warn` while there is no picture), `uv run python -I tools/living.py ref cities/<slug> <id>` (the shot as a still and
   the prompt), `gen` (the Codex CLI edits the still; with another image tool, give it the still and the prompt, save the answer as `assets/living/<id>.png`, then `adopt`), and look at the `sheet`:
-  the picture's buildings, walls and streets must sit on the model's (an image tool that drew another view: make it again), and nothing in it may contradict the card; and no colour of the model may carry over into it (a landmark tinted in the film came back as a lilac dome: the prompt says the model's colours are not the place's, and the sheet is checked for it). Ask the user which image tool they
+  the picture's buildings, walls and streets must sit on the model's (an image tool that drew another view: make it again), and nothing in it may contradict the card; and no colour of the model may carry over into it (a landmark tinted in the film came back as a lilac dome: the prompt says the model's colours are not the place's, and the sheet is checked for it).
+  Where the still shows bare ground round the subject (no building of that moment stands there in the model, or the shot hides them), the card's `picture` names what really stood there: the image tool
+  fills bare ground by guessing, and guessed open farmland round a church inside a city, or a river lapping at a square that stands high above it behind embankment walls, tells the viewer something false.
+  The people the moment is about must read at the size the film shows them: when they are a few pixels tall, bring the shot closer, not the people bigger. Ask the user which image tool they
   have, as for imagined pictures (SCRIPT.md "Pictures").
 - **A picture belongs to its shot and its model:** compile stops when the shot changed after the picture was made; after a change to the model or the terrain, `tools/living.py check` tells which
   pictures no longer fit (CHECKS.md).

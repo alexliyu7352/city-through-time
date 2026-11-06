@@ -1110,6 +1110,14 @@ def voice_len(lid):
         break
     _VOICE[lid] = v_; return v_
 VOICE_TAIL = .3   # after the voice ends, before the next line may start
+# lines read as one take (audio/voicecut.py writes build/audio/voice/<language>/takes.json {id: [take, start s, end s]}): a line
+# that starts where the line before it in its take ends goes straight on after it, the take's own pause between them (no tail,
+# no gap): a sentence the subtitles split over two lines is heard as one
+_TAKES_F = os.path.join(VOICE_DIR, 'takes.json')
+_TAKES = json.load(open(_TAKES_F)) if os.path.exists(_TAKES_F) else {}
+def joins(a_id, b_id):
+    a_, b_ = _TAKES.get(a_id), _TAKES.get(b_id)
+    return bool(a_ and b_ and a_[0] == b_[0] and abs(a_[2] - b_[1]) < 1e-3 and voice_len(a_id) and voice_len(b_id))
 def spoken(ln):
     """how long a line of narration takes: its voice once recorded, else its text in the voiced language at that language's
     speaking rate (i18n speak); the subtitles follow it and never hold it"""
@@ -1128,17 +1136,19 @@ def schedule_lines(node, dur):
     arrive_ = node_time(node, 0)   # (after a tour's flight or a beam's approach: inserted before the node's own second 0)
     for _it in range(80):
         prev_end, out_, pauses_, fix_ = arrive_, {}, [], None
-        for ln in node.get('cues', []):
+        cl_ = node.get('cues', [])
+        for i_, ln in enumerate(cl_):
             if 'pause' in ln:
                 pauses_.append((prev_end, prev_end + float(ln['pause']))); prev_end += float(ln['pause']); continue
-            need_ = spoken(ln) + VOICE_TAIL
+            on_ = i_ + 1 < len(cl_) and 'id' in cl_[i_ + 1] and joins(ln['id'], cl_[i_ + 1]['id'])   # (the next line goes straight on in the take)
+            need_ = spoken(ln) + (0 if on_ else VOICE_TAIL)
             if 'with' in ln: early_, tau_ = line_anchor(node, ln)
             elif isinstance(ln.get('t'), (int, float)): early_, tau_ = node_time(node, float(ln['t'])), float(ln['t'])
             else: early_, tau_ = (prev_end if out_ else arrive_ + LINE_FIRST), None   # (a node's first line: a breath after it arrives)
             go_ = max(early_, prev_end, arrive_)
             if tau_ is not None and go_ > early_ + .05:   # the words before run long: the picture this line waits for waits too
                 fix_ = (round(tau_ - 1e-3, 4), math.ceil((go_ - early_) * 100) / 100); break
-            out_[ln['id']] = (round(go_, 3), round(go_ + need_, 3)); prev_end = go_ + need_ + LINE_GAP
+            out_[ln['id']] = (round(go_, 3), round(go_ + need_, 3)); prev_end = go_ + need_ + (0 if on_ else LINE_GAP)
         if fix_ is None:
             end_ = node['_t0'] + dur * node.get('_k', 1.0) + sum(q['delta'] for q in node['_ins'])
             if prev_end + .15 > end_ + .01: fix_ = (round(dur - 1e-3, 4), math.ceil((prev_end + .15 - end_) * 100) / 100)   # the last line: the node runs on
@@ -2415,12 +2425,13 @@ if op_cue:
     cues.insert(0, {'id': op_cue.get('id', 'opening'), 'node': None, 'later': False, 't0': t0, 'say': round(say_, 3), 't1': round(min(t0 + max(say_, hold(a), hold(b)) + .4, cues[0]['t0'] - .08 if cues else light['lamp']), 3), 'a': a, 'b': b})
 if PRO:   # the prologue's lines: each at its t or after the one before has been said, all said before the prologue's closing black
     _pc, _t = [], .5
-    for ln in SCR['prologue']:
+    for i_, ln in enumerate(SCR['prologue']):
         a, b = ab(ln); t0 = float(ln['t']) if 't' in ln else _t
         if _pc and t0 < _pc[-1]['t1'] - .4: raise SystemExit(f"compile: prologue line {ln['id']} at {t0:.1f} s starts before the line before it has been said")
         say_ = spoken(ln); t1 = round(t0 + say_ + .4, 3)
         if t1 > PD - float(PRO.get('fade', .8)) + 1e-6: raise SystemExit(f"compile: prologue line {ln['id']} ends at {t1:.1f} s, inside the prologue's closing black: lengthen film.prologue.dur or shorten the line")
-        _pc.append({'id': ln['id'], 'node': None, 'later': False, 't0': round(t0, 3), 't1': t1, 'a': a, 'b': b, 'say': round(say_, 3)}); _t = t1 - .4 + LINE_GAP
+        _pc.append({'id': ln['id'], 'node': None, 'later': False, 't0': round(t0, 3), 't1': t1, 'a': a, 'b': b, 'say': round(say_, 3)})
+        _t = t1 - .4 + (0 if i_ + 1 < len(SCR['prologue']) and joins(ln['id'], SCR['prologue'][i_ + 1]['id']) else LINE_GAP)
     for i_, c_ in enumerate(_pc):   # on to be read while the next line or the closing black leaves room
         room_ = _pc[i_ + 1]['t0'] - .08 if i_ + 1 < len(_pc) else PD - float(PRO.get('fade', .8))
         c_['t1'] = round(max(c_['t1'], min(c_['t0'] + max(hold(c_['a']), hold(c_['b'])) + .4, room_)), 3)
