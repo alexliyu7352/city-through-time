@@ -6,7 +6,8 @@ the take's start or end (trimming eats first words).
 
     python -I audio/voicecut.py --takes <dir of <take>.wav> --lines <tsv> --out <city>/build/audio/voice/<lang>
 
-<tsv>: a header, then take, line id, the line's words as said (numbers in words, as the voice text has them), in film order.
+<tsv>: a header, then take, line id, the line's words as said (numbers in words, as the voice text has them), in film order;
+only the takes given are cut, so a take made again is cut alone (--only <take> ...) and takes.json keeps the others.
 Writes <out>/<line id>.flac and <out>/takes.json {line id: [take, start s, end s]}: compile lays a line that starts where the
 line before it in the same take ends straight after it (no gap of its own), and keeps its usual gaps between takes.
 Prints the words the aligner found least sure of (a misread, a skipped or an added word shows there): listen to those first.
@@ -58,6 +59,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--takes', required=True); ap.add_argument('--lines', required=True); ap.add_argument('--out', required=True)
     ap.add_argument('--worst', type=int, default=6, help='the least sure words listed per take')
+    ap.add_argument('--only', nargs='*', help='cut only these takes (one made again)')
     A = ap.parse_args()
     import torch, torchaudio
     from torchaudio.pipelines import MMS_FA
@@ -66,9 +68,10 @@ def main():
     takes = {}
     with open(A.lines, encoding='utf-8') as f:
         for row in list(csv.reader(f, delimiter='\t'))[1:]:
-            takes.setdefault(row[0], []).append((row[1], row[2]))
+            if not A.only or row[0] in A.only: takes.setdefault(row[0], []).append((row[1], row[2]))
     os.makedirs(A.out, exist_ok=True)
-    index, report = {}, []
+    TJ = os.path.join(A.out, 'takes.json')
+    index, report = (json.load(open(TJ)) if os.path.exists(TJ) else {}), []   # (a take made again is cut alone: the other lines keep their entries)
     for take, lines in takes.items():
         x, sr = sf.read(os.path.join(A.takes, take + '.wav'), dtype='float32')
         x = x.mean(1) if x.ndim > 1 else x
@@ -94,7 +97,7 @@ def main():
         worst = sorted((k for k in range(len(words)) if words[k] not in NUMBER_WORDS), key=lambda k: wt[k][2])[:A.worst]
         print(f'{take}: {len(x) / sr:.1f} s, {len(lines)} lines, {len(words)} words, least sure: '
               + ', '.join(f'{words[k]} {wt[k][0]:.1f}s ({wt[k][2]:.2f})' for k in worst), flush=True)
-    json.dump(index, open(os.path.join(A.out, 'takes.json'), 'w'), indent=0)
+    json.dump(index, open(TJ, 'w'), indent=0)
     r = sorted(q[3] for q in report)
     print(f'{len(report)} lines cut; words a second (first word to last) median {r[len(r) // 2]:.2f}, slowest '
           + ', '.join(f'{q[1]} {q[3]:.2f}' for q in sorted(report, key=lambda q: q[3])[:3]) + ', fastest '
