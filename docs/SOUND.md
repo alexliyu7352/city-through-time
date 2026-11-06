@@ -52,14 +52,13 @@ has weights of 3 GB, no login, 2 GB of memory; the standard weights need 15 GB o
 measure the usage and time, and change the default only once it runs.
 Xianyang: Stable Audio 3 Medium generated locally, 11 sections. Songs on the internet are copyrighted and are not used; use only music you generated yourself, CC or public domain.
 **Music chosen from a library** (when the user picks existing recordings over generating): the same research (`research/music.md`), sections and laying rules as above; what changes is how each piece is found and cleared.
-- Licence, both layers (the composition and the recording: a public-domain work, Palestrina or a Gregorian chant, in someone's recording is under that recording's licence). Best is public domain, CC0, CC BY or CC BY-SA:
-  the film then stays wholly under its own CC BY-SA. A royalty-free or non-commercial licence is usable too, as an exception like a voice under a service's terms: the film may use the track, but the track is not
-  open, so `LICENSE-CONTENT.md` and `CREDITS` name it as outside the film's CC BY-SA (whoever reuses the film commercially replaces it), and its file never goes into the public repository on its own.
-  Such a licence must allow the track in a video published online on more than one site, and must allow the web version, which sends the score as an audio file of its own (some royalty-free terms forbid offering a track
-  "on a standalone basis": read that clause). Out: ND (a film score is an adaptation), a licence bound to one platform ("free for YouTube", a platform's own audio library), and a track with no licence on its own page.
+- Licence: how closely to read it follows what the user says the film is for (ask whether it will earn money). For a film that earns nothing, the licence named on the track's own page is enough:
+  free to use in a video (public domain, CC, royalty-free or similar), credited as it asks; a track whose rights holder objects is taken down and replaced. Prefer public domain and CC when they serve as well
+  (the film then stays wholly under its CC BY-SA); any other licence is named in `LICENSE-CONTENT.md` and `CREDITS` as an exception, like a voice under a service's terms. Not used: commercial songs and
+  soundtracks, and tracks with no licence on their page. A film that earns money reads every licence in full (commercial use, the web version's separate score file, one-platform terms).
 - Where to look: Wikimedia Commons, Musopen, the Internet Archive, the Free Music Archive, ccMixter, royalty-free libraries such as Pixabay Music, and similar, judging every track by its own page, never by the site (one site carries all licences). Write for each piece in `MUSIC.md`:
-  title, composer, performer, page URL, licence of the work and of the recording, the date checked, and the file's sha256; its credit line goes into `CREDITS` and the end card as the licence asks.
-- Order: narrow by licence first (no listening time spent on what cannot be used), then by the period and the section's emotion from the research, then by the cut: the piece must carry the section's length (or loop cleanly) and have a start that lands on a hit.
+  title, composer, performer, page URL, the licence the page names, the date, and the file's sha256; its credit line goes into `CREDITS` and the end card as the licence asks.
+- Order: the licence first (no listening time spent on what cannot be used), then the period and the section's emotion from the research, then by the cut: the piece must carry the section's length (or loop cleanly) and have a start that lands on a hit.
   Recordings with audience noise, a bad tape hiss or a speaking voice are left out (the narration is the only voice).
 - Lay it as a take: convert to 48 kHz WAV as `build/audio/music/cand/<cue id>_<take>.wav` (the file comes back from its URL, so `build/` may lose it); the measures of generated candidates (silence, gaps, loudness) apply,
   and the user hears two or three candidates per section before one is laid.
