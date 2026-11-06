@@ -2326,15 +2326,15 @@ if grow and grow.get('yl'):
         x_, y_, z_ = ndc_(P_[k_]); (xb_, yb_, _), (xt_, yt_, _) = ndc_(P_[k_] - Hh_[k_]), ndc_(P_[k_] + Hh_[k_])
         px_ = np.hypot((xt_ - xb_) * 960, (yt_ - yb_) * 540)   # (its height on screen, foot to top, in pixels of the 1920 x 1080 frame)
         return (z_ > 1e-4) & (np.abs(x_) < .92) & (np.abs(y_) < .85) & (px_ >= TIMING['see_px'])
-    t = float(ty_.min()) if len(ty_) else t_end
-    while t <= t_end + 1e-6 and np.isnan(seen_).any():
+    t = float(ty_.min()) if len(ty_) else t_end; rise_ = 1.8   # (the engine's rise, uGrowDur: a building seen later than rise_ before the growth's end could not finish rising in it)
+    while t <= t_end - rise_ + 1e-6 and np.isnan(seen_).any():
         if not covered(t): k_ = np.where(np.isnan(seen_) & (ty_ <= t + .125))[0]; seen_[k_[big_(t, k_)]] = t
         t += .25
     late_ = ~np.isnan(seen_) & (seen_ > ty_ + .5)
     out_ = []; rs_ = ty_.copy()   # (when each rises: its year on the counter, or when the camera comes to see it)
     for t_ in np.unique(seen_[late_]):   # those entering the frame together: oldest first, longer for more (a whole district, up to see_max)
         k_ = np.where(late_ & (seen_ == t_))[0]; k_ = k_[np.argsort(np.array(yrs_)[k_], kind='stable')]
-        sp_ = min(TIMING['see_max'], max(TIMING['see_min'], TIMING['see_rate'] * len(k_)))
+        sp_ = min(TIMING['see_max'], max(TIMING['see_min'], TIMING['see_rate'] * len(k_)), t_end - rise_ - float(t_))   # (the last of a batch done rising by the growth's end)
         for n_, j_ in enumerate(k_): rs_[j_] = round(float(t_) + sp_ * n_ / max(1, len(k_)), 3); out_.append([ids_[j_], float(rs_[j_])])
     json.dump(out_, open(LAYOUT.data(D, 'grow_t.json'), 'w'), separators=(',', ':'))
     GROW_T = sorted(t_ for _, t_ in out_)   # (for the dead-air check: today's buildings rising as the camera finds them)
@@ -2345,7 +2345,7 @@ if grow and grow.get('yl'):
     run_ = []; t = yl_[0][0]
     while t <= t_end + 1e-6:
         if any(t0_ <= t < t1_ and y1_ > y0_ for (t0_, y0_), (t1_, y1_) in zip(yl_, yl_[1:])):
-            k_ = np.where((rs_ <= t) & (t < rs_ + 1.8))[0]; run_.append((t, not covered(t) and int(big_(t, k_).sum()) >= TIMING['see_n']))
+            k_ = np.where((rs_ <= t) & (t < rs_ + rise_))[0]; run_.append((t, not covered(t) and int(big_(t, k_).sum()) >= TIMING['see_n']))
         t += .25
     share_ = sum(s_ for _, s_ in run_) / max(1, len(run_)); st_ = []
     for t_, s_ in run_:   # (the stretches that show it: which shots carry the growth)
