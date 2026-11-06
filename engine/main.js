@@ -246,6 +246,8 @@ for (const L of FREE ? [] : FILM.lines || []) {
   }
   lineA[L.id] = S.addLines(L.id, pls, L.col, L.width || .0015, L.flow || 0, L.screen ? 3 : 1);
 }
+// the night city's streets: under the deep night today's main roads burn warm, the lines a city's lights draw seen from above (windows alone read as a grain)
+const NROADS = !FREE && FILM.night_look && FILM.night_look.deep && (LN.roads || []).length ? S.addLines('_night_roads', LN.roads.map(w => w.pts), '#ffb25c', .0009, 0, 2) : null;
 
 const proj3 = (x, y, z) => { const v = new THREE.Vector3(x, y, z).project(camera); return v.z < 1 ? [(v.x * .5 + .5) * W, (-v.y * .5 + .5) * H] : null; };
 const at = p => proj3(p[0], p[2] || 0, p[1]);   // [x, z, h] -> screen
@@ -381,6 +383,7 @@ function setLayers(t) {
     const fl = (L.flash || []).reduce((m, tf) => Math.max(m, Math.exp(-(((t - tf) / .45) ** 2))), 0);
     lineA[L.id].value = epochAlpha(t, L) * (L.gain || 1) * (1 + 2.2 * fl) * (1 - (LV ? LV.k : 0));
   }
+  if (NROADS) NROADS.value = FILM.night_look.deep * ss(seg(nightAt(t), .45, .95)) * .85 * (1 - (LV ? LV.k : 0));   // (they come on late in the dusk, after the first windows)
   const G = FILM.grow;
   if (G) {
     U.uGrowOn.value = t >= G.on - .01 ? 1 : 0; U.uGrowMono.value = G.mono ? 1 : 0; U.uGrowWarm.value = G.warm || 0;
@@ -688,7 +691,7 @@ if (QS.has('view')) {
       for (let i = 0; i < U.uHideT.value.length; i++) { U.uRiseA.value[i] = 0; U.uHideFA.value[i] = 0; U.uEdgeA.value[i] = 0; U.uHideT.value[i] = -1; U.uHideFR.value[i] = -1; U.uHideFI.value[i] = 0; U.uHideFW.value[i] = -1; }
       U.uPhotoA.value = 0; U.uRingN.value = 0; U.uPulse.value = 0; U.uShockA.value = 0; U.uNodeFront.value = 0; U.uNodeR.value = 99;
       U.uNodeA.value = U.uNodeA0.value = 0; U.uPickOn.value = 0; U.uHgtOn.value = 0; U.uResetR.value = -1; U.uResetY.value = 0;
-      for (const k in lineA) lineA[k].value = 0;
+      for (const k in lineA) lineA[k].value = 0; if (NROADS) NROADS.value = 0;
       for (const r of Object.values(S.routes)) r.set(0, 0);
       for (const r of Object.values(S.arrows)) r.set(0, 0);
       S.tally.visible = false;

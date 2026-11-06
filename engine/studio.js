@@ -554,17 +554,19 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
  if (vData.w > 2.5) outgoingLight += diffuseColor.rgb * uEraCol * uEraGlow * .2 * uProj * (1. - eraBurnK()) * vUp * keyK(normalize(vWN));   // the period city glows a little (it is the subject), more on the faces the key light finds
  if (uNight > 0. && vData.w > -.5 && vData.w < .5) {   // night: lit windows on the facades of today's buildings, roofs dark
    vec3 Nn = normalize(vWN); float fl = (vWP.y - vBase) / (uScaleH * 3.2);           // floors of 3.2 m
-   float nd_ = uNightDeep * uNight; if (abs(Nn.y) < .5) outgoingLight *= 1. - .9 * nd_;   // the deep night: the walls go dark, the lit windows carry the city
+   float nd_ = uNightDeep * uNight; vec3 dusk_ = mix(vec3(1.), vec3(.72, .84, 1.08), min(1., 1.6 * nd_));   // the deep night falls blue (the hour after sunset), not grey
+   if (abs(Nn.y) < .5) outgoingLight *= (1. - .9 * nd_) * dusk_;   // the deep night: the walls go dark, the lit windows carry the city
    if (abs(Nn.y) < .5 && fl > .6) {
      vec2 tg = normalize(vec2(-Nn.z, Nn.x)); float u = dot(vWP.xz, tg) / (uScaleH / 3. * 3.6);  // bays of 3.6 m (plan scale = height scale / exaggeration)
      vec2 cell = vec2(floor(u), floor(fl)); float h = fract(sin(dot(cell + vData.z * 91.7, vec2(12.9898, 78.233))) * 43758.5453);
      vec2 f = fract(vec2(u, fl)); float win = step(.18, f.x) * step(f.x, .82) * step(.25, f.y) * step(f.y, .8);
      float fw = max(fwidth(u), fwidth(fl)); float lit = h < uLit * (1. - .37 * nd_) ? 1. : 0.;
-     float e = mix(win * lit, uLit * .3 * (1. - .75 * nd_), smoothstep(.35, .8, fw));   // far away: an average glow instead of aliasing (fewer windows lit in the deep night)
+     float on_ = mix(uNight, smoothstep(0., .06, uNight - .9 * fract(h * 13.1)), uNightDeep);   // the deep night: each window switches on at its own hour, at full light (dusk), not all of them half lit
+     float e = mix(win * lit * on_, uLit * .3 * (1. - .75 * nd_) * mix(uNight, min(1., uNight / .9), uNightDeep), smoothstep(.35, .8, fw));   // far away: an average glow instead of aliasing (fewer windows lit in the deep night)
      vec3 wc = mix(vec3(1., .78, .48), vec3(.75, .86, 1.), step(.7, fract(h * 7.3)));
-     outgoingLight += wc * e * (1.6 + 2.6 * nd_) * uNight;
+     outgoingLight += wc * e * (1.6 + 2.6 * nd_);
    }
-   outgoingLight *= mix(1., .6, uNight * step(.5, Nn.y)) * (1. - .85 * nd_ * step(.5, Nn.y));   // (roofs to .35 turned the wide shots of the modern half grey: a roof is most of what a wide shot sees)
+   outgoingLight *= mix(1., .6, uNight * step(.5, Nn.y)) * (1. - .85 * nd_ * step(.5, Nn.y)) * mix(vec3(1.), dusk_, step(.5, Nn.y));   // (roofs to .35 turned the wide shots of the modern half grey: a roof is most of what a wide shot sees)
  }` : ''}
  ${kind === 1 ? 'outgoingLight *= 1. - .45 * uNightDeep * uNight;' : ''}
  ${kind < 1.5 ? 'outgoingLight *= mix(uSpotK, uSpotB, smoothstep(uSpotR, uSpotR * .35, length(vWP.xz - uSpotC)));' : ''}
