@@ -24,7 +24,8 @@ and **do not trim leading and trailing silence** (it eats the first word of a li
 A voice generated in **takes**, each a section of the script read as continuous speech (whole sentences, never ending a take inside a sentence, so a sentence the subtitles split over two lines keeps its flow), is cut by
 `audio/voicecut.py` (forced alignment of the known words; needs torch and torchaudio): each line is found in its take and cut at the quietest point between its last word and the next line's first, nothing trimmed, and the lines'
 place in their takes goes to `build/audio/voice/<language>/takes.json`, from which compile lays the lines of one take straight after one another with the take's own pauses (its usual gaps only between takes;
-without it a split sentence gets two gaps in the middle). The voice text for such takes is the script's words as they are said: numbers, dates and regnal numbers written in words (a voice model guesses at
+without it a split sentence gets two gaps in the middle). A picture that a line waits for must not stop a sentence half way: compile faults a wait over 0.3 s between two lines of a take where the first ends inside a sentence
+(the picture waits before the sentence instead, or comes sooner; a `{pause: s}` written between them is meant and passes). The voice text for such takes is the script's words as they are said: numbers, dates and regnal numbers written in words (a voice model guesses at
 「Pius IX」 and 「0.44 km²」), abbreviations spelled out (「St」 can be read as "street"); a pause is written as punctuation and line breaks, not as words (an ellipsis a breath, a dash an aside, a line break between
 sentences), used sparingly: a narrator who breathes before every second phrase sounds unsure. Check the voice text against the script word for word (after the spoken forms) before it goes to the voice, and after
 cutting listen first to the words the tool lists as least sure.

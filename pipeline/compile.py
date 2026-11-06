@@ -1756,6 +1756,21 @@ for i, c in enumerate(cues):
     on_ = i + 1 < len(cues) and joins(c['id'], cues[i + 1]['id'])   # (the next line goes straight on in its take: the blank between the two subtitles falls in the take's own pause); t0, say and the next t0 are each rounded to the millisecond
     if c['t1'] < c['t0'] + h - (0.08 if on_ else 0) - .002: print(f'warning: cue {c["id"]} at {c["t0"]:.2f}s needs {h:.1f}s but has {c["t1"] - c["t0"]:.1f}s: give its node more seconds', file=sys.stderr)
     c.pop('extra', None)
+# a sentence read in one take is not broken by a wait (docs/SOUND.md "takes"): when a line that runs on from the line before it in its
+# take (that line ends inside a sentence) waits for its picture, the silence falls in the middle of the words. The picture waits
+# before the sentence instead (with: on its first line, or the shot sooner). A {pause: s} written between the two is meant.
+_said = {ln['id']: tx(ln.get(VOICE_LANG)) or '' for ln in SCR.get('prologue') or []}
+_meant = set()
+for nd_ in FM['nodes']:
+    cl_ = nd_.get('cues', [])
+    _said.update({ln['id']: tx(ln.get(VOICE_LANG)) or '' for ln in cl_ if 'id' in ln})
+    _meant |= {(x_['id'], cl_[k_ + 2]['id']) for k_, x_ in enumerate(cl_[:-2]) if 'id' in x_ and 'pause' in cl_[k_ + 1] and 'id' in cl_[k_ + 2]}
+for a_, b_ in zip(cues, cues[1:]):
+    if not joins(a_['id'], b_['id']) or (a_['id'], b_['id']) in _meant: continue
+    g_, end_ = b_['t0'] - (a_['t0'] + a_['say']), _said.get(a_['id'], '').rstrip().rstrip('"\'”’)')
+    if g_ > .3 and end_ and end_[-1] not in '.?!:;。？！：；':
+        fault(f"line {b_['id']} at {b_['t0']:.1f}s waits {g_:.1f}s inside a sentence the voice reads in one take (...{end_[-30:]!r} | {_said.get(b_['id'], '')[:30]!r}...): "
+              f"let its picture wait before the sentence starts, or come sooner")
 # camera: opening keys, then the nodes' keys; a node without keys drifts gently from the previous key
 op_keys = [[PD + float(k['t']), camv(k)] for k in OP.get('camera', [])] + [[float(k['t']), camv(k)] for k in (PRO.get('camera', []) if PRO else [])]
 cam = op_keys + cam
