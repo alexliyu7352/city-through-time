@@ -51,7 +51,7 @@ Do not show: {avoid}
 Look: natural colours, documentary realism, like a well-lit film still; people small in the frame, nobody posing, no close-up faces; nothing modern unless the sources name it; no text, no watermark, no border.
 """
 # what the still shows, for a film's shot and for a museum page's viewpoint (the model alone on its stand)
-STILL = {'living': 'The attached image is a plain white 3D model of {place}, {when}. Some of it only helps the model stand and is not a building: square slabs under monuments are the ground they stand on, dark bands at the foot of walls are shadow, flat grey strips are streets. The empty dark ground and the black sky are to be filled.',
+STILL = {'living': 'The attached image is a plain white 3D model of {place}, {when}. Some of it only helps the model stand and is not a building: square slabs under monuments are the ground they stand on, dark bands at the foot of walls are shadow, flat grey strips are streets. Its colours are the model's, not the place's: a building tinted lilac, teal or gold is only picked out in the film; give every surface its real material and colour. The empty dark ground and the black sky are to be filled.',
          'museum': 'The attached image is a plain white 3D model standing alone on flat grey ground: {place}; the moment: {when}. The grey ground is the level ground round the building: paint it as that ground, running on, level, to the horizon; where it fades into the dark it only goes farther away, it does not end, drop or rise. The plain dark background is not part of the place: fill it with the land beyond and the sky, as the description says. Dark slits and openings are doorways; thin vertical sticks are timber posts.'}
 
 
