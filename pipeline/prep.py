@@ -24,7 +24,7 @@ TER = None
 tpath = LAYOUT.data(D, 'terrain.png')
 if os.path.exists(tpath) and C.get('terrain', {}).get('enabled', True):
     import terrainio
-    timg, tj = terrainio.load(D)   # metres above the box minimum
+    timg, tj = terrainio.load(D, ungraded=True)   # metres above the box minimum (as prepared: compile levels it under the landmarks on a slope and seats today's buildings there again, grade.py)
     TEX = float(C.get('terrain', {}).get('exaggeration', 3.0))
     def ground(x, y):
         """ground metres -> model units of relief (already exaggerated) at a ground point (bilinear, like the engine)"""

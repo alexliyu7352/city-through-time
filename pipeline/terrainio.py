@@ -6,19 +6,21 @@ import numpy as np
 from PIL import Image
 
 
-def load(D, true=False):
+def load(D, true=False, ungraded=False):
     """-> (metres above the box minimum as float32 HxW, terrain.json dict) or (None, None). The field the plate is drawn from
-    (its fine relief scaled down so it shows at its true height: terrain.py), or with true=True the relief as measured
-    (terrain_true16.png, for what quotes metres; an older build without it: the plate's)"""
+    (its fine relief scaled down so it shows at its true height: terrain.py; levelled under the landmarks on a slope: grade.py),
+    with ungraded=True the same before it was levelled (what prep seats today's buildings on, and grade levels from), or with
+    true=True the relief as measured (terrain_true16.png, for what quotes metres; an older build without it: the plate's)"""
     tj_p = os.path.join(D, 'build', 'data', 'terrain.json')   # (pipeline/layout.py)
     if not os.path.exists(tj_p): return None, None
     tj = json.load(open(tj_p)); span = tj['max_m'] - tj['min_m']
-    p16 = os.path.join(D, 'build', 'data', 'terrain16.png')
+    un = '_ungraded' if ungraded and 'graded' in tj else ''
+    p16 = os.path.join(D, 'build', 'data', f'terrain16{un}.png')
     if true and os.path.exists(os.path.join(D, 'build', 'data', 'terrain_true16.png')): p16 = os.path.join(D, 'build', 'data', 'terrain_true16.png')
     if os.path.exists(p16):
         a = np.asarray(Image.open(p16).convert('RGB')).astype(np.float32)
         return (a[..., 0] * 256 + a[..., 1]) / 65535.0 * span, tj
-    return np.asarray(Image.open(os.path.join(D, 'build', 'data', 'terrain.png')).convert('L')).astype(np.float32) / 255.0 * span, tj
+    return np.asarray(Image.open(os.path.join(D, 'build', 'data', f'terrain{un}.png')).convert('L')).astype(np.float32) / 255.0 * span, tj
 
 
 def load_context(D):

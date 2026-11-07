@@ -31,7 +31,8 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
                       highest exaggeration that would pass. Plinths (citygen PLINTH: a body's base on a slope) are not bodies here.
 Listed, not counted (the era's line and clipcheck.json; compile names them):
   tall_platform_at    landmarks levelled on a slope whose platform (site: raised) shows over 30% of the landmark's height: a podium
-                      or a terrace as built, or a building let into the hill that writes site: cut (docs/MODEL.md, Landmarks)
+                      or a terrace as built, or a building let into the hill that writes site: cut (docs/MODEL.md, Landmarks; the
+                      ground compile levelled under the landmarks on a slope has none: pipeline/grade.py)
 Checks on today's buildings (data/model.json):
   today floating      buildings whose base stands more than 1 m (times the plate's exaggeration) above the lowest plate point
                       under the footprint: prep.py seats each one on that point, so a count here means the model was prepared

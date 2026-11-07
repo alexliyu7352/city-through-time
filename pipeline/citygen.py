@@ -105,6 +105,7 @@ class Builder:
         self.plinth = .3   # metres of foundation (self.found) above which a house's or a hall's body gets a plinth (_emit)
         self.slope = None  # (dg/dx, dg/dy) ground metres per metre: the primitives emitted now are laid along a slope (see lay)
         self.site = None   # the lot being built on, made one plane (lot_site): (x, y, height there, slope, foundation)
+        self.graded = None   # the ground levelled under the landmarks on a slope and its banks (grade.py zone): nothing is let into it (lot_site mid)
         self.lot_slope = .04   # the steepest a lot's plane leans (ground metres per metre, before the plate's exaggeration): a house tilts with a gentle slope; on a steeper one it stands on a terrace (a whole house sheared along a hillside reads as falling over, and its roof slopes cross)
         self.gid, self.tag, self.meta = 0, ('misc', 0), []   # building groups (a building rises whole) and what each came from (stages)
         self.label, self.labels = (), []   # what part of its building each record is (labelled): beside the records, never in them (a museum page's parts)
@@ -244,8 +245,10 @@ class Builder:
         (a mansion's courts) the plane is the mansion's. mid: the plane half-way between the highest and the lowest ground
         under it, the building let into the slope (cut on the uphill side, filled on the downhill), not raised over it.
         regroup False: a platform does not start a building group of its own (a part of a landmark levelled on its own ground: the
-        landmark stays one building)."""
+        landmark stays one building). On the ground grade.py levelled, or its bank, a lot is never let in: the cut is made already
+        (on the bank, half-way in would bury it in the slope back to the hill)."""
         if self.site is not None: yield; return
+        if mid and self.graded is not None and shapely.contains_xy(self.graded, x, y): mid = False
         P = self.frame(x, y, th); n = max(3, min(12, int(math.ceil(max(w, d) / 6)) + 1)); pts = []
         for i in range(n):
             for j in range(n):
@@ -1575,7 +1578,7 @@ def landmark_site(L, F, theta_deg=0.0):
     return x, y, th, L, [Polygon([P(-hw, -hd), P(hw, -hd), P(hw, hd), P(-hw, hd)]).buffer(6)]
 
 
-def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None, sites=None, empty=None, labels=None):
+def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=None, basins=None, sites=None, empty=None, labels=None, graded=None):
     """spec (dict from city.yaml, lon/lat) -> primitive list. Spec keys:
     origin [lon, lat]; theta_deg (grid rotation, CCW from east); detail (low | medium | high); exaggeration (building heights,
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
@@ -1591,7 +1594,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     import landmarks as LMK_
     LMK_.checked(spec)   # (the landmarks of any region: their classes checked and completed; compile has checked them once already)
     ox, oy = F.to_utm.transform(*spec['origin'])
-    B = Builder(F, ground_m, exag, spec.get('exaggeration', 2.0), (ox, oy), seed=spec.get('seed', 7), detail=spec.get('detail', 'medium'))
+    B = Builder(F, ground_m, exag, spec.get('exaggeration', 2.0), (ox, oy), seed=spec.get('seed', 7), detail=spec.get('detail', 'medium')); B.graded = graded
     B.types = spec.get('types') or {}   # complete (house_types, which the caller runs)
     for fb in spec.get('fabric', []):   # (a typ that is neither would leave its lots empty without a word)
         if fb.get('typ', 'courtyard') not in BUILTIN_TYPES and fb.get('typ') not in B.types:

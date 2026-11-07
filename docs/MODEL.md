@@ -99,13 +99,26 @@ the city, quarter by quarter; a share written "schematic" with no basis decides 
 The generator's own landmark kinds (`hall`, `terrace`, `palace`, `pagoda`, `court`…) are north China's. Elsewhere a landmark is one of a few classes of massing, written as data in
 the node's `city.landmarks` with its sizes in metres from the research (`pipeline/landmarks.py`); the classes reach the monuments of most traditions, so a city never needs code of its own.
 A building that stands in several periods or several places (a temple kept through three stations, a type of insula block) is written once in city.yaml's `landmark_types` (name -> the
-landmark without its place, or files holding such a mapping or `{landmarks: [{name, ..}]}`); each copy is `{template: <name>, lon, lat, ..}` with what differs, a traced one too. On a slope a landmark is levelled at the highest ground under it with a
-platform below (`site: raised`, the default); `site: cut` levels it half-way, cut on the uphill side and filled on the downhill, its walls reaching down to the ground with no
-platform. **Choose the site from how the building was built, not from its size:** builders who cut into the hillside and filled the slope below (a basilica laid across a hill, a
+landmark without its place, or files holding such a mapping or `{landmarks: [{name, ..}]}`); each copy is `{template: <name>, lon, lat, ..}` with what differs, a traced one too.
+**The ground under a landmark on a slope is levelled** (`pipeline/grade.py`, on every compile, before anything is built on it): the landmark gets a pad, its rectangle and
+10 m round, level half-way between the highest and the lowest ground under it (as much cut as fill), the hill coming back to its own height over a bank round it (45 m, or 8 times
+the cut where that is wider: a deep cut's bank no steeper than a shallow one's). Pads that overlap, in any period, are one, at one level (a church and its forecourt, the same ground
+built on again), and a landmark that needs no pad of its own but overlaps one stands on it. The ground is level for the whole film, from before the landmark that needs it is built,
+and everything reads it as the terrain: the plate, the period cities, today's buildings (seated on it again) and the checks. The film is not the land as it was, metre by metre, any
+more than its buildings are: it needs a building standing square on ground that looks right, and ground that changed while the film plays would tear what stands on it. Not levelled:
+a landmark of parts (`site: parts`, below: each part on its own ground), an arcade (`kind: arches`, which follows the ground), one in the river (a tenth of its rectangle or more on
+water: its ground is the river's) and one with under 1.5 m of cut or fill. These stand on the ground as it is, as their `site` says: levelled at the highest ground under it with a
+platform below (`site: raised`, the default), or levelled half-way, cut on the uphill side and filled on the downhill, its walls reaching down to the ground with no platform
+(`site: cut`). **Choose the site from how the building was built, not from its size:** builders who cut into the hillside and filled the slope below (a basilica laid across a hill, a
 hut, a house on a hillside) give `cut`, however large the building; a temple raised on its podium or a palace on a built terrace is `raised` (the podium or terrace itself is
-written as part of the landmark where the sources give it). On a slope a building follows the ground: a platform the sources do not give reads as a foundation dug out and built
-up, and today's ground and the terrain's exaggeration make every slope steeper than the ancient one, so a raised landmark stands on a taller platform than it ever had. clipcheck
-lists each landmark whose platform shows over 30% of its height (`tall_platform_at`; compile prints them by name, a list, not a fault): decide each from the sources. `cut` levels the building, not the ground: the plate is not graded, so a courtyard, an open floor or an arena let into the hill shows the plate through its floor on the uphill half (clipcheck's `terrain_cut`). Not built yet: compile grading the ground under a cut site. Until then such a building is modelled as parts stepping down the slope (`site: parts`) where the sources give steps, or stays raised, listed as such. A
+written as part of the landmark where the sources give it). On levelled ground and its bank nothing is let in (the cut is made already, and half-way into a bank buries a building in
+the slope back up to the hill): `cut` stands raised there, its walls reaching down. Today's ground and the terrain's exaggeration make every slope steeper than the ancient one, so a
+raised landmark can stand on a taller platform than it ever had: clipcheck lists each landmark whose platform shows over 30% of its height (`tall_platform_at`; compile prints them by
+name, a list, not a fault): decide each from the sources. `cut` levels the building, not the ground: a courtyard, an open floor or an arena let in shows the plate through its floor on
+the uphill half (clipcheck's `terrain_cut`); from 1.5 m the ground is levelled instead. compile prints the pads it laid, and names any cut or fill deeper than 15 m: a building
+that steps down the hill (`site: parts`) as the sources say, or one placed where the hill is too steep for it. `uv run python -I pipeline/grade.py cities/<slug>` prints the pads and
+their levels without writing anything. A period model that leaves out a building standing in its time shows today's building there, in today's colour (where a period model stands,
+today's buildings step aside, nowhere else): a levelled slope can uncover one a platform used to hide. A
 `kind: parts` landmark of separate buildings joined in a chain or a group (a housing estate's blocks, a row of linked pavilions, a stadium's stands and the buildings at its
 ends) writes `site: parts`: each part is levelled on its own ground as a landmark of its own, raised or cut as the part's own `site` says (a part `atop` another on that one's;
 a ring part, a stadium's oval, never stands on a square plate: raised, its walls reach down to the ground),
@@ -266,6 +279,8 @@ Mountain cities have big slopes and can mostly take only ×1–1.5 (the mountain
 **The ground is bare earth:** GLO-30 measures roofs, so `terrain.py` digs out every 30 m cell touched by today's building outlines (the source and fill of buildings) and levels it with the surrounding streets, yards and fields
 (it does not use "data height minus building height": a cell mixes roofs and streets and the building height is an estimate, so the subtraction comes out pitted).
 Tombs, loess plateaus and river banks are not buildings and stay as they are. `terrain.bare: false` does not level.
+Under the landmarks on a slope compile levels the ground once more, for the whole film (`pipeline/grade.py`, "Landmarks" above): terrain16.png and terrain.png are rewritten on
+every compile, the relief as terrain.py made it kept beside them (`*_ungraded`) and levelled from each time; `terrain_true16.png` keeps the land as measured.
 Not built yet (wait for the first mountain city): houses on steep slopes lined up along contour lines, and no houses where it is too steep.
 **A pool is a dug basin** (`kind: pool`, its `w_m` x `d_m` rectangle, or with `shape: round` the ellipse in it: a fountain's basin, a round tank): its water stands at the lowest point of its rim, and the plate inside it is lowered below the water while it stands
 (back when it is taken back or lost), so a lake on uneven ground is water from bank to bank. Pools that touch (an L-shaped lake drawn as two) share one level.
@@ -296,6 +311,7 @@ shown while they stand: compile warns of any whose centre is on it, today's or t
 **Today's buildings stand on the lowest ground under them:** `prep.py` puts each building's base on the lowest point of the plate under its footprint (the plate as the engine draws it, `terrainio.plate_mesh`)
 and its top where its height puts it above the ground at its centroid, so a building on a slope reaches down to the ground on its downhill side instead of hanging in the air.
 clipcheck's `today floating` counts any building that does not, which is how a model prepared on an older terrain shows: after `terrain.py`, run `prep.py` again.
+prep seats them on the relief as terrain.py made it; compile seats those over levelled ground again, on it (prep's seats kept as `model_ungraded.json`).
 **Terrain is exaggerated at two scales** (`terrain.detail: { below_m: 150, exaggeration: 1 }`, the default): large terrain such as plateaus, terraces and river valleys is exaggerated by `terrain.exaggeration`;
 small relief below 150 m keeps its original height (×1). Copernicus GLO-30 is a surface model and measures today's roofs and treetops, and most of the small relief in a city is those;
 exaggerating them by the large-terrain factor (for example ×6) makes 4 m of relief 24 m on screen, much taller than a 5 m dwelling, and the ancient city looks as if built on a heap of rubble. The true terrain is stored separately as `terrain_true16.png`;

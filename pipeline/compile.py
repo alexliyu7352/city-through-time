@@ -217,11 +217,25 @@ def pos_of(o):
     raise ValueError(f'no position in {o}')
 
 # ------------------------------------------------------------------ terrain sampler (same field prep.py used), for prop and pin heights
-TER = None
+TER = None; GRADE_PADS = []
 if os.path.exists(LAYOUT.data(D, 'terrain.png')) and C.get('terrain', {}).get('enabled', True):
-    import terrainio
-    _timg, _tj = terrainio.load(D)
+    import terrainio, grade as GRADE
+    _timg0, _tj = terrainio.load(D, ungraded=True)   # (the relief as prepared)
     _tex = float(C.get('terrain', {}).get('exaggeration', 3.0))
+    # the ground levelled under the landmarks on a slope (pipeline/grade.py), once for the film, before anything is laid on it:
+    # every reader takes it as the terrain (the engine's plate, citygen, the checks); today's buildings over it are seated on it
+    # again in model.json, and the pins prep stood on them (stats marks, tallest) moved with them
+    _timg, _tj, GRADE_PADS = GRADE.grade(C, F, D, _timg0, _tj, _tex); GRADED = GRADE.zone(GRADE_PADS)   # (citygen lets nothing into it)
+    if GRADE_PADS:
+        def _dg(x, z):   # how far the levelling moved the ground at model x, z (model units)
+            u, v = x / F.size[0] + .5, z / F.size[1] + .5
+            return (terrainio.bilinear(_timg, u, v) - terrainio.bilinear(_timg0, u, v)) * F.scale * _tex if 0 <= u <= 1 and 0 <= v <= 1 else 0.0
+        for m_ in list((ST.get('marks') or {}).values()) + list(ST.get('tallest') or []):
+            if m_.get('pos'): m_['pos'][2] = round(m_['pos'][2] + _dg(m_['pos'][0], m_['pos'][1]), 6)
+        print(f'  ground levelled: {len(GRADE_PADS)} pad(s) under {sum(len(p_["landmarks"]) for p_ in GRADE_PADS)} landmarks on a slope, the deepest '
+              + ', '.join(f'{p_["landmarks"][0]}{" +" + str(len(p_["landmarks"]) - 1) if len(p_["landmarks"]) > 1 else ""} {max(p_["cut_m"], p_["fill_m"]):g} m' for p_ in sorted(GRADE_PADS, key=lambda q_: -max(q_['cut_m'], q_['fill_m']))[:3]))
+        for p_ in GRADE_PADS:
+            if max(p_['cut_m'], p_['fill_m']) > GRADE.DEEP_M: print(f'  ground levelled {max(p_["cut_m"], p_["fill_m"]):g} m deep under {", ".join(p_["landmarks"][:4])}: does it step down the hill (site: parts), as the sources say?')
     _cimg, _cj = terrainio.load_context(D)   # the land beyond the plate (terrain.context): pins may stand on it
     CTX_RECT = _cj['rect_model'] if _cj else None   # [x0, x1, z0, z1] model units
     _CTXC = (C.get('terrain') or {}).get('context') or {}
@@ -256,7 +270,7 @@ else:
     def ground_m_xy(x, y): return 0.0
     ground_m_mesh = ground_m_xy
     def section_profile(a_ll, b_ll, n=120): return {}
-    _tex = 3.0; _cj = None; CTX_RECT = None
+    _tex = 3.0; _cj = None; CTX_RECT = None; GRADED = None
 
 # ------------------------------------------------------------------ OSM geometry by name (all cached themes of the city's area)
 import osmgeo
@@ -979,7 +993,7 @@ def gen_city(node):
                 if p[11] == 4 or gone_[i_]: continue   # (a part lost by this node leaves its ground free)
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
-    meta_, bas_, sites_, empty_, lab_ = [], [], {}, [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_)
+    meta_, bas_, sites_, empty_, lab_ = [], [], {}, [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_, graded=GRADED)
     GEN_SAVED[node['id']] = pickle.dumps((PRIMS[node['id']], meta_, lab_, bas_, sites_, empty_), protocol=pickle.HIGHEST_PROTOCOL)   # (as built, before anything touches it)
     _gen_done(node, cs, meta_, lab_, bas_, sites_, empty_)
 
