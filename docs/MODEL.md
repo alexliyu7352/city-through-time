@@ -118,7 +118,9 @@ name, a list, not a fault): decide each from the sources. `cut` levels the build
 the uphill half (clipcheck's `terrain_cut`); from 1.5 m the ground is levelled instead. compile prints the pads it laid, and names any cut or fill deeper than 15 m: a building
 that steps down the hill (`site: parts`) as the sources say, or one placed where the hill is too steep for it. `uv run python -I pipeline/grade.py cities/<slug>` prints the pads and
 their levels without writing anything. A period model that leaves out a building standing in its time shows today's building there, in today's colour (where a period model stands,
-today's buildings step aside, nowhere else): a levelled slope can uncover one a platform used to hide. A
+today's buildings step aside, nowhere else): a levelled slope can uncover one a platform used to hide. It uncovers the plate too: a landmark
+on levelled ground has no platform, so the courts, forecourt and apron the platform's top used to cover lie on the bare plate and read as a pool or a pit; give them their surface
+(`grounds`, "Open ground" below) as the sources say, and let the grounds round the building reach its walls. A
 `kind: parts` landmark of separate buildings joined in a chain or a group (a housing estate's blocks, a row of linked pavilions, a stadium's stands and the buildings at its
 ends) writes `site: parts`: each part is levelled on its own ground as a landmark of its own, raised or cut as the part's own `site` says (a part `atop` another on that one's;
 a ring part, a stadium's oval, never stands on a square plate: raised, its walls reach down to the ground),
