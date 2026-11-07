@@ -1,7 +1,8 @@
 """One round of changes, checked in one command (docs/CHECKS.md "After every change"): compile the city (pipeline/compile.py), list
 where it now differs from the version before the round (tools/filmdiff.py), check every stretch that changed in one rangecheck
 (each stretch on its own, the film loaded once: tools/rangecheck.py), then a short report: compile's faults, each stretch's verdict,
-the lines the camera now shows from much farther than before, the sheets to look at, and each step's time. It runs to the end by
+the lines the camera now shows from much farther than before, the period cities whose model changed (not checked here: look at
+them with tools/eraview.mjs), the sheets to look at, and each step's time. It runs to the end by
 itself: start it, wait for it once (it says at its start how long the last round of the city took), then read the report and look at
 the sheets. A round is the whole list of changes made, then this once, not a run for each change.
 usage: python -I tools/round.py <city_slug | city folder> --against <the version before the round> [--no-compile] [--step 1] [--size 960x540]
@@ -61,7 +62,12 @@ def main():
     FD = json.load(open(fd_json, encoding='utf-8'))
     print(f"round: {len(FD['stretches'])} stretch(es) changed against {os.path.relpath(P, ROOT)}", flush=True)
     for (a, b), w in zip(FD['stretches'], FD['what']): print(f'  {a:8.2f}-{b:8.2f}  {w[:150]}', flush=True)
-    if not FD['stretches']: done(0, stretches=[], farther=FD['farther'])
+    M, rest = FD.get('model', []), FD.get('rest', [])   # what filmdiff cannot place in time: not checked here, look at it yourself
+    if M:
+        print('round: the model changed (on screen for as long as the city stands: look at each city from every side with tools/eraview.mjs, this version and the last, then in the film where it shows it):', flush=True)
+        for m in M: print(f"  {m['city']:28s} {m['on']:8.2f}-{m['off'] if m['off'] is not None else 'end':>8}  {', '.join(m['what'])}", flush=True)
+    if rest: print(f"round: changed and placed nowhere by filmdiff (look where it matters): {', '.join(rest)}", flush=True)
+    if not FD['stretches']: done(0, stretches=[], farther=FD['farther'], model=M, rest=rest)
     rng = [x for a, b in FD['stretches'] for x in ('--from', f'{a:.2f}', '--to', f'{b:.2f}')]
     rc, text = run('rangecheck', [*py, 'tools/rangecheck.py', D, *rng, '--against', P, '--step', A.step, '--size', A.size])
     SP = []   # the stretches as rangecheck merged them (its folders are named by them)
@@ -87,7 +93,7 @@ def main():
         for f in off: print(f"  {f['pin']:28s} {f['t']:8.2f} s  {f['above_m']:g} m up, {f['px']} px off", flush=True)
     print('round: the sheets, line by line beside the previous version (the checks cannot see composition: look at every one):', flush=True)
     for s in out: print('  ' + ', '.join(x for x in s['sheets'] if '/lines_' in x), flush=True)
-    done(1 if any(s['failed'] for s in out) else 0, stretches=out, farther=FD['farther'], pins_off=off)
+    done(1 if any(s['failed'] for s in out) else 0, stretches=out, farther=FD['farther'], pins_off=off, model=M, rest=rest)
 
 
 if __name__ == '__main__':
