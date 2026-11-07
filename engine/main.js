@@ -459,7 +459,12 @@ function setLayers(t) {
     const offStart = !FR ? Infinity : e.sinkStyle === 'burn' ? e.off - e.burn : FR.hit;
     const scf = (e.fronts || []).find(f => f.mode === 'scan'), sc0 = scf ? scf.curve[0][0] : 0;
     const draw = scf ? eo(seg(t, sc0, sc0 + Math.max(1.4, .5 * (scf.curve[1][0] - sc0)))) : 1;   // a small place: the outline draws itself as it is scanned
-    const edgeA = gone ? 0 : (scf ? ss(seg(t, sc0, sc0 + .3)) : ss(seg(t, e.on + full, e.on + full + 1.2)) * (1 - U.uNodeFront.value)) * (1 - ss(seg(t, offStart - .4, offStart))) * (1 - satOn);
+    // only the newest city keeps its line: an older one's goes out as a newer city's lights (docs/STAGING.md 2; a late node lit
+    // eight lines in five colours round the Vatican while one boundary was told). A later node that tells of it draws it again (ghost)
+    let newer = Infinity;
+    for (const q of FILM.eras || []) if (q.on > e.on) { const f = (q.fronts || []).find(r => r.mode === 'scan'); newer = Math.min(newer, f ? f.curve[0][0] : q.on + q.span + q.grow); }
+    const edgeA = gone ? 0 : (scf ? ss(seg(t, sc0, sc0 + .3)) : ss(seg(t, e.on + full, e.on + full + 1.2)) * (1 - U.uNodeFront.value)) * (1 - ss(seg(t, offStart - .4, offStart))) * (1 - satOn)
+      * (newer < Infinity ? 1 - ss(seg(t, newer, newer + 1.2)) : 1);
     // a city long gone, drawn again as its outline (and the light along it on the ground) while a later node tells what stands
     // on it now (node `ghost`)
     let gA = 0, gD = 1;
