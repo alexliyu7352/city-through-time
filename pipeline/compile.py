@@ -1458,6 +1458,12 @@ for i, node in enumerate(FM['nodes']):
         for c in e.get('circles', []):
             x, y = F.to_utm.transform(c[0], c[1]); u, v = F.uv(x, y); rr = c[2] / (F.x1 - F.x0) * MW
             dl.ellipse([u * MW - rr, v * MH - rr, u * MW + rr, v * MH + rr], fill=255); pts_all.append((c[0], c[1])); parts_.append(_Pt(*F.model_lonlat(c[0], c[1])).buffer(c[2] * F.scale))
+        # the mask is softened over a few of its texels: an area smaller than that is a smudge on the plate, and a wash made of
+        # many of them (a building footprint each) is a scatter of stains over the city rising under it
+        blur_m_ = 2 * e.get('soft_px', 2.5) * (F.x1 - F.x0) / MW; small_ = sum(1 for g_ in parts_ if g_.area < (blur_m_ * F.scale) ** 2)
+        if small_ >= 20 and 2 * small_ >= len(parts_):
+            fault(f"epoch {e['id']}: {small_} of its {len(parts_)} areas are smaller than the {blur_m_:.0f} m its wash is softened over: on the plate each "
+                  f"is a smudge, together a scatter of stains over what stands or rises there; light the buildings by their years (yr) or draw the area as a few outlines")
         if 'centre' in e: cx, cz = F.model_lonlat(*e['centre'])
         elif pts_all: cx, cz = F.model_lonlat(sum(p[0] for p in pts_all) / len(pts_all), sum(p[1] for p in pts_all) / len(pts_all))
         else: cx = cz = None
