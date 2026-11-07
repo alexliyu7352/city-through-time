@@ -2160,9 +2160,12 @@ if gnd_:
         slot_ = {b['k']: b for b in e_['basins'] if b.get('ground')}
         for k_, b_, g_ in lst_:   # (only the houses standing while it does: a garden laid where houses were lost does not count them)
             s_ = slot_[k_]; g0_, g1_ = e_['on'] + s_['rank'] * e_['span'], end_(s_['lost'])
-            both_ = (T0_ < g1_) & (g0_ < T1_)
-            share_ = float(A_[_sh.contains_xy(g_, X_, Z_) & both_].sum()) / max(g_.area, 1e-12)
-            if share_ > .25: print(f"  WARN era {eid_}: ground {b_['name']}: houses cover {share_:.0%} of it: a ground is open space, the ground between the houses of a quarter stays the plate (docs/MODEL.md)")
+            on_ = _sh.contains_xy(g_, X_, Z_) & (T0_ < g1_) & (g0_ < T1_)
+            share_ = float(A_[on_].sum()) / max(g_.area, 1e-12)
+            if share_ > .25:   # (hidden while they stand, it shows once they are lost: where to look)
+                last_ = min(g1_, off_); gone_ = _np.sort(T1_[on_ & (T1_ > g0_) & (T1_ < last_)])
+                print(f"  WARN era {eid_}: ground {b_['name']}: houses cover {share_:.0%} of it: a ground is open space, the ground between the houses of a quarter stays the plate (docs/MODEL.md)"
+                      + (f"; they are lost {gone_[0]:.1f}-{gone_[-1]:.1f} s, and from then to {last_:.1f} s it shows wherever no building stands on it, a slab with lots cut in it: look at it there, not while they stand" if len(gone_) else ""))
     px_ = GND_PX
     while True:
         crops_ = []
