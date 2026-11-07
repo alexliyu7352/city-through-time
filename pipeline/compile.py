@@ -2813,9 +2813,35 @@ if _voiced:
     import subprocess, wave
     import numpy as np
     _sr = 48000; _trk = np.zeros(int((DUR + 1) * _sr), np.int32)
+    _vx = {}
     for c_ in _voiced:
         f_ = next(os.path.join(VOICE_DIR, f"{c_['id']}.{e_}") for e_ in ('wav', 'mp3', 'm4a', 'ogg', 'flac') if os.path.exists(os.path.join(VOICE_DIR, f"{c_['id']}.{e_}")))
-        x_ = np.frombuffer(subprocess.run(['ffmpeg', '-v', 'error', '-i', f_, '-f', 's16le', '-ac', '1', '-ar', str(_sr), '-'], capture_output=True, check=True).stdout, np.int16)
+        _vx[c_['id']] = np.frombuffer(subprocess.run(['ffmpeg', '-v', 'error', '-i', f_, '-f', 's16le', '-ac', '1', '-ar', str(_sr), '-'], capture_output=True, check=True).stdout, np.int16)
+    # one loudness for the narration: takes read in different sessions came out up to 7 LU apart (Rome), a jump heard where a
+    # section starts. Each take (a line without takes.json is its own) is brought within LEVEL_LU of the takes' median
+    # loudness; inside a take the lines keep the reading's own rise and fall
+    LEVEL_LU = 1.0
+    def _lufs(x_):   # integrated loudness (EBU R128) of 16-bit mono at _sr
+        o_ = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-f', 's16le', '-ar', str(_sr), '-ac', '1', '-i', '-', '-af', 'ebur128', '-f', 'null', '-'],
+                            input=x_.tobytes(), capture_output=True).stderr.decode(errors='replace')
+        v_ = re.findall(r'I:\s+(-?[\d.]+) LUFS', o_); return float(v_[-1]) if v_ else None
+    _unit = {c_['id']: (_TAKES.get(c_['id']) or [c_['id']])[0] for c_ in _voiced}
+    _ul = {u_: _lufs(np.concatenate([_vx[i_] for i_ in _vx if _unit[i_] == u_])) for u_ in dict.fromkeys(_unit.values())}
+    _ok = sorted(v_ for v_ in _ul.values() if v_ is not None and v_ > -70)
+    _vgain = {}
+    if _ok:
+        _ref = _ok[len(_ok) // 2]
+        for u_, v_ in _ul.items():
+            if v_ is None or v_ <= -70: continue
+            g_ = min(0.0, _ref + LEVEL_LU - v_) if v_ > _ref + LEVEL_LU else max(0.0, _ref - LEVEL_LU - v_)
+            pk_ = max(int(np.abs(_vx[i_].astype(np.int32)).max()) for i_ in _vx if _unit[i_] == u_) / 32768
+            g_ = min(g_, 20 * math.log10(10 ** (-1 / 20) / max(pk_, 1e-6)))   # (never past -1 dBFS)
+            if abs(g_) >= .05: _vgain[u_] = round(g_, 2)
+        _moved = ', '.join(f'{u_} {g_:+.1f}' for u_, g_ in _vgain.items())
+        print(f'  voice: {len(_ul)} {"take(s)" if _TAKES else "line(s), each read alone,"} at {_ok[0]:.1f}..{_ok[-1]:.1f} LUFS, each brought within {LEVEL_LU:g} LU of {_ref:.1f}' + (f' (dB: {_moved})' if _moved else ': none moved'))
+    for c_ in _voiced:
+        x_ = _vx[c_['id']]; g_ = _vgain.get(_unit[c_['id']])
+        if g_: x_ = np.clip(np.round(x_.astype(np.float64) * 10 ** (g_ / 20)), -32768, 32767).astype(np.int16)
         a_ = int(c_['t0'] * _sr); x_ = x_[:max(0, len(_trk) - a_)]; _trk[a_:a_ + len(x_)] += x_
     _vf = os.path.join(D, 'build', 'audio', 'voice', f'track_{VOICE_LANG}.wav')
     with wave.open(_vf, 'wb') as w_: w_.setnchannels(1); w_.setsampwidth(2); w_.setframerate(_sr); w_.writeframes(np.clip(_trk, -32768, 32767).astype(np.int16).tobytes())
