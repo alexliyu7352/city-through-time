@@ -43,7 +43,10 @@ if (!FREE) {
   L.sizes(Object.fromEntries(FILM.fonts.faces.filter(f => f.bytes).map(f => [f.file, f.bytes])));   // (the fonts come from this page's server)
   L.want(FILM.fonts.faces.map(f => f.file));
 }
-const SOUND = PLAY ? [FILM.voice && FILM.voice.file, FILM.score && FILM.score.file, FILM.sfx && FILM.sfx.file, FILM.score && FILM.score.loop].map(f => f && B + f) : [];
+// score=<file under build/>&scoreAt=<s>: another score in place of the film's, its start at that film second (audio/audition.py:
+// a cue cut another way, heard against the picture and the narration)
+const SCORE_AT = +(QS.get('scoreAt') || 0);
+const SOUND = PLAY ? [FILM.voice && FILM.voice.file, QS.get('score') || (FILM.score && FILM.score.file), FILM.sfx && FILM.sfx.file, !QS.get('score') && FILM.score && FILM.score.loop].map(f => f && B + f) : [];
 L.want(SOUND, { optional: true });   // (the live page plays them: the loading screen waits for them too, so ▶ never plays silent)
 L.plan();
 const [M, ST, LN] = FREE ? [await L.take(B + 'museum/plate.json', { optional: true }).then(b => b ? b.text().then(JSON.parse) : L.json(B + 'data/model.json')), await L.json(B + 'data/stats.json'), {}]
@@ -782,7 +785,7 @@ if (PLAY) {
   // (film.sfx: the few the mix keeps)
   const tracks = [], sound = [];
   for (const [f, key] of [[SOUND[0], 'KeyM'], [SOUND[1], 'KeyB'], [SOUND[2], 'KeyN']])
-    if (f) sound.push(L.take(f, { optional: true }).then(b => { if (b) { tracks.push({ a: Object.assign(new Audio(URL.createObjectURL(b)), { preload: 'auto' }), key }); voSync(); } }));
+    if (f) sound.push(L.take(f, { optional: true }).then(b => { if (b) { tracks.push({ a: Object.assign(new Audio(URL.createObjectURL(b)), { preload: 'auto' }), key, off: key === 'KeyB' ? SCORE_AT : 0 }); voSync(); } }));
   // after the film (film.score.loop): the end card stays and one cue plays on in a loop, rising over 3 s, until the viewer plays,
   // scrubs or steps again (a viewer of the web version may stay on the end card); B mutes it with the music
   let after = null, afterRise = 0;
@@ -796,12 +799,13 @@ if (PLAY) {
     afterRise = setInterval(() => { after.volume = Math.min(1, after.volume + .05); if (after.volume >= 1) clearInterval(afterRise); }, 150);
   };
   const voSync = () => {
-    for (const { a: vo } of tracks) {
-      if (!playing) { if (!vo.paused) vo.pause(); vo.playbackRate = 1; continue; }
-      const drift = vo.currentTime - cur;
-      if (vo.paused || Math.abs(drift) > .5) { vo.currentTime = cur; vo.playbackRate = 1; }
+    for (const { a: vo, off } of tracks) {
+      const at = cur - off;   // (the track's own time: a score heard from scoreAt)
+      if (!playing || at < 0) { if (!vo.paused) vo.pause(); vo.playbackRate = 1; continue; }
+      const drift = vo.currentTime - at;
+      if (vo.paused || Math.abs(drift) > .5) { vo.currentTime = at; vo.playbackRate = 1; }
       else vo.playbackRate = Math.min(1.04, Math.max(.96, 1 - drift));
-      if (vo.paused && cur < vo.duration - .05) vo.play().catch(() => {});
+      if (vo.paused && at < vo.duration - .05) vo.play().catch(() => {});
     }
   };
   const draw = () => { window.render(cur); show(); voSync(); };

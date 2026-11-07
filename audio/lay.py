@@ -132,9 +132,10 @@ def lay_sfx(D, kinds, events, dur, voiced, voice_wav=None, score_wav=None):
     return out
 
 
-def lay(D, music, node_t0, dur, voiced, silences, voice_wav=None):
+def lay(D, music, node_t0, dur, voiced, silences, voice_wav=None, write=True):
     """music: city.yaml film.music; node_t0 {node id: start}; voiced [(t0, t1)] the lines heard; silences [(t0, t1)] declared.
-    Returns film.json's score {file, wav, cues, missing} (file: None while no cue has a take)."""
+    Returns film.json's score {file, wav, cues, missing} (file: None while no cue has a take); write=False: (that, the laid
+    buffer) with nothing written (audio/audition.py crops it)"""
     cues = (music or {}).get('cues') or []
     if not cues: return None
     sp = spans(cues, node_t0, dur)
@@ -182,6 +183,7 @@ def lay(D, music, node_t0, dur, voiced, silences, voice_wav=None):
         if off > 0 and not cont: _on_a_hit(c['id'], x, off, own)
     _crossings(buf, [(cues[i - 1]['id'], c['id'], t0) for i, (c, (t0, _)) in enumerate(zip(cues, sp)) if i and c.get('take') and cues[i - 1].get('take')])
     _dip(buf, dur, voiced, silences, music)
+    if not write: return out, buf
     _write(D, buf, out, notes, 'lower a cue gain')
     d_ = os.path.join(D, 'build', 'audio', 'music')
     lc = next((c for c in cues if c['id'] == (music or {}).get('loop')), None)
