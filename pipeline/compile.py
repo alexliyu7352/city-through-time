@@ -2995,6 +2995,14 @@ for a0_, a1_, ai_ in _lw:
     for f_ in footage_out:
         if f_['on'] < a1_ and a0_ < f_['on'] + f_['dur']: LIVING_BAD.append(f'living {ai_} ({a0_:.1f}-{a1_:.1f} s) overlaps the picture {f_["id"]} ({f_["mode"]}, {f_["on"]:.1f}-{f_["on"] + f_["dur"]:.1f} s): one picture at a time')
 for m_ in LIVING_BAD: print('  ' + m_)
+# pictures one at a time too: a picture up past its lines when the next comes in leaves two on screen, the first over lines
+# that are no longer about it (fades excluded: one picture may hand over to the next)
+_fu = sorted(footage_out, key=lambda x_: x_['on'])
+_two = [f"{a_['id']} ({a_['mode']}, {a_['on']:.1f}-{a_['on'] + a_['dur']:.1f} s, with {a_['_with']}) and {b_['id']} ({b_['mode']}, from {b_['on']:.1f} s, with {b_['_with']})"
+        for i_, a_ in enumerate(_fu) for b_ in _fu[i_ + 1:]
+        if b_['on'] + b_.get('fin', 1.0) < a_['on'] + a_['dur'] - a_.get('fout', 1.0) and not b_['force']]
+if _two: fault('two pictures up at once: end the first with the lines it goes with (its dur), or bring the second in on a later line '
+               '(force: true on the second if both are meant to be up): ' + '; '.join(_two))
 _dead = _dead_air()
 open(LAYOUT.logs(D, 'deadair.txt'), 'w', encoding='utf-8').write('\n'.join(_dead) + '\n')
 print(f'  dead air: {len(_dead)} stretch(es)' + ''.join('\n    ' + d_ for d_ in _dead))
