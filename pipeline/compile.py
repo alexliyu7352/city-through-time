@@ -2963,6 +2963,7 @@ _pict += [(a_, b_) for a_, b_, w_, _ in _changes() if 'growing' not in w_] + [(a
 _pict += [(r['on'], r['on'] + r.get('draw', 0) + .5) for r in routes_out + arrows_out]
 _pict += [(q['on'], q['on'] + (q.get('fade') or 1)) for q in lines] + [(q['on'], q['on'] + (q.get('fade') or 1)) for q in decals_out]
 _pict += [(p_['t0'], p_['t0'] + 1.0) for p_ in pins] + [(s_['t0'], s_['t1']) for s_ in sections]   # (a terrain section: a panel, as a photo)
+_pict += [(x_['on'], x_['on'] + x_['reveal'] + x_['hold'] + x_['out']) for x_ in living_out]   # (a living moment: its picture from the ring to its fade; the flights there and back are the camera's)
 def _moving(t, step=.25):   # the picture moves: something changes, a picture is up, or the camera travels
     if any(a_ - 1e-6 <= t <= b_ for a_, b_ in _pict): return True
     gt_ = globals().get('GROW_T') or []
