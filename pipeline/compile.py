@@ -332,7 +332,7 @@ def edge_rings(bnd, prims, cs):
     return [r for r in bnd if not lone(r)] or bnd
 
 EW = 1024   # edge distance fields: one era per channel, each over its own crop of the plate (edge.png, edge2.png)
-HIDE_BY, EDGE_BY, KEEP_BY = {}, {}, {}   # per era: where today's buildings step aside (hide_layer), the distance field to its outline (edge_sdf)
+HIDE_BY, EDGE_BY, KEEP_BY, KEEP_ARGS = {}, {}, {}, {}   # per era: where today's buildings step aside (hide_layer), the distance field to its outline (edge_sdf)
 SLOTS, SLOTS_MAX = 8, 12   # channels of hide.png / hide2.png and edge.png / edge2.png (engine/studio.js); cities apart in time share one; a film with
                            # more standing at once takes 12 (hide3.png, edge3.png: film.eraSlots, the engine sizes its uniforms to it)
 if os.environ.get('CT_ERA_SLOTS'): SLOTS = SLOTS_MAX = int(os.environ['CT_ERA_SLOTS'])   # (fewer, to test the sharing on a film that needs none)
@@ -354,17 +354,61 @@ def edge_sdf(bnd, D):
     PWm, PDm = F.size
     return img, [round(x0 / PWm + .5, 6), round(z0 / PDm + .5, 6), round(x1 / PWm + .5, 6), round(z1 / PDm + .5, 6)]
 
-def keep_layer(prims, lost, cs):
-    """a city with today_from: what of it still stands once its losses have gone (the parts no loss takes), where today's buildings
-    keep stepping aside from that node on: those parts' padded footprints and today's buildings that touch them, drawn as
-    hide_layer draws them, without the city's outline, its walls' ring or its hide regions, which go back to today's city (a
-    palace and a church carried into the present, the streets round them taken down: today's streets come back)"""
+COURT_MAX_M2 = 20000   # a court a landmark closes round (a portico's, a cloister's, an arena): at most this big; a larger hole is open land
+
+def courts(prims, pad):
+    """the courts the landmarks of a city close round, as a boolean map of the hide map's texels: the holes in their padded
+    footprints up to COURT_MAX_M2. Where a period building stands today's buildings step aside, and its court is part of it: a
+    canopy of today in the middle of Old St Peter's atrium stood there as a dark block (Rome). Houses and streets are left out,
+    so a block of houses or a grid of streets does not make a court"""
+    import numpy as _np
+    from scipy import ndimage as _nd
+    PWm, PDm = F.size
+    U_ = lambda X, Z: ((X / PWm + .5) * HW, (Z / PDm + .5) * HH)
+    im = Image.new('1', (HW, HH), 0); dr = ImageDraw.Draw(im); n_ = 0
+    for p in prims:
+        if p[11] in (citygen.LMK, citygen.LROOF): dr.polygon([U_(x, z) for x, z in citygen.footprint(p, pad)], fill=1); n_ += 1
+    out = _np.zeros((HH, HW), bool)
+    if not n_: return out
+    m = _np.asarray(im, bool); ys, xs = _np.nonzero(m)
+    y0, y1, x0, x1 = ys.min(), ys.max() + 1, xs.min(), xs.max() + 1
+    holes = _nd.binary_fill_holes(m[y0:y1, x0:x1]) & ~m[y0:y1, x0:x1]; lab, n = _nd.label(holes)
+    if n:
+        texel_m2 = (PWm / F.scale / HW) * (PDm / F.scale / HH)
+        small = _np.zeros(n + 1, bool); small[1:] = _nd.sum(holes, lab, range(1, n + 1)) * texel_m2 <= COURT_MAX_M2
+        out[y0:y1, x0:x1] = small[lab]
+    return out
+
+def fill_in(val, region):
+    """a mask's gaps inside its region take the nearest rank (3x3 min growing outward, on the region's crop only)"""
+    import numpy as _np
+    ys, xs = _np.nonzero(region)
+    if len(xs):
+        y0, y1, x0, x1 = max(0, ys.min() - 2), min(HH, ys.max() + 3), max(0, xs.min() - 2), min(HW, xs.max() + 3)
+        a = _np.where(val[y0:y1, x0:x1] > 0, val[y0:y1, x0:x1], _np.inf); rg = region[y0:y1, x0:x1]
+        for _ in range(80):
+            if not (_np.isinf(a) & rg).any(): break
+            P_ = _np.pad(a, 1, constant_values=_np.inf)
+            m_ = _np.minimum.reduce([P_[1 + dy:P_.shape[0] - 1 + dy, 1 + dx:P_.shape[1] - 1 + dx] for dy in (-1, 0, 1) for dx in (-1, 0, 1)])
+            a = _np.where(_np.isinf(a) & rg, m_, a)
+        a = _np.where(rg & _np.isinf(a), 255, a); a = _np.where(rg, a, 0)
+        val[y0:y1, x0:x1] = a
+    return Image.fromarray(_np.clip(val, 0, 255).round().astype(_np.uint8), 'L')
+
+def keep_layer(prims, lost, cs, late=()):
+    """a city with today_from: what of it still stands at that node, where today's buildings keep stepping aside from then on:
+    the parts no loss takes and the landmarks a later loss takes (`late`: their losses' numbers; such a landmark keeps today's
+    buildings away until the city ends, not only until it is gone: one map cannot time them; a later loss's houses and walls
+    are left to today's city, as before, or a wall's line would stay bare for good), their padded footprints, the courts they
+    close round and today's buildings that touch them, drawn as hide_layer draws them, without the city's outline, its walls'
+    ring or its hide regions, which go back to today's city (a palace and a church carried into the present, the streets
+    round them taken down: today's streets come back)"""
     PWm, PDm = F.size
     pad = cs.get('hide_buffer_m', 14) * F.scale
     U_ = lambda X, Z: ((X / PWm + .5) * HW, (Z / PDm + .5) * HH)
     code = lambda r: max(10, int(round((.04 + .96 * r) * 255)))
     im = Image.new('L', (HW, HH), 0); dr = ImageDraw.Draw(im)
-    keep = [p for i, p in enumerate(prims) if not (lost and lost[i])]
+    keep = [p for i, p in enumerate(prims) if not (lost and lost[i]) or lost[i] in late and p[11] in (citygen.LMK, citygen.LROOF)]
     for p in sorted(keep, key=lambda p: -p[10]): dr.polygon([U_(x, z) for x, z in citygen.footprint(p, pad)], fill=code(p[10]))
     from shapely.geometry import Polygon as _P
     from shapely.strtree import STRtree as _T
@@ -377,7 +421,9 @@ def keep_layer(prims, lost, cs):
         for k_ in _np.nonzero(_np.isfinite(low_))[0]:
             ring = rings_[k_]; v = code(float(low_[k_])); dr.polygon([U_(x, z) for x, z in ring], fill=v)
             dr.point(U_(sum(x for x, _ in ring) / len(ring), sum(z for _, z in ring) / len(ring)), fill=v)   # (where the engine reads it: hide_layer)
-    return im
+    import numpy as _np
+    val = _np.asarray(im).astype(_np.float32)
+    return fill_in(val, (val > 0) | courts(keep, pad))
 
 _TODAY = []
 def today_polys():
@@ -428,20 +474,9 @@ def hide_layer(prims, cs, bnd=()):
     reg = Image.new('L', (HW, HH), 0); dg = ImageDraw.Draw(reg)
     for r in hide_rings(cs): dg.polygon([U_(*F.model_lonlat(lon, lat)) for lon, lat in r], fill=255)
     for r in bnd: dg.polygon([U_(x, z) for x, z in r], fill=255)
-    val = _np.asarray(im).astype(_np.float32); region = (_np.asarray(reg) > 0) | (val > 0)
+    val = _np.asarray(im).astype(_np.float32); region = (_np.asarray(reg) > 0) | (val > 0) | courts(prims, pad)
     region = _np.asarray(Image.fromarray(region.astype(_np.uint8) * 255).filter(ImageFilter.MaxFilter(3))) > 0   # one pixel of margin: a building whose centre sits on the edge
-    ys, xs = _np.nonzero(region)
-    if len(xs):   # fill the gaps inside with the nearest rank (3x3 min growing outward, on the region's crop only)
-        y0, y1, x0, x1 = max(0, ys.min() - 2), min(HH, ys.max() + 3), max(0, xs.min() - 2), min(HW, xs.max() + 3)
-        a = _np.where(val[y0:y1, x0:x1] > 0, val[y0:y1, x0:x1], _np.inf); rg = region[y0:y1, x0:x1]
-        for _ in range(80):
-            if not (_np.isinf(a) & rg).any(): break
-            P_ = _np.pad(a, 1, constant_values=_np.inf)
-            m_ = _np.minimum.reduce([P_[1 + dy:P_.shape[0] - 1 + dy, 1 + dx:P_.shape[1] - 1 + dx] for dy in (-1, 0, 1) for dx in (-1, 0, 1)])
-            a = _np.where(_np.isinf(a) & rg, m_, a)
-        a = _np.where(rg & _np.isinf(a), 255, a); a = _np.where(rg, a, 0)
-        val[y0:y1, x0:x1] = a
-    return Image.fromarray(_np.clip(val, 0, 255).round().astype(_np.uint8), 'L')
+    return fill_in(val, region)
 
 TIMING = {'ring_view': 2.8, 'ring_out': 1.6, 'min_stage': 4.0, 'min_stage_small': 2.0, 'grow': 1.6, 'frames_per_s': 1 / 3,
           'settle_need': 2.0, 'ring_m': 1000.0, 'ring_q': .35, 'scan_w': .12, 'fade': .4, 'fall_dur': 1.4,
@@ -1982,7 +2017,7 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
         tf_ = next((n for n in FM['nodes'] if n['id'] == cs['today_from']), None)
         if tf_ is None or FM['nodes'].index(tf_) < FM['nodes'].index(node):   # (its own node: a city of the present day, which today's city never steps back for)
             raise SystemExit(f"compile: era {e['id']}: today_from {cs['today_from']!r}: this node's id or a later one's (from it, today's city comes back round what of this city still stands)")
-        KEEP_BY[e['id']] = keep_layer(prims, LOST.get(e['id']), cs_); e['todayFrom'] = round(tf_['_t0'], 3)
+        KEEP_ARGS[e['id']] = (prims, cs_); e['todayFrom'] = round(tf_['_t0'], 3)   # (drawn once its losses are timed, below)
     ED = float(FM.get('era_look', {}).get('edge_m', 150)) * F.scale; img_, rect_ = edge_sdf(pd['ebnd'], ED); EDGE_BY[e['id']] = img_; e['edgeRect'] = rect_; e['edgeD'] = round(ED, 6)
 for i_, (nd, node) in enumerate(zip(nodes_out, FM['nodes'])):   # each node's colour ring, sent when its change starts (docs/STAGING.md 1)
     imp = IMPACT.get(node['id']); era_ = next((e for e in eras_out if e['id'] == node['id']), None)
@@ -2047,6 +2082,14 @@ for e in eras_out:   # a part of a city lost while the rest stands (lose:): a ri
         if gone_ is not None and rise_ < gone_ - .05:
             fault(f"era {e['id']}: {cs_['landmarks'][li].get('id')} starts to rise at {rise_:.1f} s, but the buildings on its site "
                   f"are gone only at {gone_:.1f} s: its stage later, or the loss that takes them earlier")
+for e in eras_out:   # what still stands at today_from (keep_layer): a part a loss takes later still stands then; a loss gone within
+    # 5 s of it is the city handing over to today's (its fabric going as today's comes back, over 3 s)
+    if e['id'] not in KEEP_ARGS: continue
+    p_, c_ = KEEP_ARGS.pop(e['id']); late_ = {j for j, q in enumerate(e.get('losses') or [], 1) if q['gone'] > e['todayFrom'] + 5}
+    for j in sorted(late_):
+        print(f"  keep {e['id']}.{e['losses'][j - 1]['id']}: still stands at today_from ({e['todayFrom']:.1f} s), gone {e['losses'][j - 1]['gone']:.1f} s: "
+              f"today's buildings stay off its landmarks' sites to {e['off'] if e.get('off') is not None else 'the end'}")
+    KEEP_BY[e['id']] = keep_layer(p_, LOST.get(e['id']), c_, late_)
 for e in eras_out: e.pop('_dist', None); e.pop('_bc', None)
 def occupancy(e):
     """when an era's channel is in use: from its first light (its fronts, its rise) to its last (taken back, or the film's end),
