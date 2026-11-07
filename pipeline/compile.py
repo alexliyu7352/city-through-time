@@ -2014,7 +2014,7 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
         at_ = gd_['at']; nid_ = at_['node'] if isinstance(at_, dict) and 'node' in at_ else e['id']
         nd_ = next((n for n in FM['nodes'] if n['id'] == nid_), None)
         if nd_ is None: raise SystemExit(f"compile: era {e['id']}: ground {b_['name']}: at: no node {nid_!r}")
-        t_ = node_time(nd_, at_['at'] if isinstance(at_, dict) and 'node' in at_ else at_)
+        t_ = node_time(nd_, at_['at']) if nid_ != e['id'] else pd['at_of'](at_['at'] if isinstance(at_, dict) and 'node' in at_ else at_)   # (its own node: as its losses are timed)
         if t_ is None or t_ < e['on']: raise SystemExit(f"compile: era {e['id']}: ground {b_['name']}: at {t_} s, before its city rises ({e['on']:.1f} s)")
         prims[basin_piece(e['id'], b_)][10] = round((t_ - e['on']) / e['span'], 5)
         print(f"  ground {e['id']}.{b_['name']}: rises at {t_:.1f} s ({nid_})")
@@ -2097,7 +2097,7 @@ for e in eras_out:   # what still stands at today_from (keep_layer): a part a lo
     # 5 s of it is the city handing over to today's (its fabric going as today's comes back, over 3 s)
     if e['id'] not in KEEP_ARGS: continue
     p_, c_ = KEEP_ARGS.pop(e['id']); late_ = {j for j, q in enumerate(e.get('losses') or [], 1) if q['gone'] > e['todayFrom'] + 5}
-    for j in sorted(late_):
+    for j in sorted(j_ for j_ in late_ if any(k_ == j_ and q_[11] in (citygen.LMK, citygen.LROOF) for k_, q_ in zip(LOST.get(e["id"]) or [], p_))):
         print(f"  keep {e['id']}.{e['losses'][j - 1]['id']}: still stands at today_from ({e['todayFrom']:.1f} s), gone {e['losses'][j - 1]['gone']:.1f} s: "
               f"today's buildings stay off its landmarks' sites to {e['off'] if e.get('off') is not None else 'the end'}")
     KEEP_BY[e['id']] = keep_layer(p_, LOST.get(e['id']), c_, late_)
