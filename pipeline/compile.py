@@ -995,7 +995,7 @@ def gen_city(node):
         for oid in cs['avoid_eras']:
             gone_ = lost_by(oid, here)
             for i_, p in enumerate(PRIMS[oid]):
-                if p[11] == 4 or gone_[i_]: continue   # (a part lost by this node leaves its ground free)
+                if p[11] == 4 or gone_[i_] or CITY_META[oid][i_][1][0] == 'grounds': continue   # (a part lost by this node leaves its ground free; a ground's half-metre mark only times it: houses may stand round an open ground, and one moved would move them)
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
     meta_, bas_, sites_, empty_, lab_ = [], [], {}, [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_, graded=GRADED)
