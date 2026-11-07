@@ -151,13 +151,16 @@ def model(P, N, pd, nd, shift):
     basin of a city whose model did not change now rises at another time (each rises at the city's on + its rank × the city's span:
     a city re-timed re-ranks them all, so they are compared as times, shift taken back, not as the model)"""
     pe = {e['id']: e for e in P.get('eras') or []}; atlas = {}; notes, rises = [], []
-    def crop(F, D, g):   # a city's ground (film.groundMap: one atlas of every city's ground, each its crop)
+    def crop(F, D, e):   # a city's ground (film.groundMap: one atlas of every city's ground, each its crop), its slots as the city's own
         if D not in atlas: atlas[D] = np.asarray(Image.open(os.path.join(D, 'build', F['groundMap']['file'])))
-        ax, ay, nx, nz = g['a']; return atlas[D][ay:ay + nz, ax:ax + nx]
+        ax, ay, nx, nz = e['ground']['a']; c = atlas[D][ay:ay + nz, ax:ax + nx].copy()
+        own = np.zeros(256, np.uint8)   # (B: the slot that times a texel's ground + 1, numbered over the whole film: grounds added before it renumber it)
+        for i, b in enumerate(e.get('basins') or []): own[b['k'] + 1] = i + 1
+        c[..., 2] = own[c[..., 2]]; return c
     def ground_same(o, e):
         g, h = o.get('ground'), e.get('ground')
         if not g or not h: return not g and not h
-        return g['m'] == h['m'] and g['a'][2:] == h['a'][2:] and np.array_equal(crop(P, pd, g), crop(N, nd, h))
+        return g['m'] == h['m'] and g['a'][2:] == h['a'][2:] and np.array_equal(crop(P, pd, o), crop(N, nd, e))
     def risen(o, e, ro, rn, name):   # ranks of the same parts in both versions -> where their rise differs
         to, tn = o['on'] + np.array(ro) * o.get('span', 0), e['on'] + np.array(rn) * e.get('span', 0)
         u, inv = np.unique(tn.round(2), return_inverse=True); sh = np.array([shift(t) for t in u])[inv]
