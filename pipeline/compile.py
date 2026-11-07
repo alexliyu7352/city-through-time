@@ -406,7 +406,7 @@ def keep_layer(prims, lost, cs, late=()):
     PWm, PDm = F.size
     pad = cs.get('hide_buffer_m', 14) * F.scale
     U_ = lambda X, Z: ((X / PWm + .5) * HW, (Z / PDm + .5) * HH)
-    code = lambda r: max(10, int(round((.04 + .96 * r) * 255)))
+    code = lambda r: min(255, max(10, int(round((.04 + .96 * r) * 255))))   # (a ground rising after its city: rank past 1)
     im = Image.new('L', (HW, HH), 0); dr = ImageDraw.Draw(im)
     keep = [p for i, p in enumerate(prims) if not (lost and lost[i]) or lost[i] in late and p[11] in (citygen.LMK, citygen.LROOF)]
     for p in sorted(keep, key=lambda p: -p[10]): dr.polygon([U_(x, z) for x, z in citygen.footprint(p, pad)], fill=code(p[10]))
@@ -444,7 +444,7 @@ def hide_layer(prims, cs, bnd=()):
     PWm, PDm = F.size
     pad = cs.get('hide_buffer_m', 14) * F.scale
     U_ = lambda X, Z: ((X / PWm + .5) * HW, (Z / PDm + .5) * HH)
-    code = lambda r: max(10, int(round((.04 + .96 * r) * 255)))
+    code = lambda r: min(255, max(10, int(round((.04 + .96 * r) * 255))))   # (a ground rising after its city: rank past 1)
     im = Image.new('L', (HW, HH), 0); dr = ImageDraw.Draw(im)
     from shapely.geometry import Polygon as _P
     era_ = cs.get('_id', ''); shapes = [(p[10], citygen.footprint(p, pad)) for p in prims]
@@ -2007,6 +2007,17 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
         if P_: PLACES.append((e['id'], f['a'], P_['centre'], P_['rad'], [f['a'][0], P_['t_end']]))   # (a: the front's light, to its run-off; then while buildings rise)
         if P_: STAGE_AT.append((e['id'], P_.get('stage'), P_['centre']))
     for p, r in zip(prims, ranks_): p[10] = round(r, 5)
+    # a ground that opens after its city's own node (`at: {node, at}`: a site a fire told later cleared, open until a later city
+    # builds on it) rises then: its timing mark's rank past the city's rise (the engine times a ground by on + rank x span)
+    for gd_, b_ in zip(cs.get('grounds') or [], [b for b in BASINS.get(e['id'], []) if 'surface' in b]):
+        if 'at' not in gd_: continue
+        at_ = gd_['at']; nid_ = at_['node'] if isinstance(at_, dict) and 'node' in at_ else e['id']
+        nd_ = next((n for n in FM['nodes'] if n['id'] == nid_), None)
+        if nd_ is None: raise SystemExit(f"compile: era {e['id']}: ground {b_['name']}: at: no node {nid_!r}")
+        t_ = node_time(nd_, at_['at'] if isinstance(at_, dict) and 'node' in at_ else at_)
+        if t_ is None or t_ < e['on']: raise SystemExit(f"compile: era {e['id']}: ground {b_['name']}: at {t_} s, before its city rises ({e['on']:.1f} s)")
+        prims[basin_piece(e['id'], b_)][10] = round((t_ - e['on']) / e['span'], 5)
+        print(f"  ground {e['id']}.{b_['name']}: rises at {t_:.1f} s ({nid_})")
     json.dump({'prims': prims, **({'lost': LOST[e['id']]} if LOST.get(e['id']) else {})}, open(LAYOUT.build(D, e['file']), 'w'), separators=(',', ':'))   # (film.json's file references are relative to build/)
     fx_, fz_ = F.model_lonlat(*(cs.get('fall_from') or cs['origin']))
     e['fallC'] = [round(fx_, 5), round(fz_, 5)]
