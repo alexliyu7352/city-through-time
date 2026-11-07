@@ -312,8 +312,9 @@ def hide_rings(cs):
 
 def edge_rings(bnd, prims, cs):
     """the rings of the period city's outline its edge is drawn on (the neon line and the light along it, edge_sdf): every ring
-    but an island that holds one building alone (a basilica outside the walls, with its forecourt) on ground the city clears of
-    today's buildings anyway (hide_rings: a centre shown bare). Such a ring marks neither the city's extent nor where the city
+    but an island that holds one building alone, or with small things beside it (a basilica outside the walls, with its forecourt
+    and an obelisk: the building holds 3/4 of the island's built ground), on ground the city clears of today's buildings anyway
+    (hide_rings: a centre shown bare). Such a ring marks neither the city's extent nor where the city
     meets today's, and its line and light round one building on empty ground read as the rim of a pit the building stands in;
     among today's buildings the same ring keeps its edge, the line between the past and the present round it (a row of tombs
     in today's town). A city that is only such islands keeps them all. The hide mask, the locator and the footprints take every ring"""
@@ -322,8 +323,12 @@ def edge_rings(bnd, prims, cs):
     clear = _sh.union_all([_sh.make_valid(_sh.Polygon([F.model_lonlat(lon, lat) for lon, lat in r])) for r in hide_rings(cs)])
     body = [p for p in prims if p[4] <= p[12] + 1e-9 and p[11] not in (4, 5, 7)]   # (the bodies era_boundary grows the outline from)
     X, Z = _np.array([p[1] for p in body]), _np.array([p[2] for p in body]); K = [(p[15], p[16]) if len(p) > 16 else (p[1], p[2]) for p in body]
-    def lone(r):   # one building's centre in it (a landmark of parts is one), lying mostly on the cleared ground
-        q = _sh.Polygon(r); return len({K[i] for i in _np.nonzero(_sh.contains_xy(q, X, Z))[0]}) == 1 and q.intersection(clear).area > .5 * q.area
+    def lone(r):   # lying mostly on the cleared ground, one building (a landmark of parts is one) holding 3/4 of its built ground
+        q = _sh.Polygon(r)
+        if q.intersection(clear).area <= .5 * q.area: return False
+        A = {}
+        for i in _np.nonzero(_sh.contains_xy(q, X, Z))[0]: A[K[i]] = A.get(K[i], 0) + _sh.Polygon(citygen.footprint(body[i])).area
+        return bool(A) and max(A.values()) >= .75 * sum(A.values())
     return [r for r in bnd if not lone(r)] or bnd
 
 EW = 1024   # edge distance fields: one era per channel, each over its own crop of the plate (edge.png, edge2.png)
