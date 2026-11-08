@@ -1540,6 +1540,7 @@ def region_utm(F, rg, osm_rings=None):
     return unary_union([region_utm(F, p, osm_rings) for p in rg])
 
 
+PASSABLE = ('bridge', 'ditch', 'paifang', 'arches', 'market', 'village', 'boats', 'kilns')   # landmarks a road may run through or across as built
 SURFACES = ('earth', 'grass', 'gravel', 'paved')   # open ground (grounds:): trodden earth, grass, gravel, a hard paved yard (compile's ground map, the engine's plate)
 
 NO_SITE = {'paifang', 'kilns', 'corridor', 'bridge', 'boats', 'village'}   # landmarks that keep no ground of their own clear
@@ -1584,8 +1585,9 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     default 2: close shots keep the proportions; the ground uses the plate's `exag`);
     trace: GeoJSON drawn over an old map or a site plan (traced; the callers join it: compile, terrain.py);
     walls: [{ring|osm, h_m, t_m, gates: [[lon,lat],...], towers, style: tower|hip|none, moat}];
-    streets: [{pts, w_m, shops, path, surface}] (path: a footpath between huts or fields, thin and without ruts; surface: asphalt,
-    a modern road, smooth and darker, no ruts); lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
+    streets: [{pts, w_m, shops, path, surface, through}] (path: a footpath between huts or fields, thin and without ruts; surface: asphalt,
+    a modern road, smooth and darker, no ruts; a long stretch inside one of the city's buildings is left out unless through: true, on the
+    street or on the landmark, or the landmark is PASSABLE); lanes: {spacing_m, w_m, theta_deg, region}; fabric: [{region: ring|'walls', lot: [w,d], typ, h_m, empty}]
     (typ: a built-in house or one of `types`, complete: house_types);
     landmarks: [{kind, lon, lat, ...}] (the generator's own kinds, or the classes of pipeline/landmarks.py); trees: [{pts, step_m, h_m, r_m, both, offset_m}];
     grounds: [{region, surface}] (open ground as what it is: a field, a yard, a works ground, a parade ground; surface one of SURFACES).
@@ -1614,12 +1616,12 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         if 'pts' not in w: wall_polys.append(Polygon(ring))   # (an open run has no inside: fabric: walls takes the rings')
     inside = unary_union([p.buffer(-14) for p in wall_polys]) if wall_polys else None
     # landmarks first (their footprints are kept clear of fabric)
-    lm_foot, lm_at = [], []   # (lm_at: where each landmark's footprints start in lm_foot)
+    lm_foot, lm_at, lm_pass, lm_kind = [], [], [], []   # (lm_at: where each landmark's footprints start in lm_foot; lm_pass: a road may run through it)
     HEX0 = B.hex
     for li, L in enumerate(spec.get('landmarks', [])):
         lm_at.append(len(lm_foot))
         B.group(('landmarks', li))   # one landmark rises as one piece (kilns, huts, boats: one piece each, below)
-        x, y, th, L, foot_ = landmark_site(L, F, spec.get('theta_deg', 0)); k = L['kind']
+        x, y, th, L, foot_ = landmark_site(L, F, spec.get('theta_deg', 0)); k = L['kind']; lm_pass.append(k in PASSABLE or bool(L.get('through'))); lm_kind.append(k)
         B.hex = float(L.get('exaggeration', HEX0))   # a landmark built after a drawn elevation can keep nearer its true proportions
         if k in LMK_.KINDS:   # a class of any region (pipeline/landmarks.py), drawn level on its own site
             LMK_.build(B, L, x, y, th); lm_foot += foot_; continue
@@ -1768,10 +1770,37 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     wall_bands = [wall_line(F, w).buffer(w.get('t_m', 10) * 1.6 + 6) for w in spec.get('walls', []) if 'ring' in w or 'pts' in w]
     shop_avoid = unary_union(([lm_union] if lm_union is not None else []) + street_geoms + main_streets + wall_bands + ([extra_avoid] if extra_avoid is not None else [])) if (lm_union is not None or street_geoms or main_streets or wall_bands or extra_avoid is not None) else None
     # streets: explicit main streets (paved, optional shop rows) + an oriented lane grid (paved) inside the walls or a region
+    # a street does not run through a building of its own city: where it would (a road traced from another map down a circus' arena
+    # and through its stands, across a temple), that stretch is left out. A short crossing stays, a road under an arch or through a
+    # gate house (inside a body for at most max(3 widths, 30 m)); a landmark a road runs through as built (PASSABLE kinds, or
+    # `through: true` on it or on the street) never cuts one
+    # (the building as built, not its site with its apron: a road cut at the site's edge stops short of the door. Its body, holes
+    # filled, a court inside its wall too; a ring's whole round, its arena with it)
+    bod_ = {}
+    for p_, (_, tag_) in zip(B.prims, B.meta):
+        if tag_[0] == 'landmarks' and tag_[1] < len(lm_pass) and not lm_pass[tag_[1]] and p_[11] in (FAB, LMK, WALL):
+            q_ = p_ if len(p_) != 16 else p_[:15] + [p_[1], p_[2]] + p_[15:]   # (a record before finish: its shape not yet after the building's centre)
+            bod_.setdefault(tag_[1], []).append(Polygon([(x_ / F.scale + F.cx, -z_ / F.scale + F.cy) for x_, z_ in footprint(q_)]))
+    blk_ = []
+    for li_, ps_ in bod_.items():
+        g_ = unary_union([q_.buffer(0) for q_ in ps_])
+        blk_.append(g_.convex_hull if lm_kind[li_] == 'ring' else unary_union([Polygon(q_.exterior) for q_ in getattr(g_, 'geoms', [g_]) if isinstance(q_, Polygon)]))
+    blk_tree_ = shapely.STRtree(blk_) if blk_ and os.environ.get('CT_STREET_CUT') != '0' else None   # (CT_STREET_CUT=0: every street whole, to compare)
+    def _clear(pts_, w_):   # the street's segments, each less the long stretches it would run inside a building
+        line_ = LineString(pts_); cut_ = []
+        if blk_tree_ is not None:
+            for j_ in blk_tree_.query(line_, predicate='intersects'):
+                cut_ += [q_.buffer(.05, cap_style=2) for q_ in _lines(line_.intersection(blk_[j_])) if q_.length > max(3 * w_, 30.0)]
+        if not cut_: return list(zip(pts_[:-1], pts_[1:]))
+        cu_ = unary_union(cut_); out_ = []
+        for a_, b_ in zip(pts_[:-1], pts_[1:]):
+            out_ += [(q_.coords[0], q_.coords[-1]) for q_ in _lines(LineString([a_, b_]).difference(cu_)) if q_.length > 1.0]
+        return out_
     for si, st in enumerate(spec.get('streets', [])):
         pts = [F.to_utm.transform(*p) for p in st['pts']]
-        street_geoms.append(LineString(pts).buffer(st.get('w_m', 14) / 2, cap_style=2))
-        for a, b in zip(pts[:-1], pts[1:]):
+        segs_ = list(zip(pts[:-1], pts[1:])) if st.get('through') else _clear(pts, st.get('w_m', 2 if st.get('path') else 14))
+        street_geoms.append(LineString(pts).buffer(st.get('w_m', 14) / 2, cap_style=2))   # (the houses keep off the whole street, as before: none are laid where a stretch was left out)
+        for a, b in segs_:
             B.group(('streets', si))
             if st.get('path'): B.strip(a, b, st.get('w_m', 2), .03, part=PAVE, piece=3.0, road=False, drape=True)   # a footpath: trodden earth, a film on the ground in short pieces, no ruts
             else: B.strip(a, b, st.get('w_m', 14), .14, part=PAVE, road=2.0 if st.get('surface') == 'asphalt' else None)   # (asphalt: smooth and dark, no ruts)

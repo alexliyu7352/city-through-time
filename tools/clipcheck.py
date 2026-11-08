@@ -31,8 +31,9 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
                       highest exaggeration that would pass. Plinths (citygen PLINTH: a body's base on a slope) are not bodies here.
 Listed, not counted (the era's line and clipcheck.json; compile names them):
   streets_through_landmarks_at  a street or lane running through a landmark that stands at the same time (inside its body for more
-                      than twice the road's width: not a road under an arch or through a gate): a road traced from another map
-                      across a circus' stands or a temple; the audience sees a road through the monument. Move the road, or say why
+                      than max(3 road widths, 30 m): not a road under an arch or through a gate). citygen leaves such stretches
+                      out; what is listed is a road it let through (a PASSABLE kind, through: true) or a body it could not close:
+                      the audience sees a road through the monument. Move the road, or say why
   tall_platform_at    landmarks levelled on a slope whose platform (site: raised) shows over 30% of the landmark's height: a podium
                       or a terrace as built, or a building let into the hill that writes site: cut (docs/MODEL.md, Landmarks; the
                       ground compile levelled under the landmarks on a slope has none: pipeline/grade.py)
@@ -175,8 +176,9 @@ def main():
             R['landmarks_overlap'] = n; R['landmarks_overlap_at'] = ex_lm[:40]
         # streets_through_landmarks (a list, not a fault): a street or lane laid through a landmark standing at the same time, a road
         # traced from another map across a circus' stands or a temple: on screen a road runs through the monument. Listed where the
-        # paving runs inside the body for more than twice its own width (a road under an arch or through a gate house crosses it in
-        # about its width) and for at least half its width across (not a road brushing a body's side)
+        # paving runs inside the body for more than max(3 widths, 30 m), as citygen leaves such a stretch out (a road under an arch or
+        # through a gate house crosses it in less) and for at least half its width across (not a road brushing a body's side): what
+        # is left is a landmark citygen lets roads through (PASSABLE, through:) or one its body does not close
         if lm and streets:
             tree_ = STRtree([q for _, q, _ in lm]); thr_ = []
             for i, s_ in enumerate(streets):
@@ -186,7 +188,7 @@ def main():
                     x_ = s_.intersection(lm[j][1])
                     if x_.is_empty: continue
                     a_, b_ = sorted(_sides(x_))
-                    if b_ > 2 * w_ and a_ > .5 * w_: c_ = x_.centroid; thr_.append([round(c_.x, 4), round(c_.y, 4)]); break
+                    if b_ > max(3 * w_, 30 * S) and a_ > .5 * w_: c_ = x_.centroid; thr_.append([round(c_.x, 4), round(c_.y, 4)]); break
             R['streets_through_landmarks_at'] = thr_[:200]
         # a wall through a building: a thin long piece (a court's or a city's wall, citygen strip) across a hall or a house body,
         # in the same court too (parts of one court are let touch in landmarks_overlap, so a wall through its own side hall passed)

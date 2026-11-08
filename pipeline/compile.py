@@ -1062,7 +1062,7 @@ def _gen_base():
         h_.update(json.dumps(_plain({k: v for k, v in dict.items(C) if k != 'film'}), sort_keys=True).encode())
         h_.update(json.dumps(_plain({k: v for k, v in dict.items(FM) if k not in _NOT_MODEL}), sort_keys=True).encode())
         tim_ = globals().get('_timg'); h_.update(tim_.tobytes() if hasattr(tim_, 'tobytes') else b'-')
-        h_.update(pickle.dumps((GRADE_PADS, _tex), protocol=4))
+        h_.update(pickle.dumps((GRADE_PADS, _tex, os.environ.get('CT_STREET_CUT', '')), protocol=4))   # (and the switches citygen reads)
         raw_ = os.path.realpath(LAYOUT.raw(D))
         for r_, ds_, fs_ in os.walk(raw_):
             ds_.sort()
