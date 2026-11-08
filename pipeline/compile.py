@@ -342,7 +342,7 @@ SLOTS, SLOTS_MAX = 8, 12   # channels of hide.png / hide2.png and edge.png / edg
                            # more standing at once takes 12 (hide3.png, edge3.png: film.eraSlots, the engine sizes its uniforms to it)
 if os.environ.get('CT_ERA_SLOTS'): SLOTS = SLOTS_MAX = int(os.environ['CT_ERA_SLOTS'])   # (fewer, to test the sharing on a film that needs none)
 
-def edge_sdf(bnd, D):
+def _edge_sdf(bnd, D):
     """distance to the era's outline, in units of D (0 on the line, 1 at D or beyond), over the outline's bounding box (+D).
     A distance field stays smooth when the camera comes close (a blurred mask shows its pixels); the engine draws the
     thin line with geometry and uses this only to light what stands near it."""
@@ -439,7 +439,7 @@ def today_polys():
         rings_ = [b[2][0] for b in _MODEL['p'] if len(b[2][0]) >= 3]; _TODAY.extend([rings_, _np.array([_P(r) for r in rings_], dtype=object)])
     return _TODAY
 
-def hide_layer(prims, cs, bnd=(), timed=()):
+def _hide_layer(prims, cs, bnd=(), timed=()):
     """where an era city stands, today's buildings step aside. The value is .04 + .96 x the rank (start time, 0..1 over the
     era's rise) of the era building at that spot, so today's building there sinks just before the old one beside it rises,
     in whatever order the stages grow (engine: hideK). Covers every primitive's padded footprint, today's buildings that
@@ -1107,13 +1107,60 @@ def _gen_store(key, deps, blob):
         rows_ = sorted({(*_dep(p_), _sha(p_)) for p_ in deps if os.path.isfile(p_)})
         f_ = os.path.join(GEN_CACHE, key + '.pkl'); tmp_ = f'{f_}.{os.getpid()}.tmp'
         with open(tmp_, 'wb') as g_: pickle.dump((rows_, zlib.compress(blob, 1)), g_, protocol=pickle.HIGHEST_PROTOCOL)
-        os.replace(tmp_, f_)
-        es_ = sorted((os.path.getmtime(os.path.join(GEN_CACHE, e_)), os.path.getsize(os.path.join(GEN_CACHE, e_)), e_) for e_ in os.listdir(GEN_CACHE) if e_.endswith('.pkl'))
-        tot_ = sum(s_ for _, s_, _ in es_)
-        for _, s_, e_ in es_:
-            if tot_ <= GEN_CACHE_MAX: break
-            with contextlib.suppress(OSError): os.remove(os.path.join(GEN_CACHE, e_)); tot_ -= s_
+        os.replace(tmp_, f_); _cache_prune()
     except OSError: pass   # (a full disk or a read-only tree: the city is still built, only not kept)
+def _cache_prune():   # (every compile cache together, the least recently used first, past GEN_CACHE_MAX)
+    root_ = os.path.dirname(GEN_CACHE); es_ = []
+    for r_, _, fs_ in os.walk(root_):
+        es_ += [(os.path.getmtime(os.path.join(r_, e_)), os.path.getsize(os.path.join(r_, e_)), os.path.join(r_, e_)) for e_ in fs_ if e_.endswith('.pkl')]
+    tot_ = sum(s_ for _, s_, _ in es_)
+    for _, s_, e_ in sorted(es_):
+        if tot_ <= GEN_CACHE_MAX: break
+        with contextlib.suppress(OSError): os.remove(e_); tot_ -= s_
+# the masks of each period city (hide_layer, edge_sdf) kept the same way: a pure function of what it is given (the city's parts with
+# their ranks, its spec, outline, timed hide regions and basins), today's buildings (model.json) and what the city cache keys on.
+# Read back, it gives what it gave and leaves what it left (the footprint, the count of today's buildings a timed region reads)
+_MODEL_SHA = []
+def _memo_key(*parts):
+    if not _MODEL_SHA: _MODEL_SHA.append(_sha(LAYOUT.data(D, 'model.json')))
+    h_ = hashlib.sha256(_gen_base().encode()); h_.update(_MODEL_SHA[0].encode())
+    for p_ in parts: h_.update(p_ if isinstance(p_, bytes) else pickle.dumps(p_, protocol=4)); h_.update(b'|')
+    return h_.hexdigest()
+def _memo_get(kind, key):
+    f_ = os.path.join(os.path.dirname(GEN_CACHE), kind, key + '.pkl')
+    try:
+        with open(f_, 'rb') as g_: v_ = pickle.loads(zlib.decompress(g_.read()))
+        os.utime(f_); return v_
+    except (OSError, EOFError, pickle.UnpicklingError, zlib.error, ValueError): return None
+def _memo_put(kind, key, value):
+    try:
+        d_ = os.path.join(os.path.dirname(GEN_CACHE), kind); os.makedirs(d_, exist_ok=True)
+        f_ = os.path.join(d_, key + '.pkl'); tmp_ = f'{f_}.{os.getpid()}.tmp'
+        with open(tmp_, 'wb') as g_: g_.write(zlib.compress(pickle.dumps(value, protocol=pickle.HIGHEST_PROTOCOL), 1))
+        os.replace(tmp_, f_); _cache_prune()
+    except OSError: pass
+_im = lambda im: (im.mode, im.size, im.tobytes())   # (an image as plain data, and back)
+_mi = lambda v: Image.frombytes(*v)
+MASK_HITS = [0, 0]
+def hide_layer(prims, cs, bnd=(), timed=()):
+    era_ = cs.get('_id', '')
+    if GEN_CACHE is None: return _hide_layer(prims, cs, bnd, timed)
+    key_ = _memo_key('hide', HW, HH, era_, pickle.dumps(prims, protocol=4), json.dumps(_plain(cs), sort_keys=True), bnd, list(timed), BASINS.get(era_, []))
+    v_ = _memo_get('hide', key_)
+    if v_ is not None:
+        MASK_HITS[0] += 1; FOOT[era_] = _mi(v_[1])
+        if v_[2] is not None: TIMED_HIDE[era_] = v_[2]
+        return _mi(v_[0])
+    out_ = _hide_layer(prims, cs, bnd, timed); MASK_HITS[1] += 1
+    _memo_put('hide', key_, (_im(out_), _im(FOOT[era_]), TIMED_HIDE.get(era_) if timed else None))
+    return out_
+def edge_sdf(bnd, D_):
+    if GEN_CACHE is None: return _edge_sdf(bnd, D_)
+    key_ = _memo_key('edge', EW, tuple(F.size), bnd, D_)
+    v_ = _memo_get('edge', key_)
+    if v_ is not None: MASK_HITS[0] += 1; return _mi(v_[0]), v_[1]
+    img_, rect_ = _edge_sdf(bnd, D_); MASK_HITS[1] += 1
+    _memo_put('edge', key_, (_im(img_), rect_)); return img_, rect_
 GEN_HITS = [int(x_) for x_ in (os.environ.get('CT_GEN_HITS') or '0,0').split(',')]   # (read back, built: over the passes of this run)
 
 def gen_city(node):
@@ -3275,7 +3322,7 @@ for w_ in WARN: print('warning: ' + w_, file=sys.stderr)
 if LIVING_BAD and os.environ.get('CT_LIVING') != 'warn':   # (CT_LIVING=warn: report only, while the pictures are being made: tools/living.py ref reads film.json)
     fault('living moments (docs/STAGING.md "Living moments"): ' + '; '.join(LIVING_BAD))
 json.dump({'seconds': round(_time.time() - _T0, 1), 'passes': PASS}, open(_TF, 'w'))
-print(f'  period cities: {GEN_HITS[0]} read back from local/cache/gen, {GEN_HITS[1]} built')
+print(f'  period cities: {GEN_HITS[0]} read back from local/cache/gen, {GEN_HITS[1]} built; their masks (this pass): {MASK_HITS[0]} read back, {MASK_HITS[1]} made')
 print(f'compile: {(_time.time() - _T0) / 60:.1f} min, {PASS} pass{"es" if PASS > 1 else ""} of the stage plan')
 if FAULTS:   # (film.json and the logs are written: the faults can be looked at in the preview and the stills)
     raise SystemExit(f'compile: {len(FAULTS)} fault(s), all of them listed above as FAULT 1..{len(FAULTS)}: fix them together and compile once')

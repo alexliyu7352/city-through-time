@@ -7,7 +7,7 @@
 
 ## Preview
 
-`uv run python -I pipeline/compile.py cities/<slug>` (a period city whose inputs did not change since an earlier compile, of this version of the city or another, is read back from `local/cache/gen` instead of built again: most of a compile on a large city; `CT_GEN_CACHE=0` builds every city);
+`uv run python -I pipeline/compile.py cities/<slug>` (a period city whose inputs did not change since an earlier compile, of this version of the city or another, is read back from `local/cache/gen` instead of built again, and so are its masks (`local/cache/hide`, `local/cache/edge`): most of a compile on a large city; `CT_GEN_CACHE=0` builds every city and mask);
 `node tools/preview.mjs <slug>` starts a local server, and the user opens in Chrome the `play.html?city=<slug>&play=1` it prints to play live; judge each node yourself when it is done (the audience pass below), then lay the next one,
 and show the user long stretches of the film (SKILL.md workflow).
 On the contact sheets the round makes ("After every change"), check section by section: whether pins are out of frame, whether layers are visible, whether the camera is aimed at the subject.
