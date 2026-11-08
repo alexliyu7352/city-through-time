@@ -1,4 +1,5 @@
-// The delivered film: node render/mux.mjs <video.mp4> <mix.wav> <out.mp4> [--fps 24] [--grain 2]
+// The delivered film: node render/mux.mjs <video.mp4> <mix.wav> <out.mp4> [--fps 24] [--grain 2]   (the picture: also an .ffconcat list
+// of its parts, render/video.mjs)
 // (adapted from lemo-opuscar core/render/mux.sh, MIT; see NOTICE). The picture is encoded at the target rate (held stretches get
 // copied frames) with film grain (--grain 0: none); the audio gets a two-pass loudnorm to -14 LUFS / true peak -1.2 dB (one pass
 // misses by about 0.5 LU) and silence to the picture's length when it is shorter (a longer one is cut to the picture).

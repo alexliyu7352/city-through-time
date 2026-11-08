@@ -1,6 +1,7 @@
 // One command per city: data -> film.json (fonts resolved) -> events -> [code score] -> checks -> picture -> mix -> the film -> subtitles -> checks -> poster
-//   node tools/build.mjs <city_slug> [--no-data] [--no-video] [--no-mix] [--workers N]
-//   --no-video reuses build/video/video.mp4, --no-mix reuses build/audio/mix.wav (the mix takes minutes of CPU: run it alone on a desktop)
+//   node tools/build.mjs <city_slug> [--no-data] [--no-video] [--no-mix] [--workers N] [--size 2560x1440]
+//   --size: the film's size (16:9, default 1920x1080); the picture stays in parts (build/video/video.ffconcat, render/video.mjs)
+//   --no-video reuses build/video/ (video.ffconcat, or an older video.mp4), --no-mix reuses build/audio/mix.wav (the mix takes minutes of CPU: run it alone on a desktop)
 // Layout (pipeline/layout.py): sources in cities/<slug>/, everything made in build/, the deliverables in dist/. Python runs through
 // uv (pyproject.toml); this machine's Chrome and worker count come from local/config.json (docs/SETUP.md).
 import fs from 'fs'; import os from 'os'; import path from 'path'; import { spawnSync } from 'child_process';
@@ -8,7 +9,7 @@ import { ROOT, local, cityDir, buildDir } from '../render/local.mjs';
 
 const args = process.argv.slice(2), has = k => args.includes(k), opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
 const slug = args[0];
-if (!slug || slug.startsWith('--')) { console.error('usage: node tools/build.mjs <city_slug> [--no-data] [--no-video] [--no-mix] [--workers N]'); process.exit(2); }
+if (!slug || slug.startsWith('--')) { console.error('usage: node tools/build.mjs <city_slug> [--no-data] [--no-video] [--no-mix] [--workers N] [--size WxH]'); process.exit(2); }
 const CITY = cityDir(slug), B = buildDir(slug), DIST = cityDir(slug, 'dist'), WORKERS = String(opt('--workers', local('workers')));
 if (!fs.existsSync(path.join(CITY, 'city.yaml'))) { console.error(`no ${CITY}/city.yaml`); process.exit(2); }
 for (const d of ['data', 'logs', 'export', 'audio', 'video', 'review']) fs.mkdirSync(path.join(B, d), { recursive: true });
@@ -39,10 +40,12 @@ if (CODE) console.log(tail(py(['-I', 'audio/codescore.py', CITY]).out, 2));   //
 console.log(tail(node(['tools/subcheck.mjs', slug], { soft: true }).out, 1));
 console.log(tail(py(['-I', 'tools/clipcheck.py', CITY], { soft: true }).out, 1));
 if (node(['tools/camcheck.mjs', slug]).ok) console.log(tail(py(['-I', 'tools/camcheck.py', CITY], { soft: true }).out, 3));
-if (!has('--no-video')) node(['render/video.mjs', slug, '--fps', '24', '--workers', WORKERS], { live: true });
+const PIC = path.join(B, 'video', 'video.ffconcat'), OLD = path.join(B, 'video', 'video.mp4');
+if (!has('--no-video')) node(['render/video.mjs', slug, '--fps', '24', '--workers', WORKERS, '--size', opt('--size', '1920x1080'), '--out', PIC], { live: true });
+const V = fs.existsSync(PIC) || !fs.existsSync(OLD) ? PIC : OLD;   // (--no-video on a picture rendered before the parts: its joined file)
 if (!has('--no-mix') || !fs.existsSync(path.join(B, 'audio', 'mix.wav'))) console.log(tail(py(['-I', 'audio/mix.py', CITY]).out, 2));
 const FILM = path.join(DIST, `${slug}.mp4`);
-console.log(tail(node(['render/mux.mjs', path.join(B, 'video', 'video.mp4'), path.join(B, 'audio', 'mix.wav'), FILM, '--fps', '24', '--grain', '1']).out, 4));
+console.log(tail(node(['render/mux.mjs', V, path.join(B, 'audio', 'mix.wav'), FILM, '--fps', '24', '--grain', '1']).out, 4));
 for (const f of fs.readdirSync(path.join(B, 'export'))) if (f.startsWith(slug + '.') && /\.(srt|vtt)$/.test(f)) fs.copyFileSync(path.join(B, 'export', f), path.join(DIST, f));   // both languages and each (pipeline/subtitles.py)
 
 // checks

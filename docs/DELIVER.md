@@ -9,6 +9,8 @@
 ## Rendering (only after the user approves in the preview)
 
 `node tools/build.mjs <slug>` (add `--no-data` when the data already exists; add `--no-video` when the frames are already rendered).
+`--size 2560x1440` renders a sharper film (any 16:9 size; 1920x1080 by default): the city is drawn at twice 1920 and scaled down, so 2560 wide shows real detail, and a video platform encodes a 1440-line upload better; the text layer is drawn 1920 wide and gains nothing.
+The picture is kept in parts (`build/video/video.ffconcat` lists them; mux reads it as one picture): the disk holds the picture once while rendering (at 2560x1440 about 2 to 5 MB for each second of film, a dense city the most), plus the film in `dist/` (about half that). A render that runs out of disk loses its parts: check the space first.
 `dist/poster.jpg` written by `tools/build.mjs` is a placeholder of one frame from the film; the real cover is made at publishing (PUBLISH.md "Cover").
 Rendering also delivers the **description** `dist/description.md`, one for each language of the film:
 a one-line summary, a short description (social post), a long description (video platform), chapter times (from the nodes in `build/export/timeline.json`, less a node marked `continues`: it goes on with the chapter before; the first at 0:00, each chapter at least 10 seconds),

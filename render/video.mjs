@@ -3,7 +3,8 @@
 // this machine's `workers` (local/config.json). Each worker is its own browser over its share of the frames, its JPEG screenshots
 // piped to ffmpeg; the shares are joined losslessly. --from/--to render a stretch only (a test). The render runs at nice 10 so the
 // desktop stays usable. One render per --out: <out>.lock holds the pid (a lock whose pid is gone, or untouched for 12 h, is taken
-// over); the segments sit in a hidden folder beside --out, removed when the render ends, fails or is stopped.
+// over); the segments sit in a hidden folder beside --out, removed when the render ends, fails or is stopped. An --out ending in
+// .ffconcat keeps them unjoined (in <name>_parts/ beside it, listed in the file): the disk holds the picture once, not twice while joining.
 import fs from 'fs'; import os from 'os'; import path from 'path'; import { spawn, execFileSync } from 'child_process';
 import { openFilm, closeServer, takeSize, shot } from './page.mjs';
 import { local, buildDir } from './local.mjs';
@@ -66,10 +67,18 @@ try { await Promise.all([...Array(WK)].map(async (_, w) => {
   ff.stdin.end(); const code = await closed; await browser.close();
   if (dead || code !== 0) fail(`ffmpeg failed for worker ${w}: ${dead || 'exit code ' + code} (ffmpeg's own message, if any, is above)`);
 })); } catch (e) { fail(`render stopped: ${String(e.message || e).split('\n')[0]}`); }   // e.g. the page's render(t) threw
-fs.writeFileSync(path.join(segDir, 'segs.txt'), [...Array(WK)].map((_, w) => `file 'seg_${w}.mp4'`).filter((_, w) => w * per < TOTAL).join('\n'));
-try { execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', 'segs.txt', '-c', 'copy', 'merged.mp4'], { cwd: segDir, stdio: ['ignore', 'inherit', 'inherit'] }); }
-catch { fail('ffmpeg could not join the segments (its message is above)'); }
-fs.renameSync(path.join(segDir, 'merged.mp4'), out);   // the final name never passes through ffmpeg
+const segs = [...Array(WK).keys()].filter(w => w * per < TOTAL);
+if (path.extname(out) === '.ffconcat') {   // the parts stay, listed with their lengths: ffmpeg reads the list as one picture
+  // (render/mux.mjs takes it as it takes an .mp4); joining would hold the picture twice on disk, which a long film at 2K may not have
+  const dir = `${base.replace(/[^\w.-]/g, '_').replace(/^\./, '_')}_parts`, parts = path.join(outDir, dir);   // (a name ffmpeg reads as safe)
+  fs.rmSync(parts, { recursive: true, force: true }); fs.rmSync(path.join(segDir, 'pid')); fs.renameSync(segDir, parts); segDir = null;
+  fs.writeFileSync(out, 'ffconcat version 1.0\n' + segs.map(w => `file '${dir}/seg_${w}.mp4'\nduration ${Math.min(per, TOTAL - w * per) / FPS}\n`).join(''));
+} else {
+  fs.writeFileSync(path.join(segDir, 'segs.txt'), segs.map(w => `file 'seg_${w}.mp4'`).join('\n'));
+  try { execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', 'segs.txt', '-c', 'copy', 'merged.mp4'], { cwd: segDir, stdio: ['ignore', 'inherit', 'inherit'] }); }
+  catch { fail('ffmpeg could not join the segments (its message is above)'); }
+  fs.renameSync(path.join(segDir, 'merged.mp4'), out);   // the final name never passes through ffmpeg
+}
 cleanup();
 console.log('done', out, TOTAL, 'frames', ((Date.now() - t0) / 1000).toFixed(0) + 's');
 closeServer();
