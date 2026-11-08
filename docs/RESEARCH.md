@@ -20,7 +20,8 @@ Research is the script's stock room: the events, people, stories and the locals'
 3. Collect story material for each station (§3).
 4. Write the results into the city folder: `FACTS.md` (the source of every claim on screen) and `research/` (notes, reports, source texts, `stories.md`, `images.md`),
    which go into git with the city: they are this city's data, not temporary files.
-5. Open the original text yourself once more for the key facts: the opening and the ending, every year shown on screen, people's and places' names, quotations.
+5. Check every key fact on screen again against its original text, independently of the agent that collected it (for instance by the main agent, or by a separate verifier
+   working from `FACTS.md` and the source texts, never from summaries): the opening and the ending, every year shown on screen, people's and places' names, quotations.
 6. **Show the user the story first, then the station table**, and go to the next step only when the user approves:
    - one sentence that says what the city wins, loses and becomes (the stakes), not an abstract theme such as "a city that keeps rewriting itself";
    - the shape: the highest peak, the deepest fall, where the film turns, and the narrator's feeling rising and falling across the stations;
@@ -57,10 +58,12 @@ would prove) is offered to the user as an option; it does not steer the choice o
 **Give major events enough room:** the most glorious or most painful moment of a city is not a station carried by one line of narration; it can be a story of several minutes.
 Research it thoroughly at this stage: causes, course, key people, details, the effect on the city (Xianyang: King Ying Zheng of Qin destroyed the six states in 10 years and took the title First Emperor, dividing the world into 36 commanderies;
 for every state he destroyed, he rebuilt its palaces as exact copies on the north slope of Xianyang, and moved 120,000 of the richest households under heaven to Xianyang; writing, axle widths and weights and measures were unified from here for the whole world).
-Tell the protagonist of such an event fully too: what he achieved and why it matters; write the disputed points as facts according to the sources, and do not use him only as a contrast to the decline that follows.
+Tell the protagonist of such an event plainly and fully too: what he achieved and why it matters, and do not use him only as a contrast to the decline that follows.
+Where the sources disagree, say what they support (the range, "about", or legend), no less and no more.
 
-**Tell an epic, not a list of public works.** Choose the stations as the film's director already: the city is the protagonist, and it has stakes. An epic has a rise,
-a peak, a fall or a loss, a return and a future; name the people who drove each of them (rulers, builders, invaders, saints, artists, ordinary residents whose words survive).
+**Tell an epic, not a list of public works.** Choose the stations as the film's director already: the city is the protagonist, and it has stakes. An epic has the shape
+this city's history actually has: what it won, risked and lost, its highest and its lowest moments (Xianyang's is rise, peak, fall, return), and a future; name the people who
+drove each turn (rulers, builders, invaders, saints, artists, ordinary residents whose words survive). Never enlarge an event to fill a slot of another city's shape.
 A station whose story is a building programme, an administrative act or a planning policy is a short transition at most, unless something was won or lost there.
 Compress a stretch without drama, but never leave the modern era empty: the city growing building by building from the first year of the data
 (GHSL: 1975) is one of this film's signature pictures (STAGING.md 9i), and the story must reach this year. Give the decades of living memory their own
@@ -116,11 +119,12 @@ do not collect what has no source. Use `stories.md` first when writing the scrip
 
 From the starting era to today, each entry has: year (BCE as a negative number), event, source URL, the original quotation, a status mark.
 Status: [OK] original text opened; [SEC] only Wikipedia or a search summary; [WEAK] tourism or aggregator site; [EST] estimate.
-Only [OK] and [SEC] may go on screen; for the key years of a [SEC] entry find one more source or note it in FACTS.md. When two sources conflict, record both and use the more conservative wording on screen.
+Only [OK] and [SEC] may go on screen; for the key years of a [SEC] entry find one more source or note it in FACTS.md. When two sources conflict, record both and on screen say what they support (the range, "about", or legend), no less and no more.
 Copy numbers as in the original (for checking); for how to write them in the narration see SCRIPT.md.
 
 **Tell it up to this year, and close on the future:** the last station reaches this year (the latest government work report, statistical bulletin, this year's major events); the ending must land on the city's future:
-what is being built, what is planned, what the locals look forward to, and only then is the story complete. The outlook needs sources too: write a plan as a plan and an expectation as an expectation, never as already done.
+what is being built, what is planned, what the locals look forward to, and only then is the story complete. The outlook needs sources too: write a plan as a plan and an expectation as an expectation, never as already done,
+in the story's own words ("is to reach the old town by 2028"), not with a report's caveats ("according to the plan, it is expected to…"); the sourcing and the estimate go on screen (SCRIPT.md "Copy").
 
 These requirements bind the agent's own research and govern facts. The narrator's feelings, judgements and associations need no source (that is the voice of the work), but a feeling must not be written as a new fact.
 Copy the user writes themselves (local history, family memory, material not online) is used as is without demanding a source; raise it only when it contradicts data you found.
@@ -142,7 +146,8 @@ Scoring order:
 
 Check OSM first: `historic=*`, `site_type`, `archaeological_site`, `tomb`, `citywalls`, protected-area polygons (the historic theme of pipeline/osm.py already fetches them).
 Use an outline where one exists (`osm_polygons:` / `mounds: osm:`) and record the way id in FACTS.md.
-Where there is no outline, draw a schematic polygon from the literature (`polygons:`) and label it "schematic" on screen. A point with no coordinates is mentioned only in a subtitle, with no pin.
+Where there is no outline, draw a schematic polygon from the literature (`polygons:`) and label it "schematic" on screen. A pin at public coordinates stays as it is; a position estimated
+from the sources is labelled "location schematic"; a place with no basis for a position at all is mentioned without a pin.
 For an area a subtitle names (an administrative district, new area, new town, factory area, protected area), find the boundary: OSM administrative boundaries, official planning maps, the townships and streets it is made of; if none is found, draw a schematic one from the description of its four limits.
 Write everything into `research/<topic>_areas.geojson` (properties.id, status, source), and record the source and method of each item in the research file.
 Earthworks and platforms that still exist today, such as mounds, are built as real geometry with `mounds:` (base from the OSM outline, height from the literature, a customary value where nothing is recorded, with a note).
@@ -153,7 +158,8 @@ Earthworks and platforms that still exist today, such as mounds, are built as re
 - Name the output files and sections: timeline, story material (§3), coordinate table, ranking of anchor candidates, numbers, a list of unverified items.
 - Require a URL and the original text for every item; require a distinction between original text and the fetcher's summary ([PARAPHRASE]); story material also carries sources (a person's own words, gazetteer, interview).
 - Government sites are often unreachable: have the subagent note the URL, and the main agent tries again or uses a news reprint.
-- The main agent must check again itself: the anchor event, every year shown on screen, people's and places' names, and qualifiers where one word makes the sentence wrong ("international", "first", "into the urban area").
+- Every key fact on screen is checked again against its original text, independently of the subagent that collected it (for instance by the main agent, or by a separate verifier
+  working from `FACTS.md` and the source texts, never from summaries): the anchor event, every year shown on screen, people's and places' names, and qualifiers where one word makes the sentence wrong ("international", "first", "into the urban area").
   An entry with no original text attached counts as unverified (example: in a 15-item Xianyang list, the year Xianyang Lake was filled, subway phase 2 "into the urban area", the word "international" for the airport, and "China's first colour picture tube"
   were all wrong or had no source).
 - The output path is `cities/<slug>/research/` (notes, reports and source texts all go there; separate notes of music research go in `research/music_notes/`), and it goes into git with the city.

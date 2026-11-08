@@ -39,10 +39,10 @@ and lay the other periods only once the houses are recognisable as houses. Take 
 runs short, a study folder (or a candidate copy of the city) may live on another disk: make it there and link it in where the tools look (`build/review/modelview/<name>`
 as a symbolic link); compile, the checks and the stills follow the link. Keep only what can be made again on such a disk (a temporary disk is emptied on a restart),
 never an approved or frozen study or the city's own build. For a city with no schematic, first send a research subagent to find the archaeological and documentary layout (written into `research/`); do not fill in with grid cells.
-Every historic period needs at least one low-angle close-up (elevation 10–15°) so that the audience sees that houses are houses; the wide shot is used only to see the colour change and the growth.
+In each historic period the audience sees the city at least once close enough and long enough to recognise its houses as houses of their time (for instance a low glide along a main street at 10–15°); the storyboard decides where and how, and wide shots carry whatever the story needs.
 For a part made from the sources, check the model against that drawing item by item: position, orientation, tiers, size; no error from compile or clipcheck does not mean it is right
 (example: the three tiers of a platform were stacked in the wrong direction, and no check will report that).
-**After any change to a period city's model or to the look** (citygen, a house type, `engine/props.js`, the light and shading), look at every period city from every side:
+**After any change to a period city's model or to the look**, look from every side at whatever the change can reach: a change to one city's spec, that city at the moments it touches; shared code (citygen, a house type, `engine/props.js`) or the light and shading, every city that uses it:
 `node tools/eraview.mjs <slug> [--eras a,b]` first runs `tools/geocheck.mjs`, which stops on any face of a period city or prop that points into its piece (such a face is either not drawn from
 outside, so a near wall goes missing and the inner side of the far wall shows through, or is lit as if it faced away, so a gable end shines white in its roof); it then takes each period city's
 densest houses from eight bearings at two heights, its four largest landmarks from four bearings each (where a stair, a tree or a road meets a big building)
@@ -208,8 +208,8 @@ survivors of many periods standing together (a temple of one, a church of anothe
 
 The boundary is computed automatically from the generated buildings; for a boundary the buildings cannot give (a village moat) add `outline:`, and the footprints of the historic cities at the end are also drawn from it;
 a city laid over the previous period writes `avoid_eras: [<id>]`, so the new quarters go around the old city. Walls, elevated corridors and street surfaces on slopes tilt with the slope (citygen `lay`); do not make them into steps segment by segment.
-The later period must show change: a new city laid over the previous one must differ clearly in scale or layout (adding a few small courtyards does not count), enlarged according to the sources; the old city stays underneath, and after the colour change use a wide shot first
-so that the audience sees the new city grow around the old one, then move closer (example: Xianyang's imperial capital follows the 《史記》 (Records of the Grand Historian): the palaces of the six states
+A later period city shows what the sources say changed, clearly enough for the audience to see it; where little changed the story says so, and the model does not invent growth. The old city stays underneath, and the staging is the storyboard's,
+for instance a wide shot as the new city rises around the old one, then closer (example: Xianyang's imperial capital follows the 《史記》 (Records of the Grand Historian): the palaces of the six states
 line up along the north slope, and the new quarters of 120,000 households surround the old city).
 
 ## No empty cities
@@ -242,9 +242,9 @@ own ground (the wings stepped against the walls and the court, each on a darker 
 walls (a court on the 北阪 stood behind a wall as tall as a city's). clipcheck's `floating` knows the platforms.
 **Large plots get multi-courtyard mansions:** a courtyard plot deeper than 60 m (`Builder.MANSION_D`) is built automatically as a mansion: one courtyard every 30 m or so along the central axis, side courtyards added on both sides of a wide plot, and the surrounding wall drawn in every detail.
 A single courtyard cannot fill a large plot, leaving only a few thin houses at the edge around empty ground, which looks like an empty frame at low detail.
-Likewise, a market must have rows of shops in every cell, and a workshop area must be drawn as courtyards one by one as excavated (`workshops`), not a single row along the street or scattered points: from afar they look like empty frames and grains of sand.
+Likewise, a market or a workshop quarter reads at the film's distances as what the sources show (for instance shop rows in every cell of a ward market, workshop courtyards one by one as excavated (`workshops`), an open square with stalls), never an empty frame or scattered grains: a single row along the street or scattered points look like that from afar.
 The sizes hard-coded in a generator (house depth, number of stall rows, number of courtyard sequences) must be tried on the largest plot in the city's settings: a large plot that cannot be filled gets only an outline, which is an empty frame at low detail.
-When changing a threshold, avoid the batch the user has just seen and approved; do not let half of them change and half not.
+A threshold change neither silently alters what the user approved nor leaves a city half one way and half another: either scope it so the approved part is untouched and the rest still matches, or apply it everywhere and show the user what changed in the approved part.
 **Lay out blocks from an old map or an archaeological plan** (`city.trace`): register the picture and trace on it with `pipeline/register.py`, never with conversions of your own
 (written by hand they mirrored pictures, took 111,320 m a degree everywhere and read projected rasters as lon/lat). A GeoTIFF carries its registration; a figure without one is fitted
 to control points read off it (`{image, controls: [{id, pixel, lonlat}], method: similarity | affine}`: each point's residual and its error when left out are printed, a mirrored fit
@@ -265,9 +265,9 @@ clipcheck's `paving_under` checks whether the paving and yards are covered by th
 
 ## Appearance and height
 
-**The dark room is the brightness ratio between the subject and the plate, not how black the plate is:** lift the plate with a blue tint, make the lit faces of the white model bright, and make the ring of light and the buildings of the current period the brightest,
-most saturated small areas in the picture; lift the mid-tones with a curve and leave the black level alone; do not raise the whole thing to grey. On a phone in bright surroundings the dark parts smear together, and platform compression hurts dark gradients most.
-For thresholds and how to measure, see CHECKS.md "Brightness".
+**The dark room is the brightness ratio between the subject and the plate, not how black the plate is:** the lit faces of the white model read bright, and the ring of light and the buildings of the current period are the brightest,
+most saturated small areas in the picture, without the whole picture raised to grey (for instance lift the plate with a blue tint and the mid-tones with a curve, and leave the black level alone). On a phone in bright surroundings the dark parts smear together, and platform compression hurts dark gradients most.
+For the phone look it must pass and how to measure, see CHECKS.md "Brightness".
 Dark plate (`palette.plate/plateSide/water/plateEmit`), ivory model, edge lines (`film.edges`). Water (rivers, draped and dug pools, moats) is told from the
 ground by how it moves, not by its colour alone: it is darker than `palette.water` and glossy, fine ripples run across it with the wind and carry the room's light,
 a thin lit line follows its shore, and small glints flare on it now and then; the ripples and glints that would be finer than a pixel or two are left out, so a wide
@@ -309,8 +309,9 @@ and let the old course run into today's where the stretch ends; compile warns wh
 seconds (3), and goes as the next one comes; today's buildings standing in its water step aside meanwhile. A change runs down the river as a front, as a line
 is drawn: upstream of it the new state's water, below it the old one's, so the new course fills from upstream while the old one runs dry behind it (downstream
 is the lower end of the stretches the change touches; `flow: [[lon, lat], [lon, lat]]`, upstream first, where the plate is too flat to say). A river moved
-sideways as a whole looks like no river ever did, and a fade between two channels kilometres apart, while the camera looks elsewhere, goes unseen. **Stage it**
-where the camera holds that reach, with a route that says what moved and how far, the first time the river is somewhere else. `glimpse: {with: <route>, to:
+sideways as a whole looks like no river ever did. **The first time the river is somewhere else, the audience sees that it moved and roughly how far** (a fade
+between two channels kilometres apart, while the camera looks elsewhere, goes unseen); the storyboard decides how (for instance a hold on that reach with a route
+that says what moved and how far), without bending other scenes around it. `glimpse: {with: <route>, to:
 <state, or today>}` runs that water down the river and back while the route shows: a look ahead (where it will run) while the film's own time stays. A course known to a few hundred metres is drawn where the sources put it and labelled schematic on screen, as a draped pool is; its
 basis (the sources, the anchors it was placed by, how far it is uncertain) goes in the research note its file comes from. Houses are checked against the water
 shown while they stand: compile warns of any whose centre is on it, today's or the period's.

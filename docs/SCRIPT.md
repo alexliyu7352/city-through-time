@@ -18,7 +18,8 @@
 ## The director fixes the story first
 
 In this step you are the director of the film, not a data clerk: the data is material, and what story to tell and what the audience remembers afterwards are your choice, to be settled with the user first.
-Do the following in order; go on only when the user confirms each step:
+Do the following in order. The items with a ★ in SKILL.md's workflow table (step 3: the story outline, the detailed outline, the narration draft, the storyboard) wait for the user's approval;
+the treatment and the emotional line are yours, shown together with the next ★ item:
 
 1. **Story outline:** read `research/stories.md` and the confirmed station list, and write an outline for the user to read:
    - One sentence: what kind of city the film is about and what story, a fate with a turn that the audience could retell, not a list of eras (Xianyang: a city that was once the centre of the world, burned into fields, shrank to a small town, and two thousand years later grew into one city with Chang'an across the river);
@@ -40,7 +41,7 @@ Do the following in order; go on only when the user confirms each step:
    sentence tells; a run of stations that only lists events gives the audience no question to follow (Xianyang's modern half follows one: will it become one city with
    Xi'an?). For each big passage name what the audience will carry away (Xianyang's imperial capital: 「二世三世至於萬世」 and then 「只撐了15年」; 120,000 households
    moved in; 「火三月不滅」); a big passage with nothing to carry away is not ready. The city's most memorable events and people (RESEARCH.md §2, question 2) have the
-   most room, and its fall or loss has a line as strong as its rise.
+   most room, and its lowest moment has a line as strong as its highest.
 
    Until the user confirms the outline, write no narration and arrange no picture.
 2. **Detailed outline:** break every station of the confirmed outline into beats. A beat is one thing the audience learns or feels, with the picture that carries it
@@ -63,13 +64,15 @@ Do the following in order; go on only when the user confirms each step:
 
    Decide by the story: a beat that does not move the arc, or that the audience cannot follow without more set-up than it is worth, is one line. Do not cut beats
    yet: what to cut is decided on real text (step 4). While writing it, keep a rough sense of length (a key beat takes about 20–40 seconds, a one-line beat
-   5–8 seconds); aim for about **15 minutes** unless the user sets another length (a little over is fine). Show the user the detailed outline; go on only when the user confirms it.
-3. **Treatment:** write `TREATMENT.md` from the confirmed detailed outline ("Treatment and nodes").
+   5–8 seconds). The length follows from what the story needs and what holds the audience, unless the user sets one: about 15 minutes is the usual result for material
+   like Xianyang's, not a target. Show the user the detailed outline; go on only when the user confirms it.
+3. **Treatment:** write `TREATMENT.md` from the confirmed detailed outline ("Treatment and nodes"); it is shown to the user together with the narration draft.
 4. **Narration draft:** write the continuous narration for the whole film from the confirmed detailed outline, a key beat told as a scene and a one-line beat
    in passing ("Copy"); then estimate its length from the speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
    plus the pauses, the prologue, the opening and the picture holds the outline needs (compile times the lines the same way until the voice is recorded: "Subtitles and the timeline").
-   Before showing it, review it as a listener (SKILL.md "Judge as the audience"): read it all aloud, in every language the film shows, then write down what you remember. Set the draft's rise, peak, fall,
-   return and ending beside the example film's lines for the same moments and rewrite what is vaguer. Then read it for the links ("Copy"): each sentence follows from
+   Get real timing whenever it helps (for instance compile a draft with `CT_SCRIPT`, "Subtitles and the timeline").
+   Before showing it, review it as a listener (SKILL.md "Judge as the audience"): read it all aloud, in every language the film shows, then write down what you remember. Set the draft's strongest
+   moments (its highest and lowest, its turns, its ending) beside the example film's strongest lines, for strength, not slot for slot, and rewrite what is vaguer. Then read it for the links ("Copy"): each sentence follows from
    the one before, each scene hands on to the next, and no one sentence shape keeps coming back.
    - **Cast.** The city is the protagonist. The people who drive its fate (rulers, builders, invaders, artists, the person a station's story is about) are its leading and
      supporting roles: name them, and the first time let the audience know who they are, through what they do in the story where you can (Xianyang: "In 350 BCE Duke
@@ -94,16 +97,18 @@ Do the following in order; go on only when the user confirms each step:
    for how it links, never a text to adopt: it brings its own faults (invented detail, drama, dropped beats), and adopting it is one more swing.
 
    Write the whole draft first and time it after. Never set a length for a draft or a rewrite in advance: held to a length, the writer drops the names, years and
-   reasons the audience needs, and the narration stops making sense. A draft clearly over is shortened through the outline (below), not by thinning its lines.
-   - About the length, or a little over: show the draft and its estimate to the user.
-   - Clearly over: adjust the detailed outline (a key beat becomes one line, beats merge, a beat goes) and show the user every change, why, and the time it
-     saves, with the new estimate. Only after the user confirms, rework the narration from the adjusted detailed outline (do not just strike sentences out of
-     the old draft), estimate again, and show the draft.
+   reasons the audience needs, and the narration stops making sense. A draft that runs long is shortened by cutting whole beats through the detailed outline (below),
+   never by thinning its lines: the names, years and links stay.
+   - It holds the audience all through: show the draft and its estimate to the user.
+   - It runs long: adjust the detailed outline (a key beat becomes one line, beats merge, a beat goes), rework the narration from the adjusted detailed outline
+     (do not just strike sentences out of the old draft) and estimate again; show the user the cuts, each with its reason and the time it saves, together with the
+     reworked draft and its new estimate.
 
    Never speed up the voice or crowd the lines to fit, and never answer a shorter voice with longer silent holds: picture time comes from what the audience must
    watch change (Xianyang: 604 seconds of voice in a film of 750 seconds; the copy check flags long silences). Only after the user confirms the draft, cut it into subtitles and write it into `script.yaml`;
    compile then gives the exact length.
 5. **Emotional line:** fix the narrator's feeling at each station from the outline (`mood`, "Emblem and emotional line"); the style of the music also comes from the outline and the emotional line (SOUND.md).
+   It is shown to the user together with the storyboard.
 6. **Storyboard:** once the narration is confirmed, and before any period city is built (step 4), write in `TREATMENT.md`, line by line, what is on screen as each line
    is said: which city rises or changes and what says so (the line, a tag), which place is marked or drawn on a map, which picture or living moment (STAGING.md
    "A picture for every key beat"). Show it to the user (★). Step 4 builds what the storyboard asks for; when the narration changes, the storyboard changes first.
@@ -125,17 +130,19 @@ Do not make every station the same length; the film's length is met by adjusting
 
 ## Prologue
 
-Open the film with a 15–25 second prologue that shows the audience the most striking moment of the whole film first, then tells the story from the beginning. Platforms measure an opening by "how many are left after 30 seconds";
-if the first 30 seconds do not say why this city is worth watching, the audience leaves.
+Open the film with a prologue that shows the audience the most striking moment of the whole film first, then tells the story from the beginning. Platforms measure an opening by "how many are left after 30 seconds":
+within the first 30 seconds the viewer sees the film's most striking moment and knows why this city is worth watching, or leaves.
 - The prologue is a separate piece: it has its own camera, narration and music, and differs from that scene in the main film; the city model is shared with the main film. It ends in black and cuts to the opening of the main film; no rewinding.
-- Use the event with the most room and the strongest picture in the outline (Xianyang: the golden light of the imperial capital and the fire that burned the city). The camera is close and brighter than in the main film, with the subject filling the frame.
-- Mostly real scenes drawn by the engine (about 70%), with one or two imagined pictures mixed in to supply the people and scenes a white model cannot give. What appears in the prologue must be seen in the main film:
+- Use the event with the most room and the strongest picture in the outline (Xianyang: the golden light of the imperial capital and the fire that burned the city), shot so that it strikes at once.
+- It promises only what the film delivers: what appears in the prologue must be seen in the main film (imagined pictures may supply the people and scenes a white model cannot give);
   the prologue and the cover are promises to the audience.
-- The prologue's lines are said over its one moment: the question it ends on is answered by the opening of the main film, so do not show the
+- It leaves an open pull and does not give away the main film's reversal (Xianyang: do not say 「只撐了15年」 ("it lasted only 15 years")).
+- The prologue's lines are said over its one moment: the pull it ends on is answered by the opening of the main film, so do not show the
   answer in the prologue (a cut back to today's city or the first huts is a hard cut into another period, and gives away the opening
   seconds before it plays); a `see:` on those lines names the prologue's own pin or card, or nothing.
-- Two or three lines of narration, ending on a question (Xianyang: 「它從哪裡來？又怎樣活到今天？」 ("Where did it come from? And how did it live to today?")); do not give away the main film's reversal in advance (Xianyang: do not say 「只撐了15年」 ("it lasted only 15 years")).
-- The music uses the same voice as in the main film (Xianyang: the drums of the imperial capital), and one sound effect from the main film may be added.
+- The music uses the same voice as in the main film (Xianyang: the drums of the imperial capital); a sound effect, if any, is one the main film has.
+- For instance: about 20 seconds, mostly real scenes drawn by the engine, closer and brighter than in the main film; three lines ending on a question
+  (「它從哪裡來？又怎樣活到今天？」 ("Where did it come from? And how did it live to today?")).
 - Test: if this moment appears once more in the main film, is it better or worse? If worse, choose another moment.
 
 Settings (`film.prologue` in `city.yaml`; the lines go in `script.yaml` under `prologue:`):
@@ -167,7 +174,8 @@ film:
 Decide the pictures from the outline, not only on the main line: scenes worth a look get pictures too, such as the city at its most prosperous (Han and Tang Chang'an), the mood of a poem (Wang Wei's 「渭城朝雨」 ("morning rain at Weicheng")), the scenes of major events.
 Use first the CC pictures found in the picture list (`research/images.md`, DATA.md "Pictures and footage"); for the rest, generate imagined pictures based on the sources; for how to do it and how to label it see STAGING.md "Footage and pictures".
 A scene the audience should see alive (a street, a market, a festival, one moment of the city's daily life) is a living moment rather than a panel (STAGING.md "Living moments"): the picture is made from the model's own shot and the model turns into it; two or three a film, on key beats.
-Each picture gets one line of narration about it, and when placed it must not cover a change that is happening (STAGING.md 5b).
+The audience always knows what a picture shows and why it is up, from the line it sits under or from its caption; a picture is up while the line it belongs to is said,
+and when placed it must not cover a change that is happening (STAGING.md 5b).
 To generate imagined pictures: first ask the user which image-generation tools they have; if none, give the prompt to the user, who generates it with another AI and puts it in `assets/imagined/`.
 If the user has the Codex CLI, it can be used: `codex exec --skip-git-repo-check -` reads the prompt from stdin; tell it to draw one 16:9 picture with its built-in image generation and copy it to
 `assets/imagined/<name>.png` (in practice 1672×941, about two minutes each, can run in parallel). Each prompt states the scene and the period details (buildings, clothes, objects, terrain,
@@ -238,8 +246,9 @@ Signs of AI writing, to recognise when reading aloud, not a list to tick off:
   have; a sentence with no answer goes, however smoothly it links.
 - A point said, then explained, then summed up (Xianyang's fall is four lines, 「然而，它只撐了15年。項羽引兵入咸陽，燒秦宮室。火三月不滅。如今，那裡只剩一片田野。」
   ("It lasted 15 years. Xiang Yu took Xianyang and set the palaces alight. The fire burned for three months. Today only fields remain."), and none explains what it meant).
-- The tone of a report: who recorded it, how it was estimated, that it is still a plan. These go on screen (the source line, the label on the picture or card, the end card);
-  the voice names a record only when it is part of the story (an eyewitness's shock), and carries doubt in one word (「傳說」 ("legend"), "it is said").
+- The tone of a report: who recorded it, how it was estimated, a report's caveats around a plan ("according to the plan, it is expected to…"). The sourcing and the estimate go on screen
+  (the source line, the label on the picture or card, the end card); the voice names a record only when it is part of the story (an eyewitness's shock), carries doubt in one word
+  (「傳說」 ("legend"), "it is said"), and says a plan as a plan in the story's own words ("the line is to reach the old town by 2028").
 - Stock phrases (「見證了」 "a testament to", 「不僅……更是……」 "not only … but also", 「另一種」 "another kind of"), a moral at the end of every paragraph,
   every sentence in the same rhythm, facts strung along in outline order, a sentence the listener loses track of.
 - Talking to the audience, saying what you feel, an "I", a judgement of your own, a line that hands one scene to the next, saying why someone acted where the audience could not tell: these are not
@@ -299,12 +308,14 @@ Deliberate silences are written in `quiet:` of script.yaml. The thresholds are i
 compile also writes `build/export/`: `.srt` and `.vtt` for the bilingual and for each language, and `script_timed.tsv` (for each line: start, end, seconds to the next line, seconds it is said: for voice recording).
 The number check also scans on-screen text other than subtitles (pins, readouts, place names, photo captions, beam labels, the end card). Proper nouns and quotations that keep the original form go in `film.copy.keep`
 (Xianyang: 十五五, 國棉一廠 (State Cotton Mill No. 1), 火三月不滅).
-**Change copy as a draft first:** save the draft separately (for example `build/review/script_draft.yaml`), compile the draft with `CT_SCRIPT=<draft> uv run python -I pipeline/compile.py cities/<slug>`
-and look at it in the preview, leaving script.yaml untouched; give the user a before-and-after comparison line by line, and swap it into script.yaml only after confirmation.
+**The approved narration's words change only with the user's consent,** shown line by line as before and after, without disturbing the preview the user is watching (for instance save
+a draft separately (`build/review/script_draft.yaml`), compile it with `CT_SCRIPT=<draft> uv run python -I pipeline/compile.py cities/<slug>` and look at it in the preview, leaving
+script.yaml untouched). Changes that keep the approved words (splits, bindings, timing, pauses) go straight into script.yaml and are listed in the report.
 Each line takes as long as its voice (`film.voice.lang`, by default the first language); before the voice is recorded, as long as its text in that language takes to say at the language pack's `speak` rate
 (Chinese 4.3 characters, English 2.5 words a second). The subtitles follow the voice and never hold it; a subtitle stays on to be read only while the next line leaves room. When earlier lines cannot be finished, compile inserts time only where needed (before the picture that line has to wait for,
 and the picture waits along; if the last line cannot be finished, the node is lengthened), and does not stretch the whole node proportionally. The last node must be the current year (compile warns if it is not).
-When the second language's subtitle exceeds the single-line safe width (subcheck prints WIDE), split it into two lines with an id each; do not delete words and do not shrink the type size.
+When the second language's subtitle exceeds the single-line safe width (subcheck prints WIDE), make it fit at the readable size without losing meaning (for instance split it into two lines
+with an id each, or say it more tightly in that language); the approved narration's words still change only with the user's consent (above).
 
 ## Numbers on screen
 

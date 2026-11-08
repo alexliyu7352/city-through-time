@@ -53,7 +53,7 @@ Credit: write © OpenStreetMap contributors on the identity tag and the end card
 
 ## Extent and scale
 
-The model covers only the modern main urban area centred on the historic core, with a long side of about 20–30 km, at scale 1:10000 (plate about 2.5 m). Do not make the whole of a very large city.
+Set the extent by the story: the historic core and every place the narration needs, tight enough that the built city fills the picture (for instance a long side of about 20–30 km for a large city, at scale 1:10000: plate about 2.5 m); far mountains and water go in `terrain.context`. Do not make the whole of a very large city.
 `box` is in WGS84; `prep.py` chooses the UTM zone itself; one model unit = 1 model metre.
 
 - **The extent must let the city fill the picture:** frame the historic core and the places the narration will mention; if most of the frame is farmland, tighten it, or the city does not fill the picture and looks like a patch of crumbs.
@@ -79,8 +79,8 @@ Pictures in the film have two uses: each historic node ends with "the same place
   not by looking at a single frame. Then scale to 1600×900, desaturate by about 15%, and convert to all-intra H.264
   (`-g 1`, so the page can seek frame by frame), and put it in `cities/<slug>/assets/footage/`.
   The command looks like: `ffmpeg -ss S -t D -i in -vf "crop=…,scale=1600:900,fps=24" -an -c:v libx264 -crf 20 -g 1 out.mp4`.
-- On screen: length and manner follow STAGING.md "Footage and pictures": 4K video full frame for 7–9 seconds (slow push-in, letterbox bars, top left "今天 · TODAY · 實拍" ("Today · TODAY · live footage") + place name, bottom right the source),
-  high-resolution photos in the right-hand panel, low-resolution material as a small card with a leader line; do not flash by in 4–6 seconds.
+- On screen: how footage and pictures are shown (how long, and as full frame, panel or card) is set in one place, STAGING.md "Footage and pictures" ("the same place today");
+  this file keeps the data side: where the material comes from and its licence (above, and the record below), and its resolution, which decides the modes it can take there.
 - Web player bundle: all-intra frames are only for the renderer's frame-accurate seeking (Xianyang's footage is about 33 Mbps, 104 MB); when `tools/web.py` packs the bundle it re-encodes it into a streaming format for the web
   (CRF 26, `-g 24`, faststart; the whole Xianyang bundle fell from 206 MB to 121 MB). Do not put render-grade material on the web as it is.
 - Reproducible: write the crop and transcode commands into `cities/<slug>/assets/footage/make.sh` (.mp4 files are not in the repository; the originals are in the local ref folder).
@@ -101,5 +101,5 @@ Pictures in the film have two uses: each historic node ends with "the same place
 
 - Data: GHS-BUILT-V R2023A, 100 m cells, every 5 years 1975–2030 (2025 and 2030 are projections; only up to 2020 is read), CC BY 4.0. Download: `uv run python -I pipeline/ghsl_change.py fetch cities/<slug>` (the 1000 km tiles that cover the box, one or more; 12 periods, about 220 MB a tile).
 - What it holds: when each cell's **built-up ground** grew, not how tall it grew. Its volume for every epoch is that epoch's built surface times the cell's 2018 height (GHSL Data Package 2023, §2.3): a cell's volume over its surface stays the same from 1975 to 2020 (checked over Xianyang: 2,299 growing cells, spread 0.003 % at the median). So it dates when a plot became built-up (the first layer of a building dataset that says only "there by 1987", spread over 1975–1987 by its cell's growth) and counts the new buildings per year; **never show a building growing taller from it** (an earlier version did, for a third of Xianyang's buildings, from growth that was all ground). `grow.change: ghsl`.
-- What it cannot do: **demolition.** The observed volume of R2023A never decreases in any cell (checked over the whole Xianyang extent: no cell decreased between two periods), and no public data records demolished buildings. The film does not talk about demolition.
+- What it cannot do: **demolition.** The observed volume of R2023A never decreases in any cell (checked over the whole Xianyang extent: no cell decreased between two periods), and no public data records demolished buildings. Nothing in the film shows or implies demolition from GHSL data (it records none); a demolition the sources record is told and staged from those sources, with its basis.
 - On-screen label: "GHSL 建成体积 · 100 m · 5 年 · 估算" (GHSL built volume · 100 m · 5 years · estimate).

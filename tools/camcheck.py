@@ -8,7 +8,8 @@ For every camera sample (out/cam.json, the film's real camera with drift and nea
   below_ground  the camera is closer to the plate than 2 near planes
   inside        the camera is inside (or within 1.5 near planes of) a building of today or a period city that stands at that time
   blocked       a solid that stands at that time cuts the sight line between 4 % and 88 % of the way to the target
-  spin          two camera keys more than 120 degrees of azimuth apart (the camera whips round)
+  spin          two camera keys more than 120 degrees of azimuth apart: listed, not counted (compile unwraps the azimuth and stops on
+                a turn too fast to follow, its jump check); look that a big turn is meant
   offscreen     a period city changes where the viewer cannot see it: while its buildings rise, fewer than 60 % of the
                 rising ones are in the frame (or a full-screen clip covers it). Change only on screen (docs/STAGING.md).
   ring_unseen   a node's colour ring starts where the camera does not look (its origin out of frame for its first 1.5 s)
@@ -158,7 +159,7 @@ def main():
             ok = (z > 1e-6) & (np.abs((V @ r_) / (z * th * 16 / 9)) <= 1) & (np.abs((V @ u_) / (z * th)) <= 1)
         if any(a <= row[0] <= b for a, b in FULL): ok[:] = False
         return ok
-    # spins: camera keys are interpolated value by value, so 0 -> 357 degrees turns the whole way round: write -3
+    # spins: a big turn between two keys, listed to look at (compile has unwrapped the azimuth; a turn too fast to follow is its jump)
     pd_ = (FILM.get('prologue') or {}).get('dur', 0)   # (the prologue is cut like a trailer, and closes on black)
     spins = [(t0, t1, a[3], b[3]) for (t0, a), (t1, b) in zip(FILM['camera'][:-1], FILM['camera'][1:]) if abs(b[3] - a[3]) > 120 and t1 > pd_ + .6]
     spin_lines = [f'spin                   {t0:7.2f}-{t1:7.2f}s  azimuth {a0} -> {a1}' for t0, t1, a0, a1 in spins]   # (the whole film's: every stretch counts them)
@@ -243,7 +244,6 @@ def main():
                 if k.startswith('blocked') and w < .08: continue   # a corner grazing the sight line for a sample or two
                 if k.startswith('offscreen') and b - a < .35: continue   # a moment, not a scene
                 n += 1; lines.append(f'{k:22s} {a:7.2f}-{b:7.2f}s' + (f'  blocks {w:.0%} of the sight line' if k.startswith('blocked') else f'  {w:.0%} of the rising buildings in view' if k.startswith('offscreen') else ''))
-        n += len(spins)
         return out, lines + ['camcheck: ' + ('ok' if n <= mx else f'{n} intervals (see out/camcheck.json)')], n
     res = [check(P) for P in parts]
     for P, (_, lines, _) in zip(parts, res):

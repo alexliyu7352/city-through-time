@@ -20,8 +20,11 @@ After a context compaction, an agent change or a few days' break, first work out
 ## Core constraints (apply to every step)
 
 Working with the user
-- **Propose first, then act.** Before changing code, a data format, the engine or the workflow, state the reason and the approach, and change it only after the user agrees. When the user says "let's discuss first", only look things up and take screenshots; change no files.
-  A new request made midway goes into the plan with a note of which step it falls in; do not do it on the spot.
+- **Propose first, then act.** Propose, with the reason and the approach, any change that outlives this film or changes what the user approved (the engine's look, data formats, the
+  workflow, other cities' output), and make it only after the user agrees. Bug fixes, a city's own generators and tools that serve a round's notes are yours: list them in the commit
+  and the report. When the user says "let's discuss first", only look things up and take screenshots; change no files.
+  A request made midway is placed, not lost and not mixed in silently: say where it fits (now, this round, a later step). Do it now when it is small and touches nothing in
+  progress, or when the user wants it now; otherwise put it on the plan with a note of which step it falls in. List any addition in the report.
 - **The user judges the story and the film; you judge the steps towards them.** The user's approvals are the ★ in the workflow table: the story, the narration, the scale,
   the film in the preview, the music, the render and what is published. House types, quarters, samples, a station's camera and timing are yours: judge them against the
   step's done line and the example city, and go on. Do not wait for an approval no ★ asks for: each such round stalls the work and leaves the user judging details while
@@ -30,12 +33,14 @@ Working with the user
   language. Neither the city's own people nor native speakers are the measure. The film itself tells what the story needs: when it happens, who holds the city, who a
   person is and why something changes; nothing may rely on what a local, a historian or a native speaker already knows.
 - **Judge as the audience, not only by the checks.** Checks at zero say the film is not broken, not that it works. Before showing anything, watch and listen to it as that
-  viewer, in every language the film shows (each is read on its own), and write down what they would remember of it: the story in one sentence, and for each big passage a line, a number or a picture. Set it beside
-  the same moment of the example film (`cities/xianyang/`: its rise, peak, fall, return and ending); a stretch weaker or vaguer than the example is not done, whatever the
-  checks say. The main agent reviews a subagent's piece the same way.
+  viewer, in every language the film shows (each is read on its own), and write down what they would remember of it: the story in one sentence, and for each big passage a line, a number or a picture. Set its
+  strongest moments beside the example film's (`cities/xianyang/`, whose shape is rise, peak, fall, return) for strength, not slot for slot: each city has the shape its own
+  history has (RESEARCH.md §2). A stretch weaker or vaguer than the example is not done, whatever the checks say. The main agent reviews a subagent's piece the same way.
 - **Change only what was named.** Redo only the part the user sent back. If you find a better setting, use it only where named and add one line ("this works elsewhere too") for the user to decide.
-  **The problem the user points at is an example:** find the same defect in the same picture or the same generator yourself, and list it for the user before fixing.
-- **Small batch first, then the whole film.** Fix the few spots pointed at and test only those; apply the same fix to the whole film only after the user confirms it in the preview.
+  **The problem the user points at is an example:** the work is done when that defect is gone everywhere it occurs (for instance the same picture, the same generator, the rest of the film); find it yourself.
+- **Small batch first, then the whole film.** Fix the few spots pointed at and test those first; then spread the fix wherever it leaves approved and praised stretches unchanged (check
+  against the approved version, for instance `tools/round.py --against`), and report each place it touched (mm:ss). Where the fix would change how an approved passage looks or sounds,
+  show it in the next preview; do not stop the work to wait for a confirmation.
 - **Praised passages are the baseline.** Record them in TREATMENT.md (seconds, what works), and check every later batch of changes against them; they must not regress.
 - **Reports must be checkable.** Give film time (mm:ss), node and file name; if only half is done, say which parts are still wrong; record deferred problems as a list and pick it up in the next round without being asked;
   if the previous report was wrong, correct it first in the next one. Before saying "checks pass" or "the picture is unchanged", actually run and compare (CHECKS.md).
@@ -50,8 +55,8 @@ Computer and files
 - Local paths and settings live only in `local/config.json` (SETUP.md); always run Python as `uv run python -I …`.
 - **One heavy job at a time:** do not run rendering, mixing, music generation, DuckDB scans and whole-film screenshots at the same time. Render with 2 workers and nice by default. Write the progress of long jobs to a log file
   and read it with a separate command; do not pipe into `| tail`. To wait for a background job, wait on its PID or output file, not on the process name (`pgrep` matches its own shell).
-  **Wait once, for as long as the job takes** (compile says at its start how long the last one took): a single sleep or blocking wait of that length, or a
-  notification when it ends, never a look every half-minute. Each look is a whole turn of yours, which in a long conversation takes longer than the half-minute
+  **Wait without spending turns, and notice an early failure** (compile says at its start how long the last one took): for instance a notification when the job
+  exits, or a blocking wait on the process that returns when it dies; never a look every half-minute, and never a fixed sleep that outlasts a crash. Each look is a whole turn of yours, which in a long conversation takes longer than the half-minute
   it waits: a ten-minute compile watched that way costs twenty turns. Whole-film screenshots and checks freeze the user's computer so they cannot type:
   normally check only the stations you changed; run the whole film only in the round that fixes the whole film and before rendering the final film, and ask the user first.
 - **Try things on a copy.** For A/B tests and removing a part to see the effect, use a temporary folder or a git worktree. If you touched `build/` or a city's settings, restore it afterwards and confirm it is back to what it was.
@@ -68,7 +73,7 @@ Subagents and parallel work
   and the work slows to a crawl. Keep the main session for the plan, the user's decisions, review and merging, and give each self-contained piece to a subagent started with a fresh
   context (one that does not inherit this conversation: Codex `spawn_agent` without forking the turns, Claude Code's Agent tool, or whatever the environment offers). Where no subagent can
   be started, start each piece in a new session from the same brief.
-- **A round of revisions starts with a fresh context.** Once a round's list is set (the user's notes, frozen: later notes go to the next round), write the
+- **A round of revisions starts with a fresh context.** Once a round's list is set (the user's notes, frozen: a later note goes to the next round unless it is small and touches nothing in progress, or the user wants it now), write the
   handoff (`templates/handoff.md`, into the city's `research/`) and do the round in a new session or a subagent with a fresh context started from it. The old
   conversation is looked up, not carried: it holds withdrawn rulings and earlier versions, which a long context takes for current (a lost close shot put back
   wide, a base chosen from the wrong version), and every action in it costs more. A round is the user's list; what review sends back inside it (a fix that
@@ -79,13 +84,17 @@ Subagents and parallel work
 - **Sort a long list before the round starts.** Quick fixes (a tag moved, a label, a picture found or swapped, a line's binding) make one round, handed over
   first; rebuilds (a section restaged as a tour, a model re-traced from new sources, a new picture generated) the next. One round for both keeps the user
   waiting for the slowest item while the quick ones sit done. Research for a note stops when the picture is right; the rest goes to the notes for later.
-  A tool wanted in the middle of a round is built for the next one, unless the round would have to redo work without it.
+  Build a tool now when it saves time in this round. A fresh session with a handoff is for a context grown stale or large, not for a batch the agent holding the
+  files can finish in minutes.
 - **A piece** is work with its own inputs and its own files: one period city (step 4, once the research, the extent and the approved house types exist), one research question (step 1),
   the candidates for one music cue (step 7). Not a piece: what the user decides, the stations' staging (step 5 goes station by station, each building on the last), and a change to
   files several pieces share (the engine, the pipeline, types shared by periods, the shared keys of `city.yaml`): those stay with the main agent.
-- **The brief is all the subagent knows.** Write: the goal and its done line (the workflow table); the files it owns (for a period city: `research/<period>_*` and its study spec, built with
-  `tools/modelview.py --spec` under its own name) and the files it must not touch; what to read in full first (this file, the step's doc, `FACTS.md`, the approved types); what to deliver
-  first (MODEL.md: one quarter before the whole city); and how to report (paths of stills, the checks' lines, open questions, short). It does not ask the user anything; it asks the main agent.
+- **The brief is all the subagent knows.** It gives the subagent what it needs to meet its done line without guessing: the goal and its done line (the workflow table); the rules that
+  bind its piece and where they are; the files it owns (for a period city: `research/<period>_*` and its study spec, built with `tools/modelview.py --spec` under its own name) and the
+  files it must not touch; and how to report (paths of stills, the checks' lines, open questions, short). Have it read in full only what bears on its piece (for a period city, for
+  instance, the step's doc, `FACTS.md`, the approved types). Catch a wrong idea on a small part before the whole is built (for instance one quarter judged by the main agent before the
+  whole city, MODEL.md, after which the same subagent continues); where a subagent ends when it reports, resume it rather than start a new one. It does not ask the user anything; it
+  asks the main agent.
 - **Run in parallel what shares no files:** every period city at once, each its own subagent, when the environment can run that many (and every research question). The machine
   is shared: heavy jobs stay one at a time across all agents (rendering, mixing, music generation, whole-film checks), and a city's compile, a model study and every page a tool opens
   take one of two machine slots (`pipeline/slots.py`) and wait for a free one, so many subagents at work queue there instead of freezing the machine. The main agent merges one
@@ -106,7 +115,8 @@ Honesty
 - Every fact the agent researched and put into the film needs a real source in FACTS.md (this binds the agent's research, not the user and not the narrator's feelings).
   Copy the user writes or edits is used as is without demanding a source; raise it only when it contradicts data you found.
 - Label schematic as schematic and estimated as estimated: the period cities are schematic models; building years are not construction years (CMAB gives the first year an impervious surface appears; GHSL gives built-up area in 5-year periods),
-  and there is no building-by-building data before 1975. Do not put a dot on a site with no public coordinates, or label it "location schematic".
+  and there is no building-by-building data before 1975. A pin at public coordinates stays as it is; a position estimated from the sources is labelled "location schematic";
+  a place with no basis for a position at all is mentioned without a pin.
 - Careful means checked, not left out. A well-known story, saying or figure the film needs is looked up and verified like any fact; one that cannot be verified is told as
   legend, with "about", or as the range the sources give. Leaving a city's most memorable material out because it needed checking makes a film nobody remembers.
 - On screen, use third-party material only if it is CC, public domain, or something the user has the right to license. AI-generated narration, music and imagined pictures are labelled on screen and in the end card.
@@ -133,9 +143,12 @@ Writing rules
 | 8 | Render and deliver | `docs/DELIVER.md` | ★ render only after the user approves the preview; `dist/` has video, subtitles, description; whole-film checks and brightness pass the thresholds |
 | 9 | Publish: cover, upload, portal page (only when the user wants it public) | `docs/PUBLISH.md` | ★ cover concept; ★ every upload and push has the user's go-ahead on that occasion |
 
-Steps 4–6 go node by node: finish a station and judge it yourself (the done lines of steps 5 and 6, the audience pass) before laying the next. Show the user long
-stretches (a third of the film, or all of it) rather than each station: the user judges how the film plays as a whole, which no single station shows. Sound comes after picture: copy final → picture → preview → voice → compile again
-(timeline final) → music and effects → render.
+The period cities of step 4 do not depend on each other: build them at once ("Run in parallel what shares no files"). Staging and its checks (steps 5 and 6) are judged
+station by station (the done lines of steps 5 and 6, the audience pass), so that each station plays well coming out of the one before: a later station adapts to an
+earlier, already-judged one, never the other way round, unless that earlier station is judged again. Show the user long
+stretches (a third of the film, or all of it) rather than each station: the user judges how the film plays as a whole, which no single station shows. Sound follows what it is timed to:
+the voice's timing follows the final copy, and the timing of music and effects follows the final timeline (copy final → picture → preview → voice → compile again
+(timeline final) → music and effects → render). Work that depends on neither (casting the voice, music research, candidates) can start earlier, within the one-heavy-job limit.
 
 ## Which step are we on
 

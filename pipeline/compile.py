@@ -2356,7 +2356,7 @@ for (ta, va), (tb, vb) in zip(cam_s_, cam_s_[1:]):
     need_ = stagecraft.move_time(va, vb, speed=.6, t_min=0.0)
     if tb - ta < need_ - .1: rush.append((ta, tb, need_))
 for ta, tb, need_ in rush[:12]: print(f'    move {ta:.2f}-{tb:.2f} s: {tb - ta:.1f} s, it needs {need_:.1f} s')
-if rush: fault(f'{len(rush)} camera moves are faster than 9f allows (0.6 frames a second: travel, zoom, turn, tilt): give each the time it needs, or leave the move out')
+if rush: WARN.append(f'{len(rush)} camera moves are faster than the planner\'s pace (9f: 0.6 frames a second, listed above): look at each; a move the audience cannot follow gets more time or is left out (a cut-like one is a jump, which stops the compile)')
 ts_ = [PD + .6 + .1 * i for i in range(max(0, int((DUR - PD - 1.2) * 10)))]
 lz_ = [math.log2(max(CAMERA.state(t)[5], 1e-5)) for t in ts_]; brief = []
 for i in range(1, len(lz_) - 1):
@@ -2369,7 +2369,7 @@ for i in range(1, len(lz_) - 1):
         if came_ >= 1.5 and goes_ >= 1.5 and (ib_ - ia_) * .1 < TIMING['look_secs'] and free_(ts_[ia_], ts_[ib_]) and not any(abs(x_[0] - ts_[i]) < 1 for x_ in brief):
             brief.append((ts_[i], what_, (ib_ - ia_) * .1))
 for t_, what_, s_ in brief: print(f'    {what_} view at {t_:.1f} s: {s_:.1f} s within one zoom doubling of it, between moves of 1.5 doublings or more')
-if brief: fault(f'the camera turns back {len(brief)} times within {TIMING["look_secs"]:g} s of reaching a close or wide view: hold the view it went to, or do not go there')
+if brief: WARN.append(f'the camera turns back {len(brief)} times within {TIMING["look_secs"]:g} s of reaching a close or wide view (listed above): look at each; a view the audience cannot take in is held longer or not gone to')
 # a pin shows only what is on screen (docs/STAGING.md 9h): its place in the picture for most of its time. A tour stop frames its
 # pins (tour_subjects), so there an error; elsewhere still a warning (the film-wide pass)
 off_ = []
@@ -2505,10 +2505,11 @@ if grow and grow.get('yl'):
     if run_ and share_ < TIMING['see_share']:   # (the growth is the modern section's background: the film shows the city growing)
         fault(f'the city is seen growing {share_:.0%} of the {len(run_) * .25:.1f} s the counter runs, under {TIMING["see_share"]:.0%} (docs/STAGING.md 9i: a moment '
               f'shows growth when {TIMING["see_n"]:g} or more buildings rise in the frame at once, each {TIMING["see_px"]:g} px tall or more): while the counter '
-              'runs, fly near where the city grows, its edge as well as its centre (a shot of the whole plate shows each building a pixel or two)')
+              'runs the audience should watch the city grow, at its edge as well as its centre (a shot of the whole plate shows each building a pixel or two; '
+              'for instance fly low over the districts growing then)')
     if not any(t_ >= grow['on'] and v_[0] >= .8 for t_, v_ in night_keys):   # (the lights grow with the city: today's city ends lit)
-        fault('the modern section never comes to night (docs/STAGING.md 9i): its stations write `night:` rising with the city, to 0.8 or '
-              'more by the last one, so the film comes to today\'s city with its lights on')
+        WARN.append('the modern section never comes to night (docs/STAGING.md 9i): the film arrives at today\'s city without its lights on; if that is not '
+                    'meant, let its stations write `night:` rising with the city (for instance to 0.8 or more by the last one)')
 # masks -> two RGBA textures
 hch = [HIDE_BY[v[0]] if v else Image.new('L', (HW, HH), 0) for v in SLOT_HELD]   # (a shared channel holds its first city; the others in their own files)
 while len(hch) < SLOTS: hch.append(Image.new('L', (HW, HH), 0))
@@ -2843,8 +2844,8 @@ for x in footage_out:
         _cover.append(say_(hits_[0]) + f' (moved past the change it would leave {ln_ or "its line"})')
         continue
     _cover += [say_(h_) for h_ in hits_]
-if _cover: fault('a picture hides a change (docs/STAGING.md 5b: compose the shot so the change is on the left, move the '
-                 'picture to another line, make it a card, or give it force: true if hiding that change does not matter): ' + '; '.join(_cover))
+if _cover: fault('a picture is up while the model changes (docs/STAGING.md 5b: the eye goes to the picture and the change is missed, wherever it is in the frame; move the '
+                 'picture to a line before or after the change, make it a card, or give it force: true if missing that change does not matter): ' + '; '.join(_cover))
 # the film's type (docs/SCRIPT.md): one font per job, by family name and weight (film.fonts), looked up in <root>/fonts
 # (pipeline/fonts.py); a family or weight that is not there, or a character of the copy a font cannot draw, stops the build: the
 # browser would draw it in a system font (one subtitle line in two weights, as once happened)
@@ -2978,8 +2979,8 @@ if PRO:   # the prologue for the page: its length, its closing black, and from e
     # answered by pictures the opening shows again seconds later
     for (ta_, sa_), (tb_, sb_) in zip(_sc, _sc[1:]):
         if sb_ < sa_ + (tb_ - ta_) - 1.0:
-            fault(f'film.prologue.scene: at {tb_:g} s the prologue goes back from the film\'s {sa_ + tb_ - ta_:.1f} s to {sb_:.1f} s, a hard cut into another '
-                  f'period: the prologue stays with its one moment and ends on black; the question it ends on is answered by the opening, not shown in it (docs/SCRIPT.md "Prologue")')
+            WARN.append(f'film.prologue.scene: at {tb_:g} s the prologue goes back from the film\'s {sa_ + tb_ - ta_:.1f} s to {sb_:.1f} s, a hard cut into another '
+                        f'period: a prologue that shows the answer to its own question gives away what the opening is for (docs/SCRIPT.md "Prologue"); look at it')
     film['prologue'] = {'dur': PD, 'fade': float(PRO.get('fade', .8)), 'scene': _sc}
 json.dump(film, open(LAYOUT.build(D, 'film.json'), 'w'), ensure_ascii=False, indent=1)
 import hashlib
@@ -3132,7 +3133,9 @@ if _two: fault('two pictures up at once: end the first with the lines it goes wi
 _dead = _dead_air()
 open(LAYOUT.logs(D, 'deadair.txt'), 'w', encoding='utf-8').write('\n'.join(_dead) + '\n')
 print(f'  dead air: {len(_dead)} stretch(es)' + ''.join('\n    ' + d_ for d_ in _dead))
-_dead_stop = [d_ for d_ in _dead if not d_.startswith('still picture')]   # (a still picture is reported while a film is being made: a station not built yet has one; tools/build.mjs will not render it)
+_dead_stop = [d_ for d_ in _dead if d_.startswith('nothing at all')]   # (a still picture is reported while a film is being made: a station not built yet has one; tools/build.mjs will not render it)
+_dead_look = [d_ for d_ in _dead if d_.startswith('no words')]   # (a gap between lines is judged, not stopped: the city changing or the camera travelling can carry it; one with nothing at all is caught above)
+if _dead_look: WARN.append(f'{len(_dead_look)} gap(s) between lines over {TIMING["word_gap_s"]:g} s (docs/STAGING.md 5c; build/logs/deadair.txt): look at each; one where the audience has nothing to watch gets a line that follows on, a picture, or a declared pause')
 if _dead_stop and os.environ.get('CT_DEADAIR') != 'warn':   # (CT_DEADAIR=warn: report only, while a city is being written)
     fault(f'dead air (docs/STAGING.md 5c; build/logs/deadair.txt): let a line follow the one before, have it wait for the '
           f'picture it speaks of (with:), shorten the hold, or declare a pause: ' + '; '.join(_dead_stop))
