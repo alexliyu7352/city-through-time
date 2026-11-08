@@ -196,6 +196,10 @@ them are taken down) writes `today_from: <node id>`: from that node, today's bui
 takes, a landmark a later loss takes (kept clear to the city's end: one map cannot time its going), the courts they close round, and today's buildings that touch them), its outline, its walls' ring and its lost parts going back to today's city, so the survivors stand on without sinking
 and rising again as a city of their own; its last loss, which takes all the rest, writes `rest: true` (with `keep:` naming the survivors): it takes what no other loss of the city takes,
 whatever its place in the list, so the parts earlier losses took are passed over instead of refused as lost twice.
+**When today's buildings step aside:** each sinks just before the period building beside it rises; on the city's ground with no building of its own (inside its walls,
+its outline or a `hide` region) it goes with the nearest one. Where the nearest is built much later than the works round it (a colonnade raised a century and a half
+after the church beside it, today's blocks between them), the region writes `{ring: [[lon, lat], ...], at: ...}` (`at` as a ground's): today's buildings mostly inside it
+step aside then (compile prints how many), sooner where a building of the city's own stands there earlier; the time falls within the city's rise.
 A city of the present day staged as a node of its own (a new square, paving and trees, built in the film's last years) writes `today_from` with its own node: it is part of today's city from the start, so today's city neither dims nor steps back for it as for a city of the past.
 **How many period cities:** as many as the history has. At most twelve stand or are drawn (a ghost outline) at the same moment, each lighting one channel (where today's buildings
 step aside, its front and its edge); cities apart in time share a channel, and compile says which (`era channels`) or stops at a thirteenth at once. A film that fits in eight

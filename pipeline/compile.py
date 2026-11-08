@@ -280,6 +280,7 @@ def osm_rings(name): return osmgeo.rings(OSM, name)
 
 _MODEL = json.load(open(LAYOUT.data(D, 'model.json')))
 FOOT = {}
+TIMED_HIDE = {}   # {era id: [today's buildings read at their centre, per hide region given a time]} (hide_layer)
 HW = 4096; HH = round(HW * F.size[1] / F.size[0])   # hide masks: ~7.6 m per pixel at Xianyang's plate
 def era_boundary(prims, cs):
     """the period city's outline on the plate: the union of its ground-level bodies (no trees, water or paving) and its
@@ -306,9 +307,13 @@ def era_boundary(prims, cs):
     polys = [q for q in getattr(g, 'geoms', [g]) if q.area >= (cs.get('boundary_min_m', 140) * S) ** 2]
     return [[[round(x, 5), round(z, 5)] for x, z in q.simplify(8 * S).exterior.coords] for q in polys]
 
+def hide_ring(h):
+    """a hide entry's ring: a lon/lat ring, or {ring, at} (hide_layer: its time)"""
+    return h['ring'] if isinstance(h, dict) else h
+
 def hide_rings(cs):
     """the ground a period city clears of today's buildings beyond its own outline: inside its walls and its hide regions (lon/lat rings)"""
-    return [w['ring'] for w in cs.get('walls', []) if 'ring' in w] + cs.get('hide', [])
+    return [w['ring'] for w in cs.get('walls', []) if 'ring' in w] + [hide_ring(h) for h in cs.get('hide', [])]
 
 def edge_rings(bnd, prims, cs):
     """the rings of the period city's outline its edge is drawn on (the neon line and the light along it, edge_sdf): every ring
@@ -434,12 +439,15 @@ def today_polys():
         rings_ = [b[2][0] for b in _MODEL['p'] if len(b[2][0]) >= 3]; _TODAY.extend([rings_, _np.array([_P(r) for r in rings_], dtype=object)])
     return _TODAY
 
-def hide_layer(prims, cs, bnd=()):
+def hide_layer(prims, cs, bnd=(), timed=()):
     """where an era city stands, today's buildings step aside. The value is .04 + .96 x the rank (start time, 0..1 over the
     era's rise) of the era building at that spot, so today's building there sinks just before the old one beside it rises,
     in whatever order the stages grow (engine: hideK). Covers every primitive's padded footprint, today's buildings that
     touch the era city (their whole footprint), the city's outline and explicit hide regions; gaps inside take the rank of
-    the nearest era building."""
+    the nearest era building. A hide region given a time (`timed`: its lon/lat ring and the rank of its `at`) takes that
+    instead, and today's buildings mostly inside it (read at their centre, as the engine reads them) with it: the nearest era
+    building can be one that rises much later (Rome: a colonnade of 1656 beside today's blocks on the ground of works begun
+    in 1506 kept them standing over those works). Where an era building of its own stands it is never later than that"""
     import numpy as _np
     PWm, PDm = F.size
     pad = cs.get('hide_buffer_m', 14) * F.scale
@@ -476,7 +484,24 @@ def hide_layer(prims, cs, bnd=()):
     for r in bnd: dg.polygon([U_(x, z) for x, z in r], fill=255)
     val = _np.asarray(im).astype(_np.float32); region = (_np.asarray(reg) > 0) | (val > 0) | courts(prims, pad)
     region = _np.asarray(Image.fromarray(region.astype(_np.uint8) * 255).filter(ImageFilter.MaxFilter(3))) > 0   # one pixel of margin: a building whose centre sits on the edge
-    return fill_in(val, region)
+    if not timed: return fill_in(val, region)
+    tm = Image.new('L', (HW, HH), 0); dt = ImageDraw.Draw(tm)
+    polys_ = [(r_, _P([F.model_lonlat(lon, lat) for lon, lat in ring]).buffer(0), i_) for i_, (ring, r_) in enumerate(timed)]
+    import shapely as _sh
+    from shapely.strtree import STRtree as _T
+    rings_, geoms_ = today_polys(); tree_ = _T(geoms_); n_of = TIMED_HIDE[cs.get('_id', '')] = [0] * len(timed)
+    for r_, g_, i_ in sorted(polys_, key=lambda q: -q[0]):   # (the earliest wins where two overlap: drawn last)
+        for q_ in getattr(g_, 'geoms', [g_]): dt.polygon([U_(x, z) for x, z in q_.exterior.coords], fill=code(r_))
+        n_ = 0
+        for k_ in tree_.query(g_, predicate='intersects'):   # today's buildings mostly inside: at their centre too (it can lie outside a bent one)
+            b_ = _sh.make_valid(geoms_[k_])
+            if b_.intersection(g_).area < .5 * b_.area: continue
+            ring = rings_[k_]; dt.point(U_(sum(x for x, _ in ring) / len(ring), sum(z for _, z in ring) / len(ring)), fill=code(r_)); n_ += 1
+        n_of[i_] = n_
+    T_ = _np.asarray(tm).astype(_np.float32)
+    filled = _np.asarray(fill_in(val.copy(), region)).astype(_np.float32)   # (the gaps round a timed region take the nearest era building's rank, not its time)
+    out = _np.where(T_ > 0, _np.where(val > 0, _np.minimum(val, T_), T_), filled)
+    return Image.fromarray(_np.clip(out, 0, 255).round().astype(_np.uint8), 'L')
 
 TIMING = {'ring_view': 2.8, 'ring_out': 1.6, 'min_stage': 4.0, 'min_stage_small': 2.0, 'grow': 1.6, 'frames_per_s': 1 / 3,
           'settle_need': 2.0, 'ring_m': 1000.0, 'ring_q': .35, 'scan_w': .12, 'fade': .4, 'fall_dur': 1.4,
@@ -1052,6 +1077,16 @@ def lose_node(era_id, ls):
     nd = next((n for n in FM['nodes'] if n['id'] == nid), None)
     if nd is None: raise SystemExit(f'compile: era {era_id}: lose {ls["id"]}: no node {nid!r}')
     return nd
+
+def era_when(e, pd, at, what):
+    """the film time `at` names for something of an era's city timed after it starts rising (a ground opening, a hide region
+    clearing): node seconds or a time of its own node (as its stages: at_of), or {node: <id>, at: ...} for a later node's"""
+    nid = at['node'] if isinstance(at, dict) and 'node' in at else e['id']
+    nd = next((n for n in FM['nodes'] if n['id'] == nid), None)
+    if nd is None: raise SystemExit(f"compile: era {e['id']}: {what}: at: no node {nid!r}")
+    t = pd['at_of'](at['at'] if isinstance(at, dict) and 'node' in at else at) if nid == e['id'] else node_time(nd, at['at'])
+    if t is None or t < e['on']: raise SystemExit(f"compile: era {e['id']}: {what}: at {t} s, before its city rises ({e['on']:.1f} s)")
+    return t
 
 def lost_by(era_id, node_index):
     """per primitive of an era: lost in a node up to node_index (its ground is free for a city laid there)"""
@@ -1725,7 +1760,7 @@ for i, node in enumerate(FM['nodes']):
                 cs = nd.get('city')
                 if not cs or nd['id'] in dc.get('skip', []): continue
                 rings_ = [w['ring'] for w in cs.get('walls', []) if 'ring' in w] + [f['region'] for f in cs.get('fabric', []) if isinstance(f.get('region'), list)] + cs.get('outline', [])   # outline: a village's ditch
-                if not rings_: rings_ = cs.get('hide', [])
+                if not rings_: rings_ = [hide_ring(h) for h in cs.get('hide', [])]
                 if not rings_: continue
                 era_e = next((e for e in eras_out if e['id'] == nd['id']), None)
                 mask_ = FOOT.get(nd['id'])
@@ -2011,19 +2046,23 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
     # builds on it) rises then: its timing mark's rank past the city's rise (the engine times a ground by on + rank x span)
     for gd_, b_ in zip(cs.get('grounds') or [], [b for b in BASINS.get(e['id'], []) if 'surface' in b]):
         if 'at' not in gd_: continue
-        at_ = gd_['at']; nid_ = at_['node'] if isinstance(at_, dict) and 'node' in at_ else e['id']
-        nd_ = next((n for n in FM['nodes'] if n['id'] == nid_), None)
-        if nd_ is None: raise SystemExit(f"compile: era {e['id']}: ground {b_['name']}: at: no node {nid_!r}")
-        t_ = node_time(nd_, at_['at']) if nid_ != e['id'] else pd['at_of'](at_['at'] if isinstance(at_, dict) and 'node' in at_ else at_)   # (its own node: as its losses are timed)
-        if t_ is None or t_ < e['on']: raise SystemExit(f"compile: era {e['id']}: ground {b_['name']}: at {t_} s, before its city rises ({e['on']:.1f} s)")
+        t_ = era_when(e, pd, gd_['at'], f"ground {b_['name']}")
         prims[basin_piece(e['id'], b_)][10] = round((t_ - e['on']) / e['span'], 5)
-        print(f"  ground {e['id']}.{b_['name']}: rises at {t_:.1f} s ({nid_})")
+        print(f"  ground {e['id']}.{b_['name']}: rises at {t_:.1f} s")
     json.dump({'prims': prims, **({'lost': LOST[e['id']]} if LOST.get(e['id']) else {})}, open(LAYOUT.build(D, e['file']), 'w'), separators=(',', ':'))   # (film.json's file references are relative to build/)
     fx_, fz_ = F.model_lonlat(*(cs.get('fall_from') or cs['origin']))
     e['fallC'] = [round(fx_, 5), round(fz_, 5)]
     e['_dist'] = [math.hypot(p[15] - fx_, p[16] - fz_) for p in prims]; e['_bc'] = [(p[15], p[16]) for p in prims]
     cs_ = Seen(dict.items(cs)); cs_.read, cs_.mine = cs.read, set(); cs_['_id'] = node['id']   # (what hide_layer reads, read on cs)
-    HIDE_BY[e['id']] = hide_layer(prims, cs_, pd['bnd'])
+    timed_ = []   # hide regions given a time (`at`, as a ground's): today's buildings there step aside then (hide_layer)
+    for k_, h_ in enumerate(cs_.get('hide') or [], 1):
+        if not (isinstance(h_, dict) and 'at' in h_): continue
+        t_ = era_when(e, pd, h_['at'], f'hide #{k_}')
+        if t_ > e['on'] + e['span']: raise SystemExit(f"compile: era {e['id']}: hide #{k_}: at {t_:.1f} s, after its city has risen ({e['on'] + e['span']:.1f} s): a hide region's time is one within the rise")
+        timed_.append((k_, h_['ring'], (t_ - e['on']) / max(e['span'], 1e-6), t_))
+    HIDE_BY[e['id']] = hide_layer(prims, cs_, pd['bnd'], [(r_, q_) for _, r_, q_, _ in timed_])
+    for (k_, _, _, t_), n_ in zip(timed_, TIMED_HIDE.get(e['id'], [])):
+        print(f"  hide {e['id']} #{k_}: today's buildings there step aside at {t_:.1f} s ({n_} read at their centre)" + ('' if n_ else ': none of today\'s buildings lies mostly inside it'))
     if cs.get('today_from'):   # from that node, today's city comes back round what of this city still stands (keep_layer)
         tf_ = next((n for n in FM['nodes'] if n['id'] == cs['today_from']), None)
         if tf_ is None or FM['nodes'].index(tf_) < FM['nodes'].index(node):   # (its own node: a city of the present day, which today's city never steps back for)

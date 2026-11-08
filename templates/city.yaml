@@ -117,7 +117,7 @@ film:
           - { kind: temple, lon: 0, lat: 0, w_m: 62, d_m: 120 }
         trees: [{ pts: [[lon, lat], [lon, lat]], step_m: 22, h_m: 12, both: false }]   # a row along a line; a garden, park or grove: { region: [[lon, lat], ...] or osm:<name>, step_m: 16 } fills the area ([[ring], [hole], ..] leaves a clearing)
         grounds: [{ id: works_yard, region: [[lon, lat], ...], surface: earth }]   # open ground drawn as what it is: earth, grass, gravel or paved (a field, a yard, a sports ground, a garden's lawn); a later one cuts its place out of an earlier one
-        hide: [[[lon, lat], ...]]             # extra areas where today's buildings give way (for periods without walls)
+        hide: [[[lon, lat], ...]]             # extra areas where today's buildings give way (for periods without walls); { ring: [[lon, lat], ...], at: <time> } gives them a time (docs/MODEL.md)
       footage:                                # the same place today (live-footage echo). mode: full (4K full frame 7–9 s) | panel (photo in the right panel) | card (low-resolution small card + anchor leader line) | doc (old map / archive photo document card)
         - { id: <f>, file: assets/footage/<clip>.mp4, mode: full, at: 20.0, dur: 8.0, zh: <place name>, en: <place, today>, credit: "<author · source · licence>" }
         - { id: <p>, file: assets/photos_cc/<photo>.jpg, mode: panel, with: <line id>, plus: 0.5, dur: 6.0, kicker: "今天 · TODAY · 照片", zh: <place name>, en: <place>, credit: "<author · licence>" }
