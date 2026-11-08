@@ -40,6 +40,7 @@ KINDS = ('footage', 'pins', 'routes', 'arrows', 'lines', 'readouts', 'spots', 'l
 ONE = ('light', 'prologue', 'grow', 'bar', 'end')   # timed settings, one of each
 SEEN = ('camera', 'dim', 'night', 'yearline', 'cues', 'eras', 'dur') + LOOKS   # compared on their own: sampled, line by line, each period city (its times as an item, what it is made of in model())
 PACKED = ('voice', 'music', 'basinMap', 'basinSlots', 'eraSlots', 'groundMap', 'groundSlots', 'keepMaps')   # heard, or how the build is packed: seen through what is compared
+ASIDE_S = 4.0  # a building of today stepping aside or coming back (the engine: over a city's grow, today_from over 3 s): seen in this time
 LENGTHS = ('arrive', 'reveal', 'hold', 'out', 'back')   # a living moment's: the camera arrives (before its on), the picture reveals, holds, goes out, the camera goes back
 
 
@@ -184,6 +185,54 @@ def model(P, N, pd, nd, shift):
     return notes, rises
 
 
+def aside(P, N, pd, nd, shift):
+    """[(a, b, name)] where today's buildings step aside for a period city, or come back round what of it still stands, at
+    another time than before: each building read at its centre (the engine's aCtr) in the city's hide map and, with today_from,
+    its keep map (compile hide_layer, keep_layer). A hide region given a time, a court, a landmark kept clear: they change those
+    maps and nothing else. A building that stepped aside in both versions differs between its two times; one that steps aside
+    (or stays clear after today_from) in one version only differs from then for as long as the city stands: listed where it
+    changes, for ASIDE_S s (it steps aside, or comes back, there; what follows holds it)"""
+    out = []; dd = lambda D: os.path.join(D, 'build', 'data')
+    mp, mn = os.path.join(dd(pd), 'model.json'), os.path.join(dd(nd), 'model.json')
+    if not (os.path.exists(mp) and os.path.exists(mn)): return out
+    if not filecmp.cmp(mp, mn, shallow=False): return [(0.0, N['dur'], "today's-city (its buildings changed: where they step aside not compared)")]
+    rings = [r[2][0] for r in json.load(open(mn, encoding='utf-8'))['p']]; ok = np.array([len(r) >= 3 for r in rings])
+    ctr = np.array([np.mean(r, axis=0)[:2] if len(r) >= 3 else (0.0, 0.0) for r in rings], float)
+    PW, PD = json.load(open(mn, encoding='utf-8'))['size']; maps = {}
+    def read(D, f):
+        if (D, f) not in maps:
+            p_ = os.path.join(dd(D), f)
+            maps[(D, f)] = np.asarray(Image.open(p_).convert('RGBA')).astype(np.float32) / 255 if os.path.exists(p_) else None
+        return maps[(D, f)]
+    def at(D, e, base, own):   # the city's channel at every building's centre (a shared channel: the city's own map)
+        img = read(D, f"{own}_{e['id']}.png") if e.get('occupy') else read(D, (base, f'{base}2', f'{base}3')[e['hide'] // 4] + '.png')
+        if img is None: return None
+        H_, W_ = img.shape[:2]; u = np.clip(((ctr[:, 0] / PW + .5) * W_).astype(int), 0, W_ - 1); v = np.clip(((ctr[:, 1] / PD + .5) * H_).astype(int), 0, H_ - 1)
+        return img[v, u, 0] if e.get('occupy') else img[v, u, e['hide'] % 4]
+    pe = {e['id']: e for e in P.get('eras') or []}
+    for e in N.get('eras') or []:
+        o = pe.get(e['id'])
+        if o is None or e.get('hide') is None or o.get('hide') is None: continue
+        hn, ho = at(nd, e, 'hide', 'hide'), at(pd, o, 'hide', 'hide')
+        if hn is None or ho is None: continue
+        end = lambda f, x: min([t for t in (x.get('todayFrom'), x.get('off')) if num(t)] or [f['dur']])
+        tn = np.where((hn >= .02) & ok, e['on'] + (hn - .04) / .96 * e.get('span', 0), np.nan)
+        to = np.where((ho >= .02) & ok, o['on'] + (ho - .04) / .96 * o.get('span', 0), np.nan)
+        q = 1 / 255 / .96 * max(e.get('span', 0), o.get('span', 0)) + TOL   # (a rank kept to one step of the map's 8 bits)
+        u, inv = np.unique(np.nan_to_num(tn, nan=-1).round(1), return_inverse=True); sh = np.array([shift(t) for t in u])[inv]
+        both = ~np.isnan(tn) & ~np.isnan(to); bad = both & (np.abs(tn - sh - to) > q)
+        name = f"city {e['id']} (today's buildings stepping aside)"
+        out += [(min(a, b + s), max(a, b + s), name) for a, b, s in zip(tn[bad], to[bad], sh[bad])]
+        for t_, ws in ((tn[~np.isnan(tn) & np.isnan(to) & ok], 'now'), (to[np.isnan(tn) & ~np.isnan(to) & ok], 'before')):
+            for t in np.unique(t_.round(1)):
+                t = float(t) + (shift(float(t)) if ws == 'before' else 0.0); out.append((t, min(t + ASIDE_S, end(N, e)), f"{name[:-1]}, {ws} only)"))
+        if num(e.get('todayFrom')) and num(o.get('todayFrom')):
+            kn, ko = at(nd, e, 'keep', 'keep'), at(pd, o, 'keep', 'keep')
+            if kn is not None and ko is not None and ((kn >= .02) != (ko >= .02))[ok].any():
+                t = float(e['todayFrom']); out.append((t, t + ASIDE_S, f"city {e['id']} (today's buildings coming back round what still stands)"))
+    return out
+
+
 def main():
     args = sys.argv[1:]; out_json = None
     if '--json' in args: i = args.index('--json'); out_json = args[i + 1]; del args[i:i + 2]
@@ -242,7 +291,7 @@ def main():
         ws = list(dict.fromkeys(ws)); kinds = {}
         for w in ws: kinds.setdefault(w.split(' ')[0], []).append(w.split(' ', 1)[1] if ' ' in w else '')
         return '; '.join(k if not any(v) else f"{k} {', '.join(q for q in v[:4] if q)}{f' (+{len(v) - 4})' if len(v) > 4 else ''}" for k, v in kinds.items())
-    M, rises = model(P, N, pd, nd, shift); changed += rises
+    M, rises = model(P, N, pd, nd, shift); changed += rises + aside(P, N, pd, nd, shift)
     ch, sl = merged(changed), merged(slid)
     print(f'filmdiff: {pname} -> {nname}: {len(ch)} stretch(es) changed, {len(sl)} only moved in time')
     for a, b, ws in ch: print(f'  {a:8.2f}-{b:8.2f}  {said(ws)}')
