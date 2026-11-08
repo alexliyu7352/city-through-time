@@ -71,7 +71,9 @@ Subagents and parallel work
 - **A round of revisions starts with a fresh context.** Once a round's list is set (the user's notes, frozen: later notes go to the next round), write the
   handoff (`templates/handoff.md`, into the city's `research/`) and do the round in a new session or a subagent with a fresh context started from it. The old
   conversation is looked up, not carried: it holds withdrawn rulings and earlier versions, which a long context takes for current (a lost close shot put back
-  wide, a base chosen from the wrong version), and every action in it costs more. The fetches of a round that do not wait on each other (the sources a note
+  wide, a base chosen from the wrong version), and every action in it costs more. A round is the user's list; what review sends back inside it (a fix that
+  missed, a fix that broke something next to it) stays in the round and goes to the same subagent (Review before merging), which already knows the code and
+  the files: a new one spends its first quarter of an hour reading them again. The fetches of a round that do not wait on each other (the sources a note
   needs, the pictures to find and check for their licence) start at once in parallel subagents, each returning its file, its source and its licence; the
   staging waits only for what it uses.
 - **Sort a long list before the round starts.** Quick fixes (a tag moved, a label, a picture found or swapped, a line's binding) make one round, handed over

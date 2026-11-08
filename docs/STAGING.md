@@ -223,8 +223,10 @@ dissolves back to the model, and the camera goes on. It shows what the plate can
 - **Use a few a film** (two or three in a quarter of an hour, about one in seven or eight minutes in a longer film), on key beats that can be told as one moment of life (a street the morning after rain, a market, a crowd going to the games), with the line that tells it (`with:`).
   Never over a change on the model, never with another picture at the same time (compile stops). A scene that only needs to be seen, not lived in, stays an imagined panel.
 - **The shot:** low, close (`d` 0.01–0.04, the period city's streets and roofs filling the frame, a gate or a landmark far off), `fov` 35–45. The camera flies to it in `arrive` seconds from where the film's
-  camera is: put the keys before it close enough that the arrival is not a dive. While the picture is up the camera only zooms (`zoom`, 0.94 by default): the projection is exact only from its own camera,
-  and a camera that moves smears it.
+  camera is: put the keys before it close enough that the arrival is not a dive. Those keys belong to the moment's own beat: a shot that carries another line (the node before, a map's
+  city) is never bent toward the moment; when the flight needs seconds, the moment's node takes them (a longer `arrive`, its line starting during the flight). The camera reaching the shot
+  and the ring starting at once from the bare model is the transition; the camera waiting at the bare shot for its picture is dead air.
+  While the picture is up the camera only zooms (`zoom`, 0.94 by default): the projection is exact only from its own camera, and a camera that moves smears it.
 - **The picture follows the sources:** write the scene card `research/living/<id>.yaml` (`place`, `when`, `picture`: what the moment shows, each detail from the sources; `avoid`: what the sources rule out,
   later or modern things; `sources`: the notes and FACTS lines). Then compile (`CT_LIVING=warn` while there is no picture), `uv run python -I tools/living.py ref cities/<slug> <id>` (the shot as a still and
   the prompt), `gen` (the Codex CLI edits the still; with another image tool, give it the still and the prompt, save the answer as `assets/living/<id>.png`, then `adopt`), and look at the `sheet`:
