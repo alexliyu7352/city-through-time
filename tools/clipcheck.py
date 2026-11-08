@@ -30,6 +30,9 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
                       ground (a slope's fall shows times the exaggeration, the building times its own); the line says the
                       highest exaggeration that would pass. Plinths (citygen PLINTH: a body's base on a slope) are not bodies here.
 Listed, not counted (the era's line and clipcheck.json; compile names them):
+  streets_through_landmarks_at  a street or lane running through a landmark that stands at the same time (inside its body for more
+                      than twice the road's width: not a road under an arch or through a gate): a road traced from another map
+                      across a circus' stands or a temple; the audience sees a road through the monument. Move the road, or say why
   tall_platform_at    landmarks levelled on a slope whose platform (site: raised) shows over 30% of the landmark's height: a podium
                       or a terrace as built, or a building let into the hill that writes site: cut (docs/MODEL.md, Landmarks; the
                       ground compile levelled under the landmarks on a slope has none: pipeline/grade.py)
@@ -170,6 +173,21 @@ def main():
                     if q.intersection(polys[j]).area > min_area * 4:
                         n += 1; c_ = q.intersection(polys[j]).centroid; ex_lm.append([round(c_.x, 4), round(c_.y, 4)])
             R['landmarks_overlap'] = n; R['landmarks_overlap_at'] = ex_lm[:40]
+        # streets_through_landmarks (a list, not a fault): a street or lane laid through a landmark standing at the same time, a road
+        # traced from another map across a circus' stands or a temple: on screen a road runs through the monument. Listed where the
+        # paving runs inside the body for more than twice its own width (a road under an arch or through a gate house crosses it in
+        # about its width) and for at least half its width across (not a road brushing a body's side)
+        if lm and streets:
+            tree_ = STRtree([q for _, q, _ in lm]); thr_ = []
+            for i, s_ in enumerate(streets):
+                w_ = min(_sides(s_))
+                for j in tree_.query(s_, predicate='intersects'):
+                    if lm[j][2] != LMK or not both(sp_[i], lmp_[j]): continue   # (a building: a road crosses an earthwork, or runs on a terrace, as built)
+                    x_ = s_.intersection(lm[j][1])
+                    if x_.is_empty: continue
+                    a_, b_ = sorted(_sides(x_))
+                    if b_ > 2 * w_ and a_ > .5 * w_: c_ = x_.centroid; thr_.append([round(c_.x, 4), round(c_.y, 4)]); break
+            R['streets_through_landmarks_at'] = thr_[:200]
         # a wall through a building: a thin long piece (a court's or a city's wall, citygen strip) across a hall or a house body,
         # in the same court too (parts of one court are let touch in landmarks_overlap, so a wall through its own side hall passed)
         # (across: the wall's middle line crosses the building's whole width inside its walls; a wall running into a gate house or a
@@ -297,6 +315,7 @@ def main():
             if f_ >= S * tex and h_ >= 3 * S and f_ > FOUND_MAX * h_ and f_ / h_ > tp_.get(k_, (0,))[0]: tp_[k_] = (f_ / h_, f_, h_)
         R['tall_platform_at'] = [[x_, z_, round(r_, 2), round(f_ / S, 1), round(h_ / S, 1)] for (x_, z_), (r_, f_, h_) in sorted(tp_.items(), key=lambda q: -q[1][0])]
         if tp_: notes[e['id']] += f'; {len(tp_)} landmark(s) on a platform over {FOUND_MAX:.0%} of their height (tall_platform_at)'
+        if R.get('streets_through_landmarks_at'): notes[e['id']] += f"; {len(R['streets_through_landmarks_at'])} street(s) through a landmark (streets_through_landmarks_at)"
         xb_ = body((FAB, LMK, WALL, EARTH))
         def wall_ends(p):   # a wall piece's two ends (a thin long piece of a city's or a court's wall), else None
             if p[11] not in (WALL, LMK) or min(p[5], p[6]) > 8 * S or max(p[5], p[6]) < 3 * min(p[5], p[6]): return None
