@@ -14,7 +14,8 @@
                               viewer of the web version may stay on the end card), made seamless: its close crossed into its start
 
 A cue rises over FADE_IN from its node and rings out XF seconds under the next one. Under each voiced line the music dips DUCK_DB; where nobody speaks it sits UNDER_DB
-below the narration's speaking level (each cue levelled on its own laid stretch, then its `gain` in dB; the code score on the
+below the narration's speaking level (each cue levelled on its own laid stretch, then its `gain` in dB, its long quiet passages lifted
+towards that level by up to `lift_db` (LIFT_DB): a recording's softest pages would otherwise go under hearing; the code score on the
 stretches where it sounds). Writes build/audio/music/score.wav (48 kHz stereo: what the mix lays) and score.m4a (what the
 preview plays beside the narration)."""
 import hashlib, json, os, subprocess, wave
@@ -33,6 +34,10 @@ UNDER_DB = 5.0                # the music where nobody speaks: this far below th
 CUT = .05                     # the hard cut into and out of a silence
 END_FADE = 3.0                # the last cue fades over the film's last seconds
 LOOP_XF = 4.0                 # the loop's close crosses into its start over this long
+LIFT_DB = 15.0                # a take's long quiet passages are lifted toward its level by at most this (cue key lift_db; 0: as recorded):
+FLOOR_DB = 6.0                # a recording's softest pages, laid under the film, go under hearing; a passage more than FLOOR_DB below
+LIFT_WIN = 4.0                # the cue's level, read over LIFT_WIN seconds, is raised to it, the gain moving over seconds (swells and
+                              # accents keep their shape; nothing is pushed down)
 SFX_UNDER = 6.0               # a sound effect's loudest moment: this far below the narration's speaking level,
 SFX_OVER = 3.0                # or this far above the score around it where the score is louder (the lights go out in the climax)
 
@@ -44,6 +49,19 @@ def _read(f):
 
 
 def _rms(x): return float(np.sqrt(np.mean(np.square(x, dtype=np.float64)))) if len(x) else 0.0
+
+
+def _lift(seg, level, most):
+    """seg with its quiet passages raised: where its loudness (over LIFT_WIN) sits more than FLOOR_DB under level, a gain of at
+    most `most` dB brings it up to there; the gain follows over seconds, a slow hand on the fader, never a pump"""
+    if most <= 0 or len(seg) < SR: return seg
+    hop, w = int(.5 * SR), int(LIFT_WIN * SR)
+    c = np.concatenate([[0.0], np.cumsum(np.square(seg, dtype=np.float64).mean(axis=1))])
+    idx = np.arange(0, len(seg), hop); lo = np.clip(idx - w // 2, 0, len(seg)); hi = np.clip(idx + w // 2, 0, len(seg))
+    env = np.sqrt((c[hi] - c[lo]) / np.maximum(hi - lo, 1))
+    g_db = np.clip(20 * np.log10(level * 10 ** (-FLOOR_DB / 20) / np.maximum(env, 1e-7)), 0, most)
+    k = 7; g_db = np.convolve(np.pad(g_db, k // 2, mode='edge'), np.ones(k) / k, mode='valid')   # (over about 3 s)
+    return seg * (10 ** (np.interp(np.arange(len(seg)), idx, g_db) / 20)).astype(np.float32)[:, None]
 
 
 def music_end(x):
@@ -174,6 +192,7 @@ def lay(D, music, node_t0, dur, voiced, silences, voice_wav=None, write=True):
         own = x[int(off * SR):int((off + t1 - t0) * SR)]
         if _rms(own) < 1e-4: raise SystemExit(f"music: cue {c['id']}: the take is silent from {off} s")
         seg *= target / _rms(own) * 10 ** (float(c.get('gain', 0)) / 20)
+        seg = _lift(seg, target * 10 ** (float(c.get('gain', 0)) / 20), float(c.get('lift_db', LIFT_DB)))   # (its softest pages still heard)
         n = len(seg); r = np.arange(n) / SR
         g = np.ones(n, np.float32)
         g *= np.clip(r / (JOIN if cont else max(pre, float(c.get('fade_in', FADE_IN)))), 0, 1)   # (a continuation: linear, against the linear fade-out before it)
