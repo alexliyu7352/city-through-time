@@ -1049,6 +1049,7 @@ import hashlib, zlib, builtins, contextlib
 GEN_CACHE = None if os.environ.get('CT_GEN_CACHE') == '0' else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'local', 'cache', 'gen')
 GEN_CACHE_MAX = float(os.environ.get('CT_GEN_CACHE_GB') or 1.0) * 2 ** 30   # (the oldest go first past it)
 _GEN_BASE = []
+_NOT_MODEL = {'nodes', 'music', 'sfx', 'voice', 'fonts', 'copy', 'lang', 'yearFmt', 'end', 'closing', 'identity', 'emblem', 'labels'}   # (film keys of sound and words: no city is built from them)
 def _plain(o):   # (city.yaml as plain data, read without marking its keys read: hashing it is not a use of them)
     if isinstance(o, dict): return {str(k): _plain(v) for k, v in dict.items(o)}
     if isinstance(o, (list, tuple)): return [_plain(v) for v in o]
@@ -1059,7 +1060,7 @@ def _gen_base():
         for f_ in sorted(os.listdir(here_)):
             if f_.endswith('.py'): h_.update(f_.encode()); h_.update(open(os.path.join(here_, f_), 'rb').read())
         h_.update(json.dumps(_plain({k: v for k, v in dict.items(C) if k != 'film'}), sort_keys=True).encode())
-        h_.update(json.dumps(_plain({k: v for k, v in dict.items(FM) if k != 'nodes'}), sort_keys=True).encode())
+        h_.update(json.dumps(_plain({k: v for k, v in dict.items(FM) if k not in _NOT_MODEL}), sort_keys=True).encode())
         tim_ = globals().get('_timg'); h_.update(tim_.tobytes() if hasattr(tim_, 'tobytes') else b'-')
         h_.update(pickle.dumps((GRADE_PADS, _tex), protocol=4))
         raw_ = os.path.realpath(LAYOUT.raw(D))
