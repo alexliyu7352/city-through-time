@@ -222,7 +222,7 @@ def aside(P, N, pd, nd, shift):
         u, inv = np.unique(np.nan_to_num(tn, nan=-1).round(1), return_inverse=True); sh = np.array([shift(t) for t in u])[inv]
         both = ~np.isnan(tn) & ~np.isnan(to); bad = both & (np.abs(tn - sh - to) > q)
         name = f"city {e['id']} (today's buildings stepping aside)"
-        out += [(min(a, b + s), max(a, b + s), name) for a, b, s in zip(tn[bad], to[bad], sh[bad])]
+        out += [(float(min(a, b + s)), float(max(a, b + s)), name) for a, b, s in zip(tn[bad], to[bad], sh[bad])]   # (plain floats: the --json report)
         for t_, ws in ((tn[~np.isnan(tn) & np.isnan(to) & ok], 'now'), (to[np.isnan(tn) & ~np.isnan(to) & ok], 'before')):
             for t in np.unique(t_.round(1)):
                 t = float(t) + (shift(float(t)) if ws == 'before' else 0.0); out.append((t, min(t + ASIDE_S, end(N, e)), f"{name[:-1]}, {ws} only)"))
