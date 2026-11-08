@@ -13,7 +13,8 @@
   film.music.loop             a cue whose take the preview plays on in a loop once the film has ended (a
                               viewer of the web version may stay on the end card), made seamless: its close crossed into its start
 
-A cue rises over FADE_IN from its node and rings out XF seconds under the next one. Under each voiced line the music dips DUCK_DB; where nobody speaks it sits UNDER_DB
+A cue rises over FADE_IN from its node and rings out XF seconds under the next one. Under each voiced line the music dips DUCK_DB, and
+where it swells (a climax) further, so it stays under the line by its dip less SWELL_DB; where nobody speaks it sits UNDER_DB
 below the narration's speaking level (each cue levelled on its own laid stretch, then its `gain` in dB, its long quiet passages lifted
 towards that level by up to `lift_db` (LIFT_DB): a recording's softest pages would otherwise go under hearing; the code score on the
 stretches where it sounds). Writes build/audio/music/score.wav (48 kHz stereo: what the mix lays) and score.m4a (what the
@@ -31,6 +32,9 @@ JOIN = 1.0                    # a continuation crosses over this long, ending at
 DUCK_DB = 10.0                # the dip under a voiced line
 DUCK_IN, DUCK_OUT = .25, .6   # it starts this long before the line and recovers this long after it
 UNDER_DB = 5.0                # the music where nobody speaks: this far below the narration
+SWELL_DB = 2.0                # under a line the music may swell this far above its dip (UNDER_DB + DUCK_DB below that line), no
+                              # further (film.music.swell_db): a climax under the words is held down, between the lines it plays out
+SWELL_WIN = 1.0               # the music's level under a line, read over this long
 CUT = .05                     # the hard cut into and out of a silence
 END_FADE = 3.0                # the last cue fades over the film's last seconds
 LOOP_XF = 4.0                 # the loop's close crosses into its start over this long
@@ -118,11 +122,28 @@ def spans(cues, node_t0, dur):
     return list(zip(t0s, t0s[1:] + [dur]))
 
 
+def _voice(voice_wav, voiced):
+    """the narration track (mono samples, rate), or None"""
+    if not (voice_wav and os.path.exists(voice_wav) and voiced): return None
+    with wave.open(voice_wav) as w_:
+        v_ = np.frombuffer(w_.readframes(w_.getnframes()), np.int16).astype(np.float32) / 32768; vr_ = w_.getframerate(); ch = w_.getnchannels()
+    return (v_.reshape(-1, ch).mean(axis=1) if ch > 1 else v_), vr_
+
+
 def voice_level(voice_wav, voiced):
     """the narration's speaking level (RMS over its lines), or -20 dBFS without one"""
-    if not (voice_wav and os.path.exists(voice_wav) and voiced): return 10 ** (-20 / 20)
-    with wave.open(voice_wav) as w_: v_ = np.frombuffer(w_.readframes(w_.getnframes()), np.int16).astype(np.float32) / 32768; vr_ = w_.getframerate()
+    v = _voice(voice_wav, voiced)
+    if v is None: return 10 ** (-20 / 20)
+    v_, vr_ = v
     return _rms(np.concatenate([v_[int(a * vr_):int(b * vr_)] for a, b in voiced]))
+
+
+def line_levels(voice_wav, voiced):
+    """[(t0, t1, the line's level (RMS))] for each voiced line; the narration's level for each without a track"""
+    v = _voice(voice_wav, voiced)
+    if v is None: return [(a, b, voice_level(None, voiced)) for a, b in voiced]
+    v_, vr_ = v
+    return [(a, b, _rms(v_[int(a * vr_):int(b * vr_)]) or voice_level(voice_wav, voiced)) for a, b in voiced]
 
 
 def lay_sfx(D, kinds, events, dur, voiced, voice_wav=None, score_wav=None):
@@ -203,7 +224,7 @@ def lay(D, music, node_t0, dur, voiced, silences, voice_wav=None, write=True):
         k = int(round(a * SR)); buf[k:k + n] += (seg * g[:, None])[:N - k]
         if off > 0 and not cont: _on_a_hit(c['id'], x, off, own)
     _crossings(buf, [(cues[i - 1]['id'], c['id'], t0) for i, (c, (t0, _)) in enumerate(zip(cues, sp)) if i and c.get('take') and cues[i - 1].get('take')])
-    _dip(buf, dur, voiced, silences, music)
+    _dip(buf, dur, line_levels(voice_wav, voiced), silences, music)
     if not write: return out, buf
     _write(D, buf, out, notes, 'lower a cue gain')
     d_ = os.path.join(D, 'build', 'audio', 'music')
@@ -250,13 +271,26 @@ def _crossings(buf, joins):
     if out: print('  music: the level at each change (the hole within 2 s against 2-8 s round it): ' + ', '.join(out))
 
 
-def _dip(buf, dur, voiced, silences, music):
-    """the dips under the voice and the stops in the silences, at 100 Hz then per sample"""
+def _dip(buf, dur, lines, silences, music):
+    """the dips under the voice and the stops in the silences, at 100 Hz then per sample. lines [(t0, t1, level)]: under each the
+    music dips DUCK_DB, and where it would sound louder than the line less UNDER_DB + DUCK_DB - SWELL_DB (its level over SWELL_WIN),
+    by the rest; that hold comes in a little before the swell and lets go over half a second, a hand on the fader"""
+    from scipy.ndimage import maximum_filter1d, uniform_filter1d
     tc = np.arange(int(dur * 100) + 2) / 100
-    depth = np.zeros_like(tc)
-    for a, b in voiced:
-        depth = np.maximum(depth, np.clip(np.minimum((tc - (a - DUCK_IN)) / DUCK_IN, ((b + DUCK_OUT) - tc) / DUCK_OUT), 0, 1))
-    env = 10 ** (-DUCK_DB * depth / 20)
+    depth, room = np.zeros_like(tc), np.full_like(tc, np.inf)   # room: the music's most (dB) before the dip at each moment
+    swell = float((music or {}).get('swell_db', SWELL_DB))
+    for a, b, lv in lines:
+        on = np.clip(np.minimum((tc - (a - DUCK_IN)) / DUCK_IN, ((b + DUCK_OUT) - tc) / DUCK_OUT), 0, 1)
+        depth = np.maximum(depth, on)
+        room = np.where(on > 0, np.minimum(room, 20 * np.log10(max(lv, 1e-6)) - UNDER_DB + swell), room)
+    h = SR // 100; n = min(len(buf) // h, len(tc))
+    p = np.zeros_like(tc); p[:n] = np.mean(np.square(buf[:n * h].reshape(n, h, 2), dtype=np.float64), axis=(1, 2))
+    lvl = 10 * np.log10(uniform_filter1d(p, int(SWELL_WIN * 100), mode='nearest') + 1e-12)
+    hold = np.where(np.isfinite(room), np.clip(lvl - room, 0, None), 0) * depth
+    hold = uniform_filter1d(maximum_filter1d(hold, 31, mode='nearest'), 50, mode='nearest')   # (from 0.3 s before, over 0.5 s)
+    if hold.max() >= 1: print(f'  music: held down under the lines by up to {hold.max():.1f} dB (at {tc[hold.argmax()]:.1f} s), '
+                              f'{(hold >= 1).sum() / 100:.0f} s of {(depth > 0).sum() / 100:.0f} s under them by 1 dB or more')
+    env = 10 ** (-(DUCK_DB * depth + hold) / 20)
     if (music or {}).get('stop_in_silences'):
         for a, b in silences: env *= 1 - np.clip(np.minimum((tc - a) / CUT, (b - tc) / CUT), 0, 1)
     buf *= np.interp(np.arange(len(buf)) / SR, tc, env).astype(np.float32)[:, None]
@@ -306,6 +340,6 @@ def lay_code(D, music, dur, voiced, silences, voice_wav=None, timing_=None):
     if _rms(buf) < 1e-4: raise SystemExit('music: the code score is silent')
     buf *= voice_level(voice_wav, voiced) * 10 ** (-UNDER_DB / 20) / _loud_rms(buf) * 10 ** (float((music or {}).get('gain', 0)) / 20)
     e = int(END_FADE * SR); buf[-e:] *= np.linspace(1, 0, e, dtype=np.float32)[:, None]
-    _dip(buf, dur, voiced, silences, music)
+    _dip(buf, dur, line_levels(voice_wav, voiced), silences, music)
     _write(D, buf, out, notes, 'lower film.music.gain')
     return out
