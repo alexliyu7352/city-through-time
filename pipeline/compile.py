@@ -1040,6 +1040,82 @@ if os.environ.get('CT_GEN') and os.path.exists(GEN_PATH):
     with open(GEN_PATH, 'rb') as f_: tok_, GEN_READ = pickle.load(f_)
     if tok_ != GEN_TOKEN: GEN_READ = None
 
+# the cities as generated, kept across compiles (local/cache/gen, shared by every version of every city on this machine): a city
+# whose inputs are what they were is read back, not built again (most of a compile on a large city, where most rounds change timing
+# and camera, not the cities). Keyed on all build_city is given or reaches: this node's spec, the rest of city.yaml but the nodes,
+# the graded ground it is laid on, the area's downloads, what it keeps clear of (avoid_eras), the pipeline's code; and every file it
+# opens while building (house types, traces), whose contents are checked again on reading. CT_GEN_CACHE=0: build every city
+import hashlib, zlib, builtins, contextlib
+GEN_CACHE = None if os.environ.get('CT_GEN_CACHE') == '0' else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'local', 'cache', 'gen')
+GEN_CACHE_MAX = float(os.environ.get('CT_GEN_CACHE_GB') or 1.0) * 2 ** 30   # (the oldest go first past it)
+_GEN_BASE = []
+def _plain(o):   # (city.yaml as plain data, read without marking its keys read: hashing it is not a use of them)
+    if isinstance(o, dict): return {str(k): _plain(v) for k, v in dict.items(o)}
+    if isinstance(o, (list, tuple)): return [_plain(v) for v in o]
+    return o if isinstance(o, (str, int, float, bool, type(None))) else str(o)
+def _gen_base():
+    if not _GEN_BASE:
+        h_ = hashlib.sha256(); here_ = os.path.dirname(os.path.abspath(__file__))
+        for f_ in sorted(os.listdir(here_)):
+            if f_.endswith('.py'): h_.update(f_.encode()); h_.update(open(os.path.join(here_, f_), 'rb').read())
+        h_.update(json.dumps(_plain({k: v for k, v in dict.items(C) if k != 'film'}), sort_keys=True).encode())
+        h_.update(json.dumps(_plain({k: v for k, v in dict.items(FM) if k != 'nodes'}), sort_keys=True).encode())
+        tim_ = globals().get('_timg'); h_.update(tim_.tobytes() if hasattr(tim_, 'tobytes') else b'-')
+        h_.update(pickle.dumps((GRADE_PADS, _tex), protocol=4))
+        raw_ = os.path.realpath(LAYOUT.raw(D))
+        for r_, ds_, fs_ in os.walk(raw_):
+            ds_.sort()
+            for f_ in sorted(fs_):
+                st_ = os.stat(os.path.join(r_, f_)); h_.update(f'{os.path.relpath(os.path.join(r_, f_), raw_)} {st_.st_size} {st_.st_mtime_ns}\n'.encode())
+        _GEN_BASE.append(h_.hexdigest())
+    return _GEN_BASE[0]
+def _gen_key(node, xa):
+    if GEN_CACHE is None: return None
+    h_ = hashlib.sha256(_gen_base().encode()); h_.update(node['id'].encode())
+    h_.update(json.dumps(_plain(node['city']), sort_keys=True).encode()); h_.update(xa.wkb if xa is not None else b'-')
+    return h_.hexdigest()
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def _dep(p):   # (a file the build read, written so another version of the city finds its own copy)
+    p = os.path.abspath(p)
+    for tag_, base_ in (('D', os.path.abspath(D)), ('R', _ROOT)):
+        if p.startswith(base_ + os.sep): return tag_, os.path.relpath(p, base_)
+    return 'A', p
+def _dep_path(tag_, p): return os.path.join({'D': os.path.abspath(D), 'R': _ROOT}.get(tag_, ''), p) if tag_ != 'A' else p
+def _sha(p):
+    with open(p, 'rb') as f_: return hashlib.sha256(f_.read()).hexdigest()
+@contextlib.contextmanager
+def _reading(deps):   # (every file opened for reading while it runs)
+    open_ = builtins.open
+    def rec_(f, mode='r', *a, **k):
+        if isinstance(f, (str, os.PathLike)) and not any(c_ in mode for c_ in 'wax+'): deps.add(os.fspath(f))
+        return open_(f, mode, *a, **k)
+    builtins.open = rec_
+    try: yield
+    finally: builtins.open = open_
+def _gen_load(key):
+    f_ = os.path.join(GEN_CACHE, key + '.pkl')
+    try:
+        with open(f_, 'rb') as g_: deps_, blob_ = pickle.load(g_)
+        for tag_, p_, sha_ in deps_:
+            q_ = _dep_path(tag_, p_)
+            if not os.path.isfile(q_) or _sha(q_) != sha_: return None
+        os.utime(f_); return zlib.decompress(blob_)
+    except (OSError, EOFError, pickle.UnpicklingError, zlib.error, ValueError): return None
+def _gen_store(key, deps, blob):
+    try:
+        os.makedirs(GEN_CACHE, exist_ok=True)
+        rows_ = sorted({(*_dep(p_), _sha(p_)) for p_ in deps if os.path.isfile(p_)})
+        f_ = os.path.join(GEN_CACHE, key + '.pkl'); tmp_ = f'{f_}.{os.getpid()}.tmp'
+        with open(tmp_, 'wb') as g_: pickle.dump((rows_, zlib.compress(blob, 1)), g_, protocol=pickle.HIGHEST_PROTOCOL)
+        os.replace(tmp_, f_)
+        es_ = sorted((os.path.getmtime(os.path.join(GEN_CACHE, e_)), os.path.getsize(os.path.join(GEN_CACHE, e_)), e_) for e_ in os.listdir(GEN_CACHE) if e_.endswith('.pkl'))
+        tot_ = sum(s_ for _, s_, _ in es_)
+        for _, s_, e_ in es_:
+            if tot_ <= GEN_CACHE_MAX: break
+            with contextlib.suppress(OSError): os.remove(os.path.join(GEN_CACHE, e_)); tot_ -= s_
+    except OSError: pass   # (a full disk or a read-only tree: the city is still built, only not kept)
+GEN_HITS = [int(x_) for x_ in (os.environ.get('CT_GEN_HITS') or '0,0').split(',')]   # (read back, built: over the passes of this run)
+
 def gen_city(node):
     """a whole period city, generated from its spec (pipeline/citygen.py) at the top of its node: the camera planning (a beam
     that lands on it, docs/STAGING.md 9c) needs where its buildings are"""
@@ -1058,8 +1134,17 @@ def gen_city(node):
                 if p[11] == 4 or gone_[i_] or CITY_META[oid][i_][1][0] == 'grounds': continue   # (a part lost by this node leaves its ground free; a ground's half-metre mark only times it: houses may stand round an open ground, and one moved would move them)
                 fx.append([(x / F.scale + F.cx, -z / F.scale + F.cy) for x, z in citygen.footprint(p)])
         xa = _sh.union_all(_sh.buffer([_sh.Polygon(f_) for f_ in fx], 4.0, join_style='mitre'))
-    meta_, bas_, sites_, empty_, lab_ = [], [], {}, [], []; PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_, graded=GRADED)
+    key_ = _gen_key(node, xa); hit_ = _gen_load(key_) if key_ else None
+    if hit_ is not None:   # (an earlier compile built this city from the same inputs)
+        prims_, meta_, lab_, bas_, sites_, empty_ = pickle.loads(hit_)
+        PRIMS[node['id']] = prims_; GEN_SAVED[node['id']] = hit_; GEN_HITS[0] += 1
+        return _gen_done(node, cs, meta_, lab_, bas_, sites_, empty_)
+    meta_, bas_, sites_, empty_, lab_, deps_ = [], [], {}, [], [], set()
+    with _reading(deps_):
+        PRIMS[node['id']] = citygen.build_city(cs, F, ground_m_mesh, _tex, osm_rings, extra_avoid=xa, meta=meta_, basins=bas_, sites=sites_, empty=empty_, labels=lab_, graded=GRADED)
     GEN_SAVED[node['id']] = pickle.dumps((PRIMS[node['id']], meta_, lab_, bas_, sites_, empty_), protocol=pickle.HIGHEST_PROTOCOL)   # (as built, before anything touches it)
+    GEN_HITS[1] += 1
+    if key_: _gen_store(key_, deps_, GEN_SAVED[node['id']])
     _gen_done(node, cs, meta_, lab_, bas_, sites_, empty_)
 
 def _gen_done(node, cs, meta_, lab_, bas_, sites_, empty_):
@@ -2017,7 +2102,7 @@ if NEWPLAN:
         for node, q in NEWPLAN: node_timeline(node, node_time(node, q['tau']))
         raise SystemExit(f'compile: the stage plan did not settle in {PASS} passes: each pass needed more time somewhere (the tables above)')
     json.dump(PLAN, open(LAYOUT.logs(D, 'plan.json'), 'w'), ensure_ascii=False, indent=1)   # what the algorithm inserted (for reading)
-    sys.stdout.flush(); os.environ['CT_PLAN'] = json.dumps(PLAN); os.environ['CT_PASS'] = str(PASS + 1)
+    sys.stdout.flush(); os.environ['CT_PLAN'] = json.dumps(PLAN); os.environ['CT_PASS'] = str(PASS + 1); os.environ['CT_GEN_HITS'] = f'{GEN_HITS[0]},{GEN_HITS[1]}'
     with open(GEN_PATH, 'wb') as f_: pickle.dump((GEN_TOKEN, GEN_SAVED), f_, protocol=pickle.HIGHEST_PROTOCOL)
     os.environ['CT_GEN'] = GEN_TOKEN   # (the next pass reads the cities of this one)
     os.execv(sys.executable, [sys.executable, '-I', os.path.abspath(__file__), D])
@@ -3190,6 +3275,7 @@ for w_ in WARN: print('warning: ' + w_, file=sys.stderr)
 if LIVING_BAD and os.environ.get('CT_LIVING') != 'warn':   # (CT_LIVING=warn: report only, while the pictures are being made: tools/living.py ref reads film.json)
     fault('living moments (docs/STAGING.md "Living moments"): ' + '; '.join(LIVING_BAD))
 json.dump({'seconds': round(_time.time() - _T0, 1), 'passes': PASS}, open(_TF, 'w'))
+print(f'  period cities: {GEN_HITS[0]} read back from local/cache/gen, {GEN_HITS[1]} built')
 print(f'compile: {(_time.time() - _T0) / 60:.1f} min, {PASS} pass{"es" if PASS > 1 else ""} of the stage plan')
 if FAULTS:   # (film.json and the logs are written: the faults can be looked at in the preview and the stills)
     raise SystemExit(f'compile: {len(FAULTS)} fault(s), all of them listed above as FAULT 1..{len(FAULTS)}: fix them together and compile once')
