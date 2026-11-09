@@ -1,6 +1,6 @@
 # Camera: az255, el18, d135m, fov42, at[-10,0,8] relative to Curia anchor.
 # Intentional entrance detail within the complete seven-landmark model; the theatre may be outside the crop.
-# Make no image before the root's native multi-landmark build and bright true-height review.
+# Generate only after the corrected native reference has been inspected at true height.
 place: "The garden-facing entrance of the Curia of Pompey, at the eastern end of Pompey's theatre-portico complex in Rome, seen from the west-northwest through the open garden"
 when: "44 BCE before the assassination, an ordinary calm daylight moment; the hall and complex had been inaugurated in 55 BCE"
 picture: |
@@ -19,7 +19,7 @@ avoid: >-
   marble avenue, pools, fountains, statues or trees obscuring the entrance; a plinth rim, cliff, pit or trench;
   modern buildings or objects, text, watermark, border
 sources:
-  - "research/museum/pompey_complex/sources.md: same seven canonical source landmarks and unchanged positions; hall is a close detail, not a substitute single-building page"
+  - "research/museum/pompey_complex/sources.md: same seven canonical source geometries, with the page-only theatre alignment/contact correction; hall is a close detail, not a substitute single-building page"
   - "M01: Sovrintendenza Capitolina, hall at the eastern end of the theatre-portico complex and actual assassination site; no assassination scene is depicted"
   - "M02: Marra et al. 2021 author manuscript pp4–5, 24 by27 m independent hall and distinction between its original construction and Augustan blocking"
   - "M03: Monterroso Checa 2022 pp300–301 figs17/18A/B, independent Pompeian hall, later closure and latrines excluded; no complete Republican elevation survives"

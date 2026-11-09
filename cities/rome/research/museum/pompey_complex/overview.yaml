@@ -1,9 +1,9 @@
 # Camera: az0, el28, d540m, fov42; origin is the unchanged Curia anchor.
-# Make no image before the root's native multi-landmark build and bright true-height review.
+# Generate only after the corrected native reference has been inspected at true height.
 place: "Pompey's theatre-portico complex in the southern Campus Martius, Rome: the east-facing semicircular theatre, covered walks behind its stage, and the separate Curia of Pompey at the eastern end of the garden"
 when: "44 BCE, before the assassination of Julius Caesar, an ordinary clear day; the complex had opened in 55 BCE"
 picture: |
-  Edit the attached native museum reference. Keep its complete model geometry, including all seven matched source landmarks, their relative positions, their small joins and the gap behind the theatre stage. This is a southern overview, not a new ideal reconstruction plan. The theatre, enclosing walks and eastern hall must retain exactly the outlines and proportions in the reference.
+  Edit the attached native museum reference. Keep its complete model geometry, including all seven matched source landmarks, their corrected relative positions and their small portico joins. This is a southern overview, not a new ideal reconstruction plan. The theatre, enclosing walks and eastern hall must retain exactly the outlines and proportions in the reference.
   Give the semicircular seating and its plain exterior subdued pale stone and plaster tones. Keep the stage building a simple straight architectural mass exactly as modelled. Its original Republican elevation is uncertain: do not invent a rich facade, columns, recesses, windows or statuary to make it more complete.
   Across the garden, the independent almost square meeting hall rises above the lower covered walks. Apply restrained pale plaster tones to its existing walls and muted terracotta tones to its existing pitched roof. The height, roof pitch, single doorway and portico columns are model estimates, not surviving elevations. Keep the real doorway opening as seen, without turning the hall into a solid temple or adding a classical temple porch.
   Keep all portico column positions, roof ridges, rear walls and the estimated southern access in the reference. Use quiet pale surface colours and muted clay roof tiles without adding carved capitals or another colonnade tier. Materials and colours are restrained comparative estimates, not a recovered site colour scheme.
@@ -18,7 +18,7 @@ avoid: >-
   to the model; modern streets, cars, buildings, signs; prominent Caesar or Pompey, assassination, weapons or blood;
   a display plinth edge, cliff, excavation pit, text, watermark, border
 sources:
-  - "research/museum/pompey_complex/sources.md: seven exact canonical matchers, 302 native geometry records, unchanged positions and true-height bounds; root's bright visual review remains required"
+  - "research/museum/pompey_complex/sources.md: seven exact canonical matchers, 302 native geometry records, page-only theatre move_m[20.6,-33.4]/turn_deg1.7803785541 and unchanged canonical geometries; corrected native reference inspected before generation"
   - "M01: Sovrintendenza Capitolina, La Curia di Pompeo, official account of the hall, garden-portico-theatre relationship and the 44 BCE event; no event is depicted here"
   - "M02: Marra et al. 2021 author manuscript pp4–5, 24 by 27 m independent hall, 55 BCE opening and distinct building phases; no original elevation dimensions"
   - "M03: Monterroso Checa 2022 pp300–301 figs17–18A/B, Pompeian hall before Augustan closure; no reconstructed original facade"

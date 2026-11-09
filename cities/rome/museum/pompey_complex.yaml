@@ -1,5 +1,5 @@
 # Requires the native multi-landmark `pieces` support in f75c04f.
-# All seven pieces retain the canonical coordinates and geometry; the first Curia anchor is the camera origin.
+# Seven canonical geometries; theatre placement corrected on this page alone. Curia remains the camera origin.
 # Source review, native bounds and the remaining visual gate: research/museum/pompey_complex/sources.md.
 id: pompey_complex
 node: republic_pompey_observation
@@ -16,6 +16,16 @@ pieces:
   - id: pompey_theatre
     node: republic_late_city
     landmark: { kind: ring, id: pompey_theatre }
+    move_m: [20.6, -33.4]
+    turn_deg: 1.7803785541
+    why:
+      zh: 文献和既存平面支持剧场、园廊与议事厅同轴，柱廊紧接舞台背面。本页将影片中偏北且分离的剧场向东约20.6米、向南约33.4米，并绕自身锚点转约1.78度，使舞台背面接近西横廊屋檐。平移量是现有示意模型的展馆校正估值，不是考古测量精度；影片与city.yaml保留原位。
+      en: >-
+        Texts and existing plans support one axis through theatre, garden porticoes and meeting hall, with the portico
+        directly behind the stage. On this page alone the film's offset, detached theatre moves about 20.6 metres east
+        and 33.4 metres south and turns about 1.78 degrees about its own anchor, bringing the stage back to the western
+        cross portico's eave. These are placement estimates for this schematic museum model, not archaeological
+        survey precision. The film and city.yaml retain their original positions.
   - id: pompey_gallery_north_west
     node: republic_late_city
     landmark: { kind: parts, id: pompey_gallery_north_west }
@@ -62,14 +72,16 @@ label:
     cite: [M02, M03, M06, M07]
   - head: { zh: 怎样阅读这座模型, en: Reading the model }
     text:
-      zh: 模型沿用影片中的建筑位置和形体，垂直方向不放大。这不表示原高已经测定：剧场以约36米、大厅以约14.8米檐高、廊柱以约5.92米作示意。后两项借用维特鲁威所述法诺公共会堂作有限比较，不是庞培建筑的实测值。剧场外圈开口、座席分级和舞台立面均作简化，没有复原全部门窗、柱式与雕饰。各段柱廊的衔接和剧场与庭院的对位保留现有模型的近似关系。所有可见建筑构件因此标为「推测」，具体平面依据另在构件说明中交代。园树、古地坪和室内席位没有逐项复原。
+      zh: 模型沿用影片中的建筑形体，垂直方向不放大；剧场只在本页调整位置与方向，使它与园廊、议事厅同轴并接近相连。影片中的剧场仍偏北、与柱廊分离，city.yaml和成片不变。这不表示原高已经测定：剧场以约36米、大厅以约14.8米檐高、廊柱以约5.92米作示意。后两项借用维特鲁威所述法诺公共会堂作有限比较，不是庞培建筑的实测值。剧场外圈开口、座席分级和舞台立面均作简化，没有复原全部门窗、柱式与雕饰。各段柱廊的小接缝仍是模型近似；剧场的位置校正以同轴相连的有据关系为约束，公尺数不是遗址实测值。所有可见建筑构件因此标为「推测」，具体平面依据另在构件说明中交代。园树、古地坪和室内席位没有逐项复原。
       en: >-
-        The model keeps the film's building positions and forms without stretching their heights. This does not make
+        The model keeps the film's building forms without stretching their heights. On this page alone, the theatre is
+        repositioned and turned to share the garden and hall's axis and meet the portico. The film retains its northern
+        offset and detached placement; city.yaml and the finished film are unchanged. This does not make
         their original heights known: the theatre uses about 36 metres, the hall about 14.8 metres to its eaves, and the
         portico columns about 5.92 metres. The last two are limited comparisons with Vitruvius's basilica at Fano, rather
         than measurements of Pompey's buildings. Exterior openings, seating tiers and the stage facade are simplified;
-        complete openings, architectural orders and sculpture have not been reconstructed. Connections and alignment
-        retain the existing model's approximations.
+        complete openings, architectural orders and sculpture have not been reconstructed. Small joins between portico sections remain approximate. The theatre correction follows the attested connected,
+        axial relationship; its distances are estimates for this model, rather than site measurements.
         All visible building components are therefore marked estimated; their notes distinguish the evidence for the
         plan. Garden trees, ancient ground levels and interior seating have not been individually reconstructed.
     cite: [M02, M03, M05, M06, M07]
@@ -163,12 +175,13 @@ parts:
     status: estimated
     name: { zh: 剧场后方横向柱廊, en: Cross portico behind the theatre }
     note:
-      zh: 剧场后方有柱廊的用途有维特鲁威记载；此处135米长、35柱及具体位置是模型的近似衔接。剧场与柱廊之间约18.5米的空隙是模型的限制；实际上，柱廊直接接在剧场舞台建筑的后面。这不是一条已经考证的古街宽度，模型也不为接齐外观而移动现有建筑。
+      zh: 剧场后方有柱廊的用途有维特鲁威记载；此处135米长、35柱及具体位置是模型的近似衔接。文献与既存平面支持柱廊紧接舞台背面；本页据此把剧场移到园廊与议事厅的共同轴线上，舞台背面接近横廊屋檐，保留约0.2米的墙面至廊地坪余量。校正量由既有模型形体估配，不能当成古代街宽或发掘坐标；影片仍保留原来的错位与空隙。
       en: >-
         Vitruvius attests porticoes behind the theatre. This cross section's length of 135 metres, 35 columns and exact
-        placement are approximate model connections. The gap of about 18.5 metres between theatre and portico is a
-        limitation of this model: the actual portico joined directly to the back of the theatre's stage building.
-        It is not a measured ancient street width. Existing buildings have not been moved to make the model join neatly.
+        placement are approximate model connections. Texts and existing plans place the portico directly behind the stage. On this page the theatre is repositioned
+        on the garden and hall axis, with its stage back close to the cross portico eave and about 0.2 metres between
+        the wall and portico floor. The correction is estimated from the existing model bodies, not a measured ancient
+        street or excavated coordinates. The film retains its original offset and gap.
     cite: [M04, M06, M07, M08]
 
 # Proposed origin: the unchanged Curia landmark anchor, east/north/up metres.
