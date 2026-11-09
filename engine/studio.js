@@ -127,11 +127,12 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uNightDeep: { value: 0 },   // film.night_look.deep: at night today's buildings go dark, a few windows burn brighter (the night city)
     uSpotC: { value: new THREE.Vector2(0, 0) }, uSpotR: { value: 9 }, uSpotK: { value: 1 }, uSpotB: { value: 1 },   // spot: the light falls on a subject, the rest of the room goes dark
     // a living moment: a picture of the period projected from its shot's camera onto the model (uPM), shown inside a ring of light
-    // (uPRC, uPRR) and on the far land as the sky comes (uPF beyond uPF0..uPF1 from the ring's centre); uLiveSink: today's city sinks.
+    // (uPRC, uPRR), the ring running out past the far land to the horizon; uPF: the sky coming after it (the ring's glow goes);
+    // uLiveSink: today's city sinks.
     // uPE: the picture fades out over that share of its frame at its edges (a museum page whose window shows more than the
     // picture's frame); 0 in the film, where the picture fills the frame
     uPI: { value: null }, uPM: { value: new THREE.Matrix4() }, uPA: { value: 0 }, uPRC: { value: new THREE.Vector2(0, 0) }, uPRR: { value: 0 }, uPF: { value: 0 },
-    uPF0: { value: 9 }, uPF1: { value: 10 }, uLiveSink: { value: 0 }, uPE: { value: 0 },
+    uLiveSink: { value: 0 }, uPE: { value: 0 },
   };
 
   // the shaders' uniform arrays and the textures they read, by Z: FULL has room for any film (the engine's slots above); on
@@ -175,7 +176,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uFootM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[${HMAX}];
   uniform vec3 uShadeL, uShadeC; uniform float uShadeK, uNightDeep;
   uniform float uSpotR, uSpotK, uSpotB; uniform vec2 uSpotC;
-  uniform sampler2D uPI; uniform mat4 uPM; uniform float uPA, uPRR, uPF, uPF0, uPF1, uPE; uniform vec2 uPRC;
+  uniform sampler2D uPI; uniform mat4 uPM; uniform float uPA, uPRR, uPF, uPE; uniform vec2 uPRC;
   float peK(vec2 u){ return uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.; }   // (uPE: the picture's feathered edge)
   uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''};
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
@@ -575,7 +576,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
  ${kind < 1.5 && Z.live ? `if (uPA > 0.) {
    vec4 pc_ = uPM * vec4(vWP, 1.); vec2 pu_ = pc_.xy / pc_.w * .5 + .5; float dr_ = length(vWP.xz - uPRC) - uPRR;
    if (pc_.w > 0. && pu_.x > 0. && pu_.x < 1. && pu_.y > 0. && pu_.y < 1.) {
-     float in_ = max(smoothstep(.0012, -.0012, dr_), smoothstep(uPF0, uPF1, length(vWP.xz - uPRC)) * uPF);
+     float in_ = smoothstep(.0012, -.0012, dr_);   // (one front, near to far: nothing beyond the ring shows the picture before it arrives)
      outgoingLight = mix(outgoingLight, texture2D(uPI, pu_).rgb, uPA * in_ * peK(pu_)); }
    float gw_ = max(1.5e-4, distance(cameraPosition, vWP) * .012); outgoingLight += vec3(1., .84, .6) * exp(-dr_ * dr_ / (gw_ * gw_)) * uPA * .9 * step(.0001, uPRR) * (1. - uPF); }` : ''}
 #include <opaque_fragment>${kind === 1 ? '\n gl_FragColor.a = 1. - .5 * wDrapedK;   // (.5 on a draped pool: the edge pass leaves it out; the scene buffer\'s alpha is read for nothing else)' : ''}`);
@@ -1081,10 +1082,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     return fires[id];
   }
 
-  // a living moment's sky: the picture's sky and far land on a card far behind the shot, facing its camera (placed by aimProjector)
-  const liveSky = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ uniforms: { uPI: U.uPI, uPM: U.uPM, uPE: U.uPE, uA: { value: 0 } }, depthWrite: false, transparent: true,
+  // a living moment's sky: the picture's sky and far land on a card far behind the shot, facing its camera (placed by aimProjector);
+  // uW: how far up the picture it shows (a film's moment wipes it in from the bottom after the ring has reached the horizon; 2: all)
+  const liveSky = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ uniforms: { uPI: U.uPI, uPM: U.uPM, uPE: U.uPE, uA: { value: 0 }, uW: { value: 2 } }, depthWrite: false, transparent: true,
     vertexShader: 'varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
-    fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA, uPE; varying vec3 vW; void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(texture2D(uPI, u).rgb, uA * (uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.)); }' }));
+    fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA, uPE, uW; varying vec3 vW; void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(texture2D(uPI, u).rgb, uA * (1. - smoothstep(uW - .1, uW, u.y)) * (uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.)); }' }));
   liveSky.visible = false; liveSky.renderOrder = -1; liveSky.frustumCulled = false; scene.add(liveSky);
   // the projector of a picture made from one shot of the model (a living moment, a museum page's viewpoint): that shot's camera
   // [x, y, z, az, el, d, fov] (az, el in degrees round its target, as the camera keys count them), no drift, no zoom, at the

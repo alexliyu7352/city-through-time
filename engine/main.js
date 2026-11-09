@@ -199,30 +199,47 @@ for (const d of FILM.decals || []) U.uDrect.value[d.i].set(d.uv[0], d.uv[1], d.u
 U.uNightDeep.value = (FILM.night_look && FILM.night_look.deep) || 0;   // film.night_look.deep: the night city (docs/STAGING.md)
 // living moments (film.living, docs/STAGING.md "Living moments"): a picture of the period made from this very shot of the model and
 // projected back onto it from the shot's own camera. The camera arrives and stops (the projection is exact only from there: it may
-// zoom, never move), today's city sinks, a ring of light spreads from the viewer and turns the white model into the living town,
-// the sky and the far land come with it; it holds (a slow zoom, weather), dissolves back to the model, and the camera goes on
+// zoom, never move), today's city sinks, a ring of light spreads from the viewer and turns the white model into the living town
+// out to the horizon, and the sky comes after it, wiped in from the horizon up (one front, near to far); it holds (a slow zoom, weather), dissolves back to the model, and the camera goes on
 const LIVING = FREE ? [] : FILM.living || [], LIVETEX = {};
 for (const v of LIVING) { try { const t_ = await tex(base + v.file); t_.colorSpace = THREE.SRGBColorSpace; t_.anisotropy = 8; LIVETEX[v.id] = t_; } catch { /* no picture yet: compile said so */ } }
-let LV = null;   // this frame's moment: { L, cam: the shot's share of the camera, k: the scene's (today sunk, lines out), pa: the picture, r: the ring, sky, zoom }
+let LV = null;   // this frame's moment: { L, cam: the shot's share of the camera, k: the scene's (today sunk, lines out), pa: the picture, sky, zoom } (its ring: liveFront)
 function liveAt(t) {
   for (const L of LIVING) {
     const a0 = L.on - L.arrive, r1 = L.on + L.reveal, h1 = r1 + L.hold, o1 = h1 + L.out, b1 = o1 + L.back;
     if (t < a0 || t > b1) continue;
     const cam = t < L.on ? ss(seg(t, a0, L.on)) : t <= o1 ? 1 : 1 - ss(seg(t, o1, b1));
     const k = t < L.on ? ss(seg(t, a0 + L.arrive * .3, L.on)) : t <= o1 ? 1 : 1 - ss(seg(t, o1, b1));
-    const rk = seg(t, L.on, r1), e = ss(Math.min(1, rk / .82)), tail = Math.max(0, (rk - .82) / .18);   // the ring crosses the town, then runs out to the horizon
-    return { L, cam, k, pa: t < L.on ? 0 : 1 - ss(seg(t, h1, o1)), r: t < L.on ? 0 : 6 * L.cam[5] * e + 2 * tail * tail, sky: ss(seg(rk, .35, .85)), zoom: lerp(1, L.zoom, ss(seg(t, r1, h1))) };
+    const rk = seg(t, L.on, r1);
+    return { L, cam, k, pa: t < L.on ? 0 : 1 - ss(seg(t, h1, o1)), sky: ss(seg(rk, .8, 1)), zoom: lerp(1, L.zoom, ss(seg(t, r1, h1))) };
   }
   return null;
+}
+// the front of a moment's reveal, one line climbing the shot at an even pace through the reveal, from the ring's centre to above
+// the top: on the ground the ring reaches as far as the front has climbed (r: the ground distance ahead that the shot sees at the
+// front's height), past the horizon it runs on up the sky card (w, the share of the shot's height shown; 1.12: all of it)
+function liveFront(P, L, t) {
+  const f = new THREE.Vector3(); P.getWorldDirection(f); f.y = 0; if (f.lengthSq() < 1e-8) f.set(0, 0, -1); f.normalize();   // (straight down: any way on)
+  const q = new THREE.Vector3(), N = 256, sd = new Float64Array(N + 1), vd = new Float64Array(N + 1);
+  for (let i = 0; i <= N; i++) {   // the ground ahead on the terrain itself, as high on the shot as it has come so far (a ridge hides the dale behind it)
+    const s = i ? 1e-4 * Math.pow(4e5, (i - 1) / (N - 1)) : 0, x = L.origin[0] + f.x * s, z = L.origin[1] + f.z * s;
+    sd[i] = s; vd[i] = Math.max(i ? vd[i - 1] : -1e9, q.set(x, S.ground(x, z), z).project(P).y * .5 + .5);
+  }
+  const vh = q.set(L.origin[0] + f.x * 1e4, 0, L.origin[1] + f.z * 1e4).project(P).y * .5 + .5 - .015, v0 = Math.max(0, vd[0]);
+  if (t < L.on) return { r: 0, w: 0 };
+  const w = v0 + (1.12 - v0) * ss(seg(t, L.on, L.on + L.reveal));
+  if (w >= vh || w > vd[N]) return { r: 20, w };   // (past the horizon: all the ground, whatever its distance)
+  let i = 1; while (i < N && vd[i] < w) i++;
+  return { r: lerp(sd[i - 1], sd[i], vd[i] > vd[i - 1] ? (w - vd[i - 1]) / (vd[i] - vd[i - 1]) : 1), w };
 }
 function setLiving(t) {
   const Wp = post.weather, L = LV && LV.L, tx_ = L && LIVETEX[L.id];
   U.uLiveSink.value = LV ? LV.k * (LV.L.sink ?? 1) : 0; U.uEdgeGain.value = (LOOK.edge ?? 1) * (1 - (LV ? LV.k : 0));   // (a moment in the modern section keeps today's city: compile's sink)
   if (!tx_) { U.uPA.value = 0; S.liveSky.visible = false; Wp.enabled = false; return; }   // (no moment now, or its picture is not made yet: the white model holds the shot)
-  S.aimProjector(L.cam, W / H); U.uPI.value = tx_;   // the projector: the shot's camera, no drift, no zoom (and the sky card behind the town)
-  const pd = L.cam[5];
-  U.uPA.value = LV.pa; U.uPRC.value.set(L.origin[0], L.origin[1]); U.uPRR.value = LV.r; U.uPF.value = LV.sky; U.uPF0.value = 5 * pd; U.uPF1.value = 8 * pd;
-  S.liveSky.material.uniforms.uA.value = LV.sky * LV.pa; S.liveSky.visible = LV.sky * LV.pa > 0;
+  const PJ = S.aimProjector(L.cam, W / H); U.uPI.value = tx_;   // the projector: the shot's camera, no drift, no zoom (and the sky card behind the town)
+  const fr = liveFront(PJ, L, t);
+  U.uPA.value = LV.pa; U.uPRC.value.set(L.origin[0], L.origin[1]); U.uPRR.value = fr.r; U.uPF.value = LV.sky;
+  const sk = S.liveSky.material.uniforms; sk.uA.value = LV.pa; sk.uW.value = fr.w; S.liveSky.visible = LV.pa > 0 && fr.w > 0;
   const wk = LV.sky * LV.pa; Wp.enabled = wk > 0 && (L.rain > 0 || L.mist > 0);
   Wp.uniforms.uRain.value = L.rain * wk; Wp.uniforms.uMist.value = L.mist * wk; Wp.uniforms.uMistY.value = L.mistY; Wp.uniforms.uT.value = t;
 }
