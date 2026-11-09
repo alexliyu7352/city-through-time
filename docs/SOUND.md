@@ -29,6 +29,8 @@ without it a split sentence gets two gaps in the middle). A picture that a line 
 「Pius IX」 and 「0.44 km²」), abbreviations spelled out (「St」 can be read as "street"); a pause is written as punctuation and line breaks, not as words (an ellipsis a breath, a dash an aside, a line break between
 sentences), used sparingly: a narrator who breathes before every second phrase sounds unsure. Check the voice text against the script word for word (after the spoken forms) before it goes to the voice, and after
 cutting listen first to the words the tool lists as least sure.
+A service that makes its audio in pieces can join them with a jump in the wave, a click or pop in the line on every playback (phone speakers included); voicecut.py mends each take's seams before it cuts,
+and lines from anywhere else go through `uv run python -I audio/seams.py <their folder> --out <folder>` (on the service's own files, before any resampling) before they are laid; `--check` counts the seams left.
 Before writing the voice workflow, look at the tool's real interface (emotion options, how much text at once, whether it can be set line by line), and do not write options the interface does not have.
 The narration sounds like one narrator throughout (voice, pace, level) and no sentence breaks across pieces: generate in pieces large enough to keep that and small enough that a changed line
 or section can be redone with no audible join (for instance one take per section).

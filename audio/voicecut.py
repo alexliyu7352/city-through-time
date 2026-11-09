@@ -2,7 +2,7 @@
 read as continuous speech, whole sentences, so a sentence that the subtitles split over two lines keeps its flow. Each line is
 found in its take by forced alignment of the known words (torchaudio MMS_FA) and cut at the quietest point between its last
 word and the next line's first: the files laid end to end are the take again, its own pauses included. Nothing is trimmed at
-the take's start or end (trimming eats first words).
+the take's start or end (trimming eats first words). The take's seams are mended first (audio/seams.py).
 
     python -I audio/voicecut.py --takes <dir of <take>.wav> --lines <tsv> --out <city>/build/audio/voice/<lang>
 
@@ -16,6 +16,7 @@ Needs torch and torchaudio (CPU is enough; the model, 1.2 GB, downloads once to 
 import argparse, csv, json, os, re, unicodedata
 import numpy as np
 import soundfile as sf
+import seams as SEAMS
 
 FADE_IN, FADE_OUT = .005, .02   # at a cut between two lines of a take
 CHUNK_S, CTX_S = 30.0, 1.0      # the aligner hears the take in pieces this long, with this much either side for context
@@ -75,6 +76,7 @@ def main():
     for take, lines in takes.items():
         x, sr = sf.read(os.path.join(A.takes, take + '.wav'), dtype='float32')
         x = x.mean(1) if x.ndim > 1 else x
+        x, mended = SEAMS.mend(x, sr)   # (the service's jumps between its pieces: clicks on every playback)
         wav16 = torchaudio.functional.resample(torch.from_numpy(x), sr, sr16).numpy()
         words, owner = [], []
         for i, (_, said) in enumerate(lines):
@@ -95,7 +97,7 @@ def main():
             ws = [k for k in range(len(words)) if owner[k] == i]
             report.append((take, lid, (b - a) / sr, len(ws) / max(.1, wt[ws[-1]][1] - wt[ws[0]][0])))
         worst = sorted((k for k in range(len(words)) if words[k] not in NUMBER_WORDS), key=lambda k: wt[k][2])[:A.worst]
-        print(f'{take}: {len(x) / sr:.1f} s, {len(lines)} lines, {len(words)} words, least sure: '
+        print(f'{take}: {len(x) / sr:.1f} s, {len(lines)} lines, {len(words)} words, {len(mended)} seams mended, least sure: '
               + ', '.join(f'{words[k]} {wt[k][0]:.1f}s ({wt[k][2]:.2f})' for k in worst), flush=True)
     json.dump(index, open(TJ, 'w'), indent=0)
     r = sorted(q[3] for q in report)
