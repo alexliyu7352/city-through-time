@@ -41,6 +41,12 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
 
 - **The building:** `node` and `landmark` (its kind and place, as in city.yaml) name it; the model is the film's generator run for it alone
   on level ground, `exaggeration: 1`. A generator labels the sections it draws (citygen `Builder.labelled`); a kind with no labels is one part.
+  A building the film tells over more than one period (a theatre in one city, the hall where a ruler was killed in the next) is one
+  page of `pieces`: `[{id, node, landmark}]`, each landmark found in its own node's city and built where the film puts it, all on one
+  stand round the first piece's place (`at_m` and `stage_m` are measured from there; make the stand cover every piece). `node` then
+  names the period whose hall the page belongs to. A piece's records are labelled with its id first (`curia/hall`), so a part takes
+  them by piece (`labels: [curia/*]`). List the pieces the page shows: two nodes that both carry the same building at one place give
+  it twice.
 - **Parts:** each record goes to the first part whose `labels` (fnmatch on the label path, `west/platform`) and `kinds` (`roof`) take it;
   a record no part takes stops the build. Each part has `status: sourced` (an excavation report, or a text relaying one, says so) or
   `estimated` (a reconstruction, a mirror of the half that was dug, a guess), a short `note` in the page's languages saying what the sources

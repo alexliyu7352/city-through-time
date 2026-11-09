@@ -4,7 +4,8 @@ viewpoints whose imagined pictures are projected back onto it (tools/living.py <
 
 usage: uv run python -I tools/museum.py cities/<slug> [<page> ...]      every page of the city when none is named
 
-  reads   cities/<slug>/museum/<page>.yaml (the landmark: node and kind and place; parts, label, life, viewpoints, sources),
+  reads   cities/<slug>/museum/<page>.yaml (the landmark: node and kind and place, or `pieces`: several landmarks, each with its
+          own node, built where the film has them; parts, label, life, viewpoints, sources),
           city.yaml (the node's city: the landmark as the film builds it), assets/museum/<page>/<viewpoint>.jpg and its record
   writes  build/museum/<page>.json           the page: its words, its parts' notes and status, the viewpoints and their pictures
           build/museum/<page>/model.json     the model: its records part by part, and the stand (engine/props.js buildEra reads them)
@@ -16,7 +17,9 @@ usage: uv run python -I tools/museum.py cities/<slug> [<page> ...]      every pa
 Traditional Chinese: every zh text of the pages and the periods' names has its zh-Hant in museum/zh-Hant.yaml (tools/hant.py,
 OpenCC s2twp, read through by a person); a zh text without one stops the build (it changed since).
 The model is the film's own generator (pipeline/citygen.py) run for the one landmark on level ground, with the exaggeration the
-page gives (1: true heights). Each record goes to the first part whose `labels` (the paths the generator labels its sections
+page gives (1: true heights). A building the film tells in more than one period (a theatre in one, the hall beside it in the next)
+is a page of `pieces` ({id, node, landmark}): each built from its own node's city where the film puts it, all on one stand round
+the first; the labels of a piece's records begin with its id (curia/hall), so parts take them by piece. Each record goes to the first part whose `labels` (the paths the generator labels its sections
 with: Builder.labelled) and `kinds` (roof: roofs) it matches; a record no part takes stops the build, so every piece of the model
 is either sourced or estimated. A viewpoint's picture is used only while the viewpoint is still the one it was made from.
 """
@@ -53,30 +56,54 @@ def words(page, v, what, need=('zh', 'en')):
     return out
 
 
-def find_landmark(C, D, P, page):
-    """the node's city spec (its templates filled in) and the landmark the page names (by kind and place)"""
-    node = next((n for n in C['film']['nodes'] if n.get('id') == P['node']), None)
-    if not node or not node.get('city'): stop(page, f'node {P["node"]!r} has no city: block in city.yaml')
+def find_landmark(C, D, nid, want, page):
+    """the node's city spec (its templates filled in, its landmarks checked and completed as compile completes them: a class's
+    sizes from its defaults) and the landmark `want` names in it (by kind and place, or id)"""
+    node = next((n for n in C['film']['nodes'] if n.get('id') == nid), None)
+    if not node or not node.get('city'): stop(page, f'node {nid!r} has no city: block in city.yaml')
     F = geo.Frame(tuple(C['box']), 1.0 / C['scale'])
-    cs = landmarks.templated(citygen.with_trace(copy.deepcopy(node['city']), F, D), landmarks.library(C, D), f'node {P["node"]}')
-    want = P['landmark']; hits = []
+    cs = landmarks.checked(landmarks.templated(citygen.with_trace(copy.deepcopy(node['city']), F, D), landmarks.library(C, D), f'node {nid}'), f'node {nid}')
+    hits = []
     for L in cs.get('landmarks') or []:
         if not isinstance(L, dict) or L.get('kind') != want.get('kind'): continue
         if 'lon' in want and (abs(L.get('lon', 1e9) - want['lon']) > 1e-6 or abs(L.get('lat', 1e9) - want['lat']) > 1e-6): continue
         if 'id' in want and L.get('id') != want['id']: continue
         hits.append(L)
-    if len(hits) != 1: stop(page, f'landmark {want}: {len(hits)} landmarks of node {P["node"]} match it (give kind with lon, lat or id: exactly one)')
+    if len(hits) != 1: stop(page, f'landmark {want}: {len(hits)} landmarks of node {nid} match it (give kind with lon, lat or id: exactly one)')
     return F, cs, hits[0]
 
 
-def build_model(F, cs, L, P, page):
-    """the landmark alone on level ground, centred on its place: its records, each record's label, and the stand"""
-    lon, lat = (L['lon'], L['lat']) if 'lon' in L else L['from']
-    L0, L = L, {**copy.deepcopy(L), 'exaggeration': float(P.get('exaggeration', 1))}
+def pieces(P, page):
+    """the page's landmarks: [(piece id or None, node, landmark)]; one landmark (node, landmark), or `pieces`"""
+    if 'pieces' not in P:
+        if 'landmark' not in P: stop(page, 'landmark is missing (or pieces: [{id, node, landmark}], for a building the film tells in several periods)')
+        return [(None, P['node'], P['landmark'])]
+    if 'landmark' in P: stop(page, 'landmark and pieces: give one of them')
+    out, seen = [], set()
+    for i, q in enumerate(P['pieces'] or []):
+        if not isinstance(q, dict) or any(k not in q for k in ('id', 'node', 'landmark')): stop(page, f'pieces[{i}]: id, node and landmark (kind with lon, lat or id)')
+        if q['id'] in seen: stop(page, f'pieces: id {q["id"]!r} twice')
+        seen.add(q['id']); out.append((str(q['id']), q['node'], q['landmark']))
+    if not out: stop(page, 'pieces: none given')
+    return out
+
+
+def build_model(F, found, P, page):
+    """the landmark alone on level ground, centred on its place: its records, each record's label, and the stand. found: [(piece
+    id or None, its node's city spec, the landmark)]; several pieces stand where the film has them, round the first one's place"""
+    place = lambda L: (L['lon'], L['lat']) if 'lon' in L else L['from']
     level = lambda x, y: 0.0
-    spec = {'origin': [lon, lat], 'theta_deg': cs.get('theta_deg', 0), 'detail': cs.get('detail', 'medium'), 'exaggeration': L['exaggeration'], 'landmarks': [L]}
-    labels = []
-    prims = citygen.build_city(spec, F, level, 1.0, labels=labels)
+    prims, labels, film_, sites = [], [], [], []
+    for pid, cs, L0 in found:
+        lon_, lat_ = place(L0)
+        L = {**copy.deepcopy(L0), 'exaggeration': float(P.get('exaggeration', 1))}
+        spec = {'origin': [lon_, lat_], 'theta_deg': cs.get('theta_deg', 0), 'detail': cs.get('detail', 'medium'), 'exaggeration': L['exaggeration'], 'landmarks': [L]}
+        lab = []
+        prims += citygen.build_city(spec, F, level, 1.0, labels=lab)
+        labels += lab if pid is None else [f'{pid}/{x}' if x else pid for x in lab]
+        film_ += citygen.build_city({**spec, 'exaggeration': cs.get('exaggeration', 2.0), 'landmarks': [L0]}, F, level, 1.0)   # (as the film draws it: its top, for the walk-round view's mark)
+        sites += citygen.landmark_site(L, F, cs.get('theta_deg', 0))[4]
+    _, cs, L = found[0]; lon, lat = place(L)
     ox, oy = F.to_utm.transform(lon, lat); th = math.radians(L.get('theta_deg', cs.get('theta_deg', 0)))
     B = citygen.Builder(F, level, 1.0, 1.0, (ox, oy))   # the stand: a level slab under it, its top the ground
     sw, sd = P.get('stage_m', [300, 200]); a, b = B.frame(ox, oy, th)(-sw / 2, 0), B.frame(ox, oy, th)(sw / 2, 0)
@@ -87,10 +114,11 @@ def build_model(F, cs, L, P, page):
         q = list(p); q[1] = round(q[1] - mx, 7); q[2] = round(q[2] - mz, 7); q[10] = 0.0
         if len(q) > 16: q[15] = round(q[15] - mx, 7); q[16] = round(q[16] - mz, 7)
         return q
-    film_ = citygen.build_city({**spec, 'exaggeration': cs.get('exaggeration', 2.0), 'landmarks': [L0]}, F, level, 1.0)   # (as the film draws it: its top, for the walk-round view's mark)
     top = max(film_, key=lambda q: q[4] + q[7]); anchor = [round(top[1], 6), round(top[4] + top[7], 6), round(top[2], 6)]
-    site = citygen.landmark_site(L, F, cs.get('theta_deg', 0))[4]
-    x0, y0, x1, y1 = site[0].bounds if site else (ox - 50, oy - 50, ox + 50, oy + 50)
+    if len(found) == 1: x0, y0, x1, y1 = sites[0].bounds if sites else (ox - 50, oy - 50, ox + 50, oy + 50)
+    else:   # (round the first piece's place: every piece's ground)
+        bs = [g.bounds for g in sites] or [(ox - 50, oy - 50, ox + 50, oy + 50)]
+        x0, y0, x1, y1 = min(b[0] for b in bs), min(b[1] for b in bs), max(b[2] for b in bs), max(b[3] for b in bs)
     return [centred(p) for p in prims], labels, [centred(p) for p in stand], (mx, mz), math.hypot(x1 - x0, y1 - y0) / 2 * F.scale, F.scale, anchor
 
 
@@ -149,10 +177,12 @@ def small(D, rel, out_dir, name):
 def build_page(D, C, page):
     P = yaml.safe_load(open(os.path.join(D, 'museum', page + '.yaml'), encoding='utf-8')) or {}
     if P.get('id') != page: stop(page, f'id: {P.get("id")!r}: the file name\'s ({page})')
-    for k in ('node', 'landmark', 'name', 'parts', 'viewpoints', 'sources', 'label'):
-        if k not in P: stop(page, f'{k} is missing')
-    F, cs, L = find_landmark(C, D, P, page)
-    prims, labels, stand, (mx, mz), r, scale, anchor = build_model(F, cs, L, P, page)
+    for k in ('node', 'name', 'parts', 'viewpoints', 'sources', 'label'):
+        if k not in P: stop(page, f'{k} is missing' + (' (with pieces: the period whose hall the page belongs to)' if k == 'node' and 'pieces' in P else ''))
+    found = []
+    for pid, nid, want in pieces(P, page):
+        F, cs, L = find_landmark(C, D, nid, want, page); found.append((pid, cs, L))
+    prims, labels, stand, (mx, mz), r, scale, anchor = build_model(F, found, P, page)
     srcs = {k: {**words(page, v, f'sources.{k}'), 'short': words(page, v.get('short'), f'sources.{k}.short'), **({'url': v['url']} if v.get('url') else {})} for k, v in P['sources'].items()}
     cites = lambda c, what: [x if x in srcs else stop(page, f'{what}: cite {x!r} is not in sources ({", ".join(srcs)})') for x in (c or [])]
     parts = []
