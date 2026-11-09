@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Review · 審片</title>
+<!-- The finished film for review (node tools/preview.mjs <city> --film <file>): the second it is at, a key that writes that second
+     into the notes (kept in this browser), jumps to given moments (?at=540.9,575.0 or 540.9:label), and one button to copy the
+     notes. ?film=<address> plays another file the server gives (default review/film.mp4); ?title= names it. -->
+<style>
+:root{--bg:#0e1116;--ink:#eef1f5;--dim:#aab3bf;--acc:#f0b450;--line:#3a4250;--field:#11151b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,"PingFang TC","Noto Sans TC",sans-serif}
+main{max-width:1280px;margin:0 auto;padding:20px 16px 48px}h1{font-size:22px;margin:0 0 12px}
+video{width:100%;background:#000;border-radius:6px;display:block}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.now{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--acc);min-width:150px}
+button{min-height:38px;padding:0 14px;border:1px solid var(--line);border-radius:6px;background:#222833;color:var(--ink);font:inherit;cursor:pointer}
+button.main{background:var(--acc);color:#1b1408;border-color:transparent;font-weight:600}
+input{width:110px;min-height:38px;border:1px solid var(--line);border-radius:6px;background:var(--field);color:var(--ink);padding:0 10px;font:inherit}
+textarea{width:100%;min-height:220px;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);padding:12px;font:15px/1.6 inherit}
+.hint{color:var(--dim);font-size:14px}#marks:empty{display:none}
+</style></head><body><main>
+<h1 id="title">Review · 審片</h1>
+<video id="v" controls preload="metadata" playsinline></video>
+<div class="bar">
+  <span class="now" id="now">0.0 s</span>
+  <button class="main" id="mark">記下這一秒 Note this second (M)</button>
+  <button id="back">−3 s (←)</button>
+  <span class="hint">跳到 Go to</span><input id="go" inputmode="decimal" placeholder="s"><button id="goBtn">Go</button>
+</div>
+<div class="bar" id="marks"></div>
+<textarea id="notes" placeholder="M: the second it is at goes here; write what you saw after it. Kept in this browser.  按 M 記下秒數，接著寫看到的問題；內容存在這個瀏覽器裡。"></textarea>
+<div class="bar"><button class="main" id="copy">複製筆記 Copy notes</button><span class="hint" id="msg"></span></div>
+<script>
+const Q = new URLSearchParams(location.search), film = Q.get('film') || 'review/film.mp4', KEY = 'review:' + film;
+const $ = id => document.getElementById(id), v = $('v'), notes = $('notes');
+v.src = film; if (Q.get('title')) { $('title').textContent = Q.get('title'); document.title = Q.get('title') + ' · Review'; }
+const store = () => { try { localStorage.setItem(KEY, notes.value); } catch (e) {} };
+try { notes.value = localStorage.getItem(KEY) || ''; } catch (e) {}
+notes.addEventListener('input', store);
+v.addEventListener('timeupdate', () => { $('now').textContent = v.currentTime.toFixed(1) + ' s'; });
+const seek = s => { v.currentTime = Math.max(0, s); v.play(); };
+for (const m of (Q.get('at') || '').split(',').filter(Boolean)) {   // given moments: a few seconds before each, to see it come
+  const [s, label] = m.split(':'), b = document.createElement('button');
+  b.textContent = `${(+s).toFixed(1)} s${label ? ' · ' + label : ''}`; b.onclick = () => seek(+s - 3); $('marks').append(b);
+}
+function mark() {
+  v.pause(); const t = v.currentTime.toFixed(1);
+  notes.value += (notes.value && !notes.value.endsWith('\n') ? '\n' : '') + t + ' s: ';
+  notes.focus(); notes.selectionStart = notes.selectionEnd = notes.value.length; store();
+}
+$('mark').onclick = mark;
+$('back').onclick = () => { v.currentTime = Math.max(0, v.currentTime - 3); };
+const go = () => { const s = parseFloat($('go').value); if (!isNaN(s)) seek(s); };
+$('goBtn').onclick = go; $('go').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+$('copy').onclick = async () => {
+  try { await navigator.clipboard.writeText(notes.value); $('msg').textContent = 'Copied · 已複製'; }
+  catch (e) { notes.select(); $('msg').textContent = 'Ctrl+C'; }
+};
+document.addEventListener('keydown', e => {
+  if (e.target === notes || e.target.tagName === 'INPUT') return;
+  if (e.key === 'm' || e.key === 'M') { e.preventDefault(); mark(); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); v.currentTime = Math.max(0, v.currentTime - 3); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); v.currentTime = Math.min(v.duration || 1e9, v.currentTime + 3); }
+  else if (e.key === ' ') { e.preventDefault(); v.paused ? v.play() : v.pause(); }
+});
+</script></main></body></html>

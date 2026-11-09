@@ -27,6 +27,8 @@ The whole-film checks run in this step; ask the user first whether the computer 
 note at that time "run the whole film before rendering the final film", and catch up in this step. The whole-film brightness is also measured in this step; for the threshold see CHECKS.md "Brightness".
 Report the loudness and peak taken from the final film as measured by `render/mux.mjs`, not those of the mix (the two differ by a few tenths of a LUFS).
 When motioncheck reports "looks like a cut", pull out a few frames to see whether it is a bad frame or the camera turning fast; report the latter to the user, who decides whether to slow it down.
+The user judges the finished film on the review page, not from stills: `node tools/preview.mjs <slug> --film <the film> --at <s>:<what>,...` prints its address (the film plays and seeks anywhere, the second it is at shows large,
+M writes that second into notes the user copies back; `--at` gives a button a few seconds before each moment to look at, such as the fast camera moves). Give the address with every finished film and every moment to judge.
 
 ## Handover
 
