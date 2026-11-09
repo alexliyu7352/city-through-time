@@ -1026,8 +1026,8 @@ def basin_outline(b):
 def basin_piece(era_id, b):
     """the index of a pool's water among its era's pieces (a dug pool's water, a draped pool's 1 m mark that times it)"""
     return next(i for i, (m_, p_) in enumerate(zip(CITY_META[era_id], PRIMS[era_id])) if m_[0] == b['gid'] and p_[11] == citygen.WATER)
-SITES = {}   # era id -> {landmark index: its site (metres)} for the landmarks a loss clears the ground for (citygen); 'every': all of them
-_SITES_OUT = {}   # era id -> its landmarks' sites in model units, courts and arenas filled (data/sites.json: tools/clipcheck.py)
+SITES = {}   # era id -> {landmark index: its site (metres)} for the landmarks a loss clears the ground for (citygen)
+_SITES_OUT = {}   # era id -> its landmarks' sites in model units, courts and arenas filled, and their records (data/sites.json: tools/clipcheck.py)
 SITE_ON = {}   # era id -> {landmark index: the building groups on its site} (lost_parts; they must be gone before it rises)
 CITY_META = {}
 
@@ -2187,9 +2187,15 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
     own_lm_ = {}   # landmark index -> its own records (citygen tags them ('landmarks', li)): a site stands while they do
     for i_, m_ in enumerate(CITY_META[e['id']]):
         if m_[1][0] == 'landmarks': own_lm_.setdefault(m_[1][1], []).append(i_)
-    _SITES_OUT[e['id']] = [{'ring': [F.model(x_, y_) for x_, y_ in pg_.exterior.coords], 'prims': own_lm_.get(li_, [])}   # (closed over a colonnade's gaps, the court or arena inside kept)
-                           for li_, g_ in ((SITES.get(e['id']) or {}).get('every') or {}).items() for c_ in [g_.buffer(3).buffer(-3)]
-                           for pg_ in getattr(c_, 'geoms', [c_]) if pg_.geom_type == 'Polygon' and not pg_.is_empty]
+    import shapely as _shs
+    _SITES_OUT[e['id']] = []
+    for li_, ix_ in own_lm_.items():   # its site: its own parts' plans, closed over a colonnade's gaps, its court or arena filled; never
+        # its bounding box (an L-shaped wing keeps its inner corner, and the houses there their place)
+        fp_ = [_shs.Polygon(citygen.footprint(prims[i_])) for i_ in ix_ if prims[i_][11] != citygen.TREE]
+        if not fp_: continue
+        g_ = _shs.union_all([q_ for q_ in fp_ if q_.is_valid] or fp_).buffer(3 * F.scale, join_style='mitre').buffer(-3 * F.scale, join_style='mitre')
+        _SITES_OUT[e['id']] += [{'ring': [[round(x_, 5), round(z_, 5)] for x_, z_ in pg_.exterior.coords], 'prims': ix_}
+                                for pg_ in getattr(g_, 'geoms', [g_]) if pg_.geom_type == 'Polygon' and not pg_.is_empty]
     json.dump(_SITES_OUT, open(LAYOUT.data(D, 'sites.json'), 'w'), separators=(',', ':'))
     fx_, fz_ = F.model_lonlat(*(cs.get('fall_from') or cs['origin']))
     e['fallC'] = [round(fx_, 5), round(fz_, 5)]
