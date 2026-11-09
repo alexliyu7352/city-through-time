@@ -26,7 +26,8 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
                       the wall's line ends, not at a bend of it (a vertex set inside the other wall leaves a crossing a crossing)
   houses_in_sites     a house of one city standing inside the site of another city's landmark while that landmark stands (its
                       court or arena too: a circus, a portico round its square; compile data/sites.json, citygen landmark_site,
-                      less 4 m of its apron): the older city's houses must be gone by the time the newer landmark rises
+                      less 4 m of its apron; standing while its own parts do): the older city's houses must be gone by the time the
+                      newer landmark rises
   paving_under        paving (roads, lanes, yards) the plate rises through by more than 0.3 m: a road comes out in dashes
   tall_foundation     houses and halls whose foundation on screen is over 30% of the building's height, counted only when
                       they are more than a tenth of the era's buildings: then the plate's exaggeration is too high for this
@@ -124,11 +125,11 @@ def main():
         hp_, wp0_, sp_ = body((FAB,)), body((WALL, LMK, EARTH, WATER)), [p for p in body((PAVE,)) if p[5] > 12 * S or p[6] > 12 * S]
         houses = [rect(p, .3 * S) for p in hp_]
         houses_by_era[e['id']] = [(rect(p), *span_[id(p)]) for p in hp_]
-        lp_ = [p for p in prims if p[11] == LMK]; sites_by_era[e['id']] = []
-        for r_ in SITES_J.get(e['id'], []):   # each landmark's site, standing from its first part's rise to its last part's end
-            pg_ = Polygon(r_).buffer(-4 * S)
-            inn_ = [span_[id(p)] for p in lp_ if not pg_.is_empty and pg_.contains(shapely.Point(p[1], p[2]))]
-            if inn_: sites_by_era[e['id']].append((pg_, min(a for a, _ in inn_), max(b for _, b in inn_)))
+        sites_by_era[e['id']] = []
+        for st_ in SITES_J.get(e['id'], []):   # each landmark's site, standing from its own first part's rise to its own last part's end
+            pg_ = Polygon(st_['ring']).buffer(-4 * S)
+            inn_ = [span_[id(prims[i])] for i in st_['prims'] if i < len(prims)]
+            if inn_ and not pg_.is_empty: sites_by_era[e['id']].append((pg_, min(a for a, _ in inn_), max(b for _, b in inn_)))
         hard = [rect(p, .3 * S) for p in wp0_]
         streets = [rect(p, .5 * S) for p in sp_]
         trunks = [p for p in prims if p[11] == TREE and p[0] == 3]

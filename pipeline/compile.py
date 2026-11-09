@@ -2184,8 +2184,11 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
         prims[basin_piece(e['id'], b_)][10] = round((t_ - e['on']) / e['span'], 5)
         print(f"  ground {e['id']}.{b_['name']}: rises at {t_:.1f} s")
     json.dump({'prims': prims, **({'lost': LOST[e['id']]} if LOST.get(e['id']) else {})}, open(LAYOUT.build(D, e['file']), 'w'), separators=(',', ':'))   # (film.json's file references are relative to build/)
-    _SITES_OUT[e['id']] = [[F.model(x_, y_) for x_, y_ in pg_.exterior.coords]   # (closed over a colonnade's gaps, the court or arena inside kept)
-                           for g_ in ((SITES.get(e['id']) or {}).get('every') or {}).values() for c_ in [g_.buffer(3).buffer(-3)]
+    own_lm_ = {}   # landmark index -> its own records (citygen tags them ('landmarks', li)): a site stands while they do
+    for i_, m_ in enumerate(CITY_META[e['id']]):
+        if m_[1][0] == 'landmarks': own_lm_.setdefault(m_[1][1], []).append(i_)
+    _SITES_OUT[e['id']] = [{'ring': [F.model(x_, y_) for x_, y_ in pg_.exterior.coords], 'prims': own_lm_.get(li_, [])}   # (closed over a colonnade's gaps, the court or arena inside kept)
+                           for li_, g_ in ((SITES.get(e['id']) or {}).get('every') or {}).items() for c_ in [g_.buffer(3).buffer(-3)]
                            for pg_ in getattr(c_, 'geoms', [c_]) if pg_.geom_type == 'Polygon' and not pg_.is_empty]
     json.dump(_SITES_OUT, open(LAYOUT.data(D, 'sites.json'), 'w'), separators=(',', ':'))
     fx_, fz_ = F.model_lonlat(*(cs.get('fall_from') or cs['origin']))
