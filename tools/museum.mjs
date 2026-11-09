@@ -2,7 +2,7 @@
 // usage: node tools/museum.mjs still <city> <page> <viewpoint>[,<viewpoint>..] [--out <dir>] [--name <file.jpg>]
 //          the model alone at the viewpoint, 1920 x 1080, the reference look (what tools/living.py ref gives the image tool)
 //        node tools/museum.mjs shots <city> <page> [--out <dir>] [--lang zh|en]
-//          the page as a visitor sees it: at the main viewpoint (its picture), turned 15 and 30 degrees (the picture fading),
+//          the page as a visitor sees it: at the main viewpoint (its picture), turned 5, 15 and 30 degrees (the picture fading),
 //          the white model with its sourced and estimated parts, a part's note open; at desktop size (1600 x 1000) and at a
 //          phone's (390 x 844, 3 pixels to each); default cities/<city>/build/review/museum/<page>/
 import fs from 'fs'; import path from 'path';
@@ -30,6 +30,7 @@ if (cmd === 'still') {   // (several viewpoints, a,b,c: one page, each in turn)
   for (const [tag, view, dpr] of [['desktop', { width: 1600, height: 1000 }, 1], ['phone', { width: 390, height: 844 }, 3]]) {
     const { browser, page: P } = await openFilm(city, { q, html: 'museum.html', view, dpr, warnings: true });
     await at(P, `${tag}_0_picture.jpg`);
+    await at(P, `${tag}_5deg.jpg`, { turn: 5 });   // (the far land behind the model still shows here: a copy of the building in it, beside the model, was missed at 15)
     await at(P, `${tag}_15deg.jpg`, { turn: 15 });
     await at(P, `${tag}_30deg.jpg`, { turn: 30 });
     if (tag === 'desktop') {

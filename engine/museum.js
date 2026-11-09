@@ -57,19 +57,35 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
   // the stand's fade: round the building's middle (x..y, the room's floor), and up the picture toward the horizon (z..w, in pixels:
   // a reference still's ground receding into the dark in a straight band, as land into haze; any fade on the ground, round the
   // middle or by the distance from the eye, reads there as the rim of a round platform)
-  const fadeU = { value: clean ? new THREE.Vector4(1e3, 2e3, 1e5, 2e5) : new THREE.Vector4(FADE_M[0] * SC, FADE_M[1] * SC, 1e5, 2e5) };
+  // A page of pieces stands round its first piece's place, which can be at one end of the complex (Rome's Curia of Pompey, the
+  // theatre 300 m west): there the floor round the far pieces had faded, and the picture's far land behind (the sky card) showed
+  // its own copy of them beside the model as the visitor turned. The fade goes round what the model covers when it reaches past
+  // FADE_M[0] of the middle: from its middle, whole as far as its farthest corner and 30 m more; a building within keeps the room.
+  const fadeC = { value: new THREE.Vector2(0, 0) }; let f0 = FADE_M[0] * SC, f1 = FADE_M[1] * SC;
+  { const b = new THREE.Box3(); for (const p of pickable) b.expandByObject(p.mesh);
+    if (!b.isEmpty() && Math.max(...[b.min.x, b.max.x].flatMap(x => [b.min.z, b.max.z].map(z => Math.hypot(x, z)))) > f0) {
+      fadeC.value.set((b.min.x + b.max.x) / 2, (b.min.z + b.max.z) / 2);
+      f0 = Math.max(f0, Math.hypot(b.max.x - b.min.x, b.max.z - b.min.z) / 2 + 30 * SC); f1 = Math.max(f1, f0 + (FADE_M[1] - FADE_M[0]) * SC); } }
+  const fadeU = { value: clean ? new THREE.Vector4(1e3, 2e3, 1e5, 2e5) : new THREE.Vector4(f0, f1, 1e5, 2e5) }, picGround = { value: new THREE.Color(1, 1, 1) };
   { // the stand fades out round the building, into the room (no square edge: in a still an image tool reads a slab's edge as a cliff)
     const m = parts.find(p => p.id === '_stand').mesh.material, own = m.onBeforeCompile;
     m.transparent = true;
-    m.onBeforeCompile = (sh, r) => { own(sh, r); sh.uniforms.uFade = fadeU;
-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade;')
-        .replace('#include <opaque_fragment>', 'diffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
+    // the floor the picture's camera did not see (behind a wall, as it saw it: projDepth) takes the picture's ground colour, not
+    // the white of the room: turned off a viewpoint, a white print of the building lay on the grass beside it
+    m.onBeforeCompile = (sh, r) => { own(sh, r); sh.uniforms.uFade = fadeU; sh.uniforms.uFadeC = fadeC; sh.uniforms.uPicGround = picGround;
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade; uniform vec2 uFadeC; uniform vec3 uPicGround;')
+        .replace('#include <opaque_fragment>', 'if (uPA > 0.) { vec4 gc_ = uPM * vec4(vWP, 1.); vec2 gu_ = gc_.xy / gc_.w * .5 + .5;\n if (gc_.w > 0. && gu_.x > 0. && gu_.x < 1. && gu_.y > 0. && gu_.y < 1.) { float gz_ = uPN.x * uPN.y / (uPN.y - (uPN.y - uPN.x) * texture2D(uPD, gu_).r);\n  outgoingLight = mix(outgoingLight, uPicGround, uPA * smoothstep(gz_ * 1.003, gz_ * 1.01, gc_.w) * peK(gu_)); } }\ndiffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz - uFadeC))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
     m.customProgramCacheKey = () => 'proj0fade';
   }
   // the viewpoints and their pictures (the main one is on screen already, as the page's first picture)
   const VP = meta.viewpoints.map(v => ({ ...v, tex: null, A: v.picture ? v.picture.w / v.picture.h : 16 / 9 }));
   const loader = new THREE.TextureLoader(); loader.setCrossOrigin('anonymous');
-  const loads = clean ? [] : VP.filter(v => v.picture).map(v => loader.loadAsync(base + v.picture.file).then(t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; v.tex = t; }));
+  // (each picture's ground: the mean of its lower third, for the floor its camera did not see; below)
+  const groundOf = im => { const c = document.createElement('canvas'); c.width = 48; c.height = 27; const g = c.getContext('2d'); g.drawImage(im, 0, 0, 48, 27);
+    const d = g.getImageData(0, 18, 48, 9).data; let r = 0, gr = 0, b = 0; for (let i = 0; i < d.length; i += 4) { r += d[i]; gr += d[i + 1]; b += d[i + 2]; }
+    const n = d.length / 4; return new THREE.Color().setRGB(r / n / 255, gr / n / 255, b / n / 255, THREE.SRGBColorSpace); };
+  const loads = clean ? [] : VP.filter(v => v.picture).map(v => loader.loadAsync(base + v.picture.file).then(t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; v.tex = t;
+    try { v.ground = groundOf(t.image); } catch (e) { v.ground = null; } }));
   const main = VP.find(v => v.id === vp0) || VP.find(v => v.main) || VP[0];
 
   // the camera: a target and a place round it (az, el as the film's camera keys count them: 0 south of the target, 90 east)
@@ -122,7 +138,7 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
       fadeU.value.set(1e3, 2e3, y - .25 * k, y);
     }
     const P = clean ? { v: null, a: 0 } : pictureNow();
-    if (P.v && P.v !== shown) { S.aimProjector(P.v.cam, P.v.A); U.uPI.value = P.v.tex; shown = P.v; }
+    if (P.v && P.v !== shown) { S.aimProjector(P.v.cam, P.v.A); U.uPI.value = P.v.tex; if (P.v.ground) picGround.value.copy(P.v.ground); shown = P.v; }
     U.uPA.value = P.v ? P.a : 0;
     const sky = U.uPA.value * (1 - ss(seg(P.ang ?? 0, 4, SKY_DEG)));   // (the far land and sky, on a card far behind the model, part from it soonest: gone by SKY_DEG)
     S.liveSky.material.uniforms.uA.value = sky; S.liveSky.visible = sky > 0;

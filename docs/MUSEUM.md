@@ -72,5 +72,5 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
   own, to its building's hall, looking at it.
 - **Publishable only:** the page ships the model, its pictures and the life pictures, small; never a non-CC picture, a reference drawing
   or an internal plate. The pictures are AI-generated: list them in CREDITS with their date and tool.
-- **Check:** `node tools/museum.mjs shots <slug> <page>` (desktop and phone: the main picture, turned 15 and 30 degrees, the two tones,
+- **Check:** `node tools/museum.mjs shots <slug> <page>` (desktop and phone: the main picture, turned 5, 15 and 30 degrees, the two tones,
   a part's note); look at each at full size.
