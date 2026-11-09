@@ -259,7 +259,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     if (sf == 1) return .3 * (1. + .16 * g);   // earth: the streets' rammed earth, no ruts
     if (sf == 2) return .17 * (1. + .3 * (vnoise(P * .05) - .5) + .3 * (vnoise(P * .25) - .5) * (1. - smoothstep(.5, 1.5, px)) + .3 * (vnoise(P * 1.1) - .5) * (1. - smoothstep(.12, .35, px)));   // grass: darker, in soft patches and tufts
     if (sf == 3) return .38 * (1. + .05 * g + .35 * (h21(floor(P * 2.)) - .5) * (1. - smoothstep(.06, .2, px)));   // gravel: lighter, a fine speckle
-    return .3 * (.58 + .04 * g);   // paved: an asphalt road's (paveTex)
+    if (sf == 5) {   // stone: a period's paving (flagstones, cobbles), as light as its earth, the joints only where a pixel can show them
+      vec2 q = P / 1.3; q.x += .5 * mod(floor(q.y), 2.); vec2 f = fract(q);
+      float j = 1. - smoothstep(0., .07, min(min(f.x, 1. - f.x), min(f.y, 1. - f.y)));
+      return .31 * (1. + .07 * (h21(floor(q)) - .5) + .04 * g) * (1. - .22 * j * (1. - smoothstep(.04, .16, px))); }
+    return .3 * (.58 + .04 * g);   // paved: an asphalt road's (paveTex): a modern yard
   }
   // a ground's distance to its edge here (texels, + inside) from the four nearest texels: its own texels as they are, another
   // ground's as their own distance turned round (where two meet the one's edge is the other's: no seam between them), none's

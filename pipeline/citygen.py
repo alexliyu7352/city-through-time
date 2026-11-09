@@ -1541,7 +1541,7 @@ def region_utm(F, rg, osm_rings=None):
 
 
 PASSABLE = ('bridge', 'ditch', 'paifang', 'arches', 'market', 'village', 'boats', 'kilns')   # landmarks a road may run through or across as built
-SURFACES = ('earth', 'grass', 'gravel', 'paved')   # open ground (grounds:): trodden earth, grass, gravel, a hard paved yard (compile's ground map, the engine's plate)
+SURFACES = ('earth', 'grass', 'gravel', 'paved', 'stone')   # open ground (grounds:): trodden earth, grass, gravel, a modern paved (asphalt) yard, a period's stone paving (compile's ground map, the engine's plate)
 
 NO_SITE = {'paifang', 'kilns', 'corridor', 'bridge', 'boats', 'village'}   # landmarks that keep no ground of their own clear
 
