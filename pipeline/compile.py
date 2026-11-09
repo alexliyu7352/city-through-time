@@ -1760,7 +1760,7 @@ for i, node in enumerate(FM['nodes']):
         t0 = T(p.get('t0', 0.6)); t1 = T(p.get('t1', 'end')); need = max(hold(a), hold(sub)) + 1.0
         if t1 < t0 + need: t1 = round(t0 + need, 3)
         pins.append({'id': p['id'], 'pos': pos_of(p), 't0': t0, 't1': t1, 'text': a, 'sub': sub, 'col': p.get('col', node.get('col')), 'dx': p.get('dx', 0), 'len': p.get('len', 110), 'left': p.get('left'),
-                     '_node': node['id'], '_tour': bool(node.get('tour')), '_offok': bool(p.get('offscreen_ok')),
+                     '_fix': 'len' in p or 'left' in p, '_node': node['id'], '_tour': bool(node.get('tour')), '_offok': bool(p.get('offscreen_ok')),
                      **({'unseen_ok': True} if p.get('unseen_ok') else {})})   # (never drawn, and the user accepts it: readcheck lets it pass)
     for m in node.get('marks', []):
         marks.append({'id': m['id'], 'pos': pos_of(m), 't0': T(m.get('t0', 0)), 't1': T(m.get('t1', 'end')), 'col': m.get('col', node.get('col')), 'r': m.get('r', 10), 'k': m.get('k', 0)})
@@ -2779,15 +2779,44 @@ def _spans(vis, a, b, step=.25):
     if s0 is not None: out.append((s0, b))
     return [sp for sp in out if sp[1] - sp[0] >= .5]
 tag_list = []
-for p in pins:
-    tag_list.append({'id': 'pin:' + p['id'], 'pos': (p['pos'][0], (p['pos'][2] if len(p['pos']) > 2 else 0) + .002, p['pos'][1]), 'spans': [(p['t0'], p['t1'])], 'visible': lambda t: True, 'text': p['text'], 'sub': p['sub']})
+for p in pins:   # (a pin whose len or left the city wrote keeps them: a negative len hangs its box below the place)
+    tag_list.append({'id': 'pin:' + p['id'], 'pos': (p['pos'][0], (p['pos'][2] if len(p['pos']) > 2 else 0) + .002, p['pos'][1]), 'spans': [(p['t0'], p['t1'])], 'visible': lambda t: True, 'text': p['text'], 'sub': p['sub'],
+                     'fixed': (p['len'], p['left']) if p['_fix'] else None})
 for li, L in enumerate(labels_out):
     a0, a1 = max(light['lamp'] + 1, L['t0']), min(light['lights'], L['t1'])
     vis = (lambda L_: lambda t: (CAMERA.at(t)[3] >= L_['dmin'] - .05 or any(k0 <= t <= k1 for k0, k1 in L_['keep'])) and not covered(t))(L)
     tag_list.append({'id': f'label:{li}', 'pos': (L['pos'][0], L['pos'][2] + .004, L['pos'][1]), 'spans': _spans(vis, a0, a1), 'visible': vis, 'text': L['a'], 'sub': L['b']})
-LAY = TAGS.layout(tag_list, CAMERA.project)
+def ground_model(mx, mz):   # the ground's height at a model point, as the engine draws it
+    return ground_ll(*F.to_wgs.transform(mx / F.scale + F.cx, -mz / F.scale + F.cy))
+def _screen(t, X):
+    q = CAMERA.project(t, X)
+    return None if q is None or not (-1.2 < q[0] < 1.2 and -1.2 < q[1] < 1.2) else ((q[0] * .5 + .5) * TAGS.W, (1 - (q[1] * .5 + .5)) * TAGS.H)
+def _name_box(p, a, b):   # a route's or arrow's name as overlay.js routeLabel draws it
+    w = max(TAGS.text_w(a, 27, 2), TAGS.text_w(b, 21, 1)) + 40; h = 78 if b else 50
+    y = min(p[1] - h - 18, TAGS.SUBTOP - h); return (p[0] - w / 2, y, p[0] + w / 2, y + h)
+_heads = {r['id']: ground_model(*r['pts'][-1]) for r in arrows_out if r.get('a')}
+def tag_obstacles(t):
+    # what tags keep clear of at t besides the fixed furniture: route and arrow names, picture cards and documents with their
+    # captions, a half-screen picture (engine/overlay.js footage)
+    out = []
+    for r in arrows_out:
+        if r.get('a') and r['on'] + r['draw'] <= t <= r['off']:
+            hx, hz = r['pts'][-1]; p = _screen(t, (hx, _heads[r['id']], hz))
+            if p: out.append(_name_box(p, r['a'], r.get('b')))
+    for r in routes_out:
+        if r.get('a') and r['on'] + r['draw'] * .55 <= t <= r['off']:
+            p = _screen(t, (r['lab'][0], r['lab'][2], r['lab'][1]))
+            if p: out.append(_name_box(p, r['a'], r.get('b')))
+    for f in footage_out:
+        if not f['on'] <= t <= f['on'] + f['dur'] or f['mode'] == 'full': continue
+        left = f.get('side') == 'left'
+        if f['mode'] == 'card': out.append((112, 160, 740, 700) if left else (TAGS.W - 740, 160, TAGS.W - 100, 700))
+        elif f['mode'] == 'doc': out.append((112, 140, 960, TAGS.SUBTOP - 10) if left else (TAGS.W - 960, 140, TAGS.W - 100, TAGS.SUBTOP - 10))
+        elif f['mode'] == 'panel': out.append((TAGS.W * .36 + 200, 0, TAGS.W, TAGS.H))
+    return out
+LAY = TAGS.layout(tag_list, CAMERA.project, obstacles=tag_obstacles)
 for p in pins:
-    if 'pin:' + p['id'] in LAY: _, _, p['len'], p['left'] = LAY['pin:' + p['id']][0]
+    if 'pin:' + p['id'] in LAY and not p['_fix']: _, _, p['len'], p['left'] = LAY['pin:' + p['id']][0]
 for li, L in enumerate(labels_out): L['lay'] = LAY.get(f'label:{li}', [])
 print(f'  tags: {len(pins)} pins, {len(labels_out)} place names laid out in {sum(len(v) for v in LAY.values())} stretches')
 _core = lambda s: re.split(r'\s*[·（(]\s*', s or '')[0].strip()
@@ -2931,6 +2960,9 @@ film = {
 if re.search(r'©|\(c\)|contributors|licen[cs]e', film['identity']['l2'] or '', re.I):   # (docs/DATA.md "Credit")
     fault(f"film.identity.l2 carries a data credit ({film['identity']['l2']!r}): a credit up there is too small to read on a phone; "
           f"keep where and how big the city is there and give the credit on the end card (film.end), the description and CREDITS")
+_idw = sum(21 if TAGS.CJK.match(c) else 12.6 for c in film['identity']['l2'] or '') + .5 * len(film['identity']['l2'] or '')
+if _idw > 820:   # (overlay.js identity: one line under the city's name; the tags are laid out below it, tags.py TOP)
+    fault(f"film.identity.l2 is about {_idw:.0f} px wide at the size a phone can read, over the 820 px of its one line: shorten it ({film['identity']['l2']!r})")
 # pictures must not hide a change (docs/STAGING.md 5b). Full-frame footage hides everything, so it never
 # shows during one. A half-screen panel (engine/overlay.js: the right 64 % of the frame, melting in over 260 px) may show beside a
 # city that grows or burns on the left of the frame; it may not cover more than a third of that place on screen, sampled four times
