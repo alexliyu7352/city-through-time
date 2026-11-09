@@ -15,7 +15,7 @@ The picture is kept in parts (`build/video/video.ffconcat` lists them; mux reads
 Rendering also delivers the **description** `dist/description.md`, one for each language of the film:
 a one-line summary, a short description (social post), a long description (video platform), chapter times (from the nodes in `build/export/timeline.json`, less a node marked `continues`: it goes on with the chapter before; the first at 0:00, each chapter at least 10 seconds),
 how it was made and the sources and licences (the authors of CC BY / BY-SA material must be named), the AI-generation statement, the author's credit,
-and the project's credit, which LICENSE requires wherever a film is published: "Made with 一城春秋 · A City Through Time" and https://github.com/alexliyu7352/city-through-time. For facts use only what is in the narration and FACTS.md.
+and the project's credit, which LICENSE requires wherever a film is published: "Made with 一城春秋 · A City Through Time" with https://cities.go5.si/ first (the site, where a viewer finds the other cities) and then https://github.com/alexliyu7352/city-through-time (the repository, for whoever wants to make a film; LICENSE asks for its link here). For facts use only what is in the narration and FACTS.md.
 **The title on a video platform** leads with the city and what a newcomer gets from the film, in plain words, and ends with the series name:
 `咸陽：一座城的兩千年，從秦宮到今天｜一城春秋`, `Xianyang: 2,000 years of one city, from the Qin palaces to today | A City Through Time`.
 **The first line of every description is the series' plain subtitle**, the portal's headline in that language (`headline` in `site/i18n.js`):

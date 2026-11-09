@@ -5,7 +5,7 @@ import { clamp, lerp, seg, ss, eo } from './lib.js';
 
 export const W = 1920, H = 1080;
 // the project's credit: the end card draws it on every film, the player links it (LICENSE, condition 2)
-export const CREDIT = '一城春秋 · A City Through Time  ·  github.com/alexliyu7352/city-through-time', REPO = 'https://github.com/alexliyu7352/city-through-time';
+export const CREDIT = '一城春秋 · A City Through Time  ·  cities.go5.si', REPO = 'https://github.com/alexliyu7352/city-through-time';   // (the end card names the site: a viewer finds the other cities there, and the repository from it)
 // the film's type, one font per job (city.yaml film.fonts, resolved by compile into FILM.fonts.roles: 'weight {}px alias')
 let F = {};
 export function setFonts(roles) { F = roles; }
@@ -479,7 +479,7 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     g.save(); g.globalAlpha = a; g.fillStyle = e.rule || '#ffa13d'; g.fillRect(X, y + 14, 120 * k, 2); g.restore(); y += 58;
     // the first `bright` lines (the credits, or the first source line) in the brighter mono, the rest quieter
     (e.lines || []).forEach((s, i) => { const hi = i < (e.bright || 1); txt('end_l' + i, s, X, y, hi ? 'mono' : 'zh_sans', hi ? 24 : 22, hi ? 'rgba(232,236,242,.94)' : 'rgba(228,232,238,.86)', a, { ls: hi ? 1.5 : .5 }); y += 38; });
-    // the project's credit, on every film whatever its city.yaml says (LICENSE, condition 2a: whoever publishes a film keeps it legible)
+    // the project's credit and its site's address, on every film whatever its city.yaml says (LICENSE, condition 2a: whoever publishes a film keeps it legible)
     txt('end_credit', CREDIT, X, y + 22, 'mono', 22, 'rgba(228,232,238,.86)', a, { ls: .5 });
   }
 
