@@ -215,6 +215,7 @@ def make(A):
         n0 = len(nodes); nodes, notes = cut(C, S, A.from_, A.through)
         whole = len(nodes) == n0   # (cut to all of it: a copy)
     pf = LAYOUT.logs(B, 'plan.json') if A.plan == 'base' else os.path.abspath(A.plan)
+    if A.plan == 'base' and not os.path.exists(pf) and os.path.exists(os.path.join(B, 'plan_seed.json')): pf = os.path.join(B, 'plan_seed.json')   # (a candidate not compiled yet: its own seed)
     try: plan = {k: v for k, v in json.load(open(pf, encoding='utf-8')).items() if k in nodes}
     except OSError:
         if A.plan != 'base': sys.exit(f'candidate: no plan file {pf}')
@@ -256,6 +257,8 @@ def make(A):
     print(f'candidate: {rel(D)} from {rel(B)}, ' + ('whole' if whole else f'nodes {nodes[0]} .. {nodes[-1]} ({len(nodes)})') +
           f', plan of {sum(len(v) for v in plan.values())} insertion(s) from {rel(pf)}, {size(D) / 2 ** 20:.0f} MB')
     for x in notes: print('  note: ' + x)
+    if not whole: print('  its compile also warns of what the cut does (not a fault of the base): the last stop not this year, a city that persists '
+                        '(above), city.yaml keys that only nodes outside the cut read')
     print(f'  compile or check it with the plan: CT_PLAN="$(cat {rel(D)}/plan_seed.json)" uv run python -I tools/round.py {A.name} --against <the version to compare>')
     if A.compile:
         r = subprocess.run([sys.executable, '-I', '-X', 'faulthandler', os.path.join(ROOT, 'pipeline', 'compile.py'), D], cwd=ROOT,
