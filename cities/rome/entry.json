@@ -258,7 +258,12 @@
   },
   "poster": "https://alexliyu7352.github.io/city-through-time-rome/rome/poster.jpg",
   "thumb": "https://alexliyu7352.github.io/city-through-time-rome/rome/poster_thumb.webp",
-  "watch": [],
+  "watch": [
+    {
+      "site": "YouTube",
+      "url": "https://www.youtube.com/watch?v=yca4JiR3Peg"
+    }
+  ],
   "bundle": {
     "url": "https://alexliyu7352.github.io/city-through-time-rome/rome/",
     "mb": 435
