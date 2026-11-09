@@ -13,6 +13,7 @@ const args = process.argv.slice(2), { w: W, h: H } = takeSize(args), opt = (k, d
 const city = args[0];
 if (!city || city.startsWith('--')) { console.error('usage: node render/video.mjs <city> [--fps 24] [--workers N] [--from s] [--to s] [--q k=v] [--out file] [--size WxH]'); process.exit(2); }
 const FPS = +opt('--fps', 24), WK = +opt('--workers', local('workers')), Q = opt('--q', ''), FROM = opt('--from', null), TO = opt('--to', null);
+const TRIES = 4;   // each frame: a stalled screenshot (2 min) is tried again after 5, 10, 15 s; a page that stays stuck stops the render
 if (!(FPS > 0) || !Number.isInteger(WK) || WK < 1) { console.error('bad --fps / --workers: fps must be > 0, workers an integer >= 1'); process.exit(2); }
 try { os.setPriority(10); } catch {}
 const out = path.resolve(opt('--out', buildDir(city, 'video', 'video.mp4')));
@@ -58,8 +59,15 @@ try { await Promise.all([...Array(WK)].map(async (_, w) => {
   ff.on('error', e => { dead = e.code === 'ENOENT' ? 'ffmpeg is not installed (or not on PATH)' : e.message; done(-1); });
   ff.stdin.on('error', () => { dead ??= 'ffmpeg closed its input early'; });
   for (let f = a; f < b && !dead; f++) {
-    await page.evaluate(t => window.render(t), f / FPS);
-    const buf = await shot(page, { type: 'jpeg', quality: 95 });
+    let buf;
+    for (let k = 1; ; k++) {   // a frame that stalls (the machine short of memory, the GPU busy) is taken again before the render gives up
+      try { await page.evaluate(t => window.render(t), f / FPS); buf = await shot(page, { type: 'jpeg', quality: 95, timeout: 120000 }); break; }
+      catch (e) {
+        if (k === TRIES) throw e;
+        console.error(`[note] w${w} frame ${f}: ${String(e.message || e).split('\n')[0]}; taking it again (${k}/${TRIES - 1})`);
+        await new Promise(r => setTimeout(r, 5000 * k));
+      }
+    }
     if (dead) break;
     if (!ff.stdin.write(buf)) await Promise.race([new Promise(r => ff.stdin.once('drain', r)), closed]);
     if ((f - a) % 60 === 0) console.log(`w${w} ${f - a}/${b - a}  ${((Date.now() - t0) / 1000).toFixed(0)}s`);
