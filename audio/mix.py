@@ -128,7 +128,10 @@ def main():
     os.makedirs(os.path.join(B_, 'audio', 'stems'), exist_ok=True)
     sf.write(os.path.join(B_, 'audio', 'mix.wav'), mix.astype(np.float32), SR)
     for name, b_ in stems.items(): sf.write(os.path.join(B_, 'audio', 'stems', name + '.wav'), b_[:int(DUR * SR)].astype(np.float32), SR)
-    m = mix.mean(1); Fq = np.fft.rfftfreq(len(m), 1 / SR); P = np.abs(np.fft.rfft(m)) ** 2
+    # (in windows of 1.4 s, half over each other: one transform of the whole film held gigabytes more at the end of a 30-minute
+    # mix, past the memory the machine had left, and the mix was stopped after writing; the figure is the same to 0.05 dB)
+    m = mix.mean(1); n = 1 << 16; w = np.hanning(n); Fq = np.fft.rfftfreq(n, 1 / SR); P = np.zeros(len(Fq))
+    for i in range(0, len(m) - n + 1, n // 2): P += np.abs(np.fft.rfft(m[i:i + n] * w)) ** 2
     lo = P[(Fq > 20) & (Fq < 120)].sum(); rest = P[(Fq >= 120) & (Fq < 16000)].sum()
     print(f'low/rest {10 * np.log10(lo / rest):.1f} dB')
 
