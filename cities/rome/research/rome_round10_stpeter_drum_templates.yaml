@@ -1,0 +1,648 @@
+rome_round10_stpeter_open_drum:
+  kind: parts
+  exaggeration: 1
+  basis: 'research/rome07_renaissance_survey.md R01-R07 and R03_plan_work.jpg. Vatican
+    exterior dome diameter58.90m and facade116x45.50m. Plan articulation follows Alfarano1590
+    and Falda1667, not a solid church box. The body42m, crossing attic12.5m, drum20m,
+    shell35m, lantern18.17m and all wings/openings/roof slopes are source-constrained
+    massing estimates, not a surveyed elevation;133.30m is the selected Vatican overall
+    exterior-height branch. No internal double-shell reconstruction; the external
+    ribs added in round9 are schematic massing. Formal native child stages retain
+    one level site. Drum and peristyle, shell, lantern, ball/cross and Maderno nave
+    are separate native classes with the same sourced dimensions. Cut removes an anachronistic
+    whole-footprint platform while the old east nave stands; current DEM remains a
+    schematic grade, not the ancient church floor. 05b-07 adaptation: work1606 and
+    work1609 are exact copies of the last low construction long_hall in research/rome07_renaissance_landmark_types.yaml#rome07_renaissance_newstpeter_1606/_1609,
+    also used in the approved phase study. The old east nave follows the approved
+    formal whole-part retirement; the separate 30m study remnant is not introduced
+    into the unchanged prefix. Round9: research/rome_round9_stpeter.md. R07 official
+    facade: column height27.48m; single central pediment30x7.50m, all inside the retained116x45.50m
+    facade. Cornice/parapet depths and levels, shallow central/end facade projections
+    and two chapel-domes20m across at[22,+/-37]m are graphic massing estimates from
+    Falda1667 and the existing comparison references, not surveyed details. The main
+    shell has16 native ribs,1.4m wide and0.7m raised; widths/relief are estimates.
+    The retained32 drum columns form16 pairs (+/-2.5deg);8 lantern pairs at4.5m radius
+    are graphic estimates following R05 paired-column articulation. The0.7m ball offset
+    correction only compensates native atop following the raised rib height. The round9
+    facade detail is superseded by the round10 treatment below. Round10 supersedes
+    the round9 facade-window and omitted-Loggia scope: research/rome_round10_stpeter.md.
+    R07 gives columns27.48m high and diameter2.77m; giant order has8 round shafts
+    and flat end pilasters. Column positions, simple capital masses, five lower/upper
+    openings, the central balcony, attic windows and all smaller levels/depths are
+    schematic photo-constrained estimates from the retained2002 front view, not a
+    measured elevation. Native arches cut actual apertures in all overlapping facade
+    bodies; the central upper aperture is the Loggia. No named figures, statue substitutes,
+    clocks or leaf ornament are added. The same outer116x45.5m facade, child IDs,
+    construction stage and previous dome/ribs/small domes are retained. Drum-only
+    correction: research/rome_round10_stpeter_drum.md. The same drum ID and atop3
+    keep its50m outer diameter,20m rise,48-sided outside and unchanged upper support
+    plane. An annular native revolve replaces only the solid cap and interior, with
+    a41.50m clear opening constrained by the existing Vatican R05 interior-diameter
+    comparison. The inferred4.25m annular working edge and vertical inner wall are
+    schematic, not a survey of the1564 wall or scaffolding. The ring itself provides
+    the working edge; no new permanent platform or people. Dome, cornice and all other
+    atop/index/stage relations are unchanged.'
+  name: 'St Peter round 10: giant order and open central Loggia'
+  parts:
+  - kind: long_hall
+    at:
+    - -18
+    - 0
+    theta_deg: 90
+    w_m: 64
+    d_m: 112
+    h_m: 42
+    aisles:
+      n: 1
+      w_m: 15
+      h_m: 26
+    roof:
+      shape: flat
+    id: western_body
+  - kind: long_hall
+    at:
+    - -10
+    - 0
+    w_m: 42
+    d_m: 126
+    h_m: 42
+    roof:
+      shape: gabled
+      pitch_deg: 18
+    id: cross_arm
+  - kind: dome
+    at:
+    - -73
+    - 0
+    theta_deg: 90
+    d_m: 42
+    drum_h_m: 26
+    sweep_deg: 180
+    dome:
+      shape: saucer
+      rise_m: 6
+    id: western_apse
+  - kind: column
+    atop: 0
+    w_m: 50
+    h_m: 12.5
+    id: attic
+  - kind: revolve
+    id: drum
+    atop: 3
+    sides: 48
+    profile_m:
+    - - 20.75
+      - 0
+    - - 25
+      - 0
+    - - 25
+      - 20
+    - - 20.75
+      - 20
+  - kind: column
+    id: drum_columns
+    atop: 3
+    w_m: 1.2
+    h_m: 20
+    repeat:
+      ring:
+        n: 16
+        r_m: 28.25
+        start_deg: -2.5
+  - kind: revolve
+    id: drum_cornice
+    atop: 4
+    profile_m:
+    - - 25
+      - 0
+    - - 29.45
+      - 0
+    - - 29.45
+      - 2
+    - - 25
+      - 2
+  - kind: dome
+    id: shell
+    atop: 4
+    d_m: 50
+    drum_h_m: 0
+    dome:
+      shape: pointed
+      d_m: 46.5
+      rise_m: 35
+    ribs:
+      n: 16
+      w_m: 1.4
+      h_m: 0.7
+  - kind: dome
+    id: lantern
+    atop: 4
+    z_m: 34.3
+    d_m: 8
+    drum_h_m: 12.719000000000001
+    dome:
+      shape: hemisphere
+      rise_m: 5.4510000000000005
+  - kind: revolve
+    atop: 7
+    sides: 24
+    profile_m:
+    - - 7.654042494670958e-17
+      - 0.0
+    - - 0.19554308130028866
+      - 0.015389574256077787
+    - - 0.3862712429686843
+      - 0.061179354631058086
+    - - 0.5674881246744335
+      - 0.13624184476454027
+    - - 0.7347315653655915
+      - 0.23872875703131569
+    - - 0.8838834764831844
+      - 0.3661165235168157
+    - - 1.0112712429686843
+      - 0.5152684346344085
+    - - 1.1137581552354598
+      - 0.6825118753255666
+    - - 1.1888206453689418
+      - 0.8637287570313157
+    - - 1.2346104257439223
+      - 1.0544569186997115
+    - - 1.25
+      - 1.25
+    - - 1.2346104257439223
+      - 1.4455430813002885
+    - - 1.1888206453689418
+      - 1.6362712429686843
+    - - 1.1137581552354598
+      - 1.8174881246744334
+    - - 1.0112712429686843
+      - 1.9847315653655915
+    - - 0.8838834764831844
+      - 2.1338834764831844
+    - - 0.7347315653655915
+      - 2.261271242968684
+    - - 0.5674881246744335
+      - 2.36375815523546
+    - - 0.3862712429686843
+      - 2.438820645368942
+    - - 0.19554308130028866
+      - 2.4846104257439223
+    - - 7.654042494670958e-17
+      - 2.5
+    id: ball
+    z_m: 16.770000000000003
+  - kind: column
+    atop: 9
+    section: rect
+    w_m: 0.4
+    h_m: 3.33
+    id: cross
+  - kind: prism
+    atop: 9
+    z_m: 2.1
+    plan_m:
+    - - -1.2
+      - -0.2
+    - - 1.2
+      - -0.2
+    - - 1.2
+      - 0.2
+    - - -1.2
+      - 0.2
+    h_m: 0.4
+    id: cross_bar
+  - kind: long_hall
+    at:
+    - 68
+    - 0
+    theta_deg: 90
+    w_m: 76
+    d_m: 94
+    h_m: 42
+    aisles:
+      n: 1
+      w_m: 18
+      h_m: 26
+    roof:
+      shape: gabled
+      pitch_deg: 18
+    id: long_nave
+  - id: facade
+    kind: arches
+    at:
+    - 115
+    - 0
+    theta_deg: 90
+    length_m: 116
+    h_m: 32
+    depth_m: 14
+    bays: 5
+    tiers: 2
+    arch: round
+    opening: 0.27586206896551724
+    spring: 0.525
+    through: true
+  - kind: prism
+    id: facade_pediment
+    at:
+    - 125.0
+    - 0
+    theta_deg: 90
+    z_m: 32.7
+    section_m:
+    - - -15
+      - 0
+    - - 15
+      - 0
+    - - 0
+      - 7.5
+    length_m: 2.0
+  - kind: prism
+    id: facade_main_cornice
+    at:
+    - 122.5
+    - 0
+    theta_deg: 90
+    z_m: 31.3
+    plan_m:
+    - - -58
+      - -3.5
+    - - 58
+      - -3.5
+    - - 58
+      - 3.5
+    - - -58
+      - 3.5
+    h_m: 1.4
+  - kind: prism
+    id: facade_parapet
+    at:
+    - 124.5
+    - 0
+    theta_deg: 90
+    z_m: 44.0
+    plan_m:
+    - - -58
+      - -1.3
+    - - 58
+      - -1.3
+    - - 58
+      - 1.3
+    - - -58
+      - 1.3
+    h_m: 1.5
+  - kind: dome
+    id: small_dome_north
+    at:
+    - 22
+    - 37
+    base:
+      w_m: 23
+      d_m: 23
+      h_m: 42
+    d_m: 20
+    drum_h_m: 4
+    dome:
+      shape: pointed
+      rise_m: 12
+    lantern:
+      d_m: 3.5
+      h_m: 5
+      top: dome
+  - kind: dome
+    id: small_dome_south
+    at:
+    - 22
+    - -37
+    base:
+      w_m: 23
+      d_m: 23
+      h_m: 42
+    d_m: 20
+    drum_h_m: 4
+    dome:
+      shape: pointed
+      rise_m: 12
+    lantern:
+      d_m: 3.5
+      h_m: 5
+      top: dome
+  - kind: column
+    id: drum_columns_pair
+    atop: 3
+    w_m: 1.2
+    h_m: 20
+    repeat:
+      ring:
+        n: 16
+        r_m: 28.25
+        start_deg: 2.5
+  - kind: column
+    id: lantern_columns
+    atop: 4
+    z_m: 34.3
+    w_m: 0.45
+    h_m: 12.719
+    repeat:
+      ring:
+        n: 8
+        r_m: 4.5
+        start_deg: -8
+  - kind: column
+    id: lantern_columns_pair
+    atop: 4
+    z_m: 34.3
+    w_m: 0.45
+    h_m: 12.719
+    repeat:
+      ring:
+        n: 8
+        r_m: 4.5
+        start_deg: 8
+  - id: facade_central_projection
+    kind: arches
+    at:
+    - 122
+    - 0
+    theta_deg: 90
+    length_m: 32
+    h_m: 32
+    depth_m: 4
+    bays: 1
+    tiers: 2
+    arch: round
+    opening: 0.2
+    spring: 0.525
+    through: true
+  - id: facade_north_end
+    kind: arches
+    at:
+    - 123
+    - 46.4
+    theta_deg: 90
+    length_m: 23.2
+    h_m: 32
+    depth_m: 2
+    bays: 1
+    tiers: 2
+    arch: round
+    opening: 0.27586206896551724
+    spring: 0.525
+    through: true
+  - id: facade_south_end
+    kind: arches
+    at:
+    - 123
+    - -46.4
+    theta_deg: 90
+    length_m: 23.2
+    h_m: 32
+    depth_m: 2
+    bays: 1
+    tiers: 2
+    arch: round
+    opening: 0.27586206896551724
+    spring: 0.525
+    through: true
+  - kind: prism
+    id: facade_attic_base
+    at:
+    - 115
+    - 0
+    theta_deg: 90
+    z_m: 32
+    plan_m:
+    - - -58
+      - -9
+    - - 58
+      - -9
+    - - 58
+      - 9
+    - - -58
+      - 9
+    h_m: 4.2
+  - kind: arches
+    id: facade_attic_windows
+    at:
+    - 115
+    - 0
+    theta_deg: 90
+    z_m: 36.2
+    length_m: 116
+    h_m: 9.3
+    depth_m: 18
+    bays: 8
+    arch: flat
+    opening: 0.25
+    spring: 0.4
+    through: false
+    recess_m: 4
+  - kind: prism
+    id: facade_entablature
+    at:
+    - 124.2
+    - 0
+    theta_deg: 90
+    z_m: 27.48
+    plan_m:
+    - - -58
+      - -1.8
+    - - 58
+      - -1.8
+    - - 58
+      - 1.8
+    - - -58
+      - 1.8
+    h_m: 3.82
+  - kind: prism
+    id: facade_loggia_balcony
+    at:
+    - 124.8
+    - 0
+    theta_deg: 90
+    z_m: 15.6
+    plan_m:
+    - - -4.1
+      - -1.2
+    - - 4.1
+      - -1.2
+    - - 4.1
+      - 1.2
+    - - -4.1
+      - 1.2
+    h_m: 0.4
+  - kind: prism
+    id: facade_loggia_rail
+    at:
+    - 125.8
+    - 0
+    theta_deg: 90
+    z_m: 16
+    plan_m:
+    - - -3.9
+      - -0.175
+    - - 3.9
+      - -0.175
+    - - 3.9
+      - 0.175
+    - - -3.9
+      - 0.175
+    h_m: 1.0
+  - kind: arches
+    id: facade_loggia_interior
+    at:
+    - 119
+    - 0
+    theta_deg: 90
+    z_m: 16
+    length_m: 8
+    h_m: 11.6
+    depth_m: 2
+    bays: 1
+    arch: round
+    opening: 0.8
+    spring: 0.7
+    through: false
+    recess_m: 1.5
+  - kind: column
+    id: facade_giant_columns_1
+    at:
+    - 124.15
+    - 5.7
+    repeat:
+      mirror: y
+    stages:
+    - w_m: 3.4
+      h_m: 0.95
+    - w_m: 2.77
+      h_m: 24.0
+      taper: 0.92
+    - w_m: 3.1
+      h_m: 1.93
+    - section: square
+      w_m: 3.7
+      h_m: 0.6
+  - kind: column
+    id: facade_giant_columns_2
+    at:
+    - 124.15
+    - 17.5
+    repeat:
+      mirror: y
+    stages:
+    - w_m: 3.4
+      h_m: 0.95
+    - w_m: 2.77
+      h_m: 24.0
+      taper: 0.92
+    - w_m: 3.1
+      h_m: 1.93
+    - section: square
+      w_m: 3.7
+      h_m: 0.6
+  - kind: column
+    id: facade_giant_columns_3
+    at:
+    - 124.15
+    - 28.2
+    repeat:
+      mirror: y
+    stages:
+    - w_m: 3.4
+      h_m: 0.95
+    - w_m: 2.77
+      h_m: 24.0
+      taper: 0.92
+    - w_m: 3.1
+      h_m: 1.93
+    - section: square
+      w_m: 3.7
+      h_m: 0.6
+  - kind: column
+    id: facade_giant_columns_4
+    at:
+    - 124.15
+    - 41.3
+    repeat:
+      mirror: y
+    stages:
+    - w_m: 3.4
+      h_m: 0.95
+    - w_m: 2.77
+      h_m: 24.0
+      taper: 0.92
+    - w_m: 3.1
+      h_m: 1.93
+    - section: square
+      w_m: 3.7
+      h_m: 0.6
+  - kind: prism
+    id: facade_giant_pilasters_1
+    at:
+    - 125.3
+    - 47.5
+    theta_deg: 90
+    repeat:
+      mirror: y
+    length_m: 1.4
+    section_m:
+    - - -1.6
+      - 0
+    - - 1.6
+      - 0
+    - - 1.6
+      - 0.95
+    - - 1.25
+      - 0.95
+    - - 1.25
+      - 24.95
+    - - 1.6
+      - 24.95
+    - - 1.6
+      - 27.48
+    - - -1.6
+      - 27.48
+    - - -1.6
+      - 24.95
+    - - -1.25
+      - 24.95
+    - - -1.25
+      - 0.95
+    - - -1.6
+      - 0.95
+  - kind: prism
+    id: facade_giant_pilasters_2
+    at:
+    - 125.3
+    - 56.1
+    theta_deg: 90
+    repeat:
+      mirror: y
+    length_m: 1.4
+    section_m:
+    - - -1.6
+      - 0
+    - - 1.6
+      - 0
+    - - 1.6
+      - 0.95
+    - - 1.25
+      - 0.95
+    - - 1.25
+      - 24.95
+    - - 1.6
+      - 24.95
+    - - 1.6
+      - 27.48
+    - - -1.6
+      - 27.48
+    - - -1.6
+      - 24.95
+    - - -1.25
+      - 24.95
+    - - -1.25
+      - 0.95
+    - - -1.6
+      - 0.95
+  site: cut

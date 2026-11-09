@@ -1,0 +1,290 @@
+[
+  {
+    "id": "zh1",
+    "shape": "wide",
+    "file": "rome_A_zh1_wide.jpg",
+    "thumbnail": "rome_A_zh1_wide_320.jpg",
+    "title": "罗马2800年",
+    "subtitle": "30分钟 · 沉浸式看完一座城的兴衰",
+    "title_size": 511,
+    "subtitle_size": 177,
+    "bounds": [
+      [
+        517,
+        106,
+        3323,
+        624
+      ],
+      [
+        525,
+        670,
+        3315,
+        859
+      ],
+      [
+        537,
+        2011,
+        823,
+        2086
+      ]
+    ],
+    "size": [
+      3840,
+      2160
+    ]
+  },
+  {
+    "id": "zh1",
+    "shape": "portrait",
+    "file": "rome_A_zh1_portrait.jpg",
+    "thumbnail": "rome_A_zh1_portrait_320.jpg",
+    "title": "罗马2800年",
+    "subtitle": "30分钟 · 沉浸式看完一座城的兴衰",
+    "title_size": 176,
+    "subtitle_size": 61,
+    "bounds": [
+      [
+        58,
+        104,
+        1022,
+        282
+      ],
+      [
+        59,
+        313,
+        1021,
+        380
+      ],
+      [
+        67,
+        1363,
+        189,
+        1396
+      ]
+    ],
+    "size": [
+      1080,
+      1440
+    ]
+  },
+  {
+    "id": "zh2",
+    "shape": "wide",
+    "file": "rome_A_zh2_wide.jpg",
+    "thumbnail": "rome_A_zh2_wide_320.jpg",
+    "title": "30分钟看完罗马",
+    "subtitle": "2800年兴衰 · 按史料还原",
+    "title_size": 385,
+    "subtitle_size": 186,
+    "bounds": [
+      [
+        517,
+        106,
+        3323,
+        506
+      ],
+      [
+        806,
+        552,
+        3034,
+        751
+      ],
+      [
+        537,
+        2011,
+        823,
+        2086
+      ]
+    ],
+    "size": [
+      3840,
+      2160
+    ]
+  },
+  {
+    "id": "zh2",
+    "shape": "portrait",
+    "file": "rome_A_zh2_portrait.jpg",
+    "thumbnail": "rome_A_zh2_portrait_320.jpg",
+    "title": "30分钟看完罗马",
+    "subtitle": "2800年兴衰 · 按史料还原",
+    "title_size": 133,
+    "subtitle_size": 80,
+    "bounds": [
+      [
+        56,
+        104,
+        1024,
+        241
+      ],
+      [
+        61,
+        272,
+        1019,
+        357
+      ],
+      [
+        67,
+        1363,
+        189,
+        1396
+      ]
+    ],
+    "size": [
+      1080,
+      1440
+    ]
+  },
+  {
+    "id": "zh3",
+    "shape": "wide",
+    "file": "rome_A_zh3_wide.jpg",
+    "thumbnail": "rome_A_zh3_wide_320.jpg",
+    "title": "罗马",
+    "subtitle": "沉浸式体验2800年史诗变迁",
+    "title_size": 570,
+    "subtitle_size": 186,
+    "bounds": [
+      [
+        1336,
+        106,
+        2504,
+        657
+      ],
+      [
+        755,
+        703,
+        3085,
+        900
+      ],
+      [
+        537,
+        2011,
+        823,
+        2086
+      ]
+    ],
+    "size": [
+      3840,
+      2160
+    ]
+  },
+  {
+    "id": "zh3",
+    "shape": "portrait",
+    "file": "rome_A_zh3_portrait.jpg",
+    "thumbnail": "rome_A_zh3_portrait_320.jpg",
+    "title": "罗马",
+    "subtitle": "沉浸式体验2800年史诗变迁",
+    "title_size": 288,
+    "subtitle_size": 77,
+    "bounds": [
+      [
+        248,
+        104,
+        832,
+        377
+      ],
+      [
+        58,
+        408,
+        1022,
+        489
+      ],
+      [
+        67,
+        1363,
+        189,
+        1396
+      ]
+    ],
+    "size": [
+      1080,
+      1440
+    ]
+  },
+  {
+    "id": "en_date",
+    "shape": "wide",
+    "file": "rome_A_en_wide.jpg",
+    "thumbnail": "rome_A_en_wide_320.jpg",
+    "title": "ROME",
+    "subtitle": "753 BCE → 2026"
+  },
+  {
+    "id": "en_date",
+    "shape": "portrait",
+    "file": "rome_A_en_portrait.jpg",
+    "thumbnail": "rome_A_en_portrait_320.jpg",
+    "title": "ROME",
+    "subtitle": "753 BCE → 2026"
+  },
+  {
+    "id": "en_time",
+    "shape": "wide",
+    "file": "rome_A_en_time_wide.jpg",
+    "thumbnail": "rome_A_en_time_wide_320.jpg",
+    "title": "ROME",
+    "subtitle": "2,800 years in 30 minutes",
+    "title_size": 580,
+    "subtitle_size": 186,
+    "bounds": [
+      [
+        939,
+        106,
+        2901,
+        565
+      ],
+      [
+        729,
+        611,
+        3111,
+        811
+      ],
+      [
+        536,
+        2011,
+        1227,
+        2088
+      ]
+    ],
+    "size": [
+      3840,
+      2160
+    ]
+  },
+  {
+    "id": "en_time",
+    "shape": "portrait",
+    "file": "rome_A_en_time_portrait.jpg",
+    "thumbnail": "rome_A_en_time_portrait_320.jpg",
+    "title": "ROME",
+    "subtitle": "2,800 years in 30 minutes",
+    "title_size": 258,
+    "subtitle_size": 75,
+    "bounds": [
+      [
+        106,
+        104,
+        974,
+        304
+      ],
+      [
+        60,
+        335,
+        1020,
+        417
+      ],
+      [
+        67,
+        1363,
+        333,
+        1392
+      ]
+    ],
+    "size": [
+      1080,
+      1440
+    ]
+  }
+]

@@ -1,0 +1,595 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_01",
+    "kind": "street",
+    "w_m": 5.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       435,
+       681
+      ],
+      [
+       481,
+       590
+      ],
+      [
+       521,
+       498
+      ],
+      [
+       571,
+       379
+      ],
+      [
+       610,
+       307
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4569357,
+      41.9051798
+     ],
+     [
+      12.4583976,
+      41.9050129
+     ],
+     [
+      12.4598297,
+      41.9049165
+     ],
+     [
+      12.4616699,
+      41.9048113
+     ],
+     [
+      12.4628449,
+      41.9046501
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_02",
+    "kind": "street",
+    "w_m": 5.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       526,
+       704
+      ],
+      [
+       564,
+       612
+      ],
+      [
+       603,
+       518
+      ],
+      [
+       645,
+       423
+      ],
+      [
+       692,
+       318
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.45729,
+      41.904079
+     ],
+     [
+      12.4587079,
+      41.904005
+     ],
+     [
+      12.460158,
+      41.9039274
+     ],
+     [
+      12.4616416,
+      41.9038201
+     ],
+     [
+      12.4632856,
+      41.9036951
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_03",
+    "kind": "street",
+    "w_m": 5.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       593,
+       719
+      ],
+      [
+       627,
+       619
+      ],
+      [
+       669,
+       511
+      ],
+      [
+       709,
+       411
+      ],
+      [
+       757,
+       293
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4575749,
+      41.9032759
+     ],
+     [
+      12.4590647,
+      41.9032768
+     ],
+     [
+      12.4607109,
+      41.9032189
+     ],
+     [
+      12.4622429,
+      41.9031529
+     ],
+     [
+      12.4640564,
+      41.903066
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_04",
+    "kind": "street",
+    "w_m": 5.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       650,
+       735
+      ],
+      [
+       681,
+       637
+      ],
+      [
+       718,
+       530
+      ],
+      [
+       754,
+       438
+      ],
+      [
+       804,
+       298
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4577769,
+      41.9025804
+     ],
+     [
+      12.4592205,
+      41.902607
+     ],
+     [
+      12.4608189,
+      41.902601
+     ],
+     [
+      12.4622227,
+      41.9025492
+     ],
+     [
+      12.4643253,
+      41.9025236
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_05",
+    "kind": "street",
+    "w_m": 5.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       704,
+       740
+      ],
+      [
+       727,
+       646
+      ],
+      [
+       757,
+       555
+      ],
+      [
+       790,
+       461
+      ],
+      [
+       833,
+       331
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4580952,
+      41.90196
+     ],
+     [
+      12.4594323,
+      41.9020606
+     ],
+     [
+      12.4607814,
+      41.9020718
+     ],
+     [
+      12.462189,
+      41.902061
+     ],
+     [
+      12.4641172,
+      41.9020754
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_06",
+    "kind": "street",
+    "w_m": 4.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       431,
+       688
+      ],
+      [
+       519,
+       715
+      ],
+      [
+       589,
+       729
+      ],
+      [
+       647,
+       745
+      ],
+      [
+       704,
+       751
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.45682,
+      41.9051978
+     ],
+     [
+      12.4571031,
+      41.9041152
+     ],
+     [
+      12.4574217,
+      41.9032825
+     ],
+     [
+      12.4576307,
+      41.9025758
+     ],
+     [
+      12.4579577,
+      41.9019182
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_07",
+    "kind": "street",
+    "w_m": 4.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       479,
+       597
+      ],
+      [
+       554,
+       619
+      ],
+      [
+       625,
+       603
+      ],
+      [
+       678,
+       620
+      ],
+      [
+       727,
+       639
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.458296,
+      41.9050086
+     ],
+     [
+      12.4585499,
+      41.9040898
+     ],
+     [
+      12.4592506,
+      41.9033598
+     ],
+     [
+      12.4594118,
+      41.902705
+     ],
+     [
+      12.4595198,
+      41.9020871
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_08",
+    "kind": "street",
+    "w_m": 4.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       514,
+       526
+      ],
+      [
+       576,
+       547
+      ],
+      [
+       649,
+       527
+      ],
+      [
+       706,
+       512
+      ],
+      [
+       757,
+       555
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4594304,
+      41.9048882
+     ],
+     [
+      12.4596051,
+      41.904118
+     ],
+     [
+      12.4603698,
+      41.9033809
+     ],
+     [
+      12.4609592,
+      41.902803
+     ],
+     [
+      12.4607814,
+      41.9020718
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_09",
+    "kind": "street",
+    "w_m": 4.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       550,
+       444
+      ],
+      [
+       608,
+       460
+      ],
+      [
+       683,
+       444
+      ],
+      [
+       748,
+       410
+      ],
+      [
+       789,
+       461
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4607093,
+      41.9047985
+     ],
+     [
+      12.4609182,
+      41.9040918
+     ],
+     [
+      12.4616471,
+      41.9033172
+     ],
+     [
+      12.4625304,
+      41.9027223
+     ],
+     [
+      12.462182,
+      41.9020721
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_borgo_street_10",
+    "kind": "street",
+    "w_m": 4.2,
+    "surface": "gravel",
+    "provenance": {
+     "basis": "Falda1667 street corridor; width and local uncertain intersections estimated. No modern Conciliazione.",
+     "source_pixels": [
+      [
+       582,
+       374
+      ],
+      [
+       640,
+       393
+      ],
+      [
+       717,
+       383
+      ],
+      [
+       778,
+       327
+      ],
+      [
+       833,
+       331
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4618099,
+      41.9047077
+     ],
+     [
+      12.4619814,
+      41.9039897
+     ],
+     [
+      12.4626493,
+      41.90317
+     ],
+     [
+      12.4637794,
+      41.9027031
+     ],
+     [
+      12.4641172,
+      41.9020754
+     ]
+    ]
+   }
+  }
+ ]
+}

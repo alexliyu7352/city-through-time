@@ -1,0 +1,170 @@
+# Two existing film landmarks at true height and their original positions; no geometry is added to either.
+id: old_st_peters
+node: people_return
+pieces:
+  - {id: core, node: people_return, landmark: {kind: parts, id: rome06_medieval_old_stpeter}}
+  - {id: atrium, node: people_return, landmark: {kind: parts, id: rome06_medieval_stpeter_atrium}}
+exaggeration: 1
+stage_m: [40000, 40000]
+name: {zh: 旧圣彼得大教堂, en: Old St Peter's Basilica}
+era: {zh: 约330年建成；800年前后的核心形制；1506年开始拆旧建新, en: "Built around 330; core form around 800; replacement began in 1506"}
+where: {zh: 台伯河西岸的梵蒂冈，今天圣彼得大教堂的同一片土地, en: "The Vatican, west of the Tiber, on the site of today's St Peter's"}
+label:
+  - head: {zh: 围着一座墓建起的大殿, en: A basilica built around a tomb}
+    text:
+      zh: >-
+        君士坦丁在4世纪兴建这座教堂，把传为使徒彼得墓的地点留在建筑的中心。高大的中殿两边各有两条低侧廊，西端以横厅和半圆后殿收尾。它在罗马城墙之外，逐渐成为朝圣的目的地。这里展示沿用到800年前后的核心量体和示意前院，不是1506年拆建前每座附属建筑的完整复原。
+      en: >-
+        Constantine built this church in the fourth century around the place venerated as the apostle Peter's tomb. A tall central nave stood between two lower aisles on each side, ending in a transept and a semicircular western apse. Outside Rome's walls, it became a destination for pilgrims. This model shows the core form retained around 800 with a schematic forecourt, rather than every addition standing before replacement began in 1506.
+    cite: [V1, G1, D1]
+  - head: {zh: 怎样认识已经消失的建筑, en: Knowing a building that has disappeared}
+    text:
+      zh: >-
+        旧殿的形状来自拆建时期留下的图记，以及20世纪在新殿下面进行的考古。Alfarano绘制、1590年刊行的平面把旧殿与新殿放在一起比较；Grimaldi也留下拆除前后的记录。这里通过近代研究阅读这些材料，没有直接读过他们的全部原稿。Krautheimer等人的复原也经论文转述采用；不同研究的尺寸口径并不完全相同。
+      en: >-
+        Drawings and accounts made during rebuilding, together with twentieth-century excavation beneath the new basilica, preserve evidence of the old church. Alfarano's plan, published in 1590, compares the old and new buildings; Grimaldi also recorded the disappearing basilica. These materials are consulted here through later research, without claiming to have read their complete manuscripts. Reconstructions by Krautheimer and others are also used through published studies, whose measurements do not always use the same limits.
+    cite: [A1, D1, H1, G1]
+  - head: {zh: 前院不是一块没有历史的空地, en: The forecourt has its own history}
+    text:
+      zh: >-
+        800年以前已有铺地的前院和有顶廊道，通向教堂；它们在后来的岁月中不断维修、改建。模型用三条简化廊体表示前院，大小和高度都是图式估值，没有完整复原门廊、阶梯、钟楼和旁殿。大殿入口墙面也未画门洞，不能当作当年没有入口。更不能把1590年图上的全部附件倒放到君士坦丁或查理曼的时代。
+      en: >-
+        Before 800, a paved forecourt and covered walks already formed the approach to the church; they were repaired and altered over time. Three simplified walks indicate the court here, with estimated dimensions and heights. The entrance porch, stairs, bell tower and adjoining chapels are incomplete. Doors are also omitted from the basilica's entrance wall, rather than claimed historically absent. The additions on a 1590 plan cannot all be carried back to Constantine's or Charlemagne's time.
+    cite: [M1, V1, A1]
+  - head: {zh: 同一片土地上的新圣彼得, en: New St Peter's on the same site}
+    text:
+      zh: >-
+        1506年，新大殿开始兴建，旧殿分段拆除；东侧一部分中殿仍使用到17世纪初，并非当年整座消失。另一页「新圣彼得大教堂」展示1626年完成的建筑。两座教堂在同一地点延续对彼得墓的敬奉，体量和空间却改变了。
+      en: >-
+        Work on the new basilica began in 1506, while the old church was removed in stages. Part of its eastern nave remained in use into the early seventeenth century. The companion page, New St Peter's Basilica, shows the building completed in 1626. Both churches centred worship on Peter's tomb, while changing the scale and arrangement of the same site.
+    cite: [A1, V3, V4]
+life:
+  text:
+    zh: >-
+      朝圣者穿过前院进入教堂，来到与彼得相联系的纪念地。800年圣诞节，教宗在这座旧大殿为查理曼加冕。这里的生活想象只以少量行人说明建筑的尺度；衣着、铺地纹理和未测定的周边细节是有标示的想象，不是那个加冕场面的纪实复原。
+    en: >-
+      Pilgrims crossed the forecourt to enter the church and approach the memorial associated with Peter. At Christmas in 800, the pope crowned Charlemagne in this old basilica. The imagined views use a few small figures to convey scale; clothing, paving textures and unmeasured surroundings remain acknowledged interpretation, rather than a documentary reconstruction of the coronation.
+  cite: [V1, V2, M1]
+parts:
+  - id: roofs
+    labels: [core/nave_east, core/nave_west, core/transept, core/apse]
+    kinds: [roof]
+    status: estimated
+    name: {zh: 屋面, en: Roofs}
+    note:
+      zh: 高中殿和低侧廊有文献与复原研究支持；模型采用25度坡屋顶及简化的后殿半锥顶。坡度、檐高、出檐和覆面细节是估值，不是800年的屋顶测绘。
+      en: >-
+        Texts and reconstructions support a high nave above lower aisles. The model uses 25-degree pitched roofs and a simplified half-conical apse roof. Slopes, eaves, overhangs and surface detail are estimates, not a survey of the roofs in 800.
+    cite: [D1, G1, M1]
+  - id: openings
+    labels: [core/nave_east, core/nave_west]
+    kinds: [dark]
+    status: estimated
+    name: {zh: 简化窗列, en: Schematic windows}
+    note:
+      zh: 研究记有高侧窗，但模型的小暗窗仅表示采光节奏，位置、数量和大小不能逐个当作古窗证据。长殿分成两段是影片表现后来拆建的接口，不是800年中殿有一道横向分隔。
+      en: >-
+        Research records clerestory windows, but the small dark openings only suggest a rhythm of light. Their individual positions, number and size are not archaeological evidence. The two nave segments serve the film's later rebuilding sequence; they do not imply a cross-wall in 800.
+    cite: [G1, D1]
+  - id: main
+    labels: [core/nave_east, core/nave_west]
+    status: sourced
+    name: {zh: 中殿与四条侧廊, en: Nave and four aisles}
+    note:
+      zh: 五廊布局有据。模型沿用约91米长殿、约64米内宽及约23米中殿宽这一研究分支；以66米外宽表示墙厚。墙高和分廊细尺寸仍含估配，未复原内部柱列、墓葬和装饰。
+      en: >-
+        The five-aisled layout is documented. The model follows the research branch with a body about 91 m long, an internal width near 64 m and a central nave about 23 m wide, using 66 m externally to allow for walls. Heights and aisle details still include estimates; internal colonnades, burials and decoration are not reconstructed.
+    cite: [G1, D1]
+  - id: transept
+    labels: [core/transept]
+    status: sourced
+    name: {zh: 西端横厅, en: Western transept}
+    note:
+      zh: 突出两侧的横厅有据。模型采用约90米横跨、18米进深；另一研究记17米，属于不同口径，未将两数平均。立面高度和构造仍是量体估值。
+      en: >-
+        The projecting transept is documented. The model uses a span near 90 m and a depth of 18 m; another study gives 17 m, a different measurement that is not averaged with it. Elevation and construction remain schematic estimates.
+    cite: [G1, D1]
+  - id: apse
+    labels: [core/apse]
+    status: sourced
+    name: {zh: 半圆后殿, en: Semicircular apse}
+    note:
+      zh: 西端半圆后殿及其与彼得纪念地的关系有据。模型约23米宽的外轮廓、墙高和表面是简化估配，没有画地下墓室、内部祭坛或历次改建。
+      en: >-
+        The western semicircular apse and its relationship to Peter's memorial are documented. Its approximately 23 m width, wall height and surfaces are simplified estimates. The underground tomb, internal altar and successive alterations are not modelled.
+    cite: [V1, G1, D1]
+  - id: atrium
+    labels: [atrium]
+    status: estimated
+    name: {zh: 前院与三面廊体, en: Forecourt and three covered walks}
+    note:
+      zh: >-
+        800年以前已有铺地前院及有顶廊道，后世仍多次改建。模型沿用影片中的三条低廊体，约66米宽、70米深、6米高及规则柱跨均是图式估值，不是800年院落测绘。它表示进入大殿前的空间，没有完整复原门廊、屋架、阶梯、钟楼和附属建筑，也没有给空白的入口墙补上未经模型记录的门。
+      en: >-
+        A paved court and covered walks existed before 800 and were altered later. The model reuses the film's three low walks; an approximate width of 66 m, depth of 70 m, height of 6 m and regular bays are schematic estimates, not a survey of the court in 800. They indicate the approach without fully reconstructing the entrance porch, roof framing, stairs, bell tower or adjoining buildings. No doors are added to the model's blank entrance wall.
+    cite: [M1, V1, A1]
+viewpoints:
+  - {id: front, main: true, name: {zh: 从东南面看前院与长殿, en: Forecourt and nave from the southeast}, az: 120, el: 25, d_m: 330, fov: 36, at_m: [22.425, 2.527, 18]}
+  - {id: side, name: {zh: 从西南面看横厅, en: Transept from the southwest}, az: 225, el: 25, d_m: 315, fov: 36, at_m: [22.425, 2.527, 18]}
+  - {id: rear, name: {zh: 从西北面看后殿, en: Apse from the northwest}, az: 330, el: 25, d_m: 285, fov: 36, at_m: [22.425, 2.527, 18]}
+sources:
+  V1:
+    short: {zh: 梵蒂冈城国宫史, en: Vatican State history}
+    zh: 梵蒂冈城国《Storia》：4世纪教堂、五廊、横厅、后殿及前院；官方概述不能替代各次院落改建的分期研究。
+    en: >-
+      Vatican State, Storia: fourth-century church, five aisles, transept, apse and forecourt; an official overview rather than a phase-by-phase courtyard study.
+    url: https://www.vaticanstate.va/it/stato-e-governo/storia.html
+  G1:
+    short: {zh: Guidobaldi，君士坦丁建筑, en: Guidobaldi on Constantinian architecture}
+    zh: >-
+      Federico Guidobaldi，2013，《Leggere l'architettura costantiniana》，梵蒂冈大殿段及注21；本文转引Krautheimer的尺寸，未直接核读其原书。
+    en: >-
+      Federico Guidobaldi, Leggere l'architettura costantiniana, 2013, Vatican basilica section and note 21; its measurements relay Krautheimer, whose original volume was not directly consulted.
+    url: https://www.treccani.it/enciclopedia/leggere-l-architettura-costantiniana_%28Enciclopedia-Costantiniana%29/
+  D1:
+    short: {zh: Donadei，2021，第171–174页, en: Donadei 2021, pp. 171–174}
+    zh: >-
+      Silvia Donadei，2021，博洛尼亚大学博士论文《Sinodi ecclesiastici dell'impero romano d'Oriente (IV–VIII secolo)》，第171–174页；转述考古及Brandenburg、Krautheimer复原。只核读相关段落，未直接读这些原著。
+    en: >-
+      Silvia Donadei, Sinodi ecclesiastici dell'impero romano d'Oriente (IV–VIII secolo), Bologna doctoral thesis, 2021, pp. 171–174, relaying archaeology and reconstructions by Brandenburg and Krautheimer. Only the relevant section was consulted, not those original books.
+    url: https://amsdottorato.unibo.it/id/eprint/9900/1/Donadei_Silvia_tesi.pdf
+  A1:
+    short: {zh: 意大利参议院，Alfarano平面, en: Italian Senate on Alfarano's plan}
+    zh: >-
+      意大利参议院《San Pietro in Vaticano》：Alfarano／Bonifacio的1590年平面及旧殿逐段拆除。所读为展览说明，未读Alfarano全部原稿。
+    en: >-
+      Italian Senate, San Pietro in Vaticano: Alfarano and Bonifacio's 1590 plan and gradual removal of the old church. The exhibition commentary was consulted, not Alfarano's complete manuscript.
+    url: https://antiquorum-habet.senato.it/index.php/section/section_61_it/
+  H1:
+    short: {zh: Goffi，2010，图记研究, en: Goffi 2010 on drawings and memory}
+    zh: >-
+      Federica Goffi，2010，博士论文《The Sempiternal Nature of Architectural Conservation and the Unfinished Building and Drawing》；所核为Alfarano与Grimaldi相关摘段及图录，不是Grimaldi手稿或1972年版全文。
+    en: >-
+      Federica Goffi, The Sempiternal Nature of Architectural Conservation and the Unfinished Building and Drawing, doctoral thesis, 2010; relevant passages and figure references on Alfarano and Grimaldi were consulted, not Grimaldi's manuscript or the complete 1972 edition.
+    url: https://vtechworks.lib.vt.edu/bitstream/handle/10919/29312/GOFFI_F_D_2010_f1.pdf
+  M1:
+    short: {zh: Coates-Stephens，早期中世纪营建, en: Coates-Stephens on early medieval building}
+    zh: >-
+      Robert Coates-Stephens，1995，《Building in Early Medieval Rome, 500–1000 AD》，前院铺地和屋顶维修段；相关文字不提供800年完整院落测绘。
+    en: >-
+      Robert Coates-Stephens, Building in Early Medieval Rome, 500–1000 AD, 1995, passages on forecourt paving and roof repairs; they do not supply a complete measured forecourt plan for 800.
+    url: https://discovery.ucl.ac.uk/id/eprint/10099990/
+  V2:
+    short: {zh: 梵蒂冈，查理曼加冕, en: Vatican on Charlemagne's coronation}
+    zh: 梵蒂冈《Braccio di Carlo Magno》：800年圣诞节在圣彼得加冕；不将后世骑马像放入当时场景。
+    en: >-
+      Vatican, Braccio di Carlo Magno: Charlemagne's coronation at St Peter's at Christmas in 800; the later equestrian statue is not part of that scene.
+    url: https://www.vatican.va/content/vatican/it/ra/braccio-carlo-magno.html
+  V3:
+    short: {zh: 圣彼得营造处，新殿开工, en: Fabbrica on the new foundation}
+    zh: Pietro Zander，圣彼得营造处《The Basilica》：1506年奠基及两座大殿共同的彼得墓中心。
+    en: >-
+      Pietro Zander, Fabbrica di San Pietro, The Basilica: foundation in 1506 and the tomb retained at the centre of both basilicas.
+    url: https://www.basilicasanpietro.va/en/san-pietro/the-basilica
+  V4:
+    short: {zh: 圣彼得营造处，1506–1626, en: Fabbrica on 1506–1626}
+    zh: >-
+      圣彼得营造处《Quando è stata costruita la Basilica di San Pietro?》：新殿1506年开建、1626年完成，替代4世纪旧殿。
+    en: >-
+      Fabbrica di San Pietro, Quando è stata costruita la Basilica di San Pietro?: new basilica begun in 1506 and completed in 1626, replacing the fourth-century church.
+    url: https://www.basilicasanpietro.va/it/faq/quando-e-stata-costruita-la-basilica-di-san-pietro

@@ -1,0 +1,29 @@
+place: A dense residential street in Rome, modelled from the approved AD14 source city
+when: Early first century CE, before the fire of 64
+picture: 'Keep exactly the model camera, street, every roofline, wall and doorway. Paint the
+  approved street houses as lived-in masonry and plaster, roof tiles and simple timber shop
+  shutters. Ordinary enclosed courtyards are mostly bare packed earth or simple paving, with
+  modest household clutter. Keep greenery limited to the modelled planting. Small ordinary residents
+  in plain tunics go about work and return through the doorways; modest baskets and grain sacks,
+  no staged crowd or close-up faces. Natural warm daylight, restrained documentary realism,
+  the same visual language as the approved imagined panels.
+
+
+  Surrounding ground and skyline: The gaps in this reference are existing narrow urban streets,
+  enclosed residential courts and the skyline above a dense early-imperial built-up quarter.
+  They are not farmland or a river. Keep the visible streets and court openings open and continue
+  only the already modelled roofscape; do not add a landmark or change ordinary courts into
+  gardens. The overall quarter is a source-constrained housing schematic, not an excavated household-by-household
+  map.
+
+
+  Use real, restrained material colours throughout. White, lilac, teal or gold in the reference
+  are projection colours, not the place''s materials.'
+avoid: No Colosseum, later imperial fora, Aurelian walls, modern embankments, vehicles, wires,
+  glass shop fronts, medieval domes, invented new buildings, everyone in white togas, decorative
+  costume closeups, text or watermark. Do not change the camera or the geometry. The house layout
+  is schematic, not an excavated household census.
+sources:
+- FACTS S104 and S154; research/rome_restart_picture_plan.md, LM01 and clothing evidence
+- research/ad14_city_additional_types.yaml; approved pre-fire AD14 owner
+- research/rome_restart_ancient_sources.md A08 and A22

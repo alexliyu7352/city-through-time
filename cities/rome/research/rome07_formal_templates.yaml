@@ -1,0 +1,858 @@
+rome07_formal_stpeter:
+  kind: parts
+  exaggeration: 1
+  basis: research/rome07_renaissance_survey.md R01-R07 and R03_plan_work.jpg. Vatican
+    exterior dome diameter58.90m and facade116x45.50m. Plan articulation follows Alfarano1590
+    and Falda1667, not a solid church box. The body42m, crossing attic12.5m, drum20m,
+    shell35m, lantern18.17m and all wings/openings/roof slopes are source-constrained
+    massing estimates, not a surveyed elevation;133.30m is the selected Vatican overall
+    exterior-height branch. No internal double-shell/rib restoration. Formal native
+    child stages retain one level site. Drum and peristyle, shell, lantern, ball/cross
+    and Maderno nave are separate native classes with the same sourced dimensions.
+    Cut removes an anachronistic whole-footprint platform while the old east nave
+    stands; current DEM remains a schematic grade, not the ancient church floor.
+  name: St Peter sourced construction stages
+  parts:
+  - kind: long_hall
+    at:
+    - -18
+    - 0
+    theta_deg: 90
+    w_m: 64
+    d_m: 112
+    h_m: 42
+    aisles:
+      n: 1
+      w_m: 15
+      h_m: 26
+    roof:
+      shape: flat
+    id: western_body
+  - kind: long_hall
+    at:
+    - -10
+    - 0
+    w_m: 42
+    d_m: 126
+    h_m: 42
+    roof:
+      shape: gabled
+      pitch_deg: 18
+    id: cross_arm
+  - kind: dome
+    at:
+    - -73
+    - 0
+    theta_deg: 90
+    d_m: 42
+    drum_h_m: 26
+    sweep_deg: 180
+    dome:
+      shape: saucer
+      rise_m: 6
+    id: western_apse
+  - kind: column
+    atop: 0
+    w_m: 50
+    h_m: 12.5
+    id: attic
+  - kind: column
+    id: drum
+    atop: 3
+    w_m: 50
+    h_m: 20
+  - kind: column
+    id: drum_columns
+    atop: 3
+    w_m: 1.2
+    h_m: 20
+    repeat:
+      ring:
+        n: 32
+        r_m: 28.25
+  - kind: revolve
+    id: drum_cornice
+    atop: 4
+    profile_m:
+    - - 25
+      - 0
+    - - 29.45
+      - 0
+    - - 29.45
+      - 2
+    - - 25
+      - 2
+  - kind: dome
+    id: shell
+    atop: 4
+    d_m: 50
+    drum_h_m: 0
+    dome:
+      shape: pointed
+      d_m: 46.5
+      rise_m: 35
+  - kind: dome
+    id: lantern
+    atop: 4
+    z_m: 34.3
+    d_m: 8
+    drum_h_m: 12.719000000000001
+    dome:
+      shape: hemisphere
+      rise_m: 5.4510000000000005
+  - kind: revolve
+    atop: 7
+    sides: 24
+    profile_m:
+    - - 7.654042494670958e-17
+      - 0.0
+    - - 0.19554308130028866
+      - 0.015389574256077787
+    - - 0.3862712429686843
+      - 0.061179354631058086
+    - - 0.5674881246744335
+      - 0.13624184476454027
+    - - 0.7347315653655915
+      - 0.23872875703131569
+    - - 0.8838834764831844
+      - 0.3661165235168157
+    - - 1.0112712429686843
+      - 0.5152684346344085
+    - - 1.1137581552354598
+      - 0.6825118753255666
+    - - 1.1888206453689418
+      - 0.8637287570313157
+    - - 1.2346104257439223
+      - 1.0544569186997115
+    - - 1.25
+      - 1.25
+    - - 1.2346104257439223
+      - 1.4455430813002885
+    - - 1.1888206453689418
+      - 1.6362712429686843
+    - - 1.1137581552354598
+      - 1.8174881246744334
+    - - 1.0112712429686843
+      - 1.9847315653655915
+    - - 0.8838834764831844
+      - 2.1338834764831844
+    - - 0.7347315653655915
+      - 2.261271242968684
+    - - 0.5674881246744335
+      - 2.36375815523546
+    - - 0.3862712429686843
+      - 2.438820645368942
+    - - 0.19554308130028866
+      - 2.4846104257439223
+    - - 7.654042494670958e-17
+      - 2.5
+    id: ball
+    z_m: 17.470000000000002
+  - kind: column
+    atop: 9
+    section: rect
+    w_m: 0.4
+    h_m: 3.33
+    id: cross
+  - kind: prism
+    atop: 9
+    z_m: 2.1
+    plan_m:
+    - - -1.2
+      - -0.2
+    - - 1.2
+      - -0.2
+    - - 1.2
+      - 0.2
+    - - -1.2
+      - 0.2
+    h_m: 0.4
+    id: cross_bar
+  - kind: long_hall
+    at:
+    - 68
+    - 0
+    theta_deg: 90
+    w_m: 76
+    d_m: 94
+    h_m: 42
+    aisles:
+      n: 1
+      w_m: 18
+      h_m: 26
+    roof:
+      shape: gabled
+      pitch_deg: 18
+    id: long_nave
+  - kind: long_hall
+    at:
+    - 117
+    - 0
+    w_m: 116
+    d_m: 18
+    h_m: 45.5
+    theta_deg: 90
+    roof:
+      shape: flat
+    colonnade:
+      at: front
+      n_front: 8
+      depth_m: 4
+    id: facade
+  site: cut
+rome07_formal_oldstpeter_lifecycle:
+  kind: parts
+  basis: 'research/rome06_medieval_whole_basis.md SP. Approved late-antique core retained
+    as medieval massing; M18 pp38-39 andquadriporticus references support the maintained
+    roof and atrium by800. Alfarano1590 gives older/later outline relationships only.
+    Atrium68x70m and6m covered-walk height are graphical estimates, not800 measured
+    dimensions. Formal lifecycle interface only: original91m nave is divided into
+    east57.5m and west33.5m native long_hall segments on the same cut plane. Total
+    exterior envelope, height and original east front are retained. The initial60/31m
+    production split is moved2.5m east to resolve the small retained-aisle overlap
+    caused by the independently source-read84deg old /92deg new axes. This remains
+    an approximate retained-nave state derived from the approved07 phase and91m comparison
+    length, not a newly measured demolition line. West segment and its own roof leave
+    with the transept before the new core; east segment with its roof stays until1606-1609.'
+  parts:
+  - kind: long_hall
+    id: nave_east
+    w_m: 66
+    d_m: 57.5
+    h_m: 32.54
+    aisles:
+      n: 2
+      w_m: 10.75
+      h_m: 16
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.6
+    at:
+    - 0
+    - -16.75
+  - kind: long_hall
+    id: nave_west
+    w_m: 66
+    d_m: 33.5
+    h_m: 32.54
+    aisles:
+      n: 2
+      w_m: 10.75
+      h_m: 16
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.6
+    at:
+    - 0
+    - 28.75
+  - kind: long_hall
+    id: transept
+    at:
+    - 0
+    - 54.5
+    theta_deg: 90
+    w_m: 18
+    d_m: 90
+    h_m: 20.8
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.6
+  - kind: dome
+    id: apse
+    at:
+    - 0
+    - 63.5
+    d_m: 23
+    drum_h_m: 20.8
+    sweep_deg: 180
+    dome:
+      shape: cone
+      rise_m: 4.2
+  site: cut
+rome07_formal_colosseum_inner:
+  kind: parts
+  exaggeration: 1
+  site: cut
+  parts:
+  - kind: arches
+    at:
+    - 79.50753362380551
+    - 5.164820433074289
+    theta_deg: 95.44669422350437
+    length_m: 10.37649136029782
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 79.50753362380551
+    - -5.164820433074289
+    theta_deg: -95.44669422350437
+    length_m: 10.37649136029782
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 77.54979427561165
+    - 15.367286279104297
+    theta_deg: 106.21784608669735
+    length_m: 10.49283492467992
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 77.54979427561165
+    - -15.367286279104297
+    theta_deg: -106.21784608669735
+    length_m: 10.49283492467992
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 73.68252161934086
+    - 25.191358535843612
+    theta_deg: 116.64912993362914
+    length_m: 10.71064599622866
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 73.68252161934086
+    - -25.191358535843612
+    theta_deg: -116.64912993362914
+    length_m: 10.71064599622866
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 68.00094074253262
+    - 34.395135940104794
+    theta_deg: 126.59136461359043
+    length_m: 11.003388345885591
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 68.00094074253262
+    - -34.395135940104794
+    theta_deg: -126.59136461359043
+    length_m: 11.003388345885591
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 60.6449510224598
+    - 42.751990946608935
+    theta_deg: 135.9784616604531
+    length_m: 11.337866071467134
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 60.6449510224598
+    - -42.751990946608935
+    theta_deg: -135.9784616604531
+    length_m: 11.337866071467134
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 51.79568133916083
+    - 50.05615005028427
+    theta_deg: 144.81786708714694
+    length_m: 11.67923021049394
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 51.79568133916083
+    - -50.05615005028427
+    theta_deg: -144.81786708714694
+    length_m: 11.67923021049394
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 41.6710300812808
+    - 56.12776061288406
+    theta_deg: 153.16953913424916
+    length_m: 11.994876834460161
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 41.6710300812808
+    - -56.12776061288406
+    theta_deg: -153.16953913424916
+    length_m: 11.994876834460161
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 30.520299764579775
+    - 60.81731943183689
+    theta_deg: 161.124926086222
+    length_m: 12.256985261788921
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 30.520299764579775
+    - -60.81731943183689
+    theta_deg: -161.124926086222
+    length_m: 12.256985261788921
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 18.618058376607138
+    - 64.00935400526676
+    theta_deg: 168.7914592184484
+    length_m: 12.443955987050789
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 18.618058376607138
+    - -64.00935400526676
+    theta_deg: -168.7914592184484
+    length_m: 12.443955987050789
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 6.25737860160924
+    - 65.62526584822042
+    theta_deg: 176.28328029295406
+    length_m: 12.541134414952447
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 6.25737860160924
+    - -65.62526584822042
+    theta_deg: -176.28328029295406
+    length_m: 12.541134414952447
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -6.257378601609222
+    - 65.62526584822042
+    theta_deg: -176.28328029295406
+    length_m: 12.541134414952428
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -6.257378601609222
+    - -65.62526584822042
+    theta_deg: 176.28328029295406
+    length_m: 12.541134414952428
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -18.618058376607117
+    - 64.00935400526676
+    theta_deg: -168.7914592184485
+    length_m: 12.443955987050803
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -18.618058376607117
+    - -64.00935400526676
+    theta_deg: 168.7914592184485
+    length_m: 12.443955987050803
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -30.52029976457976
+    - 60.8173194318369
+    theta_deg: -161.12492608622196
+    length_m: 12.256985261788925
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -30.52029976457976
+    - -60.8173194318369
+    theta_deg: 161.12492608622196
+    length_m: 12.256985261788925
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -41.67103008128078
+    - 56.12776061288406
+    theta_deg: -153.16953913424916
+    length_m: 11.994876834460161
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -41.67103008128078
+    - -56.12776061288406
+    theta_deg: 153.16953913424916
+    length_m: 11.994876834460161
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -51.79568133916082
+    - 50.05615005028429
+    theta_deg: -144.817867087147
+    length_m: 11.679230210493948
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -51.79568133916082
+    - -50.05615005028429
+    theta_deg: 144.817867087147
+    length_m: 11.679230210493948
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -60.64495102245978
+    - 42.75199094660894
+    theta_deg: -135.97846166045304
+    length_m: 11.337866071467124
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -60.64495102245978
+    - -42.75199094660894
+    theta_deg: 135.97846166045304
+    length_m: 11.337866071467124
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -68.00094074253262
+    - 34.395135940104794
+    theta_deg: -126.59136461359049
+    length_m: 11.003388345885599
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -68.00094074253262
+    - -34.395135940104794
+    theta_deg: 126.59136461359049
+    length_m: 11.003388345885599
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -73.68252161934086
+    - 25.191358535843623
+    theta_deg: -116.64912993362914
+    length_m: 10.710645996228656
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -73.68252161934086
+    - -25.191358535843623
+    theta_deg: 116.64912993362914
+    length_m: 10.710645996228656
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -77.54979427561165
+    - 15.367286279104304
+    theta_deg: -106.21784608669728
+    length_m: 10.49283492467992
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -77.54979427561165
+    - -15.367286279104304
+    theta_deg: 106.21784608669728
+    length_m: 10.49283492467992
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -79.50753362380551
+    - 5.164820433074296
+    theta_deg: -95.44669422350445
+    length_m: 10.376491360297818
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -79.50753362380551
+    - -5.164820433074296
+    theta_deg: 95.44669422350445
+    length_m: 10.376491360297818
+    h_m: 24
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  basis: 'research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. S86 outer189x156m/48m,3arcade
+    tiers/80bays; northernhalf40bays shown withnativechords. M25PArCo medievalfortress
+    andearlierloss ofsouthoutergalleries. Southernshell/cavea,fortress11bays/tower
+    and1349lossprofile deliberatelyunreconstructed, notdeclaredabsent. Throughopenings
+    and8mattic are estimates; nofullgladiatorialstadium restored. R09/Falda1667 visible
+    surviving same-site body. Earlier native geometry is a dimensional comparison,
+    not an assertion of unchanged medieval upper rooms or a complete ancient restoration.
+    R09_colosseum_remnant_read.jpg shows the higher northern outer shell and lower
+    inner arcade. Native arches of the already sourced northern template are reused
+    at160/189 scale and mirrored to keep true arch openings in the lower circle. About160x132m
+    lower extent,6m gallery band and24m height are graphic estimates relative to the189x156m/48m
+    same-monument envelope, not a surveyed1667 ruin profile. No full seats, southern
+    high outer facade, nineteenth-century buttresses or restored gladiatorial arena.
+    Formal: only the separate inner gallery is supplied here;06 northern outer shell
+    persists unchanged. Its native arches follow the terrain; the two surviving gallery
+    bands are not a single cathedral floor.'

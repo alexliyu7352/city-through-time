@@ -1,0 +1,7039 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4647676,
+      41.8835467
+     ],
+     [
+      12.4626039,
+      41.8828499
+     ],
+     [
+      12.4603403,
+      41.8819463
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_001",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4623279,
+      41.8827397
+     ],
+     [
+      12.4617077,
+      41.8835504
+     ],
+     [
+      12.4611365,
+      41.8846385
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_002",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4638824,
+      41.8841637
+     ],
+     [
+      12.4631174,
+      41.8839581
+     ],
+     [
+      12.4618028,
+      41.8834261
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_003",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4637627,
+      41.8832231
+     ],
+     [
+      12.4634712,
+      41.8835582
+     ],
+     [
+      12.4633236,
+      41.8840135
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_004",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4629105,
+      41.8829487
+     ],
+     [
+      12.4627739,
+      41.8833281
+     ],
+     [
+      12.462444,
+      41.8836856
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_005",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.46294,
+      41.8838863
+     ],
+     [
+      12.4625494,
+      41.8843583
+     ],
+     [
+      12.4624038,
+      41.8846873
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_006",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4625257,
+      41.884412
+     ],
+     [
+      12.4620039,
+      41.8842833
+     ],
+     [
+      12.4614735,
+      41.8839965
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_007",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.461834,
+      41.8833853
+     ],
+     [
+      12.4609226,
+      41.8829896
+     ],
+     [
+      12.4597975,
+      41.8826754
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_008",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4610806,
+      41.8830582
+     ],
+     [
+      12.4607898,
+      41.8836654
+     ],
+     [
+      12.4602405,
+      41.8843179
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_009",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4607869,
+      41.8836689
+     ],
+     [
+      12.4602262,
+      41.8833469
+     ],
+     [
+      12.4594562,
+      41.8831113
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_010",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.460232,
+      41.8833503
+     ],
+     [
+      12.460079,
+      41.8837385
+     ],
+     [
+      12.459704,
+      41.8841259
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_011",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4612767,
+      41.8823201
+     ],
+     [
+      12.4609587,
+      41.8826282
+     ],
+     [
+      12.4608192,
+      41.8829607
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_012",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4635519,
+      41.8800112
+     ],
+     [
+      12.4629217,
+      41.8812294
+     ],
+     [
+      12.4619721,
+      41.8825977
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_013",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4626572,
+      41.8816106
+     ],
+     [
+      12.4619073,
+      41.8812439
+     ],
+     [
+      12.4609403,
+      41.8809671
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_014",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4617258,
+      41.881192
+     ],
+     [
+      12.4614783,
+      41.8816888
+     ],
+     [
+      12.4609898,
+      41.8822056
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_015",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4622877,
+      41.8821429
+     ],
+     [
+      12.4618832,
+      41.8819096
+     ],
+     [
+      12.4613807,
+      41.881792
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_016",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4631451,
+      41.8807975
+     ],
+     [
+      12.4623622,
+      41.8805745
+     ],
+     [
+      12.4618674,
+      41.8803337
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_017",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4620859,
+      41.8804401
+     ],
+     [
+      12.4617905,
+      41.880748
+     ],
+     [
+      12.4616256,
+      41.8811633
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_018",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4653748,
+      41.8825326
+     ],
+     [
+      12.4640479,
+      41.8821646
+     ],
+     [
+      12.4626599,
+      41.8816066
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_019",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4637433,
+      41.8820422
+     ],
+     [
+      12.4634115,
+      41.8824437
+     ],
+     [
+      12.463177,
+      41.8830345
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_020",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4646402,
+      41.8823289
+     ],
+     [
+      12.4644621,
+      41.8827951
+     ],
+     [
+      12.4640374,
+      41.8833116
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_021",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.463399,
+      41.8824753
+     ],
+     [
+      12.4630139,
+      41.8822699
+     ],
+     [
+      12.4623189,
+      41.8820979
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_022",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4646105,
+      41.8803335
+     ],
+     [
+      12.464256,
+      41.8811445
+     ],
+     [
+      12.4636495,
+      41.8820045
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_023",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4641003,
+      41.8813653
+     ],
+     [
+      12.4636357,
+      41.8811534
+     ],
+     [
+      12.4630159,
+      41.8810473
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_024",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4644131,
+      41.8807851
+     ],
+     [
+      12.463892,
+      41.8807008
+     ],
+     [
+      12.4633271,
+      41.8804457
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_025",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4653857,
+      41.8816837
+     ],
+     [
+      12.4650214,
+      41.8815314
+     ],
+     [
+      12.464124,
+      41.8813316
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_026",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4648822,
+      41.8815004
+     ],
+     [
+      12.4647836,
+      41.8818809
+     ],
+     [
+      12.4644638,
+      41.88228
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_lane_027",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4626349,
+       41.8803437
+      ],
+      [
+       12.4627349,
+       41.8801475
+      ],
+      [
+       12.4630501,
+       41.8802372
+      ],
+      [
+       12.46295,
+       41.8804335
+      ],
+      [
+       12.4626349,
+       41.8803437
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b001_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 199.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4621498,
+       41.8803364
+      ],
+      [
+       12.4623032,
+       41.8801604
+      ],
+      [
+       12.4625858,
+       41.880298
+      ],
+      [
+       12.4624324,
+       41.880474
+      ],
+      [
+       12.4621498,
+       41.8803364
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b001_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 211.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4632839,
+       41.8802555
+      ],
+      [
+       12.4630218,
+       41.8801798
+      ],
+      [
+       12.4631434,
+       41.8799447
+      ],
+      [
+       12.4634055,
+       41.8800204
+      ],
+      [
+       12.4632839,
+       41.8802555
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b001_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 109.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4629447,
+       41.8801676
+      ],
+      [
+       12.4626878,
+       41.8800933
+      ],
+      [
+       12.462807,
+       41.879863
+      ],
+      [
+       12.4630639,
+       41.8799372
+      ],
+      [
+       12.4629447,
+       41.8801676
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b001_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.44,
+     22.87
+    ],
+    "theta_deg": 109.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4631236,
+       41.8807175
+      ],
+      [
+       12.462809,
+       41.8806266
+      ],
+      [
+       12.4629063,
+       41.8804386
+      ],
+      [
+       12.4632209,
+       41.8805295
+      ],
+      [
+       12.4631236,
+       41.8807175
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b001_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.4,
+     28.0
+    ],
+    "theta_deg": 109.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624549,
+       41.8805497
+      ],
+      [
+       12.462555,
+       41.8803535
+      ],
+      [
+       12.4628701,
+       41.8804432
+      ],
+      [
+       12.4627701,
+       41.8806395
+      ],
+      [
+       12.4624549,
+       41.8805497
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b001_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 199.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4632355,
+       41.8805134
+      ],
+      [
+       12.4629779,
+       41.8804389
+      ],
+      [
+       12.4630974,
+       41.8802079
+      ],
+      [
+       12.463355,
+       41.8802823
+      ],
+      [
+       12.4632355,
+       41.8805134
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b001_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.51,
+     22.93
+    ],
+    "theta_deg": 109.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637574,
+       41.8804091
+      ],
+      [
+       12.4639027,
+       41.8802293
+      ],
+      [
+       12.4641914,
+       41.8803597
+      ],
+      [
+       12.4640461,
+       41.8805394
+      ],
+      [
+       12.4637574,
+       41.8804091
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b002_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 209.45,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4643391,
+       41.8807329
+      ],
+      [
+       12.4640719,
+       41.8806677
+      ],
+      [
+       12.4641767,
+       41.8804281
+      ],
+      [
+       12.4644438,
+       41.8804933
+      ],
+      [
+       12.4643391,
+       41.8807329
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b002_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 106.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637589,
+       41.880363
+      ],
+      [
+       12.4634968,
+       41.8802872
+      ],
+      [
+       12.4636184,
+       41.8800522
+      ],
+      [
+       12.4638805,
+       41.8801279
+      ],
+      [
+       12.4637589,
+       41.880363
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b002_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 289.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4612011,
+       41.880888
+      ],
+      [
+       12.4613016,
+       41.8806918
+      ],
+      [
+       12.4616166,
+       41.880782
+      ],
+      [
+       12.461516,
+       41.8809781
+      ],
+      [
+       12.4612011,
+       41.880888
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b003_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 199.26,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616486,
+       41.8807891
+      ],
+      [
+       12.4614202,
+       41.8806667
+      ],
+      [
+       12.4616167,
+       41.8804619
+      ],
+      [
+       12.4618451,
+       41.8805842
+      ],
+      [
+       12.4616486,
+       41.8807891
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b003_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 123.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.463499,
+       41.8809358
+      ],
+      [
+       12.4636444,
+       41.880756
+      ],
+      [
+       12.463933,
+       41.8808863
+      ],
+      [
+       12.4637877,
+       41.8810661
+      ],
+      [
+       12.463499,
+       41.8809358
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b004_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 29.45,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4641209,
+       41.8812172
+      ],
+      [
+       12.4638537,
+       41.8811519
+      ],
+      [
+       12.4639584,
+       41.8809124
+      ],
+      [
+       12.4642256,
+       41.8809776
+      ],
+      [
+       12.4641209,
+       41.8812172
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b004_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 106.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.463396,
+       41.8810491
+      ],
+      [
+       12.4631339,
+       41.8809734
+      ],
+      [
+       12.4632555,
+       41.8807383
+      ],
+      [
+       12.4635177,
+       41.880814
+      ],
+      [
+       12.463396,
+       41.8810491
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b004_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 289.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4632424,
+       41.8806743
+      ],
+      [
+       12.4633629,
+       41.8805253
+      ],
+      [
+       12.4636023,
+       41.8806334
+      ],
+      [
+       12.4634818,
+       41.8807824
+      ],
+      [
+       12.4632424,
+       41.8806743
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b004_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     23.21,
+     19.34
+    ],
+    "theta_deg": 29.45,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4645612,
+       41.8812138
+      ],
+      [
+       12.4646414,
+       41.8810125
+      ],
+      [
+       12.4649646,
+       41.8810844
+      ],
+      [
+       12.4648844,
+       41.8812857
+      ],
+      [
+       12.4645612,
+       41.8812138
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b005_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 194.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4648424,
+       41.8809478
+      ],
+      [
+       12.4645753,
+       41.8808826
+      ],
+      [
+       12.46468,
+       41.880643
+      ],
+      [
+       12.4649472,
+       41.8807082
+      ],
+      [
+       12.4648424,
+       41.8809478
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b005_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 286.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4648905,
+       41.8814522
+      ],
+      [
+       12.4649857,
+       41.8812133
+      ],
+      [
+       12.4652414,
+       41.8812702
+      ],
+      [
+       12.4651462,
+       41.8815091
+      ],
+      [
+       12.4648905,
+       41.8814522
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b005_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.15,
+     27.68
+    ],
+    "theta_deg": 194.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4648729,
+       41.8806529
+      ],
+      [
+       12.4645523,
+       41.8805746
+      ],
+      [
+       12.464636,
+       41.880383
+      ],
+      [
+       12.4649566,
+       41.8804612
+      ],
+      [
+       12.4648729,
+       41.8806529
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b005_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.4,
+     28.0
+    ],
+    "theta_deg": 286.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4642537,
+       41.8813337
+      ],
+      [
+       12.4643385,
+       41.8811207
+      ],
+      [
+       12.4645665,
+       41.8811715
+      ],
+      [
+       12.4644817,
+       41.8813844
+      ],
+      [
+       12.4642537,
+       41.8813337
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b005_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     19.75,
+     24.68
+    ],
+    "theta_deg": 194.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4622411,
+       41.881082
+      ],
+      [
+       12.4623411,
+       41.8808857
+      ],
+      [
+       12.4626563,
+       41.8809755
+      ],
+      [
+       12.4625562,
+       41.8811718
+      ],
+      [
+       12.4622411,
+       41.881082
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b006_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 19.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4620767,
+       41.8811693
+      ],
+      [
+       12.4618073,
+       41.8811095
+      ],
+      [
+       12.4619033,
+       41.8808679
+      ],
+      [
+       12.4621727,
+       41.8809277
+      ],
+      [
+       12.4620767,
+       41.8811693
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b006_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 284.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4628809,
+       41.8811922
+      ],
+      [
+       12.4626187,
+       41.8811164
+      ],
+      [
+       12.4627403,
+       41.8808813
+      ],
+      [
+       12.4630025,
+       41.8809571
+      ],
+      [
+       12.4628809,
+       41.8811922
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b006_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 109.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4619421,
+       41.8807444
+      ],
+      [
+       12.4620955,
+       41.8805684
+      ],
+      [
+       12.4623781,
+       41.880706
+      ],
+      [
+       12.4622247,
+       41.880882
+      ],
+      [
+       12.4619421,
+       41.8807444
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b006_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 31.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4626098,
+       41.8815015
+      ],
+      [
+       12.4623603,
+       41.8814048
+      ],
+      [
+       12.4625156,
+       41.881181
+      ],
+      [
+       12.4627651,
+       41.8812777
+      ],
+      [
+       12.4626098,
+       41.8815015
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b006_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 115.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623452,
+       41.8808501
+      ],
+      [
+       12.4624453,
+       41.8806538
+      ],
+      [
+       12.4627604,
+       41.8807436
+      ],
+      [
+       12.4626604,
+       41.8809398
+      ],
+      [
+       12.4623452,
+       41.8808501
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b006_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 19.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4620588,
+       41.8812549
+      ],
+      [
+       12.4622077,
+       41.8810848
+      ],
+      [
+       12.4624809,
+       41.8812183
+      ],
+      [
+       12.4623319,
+       41.8813885
+      ],
+      [
+       12.4620588,
+       41.8812549
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b006_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.1,
+     22.58
+    ],
+    "theta_deg": 211.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4631464,
+       41.881513
+      ],
+      [
+       12.4632795,
+       41.8813281
+      ],
+      [
+       12.4635765,
+       41.8814475
+      ],
+      [
+       12.4634434,
+       41.8816324
+      ],
+      [
+       12.4631464,
+       41.881513
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b007_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 206.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637134,
+       41.8813264
+      ],
+      [
+       12.4639529,
+       41.8814362
+      ],
+      [
+       12.4637766,
+       41.8816511
+      ],
+      [
+       12.463537,
+       41.8815412
+      ],
+      [
+       12.4637134,
+       41.8813264
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b007_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 119.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.463025,
+       41.881632
+      ],
+      [
+       12.4627755,
+       41.8815353
+      ],
+      [
+       12.4629308,
+       41.8813115
+      ],
+      [
+       12.4631803,
+       41.8814082
+      ],
+      [
+       12.463025,
+       41.881632
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b007_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 295.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4629852,
+       41.881326
+      ],
+      [
+       12.4630569,
+       41.881092
+      ],
+      [
+       12.4633074,
+       41.8811349
+      ],
+      [
+       12.4632357,
+       41.8813689
+      ],
+      [
+       12.4629852,
+       41.881326
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b007_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     21.33,
+     26.67
+    ],
+    "theta_deg": 11.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633149,
+       41.8818232
+      ],
+      [
+       12.4634617,
+       41.8816193
+      ],
+      [
+       12.46368,
+       41.8817071
+      ],
+      [
+       12.4635332,
+       41.881911
+      ],
+      [
+       12.4633149,
+       41.8818232
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b007_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.57,
+     25.72
+    ],
+    "theta_deg": 206.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633778,
+       41.8813477
+      ],
+      [
+       12.4634295,
+       41.8811791
+      ],
+      [
+       12.4637003,
+       41.8812254
+      ],
+      [
+       12.4636486,
+       41.8813941
+      ],
+      [
+       12.4633778,
+       41.8813477
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b007_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     23.06,
+     19.22
+    ],
+    "theta_deg": 11.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4630395,
+       41.8817125
+      ],
+      [
+       12.4631599,
+       41.8815453
+      ],
+      [
+       12.4634284,
+       41.8816532
+      ],
+      [
+       12.463308,
+       41.8818205
+      ],
+      [
+       12.4630395,
+       41.8817125
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b007_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.31,
+     21.09
+    ],
+    "theta_deg": 206.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4611877,
+       41.8815864
+      ],
+      [
+       12.4609244,
+       41.8815131
+      ],
+      [
+       12.4610421,
+       41.8812769
+      ],
+      [
+       12.4613054,
+       41.8813502
+      ],
+      [
+       12.4611877,
+       41.8815864
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b008_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 108.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.460881,
+       41.8819695
+      ],
+      [
+       12.4606514,
+       41.8818483
+      ],
+      [
+       12.460846,
+       41.8816425
+      ],
+      [
+       12.4610755,
+       41.8817636
+      ],
+      [
+       12.460881,
+       41.8819695
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b008_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 123.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4615723,
+       41.8814182
+      ],
+      [
+       12.4612592,
+       41.8813311
+      ],
+      [
+       12.4613525,
+       41.8811439
+      ],
+      [
+       12.4616656,
+       41.881231
+      ],
+      [
+       12.4615723,
+       41.8814182
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b008_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.19,
+     27.74
+    ],
+    "theta_deg": 108.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4608177,
+       41.8811977
+      ],
+      [
+       12.4609131,
+       41.8810114
+      ],
+      [
+       12.4612123,
+       41.8810971
+      ],
+      [
+       12.4611168,
+       41.8812833
+      ],
+      [
+       12.4608177,
+       41.8811977
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b008_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     26.59,
+     22.16
+    ],
+    "theta_deg": 19.26,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4612407,
+       41.8818436
+      ],
+      [
+       12.461051,
+       41.8817435
+      ],
+      [
+       12.4612118,
+       41.8815734
+      ],
+      [
+       12.4614015,
+       41.8816735
+      ],
+      [
+       12.4612407,
+       41.8818436
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b008_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     23.14,
+     19.28
+    ],
+    "theta_deg": 123.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4605948,
+       41.8815907
+      ],
+      [
+       12.4607294,
+       41.8814023
+      ],
+      [
+       12.4609311,
+       41.8814828
+      ],
+      [
+       12.4607964,
+       41.8816712
+      ],
+      [
+       12.4605948,
+       41.8815907
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b008_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     18.98,
+     23.73
+    ],
+    "theta_deg": 206.42,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4614531,
+       41.8816358
+      ],
+      [
+       12.4612217,
+       41.8815714
+      ],
+      [
+       12.4613251,
+       41.881364
+      ],
+      [
+       12.4615565,
+       41.8814284
+      ],
+      [
+       12.4614531,
+       41.8816358
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b008_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     24.6,
+     20.5
+    ],
+    "theta_deg": 108.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4618377,
+       41.8816638
+      ],
+      [
+       12.4620094,
+       41.8814975
+      ],
+      [
+       12.4622764,
+       41.8816515
+      ],
+      [
+       12.4621047,
+       41.8818178
+      ],
+      [
+       12.4618377,
+       41.8816638
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b009_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 35.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4619202,
+       41.8815622
+      ],
+      [
+       12.4616655,
+       41.8814913
+      ],
+      [
+       12.4617793,
+       41.8812629
+      ],
+      [
+       12.462034,
+       41.8813338
+      ],
+      [
+       12.4619202,
+       41.8815622
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b009_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.08,
+     22.56
+    ],
+    "theta_deg": 288.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624648,
+       41.8818228
+      ],
+      [
+       12.4622331,
+       41.881733
+      ],
+      [
+       12.4623773,
+       41.8815252
+      ],
+      [
+       12.462609,
+       41.881615
+      ],
+      [
+       12.4624648,
+       41.8818228
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b009_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     26.0,
+     21.67
+    ],
+    "theta_deg": 115.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4617527,
+       41.8818123
+      ],
+      [
+       12.4614893,
+       41.881739
+      ],
+      [
+       12.4616071,
+       41.8815028
+      ],
+      [
+       12.4618704,
+       41.8815761
+      ],
+      [
+       12.4617527,
+       41.8818123
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b009_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 288.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4622629,
+       41.8820572
+      ],
+      [
+       12.462042,
+       41.8819716
+      ],
+      [
+       12.4621795,
+       41.8817736
+      ],
+      [
+       12.4624004,
+       41.8818592
+      ],
+      [
+       12.4622629,
+       41.8820572
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b009_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     24.79,
+     20.66
+    ],
+    "theta_deg": 115.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4643494,
+       41.8819604
+      ],
+      [
+       12.4641008,
+       41.8818625
+      ],
+      [
+       12.464258,
+       41.8816395
+      ],
+      [
+       12.4645067,
+       41.8817374
+      ],
+      [
+       12.4643494,
+       41.8819604
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b010_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 296.1,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4644228,
+       41.8816816
+      ],
+      [
+       12.464503,
+       41.8814803
+      ],
+      [
+       12.4648263,
+       41.8815522
+      ],
+      [
+       12.4647461,
+       41.8817535
+      ],
+      [
+       12.4644228,
+       41.8816816
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b010_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 14.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637241,
+       41.8819713
+      ],
+      [
+       12.4638573,
+       41.8817864
+      ],
+      [
+       12.4641543,
+       41.8819058
+      ],
+      [
+       12.4640212,
+       41.8820907
+      ],
+      [
+       12.4637241,
+       41.8819713
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b010_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 206.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.464187,
+       41.8821427
+      ],
+      [
+       12.4642756,
+       41.8819643
+      ],
+      [
+       12.4645622,
+       41.8820438
+      ],
+      [
+       12.4644735,
+       41.8822222
+      ],
+      [
+       12.464187,
+       41.8821427
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b010_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.38,
+     21.15
+    ],
+    "theta_deg": 198.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4640481,
+       41.8815661
+      ],
+      [
+       12.4641181,
+       41.8813902
+      ],
+      [
+       12.4644006,
+       41.8814531
+      ],
+      [
+       12.4643305,
+       41.8816289
+      ],
+      [
+       12.4640481,
+       41.8815661
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b010_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     24.46,
+     20.39
+    ],
+    "theta_deg": 14.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4651385,
+       41.8822109
+      ],
+      [
+       12.4648974,
+       41.882103
+      ],
+      [
+       12.4650707,
+       41.8818868
+      ],
+      [
+       12.4653118,
+       41.8819947
+      ],
+      [
+       12.4651385,
+       41.8822109
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b011_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 299.23,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4650754,
+       41.8823779
+      ],
+      [
+       12.4651732,
+       41.882181
+      ],
+      [
+       12.4654894,
+       41.8822687
+      ],
+      [
+       12.4653916,
+       41.8824656
+      ],
+      [
+       12.4650754,
+       41.8823779
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b011_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 198.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4648454,
+       41.8817656
+      ],
+      [
+       12.4649765,
+       41.8815905
+      ],
+      [
+       12.4652576,
+       41.8817081
+      ],
+      [
+       12.4651265,
+       41.8818831
+      ],
+      [
+       12.4648454,
+       41.8817656
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b011_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     26.74,
+     22.29
+    ],
+    "theta_deg": 27.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.464579,
+       41.8822509
+      ],
+      [
+       12.4646692,
+       41.8820692
+      ],
+      [
+       12.464961,
+       41.8821501
+      ],
+      [
+       12.4648707,
+       41.8823318
+      ],
+      [
+       12.464579,
+       41.8822509
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b011_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.84,
+     21.53
+    ],
+    "theta_deg": 198.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4627,
+       41.882012
+      ],
+      [
+       12.4628331,
+       41.881827
+      ],
+      [
+       12.4631302,
+       41.8819464
+      ],
+      [
+       12.462997,
+       41.8821314
+      ],
+      [
+       12.4627,
+       41.882012
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b012_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 26.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4631121,
+       41.8820699
+      ],
+      [
+       12.4632411,
+       41.8818907
+      ],
+      [
+       12.4634328,
+       41.8819678
+      ],
+      [
+       12.4633039,
+       41.8821469
+      ],
+      [
+       12.4631121,
+       41.8820699
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b012_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     18.08,
+     22.59
+    ],
+    "theta_deg": 26.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4626438,
+       41.8820803
+      ],
+      [
+       12.4624266,
+       41.8819961
+      ],
+      [
+       12.4625617,
+       41.8818013
+      ],
+      [
+       12.4627789,
+       41.8818855
+      ],
+      [
+       12.4626438,
+       41.8820803
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b012_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     24.38,
+     20.31
+    ],
+    "theta_deg": 295.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4614314,
+       41.8822068
+      ],
+      [
+       12.4615639,
+       41.8820216
+      ],
+      [
+       12.4618613,
+       41.8821403
+      ],
+      [
+       12.4617289,
+       41.8823256
+      ],
+      [
+       12.4614314,
+       41.8822068
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b013_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 206.42,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.461947,
+       41.8825318
+      ],
+      [
+       12.4616975,
+       41.8824351
+      ],
+      [
+       12.4618528,
+       41.8822113
+      ],
+      [
+       12.4621023,
+       41.882308
+      ],
+      [
+       12.461947,
+       41.8825318
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b013_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 115.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4612919,
+       41.8822996
+      ],
+      [
+       12.4610872,
+       41.8821916
+      ],
+      [
+       12.4612607,
+       41.8820079
+      ],
+      [
+       12.4614655,
+       41.882116
+      ],
+      [
+       12.4612919,
+       41.8822996
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b013_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     24.98,
+     20.81
+    ],
+    "theta_deg": 303.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4605375,
+       41.8826225
+      ],
+      [
+       12.4603149,
+       41.8824942
+      ],
+      [
+       12.4605209,
+       41.8822947
+      ],
+      [
+       12.4607435,
+       41.8824229
+      ],
+      [
+       12.4605375,
+       41.8826225
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b014_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 125.95,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4599159,
+       41.882627
+      ],
+      [
+       12.4600142,
+       41.8824302
+      ],
+      [
+       12.4603302,
+       41.8825185
+      ],
+      [
+       12.4602318,
+       41.8827152
+      ],
+      [
+       12.4599159,
+       41.882627
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b014_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 198.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4608961,
+       41.8826395
+      ],
+      [
+       12.4606736,
+       41.8825112
+      ],
+      [
+       12.4608796,
+       41.8823116
+      ],
+      [
+       12.4611021,
+       41.8824399
+      ],
+      [
+       12.4608961,
+       41.8826395
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b014_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 125.95,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4607577,
+       41.8828881
+      ],
+      [
+       12.4604895,
+       41.8828252
+      ],
+      [
+       12.4605904,
+       41.8825847
+      ],
+      [
+       12.4608586,
+       41.8826476
+      ],
+      [
+       12.4607577,
+       41.8828881
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b014_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 105.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4602187,
+       41.8822303
+      ],
+      [
+       12.4603777,
+       41.882008
+      ],
+      [
+       12.4606156,
+       41.882103
+      ],
+      [
+       12.4604567,
+       41.8823253
+      ],
+      [
+       12.4602187,
+       41.8822303
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b014_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.4,
+     28.0
+    ],
+    "theta_deg": 26.42,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4605492,
+       41.8822864
+      ],
+      [
+       12.4606585,
+       41.8821336
+      ],
+      [
+       12.4609039,
+       41.8822316
+      ],
+      [
+       12.4607946,
+       41.8823844
+      ],
+      [
+       12.4605492,
+       41.8822864
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b014_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     23.1,
+     19.25
+    ],
+    "theta_deg": 26.42,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4600531,
+       41.8824057
+      ],
+      [
+       12.4601316,
+       41.8822487
+      ],
+      [
+       12.4603836,
+       41.8823191
+      ],
+      [
+       12.4603051,
+       41.8824761
+      ],
+      [
+       12.4600531,
+       41.8824057
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b014_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.33,
+     18.61
+    ],
+    "theta_deg": 198.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4602371,
+       41.8827731
+      ],
+      [
+       12.4603343,
+       41.8825788
+      ],
+      [
+       12.4605423,
+       41.8826369
+      ],
+      [
+       12.4604451,
+       41.8828312
+      ],
+      [
+       12.4602371,
+       41.8827731
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b014_08",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     18.44,
+     23.04
+    ],
+    "theta_deg": 198.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4629805,
+       41.8825022
+      ],
+      [
+       12.4631191,
+       41.8826849
+      ],
+      [
+       12.4628258,
+       41.8828092
+      ],
+      [
+       12.4626871,
+       41.8826265
+      ],
+      [
+       12.4629805,
+       41.8825022
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b015_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 328.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624895,
+       41.882485
+      ],
+      [
+       12.46224,
+       41.8823883
+      ],
+      [
+       12.4623953,
+       41.8821645
+      ],
+      [
+       12.4626448,
+       41.8822613
+      ],
+      [
+       12.4624895,
+       41.882485
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b015_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 295.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4640224,
+       41.8827701
+      ],
+      [
+       12.4637529,
+       41.8827104
+      ],
+      [
+       12.4638489,
+       41.8824688
+      ],
+      [
+       12.4641183,
+       41.8825285
+      ],
+      [
+       12.4640224,
+       41.8827701
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b016_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 284.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.463689,
+       41.8830369
+      ],
+      [
+       12.4638002,
+       41.882844
+      ],
+      [
+       12.46411,
+       41.8829437
+      ],
+      [
+       12.4639987,
+       41.8831366
+      ],
+      [
+       12.463689,
+       41.8830369
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b016_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 201.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4636332,
+       41.8829676
+      ],
+      [
+       12.4633637,
+       41.8829078
+      ],
+      [
+       12.4634596,
+       41.8826662
+      ],
+      [
+       12.4637291,
+       41.8827259
+      ],
+      [
+       12.4636332,
+       41.8829676
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b016_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 284.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4644154,
+       41.8825977
+      ],
+      [
+       12.4641451,
+       41.88254
+      ],
+      [
+       12.4642377,
+       41.8822976
+      ],
+      [
+       12.4645079,
+       41.8823553
+      ],
+      [
+       12.4644154,
+       41.8825977
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b016_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 104.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.46362,
+       41.882328
+      ],
+      [
+       12.4637531,
+       41.8821431
+      ],
+      [
+       12.4640501,
+       41.8822625
+      ],
+      [
+       12.463917,
+       41.8824474
+      ],
+      [
+       12.46362,
+       41.882328
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b016_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 26.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4643424,
+       41.8828727
+      ],
+      [
+       12.4640721,
+       41.882815
+      ],
+      [
+       12.4641647,
+       41.8825727
+      ],
+      [
+       12.464435,
+       41.8826303
+      ],
+      [
+       12.4643424,
+       41.8828727
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b016_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 104.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637047,
+       41.8826684
+      ],
+      [
+       12.4634353,
+       41.8826087
+      ],
+      [
+       12.4635312,
+       41.8823671
+      ],
+      [
+       12.4638006,
+       41.8824268
+      ],
+      [
+       12.4637047,
+       41.8826684
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b016_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 284.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4618608,
+       41.8828925
+      ],
+      [
+       12.4619323,
+       41.8830956
+      ],
+      [
+       12.4616061,
+       41.8831597
+      ],
+      [
+       12.4615346,
+       41.8829565
+      ],
+      [
+       12.4618608,
+       41.8828925
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b017_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 343.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4615661,
+       41.8825889
+      ],
+      [
+       12.4616375,
+       41.882792
+      ],
+      [
+       12.4613113,
+       41.8828561
+      ],
+      [
+       12.4612399,
+       41.8826529
+      ],
+      [
+       12.4615661,
+       41.8825889
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b017_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 163.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.46117,
+       41.8829164
+      ],
+      [
+       12.460957,
+       41.8828665
+      ],
+      [
+       12.4610372,
+       41.8826755
+      ],
+      [
+       12.4612501,
+       41.8827254
+      ],
+      [
+       12.46117,
+       41.8829164
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b017_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.23,
+     18.53
+    ],
+    "theta_deg": 285.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4647742,
+       41.8831067
+      ],
+      [
+       12.4645347,
+       41.8829968
+      ],
+      [
+       12.4647113,
+       41.882782
+      ],
+      [
+       12.4649508,
+       41.882892
+      ],
+      [
+       12.4647742,
+       41.8831067
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b018_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 299.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4647897,
+       41.882723
+      ],
+      [
+       12.4648875,
+       41.8825261
+      ],
+      [
+       12.4652037,
+       41.8826138
+      ],
+      [
+       12.4651059,
+       41.8828107
+      ],
+      [
+       12.4647897,
+       41.882723
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b018_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 18.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4642625,
+       41.8832559
+      ],
+      [
+       12.4643737,
+       41.883063
+      ],
+      [
+       12.4646834,
+       41.8831627
+      ],
+      [
+       12.4645722,
+       41.8833556
+      ],
+      [
+       12.4642625,
+       41.8832559
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b018_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 201.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4596986,
+       41.883012
+      ],
+      [
+       12.459797,
+       41.8828152
+      ],
+      [
+       12.460113,
+       41.8829034
+      ],
+      [
+       12.4600146,
+       41.8831002
+      ],
+      [
+       12.4596986,
+       41.883012
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b019_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 18.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4604223,
+       41.8833046
+      ],
+      [
+       12.4605936,
+       41.883138
+      ],
+      [
+       12.460861,
+       41.8832916
+      ],
+      [
+       12.4606898,
+       41.8834581
+      ],
+      [
+       12.4604223,
+       41.8833046
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b019_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 215.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4601055,
+       41.8830077
+      ],
+      [
+       12.4601827,
+       41.8828534
+      ],
+      [
+       12.4604303,
+       41.8829226
+      ],
+      [
+       12.4603532,
+       41.8830768
+      ],
+      [
+       12.4601055,
+       41.8830077
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b019_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     21.95,
+     18.29
+    ],
+    "theta_deg": 18.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624279,
+       41.883379
+      ],
+      [
+       12.4621839,
+       41.8832747
+      ],
+      [
+       12.4623514,
+       41.8830559
+      ],
+      [
+       12.4625953,
+       41.8831602
+      ],
+      [
+       12.4624279,
+       41.883379
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b020_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 298.07,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624705,
+       41.8830791
+      ],
+      [
+       12.462574,
+       41.8828996
+      ],
+      [
+       12.4628623,
+       41.8829924
+      ],
+      [
+       12.4627588,
+       41.883172
+      ],
+      [
+       12.4624705,
+       41.8830791
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b020_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     26.06,
+     21.72
+    ],
+    "theta_deg": 21.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4618647,
+       41.8834018
+      ],
+      [
+       12.4619938,
+       41.8832235
+      ],
+      [
+       12.4622801,
+       41.8833394
+      ],
+      [
+       12.4621509,
+       41.8835176
+      ],
+      [
+       12.4618647,
+       41.8834018
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b020_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.02,
+     22.52
+    ],
+    "theta_deg": 206.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4621994,
+       41.8835577
+      ],
+      [
+       12.4623476,
+       41.8833531
+      ],
+      [
+       12.4625666,
+       41.8834417
+      ],
+      [
+       12.4624184,
+       41.8836463
+      ],
+      [
+       12.4621994,
+       41.8835577
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b020_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.67,
+     25.84
+    ],
+    "theta_deg": 206.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624113,
+       41.8830748
+      ],
+      [
+       12.4622102,
+       41.8829888
+      ],
+      [
+       12.4623482,
+       41.8828085
+      ],
+      [
+       12.4625493,
+       41.8828944
+      ],
+      [
+       12.4624113,
+       41.8830748
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b020_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     23.08,
+     19.23
+    ],
+    "theta_deg": 298.07,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4631329,
+       41.8836418
+      ],
+      [
+       12.4628972,
+       41.8835273
+      ],
+      [
+       12.463081,
+       41.883316
+      ],
+      [
+       12.4633166,
+       41.8834304
+      ],
+      [
+       12.4631329,
+       41.8836418
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b021_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 121.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4632109,
+       41.8833454
+      ],
+      [
+       12.4633221,
+       41.8831525
+      ],
+      [
+       12.4636318,
+       41.8832522
+      ],
+      [
+       12.4635206,
+       41.8834451
+      ],
+      [
+       12.4632109,
+       41.8833454
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b021_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 21.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4629582,
+       41.8838198
+      ],
+      [
+       12.4630876,
+       41.8836412
+      ],
+      [
+       12.4633745,
+       41.8837572
+      ],
+      [
+       12.463245,
+       41.8839359
+      ],
+      [
+       12.4629582,
+       41.8838198
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b021_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.08,
+     22.57
+    ],
+    "theta_deg": 206.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4631466,
+       41.8833207
+      ],
+      [
+       12.4628762,
+       41.8832664
+      ],
+      [
+       12.4629635,
+       41.8830239
+      ],
+      [
+       12.4632339,
+       41.8830783
+      ],
+      [
+       12.4631466,
+       41.8833207
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b021_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.89,
+     23.25
+    ],
+    "theta_deg": 283.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4625477,
+       41.883663
+      ],
+      [
+       12.4626815,
+       41.8834783
+      ],
+      [
+       12.4629781,
+       41.8835983
+      ],
+      [
+       12.4628443,
+       41.883783
+      ],
+      [
+       12.4625477,
+       41.883663
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b021_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 206.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4594187,
+       41.8835838
+      ],
+      [
+       12.4595252,
+       41.8833894
+      ],
+      [
+       12.4598374,
+       41.8834849
+      ],
+      [
+       12.4597309,
+       41.8836793
+      ],
+      [
+       12.4594187,
+       41.8835838
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b022_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 20.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4596036,
+       41.8840239
+      ],
+      [
+       12.4593759,
+       41.8839008
+      ],
+      [
+       12.4595736,
+       41.8836966
+      ],
+      [
+       12.4598013,
+       41.8838197
+      ],
+      [
+       12.4596036,
+       41.8840239
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b022_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 124.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.459269,
+       41.8838805
+      ],
+      [
+       12.4590413,
+       41.8837574
+      ],
+      [
+       12.459239,
+       41.8835532
+      ],
+      [
+       12.4594667,
+       41.8836763
+      ],
+      [
+       12.459269,
+       41.8838805
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b022_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 124.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4600022,
+       41.883778
+      ],
+      [
+       12.4597568,
+       41.883724
+      ],
+      [
+       12.4598435,
+       41.883504
+      ],
+      [
+       12.4600889,
+       41.883558
+      ],
+      [
+       12.4600022,
+       41.883778
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b022_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.48,
+     21.23
+    ],
+    "theta_deg": 104.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4593356,
+       41.8833124
+      ],
+      [
+       12.4594215,
+       41.8831557
+      ],
+      [
+       12.4596731,
+       41.8832327
+      ],
+      [
+       12.4595873,
+       41.8833894
+      ],
+      [
+       12.4593356,
+       41.8833124
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b022_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.57,
+     18.81
+    ],
+    "theta_deg": 20.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4597558,
+       41.8834534
+      ],
+      [
+       12.4598557,
+       41.8832712
+      ],
+      [
+       12.4601483,
+       41.8833607
+      ],
+      [
+       12.4600484,
+       41.883543
+      ],
+      [
+       12.4597558,
+       41.8834534
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b022_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     26.25,
+     21.87
+    ],
+    "theta_deg": 20.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637969,
+       41.8837707
+      ],
+      [
+       12.4639082,
+       41.8835778
+      ],
+      [
+       12.4642179,
+       41.8836776
+      ],
+      [
+       12.4641067,
+       41.8838704
+      ],
+      [
+       12.4637969,
+       41.8837707
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b023_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 21.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4642416,
+       41.8837025
+      ],
+      [
+       12.4643529,
+       41.8835097
+      ],
+      [
+       12.4646626,
+       41.8836094
+      ],
+      [
+       12.4645514,
+       41.8838023
+      ],
+      [
+       12.4642416,
+       41.8837025
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b023_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 21.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637263,
+       41.8838769
+      ],
+      [
+       12.4634532,
+       41.8838274
+      ],
+      [
+       12.4635326,
+       41.8835824
+      ],
+      [
+       12.4638058,
+       41.8836319
+      ],
+      [
+       12.4637263,
+       41.8838769
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b023_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 281.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4636885,
+       41.8840335
+      ],
+      [
+       12.4637836,
+       41.8838358
+      ],
+      [
+       12.464101,
+       41.8839211
+      ],
+      [
+       12.4640059,
+       41.8841188
+      ],
+      [
+       12.4636885,
+       41.8840335
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b023_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 198.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4638736,
+       41.8835965
+      ],
+      [
+       12.4636379,
+       41.883482
+      ],
+      [
+       12.4638217,
+       41.8832707
+      ],
+      [
+       12.4640574,
+       41.8833851
+      ],
+      [
+       12.4638736,
+       41.8835965
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b023_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 301.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4641419,
+       41.8839153
+      ],
+      [
+       12.4642171,
+       41.8837588
+      ],
+      [
+       12.4644683,
+       41.8838263
+      ],
+      [
+       12.4643931,
+       41.8839828
+      ],
+      [
+       12.4641419,
+       41.8839153
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b023_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.16,
+     18.47
+    ],
+    "theta_deg": 18.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4639672,
+       41.8835896
+      ],
+      [
+       12.4641007,
+       41.8833582
+      ],
+      [
+       12.4643485,
+       41.883438
+      ],
+      [
+       12.464215,
+       41.8836694
+      ],
+      [
+       12.4639672,
+       41.8835896
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b023_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.4,
+     28.0
+    ],
+    "theta_deg": 21.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4610961,
+       41.8840496
+      ],
+      [
+       12.4608581,
+       41.8839377
+      ],
+      [
+       12.4610377,
+       41.8837244
+      ],
+      [
+       12.4612756,
+       41.8838362
+      ],
+      [
+       12.4610961,
+       41.8840496
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b024_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 300.48,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4613716,
+       41.8836596
+      ],
+      [
+       12.461107,
+       41.8835888
+      ],
+      [
+       12.4612206,
+       41.8833515
+      ],
+      [
+       12.4614852,
+       41.8834223
+      ],
+      [
+       12.4613716,
+       41.8836596
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b024_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 287.99,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4608074,
+       41.884381
+      ],
+      [
+       12.4605695,
+       41.8842692
+      ],
+      [
+       12.460749,
+       41.8840558
+      ],
+      [
+       12.4609869,
+       41.8841677
+      ],
+      [
+       12.4608074,
+       41.884381
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b024_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 300.48,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4610739,
+       41.8845845
+      ],
+      [
+       12.4608122,
+       41.8845078
+      ],
+      [
+       12.4609354,
+       41.8842732
+      ],
+      [
+       12.4611971,
+       41.8843499
+      ],
+      [
+       12.4610739,
+       41.8845845
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b024_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 109.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4612601,
+       41.8842966
+      ],
+      [
+       12.4609809,
+       41.8842148
+      ],
+      [
+       12.4610685,
+       41.8840478
+      ],
+      [
+       12.4613478,
+       41.8841297
+      ],
+      [
+       12.4612601,
+       41.8842966
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b024_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     19.92,
+     24.91
+    ],
+    "theta_deg": 109.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4614889,
+       41.8838847
+      ],
+      [
+       12.4612355,
+       41.8838104
+      ],
+      [
+       12.461315,
+       41.8836589
+      ],
+      [
+       12.4615684,
+       41.8837332
+      ],
+      [
+       12.4614889,
+       41.8838847
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b024_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     18.08,
+     22.6
+    ],
+    "theta_deg": 109.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4602719,
+       41.8840399
+      ],
+      [
+       12.4600442,
+       41.8839168
+      ],
+      [
+       12.4602419,
+       41.8837126
+      ],
+      [
+       12.4604696,
+       41.8838357
+      ],
+      [
+       12.4602719,
+       41.8840399
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b025_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 304.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4600343,
+       41.8842441
+      ],
+      [
+       12.459811,
+       41.8841234
+      ],
+      [
+       12.4600048,
+       41.8839231
+      ],
+      [
+       12.4602281,
+       41.8840438
+      ],
+      [
+       12.4600343,
+       41.8842441
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b025_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.46,
+     22.88
+    ],
+    "theta_deg": 304.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4604545,
+       41.8837233
+      ],
+      [
+       12.4601601,
+       41.8836585
+      ],
+      [
+       12.4602294,
+       41.8834825
+      ],
+      [
+       12.4605238,
+       41.8835473
+      ],
+      [
+       12.4604545,
+       41.8837233
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b025_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.38,
+     25.48
+    ],
+    "theta_deg": 284.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4619794,
+       41.8839738
+      ],
+      [
+       12.4621133,
+       41.8837891
+      ],
+      [
+       12.4624098,
+       41.8839091
+      ],
+      [
+       12.462276,
+       41.8840938
+      ],
+      [
+       12.4619794,
+       41.8839738
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b026_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 26.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4619821,
+       41.8838495
+      ],
+      [
+       12.4617204,
+       41.8837728
+      ],
+      [
+       12.4618436,
+       41.8835382
+      ],
+      [
+       12.4621052,
+       41.8836149
+      ],
+      [
+       12.4619821,
+       41.8838495
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b026_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 289.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.462396,
+       41.883984
+      ],
+      [
+       12.4625298,
+       41.8837993
+      ],
+      [
+       12.4628264,
+       41.8839193
+      ],
+      [
+       12.4626926,
+       41.884104
+      ],
+      [
+       12.462396,
+       41.883984
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b026_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 26.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4615617,
+       41.8839634
+      ],
+      [
+       12.4617243,
+       41.8837955
+      ],
+      [
+       12.461994,
+       41.8839413
+      ],
+      [
+       12.4618314,
+       41.8841092
+      ],
+      [
+       12.4615617,
+       41.8839634
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b026_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.64,
+     23.03
+    ],
+    "theta_deg": 214.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624415,
+       41.8843666
+      ],
+      [
+       12.4622054,
+       41.8842575
+      ],
+      [
+       12.4623806,
+       41.8840458
+      ],
+      [
+       12.4626167,
+       41.8841549
+      ],
+      [
+       12.4624415,
+       41.8843666
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b026_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     27.65,
+     23.04
+    ],
+    "theta_deg": 120.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4619034,
+       41.8841661
+      ],
+      [
+       12.4620423,
+       41.8840227
+      ],
+      [
+       12.4622726,
+       41.8841473
+      ],
+      [
+       12.4621337,
+       41.8842907
+      ],
+      [
+       12.4619034,
+       41.8841661
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b026_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     23.6,
+     19.66
+    ],
+    "theta_deg": 214.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4620631,
+       41.8837621
+      ],
+      [
+       12.4621775,
+       41.8836043
+      ],
+      [
+       12.4624308,
+       41.8837069
+      ],
+      [
+       12.4623165,
+       41.8838647
+      ],
+      [
+       12.4620631,
+       41.8837621
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b026_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     23.92,
+     19.93
+    ],
+    "theta_deg": 26.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4630792,
+       41.8844269
+      ],
+      [
+       12.4628401,
+       41.8843164
+      ],
+      [
+       12.4630175,
+       41.884102
+      ],
+      [
+       12.4632566,
+       41.8842125
+      ],
+      [
+       12.4630792,
+       41.8844269
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b027_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 300.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4628304,
+       41.8845363
+      ],
+      [
+       12.462571,
+       41.8844722
+      ],
+      [
+       12.4626397,
+       41.8843171
+      ],
+      [
+       12.462899,
+       41.8843812
+      ],
+      [
+       12.4628304,
+       41.8845363
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b027_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     18.14,
+     22.67
+    ],
+    "theta_deg": 286.61,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616286,
+       41.8845934
+      ],
+      [
+       12.4617167,
+       41.8843939
+      ],
+      [
+       12.462037,
+       41.8844729
+      ],
+      [
+       12.4619489,
+       41.8846724
+      ],
+      [
+       12.4616286,
+       41.8845934
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b028_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 16.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b028",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4613629,
+       41.8842834
+      ],
+      [
+       12.4615277,
+       41.8841132
+      ],
+      [
+       12.4618009,
+       41.884261
+      ],
+      [
+       12.4616361,
+       41.8844311
+      ],
+      [
+       12.4613629,
+       41.8842834
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b028_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 34.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b028",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4614906,
+       41.8847282
+      ],
+      [
+       12.4612289,
+       41.8846515
+      ],
+      [
+       12.4613521,
+       41.8844169
+      ],
+      [
+       12.4616138,
+       41.8844936
+      ],
+      [
+       12.4614906,
+       41.8847282
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b028_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 289.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b028",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623067,
+       41.8846916
+      ],
+      [
+       12.4620399,
+       41.8846256
+      ],
+      [
+       12.4621458,
+       41.8843863
+      ],
+      [
+       12.4624126,
+       41.8844523
+      ],
+      [
+       12.4623067,
+       41.8846916
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_monteverde_b028_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     28.0,
+     23.33
+    ],
+    "theta_deg": 106.61,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_monteverde_b028",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; monteverde source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  }
+ ]
+}

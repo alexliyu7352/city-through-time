@@ -1,0 +1,1043 @@
+rome09_fascist_marmi1932:
+  kind: parts
+  name: Stadio dei Marmi1932
+  site: cut
+  exaggeration: 1
+  parts:
+  - id: marble_step_1
+    kind: ring
+    plan: obround
+    outer_m:
+    - 202.5
+    - 82.5
+    inner_m:
+    - 200.0
+    - 80.0
+    h_m: 1.0
+    section: building
+    roof: flat
+  - id: marble_step_2
+    kind: ring
+    plan: obround
+    outer_m:
+    - 205.0
+    - 85.0
+    inner_m:
+    - 202.5
+    - 82.5
+    h_m: 1.45
+    section: building
+    roof: flat
+  - id: marble_step_3
+    kind: ring
+    plan: obround
+    outer_m:
+    - 207.5
+    - 87.5
+    inner_m:
+    - 205.0
+    - 85.0
+    h_m: 1.9
+    section: building
+    roof: flat
+  - id: marble_step_4
+    kind: ring
+    plan: obround
+    outer_m:
+    - 210.0
+    - 90.0
+    inner_m:
+    - 207.5
+    - 87.5
+    h_m: 2.35
+    section: building
+    roof: flat
+  - id: marble_step_5
+    kind: ring
+    plan: obround
+    outer_m:
+    - 212.5
+    - 92.5
+    inner_m:
+    - 210.0
+    - 90.0
+    h_m: 2.8
+    section: building
+    roof: flat
+  - id: marble_step_6
+    kind: ring
+    plan: obround
+    outer_m:
+    - 215.0
+    - 95.0
+    inner_m:
+    - 212.5
+    - 92.5
+    h_m: 3.25
+    section: building
+    roof: flat
+  - id: marble_step_7
+    kind: ring
+    plan: obround
+    outer_m:
+    - 217.5
+    - 97.5
+    inner_m:
+    - 215.0
+    - 95.0
+    h_m: 3.7
+    section: building
+    roof: flat
+  - id: marble_step_8
+    kind: ring
+    plan: obround
+    outer_m:
+    - 220.0
+    - 100.0
+    inner_m:
+    - 217.5
+    - 97.5
+    h_m: 4.15
+    section: building
+    roof: flat
+  - id: athlete_1
+    kind: column
+    at:
+    - -55.382006122008505
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_2
+    kind: column
+    at:
+    - -46.146018366025515
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_3
+    kind: column
+    at:
+    - -36.910030610042526
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_4
+    kind: column
+    at:
+    - -27.674042854059536
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_5
+    kind: column
+    at:
+    - -18.438055098076546
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_6
+    kind: column
+    at:
+    - -9.202067342093557
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_7
+    kind: column
+    at:
+    - 0.03392041388943312
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_8
+    kind: column
+    at:
+    - 9.269908169872423
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_9
+    kind: column
+    at:
+    - 18.505895925855413
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_10
+    kind: column
+    at:
+    - 27.741883681838402
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_11
+    kind: column
+    at:
+    - 36.97787143782139
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_12
+    kind: column
+    at:
+    - 46.21385919380438
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_13
+    kind: column
+    at:
+    - 55.44984694978737
+    - -50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_14
+    kind: column
+    at:
+    - 64.67897857777935
+    - -49.780590188030935
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_15
+    kind: column
+    at:
+    - 73.74263262043212
+    - -48.074317973943586
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_16
+    kind: column
+    at:
+    - 82.33870079220857
+    - -44.7323422918606
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_17
+    kind: column
+    at:
+    - 90.17470637971422
+    - -39.868372112465714
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_18
+    kind: column
+    at:
+    - 96.98403340055148
+    - -33.64790147136806
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_19
+    kind: column
+    at:
+    - 102.53499807235787
+    - -26.282578621294228
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_20
+    kind: column
+    at:
+    - 106.63873173204979
+    - -18.023004811237563
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_21
+    kind: column
+    at:
+    - 109.15560699307696
+    - -9.150207710328969
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_22
+    kind: column
+    at:
+    - 109.99998849405566
+    - 0.0339204112875451
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_23
+    kind: column
+    at:
+    - 109.14314659704884
+    - 9.216894408691441
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_24
+    kind: column
+    at:
+    - 106.61423489843654
+    - 18.086268405433497
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_25
+    kind: column
+    at:
+    - 102.49929829308167
+    - 26.340266600694573
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_26
+    kind: column
+    at:
+    - 96.93834534188801
+    - 33.69805103271435
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_27
+    kind: column
+    at:
+    - 90.12058455390931
+    - 39.9092769432221
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_28
+    kind: column
+    at:
+    - 82.27798666601404
+    - 44.76261062660332
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_29
+    kind: column
+    at:
+    - 73.67739196016475
+    - 48.09291994845001
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_30
+    kind: column
+    at:
+    - 64.61143116270486
+    - 49.786892879869846
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_31
+    kind: column
+    at:
+    - 55.38200612200845
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_32
+    kind: column
+    at:
+    - 46.14601836602546
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_33
+    kind: column
+    at:
+    - 36.910030610042526
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_34
+    kind: column
+    at:
+    - 27.674042854059536
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_35
+    kind: column
+    at:
+    - 18.438055098076546
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_36
+    kind: column
+    at:
+    - 9.202067342093557
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_37
+    kind: column
+    at:
+    - -0.03392041388943312
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_38
+    kind: column
+    at:
+    - -9.269908169872423
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_39
+    kind: column
+    at:
+    - -18.505895925855413
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_40
+    kind: column
+    at:
+    - -27.741883681838402
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_41
+    kind: column
+    at:
+    - -36.97787143782145
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_42
+    kind: column
+    at:
+    - -46.21385919380444
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_43
+    kind: column
+    at:
+    - -55.44984694978743
+    - 50.0
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_44
+    kind: column
+    at:
+    - -64.67897857777939
+    - 49.780590188030935
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_45
+    kind: column
+    at:
+    - -73.74263262043216
+    - 48.07431797394357
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_46
+    kind: column
+    at:
+    - -82.33870079220861
+    - 44.73234229186057
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_47
+    kind: column
+    at:
+    - -90.17470637971427
+    - 39.868372112465686
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_48
+    kind: column
+    at:
+    - -96.98403340055151
+    - 33.64790147136802
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_49
+    kind: column
+    at:
+    - -102.53499807235787
+    - 26.282578621294235
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_50
+    kind: column
+    at:
+    - -106.63873173204979
+    - 18.02300481123758
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_51
+    kind: column
+    at:
+    - -109.15560699307696
+    - 9.150207710328965
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_52
+    kind: column
+    at:
+    - -109.99998849405566
+    - -0.033920411287538976
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_53
+    kind: column
+    at:
+    - -109.14314659704884
+    - -9.216894408691424
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_54
+    kind: column
+    at:
+    - -106.61423489843654
+    - -18.086268405433493
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_55
+    kind: column
+    at:
+    - -102.49929829308167
+    - -26.340266600694573
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_56
+    kind: column
+    at:
+    - -96.93834534188795
+    - -33.698051032714396
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_57
+    kind: column
+    at:
+    - -90.12058455390934
+    - -39.90927694322209
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_58
+    kind: column
+    at:
+    - -82.27798666601399
+    - -44.76261062660335
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_59
+    kind: column
+    at:
+    - -73.67739196016471
+    - -48.09291994845002
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  - id: athlete_60
+    kind: column
+    at:
+    - -64.61143116270476
+    - -49.78689287986985
+    z_m: 4.15
+    w_m: 2
+    h_m: 1.2
+    top:
+      shape: statue
+      h_m: 4
+      w_m: 1.2
+  basis: 'research/rome09_fascist_whole_basis.md; F01 MAXXI2025 IlForoItalico archive
+    guide PDF13–14: Academy two mirroredC bodies and low arched connecting bridge,
+    inaugurated4November1932 together with Marmi and Cipressi; Marmi8 marble step
+    rows,60 athlete statues4m high. AMS2 north1944 existing footprint and axis, native
+    five-control registration with21.63m max residual /80.17m maxLOO. Marmi inner200x80m,
+    eight1.25m treads with1m inner podium and.45m rises, and1.2m statue plinths are
+    rounded source-plan/comparison estimates, not measured tread heights; native generic
+    figures are architectural statues, not reconstructed individual sculptures. Cipressi
+    source-plan300x170m low open stand envelope,240x110m field and4m height are map/photo
+    constrained estimates, not the1953 319x186/20.5m bowl. Small entrances, honor
+    box and exact asymmetrical1937 terraces simplified; no1990 roof,1960 pools or1959Farnesina
+    backdated.'
+rome09_fascist_cipressi_low1937:
+  kind: parts
+  name: Cipressi source east stand and open earth stadium
+  parts:
+  - id: tevere_stand
+    kind: prism
+    at:
+    - 0
+    - 64
+    theta_deg: 90
+    section_m:
+    - - -12
+      - 0
+    - - 12
+      - 0
+    - - 12
+      - 6
+    - - -12
+      - 0.5
+    length_m: 190
+  site: raised
+  exaggeration: 1
+  basis: 'research/rome09_fascist_whole_basis.md; F01 MAXXI2025 IlForoItalico archive
+    guide PDF13–14: Academy two mirroredC bodies and low arched connecting bridge,
+    inaugurated4November1932 together with Marmi and Cipressi; Marmi8 marble step
+    rows,60 athlete statues4m high. AMS2 north1944 existing footprint and axis, native
+    five-control registration with21.63m max residual /80.17m maxLOO. Marmi inner200x80m,
+    eight1.25m treads with1m inner podium and.45m rises, and1.2m statue plinths are
+    rounded source-plan/comparison estimates, not measured tread heights; native generic
+    figures are architectural statues, not reconstructed individual sculptures. Cipressi
+    source-plan300x170m low open stand envelope,240x110m field and4m height are map/photo
+    constrained estimates, not the1953 319x186/20.5m bowl. Small entrances, honor
+    box and exact asymmetrical1937 terraces simplified; no1990 roof,1960 pools or1959Farnesina
+    backdated. Revised source subset:1932 stadium was mainly grassy terraces (Toschi
+    QDS pp14–15 quoting Architettura1933); seven low travertine steps existed, later1933–37
+    Tevere-side masonry work is recorded by InfoRoma, a secondary chronology, not
+    a measured elevation. Only one190x24m/6m eastern low stand is reconstructed as
+    an estimate on the1944 mapped side; western grassy slopes remain terrain, not
+    a full concrete1953 bowl. The detached eastern terrace uses native raised levelling
+    and retaining support on the sampled modern slope; this grade is estimated, not
+    a measured1937 datum. Exact curves and low stone perimeter are omitted.'
+rome09_fascist_palazzoh1932:
+  kind: parts
+  name: Academy PalazzoH1932
+  exaggeration: 1
+  parts:
+  - id: c_body_1
+    kind: prism
+    plan_m:
+    - - -59.032971729233395
+      - 18.574172653257847
+    - - -30.122124216810334
+      - 0.985111084766686
+    - - -11.451790145423729
+      - 17.81063288450241
+    - - -0.7328890185453929
+      - 2.401620328426361
+    - - -15.360054411867168
+      - -11.385926216840744
+    - - -28.441710486833472
+      - -26.80911828018725
+    - - -48.75721797766164
+      - -45.958488477393985
+    - - -61.14122534444323
+      - -33.66522310581058
+    - - -73.96375475631794
+      - -38.79373097792268
+    - - -85.21621669956949
+      - -13.064110255800188
+    - - -80.00163695769152
+      - 4.9940179185941815
+    h_m: 12
+  - id: c_body_2
+    kind: prism
+    plan_m:
+    - - 6.52552054746775
+      - 38.62157257925719
+    - - 40.31671518803341
+      - 57.33023518975824
+    - - 47.96453049842967
+      - 45.98441245499998
+    - - 21.367321633326355
+      - 29.418130413629115
+    - - 33.59186643810244
+      - 10.789674770087004
+    - - 51.584484621242154
+      - 0.6906379200518131
+    - - 76.49665442638798
+      - 13.34927399083972
+    - - 92.8440991899115
+      - 0.9263887396082282
+    - - 63.60970122355502
+      - -25.856805562973022
+    - - 48.24964681168785
+      - -37.24273177981377
+    - - 32.814486448827665
+      - -20.094377799890935
+    - - 23.007869722496253
+      - 0.04010348301380873
+    - - 7.612575000268407
+      - 18.77225503139198
+    - - -5.544187025341671
+      - 31.883343162946403
+    h_m: 12
+  - id: open_bridge
+    kind: arches
+    at:
+    - -2.871757613844238
+    - 11.982177662663162
+    theta_deg: 40
+    length_m: 22
+    depth_m: 12
+    h_m: 12
+    bays: 1
+    arch: flat
+    opening: 0.76
+    spring: 0.65
+  basis: 'research/rome09_fascist_whole_basis.md; F01 MAXXI2025 IlForoItalico archive
+    guide PDF13–14: Academy two mirroredC bodies and low arched connecting bridge,
+    inaugurated4November1932 together with Marmi and Cipressi; Marmi8 marble step
+    rows,60 athlete statues4m high. AMS2 north1944 existing footprint and axis, native
+    five-control registration with21.63m max residual /80.17m maxLOO. Marmi inner200x80m,
+    eight1.25m treads with1m inner podium and.45m rises, and1.2m statue plinths are
+    rounded source-plan/comparison estimates, not measured tread heights; native generic
+    figures are architectural statues, not reconstructed individual sculptures. Cipressi
+    source-plan300x170m low open stand envelope,240x110m field and4m height are map/photo
+    constrained estimates, not the1953 319x186/20.5m bowl. Small entrances, honor
+    box and exact asymmetrical1937 terraces simplified; no1990 roof,1960 pools or1959Farnesina
+    backdated. Academy source twoC profiles traced independently;12m height is a three-storey
+    source-photo comparison with4m storeys, not a measured elevation. Lower gyms,
+    curved stair towers and exact bridge arch are simplified.'
+rome09_fascist_pnf1928:
+  kind: parts
+  name: Existing StadioPNF after1927 adaptation
+  site: parts
+  exaggeration: 1
+  basis: research/rome09_fascist_whole_basis.md; F02 official MiC contemporary-architecture
+    inventory id3073 confirms1911 predecessor on the laterFlaminio site. OfficialS.S.LazioMuseum
+    StadioPNF (read full18October2018 page) gives220x120m, elongatedU with one open
+    end;1927 renovation and75x20m local canopy, pool50x18m, and1957-07-01 demolition.
+    AMS1944 north source PNFlabeled footprint center[301.7,401], own axis78.408deg
+    read between[299.2,415] and[304.2,387]; enlarged original grid read rome09_pnf_grid_read.jpg
+    corrects the initial coarse center[307,397]. Only body/U and75x20m canopy retained
+    here;6m terrace,8m front pavilions,9m canopy underside/1m roof slab,190x90m inner
+    open floor are estimated proportions against Marmi/urban halls, not measured elevations.1927
+    fascia/sculpture/hotel/pool details simplified;1959Flaminio/14m canopy never backdated.
+  parts:
+  - id: u_stands
+    kind: ring
+    plan: u
+    outer_m:
+    - 220
+    - 120
+    inner_m:
+    - 190
+    - 90
+    h_m: 6
+    arena_wall_m: 0.5
+    section: seats
+  - id: front_left
+    kind: long_hall
+    at:
+    - -102
+    - -47
+    w_m: 16
+    d_m: 26
+    h_m: 8
+    roof:
+      shape: flat
+  - id: front_right
+    kind: long_hall
+    at:
+    - -102
+    - 47
+    w_m: 16
+    d_m: 26
+    h_m: 8
+    roof:
+      shape: flat
+  - id: canopy_supports
+    kind: column
+    at:
+    - -30
+    - 54
+    w_m: 1
+    h_m: 9
+    section: rect
+    repeat:
+      line:
+        n: 4
+        step_m:
+        - 20
+        - 0
+  - id: local_canopy
+    kind: prism
+    at:
+    - 0
+    - 50
+    atop: 3
+    plan_m:
+    - - -37.5
+      - -10
+    - - 37.5
+      - -10
+    - - 37.5
+      - 10
+    - - -37.5
+      - 10
+    h_m: 1

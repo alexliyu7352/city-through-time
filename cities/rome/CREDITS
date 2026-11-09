@@ -1,0 +1,367 @@
+《一城春秋 · 羅馬》 A City Through Time · Rome — data and material credits
+
+SCOPE
+- The preview preserves the approved 1808.233-second duration, subtitles and narration.
+  The user selected the five musical edits listed below; historical MODEL STUDY notes record earlier development,
+  while current on-screen material is credited in RESTART MATERIALS.
+
+MUSIC
+Music: Ottorino Respighi
+演奏：“The President's Own” United States Marine Band／美國海軍陸戰隊樂隊
+- Pines of Rome: The Pines of the Janiculum; The Pines of the Appian Way;
+  Pines Near a Catacomb; The Pines of Villa Borghese. Recording collection: Director's Choice.
+  Commons pages dated 2007-08-29; the pages do not separately identify the actual recording date or conductor.
+  https://commons.wikimedia.org/wiki/File:Respighi_Pines_of_the_Janiculum.ogg
+  https://commons.wikimedia.org/wiki/File:Respighi_Pines_of_the_Appian_way.oga
+  https://commons.wikimedia.org/wiki/File:Respighi_Pines_near_a_catacomb.ogg
+  https://commons.wikimedia.org/wiki/File:Respighi_Pines_of_Villa_Borghese.ogg
+- Ancient Airs and Dances, Suite No.1: I. Balletto detto Il conte Orlando; III. Villanella.
+  Web Exclusives, performed 2010-04-11 at Bishop Ireton High School Auditorium, Alexandria, Virginia;
+  Colonel Michael J. Colburn, conductor.
+  https://commons.wikimedia.org/wiki/File:Balletto_detto_Il_conte_Orlando.ogg
+  https://commons.wikimedia.org/wiki/File:Villanella.ogg
+- Each specific Commons file page marks the recording Public domain as a United States government work;
+  checked 2026-11-07. Exact source files and SHA256s are recorded in MUSIC.md.
+- Film edits: excerpts, phrase repeats, crossfades, voice ducking and sustained-soft-passage lift.
+  User selections: R14_01 B; R14_02 A; R14_03 A; R14_04 B; R14_05 B.
+
+DATA
+- Building footprints: Overture Maps Foundation, Buildings theme, release 2026-10-21.0; accessed 2026-10-26.
+  © OpenStreetMap contributors, Overture Maps Foundation. Open Database License (ODbL) 1.0.
+  https://docs.overturemaps.org/attribution/#buildings
+  Dataset-wide upstream acknowledgements listed by Overture: OpenStreetMap contributors (ODbL); Esri Community Maps contributors
+  (CC BY 4.0); Microsoft Global ML Building Footprints (ODbL); Google Open Buildings (CC BY 4.0); USGS 3D Elevation Program;
+  Qian Shi et al., A First High-quality Vector Data of Buildings in East Asian Countries Based on a Comprehensive Large-scale
+  Mapping Framework, Zenodo 10.5281/zenodo.8174931 (CC BY 4.0); work derived from BTN 2024, Instituto Geográfico Nacional, Spain
+  (CC BY 4.0). These are acknowledgements for the global source dataset, not a claim that each supplier contributed to Rome.
+- Heights: Overture height where supplied; otherwise number of floors ×3.2 m; otherwise 9 m. Estimates.
+  Approved display: building heights ×3; horizontal scale 1:10000. The first period study uses terrain ×2 after slope and foundation checks;
+  remaining periods will be checked as they are built. Period buildings ×2; amphitheatre/circus masses ×1.
+- Building-age estimates: European Commission, Joint Research Centre, GHS-BUILT-S R2023A, 100 m cells and 5-year epochs.
+  Built-volume series: GHS-BUILT-V R2023A. CC BY 4.0. Shared tiles covering Rome: R4_C20 and R5_C20.
+  Years are estimates from GHSL 5-year built-up periods, accuracy 100 m. They are not individual construction dates.
+  Historical growth stops at 2020; the 2025 and 2030 projections are not shown as historical measurements.
+- Water, rivers, roads, railway, heritage features and places: © OpenStreetMap contributors, Open Database License (ODbL) 1.0.
+  https://www.openstreetmap.org/copyright
+  City-specific Overpass extracts cover the projected plate's area, slightly larger than city.yaml's lon/lat box;
+  acquisition details in research/data_acquisition.md.
+- Terrain: produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018
+  provided under COPERNICUS by the European Union and ESA; all rights reserved. Copernicus DEM GLO-30 via Earth Search.
+- Satellite plate: Copernicus Sentinel-2 L2A true colour via Earth Search, scenes dated 2025-10-28.
+  Scene IDs and cloud cover: build/data/satellite.json. Contains modified Copernicus Sentinel data 2025.
+  The GHSL built-up rasters are separate from this true-colour imagery.
+
+MODEL STUDY
+- Layout references: Digital Augustan Rome (University of Arizona Archaeological Mapping Lab / Parrhasian Heritage Foundation),
+  Lanciani's Forma Urbis Romae (1893–1901) via University of Virginia, and official Parco archeologico del Colosseo /
+  Sovrintendenza Capitolina site descriptions. Specific sources and schematic limits: FACTS S79–S83, research/model_sources.md.
+- Reference images are retained for research; none is placed on screen. The study uses generated schematic geometry.
+- The old technical review's custom 10 m contours are retired. Current studies use terrain.shade from the shared engine.
+- Roman house/landmark samples: FACTS S84–S91 and research/imperial_sample_sources.md; shared declared house types and
+  landmark classes rendered with tools/modelview.py and inspected with tools/eraview.mjs. No external reference imagery
+  appears on screen. Caen reconstruction photographs and Heikonen's research PDF are retained for research only.
+
+FONTS
+- Inter Tight (Rasmus Andersson), Noto Serif SC (Google), Cormorant Garamond (Christian Thalmann), IBM Plex Mono (IBM).
+  SIL Open Font License 1.1; existing complete fonts in the project.
+
+ENGINE
+- Adapted from lemo-opuscar (lemomo-ai), MIT; see the project's NOTICE.
+- three.js (MIT), playwright-core (Apache-2.0), ffmpeg.
+
+Historical claims and their sources: FACTS.md. Data acquisition, scope and the review state: research/data_acquisition.md.
+
+OLYMPIC OBSERVATION MODEL AND PANEL (1957–1960)
+- Project-authored schematic Olympic Village and venues; plans, dimensions and limits:
+  research/rome11_olympic_model_basis.md and research/rome11_olympic_review.md.
+  The1953Olimpico is an existing venue observed in1960, not a1960new build.
+- research/rome11_formal_panel_963.18.jpg is a native still of the project's own
+  schematic model, not an archive photograph, an interior or an AI-generated image.
+  The existing map/terrain attributions and licences above remain applicable.
+- Factual layout basis: O01, official1960Olympic report, printed p91/PDF236 operation
+  plan: ten36×34m restaurants, six north and four south. The Italian pavilion number
+  is unidentified. Heights, facades and present-terrain levels remain schematic.
+  The source plan itself is not reproduced on screen.
+- On-screen credit: Project model · O01 1960 plan. Native capture and asset SHA:
+  research/rome11_formal_panel_provenance.json.
+
+MODERN GROWTH AND PUBLIC-SPACE OBSERVATIONS (1975–2026)
+- Growth uses GHS-BUILT-S R2023A, 100 m / 5-year built-up estimates on current
+  Overture footprints. No built-volume or height-change series is animated.
+  The 2020–2025 display-year assignments are estimates, not dated construction
+  events. Historical growth narration stops at 2020; current footprints remain
+  visible through the contemporary observations.
+- Piazza Pia: project-authored ground-draped schematic paving, six principal tree
+  rows / 33 design-plan symbols and two approximately 8.37 m fountain rims.
+  Basis: VIA Ingegneria 1:500 general plan and 1:100 detail; ANAS opening release,
+  23 December 2024. Rim height/width and tree sizes are visual estimates. Water is
+  omitted at this scale; no underground-road reconstruction or survey claim.
+  https://via.it/portfolio/piazza-pia-sottovia-e-nuovo-spazio-urbano/
+  https://www.fsitaliane.it/it/media/comunicati-stampa/2024/12/23/giubileo-anas-ultimati-lavori-piazza-pia.html
+  Source receipts, registration and limits: research/rome12_modern_tail_basis.md,
+  research/rome12_modern_tail_sources.json. Reference plans/photos are research
+  material only; none is reproduced on screen.
+- St Peter's basilica, colonnades and obelisk remain in their original historical
+  model owner through 2020–2026; modern Borgo uses current footprints. The transfer
+  is a modern observation version, not a dated demolition of the historical city.
+- Public activity is a marked schematic line over the registered square, not a
+  crowd count, walking route, blackout or new building. Basis and source limits:
+  research/rome13_silent_changes_proposed.yaml and
+  research/rome14_return_changes_proposed.yaml (Vatican 27 March 2020; May 2025).
+  The youth Jubilee is not relocated to this square. Tevere is an existing OSM
+  river reference: Planned / part shown / full corridor 75 km, not a completed path
+  or a mapped project boundary. Official plan basis:
+  https://www.comune.roma.it/web/it/notizia/approvato-il-piano-strategico-e-operativo-del-tevere-luglio2025.page
+
+REPUBLICAN OBSERVATION MODELS (traditional 509 BCE, c.160 BCE, 44 BCE)
+- Project-authored schematic city geometry, separated by period; the animated
+  reveal is not a claim that every building was constructed in the observed year.
+  Public-building dates, versions, uncertainty and model ownership transfers:
+  research/rome02_formal_prepare_phasing.md and research/rome02_formal_prepare.md.
+- Early enclosure: Cifani (2016), late-6th-century reconstruction hypothesis,
+  approximately 365 ha. The extent is not a measured occupied area. Ordinary
+  houses use qualified contemporary comparisons from San Giovenale V:1 (2013);
+  Rome's household boundaries, density, heights and roofs remain schematic or
+  explicitly estimated. No later atrium/impluvium type is backdated to 509 BCE.
+  Basis: research/rome02_early_whole_plan.md,
+  research/rome02_early_cifani_basis.md and research/rome02_early_house_sources.md.
+- Middle-Republic Palatine/Curiae: Panella, Rescigno and Ferrandes,
+  Architetture perdute (2021), including the road orientation and physical
+  boundary contact on printed p.88. Cosa V's House of Diana is a named form
+  comparison, not a transplanted Roman street grid or a dated Rome census.
+  The reconstructed Servian circuit's location is approximate, at roughly
+  150 m scale of uncertainty. Basis: research/rome02_mid_whole_plan.md and
+  research/rome02_continuous_window_sources.md.
+- Late-Republic buildings and Pompey/Curia: the dated source catalogue and
+  qualified plan/elevation branches in research/rome02_republic_forms.md,
+  research/rome02_republic_whole_evidence_decisions.md and FACTS S149-S153.
+  The 44 BCE model precedes Caesar's assassination. Gardens, open fields and
+  housing layout/density retain the declared schematic and estimate limits;
+  later imperial forms are not treated as Republican measurements.
+- The 29 BCE Curia Iulia and 28 BCE Apollo Palatine models are observed together
+  in 28 BCE, not described as two buildings constructed in the same year.
+  Archaeological plans, reconstruction drawings and photographs are research
+  references only; none is reproduced as an on-screen third-party image.
+
+RESTART MATERIALS · 2026-10-31
+- Augustus portrait, Roman artist, c.14–30 CE, The Metropolitan Museum of Art, 21.88.94.
+  Public domain image / CC0 through The Met Open Access. Original image unmodified.
+  https://www.metmuseum.org/art/collection/search/251114
+  https://www.metmuseum.org/hubs/open-access
+- Campo Vaccino, Stefano della Bella, c.1643–48, The Met, 2012.136.551.12.
+  Public domain image / CC0. This is a dated seventeenth-century echo, not a sixth-century reconstruction.
+  Original image unmodified; displayed within its full image frame.
+  Paper-border presentation: assets/restart_sources/rome_director_v9_0507_campo_vaccino_doc.svg
+  and .png. The complete original is embedded in a document layout with an 8% paper margin,
+  rendered with Inkscape; no part of the original work or signature is painted over or cropped.
+  https://www.metmuseum.org/art/collection/search/413375
+- Via della Fiumara in Ghetto allagata, Ettore Roesler Franz, c. 1880.
+  Depicts the December 1870 flood; a later painting, not an 1870 photograph.
+  Wikimedia Commons explicitly marks the image PD-Art (PD-old-100), Public domain / PDM 1.0.
+  Original image unmodified; complete-frame document presentation.
+  assets/restart_sources/rome1870_flood_fiumara_roesler_franz.jpg
+  Paper-border presentation: assets/restart_sources/rome_director_v9_0507_flood_doc.svg
+  and .png. The full original is embedded with an 8% paper margin and exported with Inkscape;
+  no crop or repaint. Original SHA256: 7599c49cef228451cc9623017c54c4334349ed8331c4b937ab0f9de5fb6b3ec0.
+  https://commons.wikimedia.org/wiki/File:Ettore_Roesler_Franz_ViaDellaFiumaraAllagata.jpg
+  The depicted event is identified in ISPRA, Di Loreto and Bersani (2021), p. 216, fig. 13:
+  https://www.isprambiente.gov.it/it/pubblicazioni/periodici-tecnici/memorie-descrittive-della-carta-geologica-ditalia/4-2diloreto-bersani_layout-1.pdf
+- Colosseum, Mattia.masala, 2024-10-31, Wikimedia Commons, CC0 1.0.
+  Original portrait photograph unmodified; the surviving facade is only partly in the original frame.
+  https://commons.wikimedia.org/wiki/File:Colosseum_-_Rome.jpg
+  https://creativecommons.org/publicdomain/zero/1.0/
+- Porta San Sebastiano, Ardeatino, 2024-02-17, Wikimedia Commons, CC BY 4.0.
+  Original photograph unmodified; modern gate appearance is not the275 or403 reconstruction.
+  https://commons.wikimedia.org/wiki/File:PortSSebastian(face_externe).jpg
+  https://creativecommons.org/licenses/by/4.0/
+- Natural Earth110m land, public domain; project-authored map arrows are schematic directions, not territorial borders.
+  https://www.naturalearthdata.com/about/terms-of-use/
+  Republican geography animations: assets/restart_sources/rome02_g1_g2.mp4 and rome02_g3_g4.mp4.
+  Natural Earth 1:110m land GeoJSON; regional washes, pins, text and animated directions are project-authored.
+  No precise ancient frontier, military itinerary, river course or crossing point is claimed.
+  Rubicon locality uses the public Savignano sul Rubicone locality, rounded to 12.4 E / 44.1 N:
+  https://catalogo.cultura.gov.it/detail/ibc/ArchaeologicalProperty/262091
+  https://www.italia.it/en/emilia-romagna/savignano-on-rubicone
+  Sources, data hash and animation timings: research/rome02_revision_sources.md and rome02_revision_animation_events.json.
+  IP02 panel layout: assets/restart_sources/rome02_ip02_aftermath_panel.svg and .png.
+  The unchanged original restart_ip02_caesar.png is embedded in a complete-frame safety-margin layout;
+  no crop, repaint or new image generation. The depiction is labelled imagined aftermath, not the stabbing itself.
+- Jerome, Letter127 §12, written412; narration quotation source only (FACTS S31).
+  The modern typeset quotation image is replaced in the A–F candidate by the credited Sylvestre painting.
+- AI-generated historical imagined panels: restart_ip01_fire, restart_ip02_caesar, restart_ip03_grain,
+  restart_ip05_empty_room. Made with Codex built-in image generation,2026-10-31; underlying model version not disclosed.
+  Not archive photographs or exact portraits/addresses. Prompts, sources, original outputs, image SHA256 and limits:
+  research/rome_restart_generated_pictures.md and research/rome_restart_picture_plan.md.
+  Fire: Tacitus Annals15.38/40; Caesar: Suetonius Julius82; grain handling: Ostia archaeological park, Grain and Bread;
+  empty room: CDEC1955 oral-history transcription. Clothing comparisons and limitations are in the picture plan.
+- Living moments remain tied to their own model still and camera; source cards and native adoption/check records
+  are kept in research/living/ and assets/living/. Pending images are not represented as finished material.
+- Julius Caesar, Tusculum portrait, Museo di Antichità / Musei Reali di Torino.
+  Photograph: Marie-Lan Taÿ Pamart (Jastrow), 14 May 2026, Wikimedia Commons; CC BY 4.0.
+  Original JPEG retained; displayed as a portrait card, without repainting or AI alteration.
+  https://commons.wikimedia.org/wiki/File:Head_of_Julius_Caesar_from_Tusculum_MAntTorino_2089_n01.jpg
+  https://creativecommons.org/licenses/by/4.0/
+  Identity cross-check: Musei Reali, Relazione generale di progetto, 7 June 2019, PDF pp.8-9,
+  caption "Cesare di Tusculum".
+  https://museireali.beniculturali.it/wp-content/uploads/2022/09/PFTE-01_Relazione-generale.pdf
+  Original asset, photograph SHA256 and source record: research/rome_fourfix_caesar_sources.md.
+
+- Geography maps for chapters 03–07: project cartography, CC BY 4.0.
+  Base: Natural Earth 110m land, public domain. Roman empire outlines: Ancient World Mapping Center, UNC-Chapel Hill, ODbL 1.0; derived database under ODbL 1.0.
+  https://github.com/AWMC/geodata
+  Sources and schematic limits: research/rome_geography_0307_sources.md.
+
+Geography revision r2: original schematic territories and direction arrows, CC BY 4.0, on Natural Earth public-domain coastlines. Historical references: William R. Shepherd, Historical Atlas (1926), p.53 (public-domain scan); H.G. Wells, The Outline of History (1921), p.967 (public-domain map); IEG-MAPS, Kunz, Reichskreise 1512 (reference only, image not used); Maciej Dawczyk (2019), DOI 10.12797/Politeja.16.2019.58.05 (historical research). All hand-drawn historical boundaries approximate; no reference map reproduced in the film.
+
+- Chapters08–10 location maps: project cartography, CC BY4.0. A–F candidate picture replacements and their individual rights follow below; the superseded project typography cards are not documentary originals. Natural Earth coastlines/country-location fills are public domain. Vatican outline: OpenStreetMap relation36989; Villa Ada grounds: OpenStreetMap via Nominatim, ODbL1.0. Current mapped outlines are location references, not 1943 property surveys. Approximate Allied entry direction is based on U.S. Army, Cassino to the Alps, ChapterXI/Map6.
+
+- Baths of Caracalla, Vyacheslav Argenberg, 4 May2006; CC BY4.0. Original photo, displayed unaltered as the site in2006, not a1960 competition photograph. https://commons.wikimedia.org/wiki/File:Rome,_Italy,_The_Baths_of_Caracalla.jpg ; https://creativecommons.org/licenses/by/4.0/ . Asset: assets/restart_sources/tail_caracalla_wide.jpg.
+- Basilica of Maxentius, Jebulon, 22 August2013; CC0. Original photo, displayed unaltered as the site in2013, not a1960 competition photograph. https://commons.wikimedia.org/wiki/File:Basilica_Maxentius_Constantine_Rome.jpg ; https://creativecommons.org/publicdomain/zero/1.0/ . Asset: assets/restart_sources/tail_maxentius.jpg.
+
+- Pending founding-price revision: Tiber Island aerial photograph, April 2021, © EU / Elio Castoria, European Commission Audiovisual Service P-051266; CC BY 4.0. Original unmodified; scaled by the player. https://commons.wikimedia.org/wiki/File:Isola_Tiberina,_Roma_(2).jpg ; https://audiovisual.ec.europa.eu/en/media/photo/P-051266 ; https://creativecommons.org/licenses/by/4.0/ . Asset: assets/founding_revision/tiber_island_2021.jpg. A modern location reference, not an ancient reconstruction.
+
+Founding geography locator: Natural Earth 110m land, public domain — https://www.naturalearthdata.com/about/terms-of-use/ . Tiber Island modern outline: OpenStreetMap contributors, water relation 5071, ODbL; location only.
+
+- Romulus marking the foundation boundary, imagined from legend: OpenAI built-in image generation, 4 November 2026. Plutarch, Life of Romulus 11.2–3 (Perrin translation, https://penelope.uchicago.edu/thayer/e/roman/texts/plutarch/lives/romulus*.html); hut forms compared with the approved Cermalus model and PArCo Casa Romuli model. An illustration of a later literary tradition, not documentary evidence for 753 BCE. Asset: assets/founding_revision/romulus_legend.png.
+
+- The Sack of Rome, 1527: Dirck Volckertsz. Coornhert after Maarten van Heemskerck, published by Hieronymus Cock, engraving dated 1555–1556, Rijksmuseum RP-P-1936-143. Public Domain. https://id.rijksmuseum.nl/200176592 ; image https://iiif.micr.io/mHJtU/full/max/0/default.jpg . Later depiction, not a contemporary eyewitness record. Full original, no crop or recolouring.
+- Michelangelo Buonarroti (1475–1564), attributed to Daniele da Volterra, probably ca.1545, The Metropolitan Museum of Art 1977.384.1. Public Domain / CC0. https://www.metmuseum.org/art/collection/search/436771 ; https://images.metmuseum.org/CRDImages/ep/original/DP312760.jpg . Full original, no crop or recolouring.
+
+- Founding living moment, rome01_founding_legend: OpenAI built-in image generation/edit, 4 November 2026, derived from the film camera's own white-model still. Legend: Plutarch, Romulus 11.2–3; hut evidence and model: FACTS S128 and S191. An imagined literary tradition, not an eyewitness reconstruction. Assets: assets/living/rome01_founding_legend.png and its recorded reference.
+- Floating mills living moment, rome04_boatmill_537: OpenAI built-in image generation/edit, 4 November 2026, derived from the approved functional model's own camera still. Procopius, Wars V.19, Dewing translation pp.191–193; FACTS S165; research/rome_restart_boat_mill.md. Schematic operation and workers, not a surveyed mill site or a definitive gearing reconstruction. Asset: assets/living/rome04_boatmill_537.png.
+
+A–F candidate open pictures (original JPEGs, complete images; no repainting):
+- Joseph-Noël Sylvestre, Visigoths sack Rome, 1890; Musée Paul Valéry, scan James Steakley. Public domain / PD-Art. A later painting of 410, not an eyewitness image. https://commons.wikimedia.org/wiki/File:Visigoths_sack_Rome.jpg
+- Agence Meurisse / Bibliothèque nationale de France, Mussolini portrait, 1923. Public domain (France and United States). https://commons.wikimedia.org/wiki/File:Mr_Mussolini_(portrait)_(gros_plan)_-_btv1b9023599n.jpg
+- International Photo / St. Louis Post-Dispatch, Signing Papal-Italian Accord, newspaper published 14 February 1929; signing 11 February. Public domain / PD-anon-expired. https://commons.wikimedia.org/wiki/File:Signing_Papal-Italian_Accord,_1929_photo_by_International.jpg
+- Raphael and workshop, Coronation of Charlemagne, 1516–17 fresco, Apostolic Palace; Web Gallery of Art. Public domain / PD-Art. A later representation of the coronation in 800. https://commons.wikimedia.org/wiki/File:Raffaello_Sanzio_-_The_Coronation_of_Charlemagne_-_WGA18761.jpg
+- Henry William Brewer, Old St Peter's Basilica, 1891 reconstruction of its later appearance; RIBA Collections. Public domain. The drawing combines later phases and is not an exact fourth-century or 800 reconstruction. https://commons.wikimedia.org/wiki/File:Old_St_Peter%27s_Basilica,_Rome,_about_the_year_1450_restored_from_ancient_authorities.jpg
+- Martin Möller, Basilica di San Pietro front, August 2002; CC BY-SA 2.5. Modern architectural photograph, not a 1626 or 2020 event photograph. https://commons.wikimedia.org/wiki/File:Basilica_di_San_Pietro_front_(MM).jpg ; https://creativecommons.org/licenses/by-sa/2.5/
+- Touring Club Italiano, Archivio Storico 04_0850, scene from Ben-Hur (1959); CC BY-SA 4.0, Commons VRT ticket 2022090510003181. A film set and film still, not ancient Rome. https://commons.wikimedia.org/wiki/File:Photo_A_scene_from_Ben-Hur,_a_1959_film_directed_by_William_Wyler_1959_-_Touring_Club_Italiano_04_0850.jpg ; https://creativecommons.org/licenses/by-sa/4.0/
+- Referendum ballot of 1946, reproduced in Almanacco Socialista 1976, Edizioni Avanti!, scan Alfonso Capriolo; public domain in Italy / PD-1996. https://commons.wikimedia.org/wiki/File:Referendum-2-giugno_scheda_elettorale.jpg ; provenance: research/rome_af_images_sources.md. A later printed reproduction of the ballot, not a signed original or a photograph of the result announcement.
+- No Cassibile group photograph used: the proposed CC0 file's source chain was circular and its authority to release could not be established. No Vatican Media, Reuters or AP prayer photograph used. No CDEC website screenshot, invented manuscript or unlicensed Cesare portrait used.
+
+A–F candidate generated pictures and living reconstruction:
+- cesare_homecoming_imagined_v2.png: OpenAI built-in image generation/edit, 4 November 2026, derived from the previously approved generated empty-room panel. Based on CDEC's 1955 testimony of Cesare Di Segni (FACTS S160), with the survival figures remaining narration (S159). The added back-view man is a symbolic imagined survivor, not a likeness, known address or documentary photograph. Used for the survivors/homecoming connection; the original empty room remains separately credited.
+- armistice_radio_imagined.png: OpenAI built-in image generation, 4 November 2026; an imagined Italian civilian room listening to the September 1943 radio announcement, FACTS S198 / S21. The people and room are illustrative and unidentified.
+- rome_af_prayer2020.png: OpenAI built-in image generation/edit from the native white-model reference and camera, for the rainy prayer on 27 March 2020. FACTS S53–54, research/living/rome_af_prayer2020.yaml; the distant white-robed figure has no face. Generated reconstruction, not an archive photograph; native ref/adopt/check records in assets/living/.
+- Built-in image generation did not report a verifiable underlying model version. Prompts and limits: research/rome_af_r5_imagined.md; living shot and source card as listed above.
+
+A–F geometry and cartography:
+- Passetto shared centreline: OpenStreetMap relation12043626, © OpenStreetMap contributors, ODbL1.0. Derived from the present wall footprint as a geographical anchor, not a medieval survey. Historical identification: Museo Virtuale delle Mura, Itinerario8 and Direzione Musei Roma Passetto document. FACTS S195; research/rome_af_sites_sources.md.
+- Completed embankment reach traces: L'Ingegneria Civile e le Arti Industriali, 1901 No.16, TavolaXV, historical public-domain engineering plate; digitized by Politecnico di Torino, https://digit.biblio.polito.it/4740/1/16_ING.CIV.%20ART_IND_1901_N.16.pdf . Digitization portal marks its scan CC BY-NC-SA; the scan is research-only and no plate image is reproduced in the film. Factual reach geometry is restaged as an original schematic model. Registered using OSM bridge locations, ODbL1.0; simplified traces are estimates, about ±20m. Pending reaches and the collapsed Anguillara Garibaldi–Cestio reach are omitted; no1902/03 repair is shown as1900. FACTS S196; research/rome_af_sites_sources.md.
+- 1861 location map revision: project cartography, CC BY4.0, Natural Earth public-domain base. Same approved schematic territory; Papal States label moved next to the Rome-area remnant. Asset assets/round_af_pictures/rome_geo_kingdom_af.png and editable SVG.
+- Leonine north corridor: Barsali1976 text/figures205/209 and Gibson/Ward-Perkins1979, located schematically between Passetto, Fontana delle Torri and the surviving garden wall. Existing OSM geometry supplies geographical anchors, © OpenStreetMap contributors, ODbL1.0; no historical source image is reproduced. FACTS S199; research/rome_af_sites_sources.md.
+- Retained Vatican perimeter: OSM ways781938105/525783139 and official Museo Virtuale delle Mura Itinerario8 survival description. Present geographic alignment is an estimate for the same historical boundary; restored fabric, gates and openings vary. The demolished Borgo branch does not persist into2020. © OpenStreetMap contributors, ODbL1.0. FACTS S199.
+- Palazzo di Giustizia: OSM relation325578 exterior envelope, © OpenStreetMap contributors, ODbL1.0, as a same-site1932 estimate for the1911 building. The two historical TCI1925 schematic courts are locally registered to this envelope; modern11-court details are not asserted for1932. Original24m massing estimate retained. Court ofCassation institutional history; FACTS S200.
+
+A–F native living-check updates:
+- Native check after the model revision found rome04_boatmill_537 and restart_lm02 differed from their adopted references by10.6/12.4 per pixel. Candidate-specific replacements rome_af_boatmill537.png and rome_af_jubilee1300.png were generated with OpenAI built-in image generation from new native references, preserving the original camera and schematic silhouettes. Sources remain Procopius/FACTS S165 and Dante InfernoXVIII28–33 respectively; small people and materials are imagined. Original approvedr4 assets remain untouched.
+- The final prayer picture uses the B4-corrected surviving/rebuilt Vatican perimeter, not the demolished Borgo branch or old Falda misregistration; no claim of unchanged1565 masonry. The figure remains a distant faceless generated silhouette. Native reference/adoption records and final check apply to the candidate-specific assets.
+
+ROUND 9 CANDIDATE MATERIALS (5 November 2026)
+- New living reconstructions use OpenAI built-in image generation/edit from each candidate shot's native white-model reference. The tool did not report a verifiable underlying model version. Anonymous people, possessions, materials and weather are imagined staging, not archive photographs or identified households. Source cards: research/living/rome_round9_*.yaml; actual generation prompts and originals: research/round9_living_sources/generated/; shot/ref/adoption records: assets/living/.
+- rome_round9_stpeter_drum1564.png: the drum-only worksite, FACTS S38/S174/S201. Dosio's c.1563 Uffizi GDSU91A drawing, reproduced in Stefan M. Holzer's 2024 ETH lecture, supports mast-crane stone handling; the drawing is research-only and not copied into the frame. Exact rigging, worker placement and clothing are schematic.
+- rome_round9_flood1870.png: a local flooded street and small rowing boat, FACTS S19. ISPRA Memorie108(2021), p.216 fig.13 identifies the Via della Fiumara flooding depicted by Ettore Roesler Franz. His c.1880 later painting is separately retained on screen as a public-domain document; this living scene keeps its own model camera and does not copy the painting's buildings or composition. No precise citywide water depth is claimed.
+- rome_round9_spina_move1937.png: anonymous residents carrying bedding, luggage and a chair away from the clearance edge. FACTS S202; Laura Moure Cecchini, Selva2(2020), p.206, https://selvajournal.org/wp-content/uploads/2020/10/12_Cecchini.pdf . No source photograph is reproduced, no household address or destination asserted, and no demolished house restored in the image.
+- rome_round9_periphery_home1980s.png: an imagined family newly moving into an existing outer-Rome apartment, FACTS S68 and Maria Immacolata Macioti's retrospective fieldwork account, https://www.istitutoeuroarabo.it/DM/roma-le-borgate-di-ieri-le-periferie-di-oggi/ . Early1980s is a narrative time, not an individual construction date or a photographed family. Water and electricity remain in the narration; no interior or utility installation is invented.
+- rome_round9_piazza_pia2024.png: anonymous ordinary winter walkers after the23December2024 opening, FACTS S62; Roma Capitale, https://www.comune.roma.it/web/it/notizia/ecco-la-nuova-piazza-pia-dicembre-2024.page . The opening report establishes the surface connection, not this group or a later2025 event. Only modelled buildings, paving and planting may be pictured.
+- Round9 native geometry remains a schematic reconstruction. The three horizontal Belvedere courts retain the existing wing axes and source extent; 2.5m terrace increments and levelling heights are production estimates. Saint Peter's uses the source-based native ribs, paired drum/lantern columns, two small domes, central pediment and parapet; sculpted figures are omitted. Round10 replaces the earlier simplified facade with native giant columns, pilasters and a recessed Loggia opening. Research photographs and drawings are not reproduced as textures.
+
+- rome_round9_prayer2020.png: candidate-specific OpenAI built-in image edit updating the rebuilt Saint Peter's geometry, with the original rome_af_prayer2020 scene card and prompt unchanged (FACTS S53–54). Rain, empty square, distant single white-robed figure, small shelter and dusk lighting follow the approved original. This is a generated reconstruction, not an archive photograph. The accepted new-geometry PNG was retained after neutral-clean reference verification; three later rejected trials are not used. All r6 original PNG/reference/record files remain unchanged.
+
+ROUND 10 MODEL SOURCES
+- Saint Peter's facade: Vatican R07 dimensions and the previously credited Martin Möller2002 photograph (CC BY-SA2.5); native massing, opening and column details remain schematic. Original part IDs and construction phases retained; no statues, portraits or later clocks. FACTS S203; research/rome_round10_stpeter.md.
+- Landmark sites and open courts: official Vatican necropolis history, Digital Augustan Rome, PArCo and the original period surveys listed in FACTS S204 and research/rome_round10_sites_sources.md. Aemilia's four floor bands and placement datums are production estimates, not measured ancient levels. Ground surfaces do not excavate the plate; unresolved sites retain their prior raised placement as listed in research/rome_round10_sites_table.md.
+- Quirinal Manica Lunga: Presidency of the Italian Republic official palace history and imperiali.pdf, Constitutional Court booklet, and the existing registered1866 Censo source. Existing palace stock by1871, not a new capital-era construction; source-constrained native massing estimates. FACTS S205; research/rome_round10_quirinal.md. Source scans are research references, not on-screen textures.
+
+ROUND 10 LIVING RECONSTRUCTIONS (6 November 2026)
+- All six new PNGs below use OpenAI built-in image generation/edit (imagegen, EDIT) from the final native camera reference, with each original approved PNG/reference/record retained. The tool did not report a verifiable underlying model version. Anonymous people, materials and weather are generated reconstruction, not documentary photographs. Scene cards: research/living/rome_round10_*.yaml; canonical native shot/ref/adoption records: assets/living/.
+- rome_round10_stpeter_drum1564.png: the open-drum construction edge in1564, small workers, timber mast/rope and a modest suspended stone. FACTS S38/S174/S201/S203; Dosio's c.1563 view supports the lifting method, not the exact workers or rig placement. OpenAI built-in imagegen EDIT; the camera and same-ID native drum opening were settled before generation. Inner diameter41.5m and stone edge4.25m are production estimates; no completed dome is depicted.
+- rome_round10_periphery_home1980s.png: the approved moving family and possessions beside a clean newly occupied late1970s/early1980s public-housing exterior. FACTS S68 and Macioti's previously credited fieldwork account; no identified household, estate or precise moving day is asserted. OpenAI built-in imagegen EDIT, with the former approved family picture used only for people/style continuity.
+- rome_round10_piazza_pia2024.png: ordinary winter pedestrians after the23December2024 opening, FACTS S62 and the previously credited Roma Capitale report. Saint Peter's uses natural pale stone and a muted grey metal dome, rather than the model's purple projection tint. OpenAI built-in imagegen EDIT; no later event or crowd count is claimed.
+- rome_round10_boatmill537.png: a replacement required by the site geometry visible at the frame's upper edge. The native short twin boats, waterwheel and millstone stay at their model positions; Procopius/FACTS S165 and the original scene card remain the basis. OpenAI built-in imagegen EDIT; workers and materials are anonymous reconstruction.
+- rome_round10_spina_move1937.png: a replacement required by the revised Saint Peter's facade in the background. The cleared street, surviving roofs and small household carrying possessions remain; no demolished house is restored. FACTS S202, Senato and Cecchini as previously credited. OpenAI built-in imagegen EDIT.
+- rome_round10_prayer2020.png: a replacement required by the revised giant columns, Loggia and small domes. The original approved rain, empty square, single distant white-robed figure, small shelter and warm dusk reflections are retained, using the old PNG only for atmosphere. FACTS S53–54 and the unchanged original scene description; OpenAI built-in imagegen EDIT, not an archive photograph.
+
+Voice: Muse Assistant
+配音：Muse 助理
+
+ROUND 11 MODEL AND SURROUNDING SOURCES
+- Quirinal Palace: Presidency of the Italian Republic palace history and official virtual-tour Spanish text; the retained Falda1667 and registered1866 Censo references. FACTS S206; research/rome_round11_models.md. Only the1871 observation snapshot uses display exaggeration2 consistently with neighbouring houses. The original23m court,18m wing and21m end remain schematic physical dimensions; the four hip roofs and Torrino are source-constrained massing estimates, not a surveyed elevation. The1671 template, address, terrain and native footprint bounds remain unchanged. No source image is used as an on-screen texture.
+- Living surroundings: FACTS S207 and research/rome_round11_living_surroundings.md. The1564 worksite belongs within the Vatican palace/old-basilica/Borgo setting; the2020 square retains the neighbouring built city; the2024 Piazza Pia paving stands at street level above the Tiber's independent, embanked channel. The seven retained pictures retain their original generation credits. New source cards clarify these settings without turning imagined people or ground detail into measured historical evidence.
+
+English narration is AI-generated using the user's chosen Muse Assistant online service. The27 continuous takes were aligned and split by audio/voicecut.py into361 FLAC lines and an unchanged takes.json manifest. Numbers and punctuation follow the delivered voice script. No service terms URL was provided or verified; public-distribution and commercial-use terms remain unverified. No underlying synthesis model version is asserted.
+
+ROUND 11 LIVING RECONSTRUCTIONS
+- The following three new PNGs use OpenAI built-in imagegen EDIT from their final native camera references; original approved PNG/reference/records remain. The tool did not report a verifiable underlying model version. Generated people, materials and weather remain labelled reconstruction. Scene cards: research/living/rome_round11_*.yaml; prompts and generation provenance: research/rome_round11_living_prompts.json and rome_round11_living_generation.json.
+- rome_round11_stpeter_drum1564.png: a close view along the open drum's working rim, with ordinary-scale workers, timber lifting gear and small stones, based on the previously credited Dosio view and FACTS S38/S174/S201/S203/S207. The east-northeast camera looks west-southwest: Borgo and the old east nave stay behind the camera; only low-detail Vatican hill, enclosed garden/orchard and walls are filled beyond the western worksite. Garden paths and later formal flowerbeds are not invented. A final edit restored the native drum silhouette.
+- rome_round11_prayer2020.png: the retained native street blocks around Saint Peter's, the approved distant white-robed figure and small shelter, with wet textured stone paving. FACTS S53–54/S207 and the existing modern city constrain the setting. Reflections do not turn the square into a lake.
+- rome_round11_piazza_pia2024.png: ordinary winter walkers on the new paving, with the native two fountain basins and distant naturally pale Saint Peter's. FACTS S62/S207. The river and high embankment are behind the camera; only the two basins contain water, with no added riverbank.
+
+Current projected living pictures — round 12
+- The eight files below are the current projected versions, regenerated 7 November 2026 with OpenAI built-in imagegen EDIT from the new native model references. Earlier filenames and dates above document the retained source originals; they do not identify these replacement projections. The tool did not report a verifiable underlying model version. People, materials, weather and unmeasured surface details remain imagined, not archive photographs or surveyed historical elevations.
+- rome_round12_founding_legend.png — Plutarch / FACTS S128/S191; literary founding legend, not an eyewitness event.
+- rome_round12_imperial_street.png — retained insula/shop-house model and its source card; anonymous daily life, not identified residents.
+- rome_round12_jubilee1300.png — Dante Inferno XVIII.28–33 and the retained pre-Bernini bridge sources; no invented weir.
+- rome_round12_stpeter_drum1564.png — FACTS S38/S174/S201/S203/S207; open drum and Dosio-based mast lifting; no completed dome.
+- rome_round12_flood1870.png — FACTS S19 and ISPRA Memorie 108 (2021), p216 fig13; model-camera street reconstruction.
+- rome_round12_spina_move1937.png — FACTS S202, Senato and Cecchini; household leaving the clearance, not restored demolished houses.
+- rome_round12_prayer2020.png — FACTS S53–54/S207; rain on the square, not floodwater.
+- rome_round12_piazza_pia2024.png — FACTS S62/S207; modern paving and two fountain basins, with the embanked river outside this camera.
+- Source cards: research/living/rome_round12_*.yaml. Exact prompts and generation sources: research/rome_round12_living_generation.json and research/rome_round12_extra_living_generation.json. Native camera, reference and adoption records: assets/living/<id>.json and <id>_ref.jpg. All preceding approved PNGs, source pictures and records are retained.
+- rome_round10_boatmill537.png and rome_round10_periphery_home1980s.png retain their original generated pictures and generation credits. Only the boatmill reference/record was refreshed for changed water highlights; its boat, wheel and opposite-bank building outlines are unchanged. Its refreshed native record/reference is archived separately in research/rome_round12_living_records/, preserving the earlier formal record and the frozen round 11b assets.
+
+Round 12b Vatican ground and existing context
+- Vatican State, Fabbrica di San Pietro, Musei Vaticani, MiC Piazza Pia excavation and Sovrintendenza Capitolina bridge history: FACTS S211; research/rome_round12b_vatican_context.md V01–V07. The bounded open-land surface, sparse vegetation and access are schematic context, not an ancient garden boundary, tree survey or restored cemetery. The source-calibrated three-central-arch Aelius bridge is reused for its earlier, already-standing phase. No new third-party image or generated living picture is introduced.
+
+Round 12c temporal open ground and landscape
+- Existing FACTS S97/S121/S128 and S211, registered Palatine hill-use and late-antique garden-use research: neutral earth outlives the houses and precedes Flavian surfaces. Native surviving housing and streets bound the open-land display. In earlier occupied states the same surface represents land beneath unchanged houses, not a mapped44/27BCE vacant precinct. No later palace version is projected into AD80. Constantine-bath land uses neutral earth from275 within the registered working envelope; it does not assert an earlier bath courtyard or land-use survey. Vatican land-cover joins and sparse groups are schematic topographic context, not an ancient garden boundary or planting survey. Mature-tree physical estimates11m high/4m crown radius reuse this film's Sallustian and Esquiline garden trees; group extent and density are schematic. Sources and limits: research/rome_round12c_ground_lifetimes.md and research/rome_round12c_vatican_landscape.md.
+
+Round 13 living moments
+- Early Republican citizens at the Comitium, 2nd-century-BCE Emporium cargo, and a1953 Roman Holiday scooter scene: AI-generated reconstruction from the registered model and sources; anonymous distant people, no actor likeness. Scene cards: research/living/rome_round13_*.yaml.
+
+- rome_round13_republic_assembly.png: OpenAI built-in image generation; AI-generated reconstruction.
+  Source: FACTS S03 and S28; research/rome02_early_whole_plan.md and rome02_early_whole_review.md; early-model public-use and missing-Hostilia-elevation limits
+  Source: research/rome02_early_whole_source_geography.geojson, rome02_early_whole_comitium_public; working domain only, not a measured ancient assembly footprint
+  Source: Livy 2.1 and 2.7-8, https://www.thelatinlibrary.com/livy/liv.2.shtml ; annual magistracy and lowering fasces before an assembly are separate literary claims
+  Source: Margarita Gleba, Textiles and Dress (2017), printed pp. 488-490, https://www.research.unipd.it/bitstream/11577/3454499/2/gleba2017.pdf ; contemporary central-Italian garment comparison, not a Rome 509 costume census
+  Source: The Metropolitan Museum of Art, The Roman Republic, https://www.metmuseum.org/essays/the-roman-republic ; political participation and class restrictions
+  Source: research/rome_round13_living_sources.md; r02_004-r02_006, priority r02_005; final timing and camera belong to the integrator
+
+- rome_round13_emporium_arrivals.png: OpenAI built-in image generation; AI-generated reconstruction.
+  Source: research/rome02_mid_whole_plan.md and rome02_mid_whole_review.md; the approved 160 BCE early-port working proxies, excluding the later giant vaulted warehouse
+  Source: research/rome02_mid_whole_spec.yaml, rome02_mid_whole_emporium_early_portico_1-3; native positions, estimated 8 x 55 m / 3.5 m working ranges
+  Source: Final native reference review by the integrator; activity centre 12.4756 E, 41.88085 N is within the existing loading reservation and projects near x714, y727 at 1920 x 1080; no new architecture is inferred from this working position
+  Source: Livy 41.27.8, https://www.thelatinlibrary.com/livy/liv.41.shtml ; 174 BCE Emporium paving, fencing, portico repairs and steps to the Tiber
+  Source: Digital Augustan Rome, Porticus Aemilia (Emporium), https://www.digitalaugustanrome.org/records/porticus-aemilia-emporium/ ; early-portico and later-warehouse chronology distinction
+  Source: Livy 33.42 and 37.2, https://www.thelatinlibrary.com/livy/liv.33.shtml and https://www.thelatinlibrary.com/livy/liv.37.shtml ; second-century grain arrivals and levy destinations, not this precise cargo
+  Source: Ostia Antica archaeological park, Grain and Bread, https://ostiaantica.cultura.gov.it/en/trails/grain-and-bread/ ; conservative sack-carrying function only, not later imperial buildings, boat shapes or occupational costume
+  Source: research/rome_round13_living_sources.md; r02_011; anonymous source-constrained grain-working moment, not a composite triumph
+
+- rome_round13_holiday1953.png: OpenAI built-in image generation; AI-generated reconstruction.
+  Source: FACTS S50 and S194; research/rome_holiday_picture_sources_20261104.md; 1953 film and filming-location evidence, source rights separate
+  Source: research/rome08_capital_whole_basis.md C17-C19 and rome08_formal_templates.yaml; lower two-tier inner supports and northern remnant shell are the existing source-constrained same-monument model, with dimensions and ruin-edge simplifications explicitly estimated
+  Source: VisitLazio official Cinema, Roman Holiday, https://www.visitlazio.com/en/roman-holiday/ ; specifically names Corso Vittorio Emanuele, Colosseum and Piazza Venezia as the Vespa outing locations
+  Source: Piaggio official WIDE, Happy 70th Birthday, Roman Holiday, August 2023, https://wide.piaggiogroup.com/en/articles/events/happy-70th-birthday-roman-holiday/index.html ; 1951 Vespa 125 faro basso mod 51 object identification, archive images reference-only
+  Source: BFI location comparison, https://www.bfi.org.uk/features/roman-holiday-rome-locations-audrey-hepburn-gregory-peck ; distinguishes the Trinita-dei-Monti scooter start from the lower Spanish-Steps gelato scene
+  Source: research/rome_round13_living_sources.md; r09_003-r09_004; ordinary extras, vehicles, costume and rear-facing fictional couple are bounded imagined details, not actor portraits
+
+Round13b replacement close living moments
+- rome_round13b_emporium_unloading.png: OpenAI built-in image generation; AI-generated reconstruction from the native model and scene card research/living/rome_round13b_emporium_unloading.yaml.
+- rome_round13b_holiday1953_close.png: OpenAI built-in image generation; AI-generated reconstruction from the native model and scene card research/living/rome_round13b_holiday1953_close.yaml.
+- Southern fountain today.p52764: exact prepared footprint; later17th-century Bernini fountain context, not present in1626. Source: https://www.vatican.va/content/vatican/en/ra/fontana-sinistra.html and https://www.turismoroma.it/en/places/fountains-st-peters-square/ .
+
+FINAL COVERS / 定稿封面
+- Selected A artwork combines an imagined 753 BCE landscape with the film-derived modern white-model city, Tiber bend and Colosseum. OpenAI built-in image generation/edit; the tool did not disclose a verifiable underlying model version. Anonymous huts, vegetation and atmospheric textures are illustrative, not a measured archaeological reconstruction. Model-camera references, prompts, original generations and additional Colosseum reference attribution: research/rome_cover_delivery.md, research/rome_cover_prompts.json and assets/covers/r15/provenance.json.
+- Final typography: assets/covers/r15/titles_v2/rome_A_zh1_{wide,portrait}.jpg for Bilibili; rome_A_en_{wide,portrait}.jpg for the English main cover; rome_A_en_time_wide.jpg for YouTube Test & Compare. Chinese dates use 公元前753年到公元2026年. Noto Sans SC, Cinzel and Inter Tight fonts retain their SIL OFL notices. The English wide main cover is also dist/poster.jpg.
+
+MUSEUM RECONSTRUCTIONS / 展馆想象图
+- Tool: Codex built-in image generation via tools/living.py gen, 2026-11-09. The tool did not disclose a verifiable underlying model version. Project-authored AI reconstructions, CC BY-SA 4.0; not photographs or measured archaeological reconstructions.
+- Each image edits one native true-height museum model reference at its recorded camera. Materials, people and unmeasured surroundings are interpretations. Model simplifications remain visible and are stated in each page’s sourced/estimated part notes.
+- No reference drawing, book scan or other third-party reference image is included in these generated views. Museum source notes and scene cards distinguish consulted sources from works known through later research.
+- colosseum: assets/museum/colosseum/south.jpg, assets/museum/colosseum/northeast.jpg, assets/museum/colosseum/northwest.jpg. Source: museum/colosseum.yaml and research/museum/colosseum/sources.md; viewpoint prompts: research/museum/colosseum/{south,northeast,northwest}.yaml.
+- pompey_complex: assets/museum/pompey_complex/overview.jpg, assets/museum/pompey_complex/reverse.jpg, assets/museum/pompey_complex/hall.jpg. Source: museum/pompey_complex.yaml and research/museum/pompey_complex/sources.md; viewpoint prompts: research/museum/pompey_complex/{overview,reverse,hall}.yaml.
+- old_st_peters: assets/museum/old_st_peters/front.jpg, assets/museum/old_st_peters/side.jpg, assets/museum/old_st_peters/rear.jpg. Source: museum/old_st_peters.yaml and research/museum/old_st_peters/sources.md; viewpoint prompts: research/museum/old_st_peters/{front,side,rear}.yaml.
+- new_st_peters: assets/museum/new_st_peters/front.jpg, assets/museum/new_st_peters/side.jpg, assets/museum/new_st_peters/rear.jpg. Source: museum/new_st_peters.yaml and research/museum/new_st_peters/sources.md; viewpoint prompts: research/museum/new_st_peters/{front,side,rear}.yaml.
+- Old and New St Peter’s describe successive buildings on the same site. Old St Peter’s includes the existing schematic forecourt; New St Peter’s is the 1626 church without Bernini’s later colonnade. Pompey’s stage-to-portico gap is a model limitation, not an ancient street: the actual portico joined the rear of the stage building.

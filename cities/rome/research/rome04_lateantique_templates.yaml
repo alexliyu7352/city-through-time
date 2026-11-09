@@ -1,0 +1,4822 @@
+rome04_retained_basilica_iulia:
+  kind: parts
+  theta_deg: 63.89
+  basis: "research/forum_palatine_sources.md L7 revised arcade study; FACTS S92. PArCo\
+    \ Quaderni della Didattica pp2,6\u20137:101x49m outside,75x16m central hall,30m\
+    \ nave, two5.5m aisles on each side, two rows of arcades with17 long-side and7\
+    \ short-side openings. Native parts joins an inner38x75m five-aisle long_hall\
+    \ to four genuinely through, two-tier arches walls. Gallery15m, arcade thickness1.2m,\
+    \ opening.72, spring.56, attic1m and.4m covering ring estimated from that same\
+    \ PArCo reconstruction.22-degree nave roof also estimated. The outer4.3m side\
+    \ passage and13m end passage are schematic residual spaces, not a survey of every\
+    \ corridor. The inner barrel vaults, interstorey floors, engaged orders and detailed\
+    \ marble decoration are not reconstructed. No solid external aisle body blocks\
+    \ the arch openings. Layout: S92; OSM way131451564 centre and long-axis153.89deg;101x49m\
+    \ dimensions from PArCo. DAR126 is a label, not the measured centre. Late use:\
+    \ research/rome04_lateantique_survey.md LA32; public position retained, late alterations\
+    \ treated separately. Earlier roof reconstruction remains a comparison, not a\
+    \ fourth-century survey."
+  name: Basilica_Iulia
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    w_m: 38.0
+    d_m: 75.0
+    h_m: 30.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+    aisles:
+      n: 2
+      w_m: 5.5
+      h_m: 15.0
+  - kind: arches
+    theta_deg: 90.0
+    z_m: 0.0
+    site: raised
+    at:
+    - -23.9
+    - 0.0
+    repeat:
+      mirror: x
+    length_m: 101.0
+    h_m: 15.0
+    depth_m: 1.2
+    bays: 17
+    tiers: 2
+    arch: round
+    opening: 0.72
+    spring: 0.56
+    attic_m: 1.0
+    through: true
+    deck_m: 0.0
+  - kind: arches
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - -49.9
+    repeat:
+      mirror: y
+    length_m: 49.0
+    h_m: 15.0
+    depth_m: 1.2
+    bays: 7
+    tiers: 2
+    arch: round
+    opening: 0.72
+    spring: 0.56
+    attic_m: 1.0
+    through: true
+    deck_m: 0.0
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    atop: 1
+    plan_m:
+    - - -24.5
+      - -50.5
+    - - 24.5
+      - -50.5
+    - - 24.5
+      - 50.5
+    - - -24.5
+      - 50.5
+    holes_m:
+    - - - -19.0
+        - -37.5
+      - - 19.0
+        - -37.5
+      - - 19.0
+        - 37.5
+      - - -19.0
+        - 37.5
+    h_m: 0.4
+    top: 1.0
+rome04_retained_castor_pollux:
+  kind: long_hall
+  theta_deg: 153.69
+  basis: 'research/imperial_sample_sources.md L4; FACTS S89. Caen Castor temple: podium
+    about30x50m, columns12.5m, eight across the front. Body29x49m plus built-in1m
+    podium margin; 7m podium,14.5m eaves,15-degree roof and4.5m cella setback are
+    estimates from the same temple reconstruction. Generic colonnade spacing and continuous
+    stairs approximate the actual side-column count and stair arrangement. Layout:
+    S89; OSM relation1842061 position/axis; Caen30x50m podium and front faces NE towards
+    Forum. Late use: research/rome04_lateantique_survey.md LA32; public position retained,
+    late alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: Temple_Castor_Pollux
+  z_m: 0.0
+  site: raised
+  w_m: 29.0
+  d_m: 49.0
+  h_m: 14.5
+  roof:
+    shape: gabled
+    pitch_deg: 15.0
+    overhang_m: 0.6
+    eaves: 1
+    flared: false
+    rise: 0.5
+  colonnade:
+    at: around
+    n_front: 8
+    h_m: 12.5
+    depth_m: 4.5
+  podium:
+    h_m: 7.0
+    stair: front
+rome04_retained_colosseum:
+  kind: ring
+  theta_deg: -22.0
+  basis: 'research/imperial_sample_sources.md L1; FACTS S86. Roma Capitale: exterior
+    189x156m, over 48m high, arena 76x46m; height rounded to 48m. Constant seat-band
+    class gives a 79x46m arena; this 3m length approximation and the missing separate
+    attic are explicit limits. Three arcade rows, 80 bays; arena wall 4m estimated
+    from the same monument. Layout: S86; OSM relation1834818,189x156m oval aligned
+    NW/SE. Arena length approximation retained. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: colosseum
+  z_m: 0.0
+  site: raised
+  plan: oval
+  outer_m:
+  - 189.0
+  - 156.0
+  inner_m:
+  - 79.0
+  - 46.0
+  h_m: 48.0
+  section: seats
+  arena_wall_m: 4.0
+  roof: flat
+  storeys: 3
+  bays: 80
+  sweep_deg: 180.0
+rome04_retained_circus_maximus:
+  kind: ring
+  theta_deg: -32.0
+  basis: "research/imperial_sample_sources.md L2; FACTS S87. City exterior about 600x140m;\
+    \ Platner/Ashby arena 568m long and 75\u201387m wide, seating band 27m, spina\
+    \ 344m. Shared constant-width U class uses arena width 86m; 20m height, 3m podium\
+    \ and 8x2m spina cross-section are estimates from the named Circus reconstruction.\
+    \ No second obelisk of AD357. Layout: S87; OSM relation11384819 and Lanciani valley\
+    \ axis; curved end to SE, Trajan reconstruction by113. Late use: research/rome04_lateantique_survey.md\
+    \ LA32; public position retained, late alterations treated separately. Earlier\
+    \ roof reconstruction remains a comparison, not a fourth-century survey."
+  name: circus_maximus
+  z_m: 0.0
+  site: raised
+  plan: u
+  outer_m:
+  - 600.0
+  - 140.0
+  inner_m:
+  - 568.0
+  - 86.0
+  h_m: 20.0
+  section: seats
+  arena_wall_m: 3.0
+  roof: flat
+  storeys: 0
+  sweep_deg: 180.0
+  spina:
+    share: 0.649057
+    w_m: 8.0
+    h_m: 2.0
+rome04_retained_basilica_ulpia:
+  kind: parts
+  theta_deg: -51.0
+  basis: 'research/imperial_sample_sources.md L3; FACTS S88. Heikonen table: nave25m
+    wide and25m high, aisles6.5m. Width51m=25+4x6.5; schematic rectangle119m and end
+    apse radius25.5m give overall170m. Rectangle length, apse radius,12.5m aisle eaves,22-degree
+    central roof and5m conical apse roofs are estimates from the named Ulpia reconstruction.
+    The shared classes do not separately model end ambulatories or long-side entrances;
+    the uninterrupted nave length is not the measured88m nave. Layout: S88; long axis
+    approx39degrees across NW end of Trajan plaza. Anchor from registered complete
+    basilica, not centroid of partial OSM remnant. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: basilica_ulpia
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    w_m: 51.0
+    d_m: 119.0
+    h_m: 25.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+    aisles:
+      n: 2
+      w_m: 6.5
+      h_m: 12.5
+  - kind: dome
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 59.4
+    d_m: 51.0
+    sides: 0
+    drum_h_m: 12.5
+    dome:
+      shape: cone
+      rise_m: 5.0
+      keep_curve: true
+    finial_m: 0.0
+    oculus_m: 0.0
+    sweep_deg: 180.0
+  - kind: dome
+    theta_deg: 180.0
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - -59.4
+    d_m: 51.0
+    sides: 0
+    drum_h_m: 12.5
+    dome:
+      shape: cone
+      rise_m: 5.0
+      keep_curve: true
+    finial_m: 0.0
+    oculus_m: 0.0
+    sweep_deg: 180.0
+rome04_retained_trajan_column:
+  kind: column
+  theta_deg: 0.0
+  basis: "research/imperial_sample_sources.md L6; FACTS S91. St Andrews measured column29.78m,\
+    \ pedestal5.29m, die5.30m wide, shaft diameter3.68\u20133.29m, torus .855m, abacus4.34m.\
+    \ Stages preserve29.78m: .855m base,27.725m simplified shaft,1.2m simplified capital;\
+    \ capital height and4.34m base width estimated from that same monument. Top statue/drums2.93m\
+    \ and1.2m width estimated to the researchers approximate38m ancient total. No\
+    \ helical relief or capital sculpture. Layout: S91; OSM relation3376015 surveyed\
+    \ pedestal centre. Overrides earlier sheet label point. Late use: research/rome04_lateantique_survey.md\
+    \ LA32; public position retained, late alterations treated separately. Earlier\
+    \ roof reconstruction remains a comparison, not a fourth-century survey."
+  name: trajan_column
+  z_m: 0.0
+  site: raised
+  section: round
+  taper: 1.0
+  pedestal:
+    w_m: 5.3
+    h_m: 5.29
+  stages:
+  - section: round
+    w_m: 4.34
+    h_m: 0.855
+    taper: 1.0
+    balcony_m: 0.0
+  - section: round
+    w_m: 3.68
+    h_m: 27.725
+    taper: 0.894
+    balcony_m: 0.0
+  - section: square
+    w_m: 4.34
+    h_m: 1.2
+    taper: 1.0
+    balcony_m: 0.0
+  top:
+    shape: statue
+    h_m: 2.93
+    w_m: 1.2
+rome04_retained_domus_flavia:
+  kind: parts
+  theta_deg: -46.28
+  basis: 'FACTS S90/S97; registered palace axis and Caen37x44m Aula Regia plus PArCo
+    north hall, central peristyle, southern banquet hall. Approx92x155m envelope,
+    peristyle WEST of the Aula axis, as registered palace plan. Court80x80m with60x50m
+    open centre,10m wings, southern37x30m hall14m high and western20x44m basilical
+    hall18m high estimated from that same plan. All halls and wings on ONE level;
+    room partitions, fountain and orders simplified. Layout: S90/S97; north Aula at
+    local[0,63] lands on OSM node5586787424,12.487287/41.889129 within1m. Whole palace
+    axis from relation1857984. Replaces illustrative hill-study Aula marker with site-correct
+    whole palace. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: domus_flavia
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    at:
+    - -18.0
+    - 0.0
+    plan_m:
+    - - -40.0
+      - -40.0
+    - - 40.0
+      - -40.0
+    - - 40.0
+      - 40.0
+    - - -40.0
+      - 40.0
+    holes_m:
+    - - - -30.0
+        - -25.0
+      - - -30.0
+        - 25.0
+      - - 30.0
+        - 25.0
+      - - 30.0
+        - -25.0
+    h_m: 10.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 63.0
+    w_m: 37.0
+    d_m: 44.0
+    h_m: 28.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 38.5
+    w_m: 37.0
+    d_m: 6.0
+    h_m: 8.0
+    roof:
+      shape: flat
+      eaves: 1
+      flared: false
+      rise: 0.5
+    colonnade:
+      at: front
+      n_front: 10
+      h_m: 7.0
+      depth_m: 4.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - -18.0
+    - -55.0
+    w_m: 37.0
+    d_m: 30.0
+    h_m: 14.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - -60.0
+    - 63.0
+    w_m: 20.0
+    d_m: 44.0
+    h_m: 18.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+    aisles:
+      n: 1
+      w_m: 3.0
+      h_m: 9.0
+rome04_retained_domus_augustana_upper:
+  kind: parts
+  theta_deg: -46.28
+  basis: 'FACTS S97; source identifies Domus Flavia rectangular peristyle between
+    north audience hall and south banquet hall. Court enclosure100x100m, courtyard60x60m,
+    wings10m and heights10/14m estimated from registered Lanciani and the named Caen
+    Domus Flavia reconstruction. One level for all wings; portico columns, room subdivisions
+    and octagonal fountain not restored. Overrides for other separately built palace
+    blocks are itemised in the layout basis. Layout: S97; separate eastern private
+    palace block, registered Domus Augustana upper court. Approx85x100m envelope;
+    peristyle48x60m and12m wings estimated from this palace, not household fabric.
+    Separate historic terrace, not independently grounded wings of Flavia. Late use:
+    research/rome04_lateantique_survey.md LA32; public position retained, late alterations
+    treated separately. Earlier roof reconstruction remains a comparison, not a fourth-century
+    survey.'
+  name: domus_augustana_upper
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -42.5
+      - -50.0
+    - - 42.5
+      - -50.0
+    - - 42.5
+      - 50.0
+    - - -42.5
+      - 50.0
+    holes_m:
+    - - - -24.0
+        - -30.0
+      - - -24.0
+        - 30.0
+      - - 24.0
+        - 30.0
+      - - 24.0
+        - -30.0
+    h_m: 12.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 39.0
+    w_m: 48.0
+    d_m: 22.0
+    h_m: 16.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+rome04_retained_domus_augustana_lower:
+  kind: parts
+  theta_deg: -46.28
+  basis: 'FACTS S97; source identifies Domus Flavia rectangular peristyle between
+    north audience hall and south banquet hall. Court enclosure100x100m, courtyard60x60m,
+    wings10m and heights10/14m estimated from registered Lanciani and the named Caen
+    Domus Flavia reconstruction. One level for all wings; portico columns, room subdivisions
+    and octagonal fountain not restored. Overrides for other separately built palace
+    blocks are itemised in the layout basis. Layout: S97; narrower lower private court
+    on a separate terrace, approx60x85m envelope from registered palace plan;45x45m
+    open court and12m wings estimated from Domus Augustana. This is the west court
+    beside the Stadium, not the full86m-wide excavation envelope. Actual DEM, not
+    artificial ancient floor offset. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: domus_augustana_lower
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -30.0
+      - -42.5
+    - - 30.0
+      - -42.5
+    - - 30.0
+      - 42.5
+    - - -30.0
+      - 42.5
+    holes_m:
+    - - - -22.5
+        - -22.5
+      - - -22.5
+        - 22.5
+      - - 22.5
+        - 22.5
+      - - 22.5
+        - -22.5
+    h_m: 12.0
+    top: 1.0
+rome04_retained_domus_tiberiana:
+  kind: parts
+  theta_deg: -42.25
+  basis: 'FACTS S97; source identifies Domus Flavia rectangular peristyle between
+    north audience hall and south banquet hall. Court enclosure100x100m, courtyard60x60m,
+    wings10m and heights10/14m estimated from registered Lanciani and the named Caen
+    Domus Flavia reconstruction. One level for all wings; portico columns, room subdivisions
+    and octagonal fountain not restored. Overrides for other separately built palace
+    blocks are itemised in the layout basis. Layout: S97; first-century palace central
+    peristyle, excludes later Hadrian north-front expansion.100x120m model envelope,60x70m
+    court and14m wings estimated from Lanciani/Caen; not whole220m present excavation
+    extent. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: domus_tiberiana
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -50.0
+      - -60.0
+    - - 50.0
+      - -60.0
+    - - 50.0
+      - 60.0
+    - - -50.0
+      - 60.0
+    holes_m:
+    - - - -30.0
+        - -35.0
+      - - -30.0
+        - 35.0
+      - - 30.0
+        - 35.0
+      - - 30.0
+        - -35.0
+    h_m: 14.0
+    top: 1.0
+rome04_retained_palatine_stadium:
+  kind: ring
+  theta_deg: -133.2
+  basis: 'FACTS S97; PArCo161x48m with curved SW end, east exedra and three-sided
+    portico, approximately10m below palace. Native u building band approximates the
+    surrounding portico, not spectator seating. Band6m and elevation7m estimated from
+    the same reconstruction; exedra and fine columns not restored. No late inner oval.
+    Ground is the actual plate, not an invented10m offset. Layout: S97; OSM relation1805355
+    with SW curved end.161x48m official envelope, no late oval in garden. Late use:
+    research/rome04_lateantique_survey.md LA32; public position retained, late alterations
+    treated separately. Earlier roof reconstruction remains a comparison, not a fourth-century
+    survey.'
+  name: palatine_stadium
+  z_m: 0.0
+  site: raised
+  plan: u
+  outer_m:
+  - 161.0
+  - 48.0
+  inner_m:
+  - 149.0
+  - 36.0
+  h_m: 7.0
+  section: building
+  arena_wall_m: 4.0
+  roof: pitched
+  storeys: 0
+  sweep_deg: 180.0
+rome04_retained_jupiter_capitolinus:
+  kind: long_hall
+  theta_deg: 135.0
+  basis: 'FACTS S98; Musei Capitolini foundation approximately55x60m, repeated rebuilding
+    including Domitian. Body54x59m plus1m podium edge. Height24m, podium4m, six19m
+    front columns and10m setback estimated from the named Capitoline reconstruction;
+    triple cella and sculptural roof not restored. Not the smaller Castor temple copied
+    at its original size. Layout: S98; registered foundation at Caffarelli, front
+    SE toward Forum, Domitian rebuilding.55x60m podium; elevation estimated. Late
+    use: research/rome04_lateantique_survey.md LA32; public position retained, late
+    alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: jupiter_capitolinus
+  z_m: 0.0
+  site: raised
+  w_m: 54.0
+  d_m: 59.0
+  h_m: 24.0
+  roof:
+    shape: gabled
+    pitch_deg: 15.0
+    overhang_m: 0.6
+    eaves: 1
+    flared: false
+    rise: 0.5
+  colonnade:
+    at: front
+    n_front: 6
+    h_m: 19.0
+    depth_m: 10.0
+  podium:
+    h_m: 4.0
+    stair: front
+rome04_retained_curia_iulia:
+  kind: long_hall
+  theta_deg: 128.36
+  basis: 'FACTS S98; PArCo21m interior height and Augustan origin. OSM preserved outer
+    footprint about30x26m, used as an approximate envelope not a measured113 facade.
+    Outer eaves22m and22-degree roof estimated from that same Curia; no Diocletian
+    interior or modern bronze doors asserted. Layout: S98; OSM relation1841079 axis;
+    Augustan senate building, present Diocletian interior excluded. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey. LA30: rebuilt
+    after283, dedicated303. Exterior envelope retained as an estimate; present surviving
+    interior is the Diocletian branch from303.'
+  name: curia_iulia
+  z_m: 0.0
+  site: raised
+  w_m: 26.0
+  d_m: 30.0
+  h_m: 22.0
+  roof:
+    shape: gabled
+    pitch_deg: 22.0
+    overhang_m: 0.6
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_basilica_aemilia:
+  kind: parts
+  theta_deg: 55.74
+  basis: 'research/imperial_sample_sources.md L3; FACTS S88. Heikonen table: nave25m
+    wide and25m high, aisles6.5m. Width51m=25+4x6.5; schematic rectangle119m and end
+    apse radius25.5m give overall170m. Rectangle length, apse radius,12.5m aisle eaves,22-degree
+    central roof and5m conical apse roofs are estimates from the named Ulpia reconstruction.
+    The shared classes do not separately model end ambulatories or long-side entrances;
+    the uninterrupted nave length is not the measured88m nave. Layout: S98; OSM relation1766532
+    near100x27m footprint. Rectangular basilica, NOT Ulpia end apses;18m nave and9m
+    aisles estimated by named Julia/Ulpia basilica comparisons; fine Augustan arcade
+    not restored. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: basilica_aemilia
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    w_m: 27.0
+    d_m: 99.0
+    h_m: 18.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+    aisles:
+      n: 1
+      w_m: 5.0
+      h_m: 9.0
+rome04_retained_saturn_temple:
+  kind: long_hall
+  theta_deg: -37.1
+  basis: 'research/imperial_sample_sources.md L4; FACTS S89. Caen Castor temple: podium
+    about30x50m, columns12.5m, eight across the front. Body29x49m plus built-in1m
+    podium margin; 7m podium,14.5m eaves,15-degree roof and4.5m cella setback are
+    estimates from the same temple reconstruction. Generic colonnade spacing and continuous
+    stairs approximate the actual side-column count and stair arrangement. Layout:
+    S98; OSM relation1849835 podium approx27x39m; envelope26x38m plus1m podium. Front
+    to NE Forum.13m eaves,5m podium and11m columns estimates by Castor analogy; no
+    late reused column detail. Late use: research/rome04_lateantique_survey.md LA32;
+    public position retained, late alterations treated separately. Earlier roof reconstruction
+    remains a comparison, not a fourth-century survey.'
+  name: saturn_temple
+  z_m: 0.0
+  site: raised
+  w_m: 26.0
+  d_m: 38.0
+  h_m: 13.0
+  roof:
+    shape: gabled
+    pitch_deg: 15.0
+    overhang_m: 0.6
+    eaves: 1
+    flared: false
+    rise: 0.5
+  colonnade:
+    at: front
+    n_front: 6
+    h_m: 11.0
+    depth_m: 6.0
+  podium:
+    h_m: 5.0
+    stair: front
+rome04_retained_vespasian_temple:
+  kind: long_hall
+  theta_deg: 145.18
+  basis: 'research/imperial_sample_sources.md L4; FACTS S89. Caen Castor temple: podium
+    about30x50m, columns12.5m, eight across the front. Body29x49m plus built-in1m
+    podium margin; 7m podium,14.5m eaves,15-degree roof and4.5m cella setback are
+    estimates from the same temple reconstruction. Generic colonnade spacing and continuous
+    stairs approximate the actual side-column count and stair arrangement. Layout:
+    S98; OSM relation1767603 approx25x28m podium;24x27m body plus1m edge. Front SE.13m
+    eaves,4m podium,11m columns estimated by Castor analogy; later restorations not
+    asserted. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: vespasian_temple
+  z_m: 0.0
+  site: raised
+  w_m: 24.0
+  d_m: 27.0
+  h_m: 13.0
+  roof:
+    shape: gabled
+    pitch_deg: 15.0
+    overhang_m: 0.6
+    eaves: 1
+    flared: false
+    rise: 0.5
+  colonnade:
+    at: front
+    n_front: 6
+    h_m: 11.0
+    depth_m: 6.0
+  podium:
+    h_m: 4.0
+    stair: front
+rome04_retained_vesta_temple:
+  kind: dome
+  theta_deg: 0.0
+  basis: 'FACTS S98; registered plan and OSM circular remnant approximately13m; this
+    is the early imperial round Vesta temple, not surviving Severan detail. Drum9m,
+    cone rise3m, twenty6m columns with1.2m gap estimated from the same temple reconstruction;
+    conical roof rather than an invented hemispherical dome. Layout: S98; OSM relation1842062
+    circular shrine centre, early imperial type rather than surviving Severan ornament.
+    Late use: research/rome04_lateantique_survey.md LA32; public position retained,
+    late alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: vesta_temple
+  z_m: 0.0
+  site: raised
+  d_m: 10.0
+  sides: 0
+  drum_h_m: 7.0
+  dome:
+    shape: cone
+    rise_m: 3.0
+    keep_curve: true
+  finial_m: 0.0
+  oculus_m: 0.0
+  sweep_deg: 360.0
+  peristyle:
+    n: 20
+    h_m: 6.0
+    gap_m: 1.2
+    col_m: 0.45
+rome04_retained_atrium_vestae:
+  kind: parts
+  theta_deg: 63.66
+  basis: 'FACTS S97; source identifies Domus Flavia rectangular peristyle between
+    north audience hall and south banquet hall. Court enclosure100x100m, courtyard60x60m,
+    wings10m and heights10/14m estimated from registered Lanciani and the named Caen
+    Domus Flavia reconstruction. One level for all wings; portico columns, room subdivisions
+    and octagonal fountain not restored. Overrides for other separately built palace
+    blocks are itemised in the layout basis. Layout: S98; OSM relation1842058 approx104x55m
+    envelope, long central court56x16m from relation13402580.12m wings estimated by
+    Flavian palace/near-period court analogy; not individual dwellings; entire residence
+    one plane. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: atrium_vestae
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -27.3
+      - -52.0
+    - - 27.3
+      - -52.0
+    - - 27.3
+      - 52.0
+    - - -27.3
+      - 52.0
+    holes_m:
+    - - - -8.0
+        - -28.0
+      - - -8.0
+        - 28.0
+      - - 8.0
+        - 28.0
+      - - 8.0
+        - -28.0
+    h_m: 12.0
+    top: 1.0
+rome04_retained_titus_arch:
+  kind: arches
+  theta_deg: 65.0
+  basis: 'FACTS S98; PArCo surviving Flavian single arch, OSM/lanciani anchor. Envelope13.5x4.75m,15.4m
+    high from the named Titus arch; opening .56, spring .63 and attic3m are modelling
+    estimates, without reliefs or inscriptions. Layout: S98; OSM way23913953, transverse
+    to Sacra Via approach; no Constantine arch. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: titus_arch
+  z_m: 0.0
+  site: raised
+  length_m: 13.5
+  h_m: 15.4
+  depth_m: 4.75
+  bays: 1
+  tiers: 1
+  arch: round
+  opening: 0.56
+  spring: 0.63
+  attic_m: 3.0
+  through: true
+  deck_m: 0.0
+rome04_retained_trajan_markets:
+  kind: parts
+  theta_deg: -51.0
+  basis: 'FACTS S98; Mercati di Traiano describes Great Hemicycle and Grande Aula.
+    OSM remains and registered Lanciani give approx100m hemicycle and35x15m hall.
+    Three-storey18m hemicycle,12m band and22m hall/vault are estimates from the same
+    named reconstruction. Semicircle kept curved, no small rectangle standing in for
+    it; individual shops and terrace steps simplified. Layout: S98; OSM relations13353038/39
+    plus complete registered hemicycle, opens SW toward Trajan forum, Aula uphill
+    on NE. Late use: research/rome04_lateantique_survey.md LA32; public position retained,
+    late alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: trajan_markets
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: ring
+    z_m: 0.0
+    site: raised
+    plan: half
+    outer_m:
+    - 100.0
+    - 100.0
+    inner_m:
+    - 76.0
+    - 76.0
+    h_m: 18.0
+    section: building
+    arena_wall_m: 4.0
+    roof: flat
+    storeys: 0
+    sweep_deg: 180.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 55.0
+    - 0.0
+    w_m: 15.0
+    d_m: 35.0
+    h_m: 22.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+rome04_retained_caesar_forum:
+  kind: parts
+  theta_deg: 36.0
+  basis: 'FACTS S98; Mercati di Traiano source and registered Lanciani precinct;160x75m
+    enclosure and approx30x46m Venus temple envelope read from the registered plan.10m
+    gallery,17m temple eaves,5m podium and remaining column/roof sizes estimated from
+    the same reconstruction, not a precise113 elevation. Open court and temple share
+    one plane. Layout: S98; Caesar precinct and Trajan restoration, long axis NW/SE,
+    Venus at NW. Complete envelope position from registered plan, not label point.
+    Late use: research/rome04_lateantique_survey.md LA32; public position retained,
+    late alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: caesar_forum
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -37.5
+      - -80.0
+    - - 37.5
+      - -80.0
+    - - 37.5
+      - 80.0
+    - - -37.5
+      - 80.0
+    holes_m:
+    - - - -29.5
+        - -72.0
+      - - -29.5
+        - 72.0
+      - - 29.5
+        - 72.0
+      - - 29.5
+        - -72.0
+    h_m: 10.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 48.0
+    w_m: 30.0
+    d_m: 46.0
+    h_m: 17.0
+    roof:
+      shape: gabled
+      pitch_deg: 15.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+    colonnade:
+      at: around
+      n_front: 8
+      h_m: 15.0
+      depth_m: 5.0
+    podium:
+      h_m: 5.0
+      stair: front
+rome04_retained_augustus_forum:
+  kind: parts
+  theta_deg: -51.0
+  basis: 'FACTS S98; museum plan identifies Mars Ultor at NE, two long porticoes and
+    exedrae. Approx90x125m precinct and35x50m temple from registered plan;10m galleries,18m
+    temple eaves,6m podium and exedra heights estimated from that same reconstruction.
+    Two principal half-round exedrae retained, northern irregular firewall and minor
+    rooms simplified. Layout: S98; Mars Ultor to NE, axis SW/NE. Temple aligned to
+    cached OSM node11933283813; whole precinct approximate. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: augustus_forum
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -45.0
+      - -62.5
+    - - 45.0
+      - -62.5
+    - - 45.0
+      - 62.5
+    - - -45.0
+      - 62.5
+    holes_m:
+    - - - -35.0
+        - -54.5
+      - - -35.0
+        - 54.5
+      - - 35.0
+        - 54.5
+      - - 35.0
+        - -54.5
+    h_m: 10.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 27.0
+    w_m: 35.0
+    d_m: 50.0
+    h_m: 18.0
+    roof:
+      shape: gabled
+      pitch_deg: 15.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+    colonnade:
+      at: around
+      n_front: 8
+      h_m: 16.0
+      depth_m: 5.0
+    podium:
+      h_m: 6.0
+      stair: front
+  - kind: dome
+    theta_deg: 90.0
+    z_m: 0.0
+    site: raised
+    at:
+    - -45.0
+    - 27.0
+    d_m: 35.0
+    sides: 0
+    drum_h_m: 10.0
+    dome:
+      shape: cone
+      rise_m: 3.0
+      keep_curve: true
+    finial_m: 0.0
+    oculus_m: 0.0
+    sweep_deg: 180.0
+  - kind: dome
+    theta_deg: -90.0
+    z_m: 0.0
+    site: raised
+    at:
+    - 45.0
+    - 27.0
+    d_m: 35.0
+    sides: 0
+    drum_h_m: 10.0
+    dome:
+      shape: cone
+      rise_m: 3.0
+      keep_curve: true
+    finial_m: 0.0
+    oculus_m: 0.0
+    sweep_deg: 180.0
+rome04_retained_nerva_forum:
+  kind: parts
+  theta_deg: -51.0
+  basis: 'FACTS S98; museum/Lanciani narrow transitional forum and Minerva temple
+    in NE end. Approx45x110m main court with20x30m temple read from registered plan;
+    the rear Porticus absidata is not included in this main-court envelope, rather
+    than forcing the approximate120m whole precinct into a rectangle;10m enclosure,13m
+    eaves,4m podium and columns estimated using named Minerva/Castor comparison. Columnata
+    and entablature details not restored. Layout: S98; transitional forum to SE of
+    Augustus, Minerva at NE; temple aligned with OSM way140264246, whole precinct
+    approximate. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: nerva_forum
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -22.5
+      - -60.0
+    - - 22.5
+      - -60.0
+    - - 22.5
+      - 50.0
+    - - -22.5
+      - 50.0
+    holes_m:
+    - - - -18.5
+        - -56.0
+      - - -18.5
+        - 46.0
+      - - 18.5
+        - 46.0
+      - - 18.5
+        - -56.0
+    h_m: 10.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 35.0
+    w_m: 20.0
+    d_m: 30.0
+    h_m: 13.0
+    roof:
+      shape: gabled
+      pitch_deg: 15.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+    colonnade:
+      at: front
+      n_front: 6
+      h_m: 11.0
+      depth_m: 5.0
+    podium:
+      h_m: 4.0
+      stair: front
+rome04_retained_peace_temple:
+  kind: parts
+  theta_deg: -141.0
+  basis: 'FACTS S98; Vespasianic Peace precinct from registered Lanciani, no later
+    Maxentius hall. Approx130x140m enclosure and34x24m shrine;10m portico,15m shrine
+    eaves and six columns estimated from named Peace reconstruction; courts and galleries
+    preserved, later Severan map wall not asserted as113. Layout: S98; Flavian precinct
+    at SE of Nerva forum, shrine at SE end near later Cosma/Damiano complex; native
+    axis rotated accordingly, later basilica excluded. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: peace_temple
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -65.0
+      - -70.0
+    - - 65.0
+      - -70.0
+    - - 65.0
+      - 70.0
+    - - -65.0
+      - 70.0
+    holes_m:
+    - - - -55.0
+        - -60.0
+      - - -55.0
+        - 60.0
+      - - 55.0
+        - 60.0
+      - - 55.0
+        - -60.0
+    h_m: 10.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 46.0
+    w_m: 34.0
+    d_m: 24.0
+    h_m: 15.0
+    roof:
+      shape: gabled
+      pitch_deg: 15.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+    colonnade:
+      at: front
+      n_front: 6
+      h_m: 12.0
+      depth_m: 6.0
+rome04_retained_marcellus_theatre:
+  kind: ring
+  theta_deg: -22.0
+  basis: 'FACTS S96; imperial_113_sources.md. Roma Capitale gives diameter130m, semicircular
+    cavea and three exterior orders. Height32m, orchestra37m, stage12m and42 bays
+    are reconstruction estimates of this theatre; two lower arcade rows are simplified
+    dark openings, not through arches. No Renaissance palace. Layout: S96; orchestra/circle
+    centre measured on registered Lanciani campus detail, rim fit RMS1.1m; map gives
+    approx140m versus official130m adopted, so centre/axis remain map approximations.
+    Stage axis approx-22degrees. The earlier point on the surviving NE arc was not
+    the full theatre centre. Late use: research/rome04_lateantique_survey.md LA32;
+    public position retained, late alterations treated separately. Earlier roof reconstruction
+    remains a comparison, not a fourth-century survey.'
+  name: marcellus_theatre
+  z_m: 0.0
+  site: raised
+  plan: half
+  outer_m:
+  - 130.0
+  - 130.0
+  inner_m:
+  - 37.0
+  - 37.0
+  h_m: 32.0
+  section: seats
+  arena_wall_m: 3.0
+  roof: flat
+  storeys: 2
+  bays: 42
+  sweep_deg: 180.0
+  stage:
+    d_m: 12.0
+    h_m: 32.0
+rome04_retained_pompey_theatre:
+  kind: ring
+  theta_deg: 90.0
+  basis: 'FACTS S96; DAR surveyed cavea faces east toward its stage and portico. Diameter150m
+    read approximately from the registered Lanciani plan; height36m, orchestra44m,
+    stage14m and48 bays are estimates from the named Pompey reconstruction (Caen).
+    Exterior openings and stage architecture simplified; no claim to the disputed
+    Venus temple plan. Layout: S96; registered cavea centre; theatre faces EAST toward
+    quadriportico, DAR explicit orientation, not generic south-facing theatre. Late
+    use: research/rome04_lateantique_survey.md LA32; public position retained, late
+    alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: pompey_theatre
+  z_m: 0.0
+  site: raised
+  plan: half
+  outer_m:
+  - 150.0
+  - 150.0
+  inner_m:
+  - 44.0
+  - 44.0
+  h_m: 36.0
+  section: seats
+  arena_wall_m: 3.0
+  roof: flat
+  storeys: 2
+  bays: 48
+  sweep_deg: 180.0
+  stage:
+    d_m: 14.0
+    h_m: 36.0
+rome04_retained_balbus_theatre:
+  kind: ring
+  theta_deg: 90.0
+  basis: 'FACTS S96; imperial_113_sources.md. Roma Capitale gives diameter130m, semicircular
+    cavea and three exterior orders. Height32m, orchestra37m, stage12m and42 bays
+    are reconstruction estimates of this theatre; two lower arcade rows are simplified
+    dark openings, not through arches. No Renaissance palace. Layout: S96; DAR/Lanciani
+    theatre faces east toward Crypta Balbi, approximate90m cavea read from plan;22m
+    height,25m orchestra and10m stage estimated from Marcellus comparison. Late use:
+    research/rome04_lateantique_survey.md LA32; public position retained, late alterations
+    treated separately. Earlier roof reconstruction remains a comparison, not a fourth-century
+    survey.'
+  name: balbus_theatre
+  z_m: 0.0
+  site: raised
+  plan: half
+  outer_m:
+  - 90.0
+  - 90.0
+  inner_m:
+  - 25.0
+  - 25.0
+  h_m: 22.0
+  section: seats
+  arena_wall_m: 3.0
+  roof: flat
+  storeys: 2
+  bays: 30
+  sweep_deg: 180.0
+  stage:
+    d_m: 10.0
+    h_m: 22.0
+rome04_retained_domitian_stadium:
+  kind: ring
+  theta_deg: 91.0
+  basis: 'FACTS S96; Caen/Roma Capitale tourism275x106m, city archaeology page265x106m
+    conflict recorded. Model uses275x106m. Interior223x54m follows the native constant26m
+    seat band, not a surveyed arena; height20m and3m lower wall estimated by Circus
+    Maximus analogy. No spina or obelisk. Native u has a low straight closing wall,
+    not the actual slightly oblique south facade. Layout: S96; Piazza Navona registered
+    footprint; round end NORTH, no central obelisk or spina. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: domitian_stadium
+  z_m: 0.0
+  site: raised
+  plan: u
+  outer_m:
+  - 275.0
+  - 106.0
+  inner_m:
+  - 223.0
+  - 54.0
+  h_m: 20.0
+  section: seats
+  arena_wall_m: 3.0
+  roof: flat
+  storeys: 0
+  sweep_deg: 180.0
+rome04_retained_trajan_baths:
+  kind: parts
+  theta_deg: -45.0
+  basis: 'FACTS S99; Padova TESS11902: enclosure over330x315m, central block, outer
+    exedra, natatio, paired palaestrae, rectangular triapsidal caldarium. Native parts
+    preserve enclosure, two open courts and axial halls; internal sizes180x110m and
+    individual heights12/24m are estimates from registered plan and the named Trajan
+    reconstruction. No Caracalla/Diocletian plan substituted; pool and room-level
+    vaults not restored. Layout: S99;334x315m registered Oppian precinct and preserved
+    exedrae, major axis NE/SW. Late building ruins are not copied as113 room evidence.
+    Late use: research/rome04_lateantique_survey.md LA32; public position retained,
+    late alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: trajan_baths
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -165.0
+      - -157.5
+    - - 165.0
+      - -157.5
+    - - 165.0
+      - 157.5
+    - - -165.0
+      - 157.5
+    holes_m:
+    - - - -159.0
+        - -151.5
+      - - -159.0
+        - 151.5
+      - - 159.0
+        - 151.5
+      - - 159.0
+        - -151.5
+    h_m: 6.0
+    top: 1.0
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -90.0
+      - -55.0
+    - - 90.0
+      - -55.0
+    - - 90.0
+      - 55.0
+    - - -90.0
+      - 55.0
+    holes_m:
+    - - - -75.0
+        - -38.0
+      - - -75.0
+        - 38.0
+      - - -35.0
+        - 38.0
+      - - -35.0
+        - -38.0
+    - - - 35.0
+        - -38.0
+      - - 35.0
+        - 38.0
+      - - 75.0
+        - 38.0
+      - - 75.0
+        - -38.0
+    h_m: 12.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 0.0
+    w_m: 40.0
+    d_m: 90.0
+    h_m: 24.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - -70.0
+    w_m: 48.0
+    d_m: 30.0
+    h_m: 18.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+  - kind: dome
+    theta_deg: 180.0
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - -137.0
+    d_m: 90.0
+    sides: 0
+    drum_h_m: 6.0
+    dome:
+      shape: cone
+      rise_m: 4.0
+      keep_curve: true
+    finial_m: 0.0
+    oculus_m: 0.0
+    sweep_deg: 180.0
+rome04_retained_augustus_mausoleum:
+  kind: parts
+  theta_deg: 0.0
+  basis: 'FACTS S100; Roma Capitale diameter87m and concentric drum/tumulus reconstruction.
+    Native round stepped volumes preserve this type; first drum12m, mound rise12m,
+    upper drum24m across/8m high and statue4m are uncertain estimates of the named
+    mausoleum reconstruction, not an exact ancient elevation. No modern glass roof.
+    Layout: S100; registered mausoleum circumference,87m diameter, elevation schematic.
+    Late use: research/rome04_lateantique_survey.md LA32; public position retained,
+    late alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: augustus_mausoleum
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: dome
+    z_m: 0.0
+    site: raised
+    d_m: 87.0
+    sides: 0
+    drum_h_m: 12.0
+    dome:
+      shape: cone
+      rise_m: 12.0
+      keep_curve: true
+    finial_m: 0.0
+    oculus_m: 0.0
+    sweep_deg: 360.0
+  - kind: column
+    z_m: 0.0
+    site: raised
+    atop: 0
+    section: round
+    w_m: 24.0
+    h_m: 8.0
+    taper: 1.0
+    top:
+      shape: statue
+      h_m: 4.0
+      w_m: 2.0
+rome04_retained_aemilia_warehouses:
+  kind: parts
+  theta_deg: 43.0
+  basis: 'FACTS S100; Roma Capitale/MiC487x60m, seven longitudinal aisles and fifty
+    transverse vaulted bays. Native repeat of50 low vault strips9.74m apart follows487m
+    width; height8m/roof estimate from this warehouse reconstruction. Entire building
+    one plane; internal294 piers and two-by-two changes of floor level not restored.
+    Traditional identification retained with scholarly uncertainty recorded. Layout:
+    S100; full487m envelope along Tiber from registered plan and official dimensions;
+    preserved87m OSM fragment not mistaken for full building.50vault strips run transverse
+    to long front. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: aemilia_warehouses
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - -238.63
+    - 0.0
+    repeat:
+      line:
+        n: 50
+        step_m:
+        - 9.74
+        - 0.0
+    w_m: 9.74
+    d_m: 60.0
+    h_m: 8.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+rome04_retained_fabricius_bridge:
+  kind: arches
+  theta_deg: 45.62
+  basis: 'FACTS S100; ancient bridge retains two main arches, cached OSM length66m,width8.2m.
+    Native envelope66x8.2m;12m height, opening .82,spring .35 and1.2m roadway band
+    estimates from the named Fabricius bridge, not hydrological measurements. Rises
+    from actual plate; no arbitrary below-ground bridge. Layout: S100; OSM relation5676411
+    and official two-arch bridge, no modern embankment asserted. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: fabricius_bridge
+  z_m: 0.0
+  site: raised
+  length_m: 66.0
+  h_m: 12.0
+  depth_m: 8.2
+  bays: 2
+  tiers: 1
+  arch: round
+  opening: 0.82
+  spring: 0.35
+  attic_m: 1.2
+  through: true
+  deck_m: 0.0
+rome04_retained_cestio_bridge:
+  kind: arches
+  theta_deg: 71.68
+  basis: 'FACTS S100; ancient bridge retains two main arches, cached OSM length66m,width8.2m.
+    Native envelope66x8.2m;12m height, opening .82,spring .35 and1.2m roadway band
+    estimates from the named Fabricius bridge, not hydrological measurements. Rises
+    from actual plate; no arbitrary below-ground bridge. Layout: S100; official source
+    confirms Republican crossing but present structure heavily rebuilt365/1888. Native60x8m
+    one-arch estimate by Fabricius comparison, not modern81.6m outline or exact113
+    elevation. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: cestio_bridge
+  z_m: 0.0
+  site: raised
+  length_m: 60.0
+  h_m: 10.0
+  depth_m: 8.0
+  bays: 1
+  tiers: 1
+  arch: round
+  opening: 0.82
+  spring: 0.35
+  attic_m: 1.2
+  through: true
+  deck_m: 0.0
+rome04_retained_pompey_portico:
+  kind: prism
+  theta_deg: 0.0
+  basis: 'FACTS S98/S100; source-specific enclosures use their own registered outline.
+    This prototype120x140m,8m galleries and10m height follows Porticus Octaviae reconstruction
+    as a named period comparison; per-item overrides name the precinct. Open court
+    is real geometry; column orders, sculpture and roof detail simplified. Layout:
+    S96/S100; DAR quadriportico EAST of theatre, approx180x135m registered envelope.10m
+    galleries and10m height estimated from the named Pompey portico; sculpture garden
+    left open, no copied marble-map household detail. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: pompey_portico
+  z_m: 0.0
+  site: raised
+  plan_m:
+  - - -90.0
+    - -67.5
+  - - 90.0
+    - -67.5
+  - - 90.0
+    - 67.5
+  - - -90.0
+    - 67.5
+  holes_m:
+  - - - -80.0
+      - -57.5
+    - - -80.0
+      - 57.5
+    - - 80.0
+      - 57.5
+    - - 80.0
+      - -57.5
+  h_m: 10.0
+  top: 1.0
+rome04_retained_octavia_portico:
+  kind: prism
+  theta_deg: -29.0
+  basis: 'FACTS S98/S100; source-specific enclosures use their own registered outline.
+    This prototype120x140m,8m galleries and10m height follows Porticus Octaviae reconstruction
+    as a named period comparison; per-item overrides name the precinct. Open court
+    is real geometry; column orders, sculpture and roof detail simplified. Layout:
+    S100; DAR/Caen approx119x132m precinct, Domitian-era repair after80 fire. Centre
+    of complete precinct NE of surviving southern entrance, not OSM doorway centroid.10m
+    galleries/height estimated; present Severan portal not reproduced. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: octavia_portico
+  z_m: 0.0
+  site: raised
+  plan_m:
+  - - -59.5
+    - -66.0
+  - - 59.5
+    - -66.0
+  - - 59.5
+    - 66.0
+  - - -59.5
+    - 66.0
+  holes_m:
+  - - - -49.5
+      - -56.0
+    - - -49.5
+      - 56.0
+    - - 49.5
+      - 56.0
+    - - 49.5
+      - -56.0
+  h_m: 10.0
+  top: 1.0
+rome04_retained_crypta_balbi:
+  kind: prism
+  theta_deg: 0.0
+  basis: 'FACTS S98/S100; source-specific enclosures use their own registered outline.
+    This prototype120x140m,8m galleries and10m height follows Porticus Octaviae reconstruction
+    as a named period comparison; per-item overrides name the precinct. Open court
+    is real geometry; column orders, sculpture and roof detail simplified. Layout:
+    S96; DAR/Lanciani portico east of Balbus theatre. Approx90x90m envelope,8m galleries
+    and10m height estimated by Octavia comparison; central building of uncertain purpose
+    omitted. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: crypta_balbi
+  z_m: 0.0
+  site: raised
+  plan_m:
+  - - -45.0
+    - -45.0
+  - - 45.0
+    - -45.0
+  - - 45.0
+    - 45.0
+  - - -45.0
+    - 45.0
+  holes_m:
+  - - - -37.0
+      - -37.0
+    - - -37.0
+      - 37.0
+    - - 37.0
+      - 37.0
+    - - 37.0
+      - -37.0
+  h_m: 10.0
+  top: 1.0
+rome04_retained_saepta_iulia:
+  kind: prism
+  theta_deg: 0.0
+  basis: 'FACTS S98/S100; source-specific enclosures use their own registered outline.
+    This prototype120x140m,8m galleries and10m height follows Porticus Octaviae reconstruction
+    as a named period comparison; per-item overrides name the precinct. Open court
+    is real geometry; column orders, sculpture and roof detail simplified. Layout:
+    S100; DAR310x120m piazza east of Pantheon, Domitian rebuilding without known plan
+    change. Approximate whole-precinct centre follows its west stoa boundary, rather
+    than treating the DAR label point as the centre; bath/portico areas meet without
+    overlapping.8m galleries and10m height estimated by Octavia comparison; northern
+    hall and Diribitorium junction not restored. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: saepta_iulia
+  z_m: 0.0
+  site: raised
+  plan_m:
+  - - -60.0
+    - -155.0
+  - - 60.0
+    - -155.0
+  - - 60.0
+    - 155.0
+  - - -60.0
+    - 155.0
+  holes_m:
+  - - - -52.0
+      - -147.0
+    - - -52.0
+      - 147.0
+    - - 52.0
+      - 147.0
+    - - 52.0
+      - -147.0
+  h_m: 10.0
+  top: 1.0
+rome04_retained_ludus_magnus:
+  kind: parts
+  theta_deg: -18.39
+  basis: 'FACTS S97; source identifies Domus Flavia rectangular peristyle between
+    north audience hall and south banquet hall. Court enclosure100x100m, courtyard60x60m,
+    wings10m and heights10/14m estimated from registered Lanciani and the named Caen
+    Domus Flavia reconstruction. One level for all wings; portico columns, room subdivisions
+    and octagonal fountain not restored. Overrides for other separately built palace
+    blocks are itemised in the layout basis. Layout: S98; OSM relation1894844 preserved
+    half plus registered complete Ludus. Approx100x85m whole training complex, elliptical63x42m
+    practice ring; rooms10m high and ring5m estimated by Colosseum analogy. Domitian
+    institution, no present late facade asserted. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: ludus_magnus
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -50.0
+      - -42.5
+    - - 50.0
+      - -42.5
+    - - 50.0
+      - 42.5
+    - - -50.0
+      - 42.5
+    holes_m:
+    - - - -39.0
+        - -31.5
+      - - -39.0
+        - 31.5
+      - - 39.0
+        - 31.5
+      - - 39.0
+        - -31.5
+    h_m: 10.0
+    top: 1.0
+  - kind: ring
+    z_m: 0.0
+    site: raised
+    plan: oval
+    outer_m:
+    - 63.0
+    - 42.0
+    inner_m:
+    - 51.0
+    - 30.0
+    h_m: 5.0
+    section: seats
+    arena_wall_m: 1.5
+    roof: flat
+    storeys: 0
+    sweep_deg: 180.0
+rome04_retained_horrea_galbana:
+  kind: parts
+  theta_deg: -47.0
+  basis: 'FACTS S97; source identifies Domus Flavia rectangular peristyle between
+    north audience hall and south banquet hall. Court enclosure100x100m, courtyard60x60m,
+    wings10m and heights10/14m estimated from registered Lanciani and the named Caen
+    Domus Flavia reconstruction. One level for all wings; portico columns, room subdivisions
+    and octagonal fountain not restored. Overrides for other separately built palace
+    blocks are itemised in the layout basis. Layout: S95/S100; named Horrea Galbana
+    general location from DAR, footprint schematic around it from registered warehouse
+    district. Approx150x180m warehouse court;12m high perimeter storerooms and three
+    courtyard partitions estimated by the named Galba warehouse reconstruction, not
+    excavated113 elevation. Late use: research/rome04_lateantique_survey.md LA32;
+    public position retained, late alterations treated separately. Earlier roof reconstruction
+    remains a comparison, not a fourth-century survey.'
+  name: horrea_galbana
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -75.0
+      - -90.0
+    - - 75.0
+      - -90.0
+    - - 75.0
+      - 90.0
+    - - -75.0
+      - 90.0
+    holes_m:
+    - - - -55.0
+        - -70.0
+      - - -55.0
+        - 70.0
+      - - -22.0
+        - 70.0
+      - - -22.0
+        - -70.0
+    - - - -16.0
+        - -70.0
+      - - -16.0
+        - 70.0
+      - - 16.0
+        - 70.0
+      - - 16.0
+        - -70.0
+    - - - 22.0
+        - -70.0
+      - - 22.0
+        - 70.0
+      - - 55.0
+        - 70.0
+      - - 55.0
+        - -70.0
+    h_m: 12.0
+    top: 1.0
+rome04_retained_emporium_vaults_east:
+  kind: parts
+  theta_deg: 43.0
+  basis: 'FACTS S100; Roma Capitale/MiC487x60m, seven longitudinal aisles and fifty
+    transverse vaulted bays. Native repeat of50 low vault strips9.74m apart follows487m
+    width; height8m/roof estimate from this warehouse reconstruction. Entire building
+    one plane; internal294 piers and two-by-two changes of floor level not restored.
+    Traditional identification retained with scholarly uncertainty recorded. Layout:
+    S95/S100; schematic river-port warehouse, not named excavated building. Eight
+    bays at9.74m give77.92x60m;8m height and vaults by Porticus Aemilia analogy. Late
+    use: research/rome04_lateantique_survey.md LA32; public position retained, late
+    alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: emporium_vaults_east
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - -34.09
+    - 0.0
+    repeat:
+      line:
+        n: 8
+        step_m:
+        - 9.74
+        - 0.0
+    w_m: 9.74
+    d_m: 60.0
+    h_m: 8.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+rome04_retained_emporium_vaults_south:
+  kind: parts
+  theta_deg: 43.0
+  basis: 'FACTS S100; Roma Capitale/MiC487x60m, seven longitudinal aisles and fifty
+    transverse vaulted bays. Native repeat of50 low vault strips9.74m apart follows487m
+    width; height8m/roof estimate from this warehouse reconstruction. Entire building
+    one plane; internal294 piers and two-by-two changes of floor level not restored.
+    Traditional identification retained with scholarly uncertainty recorded. Layout:
+    S95/S100; schematic smaller river-port warehouse, eight native vault bays by Porticus
+    Aemilia analogy; not an excavated or named footprint. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: emporium_vaults_south
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - -34.09
+    - 0.0
+    repeat:
+      line:
+        n: 8
+        step_m:
+        - 9.74
+        - 0.0
+    w_m: 9.74
+    d_m: 60.0
+    h_m: 8.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+rome04_retained_regola_domitian_warehouses:
+  kind: parts
+  theta_deg: -32.0
+  basis: 'FACTS S100; Roma Capitale/MiC487x60m, seven longitudinal aisles and fifty
+    transverse vaulted bays. Native repeat of50 low vault strips9.74m apart follows487m
+    width; height8m/roof estimate from this warehouse reconstruction. Entire building
+    one plane; internal294 piers and two-by-two changes of floor level not restored.
+    Traditional identification retained with scholarly uncertainty recorded. Layout:
+    S83/S100; Domitian river-side warehouses in San Paolo alla Regola quarter, exact
+    whole-building footprint schematic; twelve9.74x45m vault bays at8m height by Porticus
+    Aemilia analogy. No Severan four-storey residence. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: regola_domitian_warehouses
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - -53.57
+    - 0.0
+    repeat:
+      line:
+        n: 12
+        step_m:
+        - 9.74
+        - 0.0
+    w_m: 9.74
+    d_m: 45.0
+    h_m: 8.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+rome04_retained_portunus_temple:
+  kind: long_hall
+  theta_deg: 15.68
+  basis: 'research/imperial_sample_sources.md L4; FACTS S89. Caen Castor temple: podium
+    about30x50m, columns12.5m, eight across the front. Body29x49m plus built-in1m
+    podium margin; 7m podium,14.5m eaves,15-degree roof and4.5m cella setback are
+    estimates from the same temple reconstruction. Generic colonnade spacing and continuous
+    stairs approximate the actual side-column count and stair arrangement. Layout:
+    S98; Soprintendenza Republican harbour temple, OSM way251331418 approx11.6x23.3m.
+    Body10.6x22.3m plus1m podium margin; front toward north.8m eaves,2.5m podium and6.5m
+    columns estimated from this temple; engaged side-columns simplified, no Christian
+    fittings. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: portunus_temple
+  z_m: 0.0
+  site: raised
+  w_m: 10.6
+  d_m: 22.3
+  h_m: 8.0
+  roof:
+    shape: gabled
+    pitch_deg: 15.0
+    overhang_m: 0.6
+    eaves: 1
+    flared: false
+    rise: 0.5
+  colonnade:
+    at: front
+    n_front: 4
+    h_m: 6.5
+    depth_m: 4.0
+  podium:
+    h_m: 2.5
+    stair: front
+rome04_retained_hercules_temple:
+  kind: dome
+  theta_deg: 0.0
+  basis: 'FACTS S98; registered plan and OSM circular remnant approximately13m; this
+    is the early imperial round Vesta temple, not surviving Severan detail. Drum9m,
+    cone rise3m, twenty6m columns with1.2m gap estimated from the same temple reconstruction;
+    conical roof rather than an invented hemispherical dome. Layout: S98; OSM way251342364
+    and official Boarium temple entry, approximate19m outer circular order. Drum14m
+    with20 columns at2m gap,7m drum/column and3m cone rise estimated from named Hercules
+    round-temple reconstruction; no later Christian roof asserted. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: hercules_temple
+  z_m: 0.0
+  site: raised
+  d_m: 14.0
+  sides: 0
+  drum_h_m: 7.0
+  dome:
+    shape: cone
+    rise_m: 3.0
+    keep_curve: true
+  finial_m: 0.0
+  oculus_m: 0.0
+  sweep_deg: 360.0
+  peristyle:
+    n: 20
+    h_m: 7.0
+    gap_m: 2.0
+    col_m: 0.5
+rome04_retained_apollo_palatine:
+  kind: long_hall
+  theta_deg: -46.28
+  basis: 'research/imperial_sample_sources.md L4; FACTS S89. Caen Castor temple: podium
+    about30x50m, columns12.5m, eight across the front. Body29x49m plus built-in1m
+    podium margin; 7m podium,14.5m eaves,15-degree roof and4.5m cella setback are
+    estimates from the same temple reconstruction. Generic colonnade spacing and continuous
+    stairs approximate the actual side-column count and stair arrangement. Layout:
+    S98; PArCo28BC dedication, OSM way132881964 and Lanciani site/axis. Approx24x45m
+    body and4m podium,14m eaves and12m columns estimated from registered remains and
+    Castor contemporary comparison. Not a surveyed complete superstructure. Late use:
+    research/rome04_lateantique_survey.md LA32; public position retained, late alterations
+    treated separately. Earlier roof reconstruction remains a comparison, not a fourth-century
+    survey.'
+  name: apollo_palatine
+  z_m: 0.0
+  site: raised
+  w_m: 24.0
+  d_m: 45.0
+  h_m: 14.0
+  roof:
+    shape: gabled
+    pitch_deg: 15.0
+    overhang_m: 0.6
+    eaves: 1
+    flared: false
+    rise: 0.5
+  colonnade:
+    at: around
+    n_front: 6
+    h_m: 12.0
+    depth_m: 4.0
+  podium:
+    h_m: 4.0
+    stair: front
+rome04_retained_agrippa_baths:
+  kind: parts
+  theta_deg: 0.0
+  basis: 'FACTS S97; source identifies Domus Flavia rectangular peristyle between
+    north audience hall and south banquet hall. Court enclosure100x100m, courtyard60x60m,
+    wings10m and heights10/14m estimated from registered Lanciani and the named Caen
+    Domus Flavia reconstruction. One level for all wings; portico columns, room subdivisions
+    and octagonal fountain not restored. Overrides for other separately built palace
+    blocks are itemised in the layout basis. Layout: S102; DAR baths immediately south
+    of Pantheon, west of Saepta, repaired after80 fire. Approx100x150m irregular-area
+    envelope read from map; room masses and12/18m heights schematic by pre113 Trajan
+    bath halls, not exact Agrippa room plan. No extant late Arco della Ciambella facade
+    or finished Hadrian Pantheon. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: agrippa_baths
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -50.0
+      - -75.0
+    - - 50.0
+      - -75.0
+    - - 50.0
+      - 75.0
+    - - -50.0
+      - 75.0
+    holes_m:
+    - - - -38.0
+        - -58.0
+      - - -38.0
+        - -5.0
+      - - -12.0
+        - -5.0
+      - - -12.0
+        - -58.0
+    - - - 12.0
+        - 5.0
+      - - 12.0
+        - 58.0
+      - - 38.0
+        - 58.0
+      - - 38.0
+        - 5.0
+    h_m: 12.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 0.0
+    w_m: 24.0
+    d_m: 56.0
+    h_m: 18.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+rome04_retained_nero_baths:
+  kind: parts
+  theta_deg: 0.0
+  basis: 'FACTS S97; source identifies Domus Flavia rectangular peristyle between
+    north audience hall and south banquet hall. Court enclosure100x100m, courtyard60x60m,
+    wings10m and heights10/14m estimated from registered Lanciani and the named Caen
+    Domus Flavia reconstruction. One level for all wings; portico columns, room subdivisions
+    and octagonal fountain not restored. Overrides for other separately built palace
+    blocks are itemised in the layout basis. Layout: S102; Platner/Ashby190x120m public
+    bath area between Pantheon and Domitian stadium; north-facing. Symmetric courts/hall
+    are source-attested general arrangement, but standing remains/reconstructions
+    include227 Alexander Severus rebuilding;113 room sizes and12/18m heights explicitly
+    schematic by contemporary Trajan bath analogy. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: nero_baths
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -60.0
+      - -95.0
+    - - 60.0
+      - -95.0
+    - - 60.0
+      - 95.0
+    - - -60.0
+      - 95.0
+    holes_m:
+    - - - -48.0
+        - -50.0
+      - - -48.0
+        - 50.0
+      - - -18.0
+        - 50.0
+      - - -18.0
+        - -50.0
+    - - - 18.0
+        - -50.0
+      - - 18.0
+        - 50.0
+      - - 48.0
+        - 50.0
+      - - 48.0
+        - -50.0
+    h_m: 12.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 0.0
+    w_m: 36.0
+    d_m: 90.0
+    h_m: 18.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+rome04_retained_trajan_forum_porticoes:
+  kind: parts
+  theta_deg: 35.0
+  basis: 'FACTS S98; museum plan identifies Mars Ultor at NE, two long porticoes and
+    exedrae. Approx90x125m precinct and35x50m temple from registered plan;10m galleries,18m
+    temple eaves,6m podium and exedra heights estimated from that same reconstruction.
+    Two principal half-round exedrae retained, northern irregular firewall and minor
+    rooms simplified. Layout: S83/S98; central Trajan piazza flanked by porticoes/exedrae,
+    Ulpia to NW and column behind, full complex300x185m. This is only the approximate110x125m
+    portico/plaza portion;10m galleries and35m exedrae estimated from official reconstruction.
+    Ulpia/column remain separately site-anchored; no unverified Trajan temple. Late
+    use: research/rome04_lateantique_survey.md LA32; public position retained, late
+    alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey.'
+  name: trajan_forum_porticoes
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -55.0
+      - -62.5
+    - - 55.0
+      - -62.5
+    - - 55.0
+      - 62.5
+    - - -55.0
+      - 62.5
+    holes_m:
+    - - - -45.0
+        - -54.5
+      - - -45.0
+        - 54.5
+      - - 45.0
+        - 54.5
+      - - 45.0
+        - -54.5
+    h_m: 10.0
+    top: 1.0
+  - kind: dome
+    theta_deg: 90.0
+    z_m: 0.0
+    site: raised
+    at:
+    - -55.0
+    - 0.0
+    d_m: 35.0
+    sides: 0
+    drum_h_m: 10.0
+    dome:
+      shape: cone
+      rise_m: 3.0
+      keep_curve: true
+    finial_m: 0.0
+    oculus_m: 0.0
+    sweep_deg: 180.0
+  - kind: dome
+    theta_deg: -90.0
+    z_m: 0.0
+    site: raised
+    at:
+    - 55.0
+    - 0.0
+    d_m: 35.0
+    sides: 0
+    drum_h_m: 10.0
+    dome:
+      shape: cone
+      rise_m: 3.0
+      keep_curve: true
+    finial_m: 0.0
+    oculus_m: 0.0
+    sweep_deg: 180.0
+rome04_retained_castra_barrack_01_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_01_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_01_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_01_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_01_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_01_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_01_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_01_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_02_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_02_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_02_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_02_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_02_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_02_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_02_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_02_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_03_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_03_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_03_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_03_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_03_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_03_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_03_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_03_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_04_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_04_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_04_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_04_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_04_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_04_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_04_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_04_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_05_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_05_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_05_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_05_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_05_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_05_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_05_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_05_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_06_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_06_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_06_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_06_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_06_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_06_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_06_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_06_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_07_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_07_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_07_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_07_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_07_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_07_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_07_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_07_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_08_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_08_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_08_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_08_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_08_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_08_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_08_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_08_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_09_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_09_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_09_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_09_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_09_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_09_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_09_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_09_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_10_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_10_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_10_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_10_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_10_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_10_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_10_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_10_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_11_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_11_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_11_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_11_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_11_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_11_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_11_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_11_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_12_1:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_12_1
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_12_2:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_12_2
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_12_3:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_12_3
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_castra_barrack_12_4:
+  kind: long_hall
+  theta_deg: -73.0
+  basis: 'FACTS S103; Padova TESS13007 excavated barracks over76x12m oriented E-W,
+    but surviving floors include Hadrian/Severan work and some late-first-century
+    styles.76x12m is a near-period comparison, not proof of each113 building. One4.25m
+    level and25-degree tiled roof estimated by the approved contemporary Roman domestic
+    comparison; complete camp rows schematic, no headcount asserted. Layout: S103;
+    registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century
+    camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or
+    Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated
+    comparison, not113 excavated building inventory. Late use: research/rome04_lateantique_survey.md
+    LA32; public position retained, late alterations treated separately. Earlier roof
+    reconstruction remains a comparison, not a fourth-century survey.'
+  name: castra_barrack_12_4
+  z_m: 0.0
+  site: raised
+  w_m: 12.0
+  d_m: 76.0
+  h_m: 4.25
+  roof:
+    shape: gabled
+    pitch_deg: 25.0
+    overhang_m: 0.35
+    eaves: 1
+    flared: false
+    rise: 0.5
+rome04_retained_vigna_barberini_flavian:
+  kind: parts
+  theta_deg: -46.28
+  basis: 'S112; David/Fedeli/Villedieu 2013 pp5-7: Flavian terrace160x140m, straight
+    north/west/east buildings and south hemicycle around a garden. Its existence precedes113;
+    exact wing widths12/16m, elevations12/16m, roof22deg and polygonal approximation
+    of the southern curve are estimates. No later Elagabalus temple or exposed buried
+    Neronian tower. Layout: S112. Excavated Flavian complex, approximate anchor inside
+    the registered Lanciani terrace; later map temple excluded.160x140m is the terrace,
+    NOT a measured building footprint. Inner128x116m building envelope estimated,
+    leaving outer terrace walks. Exact Flavian wing registration uncertain. Anchor19m
+    southwest of the initial terrace-centre estimate keeps the new schematic massing
+    clear of approved housing. Late use: research/rome04_lateantique_survey.md LA32;
+    public position retained, late alterations treated separately. Earlier roof reconstruction
+    remains a comparison, not a fourth-century survey.'
+  name: vigna_barberini_flavian
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 50.0
+    w_m: 128.0
+    d_m: 16.0
+    h_m: 16.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.5
+      eaves: 1
+      flared: false
+      rise: 0.5
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - -58.0
+    - 2.0
+    w_m: 12.0
+    d_m: 80.0
+    h_m: 12.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.5
+      eaves: 1
+      flared: false
+      rise: 0.5
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 58.0
+    - 2.0
+    w_m: 12.0
+    d_m: 80.0
+    h_m: 12.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.5
+      eaves: 1
+      flared: false
+      rise: 0.5
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -64.0
+      - -38.0
+    - - -53.0
+      - -48.0
+    - - -32.0
+      - -56.0
+    - - 0.0
+      - -58.0
+    - - 32.0
+      - -56.0
+    - - 53.0
+      - -48.0
+    - - 64.0
+      - -38.0
+    - - 52.0
+      - -32.0
+    - - 44.0
+      - -38.0
+    - - 26.0
+      - -44.0
+    - - 0.0
+      - -46.0
+    - - -26.0
+      - -44.0
+    - - -44.0
+      - -38.0
+    - - -52.0
+      - -32.0
+    holes_m: []
+    h_m: 12.0
+    top: 1.0
+rome04_retained_victoria_palatine:
+  kind: long_hall
+  theta_deg: -46.28
+  basis: 'S114; DAR33x19m podium and hexastyle peripteros sine postico. Model body17x27m,3m
+    podium,12m eaves and10m front columns are estimates; native six-column front simplifies
+    the double frontal order and missing side colonnades. Registered approximate axis,
+    not measured elevation. Layout: S114; early temple survives into imperial period.
+    Position/approximate axis from DAR and registered archaeological map, fine layout
+    uncertain. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: victoria_palatine
+  z_m: 0.0
+  site: raised
+  w_m: 17.0
+  d_m: 27.0
+  h_m: 12.0
+  roof:
+    shape: gabled
+    pitch_deg: 22.0
+    overhang_m: 0.4
+    eaves: 1
+    flared: false
+    rise: 0.5
+  colonnade:
+    at: front
+    n_front: 6
+    h_m: 10.0
+    depth_m: 4.0
+  podium:
+    h_m: 3.0
+    stair: front
+rome04_retained_apollo_library_halls:
+  kind: parts
+  theta_deg: -46.28
+  basis: 'S115; DAR adjacent apsidal halls southeast of Apollo represent Domitianic
+    library on later FUR20b; Caen connection is a reconstruction hypothesis. Two18x27m
+    halls,6m apses,12m eaves and roofs are estimated from that named reconstruction,
+    not a surveyed113 footprint. Layout: S115; source-constrained Domitianic library
+    form; placement southeast of Apollo approximate. No exact Danaid portico location
+    asserted. Late use: research/rome04_lateantique_survey.md LA32; public position
+    retained, late alterations treated separately. Earlier roof reconstruction remains
+    a comparison, not a fourth-century survey.'
+  name: apollo_library_halls
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    theta_deg: 180.0
+    z_m: 0.0
+    site: raised
+    at:
+    - -10.0
+    - 0.0
+    w_m: 18.0
+    d_m: 27.0
+    h_m: 12.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.4
+      eaves: 1
+      flared: false
+      rise: 0.5
+    apse:
+      at: back
+      r_m: 6.0
+  - kind: long_hall
+    theta_deg: 180.0
+    z_m: 0.0
+    site: raised
+    at:
+    - 10.0
+    - 0.0
+    w_m: 18.0
+    d_m: 27.0
+    h_m: 12.0
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.4
+      eaves: 1
+      flared: false
+      rise: 0.5
+    apse:
+      at: back
+      r_m: 6.0
+rome04_retained_paedagogium_palatine:
+  kind: parts
+  theta_deg: -52.0
+  basis: 'S116; PArCo Domitianic stamps, two levels, two rows of rooms around court
+    and apsidal hall. Cached OSM1805350 wall envelope about59x46m; model55x42m,8m
+    wings,8.5m two-level eaves and roof estimated. No Severan mosaics and no claim
+    that later graffiti establish113 occupants. Layout: S116; excavated Domitianic
+    complex at its cached surviving wall location; room partitions simplified. Public/service
+    compound, not new housing. Late use: research/rome04_lateantique_survey.md LA32;
+    public position retained, late alterations treated separately. Earlier roof reconstruction
+    remains a comparison, not a fourth-century survey.'
+  name: paedagogium_palatine
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - -23.0
+    - 0.0
+    w_m: 9.0
+    d_m: 42.0
+    h_m: 8.5
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.4
+      eaves: 1
+      flared: false
+      rise: 0.5
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 23.0
+    - 0.0
+    w_m: 9.0
+    d_m: 42.0
+    h_m: 8.5
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.4
+      eaves: 1
+      flared: false
+      rise: 0.5
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 16.0
+    w_m: 35.0
+    d_m: 10.0
+    h_m: 8.5
+    roof:
+      shape: gabled
+      pitch_deg: 22.0
+      overhang_m: 0.4
+      eaves: 1
+      flared: false
+      rise: 0.5
+    apse:
+      at: back
+      r_m: 4.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - -17.0
+    w_m: 35.0
+    d_m: 8.0
+    h_m: 8.5
+    roof:
+      shape: flat
+      eaves: 1
+      flared: false
+      rise: 0.5
+rome04_retained_domitian_forum_entrance:
+  kind: parts
+  theta_deg: -42.25
+  basis: 'S117; Domitianic court and ramp entrance below Palatine, later converted
+    to Santa Maria Antiqua. Registered Lanciani approximate envelope35x42m,7m wings
+    and12m elevation estimated; no Christian apse, later church roof or exact seven
+    underground ramps asserted. Layout: S117; PArCo identifies Domitianic entrance/ramp.
+    Archaeological-map placement, not the tourism page visitor-address pin. Late use:
+    research/rome04_lateantique_survey.md LA32; public position retained, late alterations
+    treated separately. Earlier roof reconstruction remains a comparison, not a fourth-century
+    survey.'
+  name: domitian_forum_entrance
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -17.5
+      - -21.0
+    - - 17.5
+      - -21.0
+    - - 17.5
+      - 21.0
+    - - -17.5
+      - 21.0
+    holes_m:
+    - - - -10.5
+        - -14.0
+      - - -10.5
+        - 14.0
+      - - 10.5
+        - 14.0
+      - - 10.5
+        - -14.0
+    h_m: 12.0
+    top: 1.0
+rome04_caesar_forum_303:
+  kind: parts
+  theta_deg: 36.0
+  basis: 'FACTS S98; Mercati di Traiano source and registered Lanciani precinct;160x75m
+    enclosure and approx30x46m Venus temple envelope read from the registered plan.10m
+    gallery,17m temple eaves,5m podium and remaining column/roof sizes estimated from
+    the same reconstruction, not a precise113 elevation. Open court and temple share
+    one plane. Layout: S98; Caesar precinct and Trajan restoration, long axis NW/SE,
+    Venus at NW. Complete envelope position from registered plan, not label point.
+    Late use: research/rome04_lateantique_survey.md LA32; public position retained,
+    late alterations treated separately. Earlier roof reconstruction remains a comparison,
+    not a fourth-century survey. LA30 post283/303 branch: Venus front portico closed
+    by masonry.30m front,1.2m wall thickness and15m wall above5m podium are massing
+    estimates, not measured late brickwork.'
+  name: caesar_forum
+  z_m: 0.0
+  site: raised
+  parts:
+  - kind: prism
+    z_m: 0.0
+    site: raised
+    plan_m:
+    - - -37.5
+      - -80.0
+    - - 37.5
+      - -80.0
+    - - 37.5
+      - 80.0
+    - - -37.5
+      - 80.0
+    holes_m:
+    - - - -29.5
+        - -72.0
+      - - -29.5
+        - 72.0
+      - - 29.5
+        - 72.0
+      - - 29.5
+        - -72.0
+    h_m: 10.0
+    top: 1.0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - 0.0
+    - 48.0
+    w_m: 30.0
+    d_m: 46.0
+    h_m: 17.0
+    roof:
+      shape: gabled
+      pitch_deg: 15.0
+      overhang_m: 0.6
+      eaves: 1
+      flared: false
+      rise: 0.5
+    colonnade:
+      at: around
+      n_front: 8
+      h_m: 15.0
+      depth_m: 5.0
+    podium:
+      h_m: 5.0
+      stair: front
+  - kind: prism
+    at:
+    - 0
+    - 25
+    z_m: 5
+    plan_m:
+    - - -15
+      - -0.6
+    - - 15
+      - -0.6
+    - - 15
+      - 0.6
+    - - -15
+      - 0.6
+    h_m: 15
+rome04_pantheon_hadrian:
+  kind: parts
+  name: pantheon_hadrian
+  basis: research/rome04_lateantique_whole_basis.md; LA14/S101 current Hadrianic rotunda,43.3m
+    interior span and height; outer drum50m,21.65m drum and21.65m hemisphere are simplified
+    outer massing. Portico33x16m,16m eaves and columns are comparative estimates;
+    no fire-empty113 site.
+  exaggeration: 1
+  parts:
+  - kind: dome
+    d_m: 43.3
+    drum_h_m: 21.65
+    dome:
+      shape: hemisphere
+    oculus_m: 8.9
+  - kind: long_hall
+    at:
+    - 0
+    - -28
+    w_m: 33
+    d_m: 16
+    h_m: 16
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+    colonnade:
+      at: front
+      n_front: 8
+      h_m: 13
+      depth_m: 3
+  theta_deg: 0
+rome04_hadrian_mausoleum:
+  kind: parts
+  name: hadrian_mausoleum
+  basis: research/rome04_lateantique_whole_basis.md; Lanciani site and Treccani Enciclopedia
+    Arte Antica Roma section7:89m square base,64m cylindrical core and21m cylinder
+    height.12m base and12m earth-mound envelope estimated; no medieval battlements
+    or angel.
+  exaggeration: 1
+  parts:
+  - kind: prism
+    plan_m:
+    - - -44.5
+      - -44.5
+    - - 44.5
+      - -44.5
+    - - 44.5
+      - 44.5
+    - - -44.5
+      - 44.5
+    h_m: 12
+  - kind: dome
+    d_m: 64
+    drum_h_m: 21
+    z_m: 12
+    dome:
+      shape: saucer
+      rise_m: 12
+rome04_caracalla_baths:
+  kind: parts
+  name: caracalla_baths
+  basis: research/rome04_lateantique_whole_basis.md; LA15 axial rooms and two palaestrae;
+    Lanciani registered footprint.337x328m precinct and214m central width are plan-envelope
+    estimates from that monument, not Diocletian rescaling. Calidarium35m span follows
+    LA32, frigidarium58x24m and all heights are reconstruction estimates. Native barrel
+    envelopes simplify groin vaults; no claim to reconstructed vault interiors.
+  exaggeration: 1
+  parts:
+  - kind: prism
+    at:
+    - 0
+    - 0
+    plan_m:
+    - - -168.5
+      - -164.0
+    - - 168.5
+      - -164.0
+    - - 168.5
+      - 164.0
+    - - -168.5
+      - 164.0
+    holes_m:
+    - - - -161.5
+        - -157.0
+      - - 161.5
+        - -157.0
+      - - 161.5
+        - 157.0
+      - - -161.5
+        - 157.0
+    h_m: 11
+  - kind: long_hall
+    at:
+    - 0
+    - 2
+    w_m: 58
+    d_m: 24
+    h_m: 30
+    roof:
+      shape: vault
+  - kind: long_hall
+    at:
+    - 0
+    - -25
+    w_m: 26
+    d_m: 22
+    h_m: 22
+    roof:
+      shape: vault
+  - kind: dome
+    at:
+    - 0
+    - -62
+    d_m: 35
+    drum_h_m: 20
+    dome:
+      shape: hemisphere
+  - kind: prism
+    at:
+    - -76
+    - 4
+    plan_m:
+    - - -34.0
+      - -43.0
+    - - 34.0
+      - -43.0
+    - - 34.0
+      - 43.0
+    - - -34.0
+      - 43.0
+    holes_m:
+    - - - -25.0
+        - -34.0
+      - - 25.0
+        - -34.0
+      - - 25.0
+        - 34.0
+      - - -25.0
+        - 34.0
+    h_m: 12
+  - kind: prism
+    at:
+    - 76
+    - 4
+    plan_m:
+    - - -34.0
+      - -43.0
+    - - 34.0
+      - -43.0
+    - - 34.0
+      - 43.0
+    - - -34.0
+      - 43.0
+    holes_m:
+    - - - -25.0
+        - -34.0
+      - - 25.0
+        - -34.0
+      - - 25.0
+        - 34.0
+      - - -25.0
+        - 34.0
+    h_m: 12
+  - kind: long_hall
+    at:
+    - -105
+    - -37
+    w_m: 22
+    d_m: 74
+    h_m: 15
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+  - kind: long_hall
+    at:
+    - 105
+    - -37
+    w_m: 22
+    d_m: 74
+    h_m: 15
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+  - kind: long_hall
+    at:
+    - 0
+    - 67
+    w_m: 100
+    d_m: 16
+    h_m: 14
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+  theta_deg: -45
+rome04_diocletian_baths:
+  kind: parts
+  name: diocletian_baths
+  basis: "research/rome04_lateantique_whole_basis.md; LA18 TESS13255:380x365m enclosure,250x180m\
+    \ main block,61x42m frigidarium,22m tepidarium,21x47m calidarium and2500m\xB2\
+    \ natatio. Selected roof envelopes and heights31/18/20/12m are same-monument comparative\
+    \ estimates. Native vault is barrel-envelope massing, not exact groin vault. Gardens\
+    \ and open exercise courts are preserved."
+  exaggeration: 1
+  parts:
+  - kind: prism
+    at:
+    - 0
+    - 0
+    plan_m:
+    - - -190.0
+      - -182.5
+    - - 190.0
+      - -182.5
+    - - 190.0
+      - 182.5
+    - - -190.0
+      - 182.5
+    holes_m:
+    - - - -183.0
+        - -175.5
+      - - 183.0
+        - -175.5
+      - - 183.0
+        - 175.5
+      - - -183.0
+        - 175.5
+    h_m: 12
+  - kind: long_hall
+    at:
+    - 0
+    - 8
+    w_m: 61
+    d_m: 42
+    h_m: 31
+    roof:
+      shape: vault
+  - kind: dome
+    at:
+    - 0
+    - -28
+    d_m: 22
+    drum_h_m: 14
+    dome:
+      shape: saucer
+      rise_m: 4
+  - kind: long_hall
+    at:
+    - 0
+    - -55
+    w_m: 47
+    d_m: 21
+    h_m: 20
+    roof:
+      shape: vault
+  - kind: prism
+    at:
+    - -88
+    - 8
+    plan_m:
+    - - -36.0
+      - -45.0
+    - - 36.0
+      - -45.0
+    - - 36.0
+      - 45.0
+    - - -36.0
+      - 45.0
+    holes_m:
+    - - - -26.0
+        - -35.0
+      - - 26.0
+        - -35.0
+      - - 26.0
+        - 35.0
+      - - -26.0
+        - 35.0
+    h_m: 14
+  - kind: prism
+    at:
+    - 88
+    - 8
+    plan_m:
+    - - -36.0
+      - -45.0
+    - - 36.0
+      - -45.0
+    - - 36.0
+      - 45.0
+    - - -36.0
+      - 45.0
+    holes_m:
+    - - - -26.0
+        - -35.0
+      - - 26.0
+        - -35.0
+      - - 26.0
+        - 35.0
+      - - -26.0
+        - 35.0
+    h_m: 14
+  - kind: long_hall
+    at:
+    - -113
+    - -46
+    w_m: 24
+    d_m: 78
+    h_m: 16
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+  - kind: long_hall
+    at:
+    - 113
+    - -46
+    w_m: 24
+    d_m: 78
+    h_m: 16
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+  - kind: long_hall
+    at:
+    - 0
+    - 88
+    w_m: 110
+    d_m: 14
+    h_m: 15
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+  theta_deg: -45
+rome04_venus_roma_hadrian:
+  kind: parts
+  name: venus_roma_hadrian
+  basis: research/rome04_lateantique_whole_basis.md; Hadrianic temple before307 fire,
+    LA32 distinguishes the later vaulted cellae. Lanciani site and source-plan comparative110x53m
+    main body,145x100m platform. Upper22m and25degree pitched envelope estimated;
+    no Maxentian apses before307.
+  exaggeration: 1
+  parts:
+  - kind: stepped
+    w_m: 145
+    d_m: 100
+    h_m: 3
+    tiers: 1
+  - kind: long_hall
+    at:
+    - 0
+    - 0
+    w_m: 53
+    d_m: 110
+    h_m: 22
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+    colonnade:
+      at: around
+      n_front: 10
+      h_m: 18
+      depth_m: 6
+  theta_deg: 60
+rome04_venus_roma_maxentius:
+  kind: parts
+  name: venus_roma_maxentius
+  basis: research/rome04_lateantique_whole_basis.md; LA32 post307 replacement of Hadrianic
+    cella with opposing apses and vault. Site/platform retained.53x110m envelope,22m
+    eaves and opposite20m apses estimated from registered same-monument plan; native
+    barrel/capped half-round masses simplify vault articulation.
+  exaggeration: 1
+  parts:
+  - kind: stepped
+    w_m: 145
+    d_m: 100
+    h_m: 3
+    tiers: 1
+  - kind: long_hall
+    at:
+    - 0
+    - 0
+    w_m: 53
+    d_m: 110
+    h_m: 22
+    roof:
+      shape: vault
+  - kind: dome
+    at:
+    - 0
+    - 46
+    d_m: 20
+    drum_h_m: 22
+    sweep_deg: 180
+    dome:
+      shape: saucer
+      rise_m: 6
+  - kind: dome
+    at:
+    - 0
+    - -46
+    theta_deg: 180
+    d_m: 20
+    drum_h_m: 22
+    sweep_deg: 180
+    dome:
+      shape: saucer
+      rise_m: 6
+  theta_deg: 60
+rome04_basilica_nova:
+  kind: parts
+  name: basilica_nova
+  basis: 'research/rome04_lateantique_whole_basis.md; LA17/LA32:308 begun, Maxentian
+    east-west three-bay vaulted basilica; selected312 exterior observation does not
+    assign disputed northapse/south entrance to312.100x65m overall and80x25m central
+    envelope are working plan estimates, not dimensions supplied by LA17.26m central
+    eaves and18m side eaves estimated. Six transverse side barrels follow LA17; exact
+    central groin vault unavailable: exterior vaulted envelope only, limitation reported;
+    no wooden basilica roof.'
+  exaggeration: 1
+  parts:
+  - kind: long_hall
+    at:
+    - 0
+    - 0
+    w_m: 25
+    d_m: 80
+    h_m: 26
+    roof:
+      shape: vault
+  - kind: long_hall
+    at:
+    - -22.5
+    - -27
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - -22.5
+    - 0
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - -22.5
+    - 27
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - 22.5
+    - -27
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - 22.5
+    - 0
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - 22.5
+    - 27
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: dome
+    at:
+    - 0
+    - 40
+    d_m: 20
+    drum_h_m: 26
+    sweep_deg: 180
+    dome:
+      shape: saucer
+      rise_m: 6
+  theta_deg: 60
+rome04_basilica_nova_late:
+  kind: parts
+  name: basilica_nova
+  basis: 'research/rome04_lateantique_whole_basis.md; LA17/LA32:308 begun, Maxentian
+    east-west three-bay vaulted basilica; selected312 exterior observation does not
+    assign disputed northapse/south entrance to312.100x65m overall and80x25m central
+    envelope are working plan estimates, not dimensions supplied by LA17.26m central
+    eaves and18m side eaves estimated. Six transverse side barrels follow LA17; exact
+    central groin vault unavailable: exterior vaulted envelope only, limitation reported;
+    no wooden basilica roof. Late fourth-century branch: northapse and southern porphyry-column
+    entrance appear by403, without assigning both to312.20m apse,20x10m entrance and12m
+    columns estimated from the same-monument plan relationship; LA17 gives four entrance
+    columns, LA32 records dating uncertainty.'
+  exaggeration: 1
+  parts:
+  - kind: long_hall
+    at:
+    - 0
+    - 0
+    w_m: 25
+    d_m: 80
+    h_m: 26
+    roof:
+      shape: vault
+  - kind: long_hall
+    at:
+    - -22.5
+    - -27
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - -22.5
+    - 0
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - -22.5
+    - 27
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - 22.5
+    - -27
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - 22.5
+    - 0
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: long_hall
+    at:
+    - 22.5
+    - 27
+    w_m: 26.6
+    d_m: 20
+    h_m: 18
+    roof:
+      shape: vault
+    theta_deg: 90
+  - kind: dome
+    at:
+    - 0
+    - 40
+    d_m: 20
+    drum_h_m: 26
+    sweep_deg: 180
+    dome:
+      shape: saucer
+      rise_m: 6
+  - kind: dome
+    at:
+    - 32.5
+    - 0
+    theta_deg: -90
+    d_m: 20
+    drum_h_m: 18
+    sweep_deg: 180
+    dome:
+      shape: saucer
+      rise_m: 5
+  - kind: long_hall
+    at:
+    - -40
+    - 0
+    w_m: 20
+    d_m: 10
+    h_m: 16
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+    theta_deg: -90
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 12
+      depth_m: 3
+  theta_deg: 60
+rome04_horrea_piperataria_proxy:
+  kind: parts
+  name: horrea_piperataria_proxy
+  basis: research/rome04_lateantique_whole_basis.md; LA17 identifies former spice
+    warehouses partly covered by Basilica Nova. The lost exact plan is not asserted:8
+    low vaulted strips of9.74x45m and8m eaves borrow the approved Domitian Regola/Porticus
+    Aemilia comparison. This is a bounded functional placeholder for the pre308 site,
+    not excavated Horrea walls.
+  exaggeration: 1
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    at:
+    - -34.09
+    - 0
+    repeat:
+      line:
+        n: 8
+        step_m:
+        - 9.74
+        - 0
+    w_m: 9.74
+    d_m: 45.0
+    h_m: 8.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+  theta_deg: 150
+rome04_constantine_arch:
+  kind: arches
+  name: constantine_arch
+  basis: research/rome04_lateantique_whole_basis.md; LA25 dedicated315. Same-monument21m
+    height,25.9m width and7.4m depth comparative reconstruction; native equal3-bay
+    openings simplify the taller central arch and attic relief.
+  exaggeration: 1
+  length_m: 25.9
+  depth_m: 7.4
+  h_m: 21
+  bays: 3
+  tiers: 1
+  arch: round
+  opening: 0.66
+  spring: 0.58
+  through: true
+  theta_deg: 64
+rome04_lateran_constantinian:
+  kind: parts
+  name: lateran_constantinian
+  basis: research/rome04_lateantique_whole_basis.md; LA06:about90m rectangular body
+    excluding apse,55m external width,19m nave,102m including apse/walls. Five-aisle
+    mass with28m nave eaves,14m aisles estimated by Old St Peter comparison; no early
+    transept, medieval tower or Baroque facade.
+  exaggeration: 1
+  parts:
+  - kind: long_hall
+    at:
+    - 0
+    - 0
+    w_m: 55
+    d_m: 90
+    h_m: 28
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.4
+    aisles:
+      n: 2
+      w_m: 9
+      h_m: 14
+  - kind: dome
+    at:
+    - 0
+    - 45
+    d_m: 19
+    drum_h_m: 18
+    sweep_deg: 180
+    dome:
+      shape: cone
+      rise_m: 4
+  theta_deg: 44
+rome04_old_stpeter:
+  kind: parts
+  exaggeration: 1
+  basis: research/rome04_lateantique_survey.md SP01 and housing_basis.md L01. Sheet-only
+    massing; coordinates are laboratory positions, NOT the Vatican site. LA06 note21
+    supplies internal91m longitudinal body,64m width,23m nave and18m transept. Select66m
+    outer width (1m estimated side walls); retain91m body as nominal massing length.
+    LA13 printed172 gives37.9m full height and90x17m transept; selected18m transept
+    is LA06 branch, no averaging.32.54m eaves derives37.9m minus23m/2*tan25deg;25deg
+    roof,16m aisle eaves,20.80m transept eaves and4.2m apse cap are graphical estimates
+    after the transmitted Brandenburg2004/Frazer reconstruction in LA13 printed173.
+    New original editions were not read. No medieval tower, modern dome or Bernini
+    colonnade. Atrium and later annexes omitted pending their separate phase approval.
+    Actual Vatican placement uses the shrine under the present crossing as approximate
+    west-apse anchor; nave centre is estimated east of it. Approved parts unchanged.
+    No hypothetical fully finished early atrium.
+  parts:
+  - kind: long_hall
+    w_m: 66
+    d_m: 91
+    h_m: 32.54
+    aisles:
+      n: 2
+      w_m: 10.75
+      h_m: 16
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.6
+  - kind: long_hall
+    at:
+    - 0
+    - 54.5
+    theta_deg: 90
+    w_m: 18
+    d_m: 90
+    h_m: 20.8
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.6
+  - kind: dome
+    at:
+    - 0
+    - 63.5
+    d_m: 23
+    drum_h_m: 20.8
+    sweep_deg: 180
+    dome:
+      shape: cone
+      rise_m: 4.2
+  name: Old_St_Peter_fourth_century
+rome04_constantius_obelisk:
+  kind: column
+  name: constantius_obelisk
+  basis: research/rome04_lateantique_whole_basis.md; LA31/LA32 second Circus obelisk
+    raised357.32m shaft and7m base comparative estimates; approximate position on
+    Circus spina, not present Lateran square, precise ancient base not measured.
+  exaggeration: 1
+  w_m: 2.8
+  h_m: 32
+  taper: 0.55
+  pedestal:
+    w_m: 5
+    h_m: 7
+rome04_constantine_baths:
+  kind: parts
+  name: constantine_baths
+  basis: research/rome04_lateantique_whole_basis.md; LA06:Quirinal baths with deep
+    axis, two large exedrae and25m calidarium.170x235m working envelope, side wings
+    and18/14m eaves estimated from registered Lanciani and Palladio-described plan;
+    not exact restored rooms. Observation in350 avoids unsupported precise completion
+    year.
+  exaggeration: 1
+  parts:
+  - kind: prism
+    at:
+    - 0
+    - 0
+    plan_m:
+    - - -85.0
+      - -117.5
+    - - 85.0
+      - -117.5
+    - - 85.0
+      - 117.5
+    - - -85.0
+      - 117.5
+    holes_m:
+    - - - -78.0
+        - -110.5
+      - - 78.0
+        - -110.5
+      - - 78.0
+        - 110.5
+      - - -78.0
+        - 110.5
+    h_m: 12
+  - kind: long_hall
+    at:
+    - 0
+    - 10
+    w_m: 50
+    d_m: 60
+    h_m: 24
+    roof:
+      shape: vault
+  - kind: dome
+    at:
+    - 0
+    - -54
+    d_m: 25
+    drum_h_m: 18
+    dome:
+      shape: hemisphere
+  - kind: dome
+    at:
+    - 0
+    - 104
+    d_m: 70
+    drum_h_m: 12
+    sweep_deg: 180
+    dome:
+      shape: cone
+      rise_m: 4
+  - kind: dome
+    at:
+    - 0
+    - -104
+    theta_deg: 180
+    d_m: 70
+    drum_h_m: 12
+    sweep_deg: 180
+    dome:
+      shape: cone
+      rise_m: 4
+  theta_deg: -34
+rome04_caelian_domus:
+  kind: prism
+  theta_deg: 35.2
+  plan_m:
+  - - -12.982
+    - 24.802
+  - - 13.024
+    - 24.802
+  - - 12.991
+    - -25.165
+  - - -13.015
+    - -25.165
+  holes_m:
+  - - - -3.609
+      - -2.327
+    - - 3.883
+      - -2.327
+    - - 3.883
+      - -8.267
+    - - -3.609
+      - -8.267
+  h_m: 7
+  basis: research/rome04_lateantique_whole_basis.md; LA09/LA22 Pavolini1993 transmitted
+    plan:Commodan perimeter retained and small rectangular fountain court belongs
+    to the first phase.10m/303px bar, north arrow35.2deg; absolute site follows LA04
+    fig3 and inherits its coarse location uncertainty.7m upper envelope is an estimated
+    two-level comparison, not measured floors. Flat upper envelope does not reconstruct
+    the lost roof or all phase-specific internal rooms.409 identifies owner career,
+    not house construction.
+  name: Caelian_domus_Pavolini_plan
+  exaggeration: 2
+rome04_lateran_old_cavalry:
+  kind: parts
+  name: Former_cavalry_camp_section
+  exaggeration: 1
+  basis: LA06/LA32:Lateran basilica replaced the equites singulares camp after312.
+    Only a bounded former military-use section is represented; two76x12m barrack comparisons
+    reuse the earlier approved Praetorian excavation comparison. It is not a recovered
+    complete cavalry camp plan or its real barrack count. The church footprint is
+    not left as an empty future building lot before312.
+  parts:
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    w_m: 12.0
+    d_m: 76.0
+    h_m: 4.25
+    roof:
+      shape: gabled
+      pitch_deg: 25.0
+      overhang_m: 0.35
+      eaves: 1
+      flared: false
+      rise: 0.5
+    at:
+    - -17
+    - 0
+  - kind: long_hall
+    z_m: 0.0
+    site: raised
+    w_m: 12.0
+    d_m: 76.0
+    h_m: 4.25
+    roof:
+      shape: gabled
+      pitch_deg: 25.0
+      overhang_m: 0.35
+      eaves: 1
+      flared: false
+      rise: 0.5
+    at:
+    - 17
+    - 0
+rome04_augustus_circus_obelisk:
+  kind: column
+  name: augustus_circus_obelisk
+  basis: LA31:Flaminio24m Egyptian shaft brought by Augustus10BCE and originally in
+    Circus.2.4m width,5m base and exact spina point estimated. Separate second obelisk
+    enters357.
+  exaggeration: 1
+  w_m: 2.4
+  h_m: 24
+  taper: 0.55
+  pedestal:
+    w_m: 4.5
+    h_m: 5

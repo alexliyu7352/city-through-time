@@ -1,0 +1,54 @@
+{
+  "asset": "research/rome11_formal_panel_963.18.jpg",
+  "sha256": "9f9bd3677f1bc94a29e929587bba68b4bdedc5e5f326a0a0fb3ab4e95f4fb278",
+  "bytes": 337412,
+  "kind": "own native white-model reconstruction; not archive photography, an interior, or AI-generated imagery",
+  "native_capture": {
+    "name": "restaurants",
+    "file": "research/rome11_formal_panel_963.18.jpg",
+    "t": 963.18,
+    "camera": [
+      -0.21828,
+      0.00406,
+      -0.37332,
+      -60,
+      65,
+      0.065,
+      42
+    ],
+    "sha256": "9f9bd3677f1bc94a29e929587bba68b4bdedc5e5f326a0a0fb3ab4e95f4fb278",
+    "clean": true
+  },
+  "capture_source_film": "build/review/modelview/rome11_formal_candidate/build/film.json",
+  "capture_source_film_sha256": "d2db099def611aff84814dbe056c24c4629268a6942cdaef54432cd41e449ed3",
+  "basis": [
+    "rome11_olympic_services_catalog.json",
+    "rome11_olympic_model_basis.md",
+    "O01 printed91 / PDF236; 10 restaurants36x34m, north6/south4; Italian pavilion number unidentified"
+  ],
+  "credit_proposed": "Project model; O01 original1960 operating plan supplies placement and documented dimensions. Heights, façades and present-terrain levels remain schematic. Native render/still.mjs clean view; no external picture added.",
+  "geometry_changed": false,
+  "runtime_contract": "Candidate08 native panel verified in core_942.68 and all13 affected-range sheets; only r11_06–07, all10 restaurants retained after crop; English subtitles and chapter title unobscured. No geometry changes.",
+  "runtime_footage": [
+    {
+      "id": "rome11_restaurants_model_panel",
+      "file": "research/rome11_formal_panel_963.18.jpg",
+      "on": 936.95,
+      "dur": 8.77,
+      "start": 0.0,
+      "fin": 0.4,
+      "fout": 0.4,
+      "title": "10 restaurants · Italian pavilion unidentified",
+      "sub": "10座餐厅·意大利馆号未明",
+      "kicker": "MODEL RECONSTRUCTION · 模型复原视图",
+      "credit": "Project model · O01 1960 plan",
+      "pan": 0,
+      "mode": "panel",
+      "side": "right",
+      "anchor": null,
+      "force": false,
+      "_with": "r11_06",
+      "_node": "rome11_olympic1960"
+    }
+  ]
+}

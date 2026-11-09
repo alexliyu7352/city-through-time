@@ -1,0 +1,1302 @@
+{
+  "status": "Research inventory for formal phasing, not compiled stage timing or an AD14 reconstruction",
+  "master": "imperial_completion_layout.geojson",
+  "master_sha256": "3363e2564239015667eb367a407626cf237c6a02bf35e201fe3c5b2bbac3db0d",
+  "rules": [
+    "period_ce is not a construction date; never generate earlier city by numeric filter alone",
+    "id names select whole landmarks; never positional indices or ids inside parts",
+    "113 master and formal narration remain unchanged",
+    "AD14 houses/streets need period-specific provenance;113 source method approval is not an earlier-city survey"
+  ],
+  "public_items": [
+    {
+      "id": "basilica_iulia",
+      "kind": "landmark",
+      "model_version_marker_ce": 113,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S92; PArCo QuaderniDidattica_Basilica-Giulia.pdf",
+      "note": "The113 marker is the study year. The Augustan rebuilding was dedicatedAD12; do not omit it fromAD14.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "castor_pollux",
+      "kind": "landmark",
+      "model_version_marker_ce": 113,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S89; Caen/official PArCo",
+      "note": "The113 marker is the study year. The model compares with the TiberianAD6 rebuild; not its first temple foundation.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "colosseum",
+      "kind": "landmark",
+      "model_version_marker_ce": 80,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S86; OSM relation1834818,189x156m oval aligned NW/SE. Arena length approximation retained.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "circus_maximus",
+      "kind": "landmark",
+      "model_version_marker_ce": 103,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S83/S87",
+      "note": "103 is the Trajan version; the Circus exists before64 and requires its own earlier version, not this model burning.",
+      "different_geometry_required": true,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "basilica_ulpia",
+      "kind": "landmark",
+      "model_version_marker_ce": 112,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S88; long axis approx39degrees across NW end of Trajan plaza. Anchor from registered complete basilica, not centroid of partial OSM remnant.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "trajan_column",
+      "kind": "landmark",
+      "model_version_marker_ce": 113,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S91; OSM relation3376015 surveyed pedestal centre. Overrides earlier sheet label point.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "domus_flavia",
+      "kind": "landmark",
+      "model_version_marker_ce": 92,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S90/S97; north Aula at local[0,63] lands on OSM node5586787424,12.487287/41.889129 within1m. Whole palace axis from relation1857984. Replaces illustrative hill-study Aula marker with site-correct whole palace. Addition: S113; missing eastern neighbour of the existing Aula, not an additional Aula. Function uncertain; no new residential fabric. Built as a native part of Domus Flavia, on its one common level plane; no independent lower platform.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "domus_augustana_upper",
+      "kind": "landmark",
+      "model_version_marker_ce": 92,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S97; separate eastern private palace block, registered Domus Augustana upper court. Approx85x100m envelope; peristyle48x60m and12m wings estimated from this palace, not household fabric. Separate historic terrace, not independently grounded wings of Flavia. Revision: S113/S120; registered Lanciani and Caen palace plan. The previous continuous rectangular northwest wing was schematic and occupied the smaller Flavia hall; recess that corner. Its oversized southeast edge also crossed the sourced161x48m Palatine Stadium, so that half-wing recedes6.5m. Site anchor, inner court, north hall and other wings retained. Recess coordinates are plan-reading estimates, not an excavated113 wall survey.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "domus_augustana_lower",
+      "kind": "landmark",
+      "model_version_marker_ce": 92,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S97; narrower lower private court on a separate terrace, approx60x85m envelope from registered palace plan;45x45m open court and12m wings estimated from Domus Augustana. This is the west court beside the Stadium, not the full86m-wide excavation envelope. Actual DEM, not artificial ancient floor offset.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "domus_tiberiana",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S97",
+      "note": "The113 model is a later first-century palace version. Augustus/Livia houses need their own source plans and terraces.",
+      "different_geometry_required": true,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "palatine_stadium",
+      "kind": "landmark",
+      "model_version_marker_ce": 92,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S97; OSM relation1805355 with SW curved end.161x48m official envelope, no late oval in garden.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "jupiter_capitolinus",
+      "kind": "landmark",
+      "model_version_marker_ce": 82,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S98",
+      "note": "The current82 marker is Domitian rebuilding, not the foundation of the Capitoline temple.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "curia_iulia",
+      "kind": "landmark",
+      "model_version_marker_ce": -29,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM relation1841079 axis; Augustan senate building, present Diocletian interior excluded.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "basilica_aemilia",
+      "kind": "landmark",
+      "model_version_marker_ce": 22,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM relation1766532 near100x27m footprint. Rectangular basilica, NOT Ulpia end apses;18m nave and9m aisles estimated by named Julia/Ulpia basilica comparisons; fine Augustan arcade not restored.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "different_geometry_required": true,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "saturn_temple",
+      "kind": "landmark",
+      "model_version_marker_ce": -42,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM relation1849835 podium approx27x39m; envelope26x38m plus1m podium. Front to NE Forum.13m eaves,5m podium and11m columns estimates by Castor analogy; no late reused column detail.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "vespasian_temple",
+      "kind": "landmark",
+      "model_version_marker_ce": 87,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM relation1767603 approx25x28m podium;24x27m body plus1m edge. Front SE.13m eaves,4m podium,11m columns estimated by Castor analogy; later restorations not asserted.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "vesta_temple",
+      "kind": "landmark",
+      "model_version_marker_ce": 64,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM relation1842062 circular shrine centre, early imperial type rather than surviving Severan ornament.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "atrium_vestae",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM relation1842058 approx104x55m envelope, long central court56x16m from relation13402580.12m wings estimated by Flavian palace/near-period court analogy; not individual dwellings; entire residence one plane.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "different_geometry_required": true,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "titus_arch",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM way23913953, transverse to Sacra Via approach; no Constantine arch.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "trajan_markets",
+      "kind": "landmark",
+      "model_version_marker_ce": 112,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM relations13353038/39 plus complete registered hemicycle, opens SW toward Trajan forum, Aula uphill on NE.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "caesar_forum",
+      "kind": "landmark",
+      "model_version_marker_ce": 113,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S98; Mercati di Traiano Foro di Cesare/Foro di Traiano",
+      "note": "46BCE first inauguration versus Trajan restoration113. The current113 model does not establish the earlier elevation.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "augustus_forum",
+      "kind": "landmark",
+      "model_version_marker_ce": -2,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S98; Mars Ultor to NE, axis SW/NE. Temple aligned to cached OSM node11933283813; whole precinct approximate.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "nerva_forum",
+      "kind": "landmark",
+      "model_version_marker_ce": 97,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S98; transitional forum to SE of Augustus, Minerva at NE; temple aligned with OSM way140264246, whole precinct approximate.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "peace_temple",
+      "kind": "landmark",
+      "model_version_marker_ce": 75,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S98; Flavian precinct at SE of Nerva forum, shrine at SE end near later Cosma/Damiano complex; native axis rotated accordingly, later basilica excluded.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "marcellus_theatre",
+      "kind": "landmark",
+      "model_version_marker_ce": -13,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S96; orchestra/circle centre measured on registered Lanciani campus detail, rim fit RMS1.1m; map gives approx140m versus official130m adopted, so centre/axis remain map approximations. Stage axis approx-22degrees. The earlier point on the surviving NE arc was not the full theatre centre.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "pompey_theatre",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S96; registered cavea centre; theatre faces EAST toward quadriportico, DAR explicit orientation, not generic south-facing theatre.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Native straight stage may be reused if the early plan fits; no rebuild solely to change the era label.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "balbus_theatre",
+      "kind": "landmark",
+      "model_version_marker_ce": -13,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S96; DAR/Lanciani theatre faces east toward Crypta Balbi, approximate90m cavea read from plan;22m height,25m orchestra and10m stage estimated from Marcellus comparison.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "domitian_stadium",
+      "kind": "landmark",
+      "model_version_marker_ce": 86,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S96; Piazza Navona registered footprint; round end NORTH, no central obelisk or spina.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "trajan_baths",
+      "kind": "landmark",
+      "model_version_marker_ce": 109,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S99;334x315m registered Oppian precinct and preserved exedrae, major axis NE/SW. Late building ruins are not copied as113 room evidence.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "augustus_mausoleum",
+      "kind": "landmark",
+      "model_version_marker_ce": -28,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S100; registered mausoleum circumference,87m diameter, elevation schematic.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "aemilia_warehouses",
+      "kind": "landmark",
+      "model_version_marker_ce": -174,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S100; full487m envelope along Tiber from registered plan and official dimensions; preserved87m OSM fragment not mistaken for full building.50vault strips run transverse to long front.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "fabricius_bridge",
+      "kind": "landmark",
+      "model_version_marker_ce": -62,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S100; OSM relation5676411 and official two-arch bridge, no modern embankment asserted.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "cestio_bridge",
+      "kind": "landmark",
+      "model_version_marker_ce": -46,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S100; official source confirms Republican crossing but present structure heavily rebuilt365/1888. Native60x8m one-arch estimate by Fabricius comparison, not modern81.6m outline or exact113 elevation.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "pompey_portico",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S96/S100; DAR quadriportico EAST of theatre, approx180x135m registered envelope.10m galleries and10m height estimated from the named Pompey portico; sculpture garden left open, no copied marble-map household detail.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "octavia_portico",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S100; DAR/Caen approx119x132m precinct, Domitian-era repair after80 fire. Centre of complete precinct NE of surviving southern entrance, not OSM doorway centroid.10m galleries/height estimated; present Severan portal not reproduced.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "crypta_balbi",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S96; DAR/Lanciani portico east of Balbus theatre. Approx90x90m envelope,8m galleries and10m height estimated by Octavia comparison; central building of uncertain purpose omitted.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "saepta_iulia",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S100; DAR310x120m piazza east of Pantheon, Domitian rebuilding without known plan change. Approximate whole-precinct centre follows its west stoa boundary, rather than treating the DAR label point as the centre; bath/portico areas meet without overlapping.8m galleries and10m height estimated by Octavia comparison; northern hall and Diribitorium junction not restored.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "ludus_magnus",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM relation1894844 preserved half plus registered complete Ludus. Approx100x85m whole training complex, elliptical63x42m practice ring; rooms10m high and ring5m estimated by Colosseum analogy. Domitian institution, no present late facade asserted.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "horrea_galbana",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S95/S100; named Horrea Galbana general location from DAR, footprint schematic around it from registered warehouse district. Approx150x180m warehouse court;12m high perimeter storerooms and three courtyard partitions estimated by the named Galba warehouse reconstruction, not excavated113 elevation.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "emporium_vaults_east",
+      "kind": "landmark",
+      "model_version_marker_ce": 113,
+      "early_model_action": "version_review_required",
+      "early_geometry_approved": false,
+      "basis": "S95/S100; schematic river-port warehouse, not named excavated building. Eight bays at9.74m give77.92x60m;8m height and vaults by Porticus Aemilia analogy.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "emporium_vaults_south",
+      "kind": "landmark",
+      "model_version_marker_ce": 113,
+      "early_model_action": "version_review_required",
+      "early_geometry_approved": false,
+      "basis": "S95/S100; schematic smaller river-port warehouse, eight native vault bays by Porticus Aemilia analogy; not an excavated or named footprint.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "regola_domitian_warehouses",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S83/S100; Domitian river-side warehouses in San Paolo alla Regola quarter, exact whole-building footprint schematic; twelve9.74x45m vault bays at8m height by Porticus Aemilia analogy. No Severan four-storey residence.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "portunus_temple",
+      "kind": "landmark",
+      "model_version_marker_ce": -80,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S98; Soprintendenza Republican harbour temple, OSM way251331418 approx11.6x23.3m. Body10.6x22.3m plus1m podium margin; front toward north.8m eaves,2.5m podium and6.5m columns estimated from this temple; engaged side-columns simplified, no Christian fittings.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "hercules_temple",
+      "kind": "landmark",
+      "model_version_marker_ce": -120,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S98; OSM way251342364 and official Boarium temple entry, approximate19m outer circular order. Drum14m with20 columns at2m gap,7m drum/column and3m cone rise estimated from named Hercules round-temple reconstruction; no later Christian roof asserted.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "apollo_palatine",
+      "kind": "landmark",
+      "model_version_marker_ce": -28,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S98; PArCo28BC dedication, OSM way132881964 and Lanciani site/axis. Approx24x45m body and4m podium,14m eaves and12m columns estimated from registered remains and Castor contemporary comparison. Not a surveyed complete superstructure.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "agrippa_baths",
+      "kind": "landmark",
+      "model_version_marker_ce": 81,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S102; DAR baths immediately south of Pantheon, west of Saepta, repaired after80 fire. Approx100x150m irregular-area envelope read from map; room masses and12/18m heights schematic by pre113 Trajan bath halls, not exact Agrippa room plan. No extant late Arco della Ciambella facade or finished Hadrian Pantheon.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "nero_baths",
+      "kind": "landmark",
+      "model_version_marker_ce": 64,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S102; Platner/Ashby190x120m public bath area between Pantheon and Domitian stadium; north-facing. Symmetric courts/hall are source-attested general arrangement, but standing remains/reconstructions include227 Alexander Severus rebuilding;113 room sizes and12/18m heights explicitly schematic by contemporary Trajan bath analogy.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "trajan_forum_porticoes",
+      "kind": "landmark",
+      "model_version_marker_ce": 112,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S83/S98; central Trajan piazza flanked by porticoes/exedrae, Ulpia to NW and column behind, full complex300x185m. This is only the approximate110x125m portico/plaza portion;10m galleries and35m exedrae estimated from official reconstruction. Ulpia/column remain separately site-anchored; no unverified Trajan temple.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "castra_barrack_01_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_01_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_01_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_01_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_02_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_02_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_02_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_02_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_03_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_03_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_03_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_03_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_04_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_04_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_04_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_04_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_05_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_05_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_05_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_05_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_06_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_06_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_06_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_06_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_07_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_07_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_07_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_07_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_08_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_08_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_08_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_08_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_09_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_09_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_09_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_09_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_10_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_10_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_10_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_10_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_11_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_11_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_11_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_11_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_12_1",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_12_2",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_12_3",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_barrack_12_4",
+      "kind": "landmark",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "castra_praetoria_wall",
+      "kind": "wall",
+      "model_version_marker_ce": 25,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S103; registered Lanciani camp centre/axis; TESS440x360m/official~16ha enclosure, first-century camp. Native low wall4.5m and2.5m thickness estimated, no Aurelian highwall or Chinese gate towers.48 barrack rows are schematic by near-period76x12m excavated comparison, not113 excavated building inventory.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master. Official source places establishment20-23;25 remains an old coarse model marker, not the historical foundation date.",
+      "source_review": "research/early_imperial_layout_sources.md",
+      "source_construction_interval_ce": [
+        20,
+        23
+      ]
+    },
+    {
+      "id": "vigna_barberini_flavian",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S112",
+      "note": "Vespasian/Domitian terrace and court are later than the64 fire. Do not backdate its high platform toAugustus.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "magna_mater_palatine",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S114; excavated temple, walls anchored independently of DAR label point. Native17x39.8m overall stair envelope approximates sourced17x33m podium, rather than claiming an exact restoration.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "victoria_palatine",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "candidate_existing_14",
+      "early_geometry_approved": false,
+      "basis": "S114; early temple survives into imperial period. Position/approximate axis from DAR and registered archaeological map, fine layout uncertain.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "apollo_library_halls",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S115",
+      "note": "The paired apsidal halls are the Domitianic reconstruction hypothesis. An Augustan library existed, but not proof of theseAD14 apses.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "paedagogium_palatine",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S116; excavated Domitianic complex at its cached surviving wall location; room partitions simplified. Public/service compound, not new housing.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "domitian_forum_entrance",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S117; PArCo identifies Domitianic entrance/ramp. Archaeological-map placement, not the tourism page visitor-address pin.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "horrea_agrippiana",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "early_version_and_basis_review",
+      "early_geometry_approved": false,
+      "basis": "S93/S120",
+      "note": "Augustan warehouse exists; the113 choice of3storeys remains a phased uncertainty. Do not silently make that a surveyedAD14 height.",
+      "different_geometry_required": false,
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "augustana_circus_loggia",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "omit_current_later_form_from_14",
+      "early_geometry_approved": false,
+      "basis": "S121; source-located southern loggia, partly schematic elevation. Curved facade connects the palace to the Circus-facing terrace; columns/entablatures estimated, not a surveyed complete113 elevation.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "forum_civic_paving_01",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "version_review_required",
+      "early_geometry_approved": false,
+      "basis": "S119; registered Forum civic open area, ancient paved square.44x125m painted extent estimated from the registered plan; surviving later pavement patterns not copied. Existing monuments excluded.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    },
+    {
+      "id": "area_palatina_paving_01",
+      "kind": "landmark",
+      "model_version_marker_ce": null,
+      "early_model_action": "version_review_required",
+      "early_geometry_approved": false,
+      "basis": "S113/S119; registered area in front of Flavian audience halls, conventionally Area/Forum Palatinum.78x90m paving extent approximate, not an excavated113 slab inventory; monuments and garden court excluded.",
+      "note": "Initial construction and rebuilt form must be distinguished; source-backed113 version is retained in the master.",
+      "source_review": "research/early_imperial_layout_sources.md"
+    }
+  ],
+  "summary": {
+    "candidate_existing_14": 16,
+    "omit_current_later_form_from_14": 72,
+    "early_version_and_basis_review": 15,
+    "version_review_required": 4
+  },
+  "residential_items_to_research": 8868,
+  "street_items_to_research": 894
+}

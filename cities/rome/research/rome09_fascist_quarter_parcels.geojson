@@ -1,0 +1,99 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4859714,
+       41.8935138
+      ],
+      [
+       12.4858266,
+       41.8936577
+      ],
+      [
+       12.4854155,
+       41.8934269
+      ],
+      [
+       12.4855602,
+       41.8932829
+      ],
+      [
+       12.4859714,
+       41.8935138
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_quarter_b001_01",
+    "kind": "block",
+    "typ": "rome09_fascist_front34",
+    "lot": [
+     8.54,
+     20.0
+    ],
+    "theta_deg": 35.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 5 shop-houses on one street front",
+     "parent_block": "rome09_fascist_quarter_b001",
+     "buildings": 5,
+     "basis": "research/rome09_fascist_housing_basis.md; A01 Figs6/7/9. Native whole-house parcels subdivide the source block. Widths6–12m/depth12–20m are source-constrained schematic working estimates, not cadastral tenure or dwelling counts. Usually3/4 storeys; no quantitative ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4857679,
+       41.8938722
+      ],
+      [
+       12.4855569,
+       41.8938059
+      ],
+      [
+       12.4856424,
+       41.893654
+      ],
+      [
+       12.4858534,
+       41.8937203
+      ],
+      [
+       12.4857679,
+       41.8938722
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_quarter_b001_02",
+    "kind": "block",
+    "typ": "rome09_fascist_front34",
+    "lot": [
+     9.16,
+     19.0
+    ],
+    "theta_deg": 111.13,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_quarter_b001",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_housing_basis.md; A01 Figs6/7/9. Native whole-house parcels subdivide the source block. Widths6–12m/depth12–20m are source-constrained schematic working estimates, not cadastral tenure or dwelling counts. Usually3/4 storeys; no quantitative ratio."
+    }
+   }
+  }
+ ]
+}

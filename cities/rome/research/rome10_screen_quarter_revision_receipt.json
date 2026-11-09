@@ -1,0 +1,306 @@
+{
+ "created_utc": "2026-10-30T06:09:20.138031+00:00",
+ "code_commit": "8db0bd2365ee7ab63be9364a52ed9341e4deb0ef",
+ "study": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision",
+ "study_seconds": 4.64,
+ "formal_film_seconds": null,
+ "primitives": 90,
+ "catalog": {
+  "path": "research/rome10_screen_quarter_revision_catalog.json",
+  "sha256": "e0702f2b402cfd24074aedae2b78ba190fdd4a879cbd45bfdac2ff888462571d",
+  "bytes": 32251
+ },
+ "source_ledger": {
+  "path": "research/rome10_screen_quarter_revision_sources.md",
+  "sha256": "486ea9a88e6d69549bf1479d8488d0a48b0d805cc1bd10f33eaaa74c69070062",
+  "bytes": 6615
+ },
+ "frozen": {
+  "path": "build/review/modelview/rome10_screen_quarter_central_approved_frozen/FROZEN.json",
+  "sha256": "9d8301edfd9582a8920866cfb4f39f2ee67e1f05a6cfc908f33dcb3a81078dcb",
+  "bytes": 996
+ },
+ "freeze_exit": 0,
+ "freeze_check_exit": 0,
+ "freeze_logs": [
+  {
+   "path": "research/rome10_screen_quarter_revision_freeze.log",
+   "sha256": "25af7099280009163c79560caf9af7dd0fb29713479830e2dd2eccf50bad9af6",
+   "bytes": 143
+  },
+  {
+   "path": "research/rome10_screen_quarter_revision_freeze_check.log",
+   "sha256": "0fe6c9b2769b14f5450430da3f6fdfc6e568da5d884c218c6194eacc304dc4c4",
+   "bytes": 49
+  }
+ ],
+ "central_comparison": {
+  "normalization": "native tools/freeze.py geometry: only primitive rise rank field10 omitted",
+  "old_body_count": 16,
+  "new_body_count": 16,
+  "equal": true,
+  "including_native_plinth": {
+   "old_count": 17,
+   "new_count": 17,
+   "equal": true,
+   "sha256": "62acfee42324080f632b3fe41a5f42f3e144224b88126c7493523df4d59227c5"
+  },
+  "old_sha256": "3c52d85705104a5136fb61dceb9f71824c2c265e3153f9909d16dbee88c67d75",
+  "new_sha256": "3c52d85705104a5136fb61dceb9f71824c2c265e3153f9909d16dbee88c67d75",
+  "old_era": {
+   "path": "build/review/modelview/rome10_screen_quarter_central_approved_frozen/build/data/era_screen_rome.json",
+   "sha256": "393ecc866ddff7cd5f1e206f7d6208fe9df5e464e3b5c614ecb4fefc56680777",
+   "bytes": 7032
+  },
+  "new_era": {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/data/era_screen_rome.json",
+   "sha256": "d306ddd22b4ce1175c7b087439f60d0a9c2d634d04ec780c32d541088edcd573",
+   "bytes": 18484
+  }
+ },
+ "compiled_inputs": {
+  "city.yaml": "1386b47159c57b5315b15478b11b0db09463b013cff356122f7d24553a2497f7",
+  "research/rome01_founding_approved_templates.yaml": "4f818caac584a894e8264a47466d2ffef889ff90716a2b076a6d7cb3c5b30c34",
+  "research/rome10_screen_quarter_revision_templates.yaml": "0367c171a044b9c7d49bce6fc6ca9d7bc0d430cff89bc680bafc73f92e3beedd",
+  "research/rome10_screen_quarter_revision_trace.geojson": "214eb92b5a721f372cd69a04fcd11b2b219360d80cdf544d4b465c8615c911a3"
+ },
+ "inputs_still_match": {
+  "city.yaml": true,
+  "research/rome01_founding_approved_templates.yaml": true,
+  "research/rome10_screen_quarter_revision_templates.yaml": true,
+  "research/rome10_screen_quarter_revision_trace.geojson": true
+ },
+ "native_commands": {
+  "modelview": {
+   "command": [
+    ".venv/bin/python3",
+    "-I",
+    "tools/modelview.py",
+    "build/review/modelview/rome10_screen_quarter_revision_inputs",
+    "screen_rome",
+    "--spec",
+    "research/rome10_screen_quarter_revision_spec.yaml",
+    "--year",
+    "1953",
+    "--name",
+    "rome10_screen_quarter_revision",
+    "--at",
+    "12.57704016,41.85221508,-30.6,15,0.037",
+    "--at",
+    "12.57726682,41.85235180,59.4,30,0.045",
+    "--at",
+    "12.57769232,41.85272038,149.4,15,0.04",
+    "--at",
+    "12.57729342,41.85230759,239.4,60,0.06"
+   ],
+   "exit": 0,
+   "log": "research/rome10_screen_quarter_revision_modelview.log"
+  },
+  "eraview": {
+   "command": [
+    "node",
+    "tools/eraview.mjs",
+    "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision",
+    "--eras",
+    "screen_rome",
+    "--quality",
+    "low",
+    "--d",
+    ".04",
+    "--aim",
+    "0.62715000,0.54703000",
+    "--at",
+    "4.64"
+   ],
+   "exit": 0,
+   "log": "research/rome10_screen_quarter_revision_eraview.log"
+  },
+  "rangecheck": {
+   "command": [
+    ".venv/bin/python3",
+    "-I",
+    "tools/rangecheck.py",
+    "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision",
+    "--from",
+    "4.64",
+    "--to",
+    "6.64",
+    "--step",
+    "1",
+    "--size",
+    "960x540"
+   ],
+   "exit": 0,
+   "log": "research/rome10_screen_quarter_revision_rangecheck.log"
+  },
+  "sheet": {
+   "command": [
+    ".venv/bin/python3",
+    "-I",
+    "tools/sheet.py",
+    "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/sheet.jpg",
+    "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/1_4.64.jpg",
+    "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/2_4.64.jpg",
+    "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/3_4.64.jpg",
+    "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/4_4.64.jpg",
+    "--cols",
+    "2",
+    "--w",
+    "960"
+   ],
+   "exit": 0,
+   "log": "research/rome10_screen_quarter_revision_sheet.log"
+  }
+ },
+ "native_range_report": {
+  "city": "rome/build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision",
+  "from": 4.64,
+  "to": 6.64,
+  "steps": {
+   "camdump": {
+    "ok": true,
+    "log": "cities/rome/build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/range_camdump.log",
+    "last": "camcheck: 21 camera samples -> build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/cam.json"
+   },
+   "camcheck": {
+    "ok": true,
+    "log": "cities/rome/build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/range_camcheck.log",
+    "last": "camcheck: ok"
+   },
+   "readcheck": {
+    "ok": true,
+    "log": "cities/rome/build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/range_readcheck.log",
+    "last": "--  r_screen_romen     at 4.64s  runs past the checked range: not judged"
+   },
+   "stills": {
+    "ok": true,
+    "log": "cities/rome/build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/range_stills.log",
+    "last": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/review/range_4.64_6.64/t_6.64.jpg 150ms"
+   },
+   "sheet_00": {
+    "ok": true,
+    "log": "cities/rome/build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/range_sheet_00.log",
+    "last": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/review/range_4.64_6.64/sheet_00.jpg (1920, 292)"
+   }
+  },
+  "stills": 3,
+  "sheets": [
+   "cities/rome/build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/review/range_4.64_6.64/sheet_00.jpg"
+  ],
+  "yavg": 52.8,
+  "yavg_lowest_minute": 52.8,
+  "yavg_per_still": [
+   [
+    4.64,
+    52.6
+   ],
+   [
+    5.64,
+    52.8
+   ],
+   [
+    6.64,
+    52.8
+   ]
+  ]
+ },
+ "paving_primitives": 35,
+ "all_native_paving_asphalt_flag2": true,
+ "original_seven_routes_geometry_and_dimensions_equal": {
+  "rome10_screen_quarter_front_crossroad": true,
+  "rome10_screen_quarter_rear_crossroad": true,
+  "rome10_screen_quarter_west_service_and_loading": true,
+  "rome10_screen_quarter_east_service_and_loading": true,
+  "rome10_screen_quarter_gallery_crossing_under_roof": true,
+  "rome10_screen_quarter_rear_large_door_loading": true,
+  "rome10_screen_quarter_service_front_entry": true
+ },
+ "native_logs": [
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/compile.log",
+   "sha256": "0bde711ac893b51121a01fd28b6876e9ddbd3fc4c21a399926f35813dc466322",
+   "bytes": 1208
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/geocheck.log",
+   "sha256": "8c3a9f508d7e5f9c788bc29d5c012e799614a5b8d5b4c536554f8e6e3db4983b",
+   "bytes": 239
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/clipcheck.log",
+   "sha256": "ddb5ed8f3af85443a5f0df4387241778564e44bc1ba63209269aee98f22b14b5",
+   "bytes": 267
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/logs/clipcheck.json",
+   "sha256": "dc1b59734576be0c8ccf154f9ef6dd8800ddae077b973a65b198f8cacb4e5364",
+   "bytes": 484
+  }
+ ],
+ "artifacts": [
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/1_4.64.jpg",
+   "sha256": "d0ceeee50f01c85945a84df5c787e983dd4c9954258305118853974f258bd174",
+   "bytes": 186027
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/2_4.64.jpg",
+   "sha256": "e5f08ec9bb972b0ddca7c4eafd48c49979210f206cdccc0eb3949cb0a22cd0fd",
+   "bytes": 201601
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/3_4.64.jpg",
+   "sha256": "7d796c4fdd5ce40229ef7111a9c27a1639b95bef9eb0997c75adfbd3f618cf71",
+   "bytes": 187975
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/4_4.64.jpg",
+   "sha256": "e1314d0347c9660b10bf28d1c745acc14665de49b7708b6574d3fbe9d2c875e4",
+   "bytes": 209213
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/sheet.jpg",
+   "sha256": "3a7d683ae8d005d58f8a9992d89c911a3ecfd58797e38ac2645204a5fcff6d1f",
+   "bytes": 236412
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/review/eraview/screen_rome_at4.64_film.jpg",
+   "sha256": "5c3d80090d7f1f37b4b919c047ed573408fe06cc344023afd898f9a895816232",
+   "bytes": 192186
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/review/eraview/screen_rome_at4.64_check.jpg",
+   "sha256": "9d41f63bbe8af154cb333bec007b6b37dadf8deaad7320c6db1a1995b7d3bda9",
+   "bytes": 186864
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/review/range_4.64_6.64/report.json",
+   "sha256": "9395f0ce9a5b0a98c265191cb62bb7348bf550c0c51e886cfe2269795e4c1a79",
+   "bytes": 2302
+  },
+  {
+   "path": "build/review/modelview/rome10_screen_quarter_revision_inputs/build/review/modelview/rome10_screen_quarter_revision/build/review/range_4.64_6.64/sheet_00.jpg",
+   "sha256": "d4b8826e7da4cf88159a0295703daf924a18f81045877916f825a5d4f1dd9232",
+   "bytes": 61221
+  }
+ ],
+ "source_overlay": [
+  {
+   "path": "research/model_reference/rome10_screen_quarter/revision1953_overlay.png",
+   "sha256": "8b09fb70ba23eed0adff73cb5f3ff962bd1c3f9683373fe30feada57e61941ba",
+   "bytes": 169079
+  },
+  {
+   "path": "research/model_reference/rome10_screen_quarter/revision1953_local_overlay.png",
+   "sha256": "14ed5cd7c7224d38de0c25156892a915cb7920485fb82c330b7d10281ef396e0",
+   "bytes": 811964
+  }
+ ],
+ "limits": [
+  "1953 plan dimensions are graphical estimates; upper forms of15/16 and auxiliaries are named same-period comparisons",
+  "16 is a soundstage in the1953 legend; north bar of15 is not proven17",
+  "21 is source-traced outer massing; its exact openings/equipment are not reconstructed",
+  "no exact1953-1959 window chronology or steel-truss mesh claimed",
+  "local study brightness is reported, not final-film acceptance; no formal staging changed"
+ ]
+}

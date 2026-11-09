@@ -1,0 +1,225 @@
+rome09_fascist_vittoriano_1925:
+  kind: parts
+  name: Vittoriano before1927 quadriga crowns
+  exaggeration: 1
+  basis: research/rome09_fascist_whole_basis.md; TCI1925 plan at the north Capitoline
+    and MiC Lazio Vittoriano official account:1911 inauguration,1921 UnknownSoldier,1927
+    quadrigas,1935 completion. Terraced podium and open colonnade follow the identifiable
+    institution;135x130m source-plan envelope and27/14/20m body heights are graphical/programme-constrained
+    estimates, not measured as-built elevations. MiC gives the original27m terrace
+    programme, which changed in construction; it is used as a named scale comparison,
+    not proof of exact1925 height. No later quadrigas or modern lifts. Sculpture,
+    individual stairs, curved colonnade and exact wings remain simplified.
+  parts:
+  - kind: stepped
+    w_m: 135
+    d_m: 130
+    h_m: 27
+    tiers: 3
+    top: 0.76
+    slope: vertical
+    stair:
+      at: front
+      w_m: 55
+  - kind: long_hall
+    at:
+    - 0
+    - 35
+    atop: 0
+    w_m: 108
+    d_m: 20
+    h_m: 14
+    colonnade:
+      at: front
+      n_front: 16
+    roof:
+      shape: flat
+  - kind: long_hall
+    at:
+    - -53
+    - 35
+    atop: 0
+    w_m: 20
+    d_m: 28
+    h_m: 20
+    colonnade:
+      at: front
+      n_front: 4
+    roof:
+      shape: flat
+  - kind: long_hall
+    at:
+    - 53
+    - 35
+    atop: 0
+    w_m: 20
+    d_m: 28
+    h_m: 20
+    colonnade:
+      at: front
+      n_front: 4
+    roof:
+      shape: flat
+rome09_fascist_sanlorenzo_body:
+  kind: parts
+  name: San Lorenzo outside the walls, source-bounded roof loss
+  exaggeration: 1
+  parts:
+  - id: rear_basilica
+    kind: long_hall
+    at:
+    - 0
+    - 27.5
+    w_m: 26
+    d_m: 35
+    h_m: 14
+    roof:
+      shape: gabled
+      pitch_deg: 18
+  - id: south_aisle
+    kind: long_hall
+    at:
+    - -11.5
+    - -17.5
+    w_m: 7
+    d_m: 55
+    h_m: 6
+    roof:
+      shape: gabled
+      pitch_deg: 18
+  - id: north_aisle
+    kind: long_hall
+    at:
+    - 11.5
+    - -17.5
+    w_m: 7
+    d_m: 55
+    h_m: 6
+    roof:
+      shape: gabled
+      pitch_deg: 18
+  - id: south_arcade
+    kind: arches
+    at:
+    - -8
+    - -17.5
+    theta_deg: 90
+    length_m: 55
+    h_m: 9
+    depth_m: 1.2
+    bays: 12
+    opening: 0.78
+    spring: 0.65
+    arch: round
+  - id: north_arcade
+    kind: arches
+    at:
+    - 8
+    - -17.5
+    theta_deg: 90
+    length_m: 55
+    h_m: 9
+    depth_m: 1.2
+    bays: 12
+    opening: 0.78
+    spring: 0.65
+    arch: round
+  - id: south_clerestory
+    kind: prism
+    at:
+    - -8
+    - -17.5
+    atop: 3
+    plan_m:
+    - - -0.6
+      - -27.5
+    - - 0.6
+      - -27.5
+    - - 0.6
+      - 27.5
+    - - -0.6
+      - 27.5
+    h_m: 5.5
+  - id: north_clerestory
+    kind: prism
+    at:
+    - 8
+    - -17.5
+    atop: 4
+    plan_m:
+    - - -0.6
+      - -27.5
+    - - 0.6
+      - -27.5
+    - - 0.6
+      - 27.5
+    - - -0.6
+      - 27.5
+    h_m: 5.5
+  - id: nave_roof
+    kind: prism
+    at:
+    - 0
+    - -17.5
+    atop: 5
+    section_m:
+    - - -9
+      - 0.5
+    - - 0
+      - 4.7
+    - - 9
+      - 0.5
+    - - 9
+      - 0
+    - - 0
+      - 4.2
+    - - -9
+      - 0
+    length_m: 55
+  - id: front_lower
+    kind: arches
+    at:
+    - 0
+    - -45
+    length_m: 30
+    h_m: 8
+    depth_m: 1.5
+    bays: 3
+    opening: 0.5
+    spring: 0.65
+  - id: portico
+    kind: long_hall
+    at:
+    - 0
+    - -49
+    w_m: 30
+    d_m: 8
+    h_m: 7
+    colonnade:
+      at: front
+      n_front: 6
+      depth_m: 6
+    roof:
+      shape: flat
+  - id: campanile
+    kind: column
+    at:
+    - 19
+    - -30
+    section: rect
+    w_m: 5
+    d_m: 5
+    h_m: 30
+  basis: research/rome09_fascist_whole_basis.md; SL01 Jiang2026 DOI10.5334/bc.707
+    pp221–223 fig4 (July1943 nave roof gone, arcades/rear survive), fig5 (NARA June20
+    1944 front columns and entablature standing under repairs). Official parish portico
+    page confirms six columns and post1943 reconstruction. AMS1944 north traced west–east
+    church axis; TourismRoma door point controls its west front. Portico8m overall
+    depth/6m open column bay is a source-photo scale estimate against its7m columns,
+    not a measured plan. Source-plan90m body length/30m width rounded from 1:10000
+    scan. Heights6/9/14/30m, roof4.2m rise,12 comparative nave bays, simplified rear
+    hall and tower are massing estimates against reused urban-basilica types and source
+    photographs, not an architectural survey. Roof skin is a named part;1943 loss
+    removes that skin only, retains standing side arcades, six front columns, rear
+    body and campanile. Surviving individual timber trusses, broken upper facade edges
+    and1944 repair scaffolding omitted. Does not assert an unrepaired roof through1945.

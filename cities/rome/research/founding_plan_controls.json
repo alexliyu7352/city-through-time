@@ -1,0 +1,179 @@
+{
+  "status": "manual_image_controls_for_research_not_georeferenced_not_approved_layout",
+  "coordinate_system": "Original image pixels; origin top-left; x right; y down; boxes [left, top, right, bottom]. No resampling, no cropped images substituted for original.",
+  "manual_reading_precision_px": {
+    "scale_tick": 3,
+    "north_arrow": 5,
+    "work_window": 10
+  },
+  "precision_meaning": "Working reading tolerance, not archaeological survey uncertainty. Re-pick controls at source resolution before tracing.",
+  "images": [
+    {
+      "id": "capanna_a_composite",
+      "file": "model_reference/founding_coarelli_capanna_a.jpg",
+      "source": "F04",
+      "size_px": [
+        1237,
+        2390
+      ],
+      "scale": {
+        "start_px": [
+          205,
+          2296
+        ],
+        "end_px": [
+          878,
+          2296
+        ],
+        "distance_m": 5,
+        "approx_px_per_m": 134.6
+      },
+      "north": {
+        "tail_px": [
+          1155,
+          1134
+        ],
+        "tip_px": [
+          1019,
+          1055
+        ],
+        "role": "orientation from printed arrow only; no geographic translation"
+      },
+      "regions": {
+        "ground_plan_px": [
+          120,
+          1080,
+          970,
+          1660
+        ],
+        "section_ab_px": [
+          95,
+          1690,
+          1060,
+          1940
+        ],
+        "section_cd_px": [
+          190,
+          2000,
+          860,
+          2190
+        ],
+        "frame_reconstruction_px": [
+          120,
+          40,
+          1110,
+          970
+        ]
+      },
+      "limits": "Body outline is incomplete and irregular; no closed vector generated. View-right porch belongs to short side; printed compass must be used before native rotation. Sections show cut features, not preserved roof heights."
+    },
+    {
+      "id": "pensabene_fig2",
+      "file": "model_reference/founding_pensabene2009_p7.jpg",
+      "source": "F01",
+      "size_px": [
+        1737,
+        2162
+      ],
+      "scale": {
+        "start_px": [
+          1279,
+          1106
+        ],
+        "end_px": [
+          1504,
+          1106
+        ],
+        "distance_m": 5,
+        "approx_px_per_m": 45.0
+      },
+      "north": {
+        "tail_px": [
+          1409,
+          1028
+        ],
+        "tip_px": [
+          1378,
+          982
+        ],
+        "role": "approximate compass needle direction; verify tip before registration"
+      },
+      "figure_region_px": [
+        180,
+        195,
+        1530,
+        1130
+      ],
+      "research_work_window_px": [
+        200,
+        480,
+        805,
+        985
+      ],
+      "approx_work_window_m": [
+        13.4,
+        11.2
+      ],
+      "single_hut_comparison_window_px": [
+        390,
+        470,
+        680,
+        745
+      ],
+      "limits": "Rectangles are researcher selections, not ancient property lines, settlement extent or excavated-unit polygons. All four hut traces are NOT simultaneous. Later stone walls are registration context, not founding buildings."
+    },
+    {
+      "id": "pensabene_fig1",
+      "file": "model_reference/founding_pensabene2009_p6.jpg",
+      "source": "F01",
+      "size_px": [
+        1737,
+        2162
+      ],
+      "scale": {
+        "start_px": [
+          331,
+          1340
+        ],
+        "end_px": [
+          548,
+          1340
+        ],
+        "distance_m": 10,
+        "approx_px_per_m": 21.7
+      },
+      "north": {
+        "tail_px": [
+          502,
+          1310
+        ],
+        "tip_px": [
+          491,
+          1271
+        ],
+        "role": "approximate arrow orientation"
+      },
+      "hut_area_label_a_px": [
+        1025,
+        1118
+      ],
+      "registration_features_to_resolve": [
+        "Preserved corners of later Magna Mater podium (label i)",
+        "Unambiguous turns along Scalae Caci edges (label o)",
+        "Corresponding preserved masonry features repeated in fig.2"
+      ],
+      "limits": "Label a is a label location, not a surveyed hut centroid. Full figure mixes periods. No selected control feature has yet been assigned WGS84 coordinates."
+    }
+  ],
+  "georeferencing": {
+    "performed": false,
+    "lon_lat_controls": null,
+    "minimum_future_requirements": "At least three identified non-collinear same-feature controls, checked rotation/scale and residuals; later monuments are anchors only, not eighth-century scene content."
+  },
+  "forbidden_inference": [
+    "No fake precise lon/lat from tourist map pins",
+    "No geometric settlement perimeter",
+    "No random or regular placement of huts",
+    "No native theta_deg copied directly from page image without frame conversion"
+  ]
+}

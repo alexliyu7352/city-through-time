@@ -1,0 +1,35 @@
+# Round10 地基與古地面
+
+基線為只讀 `rome_round9c_all`。原生 `tools/clipcheck.py` 在 `本機候選/rome_round10_sites_baseline` 的獨立 logs 執行，結果 `clipcheck: ok`，新增清單共127筆。對應表為 `rome_round10_sites_inventory.json`，每筆保留era、原ID、模板、平台／本體比例、米數與原basis；inline量體的template為null，表示它直接寫在該node的landmarks，不是查漏。對應以原生 `landmark_site`、`landmarks.build`、`Builder.finish` 的實際building center核對，127筆中心誤差均0。
+
+`rome_round10_sites_decisions.json` 保留建法判斷及cut試驗結果，未把通過新清單當成畫面完成。最終 `rome_round10_sites_patch.yaml` 只含54個安全cut覆寫及Aemilia兩期的四級floor＋atop替換，原28個unsafe cut中其餘26件改列 `deferred_raised` 並逐ID保9c raised；`rome_round10_sites_patch_safe.yaml` 單獨保存54個安全cut覆寫。原量體、部件ID及stage保留，Aemilia才新增有據四級部件。所有cut提案都在同一個獨有scratch中逐棟測試，沒有改正式city、原模板、baseline或共享程式。Aemilia實作及8筆限定院地建議見 `rome_round10_sites_aemilia_courts.md`。
+
+## 五處必核
+
+平面與DEM對照圖：`本機候選/rome_round10_sites_probe/five_sites_plan_dem.jpg`。紅線是原生 `landmark_site` 外包去標準6m apron；像素／地理對應只用 `register.Source.geotiff`，不是手寫經緯度換算。底圖沿既有館藏KML配準GeoTIFF。地形數值為引擎實畫的 `terrain16.png`＋`terrainio.plate_mesh`，以圖像相對高程報告，不冒稱絕對海拔或古地面；數值在 `rome_round10_sites_plan_dem.json`。它與真實古地坪的差異是本件問題本身，不拿今天DEM當考古測高。
+
+|項目|原址／平面核對|原生plate內高差（地形×2前）|來源判斷與處理|
+|---|---|---:|---|
+|Aemilia warehouses|12.47430,41.88054，487×60m、43°；沿配準Lanciani河岸長倉，沒有移到Testaccio堆山|16.94m|[DAR Porticus Aemilia (Emporium)](https://www.digitalaugustanrome.org/records/porticus-aemilia-emporium/)明載四級向台伯河遞降、50橫向桶拱，且批評Berlin模型錯置。既有原文在 `model_reference/rome02_republic_whole_evidence/dar_porticus_aemilia_emporium.txt`。50個長廳在整片最高點共用一面不合四級建法，不能只改cut就聲稱完成。487×60m沿[市府](https://www.turismoroma.it/en/places/porticus-aemilia)／既核MiC。名稱及年代爭議沿原basis，不重定分期。|
+|Palatine Stadium|12.487493,41.88756，161×48m、−133.2°；外包吻合配準宮殿圖，曲端朝SW；不挪向宮殿高台|11.46m|[PArCo](https://colosseo.it/mirabilia/stadio-palatino/)正文列低於Flavia-Augustana約10m、三面柱廊、東exedra。本輪含鄰宮study確認原Stadium已低於Flavia8.24m螢幕／upper5.05m，保原分台＋earth內場／端部grass已讀成較低乾地長園，native0。terrain×2前僅4.12／2.53m，官方約10m仍屬未校準精度限制；不採會吞牆的cut，不造坑。原161×48m、7m廊高／曲端不改，東exedra仍沿原簡化。|
+|Saepta|12.47816,41.89725，310×120m；配準圖、Pantheon以東及Via della Minerva西stoa界關係符合舊估外廓，保留Diribitorium接合邊|11.27m|[DAR](https://www.digitalaugustanrome.org/records/saepta-iulia/)列開放piazza、東西柱廊、北廳、南與Diribitorium相接；無高達整個柱廊的全場podium。採cut，不為消平台縮小院子或移錨點。|
+|Octavia／Metelli|12.47880,41.89298，119×132m、−29°；精查 `lanciani_campus_core.tif`，完整圍區在南側現存入口NE，沒有把門廊點當中心|9.73m|[DAR](https://www.digitalaugustanrome.org/records/porticus-octaviae/)第2段明記Metelli的tufa foundations及podium遺存，故兩期保留raised。20m螢幕平台不能稱古podium實高：它混合現代起伏與×2；原上高本來就是示意。沒有依比例把有據podium刪掉。|
+|Atrium Vestae|帝國／晚古12.4866706,41.8913511，104×54.6m、63.66°；長院及Vesta西北錨吻合配準圖；早期與共和版本維持各自較小來源平面|10.36m|[PArCo](https://colosseo.it/area/foro-romano/la-casa-delle-vestali/)記自然土直接在帝國地坪下，後來覆土局部達20m；SE Nero-Flavian牆再由110–113結構包入。這不能支持整住宅露出一層高podium。cut，保持前後版本及早期南界的不確定性；不硬加−10m或把後期長院倒填早期。|
+
+## 表中來源組與建法界線
+
+- **PET**：[Fabbrica di San Pietro／Pietro Zander〈La Necropoli〉](https://www.basilicasanpietro.va/it/san-pietro/la-necropoli)原文：拆墓上部、回填、平整Vatican雙向坡地；官方估土方逾40,000m³。只用來支持切填建法，不將估土方轉為精確每處地坪。04舊殿改cut；06舊殿基線已cut，patch明列維持cut，原nave／transept／apse分期不動。800前院也cut。
+- **POD**：逐廟原basis沿 `FACTS.md` S89、S98、S114及共和／AD14原來源表；[DAR Jupiter](https://www.digitalaugustanrome.org/records/iuppiter-optimus-maximus-capitolinus-aedes/)、[Magna Mater](https://www.digitalaugustanrome.org/records/magna-mater-aedes/)、[Victoria](https://www.digitalaugustanrome.org/records/victoria-aedes-palatium/)、[Caen Castor](https://rome.unicaen.fr/monument/templecastorpollux/)。有據神廟基座保留raised，不按畫面平台大小選site；模型明畫的podium也不刪。
+- **TER**：Palatine各歷史台地／宮殿下層承重結構依 `imperial_113_sources.md` S97、`imperial_completion_sources.md`、`imperial_landscape_sources.md`；[PArCo Tiberiana](https://colosseo.it/mosaico/domus-tiberiana/)、[PArCo Palatine地坪](https://colosseo.it/percorsi/camminare-sulla-storia-mosaici-e-pavimenti-in-marmo-del-palatino/)、[Vigna原研究pp5–7](https://colosseo.it/sito/wp-content/uploads/2021/10/15_La_coenatio_rotunda_della_Domus_Aurea_su.pdf)。[市府Trajan地下廊](https://www.sovraintendenzaroma.it/i_luoghi/roma_antica/monumenti/terme_di_traiano/galleria_sudoccidentale)明記人工台地約6ha、舊建築作基礎。[TESS13142](https://tess.beniculturali.unipd.it/web/scheda/?recid=13142)正文明記Constantine南坡人工台地並利用舊建築／商倉。[MiC Caracalla](https://soprintendenzaspecialeroma.it/luoghi/terme-di-caracalla/)既存原文 `LA15_caracalla.txt`／html明記三道遞降台地及地下服務廊，保留raised類型，不能把本模型單面平台當三台精測。[DAR Porticus Liviae](https://www.digitalaugustanrome.org/records/porticus-liviae/)支持陡坡上的院地與下接商舖階梯。Belvedere三台沿round9原已核模板及Vatican來源，不重做後期層差。
+- **OCT**：上表DAR原文的Metelli podium依據，適用共和Metelli與後續Octavia同址柱廊。
+- **VEN**：[市府Circus Maximus](https://www.turismoroma.it/it/luoghi/circo-massimo)、[DAR Circus](https://www.digitalaugustanrome.org/records/circus-maximus/)、[PArCo Stadium](https://colosseo.it/mirabilia/stadio-palatino/)、[市府Domitian stadium](https://sovraintendenzaroma.it/i_luoghi/roma_antica/monumenti/stadio_di_domiziano)；1937Cipressi及1960游泳看台沿 `rome09_fascist_foro_*`、`rome11_olympic_*` 的原報告及來源平面。場館自身的看台／承重體保留；只有已通過項採cut撤外包平台，未通過項維持原分台，Palatine Stadium另以乾地花園表達其既有相對低位。
+- **BRI**：`FACTS.md` S100及原[市府古橋冊](https://sovraintendenzaroma.it/sites/default/files/storage/original/application/10ca51a6208eb64e25c4a259d3ff184a.pdf)；橋墩及拱本體保留。橋的矩形外包不應成實心島臺，cut只是建模落地選擇，不是主張橋基全部挖掉。
+- **CIV**：逐件原basis的DAR／官方廣場平面與修建史，見 `ad14_public_sources.md` AP06、AP08、`imperial_113_sources.md` S98–100；[Saepta](https://www.digitalaugustanrome.org/records/saepta-iulia/)、[Forum Iulium](https://www.digitalaugustanrome.org/records/forum-iulium/)、[Trajan Markets](https://www.mercatiditraiano.it/it/infopage/gran-emiciclo)。開放公共地坪與挖入山坡的市場採cut，是對現代DEM地面之有界模型處理；不宣稱每處出土切坡深度已知。
+- **GRD**：逐件原basis保留在inventory JSON，包括 `rome02_republic_whole_sources.md`、`ad14_hill_completion_sources.md`、`imperial_completion_sources.md`。[Horrea Agrippiana](https://www.digitalaugustanrome.org/records/horrea-agrippiana/)／[PArCo地坪路線](https://colosseo.it/percorsi/camminare-sulla-storia-mosaici-e-pavimenti-in-marmo-del-palatino/)。地上庫房／服務院／住宅本身的樓層與牆體保留，沒有來源的整片高臺採cut；不以「沒寫podium」冒充考古證明全部是同一建造工法。
+- **MOD**：逐件原模板basis與既有原來源：`rome06_medieval_whole_basis.md`、`rome_director_v9_0507_facade_patch.md`、`rome10_screen_whole_sources.md`、`rome11_olympic_services_templates.yaml`、`rome09_fascist_foro_*`。20世紀服務附屋採地上建築切填落地，不發明與低屋同高的平台；地形整平仍受下節能力限制。
+
+## 原生能力問題
+
+`site: cut` 現有實作只把建物地坪放在現有plate最高／最低中點，去掉PLINTH並把牆往下延伸；**沒有把底板的上坡半邊切低或將院地填平**（`landmarks.py` build、`citygen.py` lot_site）。因此不能以 `tall_platform_at` 歸零就報完成。以五處全cut的研究測試，geo正常、clip共65：`terrain_cut 14`、`tall_foundation 51`；ref可見Stadium及Octavia高基礎換成同色高牆。五處原raised對照geo／clip均正常，平台清單5筆，證明checker正常也不能代表建法正確。同機位並排圖 `本機候選/rome_round10_sites_probe/raised_vs_cut.jpg`，左raised／右cut；順序Aemilia、Stadium、Saepta、Octavia、Vesta。原圖在 `rome_round10_sites_principal_raised/1_4.66.jpg`至5、`rome_round10_sites_principal_cut/1_4.62.jpg`至5，均已實看。Octavia全cut只作能力對照，最終建法判斷仍raised。127項各自獨立的原生測試中，28項cut仍失敗；其餘cut通過也只表示模型檢查通過，需由排片者在最終片機位驗看。失敗表與safe patch由原生結果產生。
+
+本輪按MODEL現有能力收束：Aemilia以4個整片floor的 `site:parts`、每級vault組 `atop` 共面處理，兩期clip0；古絕對datum／階差未知、15m帶深是估值，高基礎仍266%／172%而未冒稱消失。其餘缺共同古地坪者保9c raised。Stadium保既有分台，含鄰宮＋earth／grass的原生study已表達相對低位乾地花園、geo/clip0，本輪採用；真整地未做、官方約10m未校準是精度限制，並非把整件標成沒做。沒有硬加−10m、新坑或水池，也未改共享程式。

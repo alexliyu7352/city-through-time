@@ -1,0 +1,273 @@
+{
+  "slug": "rome",
+  "name": {
+    "en": "Rome",
+    "ja": "ローマ",
+    "zh-Hant": "羅馬",
+    "zh-Hans": "罗马",
+    "es": "Roma"
+  },
+  "location": [
+    12.5,
+    41.9
+  ],
+  "years": [
+    -753,
+    2026
+  ],
+  "duration": 1808.2,
+  "narration": "en",
+  "subtitles": [
+    "en",
+    "zh"
+  ],
+  "chapters": [
+    {
+      "t": 25.3,
+      "year": -753,
+      "color": "#8CCBFF"
+    },
+    {
+      "t": 87.5,
+      "year": -509,
+      "color": "#BB7548"
+    },
+    {
+      "t": 110.6,
+      "year": -160,
+      "color": "#BB7548"
+    },
+    {
+      "t": 126.8,
+      "year": -160,
+      "color": "#BB7548"
+    },
+    {
+      "t": 144.8,
+      "year": -55,
+      "color": "#BB7548"
+    },
+    {
+      "t": 157.9,
+      "year": -55,
+      "color": "#BB7548"
+    },
+    {
+      "t": 165.6,
+      "year": -55,
+      "color": "#BB7548"
+    },
+    {
+      "t": 188.4,
+      "year": -49,
+      "color": "#BB7548"
+    },
+    {
+      "t": 231.7,
+      "year": -44,
+      "color": "#BB7548"
+    },
+    {
+      "t": 239.4,
+      "year": -44,
+      "color": "#BB7548"
+    },
+    {
+      "t": 264.4,
+      "year": -27,
+      "color": "#EBCB75"
+    },
+    {
+      "t": 282.7,
+      "year": 14,
+      "color": "#EBCB75"
+    },
+    {
+      "t": 472.2,
+      "year": 271,
+      "color": "#9ABFE2"
+    },
+    {
+      "t": 559.3,
+      "year": 408,
+      "color": "#9ABFE2"
+    },
+    {
+      "t": 721.1,
+      "year": 554,
+      "color": "#9ABFE2"
+    },
+    {
+      "t": 790.9,
+      "year": 1300,
+      "color": "#70C6AC"
+    },
+    {
+      "t": 852.8,
+      "year": 1300,
+      "color": "#70C6AC"
+    },
+    {
+      "t": 911.1,
+      "year": 1506,
+      "color": "#D6B8F2"
+    },
+    {
+      "t": 1121.0,
+      "year": 1848,
+      "color": "#E2B783"
+    },
+    {
+      "t": 1194.6,
+      "year": 1870,
+      "color": "#E2B783"
+    },
+    {
+      "t": 1212.1,
+      "year": 1871,
+      "color": "#E2B783"
+    },
+    {
+      "t": 1227.7,
+      "year": 1871,
+      "color": "#E2B783"
+    },
+    {
+      "t": 1249.8,
+      "year": 1925,
+      "color": "#E2B783"
+    },
+    {
+      "t": 1265.0,
+      "year": 1931,
+      "color": "#E2B783"
+    },
+    {
+      "t": 1276.2,
+      "year": 1932,
+      "color": "#8D9FB1"
+    },
+    {
+      "t": 1340.3,
+      "year": 1932,
+      "color": "#8D9FB1"
+    },
+    {
+      "t": 1359.4,
+      "year": 1936,
+      "color": "#8D9FB1"
+    },
+    {
+      "t": 1380.1,
+      "year": 1943,
+      "color": "#8D9FB1"
+    },
+    {
+      "t": 1456.7,
+      "year": 1945,
+      "color": "#8D9FB1"
+    },
+    {
+      "t": 1492.1,
+      "year": 1953,
+      "color": "#E7C5A5"
+    },
+    {
+      "t": 1553.1,
+      "year": 1960,
+      "color": "#F1D171"
+    },
+    {
+      "t": 1601.9,
+      "year": 1960,
+      "color": "#67B9EE"
+    },
+    {
+      "t": 1610.5,
+      "year": 1975,
+      "color": "#67B9EE"
+    },
+    {
+      "t": 1624.2,
+      "year": 1982,
+      "color": "#67B9EE"
+    },
+    {
+      "t": 1639.1,
+      "year": 1982,
+      "color": "#67B9EE"
+    },
+    {
+      "t": 1653.8,
+      "year": 1993,
+      "color": "#67B9EE"
+    },
+    {
+      "t": 1662.4,
+      "year": 2020,
+      "color": "#526D83"
+    },
+    {
+      "t": 1681.4,
+      "year": 2020,
+      "color": "#DCE7EF"
+    },
+    {
+      "t": 1689.5,
+      "year": 2024,
+      "color": "#DCE7EF"
+    },
+    {
+      "t": 1716.6,
+      "year": 2024,
+      "color": "#DCE7EF"
+    },
+    {
+      "t": 1731.0,
+      "year": 2025,
+      "color": "#DCE7EF"
+    },
+    {
+      "t": 1744.8,
+      "year": 2026,
+      "color": "#DCE7EF"
+    },
+    {
+      "t": 1748.1,
+      "year": 2026,
+      "color": "#DCE7EF"
+    },
+    {
+      "t": 1767.0,
+      "year": 2026,
+      "color": "#DCE7EF"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Alex",
+      "url": "https://x.com/alexlee20122022"
+    }
+  ],
+  "summary": {
+    "en": "From huts beside the Tiber to the Rome of 2026, follow 2,800 years on the same ground: a republic becomes an imperial capital, the city shrinks, and successive generations rebuild it. Models, maps and labelled imagined scenes show how its streets and monuments changed.",
+    "ja": "テヴェレ川沿いの小屋から2026年のローマまで、同じ土地に重なる約2800年をたどります。共和政から帝国の首都へ、人口の減少と幾度もの再建。模型、地図、想像図で、街路と建築の変化を見ていきます。",
+    "zh-Hant": "從台伯河邊的茅屋到2026年的羅馬，在同一片土地上看約2800年的興衰：共和國成為帝都，城市縮小，又被一代代人重建。透過模型、地圖與明確標示的想像場景，觀看街道和建築如何改變。",
+    "zh-Hans": "从台伯河边的茅屋到2026年的罗马，在同一片土地上看约2800年的兴衰：共和国成为帝都，城市缩小，又被一代代人重建。通过模型、地图与明确标示的想象场景，观看街道和建筑如何改变。",
+    "es": "Desde las cabañas junto al Tíber hasta la Roma de 2026, recorre unos 2.800 años sobre el mismo terreno: una república se convierte en capital imperial, la ciudad se reduce y generaciones sucesivas la reconstruyen. Maquetas, mapas y escenas imaginadas identificadas muestran cómo cambiaron sus calles y monumentos."
+  },
+  "poster": "https://alexliyu7352.github.io/city-through-time-rome/rome/poster.jpg",
+  "thumb": "https://alexliyu7352.github.io/city-through-time-rome/rome/poster_thumb.webp",
+  "watch": [],
+  "bundle": {
+    "url": "https://alexliyu7352.github.io/city-through-time-rome/rome/",
+    "mb": 435
+  },
+  "download": null,
+  "ai": [
+    "narration",
+    "imagined"
+  ],
+  "license": "CC BY-SA 4.0",
+  "added": "2026-11-09"
+}

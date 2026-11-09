@@ -1,0 +1,1588 @@
+langs:
+- en
+- zh
+prologue:
+- id: rp_001
+  en: In 64 CE, Rome caught fire.
+  zh: 公元64年，罗马烧了起来。
+- id: rp_002
+  en: The flames raced from the low streets up the hillsides,
+  zh: 大火顺着低处的街巷往山坡上窜，
+- id: rp_003
+  en: and families ran for their lives.
+  zh: 满城的人拖家带口，拼命往外逃。
+  see: card:prologue_fire_escape
+- id: rp_004
+  en: Who would have thought that this city,
+  zh: 谁能想到，
+- id: rp_005
+  en: home to more than 2.7 million people today,
+  zh: 这座今天住着270多万人的城市，
+- id: rp_006
+  en: began as a few clusters of thatched huts by the River Tiber?
+  zh: 最早，只是台伯河边的几片茅草屋。
+opening: []
+nodes:
+  founding_price:
+  - id: r01_001
+    en: The River Tiber runs between a group of hills in central Italy,
+    zh: 台伯河穿过意大利中部的几座山丘，
+    see: stage:cermalus_first_houses
+  - id: r01_002
+    en: then on to the Mediterranean Sea.
+    zh: 一路流进地中海。
+    see:
+    - card:founding_geography
+  - id: r01_003
+    en: By the 8th century BCE, people were living on these slopes.
+    zh: 公元前8世纪，这些山坡上已经有了人家。
+  - id: r01_004
+    en: Their huts stood in small clusters with open ground between them;
+    zh: 茅屋三五成群，中间隔着大片荒地；
+    with: shot:huts
+    see: stage:hillside_villages
+  - id: r01_005
+    en: even the Palatine Hill, where emperors would
+    zh: 就连后来建起皇宫的帕拉蒂尼山，
+  - id: r01_006
+    en: later build their palaces, had only thatched huts.
+    zh: 那时也只有草房。
+  - id: r01_007
+    en: In the river lay a small island, the easiest place to cross.
+    zh: 河心有一座小岛，是渡河最省力的地方。
+    with: shot:river
+    see: pin:founding_island
+  - id: r01_008
+    en: Goods brought up from the coast were unloaded here,
+    zh: 海边运来的货物在这里卸船，
+    see: pin:founding_island
+  - id: r01_009
+    en: and travellers crossed here on their way north and south.
+    zh: 南来北往的行人从这里过河。
+    see: pin:founding_island
+  - id: r01_010
+    en: The first Rome grew up at this crossing,
+    zh: 最早的罗马，
+    see:
+    - pin:founding_island
+    - pin:founding_settlement_return
+  - id: r01_011
+    en: where the river met the road.
+    zh: 就长在这个水陆交汇的渡口旁。
+    see:
+    - pin:founding_island
+    - pin:founding_settlement_return
+  - id: r01_012
+    en: The Romans' own legend says that in 753 BCE Romulus founded
+    zh: 按罗马人自己的传说，公元前753年，
+    see: pin:romulus_legend
+  - id: r01_013
+    en: a city here and became its king. The name Rome comes from him.
+    zh: 罗慕路斯在这里筑城称王，“罗马”这个名字，就来自他。
+    see: pin:romulus_legend
+  - pause: 4.5
+    why: 'Legendary founding: see the boundary ritual, then return from the living
+      moment to the model.'
+  republic_won_and_lost:
+  - id: r02_001
+    en: In 509 BCE the Romans drove out
+    zh: 公元前509年，罗马人赶走最后一位国王，
+  - id: r02_002
+    en: their last king and founded a republic.
+    zh: 建立共和国。
+  - id: r02_003
+    en: Affairs of state were decided by the Senate,
+    zh: 国家大事交给元老院、
+  - id: r02_004
+    en: the citizens' assemblies and elected officials,
+    zh: 公民大会和选出来的官员共同决定，
+  - id: r02_005
+    en: and the officials had to give up their power when their term ended.
+    zh: 官员任期一到就得交权。
+  - id: r02_006
+    en: From then on, no single man ruled Rome.
+    zh: 从那以后，罗马不再由一个人说了算。
+  republic_middle_city:
+  - id: r02_011
+    en: Grain, tribute and the spoils of war flowed in from far away; the city
+    zh: 远方的粮食、贡赋和战利品运进城里，
+    year: -160
+    t: 3.9
+  - id: r02_012
+    en: spread outward ring by ring, and its public squares grew grander.
+    zh: 城区一圈圈向外长，广场也越修越大。
+    year: -160
+  republic_pompey_observation:
+  - id: r02_013
+    en: But as the wars were fought further and further away,
+    zh: 但仗越打越远，
+    year: -55
+    with: node
+    lead: 0
+  - id: r02_014
+    en: generals came to have armies loyal to them alone,
+    zh: 将军们手里有了只听自己号令的军队，
+    year: -55
+  - id: r02_015
+    en: and with those armies, the means to challenge the Senate.
+    zh: 也就有了跟元老院较量的本钱。
+    year: -55
+  republic_late_city:
+  - id: r02_020
+    en: 'Civil war began:'
+    zh: 内战开始了，罗马人打罗马人，
+    year: -49
+  - id: r02_021
+    en: Romans fought Romans over who would rule the state.
+    zh: 争的是谁来统治这个国家。
+    year: -49
+  - id: r02_022
+    en: Caesar won, and was made dictator for life,
+    zh: 凯撒赢了内战，
+    year: -44
+  - id: r02_023
+    en: with all power in his hands.
+    zh: 当上终身独裁官，大权集于一身。
+    year: -44
+  - id: r02_023a
+    en: 'He was already remaking the city: a new square carried his name.'
+    zh: 他已经在改造这座城：一座以他命名的新广场落成了。
+    with: shot:forum
+    lead: 0
+  - id: r02_024
+    en: A group of senators decided that to save the Republic,
+    zh: 一批元老暗下决心：
+    year: -44
+  - id: r02_025
+    en: Caesar had to die.
+    zh: 要想保住共和，凯撒必须死。
+    year: -44
+  - id: r02_026
+    en: On 15 March 44 BCE, the Senate met in a hall built by Pompey.
+    zh: 公元前44年3月15日，元老院在庞培议事厅开会。
+    year: -44
+    with: shot:curia
+    lead: 0
+  republic_caesar:
+  - id: r02_027
+    en: As soon as Caesar sat down,
+    zh: 凯撒刚坐下，刺客就围了上来，
+    year: -44
+  - id: r02_028
+    en: the assassins closed in and stabbed him to death.
+    zh: 用刀把他刺死在会场里。
+    year: -44
+  republic_last_wars:
+  - id: r02_029
+    en: But killing Caesar did not save the Republic.
+    zh: 但刺死凯撒，并没有救回共和国。
+    year: -44
+  - id: r02_029a
+    en: Civil war went on for more than 10 years,
+    zh: 罗马又打了10多年内战，
+    year: -44
+  - id: r02_030
+    en: until Caesar's adopted son Octavian came out the winner.
+    zh: 最后的赢家是凯撒的养子屋大维。
+    year: -44
+  - id: r02_031
+    en: In 27 BCE the Senate gave him the title Augustus.
+    zh: 公元前27年，元老院献给他“奥古斯都”的尊号——
+    year: -27
+  - id: r02_032
+    en: The Republic was over, and Rome had its first emperor.
+    zh: 罗马告别了共和，有了第一位皇帝。
+    year: -27
+  republic_civic_dedications:
+  - id: r03_001
+    en: 'After the civil wars, Augustus set about rebuilding the capital:'
+    zh: 内战结束后，奥古斯都着手整修首都，
+    year: -27
+  - id: r03_002
+    en: he restored old temples and gave the citizens new public squares.
+    zh: 修复旧神庙，给市民建新广场。
+    year: -27
+    with: shot:apollo
+    lead: 0
+  imperial_height:
+  - id: r03_003
+    en: He liked to boast that he had found
+    zh: 他曾得意地说，自己接手的是一座砖头城，
+    year: 14
+  - id: r03_004
+    en: a city of brick and left a city of marble.
+    zh: 留下的是一座大理石城。
+    year: 14
+  - id: r03_005
+    en: But the marble went into temples and squares; ordinary Romans still
+    zh: 可大理石多用在神庙和广场上，
+    year: 14
+  - id: r03_006
+    en: crowded into tall blocks of rented rooms along narrow streets.
+    zh: 普通市民仍挤在窄巷里的多层出租楼中。
+    year: 14
+  - id: r03_007
+    en: By then Rome may have held close to 1 million people,
+    zh: 那时的罗马，可能已住着近100万人。
+    year: 14
+  - id: r03_008
+    en: far more than the farmland around it could feed.
+    zh: 城外的田地养不活这么多人，
+    year: 14
+  - id: r03_009
+    en: Grain was shipped from North Africa and Egypt
+    zh: 粮食要从北非和埃及装船，
+    year: 14
+  - id: r03_010
+    en: across the Mediterranean,
+    zh: 渡过地中海，
+    year: 14
+  - id: r03_011
+    en: then brought up the Tiber into the city.
+    zh: 再沿台伯河运进城。
+    year: 14
+  - id: r03_012
+    en: If the grain ships were a few days late, the city went hungry.
+    zh: 粮船晚到几天，城里就要挨饿。
+    year: 14
+  - id: r03_013
+    en: In 51 CE, during a shortage, Rome had only 15 days of food left,
+    zh: 公元51年闹粮荒，存粮只够吃15天，
+    year: 51
+  - id: r03_014
+    en: and an angry crowd surrounded the emperor Claudius.
+    zh: 愤怒的市民围住了皇帝克劳狄乌斯。
+    year: 51
+  - id: r03_015
+    en: Besides hunger, this city of tall buildings
+    zh: 除了饥荒，这座挤满高楼窄巷的城还怕一样东西：
+    year: 51
+  - id: r03_016
+    en: 'and narrow streets feared one more thing: fire.'
+    zh: 火。
+    year: 51
+  - id: r03_017
+    en: In 64 CE, under the emperor Nero, a fire broke out in shops
+    zh: 公元64年，尼禄在位时，
+    year: 64
+    with: shot:fire
+    lead: 0
+  - id: r03_018
+    en: beside the Circus Maximus, the great chariot-racing track.
+    zh: 大赛车场边的店铺起了火。
+    year: 64
+  - id: r03_019
+    en: Driven by the wind, it swept along the narrow streets of the valley
+    zh: 火借着风，顺着低处的窄街一路烧上山坡。
+    year: 64
+    with: shot:firebreak
+    lead: 18.117583333333332
+  - id: r03_020
+    en: and up the hills. People fled, helping the old and carrying the young;
+    zh: 逃难的人扶老携幼，
+    year: 64
+  - id: r03_021
+    en: those in front were still looking for a way out while those
+    zh: 前面的还没找到出路，后面的又涌了上来。
+    year: 64
+  - id: r03_022
+    en: behind pushed forward. On the 6th day, people tore down a whole
+    zh: 烧到第6天，人们拆掉一大片房子，
+    year: 64
+  - id: r03_023
+    en: stretch of houses to make a firebreak, and the fire was stopped.
+    zh: 空出一道隔火带，才把火挡住；
+    year: 64
+  - id: r03_024
+    en: Soon it broke out again and burned still more of the city.
+    zh: 没过多久，火又烧起来，烧掉了更多街区。
+    year: 64
+  - id: r03_025
+    en: Legend says that while Rome burned, Nero played his lyre and sang.
+    zh: 传说，罗马燃烧时，尼禄在高处弹琴唱歌。
+    year: 64
+    with: shot:rebuild
+    lead: 0
+  - id: r03_026
+    en: No one knows for certain how the fire started. What Nero did next
+    zh: 火到底是怎么烧起来的，至今没人说得清；
+    year: 64
+    see:
+    - stage:postfire_housing
+    - pin:postfire_homes
+  - id: r03_027
+    en: 'showed whose interests came first: in the burned-out heart of the city'
+    zh: 尼禄接下来做的事，却让人看清了他的私心：
+    year: 64
+  - id: r03_028
+    en: he took a huge stretch of land for his Golden House and its gardens,
+    zh: 他在烧光的城中心圈下一大片地，
+    year: 64
+  - id: r03_029
+    en: and dug an artificial lake in the valley.
+    zh: 修起他的金宫和园林，还在谷底挖了一个人工湖。
+    year: 68
+  - id: r03_030
+    en: Streets where families had lived became one man's private park.
+    zh: 原来住满人家的街坊，成了皇帝一个人的园子。
+    year: 68
+  - id: r03_031
+    en: After Nero's death,
+    zh: 尼禄死后，
+    year: 70
+  - id: r03_031a
+    en: the emperor Vespasian gave the land back to the people of Rome.
+    zh: 皇帝维斯帕先把这片地还给了罗马市民：
+    year: 70
+  - id: r03_032
+    en: He drained the lake
+    zh: 排干湖水，
+    year: 70
+    with: shot:drain
+    lead: 0
+  - id: r03_032a
+    en: and began building a great arena on the spot.
+    zh: 在原地建一座大竞技场。
+  - pause: 7
+    why: A breath while the arena rises on the drained lake.
+  - id: r03_033
+    en: In 80 CE his son, the emperor Titus, opened it.
+    zh: 公元80年，他的儿子提图斯皇帝为它揭幕。
+    year: 80
+    with: shot:arena_plate
+    lead: 0
+  - id: r03_034
+    en: Where an emperor had kept a private lake,
+    zh: 皇帝独享的湖面，
+    year: 80
+  - id: r03_035
+    en: there were now seats for about 50,000 people.
+    zh: 变成了约5万人的看台。
+    year: 80
+  - id: r03_035a
+    en: This is the Colosseum.
+    zh: 这就是罗马斗兽场。
+    year: 80
+  - id: r03_036
+    en: By the early 2nd century, under the emperor Trajan,
+    zh: 到了2世纪初的图拉真皇帝时，
+  - id: r03_037
+    en: the empire reached its greatest size.
+    zh: 帝国的疆域达到最大。
+  - pause: 4.5
+    why: A short breath between the sentences of the building montage.
+  - id: r03_038
+    en: In the capital, the wealth of generations of conquest was turned
+    zh: 一代代征服带回的财富，
+    year: 109
+  - id: r03_039
+    en: into temples, baths and public squares, one after another.
+    zh: 在首都变成了一座又一座神庙、浴场和广场。
+    year: 113
+  - pause: 8
+    why: The column completes the city before the next chapter.
+  another_centre:
+  - id: r04_001
+    en: Yet the empire's golden age could not last forever.
+    zh: 然而，帝国的黄金时代终有落幕的时候。
+    year: 271
+  - id: r04_002
+    en: By 271, invaders from the north were closing in on Italy.
+    zh: 公元271年，北方的入侵者已经逼近意大利。
+    year: 271
+  - id: r04_003
+    en: Rome had long since spread beyond its old walls,
+    zh: 罗马城区早就漫出了几百年前的旧城墙，
+    year: 271
+  - id: r04_004
+    en: built centuries before, and the emperor Aurelian ordered
+    zh: 皇帝奥勒良下令，
+    year: 271
+  - id: r04_005
+    en: a new wall to be raised around the whole city in haste.
+    zh: 绕着整座城抢修一道新墙。
+    year: 271
+  - id: r04_006
+    en: In 275 the Aurelian Wall, about 19 km long, was complete.
+    zh: 4年后，约19公里长的奥勒良城墙合拢。
+    year: 275
+    with: shot:round9_wall_circuit
+    lead: 5
+  - id: r04_007
+    en: By now the emperors rarely lived in Rome.
+    zh: 可这时的皇帝，已经很少住在罗马。
+    year: 330
+    see:
+    - stage:constantinian_city_350
+    - pin:constantinian_rome
+  - id: r04_008
+    en: In 330 Constantine the Great founded a new capital in the east,
+    zh: 330年，君士坦丁大帝在东方建立新都君士坦丁堡，
+    year: 330
+  - id: r04_009
+    en: Constantinople, today's Istanbul.
+    zh: 也就是今天的伊斯坦布尔。
+    year: 330
+  - id: r04_010
+    en: Also in Constantine's time,
+    zh: 也是在君士坦丁的时代，台伯河西岸、
+    year: 330
+  - id: r04_011
+    en: the first St Peter's Basilica was built across the Tiber,
+    zh: 相传安葬着耶稣门徒彼得的地方，
+    year: 330
+  - id: r04_012
+    en: on the spot where Jesus's disciple Peter was said to be buried.
+    zh: 建起了最早的圣彼得大教堂。
+    year: 330
+  - id: r04_013
+    en: From then on,
+    zh: 此后，
+    year: 330
+  - id: r04_014
+    en: pilgrims came to Rome from every direction to visit this tomb.
+    zh: 四面八方的朝圣者为这座墓来到罗马。
+    year: 330
+  - id: r04_015
+    en: Later the empire split into an eastern and a western half,
+    zh: 后来，帝国分成东西两半，
+    year: 395
+  - id: r04_016
+    en: each with its own emperor.
+    zh: 各有一位皇帝。
+    year: 395
+  - id: r04_017
+    en: In 402 the western emperor moved his court to Ravenna,
+    zh: 402年，
+    year: 402
+  - id: r04_018
+    en: which was easier to defend.
+    zh: 西罗马皇帝把朝廷搬到了更易防守的拉文纳。
+    year: 402
+  - id: r04_019
+    en: Rome's walls were raised higher.
+    zh: 罗马的城墙又加高了一截。
+    year: 403
+    see:
+    - stage:honorian_city_403
+    - pin:raised_wall_section
+  - pause: 6
+    why: Two extra seconds to see the higher wall before the siege; the next line
+      accompanies the pull-back.
+  the_city_taken:
+  - id: r04_020
+    en: Only 6 years later, in 408, the Visigothic king Alaric cut
+    zh: 仅仅6年后，408年，西哥特国王阿拉里克
+    year: 408
+  - id: r04_021
+    en: off the route that brought grain from the port into the city.
+    zh: 带兵截断了从海港运粮进城的路。
+    year: 408
+  - id: r04_022
+    en: Rations were cut again and again,
+    zh: 城里的口粮一减再减，
+    year: 408
+  - id: r04_023
+    en: and Rome had to pay a ransom to make him withdraw.
+    zh: 罗马只好交出赎金，换他退兵。
+    year: 408
+  - id: r04_024
+    en: In the summer of 410 he came back,
+    zh: 410年夏天，他又带兵回来，
+    year: 410
+  - id: r04_025
+    en: and this time his army broke through the gates and sacked the city.
+    zh: 这一次攻进了城门，洗劫了罗马。
+    year: 410
+    see:
+    - arrow:alaric410_entry
+  - id: r04_026
+    en: It was the first time in 800 years
+    zh: 这是800年来，
+    year: 410
+  - id: r04_027
+    en: that a foreign enemy had taken Rome.
+    zh: 罗马第一次被外敌攻破。
+    year: 410
+  - id: r04_028
+    en: 'Far away, the Christian scholar Jerome heard the news and wrote:'
+    zh: 消息传到远方，基督教学者哲罗姆在信中写道：
+    year: 412
+  - id: r04_029
+    en: '"The city which had taken the whole world was itself taken."'
+    zh: “那座征服了整个世界的城，自己竟被征服了。”
+    year: 412
+  - id: r04_030
+    en: The Western Roman Empire held on for a few more decades.
+    zh: 西罗马帝国又勉强撑了几十年。
+    year: 412
+  - id: r04_031
+    en: In 476 the army commander Odoacer deposed the last
+    zh: 476年，军队统帅奥多亚塞废黜了西罗马的末代皇帝，
+    year: 476
+    with: shot:empire476
+    lead: 0
+  - id: r04_032
+    en: western emperor and took Italy for himself.
+    zh: 自己掌握了意大利。
+    year: 476
+  - id: r04_033
+    en: 'As it happened, the young emperor was named Romulus Augustus:'
+    zh: 巧的是，这位年轻皇帝的名字叫“罗慕路斯·奥古斯都”
+    year: 476
+  - id: r04_034
+    en: Romulus, the city's founder, and Augustus, its first emperor.
+    zh: ——前半截是建城的始祖，后半截是第一位皇帝。
+    year: 476
+  - id: r04_035
+    en: The Western Empire ended with that name.
+    zh: 西罗马帝国，就结束在这个名字上。
+    year: 476
+  - id: r04_036
+    en: In the east, the Roman Empire lived on,
+    zh: 东边的罗马帝国还在，
+    year: 476
+  - id: r04_037
+    en: with its capital at Constantinople.
+    zh: 都城是君士坦丁堡。
+    year: 476
+  - id: r04_038
+    en: In 493 the king of the Ostrogoths took Italy from Odoacer,
+    zh: 493年，东哥特国王从奥多亚塞手里夺下意大利，
+    year: 493
+  - id: r04_039
+    en: and Rome became a city of the Ostrogothic kingdom.
+    zh: 罗马成了东哥特王国里的一座城。
+    year: 493
+  - id: r04_040
+    en: In the 6th century the eastern emperor Justinian set out
+    zh: 到了6世纪，东罗马皇帝查士丁尼决心收回意大利，
+    year: 535
+  - id: r04_041
+    en: to win Italy back and sent his general Belisarius west.
+    zh: 派大将贝利撒留西征。
+    year: 535
+  - id: r04_042
+    en: Belisarius entered Rome in 536; the next year
+    zh: 536年，贝利撒留进了罗马；
+    year: 536
+  - id: r04_043
+    en: the Ostrogothic army returned and laid siege to the city.
+    zh: 次年，东哥特大军杀了回来，把城围住。
+    year: 537
+  - id: r04_044
+    en: The Goths cut the aqueducts.
+    zh: 东哥特人切断了引水渠。
+    year: 537
+  - id: r04_045
+    en: The mills on the Janiculum Hill were driven by aqueduct water,
+    zh: 贾尼科洛山上的磨坊靠渠水推动，
+    year: 537
+    with: shot:mill_wide
+    lead: 0
+  - id: r04_046
+    en: and with the water gone, they stopped.
+    zh: 水一断，磨就停了。
+    year: 537
+    with: shot:mill_stopped
+    lead: 0
+  - id: r04_047
+    en: Without the mills, grain could not be ground into flour,
+    zh: 粮食磨不成面粉，
+    year: 537
+  - id: r04_048
+    en: and there was no bread.
+    zh: 就做不成面包。
+    year: 537
+  - pause: 6
+    why: The camera follows the stopped hilltop mill down to the existing river mooring
+      before the boat mill is introduced.
+  - id: r04_049
+    en: 'Belisarius found a way:'
+    zh: 贝利撒留想出了一个办法：
+    year: 537
+    with: shot:river_mills
+    lead: 0
+  - id: r04_049a
+    en: he had boats moored side by side on the Tiber,
+    zh: 让人把船并排拴在台伯河上，
+    year: 537
+  - id: r04_050
+    en: with water wheels between them, so that the river itself
+    zh: 在两船之间装上水轮，
+    year: 537
+    see:
+    - stage:river_mills_537
+  - id: r04_051
+    en: turned the millstones.
+    zh: 用河水推磨。
+    year: 537
+    see:
+    - stage:river_mills_537
+  - id: r04_052
+    en: The river that had carried grain to Rome for centuries now ground it.
+    zh: 这条为罗马运了几百年粮食的河，开始为它磨面。
+    year: 537
+    see:
+    - stage:river_mills_537
+  - id: r04_053
+    en: Food was still short.
+    zh: 粮食仍然不够。
+    year: 537
+  - id: r04_054
+    en: The baths had no water, the citizens called up to guard the walls
+    zh: 浴场断了水，被叫去守城墙的居民睡不了整觉，
+    year: 537
+  - id: r04_055
+    en: barely slept, and women and children were sent out of the city.
+    zh: 妇女和孩子被送出城外。
+    year: 537
+  - id: r04_056
+    en: The war went on, on and off, for almost 20 years,
+    zh: 这场仗断断续续打了近20年，
+    year: 554
+  - id: r04_057
+    en: and in the end the eastern empire won.
+    zh: 最后东罗马赢了。
+    year: 554
+  people_return:
+  - id: r04_058
+    en: By the middle of the 6th century, Rome,
+    zh: 到6世纪中叶，
+    year: 554
+  - id: r04_059
+    en: once home to close to 1 million people,
+    zh: 曾经住着近100万人的罗马，
+    year: 554
+  - id: r04_060
+    en: may have had only 50,000 left,
+    zh: 可能只剩下5万人，
+    year: 554
+    with: shot:small_city
+    lead: 0
+  - id: r04_060a
+    en: about enough to fill the old Colosseum.
+    zh: 差不多刚够坐满当年的斗兽场。
+    year: 554
+  - id: r04_061
+    en: The streets where people lived drew back;
+    zh: 住人的街区缩了回去，
+    year: 554
+  - id: r04_062
+    en: the walls stayed where they were.
+    zh: 城墙却还是那么长。
+    year: 554
+  - id: r04_063
+    en: Italy was hard to govern from Constantinople.
+    zh: 意大利离君士坦丁堡太远，东罗马鞭长莫及，
+    year: 554
+  - id: r04_064
+    en: Feeding the city and defending it fell more and more
+    zh: 城里的民生和防务，渐渐落到了
+    year: 554
+  - id: r04_065
+    en: 'to the Bishop of Rome: the pope.'
+    zh: 罗马主教，也就是教宗的身上。
+    year: 756
+  - id: r04_066
+    en: In the 8th century, with the armed backing of the Franks to the north,
+    zh: 到了8世纪，教宗借着北方法兰克王国的武力，
+    year: 756
+  - id: r04_067
+    en: the popes won a territory of their own in central Italy,
+    zh: 在意大利中部站稳了脚跟，
+    year: 756
+  - id: r04_067a
+    en: the Papal States,
+    zh: 建立起
+    year: 756
+  - id: r04_068
+    en: where the pope was both head of the Church and ruler of the land.
+    zh: 政教合一的教宗国。
+    year: 756
+  - id: r04_069
+    en: On Christmas Day in 800, the Frankish king Charlemagne came
+    zh: 800年圣诞节，法兰克国王查理曼来到圣彼得大教堂，
+    year: 800
+    with: shot:charlemagne_stpeter
+    lead: 0
+  - id: r04_070
+    en: to St Peter's, and the pope crowned him with his own hands.
+    zh: 教宗亲手为他戴上皇冠。
+    year: 800
+  - id: r04_071
+    en: More than 300 years after the fall of the Western Empire,
+    zh: 西罗马灭亡300多年后，
+    year: 800
+  - id: r04_072
+    en: the West had an emperor again.
+    zh: 西方又有了皇帝。
+    year: 800
+  - id: r04_073
+    en: Rome was by then far too small to look like an imperial capital,
+    zh: 那时的罗马已经小得不像帝都了，
+    year: 800
+  - id: r04_074
+    en: yet whoever wanted to be emperor still had to come to Rome.
+    zh: 可要当皇帝，还得到罗马来。
+    year: 800
+  people_return_late:
+  - id: r05_001
+    en: By around 1300, most of the land inside
+    zh: 到了1300年前后，
+  - id: r05_002
+    en: the Aurelian Wall was empty of people.
+    zh: 奥勒良城墙里一大半的地方已经没人住。
+  - id: r05_003
+    en: Fields, vegetable gardens, churches and ancient ruins
+    zh: 有人烟的街巷之间，夹着大片田地、
+  - id: r05_004
+    en: lay between the streets where people still lived.
+    zh: 菜园、教堂和古代废墟。
+  - id: r05_005
+    en: In that same year, 1300, Pope Boniface VIII proclaimed
+    zh: 就在1300年，教宗博尼法斯八世宣布
+  - id: r05_006
+    en: 'the first Jubilee in Christian history: believers who came to Rome'
+    zh: 举行基督教历史上第一个禧年：信徒这一年到罗马，
+  - id: r05_007
+    en: that year and prayed at the basilicas of St Peter and St Paul
+    zh: 朝拜圣彼得和圣保罗两座大教堂满15天，
+    see:
+    - pin:pilgrim_peter
+    - pin:pilgrim_paul
+  - id: r05_008
+    en: for 15 days would be freed from the punishment for their sins.
+    zh: 就能得到罪罚的赦免。
+  - id: r05_009
+    en: Pilgrims poured by the thousands
+    zh: 成千上万的朝圣者
+  - id: r05_010
+    en: into a city that was more than half empty.
+    zh: 涌进这座空了大半的城。
+  - id: r05_011
+    en: 'The poet Dante later described that year in his Divine Comedy:'
+    zh: 诗人但丁后来在《神曲》里
+  - id: r05_012
+    en: the crowd on the bridge by Castel Sant'Angelo was so great
+    zh: 写到了那一年圣天使桥上的情景：
+    see:
+    - pin:bridge_castle
+    - pin:pilgrim_bridge
+  - id: r05_013
+    en: that the bridge was divided down the middle, one side
+    zh: 过河的人太多，桥面只好从中间分开，
+    see:
+    - pin:bridge_castle
+    - pin:pilgrim_bridge
+  - id: r05_014
+    en: for those going to St Peter's, the other for those coming back.
+    zh: 一边往圣彼得走，一边往回走。
+    year: 1300
+    see:
+    - pin:bridge_castle
+    - pin:pilgrim_bridge
+  - pause: 1.7000000000000002
+    why: Protected 05a/05b handoff; retain approved timing.
+  made_again:
+  - id: r06_001
+    en: In the 16th century, the popes set out to rebuild
+    zh: 进入16世纪，
+    year: 1506
+    see:
+    - stage:veronica1506
+  - id: r06_002
+    en: Rome as the capital of the Christian world.
+    zh: 教宗们要把罗马重新建成基督教世界的首都。
+  - id: r06_003
+    en: 'In 1506 Pope Julius II made a bold decision:'
+    zh: 1506年，教宗尤利乌斯二世做出了一个大胆的决定：
+    year: 1506
+  - id: r06_004
+    en: to pull down the old St Peter's, more than 1,000 years old,
+    zh: 拆掉已有1000多年历史的老圣彼得大教堂，
+  - id: r06_005
+    en: and build a larger church on the same spot.
+    zh: 在原地建一座更大的新教堂。
+  - pause: 0.35
+    why: Turn from construction to the pope as a temporal ruler.
+  - id: r06_006
+    en: But the pope was also the ruler of a state,
+    zh: 可教宗也是一国之君，
+  - id: r06_007
+    en: and he could not keep out of Europe's wars.
+    zh: 躲不开欧洲各国的争斗。
+  - id: r06_008
+    en: In 1526 Pope Clement VII joined
+    zh: 1526年，教宗克莱孟七世联合几个国家，
+    year: 1526
+  - id: r06_009
+    en: an alliance against Charles V,
+    zh: 对抗身兼西班牙国王
+  - id: r06_010
+    en: who was both king of Spain and Holy Roman Emperor.
+    zh: 与神圣罗马帝国皇帝的查理五世。
+  - pause: 0.55
+    why: Alliance gives way to the May 1527 assault.
+  - id: r06_011
+    en: In May 1527 one of Charles's armies,
+    zh: 1527年5月，查理五世手下一支长期欠饷、
+    year: 1527
+    see:
+    - card:sack1527_engraving
+    - pin:sack1527_entry_schematic
+  - id: r06_012
+    en: long unpaid and almost out of control, broke into Rome.
+    zh: 几乎失控的军队攻破了罗马。
+    see:
+    - arrow:sack1527_entry_direction
+  - pause: 0.18
+    why: Minimum native flight from the assault view to the Passetto.
+  - id: r06_013
+    en: Clement fled along a raised passage on top of a wall into Castel
+    zh: 克莱孟七世沿着城墙上的高架通道
+    see:
+    - pin:escape_castle
+    - pin:escape1527
+    - arrow:passetto_castel_direction_only
+  - id: r06_014
+    en: Sant'Angelo; the people of the city had nowhere to go.
+    zh: 仓皇逃进圣天使堡，城里的百姓却无处可逃。
+    see:
+    - pin:escape_castle
+    - pin:escape1527
+  - pause: 0.95
+    why: Minimum native flight from the Passetto to the civilian home.
+  - id: r06_015
+    en: Soldiers broke into homes, looted them,
+    zh: 乱兵闯进民宅抢劫，
+  - id: r06_016
+    en: and held whoever they caught for ransom.
+    zh: 抓到人就勒索赎金。
+  - id: r06_017
+    en: One Roman notary and his wife paid a ransom of 100 ducats
+    zh: 一位罗马公证人和妻子，
+  - id: r06_018
+    en: to save their lives, but their home was gone.
+    zh: 交出100达克特的赎金才保住性命，可他们的家已经没了。
+    year: 1527
+  - pause: 0.45
+    why: From the ruined home to the army leaving in 1528.
+  - id: r06_019
+    en: When the soldiers finally left, the pope had already fled the city.
+    zh: 乱兵撤走时，教宗已经逃到了外地。
+    year: 1528
+  - id: r06_020
+    en: The Romans sent envoys to beg him to come back, and, hard as it was,
+    zh: 罗马人一边派人去请教宗回来，一边咬着牙，
+  - id: r06_021
+    en: rebuilt their ruined houses one by one where they had stood.
+    zh: 在原地把被毁的房子一间间修起来。
+  - pause: 0.55
+    why: 1530s redesign follows the rebuilding passage.
+  - id: r06_022
+    en: In the 1530s Michelangelo, then in his 60s,
+    zh: 1530年代，年过六旬的米开朗基罗
+    year: 1537
+    see:
+    - card:michelangelo_portrait
+  - id: r06_023
+    en: redesigned the square on the Capitoline Hill.
+    zh: 重新设计卡比托利欧山上的广场。
+    see:
+    - pin:capitol_design
+  - id: r06_024
+    en: 'His design showed which way Rome now faced: he turned the square'
+    zh: 他做了一个意味深长的设计：
+    year: 1564
+  - id: r06_025
+    en: around, so that its back was to the ruins of the ancient
+    zh: 让广场掉了个头，背对古罗马广场的废墟，
+    see:
+    - arrow:camp_forum_direction
+  - id: r06_026
+    en: Forum and its face to the new streets where people lived.
+    zh: 正面朝着市民住的新城区。
+    see:
+    - arrow:camp_streets_direction
+  - pause: 0.5
+    why: Minimum native flight after the complete Campidoglio orientation sentence.
+  - id: r06_027
+    en: In his last years Michelangelo also
+    zh: 晚年的米开朗基罗
+    year: 1564
+  - id: r06_028
+    en: designed the great dome of St Peter's.
+    zh: 还设计了圣彼得大教堂的大穹顶。
+    year: 1564
+  - id: r06_029
+    en: When he died, it had risen only as far as the ring at its base.
+    zh: 直到他去世，穹顶才修到底下那一圈基座。
+    year: 1564
+    see:
+    - pin:drum1564
+  - pause: 6
+    why: The drum worksite living moment ends before the completed church and relocated
+      obelisk rise.
+  - id: r06_030
+    en: In 1626 the new St Peter's was finally consecrated,
+    zh: 1626年，新圣彼得大教堂终于落成，
+    year: 1626
+    see:
+    - stage:completion1626
+    - pin:new1626
+  - id: r06_031
+    en: 120 years after building began.
+    zh: 距离动工已经过去了120年。
+    year: 1626
+    see:
+    - stage:completion1626
+    - pin:new1626
+  - pause: 9.1
+    why: The low front view stays through the photograph, then the native seven-second
+      flight reaches the ancient Forum.
+  - id: r06_032
+    en: At the other end of the city, the ancient Forum lay half buried
+    zh: 那时，城另一头的古罗马广场已经半埋在土里，
+    year: 1626
+    with: shot:cow_field
+    lead: 0
+    see:
+    - pin:campo_location
+  - id: r06_033
+    en: in earth, and cattle grazed among its broken columns.
+    zh: 牛群在断柱之间吃草。
+  - id: r06_034
+    en: The place where an empire had once made its greatest
+    zh: 当年决定天下大事的地方，
+  - id: r06_035
+    en: decisions was now known to Romans simply as the Cow Field.
+    zh: 老百姓干脆管它叫“牛场”。
+  - pause: 0.5
+    why: From Cow Field to Bernini in 1667.
+  - id: r06_036
+    en: In 1667 the sculptor Bernini finished a pair of curving colonnades
+    zh: 40多年后，雕塑家贝尼尼在大教堂前修起两道弧形柱廊，
+    year: 1667
+  - id: r06_037
+    en: in front of St Peter's, reaching out like open arms around the square.
+    zh: 像一双伸开的臂膀，把广场围在当中。
+    year: 1667
+  - id: r06_038
+    en: 'Around the church and the palaces were streets where people lived:'
+    zh: 大教堂和宫殿四周，依然是一条条住人的街巷，
+    with: shot:living_city
+    lead: 0
+  - id: r06_039
+    en: officials, craftsmen and shopkeepers made their living there,
+    zh: 官员、工匠和店主在这里过日子，
+  - id: r06_040
+    en: and pilgrims from afar found a place to stay.
+    zh: 远来的朝圣者在这里落脚。
+  - pause: 0.3
+    why: Closing judgement follows the inhabited streets.
+  - id: r06_041
+    en: Looted and battered, Rome had been rebuilt by one generation after
+    zh: 这座被抢过、被毁过的城，靠着几代人的接力，
+    year: 1671
+  - id: r06_042
+    en: another, on the same ground, into a city people could go on living in.
+    zh: 在同一片土地上，又建出了一座能继续住下去的城。
+  a_capital_fought_for:
+  - id: r07_001
+    en: By the 19th century a movement to unite Italy had begun.
+    zh: 时间来到19世纪，意大利半岛兴起了统一运动。
+    year: 1848
+  - id: r07_002
+    en: Rome, though, was still the capital of the Papal States,
+    zh: 可罗马这时仍是教宗国的首都，
+    see:
+    - pin:censo_east_identity
+    - stage:censo_east_context
+  - id: r07_003
+    en: and the pope was both head of the Church and ruler of the city.
+    zh: 教宗既是宗教领袖，也是这座城的君主。
+  - id: r07_004
+    en: Late in 1848 a revolution forced Pope Pius IX to flee;
+    zh: 1848年底，革命逼得教宗庇护九世出逃；
+    year: 1848
+  - id: r07_005
+    en: the next year the revolutionaries declared a Roman Republic.
+    zh: 次年，革命者宣布成立罗马共和国。
+    year: 1849
+  - id: r07_006
+    en: A few months later French troops crushed
+    zh: 几个月后，法国出兵打垮了共和国，
+  - id: r07_007
+    en: the republic and restored the pope's rule.
+    zh: 恢复了教宗的统治。
+    year: 1849
+  - pause: 0.4
+    why: Time advances from the restored pope to the 1861 kingdom.
+  - id: r07_008
+    en: In 1861 the Kingdom of Italy was founded,
+    zh: 1861年，意大利王国成立，
+    year: 1861
+  - id: r07_009
+    en: with Victor Emmanuel II as its king.
+    zh: 国王是维托里奥·埃马努埃莱二世。
+  - id: r07_010
+    en: The new kingdom wanted Rome as its capital,
+    zh: 新王国要以罗马为首都，
+  - id: r07_011
+    en: but Rome was still in the hands of Pius IX.
+    zh: 可罗马还在庇护九世手里。
+  - pause: 0.55
+    why: The 1870 turning point follows the political impasse.
+  - id: r07_012
+    en: The turning point came on 20 September 1870.
+    zh: 转折发生在1870年9月20日。
+    year: 1870
+  - id: r07_013
+    en: The kingdom's troops brought up cannon,
+    zh: 意大利王国的军队架起大炮，在庇亚门旁
+  - id: r07_014
+    en: blew a gap in the 1,600-year-old Aurelian Wall beside the Porta Pia,
+    zh: 把有着1600年历史的奥勒良城墙轰开一道缺口，
+  - id: r07_015
+    en: and marched into Rome.
+    zh: 攻入罗马。
+  - pause: 0.3
+    why: From the army entering to the end of the Papal States.
+  - id: r07_016
+    en: Pius IX refused to accept it, but the Papal States,
+    zh: 庇护九世拒不承认，
+  - id: r07_017
+    en: which had lasted more than 1,000 years, were finished.
+    zh: 可延续了1000多年的教宗国，就此终结。
+  rome08_national_capital:
+  - id: r07_018
+    en: The following year Rome officially became the capital
+    zh: 次年，罗马正式成为意大利王国的首都，
+    year: 1871
+    with: shot:quirinal_close
+    lead: 3.651125
+  - id: r07_019
+    en: of the Kingdom of Italy, and the Quirinal Palace,
+    zh: 原本属于教宗的奎里纳尔宫，
+  - id: r07_020
+    en: once the pope's, had become the king's.
+    zh: 已经成了国王的王宫。
+    year: 1871
+  rome08_expansion1925:
+  - id: r07_021
+    en: The new government brought crowds of officials, and drew thousands
+    zh: 新政府带来了大批官员，
+  - id: r07_022
+    en: upon thousands of people from the provinces looking for work.
+    zh: 也吸引了成千上万进城谋生的外省人。
+  - id: r07_023
+    en: To house them, new districts were built beyond the ancient walls.
+    zh: 为了安置越来越多的人口，一片片新街区越过了古墙。
+    year: 1925
+  rome08_river_forecast:
+  - id: r07_026
+    en: The new government began building
+    zh: 新政府开始在河两岸
+    year: 1871
+    with: shot:embankment_close
+    lead: 1.5
+  - id: r07_027
+    en: high stone embankments along both banks.
+    zh: 修筑高高的石砌河堤。
+  - id: r07_028
+    en: By 1900 the finished stretches kept the floods out of the streets,
+    zh: 到1900年，修好的河堤已经把街道和泛滥的河水隔开，
+    year: 1900
+  - id: r07_029
+    en: and kept the Romans away from their river.
+    zh: 也把罗马人和台伯河隔开了。
+  republic_conquests_map:
+  - id: r02_007
+    en: Over the next few centuries, Rome's armies conquered the Italian
+    zh: 接下来的几百年里，罗马军队先打下意大利半岛，
+    year: -160
+  - id: r02_008
+    en: peninsula, then reached out across the Mediterranean.
+    zh: 又把势力伸向整个地中海。
+    year: -160
+  - id: r02_009
+    en: By the 2nd century BCE,
+    zh: 到公元前2世纪，台伯河边的这座城，
+    year: -160
+  - id: r02_010
+    en: the city on the Tiber ruled a vast territory.
+    zh: 已经统治着一大片疆域。
+    year: -160
+  republic_caesar_introduction:
+  - id: r02_016
+    en: The most famous of these generals was Julius Caesar.
+    zh: 凯撒是其中最有名的一个。
+    year: -55
+    with: node
+    lead: 0
+  republic_campaigns_map:
+  - id: r02_017
+    en: He spent 8 years fighting in Gaul, roughly today's France,
+    zh: 他在高卢，也就是今天的法国一带，
+    year: -55
+    with: node
+    lead: 0
+  - id: r02_018
+    en: and came back with a great army that answered to him.
+    zh: 打了8年仗，带回一支忠于他的大军。
+    year: -55
+  - id: r02_019
+    en: In 49 BCE Caesar led his troops across the Rubicon River into Italy.
+    zh: 公元前49年，凯撒率军越过卢比孔河，进入意大利。
+    year: -49
+  a_home_lost:
+  - id: r08_001
+    en: In the 1920s Benito Mussolini seized power
+    zh: 1920年代，墨索里尼夺取政权，
+  - id: r08_002
+    en: and set up a Fascist dictatorship in Italy.
+    zh: 在意大利建立法西斯独裁。
+  - id: r08_003
+    en: The king kept his throne, but the real power was Mussolini's.
+    zh: 国王还在，实权却在他手里。
+  - id: r08_004
+    en: 'He wanted Rome to look like the capital of an empire again:'
+    zh: 他要让罗马重现古罗马帝国的威风：
+    t: 11.5575
+  - id: r08_005
+    en: by the Tiber he built ever larger stadiums,
+    zh: 在台伯河边修起越来越大的体育场，
+    t: 15.4933
+  - id: r08_006
+    en: ringed with marble statues, and he tore down old neighbourhoods to lay
+    zh: 赛场四周立满大理石雕像；还要拆掉老街区，
+    t: 18.7186
+  - id: r08_007
+    en: bare the ancient ruins and open wide avenues for military parades.
+    zh: 让古代遗迹露出来，给阅兵队伍腾出宽阔的大道。
+  - id: r08_008
+    en: In 1929 he signed the Lateran Treaty with the papacy,
+    zh: 1929年，他又与教廷签下《拉特兰条约》，
+    t: 28.9731
+  - id: r08_009
+    en: ending almost 60 years of hostility that had begun in 1870. The pope
+    zh: 结束了从1870年起近60年的对立：
+    t: 34.0606
+  - id: r08_010
+    en: recognised Rome as part of Italy, and the papacy gained a state
+    zh: 教宗承认罗马属于意大利，教廷则在城里得到
+    t: 40.4295
+  - id: r08_011
+    en: 'of its own inside the city, just 0.44 km² in size: Vatican City.'
+    zh: 一个只有0.44平方公里的国家——梵蒂冈城国。
+  - id: r08_012
+    en: The cost of his grand plans fell on ordinary Romans.
+    zh: 他的宏图，代价由普通罗马人来付。
+    t: 52.3445
+  rome09_clearance1932:
+  - id: r08_013
+    en: In 1932, to clear the way for the Via dell'Impero,
+    zh: 1932年，为了开辟通往斗兽场的“帝国大道”，
+    t: 0.5
+    see:
+    - pin:tail_via_impero
+    - pin:tail_cleared_homes
+  - id: r08_014
+    en: the "Avenue of the Empire", running to the Colosseum,
+    zh: 古罗马广场旁的亚历山德里诺街区被成片拆平，
+    t: 5.0887
+    see:
+    - pin:tail_via_impero
+    - pin:tail_cleared_homes
+  - id: r08_015
+    en: 'much of the Alessandrino neighbourhood beside the Forum was flattened:'
+    zh: 住宅、
+    t: 8.8973
+    see:
+    - pin:tail_via_impero
+    - pin:tail_cleared_homes
+  - id: r08_016
+    en: homes, shops and churches all went.
+    zh: 铺面和教堂一起消失。
+    t: 13.9382
+  rome09_spina1937:
+  - id: r08_017
+    en: A few years later the old streets of the Borgo,
+    zh: 几年后，
+    see:
+    - pin:tail_spina
+  - id: r08_018
+    en: right in front of St Peter's, were pulled down too,
+    zh: 圣彼得大教堂正前方的博尔戈老街也被拆掉，
+  - id: r08_019
+    en: and replaced by a broad, straight avenue.
+    zh: 换成一条宽阔笔直的大道。
+  - id: r08_020
+    en: Neighbours who had lived there for generations were scattered.
+    zh: 世代住在那里的老街坊，就此散了。
+  - pause: 3.5
+    why: See residents leaving in the new Borgo living moment.
+  rome09_war1943:
+  - id: r08_021
+    en: 'And a greater disaster followed: the Second World War.'
+    zh: 而更大的灾难，是随之而来的第二次世界大战。
+    t: 3.5
+  - id: r08_022
+    en: On 19 July 1943 Allied planes bombed Rome;
+    zh: 1943年7月19日，盟军的飞机轰炸罗马，
+    year: 1943
+    with: shot:tail_bombed1943
+  - id: r08_023
+    en: San Lorenzo, a district of working families, was hit hardest.
+    zh: 平民住的圣洛伦佐区被炸得最惨。
+  - id: r08_024
+    en: Days later King Victor Emmanuel III
+    zh: 几天后，国王维托里奥·埃马努埃莱三世
+  - id: r08_025
+    en: dismissed Mussolini and had him arrested;
+    zh: 罢免并逮捕了墨索里尼；
+  - id: r08_026
+    en: in September the new government signed an armistice with the Allies.
+    zh: 9月，新政府与盟军停战。
+  - id: r08_027
+    en: Nazi Germany, Italy's former ally,
+    zh: 原来的盟友纳粹德国随即出兵，
+  - id: r08_028
+    en: at once sent in its troops and occupied Rome.
+    zh: 占领了罗马。
+  - id: r08_029
+    en: At dawn on 16 October, German troops sealed off the city's
+    zh: 10月16日清晨，德军封锁了城里的犹太社区，
+  - id: r08_030
+    en: Jewish quarter and went from house to house, arresting people.
+    zh: 挨家挨户搜捕。
+  - id: r08_031
+    en: On 18 October, 1,020 of Rome's Jews were put
+    zh: 两天后，1020名罗马犹太人被押上火车，
+  - id: r08_032
+    en: on a train to the Auschwitz concentration camp.
+    zh: 送往奥斯维辛集中营。
+    year: 1943
+  - id: r08_033
+    en: On 4 June 1944 Allied troops entered Rome, and the city was free.
+    zh: 1944年6月4日，盟军开进罗马，城市解放了。
+    year: 1944
+    see:
+    - arrow:tail_allied_entry
+  - id: r08_034
+    en: Of the 1,020 people sent to Auschwitz, only 17 survived.
+    zh: 被送往奥斯维辛的1020人里，最终只有17人活了下来。
+  rome09_homecoming1945:
+  - id: r08_035
+    en: One of the survivors was a father named Cesare Di Segni.
+    zh: 幸存者里有一位名叫切萨雷·迪塞尼的父亲。
+    t: 0.5
+  - id: r08_036
+    en: When the war was over he came back to Rome, to the rooms
+    zh: 战争结束后，他回到罗马，
+    t: 5.2984
+  - id: r08_037
+    en: where he had lived with his children. The rooms were empty.
+    zh: 回到从前和孩子一起生活过的房间。屋子里空空荡荡。
+  - pause: 4.0
+    why: Music alone after the empty rooms, before his nightly grief.
+  - id: r08_038
+    en: For weeks afterwards, he wept every night.
+    zh: 那之后的好几个星期，他每天夜里都在哭。
+    year: 1945
+    t: 16.6631
+  - id: r08_039
+    en: In June 1946 Italians voted in a referendum
+    zh: 1946年6月，意大利人通过公投废除君主制，
+    year: 1946
+    t: 19.7962
+  - id: r08_040
+    en: to end the monarchy and found a republic.
+    zh: 建立共和国。
+    t: 23.5513
+  - id: r08_041
+    en: Rome remained the capital.
+    zh: 罗马仍是首都。
+    t: 27.6659
+  screen_rome:
+  - id: r09_001
+    en: It was a film that put post-war Rome back in front of the world.
+    zh: 把战后罗马重新推到世界眼前的，是一部电影。
+    t: 0.5
+  - id: r09_002
+    en: In 1953 Roman Holiday came out.
+    zh: 1953年，《罗马假日》上映。
+    year: 1953
+    t: 5.7265
+  - id: r09_003
+    en: On screen, Audrey Hepburn's princess slips out of the palace
+    zh: 银幕上，奥黛丽·赫本演的公主偷偷溜出王宫，
+    t: 9.7363
+  - id: r09_004
+    en: and rides a motor scooter through the streets of Rome.
+    zh: 坐着小摩托穿过罗马的大街小巷。
+    t: 14.3486
+  - id: r09_005
+    en: Only a few years after the war,
+    zh: 战争才过去几年，银幕上的罗马，
+    t: 18.0665
+  - id: r09_006
+    en: the Rome on the screen was a place the whole world wanted to visit.
+    zh: 又成了全世界想去的地方。
+    year: 1953
+    t: 20.35
+  - id: r09_007
+    en: Films brought the Romans work too. In the first years after the war,
+    zh: 电影也给罗马人带来了工作。
+    t: 23.8208
+    year: 1953
+  - id: r09_008
+    en: the great studios of Cinecittà, in the south-east of the city,
+    zh: 城东南的奇尼奇塔电影城，
+    t: 28.0401
+    year: 1953
+    see:
+    - arrow:tail_city_to_studios
+  - id: r09_009
+    en: were full of homeless people. As they gradually moved out,
+    zh: 战后初期住满了无家可归的人；随着他们陆续搬离，
+    t: 32.6761
+    year: 1953
+  - id: r09_010
+    en: the repaired studios went back to work and became known as "Hollywood
+    zh: 修好的摄影棚重新开工，成了“台伯河上的好莱坞”。
+    t: 37.0546
+    year: 1953
+  - id: r09_011
+    en: on the Tiber". Hollywood epics such as Ben-Hur were filmed here,
+    zh: 《宾虚》等好莱坞大片来这里拍摄，搭布景的木匠、
+    year: 1959
+    t: 42.0503
+  - id: r09_012
+    en: and carpenters building sets and editors cutting film found jobs.
+    zh: 剪胶片的剪辑师，都在这里找到了工作。
+    t: 47.1511
+  rome11_olympic1960:
+  - id: r09_013
+    en: In 1960 Rome hosted the Summer Olympics.
+    zh: 1960年，罗马举办夏季奥运会。
+    year: 1960
+    t: 3.3
+  - id: r09_014
+    en: Gymnastics was held in the ancient Baths of Caracalla,
+    zh: 体操比赛设在古罗马的卡拉卡拉浴场，
+    with: shot:tail_maxentius1960
+    lead: 3.713208333333333
+  - id: r09_015
+    en: and wrestling in the Basilica of Maxentius.
+    zh: 摔跤比赛设在马克森提乌斯大会堂。
+  - id: r09_016
+    en: In buildings more than 1,000 years old, crowds cheered again.
+    zh: 1000多年前的建筑里，又响起了观众的喝彩。
+  - id: r09_017
+    en: The stadiums Mussolini had built now welcomed athletes
+    zh: 当年墨索里尼修的体育场，
+  - id: r09_018
+    en: from around the world. In the north of the city, the new
+    zh: 这时用来接待世界各地的运动员；
+    see:
+    - stage:rome11_north_observed1960
+    - pin:tail_olimpico1953
+  - id: r09_019
+    en: Olympic Village's temporary buildings came down after the Games.
+    zh: 城北新建的奥运村，赛后拆掉了临时设施。
+  - id: r09_020
+    en: The flats built for guests from afar became homes for Romans.
+    zh: 为远方客人盖的房子，成了罗马人自己的家。
+    with: shot:tail_village_homes
+  modern_growth: []
+  silent_rome:
+  - id: r10_008
+    en: In the spring of 2020, Covid-19 swept through Italy,
+    zh: 2020年春天，新冠疫情席卷意大利，
+  - id: r10_009
+    en: and streets usually packed with visitors suddenly emptied.
+    zh: 平日挤满游人的街巷忽然空了。
+  - id: r10_010
+    en: One rainy evening,
+    zh: 一个下雨的傍晚，
+  - id: r10_011
+    en: Pope Francis stood alone in an empty
+    zh: 教宗方济各独自站在空旷的圣彼得广场上，
+  - id: r10_012
+    en: St Peter's Square and prayed for the world.
+    zh: 为世界祈祷。
+  world_returns:
+  - id: r10_013
+    en: But crowds always come back.
+    zh: 但人群总会回来。
+  rome08_flood1870:
+  - id: r07_024
+    en: That December, 3 months after the troops had marched in,
+    zh: 就在意大利军队进城3个月后，
+    year: 1870
+  - id: r07_025
+    en: the Tiber flooded, and the water poured into the city.
+    zh: 台伯河发了一场大洪水，河水淹进了城里。
+    year: 1870
+  - pause: 5.8
+    why: See the new single flood living moment after its date document.
+  rome08_million1931:
+  - id: r07_030
+    en: In 1931 Rome's population passed 1 million,
+    zh: 1931年，罗马人口突破100万，
+    year: 1931
+  - id: r07_031
+    en: back to the size of the city under Augustus.
+    zh: 又回到了奥古斯都时代的规模。
+  rome12_outskirts1975:
+  - id: r10_003
+    en: Families who moved into new blocks on the outskirts were happy at
+    zh: 搬进郊区新楼的人家，起初很高兴：
+  - id: r10_004
+    en: 'first: at last they had a proper roof, running water and electricity.'
+    zh: 终于有了像样的屋顶，通了自来水和电。
+  rome12_commute1975:
+  - id: r10_005
+    en: Before long the bills came, one after another,
+    zh: 可没过多久，账单一张张寄来，
+  - id: r10_006
+    en: the journey to work grew longer, and the neighbours who had
+    zh: 进城上班的路远了，
+    see:
+    - arrow:tail_commute
+  - id: r10_007
+    en: helped each other in the old streets now lived far apart.
+    zh: 从前在老街巷里推门就能帮一把的邻居，也散了。
+  rome12_jubilee2025:
+  - id: r10_018
+    en: More than 700 years after the first Jubilee that Dante wrote about,
+    zh: 从1300年但丁写过的第一个禧年算起，
+  - id: r10_019
+    en: people are still making their way to Rome.
+    zh: 700多年过去了，人们一直在往罗马走。
+  rome12_river2026:
+  - id: r10_020
+    en: In 2026 Rome approved a plan to improve 75 km
+    zh: 2026年，罗马通过了一项新计划，
+  - id: r10_021
+    en: of the Tiber's banks and connect its two sides again.
+    zh: 要整治台伯河75公里长的河岸，把两岸重新连起来。
+  rome12_first_hill2026: []
+  rome12_river_memory2026:
+  - id: r10_022
+    en: This river fed the first huts,
+    zh: 这条河养活过最初的茅草屋，
+  - id: r10_023
+    en: carried grain for an empire and turned mills during a siege,
+    zh: 为帝国运过粮，在围城时推过磨，
+  - id: r10_024
+    en: then was walled off behind high embankments for more than 100 years.
+    zh: 后来又被高高的河堤隔开了100多年。
+  - id: r10_025
+    en: Now the Romans want to find their way back to it.
+    zh: 如今，罗马人想重新走近它。
+  rome12_walls2026:
+  - id: r10_026
+    en: The Tiber still flows past the hills where the first people settled,
+    zh: 今天，台伯河依然流过最初有人居住的山丘，
+    see:
+    - pin:tail_hills_return
+  - id: r10_027
+    en: and the Aurelian Wall still stands where it was built. For more
+    zh: 奥勒良的城墙也还在原地。在过去1000多年里，
+  - id: r10_028
+    en: than 1,000 years, a shrunken city lived half empty inside that great
+    zh: 是一座缩小了的城，空荡荡地借住在大墙里；
+  - id: r10_029
+    en: wall. Today, the whole of the ancient wall lives inside Rome.
+    zh: 而今天，是整道古墙，住在罗马城里。
+  rome12_walk2024:
+  - id: r10_014
+    en: In late 2024, in time for the Jubilee of 2025, the traffic
+    zh: 2024年底，为了迎接2025年的禧年，
+  - id: r10_015
+    en: at Piazza Pia beside Castel Sant'Angelo was sent
+    zh: 圣天使堡旁的庇亚广场把车流引进地下隧道，
+    see:
+    - pin:tail_castle_name
+    - pin:tail_pia
+  - id: r10_016
+    en: into a tunnel and the square was given back to people on foot,
+    zh: 地面还给行人，
+  - id: r10_017
+    en: so they could walk all the way to St Peter's.
+    zh: 人们可以一路走到圣彼得。
+    see:
+    - arrow:tail_pilgrimage
+  - pause: 5.5
+    why: See the new pedestrian living moment after the ground has changed.
+  rome_round9_growth_edges:
+  - id: r10_001
+    en: After 1975 Rome kept spreading out along the roads
+    zh: 1975年以后，罗马继续沿着公路向四周的田野伸展，
+  - id: r10_002
+    en: into the countryside, further and further from its ancient walls.
+    zh: 离古老的城墙越来越远。
+  rome_round9_growth_finish: []
+  rome_round12b_avignon_return:
+  - id: r05_015
+    en: Only 9 years later, under the influence of the French king,
+    zh: 仅仅9年后，在法国国王的影响下，
+    year: 1309
+  - id: r05_016
+    en: the pope moved his residence to Avignon, in what is now the south
+    zh: 教宗把驻地迁到了今天法国南部的阿维尼翁，
+  - id: r05_017
+    en: of France, and the popes stayed there for nearly 70 years.
+    zh: 一住就是近70年。
+  - id: r05_018
+    en: The clergy, envoys and merchants who made their living from the papal
+    zh: 靠教廷吃饭的神职人员、使节和商人，
+  - id: r05_019
+    en: court gathered in Avignon instead, and Rome grew quiet again.
+    zh: 也都聚到了阿维尼翁，罗马又冷清下来。
+  - pause: 0.45
+    why: 1377 return follows the quiet Avignon passage.
+  - id: r05_020
+    en: In 1377 the popes moved back to Rome;
+    zh: 1377年，教宗把驻地迁回了罗马；
+    year: 1377
+  - id: r05_021
+    en: soon afterwards the Church split,
+    zh: 可紧接着，教会又分裂了近40年，
+  - id: r05_022
+    en: and for nearly 40 years rival popes refused to recognise each other.
+    zh: 欧洲同时有几个互不承认的教宗。
+  - pause: 0.55
+    why: The schism ends before Martin V returns.
+  - id: r05_023
+    en: After the split was over,
+    zh: 分裂结束后，
+    year: 1417
+  - id: r05_024
+    en: Pope Martin V returned to Rome in 1420.
+    zh: 教宗马丁五世在1420年回到罗马。
+    year: 1420
+  - id: r05_025
+    en: From then on, the papacy stayed in Rome.
+    zh: 从此，教廷一直设在罗马。
+  - id: r05_026
+    en: The city's abandoned churches and streets were repaired one by one.
+    zh: 荒废的教堂和街道一处处修了起来。
+quiet:
+  rome09_homecoming1945:
+  - - with: r08_037
+      edge: end
+    - with: r08_037
+      edge: end
+      plus: 4.0
+  modern_growth:
+  - - -0.001
+    - 0
+    - The native capped1960–1975flight reaches the first growth view.
+  rome_round9_growth_finish:
+  - - -0.001
+    - end
+    - The native capped1993–2020flight and the last building rise.

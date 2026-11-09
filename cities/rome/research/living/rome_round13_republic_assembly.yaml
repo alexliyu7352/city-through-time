@@ -1,0 +1,40 @@
+place: The source-constrained early Republican Comitium public open ground in the Forum, working target 12.48349 E, 41.89241 N
+when: Early Republic around the traditional 509 BCE transition; a literary-source-based imagined civic gathering, not a witnessed inauguration or a documented annual handover ceremony
+picture: >-
+  EDIT the final native reference into one quiet public gathering in early Republican Rome.
+  Keep its exact camera, framing, lens, ground slopes, every visible low building, roofline,
+  street opening and distant hill in the same positions. Keep the unknown early Curia Hostilia
+  outside the frame; do not invent its elevation. On the existing Comitium public ground, a
+  modest group of adult male citizens listens to an anonymous official addressing them. At
+  his side one attendant lowers a small tied bundle of rods toward the assembled citizens,
+  borrowing Livy's description of power publicly acknowledging the people. It is not a baton
+  passed from one officeholder to another. Ordinary true-scale bodies, restrained gestures,
+  profiles or backs rather than portrait faces. Simple late-sixth/early-fifth-century central
+  Italian wool tunics and modest rectangular or short semicircular mantles, muted natural
+  colours and ordinary footwear. Garment form is a conservative contemporary regional
+  comparison, not the late-Republican or imperial oversized draped toga.
+
+  The reference's open ground is a civic gathering area and existing paths, not farmland,
+  an amphitheatre, water or an invitation to build a monumental forum. Continue the already
+  modelled low urban roofs at its edges and the same distant natural hills. Plain compacted
+  earth or restrained existing hard ground, without a conjectural archaeological paving
+  pattern, new seating, raised tribune or invented ring of columns. Warm-grey stone, earth
+  plaster, timber and muted clay tiles where the existing model supports them. Model white,
+  lilac, teal or gold are projection colours, never the actual materials. Natural readable
+  daylight and the same restrained documentary realism with extremely light painterly texture
+  as the approved Rome living images. Output the exact native landscape 16:9 composition.
+avoid: >-
+  No viewpoint change, crop, zoom, moved building, new senate house or invented marble hall.
+  No Curia Julia, Curia Pompeia, Tabularium, later basilicas, Saturn or Castor temple,
+  Colosseum, imperial arches, Renaissance skyline or modern objects. No modern parliament,
+  ballots, ballot boxes, universal-suffrage crowd, military armour, helmets, giant white
+  imperial togas, purple ceremonial uniform, crowns, axes, execution, named portrait,
+  text, emblem, watermark or border. Do not claim that Livy's gesture was the annual transfer
+  of office or that all Roman residents held equal political power.
+sources:
+  - FACTS S03 and S28; research/rome02_early_whole_plan.md and rome02_early_whole_review.md; early-model public-use and missing-Hostilia-elevation limits
+  - research/rome02_early_whole_source_geography.geojson, rome02_early_whole_comitium_public; working domain only, not a measured ancient assembly footprint
+  - Livy 2.1 and 2.7-8, https://www.thelatinlibrary.com/livy/liv.2.shtml ; annual magistracy and lowering fasces before an assembly are separate literary claims
+  - Margarita Gleba, Textiles and Dress (2017), printed pp. 488-490, https://www.research.unipd.it/bitstream/11577/3454499/2/gleba2017.pdf ; contemporary central-Italian garment comparison, not a Rome 509 costume census
+  - The Metropolitan Museum of Art, The Roman Republic, https://www.metmuseum.org/essays/the-roman-republic ; political participation and class restrictions
+  - research/rome_round13_living_sources.md; r02_004-r02_006, priority r02_005; final timing and camera belong to the integrator

@@ -1,0 +1,1720 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_enclosure_working_extent",
+    "kind": "coverage",
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "NamedArchaic circuit branch only.370.47ha traced at originalscale,not occupiedhousingarea or a targetnumberofhouseholds.",
+     "source_pixels": [
+      [
+       903,
+       350
+      ],
+      [
+       940,
+       460
+      ],
+      [
+       986,
+       528
+      ],
+      [
+       976,
+       611
+      ],
+      [
+       963,
+       646
+      ],
+      [
+       954,
+       704
+      ],
+      [
+       930,
+       759
+      ],
+      [
+       909,
+       811
+      ],
+      [
+       926,
+       860
+      ],
+      [
+       883,
+       906
+      ],
+      [
+       849,
+       909
+      ],
+      [
+       815,
+       944
+      ],
+      [
+       793,
+       942
+      ],
+      [
+       781,
+       948
+      ],
+      [
+       750,
+       964
+      ],
+      [
+       733,
+       1002
+      ],
+      [
+       749,
+       1040
+      ],
+      [
+       713,
+       1083
+      ],
+      [
+       690,
+       1116
+      ],
+      [
+       648,
+       1102
+      ],
+      [
+       628,
+       1067
+      ],
+      [
+       611,
+       1042
+      ],
+      [
+       539,
+       1031
+      ],
+      [
+       524,
+       1076
+      ],
+      [
+       512,
+       1049
+      ],
+      [
+       505,
+       1007
+      ],
+      [
+       514,
+       964
+      ],
+      [
+       547,
+       910
+      ],
+      [
+       570,
+       876
+      ],
+      [
+       584,
+       841
+      ],
+      [
+       580,
+       816
+      ],
+      [
+       567,
+       785
+      ],
+      [
+       560,
+       761
+      ],
+      [
+       560,
+       731
+      ],
+      [
+       568,
+       690
+      ],
+      [
+       575,
+       669
+      ],
+      [
+       587,
+       632
+      ],
+      [
+       577,
+       607
+      ],
+      [
+       596,
+       568
+      ],
+      [
+       606,
+       520
+      ],
+      [
+       629,
+       498
+      ],
+      [
+       660,
+       475
+      ],
+      [
+       696,
+       463
+      ],
+      [
+       741,
+       476
+      ],
+      [
+       754,
+       465
+      ],
+      [
+       805,
+       405
+      ],
+      [
+       829,
+       395
+      ],
+      [
+       829,
+       369
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4958863,
+       41.9071116
+      ],
+      [
+       12.4979044,
+       41.9030279
+      ],
+      [
+       12.5003126,
+       41.9005287
+      ],
+      [
+       12.4999322,
+       41.8974059
+      ],
+      [
+       12.499331,
+       41.8960794
+      ],
+      [
+       12.4989643,
+       41.893895
+      ],
+      [
+       12.4978405,
+       41.8918067
+      ],
+      [
+       12.4968629,
+       41.8898341
+      ],
+      [
+       12.4977876,
+       41.8880155
+      ],
+      [
+       12.4956975,
+       41.8862438
+      ],
+      [
+       12.493996,
+       41.8860941
+      ],
+      [
+       12.4923414,
+       41.8847446
+      ],
+      [
+       12.4912347,
+       41.8847955
+      ],
+      [
+       12.4906414,
+       41.8845574
+      ],
+      [
+       12.4891096,
+       41.8839235
+      ],
+      [
+       12.4883125,
+       41.8824801
+      ],
+      [
+       12.489171,
+       41.8810729
+      ],
+      [
+       12.4874281,
+       41.8794212
+      ],
+      [
+       12.4863228,
+       41.8781587
+      ],
+      [
+       12.4841952,
+       41.8786374
+      ],
+      [
+       12.4831403,
+       41.8799277
+      ],
+      [
+       12.4822506,
+       41.8808463
+      ],
+      [
+       12.4786222,
+       41.8811794
+      ],
+      [
+       12.477936,
+       41.8794757
+      ],
+      [
+       12.4772942,
+       41.8804748
+      ],
+      [
+       12.476881,
+       41.8820417
+      ],
+      [
+       12.4772691,
+       41.8836638
+      ],
+      [
+       12.4788451,
+       41.8857248
+      ],
+      [
+       12.479949,
+       41.8870248
+      ],
+      [
+       12.4805998,
+       41.8883525
+      ],
+      [
+       12.4803622,
+       41.8892854
+      ],
+      [
+       12.4796642,
+       41.8904333
+      ],
+      [
+       12.4792776,
+       41.8913254
+      ],
+      [
+       12.4792334,
+       41.8924502
+      ],
+      [
+       12.4795743,
+       41.8939962
+      ],
+      [
+       12.4798946,
+       41.8947912
+      ],
+      [
+       12.4804422,
+       41.8961916
+      ],
+      [
+       12.4799035,
+       41.8971179
+      ],
+      [
+       12.4807995,
+       41.8986011
+      ],
+      [
+       12.4812305,
+       41.9004117
+      ],
+      [
+       12.4823524,
+       41.9012618
+      ],
+      [
+       12.4838742,
+       41.9021583
+      ],
+      [
+       12.4856633,
+       41.9026478
+      ],
+      [
+       12.4879408,
+       41.9022098
+      ],
+      [
+       12.488577,
+       41.9026365
+      ],
+      [
+       12.4910484,
+       41.9049421
+      ],
+      [
+       12.4922383,
+       41.9053433
+      ],
+      [
+       12.4922001,
+       41.9063181
+      ],
+      [
+       12.4958863,
+       41.9071116
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_forum_valley",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "R09/R17earlypublicForumrelation;centreline/6mwidth estimated,notCaesareanpavement.",
+     "source_pixels": [
+      [
+       586,
+       756
+      ],
+      [
+       616,
+       752
+      ],
+      [
+       654,
+       759
+      ],
+      [
+       692,
+       776
+      ],
+      [
+       739,
+       797
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4805749,
+      41.8915415
+     ],
+     [
+      12.4820743,
+      41.8917245
+     ],
+     [
+      12.4839913,
+      41.8915039
+     ],
+     [
+      12.4859231,
+      41.8909083
+     ],
+     [
+      12.4883123,
+      41.8901726
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_tuscus_boarium",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       648,
+       763
+      ],
+      [
+       628,
+       792
+      ],
+      [
+       601,
+       812
+      ],
+      [
+       580,
+       816
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4836962,
+      41.8913473
+     ],
+     [
+      12.4827353,
+      41.890238
+     ],
+     [
+      12.48141,
+      41.8894585
+     ],
+     [
+      12.4803622,
+      41.8892854
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_iugarius_foot",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       603,
+       748
+      ],
+      [
+       589,
+       775
+      ],
+      [
+       580,
+       816
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4814161,
+      41.8918602
+     ],
+     [
+      12.4807534,
+      41.8908325
+     ],
+     [
+      12.4803622,
+      41.8892854
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_argiletum_subura",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       644,
+       742
+      ],
+      [
+       677,
+       710
+      ],
+      [
+       712,
+       687
+      ],
+      [
+       752,
+       668
+      ],
+      [
+       790,
+       652
+      ],
+      [
+       829,
+       632
+      ],
+      [
+       863,
+       609
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4834645,
+      41.8921303
+     ],
+     [
+      12.4850733,
+      41.8933663
+     ],
+     [
+      12.4867958,
+      41.8942671
+     ],
+     [
+      12.488775,
+      41.8950234
+     ],
+     [
+      12.4906584,
+      41.895665
+     ],
+     [
+      12.4925861,
+      41.8964576
+     ],
+     [
+      12.4942586,
+      41.8973572
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_quirinal_ridge",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       652,
+       691
+      ],
+      [
+       678,
+       648
+      ],
+      [
+       712,
+       605
+      ],
+      [
+       749,
+       562
+      ],
+      [
+       782,
+       515
+      ],
+      [
+       815,
+       466
+      ],
+      [
+       850,
+       415
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4837909,
+      41.8940512
+     ],
+     [
+      12.4850323,
+      41.8956919
+     ],
+     [
+      12.4866752,
+      41.8973415
+     ],
+     [
+      12.4884687,
+      41.8989943
+     ],
+     [
+      12.4900557,
+      41.9007927
+     ],
+     [
+      12.4916399,
+      41.902666
+     ],
+     [
+      12.4933216,
+      41.9046165
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_viminal_ridge",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       711,
+       687
+      ],
+      [
+       752,
+       652
+      ],
+      [
+       790,
+       614
+      ],
+      [
+       830,
+       574
+      ],
+      [
+       869,
+       537
+      ],
+      [
+       906,
+       502
+      ],
+      [
+       950,
+       476
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4867456,
+      41.894266
+     ],
+     [
+      12.4887515,
+      41.8956233
+     ],
+     [
+      12.4906026,
+      41.8970897
+     ],
+     [
+      12.4925512,
+      41.8986333
+     ],
+     [
+      12.4944541,
+      41.9000632
+     ],
+     [
+      12.4962596,
+      41.901416
+     ],
+     [
+      12.4984297,
+      41.902439
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_esquiline_valley",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       752,
+       668
+      ],
+      [
+       789,
+       704
+      ],
+      [
+       831,
+       734
+      ],
+      [
+       872,
+       759
+      ],
+      [
+       909,
+       786
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.488775,
+      41.8950234
+     ],
+     [
+      12.4906846,
+      41.8937143
+     ],
+     [
+      12.4928362,
+      41.8926356
+     ],
+     [
+      12.4949301,
+      41.8917432
+     ],
+     [
+      12.4968263,
+      41.8907714
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_velia_carinæ",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       692,
+       776
+      ],
+      [
+       738,
+       762
+      ],
+      [
+       786,
+       744
+      ],
+      [
+       830,
+       723
+      ],
+      [
+       873,
+       695
+      ],
+      [
+       928,
+       667
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4859231,
+      41.8909083
+     ],
+     [
+      12.4882107,
+      41.8914837
+     ],
+     [
+      12.4905928,
+      41.8922113
+     ],
+     [
+      12.4927698,
+      41.8930469
+     ],
+     [
+      12.4948865,
+      41.8941438
+     ],
+     [
+      12.4976054,
+      41.8952538
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_palatine_slope",
+    "kind": "street",
+    "model": {
+     "w_m": 4
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       648,
+       763
+      ],
+      [
+       662,
+       796
+      ],
+      [
+       681,
+       835
+      ],
+      [
+       707,
+       871
+      ],
+      [
+       736,
+       900
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4836962,
+      41.8913473
+     ],
+     [
+      12.4844472,
+      41.8901255
+     ],
+     [
+      12.485458,
+      41.8886842
+     ],
+     [
+      12.4868155,
+      41.887363
+     ],
+     [
+      12.4883131,
+      41.8863076
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_aventine_river",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       580,
+       816
+      ],
+      [
+       568,
+       856
+      ],
+      [
+       547,
+       900
+      ],
+      [
+       532,
+       946
+      ],
+      [
+       529,
+       992
+      ],
+      [
+       548,
+       1029
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4803622,
+      41.8892854
+     ],
+     [
+      12.4798191,
+      41.8877725
+     ],
+     [
+      12.4788304,
+      41.8860997
+     ],
+     [
+      12.4781456,
+      41.8843585
+     ],
+     [
+      12.478063,
+      41.8826306
+     ],
+     [
+      12.4790708,
+      41.8812643
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_aventine_saddle",
+    "kind": "street",
+    "model": {
+     "w_m": 4
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       613,
+       884
+      ],
+      [
+       608,
+       925
+      ],
+      [
+       622,
+       973
+      ],
+      [
+       650,
+       1015
+      ],
+      [
+       682,
+       1058
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4821182,
+      41.8867723
+     ],
+     [
+      12.4819278,
+      41.8852296
+     ],
+     [
+      12.4827009,
+      41.8834454
+     ],
+     [
+      12.4841675,
+      41.8819015
+     ],
+     [
+      12.4858361,
+      41.8803245
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_caelian_valley",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       736,
+       900
+      ],
+      [
+       775,
+       894
+      ],
+      [
+       817,
+       878
+      ],
+      [
+       857,
+       859
+      ],
+      [
+       899,
+       828
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4883131,
+      41.8863076
+     ],
+     [
+      12.4902611,
+      41.8865754
+     ],
+     [
+      12.4923449,
+      41.8872213
+     ],
+     [
+      12.4943241,
+      41.8879775
+     ],
+     [
+      12.496386,
+      41.8891858
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_circus_corridor",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Schematicearlytraffic along registeredhill/valley relation,not an excavated509street or a late imperialroad.",
+     "source_pixels": [
+      [
+       613,
+       884
+      ],
+      [
+       646,
+       886
+      ],
+      [
+       681,
+       895
+      ],
+      [
+       715,
+       914
+      ],
+      [
+       750,
+       938
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4821182,
+      41.8867723
+     ],
+     [
+      12.4837769,
+      41.8867336
+     ],
+     [
+      12.4855462,
+      41.8864346
+     ],
+     [
+      12.4872801,
+      41.8857596
+     ],
+     [
+      12.4890714,
+      41.8848983
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_source_west_join",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Estimatedconnector ends at exact approved6cwindowstreet endpoint;oldstreetcurveunchanged.",
+     "source_pixels": [
+      [
+       692,
+       776
+      ],
+      [
+       754.1823901663861,
+       788.7605828280747
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4859231,
+      41.8909083
+     ],
+     [
+      12.489062,
+      41.8904982
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_source_east_join",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Estimatedconnector ends at exact approved6cwindowstreet endpoint;oldstreetcurveunchanged.",
+     "source_pixels": [
+      [
+       873,
+       695
+      ],
+      [
+       777.2192602757038,
+       802.0241698333621
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4948865,
+      41.8941438
+     ],
+     [
+      12.4902374,
+      41.8900262
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_forum_public",
+    "kind": "reservation",
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Documentedearlypublic/cult/racinguse;completeboundary andpavedsurface estimated. No residences covered by a blankground.",
+     "source_pixels": [
+      [
+       618,
+       742
+      ],
+      [
+       644,
+       741
+      ],
+      [
+       672,
+       751
+      ],
+      [
+       690,
+       769
+      ],
+      [
+       675,
+       778
+      ],
+      [
+       650,
+       765
+      ],
+      [
+       627,
+       757
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4821599,
+       41.8921017
+      ],
+      [
+       12.4834631,
+       41.8921678
+      ],
+      [
+       12.4848828,
+       41.8918236
+      ],
+      [
+       12.4858125,
+       41.8911686
+      ],
+      [
+       12.485073,
+       41.8908146
+      ],
+      [
+       12.4837995,
+       41.8912745
+      ],
+      [
+       12.4826336,
+       41.8915492
+      ],
+      [
+       12.4821599,
+       41.8921017
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_comitium_public",
+    "kind": "reservation",
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Documentedearlypublic/cult/racinguse;completeboundary andearthsurface estimated. No residences covered by a blankground.",
+     "source_pixels": [
+      [
+       635,
+       727
+      ],
+      [
+       648,
+       726
+      ],
+      [
+       657,
+       736
+      ],
+      [
+       649,
+       744
+      ],
+      [
+       635,
+       740
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4829908,
+       41.8926827
+      ],
+      [
+       12.4836417,
+       41.8927345
+      ],
+      [
+       12.484108,
+       41.8923695
+      ],
+      [
+       12.4837184,
+       41.8920608
+      ],
+      [
+       12.48301,
+       41.8921953
+      ],
+      [
+       12.4829908,
+       41.8926827
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_capitol_sacred",
+    "kind": "reservation",
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Documentedearlypublic/cult/racinguse;completeboundary andearthsurface estimated. No residences covered by a blankground.",
+     "source_pixels": [
+      [
+       593,
+       714
+      ],
+      [
+       619,
+       710
+      ],
+      [
+       636,
+       731
+      ],
+      [
+       626,
+       752
+      ],
+      [
+       601,
+       751
+      ],
+      [
+       587,
+       735
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808642,
+       41.8931239
+      ],
+      [
+       12.4821629,
+       41.8933025
+      ],
+      [
+       12.4830469,
+       41.8925339
+      ],
+      [
+       12.4825761,
+       41.8917355
+      ],
+      [
+       12.4813201,
+       41.8917455
+      ],
+      [
+       12.4805941,
+       41.89233
+      ],
+      [
+       12.4808642,
+       41.8931239
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_vesta_regia_sacred_use",
+    "kind": "reservation",
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Documentedearlypublic/cult/racinguse;completeboundary andearthsurface estimated. No residences covered by a blankground.",
+     "source_pixels": [
+      [
+       683,
+       764
+      ],
+      [
+       702,
+       763
+      ],
+      [
+       714,
+       777
+      ],
+      [
+       705,
+       791
+      ],
+      [
+       689,
+       789
+      ],
+      [
+       678,
+       777
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4854539,
+       41.8913483
+      ],
+      [
+       12.4864058,
+       41.8914067
+      ],
+      [
+       12.4870285,
+       41.890895
+      ],
+      [
+       12.4865975,
+       41.8903602
+      ],
+      [
+       12.4857917,
+       41.8904176
+      ],
+      [
+       12.4852221,
+       41.8908554
+      ],
+      [
+       12.4854539,
+       41.8913483
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome02_early_whole_circus_early_use",
+    "kind": "reservation",
+    "provenance": {
+     "basis": "research/rome02_early_whole_plan.md;late6-5c named reconstruction and bounded contemporary comparison,not a509survey.",
+     "role": "Documentedearlypublic/cult/racinguse;completeboundary andearthsurface estimated. No residences covered by a blankground.",
+     "source_pixels": [
+      [
+       618,
+       859
+      ],
+      [
+       641,
+       863
+      ],
+      [
+       672,
+       877
+      ],
+      [
+       701,
+       894
+      ],
+      [
+       729,
+       913
+      ],
+      [
+       747,
+       931
+      ],
+      [
+       740,
+       939
+      ],
+      [
+       717,
+       924
+      ],
+      [
+       686,
+       906
+      ],
+      [
+       655,
+       889
+      ],
+      [
+       626,
+       878
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4823323,
+       41.8877151
+      ],
+      [
+       12.4834922,
+       41.8875904
+      ],
+      [
+       12.4850682,
+       41.8870996
+      ],
+      [
+       12.4865482,
+       41.8864941
+      ],
+      [
+       12.487981,
+       41.8858125
+      ],
+      [
+       12.4889106,
+       41.8851574
+      ],
+      [
+       12.4885711,
+       41.8848498
+      ],
+      [
+       12.4873951,
+       41.8853869
+      ],
+      [
+       12.4858133,
+       41.8860277
+      ],
+      [
+       12.4842329,
+       41.886631
+      ],
+      [
+       12.4827616,
+       41.8870115
+      ],
+      [
+       12.4823323,
+       41.8877151
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}

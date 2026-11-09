@@ -1,0 +1,746 @@
+rome10_screen_quarter_central_approved:
+  name: Cinecitta_central_stage_and_service_1937_restored_branch
+  kind: parts
+  theta_deg: -45.595107
+  basis: research/rome10_screen_quarter_sources.md Q01-Q05. Approved 36x80m, two-storey
+    service and eight actual openings preserved exactly. 1937 plan item24 / 1953 plan
+    stage5 identified by the same central block and adjacent services. Position from
+    native similarity registration; map residuals are not survey accuracy. Windows,
+    door positions, 16m-as-eaves and all approved estimates remain estimates.
+  parts:
+  - kind: long_hall
+    w_m: 36
+    d_m: 80
+    h_m: 1
+    z_m: 15
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.35
+  - kind: prism
+    at:
+    - 0
+    - -39.6
+    section_m:
+    - - -18
+      - 0
+    - - -3
+      - 0
+    - - -3
+      - 6.5
+    - - 3
+      - 6.5
+    - - 3
+      - 0
+    - - 18
+      - 0
+    - - 18
+      - 16
+    - - -18
+      - 16
+    length_m: 0.8
+  - kind: prism
+    at:
+    - 0
+    - 39.6
+    section_m:
+    - - -18
+      - 0
+    - - -5
+      - 0
+    - - -5
+      - 8
+    - - 5
+      - 8
+    - - 5
+      - 0
+    - - 18
+      - 0
+    - - 18
+      - 16
+    - - -18
+      - 16
+    length_m: 0.8
+  - kind: prism
+    at:
+    - 17.6
+    - 0
+    theta_deg: 90
+    repeat:
+      mirror: x
+    section_m:
+    - - -40
+      - 0
+    - - -26.75
+      - 0
+    - - -26.75
+      - 6
+    - - -21.25
+      - 6
+    - - -21.25
+      - 0
+    - - -2.75
+      - 0
+    - - -2.75
+      - 6
+    - - 2.75
+      - 6
+    - - 2.75
+      - 0
+    - - 21.25
+      - 0
+    - - 21.25
+      - 6
+    - - 26.75
+      - 6
+    - - 26.75
+      - 0
+    - - 40
+      - 0
+    - - 40
+      - 16
+    - - -40
+      - 16
+    length_m: 0.8
+  - kind: arches
+    at:
+    - 0
+    - -51.7
+    length_m: 36
+    h_m: 8
+    depth_m: 0.6
+    bays: 9
+    tiers: 2
+    arch: flat
+    opening: 0.8
+    spring: 0.7
+    through: true
+  - kind: prism
+    at:
+    - -9.8
+    - -51.7
+    plan_m:
+    - - -8.2
+      - -0.3
+    - - 8.2
+      - -0.3
+    - - 8.2
+      - 0.3
+    - - -8.2
+      - 0.3
+    h_m: 1
+    repeat:
+      mirror: x
+  - kind: prism
+    at:
+    - 0
+    - -51.7
+    z_m: 4
+    plan_m:
+    - - -18
+      - -0.3
+    - - 18
+      - -0.3
+    - - 18
+      - 0.3
+    - - -18
+      - 0.3
+    h_m: 0.8
+  - kind: prism
+    at:
+    - 0
+    - -43.3
+    section_m:
+    - - -18
+      - 0
+    - - -1.6
+      - 0
+    - - -1.6
+      - 2.8
+    - - 1.6
+      - 2.8
+    - - 1.6
+      - 0
+    - - 18
+      - 0
+    - - 18
+      - 8
+    - - -18
+      - 8
+    length_m: 0.6
+  - kind: prism
+    at:
+    - 17.7
+    - -47.5
+    plan_m:
+    - - -0.3
+      - -4.5
+    - - 0.3
+      - -4.5
+    - - 0.3
+      - 4.5
+    - - -0.3
+      - 4.5
+    h_m: 8
+    repeat:
+      mirror: x
+  - kind: prism
+    at:
+    - 0
+    - -47.5
+    z_m: 4
+    plan_m:
+    - - -18
+      - -4.5
+    - - 18
+      - -4.5
+    - - 18
+      - 4.5
+    - - -18
+      - 4.5
+    h_m: 0.2
+  - kind: prism
+    at:
+    - 0
+    - -47.5
+    z_m: 8
+    plan_m:
+    - - -18
+      - -4.5
+    - - 18
+      - -4.5
+    - - 18
+      - 4.5
+    - - -18
+      - 4.5
+    h_m: 0.3
+  - kind: prism
+    at:
+    - 0
+    - -41.5
+    z_m: 7.6
+    plan_m:
+    - - -18
+      - -1.5
+    - - 18
+      - -1.5
+    - - 18
+      - 1.5
+    - - -18
+      - 1.5
+    h_m: 0.4
+rome10_screen_quarter_stage15_1953:
+  kind: parts
+  name: Teatro15_and_north_support_bar
+  basis: research/rome10_screen_quarter_revision_sources.md R15. 1953 plan body about30x62m,
+    north support bar30x9m and4.5m gallery estimated from registered pixels. Eaves12m
+    and two4m support storeys compare Peressutti1937's20x40x12 studio and two-storey
+    service buildings; not published dimensions of stage15. Roof25degrees, doors,
+    windows and wall thickness estimated. Hollow native shell, no truss reconstruction.
+  parts:
+  - kind: long_hall
+    w_m: 30
+    d_m: 62
+    z_m: 11
+    h_m: 1
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.35
+  - kind: prism
+    at:
+    - 0
+    - -30.7
+    section_m:
+    - - -15.0
+      - 0
+    - - -2.5
+      - 0
+    - - -2.5
+      - 5.5
+    - - 2.5
+      - 5.5
+    - - 2.5
+      - 0
+    - - 15.0
+      - 0
+    - - 15.0
+      - 12
+    - - -15.0
+      - 12
+    length_m: 0.6
+  - kind: prism
+    at:
+    - 0
+    - 30.7
+    section_m:
+    - - -15.0
+      - 0
+    - - -3.5
+      - 0
+    - - -3.5
+      - 6
+    - - 3.5
+      - 6
+    - - 3.5
+      - 0
+    - - 15.0
+      - 0
+    - - 15.0
+      - 12
+    - - -15.0
+      - 12
+    length_m: 0.6
+  - kind: prism
+    at:
+    - 14.7
+    - 0
+    theta_deg: 90
+    repeat:
+      mirror: x
+    section_m:
+    - - -31.0
+      - 0
+    - - -21.25
+      - 0
+    - - -21.25
+      - 5
+    - - -16.75
+      - 5
+    - - -16.75
+      - 0
+    - - 16.75
+      - 0
+    - - 16.75
+      - 5
+    - - 21.25
+      - 5
+    - - 21.25
+      - 0
+    - - 31.0
+      - 0
+    - - 31.0
+      - 12
+    - - -31.0
+      - 12
+    length_m: 0.6
+  - kind: arches
+    at:
+    - 0
+    - -44.2
+    length_m: 30
+    h_m: 8
+    depth_m: 0.6
+    bays: 7
+    tiers: 2
+    arch: flat
+    opening: 0.8
+    spring: 0.7
+    through: true
+  - kind: prism
+    at:
+    - 8.3
+    - -44.2
+    repeat:
+      mirror: x
+    h_m: 1
+    plan_m:
+    - - -6.7
+      - -0.3
+    - - 6.7
+      - -0.3
+    - - 6.7
+      - 0.3
+    - - -6.7
+      - 0.3
+  - kind: prism
+    at:
+    - 0
+    - -44.2
+    z_m: 4
+    h_m: 0.8
+    plan_m:
+    - - -15.0
+      - -0.3
+    - - 15.0
+      - -0.3
+    - - 15.0
+      - 0.3
+    - - -15.0
+      - 0.3
+  - kind: prism
+    at:
+    - 0
+    - -35.8
+    section_m:
+    - - -15.0
+      - 0
+    - - -1.6
+      - 0
+    - - -1.6
+      - 2.8
+    - - 1.6
+      - 2.8
+    - - 1.6
+      - 0
+    - - 15.0
+      - 0
+    - - 15.0
+      - 8
+    - - -15.0
+      - 8
+    length_m: 0.6
+  - kind: prism
+    at:
+    - 14.7
+    - -40
+    repeat:
+      mirror: x
+    h_m: 8
+    plan_m:
+    - - -0.3
+      - -4.5
+    - - 0.3
+      - -4.5
+    - - 0.3
+      - 4.5
+    - - -0.3
+      - 4.5
+  - kind: prism
+    at:
+    - 0
+    - -40
+    z_m: 4
+    h_m: 0.2
+    plan_m:
+    - - -15.0
+      - -4.5
+    - - 15.0
+      - -4.5
+    - - 15.0
+      - 4.5
+    - - -15.0
+      - 4.5
+  - kind: prism
+    at:
+    - 0
+    - -40
+    z_m: 8
+    h_m: 0.3
+    plan_m:
+    - - -15.0
+      - -4.5
+    - - 15.0
+      - -4.5
+    - - 15.0
+      - 4.5
+    - - -15.0
+      - 4.5
+  - kind: prism
+    at:
+    - 0
+    - -33.25
+    z_m: 7.6
+    h_m: 0.4
+    plan_m:
+    - - -15.0
+      - -2.25
+    - - 15.0
+      - -2.25
+    - - 15.0
+      - 2.25
+    - - -15.0
+      - 2.25
+rome10_screen_quarter_stage16_1953:
+  kind: parts
+  name: Teatro16_narrow_stage
+  basis: research/rome10_screen_quarter_revision_sources.md R16. 1953 legend names16
+    a soundstage, not a dressing-room bar. Plan footprint about10x75m; h10.5m compares
+    the1937 small stage height, not a measured height of16. Gable,25degree roof, door
+    sizes/positions and thickness estimated; east-side doors avoid ventilation22.
+    No assumed date or process of conversion.
+  parts:
+  - kind: long_hall
+    w_m: 10
+    d_m: 75
+    z_m: 9.5
+    h_m: 1
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.35
+  - kind: prism
+    at:
+    - 0
+    - -37.2
+    section_m:
+    - - -5.0
+      - 0
+    - - -1.5
+      - 0
+    - - -1.5
+      - 4
+    - - 1.5
+      - 4
+    - - 1.5
+      - 0
+    - - 5.0
+      - 0
+    - - 5.0
+      - 10.5
+    - - -5.0
+      - 10.5
+    length_m: 0.6
+  - kind: prism
+    at:
+    - 0
+    - 37.2
+    section_m:
+    - - -5.0
+      - 0
+    - - -1.5
+      - 0
+    - - -1.5
+      - 4
+    - - 1.5
+      - 4
+    - - 1.5
+      - 0
+    - - 5.0
+      - 0
+    - - 5.0
+      - 10.5
+    - - -5.0
+      - 10.5
+    length_m: 0.6
+  - kind: prism
+    at:
+    - 4.7
+    - 0
+    theta_deg: 90
+    repeat:
+      mirror: x
+    section_m:
+    - - -37.5
+      - 0
+    - - -31.5
+      - 0
+    - - -31.5
+      - 4
+    - - -28.5
+      - 4
+    - - -28.5
+      - 0
+    - - 23.5
+      - 0
+    - - 23.5
+      - 4
+    - - 26.5
+      - 4
+    - - 26.5
+      - 0
+    - - 37.5
+      - 0
+    - - 37.5
+      - 10.5
+    - - -37.5
+      - 10.5
+    length_m: 0.6
+rome10_screen_quarter_vent22_1953:
+  kind: parts
+  name: Ventilation_for_stage5_22
+  basis: research/rome10_screen_quarter_revision_sources.md R22. 1953 legend Impianto
+    Aereaz.5o teatro and12x30m approximate plan footprint. One4m-high service volume
+    compares same-article4x4x4m technical/dressing room scale; flat cap, doors and
+    wall thickness estimated. No invented duct machinery.
+  parts:
+  - kind: long_hall
+    w_m: 12
+    d_m: 30
+    z_m: 3
+    h_m: 1
+    roof:
+      shape: flat
+  - kind: prism
+    at:
+    - 0
+    - -14.8
+    section_m:
+    - - -6.0
+      - 0
+    - - -1.5
+      - 0
+    - - -1.5
+      - 3
+    - - 1.5
+      - 3
+    - - 1.5
+      - 0
+    - - 6.0
+      - 0
+    - - 6.0
+      - 4
+    - - -6.0
+      - 4
+    length_m: 0.4
+  - kind: prism
+    at:
+    - 0
+    - 14.8
+    section_m:
+    - - -6.0
+      - 0
+    - - -0.8
+      - 0
+    - - -0.8
+      - 2.5
+    - - 0.8
+      - 2.5
+    - - 0.8
+      - 0
+    - - 6.0
+      - 0
+    - - 6.0
+      - 4
+    - - -6.0
+      - 4
+    length_m: 0.4
+  - kind: prism
+    at:
+    - 5.8
+    - 0
+    theta_deg: 90
+    repeat:
+      mirror: x
+    section_m:
+    - - -15.0
+      - 0
+    - - 15.0
+      - 0
+    - - 15.0
+      - 4
+    - - -15.0
+      - 4
+    length_m: 0.4
+rome10_screen_quarter_lamp60_1953:
+  kind: parts
+  name: Lamp_facility2_60
+  basis: research/rome10_screen_quarter_revision_sources.md R60. 1953 legend Parco
+    Lampade n.2, registered plan about26x13m. Covered low store is a massing interpretation,
+    h4m compares1937 service room scale; flat roof and three front handling openings
+    estimated. No claim about individual lamp inventory or a measured elevation.
+  parts:
+  - kind: long_hall
+    w_m: 26
+    d_m: 13
+    z_m: 3
+    h_m: 1
+    roof:
+      shape: flat
+  - kind: prism
+    at:
+    - 0
+    - -6.3
+    section_m:
+    - - -13.0
+      - 0
+    - - -9.5
+      - 0
+    - - -9.5
+      - 3
+    - - -6.5
+      - 3
+    - - -6.5
+      - 0
+    - - -1.5
+      - 0
+    - - -1.5
+      - 3
+    - - 1.5
+      - 3
+    - - 1.5
+      - 0
+    - - 6.5
+      - 0
+    - - 6.5
+      - 3
+    - - 9.5
+      - 3
+    - - 9.5
+      - 0
+    - - 13.0
+      - 0
+    - - 13.0
+      - 4
+    - - -13.0
+      - 4
+    length_m: 0.4
+  - kind: prism
+    at:
+    - 0
+    - 6.3
+    section_m:
+    - - -13.0
+      - 0
+    - - -0.8
+      - 0
+    - - -0.8
+      - 2.5
+    - - 0.8
+      - 2.5
+    - - 0.8
+      - 0
+    - - 13.0
+      - 0
+    - - 13.0
+      - 4
+    - - -13.0
+      - 4
+    length_m: 0.4
+  - kind: prism
+    at:
+    - 12.8
+    - 0
+    theta_deg: 90
+    repeat:
+      mirror: x
+    section_m:
+    - - -6.5
+      - 0
+    - - 6.5
+      - 0
+    - - 6.5
+      - 4
+    - - -6.5
+      - 4
+    length_m: 0.4
+rome10_screen_quarter_power21_1953:
+  kind: prism
+  plan_m:
+  - - -13.277
+    - 18.272
+  - - 17.896
+    - 18.272
+  - - 17.896
+    - 12.391
+  - - 11.426
+    - 12.391
+  - - 11.426
+    - 2.392
+  - - 18.484
+    - -1.725
+  - - 18.484
+    - -15.841
+  - - -19.159
+    - -15.841
+  - - -19.159
+    - -3.49
+  - - -13.277
+    - 2.98
+  h_m: 6
+  name: Power_building21
+  basis: 'research/rome10_screen_quarter_revision_sources.md R21. 1953 legend Centrale
+    elettrica; source-traced stepped footprint, not a generic studio. h6m is an industrial
+    volume estimate between the1937 4m service room and10.5m small-stage height; no
+    asserted storey count. Flat massing only: exact windows, equipment and openings
+    not reconstructed.'

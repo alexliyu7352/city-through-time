@@ -1,0 +1,413 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4930142,
+       41.8855488
+      ],
+      [
+       12.4931089,
+       41.8858094
+      ],
+      [
+       12.4926903,
+       41.8858943
+      ],
+      [
+       12.4925957,
+       41.8856337
+      ],
+      [
+       12.4930142,
+       41.8855488
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_quarter_b001_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 343.14,
+    "empty": 0,
+    "provenance": {
+     "role": "One complete late-antique comparison building; assigned by source-constrained site function, not a census ratio.",
+     "parent_block": "rome04_lateantique_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_centroid_px": [
+      375.2,
+      675.5
+     ]
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.491883,
+       41.8858245
+      ],
+      [
+       12.4919826,
+       41.8860841
+      ],
+      [
+       12.4915657,
+       41.8861734
+      ],
+      [
+       12.4914661,
+       41.8859138
+      ],
+      [
+       12.491883,
+       41.8858245
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_quarter_b002_01",
+    "kind": "block",
+    "typ": "subura_court_4",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 162.33,
+    "empty": 0,
+    "provenance": {
+     "role": "One complete late-antique comparison building; assigned by source-constrained site function, not a census ratio.",
+     "parent_block": "rome04_lateantique_quarter_b002",
+     "buildings": 1,
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_centroid_px": [
+      291.0,
+      648.9
+     ]
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4921533,
+       41.8856405
+      ],
+      [
+       12.4922477,
+       41.8858923
+      ],
+      [
+       12.4919782,
+       41.8859486
+      ],
+      [
+       12.4918839,
+       41.8856969
+      ],
+      [
+       12.4921533,
+       41.8856405
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_quarter_b002_02",
+    "kind": "block",
+    "typ": "subura_domus_1",
+    "lot": [
+     23.23,
+     29.04
+    ],
+    "theta_deg": 342.68,
+    "empty": 0,
+    "provenance": {
+     "role": "One complete late-antique comparison building; assigned by source-constrained site function, not a census ratio.",
+     "parent_block": "rome04_lateantique_quarter_b002",
+     "buildings": 1,
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_centroid_px": [
+      316.6,
+      668.9
+     ]
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4912141,
+       41.8861181
+      ],
+      [
+       12.4914925,
+       41.8860677
+      ],
+      [
+       12.4915736,
+       41.8863173
+      ],
+      [
+       12.4912952,
+       41.8863677
+      ],
+      [
+       12.4912141,
+       41.8861181
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_quarter_b002_03",
+    "kind": "block",
+    "typ": "subura_court_4",
+    "lot": [
+     28.53,
+     23.78
+    ],
+    "theta_deg": 254.69,
+    "empty": 0,
+    "provenance": {
+     "role": "One complete late-antique comparison building; assigned by source-constrained site function, not a census ratio.",
+     "parent_block": "rome04_lateantique_quarter_b002",
+     "buildings": 1,
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_centroid_px": [
+      266.2,
+      627.4
+     ]
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.492244,
+       41.8859196
+      ],
+      [
+       12.4923133,
+       41.8861002
+      ],
+      [
+       12.4920234,
+       41.8861623
+      ],
+      [
+       12.4919541,
+       41.8859817
+      ],
+      [
+       12.492244,
+       41.8859196
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_quarter_b002_04",
+    "kind": "block",
+    "typ": "subura_court_4",
+    "lot": [
+     25.04,
+     20.87
+    ],
+    "theta_deg": 162.33,
+    "empty": 0,
+    "provenance": {
+     "role": "One complete late-antique comparison building; assigned by source-constrained site function, not a census ratio.",
+     "parent_block": "rome04_lateantique_quarter_b002",
+     "buildings": 1,
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_centroid_px": [
+      321.4,
+      644.4
+     ]
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4908726,
+       41.8861331
+      ],
+      [
+       12.4907316,
+       41.8863817
+      ],
+      [
+       12.4903325,
+       41.8862552
+      ],
+      [
+       12.4904735,
+       41.8860067
+      ],
+      [
+       12.4908726,
+       41.8861331
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_quarter_b003_01",
+    "kind": "block",
+    "typ": "subura_domus_2",
+    "lot": [
+     35.99,
+     29.99
+    ],
+    "theta_deg": 201.3,
+    "empty": 0,
+    "provenance": {
+     "role": "One complete late-antique comparison building; assigned by source-constrained site function, not a census ratio.",
+     "parent_block": "rome04_lateantique_quarter_b003",
+     "buildings": 1,
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_centroid_px": [
+      207.5,
+      630.4
+     ]
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4918608,
+       41.8864744
+      ],
+      [
+       12.4919622,
+       41.8867262
+      ],
+      [
+       12.4915579,
+       41.8868171
+      ],
+      [
+       12.4914565,
+       41.8865654
+      ],
+      [
+       12.4918608,
+       41.8864744
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_quarter_b004_01",
+    "kind": "block",
+    "typ": "rome04_lateantique_portico_insula5",
+    "lot": [
+     35.05,
+     29.21
+    ],
+    "theta_deg": 341.57,
+    "empty": 0,
+    "provenance": {
+     "role": "One complete late-antique comparison building; assigned by source-constrained site function, not a census ratio.",
+     "parent_block": "rome04_lateantique_quarter_b004",
+     "buildings": 1,
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_centroid_px": [
+      289.2,
+      584.6
+     ]
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.490917,
+       41.8866582
+      ],
+      [
+       12.4908149,
+       41.8868382
+      ],
+      [
+       12.4904173,
+       41.8867123
+      ],
+      [
+       12.4905195,
+       41.8865322
+      ],
+      [
+       12.490917,
+       41.8866582
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_quarter_b005_01",
+    "kind": "block",
+    "typ": "subura_court_4",
+    "lot": [
+     35.84,
+     21.72
+    ],
+    "theta_deg": 21.3,
+    "empty": 0,
+    "provenance": {
+     "role": "One complete late-antique comparison building; assigned by source-constrained site function, not a census ratio.",
+     "parent_block": "rome04_lateantique_quarter_b005",
+     "buildings": 1,
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_centroid_px": [
+      211.7,
+      581.5
+     ]
+    }
+   }
+  }
+ ]
+}

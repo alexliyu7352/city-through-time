@@ -1,0 +1,15 @@
+{
+ "cam": [
+  0.001729,
+  0.004,
+  3e-05,
+  210.0,
+  25.0,
+  0.048,
+  36.0
+ ],
+ "made": "codex",
+ "date": "2026-11-09",
+ "ref": "side_ref.jpg",
+ "ref_sha1": "8b0bc0a3d80608b8ca4cc5ec2cdbbbd95add1d0e"
+}

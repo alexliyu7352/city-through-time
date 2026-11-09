@@ -1,0 +1,209 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_quarter_street_0",
+    "kind": "street",
+    "w_m": 4.5,
+    "provenance": {
+     "basis": "A01 Fig9 visible enclosing historic street alignment. Width4.5m is a massing estimate; not a measured 1932 street survey.",
+     "source_pixels": [
+      [
+       298,
+       310
+      ],
+      [
+       477,
+       177
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4854396,
+      41.8937881
+     ],
+     [
+      12.4857779,
+      41.8939241
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_quarter_street_1",
+    "kind": "street",
+    "w_m": 4.5,
+    "provenance": {
+     "basis": "A01 Fig9 visible enclosing historic street alignment. Width4.5m is a massing estimate; not a measured 1932 street survey.",
+     "source_pixels": [
+      [
+       477,
+       177
+      ],
+      [
+       660,
+       480
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4857779,
+      41.8939241
+     ],
+     [
+      12.4860143,
+      41.8935041
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_quarter_street_2",
+    "kind": "street",
+    "w_m": 4.5,
+    "provenance": {
+     "basis": "A01 Fig9 visible enclosing historic street alignment. Width4.5m is a massing estimate; not a measured 1932 street survey.",
+     "source_pixels": [
+      [
+       660,
+       480
+      ],
+      [
+       425,
+       717
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4860143,
+      41.8935041
+     ],
+     [
+      12.4855546,
+      41.893246
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_quarter_street_3",
+    "kind": "street",
+    "w_m": 4.5,
+    "provenance": {
+     "basis": "A01 Fig9 visible enclosing historic street alignment. Width4.5m is a massing estimate; not a measured 1932 street survey.",
+     "source_pixels": [
+      [
+       425,
+       717
+      ],
+      [
+       255,
+       552
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4855546,
+      41.893246
+     ],
+     [
+      12.485306,
+      41.8934878
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_quarter_street_4",
+    "kind": "street",
+    "w_m": 4.5,
+    "provenance": {
+     "basis": "A01 Fig9 visible enclosing historic street alignment. Width4.5m is a massing estimate; not a measured 1932 street survey.",
+     "source_pixels": [
+      [
+       255,
+       552
+      ],
+      [
+       421,
+       415
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.485306,
+      41.8934878
+     ],
+     [
+      12.4856231,
+      41.8936314
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_quarter_street_5",
+    "kind": "street",
+    "w_m": 4.5,
+    "provenance": {
+     "basis": "A01 Fig9 visible enclosing historic street alignment. Width4.5m is a massing estimate; not a measured 1932 street survey.",
+     "source_pixels": [
+      [
+       421,
+       415
+      ],
+      [
+       298,
+       310
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4856231,
+      41.8936314
+     ],
+     [
+      12.4854396,
+      41.8937881
+     ]
+    ]
+   }
+  }
+ ]
+}

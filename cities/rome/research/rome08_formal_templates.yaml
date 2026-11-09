@@ -1,0 +1,677 @@
+rome08_formal_colosseum_inner_supports:
+  kind: parts
+  exaggeration: 1
+  site: cut
+  parts:
+  - kind: arches
+    at:
+    - 80.76971572008343
+    - 5.246811957449344
+    theta_deg: 95.44669422350437
+    length_m: 10.541218160642547
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 80.76971572008343
+    - -5.246811957449344
+    theta_deg: -95.44669422350437
+    length_m: 10.541218160642547
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 78.78089725973699
+    - 15.611241948785079
+    theta_deg: 106.21784608669735
+    length_m: 10.659408679109214
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 78.78089725973699
+    - -15.611241948785079
+    theta_deg: -106.21784608669735
+    length_m: 10.659408679109214
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 74.85223165004788
+    - 25.59127135260013
+    theta_deg: 116.64912993362914
+    length_m: 10.880677501418788
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 74.85223165004788
+    - -25.59127135260013
+    theta_deg: -116.64912993362914
+    length_m: 10.880677501418788
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 69.08045567682032
+    - 34.941158723153954
+    theta_deg: 126.59136461359043
+    length_m: 11.178067135876525
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 69.08045567682032
+    - -34.941158723153954
+    theta_deg: -126.59136461359043
+    length_m: 11.178067135876525
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 61.60768961994135
+    - 43.430678802886355
+    theta_deg: 135.9784616604531
+    length_m: 11.517854695351675
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 61.60768961994135
+    - -43.430678802886355
+    theta_deg: -135.9784616604531
+    length_m: 11.517854695351675
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 52.61793778042001
+    - 50.85079143233254
+    theta_deg: 144.81786708714694
+    length_m: 11.86463799008553
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 52.61793778042001
+    - -50.85079143233254
+    theta_deg: -144.81786708714694
+    length_m: 11.86463799008553
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 42.33255768382113
+    - 57.01878881261359
+    theta_deg: 153.16953913424916
+    length_m: 12.185295504207216
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 42.33255768382113
+    - -57.01878881261359
+    theta_deg: -153.16953913424916
+    length_m: 12.185295504207216
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 31.004809523342477
+    - 61.7827943778173
+    theta_deg: 161.124926086222
+    length_m: 12.45156490281982
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 31.004809523342477
+    - -61.7827943778173
+    theta_deg: -161.124926086222
+    length_m: 12.45156490281982
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 18.913620053335773
+    - 65.02550250010037
+    theta_deg: 168.7914592184484
+    length_m: 12.64150378834522
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 18.913620053335773
+    - -65.02550250010037
+    theta_deg: -168.7914592184484
+    length_m: 12.64150378834522
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 6.3567144869097865
+    - 66.66706694356093
+    theta_deg: 176.28328029295406
+    length_m: 12.740224923789816
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 6.3567144869097865
+    - -66.66706694356093
+    theta_deg: -176.28328029295406
+    length_m: 12.740224923789816
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -6.356714486909768
+    - 66.66706694356093
+    theta_deg: -176.28328029295406
+    length_m: 12.740224923789798
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -6.356714486909768
+    - -66.66706694356093
+    theta_deg: 176.28328029295406
+    length_m: 12.740224923789798
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -18.913620053335755
+    - 65.02550250010037
+    theta_deg: -168.7914592184485
+    length_m: 12.641503788345236
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -18.913620053335755
+    - -65.02550250010037
+    theta_deg: 168.7914592184485
+    length_m: 12.641503788345236
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -31.004809523342466
+    - 61.78279437781731
+    theta_deg: -161.12492608622196
+    length_m: 12.451564902819822
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -31.004809523342466
+    - -61.78279437781731
+    theta_deg: 161.12492608622196
+    length_m: 12.451564902819822
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -42.33255768382112
+    - 57.01878881261359
+    theta_deg: -153.16953913424916
+    length_m: 12.185295504207216
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -42.33255768382112
+    - -57.01878881261359
+    theta_deg: 153.16953913424916
+    length_m: 12.185295504207216
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -52.61793778041999
+    - 50.85079143233255
+    theta_deg: -144.817867087147
+    length_m: 11.864637990085539
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -52.61793778041999
+    - -50.85079143233255
+    theta_deg: 144.817867087147
+    length_m: 11.864637990085539
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -61.60768961994133
+    - 43.43067880288636
+    theta_deg: -135.97846166045304
+    length_m: 11.517854695351666
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -61.60768961994133
+    - -43.43067880288636
+    theta_deg: 135.97846166045304
+    length_m: 11.517854695351666
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -69.08045567682032
+    - 34.941158723153954
+    theta_deg: -126.59136461359049
+    length_m: 11.178067135876532
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -69.08045567682032
+    - -34.941158723153954
+    theta_deg: 126.59136461359049
+    length_m: 11.178067135876532
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -74.85223165004788
+    - 25.59127135260014
+    theta_deg: -116.64912993362914
+    length_m: 10.880677501418786
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -74.85223165004788
+    - -25.59127135260014
+    theta_deg: 116.64912993362914
+    length_m: 10.880677501418786
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -78.78089725973699
+    - 15.611241948785086
+    theta_deg: -106.21784608669728
+    length_m: 10.659408679109214
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -78.78089725973699
+    - -15.611241948785086
+    theta_deg: 106.21784608669728
+    length_m: 10.659408679109214
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -80.76971572008343
+    - 5.24681195744935
+    theta_deg: -95.44669422350445
+    length_m: 10.541218160642545
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -80.76971572008343
+    - -5.24681195744935
+    theta_deg: 95.44669422350445
+    length_m: 10.541218160642545
+    h_m: 26
+    depth_m: 6
+    bays: 2
+    tiers: 2
+    attic_m: 3
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: prism
+    at:
+    - 93
+    - 0
+    theta_deg: 90
+    length_m: 5
+    section_m:
+    - - -12
+      - 0
+    - - 0
+      - 0
+    - - 0
+      - 48
+    - - -3
+      - 48
+  - kind: arches
+    at:
+    - -93
+    - -3.5
+    theta_deg: 90
+    length_m: 7
+    h_m: 42
+    depth_m: 4
+    bays: 1
+    tiers: 3
+    attic_m: 3
+  - kind: arches
+    at:
+    - -91
+    - -10
+    theta_deg: 95
+    length_m: 7
+    h_m: 29
+    depth_m: 4
+    bays: 1
+    tiers: 2
+    attic_m: 2
+  - kind: arches
+    at:
+    - -88
+    - -16.5
+    theta_deg: 100
+    length_m: 7
+    h_m: 15
+    depth_m: 4
+    bays: 1
+    tiers: 1
+    attic_m: 1
+  basis: research/rome08_capital_whole_basis.md; C17 official Colosseo restoration account dates Stern1805–07 and
+    Valadier1822–27 end supports; C18 museum albumen interior photograph1860–70 confirms broken lower inner arcade,
+    open unexcavated arena and missing full seating; C19 after1870 photograph is a comparison only, not exact1871
+    dating. Native06 northern189x156m/48m arcade is a same-monument dimension comparison. Lower gallery native chords
+    at0.86 of the same plan (about163x134m),6m depth and26m top are graphic estimates, not a measured1871 ruin profile;
+    its80 bays and3m attic are a schematic continuation of the same radial system. The eastern12x5m wedge and western7m
+    stepped arcade supports are schematic masses; cracks, individual ruined upper edges, decorative orders, ViaCrucis
+    shrines and later hypogeum excavation are not reconstructed. No southern high outer shell or full gladiatorial
+    seats. Formal continuity:06 northern outer shell persists. Only the sourced19c low gallery and already-built1807/1827
+    end supports replace the17c low-gallery comparison; this source observation is not new construction in1849.
+  name: Colosseum nineteenth-century remnant
+rome08_formal_portapia:
+  kind: parts
+  name: PortaPia dual gate after1868
+  exaggeration: 1
+  basis: research/rome08_capital_whole_basis.md; C06 documents the1851 restoration and1862–68 exterior and completed
+    double gate court; C07 shows the1870 gate retained beside a local breach.18m facade width,32m court axis,14/16m
+    heights and simplified attic use the persistent modern two-facade locator as a graphic scale comparison; ornament
+    and exact1868 elevations are not reconstructed.
+  parts:
+  - kind: arches
+    at:
+    - 0
+    - -16
+    length_m: 18
+    h_m: 14
+    depth_m: 3
+    bays: 1
+    arch: flat
+    opening: 0.34
+    attic_m: 2
+    id: inner_after1851
+  - kind: arches
+    at:
+    - 0
+    - 16
+    length_m: 18
+    h_m: 16
+    depth_m: 3
+    bays: 1
+    arch: round
+    opening: 0.34
+    attic_m: 3
+    id: outer_after1868
+  - kind: long_hall
+    at:
+    - -8
+    - 0
+    w_m: 2
+    d_m: 32
+    h_m: 8
+    roof:
+      shape: flat
+    id: court_west
+  - kind: long_hall
+    at:
+    - 8
+    - 0
+    w_m: 2
+    d_m: 32
+    h_m: 8
+    roof:
+      shape: flat
+    id: court_east

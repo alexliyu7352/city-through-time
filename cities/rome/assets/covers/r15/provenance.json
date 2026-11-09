@@ -1,0 +1,268 @@
+{
+  "tool": "tools.image_gen__imagegen",
+  "model": "Actual tool response disclosed no model identifier.",
+  "files": [
+    {
+      "file": "cities/rome_round14g_all/build/film.json",
+      "sha256": "572bf1d65a18941e7e2913052171517eb4b556afc61886ec03b5bab44e4047e7",
+      "bytes": 1701946
+    },
+    {
+      "file": "cities/rome_round14g_all/build/data/model.json",
+      "sha256": "9913fa4991ca7f6e4139911839628e6714bf1c9d2bb94092e26dd204b4a93a5c",
+      "bytes": 22492985
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/refs/cam01_2026.png",
+      "sha256": "dcee6ded4d6f88cd473d9f3723b80c0c7744409b523efb16eb8fe8956511eba5",
+      "bytes": 3707301,
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/refs/cam01_753bce.png",
+      "sha256": "07c727bf1489676632b6b9c0ec152fd42a8d7ac84e3fed7de65add797c6b75df",
+      "bytes": 2373192,
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/refs/cam02_2026.png",
+      "sha256": "f2bce63d6cf9cafbe4bc86532bf538b8189b152a8dbed2cfcfee19fc86001c33",
+      "bytes": 3171488,
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/refs/cam02_753bce.png",
+      "sha256": "6e41f130e2c380473a56cf9d8e395dd71aa90cb26e3fbd74c2c2ea60d4f1d569",
+      "bytes": 2090884,
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/refs/film_colosseum_photo.jpg",
+      "sha256": "215ee921e4328bb28fe1285f929dab5ab8821f9ad4b2325ae9d3fd3418b87630",
+      "bytes": 3837901,
+      "size": [
+        4032,
+        3024
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/refs/film_founding_imagination.png",
+      "sha256": "43954a29ce0368974fdc2627a127b93bbd21bae7b807081e768e5a0d182a4568",
+      "bytes": 2893087,
+      "size": [
+        1672,
+        941
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/generated/A_portrait.png",
+      "sha256": "5f4380ab3957ed3524e5e868387a6a94c2de6194dffb46ad7193e98ddd949897",
+      "bytes": 2537219,
+      "size": [
+        1086,
+        1448
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/generated/A_wide.png",
+      "sha256": "0200b4e3b198123ff359f2814da6a8b31cf6f4428192214b92a0b9e6cd69b00e",
+      "bytes": 2512733,
+      "size": [
+        1672,
+        941
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/generated/A_wide_v1_wrong_bank.png",
+      "sha256": "e67d8b82ad5f4270245fa275a930e2a776ec8efbdd9962a8e6e424a37d3b492d",
+      "bytes": 2679503,
+      "size": [
+        1672,
+        941
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/generated/A_wide_v2.png",
+      "sha256": "a07b8b5c6a79e6882e93f10320a9962d4d6f8d2126e594e069792907474541a8",
+      "bytes": 2611968,
+      "size": [
+        1672,
+        941
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/generated/B_portrait.png",
+      "sha256": "3134d258c9d9a43da36164a0434a0d7e7f5eb07326b4694e2786e90aa2d51519",
+      "bytes": 2447983,
+      "size": [
+        1086,
+        1448
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/generated/B_wide.png",
+      "sha256": "b62969057f3ffea7ce59031e9b7b65fb0f00e73a293839eff86a344ef408a299",
+      "bytes": 2463368,
+      "size": [
+        1672,
+        941
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_A_en_portrait.jpg",
+      "sha256": "54a215c49d582aec90d9226a714a3ef9ec9c118ceb71caee76fec06d290cee0b",
+      "bytes": 1081904,
+      "size": [
+        1080,
+        1440
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_A_en_wide.jpg",
+      "sha256": "63daa6046f978b79ebb49760defbdd359ef596adfd0c2aac2d5b57456df62e0e",
+      "bytes": 3194936,
+      "size": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_A_zh_portrait.jpg",
+      "sha256": "8f33ef5bda5c98b70214ecc92d37d964f628a486d71e5fb7c7c982453a906575",
+      "bytes": 1065669,
+      "size": [
+        1080,
+        1440
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_A_zh_wide.jpg",
+      "sha256": "f2ea3a4ed509dce0a2b1bd97537890eda9ab3027ad21fd177799d632b6bf17f5",
+      "bytes": 3154493,
+      "size": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_B_en_portrait.jpg",
+      "sha256": "f552c0eebadbde2f34c2d3f110449f0fbf4cb8bdcd396fac57d74d7bdf1e65b3",
+      "bytes": 893863,
+      "size": [
+        1080,
+        1440
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_B_en_wide.jpg",
+      "sha256": "5919021f3c97642aed4d8486fa93b478dfd83eefa96e32aa7e5be51678956863",
+      "bytes": 3014271,
+      "size": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_B_zh_portrait.jpg",
+      "sha256": "0eb066871ce89d9f526ed8ac304b2d9a58b7501bc2fdd2ae985c2de4032f0485",
+      "bytes": 876912,
+      "size": [
+        1080,
+        1440
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_B_zh_wide.jpg",
+      "sha256": "c681423dcf5f82e6233492db9b4c485d214e224d551e27b2f0bd721f4b65245d",
+      "bytes": 2974909,
+      "size": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_A_en_portrait_320.jpg",
+      "sha256": "3afcb0fb635f7d70e59d67130f6de7532eb46afa87f23c88ea38f32e163d5e0b",
+      "bytes": 123683,
+      "size": [
+        320,
+        427
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_A_en_wide_320.jpg",
+      "sha256": "f44996f8822c61a7325ef28eb6f4f71719c66592fec14a8e3f1688a68105c8ea",
+      "bytes": 57469,
+      "size": [
+        320,
+        180
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_A_zh_portrait_320.jpg",
+      "sha256": "520a96d2344e7fad79898819d43ad920df639325e431e485064b621801aea403",
+      "bytes": 119744,
+      "size": [
+        320,
+        427
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_A_zh_wide_320.jpg",
+      "sha256": "045258517fe9899fef90111f6408a79f8b7c23ab22aaa6ce22db0a6612ac58a5",
+      "bytes": 54745,
+      "size": [
+        320,
+        180
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_B_en_portrait_320.jpg",
+      "sha256": "3fad09fcf19ff787513bdcf9c48803da88b2409074b24c80ed203e78b380ff02",
+      "bytes": 107037,
+      "size": [
+        320,
+        427
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_B_en_wide_320.jpg",
+      "sha256": "3ae181559648b2af31e331f0a92ec3aa63125372e78820cc58c64238cf0bf443",
+      "bytes": 52570,
+      "size": [
+        320,
+        180
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_B_zh_portrait_320.jpg",
+      "sha256": "e6c5fc5113891a713e4588aa62b1e7329583a9fe4bdf12cafd74dba9f1fdc33d",
+      "bytes": 103135,
+      "size": [
+        320,
+        427
+      ]
+    },
+    {
+      "file": "cities/rome/assets/covers/r15/final/rome_B_zh_wide_320.jpg",
+      "sha256": "b5d07d73bec2b79cc105ea0a2f42dd61785b38b7d8af1b820e3c49c59b7e2eae",
+      "bytes": 49798,
+      "size": [
+        320,
+        180
+      ]
+    }
+  ]
+}

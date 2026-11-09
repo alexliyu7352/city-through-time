@@ -1,0 +1,6752 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4928061,
+      41.8942511
+     ],
+     [
+      12.4922453,
+      41.894903
+     ],
+     [
+      12.4915923,
+      41.8954446
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_lane_001",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.49381,
+      41.8948833
+     ],
+     [
+      12.4932333,
+      41.8953596
+     ],
+     [
+      12.4927019,
+      41.8960011
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_lane_002",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.494178,
+      41.8958486
+     ],
+     [
+      12.4938867,
+      41.8957039
+     ],
+     [
+      12.4933474,
+      41.8952654
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_lane_003",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4930828,
+      41.8955414
+     ],
+     [
+      12.4926903,
+      41.8952546
+     ],
+     [
+      12.4921126,
+      41.895013
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_lane_004",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4911754,
+      41.8933242
+     ],
+     [
+      12.4906118,
+      41.8939794
+     ],
+     [
+      12.4898727,
+      41.8945924
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_lane_005",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4903933,
+      41.8941606
+     ],
+     [
+      12.4899044,
+      41.8937532
+     ],
+     [
+      12.4893174,
+      41.8934441
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_lane_006",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4919879,
+      41.8937836
+     ],
+     [
+      12.4914573,
+      41.8944058
+     ],
+     [
+      12.4907235,
+      41.8950089
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_lane_007",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4923862,
+      41.8947391
+     ],
+     [
+      12.4920405,
+      41.8944718
+     ],
+     [
+      12.4915641,
+      41.8942805
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_lane_008",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4912286,
+      41.8945938
+     ],
+     [
+      12.4908044,
+      41.8944177
+     ],
+     [
+      12.4904375,
+      41.8941239
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_lane_009",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4904751,
+       41.8933312
+      ],
+      [
+       12.49036,
+       41.8934541
+      ],
+      [
+       12.4901626,
+       41.8933508
+      ],
+      [
+       12.4902777,
+       41.8932279
+      ],
+      [
+       12.4904751,
+       41.8933312
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4900514,
+       41.8934028
+      ],
+      [
+       12.4899362,
+       41.8935257
+      ],
+      [
+       12.4897388,
+       41.8934225
+      ],
+      [
+       12.489854,
+       41.8932996
+      ],
+      [
+       12.4900514,
+       41.8934028
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4907635,
+       41.8935212
+      ],
+      [
+       12.4905946,
+       41.8934401
+      ],
+      [
+       12.4907249,
+       41.8932886
+      ],
+      [
+       12.4908938,
+       41.8933697
+      ],
+      [
+       12.4907635,
+       41.8935212
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4905189,
+       41.8937753
+      ],
+      [
+       12.49035,
+       41.8936942
+      ],
+      [
+       12.4904803,
+       41.8935427
+      ],
+      [
+       12.4906492,
+       41.8936238
+      ],
+      [
+       12.4905189,
+       41.8937753
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4904619,
+       41.8930402
+      ],
+      [
+       12.4903468,
+       41.8931631
+      ],
+      [
+       12.4901494,
+       41.8930599
+      ],
+      [
+       12.4902645,
+       41.892937
+      ],
+      [
+       12.4904619,
+       41.8930402
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4903335,
+       41.8935503
+      ],
+      [
+       12.4902183,
+       41.8936732
+      ],
+      [
+       12.4900209,
+       41.89357
+      ],
+      [
+       12.4901361,
+       41.8934471
+      ],
+      [
+       12.4903335,
+       41.8935503
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4901917,
+       41.8931876
+      ],
+      [
+       12.4900766,
+       41.8933105
+      ],
+      [
+       12.4898792,
+       41.8932072
+      ],
+      [
+       12.4899943,
+       41.8930843
+      ],
+      [
+       12.4901917,
+       41.8931876
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4906048,
+       41.8932928
+      ],
+      [
+       12.4904358,
+       41.8932116
+      ],
+      [
+       12.4905661,
+       41.8930602
+      ],
+      [
+       12.490735,
+       41.8931413
+      ],
+      [
+       12.4906048,
+       41.8932928
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4897812,
+       41.8933299
+      ],
+      [
+       12.4896463,
+       41.8934738
+      ],
+      [
+       12.4894921,
+       41.8933932
+      ],
+      [
+       12.489627,
+       41.8932492
+      ],
+      [
+       12.4897812,
+       41.8933299
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.62,
+     19.52
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4908573,
+       41.8933269
+      ],
+      [
+       12.4906644,
+       41.8932343
+      ],
+      [
+       12.4907636,
+       41.893119
+      ],
+      [
+       12.4909565,
+       41.8932116
+      ],
+      [
+       12.4908573,
+       41.8933269
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.23,
+     19.03
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4910483,
+       41.8934328
+      ],
+      [
+       12.4908592,
+       41.893342
+      ],
+      [
+       12.4909564,
+       41.893229
+      ],
+      [
+       12.4911456,
+       41.8933198
+      ],
+      [
+       12.4910483,
+       41.8934328
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.93,
+     18.66
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4905283,
+       41.8934919
+      ],
+      [
+       12.4904055,
+       41.8934329
+      ],
+      [
+       12.4905358,
+       41.8932814
+      ],
+      [
+       12.4906586,
+       41.8933404
+      ],
+      [
+       12.4905283,
+       41.8934919
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     12.12
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4904136,
+       41.8941122
+      ],
+      [
+       12.4902731,
+       41.8940176
+      ],
+      [
+       12.4903743,
+       41.8939336
+      ],
+      [
+       12.4905149,
+       41.8940282
+      ],
+      [
+       12.4904136,
+       41.8941122
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.56,
+     15.7
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4907797,
+       41.8936978
+      ],
+      [
+       12.4906519,
+       41.8936365
+      ],
+      [
+       12.4907505,
+       41.8935219
+      ],
+      [
+       12.4908783,
+       41.8935832
+      ],
+      [
+       12.4907797,
+       41.8936978
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.13,
+     12.61
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4905729,
+       41.893952
+      ],
+      [
+       12.4904337,
+       41.8938852
+      ],
+      [
+       12.4905411,
+       41.8937603
+      ],
+      [
+       12.4906803,
+       41.8938272
+      ],
+      [
+       12.4905729,
+       41.893952
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.48,
+     13.73
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4906917,
+       41.8938253
+      ],
+      [
+       12.4905633,
+       41.8937636
+      ],
+      [
+       12.4906624,
+       41.8936484
+      ],
+      [
+       12.4907908,
+       41.8937101
+      ],
+      [
+       12.4906917,
+       41.8938253
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.21,
+     12.68
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4909056,
+       41.8935894
+      ],
+      [
+       12.4907757,
+       41.893527
+      ],
+      [
+       12.4908759,
+       41.8934105
+      ],
+      [
+       12.4910058,
+       41.8934729
+      ],
+      [
+       12.4909056,
+       41.8935894
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.38,
+     12.82
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4898922,
+       41.8932339
+      ],
+      [
+       12.4898155,
+       41.8933158
+      ],
+      [
+       12.489684,
+       41.893247
+      ],
+      [
+       12.4897607,
+       41.8931651
+      ],
+      [
+       12.4898922,
+       41.8932339
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_18",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.33,
+     11.11
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4903745,
+       41.8937221
+      ],
+      [
+       12.4902992,
+       41.8938025
+      ],
+      [
+       12.49017,
+       41.893735
+      ],
+      [
+       12.4902454,
+       41.8936546
+      ],
+      [
+       12.4903745,
+       41.8937221
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_19",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.08,
+     10.9
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4906644,
+       41.8936111
+      ],
+      [
+       12.4905255,
+       41.8935444
+      ],
+      [
+       12.4905969,
+       41.8934614
+      ],
+      [
+       12.4907358,
+       41.8935281
+      ],
+      [
+       12.4906644,
+       41.8936111
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_20",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.96,
+     13.71
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4904967,
+       41.8934906
+      ],
+      [
+       12.49041,
+       41.8935832
+      ],
+      [
+       12.4903109,
+       41.8935313
+      ],
+      [
+       12.4903976,
+       41.8934388
+      ],
+      [
+       12.4904967,
+       41.8934906
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_21",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.04,
+     12.55
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.490499,
+       41.8937816
+      ],
+      [
+       12.49041,
+       41.8938765
+      ],
+      [
+       12.4903084,
+       41.8938233
+      ],
+      [
+       12.4903973,
+       41.8937284
+      ],
+      [
+       12.490499,
+       41.8937816
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b001_22",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.3,
+     12.87
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4913219,
+       41.8939922
+      ],
+      [
+       12.491153,
+       41.893911
+      ],
+      [
+       12.4912832,
+       41.8937596
+      ],
+      [
+       12.4914521,
+       41.8938407
+      ],
+      [
+       12.4913219,
+       41.8939922
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 301.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4916669,
+       41.8939996
+      ],
+      [
+       12.4914976,
+       41.893919
+      ],
+      [
+       12.491627,
+       41.8937672
+      ],
+      [
+       12.4917964,
+       41.8938478
+      ],
+      [
+       12.4916669,
+       41.8939996
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 120.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4910735,
+       41.8943042
+      ],
+      [
+       12.4909584,
+       41.8944271
+      ],
+      [
+       12.490761,
+       41.8943239
+      ],
+      [
+       12.4908761,
+       41.894201
+      ],
+      [
+       12.4910735,
+       41.8943042
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4909799,
+       41.8939847
+      ],
+      [
+       12.490811,
+       41.8939036
+      ],
+      [
+       12.4909413,
+       41.8937521
+      ],
+      [
+       12.4911102,
+       41.8938332
+      ],
+      [
+       12.4909799,
+       41.8939847
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 301.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4912765,
+       41.8937006
+      ],
+      [
+       12.4911075,
+       41.8936195
+      ],
+      [
+       12.4912378,
+       41.893468
+      ],
+      [
+       12.4914067,
+       41.8935492
+      ],
+      [
+       12.4912765,
+       41.8937006
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 301.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4913794,
+       41.894282
+      ],
+      [
+       12.49121,
+       41.8942014
+      ],
+      [
+       12.4913395,
+       41.8940496
+      ],
+      [
+       12.4915088,
+       41.8941302
+      ],
+      [
+       12.4913794,
+       41.894282
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 120.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4912571,
+       41.8940719
+      ],
+      [
+       12.4911419,
+       41.8941948
+      ],
+      [
+       12.4909445,
+       41.8940916
+      ],
+      [
+       12.4910597,
+       41.8939687
+      ],
+      [
+       12.4912571,
+       41.8940719
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.49153,
+       41.8937865
+      ],
+      [
+       12.4913607,
+       41.8937059
+      ],
+      [
+       12.4914902,
+       41.8935541
+      ],
+      [
+       12.4916595,
+       41.8936347
+      ],
+      [
+       12.49153,
+       41.8937865
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 120.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4911809,
+       41.8938465
+      ],
+      [
+       12.4909782,
+       41.8937492
+      ],
+      [
+       12.4910824,
+       41.893628
+      ],
+      [
+       12.4912851,
+       41.8937254
+      ],
+      [
+       12.4911809,
+       41.8938465
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 301.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4909764,
+       41.894443
+      ],
+      [
+       12.4910662,
+       41.8943222
+      ],
+      [
+       12.4912602,
+       41.8944028
+      ],
+      [
+       12.4911703,
+       41.8945235
+      ],
+      [
+       12.4909764,
+       41.894443
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.42,
+     15.35
+    ],
+    "theta_deg": 207.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4916297,
+       41.8941642
+      ],
+      [
+       12.4914417,
+       41.8940747
+      ],
+      [
+       12.4915375,
+       41.8939623
+      ],
+      [
+       12.4917256,
+       41.8940518
+      ],
+      [
+       12.4916297,
+       41.8941642
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.81,
+     18.51
+    ],
+    "theta_deg": 120.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4910022,
+       41.8940198
+      ],
+      [
+       12.4909065,
+       41.894122
+      ],
+      [
+       12.4907423,
+       41.8940362
+      ],
+      [
+       12.4908381,
+       41.893934
+      ],
+      [
+       12.4910022,
+       41.8940198
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.63,
+     13.86
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4917563,
+       41.8938084
+      ],
+      [
+       12.4915887,
+       41.8937286
+      ],
+      [
+       12.4916741,
+       41.8936284
+      ],
+      [
+       12.4918417,
+       41.8937082
+      ],
+      [
+       12.4917563,
+       41.8938084
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.19,
+     16.49
+    ],
+    "theta_deg": 120.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4906098,
+       41.8941975
+      ],
+      [
+       12.4907225,
+       41.8941189
+      ],
+      [
+       12.4908488,
+       41.8942199
+      ],
+      [
+       12.490736,
+       41.8942986
+      ],
+      [
+       12.4906098,
+       41.8941975
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.36,
+     12.8
+    ],
+    "theta_deg": 225.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4906109,
+       41.8941887
+      ],
+      [
+       12.4904962,
+       41.8941115
+      ],
+      [
+       12.4905788,
+       41.894043
+      ],
+      [
+       12.4906935,
+       41.8941202
+      ],
+      [
+       12.4906109,
+       41.8941887
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.25,
+     12.81
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.491417,
+       41.8940795
+      ],
+      [
+       12.4913112,
+       41.8940292
+      ],
+      [
+       12.4913921,
+       41.8939343
+      ],
+      [
+       12.4914979,
+       41.8939847
+      ],
+      [
+       12.491417,
+       41.8940795
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.49,
+     10.41
+    ],
+    "theta_deg": 120.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4918657,
+       41.8938738
+      ],
+      [
+       12.4917631,
+       41.893825
+      ],
+      [
+       12.4918415,
+       41.893733
+      ],
+      [
+       12.4919441,
+       41.8937818
+      ],
+      [
+       12.4918657,
+       41.8938738
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b002_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.12,
+     10.1
+    ],
+    "theta_deg": 120.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4891728,
+       41.8939186
+      ],
+      [
+       12.4892885,
+       41.893796
+      ],
+      [
+       12.4894854,
+       41.8938997
+      ],
+      [
+       12.4893697,
+       41.8940223
+      ],
+      [
+       12.4891728,
+       41.8939186
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.489621,
+       41.8941428
+      ],
+      [
+       12.4897705,
+       41.8940427
+      ],
+      [
+       12.4899314,
+       41.8941767
+      ],
+      [
+       12.4897819,
+       41.8942768
+      ],
+      [
+       12.489621,
+       41.8941428
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 46.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4887692,
+       41.8939333
+      ],
+      [
+       12.4888848,
+       41.8938106
+      ],
+      [
+       12.4890818,
+       41.8939144
+      ],
+      [
+       12.4889661,
+       41.894037
+      ],
+      [
+       12.4887692,
+       41.8939333
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4895555,
+       41.8938874
+      ],
+      [
+       12.4896712,
+       41.8937648
+      ],
+      [
+       12.4898682,
+       41.8938685
+      ],
+      [
+       12.4897525,
+       41.8939911
+      ],
+      [
+       12.4895555,
+       41.8938874
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.489403,
+       41.8942997
+      ],
+      [
+       12.4892538,
+       41.8941992
+      ],
+      [
+       12.4894151,
+       41.8940655
+      ],
+      [
+       12.4895643,
+       41.8941659
+      ],
+      [
+       12.489403,
+       41.8942997
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.48915,
+       41.8936532
+      ],
+      [
+       12.4892657,
+       41.8935306
+      ],
+      [
+       12.4894626,
+       41.8936343
+      ],
+      [
+       12.4893469,
+       41.8937569
+      ],
+      [
+       12.48915,
+       41.8936532
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4901095,
+       41.8942775
+      ],
+      [
+       12.4899603,
+       41.8941771
+      ],
+      [
+       12.4901216,
+       41.8940434
+      ],
+      [
+       12.4902708,
+       41.8941438
+      ],
+      [
+       12.4901095,
+       41.8942775
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4889965,
+       41.8940871
+      ],
+      [
+       12.4891122,
+       41.8939645
+      ],
+      [
+       12.4893092,
+       41.8940682
+      ],
+      [
+       12.4891935,
+       41.8941909
+      ],
+      [
+       12.4889965,
+       41.8940871
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4898124,
+       41.8945273
+      ],
+      [
+       12.4896632,
+       41.8944269
+      ],
+      [
+       12.4898245,
+       41.8942931
+      ],
+      [
+       12.4899737,
+       41.8943935
+      ],
+      [
+       12.4898124,
+       41.8945273
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4897924,
+       41.8939842
+      ],
+      [
+       12.4899419,
+       41.8938841
+      ],
+      [
+       12.4901028,
+       41.8940181
+      ],
+      [
+       12.4899533,
+       41.8941183
+      ],
+      [
+       12.4897924,
+       41.8939842
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 46.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4889156,
+       41.8937701
+      ],
+      [
+       12.4890313,
+       41.8936475
+      ],
+      [
+       12.4892282,
+       41.8937512
+      ],
+      [
+       12.4891125,
+       41.8938739
+      ],
+      [
+       12.4889156,
+       41.8937701
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4895762,
+       41.8944396
+      ],
+      [
+       12.489427,
+       41.8943392
+      ],
+      [
+       12.4895883,
+       41.8942054
+      ],
+      [
+       12.4897375,
+       41.8943058
+      ],
+      [
+       12.4895762,
+       41.8944396
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4894159,
+       41.8940366
+      ],
+      [
+       12.4895316,
+       41.893914
+      ],
+      [
+       12.4897286,
+       41.8940177
+      ],
+      [
+       12.4896129,
+       41.8941403
+      ],
+      [
+       12.4894159,
+       41.8940366
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4893509,
+       41.8937723
+      ],
+      [
+       12.4894666,
+       41.8936497
+      ],
+      [
+       12.4896635,
+       41.8937534
+      ],
+      [
+       12.4895478,
+       41.893876
+      ],
+      [
+       12.4893509,
+       41.8937723
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4899447,
+       41.8943661
+      ],
+      [
+       12.4898268,
+       41.8942867
+      ],
+      [
+       12.4899543,
+       41.894181
+      ],
+      [
+       12.4900722,
+       41.8942604
+      ],
+      [
+       12.4899447,
+       41.8943661
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.81,
+     13.18
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4886547,
+       41.893998
+      ],
+      [
+       12.4887241,
+       41.8939243
+      ],
+      [
+       12.4888868,
+       41.89401
+      ],
+      [
+       12.4888173,
+       41.8940836
+      ],
+      [
+       12.4886547,
+       41.893998
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b003_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.51,
+     10.01
+    ],
+    "theta_deg": 33.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.492051,
+       41.8942634
+      ],
+      [
+       12.4921461,
+       41.8941312
+      ],
+      [
+       12.4923583,
+       41.8942165
+      ],
+      [
+       12.4922633,
+       41.8943486
+      ],
+      [
+       12.492051,
+       41.8942634
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b004_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 206.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4923727,
+       41.8945948
+      ],
+      [
+       12.4922038,
+       41.8945137
+      ],
+      [
+       12.492334,
+       41.8943623
+      ],
+      [
+       12.492503,
+       41.8944434
+      ],
+      [
+       12.4923727,
+       41.8945948
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b004_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4920789,
+       41.8941169
+      ],
+      [
+       12.4919095,
+       41.8940363
+      ],
+      [
+       12.492039,
+       41.8938844
+      ],
+      [
+       12.4922083,
+       41.893965
+      ],
+      [
+       12.4920789,
+       41.8941169
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b004_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 300.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4925575,
+       41.8943842
+      ],
+      [
+       12.4923886,
+       41.8943031
+      ],
+      [
+       12.4925189,
+       41.8941517
+      ],
+      [
+       12.4926878,
+       41.8942328
+      ],
+      [
+       12.4925575,
+       41.8943842
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b004_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 121.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4916898,
+       41.8942666
+      ],
+      [
+       12.4917849,
+       41.8941344
+      ],
+      [
+       12.4919971,
+       41.8942197
+      ],
+      [
+       12.4919021,
+       41.8943518
+      ],
+      [
+       12.4916898,
+       41.8942666
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b004_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 206.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4923021,
+       41.8941868
+      ],
+      [
+       12.4921328,
+       41.8941062
+      ],
+      [
+       12.4922623,
+       41.8939544
+      ],
+      [
+       12.4924316,
+       41.894035
+      ],
+      [
+       12.4923021,
+       41.8941868
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b004_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 300.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4920241,
+       41.8943952
+      ],
+      [
+       12.492142,
+       41.8943101
+      ],
+      [
+       12.4922787,
+       41.8944158
+      ],
+      [
+       12.4921608,
+       41.8945009
+      ],
+      [
+       12.4920241,
+       41.8943952
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b004_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.33,
+     13.61
+    ],
+    "theta_deg": 224.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4918983,
+       41.8941702
+      ],
+      [
+       12.4917514,
+       41.8941003
+      ],
+      [
+       12.4918263,
+       41.8940125
+      ],
+      [
+       12.4919732,
+       41.8940824
+      ],
+      [
+       12.4918983,
+       41.8941702
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b004_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.57,
+     14.46
+    ],
+    "theta_deg": 300.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4920421,
+       41.8942256
+      ],
+      [
+       12.4919129,
+       41.894164
+      ],
+      [
+       12.4919788,
+       41.8940868
+      ],
+      [
+       12.492108,
+       41.8941483
+      ],
+      [
+       12.4920421,
+       41.8942256
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b004_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.18,
+     12.72
+    ],
+    "theta_deg": 300.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4903789,
+       41.8945792
+      ],
+      [
+       12.4905257,
+       41.8944769
+      ],
+      [
+       12.4906901,
+       41.8946085
+      ],
+      [
+       12.4905432,
+       41.8947108
+      ],
+      [
+       12.4903789,
+       41.8945792
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b005_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 45.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.490729,
+       41.8946575
+      ],
+      [
+       12.4908266,
+       41.8945263
+      ],
+      [
+       12.4910372,
+       41.8946138
+      ],
+      [
+       12.4909396,
+       41.8947449
+      ],
+      [
+       12.490729,
+       41.8946575
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b005_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 27.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.490177,
+       41.8946933
+      ],
+      [
+       12.4900279,
+       41.8945929
+      ],
+      [
+       12.4901891,
+       41.8944591
+      ],
+      [
+       12.4903383,
+       41.8945595
+      ],
+      [
+       12.490177,
+       41.8946933
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b005_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4906644,
+       41.8949349
+      ],
+      [
+       12.4905159,
+       41.894834
+      ],
+      [
+       12.4906779,
+       41.8947008
+      ],
+      [
+       12.4908265,
+       41.8948017
+      ],
+      [
+       12.4906644,
+       41.8949349
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b005_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.490285,
+       41.8943381
+      ],
+      [
+       12.4904318,
+       41.8942358
+      ],
+      [
+       12.4905962,
+       41.8943674
+      ],
+      [
+       12.4904494,
+       41.8944698
+      ],
+      [
+       12.490285,
+       41.8943381
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b005_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 45.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4903739,
+       41.8948194
+      ],
+      [
+       12.4901949,
+       41.8946989
+      ],
+      [
+       12.4903239,
+       41.8945919
+      ],
+      [
+       12.4905029,
+       41.8947124
+      ],
+      [
+       12.4903739,
+       41.8948194
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b005_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.490584,
+       41.894515
+      ],
+      [
+       12.4906655,
+       41.8944054
+      ],
+      [
+       12.4908413,
+       41.8944785
+      ],
+      [
+       12.4907599,
+       41.894588
+      ],
+      [
+       12.490584,
+       41.894515
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b005_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.7,
+     13.92
+    ],
+    "theta_deg": 27.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4902649,
+       41.8944859
+      ],
+      [
+       12.4901403,
+       41.8944021
+      ],
+      [
+       12.4902301,
+       41.8943276
+      ],
+      [
+       12.4903547,
+       41.8944114
+      ],
+      [
+       12.4902649,
+       41.8944859
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b005_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.14,
+     13.92
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4903831,
+       41.8945682
+      ],
+      [
+       12.490269,
+       41.8944914
+      ],
+      [
+       12.4903512,
+       41.8944232
+      ],
+      [
+       12.4904653,
+       41.8945
+      ],
+      [
+       12.4903831,
+       41.8945682
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b005_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.2,
+     12.75
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.49148,
+       41.8950707
+      ],
+      [
+       12.4913314,
+       41.8949697
+      ],
+      [
+       12.4914934,
+       41.8948365
+      ],
+      [
+       12.491642,
+       41.8949374
+      ],
+      [
+       12.49148,
+       41.8950707
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 310.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4921531,
+       41.8946013
+      ],
+      [
+       12.4920379,
+       41.8947243
+      ],
+      [
+       12.4918405,
+       41.894621
+      ],
+      [
+       12.4919557,
+       41.8944981
+      ],
+      [
+       12.4921531,
+       41.8946013
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 213.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4910893,
+       41.8951067
+      ],
+      [
+       12.4909407,
+       41.8950058
+      ],
+      [
+       12.4911028,
+       41.8948726
+      ],
+      [
+       12.4912513,
+       41.8949735
+      ],
+      [
+       12.4910893,
+       41.8951067
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 310.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4918716,
+       41.8950385
+      ],
+      [
+       12.4917224,
+       41.8949381
+      ],
+      [
+       12.4918837,
+       41.8948043
+      ],
+      [
+       12.4920329,
+       41.8949047
+      ],
+      [
+       12.4918716,
+       41.8950385
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4914396,
+       41.8947952
+      ],
+      [
+       12.491291,
+       41.8946943
+      ],
+      [
+       12.4914531,
+       41.8945611
+      ],
+      [
+       12.4916017,
+       41.894662
+      ],
+      [
+       12.4914396,
+       41.8947952
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 310.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4915279,
+       41.8953443
+      ],
+      [
+       12.4913787,
+       41.8952439
+      ],
+      [
+       12.49154,
+       41.8951101
+      ],
+      [
+       12.4916892,
+       41.8952105
+      ],
+      [
+       12.4915279,
+       41.8953443
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4912752,
+       41.8952534
+      ],
+      [
+       12.491126,
+       41.895153
+      ],
+      [
+       12.4912873,
+       41.8950193
+      ],
+      [
+       12.4914365,
+       41.8951197
+      ],
+      [
+       12.4912752,
+       41.8952534
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4918398,
+       41.8947722
+      ],
+      [
+       12.4917246,
+       41.8948951
+      ],
+      [
+       12.4915272,
+       41.8947918
+      ],
+      [
+       12.4916424,
+       41.8946689
+      ],
+      [
+       12.4918398,
+       41.8947722
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4912207,
+       41.8949213
+      ],
+      [
+       12.4910721,
+       41.8948204
+      ],
+      [
+       12.4912342,
+       41.8946872
+      ],
+      [
+       12.4913828,
+       41.8947881
+      ],
+      [
+       12.4912207,
+       41.8949213
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 310.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4917508,
+       41.8952258
+      ],
+      [
+       12.4916016,
+       41.8951253
+      ],
+      [
+       12.4917629,
+       41.8949916
+      ],
+      [
+       12.4919121,
+       41.895092
+      ],
+      [
+       12.4917508,
+       41.8952258
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4916622,
+       41.8945195
+      ],
+      [
+       12.4917481,
+       41.8944
+      ],
+      [
+       12.4919399,
+       41.8944771
+      ],
+      [
+       12.491854,
+       41.8945965
+      ],
+      [
+       12.4916622,
+       41.8945195
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.07,
+     15.06
+    ],
+    "theta_deg": 26.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4914837,
+       41.8944317
+      ],
+      [
+       12.4915642,
+       41.8943199
+      ],
+      [
+       12.4917437,
+       41.894392
+      ],
+      [
+       12.4916633,
+       41.8945038
+      ],
+      [
+       12.4914837,
+       41.8944317
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.92,
+     14.1
+    ],
+    "theta_deg": 26.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4909038,
+       41.8950274
+      ],
+      [
+       12.4908137,
+       41.8949663
+      ],
+      [
+       12.4909488,
+       41.8948553
+      ],
+      [
+       12.4910388,
+       41.8949164
+      ],
+      [
+       12.4909038,
+       41.8950274
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.66,
+     10.1
+    ],
+    "theta_deg": 310.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4920668,
+       41.8947037
+      ],
+      [
+       12.4921693,
+       41.8946296
+      ],
+      [
+       12.4922883,
+       41.8947215
+      ],
+      [
+       12.4921857,
+       41.8947956
+      ],
+      [
+       12.4920668,
+       41.8947037
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b006_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.2,
+     11.84
+    ],
+    "theta_deg": 44.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4931946,
+       41.8947332
+      ],
+      [
+       12.4931202,
+       41.8948726
+      ],
+      [
+       12.4928964,
+       41.8948059
+      ],
+      [
+       12.4929707,
+       41.8946665
+      ],
+      [
+       12.4931946,
+       41.8947332
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 200.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4927276,
+       41.8948042
+      ],
+      [
+       12.4925587,
+       41.8947231
+      ],
+      [
+       12.492689,
+       41.8945717
+      ],
+      [
+       12.4928579,
+       41.8946528
+      ],
+      [
+       12.4927276,
+       41.8948042
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 301.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4928928,
+       41.8953292
+      ],
+      [
+       12.4930332,
+       41.895222
+      ],
+      [
+       12.4932054,
+       41.8953478
+      ],
+      [
+       12.493065,
+       41.8954551
+      ],
+      [
+       12.4928928,
+       41.8953292
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 222.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4933978,
+       41.8950087
+      ],
+      [
+       12.4932489,
+       41.894908
+      ],
+      [
+       12.4934105,
+       41.8947745
+      ],
+      [
+       12.4935594,
+       41.8948752
+      ],
+      [
+       12.4933978,
+       41.8950087
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 130.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4928918,
+       41.8945978
+      ],
+      [
+       12.4927229,
+       41.8945166
+      ],
+      [
+       12.4928531,
+       41.8943652
+      ],
+      [
+       12.4930221,
+       41.8944463
+      ],
+      [
+       12.4928918,
+       41.8945978
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 301.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4931141,
+       41.8946943
+      ],
+      [
+       12.4929452,
+       41.8946132
+      ],
+      [
+       12.4930755,
+       41.8944618
+      ],
+      [
+       12.4932444,
+       41.8945429
+      ],
+      [
+       12.4931141,
+       41.8946943
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 301.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4932861,
+       41.8949487
+      ],
+      [
+       12.4932118,
+       41.895088
+      ],
+      [
+       12.4929879,
+       41.8950213
+      ],
+      [
+       12.4930623,
+       41.894882
+      ],
+      [
+       12.4932861,
+       41.8949487
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 200.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4929474,
+       41.8948373
+      ],
+      [
+       12.4928581,
+       41.8950045
+      ],
+      [
+       12.4926791,
+       41.8949512
+      ],
+      [
+       12.4927683,
+       41.894784
+      ],
+      [
+       12.4929474,
+       41.8948373
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 200.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4933459,
+       41.8948137
+      ],
+      [
+       12.4931672,
+       41.8946929
+      ],
+      [
+       12.4932965,
+       41.8945861
+      ],
+      [
+       12.4934752,
+       41.8947069
+      ],
+      [
+       12.4933459,
+       41.8948137
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 130.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4925541,
+       41.8949227
+      ],
+      [
+       12.4923514,
+       41.8948254
+      ],
+      [
+       12.4924556,
+       41.8947043
+      ],
+      [
+       12.4926583,
+       41.8948016
+      ],
+      [
+       12.4925541,
+       41.8949227
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 301.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4929688,
+       41.8951913
+      ],
+      [
+       12.4928857,
+       41.8953081
+      ],
+      [
+       12.4926981,
+       41.8952336
+      ],
+      [
+       12.4927812,
+       41.8951168
+      ],
+      [
+       12.4929688,
+       41.8951913
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.64,
+     14.7
+    ],
+    "theta_deg": 26.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.492344,
+       41.8950853
+      ],
+      [
+       12.4924289,
+       41.8949719
+      ],
+      [
+       12.492611,
+       41.8950481
+      ],
+      [
+       12.492526,
+       41.8951614
+      ],
+      [
+       12.492344,
+       41.8950853
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.32,
+     14.43
+    ],
+    "theta_deg": 207.56,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4933971,
+       41.8951781
+      ],
+      [
+       12.4932586,
+       41.8950845
+      ],
+      [
+       12.4933588,
+       41.8950016
+      ],
+      [
+       12.4934974,
+       41.8950953
+      ],
+      [
+       12.4933971,
+       41.8951781
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.41,
+     15.51
+    ],
+    "theta_deg": 130.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4925405,
+       41.895155
+      ],
+      [
+       12.4926128,
+       41.8950586
+      ],
+      [
+       12.4927676,
+       41.8951233
+      ],
+      [
+       12.4926954,
+       41.8952198
+      ],
+      [
+       12.4925405,
+       41.895155
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.73,
+     12.28
+    ],
+    "theta_deg": 207.56,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4921963,
+       41.8950228
+      ],
+      [
+       12.492279,
+       41.8949124
+      ],
+      [
+       12.4923972,
+       41.8949618
+      ],
+      [
+       12.4923145,
+       41.8950722
+      ],
+      [
+       12.4921963,
+       41.8950228
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.24,
+     14.05
+    ],
+    "theta_deg": 207.56,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4936537,
+       41.8949538
+      ],
+      [
+       12.4935553,
+       41.8948873
+      ],
+      [
+       12.4936621,
+       41.8947991
+      ],
+      [
+       12.4937605,
+       41.8948656
+      ],
+      [
+       12.4936537,
+       41.8949538
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.21,
+     11.01
+    ],
+    "theta_deg": 130.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4935374,
+       41.8950769
+      ],
+      [
+       12.493421,
+       41.8949983
+      ],
+      [
+       12.4935474,
+       41.8948939
+      ],
+      [
+       12.4936637,
+       41.8949726
+      ],
+      [
+       12.4935374,
+       41.8950769
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b007_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.63,
+     13.02
+    ],
+    "theta_deg": 130.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4938463,
+       41.895249
+      ],
+      [
+       12.4936974,
+       41.8951483
+      ],
+      [
+       12.493859,
+       41.8950148
+      ],
+      [
+       12.4940079,
+       41.8951155
+      ],
+      [
+       12.4938463,
+       41.895249
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 310.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.494316,
+       41.8952446
+      ],
+      [
+       12.4942417,
+       41.895384
+      ],
+      [
+       12.4940178,
+       41.8953173
+      ],
+      [
+       12.4940922,
+       41.8951779
+      ],
+      [
+       12.494316,
+       41.8952446
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 200.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4945334,
+       41.8953388
+      ],
+      [
+       12.4944629,
+       41.8954709
+      ],
+      [
+       12.4942507,
+       41.8954077
+      ],
+      [
+       12.4943212,
+       41.8952756
+      ],
+      [
+       12.4945334,
+       41.8953388
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.96,
+     15.8
+    ],
+    "theta_deg": 200.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4945463,
+       41.8956084
+      ],
+      [
+       12.4944777,
+       41.8957048
+      ],
+      [
+       12.4942649,
+       41.8956203
+      ],
+      [
+       12.4943335,
+       41.8955239
+      ],
+      [
+       12.4945463,
+       41.8956084
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     12.12
+    ],
+    "theta_deg": 206.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4941812,
+       41.8956679
+      ],
+      [
+       12.4941131,
+       41.8957636
+      ],
+      [
+       12.4939018,
+       41.8956797
+      ],
+      [
+       12.4939699,
+       41.895584
+      ],
+      [
+       12.4941812,
+       41.8956679
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.86,
+     12.04
+    ],
+    "theta_deg": 26.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4947048,
+       41.8954467
+      ],
+      [
+       12.4945879,
+       41.8955575
+      ],
+      [
+       12.4944693,
+       41.8954877
+      ],
+      [
+       12.4945861,
+       41.8953769
+      ],
+      [
+       12.4947048,
+       41.8954467
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.54,
+     15.67
+    ],
+    "theta_deg": 216.55,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4948451,
+       41.8955504
+      ],
+      [
+       12.4947521,
+       41.8956386
+      ],
+      [
+       12.4946104,
+       41.8955552
+      ],
+      [
+       12.4947034,
+       41.895467
+      ],
+      [
+       12.4948451,
+       41.8955504
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.97,
+     12.47
+    ],
+    "theta_deg": 216.55,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4941079,
+       41.8954674
+      ],
+      [
+       12.4940513,
+       41.8955469
+      ],
+      [
+       12.4938755,
+       41.8954771
+      ],
+      [
+       12.4939321,
+       41.8953975
+      ],
+      [
+       12.4941079,
+       41.8954674
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.52,
+     10.01
+    ],
+    "theta_deg": 206.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4943202,
+       41.8955285
+      ],
+      [
+       12.4942515,
+       41.895625
+      ],
+      [
+       12.4940966,
+       41.8955634
+      ],
+      [
+       12.4941653,
+       41.895467
+      ],
+      [
+       12.4943202,
+       41.8955285
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.56,
+     12.13
+    ],
+    "theta_deg": 206.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4936269,
+       41.8952465
+      ],
+      [
+       12.4935132,
+       41.8951697
+      ],
+      [
+       12.4935955,
+       41.8951018
+      ],
+      [
+       12.4937092,
+       41.8951786
+      ],
+      [
+       12.4936269,
+       41.8952465
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.18,
+     12.72
+    ],
+    "theta_deg": 310.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4940296,
+       41.8952352
+      ],
+      [
+       12.4939724,
+       41.8953424
+      ],
+      [
+       12.4938577,
+       41.8953082
+      ],
+      [
+       12.4939149,
+       41.8952011
+      ],
+      [
+       12.4940296,
+       41.8952352
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b008_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.25,
+     12.81
+    ],
+    "theta_deg": 200.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4922137,
+       41.8955196
+      ],
+      [
+       12.4923118,
+       41.8953887
+      ],
+      [
+       12.492522,
+       41.8954766
+      ],
+      [
+       12.492424,
+       41.8956075
+      ],
+      [
+       12.4922137,
+       41.8955196
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 27.56,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4919398,
+       41.895606
+      ],
+      [
+       12.4917906,
+       41.8955056
+      ],
+      [
+       12.4919519,
+       41.8953718
+      ],
+      [
+       12.4921011,
+       41.8954722
+      ],
+      [
+       12.4919398,
+       41.895606
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4927573,
+       41.8956918
+      ],
+      [
+       12.4925865,
+       41.8956129
+      ],
+      [
+       12.4927134,
+       41.8954598
+      ],
+      [
+       12.4928841,
+       41.8955387
+      ],
+      [
+       12.4927573,
+       41.8956918
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 120.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4921593,
+       41.8953696
+      ],
+      [
+       12.4920101,
+       41.8952692
+      ],
+      [
+       12.4921714,
+       41.8951355
+      ],
+      [
+       12.4923206,
+       41.8952359
+      ],
+      [
+       12.4921593,
+       41.8953696
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4926409,
+       41.8959111
+      ],
+      [
+       12.4924701,
+       41.8958322
+      ],
+      [
+       12.4925969,
+       41.8956791
+      ],
+      [
+       12.4927677,
+       41.895758
+      ],
+      [
+       12.4926409,
+       41.8959111
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 120.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.492334,
+       41.8953465
+      ],
+      [
+       12.492432,
+       41.8952156
+      ],
+      [
+       12.4926423,
+       41.8953035
+      ],
+      [
+       12.4925442,
+       41.8954344
+      ],
+      [
+       12.492334,
+       41.8953465
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 27.56,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4924108,
+       41.8958323
+      ],
+      [
+       12.49224,
+       41.8957534
+      ],
+      [
+       12.4923668,
+       41.8956003
+      ],
+      [
+       12.4925376,
+       41.8956792
+      ],
+      [
+       12.4924108,
+       41.8958323
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 120.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4921771,
+       41.895738
+      ],
+      [
+       12.4920325,
+       41.8956406
+      ],
+      [
+       12.4921888,
+       41.8955109
+      ],
+      [
+       12.4923335,
+       41.8956083
+      ],
+      [
+       12.4921771,
+       41.895738
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.39,
+     16.16
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.492582,
+       41.895396
+      ],
+      [
+       12.492708,
+       41.8952997
+      ],
+      [
+       12.4928111,
+       41.8953751
+      ],
+      [
+       12.4926851,
+       41.8954714
+      ],
+      [
+       12.492582,
+       41.895396
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.97,
+     14.96
+    ],
+    "theta_deg": 42.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.491919,
+       41.895383
+      ],
+      [
+       12.4918161,
+       41.8953137
+      ],
+      [
+       12.4919274,
+       41.8952214
+      ],
+      [
+       12.4920303,
+       41.8952907
+      ],
+      [
+       12.491919,
+       41.895383
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.8,
+     11.5
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4917571,
+       41.8955246
+      ],
+      [
+       12.4916339,
+       41.8954417
+      ],
+      [
+       12.4917671,
+       41.8953313
+      ],
+      [
+       12.4918903,
+       41.8954142
+      ],
+      [
+       12.4917571,
+       41.8955246
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.51,
+     13.76
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4921719,
+       41.8955095
+      ],
+      [
+       12.4920777,
+       41.8954461
+      ],
+      [
+       12.4921796,
+       41.8953616
+      ],
+      [
+       12.4922738,
+       41.895425
+      ],
+      [
+       12.4921719,
+       41.8955095
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.64,
+     10.53
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4920694,
+       41.895443
+      ],
+      [
+       12.491953,
+       41.8953647
+      ],
+      [
+       12.4920369,
+       41.8952952
+      ],
+      [
+       12.4921532,
+       41.8953735
+      ],
+      [
+       12.4920694,
+       41.895443
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b009_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.4,
+     13.0
+    ],
+    "theta_deg": 310.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4932394,
+       41.8957757
+      ],
+      [
+       12.4933872,
+       41.8956741
+      ],
+      [
+       12.4935503,
+       41.8958067
+      ],
+      [
+       12.4934024,
+       41.8959082
+      ],
+      [
+       12.4932394,
+       41.8957757
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 45.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4936148,
+       41.895799
+      ],
+      [
+       12.493726,
+       41.895674
+      ],
+      [
+       12.4939266,
+       41.8957737
+      ],
+      [
+       12.4938155,
+       41.8958986
+      ],
+      [
+       12.4936148,
+       41.895799
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 31.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4931092,
+       41.8960708
+      ],
+      [
+       12.4929385,
+       41.8959919
+      ],
+      [
+       12.4930653,
+       41.8958388
+      ],
+      [
+       12.493236,
+       41.8959177
+      ],
+      [
+       12.4931092,
+       41.8960708
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 300.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4932055,
+       41.8955084
+      ],
+      [
+       12.4933533,
+       41.8954069
+      ],
+      [
+       12.4935164,
+       41.8955394
+      ],
+      [
+       12.4933685,
+       41.8956409
+      ],
+      [
+       12.4932055,
+       41.8955084
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 45.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4933641,
+       41.8961395
+      ],
+      [
+       12.4931933,
+       41.8960605
+      ],
+      [
+       12.4933201,
+       41.8959074
+      ],
+      [
+       12.4934909,
+       41.8959864
+      ],
+      [
+       12.4933641,
+       41.8961395
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 300.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.493208,
+       41.8957754
+      ],
+      [
+       12.4930373,
+       41.8956965
+      ],
+      [
+       12.4931641,
+       41.8955434
+      ],
+      [
+       12.4933348,
+       41.8956223
+      ],
+      [
+       12.493208,
+       41.8957754
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 300.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4934813,
+       41.8959695
+      ],
+      [
+       12.4936103,
+       41.8958244
+      ],
+      [
+       12.4937657,
+       41.8959015
+      ],
+      [
+       12.4936366,
+       41.8960466
+      ],
+      [
+       12.4934813,
+       41.8959695
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.48,
+     19.35
+    ],
+    "theta_deg": 31.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4934126,
+       41.8956397
+      ],
+      [
+       12.4935587,
+       41.8955394
+      ],
+      [
+       12.4937198,
+       41.8956704
+      ],
+      [
+       12.4935737,
+       41.8957707
+      ],
+      [
+       12.4934126,
+       41.8956397
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.76,
+     16.47
+    ],
+    "theta_deg": 45.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4930939,
+       41.8958445
+      ],
+      [
+       12.4929549,
+       41.8957802
+      ],
+      [
+       12.4930238,
+       41.8956971
+      ],
+      [
+       12.4931628,
+       41.8957614
+      ],
+      [
+       12.4930939,
+       41.8958445
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.86,
+     13.57
+    ],
+    "theta_deg": 300.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4931731,
+       41.8962161
+      ],
+      [
+       12.4930616,
+       41.8961646
+      ],
+      [
+       12.4931444,
+       41.8960646
+      ],
+      [
+       12.4932559,
+       41.8961162
+      ],
+      [
+       12.4931731,
+       41.8962161
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_subura_b010_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.06,
+     10.88
+    ],
+    "theta_deg": 300.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_subura_b010",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowsubura/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,134 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_felice_0",
+    "kind": "street",
+    "w_m": 6.2,
+    "surface": "paved",
+    "provenance": {
+     "basis": "R15 and Falda1667: Trinita/Sistina, Barberini, QuattroFontane, and Maggiore corridor read on the original. Native local two-anchor registration per leg; widths and undated micro-alignment estimated. Not a straight church-to-church invented route; SantaCroce continuation not reconstructed.",
+     "source_pixels": [
+      [
+       3167.6470588235293,
+       3332.3529411764703
+      ],
+      [
+       3447.0588235294117,
+       3047.0588235294117
+      ],
+      [
+       3800.0,
+       2655.882352941176
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4826,
+      41.9059
+     ],
+     [
+      12.4850287,
+      41.9049347
+     ],
+     [
+      12.4883,
+      41.90376
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_felice_1",
+    "kind": "street",
+    "w_m": 6.2,
+    "surface": "paved",
+    "provenance": {
+     "basis": "R15 and Falda1667: Trinita/Sistina, Barberini, QuattroFontane, and Maggiore corridor read on the original. Native local two-anchor registration per leg; widths and undated micro-alignment estimated. Not a straight church-to-church invented route; SantaCroce continuation not reconstructed.",
+     "source_pixels": [
+      [
+       3800.0,
+       2655.882352941176
+      ],
+      [
+       4182.35294117647,
+       2488.235294117647
+      ],
+      [
+       4741.176470588235,
+       2332.3529411764703
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4883,
+      41.90376
+     ],
+     [
+      12.4894493,
+      41.9028794
+     ],
+     [
+      12.4908,
+      41.9015
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome07_renaissance_felice_2",
+    "kind": "street",
+    "w_m": 6.2,
+    "surface": "paved",
+    "provenance": {
+     "basis": "R15 and Falda1667: Trinita/Sistina, Barberini, QuattroFontane, and Maggiore corridor read on the original. Native local two-anchor registration per leg; widths and undated micro-alignment estimated. Not a straight church-to-church invented route; SantaCroce continuation not reconstructed.",
+     "source_pixels": [
+      [
+       4741.176470588235,
+       2332.3529411764703
+      ],
+      [
+       4961.764705882353,
+       2194.1176470588234
+      ],
+      [
+       5294.117647058823,
+       2044.1176470588234
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4908,
+      41.9015
+     ],
+     [
+      12.4940948,
+      41.9002508
+     ],
+     [
+      12.49835,
+      41.89805
+     ]
+    ]
+   }
+  }
+ ]
+}

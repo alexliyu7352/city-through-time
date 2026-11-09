@@ -1,0 +1,6376 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4600094,
+      41.9024979
+     ],
+     [
+      12.4595941,
+      41.9014346
+     ],
+     [
+      12.459385,
+      41.9004137
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_001",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4595634,
+      41.901285
+     ],
+     [
+      12.4584746,
+      41.9014143
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_002",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4597082,
+      41.9017267
+     ],
+     [
+      12.4590174,
+      41.9019057
+     ],
+     [
+      12.4584284,
+      41.901948
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_003",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4576179,
+      41.9011549
+     ],
+     [
+      12.4576462,
+      41.9009783
+     ],
+     [
+      12.4575158,
+      41.900457
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_004",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4587345,
+      41.9013834
+     ],
+     [
+      12.4585861,
+      41.9009292
+     ],
+     [
+      12.4586211,
+      41.9004275
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_005",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4616986,
+      41.9020805
+     ],
+     [
+      12.4614861,
+      41.9011319
+     ],
+     [
+      12.4610505,
+      41.9000825
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_006",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4614618,
+      41.9010734
+     ],
+     [
+      12.4606291,
+      41.9013085
+     ],
+     [
+      12.4595917,
+      41.9014233
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_007",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4611189,
+      41.902244
+     ],
+     [
+      12.4610449,
+      41.9017792
+     ],
+     [
+      12.4607665,
+      41.9012697
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_008",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4610546,
+      41.9018398
+     ],
+     [
+      12.4605335,
+      41.9020198
+     ],
+     [
+      12.4598462,
+      41.90208
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_009",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4606907,
+      41.9012911
+     ],
+     [
+      12.4606023,
+      41.9007884
+     ],
+     [
+      12.4603416,
+      41.9003344
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_010",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4637646,
+      41.9008331
+     ],
+     [
+      12.4626567,
+      41.9010558
+     ],
+     [
+      12.4614874,
+      41.901138
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_011",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.462903,
+      41.9017921
+     ],
+     [
+      12.4628893,
+      41.9014928
+     ],
+     [
+      12.4626816,
+      41.9010508
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_012",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4629238,
+      41.9010021
+     ],
+     [
+      12.4626129,
+      41.900398
+     ],
+     [
+      12.4625174,
+      41.8999143
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_013",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4626538,
+      41.9004773
+     ],
+     [
+      12.4620483,
+      41.9005421
+     ],
+     [
+      12.4613389,
+      41.9007772
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_lane_014",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4618401,
+       41.9003026
+      ],
+      [
+       12.4617889,
+       41.9000353
+      ],
+      [
+       12.4622182,
+       41.8999894
+      ],
+      [
+       12.4622695,
+       41.9002567
+      ],
+      [
+       12.4618401,
+       41.9003026
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 170.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4612432,
+       41.9000909
+      ],
+      [
+       12.4615885,
+       41.9000109
+      ],
+      [
+       12.4617169,
+       41.9003204
+      ],
+      [
+       12.4613717,
+       41.9004004
+      ],
+      [
+       12.4612432,
+       41.9000909
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 251.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4613776,
+       41.9007004
+      ],
+      [
+       12.461252,
+       41.9004889
+      ],
+      [
+       12.4615916,
+       41.9003764
+      ],
+      [
+       12.4617172,
+       41.9005878
+      ],
+      [
+       12.4613776,
+       41.9007004
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     30.83,
+     25.7
+    ],
+    "theta_deg": 154.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4622404,
+       41.9000425
+      ],
+      [
+       12.4625005,
+       41.9000139
+      ],
+      [
+       12.4625638,
+       41.9003345
+      ],
+      [
+       12.4623037,
+       41.9003631
+      ],
+      [
+       12.4622404,
+       41.9000425
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     21.82
+    ],
+    "theta_deg": 79.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4617403,
+       41.900584
+      ],
+      [
+       12.4616299,
+       41.9003981
+      ],
+      [
+       12.4619286,
+       41.9002991
+      ],
+      [
+       12.462039,
+       41.900485
+      ],
+      [
+       12.4617403,
+       41.900584
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     27.12,
+     22.6
+    ],
+    "theta_deg": 154.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4620531,
+       41.9005166
+      ],
+      [
+       12.4620275,
+       41.9003829
+      ],
+      [
+       12.4622939,
+       41.9003544
+      ],
+      [
+       12.4623195,
+       41.9004881
+      ],
+      [
+       12.4620531,
+       41.9005166
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.17,
+     15.0
+    ],
+    "theta_deg": 170.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.461885,
+       41.8998061
+      ],
+      [
+       12.4621609,
+       41.8997757
+      ],
+      [
+       12.4621934,
+       41.8999406
+      ],
+      [
+       12.4619175,
+       41.899971
+      ],
+      [
+       12.461885,
+       41.8998061
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     18.51,
+     23.14
+    ],
+    "theta_deg": 79.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616409,
+       41.8998728
+      ],
+      [
+       12.4618857,
+       41.8998458
+      ],
+      [
+       12.4619146,
+       41.8999922
+      ],
+      [
+       12.4616697,
+       41.9000191
+      ],
+      [
+       12.4616409,
+       41.8998728
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     16.43,
+     20.54
+    ],
+    "theta_deg": 79.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4610891,
+       41.9000963
+      ],
+      [
+       12.4612243,
+       41.900065
+      ],
+      [
+       12.4612935,
+       41.9002317
+      ],
+      [
+       12.4611583,
+       41.900263
+      ],
+      [
+       12.4610891,
+       41.9000963
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_09",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     19.39,
+     11.75
+    ],
+    "theta_deg": 251.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4622188,
+       41.8998923
+      ],
+      [
+       12.4624074,
+       41.8998715
+      ],
+      [
+       12.4624296,
+       41.8999842
+      ],
+      [
+       12.4622411,
+       41.900005
+      ],
+      [
+       12.4622188,
+       41.8998923
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_10",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.65,
+     15.82
+    ],
+    "theta_deg": 79.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624054,
+       41.9004783
+      ],
+      [
+       12.462383,
+       41.9003618
+      ],
+      [
+       12.4625702,
+       41.9003418
+      ],
+      [
+       12.4625925,
+       41.9004583
+      ],
+      [
+       12.4624054,
+       41.9004783
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_11",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     15.69,
+     13.07
+    ],
+    "theta_deg": 170.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616288,
+       41.9000376
+      ],
+      [
+       12.4617435,
+       41.900011
+      ],
+      [
+       12.4617861,
+       41.9001138
+      ],
+      [
+       12.4616715,
+       41.9001403
+      ],
+      [
+       12.4616288,
+       41.9000376
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_12",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.95,
+     9.96
+    ],
+    "theta_deg": 251.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4611724,
+       41.9002971
+      ],
+      [
+       12.4613076,
+       41.9002658
+      ],
+      [
+       12.4613768,
+       41.9004325
+      ],
+      [
+       12.4612416,
+       41.9004638
+      ],
+      [
+       12.4611724,
+       41.9002971
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b001_13",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     19.39,
+     11.75
+    ],
+    "theta_deg": 251.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4630655,
+       41.9007744
+      ],
+      [
+       12.4629715,
+       41.9005136
+      ],
+      [
+       12.4633904,
+       41.9004294
+      ],
+      [
+       12.4634843,
+       41.9006902
+      ],
+      [
+       12.4630655,
+       41.9007744
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b002_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 163.25,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4626995,
+       41.9001625
+      ],
+      [
+       12.4630553,
+       41.9001233
+      ],
+      [
+       12.4631183,
+       41.9004422
+      ],
+      [
+       12.4627625,
+       41.9004814
+      ],
+      [
+       12.4626995,
+       41.9001625
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b002_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     35.81,
+     29.84
+    ],
+    "theta_deg": 259.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4634714,
+       41.9006068
+      ],
+      [
+       12.4633954,
+       41.9003959
+      ],
+      [
+       12.4636213,
+       41.9003505
+      ],
+      [
+       12.4636973,
+       41.9005614
+      ],
+      [
+       12.4634714,
+       41.9006068
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b002_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     19.41,
+     24.26
+    ],
+    "theta_deg": 163.25,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4629425,
+       41.9009727
+      ],
+      [
+       12.4628893,
+       41.900825
+      ],
+      [
+       12.4637023,
+       41.9006615
+      ],
+      [
+       12.4637555,
+       41.9008093
+      ],
+      [
+       12.4629425,
+       41.9009727
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b002_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.65,
+     17.0
+    ],
+    "theta_deg": 163.25,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 6 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b002",
+     "buildings": 6,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4627146,
+       41.9005267
+      ],
+      [
+       12.4629058,
+       41.9004717
+      ],
+      [
+       12.4630475,
+       41.900747
+      ],
+      [
+       12.4628563,
+       41.9008019
+      ],
+      [
+       12.4627146,
+       41.9005267
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b002_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     10.92,
+     17.0
+    ],
+    "theta_deg": 247.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 3 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b002",
+     "buildings": 3,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4625715,
+       41.9000187
+      ],
+      [
+       12.4627384,
+       41.9000003
+      ],
+      [
+       12.4627678,
+       41.9001489
+      ],
+      [
+       12.4626009,
+       41.9001673
+      ],
+      [
+       12.4625715,
+       41.9000187
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b002_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     8.34,
+     14.0
+    ],
+    "theta_deg": 259.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b002",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4631239,
+       41.900275
+      ],
+      [
+       12.463309,
+       41.9002219
+      ],
+      [
+       12.4633943,
+       41.9003878
+      ],
+      [
+       12.4632093,
+       41.9004409
+      ],
+      [
+       12.4631239,
+       41.900275
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b002_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     19.74,
+     16.45
+    ],
+    "theta_deg": 247.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4606109,
+       41.9004694
+      ],
+      [
+       12.4609431,
+       41.900363
+      ],
+      [
+       12.4611141,
+       41.9006608
+      ],
+      [
+       12.4607819,
+       41.9007672
+      ],
+      [
+       12.4606109,
+       41.9004694
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b003_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 245.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4609163,
+       41.9011104
+      ],
+      [
+       12.4607885,
+       41.9008578
+      ],
+      [
+       12.4611942,
+       41.9007433
+      ],
+      [
+       12.461322,
+       41.9009959
+      ],
+      [
+       12.4609163,
+       41.9011104
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b003_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 157.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4607554,
+       41.9001955
+      ],
+      [
+       12.4610375,
+       41.9001302
+      ],
+      [
+       12.4611075,
+       41.9002988
+      ],
+      [
+       12.4608254,
+       41.9003641
+      ],
+      [
+       12.4607554,
+       41.9001955
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b003_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     19.61,
+     24.51
+    ],
+    "theta_deg": 71.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4603723,
+       41.900325
+      ],
+      [
+       12.4606381,
+       41.9002398
+      ],
+      [
+       12.460742,
+       41.9004209
+      ],
+      [
+       12.4604762,
+       41.900506
+      ],
+      [
+       12.4603723,
+       41.900325
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b003_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     10.94,
+     24.0
+    ],
+    "theta_deg": 245.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b003",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.460671,
+       41.9009893
+      ],
+      [
+       12.4608383,
+       41.9009729
+      ],
+      [
+       12.4608804,
+       41.9012123
+      ],
+      [
+       12.4607131,
+       41.9012287
+      ],
+      [
+       12.460671,
+       41.9009893
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b003_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.41,
+     14.0
+    ],
+    "theta_deg": 260.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b003",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4609619,
+       41.9003386
+      ],
+      [
+       12.4610972,
+       41.9003073
+      ],
+      [
+       12.4611475,
+       41.9004285
+      ],
+      [
+       12.4610123,
+       41.9004598
+      ],
+      [
+       12.4609619,
+       41.9003386
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b003_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.1,
+     11.75
+    ],
+    "theta_deg": 71.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4606567,
+       41.9007557
+      ],
+      [
+       12.4607609,
+       41.9007455
+      ],
+      [
+       12.4607834,
+       41.9008738
+      ],
+      [
+       12.4606793,
+       41.900884
+      ],
+      [
+       12.4606567,
+       41.9007557
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b003_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.38,
+     8.71
+    ],
+    "theta_deg": 260.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4610247,
+       41.900457
+      ],
+      [
+       12.4611517,
+       41.9004275
+      ],
+      [
+       12.4611989,
+       41.9005414
+      ],
+      [
+       12.461072,
+       41.9005708
+      ],
+      [
+       12.4610247,
+       41.900457
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b003_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.24,
+     11.03
+    ],
+    "theta_deg": 71.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4619264,
+       41.9010377
+      ],
+      [
+       12.4618926,
+       41.9007689
+      ],
+      [
+       12.4623244,
+       41.9007385
+      ],
+      [
+       12.4623583,
+       41.9010074
+      ],
+      [
+       12.4619264,
+       41.9010377
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b004_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 172.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4614275,
+       41.9007735
+      ],
+      [
+       12.4617715,
+       41.9006938
+      ],
+      [
+       12.4618995,
+       41.9010021
+      ],
+      [
+       12.4615555,
+       41.9010818
+      ],
+      [
+       12.4614275,
+       41.9007735
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b004_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     35.87,
+     29.89
+    ],
+    "theta_deg": 251.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623567,
+       41.9007738
+      ],
+      [
+       12.4626577,
+       41.9006874
+      ],
+      [
+       12.4627965,
+       41.9009572
+      ],
+      [
+       12.4624956,
+       41.9010436
+      ],
+      [
+       12.4623567,
+       41.9007738
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b004_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     32.11,
+     26.76
+    ],
+    "theta_deg": 67.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4626084,
+       41.9005072
+      ],
+      [
+       12.4626425,
+       41.9006854
+      ],
+      [
+       12.4620876,
+       41.9007448
+      ],
+      [
+       12.4620534,
+       41.9005666
+      ],
+      [
+       12.4626084,
+       41.9005072
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b004_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.63,
+     20.0
+    ],
+    "theta_deg": 350.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 4 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b004",
+     "buildings": 4,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4620098,
+       41.9005819
+      ],
+      [
+       12.4620782,
+       41.9006971
+      ],
+      [
+       12.4618308,
+       41.9007791
+      ],
+      [
+       12.4617624,
+       41.9006639
+      ],
+      [
+       12.4620098,
+       41.9005819
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b004_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.23,
+     14.0
+    ],
+    "theta_deg": 334.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b004",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4570182,
+       41.9006444
+      ],
+      [
+       12.4573735,
+       41.9005948
+      ],
+      [
+       12.4574532,
+       41.9009133
+      ],
+      [
+       12.4570979,
+       41.9009629
+      ],
+      [
+       12.4570182,
+       41.9006444
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b005_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 77.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4566635,
+       41.9006994
+      ],
+      [
+       12.456979,
+       41.9006554
+      ],
+      [
+       12.4570262,
+       41.9008439
+      ],
+      [
+       12.4567107,
+       41.900888
+      ],
+      [
+       12.4566635,
+       41.9006994
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b005_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     21.31,
+     26.64
+    ],
+    "theta_deg": 77.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.457383,
+       41.9009319
+      ],
+      [
+       12.4576078,
+       41.900952
+      ],
+      [
+       12.4575862,
+       41.9010864
+      ],
+      [
+       12.4573615,
+       41.9010663
+      ],
+      [
+       12.457383,
+       41.9009319
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b005_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     15.03,
+     18.79
+    ],
+    "theta_deg": 95.13,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4566593,
+       41.9007146
+      ],
+      [
+       12.4566517,
+       41.9008233
+      ],
+      [
+       12.4564773,
+       41.9008165
+      ],
+      [
+       12.4564848,
+       41.9007078
+      ],
+      [
+       12.4566593,
+       41.9007146
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b005_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.5,
+     12.08
+    ],
+    "theta_deg": 181.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.457418,
+       41.900741
+      ],
+      [
+       12.4575503,
+       41.9007225
+      ],
+      [
+       12.4575911,
+       41.9008856
+      ],
+      [
+       12.4574588,
+       41.900904
+      ],
+      [
+       12.457418,
+       41.900741
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b005_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     18.43,
+     11.17
+    ],
+    "theta_deg": 77.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4578698,
+       41.9005592
+      ],
+      [
+       12.4582251,
+       41.9005096
+      ],
+      [
+       12.4583048,
+       41.9008281
+      ],
+      [
+       12.4579495,
+       41.9008777
+      ],
+      [
+       12.4578698,
+       41.9005592
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b006_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 257.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4580712,
+       41.9009356
+      ],
+      [
+       12.4584926,
+       41.9008588
+      ],
+      [
+       12.4585749,
+       41.9011106
+      ],
+      [
+       12.4581535,
+       41.9011875
+      ],
+      [
+       12.4580712,
+       41.9009356
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b006_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     28.8,
+     36.0
+    ],
+    "theta_deg": 74.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4577371,
+       41.9008684
+      ],
+      [
+       12.4580693,
+       41.9008981
+      ],
+      [
+       12.4580216,
+       41.901196
+      ],
+      [
+       12.4576894,
+       41.9011663
+      ],
+      [
+       12.4577371,
+       41.9008684
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b006_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     33.32,
+     27.77
+    ],
+    "theta_deg": 275.13,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4582925,
+       41.9004335
+      ],
+      [
+       12.458554,
+       41.9004437
+      ],
+      [
+       12.4585376,
+       41.9006781
+      ],
+      [
+       12.4582762,
+       41.9006679
+      ],
+      [
+       12.4582925,
+       41.9004335
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b006_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     26.07,
+     21.73
+    ],
+    "theta_deg": 91.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4576272,
+       41.9006674
+      ],
+      [
+       12.457854,
+       41.9006357
+      ],
+      [
+       12.4579049,
+       41.900839
+      ],
+      [
+       12.4576781,
+       41.9008707
+      ],
+      [
+       12.4576272,
+       41.9006674
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b006_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     22.98,
+     19.15
+    ],
+    "theta_deg": 257.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4575553,
+       41.9004801
+      ],
+      [
+       12.4578277,
+       41.9004421
+      ],
+      [
+       12.4578739,
+       41.9006268
+      ],
+      [
+       12.4576015,
+       41.9006649
+      ],
+      [
+       12.4575553,
+       41.9004801
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b006_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     10.44,
+     23.0
+    ],
+    "theta_deg": 257.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b006",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4586904,
+       41.9013529
+      ],
+      [
+       12.4585031,
+       41.901387
+      ],
+      [
+       12.4584238,
+       41.9011444
+      ],
+      [
+       12.4586111,
+       41.9011102
+      ],
+      [
+       12.4586904,
+       41.9013529
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b006_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.87,
+     16.0
+    ],
+    "theta_deg": 74.58,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b006",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4583422,
+       41.9006881
+      ],
+      [
+       12.458519,
+       41.900695
+      ],
+      [
+       12.4585079,
+       41.9008535
+      ],
+      [
+       12.4583311,
+       41.9008466
+      ],
+      [
+       12.4583422,
+       41.9006881
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b006_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     17.63,
+     14.69
+    ],
+    "theta_deg": 91.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4578325,
+       41.9004613
+      ],
+      [
+       12.4579731,
+       41.9004416
+      ],
+      [
+       12.4579942,
+       41.9005257
+      ],
+      [
+       12.4578535,
+       41.9005454
+      ],
+      [
+       12.4578325,
+       41.9004613
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b006_09",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     9.5,
+     11.88
+    ],
+    "theta_deg": 257.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4602723,
+       41.9008627
+      ],
+      [
+       12.4603086,
+       41.9011314
+      ],
+      [
+       12.459877,
+       41.9011639
+      ],
+      [
+       12.4598408,
+       41.9008952
+      ],
+      [
+       12.4602723,
+       41.9008627
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 172.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4595926,
+       41.9005087
+      ],
+      [
+       12.4599499,
+       41.9004679
+      ],
+      [
+       12.4600155,
+       41.9007882
+      ],
+      [
+       12.4596582,
+       41.9008291
+      ],
+      [
+       12.4595926,
+       41.9005087
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 259.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4599904,
+       41.9006266
+      ],
+      [
+       12.4603671,
+       41.9005059
+      ],
+      [
+       12.4604963,
+       41.9007311
+      ],
+      [
+       12.4601196,
+       41.9008518
+      ],
+      [
+       12.4599904,
+       41.9006266
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     27.21,
+     34.02
+    ],
+    "theta_deg": 65.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4603245,
+       41.901046
+      ],
+      [
+       12.4605825,
+       41.9010207
+      ],
+      [
+       12.4606232,
+       41.9012521
+      ],
+      [
+       12.4603652,
+       41.9012774
+      ],
+      [
+       12.4603245,
+       41.901046
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     25.92,
+     21.6
+    ],
+    "theta_deg": 80.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.459529,
+       41.9008498
+      ],
+      [
+       12.4597912,
+       41.9008198
+      ],
+      [
+       12.4598394,
+       41.9010549
+      ],
+      [
+       12.4595772,
+       41.9010848
+      ],
+      [
+       12.459529,
+       41.9008498
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     26.42,
+     22.01
+    ],
+    "theta_deg": 259.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4602897,
+       41.9008079
+      ],
+      [
+       12.4605481,
+       41.9007826
+      ],
+      [
+       12.4605888,
+       41.9010142
+      ],
+      [
+       12.4603304,
+       41.9010396
+      ],
+      [
+       12.4602897,
+       41.9008079
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     25.95,
+     21.63
+    ],
+    "theta_deg": 80.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4595892,
+       41.9011165
+      ],
+      [
+       12.4598302,
+       41.9010889
+      ],
+      [
+       12.4598744,
+       41.901305
+      ],
+      [
+       12.4596334,
+       41.9013325
+      ],
+      [
+       12.4595892,
+       41.9011165
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_07",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     24.28,
+     20.23
+    ],
+    "theta_deg": 259.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4603951,
+       41.9004904
+      ],
+      [
+       12.4602401,
+       41.90054
+      ],
+      [
+       12.4601593,
+       41.9003994
+      ],
+      [
+       12.4603144,
+       41.9003497
+      ],
+      [
+       12.4603951,
+       41.9004904
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     8.5,
+     14.0
+    ],
+    "theta_deg": 65.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4599677,
+       41.9004495
+      ],
+      [
+       12.4601209,
+       41.9004004
+      ],
+      [
+       12.4601997,
+       41.9005377
+      ],
+      [
+       12.4600465,
+       41.9005868
+      ],
+      [
+       12.4599677,
+       41.9004495
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_09",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     16.6,
+     13.83
+    ],
+    "theta_deg": 65.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4603339,
+       41.9011447
+      ],
+      [
+       12.4603507,
+       41.9012691
+      ],
+      [
+       12.4600758,
+       41.9012899
+      ],
+      [
+       12.460059,
+       41.9011654
+      ],
+      [
+       12.4603339,
+       41.9011447
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_10",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     22.93,
+     13.9
+    ],
+    "theta_deg": 172.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4600322,
+       41.9011581
+      ],
+      [
+       12.4600514,
+       41.9013005
+      ],
+      [
+       12.4598989,
+       41.901312
+      ],
+      [
+       12.4598797,
+       41.9011696
+      ],
+      [
+       12.4600322,
+       41.9011581
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_11",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.72,
+     15.9
+    ],
+    "theta_deg": 172.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4594385,
+       41.9004252
+      ],
+      [
+       12.4595646,
+       41.9004108
+      ],
+      [
+       12.4595878,
+       41.9005239
+      ],
+      [
+       12.4594617,
+       41.9005383
+      ],
+      [
+       12.4594385,
+       41.9004252
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_12",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.7,
+     10.59
+    ],
+    "theta_deg": 259.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4594631,
+       41.9006404
+      ],
+      [
+       12.4596082,
+       41.9006238
+      ],
+      [
+       12.4596449,
+       41.9008027
+      ],
+      [
+       12.4594997,
+       41.9008193
+      ],
+      [
+       12.4594631,
+       41.9006404
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b007_13",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     20.11,
+     12.19
+    ],
+    "theta_deg": 259.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4588115,
+       41.9005467
+      ],
+      [
+       12.4591688,
+       41.9005059
+      ],
+      [
+       12.4592344,
+       41.9008262
+      ],
+      [
+       12.4588771,
+       41.9008671
+      ],
+      [
+       12.4588115,
+       41.9005467
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b008_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 79.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.45881,
+       41.9012527
+      ],
+      [
+       12.4587532,
+       41.900986
+      ],
+      [
+       12.4591816,
+       41.9009351
+      ],
+      [
+       12.4592383,
+       41.9012018
+      ],
+      [
+       12.45881,
+       41.9012527
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b008_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 169.27,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4595259,
+       41.9012655
+      ],
+      [
+       12.4593472,
+       41.901286
+      ],
+      [
+       12.4591736,
+       41.9004382
+      ],
+      [
+       12.4593523,
+       41.9004178
+      ],
+      [
+       12.4595259,
+       41.9012655
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b008_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.91,
+     15.0
+    ],
+    "theta_deg": 79.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 8 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b008",
+     "buildings": 8,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4586435,
+       41.9005815
+      ],
+      [
+       12.458812,
+       41.9005881
+      ],
+      [
+       12.4587876,
+       41.9009367
+      ],
+      [
+       12.4586192,
+       41.9009301
+      ],
+      [
+       12.4586435,
+       41.9005815
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b008_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.93,
+     14.0
+    ],
+    "theta_deg": 271.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 3 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b008",
+     "buildings": 3,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4586782,
+       41.9004325
+      ],
+      [
+       12.4588112,
+       41.9004377
+      ],
+      [
+       12.4588029,
+       41.900557
+      ],
+      [
+       12.4586699,
+       41.9005518
+      ],
+      [
+       12.4586782,
+       41.9004325
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b008_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.27,
+     11.06
+    ],
+    "theta_deg": 271.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4588222,
+       41.9004298
+      ],
+      [
+       12.4589693,
+       41.9004355
+      ],
+      [
+       12.4589632,
+       41.9005235
+      ],
+      [
+       12.458816,
+       41.9005177
+      ],
+      [
+       12.4588222,
+       41.9004298
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b008_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     9.78,
+     12.23
+    ],
+    "theta_deg": 271.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4635481,
+       41.901154
+      ],
+      [
+       12.4635983,
+       41.9014214
+      ],
+      [
+       12.4631688,
+       41.9014665
+      ],
+      [
+       12.4631185,
+       41.9011991
+      ],
+      [
+       12.4635481,
+       41.901154
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 350.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4638546,
+       41.9014076
+      ],
+      [
+       12.4638962,
+       41.9016921
+      ],
+      [
+       12.4635915,
+       41.901717
+      ],
+      [
+       12.4635499,
+       41.9014324
+      ],
+      [
+       12.4638546,
+       41.9014076
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     25.44,
+     31.8
+    ],
+    "theta_deg": 172.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4635078,
+       41.9011523
+      ],
+      [
+       12.4634385,
+       41.9009599
+      ],
+      [
+       12.4637475,
+       41.9008978
+      ],
+      [
+       12.4638168,
+       41.9010902
+      ],
+      [
+       12.4635078,
+       41.9011523
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     26.56,
+     22.13
+    ],
+    "theta_deg": 343.25,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4629203,
+       41.9014844
+      ],
+      [
+       12.4632414,
+       41.9014762
+      ],
+      [
+       12.4632503,
+       41.9016682
+      ],
+      [
+       12.4629291,
+       41.9016764
+      ],
+      [
+       12.4629203,
+       41.9014844
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     21.34,
+     26.67
+    ],
+    "theta_deg": 266.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4628123,
+       41.9012162
+      ],
+      [
+       12.4630439,
+       41.9011554
+      ],
+      [
+       12.4631414,
+       41.9013631
+      ],
+      [
+       12.4629099,
+       41.9014238
+      ],
+      [
+       12.4628123,
+       41.9012162
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     24.44,
+     20.37
+    ],
+    "theta_deg": 248.96,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4638392,
+       41.9011646
+      ],
+      [
+       12.4638736,
+       41.9014001
+      ],
+      [
+       12.4636214,
+       41.9014207
+      ],
+      [
+       12.463587,
+       41.9011852
+      ],
+      [
+       12.4638392,
+       41.9011646
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     21.05,
+     26.32
+    ],
+    "theta_deg": 172.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4635395,
+       41.9014667
+      ],
+      [
+       12.4635658,
+       41.901647
+      ],
+      [
+       12.4632763,
+       41.9016706
+      ],
+      [
+       12.4632499,
+       41.9014903
+      ],
+      [
+       12.4635395,
+       41.9014667
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_07",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     24.17,
+     20.15
+    ],
+    "theta_deg": 172.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4634398,
+       41.9010091
+      ],
+      [
+       12.4634673,
+       41.9011552
+      ],
+      [
+       12.4633108,
+       41.9011716
+      ],
+      [
+       12.4632834,
+       41.9010255
+      ],
+      [
+       12.4634398,
+       41.9010091
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.11,
+     16.39
+    ],
+    "theta_deg": 350.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4632526,
+       41.9010588
+      ],
+      [
+       12.4632748,
+       41.9011768
+      ],
+      [
+       12.4630853,
+       41.9011966
+      ],
+      [
+       12.4630632,
+       41.9010787
+      ],
+      [
+       12.4632526,
+       41.9010588
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_09",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     15.88,
+     13.23
+    ],
+    "theta_deg": 350.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4639824,
+       41.9017964
+      ],
+      [
+       12.4638409,
+       41.9017966
+      ],
+      [
+       12.4638406,
+       41.901712
+      ],
+      [
+       12.4639822,
+       41.9017118
+      ],
+      [
+       12.4639824,
+       41.9017964
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b009_10",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     9.4,
+     11.75
+    ],
+    "theta_deg": 268.17,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.455158,
+       41.9010976
+      ],
+      [
+       12.4551414,
+       41.9013358
+      ],
+      [
+       12.4548864,
+       41.9013258
+      ],
+      [
+       12.454903,
+       41.9010877
+      ],
+      [
+       12.455158,
+       41.9010976
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b010_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     21.19,
+     26.49
+    ],
+    "theta_deg": 181.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4551619,
+       41.901356
+      ],
+      [
+       12.4551483,
+       41.9015501
+      ],
+      [
+       12.4549405,
+       41.901542
+      ],
+      [
+       12.454954,
+       41.9013479
+      ],
+      [
+       12.4551619,
+       41.901356
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b010_02",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     17.27,
+     21.59
+    ],
+    "theta_deg": 1.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4554178,
+       41.9010366
+      ],
+      [
+       12.4554084,
+       41.9011712
+      ],
+      [
+       12.4551923,
+       41.9011627
+      ],
+      [
+       12.4552017,
+       41.9010282
+      ],
+      [
+       12.4554178,
+       41.9010366
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b010_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     17.96,
+     14.97
+    ],
+    "theta_deg": 181.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4555966,
+       41.9009721
+      ],
+      [
+       12.45559,
+       41.9010669
+      ],
+      [
+       12.4554377,
+       41.9010609
+      ],
+      [
+       12.4554443,
+       41.9009662
+      ],
+      [
+       12.4555966,
+       41.9009721
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b010_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.65,
+     10.54
+    ],
+    "theta_deg": 181.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623752,
+       41.9012111
+      ],
+      [
+       12.4624255,
+       41.9014785
+      ],
+      [
+       12.4619959,
+       41.9015236
+      ],
+      [
+       12.4619457,
+       41.9012562
+      ],
+      [
+       12.4623752,
+       41.9012111
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b011_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 350.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624445,
+       41.9014057
+      ],
+      [
+       12.4628057,
+       41.9013964
+      ],
+      [
+       12.4628206,
+       41.9017203
+      ],
+      [
+       12.4624593,
+       41.9017295
+      ],
+      [
+       12.4624445,
+       41.9014057
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b011_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 86.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4615628,
+       41.9012897
+      ],
+      [
+       12.4619193,
+       41.9012452
+      ],
+      [
+       12.4619909,
+       41.9015648
+      ],
+      [
+       12.4616344,
+       41.9016093
+      ],
+      [
+       12.4615628,
+       41.9012897
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b011_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 258.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624201,
+       41.9015129
+      ],
+      [
+       12.4624513,
+       41.9017265
+      ],
+      [
+       12.4621083,
+       41.9017545
+      ],
+      [
+       12.4620771,
+       41.9015409
+      ],
+      [
+       12.4624201,
+       41.9015129
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b011_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     28.64,
+     23.87
+    ],
+    "theta_deg": 172.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623848,
+       41.9012201
+      ],
+      [
+       12.4626712,
+       41.901145
+      ],
+      [
+       12.4627517,
+       41.9013162
+      ],
+      [
+       12.4624653,
+       41.9013913
+      ],
+      [
+       12.4623848,
+       41.9012201
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b011_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     20.16,
+     25.19
+    ],
+    "theta_deg": 68.96,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.462075,
+       41.9015807
+      ],
+      [
+       12.4621019,
+       41.9017652
+      ],
+      [
+       12.4618056,
+       41.9017894
+      ],
+      [
+       12.4617786,
+       41.9016049
+      ],
+      [
+       12.462075,
+       41.9015807
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b011_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     24.74,
+     20.62
+    ],
+    "theta_deg": 172.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616894,
+       41.9018894
+      ],
+      [
+       12.4619508,
+       41.9018567
+      ],
+      [
+       12.461983,
+       41.9020001
+      ],
+      [
+       12.4617215,
+       41.9020328
+      ],
+      [
+       12.4616894,
+       41.9018894
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b011_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     8.07,
+     22.0
+    ],
+    "theta_deg": 258.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b011",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4621258,
+       41.9018558
+      ],
+      [
+       12.4621404,
+       41.9019558
+      ],
+      [
+       12.4619797,
+       41.9019689
+      ],
+      [
+       12.4619651,
+       41.9018689
+      ],
+      [
+       12.4621258,
+       41.9018558
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b011_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.42,
+     11.18
+    ],
+    "theta_deg": 352.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616381,
+       41.9016148
+      ],
+      [
+       12.4617539,
+       41.9016003
+      ],
+      [
+       12.4617772,
+       41.9017041
+      ],
+      [
+       12.4616614,
+       41.9017186
+      ],
+      [
+       12.4616381,
+       41.9016148
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b011_09",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.69,
+     9.74
+    ],
+    "theta_deg": 258.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4609988,
+       41.9014469
+      ],
+      [
+       12.4613334,
+       41.9013448
+      ],
+      [
+       12.4614974,
+       41.9016448
+      ],
+      [
+       12.4611628,
+       41.9017469
+      ],
+      [
+       12.4609988,
+       41.9014469
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b012_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 246.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4615825,
+       41.9018886
+      ],
+      [
+       12.461611,
+       41.9020838
+      ],
+      [
+       12.4611798,
+       41.9021189
+      ],
+      [
+       12.4611513,
+       41.9019237
+      ],
+      [
+       12.4615825,
+       41.9018886
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b012_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     21.82
+    ],
+    "theta_deg": 352.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616044,
+       41.9018101
+      ],
+      [
+       12.4613905,
+       41.9018368
+      ],
+      [
+       12.4613584,
+       41.9016937
+      ],
+      [
+       12.4615724,
+       41.901667
+      ],
+      [
+       12.4616044,
+       41.9018101
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b012_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     8.06,
+     18.0
+    ],
+    "theta_deg": 78.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b012",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.46085,
+       41.9013457
+      ],
+      [
+       12.4610245,
+       41.9012924
+      ],
+      [
+       12.4610815,
+       41.9013967
+      ],
+      [
+       12.460907,
+       41.90145
+      ],
+      [
+       12.46085,
+       41.9013457
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b012_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.52,
+     15.64
+    ],
+    "theta_deg": 246.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4613629,
+       41.9017269
+      ],
+      [
+       12.461377,
+       41.9018236
+      ],
+      [
+       12.4612217,
+       41.9018362
+      ],
+      [
+       12.4612076,
+       41.9017396
+      ],
+      [
+       12.4613629,
+       41.9017269
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b012_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.96,
+     10.8
+    ],
+    "theta_deg": 172.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.461336,
+       41.9012659
+      ],
+      [
+       12.4614647,
+       41.9012498
+      ],
+      [
+       12.4614906,
+       41.9013652
+      ],
+      [
+       12.4613619,
+       41.9013813
+      ],
+      [
+       12.461336,
+       41.9012659
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b012_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.0,
+     10.83
+    ],
+    "theta_deg": 78.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4592276,
+       41.9014469
+      ],
+      [
+       12.4592639,
+       41.9017156
+      ],
+      [
+       12.4588323,
+       41.9017481
+      ],
+      [
+       12.458796,
+       41.9014794
+      ],
+      [
+       12.4592276,
+       41.9014469
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b013_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 352.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.458475,
+       41.9019211
+      ],
+      [
+       12.4584355,
+       41.9016136
+      ],
+      [
+       12.4587648,
+       41.9015899
+      ],
+      [
+       12.4588044,
+       41.9018975
+      ],
+      [
+       12.458475,
+       41.9019211
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b013_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     27.46,
+     34.32
+    ],
+    "theta_deg": 172.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4592466,
+       41.9015223
+      ],
+      [
+       12.4595376,
+       41.9014588
+      ],
+      [
+       12.4596395,
+       41.9017197
+      ],
+      [
+       12.4593485,
+       41.9017832
+      ],
+      [
+       12.4592466,
+       41.9015223
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b013_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     30.19,
+     25.16
+    ],
+    "theta_deg": 72.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4588122,
+       41.9018956
+      ],
+      [
+       12.4587949,
+       41.9017612
+      ],
+      [
+       12.4589965,
+       41.9017467
+      ],
+      [
+       12.4590138,
+       41.9018811
+      ],
+      [
+       12.4588122,
+       41.9018956
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b013_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     8.4,
+     15.0
+    ],
+    "theta_deg": 172.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b013",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4590386,
+       41.9018563
+      ],
+      [
+       12.4589998,
+       41.9017728
+      ],
+      [
+       12.459134,
+       41.901738
+      ],
+      [
+       12.4591727,
+       41.9018215
+      ],
+      [
+       12.4590386,
+       41.9018563
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b013_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.78,
+     9.82
+    ],
+    "theta_deg": 159.17,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4587864,
+       41.9014667
+      ],
+      [
+       12.4588012,
+       41.9015759
+      ],
+      [
+       12.4585599,
+       41.9015941
+      ],
+      [
+       12.4585452,
+       41.9014848
+      ],
+      [
+       12.4587864,
+       41.9014667
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b013_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     20.12,
+     12.2
+    ],
+    "theta_deg": 352.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4601217,
+       41.9017709
+      ],
+      [
+       12.4600687,
+       41.9015038
+      ],
+      [
+       12.4604978,
+       41.9014563
+      ],
+      [
+       12.4605507,
+       41.9017234
+      ],
+      [
+       12.4601217,
+       41.9017709
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b014_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 349.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4596707,
+       41.9014958
+      ],
+      [
+       12.4599902,
+       41.9014262
+      ],
+      [
+       12.4601022,
+       41.9017127
+      ],
+      [
+       12.4597826,
+       41.9017823
+      ],
+      [
+       12.4596707,
+       41.9014958
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b014_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     33.15,
+     27.63
+    ],
+    "theta_deg": 252.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4605217,
+       41.9014897
+      ],
+      [
+       12.4607651,
+       41.9014155
+      ],
+      [
+       12.4609291,
+       41.9017155
+      ],
+      [
+       12.4606857,
+       41.9017898
+      ],
+      [
+       12.4605217,
+       41.9014897
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b014_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     21.82
+    ],
+    "theta_deg": 66.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4597681,
+       41.9017918
+      ],
+      [
+       12.4600457,
+       41.9017313
+      ],
+      [
+       12.4601216,
+       41.9019254
+      ],
+      [
+       12.459844,
+       41.9019859
+      ],
+      [
+       12.4597681,
+       41.9017918
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b014_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.23,
+     24.0
+    ],
+    "theta_deg": 252.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b014",
+     "buildings": 2,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4606366,
+       41.9017222
+      ],
+      [
+       12.4606686,
+       41.9019037
+      ],
+      [
+       12.4604743,
+       41.9019228
+      ],
+      [
+       12.4604423,
+       41.9017414
+      ],
+      [
+       12.4606366,
+       41.9017222
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b014_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     16.27,
+     20.33
+    ],
+    "theta_deg": 170.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4604443,
+       41.9017531
+      ],
+      [
+       12.4604727,
+       41.901914
+      ],
+      [
+       12.4602142,
+       41.9019394
+      ],
+      [
+       12.4601859,
+       41.9017785
+      ],
+      [
+       12.4604443,
+       41.9017531
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b014_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     21.63,
+     18.03
+    ],
+    "theta_deg": 170.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4607496,
+       41.901897
+      ],
+      [
+       12.4606999,
+       41.9018167
+      ],
+      [
+       12.4608772,
+       41.9017554
+      ],
+      [
+       12.4609269,
+       41.9018357
+      ],
+      [
+       12.4607496,
+       41.901897
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b014_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     16.21,
+     9.83
+    ],
+    "theta_deg": 153.49,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4604803,
+       41.9014523
+      ],
+      [
+       12.4604649,
+       41.9013748
+      ],
+      [
+       12.4606363,
+       41.9013558
+      ],
+      [
+       12.4606516,
+       41.9014334
+      ],
+      [
+       12.4604803,
+       41.9014523
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b014_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.38,
+     8.71
+    ],
+    "theta_deg": 349.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4600304,
+       41.9024174
+      ],
+      [
+       12.4599882,
+       41.9021492
+      ],
+      [
+       12.4604191,
+       41.9021114
+      ],
+      [
+       12.4604612,
+       41.9023796
+      ],
+      [
+       12.4600304,
+       41.9024174
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b015_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 351.61,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4607695,
+       41.9023257
+      ],
+      [
+       12.4605989,
+       41.9020501
+      ],
+      [
+       12.4608941,
+       41.9019481
+      ],
+      [
+       12.4610647,
+       41.9022238
+      ],
+      [
+       12.4607695,
+       41.9023257
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b015_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     26.99,
+     33.73
+    ],
+    "theta_deg": 333.49,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4605507,
+       41.9024026
+      ],
+      [
+       12.4604461,
+       41.9022337
+      ],
+      [
+       12.4606271,
+       41.9021711
+      ],
+      [
+       12.4607317,
+       41.9023401
+      ],
+      [
+       12.4605507,
+       41.9024026
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b015_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     16.55,
+     20.68
+    ],
+    "theta_deg": 333.49,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4604544,
+       41.9021824
+      ],
+      [
+       12.4604386,
+       41.9020814
+      ],
+      [
+       12.4606009,
+       41.9020671
+      ],
+      [
+       12.4606167,
+       41.9021682
+      ],
+      [
+       12.4604544,
+       41.9021824
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b015_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.56,
+     11.3
+    ],
+    "theta_deg": 351.61,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4593335,
+       41.9021736
+      ],
+      [
+       12.4593807,
+       41.9024414
+      ],
+      [
+       12.4589507,
+       41.9024837
+      ],
+      [
+       12.4589035,
+       41.9022159
+      ],
+      [
+       12.4593335,
+       41.9021736
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 350.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4588321,
+       41.9021625
+      ],
+      [
+       12.4588793,
+       41.9024303
+      ],
+      [
+       12.4584492,
+       41.9024726
+      ],
+      [
+       12.458402,
+       41.9022048
+      ],
+      [
+       12.4588321,
+       41.9021625
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 350.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4598117,
+       41.9024197
+      ],
+      [
+       12.4594508,
+       41.9024353
+      ],
+      [
+       12.4594257,
+       41.9021118
+      ],
+      [
+       12.4597866,
+       41.9020962
+      ],
+      [
+       12.4598117,
+       41.9024197
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 84.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4586376,
+       41.9024684
+      ],
+      [
+       12.4586822,
+       41.9027211
+      ],
+      [
+       12.4584115,
+       41.9027477
+      ],
+      [
+       12.458367,
+       41.902495
+      ],
+      [
+       12.4586376,
+       41.9024684
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     22.65,
+     28.32
+    ],
+    "theta_deg": 350.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4589287,
+       41.9024465
+      ],
+      [
+       12.4589686,
+       41.9026729
+      ],
+      [
+       12.4587261,
+       41.9026968
+      ],
+      [
+       12.4586862,
+       41.9024703
+      ],
+      [
+       12.4589287,
+       41.9024465
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     20.3,
+     25.37
+    ],
+    "theta_deg": 350.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4594132,
+       41.9018458
+      ],
+      [
+       12.4596978,
+       41.9017837
+      ],
+      [
+       12.4597643,
+       41.9019539
+      ],
+      [
+       12.4594796,
+       41.9020159
+      ],
+      [
+       12.4594132,
+       41.9018458
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     19.69,
+     24.61
+    ],
+    "theta_deg": 72.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4590201,
+       41.9019304
+      ],
+      [
+       12.4590374,
+       41.9020648
+      ],
+      [
+       12.4584189,
+       41.9021092
+      ],
+      [
+       12.4584017,
+       41.9019748
+      ],
+      [
+       12.4590201,
+       41.9019304
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.89,
+     15.0
+    ],
+    "theta_deg": 352.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 4 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 4,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4593912,
+       41.9018351
+      ],
+      [
+       12.4594504,
+       41.9019626
+      ],
+      [
+       12.459088,
+       41.9020566
+      ],
+      [
+       12.4590287,
+       41.901929
+      ],
+      [
+       12.4593912,
+       41.9018351
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     10.61,
+     15.0
+    ],
+    "theta_deg": 339.17,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 3 shop-houses on one street front",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 3,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4591957,
+       41.9026277
+      ],
+      [
+       12.4589703,
+       41.9026375
+      ],
+      [
+       12.4589598,
+       41.9025027
+      ],
+      [
+       12.4591853,
+       41.9024929
+      ],
+      [
+       12.4591957,
+       41.9026277
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_09",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.99,
+     18.74
+    ],
+    "theta_deg": 84.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4594185,
+       41.9025972
+      ],
+      [
+       12.4591954,
+       41.9026069
+      ],
+      [
+       12.4591851,
+       41.9024736
+      ],
+      [
+       12.4594082,
+       41.9024639
+      ],
+      [
+       12.4594185,
+       41.9025972
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_10",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.84,
+     18.55
+    ],
+    "theta_deg": 84.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4597877,
+       41.9024311
+      ],
+      [
+       12.4599379,
+       41.9023983
+      ],
+      [
+       12.459973,
+       41.9024881
+      ],
+      [
+       12.4598228,
+       41.9025209
+      ],
+      [
+       12.4597877,
+       41.9024311
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_11",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     10.39,
+     12.99
+    ],
+    "theta_deg": 72.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.459798,
+       41.9025282
+      ],
+      [
+       12.45965,
+       41.9025346
+      ],
+      [
+       12.4596431,
+       41.9024462
+      ],
+      [
+       12.4597911,
+       41.9024398
+      ],
+      [
+       12.459798,
+       41.9025282
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b016_12",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     9.84,
+     12.3
+    ],
+    "theta_deg": 264.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.455914,
+       41.9031306
+      ],
+      [
+       12.4555605,
+       41.9031556
+      ],
+      [
+       12.4555338,
+       41.9029443
+      ],
+      [
+       12.4558873,
+       41.9029194
+      ],
+      [
+       12.455914,
+       41.9031306
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b017_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     23.57,
+     29.47
+    ],
+    "theta_deg": 262.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_borgo_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4561616,
+       41.903102
+      ],
+      [
+       12.4559328,
+       41.9031182
+      ],
+      [
+       12.4559154,
+       41.9029814
+      ],
+      [
+       12.4561443,
+       41.9029652
+      ],
+      [
+       12.4561616,
+       41.903102
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_borgo_b017_02",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     15.26,
+     19.08
+    ],
+    "theta_deg": 262.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome09_fascist_borgo_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; borgo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  }
+ ]
+}

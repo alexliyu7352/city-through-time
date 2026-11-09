@@ -1,0 +1,800 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_01",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 1,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              812,
+              1179
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4731563,
+          41.9315674
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_02",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 2,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              746,
+              1174
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4730597,
+          41.9319259
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_03",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 3,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              563,
+              1145
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4728995,
+          41.9329426
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_04",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 4,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              496,
+              1135
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4728364,
+          41.9333139
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_05",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 5,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              430,
+              1127
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4727611,
+          41.9336769
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_06",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 6,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              362,
+              1118
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.472689,
+          41.9340521
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_07",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 7,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              541,
+              1306
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4717086,
+          41.9328187
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_08",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 8,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              472,
+              1296
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4716416,
+          41.9332006
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_09",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 9,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              404,
+              1286
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4715765,
+          41.9335773
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_restaurant_10",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_restaurant36x34",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 original1960 report PDF236 full operating plan:restaurant1–10 on both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post grid estimated; exactItalian restaurant number and individual façade divisions unknown. Central kitchen is not an invented open court.",
+          "source_plan_number": 10,
+          "restaurant_nationality": "unidentified",
+          "source_pixels": [
+            [
+              337,
+              1277
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4715063,
+          41.9339471
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_reception_post_J",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_reception_post_J",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; J post/telecommunications; one of the4source reception volumes.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              623.3345210598598,
+              1471.635214876848
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4706939,
+          41.9321329
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_reception_bank_info",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_reception_bank_info",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; Ybank/Kreception/Winformation in the central lozenge.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              622.995306038056,
+              1516.003914823357
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4703772,
+          41.9320683
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_reception_K_west",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_reception_K_west",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; K reception west.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              599.4224567794224,
+              1561.2195440688213
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4700079,
+          41.932126
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_reception_K_east",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_reception_K_east",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; K reception east.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              637.4320936721293,
+              1562.7196468559016
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4700734,
+          41.9319216
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_cinema",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_cinema",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; CINEMA explicitly labelled on the1960 operating plan, distinct from the unbuilt permanent1958cinema/theatre scheme.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              850.0085100547152,
+              1330.9983380893584
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4721499,
+          41.9311378
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_public_hex_C",
+        "group": "village_public1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_public_hex_C",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; Hexagonal pavilionC:report glossaryRestRoom; Ministry4535 describes the permanent hexagonal market; do not call this a newly invented church.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              359.1845576747241,
+              999.9475285188705
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4735242,
+          41.9342437
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_stores_MG_north",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_stores_MG_north",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; MG central stores outside the housing boundary.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              796.8952455079017,
+              592.7449823126481
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4773018,
+          41.932525
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_stores_MG_middle",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_stores_MG_middle",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; MG central stores outside the housing boundary.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              758.3559307749925,
+              625.1444341762476
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4769938,
+          41.9326815
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_stores_MG_connector",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_stores_MG_connector",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; MG central stores small connecting shed.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              783.7850089130426,
+              644.9617114992594
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4769036,
+          41.9325166
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_stores_MG_south",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_stores_MG_south",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; MG central stores outside the housing boundary.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              767.5274224865706,
+              673.7457170778932
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "O01; research/rome_round12_platforms.md MOD. The source supports single-storey ground-level stores, not a raised terrace. Native cut on the graded plate removes the incidental plinth; retained source footprint, estimated 3.1 m eaves and phase are unchanged."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.476666,
+          41.93256
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_luggage_MB",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_luggage_MB",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; MB luggage stores single drawn building; open surrounding depot area is not filled with invented sheds.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              1094.3462312191955,
+              819.151549988878
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4762852,
+          41.9306042
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_sauna",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_sauna",
+          "site": "raised"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; SAUNA labelled service strip outside the housing boundary.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              981.6242542704645,
+              840.3553822605404
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4759083,
+          41.931172
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_shops_west",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_shops_west",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; West long shop/service pavilion; numbered openings are not a count of independent warehouses.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              439.6340287833277,
+              1508.995152864275
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4700596,
+          41.933054
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_shops_east",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_shops_east",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; East long shop/service pavilion, not a row of copied permanent residences.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              808.1442784364806,
+              1533.4967375533074
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4706237,
+          41.9310574
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_infirmary33",
+        "group": "village_temporary1960",
+        "kind": "landmark",
+        "model": {
+          "template": "rome11_olympic_infirmary33",
+          "site": "cut"
+        },
+        "provenance": {
+          "basis": "O01 originalPDF236 source operating-plan outline; 33 infirmary explicitly labelled next to the east long residential spine.3.1m single-storey height and flat light-roof exterior estimated,not a measured elevation. Four reception footprints follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm of these roofs.",
+          "source_pixels": [
+            [
+              737.1938377062659,
+              742.20421121289
+            ]
+          ],
+          "height_estimate_minmax_m": [
+            2.8,
+            3.5
+          ],
+          "ground_contact": "MG closed-floor stores/sauna use the standard native raised site; no openpilotis platform needs preserving. All levels remain present-terrain schematic,not recovered1960 floor elevations."
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4761176,
+          41.9326189
+        ]
+      }
+    }
+  ]
+}

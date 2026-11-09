@@ -1,0 +1,574 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4727732,
+          41.8975369
+        ]
+      },
+      "properties": {
+        "kind": "landmark",
+        "id": "rome08_capital_braschi",
+        "template": "rome08_capital_braschi_body",
+        "theta_deg": 1.451,
+        "provenance": {
+          "basis": "research/rome08_capital_window_basis.md",
+          "source_pixels": [
+            [
+              315,
+              300
+            ],
+            [
+              690,
+              286
+            ],
+            [
+              628,
+              573
+            ],
+            [
+              493,
+              595
+            ]
+          ]
+        },
+        "site": "cut"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4732632,
+          41.8971584
+        ]
+      },
+      "properties": {
+        "kind": "landmark",
+        "id": "rome08_capital_sanpantaleo",
+        "template": "rome08_capital_sanpantaleo_body",
+        "theta_deg": 33.463,
+        "provenance": {
+          "basis": "research/rome08_capital_window_basis.md",
+          "source_pixels": [
+            [
+              658,
+              622
+            ],
+            [
+              680,
+              608
+            ],
+            [
+              677,
+              599
+            ],
+            [
+              694,
+              589
+            ],
+            [
+              699,
+              595
+            ],
+            [
+              733,
+              578
+            ],
+            [
+              743,
+              594
+            ],
+            [
+              777,
+              580
+            ],
+            [
+              799,
+              585
+            ],
+            [
+              812,
+              598
+            ],
+            [
+              818,
+              617
+            ],
+            [
+              811,
+              632
+            ],
+            [
+              790,
+              647
+            ],
+            [
+              799,
+              662
+            ],
+            [
+              749,
+              690
+            ],
+            [
+              740,
+              675
+            ],
+            [
+              704,
+              696
+            ],
+            [
+              689,
+              675
+            ],
+            [
+              679,
+              681
+            ],
+            [
+              662,
+              655
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "via_san_pantaleo_west",
+        "kind": "street",
+        "w_m": 6,
+        "provenance": {
+          "basis": "research/rome08_capital_window_basis.md",
+          "source_pixels": [
+            [
+              194,
+              286
+            ],
+            [
+              286,
+              357
+            ],
+            [
+              370,
+              462
+            ],
+            [
+              424,
+              541
+            ],
+            [
+              489,
+              628
+            ],
+            [
+              587,
+              718
+            ],
+            [
+              691,
+              803
+            ],
+            [
+              821,
+              891
+            ],
+            [
+              919,
+              916
+            ],
+            [
+              1148,
+              919
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            12.4720656,
+            41.8977482
+          ],
+          [
+            12.4722694,
+            41.8976271
+          ],
+          [
+            12.4724574,
+            41.8974469
+          ],
+          [
+            12.4725789,
+            41.8973111
+          ],
+          [
+            12.4727246,
+            41.8971617
+          ],
+          [
+            12.4729424,
+            41.8970078
+          ],
+          [
+            12.473173,
+            41.8968628
+          ],
+          [
+            12.4734603,
+            41.8967132
+          ],
+          [
+            12.4736749,
+            41.8966722
+          ],
+          [
+            12.4741736,
+            41.8966726
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "via_cuccagna",
+        "kind": "street",
+        "w_m": 4.8,
+        "provenance": {
+          "basis": "research/rome08_capital_window_basis.md",
+          "source_pixels": [
+            [
+              705,
+              287
+            ],
+            [
+              683,
+              408
+            ],
+            [
+              653,
+              532
+            ],
+            [
+              653,
+              587
+            ],
+            [
+              660,
+              622
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            12.4731782,
+            41.8977588
+          ],
+          [
+            12.4731362,
+            41.8975483
+          ],
+          [
+            12.473077,
+            41.8973323
+          ],
+          [
+            12.4730797,
+            41.8972368
+          ],
+          [
+            12.4730966,
+            41.8971762
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "aquila",
+        "kind": "street",
+        "w_m": 4,
+        "provenance": {
+          "basis": "research/rome08_capital_window_basis.md",
+          "source_pixels": [
+            [
+              489,
+              628
+            ],
+            [
+              452,
+              738
+            ],
+            [
+              414,
+              831
+            ],
+            [
+              390,
+              941
+            ],
+            [
+              373,
+              987
+            ],
+            [
+              408,
+              1004
+            ],
+            [
+              462,
+              1023
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            12.4727246,
+            41.8971617
+          ],
+          [
+            12.4726495,
+            41.8969698
+          ],
+          [
+            12.4725713,
+            41.8968075
+          ],
+          [
+            12.4725244,
+            41.896616
+          ],
+          [
+            12.4724897,
+            41.8965357
+          ],
+          [
+            12.4725667,
+            41.896507
+          ],
+          [
+            12.4726852,
+            41.8964754
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "via_baullari",
+        "kind": "street",
+        "w_m": 5,
+        "provenance": {
+          "basis": "research/rome08_capital_window_basis.md",
+          "source_pixels": [
+            [
+              693,
+              806
+            ],
+            [
+              666,
+              874
+            ],
+            [
+              626,
+              952
+            ],
+            [
+              579,
+              1018
+            ],
+            [
+              524,
+              1114
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            12.4731775,
+            41.8968577
+          ],
+          [
+            12.473122,
+            41.896739
+          ],
+          [
+            12.4730388,
+            41.8966026
+          ],
+          [
+            12.4729397,
+            41.8964869
+          ],
+          [
+            12.4728246,
+            41.8963189
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "via_san_pantaleo_east",
+        "kind": "street",
+        "w_m": 4.5,
+        "provenance": {
+          "basis": "research/rome08_capital_window_basis.md",
+          "source_pixels": [
+            [
+              883,
+              288
+            ],
+            [
+              903,
+              381
+            ],
+            [
+              927,
+              470
+            ],
+            [
+              949,
+              567
+            ],
+            [
+              960,
+              635
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            12.4735658,
+            41.8977614
+          ],
+          [
+            12.4736139,
+            41.8976005
+          ],
+          [
+            12.4736705,
+            41.8974466
+          ],
+          [
+            12.4737231,
+            41.8972787
+          ],
+          [
+            12.4737504,
+            41.897161
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "vicolo_posta",
+        "kind": "street",
+        "w_m": 4,
+        "provenance": {
+          "basis": "research/rome08_capital_window_basis.md",
+          "source_pixels": [
+            [
+              848,
+              595
+            ],
+            [
+              978,
+              576
+            ],
+            [
+              1148,
+              567
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            12.4735046,
+            41.8972277
+          ],
+          [
+            12.4737867,
+            41.8972638
+          ],
+          [
+            12.4741564,
+            41.8972836
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "via_paradiso",
+        "kind": "street",
+        "w_m": 4,
+        "provenance": {
+          "basis": "research/rome08_capital_window_basis.md",
+          "source_pixels": [
+            [
+              865,
+              914
+            ],
+            [
+              848,
+              1014
+            ],
+            [
+              833,
+              1114
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            12.4735572,
+            41.8966744
+          ],
+          [
+            12.4735251,
+            41.8965004
+          ],
+          [
+            12.4734974,
+            41.8963264
+          ]
+        ]
+      }
+    }
+  ]
+}

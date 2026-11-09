@@ -1,0 +1,757 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4728259,
+       41.8936066
+      ],
+      [
+       12.4726753,
+       41.89349
+      ],
+      [
+       12.4733585,
+       41.8929972
+      ],
+      [
+       12.4735091,
+       41.8931138
+      ],
+      [
+       12.4728259,
+       41.8936066
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_01",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     6.06,
+     18.0
+    ],
+    "theta_deg": 134.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 13 shop-houses on one street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 13,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4731011,
+       41.8927997
+      ],
+      [
+       12.4729451,
+       41.8929122
+      ],
+      [
+       12.472482,
+       41.8925538
+      ],
+      [
+       12.472638,
+       41.8924412
+      ],
+      [
+       12.4731011,
+       41.8927997
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_02",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     6.15,
+     18.0
+    ],
+    "theta_deg": 44.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 9 shop-houses on one street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 9,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4733572,
+       41.8929979
+      ],
+      [
+       12.4732012,
+       41.8931104
+      ],
+      [
+       12.4729848,
+       41.8929429
+      ],
+      [
+       12.4731408,
+       41.8928304
+      ],
+      [
+       12.4733572,
+       41.8929979
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_03",
+    "kind": "block",
+    "typ": "rome06_medieval_portico2",
+    "lot": [
+     6.47,
+     18.0
+    ],
+    "theta_deg": 44.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 4 shop-houses on one street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 4,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4725907,
+       41.892765
+      ],
+      [
+       12.4727162,
+       41.8928622
+      ],
+      [
+       12.4725602,
+       41.8929747
+      ],
+      [
+       12.4724347,
+       41.8928776
+      ],
+      [
+       12.4725907,
+       41.892765
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_04",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     18.0,
+     15.0
+    ],
+    "theta_deg": 134.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.472446,
+       41.8926307
+      ],
+      [
+       12.4725716,
+       41.8927278
+      ],
+      [
+       12.4724155,
+       41.8928403
+      ],
+      [
+       12.47229,
+       41.8927432
+      ],
+      [
+       12.472446,
+       41.8926307
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_05",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     18.0,
+     15.0
+    ],
+    "theta_deg": 314.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4728589,
+       41.8931303
+      ],
+      [
+       12.4729276,
+       41.8932552
+      ],
+      [
+       12.472727,
+       41.8933168
+      ],
+      [
+       12.4726583,
+       41.8931919
+      ],
+      [
+       12.4728589,
+       41.8931303
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_06",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     18.0,
+     15.0
+    ],
+    "theta_deg": 335.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4728075,
+       41.8928101
+      ],
+      [
+       12.472933,
+       41.8929073
+      ],
+      [
+       12.472777,
+       41.8930198
+      ],
+      [
+       12.4726515,
+       41.8929226
+      ],
+      [
+       12.4728075,
+       41.8928101
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_07",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     18.0,
+     15.0
+    ],
+    "theta_deg": 134.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4730151,
+       41.8930024
+      ],
+      [
+       12.4731406,
+       41.8930995
+      ],
+      [
+       12.4729846,
+       41.893212
+      ],
+      [
+       12.4728591,
+       41.8931149
+      ],
+      [
+       12.4730151,
+       41.8930024
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_08",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     18.0,
+     15.0
+    ],
+    "theta_deg": 314.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4726697,
+       41.8929456
+      ],
+      [
+       12.4727349,
+       41.8930641
+      ],
+      [
+       12.472608,
+       41.893103
+      ],
+      [
+       12.4725428,
+       41.8929845
+      ],
+      [
+       12.4726697,
+       41.8929456
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_09",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     11.39,
+     14.23
+    ],
+    "theta_deg": 155.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4727092,
+       41.892731
+      ],
+      [
+       12.4728095,
+       41.8928086
+      ],
+      [
+       12.4727264,
+       41.8928686
+      ],
+      [
+       12.472626,
+       41.892791
+      ],
+      [
+       12.4727092,
+       41.892731
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_10",
+    "kind": "block",
+    "typ": "rome06_medieval_portico3",
+    "lot": [
+     9.59,
+     11.99
+    ],
+    "theta_deg": 134.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4722616,
+       41.8927216
+      ],
+      [
+       12.4723502,
+       41.8927902
+      ],
+      [
+       12.4722768,
+       41.8928431
+      ],
+      [
+       12.4721882,
+       41.8927745
+      ],
+      [
+       12.4722616,
+       41.8927216
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_11",
+    "kind": "block",
+    "typ": "rome06_medieval_portico3",
+    "lot": [
+     8.47,
+     10.59
+    ],
+    "theta_deg": 314.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4727953,
+       41.8932958
+      ],
+      [
+       12.4728524,
+       41.89334
+      ],
+      [
+       12.4727549,
+       41.8934104
+      ],
+      [
+       12.4726978,
+       41.8933662
+      ],
+      [
+       12.4727953,
+       41.8932958
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_12",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     11.25,
+     6.82
+    ],
+    "theta_deg": 134.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4726884,
+       41.8933654
+      ],
+      [
+       12.4727585,
+       41.8934196
+      ],
+      [
+       12.4726713,
+       41.8934825
+      ],
+      [
+       12.4726012,
+       41.8934282
+      ],
+      [
+       12.4726884,
+       41.8933654
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_13",
+    "kind": "block",
+    "typ": "rome06_medieval_row2",
+    "lot": [
+     10.05,
+     8.38
+    ],
+    "theta_deg": 134.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4723821,
+       41.8928176
+      ],
+      [
+       12.4724476,
+       41.8928683
+      ],
+      [
+       12.4723662,
+       41.8929269
+      ],
+      [
+       12.4723008,
+       41.8928763
+      ],
+      [
+       12.4723821,
+       41.8928176
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_14",
+    "kind": "block",
+    "typ": "rome06_medieval_portico3",
+    "lot": [
+     9.39,
+     7.82
+    ],
+    "theta_deg": 314.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4724513,
+       41.8928956
+      ],
+      [
+       12.4724885,
+       41.8929632
+      ],
+      [
+       12.4724161,
+       41.8929855
+      ],
+      [
+       12.4723789,
+       41.8929178
+      ],
+      [
+       12.4724513,
+       41.8928956
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_15",
+    "kind": "block",
+    "typ": "rome06_medieval_portico3",
+    "lot": [
+     6.5,
+     8.12
+    ],
+    "theta_deg": 155.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4726226,
+       41.8926813
+      ],
+      [
+       12.472692,
+       41.892735
+      ],
+      [
+       12.4726345,
+       41.8927765
+      ],
+      [
+       12.4725651,
+       41.8927228
+      ],
+      [
+       12.4726226,
+       41.8926813
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_quarter_b001_16",
+    "kind": "block",
+    "typ": "rome06_medieval_portico3",
+    "lot": [
+     6.64,
+     8.29
+    ],
+    "theta_deg": 314.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome06_medieval_quarter_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes. Type allocation follows the source distinction of occasional porticoes and taller small units, with counts as production estimates only."
+    }
+   }
+  }
+ ]
+}

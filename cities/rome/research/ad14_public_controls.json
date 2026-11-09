@@ -1,0 +1,256 @@
+{
+  "aemilia_frontage": {
+    "source": "model_reference/ad14_public_platner1904_forum.jpg",
+    "source_figure": "Samuel Ball Platner 1904, fig.24; edited scan credited Saikindi on Commons",
+    "controls": [
+      {
+        "id": "curia_iulia",
+        "pixel": [
+          715.0,
+          75.0
+        ],
+        "lonlat": [
+          12.4853971,
+          41.8929602
+        ],
+        "residual_m": 1.644
+      },
+      {
+        "id": "basilica_iulia",
+        "pixel": [
+          736.0,
+          594.0
+        ],
+        "lonlat": [
+          12.4847834,
+          41.8919606
+        ],
+        "residual_m": 5.109
+      },
+      {
+        "id": "castor_pollux",
+        "pixel": [
+          1078.0,
+          579.0
+        ],
+        "lonlat": [
+          12.4856301,
+          41.8916788
+        ],
+        "residual_m": 0.556
+      },
+      {
+        "id": "vesta_temple",
+        "pixel": [
+          1265.0,
+          484.0
+        ],
+        "lonlat": [
+          12.4861979,
+          41.8916941
+        ],
+        "residual_m": 2.788
+      },
+      {
+        "id": "saturn_temple",
+        "pixel": [
+          432.0,
+          469.0
+        ],
+        "lonlat": [
+          12.4840868,
+          41.8924028
+        ],
+        "residual_m": 4.432
+      }
+    ],
+    "method": "Least-squares affine, source pixel centres hand-read; east/north metres relative to Aemilia OSM centre. Control centres include already registered schematic landmark centres, not survey benchmarks.",
+    "pixel_to_EN_matrix": [
+      [
+        0.21054670711938123,
+        -0.09218553402994134
+      ],
+      [
+        -0.11174370912241216,
+        -0.21482385681338778
+      ],
+      [
+        -201.12669017176472,
+        118.42368313114646
+      ]
+    ],
+    "frontage_line_pixels": [
+      [
+        774,
+        216
+      ],
+      [
+        1213,
+        265
+      ]
+    ],
+    "frontage_line_local_m": [
+      [
+        -34.5179816081196,
+        51.86781706914248
+      ],
+      [
+        -27.714592205703028,
+        -48.70744509737768
+      ]
+    ],
+    "frontage_line_lonlat": [
+      [
+        12.48534048463688,
+        41.89263091982322
+      ],
+      [
+        12.486389819904957,
+        41.89217281868754
+      ]
+    ],
+    "uncertainty": "Approximate plan alignment. Max control residual5.11m; allow about5m or more at unobserved corners. Historical map is not an Augustan phase survey.",
+    "finding": "Forum-facing line local x varies -34.52 to -27.71m, beside proposal x=-30.1m. This supports southwest frontage position only; 8m shop depth/8m walk and16 equal bays remain estimates.",
+    "native_extent_note": "27m is main-hall total width including aisles. long_hall does not add aisle widths. Parts extent is symmetric about origin;61.4m current symmetric extent is not the approximately44.8m occupied width including roof. Earlier68.2m extent included the removed deck."
+  },
+  "augustus_forum": {
+    "source": "model_reference/ad14_public_augustus_official_plan.jpg",
+    "overlay": "model_reference/ad14_public_augustus_official_overlay.jpg",
+    "scale": {
+      "pixel_start": [
+        428,
+        489
+      ],
+      "pixel_end": [
+        583,
+        489
+      ],
+      "length_m": 50,
+      "pixels_per_m": 3.1
+    },
+    "anchor": {
+      "source": "model_reference/imperial_osm_anchors.geojson",
+      "osm": "node11933283813",
+      "lonlat": [
+        12.4869456,
+        41.8943657
+      ],
+      "plan_pixel": [
+        500,
+        113
+      ]
+    },
+    "theta_deg": -51,
+    "registration_limit": "Temple platform centre picked at500,113px and tied to retained OSM Mars landmark point. Existing -51degree axis agrees with plan north arrow. Point registration is approximate, allow about5m; this is not a new multi-point geodetic survey.",
+    "source_parts_pixels": {
+      "temple_without_projecting_stairs": [
+        [
+          449,
+          37
+        ],
+        [
+          551,
+          190
+        ]
+      ],
+      "northwest_portico": [
+        [
+          366,
+          90
+        ],
+        [
+          419,
+          440
+        ]
+      ],
+      "southeast_portico": [
+        [
+          579,
+          90
+        ],
+        [
+          634,
+          440
+        ]
+      ],
+      "principal_exedrae_centres": [
+        [
+          366,
+          177
+        ],
+        [
+          634,
+          177
+        ]
+      ],
+      "principal_exedrae_half_axes_px": [
+        57,
+        70
+      ],
+      "minor_exedrae_centres": [
+        [
+          366,
+          361
+        ],
+        [
+          634,
+          361
+        ]
+      ],
+      "minor_exedrae_half_axes_px": [
+        36,
+        54
+      ]
+    },
+    "phase": {
+      "principal_pair": "surviving eastern pair",
+      "western_north_minor": "removed for Trajan112-113",
+      "western_south_minor": "removed for Nerva97"
+    },
+    "source_warning": "Official figure explicitly labels minor exedrae hypothetical. Official prose rounds whole enclosure120x120m, court70x50m and all exedrae diameter40m; figure distinguishes smaller western pair. Native elliptical idealisations follow figure proportions, not an assertion of exact excavated circular diameters."
+  },
+  "pantheon": {
+    "source": "model_reference/ad14_public_pantheon_osm.json",
+    "osm": "relation3374342/way251373410",
+    "rotunda_fit_node_ids": [
+      2576871678,
+      2575991823,
+      2575991839,
+      2575991871,
+      2575991894,
+      2575991923,
+      2575991942,
+      2575991964,
+      2575991985,
+      2575992017,
+      2575992047,
+      2575992057,
+      2575992025,
+      2575991983,
+      2575991959,
+      2575991932,
+      2575991909,
+      2575991893,
+      2575991872,
+      2575991841,
+      2576871680
+    ],
+    "rotunda_centre_lonlat": [
+      12.476833614245988,
+      41.89855475906104
+    ],
+    "modern_exterior_radius_m": 29.11761663703639,
+    "radial_fit_residual_max_m": 0.07302235718355732,
+    "frontage_node_ids": [
+      2575992508,
+      2575992564
+    ],
+    "theta_deg": 183.53805505143873,
+    "front_midpoint_local_m": [
+      0.01654544133431246,
+      -49.63200945566819
+    ],
+    "phase_limit": "OSM is only modern site/axis control. DAR reports early foundations under north portico and an early circular wall of same curvature. Exterior modern diameter is a spatial envelope, not an excavated Augustan ambulatory width.",
+    "native_choice": "Conditional open-court/parapet interpretation attributed by DAR toTortorici.0.61m wall thickness and1.65m preserved height come from reported early wall fragment;1.65m is used only as a low boundary proxy,not an assertion of full original AD14 height. Exterior circle follows modern curvature control. Roofed-circle and covered-ambulatory hypotheses unresolved."
+  }
+}

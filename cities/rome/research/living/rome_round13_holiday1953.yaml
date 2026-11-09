@@ -1,0 +1,58 @@
+place: The actual Roman Holiday scooter location on the road outside the Colosseum, using the final 1953-period native city view
+when: Rome as imagined from the 1953 film's scooter outing, with 1951 Vespa 125 faro basso form; not an original film frame or a documentary photograph
+picture: >-
+  EDIT the final native model reference into a restrained colour historical illustration of
+  the scooter outing at this verified Roman Holiday filming location in 1953. Keep its exact
+  camera, lens, framing, road direction, every visible building silhouette, roofline, ground
+  slope and the Colosseum's size and position. The Colosseum is a weathered surviving ancient
+  ruin in 1953, never the intact imperial amphitheatre. Preserve the surrounding inhabited
+  modern city wherever the approved 1953 model shows it.
+
+  The nearer ochre/tan two-tier arcades in the native reference are the existing nineteenth-century
+  low inner supports, graphically estimated at 26 metres; the taller pale northern remnant
+  shell behind belongs to the same monument, not a second Colosseum. Convert both to natural
+  weathered stone while preserving their different heights, exact visible arcades and gaps.
+  Never fill the missing high southern outer shell or create a continuous complete amphitheatre.
+
+  On the existing roadway, a small early rounded Vespa 125-style scooter carries TWO anonymous
+  adults together, seen FROM BEHIND or at distant rear three-quarter angle, riding away into
+  the Roman street. A man in a plain shirt and trousers drives, a woman in a modest light
+  blouse and mid-calf skirt sits behind him. Ordinary true human scale and a small vehicle,
+  with their action legible because the native shot is close enough. No visible identifying
+  facial features and no portrait likeness to any actor. The scooter uses a restrained
+  single-colour early metal body and period low front-lamp form, without logos or modern
+  accessories. A few small rounded 1950s-or-earlier cars occupy the existing road, and a few
+  ordinary anonymous bystanders in simple period shirts, jackets, skirts or dresses watch
+  the scooter pass from the edge. Natural street traffic, not a chase, collision or staged
+  celebrity crowd.
+
+  Keep the scooter and both riders on the actual exterior roadway in the lower foreground,
+  near native pixel x1057, y827 on the 1920 x 1080 ref, corresponding to the integrator-checked
+  working point 12.4912 E, 41.8892 N, outside the ancient building footprint. Together they
+  should stand only about 35-45 pixels high in that native frame, with cars and bystanders
+  at matching ordinary scale. No vehicles or pedestrians enter the arena or arcade interiors.
+
+  All ground is continuous Roman street or the existing ancient-site ground, with only
+  existing road openings and buildings. No new river, lake, farmland or isolated monument.
+  Apply natural weathered travertine, warm stone and plaster, muted road grey and restrained
+  roof colours. The model's white, lilac, teal and gold are projection colours, not the real
+  materials. Natural readable daylight, gentle low-saturation colour, restrained documentary
+  realism with the same extremely light painterly texture as the approved Rome living set.
+  This is a new source-based imagined image, not a copied movie still or fake archival photo.
+  Output the identical native landscape 16:9 composition.
+avoid: >-
+  No camera move, crop, zoom, changed Colosseum silhouette, intact ancient amphitheatre,
+  relocated street or new building. No Audrey Hepburn or Gregory Peck face, recognizable
+  actor likeness, front-facing hero portrait, palace interior, scooter on the Spanish Steps,
+  stunt, police chase or invented accident. No contemporary SUVs, buses, electric scooters,
+  glass helmets, phones, tourist flags, huge billboards, pedestrian-only present-day redesign,
+  extra excavation pits, modern bollard forest or printed road text. No black-and-white
+  fake film frame, film logo, caption, text, border or watermark. Do not copy copyrighted
+  reference photographs or a film-frame composition.
+sources:
+  - FACTS S50 and S194; research/rome_holiday_picture_sources_20261104.md; 1953 film and filming-location evidence, source rights separate
+  - research/rome08_capital_whole_basis.md C17-C19 and rome08_formal_templates.yaml; lower two-tier inner supports and northern remnant shell are the existing source-constrained same-monument model, with dimensions and ruin-edge simplifications explicitly estimated
+  - VisitLazio official Cinema, Roman Holiday, https://www.visitlazio.com/en/roman-holiday/ ; specifically names Corso Vittorio Emanuele, Colosseum and Piazza Venezia as the Vespa outing locations
+  - Piaggio official WIDE, Happy 70th Birthday, Roman Holiday, August 2023, https://wide.piaggiogroup.com/en/articles/events/happy-70th-birthday-roman-holiday/index.html ; 1951 Vespa 125 faro basso mod 51 object identification, archive images reference-only
+  - BFI location comparison, https://www.bfi.org.uk/features/roman-holiday-rome-locations-audrey-hepburn-gregory-peck ; distinguishes the Trinita-dei-Monti scooter start from the lower Spanish-Steps gelato scene
+  - research/rome_round13_living_sources.md; r09_003-r09_004; ordinary extras, vehicles, costume and rear-facing fictional couple are bounded imagined details, not actor portraits

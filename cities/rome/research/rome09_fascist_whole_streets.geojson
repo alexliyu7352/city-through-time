@@ -1,0 +1,2771 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_prati_cola_0",
+    "w_m": 10,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       135,
+       330
+      ],
+      [
+       220,
+       330
+      ],
+      [
+       298,
+       333
+      ],
+      [
+       391,
+       345
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4542334,
+      41.9042279
+     ],
+     [
+      12.4596259,
+      41.9042295
+     ],
+     [
+      12.4645705,
+      41.9040872
+     ],
+     [
+      12.4704551,
+      41.903514
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_prati_cesare_0",
+    "w_m": 12,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       150,
+       255
+      ],
+      [
+       230,
+       239
+      ],
+      [
+       317,
+       213
+      ],
+      [
+       418,
+       193
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4552808,
+      41.9078188
+     ],
+     [
+      12.4603769,
+      41.9085864
+     ],
+     [
+      12.4659301,
+      41.9098325
+     ],
+     [
+      12.4723641,
+      41.9107913
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_prati_risorgimento_0",
+    "w_m": 9,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       155,
+       355
+      ],
+      [
+       159,
+       302
+      ],
+      [
+       177,
+       249
+      ],
+      [
+       200,
+       187
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4554703,
+      41.9030314
+     ],
+     [
+      12.4557917,
+      41.9055689
+     ],
+     [
+      12.4570015,
+      41.9081066
+     ],
+     [
+      12.4585401,
+      41.9110753
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_prati_ottaviano_0",
+    "w_m": 9,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       220,
+       367
+      ],
+      [
+       222,
+       315
+      ],
+      [
+       221,
+       264
+      ],
+      [
+       218,
+       201
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4595785,
+      41.9024582
+     ],
+     [
+      12.459772,
+      41.9049477
+     ],
+     [
+      12.4597739,
+      41.9073893
+     ],
+     [
+      12.4596642,
+      41.9104054
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_prati_marco_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       285,
+       378
+      ],
+      [
+       284,
+       322
+      ],
+      [
+       276,
+       277
+      ],
+      [
+       263,
+       233
+      ],
+      [
+       249,
+       188
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.463688,
+      41.9019326
+     ],
+     [
+      12.4636964,
+      41.9046136
+     ],
+     [
+      12.4632467,
+      41.9067679
+     ],
+     [
+      12.4624783,
+      41.9088742
+     ],
+     [
+      12.4616478,
+      41.9110283
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_prati_lepanto_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       349,
+       378
+      ],
+      [
+       345,
+       331
+      ],
+      [
+       335,
+       286
+      ],
+      [
+       319,
+       249
+      ],
+      [
+       305,
+       217
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4677481,
+      41.9019336
+     ],
+     [
+      12.4675548,
+      41.9041836
+     ],
+     [
+      12.4669783,
+      41.9063379
+     ],
+     [
+      12.4660108,
+      41.9081091
+     ],
+     [
+      12.4651636,
+      41.9096409
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_prati_sc_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       147,
+       298
+      ],
+      [
+       226,
+       290
+      ],
+      [
+       300,
+       280
+      ],
+      [
+       373,
+       258
+      ],
+      [
+       431,
+       246
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4550355,
+      41.9057601
+     ],
+     [
+      12.4600578,
+      41.9061447
+     ],
+     [
+      12.4647655,
+      41.9066246
+     ],
+     [
+      12.4694252,
+      41.9076789
+     ],
+     [
+      12.4731205,
+      41.9082541
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_corso_0",
+    "w_m": 10,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       480,
+       199
+      ],
+      [
+       488,
+       255
+      ],
+      [
+       494,
+       300
+      ],
+      [
+       503,
+       350
+      ],
+      [
+       523,
+       411
+      ],
+      [
+       552,
+       482
+      ],
+      [
+       582,
+       508
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4762902,
+      41.9105047
+     ],
+     [
+      12.4767253,
+      41.9078238
+     ],
+     [
+      12.4770478,
+      41.9056694
+     ],
+     [
+      12.477554,
+      41.9032757
+     ],
+     [
+      12.4787438,
+      41.9003555
+     ],
+     [
+      12.4804915,
+      41.8969565
+     ],
+     [
+      12.4823608,
+      41.8957119
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_ripetta_0",
+    "w_m": 7,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       477,
+       199
+      ],
+      [
+       468,
+       258
+      ],
+      [
+       465,
+       312
+      ],
+      [
+       452,
+       362
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4760998,
+      41.9105047
+     ],
+     [
+      12.4754525,
+      41.90768
+     ],
+     [
+      12.4751924,
+      41.9050947
+     ],
+     [
+      12.474303,
+      41.9027008
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_babuino_0",
+    "w_m": 7,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       482,
+       198
+      ],
+      [
+       520,
+       243
+      ],
+      [
+       552,
+       282
+      ],
+      [
+       582,
+       321
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4764184,
+      41.9105526
+     ],
+     [
+      12.4787711,
+      41.9083985
+     ],
+     [
+      12.4807508,
+      41.9065316
+     ],
+     [
+      12.4826035,
+      41.9046646
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_condotti_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       476,
+       305
+      ],
+      [
+       527,
+       294
+      ],
+      [
+       570,
+       286
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4758993,
+      41.9054299
+     ],
+     [
+      12.4791492,
+      41.9059569
+     ],
+     [
+      12.4818876,
+      41.9063402
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_tritone_0",
+    "w_m": 9,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       513,
+       355
+      ],
+      [
+       564,
+       356
+      ],
+      [
+       610,
+       340
+      ],
+      [
+       667,
+       336
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.478182,
+      41.9030364
+     ],
+     [
+      12.4814161,
+      41.9029889
+     ],
+     [
+      12.4843552,
+      41.9037551
+     ],
+     [
+      12.4879766,
+      41.9039468
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_felice_north_0",
+    "w_m": 9,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       559,
+       254
+      ],
+      [
+       610,
+       301
+      ],
+      [
+       666,
+       350
+      ],
+      [
+       716,
+       391
+      ],
+      [
+       767,
+       434
+      ],
+      [
+       826,
+       470
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4812312,
+      41.9078722
+     ],
+     [
+      12.4844059,
+      41.9056223
+     ],
+     [
+      12.4878949,
+      41.9032766
+     ],
+     [
+      12.4910135,
+      41.9013137
+     ],
+     [
+      12.4941927,
+      41.8992551
+     ],
+     [
+      12.4978884,
+      41.8975314
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_nazionale_0",
+    "w_m": 12,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       824,
+       373
+      ],
+      [
+       784,
+       406
+      ],
+      [
+       737,
+       438
+      ],
+      [
+       690,
+       469
+      ],
+      [
+       653,
+       497
+      ],
+      [
+       626,
+       520
+      ],
+      [
+       620,
+       507
+      ],
+      [
+       610,
+       501
+      ],
+      [
+       594,
+       501
+      ],
+      [
+       582,
+       508
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4978886,
+      41.9021754
+     ],
+     [
+      12.4953078,
+      41.9005956
+     ],
+     [
+      12.4922844,
+      41.8990636
+     ],
+     [
+      12.4892624,
+      41.8975794
+     ],
+     [
+      12.4868789,
+      41.8962388
+     ],
+     [
+      12.4851362,
+      41.8951376
+     ],
+     [
+      12.4847725,
+      41.89576
+     ],
+     [
+      12.484146,
+      41.8960472
+     ],
+     [
+      12.4831311,
+      41.8960471
+     ],
+     [
+      12.4823608,
+      41.8957119
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_xx_settembre_0",
+    "w_m": 10,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       760,
+       241
+      ],
+      [
+       785,
+       289
+      ],
+      [
+       806,
+       331
+      ],
+      [
+       824,
+       373
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4940009,
+      41.9084951
+     ],
+     [
+      12.4955242,
+      41.906197
+     ],
+     [
+      12.4968016,
+      41.9041862
+     ],
+     [
+      12.4978886,
+      41.9021754
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_pia_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       599,
+       218
+      ],
+      [
+       638,
+       250
+      ],
+      [
+       690,
+       273
+      ],
+      [
+       739,
+       270
+      ],
+      [
+       760,
+       241
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4838158,
+      41.9095959
+     ],
+     [
+      12.4862487,
+      41.908064
+     ],
+     [
+      12.4895179,
+      41.906963
+     ],
+     [
+      12.4926306,
+      41.9071067
+     ],
+     [
+      12.4940009,
+      41.9084951
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_old_banks_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       454,
+       365
+      ],
+      [
+       435,
+       390
+      ],
+      [
+       439,
+       423
+      ],
+      [
+       456,
+       451
+      ],
+      [
+       448,
+       485
+      ],
+      [
+       454,
+       522
+      ],
+      [
+       478,
+       552
+      ],
+      [
+       514,
+       572
+      ],
+      [
+       548,
+       598
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.474426,
+      41.9025572
+     ],
+     [
+      12.4731884,
+      41.9013601
+     ],
+     [
+      12.4733995,
+      41.8997802
+     ],
+     [
+      12.4744418,
+      41.8984399
+     ],
+     [
+      12.4738904,
+      41.896812
+     ],
+     [
+      12.4742232,
+      41.8950407
+     ],
+     [
+      12.4757068,
+      41.8936047
+     ],
+     [
+      12.4779644,
+      41.8926474
+     ],
+     [
+      12.4800873,
+      41.8914029
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_corso_vittorio_0",
+    "w_m": 12,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       429,
+       402
+      ],
+      [
+       465,
+       421
+      ],
+      [
+       493,
+       443
+      ],
+      [
+       523,
+       463
+      ],
+      [
+       561,
+       478
+      ],
+      [
+       595,
+       489
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4727923,
+      41.9007855
+     ],
+     [
+      12.4750515,
+      41.8998762
+     ],
+     [
+      12.4767993,
+      41.8988232
+     ],
+     [
+      12.4786765,
+      41.8978659
+     ],
+     [
+      12.4810676,
+      41.8971481
+     ],
+     [
+      12.4832101,
+      41.8966216
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_governo_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       451,
+       443
+      ],
+      [
+       481,
+       462
+      ],
+      [
+       513,
+       477
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4741349,
+      41.8988228
+     ],
+     [
+      12.4760135,
+      41.8979135
+     ],
+     [
+      12.478024,
+      41.8971956
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_giulia_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       434,
+       446
+      ],
+      [
+       456,
+       474
+      ],
+      [
+       476,
+       502
+      ],
+      [
+       501,
+       534
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4730526,
+      41.898679
+     ],
+     [
+      12.4744121,
+      41.8973387
+     ],
+     [
+      12.4756446,
+      41.8959984
+     ],
+     [
+      12.477189,
+      41.8944666
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_navona_0",
+    "w_m": 5,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       467,
+       416
+      ],
+      [
+       477,
+       442
+      ],
+      [
+       491,
+       464
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4751848,
+      41.9001156
+     ],
+     [
+      12.4757856,
+      41.898871
+     ],
+     [
+      12.4766452,
+      41.8978178
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_ghetto_0",
+    "w_m": 5,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       542,
+       570
+      ],
+      [
+       575,
+       567
+      ],
+      [
+       608,
+       557
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4797431,
+      41.8927434
+     ],
+     [
+      12.4818402,
+      41.8928872
+     ],
+     [
+      12.4839464,
+      41.8933661
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_monti_cavour_0",
+    "w_m": 11,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       825,
+       474
+      ],
+      [
+       786,
+       495
+      ],
+      [
+       748,
+       517
+      ],
+      [
+       709,
+       544
+      ],
+      [
+       686,
+       575
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4978197,
+      41.8973399
+     ],
+     [
+      12.4953183,
+      41.8963346
+     ],
+     [
+      12.492879,
+      41.8952814
+     ],
+     [
+      12.4903699,
+      41.8939888
+     ],
+     [
+      12.4888706,
+      41.8925046
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_monti_serpenti_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       677,
+       497
+      ],
+      [
+       695,
+       525
+      ],
+      [
+       713,
+       550
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4884013,
+      41.8962389
+     ],
+     [
+      12.4895066,
+      41.8948984
+     ],
+     [
+      12.4906158,
+      41.8937015
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_monti_leonina_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       664,
+       550
+      ],
+      [
+       693,
+       557
+      ],
+      [
+       726,
+       558
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4875076,
+      41.8937014
+     ],
+     [
+      12.489338,
+      41.8933664
+     ],
+     [
+      12.49143,
+      41.8933185
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_merulana_0",
+    "w_m": 10,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       834,
+       475
+      ],
+      [
+       855,
+       519
+      ],
+      [
+       880,
+       559
+      ],
+      [
+       906,
+       603
+      ],
+      [
+       936,
+       653
+      ],
+      [
+       967,
+       693
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4983893,
+      41.897292
+     ],
+     [
+      12.4996638,
+      41.8951854
+     ],
+     [
+      12.5011972,
+      41.8932702
+     ],
+     [
+      12.5027886,
+      41.8911636
+     ],
+     [
+      12.5046257,
+      41.8887696
+     ],
+     [
+      12.5065393,
+      41.8868543
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_vittorio_0",
+    "w_m": 9,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       878,
+       493
+      ],
+      [
+       910,
+       513
+      ],
+      [
+       927,
+       547
+      ],
+      [
+       897,
+       571
+      ],
+      [
+       863,
+       548
+      ],
+      [
+       849,
+       516
+      ],
+      [
+       878,
+       493
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5011569,
+      41.89643
+     ],
+     [
+      12.5031605,
+      41.8954723
+     ],
+     [
+      12.5041942,
+      41.8938445
+     ],
+     [
+      12.5022597,
+      41.8926956
+     ],
+     [
+      12.5001332,
+      41.893797
+     ],
+     [
+      12.4992871,
+      41.895329
+     ],
+     [
+      12.5011569,
+      41.89643
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_giolitti_0",
+    "w_m": 10,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       852,
+       388
+      ],
+      [
+       902,
+       439
+      ],
+      [
+       953,
+       485
+      ],
+      [
+       1010,
+       536
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4996452,
+      41.9014571
+     ],
+     [
+      12.5027503,
+      41.8990152
+     ],
+     [
+      12.505925,
+      41.8968126
+     ],
+     [
+      12.5094736,
+      41.8943704
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_manzoni_0",
+    "w_m": 9,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       860,
+       612
+      ],
+      [
+       915,
+       595
+      ],
+      [
+       969,
+       573
+      ],
+      [
+       1014,
+       551
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.499859,
+      41.8907329
+     ],
+     [
+      12.50337,
+      41.8915465
+     ],
+     [
+      12.5068242,
+      41.8925994
+     ],
+     [
+      12.5097076,
+      41.8936522
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_santa_croce_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       969,
+       694
+      ],
+      [
+       1010,
+       674
+      ],
+      [
+       1052,
+       655
+      ],
+      [
+       1091,
+       634
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5066649,
+      41.8868064
+     ],
+     [
+      12.5092917,
+      41.8877635
+     ],
+     [
+      12.5119807,
+      41.8886727
+     ],
+     [
+      12.5144821,
+      41.8896776
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_appia_new_0",
+    "w_m": 12,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       1010,
+       723
+      ],
+      [
+       1054,
+       752
+      ],
+      [
+       1092,
+       779
+      ],
+      [
+       1130,
+       808
+      ],
+      [
+       1168,
+       834
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5092271,
+      41.8854176
+     ],
+     [
+      12.5119795,
+      41.8840287
+     ],
+     [
+      12.5143538,
+      41.8827356
+     ],
+     [
+      12.5167255,
+      41.8813467
+     ],
+     [
+      12.519101,
+      41.8801014
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_tuscolana_0",
+    "w_m": 10,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       1030,
+       687
+      ],
+      [
+       1086,
+       711
+      ],
+      [
+       1140,
+       735
+      ],
+      [
+       1169,
+       748
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5105431,
+      41.8871409
+     ],
+     [
+      12.5140632,
+      41.8859913
+     ],
+     [
+      12.5174564,
+      41.8848415
+     ],
+     [
+      12.5192784,
+      41.8842187
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_tiburtina_0",
+    "w_m": 9,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       1034,
+       482
+      ],
+      [
+       1073,
+       469
+      ],
+      [
+       1110,
+       457
+      ],
+      [
+       1149,
+       437
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5110673,
+      41.8969554
+     ],
+     [
+      12.5135585,
+      41.8975774
+     ],
+     [
+      12.5159215,
+      41.8981514
+     ],
+     [
+      12.518422,
+      41.8991084
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_sabelli_0",
+    "w_m": 7,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       1044,
+       506
+      ],
+      [
+       1082,
+       490
+      ],
+      [
+       1120,
+       475
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.51167,
+      41.8958063
+     ],
+     [
+      12.5141016,
+      41.8965719
+     ],
+     [
+      12.516532,
+      41.8972895
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_reti_0",
+    "w_m": 7,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       1082,
+       490
+      ],
+      [
+       1099,
+       521
+      ],
+      [
+       1084,
+       564
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5141016,
+      41.8965719
+     ],
+     [
+      12.515139,
+      41.8950875
+     ],
+     [
+      12.5141307,
+      41.893029
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_trastevere_lungaretta_0",
+    "w_m": 7,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       326,
+       658
+      ],
+      [
+       366,
+       640
+      ],
+      [
+       405,
+       621
+      ],
+      [
+       445,
+       610
+      ],
+      [
+       484,
+       608
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4659289,
+      41.8885281
+     ],
+     [
+      12.4684891,
+      41.8893904
+     ],
+     [
+      12.4709873,
+      41.8903005
+     ],
+     [
+      12.4735386,
+      41.8908276
+     ],
+     [
+      12.4760149,
+      41.8909237
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_trastevere_moro_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       360,
+       669
+      ],
+      [
+       390,
+       675
+      ],
+      [
+       432,
+       682
+      ],
+      [
+       466,
+       691
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4680712,
+      41.8880019
+     ],
+     [
+      12.4699663,
+      41.8877151
+     ],
+     [
+      12.4726211,
+      41.8873804
+     ],
+     [
+      12.4747659,
+      41.8869498
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_viale_re_0",
+    "w_m": 12,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       365,
+       743
+      ],
+      [
+       402,
+       704
+      ],
+      [
+       432,
+       665
+      ],
+      [
+       463,
+       628
+      ],
+      [
+       487,
+       592
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4682931,
+      41.8844592
+     ],
+     [
+      12.47069,
+      41.8863268
+     ],
+     [
+      12.472643,
+      41.8881943
+     ],
+     [
+      12.4746571,
+      41.889966
+     ],
+     [
+      12.4762259,
+      41.8916897
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_lungara_0",
+    "w_m": 7,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       222,
+       431
+      ],
+      [
+       234,
+       470
+      ],
+      [
+       247,
+       510
+      ],
+      [
+       260,
+       554
+      ],
+      [
+       263,
+       597
+      ],
+      [
+       269,
+       636
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4596234,
+      41.8993942
+     ],
+     [
+      12.4603346,
+      41.8975272
+     ],
+     [
+      12.461108,
+      41.8956124
+     ],
+     [
+      12.4618762,
+      41.8935061
+     ],
+     [
+      12.4620113,
+      41.8914476
+     ],
+     [
+      12.4623418,
+      41.8895805
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_trastevere_riario_0",
+    "w_m": 7,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       316,
+       646
+      ],
+      [
+       325,
+       686
+      ],
+      [
+       344,
+       712
+      ],
+      [
+       365,
+       743
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4653101,
+      41.8891025
+     ],
+     [
+      12.4658295,
+      41.8871876
+     ],
+     [
+      12.4670011,
+      41.8859431
+     ],
+     [
+      12.4682931,
+      41.8844592
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_borgo_nuovo_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       160,
+       369
+      ],
+      [
+       200,
+       373
+      ],
+      [
+       246,
+       379
+      ],
+      [
+       283,
+       383
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4557696,
+      41.9023613
+     ],
+     [
+      12.458302,
+      41.9021705
+     ],
+     [
+      12.4612125,
+      41.9018841
+     ],
+     [
+      12.4635547,
+      41.9016932
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_borgo_vecchio_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       164,
+       390
+      ],
+      [
+       203,
+       388
+      ],
+      [
+       243,
+       392
+      ],
+      [
+       279,
+       397
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4559965,
+      41.901356
+     ],
+     [
+      12.4584731,
+      41.9014525
+     ],
+     [
+      12.4610056,
+      41.9012617
+     ],
+     [
+      12.4632829,
+      41.9010229
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_marmorata_0",
+    "w_m": 11,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       392,
+       814
+      ],
+      [
+       431,
+       837
+      ],
+      [
+       480,
+       867
+      ],
+      [
+       527,
+       882
+      ],
+      [
+       550,
+       907
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4699139,
+      41.8810604
+     ],
+     [
+      12.4723576,
+      41.8799597
+     ],
+     [
+      12.4754263,
+      41.8785239
+     ],
+     [
+      12.4783874,
+      41.8778061
+     ],
+     [
+      12.4798136,
+      41.8766093
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_testaccio_galvani_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       416,
+       865
+      ],
+      [
+       453,
+       896
+      ],
+      [
+       490,
+       930
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4713702,
+      41.878619
+     ],
+     [
+      12.4736765,
+      41.8771352
+     ],
+     [
+      12.4759789,
+      41.8755078
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_testaccio_zabaglia_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       440,
+       966
+      ],
+      [
+       459,
+       933
+      ],
+      [
+       480,
+       900
+      ],
+      [
+       505,
+       861
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4727618,
+      41.8737838
+     ],
+     [
+      12.4740092,
+      41.8753639
+     ],
+     [
+      12.4753836,
+      41.876944
+     ],
+     [
+      12.4770194,
+      41.8788113
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_testaccio_volta_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       405,
+       905
+      ],
+      [
+       443,
+       929
+      ],
+      [
+       479,
+       951
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.470621,
+      41.8767038
+     ],
+     [
+      12.4729998,
+      41.8755552
+     ],
+     [
+      12.4752542,
+      41.8745023
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_san_saba_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       548,
+       868
+      ],
+      [
+       579,
+       848
+      ],
+      [
+       607,
+       858
+      ],
+      [
+       626,
+       884
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4797373,
+      41.8784765
+     ],
+     [
+      12.4817292,
+      41.8794342
+     ],
+     [
+      12.4834919,
+      41.8789555
+     ],
+     [
+      12.484663,
+      41.8777108
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_salaria_0",
+    "w_m": 10,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       760,
+       241
+      ],
+      [
+       783,
+       191
+      ],
+      [
+       806,
+       140
+      ],
+      [
+       803,
+       91
+      ],
+      [
+       791,
+       36
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4940009,
+      41.9084951
+     ],
+     [
+      12.4955255,
+      41.9108888
+     ],
+     [
+      12.4970516,
+      41.9133304
+     ],
+     [
+      12.4969254,
+      41.9156763
+     ],
+     [
+      12.4962359,
+      41.9183095
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_nomentana_0",
+    "w_m": 11,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       818,
+       329
+      ],
+      [
+       851,
+       269
+      ],
+      [
+       880,
+       217
+      ],
+      [
+       913,
+       166
+      ],
+      [
+       942,
+       116
+      ],
+      [
+       972,
+       67
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4975655,
+      41.9042819
+     ],
+     [
+      12.4997378,
+      41.9071543
+     ],
+     [
+      12.501646,
+      41.9096437
+     ],
+     [
+      12.5038068,
+      41.9120852
+     ],
+     [
+      12.5057126,
+      41.9144788
+     ],
+     [
+      12.5076807,
+      41.9168245
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_monteverde_poerio_0",
+    "w_m": 6,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       236,
+       770
+      ],
+      [
+       263,
+       777
+      ],
+      [
+       290,
+       792
+      ],
+      [
+       306,
+       817
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.460077,
+      41.8831646
+     ],
+     [
+      12.4617804,
+      41.88283
+     ],
+     [
+      12.4634735,
+      41.8821123
+     ],
+     [
+      12.4644561,
+      41.8809156
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_pinciano_0",
+    "w_m": 7,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; TCI1925 existing alignment; Nazionale continues asIVNovembre toPiazzaVenezia/Corso. Width and bends graphical estimates.",
+     "source_pixels": [
+      [
+       452,
+       125
+      ],
+      [
+       480,
+       111
+      ],
+      [
+       513,
+       89
+      ],
+      [
+       543,
+       57
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4746092,
+      41.9140472
+     ],
+     [
+      12.476404,
+      41.9147178
+     ],
+     [
+      12.4785264,
+      41.9157713
+     ],
+     [
+      12.4804715,
+      41.9173035
+     ]
+    ]
+   }
+  }
+ ]
+}

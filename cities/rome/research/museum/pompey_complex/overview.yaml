@@ -1,0 +1,27 @@
+# Camera: az0, el28, d540m, fov42; origin is the unchanged Curia anchor.
+# Make no image before the root's native multi-landmark build and bright true-height review.
+place: "Pompey's theatre-portico complex in the southern Campus Martius, Rome: the east-facing semicircular theatre, covered walks behind its stage, and the separate Curia of Pompey at the eastern end of the garden"
+when: "44 BCE, before the assassination of Julius Caesar, an ordinary clear day; the complex had opened in 55 BCE"
+picture: |
+  Edit the attached native museum reference. Keep its complete model geometry, including all seven matched source landmarks, their relative positions, their small joins and the gap behind the theatre stage. This is a southern overview, not a new ideal reconstruction plan. The theatre, enclosing walks and eastern hall must retain exactly the outlines and proportions in the reference.
+  Give the semicircular seating and its plain exterior subdued pale stone and plaster tones. Keep the stage building a simple straight architectural mass exactly as modelled. Its original Republican elevation is uncertain: do not invent a rich facade, columns, recesses, windows or statuary to make it more complete.
+  Across the garden, the independent almost square meeting hall rises above the lower covered walks. Apply restrained pale plaster tones to its existing walls and muted terracotta tones to its existing pitched roof. The height, roof pitch, single doorway and portico columns are model estimates, not surviving elevations. Keep the real doorway opening as seen, without turning the hall into a solid temple or adding a classical temple porch.
+  Keep all portico column positions, roof ridges, rear walls and the estimated southern access in the reference. Use quiet pale surface colours and muted clay roof tiles without adding carved capitals or another colonnade tier. Materials and colours are restrained comparative estimates, not a recovered site colour scheme.
+  The central open ground runs level through and beyond the complex. Give the existing bare ground a subdued mixture of compacted earth and low green surface vegetation, only within open areas. This lightly suggests garden use; it is not a measured pavement or planting plan. No new tree rows, built planters, pools or sculpture must obscure or alter the model. Do not paint its underground display foundation as a raised terrace, cliff, moat or archaeological trench.
+  A few tiny adults walk beneath the covered walks or across unobstructed ground in plain tunics and cloaks. Their number, dress colours and positions are illustrative. No named person or staged historical event. Beyond the selected complex, continue level ground into a quiet pale sky with low distant texture, without inserting large unmodelled monuments.
+avoid: >-
+  different camera, cropping or zooming; moving or joining model sections; replacing the theatre with an amphitheatre;
+  circular arena, full elliptical seating, Colosseum; a new Temple of Venus above the cavea; Domitianic curved stage recesses;
+  ornate invented stage facade; Curia Julia, a Roman Forum backdrop, temple porch or transparent hall;
+  interior Senate seating or statues; Augustan blocking, later latrines; new long central covered avenue, pools, fountains,
+  statues, exact double-grove layout or tall trees hiding columns; four Largo Argentina temples or southern housing added
+  to the model; modern streets, cars, buildings, signs; prominent Caesar or Pompey, assassination, weapons or blood;
+  a display plinth edge, cliff, excavation pit, text, watermark, border
+sources:
+  - "research/museum/pompey_complex/sources.md: seven exact canonical matchers, 302 native geometry records, unchanged positions and true-height bounds; root's bright visual review remains required"
+  - "M01: Sovrintendenza Capitolina, La Curia di Pompeo, official account of the hall, garden-portico-theatre relationship and the 44 BCE event; no event is depicted here"
+  - "M02: Marra et al. 2021 author manuscript pp4–5, 24 by 27 m independent hall, 55 BCE opening and distinct building phases; no original elevation dimensions"
+  - "M03: Monterroso Checa 2022 pp300–301 figs17–18A/B, Pompeian hall before Augustan closure; no reconstructed original facade"
+  - "M04/M05: Vitruvius5.9 names the porticoes and recommends green open walks; 5.1 Fano dimensions are only the existing model's limited height comparisons"
+  - "M06: Stanford Forma Urbis fragment39ac, competing readings of rectangles and dotted squares; no exact 44 BCE grove or pools can be inferred"
+  - "M07/M08: existing DAR theatre/portico syntheses, east-facing cavea and later plan limits; stone/plaster palette, terracotta roofing, low vegetation and small figures are explicit illustrative estimates"

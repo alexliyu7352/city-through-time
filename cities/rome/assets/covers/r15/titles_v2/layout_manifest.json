@@ -1,0 +1,286 @@
+[
+  {
+    "id": "zh1",
+    "shape": "wide",
+    "file": "rome_A_zh1_wide.jpg",
+    "thumbnail": "rome_A_zh1_wide_320.jpg",
+    "title": "罗马",
+    "subtitle": "2800年城市兴衰",
+    "date": "公元前753年到公元2026年",
+    "badge": "永恒之城",
+    "title_size": 680,
+    "subtitle_size": 205,
+    "bounds": [
+      [
+        1223,
+        63,
+        2617,
+        721
+      ],
+      [
+        1150,
+        761,
+        2690,
+        977
+      ],
+      [
+        936,
+        1007,
+        2904,
+        1173
+      ],
+      [
+        1665,
+        1214,
+        2175,
+        1344
+      ],
+      [
+        537,
+        2011,
+        823,
+        2086
+      ]
+    ],
+    "size": [
+      3840,
+      2160
+    ]
+  },
+  {
+    "id": "zh1",
+    "shape": "portrait",
+    "file": "rome_A_zh1_portrait.jpg",
+    "thumbnail": "rome_A_zh1_portrait_320.jpg",
+    "title": "罗马",
+    "subtitle": "2800年城市兴衰",
+    "date": "公元前753年到公元2026年",
+    "badge": "永恒之城",
+    "title_size": 320,
+    "subtitle_size": 86,
+    "bounds": [
+      [
+        215,
+        95,
+        865,
+        399
+      ],
+      [
+        217,
+        426,
+        863,
+        516
+      ],
+      [
+        141,
+        538,
+        939,
+        605
+      ],
+      [
+        429,
+        634,
+        651,
+        690
+      ],
+      [
+        67,
+        1363,
+        189,
+        1396
+      ]
+    ],
+    "size": [
+      1080,
+      1440
+    ]
+  },
+  {
+    "id": "zh2",
+    "shape": "wide",
+    "file": "rome_A_zh2_wide.jpg",
+    "thumbnail": "rome_A_zh2_wide_320.jpg",
+    "title": "罗马",
+    "subtitle": "30分钟看完2800年",
+    "date": null,
+    "badge": "3D还原",
+    "title_size": 680,
+    "subtitle_size": 205,
+    "bounds": [
+      [
+        1223,
+        63,
+        2617,
+        721
+      ],
+      [
+        1025,
+        761,
+        2815,
+        976
+      ],
+      [
+        1707,
+        1017,
+        2133,
+        1146
+      ],
+      [
+        537,
+        2011,
+        823,
+        2086
+      ]
+    ],
+    "size": [
+      3840,
+      2160
+    ]
+  },
+  {
+    "id": "zh2",
+    "shape": "portrait",
+    "file": "rome_A_zh2_portrait.jpg",
+    "thumbnail": "rome_A_zh2_portrait_320.jpg",
+    "title": "罗马",
+    "subtitle": "30分钟看完2800年",
+    "date": null,
+    "badge": "3D还原",
+    "title_size": 320,
+    "subtitle_size": 86,
+    "bounds": [
+      [
+        215,
+        95,
+        865,
+        399
+      ],
+      [
+        165,
+        426,
+        915,
+        516
+      ],
+      [
+        447,
+        545,
+        633,
+        602
+      ],
+      [
+        67,
+        1363,
+        189,
+        1396
+      ]
+    ],
+    "size": [
+      1080,
+      1440
+    ]
+  },
+  {
+    "id": "zh3",
+    "shape": "wide",
+    "file": "rome_A_zh3_wide.jpg",
+    "thumbnail": "rome_A_zh3_wide_320.jpg",
+    "title": "罗马",
+    "subtitle": "百万之城为何只剩5万人？",
+    "date": null,
+    "badge": null,
+    "title_size": 680,
+    "subtitle_size": 205,
+    "bounds": [
+      [
+        1223,
+        63,
+        2617,
+        721
+      ],
+      [
+        722,
+        761,
+        3118,
+        977
+      ],
+      [
+        537,
+        2011,
+        823,
+        2086
+      ]
+    ],
+    "size": [
+      3840,
+      2160
+    ]
+  },
+  {
+    "id": "zh3",
+    "shape": "portrait",
+    "file": "rome_A_zh3_portrait.jpg",
+    "thumbnail": "rome_A_zh3_portrait_320.jpg",
+    "title": "罗马",
+    "subtitle": "百万之城为何只剩5万人？",
+    "date": null,
+    "badge": null,
+    "title_size": 320,
+    "subtitle_size": 82,
+    "bounds": [
+      [
+        215,
+        95,
+        865,
+        399
+      ],
+      [
+        61,
+        426,
+        1019,
+        513
+      ],
+      [
+        67,
+        1363,
+        189,
+        1396
+      ]
+    ],
+    "size": [
+      1080,
+      1440
+    ]
+  },
+  {
+    "id": "en_date",
+    "shape": "wide",
+    "file": "rome_A_en_wide.jpg",
+    "thumbnail": "rome_A_en_wide_320.jpg",
+    "title": "ROME",
+    "subtitle": "753 BCE → 2026"
+  },
+  {
+    "id": "en_date",
+    "shape": "portrait",
+    "file": "rome_A_en_portrait.jpg",
+    "thumbnail": "rome_A_en_portrait_320.jpg",
+    "title": "ROME",
+    "subtitle": "753 BCE → 2026"
+  },
+  {
+    "id": "en_time",
+    "shape": "wide",
+    "file": "rome_A_en_time_wide.jpg",
+    "thumbnail": "rome_A_en_time_wide_320.jpg",
+    "title": "ROME",
+    "subtitle": "2,800 years in 30 minutes"
+  },
+  {
+    "id": "en_time",
+    "shape": "portrait",
+    "file": "rome_A_en_time_portrait.jpg",
+    "thumbnail": "rome_A_en_time_portrait_320.jpg",
+    "title": "ROME",
+    "subtitle": "2,800 years in 30 minutes"
+  }
+]

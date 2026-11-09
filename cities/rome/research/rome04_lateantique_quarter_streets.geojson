@@ -1,0 +1,253 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_lateantique_clivus_scauri",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_pixels": [
+      [
+       184,
+       614
+      ],
+      [
+       216,
+       600
+      ],
+      [
+       253,
+       597
+      ],
+      [
+       298,
+       610
+      ],
+      [
+       349,
+       624
+      ],
+      [
+       396,
+       642
+      ],
+      [
+       443,
+       657
+      ],
+      [
+       488,
+       674
+      ],
+      [
+       534,
+       679
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.490289,
+      41.8863618
+     ],
+     [
+      12.4907218,
+      41.8864989
+     ],
+     [
+      12.4912202,
+      41.8865249
+     ],
+     [
+      12.4918238,
+      41.8863891
+     ],
+     [
+      12.492508,
+      41.8862425
+     ],
+     [
+      12.4931378,
+      41.8860562
+     ],
+     [
+      12.493768,
+      41.8859
+     ],
+     [
+      12.494371,
+      41.885724
+     ],
+     [
+      12.4949893,
+      41.8856685
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_lateantique_west_approach",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_pixels": [
+      [
+       184,
+       614
+      ],
+      [
+       164,
+       644
+      ],
+      [
+       143,
+       671
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.490289,
+      41.8863618
+     ],
+     [
+      12.4900154,
+      41.8860623
+     ],
+     [
+      12.4897287,
+      41.8857932
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_lateantique_south_access",
+    "kind": "street",
+    "model": {
+     "w_m": 4.2
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_pixels": [
+      [
+       253,
+       597
+      ],
+      [
+       244,
+       636
+      ],
+      [
+       239,
+       680
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4912202,
+      41.8865249
+     ],
+     [
+      12.4910932,
+      41.8861337
+     ],
+     [
+      12.4910192,
+      41.8856918
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_lateantique_south_back_lane",
+    "kind": "street",
+    "model": {
+     "w_m": 4.2
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_quarter_basis.md; LA04 fig3 locates the known domestic sites; LA04 fig1 and LA03 constrain Clivus Scauri. The modern background is only geographic control, not a350CE cadastre. Ordinary lots, widths and upper storeys are bounded comparative estimates.",
+     "source_pixels": [
+      [
+       164,
+       644
+      ],
+      [
+       205,
+       663
+      ],
+      [
+       239,
+       680
+      ],
+      [
+       303,
+       695
+      ],
+      [
+       359,
+       710
+      ],
+      [
+       413,
+       724
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4900154,
+      41.8860623
+     ],
+     [
+      12.4905642,
+      41.8858666
+     ],
+     [
+      12.4910192,
+      41.8856918
+     ],
+     [
+      12.4918782,
+      41.8855338
+     ],
+     [
+      12.4926296,
+      41.8853766
+     ],
+     [
+      12.4933541,
+      41.8852297
+     ]
+    ]
+   }
+  }
+ ]
+}

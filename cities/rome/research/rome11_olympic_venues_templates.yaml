@@ -1,0 +1,188 @@
+rome11_olympic_palazzetto1957:
+  name: Palazzetto_1957_60m_dome_78m_support_circle
+  kind: parts
+  exaggeration: 1
+  basis: O01 catalogue60/61 printed61/62:78m external,58.5m internal,21m arena-to-top,arena3m
+    below ground; O06 dome60m, O05/CONI36radial supports. Desideri/NerviJr/Positano1979
+    printed74/75 figure2.3 reproduced in coursePDF9 confirms inward-inclined fork
+    supports. Above-grade18m represented as6m drum+12m saucer; support feet at39m
+    radius meet branches at30m dome rim,not a separate unsupported fence.0.7x0.75m
+    members/joint4.5m and bifurcation2.5m tangential offset are section-based estimates;
+    below-grade interior and roof ribs omitted.
+  parts:
+  - kind: dome
+    d_m: 60
+    drum_h_m: 6
+    dome:
+      shape: saucer
+      rise_m: 12
+  - kind: prism
+    theta_deg: 90
+    section_m:
+    - - 0
+      - 0
+    - - 0.7
+      - 0
+    - - -6.65
+      - 4.5
+    - - -7.35
+      - 4.5
+    length_m: 0.75
+    repeat:
+      ring:
+        n: 36
+        r_m: 39
+        start_deg: 0
+  - kind: prism
+    theta_deg: -38.65980825409011
+    section_m:
+    - - -0.35
+      - 4.5
+    - - 0.35
+      - 4.5
+    - - 3.5515621187164244
+      - 6
+    - - 2.851562118716424
+      - 6
+    length_m: 0.75
+    repeat:
+      ring:
+        n: 36
+        r_m: 32
+        start_deg: 0
+  - kind: prism
+    theta_deg: 218.6598082540901
+    section_m:
+    - - -0.35
+      - 4.5
+    - - 0.35
+      - 4.5
+    - - 3.5515621187164244
+      - 6
+    - - 2.851562118716424
+      - 6
+    length_m: 0.75
+    repeat:
+      ring:
+        n: 36
+        r_m: 32
+        start_deg: 0
+rome11_olympic_flaminio1959:
+  name: Flaminio_1959_open_stands_single_canopy
+  kind: parts
+  theta_deg: 80.75184507626999
+  exaggeration: 1
+  basis: O01 catalogue57/59 printed58/60:181x131m outer,105x70m field,1957 demolition/1959
+    opening; O05/CONI1958plan single west canopy,14m cantilever.12m stand/roof level
+    and0.45m roof thickness are photograph-based estimates; report6m projection is
+    not treated as a measured total height. Native obround maintains constant seat-band
+    depth; open floor approximates120x70m and contains105x70m pitch.
+  parts:
+  - kind: ring
+    plan: obround
+    outer_m:
+    - 181
+    - 131
+    inner_m:
+    - 120
+    - 70
+    h_m: 12
+    arena_wall_m: 1.2
+  - kind: prism
+    at:
+    - 0
+    - -47
+    z_m: 12
+    plan_m:
+    - - -60
+      - -11
+    - - 60
+      - -11
+    - - 60
+      - 11
+    - - -60
+      - 11
+    h_m: 0.45
+rome11_olympic_olimpico1953:
+  name: Olimpico_1953_existing_open_bowl
+  kind: parts
+  theta_deg: 104.96303000400691
+  exaggeration: 1
+  basis: O01 catalogue57 printed58 outer319x186m,inner205.8x94.4m,field4.5m below
+    road,top20.5m above field=>16m above road;O05/CONI1953open bowl and narrow MonteMario
+    press cover. Native oval ring has constant band depth,its227.4x94.4m open floor
+    is a schematic approximation rather than the printed inner length. No1990 all-round
+    roof.80m press cabin run fromO01 printed57;8m depth/3m height/roof estimated.
+  parts:
+  - kind: ring
+    plan: oval
+    outer_m:
+    - 319
+    - 186
+    inner_m:
+    - 205.8
+    - 94.4
+    h_m: 16
+    arena_wall_m: 1.0
+  - kind: long_hall
+    at:
+    - 0
+    - -89
+    z_m: 16
+    w_m: 80
+    d_m: 8
+    h_m: 3
+    roof:
+      shape: flat
+rome11_olympic_palazzoEUR1960:
+  name: Palazzo_EUR_1960_100m_dome_122m_glazed_ring
+  kind: parts
+  exaggeration: 1
+  basis: "O01 catalogue67/69/71 printed68/70/72:external122m,internal dome100m,arena-to-top34.5m,outer\
+    \ glazed gallery supports about10m,144roof ribs.122m outer gallery ring and100m\
+    \ dome kept distinct;24.5m rise plus10m drum is a schematic exterior split,not\
+    \ surveyed ground-to-arena elevation.144ribs and glazing texture omitted; no1999\u2013\
+    2003 alterations. Position from municipal TurismoRoma POINT12.466421,41.825168,working\
+    \ site control only."
+  parts:
+  - kind: dome
+    d_m: 100
+    drum_h_m: 10
+    dome:
+      shape: saucer
+      rise_m: 24.5
+  - kind: ring
+    plan: round
+    section: building
+    outer_m:
+    - 122
+    - 122
+    inner_m:
+    - 116
+    - 116
+    h_m: 10
+    storeys: 1
+    bays: 72
+  - kind: column
+    section: round
+    w_m: 0.6
+    h_m: 10
+    repeat:
+      ring:
+        n: 72
+        r_m: 60
+        start_deg: 0
+  - kind: revolve
+    profile_m:
+    - - 50
+      - 0
+    - - 61
+      - 0
+    - - 61
+      - 0.25
+    - - 50
+      - 0.25
+    atop: 1
+    basis: CONI1957 transverse section confirms the lower gallery roof meets the dome;
+      native annular roof connects100m dome and122m envelope.0.25m slab thickness
+      estimated,not an open courtyard round the dome.

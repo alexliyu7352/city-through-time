@@ -1,0 +1,4741 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4646333,
+      41.9021063
+     ],
+     [
+      12.464492,
+      41.9028205
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_lane_001",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_lane_001"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.462569,
+      41.901184
+     ],
+     [
+      12.4624432,
+      41.9018615
+     ],
+     [
+      12.4624746,
+      41.9027664
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_lane_002",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_lane_002"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4624562,
+      41.9017917
+     ],
+     [
+      12.4616325,
+      41.9018184
+     ],
+     [
+      12.4612629,
+      41.9017787
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_lane_003",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_lane_003"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.461335,
+      41.9027148
+     ],
+     [
+      12.461415,
+      41.9023043
+     ],
+     [
+      12.4613277,
+      41.9017857
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_lane_004",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_lane_004"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4643192,
+      41.9019191
+     ],
+     [
+      12.4636326,
+      41.9019282
+     ],
+     [
+      12.4624552,
+      41.9017973
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_lane_005",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_lane_005"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4636843,
+      41.9019275
+     ],
+     [
+      12.4635723,
+      41.9023136
+     ],
+     [
+      12.463612,
+      41.9028178
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_lane_006",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_lane_006"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4617376,
+       41.9016644
+      ],
+      [
+       12.461729,
+       41.9015145
+      ],
+      [
+       12.4619697,
+       41.9015067
+      ],
+      [
+       12.4619784,
+       41.9016566
+      ],
+      [
+       12.4617376,
+       41.9016644
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 175.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623043,
+       41.9015132
+      ],
+      [
+       12.4621054,
+       41.9014926
+      ],
+      [
+       12.4621385,
+       41.9013142
+      ],
+      [
+       12.4623374,
+       41.9013348
+      ],
+      [
+       12.4623043,
+       41.9015132
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 96.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4613611,
+       41.9015034
+      ],
+      [
+       12.4613897,
+       41.9013549
+      ],
+      [
+       12.4616282,
+       41.9013805
+      ],
+      [
+       12.4615996,
+       41.901529
+      ],
+      [
+       12.4613611,
+       41.9015034
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 186.48,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4618193,
+       41.901444
+      ],
+      [
+       12.4618106,
+       41.9012941
+      ],
+      [
+       12.4620514,
+       41.9012864
+      ],
+      [
+       12.46206,
+       41.9014362
+      ],
+      [
+       12.4618193,
+       41.901444
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 175.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.462053,
+       41.901722
+      ],
+      [
+       12.4620443,
+       41.9015721
+      ],
+      [
+       12.462285,
+       41.9015643
+      ],
+      [
+       12.4622937,
+       41.9017142
+      ],
+      [
+       12.462053,
+       41.901722
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 175.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4613687,
+       41.9017152
+      ],
+      [
+       12.4613973,
+       41.9015667
+      ],
+      [
+       12.4616358,
+       41.9015923
+      ],
+      [
+       12.4616073,
+       41.9017408
+      ],
+      [
+       12.4613687,
+       41.9017152
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 186.48,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4625084,
+       41.9013466
+      ],
+      [
+       12.4623029,
+       41.9013254
+      ],
+      [
+       12.4623257,
+       41.9012025
+      ],
+      [
+       12.4625311,
+       41.9012238
+      ],
+      [
+       12.4625084,
+       41.9013466
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.77,
+     17.22
+    ],
+    "theta_deg": 96.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616043,
+       41.9013695
+      ],
+      [
+       12.461599,
+       41.9012778
+      ],
+      [
+       12.4618014,
+       41.9012713
+      ],
+      [
+       12.4618067,
+       41.9013629
+      ],
+      [
+       12.4616043,
+       41.9013695
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.81,
+     10.19
+    ],
+    "theta_deg": 175.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616493,
+       41.9015109
+      ],
+      [
+       12.4616414,
+       41.9013741
+      ],
+      [
+       12.4617878,
+       41.9013694
+      ],
+      [
+       12.4617958,
+       41.9015061
+      ],
+      [
+       12.4616493,
+       41.9015109
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.16,
+     15.2
+    ],
+    "theta_deg": 175.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.461197,
+       41.9013848
+      ],
+      [
+       12.4612175,
+       41.9012777
+      ],
+      [
+       12.4613895,
+       41.9012962
+      ],
+      [
+       12.4613689,
+       41.9014032
+      ],
+      [
+       12.461197,
+       41.9013848
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.42,
+     12.01
+    ],
+    "theta_deg": 186.48,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.462434,
+       41.9016491
+      ],
+      [
+       12.462297,
+       41.9016349
+      ],
+      [
+       12.4623283,
+       41.901466
+      ],
+      [
+       12.4624653,
+       41.9014802
+      ],
+      [
+       12.462434,
+       41.9016491
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.94,
+     11.48
+    ],
+    "theta_deg": 96.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4616443,
+       41.901792
+      ],
+      [
+       12.4616374,
+       41.9016735
+      ],
+      [
+       12.4617643,
+       41.9016694
+      ],
+      [
+       12.4617712,
+       41.9017879
+      ],
+      [
+       12.4616443,
+       41.901792
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.54,
+     13.18
+    ],
+    "theta_deg": 175.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4617871,
+       41.901785
+      ],
+      [
+       12.4617808,
+       41.901676
+      ],
+      [
+       12.4620216,
+       41.9016682
+      ],
+      [
+       12.4620279,
+       41.9017772
+      ],
+      [
+       12.4617871,
+       41.901785
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     12.12
+    ],
+    "theta_deg": 175.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_13"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624715,
+       41.9014749
+      ],
+      [
+       12.462335,
+       41.9014608
+      ],
+      [
+       12.4623577,
+       41.9013384
+      ],
+      [
+       12.4624942,
+       41.9013525
+      ],
+      [
+       12.4624715,
+       41.9014749
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b002_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.72,
+     11.44
+    ],
+    "theta_deg": 96.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b002_14"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4629861,
+       41.9015576
+      ],
+      [
+       12.4630157,
+       41.9014092
+      ],
+      [
+       12.463254,
+       41.9014357
+      ],
+      [
+       12.4632245,
+       41.9015841
+      ],
+      [
+       12.4629861,
+       41.9015576
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 186.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633942,
+       41.9017201
+      ],
+      [
+       12.4634238,
+       41.9015717
+      ],
+      [
+       12.4636621,
+       41.9015982
+      ],
+      [
+       12.4636325,
+       41.9017466
+      ],
+      [
+       12.4633942,
+       41.9017201
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 186.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.46284,
+       41.9017274
+      ],
+      [
+       12.4626411,
+       41.9017068
+      ],
+      [
+       12.4626742,
+       41.9015285
+      ],
+      [
+       12.4628731,
+       41.9015491
+      ],
+      [
+       12.46284,
+       41.9017274
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 276.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633708,
+       41.9015568
+      ],
+      [
+       12.4634003,
+       41.9014084
+      ],
+      [
+       12.4636387,
+       41.9014349
+      ],
+      [
+       12.4636091,
+       41.9015833
+      ],
+      [
+       12.4633708,
+       41.9015568
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 186.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4628821,
+       41.9014389
+      ],
+      [
+       12.4626832,
+       41.9014183
+      ],
+      [
+       12.4627163,
+       41.9012399
+      ],
+      [
+       12.4629152,
+       41.9012605
+      ],
+      [
+       12.4628821,
+       41.9014389
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 276.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633178,
+       41.9013818
+      ],
+      [
+       12.4631189,
+       41.9013612
+      ],
+      [
+       12.463152,
+       41.9011829
+      ],
+      [
+       12.4633509,
+       41.9012035
+      ],
+      [
+       12.4633178,
+       41.9013818
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 276.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637136,
+       41.9018381
+      ],
+      [
+       12.46371,
+       41.9016881
+      ],
+      [
+       12.463951,
+       41.9016849
+      ],
+      [
+       12.4639545,
+       41.9018349
+      ],
+      [
+       12.4637136,
+       41.9018381
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 177.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.463069,
+       41.9017843
+      ],
+      [
+       12.4630986,
+       41.9016359
+      ],
+      [
+       12.463337,
+       41.9016624
+      ],
+      [
+       12.4633074,
+       41.9018108
+      ],
+      [
+       12.463069,
+       41.9017843
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 186.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4628599,
+       41.9017388
+      ],
+      [
+       12.4628954,
+       41.9015607
+      ],
+      [
+       12.4630861,
+       41.9015819
+      ],
+      [
+       12.4630506,
+       41.90176
+      ],
+      [
+       12.4628599,
+       41.9017388
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 186.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4631113,
+       41.9013006
+      ],
+      [
+       12.4629193,
+       41.9012808
+      ],
+      [
+       12.4629406,
+       41.901166
+      ],
+      [
+       12.4631326,
+       41.9011859
+      ],
+      [
+       12.4631113,
+       41.9013006
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.87,
+     16.08
+    ],
+    "theta_deg": 276.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4634271,
+       41.9018808
+      ],
+      [
+       12.4634559,
+       41.901736
+      ],
+      [
+       12.4636885,
+       41.9017619
+      ],
+      [
+       12.4636596,
+       41.9019067
+      ],
+      [
+       12.4634271,
+       41.9018808
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.52,
+     16.26
+    ],
+    "theta_deg": 186.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4628387,
+       41.9015396
+      ],
+      [
+       12.4626784,
+       41.901523
+      ],
+      [
+       12.4626962,
+       41.9014273
+      ],
+      [
+       12.4628564,
+       41.9014439
+      ],
+      [
+       12.4628387,
+       41.9015396
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.74,
+     13.42
+    ],
+    "theta_deg": 276.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4639857,
+       41.9018745
+      ],
+      [
+       12.4639834,
+       41.9017766
+      ],
+      [
+       12.4641406,
+       41.9017746
+      ],
+      [
+       12.464143,
+       41.9018724
+      ],
+      [
+       12.4639857,
+       41.9018745
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.05,
+     10.88
+    ],
+    "theta_deg": 177.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_13"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4626635,
+       41.9015435
+      ],
+      [
+       12.4625365,
+       41.9015303
+      ],
+      [
+       12.4625577,
+       41.9014165
+      ],
+      [
+       12.4626846,
+       41.9014296
+      ],
+      [
+       12.4626635,
+       41.9015435
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.76,
+     10.64
+    ],
+    "theta_deg": 276.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_14"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637052,
+       41.9016673
+      ],
+      [
+       12.4637025,
+       41.9015541
+      ],
+      [
+       12.4638236,
+       41.9015525
+      ],
+      [
+       12.4638263,
+       41.9016657
+      ],
+      [
+       12.4637052,
+       41.9016673
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.06,
+     12.57
+    ],
+    "theta_deg": 177.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_15"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633468,
+       41.9013723
+      ],
+      [
+       12.4633648,
+       41.901282
+      ],
+      [
+       12.4635098,
+       41.9012981
+      ],
+      [
+       12.4634919,
+       41.9013884
+      ],
+      [
+       12.4633468,
+       41.9013723
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.17,
+     10.14
+    ],
+    "theta_deg": 186.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_16"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4630524,
+       41.9014047
+      ],
+      [
+       12.4628993,
+       41.9013888
+      ],
+      [
+       12.4629163,
+       41.9012973
+      ],
+      [
+       12.4630694,
+       41.9013132
+      ],
+      [
+       12.4630524,
+       41.9014047
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b003_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.27,
+     12.83
+    ],
+    "theta_deg": 276.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b003_17"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4618247,
+       41.9022652
+      ],
+      [
+       12.4620234,
+       41.9022868
+      ],
+      [
+       12.4619887,
+       41.902465
+      ],
+      [
+       12.46179,
+       41.9024434
+      ],
+      [
+       12.4618247,
+       41.9022652
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 276.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623264,
+       41.9024765
+      ],
+      [
+       12.4621256,
+       41.9024804
+      ],
+      [
+       12.4621194,
+       41.9023004
+      ],
+      [
+       12.4623202,
+       41.9022965
+      ],
+      [
+       12.4623264,
+       41.9024765
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 86.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4615434,
+       41.9020455
+      ],
+      [
+       12.4617427,
+       41.9020268
+      ],
+      [
+       12.4617727,
+       41.9022054
+      ],
+      [
+       12.4615735,
+       41.9022241
+      ],
+      [
+       12.4615434,
+       41.9020455
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 261.14,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4615383,
+       41.9024608
+      ],
+      [
+       12.461737,
+       41.9024824
+      ],
+      [
+       12.4617023,
+       41.9026605
+      ],
+      [
+       12.4615036,
+       41.9026389
+      ],
+      [
+       12.4615383,
+       41.9024608
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 276.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4621341,
+       41.9026948
+      ],
+      [
+       12.4619334,
+       41.9026987
+      ],
+      [
+       12.4619271,
+       41.9025187
+      ],
+      [
+       12.4621279,
+       41.9025149
+      ],
+      [
+       12.4621341,
+       41.9026948
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 86.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4618178,
+       41.9021866
+      ],
+      [
+       12.4618627,
+       41.9020404
+      ],
+      [
+       12.4620976,
+       41.9020807
+      ],
+      [
+       12.4620526,
+       41.9022269
+      ],
+      [
+       12.4618178,
+       41.9021866
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 11.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623521,
+       41.9022564
+      ],
+      [
+       12.4621514,
+       41.9022603
+      ],
+      [
+       12.4621452,
+       41.9020803
+      ],
+      [
+       12.4623459,
+       41.9020764
+      ],
+      [
+       12.4623521,
+       41.9022564
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 86.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4615577,
+       41.9022452
+      ],
+      [
+       12.4617564,
+       41.9022668
+      ],
+      [
+       12.4617217,
+       41.9024449
+      ],
+      [
+       12.4615229,
+       41.9024233
+      ],
+      [
+       12.4615577,
+       41.9022452
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 276.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623932,
+       41.9026909
+      ],
+      [
+       12.4621924,
+       41.9026948
+      ],
+      [
+       12.4621862,
+       41.9025148
+      ],
+      [
+       12.462387,
+       41.9025109
+      ],
+      [
+       12.4623932,
+       41.9026909
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 86.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4622001,
+       41.9019713
+      ],
+      [
+       12.4621925,
+       41.9018393
+      ],
+      [
+       12.4624045,
+       41.9018324
+      ],
+      [
+       12.4624122,
+       41.9019644
+      ],
+      [
+       12.4622001,
+       41.9019713
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.62,
+     14.68
+    ],
+    "theta_deg": 355.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4617509,
+       41.9025757
+      ],
+      [
+       12.4619141,
+       41.9025934
+      ],
+      [
+       12.4618856,
+       41.9027397
+      ],
+      [
+       12.4617224,
+       41.902722
+      ],
+      [
+       12.4617509,
+       41.9025757
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.42,
+     13.69
+    ],
+    "theta_deg": 276.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4613828,
+       41.9019435
+      ],
+      [
+       12.4615615,
+       41.9019268
+      ],
+      [
+       12.4615795,
+       41.9020336
+      ],
+      [
+       12.4614008,
+       41.9020503
+      ],
+      [
+       12.4613828,
+       41.9019435
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.96,
+     14.95
+    ],
+    "theta_deg": 261.14,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4617792,
+       41.9024484
+      ],
+      [
+       12.4619152,
+       41.9024632
+      ],
+      [
+       12.4618914,
+       41.902585
+      ],
+      [
+       12.4617555,
+       41.9025703
+      ],
+      [
+       12.4617792,
+       41.9024484
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.68,
+     11.4
+    ],
+    "theta_deg": 276.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_13"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.462024,
+       41.9019411
+      ],
+      [
+       12.4620181,
+       41.9018405
+      ],
+      [
+       12.4621797,
+       41.9018353
+      ],
+      [
+       12.4621855,
+       41.9019358
+      ],
+      [
+       12.462024,
+       41.9019411
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.42,
+     11.18
+    ],
+    "theta_deg": 355.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_14"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4614031,
+       41.9020641
+      ],
+      [
+       12.4615365,
+       41.9020516
+      ],
+      [
+       12.4615567,
+       41.9021712
+      ],
+      [
+       12.4614232,
+       41.9021838
+      ],
+      [
+       12.4614031,
+       41.9020641
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b004_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.39,
+     11.16
+    ],
+    "theta_deg": 261.14,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b004_15"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4629213,
+       41.902045
+      ],
+      [
+       12.4629509,
+       41.9018967
+      ],
+      [
+       12.4631892,
+       41.9019232
+      ],
+      [
+       12.4631597,
+       41.9020715
+      ],
+      [
+       12.4629213,
+       41.902045
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 6.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4625608,
+       41.9020292
+      ],
+      [
+       12.4626058,
+       41.901883
+      ],
+      [
+       12.4628407,
+       41.9019233
+      ],
+      [
+       12.4627957,
+       41.9020695
+      ],
+      [
+       12.4625608,
+       41.9020292
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 191.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4630165,
+       41.9025623
+      ],
+      [
+       12.4628158,
+       41.9025662
+      ],
+      [
+       12.4628095,
+       41.9023862
+      ],
+      [
+       12.4630103,
+       41.9023824
+      ],
+      [
+       12.4630165,
+       41.9025623
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 266.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633969,
+       41.9025681
+      ],
+      [
+       12.4631964,
+       41.9025769
+      ],
+      [
+       12.4631823,
+       41.9023972
+      ],
+      [
+       12.4633827,
+       41.9023883
+      ],
+      [
+       12.4633969,
+       41.9025681
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 84.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4627867,
+       41.9023546
+      ],
+      [
+       12.462586,
+       41.9023585
+      ],
+      [
+       12.4625798,
+       41.9021786
+      ],
+      [
+       12.4627805,
+       41.9021747
+      ],
+      [
+       12.4627867,
+       41.9023546
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 266.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.462774,
+       41.9027331
+      ],
+      [
+       12.4625732,
+       41.902737
+      ],
+      [
+       12.462567,
+       41.902557
+      ],
+      [
+       12.4627677,
+       41.9025531
+      ],
+      [
+       12.462774,
+       41.9027331
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 266.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4631995,
+       41.9027597
+      ],
+      [
+       12.462999,
+       41.9027685
+      ],
+      [
+       12.4629849,
+       41.9025888
+      ],
+      [
+       12.4631853,
+       41.90258
+      ],
+      [
+       12.4631995,
+       41.9027597
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 84.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4635221,
+       41.9027767
+      ],
+      [
+       12.4633216,
+       41.9027856
+      ],
+      [
+       12.4633074,
+       41.9026058
+      ],
+      [
+       12.4635079,
+       41.902597
+      ],
+      [
+       12.4635221,
+       41.9027767
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 84.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633068,
+       41.9021162
+      ],
+      [
+       12.4633363,
+       41.9019678
+      ],
+      [
+       12.4635747,
+       41.9019943
+      ],
+      [
+       12.4635451,
+       41.9021427
+      ],
+      [
+       12.4633068,
+       41.9021162
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 6.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4627956,
+       41.9023235
+      ],
+      [
+       12.4628405,
+       41.9021773
+      ],
+      [
+       12.4630754,
+       41.9022176
+      ],
+      [
+       12.4630304,
+       41.9023638
+      ],
+      [
+       12.4627956,
+       41.9023235
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 11.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4627405,
+       41.9025447
+      ],
+      [
+       12.4625397,
+       41.9025485
+      ],
+      [
+       12.4625335,
+       41.9023686
+      ],
+      [
+       12.4627342,
+       41.9023647
+      ],
+      [
+       12.4627405,
+       41.9025447
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 266.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4630525,
+       41.9023484
+      ],
+      [
+       12.4630957,
+       41.9022081
+      ],
+      [
+       12.4633211,
+       41.9022467
+      ],
+      [
+       12.4632779,
+       41.9023871
+      ],
+      [
+       12.4630525,
+       41.9023484
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.2,
+     16.0
+    ],
+    "theta_deg": 11.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4629749,
+       41.9027775
+      ],
+      [
+       12.4627968,
+       41.9027809
+      ],
+      [
+       12.4627913,
+       41.9026213
+      ],
+      [
+       12.4629693,
+       41.9026179
+      ],
+      [
+       12.4629749,
+       41.9027775
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.74,
+     14.78
+    ],
+    "theta_deg": 266.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_13"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4635576,
+       41.9025691
+      ],
+      [
+       12.4634118,
+       41.9025755
+      ],
+      [
+       12.4633976,
+       41.9023958
+      ],
+      [
+       12.4635434,
+       41.9023894
+      ],
+      [
+       12.4635576,
+       41.9025691
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     12.12
+    ],
+    "theta_deg": 84.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_14"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633004,
+       41.9023474
+      ],
+      [
+       12.4633306,
+       41.9022491
+      ],
+      [
+       12.4635476,
+       41.9022864
+      ],
+      [
+       12.4635174,
+       41.9023846
+      ],
+      [
+       12.4633004,
+       41.9023474
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.48,
+     11.2
+    ],
+    "theta_deg": 11.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_15"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4631683,
+       41.9020683
+      ],
+      [
+       12.4631938,
+       41.9019402
+      ],
+      [
+       12.4633309,
+       41.9019555
+      ],
+      [
+       12.4633054,
+       41.9020835
+      ],
+      [
+       12.4631683,
+       41.9020683
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.5,
+     14.38
+    ],
+    "theta_deg": 6.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_16"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4630249,
+       41.9025191
+      ],
+      [
+       12.4630588,
+       41.9024088
+      ],
+      [
+       12.4631769,
+       41.9024291
+      ],
+      [
+       12.463143,
+       41.9025394
+      ],
+      [
+       12.4630249,
+       41.9025191
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b005_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.06,
+     12.57
+    ],
+    "theta_deg": 11.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b005_17"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4640081,
+       41.9021832
+      ],
+      [
+       12.464053,
+       41.902037
+      ],
+      [
+       12.4642879,
+       41.9020773
+      ],
+      [
+       12.4642429,
+       41.9022235
+      ],
+      [
+       12.4640081,
+       41.9021832
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 191.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.46391,
+       41.9022272
+      ],
+      [
+       12.4637138,
+       41.9021955
+      ],
+      [
+       12.4637648,
+       41.9020195
+      ],
+      [
+       12.4639611,
+       41.9020513
+      ],
+      [
+       12.46391,
+       41.9022272
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 280.53,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4645201,
+       41.9022367
+      ],
+      [
+       12.4643214,
+       41.9022147
+      ],
+      [
+       12.4643567,
+       41.9020366
+      ],
+      [
+       12.4645553,
+       41.9020586
+      ],
+      [
+       12.4645201,
+       41.9022367
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 96.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4639229,
+       41.9026693
+      ],
+      [
+       12.4639679,
+       41.9025231
+      ],
+      [
+       12.4642027,
+       41.9025634
+      ],
+      [
+       12.4641578,
+       41.9027096
+      ],
+      [
+       12.4639229,
+       41.9026693
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 11.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4639055,
+       41.902536
+      ],
+      [
+       12.4637051,
+       41.9025448
+      ],
+      [
+       12.4636909,
+       41.9023651
+      ],
+      [
+       12.4638914,
+       41.9023563
+      ],
+      [
+       12.4639055,
+       41.902536
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 264.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4644437,
+       41.9026257
+      ],
+      [
+       12.464245,
+       41.9026037
+      ],
+      [
+       12.4642803,
+       41.9024256
+      ],
+      [
+       12.4644789,
+       41.9024476
+      ],
+      [
+       12.4644437,
+       41.9026257
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 96.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4638877,
+       41.9028
+      ],
+      [
+       12.4636872,
+       41.9028088
+      ],
+      [
+       12.4636731,
+       41.9026291
+      ],
+      [
+       12.4638735,
+       41.9026202
+      ],
+      [
+       12.4638877,
+       41.9028
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 264.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4643942,
+       41.9028277
+      ],
+      [
+       12.4641956,
+       41.9028057
+      ],
+      [
+       12.4642308,
+       41.9026276
+      ],
+      [
+       12.4644295,
+       41.9026496
+      ],
+      [
+       12.4643942,
+       41.9028277
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 96.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.463989,
+       41.9025074
+      ],
+      [
+       12.4640339,
+       41.9023612
+      ],
+      [
+       12.4642688,
+       41.9024015
+      ],
+      [
+       12.4642238,
+       41.9025477
+      ],
+      [
+       12.463989,
+       41.9025074
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 11.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.464088,
+       41.9028134
+      ],
+      [
+       12.4639017,
+       41.9028216
+      ],
+      [
+       12.463893,
+       41.9027103
+      ],
+      [
+       12.4640792,
+       41.9027021
+      ],
+      [
+       12.464088,
+       41.9028134
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b006_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.38,
+     15.48
+    ],
+    "theta_deg": 264.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b006_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4608889,
+       41.9023924
+      ],
+      [
+       12.4610876,
+       41.902414
+      ],
+      [
+       12.4610529,
+       41.9025921
+      ],
+      [
+       12.4608541,
+       41.9025705
+      ],
+      [
+       12.4608889,
+       41.9023924
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b007_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 96.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b007_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4609959,
+       41.9021379
+      ],
+      [
+       12.4611952,
+       41.9021192
+      ],
+      [
+       12.4612252,
+       41.9022978
+      ],
+      [
+       12.461026,
+       41.9023165
+      ],
+      [
+       12.4609959,
+       41.9021379
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b007_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 81.14,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b007_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4606874,
+       41.9023799
+      ],
+      [
+       12.4606841,
+       41.9022299
+      ],
+      [
+       12.4609251,
+       41.902227
+      ],
+      [
+       12.4609283,
+       41.902377
+      ],
+      [
+       12.4606874,
+       41.9023799
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b007_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 357.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b007_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4606279,
+       41.9021973
+      ],
+      [
+       12.4606247,
+       41.9020473
+      ],
+      [
+       12.4608656,
+       41.9020443
+      ],
+      [
+       12.4608689,
+       41.9021944
+      ],
+      [
+       12.4606279,
+       41.9021973
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b007_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 357.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b007_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4611252,
+       41.9023211
+      ],
+      [
+       12.4613636,
+       41.9023471
+      ],
+      [
+       12.4613359,
+       41.9024896
+      ],
+      [
+       12.4610974,
+       41.9024637
+      ],
+      [
+       12.4611252,
+       41.9023211
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b007_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 96.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b007_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4606451,
+       41.902388
+      ],
+      [
+       12.4608438,
+       41.9024096
+      ],
+      [
+       12.4608091,
+       41.9025877
+      ],
+      [
+       12.4606103,
+       41.9025661
+      ],
+      [
+       12.4606451,
+       41.902388
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b007_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 96.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b007_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4611118,
+       41.9025012
+      ],
+      [
+       12.4613105,
+       41.9025228
+      ],
+      [
+       12.4612758,
+       41.9027009
+      ],
+      [
+       12.461077,
+       41.9026793
+      ],
+      [
+       12.4611118,
+       41.9025012
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b007_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 96.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b007_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4611973,
+       41.9020317
+      ],
+      [
+       12.4613188,
+       41.9020203
+      ],
+      [
+       12.4613371,
+       41.9021292
+      ],
+      [
+       12.4612156,
+       41.9021406
+      ],
+      [
+       12.4611973,
+       41.9020317
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b007_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.19,
+     10.16
+    ],
+    "theta_deg": 81.14,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b007_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.460878,
+       41.9021305
+      ],
+      [
+       12.4608759,
+       41.9020354
+      ],
+      [
+       12.4610287,
+       41.9020336
+      ],
+      [
+       12.4610308,
+       41.9021287
+      ],
+      [
+       12.460878,
+       41.9021305
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b007_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.68,
+     10.57
+    ],
+    "theta_deg": 357.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b007_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4648577,
+       41.9027315
+      ],
+      [
+       12.464659,
+       41.9027096
+      ],
+      [
+       12.4646942,
+       41.9025315
+      ],
+      [
+       12.4648929,
+       41.9025534
+      ],
+      [
+       12.4648577,
+       41.9027315
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 276.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.465585,
+       41.9026634
+      ],
+      [
+       12.4655869,
+       41.9025134
+      ],
+      [
+       12.4658278,
+       41.9025151
+      ],
+      [
+       12.465826,
+       41.9026651
+      ],
+      [
+       12.465585,
+       41.9026634
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 358.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4648674,
+       41.9023929
+      ],
+      [
+       12.4646687,
+       41.902371
+      ],
+      [
+       12.4647039,
+       41.9021929
+      ],
+      [
+       12.4649026,
+       41.9022148
+      ],
+      [
+       12.4648674,
+       41.9023929
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 276.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4649609,
+       41.9026919
+      ],
+      [
+       12.4649628,
+       41.9025419
+      ],
+      [
+       12.4652038,
+       41.9025436
+      ],
+      [
+       12.4652019,
+       41.9026936
+      ],
+      [
+       12.4649609,
+       41.9026919
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 358.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4652607,
+       41.9026786
+      ],
+      [
+       12.4652626,
+       41.9025286
+      ],
+      [
+       12.4655035,
+       41.9025303
+      ],
+      [
+       12.4655016,
+       41.9026803
+      ],
+      [
+       12.4652607,
+       41.9026786
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 358.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4658392,
+       41.902656
+      ],
+      [
+       12.4658411,
+       41.902506
+      ],
+      [
+       12.4660821,
+       41.9025077
+      ],
+      [
+       12.4660802,
+       41.9026577
+      ],
+      [
+       12.4658392,
+       41.902656
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 358.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.464903,
+       41.9023886
+      ],
+      [
+       12.4649048,
+       41.9022435
+      ],
+      [
+       12.4651378,
+       41.9022452
+      ],
+      [
+       12.465136,
+       41.9023902
+      ],
+      [
+       12.464903,
+       41.9023886
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.34,
+     16.11
+    ],
+    "theta_deg": 178.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4651437,
+       41.9024022
+      ],
+      [
+       12.4651454,
+       41.9022627
+      ],
+      [
+       12.4653696,
+       41.9022642
+      ],
+      [
+       12.4653678,
+       41.9024038
+      ],
+      [
+       12.4651437,
+       41.9024022
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.6,
+     15.5
+    ],
+    "theta_deg": 178.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4665722,
+       41.9025663
+      ],
+      [
+       12.4665735,
+       41.902463
+      ],
+      [
+       12.4668015,
+       41.9024646
+      ],
+      [
+       12.4668002,
+       41.9025679
+      ],
+      [
+       12.4665722,
+       41.9025663
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.93,
+     11.47
+    ],
+    "theta_deg": 358.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4660893,
+       41.9026434
+      ],
+      [
+       12.4660908,
+       41.9025234
+      ],
+      [
+       12.4662836,
+       41.9025247
+      ],
+      [
+       12.4662821,
+       41.9026447
+      ],
+      [
+       12.4660893,
+       41.9026434
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     13.33
+    ],
+    "theta_deg": 358.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.466808,
+       41.9025721
+      ],
+      [
+       12.4668094,
+       41.9024623
+      ],
+      [
+       12.4669857,
+       41.9024636
+      ],
+      [
+       12.4669843,
+       41.9025733
+      ],
+      [
+       12.466808,
+       41.9025721
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.63,
+     12.19
+    ],
+    "theta_deg": 358.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4662902,
+       41.9026237
+      ],
+      [
+       12.4662915,
+       41.9025162
+      ],
+      [
+       12.4664641,
+       41.9025174
+      ],
+      [
+       12.4664628,
+       41.9026249
+      ],
+      [
+       12.4662902,
+       41.9026237
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.32,
+     11.94
+    ],
+    "theta_deg": 358.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.46539,
+       41.9023964
+      ],
+      [
+       12.4653912,
+       41.9023005
+      ],
+      [
+       12.4655453,
+       41.9023016
+      ],
+      [
+       12.4655441,
+       41.9023975
+      ],
+      [
+       12.46539,
+       41.9023964
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_borgo_b008_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.79,
+     10.66
+    ],
+    "theta_deg": 178.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_borgo_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowborgo/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_borgo_b008_13"
+    }
+   }
+  }
+ ]
+}

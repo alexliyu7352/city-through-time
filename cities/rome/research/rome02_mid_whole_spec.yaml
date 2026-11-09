@@ -1,0 +1,1790 @@
+city:
+  origin:
+  - 12.486
+  - 41.891
+  theta_deg: 0
+  detail: medium
+  exaggeration: 2
+  col: '#BB7548'
+  seed: 160
+  types:
+    rome02_mid_roofed_atrium_1:
+      where: Rome; Palatine NE impluvium evidence, with Cosa House of Diana as a named
+        contemporary form comparison
+      when: Middle Republic,160BCE observation; comparison dates about170 or150BCE
+        are disputed
+      basis: research/rome02_mid_atrium_basis.md H160; research/rome02_mid_research.md
+        M2-M4. Capys2021 pp88-90,141 supports a house with water-collecting impluvium
+        in the180/170-150/140BCE phase, not a complete160plan or a floor census. CosaV
+        PhaseI fig5 and pp17-19 supplies the named one-ground-level atrium-house comparison
+        on a17x34m whole plot, including rear garden. This type represents only a17x24m
+        roofed front-body working envelope,not the full Cosa plot, not the known Rome
+        house footprint. Native court.frac.05 is a small estimated roof opening, not
+        the whole atrium and not a measured compluvium/impluvium ratio. Native solid
+        massing does not reconstruct the covered atrium interior or individual Cosa
+        rooms. One3.5m level is the minimum ground-floor comparison,not proof no upper
+        floor existed. 20degree gabled roofs and.25m eaves are declared display estimates,not
+        excavated160roof values. Closed frontage avoids treating the local150/140-130/120BCE
+        tabernae rebuild as160fact. No AD2Aracoeli/Ostia,69BCE Catulan or44BCE Livia
+        form is a160measurement.
+      form: court
+      storeys: 1
+      storey_m: 3.5
+      roof:
+        shape: gabled
+        pitch_deg: 20
+        overhang_m: 0.25
+      court:
+        frac: 0.05
+      ground: closed
+  landmarks:
+  - id: early_capitoline_tuscan
+    name: Early_Tuscan_comparison_not_excavated_elevation
+    kind: parts
+    lon: 12.48185
+    lat: 41.89232
+    theta_deg: 135
+    exaggeration: 1
+    basis: research/rome02_formal_prepare_tuscan_sources.md T01-T04. Early Tuscan
+      comparative candidate at the Capitoline foundation; not a measured509BCE elevation.
+      Same-site53x62m/3.6m foundation R08, not69BCE upper geometry. Three cellae,
+      wider central cella, deep three-row porch and side colonnades follow R08. Portonaccio
+      Colonna/Foglia1993 plan, reproduced Michetti2010 fig1 p97, supplies named contemporary18.38m
+      three-cell comparison; p98 derives12degree roof. Absolute column6.4m/.9m lower
+      diameter/.67m top is the Uni temple reconstruction of Garagnani/Gaucci/Gruska2016
+      pp78-80, itself Vitruvian inference, not an excavated height. Applying that
+      unscaled column module to the much larger Capitoline podium is a bounded low-elevation
+      working branch; not proof of load paths or Capitol column heights. Room42x28m
+      aggregate,13:16:13 widths,1.6m walls, door openings, column positions/count,
+      1m roof-bearing cap,.6m eaves and7.8m stair width are explicit model estimates.
+      No statue, ornament, individual cella dedication, ancient level or surrounding
+      city restored. Continued at160before83fire;approved164417geometry retained.
+    parts:
+    - id: foundation
+      kind: stepped
+      w_m: 53
+      d_m: 62
+      h_m: 3.6
+      tiers: 1
+      top: 1
+      slope: vertical
+      stair:
+        at: front
+        w_m: 7.8
+    - id: left_cella
+      kind: prism
+      at:
+      - -14.5
+      - 15
+      atop: 0
+      plan_m:
+      - - -6.5
+        - -14
+      - - -6.5
+        - 14
+      - - 6.5
+        - 14
+      - - 6.5
+        - -14
+      - - 4.9
+        - -14
+      - - 4.9
+        - 12.4
+      - - -4.9
+        - 12.4
+      - - -4.9
+        - -14
+      h_m: 6.4
+    - id: left_door
+      kind: arches
+      at:
+      - -14.5
+      - 1.8
+      atop: 0
+      length_m: 13
+      depth_m: 1.6
+      h_m: 6.4
+      bays: 1
+      tiers: 1
+      arch: flat
+      opening: 0.22
+      spring: 0.7
+      through: true
+    - id: central_cella
+      kind: prism
+      at:
+      - 0
+      - 15
+      atop: 0
+      plan_m:
+      - - -8.0
+        - -14
+      - - -8.0
+        - 14
+      - - 8.0
+        - 14
+      - - 8.0
+        - -14
+      - - 6.4
+        - -14
+      - - 6.4
+        - 12.4
+      - - -6.4
+        - 12.4
+      - - -6.4
+        - -14
+      h_m: 6.4
+    - id: central_door
+      kind: arches
+      at:
+      - 0
+      - 1.8
+      atop: 0
+      length_m: 16
+      depth_m: 1.6
+      h_m: 6.4
+      bays: 1
+      tiers: 1
+      arch: flat
+      opening: 0.25
+      spring: 0.7
+      through: true
+    - id: right_cella
+      kind: prism
+      at:
+      - 14.5
+      - 15
+      atop: 0
+      plan_m:
+      - - -6.5
+        - -14
+      - - -6.5
+        - 14
+      - - 6.5
+        - 14
+      - - 6.5
+        - -14
+      - - 4.9
+        - -14
+      - - 4.9
+        - 12.4
+      - - -4.9
+        - 12.4
+      - - -4.9
+        - -14
+      h_m: 6.4
+    - id: right_door
+      kind: arches
+      at:
+      - 14.5
+      - 1.8
+      atop: 0
+      length_m: 13
+      depth_m: 1.6
+      h_m: 6.4
+      bays: 1
+      tiers: 1
+      arch: flat
+      opening: 0.22
+      spring: 0.7
+      through: true
+    - id: porch_row_1
+      kind: column
+      at:
+      - -24
+      - -27
+      atop: 0
+      w_m: 0.9
+      h_m: 6.4
+      taper: 0.7444444444444445
+      repeat:
+        line:
+          n: 6
+          step_m:
+          - 9.6
+          - 0
+    - id: porch_row_2
+      kind: column
+      at:
+      - -24
+      - -15
+      atop: 0
+      w_m: 0.9
+      h_m: 6.4
+      taper: 0.7444444444444445
+      repeat:
+        line:
+          n: 6
+          step_m:
+          - 9.6
+          - 0
+    - id: porch_row_3
+      kind: column
+      at:
+      - -24
+      - -3
+      atop: 0
+      w_m: 0.9
+      h_m: 6.4
+      taper: 0.7444444444444445
+      repeat:
+        line:
+          n: 6
+          step_m:
+          - 9.6
+          - 0
+    - id: left_colonnade
+      kind: column
+      at:
+      - -24
+      - 9
+      atop: 0
+      w_m: 0.9
+      h_m: 6.4
+      taper: 0.7444444444444445
+      repeat:
+        line:
+          n: 2
+          step_m:
+          - 0
+          - 12
+    - id: right_colonnade
+      kind: column
+      at:
+      - 24
+      - 9
+      atop: 0
+      w_m: 0.9
+      h_m: 6.4
+      taper: 0.7444444444444445
+      repeat:
+        line:
+          n: 2
+          step_m:
+          - 0
+          - 12
+    - id: roof
+      kind: long_hall
+      w_m: 51
+      d_m: 60
+      h_m: 1
+      atop: 7
+      roof:
+        shape: gabled
+        pitch_deg: 12
+        overhang_m: 0.6
+  - id: rome02_mid_whole_sempronia_169
+    name: sempronia_169_160_schematic
+    kind: long_hall
+    lon: 12.4847834
+    lat: 41.8919606
+    w_m: 25.1
+    d_m: 68
+    h_m: 7
+    theta_deg: 63.89
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. R01fig19b/pp182-183:25.1m three-aisle hypothesis;closed long sides
+      and separate north tabernae.68m length bounded by retained site is estimated,not
+      measured.7m public hall height is a production estimate(2xapproved3.5m ground-layer
+      module),not two storeys or44Julia upperwork. Retained-site coordinates only
+      from existingR01/R15/R16/R17source inventory;no44geometryorphaseadopted.
+    aisles:
+      n: 1
+      w_m: 7.25
+      h_m: 5.25
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_fulvia_179
+    name: fulvia_179_160_schematic
+    kind: long_hall
+    lon: 12.485848
+    lat: 41.892543
+    w_m: 18.3
+    d_m: 66
+    h_m: 7
+    theta_deg: 55.74
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. R01fig19b/pp181-182:freestanding179Fulvia/BasilicaI branch,chronology
+      debated.18.3x66m footprint,7m upperheight and5.25m aisles are explicit production
+      estimates within same-site extent,not recovered179measurements or54Paulli/Augustan
+      arcade. Retained-site coordinates only from existingR01/R15/R16/R17source inventory;no44geometryorphaseadopted.
+    aisles:
+      n: 1
+      w_m: 5
+      h_m: 5.25
+  - id: rome02_mid_whole_tabernae_veteres
+    name: tabernae_veteres_160_schematic
+    kind: long_hall
+    lon: 12.4848833047439
+    lat: 41.892124930624504
+    w_m: 5
+    d_m: 62
+    h_m: 3.5
+    theta_deg: 63.89
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. R01fig19b:separate shoprange and passage northofSempronia.5x62m,3.5m
+      height,20deg roof are estimates usingM4Cosa groundlevelshopform;not a knowncountor
+      mergedJuliafacade. Estimated source-relative north/south offset preserves separate5m
+      passage,not a surveyedtaberna boundary.
+  - id: rome02_mid_whole_tabernae_novae
+    name: tabernae_novae_160_schematic
+    kind: long_hall
+    lon: 12.485739980309026
+    lat: 41.89241670286119
+    w_m: 5
+    d_m: 59
+    h_m: 3.5
+    theta_deg: 55.74
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. R01fig19b:separate publicfrontage southofFulvia;count,size and3.5mheight
+      estimated fromM4,notAugustan15shopsor16arches. Estimated source-relative north/south
+      offset preserves separate5m passage,not a surveyedtaberna boundary.
+  - id: rome02_mid_whole_castor_pre117
+    name: castor_pre117_160_schematic
+    kind: long_hall
+    lon: 12.4856301
+    lat: 41.8916788
+    w_m: 18.38
+    d_m: 26
+    h_m: 6.4
+    theta_deg: 153.69
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. R15:484dedication,prior117replacement;sitecontrol only.18.38m width
+      usesPortonaccio namedcomparison,26mdepth workingestimate,notMetellan25x42orAD6octastyle.
+      Upper6.4m/12deg roof use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+      Retained-site coordinates only from existingR01/R15/R16/R17source inventory;no44geometryorphaseadopted.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_saturn_early
+    name: saturn_early_160_schematic
+    kind: long_hall
+    lon: 12.4840868
+    lat: 41.8924028
+    w_m: 18.38
+    d_m: 25
+    h_m: 6.4
+    theta_deg: -37.1
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. R16earlyRepublictemple;18.38mPortonaccio width/25mworkingdepth withinoldsite,notPlancanpodiumorlaterstandingcolumns.
+      Upper6.4m/12deg roof use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+      Retained-site coordinates only from existingR01/R15/R16/R17source inventory;no44geometryorphaseadopted.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_magna_mater_191
+    name: magna_mater_191_160_schematic
+    kind: long_hall
+    lon: 12.4849781
+    lat: 41.8894921
+    w_m: 17
+    d_m: 33
+    h_m: 6.4
+    theta_deg: 22
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DAR:191dedication,before111fire;33x17mearlyfoundationcontrolledsite,upperformcomparative.
+      No111vaultsorAugustanwestportico. Upper6.4m/12deg roof use namedUni/Portonaccio
+      earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns. Retained-site
+      coordinates only from existingR01/R15/R16/R17source inventory;no44geometryorphaseadopted.
+    colonnade:
+      at: front
+      n_front: 6
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 2.5
+      stair: front
+  - id: rome02_mid_whole_victoria_294
+    name: victoria_294_160_schematic
+    kind: long_hall
+    lon: 12.4852728
+    lat: 41.889251
+    w_m: 18.38
+    d_m: 23
+    h_m: 6.4
+    theta_deg: 22
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DAR294dedication. Sitezone/23mdepth estimated;not50-25BCEdecorativephase.
+      Upper6.4m/12deg roof use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+      Retained-site coordinates only from existingR01/R15/R16/R17source inventory;no44geometryorphaseadopted.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_largo_a_early
+    name: largo_a_early_160_schematic
+    kind: long_hall
+    lon: 12.477207183837876
+    lat: 41.895632915910106
+    w_m: 9.5
+    d_m: 16
+    h_m: 6.4
+    theta_deg: 0
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DAR250-225initial9.5x16m/4mpodium/tetrastyle,chosenprehexastyleexpansionbranch;2cmodificationpreciseyearunknown.
+      Upper6.4m/12deg roof use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 4.0
+    podium:
+      h_m: 4
+      stair: front
+  - id: rome02_mid_whole_largo_c_early
+    name: largo_c_early_160_schematic
+    kind: long_hall
+    lon: 12.477293014526353
+    lat: 41.89499402130215
+    w_m: 16
+    d_m: 26
+    h_m: 6.4
+    theta_deg: 0
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DARfirsthalf3cTuscan/tetrastyle,tufapodium.16x26m workingbody estimatedfromretainedsite;175/151altar
+      ambiguity notforcedbefore160;noDomitiancella. Upper6.4m/12deg roof use namedUni/Portonaccio
+      earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_apollo_medicus_179
+    name: apollo_medicus_179_160_schematic
+    kind: long_hall
+    lon: 12.478709220886216
+    lat: 41.89211891647655
+    w_m: 14
+    d_m: 25
+    h_m: 6.4
+    theta_deg: -22
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DAR431dedicationandproposed179rebuilding,tetrastylediastyle.14x25m
+      site-envelope estimate,not34Sosianhexastyle. Upper6.4m/12deg roof use namedUni/Portonaccio
+      earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_juno_regina_179
+    name: juno_regina_179_160_schematic
+    kind: long_hall
+    lon: 12.478966712951648
+    lat: 41.89304535327483
+    w_m: 18.38
+    d_m: 25
+    h_m: 6.4
+    theta_deg: -22
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DAR179dedication,before156fire. Sourcezone only;18.38mPortonaccio
+      width/25mdepth estimate;noMetelli146porticusorStator131. Upper6.4m/12deg roof
+      use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_janus_early
+    name: janus_early_160_schematic
+    kind: long_hall
+    lon: 12.480039596557605
+    lat: 41.890585474318264
+    w_m: 12
+    d_m: 21
+    h_m: 6.4
+    theta_deg: 75
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DARRepublicanForumHolitoriumsite;Juno194before90rebuild,Januspost260,Spesafter213fire.
+      Footprints estimatedwithinretainedsite;noAugustan/Severanplanassertion. Upper6.4m/12deg
+      roof use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_juno_sospita_194
+    name: juno_sospita_194_160_schematic
+    kind: long_hall
+    lon: 12.480039596557603
+    lat: 41.890266002568474
+    w_m: 13
+    d_m: 23
+    h_m: 6.4
+    theta_deg: 75
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DARRepublicanForumHolitoriumsite;Juno194before90rebuild,Januspost260,Spesafter213fire.
+      Footprints estimatedwithinretainedsite;noAugustan/Severanplanassertion. Upper6.4m/12deg
+      roof use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_spes_early
+    name: spes_early_160_schematic
+    kind: long_hall
+    lon: 12.479996681213366
+    lat: 41.88994652922093
+    w_m: 10
+    d_m: 20
+    h_m: 6.4
+    theta_deg: 75
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DARRepublicanForumHolitoriumsite;Juno194before90rebuild,Januspost260,Spesafter213fire.
+      Footprints estimatedwithinretainedsite;noAugustan/Severanplanassertion. Upper6.4m/12deg
+      roof use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_diana_aventine
+    name: diana_aventine_160_schematic
+    kind: long_hall
+    lon: 12.482914924621568
+    lat: 41.88346087484331
+    w_m: 18.38
+    d_m: 24
+    h_m: 6.4
+    theta_deg: 130
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DARDianamid5clegislation/earlysanctuary;positiondisputed300m,selectedsourcezoneonly.18.38mPortonaccio
+      width/24mdepth estimate;noCornifician8column/doubleportico. Upper6.4m/12deg
+      roof use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_ceres_aventine
+    name: ceres_aventine_160_schematic
+    kind: long_hall
+    lon: 12.482099533081042
+    lat: 41.88777406808545
+    w_m: 18.38
+    d_m: 28
+    h_m: 6.4
+    theta_deg: 145
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DARCeresearlyRepublicancultaboveCircus,position/footprintuncertain.18.38mPortonacciocomparison/28mdepthestimate;noAD17rebuilding.
+      Upper6.4m/12deg roof use namedUni/Portonaccio earlytemple comparison;not measured160upperwork,no69/44orimperialcolumns.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 5
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_portunus_pre80
+    name: portunus_pre80_160_schematic
+    kind: long_hall
+    lon: 12.4809039
+    lat: 41.8892462
+    w_m: 9.5
+    d_m: 16
+    h_m: 6.4
+    theta_deg: 90
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 12
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. OfficialPortunuslate4c/early3cpredecessor,not80-70standingtemple.9.5x16m
+      uses namedcontemporaryLargoAinitialtemple comparison,not a measuredPortunusplan;upperheight
+      estimated. Upper6.4m/12deg roof use namedUni/Portonaccio earlytemple comparison;not
+      measured160upperwork,no69/44orimperialcolumns. Retained-site coordinates only
+      from existingR01/R15/R16/R17source inventory;no44geometryorphaseadopted.
+    colonnade:
+      at: front
+      n_front: 4
+      h_m: 6.4
+      depth_m: 4.0
+    podium:
+      h_m: 1.5
+      stair: front
+  - id: rome02_mid_whole_regia_early
+    kind: parts
+    lon: 12.48691
+    lat: 41.89194
+    theta_deg: 25
+    exaggeration: 1
+    parts:
+    - kind: long_hall
+      at:
+      - -10
+      - 0
+      w_m: 7
+      d_m: 19
+      h_m: 3.5
+      roof:
+        shape: gabled
+        pitch_deg: 20
+        overhang_m: 0.25
+    - kind: long_hall
+      at:
+      - 0
+      - 7
+      w_m: 9
+      d_m: 6
+      h_m: 3.5
+      roof:
+        shape: gabled
+        pitch_deg: 20
+        overhang_m: 0.25
+    - kind: long_hall
+      at:
+      - 9
+      - 0
+      w_m: 7
+      d_m: 16
+      h_m: 3.5
+      roof:
+        shape: gabled
+        pitch_deg: 20
+        overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre.R17late6ctrapezoidalcourt/3roomrelationship. Offsets androom sizes
+      estimated;3.5m/20deg use approvedM4groundlayer,not44Liviaroofproxyor36Calvinus.
+      Retained-site coordinates only from existingR01/R15/R16/R17source inventory;no44geometryorphaseadopted.
+  - id: rome02_mid_whole_largo_d_early_conditional
+    kind: prism
+    lon: 12.477250099182116
+    lat: 41.89461068146964
+    plan_m:
+    - - -8
+      - -12
+    - - 8
+      - -12
+    - - 8
+      - 12
+    - - -8
+      - 12
+    h_m: 0.6
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre.DARfirstphase200-150crosses160;conditionalearlyfoundationonly.16x24m/.6mworkingbounds,notlater23.5x37mpodiumorproofcomplete160upperform.
+  - id: rome02_mid_whole_emporium_early_portico_1
+    name: emporium_early_portico_1_160_schematic
+    kind: long_hall
+    lon: 12.47596263885497
+    lat: 41.88045744240193
+    w_m: 8
+    d_m: 55
+    h_m: 3.5
+    theta_deg: 30
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DAR193/174earlyimpermanentporticoesnearPortaTrigemina/Tiber.8x55m/3.5mheight/3ranges
+      are boundedworkyardestimatesusingM4groundmodule,not487x60Sullanconcretewarehouse.
+    colonnade:
+      at: front
+      n_front: 2
+      h_m: 3.5
+      depth_m: 2.5
+  - id: rome02_mid_whole_emporium_early_portico_2
+    name: emporium_early_portico_2_160_schematic
+    kind: long_hall
+    lon: 12.474846839904773
+    lat: 41.8798503484806
+    w_m: 8
+    d_m: 55
+    h_m: 3.5
+    theta_deg: 30
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DAR193/174earlyimpermanentporticoesnearPortaTrigemina/Tiber.8x55m/3.5mheight/3ranges
+      are boundedworkyardestimatesusingM4groundmodule,not487x60Sullanconcretewarehouse.
+    colonnade:
+      at: front
+      n_front: 2
+      h_m: 3.5
+      depth_m: 2.5
+  - id: rome02_mid_whole_emporium_early_portico_3
+    name: emporium_early_portico_3_160_schematic
+    kind: long_hall
+    lon: 12.473816871643052
+    lat: 41.87930715429366
+    w_m: 8
+    d_m: 55
+    h_m: 3.5
+    theta_deg: 30
+    exaggeration: 1
+    roof:
+      shape: gabled
+      pitch_deg: 20
+      overhang_m: 0.25
+    basis: research/rome02_mid_whole_plan.md;160BCE source-constrained schematic,not
+      a cadastre. DAR193/174earlyimpermanentporticoesnearPortaTrigemina/Tiber.8x55m/3.5mheight/3ranges
+      are boundedworkyardestimatesusingM4groundmodule,not487x60Sullanconcretewarehouse.
+    colonnade:
+      at: front
+      n_front: 2
+      h_m: 3.5
+      depth_m: 2.5
+  walls:
+  - id: rome02_mid_whole_servian_1
+    style: curtain
+    pts:
+    - &id001
+      - 12.498493194580064
+      - 41.906812536971195
+    - - 12.498750686645494
+      - 41.90588629988264
+    - - 12.499222755432115
+      - 41.904991989253254
+    - - 12.4996519088745
+      - 41.90406572575238
+    - - 12.500038146972642
+      - 41.90313944881374
+    h_m: 7
+    t_m: 4
+    towers: false
+    basis: research/rome02_mid_servian_basis.md;R21earlierroute/completeschematiccircuit.4mwidth/7mheight
+      productionestimates,not measured160elevationor44lowremains.
+  - id: rome02_mid_whole_servian_2
+    style: curtain
+    pts:
+    - - 12.500123977661119
+      - 41.90285198082464
+    - - 12.500724792480455
+      - 41.9015423880521
+    - - 12.501282691955552
+      - 41.9001688838487
+    - - 12.501411437988267
+      - 41.89901895063195
+    - - 12.501454353332505
+      - 41.89786899670769
+    h_m: 7
+    t_m: 4
+    towers: false
+    basis: research/rome02_mid_servian_basis.md;R21earlierroute/completeschematiccircuit.4mwidth/7mheight
+      productionestimates,not measured160elevationor44lowremains.
+  - id: rome02_mid_whole_servian_3
+    style: curtain
+    pts:
+    - - 12.501454353332505
+      - 41.897517617767186
+    - - 12.501068115234363
+      - 41.89671902207598
+    - - 12.50085353851317
+      - 41.89611208267189
+    h_m: 7
+    t_m: 4
+    towers: false
+    basis: research/rome02_mid_servian_basis.md;R21earlierroute/completeschematiccircuit.4mwidth/7mheight
+      productionestimates,not measured160elevationor44lowremains.
+  - id: rome02_mid_whole_servian_4
+    style: curtain
+    pts:
+    - - 12.500596046447741
+      - 41.89544124819879
+    - - 12.499952316284165
+      - 41.894482901014186
+    - - 12.49939441680907
+      - 41.89362037625317
+    - &id002
+      - 12.498922348022445
+      - 41.89291756968776
+    h_m: 7
+    t_m: 4
+    towers: false
+    basis: research/rome02_mid_servian_basis.md;R21earlierroute/completeschematiccircuit.4mwidth/7mheight
+      productionestimates,not measured160elevationor44lowremains.
+  - id: rome02_mid_whole_servian_5
+    style: curtain
+    pts:
+    - *id001
+    - - 12.4974203
+      - 41.9077463
+    - - 12.4966553
+      - 41.9076824
+    - - 12.4943998
+      - 41.9067401
+    - - 12.4947691
+      - 41.9061113
+    - - 12.4931661
+      - 41.9050602
+    - - 12.4933235
+      - 41.9047467
+    - - 12.4913504
+      - 41.9042802
+    - - 12.4904061
+      - 41.9034286
+    - - 12.4860618
+      - 41.9016708
+    - - 12.4867442
+      - 41.9003269
+    - - 12.4859661
+      - 41.8996022
+    - - 12.4857816
+      - 41.8985503
+    - - 12.4863109
+      - 41.8977402
+    - - 12.4870678
+      - 41.8974077
+    - - 12.4868182
+      - 41.8958289
+    - - 12.4850116
+      - 41.8954893
+    - - 12.484238
+      - 41.8949848
+    - - 12.4834257
+      - 41.895275
+    - - 12.4828252
+      - 41.8952498
+    - - 12.4824341
+      - 41.8947774
+    - - 12.4829063
+      - 41.8938369
+    - - 12.4818628
+      - 41.8934731
+    - - 12.4813583
+      - 41.8927839
+    - - 12.4810613
+      - 41.8915591
+    - - 12.4807705
+      - 41.8906427
+    - - 12.481291
+      - 41.8893922
+    - - 12.4807102
+      - 41.8876034
+    - - 12.4795404
+      - 41.8863622
+    - - 12.4775436
+      - 41.8846622
+    - - 12.4774578
+      - 41.8830782
+    - - 12.4781868
+      - 41.8813362
+    - - 12.4797248
+      - 41.8819047
+    - - 12.4809167
+      - 41.8815145
+    - - 12.4820384
+      - 41.8803331
+    - - 12.4836583
+      - 41.8795326
+    - - 12.4830466
+      - 41.8789349
+    - - 12.4829781
+      - 41.8782319
+    - - 12.4857528
+      - 41.8779238
+    - - 12.4882937
+      - 41.8795623
+    - - 12.4889757
+      - 41.8809512
+    - - 12.4884501
+      - 41.8819375
+    - - 12.4885248
+      - 41.8829489
+    - - 12.4902344
+      - 41.8839085
+    - - 12.4932079
+      - 41.8826243
+    - - 12.4942978
+      - 41.8825897
+    - - 12.4951532
+      - 41.8844579
+    - - 12.4957766
+      - 41.8856282
+    - - 12.4978169
+      - 41.8867535
+    - - 12.4982776
+      - 41.887973
+    - - 12.4977978
+      - 41.8885172
+    - - 12.4976467
+      - 41.889139
+    - - 12.4981531
+      - 41.8899163
+    - - 12.4993171
+      - 41.8908491
+    - *id002
+    h_m: 7
+    t_m: 4
+    towers: false
+    basis: research/rome02_mid_servian_basis.md;R21earlierroute/completeschematiccircuit.4mwidth/7mheight
+      productionestimates,not measured160elevationor44lowremains. NamedR21gatepositions
+      schematic. Native16mopening/pairedsquaregateflanks9.45mhigh are productiongatewayestimates,not4cmeasurementsorlaterGallienus/Dolabellabodies;nointervalorcorner
+      towerrow. NamedR21gatepositions schematic. Native16mopening/pairedsquaregateflanks9.45mhigh
+      are productiongatewayestimates,not4cmeasurementsorlaterGallienus/Dolabellabodies;nointervalorcorner
+      towerrow.
+    gates:
+    - - 12.490129098725417
+      - 41.90321700546471
+    - - 12.486062867359179
+      - 41.8989821153402
+    - - 12.486875370578982
+      - 41.89595929089228
+    - - 12.48130030090618
+      - 41.892609402452955
+    - - 12.481095743956253
+      - 41.89054431756667
+    - - 12.480946570672545
+      - 41.888521559050005
+    - - 12.478300970883783
+      - 41.88159708363972
+    - - 12.483063246186031
+      - 41.879771828467184
+    - - 12.490234422466733
+      - 41.88390849760235
+    - - 12.495776556005996
+      - 41.885628172082946
+  trace:
+  - research/rome02_mid_whole_trace.geojson
+  - research/rome02_mid_whole_aemiliana_forum_join_parcels.geojson
+  - research/rome02_mid_whole_aemiliana_parcels.geojson
+  - research/rome02_mid_whole_aventine_parcels.geojson
+  - research/rome02_mid_whole_caelian_parcels.geojson
+  - research/rome02_mid_whole_campus_south_parcels.geojson
+  - research/rome02_mid_whole_emporium_aventine_join_parcels.geojson
+  - research/rome02_mid_whole_emporium_parcels.geojson
+  - research/rome02_mid_whole_forum_velabrum_parcels.geojson
+  - research/rome02_mid_whole_forum_velia_join_parcels.geojson
+  - research/rome02_mid_whole_inner_servian_schematic_1_parcels.geojson
+  - research/rome02_mid_whole_inner_servian_schematic_2_parcels.geojson
+  - research/rome02_mid_whole_inner_servian_schematic_3_parcels.geojson
+  - research/rome02_mid_whole_palatine_parcels.geojson
+  - research/rome02_mid_whole_quirinal_viminal_parcels.geojson
+  - research/rome02_mid_whole_subura_esquiline_parcels.geojson
+  - research/rome02_mid_whole_transtiberim_parcels.geojson
+  avoid_eras:
+  - rome02_mid_quarter_160
+  stages:
+  - id: research160whole
+    at: 0
+    dur: 7
+  grounds:
+  - id: rome02_mid_whole_ground_earth
+    surface: earth
+    region:
+    - - - &id003
+          - 12.4805117
+          - 41.8927259
+        - - 12.4811554
+          - 41.8933968
+        - - 12.4822712
+          - 41.8933648
+        - - 12.4829149
+          - 41.8927578
+        - - 12.4823999
+          - 41.8919911
+        - - 12.48137
+          - 41.8917356
+        - - 12.4807262
+          - 41.892087
+        - *id003
+    - - - &id004
+          - 12.4748039
+          - 41.8925662
+        - - 12.4759197
+          - 41.8931092
+        - - 12.4773359
+          - 41.8928537
+        - - 12.4785805
+          - 41.8922467
+        - - 12.4781513
+          - 41.8917675
+        - - 12.4768209
+          - 41.8917995
+        - - 12.4755335
+          - 41.892087
+        - *id004
+    - - - &id005
+          - 12.4788809
+          - 41.8977093
+        - - 12.4807262
+          - 41.8980607
+        - - 12.4814987
+          - 41.8968787
+        - - 12.4819279
+          - 41.8957607
+        - - 12.4809408
+          - 41.895026
+        - - 12.4796534
+          - 41.8954732
+        - *id005
+    - - - &id006
+          - 12.4820995
+          - 41.8882533
+        - - 12.4830008
+          - 41.8883491
+        - - 12.4842882
+          - 41.8879338
+        - - 12.4857903
+          - 41.8872948
+        - - 12.4873781
+          - 41.88656
+        - - 12.4884081
+          - 41.8859849
+        - - 12.488451
+          - 41.8856015
+        - - 12.4878502
+          - 41.8854098
+        - - 12.4866056
+          - 41.8858252
+        - - 12.4850178
+          - 41.8864961
+        - - 12.4836445
+          - 41.8871351
+        - - 12.4825287
+          - 41.8876143
+        - *id006
+    - - - &id007
+          - 12.4864769
+          - 41.8915758
+        - - 12.4872923
+          - 41.8915439
+        - - 12.4876785
+          - 41.8910647
+        - - 12.4872923
+          - 41.8905535
+        - - 12.4866056
+          - 41.8904896
+        - - 12.4861336
+          - 41.8909688
+        - *id007
+  - id: rome02_mid_whole_ground_paved
+    surface: paved
+    region:
+    - - - &id008
+          - 12.4831724
+          - 41.8924384
+        - - 12.4841595
+          - 41.892662
+        - - 12.4853182
+          - 41.8922467
+        - - 12.4865627
+          - 41.8917675
+        - - 12.4863482
+          - 41.89148
+        - - 12.4853611
+          - 41.8917995
+        - - 12.4843311
+          - 41.892055
+        - - 12.4835157
+          - 41.892055
+        - *id008
+    - - - &id009
+          - 12.4740744
+          - 41.8813521
+        - - 12.4754906
+          - 41.8818314
+        - - 12.4765635
+          - 41.8820231
+        - - 12.477293
+          - 41.8815758
+        - - 12.4766922
+          - 41.8810645
+        - - 12.4753189
+          - 41.8805213
+        - - 12.4741173
+          - 41.8800421
+        - - 12.4735594
+          - 41.8805853
+        - *id009
+    - - - &id010
+          - 12.4840307
+          - 41.8935245
+        - - 12.4848032
+          - 41.8935565
+        - - 12.4853611
+          - 41.8931092
+        - - 12.4852753
+          - 41.8925981
+        - - 12.4845028
+          - 41.8923745
+        - - 12.4839878
+          - 41.8927898
+        - *id010
+  - id: rome02_mid_whole_ground_grass
+    surface: grass
+    region:
+    - - - &id011
+          - 12.4669933
+          - 41.9010313
+        - &id012
+          - 12.4696112
+          - 41.901766
+        - &id013
+          - 12.4724865
+          - 41.9019896
+        - &id014
+          - 12.4749327
+          - 41.9016702
+        - &id015
+          - 12.4767351
+          - 41.9019576
+        - &id016
+          - 12.4779797
+          - 41.902852
+        - &id017
+          - 12.4790525
+          - 41.9033311
+        - &id018
+          - 12.479825
+          - 41.9027562
+        - &id019
+          - 12.4805117
+          - 41.9009674
+        - &id020
+          - 12.4809408
+          - 41.899562
+        - &id021
+          - 12.4805117
+          - 41.8982843
+        - &id022
+          - 12.4791813
+          - 41.8976134
+        - &id023
+          - 12.4780655
+          - 41.8964954
+        - &id024
+          - 12.4763918
+          - 41.8958246
+        - &id025
+          - 12.4746752
+          - 41.8958565
+        - &id026
+          - 12.4730015
+          - 41.8963037
+        - &id027
+          - 12.4713707
+          - 41.8971343
+        - &id028
+          - 12.4698257
+          - 41.8982523
+        - &id029
+          - 12.4683237
+          - 41.8997856
+        - *id011
+  outline:
+  - - - 12.4800396
+      - 41.8919592
+    - - 12.480855
+      - 41.893237
+    - - 12.4826574
+      - 41.8934926
+    - - 12.4839878
+      - 41.8931731
+    - - 12.4851036
+      - 41.8925023
+    - - 12.4865627
+      - 41.8919592
+    - - 12.4878073
+      - 41.8912564
+    - - 12.4878931
+      - 41.8899785
+    - - 12.4868631
+      - 41.8889562
+    - - 12.4852324
+      - 41.8882213
+    - - 12.4833012
+      - 41.8879019
+    - - 12.4814129
+      - 41.8887964
+    - - 12.4801254
+      - 41.8899146
+  - - - 12.4852324
+      - 41.8882213
+    - - 12.4868631
+      - 41.8889562
+    - - 12.4878931
+      - 41.8899785
+    - - 12.4883223
+      - 41.8911925
+    - - 12.489953
+      - 41.8912244
+    - - 12.4916267
+      - 41.8904577
+    - - 12.4923563
+      - 41.8891798
+    - - 12.4915409
+      - 41.887838
+    - - 12.4895668
+      - 41.8865281
+    - - 12.4875498
+      - 41.8860169
+    - - 12.4862623
+      - 41.88656
+  - - - 12.4848461
+      - 41.8925023
+    - - 12.4849319
+      - 41.8940357
+    - - 12.4858761
+      - 41.8954412
+    - - 12.4871206
+      - 41.8965912
+    - - 12.4896097
+      - 41.8971023
+    - - 12.4920559
+      - 41.8971023
+    - - 12.4941158
+      - 41.8966232
+    - - 12.4962187
+      - 41.8958885
+    - - 12.4983215
+      - 41.894994
+    - - 12.4987507
+      - 41.8935245
+    - - 12.4980211
+      - 41.892087
+    - - 12.4968624
+      - 41.8909049
+    - - 12.4945879
+      - 41.8904577
+    - - 12.4923992
+      - 41.8901702
+    - - 12.4906397
+      - 41.8908411
+    - - 12.4883652
+      - 41.8911925
+    - - 12.4866056
+      - 41.8916397
+  - - - 12.4845886
+      - 41.8940357
+    - - 12.4841595
+      - 41.8959204
+    - - 12.4842453
+      - 41.8977093
+    - - 12.4849319
+      - 41.8992426
+    - - 12.4865198
+      - 41.90068
+    - - 12.4887943
+      - 41.9019576
+    - - 12.4911976
+      - 41.9032992
+    - - 12.493515
+      - 41.9046087
+    - - 12.4956179
+      - 41.9057266
+    - - 12.4969912
+      - 41.9042254
+    - - 12.4976349
+      - 41.9026284
+    - - 12.4984932
+      - 41.9009355
+    - - 12.4991369
+      - 41.8991787
+    - - 12.4988365
+      - 41.8974218
+    - - 12.4975061
+      - 41.8959843
+    - - 12.4959183
+      - 41.8953454
+    - - 12.4938154
+      - 41.8962718
+    - - 12.4920559
+      - 41.8971023
+    - - 12.4896097
+      - 41.8971023
+    - - 12.4871206
+      - 41.8965912
+    - - 12.4858761
+      - 41.8954412
+  - - - 12.4916267
+      - 41.8904577
+    - - 12.4945879
+      - 41.8904577
+    - - 12.4968624
+      - 41.8909049
+    - - 12.4980211
+      - 41.892087
+    - - 12.4984932
+      - 41.8906494
+    - - 12.4977207
+      - 41.8891478
+    - - 12.4966478
+      - 41.8879977
+    - - 12.4944162
+      - 41.8870073
+    - - 12.4920988
+      - 41.8863364
+    - - 12.490468
+      - 41.8856974
+    - - 12.4895668
+      - 41.8865281
+    - - 12.4915409
+      - 41.887838
+    - - 12.4923563
+      - 41.8891798
+  - - - 12.4814129
+      - 41.8887964
+    - - 12.4833012
+      - 41.8879019
+    - - 12.4852324
+      - 41.8882213
+    - - 12.4862623
+      - 41.88656
+    - - 12.4875498
+      - 41.8860169
+    - - 12.4880219
+      - 41.8845791
+    - - 12.4872923
+      - 41.8830455
+    - - 12.4860907
+      - 41.8817994
+    - - 12.4840736
+      - 41.8810965
+    - - 12.4820137
+      - 41.8813521
+    - - 12.4805975
+      - 41.8822787
+    - - 12.4797392
+      - 41.8836526
+    - - 12.4796963
+      - 41.8851542
+    - - 12.4805546
+      - 41.8865281
+  - - - 12.4734306
+      - 41.8813521
+    - - 12.4748468
+      - 41.8819592
+    - - 12.4766493
+      - 41.8824704
+    - - 12.4780226
+      - 41.882055
+    - - 12.4785805
+      - 41.8808728
+    - - 12.4775076
+      - 41.8798503
+    - - 12.4760914
+      - 41.8789237
+    - - 12.474246
+      - 41.8779651
+    - - 12.4727869
+      - 41.8778054
+    - - 12.4721003
+      - 41.8785083
+    - - 12.4723577
+      - 41.8799143
+  - - - 12.4732161
+      - 41.893269
+    - - 12.4744606
+      - 41.8940037
+    - - 12.4760056
+      - 41.8940357
+    - - 12.4774218
+      - 41.8937801
+    - - 12.4789667
+      - 41.893237
+    - - 12.4800396
+      - 41.8924703
+    - - 12.4800396
+      - 41.8919592
+    - - 12.4801254
+      - 41.8906813
+    - - 12.4790096
+      - 41.8902341
+    - - 12.4775505
+      - 41.8906174
+    - - 12.4760485
+      - 41.8909369
+    - - 12.4745893
+      - 41.8914161
+    - - 12.4736023
+      - 41.8922148
+  - - - 12.4799109
+      - 41.8934606
+    - - 12.4795675
+      - 41.8947385
+    - - 12.48034
+      - 41.8959204
+    - - 12.4817133
+      - 41.896751
+    - - 12.4832153
+      - 41.8968787
+    - - 12.4841595
+      - 41.8959204
+    - - 12.4845886
+      - 41.8940357
+    - - 12.4839878
+      - 41.8931731
+    - - 12.4826574
+      - 41.8934926
+    - - 12.480855
+      - 41.893237
+  - - - 12.4746323
+      - 41.8891478
+    - - 12.4757481
+      - 41.8892437
+    - - 12.4766922
+      - 41.8889562
+    - - 12.4774647
+      - 41.8881255
+    - - 12.4774647
+      - 41.8872309
+    - - 12.4766493
+      - 41.8865281
+    - - 12.4756622
+      - 41.8856654
+    - - 12.4746752
+      - 41.8851862
+    - - 12.4738169
+      - 41.8855057
+    - - 12.4739027
+      - 41.8864322
+    - - 12.4742889
+      - 41.8874865
+  - - - 12.4796963
+      - 41.8836526
+    - - 12.4805975
+      - 41.8822787
+    - - 12.4820137
+      - 41.8813521
+    - - 12.4785805
+      - 41.8808728
+    - - 12.4780226
+      - 41.882055
+    - - 12.4766493
+      - 41.8824704
+    - - 12.4789667
+      - 41.8833011
+  - - - 12.4848545
+      - 41.8926521
+    - - 12.4849319
+      - 41.8940357
+    - - 12.4858761
+      - 41.8954412
+    - - 12.4845886
+      - 41.8940357
+    - - 12.4839878
+      - 41.8931731
+  - - - 12.4883621
+      - 41.8911933
+    - - 12.4875565
+      - 41.891398
+    - - 12.4878073
+      - 41.8912564
+    - - 12.4878931
+      - 41.8899785
+    - - 12.4883223
+      - 41.8911925
+  - - - 12.4860618
+      - 41.9016708
+    - - 12.4904061
+      - 41.9034286
+    - - 12.4913504
+      - 41.9042802
+    - - 12.4933235
+      - 41.9047467
+    - - 12.4931661
+      - 41.9050602
+    - - 12.4947691
+      - 41.9061113
+    - - 12.4943998
+      - 41.9067401
+    - - 12.4966553
+      - 41.9076824
+    - - 12.4974203
+      - 41.9077463
+    - - 12.4984932
+      - 41.9068125
+    - - 12.4987507
+      - 41.9058863
+    - - 12.4992228
+      - 41.904992
+    - - 12.4996519
+      - 41.9040657
+    - - 12.5000381
+      - 41.9031394
+    - - 12.500124
+      - 41.902852
+    - - 12.5007248
+      - 41.9015424
+    - - 12.5012827
+      - 41.9001689
+    - - 12.5014114
+      - 41.899019
+    - - 12.5014544
+      - 41.897869
+    - - 12.5014544
+      - 41.8975176
+    - - 12.5010681
+      - 41.896719
+    - - 12.5008535
+      - 41.8961121
+    - - 12.500596
+      - 41.8954412
+    - - 12.4999523
+      - 41.8944829
+    - - 12.4993944
+      - 41.8936204
+    - - 12.4989223
+      - 41.8929176
+    - - 12.4993171
+      - 41.8908491
+    - - 12.4981531
+      - 41.8899163
+    - - 12.497977
+      - 41.889646
+    - - 12.4984932
+      - 41.8906494
+    - - 12.4980211
+      - 41.892087
+    - - 12.4987507
+      - 41.8935245
+    - - 12.4983215
+      - 41.894994
+    - - 12.4967288
+      - 41.8956715
+    - - 12.4975061
+      - 41.8959843
+    - - 12.4988365
+      - 41.8974218
+    - - 12.4991369
+      - 41.8991787
+    - - 12.4984932
+      - 41.9009355
+    - - 12.4976349
+      - 41.9026284
+    - - 12.4969912
+      - 41.9042254
+    - - 12.4956179
+      - 41.9057266
+    - - 12.493515
+      - 41.9046087
+    - - 12.4911976
+      - 41.9032992
+    - - 12.4887943
+      - 41.9019576
+    - - 12.4865549
+      - 41.9006997
+  - - - 12.4774578
+      - 41.8830782
+    - - 12.4775436
+      - 41.8846622
+    - - 12.4795404
+      - 41.8863622
+    - - 12.4807102
+      - 41.8876034
+    - - 12.4811669
+      - 41.88901
+    - - 12.4814129
+      - 41.8887964
+    - - 12.4805546
+      - 41.8865281
+    - - 12.4796963
+      - 41.8851542
+    - - 12.4797392
+      - 41.8836526
+    - - 12.4805975
+      - 41.8822787
+    - - 12.4796963
+      - 41.8836526
+    - - 12.4789667
+      - 41.8833011
+    - - 12.4775735
+      - 41.8828017
+  - - - 12.4977978
+      - 41.8885172
+    - - 12.4982776
+      - 41.887973
+    - - 12.4978169
+      - 41.8867535
+    - - 12.4957766
+      - 41.8856282
+    - - 12.4951532
+      - 41.8844579
+    - - 12.4942978
+      - 41.8825897
+    - - 12.4932079
+      - 41.8826243
+    - - 12.4902344
+      - 41.8839085
+    - - 12.4885248
+      - 41.8829489
+    - - 12.4884501
+      - 41.8819375
+    - - 12.4889757
+      - 41.8809512
+    - - 12.4882937
+      - 41.8795623
+    - - 12.4857528
+      - 41.8779238
+    - - 12.4829781
+      - 41.8782319
+    - - 12.4830466
+      - 41.8789349
+    - - 12.4836583
+      - 41.8795326
+    - - 12.4820384
+      - 41.8803331
+    - - 12.4811812
+      - 41.8812359
+    - - 12.4820137
+      - 41.8813521
+    - - 12.4840736
+      - 41.8810965
+    - - 12.4860907
+      - 41.8817994
+    - - 12.4872923
+      - 41.8830455
+    - - 12.4880219
+      - 41.8845791
+    - - 12.4875498
+      - 41.8860169
+    - - 12.4895668
+      - 41.8865281
+    - - 12.490468
+      - 41.8856974
+    - - 12.4920988
+      - 41.8863364
+    - - 12.4944162
+      - 41.8870073
+    - - 12.4966478
+      - 41.8879977
+    - - 12.4976603
+      - 41.8890831
+  - - *id011
+    - *id012
+    - *id013
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id023
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    - *id028
+    - *id029

@@ -1,0 +1,979 @@
+rome_director_v9_0507_senatorio_early:
+  kind: long_hall
+  w_m: 60
+  d_m: 25
+  h_m: 23
+  roof:
+    shape: hipped
+    pitch_deg: 18
+  exaggeration: 1
+  site: cut
+  basis: 'R16/R32: Campidoglio individual palaces and angled fronts. Their25x60m bodies,23m
+    eaves and18deg hipped roofs are source-plan/mature-palazzo comparison estimates,
+    not surveyed elevations. No1940 star paving or simultaneous1538 completion. research/rome_director_v9_0507_facade_patch.md;
+    P02; E comparison P03/P05 Farnese 57m/13 axes; early Senatorio is not demonstrated
+    to have 13 actual windows. No late 1593-1598 facade decoration. Body25x60 becomes60x25
+    with instance +/-90deg compensation; h23 and hipped18deg unchanged.'
+  storeys: 3
+  bay_m: 4.38
+  ground_floor: closed
+rome_director_v9_0507_senatorio_late:
+  kind: long_hall
+  w_m: 60
+  d_m: 25
+  h_m: 23
+  roof:
+    shape: hipped
+    pitch_deg: 18
+  exaggeration: 1
+  site: cut
+  basis: 'R16/R32: Campidoglio individual palaces and angled fronts. Their25x60m bodies,23m
+    eaves and18deg hipped roofs are source-plan/mature-palazzo comparison estimates,
+    not surveyed elevations. No1940 star paving or simultaneous1538 completion. research/rome_director_v9_0507_facade_patch.md;
+    P01/P02 mature facade after1593-1598; three principal levels, 7 model bays = floor(60/8.57).
+    Body25x60 becomes60x25 with instance +/-90deg compensation; h23 and hipped18deg
+    unchanged.'
+  storeys: 3
+  bay_m: 8.57
+  ground_floor: closed
+rome_director_v9_0507_conservatori_old:
+  kind: long_hall
+  w_m: 60
+  d_m: 25
+  h_m: 23
+  roof:
+    shape: hipped
+    pitch_deg: 18
+  exaggeration: 1
+  site: cut
+  basis: 'R16/R32: Campidoglio individual palaces and angled fronts. Their25x60m bodies,23m
+    eaves and18deg hipped roofs are source-plan/mature-palazzo comparison estimates,
+    not surveyed elevations. No1940 star paving or simultaneous1538 completion. research/rome_director_v9_0507_facade_patch.md;
+    P02 old ground loggia, principal floor and small mezzanine; two principal levels.
+    E bay from contemporary Farnese P03/P05, not later 7-bay facade. Body25x60 becomes60x25
+    with instance +/-90deg compensation; h23 and hipped18deg unchanged.'
+  storeys: 2
+  bay_m: 4.38
+  ground_floor: arcade
+rome_director_v9_0507_conservatori_1568:
+  kind: long_hall
+  w_m: 60
+  d_m: 25
+  h_m: 23
+  roof:
+    shape: hipped
+    pitch_deg: 18
+  exaggeration: 1
+  site: cut
+  basis: 'R16/R32: Campidoglio individual palaces and angled fronts. Their25x60m bodies,23m
+    eaves and18deg hipped roofs are source-plan/mature-palazzo comparison estimates,
+    not surveyed elevations. No1940 star paving or simultaneous1538 completion. research/rome_director_v9_0507_facade_patch.md;
+    P01/P10 ground loggia and 2 principal levels/7 bays, completed1568; R16 1628 conflict
+    retained, not reinterpreted as rear wing. Body25x60 becomes60x25 with instance
+    +/-90deg compensation; h23 and hipped18deg unchanged.'
+  storeys: 2
+  bay_m: 8.57
+  ground_floor: arcade
+rome_director_v9_0507_nuovo:
+  kind: long_hall
+  w_m: 60
+  d_m: 25
+  h_m: 23
+  roof:
+    shape: hipped
+    pitch_deg: 18
+  exaggeration: 1
+  site: cut
+  basis: 'R16/R32: Campidoglio individual palaces and angled fronts. Their25x60m bodies,23m
+    eaves and18deg hipped roofs are source-plan/mature-palazzo comparison estimates,
+    not surveyed elevations. No1940 star paving or simultaneous1538 completion. research/rome_director_v9_0507_facade_patch.md;
+    P01/R16 2 principal levels/7 bays/ground loggia; retain approved1671 completion
+    despite P01 1674 variant. Body25x60 becomes60x25 with instance +/-90deg compensation;
+    h23 and hipped18deg unchanged.'
+  storeys: 2
+  bay_m: 8.57
+  ground_floor: arcade
+rome_director_v9_0507_belvedere_south:
+  kind: long_hall
+  w_m: 100
+  d_m: 14
+  h_m: 22
+  roof:
+    shape: hipped
+    pitch_deg: 18
+  exaggeration: 1
+  site: cut
+  basis: Falda1667 R09 Vatican longitudinal wings and Musei Vaticani R39-R41 Belvedere
+    area approx100x300m with distinct terraces. Native individual100m wings keep separate
+    sites; widths14m,22m eaves and18deg roofs estimated by the named Vatican palace
+    comparison. No single invented300m platform, no18c Museo Pio Clementino or1990
+    sphere. research/rome_director_v9_0507_facade_patch.md; R41/P09 late-state candidate
+    adopted as E; south 3 principal model levels, arcade. The source-to-six-production-pieces
+    correspondence remains schematic. Bay4.38 is the named contemporary Farnese P03/P05
+    comparison, not a measured Vatican window pitch. h22/hipped18deg/site:cut unchanged.
+  storeys: 3
+  bay_m: 4.38
+  ground_floor: arcade
+rome_director_v9_0507_belvedere_middle:
+  kind: long_hall
+  w_m: 100
+  d_m: 14
+  h_m: 22
+  roof:
+    shape: hipped
+    pitch_deg: 18
+  exaggeration: 1
+  site: cut
+  basis: Falda1667 R09 Vatican longitudinal wings and Musei Vaticani R39-R41 Belvedere
+    area approx100x300m with distinct terraces. Native individual100m wings keep separate
+    sites; widths14m,22m eaves and18deg roofs estimated by the named Vatican palace
+    comparison. No single invented300m platform, no18c Museo Pio Clementino or1990
+    sphere. research/rome_director_v9_0507_facade_patch.md; R41/P09 late-state candidate
+    adopted as E; middle 2 principal model levels, windows. The source-to-six-production-pieces
+    correspondence remains schematic. Bay4.38 is the named contemporary Farnese P03/P05
+    comparison, not a measured Vatican window pitch. h22/hipped18deg/site:cut unchanged.
+  storeys: 2
+  bay_m: 4.38
+  ground_floor: windows
+rome_director_v9_0507_belvedere_north:
+  kind: long_hall
+  w_m: 100
+  d_m: 14
+  h_m: 22
+  roof:
+    shape: hipped
+    pitch_deg: 18
+  exaggeration: 1
+  site: cut
+  basis: Falda1667 R09 Vatican longitudinal wings and Musei Vaticani R39-R41 Belvedere
+    area approx100x300m with distinct terraces. Native individual100m wings keep separate
+    sites; widths14m,22m eaves and18deg roofs estimated by the named Vatican palace
+    comparison. No single invented300m platform, no18c Museo Pio Clementino or1990
+    sphere. research/rome_director_v9_0507_facade_patch.md; R41/P09 late-state candidate
+    adopted as E; north 2 principal model levels, windows. The source-to-six-production-pieces
+    correspondence remains schematic. Bay4.38 is the named contemporary Farnese P03/P05
+    comparison, not a measured Vatican window pitch. h22/hipped18deg/site:cut unchanged.
+  storeys: 2
+  bay_m: 4.38
+  ground_floor: windows
+rome_director_v9_0507_medieval_vatican_palace:
+  kind: parts
+  site: raised
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. M10 localises
+    survivingInnocentIII/NicholasIII palace rooms; L-shapednorth/eastwings are bounded
+    massing estimates, not exactmedieval perimeter. Two3m levels selected as supported
+    ground/firstfloor minimum; noSistineChapel orBelvedere. research/rome_director_v9_0507_facade_patch.md;
+    M10 minimum ground/first floor retained. E bay3m from named medieval Roman Via
+    Capo di Ferro portico, M01 printp69:9m/3 bays; facade-window rhythm is an analogy,
+    not Vatican measured windows or Renaissance transplant. First original part[0]
+    keeps index, now long front100x20/theta90/h5.5 plus flat top0.5; append roof carrier
+    part[2] atz5/h1, original20x100 gabled25deg. Original eaves6m/ridge10.66307658155m
+    and first ridge direction retained. Second original part[1] and whole raised site
+    retained; storeys2. No existing part id is renamed. Native top() estimates flat
+    roofs using pitch; explicit flat pitch3deg is a framing/exaggeration compatibility
+    guard only (draw(flat) remains a0.5m slab). This keeps the first carrier estimated
+    top below the unchanged second gabled wing, preserving original whole top() and
+    auto-exaggeration for every city factor.
+  parts:
+  - kind: long_hall
+    at:
+    - 0
+    - 0
+    w_m: 100
+    d_m: 20
+    h_m: 5.5
+    roof:
+      shape: flat
+      overhang_m: 0
+      pitch_deg: 3
+    theta_deg: 90
+    storeys: 2
+    bay_m: 3
+    ground_floor: windows
+  - kind: long_hall
+    at:
+    - 38
+    - 39
+    w_m: 76
+    d_m: 22
+    h_m: 6
+    roof:
+      shape: gabled
+      pitch_deg: 25
+    storeys: 2
+    bay_m: 3
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_original_first_wing_roof
+    at:
+    - 0
+    - 0
+    w_m: 20
+    d_m: 100
+    h_m: 1
+    z_m: 5
+    roof:
+      shape: gabled
+      pitch_deg: 25
+    storeys: 0
+rome_director_v9_0507_farnese:
+  kind: parts
+  exaggeration: 1
+  site: cut
+  basis: Falda1667 Farnese palace courtyard block, distinct from its back garden and
+    the surrounding ordinary fronts. Native prism/plain23m body is a source-graphic
+    palazzo comparison, not a measured roof/elevation or a claim of1667 construction
+    date. Earlier physical states are not reconstructed here. research/rome_director_v9_0507_facade_patch.md;
+    P03-P05:3 principal levels; full traced facade64.548m has13 upper axes. Carrier
+    end trims make its explicit bay parameter slightly smaller than4.96 to keep13
+    native windows; this is a display calculation, not a changed surveyed pitch. Ground
+    windows simplify12 windows+central door; no special door reconstruction. Core23m
+    height, original plan/holes and flat top retained; official57x29m remains a documented
+    mismatch, not silently corrected. Original prism is part[0]; all native long_hall
+    wings append. Their2m bodies are inside the source prism; flat roof tops stay0.1m
+    below the retained core top (Massimo ground carriers below5m) to avoid coplanar
+    roof faces. Native windows project0.2m and ledges project at most0.4m normal to
+    the corresponding source edge, including court sides; this approved facade detail
+    is not bitwise-identical exterior bounds. No nested parts or per-window bespoke
+    geometry.
+  parts:
+  - kind: prism
+    plan_m:
+    - - -32.182
+      - 41.292
+    - - 32.366
+      - 41.292
+    - - 28.836
+      - -39.539
+    - - -31.6
+      - -38.94
+    holes_m:
+    - - - -20.578
+        - 23.33
+      - - 15.23
+        - 25.126
+      - - 16.721
+        - -11.398
+      - - -19.687
+        - -14.99
+    h_m: 23
+    id: v9_original_prism_core
+  - kind: long_hall
+    id: v9_outer_0_facade
+    at:
+    - 0.09199999999999875
+    - 40.292
+    theta_deg: -180.0
+    w_m: 63.728
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 4.902152846153846
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_1_facade
+    at:
+    - 29.60195223215608
+    - 0.920129778432644
+    theta_deg: 87.49940406836856
+    w_m: 80.08804324045911
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 4.96
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_2_facade
+    at:
+    - -1.3720891756393896
+    - -38.23954911342582
+    theta_deg: -0.5678577038680132
+    w_m: 59.61896836478928
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 4.96
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_3_facade
+    at:
+    - -30.891026308954995
+    - 1.1832537726616357
+    theta_deg: -89.58438579614284
+    w_m: 79.41411087561201
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 4.96
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_0_facade
+    at:
+    - -2.724093420118937
+    - 25.226744536536142
+    theta_deg: 2.871343276985915
+    w_m: 35.03301214681969
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 4.96
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_1_facade
+    at:
+    - 16.974667802835448
+    - 6.904788500548343
+    theta_deg: -87.66234256596638
+    w_m: 35.734420485079504
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 4.96
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_2_facade
+    at:
+    - -1.3848170504304056
+    - -14.18916838194037
+    theta_deg: -174.36545378471274
+    w_m: 35.764763604538985
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 4.96
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_3_facade
+    at:
+    - -21.1322297919029
+    - 4.146754716999334
+    theta_deg: 91.33197658197244
+    w_m: 37.51035717287278
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 4.96
+    ground_floor: windows
+rome_director_v9_0507_quirinal:
+  kind: parts
+  exaggeration: 1
+  site: cut
+  basis: Falda1667 named Quirinal palace, source-graphic outer body and central court,
+    not a garden or ordinary houses. Native prism is a plain court massing;23m height
+    uses R21 Caprini named palazzo comparison. Roofs, ornament and exact historical
+    ground footprint are not reconstructed. Shown only in the late complete-city observation,
+    not asserted newly built1667 or copied into1506. research/rome_director_v9_0507_facade_patch.md;
+    P06/P07:2 principal model levels adopted as E, not a reconstruction of every mezzanine.
+    Named contemporary Farnese P03/P05 average57/13≈4.38m; adjusted native carrier
+    pitch gives26 model bays on its existing115.8m front, not26 actual Quirinal windows.
+    No18c Manica Lunga or whole-front ground arcade. Original23m flat top/plan/holes
+    retained. Original prism is part[0]; all native long_hall wings append. Their2m
+    bodies are inside the source prism; flat roof tops stay0.1m below the retained
+    core top (Massimo ground carriers below5m) to avoid coplanar roof faces. Native
+    windows project0.2m and ledges project at most0.4m normal to the corresponding
+    source edge, including court sides; this approved facade detail is not bitwise-identical
+    exterior bounds. No nested parts or per-window bespoke geometry.
+  parts:
+  - kind: prism
+    plan_m:
+    - - -62.125
+      - 50.346
+    - - 44.759
+      - 50.346
+    - - 68.836
+      - -49.912
+    - - -46.968
+      - -52.608
+    holes_m:
+    - - - -36.178
+        - 24.312
+      - - 28.993
+        - 23.917
+      - - 41.984
+        - -31.636
+      - - -21.453
+        - -31.899
+    h_m: 23
+    id: v9_original_prism_core
+  - kind: long_hall
+    id: v9_outer_0_facade
+    at:
+    - -8.683
+    - 49.346
+    theta_deg: -180.0
+    w_m: 106.06400000000001
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_1_facade
+    at:
+    - 55.82514589703534
+    - -0.01651123837579238
+    theta_deg: 103.5038816119101
+    w_m: 102.22852774140459
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_2_facade
+    at:
+    - 10.910725590722171
+    - -50.26027088575316
+    theta_deg: 1.333645846340969
+    w_m: 114.95537815365391
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.421359698217458
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_3_facade
+    at:
+    - -53.55716398546924
+    - -0.9853488745241299
+    theta_deg: -81.62501376652514
+    w_m: 103.24373414883785
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_0_facade
+    at:
+    - -3.586439133280944
+    - 25.114481632778627
+    theta_deg: -0.3472642092886479
+    w_m: 64.3521970321701
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_1_facade
+    at:
+    - 36.46223003384211
+    - -3.6317944418907544
+    theta_deg: -76.83797410066728
+    w_m: 56.23174747542795
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_2_facade
+    at:
+    - 10.269645809855488
+    - -32.76749140609339
+    theta_deg: -179.7624619121564
+    w_m: 62.61754517633859
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_3_facade
+    at:
+    - -29.782859267112375
+    - -4.046908856064288
+    theta_deg: 104.67932283744679
+    w_m: 57.28767716920028
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+rome_director_v9_0507_massimo:
+  kind: parts
+  exaggeration: 1
+  site: raised
+  basis: 'R12/S65: Peruzzi early1530s palace on1527 damaged family buildings, curved
+    Via Papale frontage and asymmetric parcel. R21 Caprini1549 named palazzo comparison.50x48m
+    envelope,20m height, inner court and fine curve are bounded estimates, not a Frommel
+    measured plan. No widened19c Corso is built. research/rome_director_v9_0507_facade_patch.md;
+    P08/R12:4 model levels;7 upper model window axes allocated1+2+3+1 along the four
+    original curved-front segments, with per-segment bay values to avoid floor() losing
+    one axis. Ground central x[-8,8] porch is two native arcade wings; side ground
+    windows remain. Width16m/5m ground level/depth symbolism are E from the existing
+    Massimo parcel and named P08 central paired-column porch. Native arcade piers/dark
+    backing stand for the porch, not a surveyed six-column classical order or an excavated
+    interior. Original20m core/curve/court/asymmetric parcel retained; no widened
+    Corso. Original prism is part[0]; all native long_hall wings append. Their2m bodies
+    are inside the source prism; flat roof tops stay0.1m below the retained core top
+    (Massimo ground carriers below5m) to avoid coplanar roof faces. Native windows
+    project0.2m and ledges project at most0.4m normal to the corresponding source
+    edge, including court sides; this approved facade detail is not bitwise-identical
+    exterior bounds. No nested parts or per-window bespoke geometry. Native front
+    arcade piers project0.6m; unlike the0.4m ledge, this is a separate explicit native
+    porch detail requiring root review. The retained prism means native dark-backed
+    loggia symbolism, not a newly cut interior.'
+  parts:
+  - kind: prism
+    plan_m:
+    - - -25
+      - -20
+    - - -15
+      - -24
+    - - 0
+      - -26
+    - - 18
+      - -25
+    - - 25
+      - -20
+    - - 25
+      - 22
+    - - -21
+      - 22
+    - - -25
+      - 8
+    holes_m:
+    - - - -8
+        - -4
+      - - 8
+        - -4
+      - - 8
+        - 11
+      - - -8
+        - 11
+    h_m: 20
+    id: v9_original_prism_core
+  - kind: long_hall
+    id: v9_outer_0_facade_upper
+    at:
+    - -19.628609323645897
+    - -21.071523309114742
+    theta_deg: -21.80140948635181
+    w_m: 9.950329614269007
+    d_m: 2.0
+    h_m: 14.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 9.950328614269008
+    ground_floor: windows
+    z_m: 5
+  - kind: long_hall
+    id: v9_outer_0_facade_ground_0
+    at:
+    - -19.628609323645897
+    - -21.071523309114742
+    theta_deg: -21.80140948635181
+    w_m: 9.950329614269007
+    d_m: 2.0
+    h_m: 4.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 1
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_1_facade_upper
+    at:
+    - -7.367836279908982
+    - -24.008772099317365
+    theta_deg: -7.594643368591445
+    w_m: 14.312745950421556
+    d_m: 2.0
+    h_m: 14.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 7.156371975210778
+    ground_floor: windows
+    z_m: 5
+  - kind: long_hall
+    id: v9_outer_1_facade_ground_0
+    at:
+    - -11.367836279908982
+    - -23.475438765984034
+    theta_deg: -7.5946433685914485
+    w_m: 6.241948110196726
+    d_m: 2.0
+    h_m: 4.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 1
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_1_facade_ground_1
+    at:
+    - -3.8678362799089823
+    - -24.475438765984034
+    theta_deg: -7.594643368591443
+    w_m: 7.250797840224829
+    d_m: 2.0
+    h_m: 4.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 1
+    bay_m: 7.14
+    ground_floor: arcade
+  - kind: long_hall
+    id: v9_outer_2_facade_upper
+    at:
+    - 8.944529980377476
+    - -24.501539646794587
+    theta_deg: 3.1798301198642345
+    w_m: 17.207756377319946
+    d_m: 2.0
+    h_m: 14.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 5.735917792439982
+    ground_floor: windows
+    z_m: 5
+  - kind: long_hall
+    id: v9_outer_2_facade_ground_0
+    at:
+    - 3.944529980377477
+    - -24.779317424572366
+    theta_deg: 3.1798301198642234
+    w_m: 7.1923361676977535
+    d_m: 2.0
+    h_m: 4.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 1
+    bay_m: 7.14
+    ground_floor: arcade
+  - kind: long_hall
+    id: v9_outer_2_facade_ground_1
+    at:
+    - 12.944529980377476
+    - -24.279317424572366
+    theta_deg: 3.1798301198642434
+    w_m: 9.195420209622192
+    d_m: 2.0
+    h_m: 4.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 1
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_3_facade_upper
+    at:
+    - 20.918761806280905
+    - -21.686266528793265
+    theta_deg: 35.53767779197438
+    w_m: 7.782325267042626
+    d_m: 2.0
+    h_m: 14.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 7.782324267042626
+    ground_floor: windows
+    z_m: 5
+  - kind: long_hall
+    id: v9_outer_3_facade_ground_0
+    at:
+    - 20.918761806280905
+    - -21.686266528793265
+    theta_deg: 35.53767779197438
+    w_m: 7.782325267042626
+    d_m: 2.0
+    h_m: 4.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 1
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_4_facade
+    at:
+    - 24.0
+    - 1.0
+    theta_deg: 90.0
+    w_m: 41.18
+    d_m: 2.0
+    h_m: 19.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 4
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_5_facade
+    at:
+    - 2.0
+    - 21.0
+    theta_deg: 180.0
+    w_m: 45.18
+    d_m: 2.0
+    h_m: 19.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 4
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_6_facade
+    at:
+    - -22.038476052359176
+    - 14.725278872102622
+    theta_deg: -105.94539590092286
+    w_m: 13.740219778561036
+    d_m: 2.0
+    h_m: 19.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 4
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_7_facade
+    at:
+    - -24.0
+    - -6.0
+    theta_deg: -90.0
+    w_m: 27.18
+    d_m: 2.0
+    h_m: 19.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 4
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_0_facade
+    at:
+    - 0.0
+    - -5.0
+    theta_deg: -180.0
+    w_m: 15.18
+    d_m: 2.0
+    h_m: 19.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 4
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_1_facade
+    at:
+    - 9.0
+    - 3.5
+    theta_deg: -90.0
+    w_m: 14.18
+    d_m: 2.0
+    h_m: 19.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 4
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_2_facade
+    at:
+    - 0.0
+    - 12.0
+    theta_deg: -0.0
+    w_m: 15.18
+    d_m: 2.0
+    h_m: 19.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 4
+    bay_m: 7.14
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_3_facade
+    at:
+    - -9.0
+    - 3.5
+    theta_deg: 90.0
+    w_m: 14.18
+    d_m: 2.0
+    h_m: 19.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 4
+    bay_m: 7.14
+    ground_floor: windows
+rome_director_v9_0507_senatorio_phased:
+  kind: parts
+  site: cut
+  exaggeration: 1
+  basis: 'R16/R32: Campidoglio individual palaces and angled fronts. Their25x60m bodies,23m
+    eaves and18deg hipped roofs are source-plan/mature-palazzo comparison estimates,
+    not surveyed elevations. No1940 star paving or simultaneous1538 completion. research/rome_director_v9_0507_facade_patch.md;
+    P02; E comparison P03/P05 Farnese 57m/13 axes; early Senatorio is not demonstrated
+    to have 13 actual windows. No late 1593-1598 facade decoration. Body25x60 becomes60x25
+    with instance +/-90deg compensation; h23 and hipped18deg unchanged. R16/R32: Campidoglio
+    individual palaces and angled fronts. Their25x60m bodies,23m eaves and18deg hipped
+    roofs are source-plan/mature-palazzo comparison estimates, not surveyed elevations.
+    No1940 star paving or simultaneous1538 completion. research/rome_director_v9_0507_facade_patch.md;
+    P01/P02 mature facade after1593-1598; three principal levels, 7 model bays = floor(60/8.57).
+    Body25x60 becomes60x25 with instance +/-90deg compensation; h23 and hipped18deg
+    unchanged. Same-landmark phase configuration: body is fixed60x25/h23/hipped18deg,
+    early_face and late_face are inside-body full-width native window carriers h22.4/flat-top22.9.
+    Root must stage late_face by part id and lose early_face at the sourced phase
+    boundary, preserving body and landmark id. No invented construction date inside1593-1598
+    or1563-1568 ranges; use approved film chronology. Old body plus facade variants
+    are alternative representations; never instantiate them together.'
+  parts:
+  - kind: long_hall
+    w_m: 60
+    d_m: 25
+    h_m: 23
+    roof:
+      shape: hipped
+      pitch_deg: 18
+    storeys: 0
+    id: body
+  - kind: long_hall
+    w_m: 60
+    d_m: 25
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 4.38
+    ground_floor: closed
+    id: early_face
+  - kind: long_hall
+    w_m: 60
+    d_m: 25
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 3
+    bay_m: 8.57
+    ground_floor: closed
+    id: late_face
+rome_director_v9_0507_conservatori_phased:
+  kind: parts
+  site: cut
+  exaggeration: 1
+  basis: 'R16/R32: Campidoglio individual palaces and angled fronts. Their25x60m bodies,23m
+    eaves and18deg hipped roofs are source-plan/mature-palazzo comparison estimates,
+    not surveyed elevations. No1940 star paving or simultaneous1538 completion. research/rome_director_v9_0507_facade_patch.md;
+    P02 old ground loggia, principal floor and small mezzanine; two principal levels.
+    E bay from contemporary Farnese P03/P05, not later 7-bay facade. Body25x60 becomes60x25
+    with instance +/-90deg compensation; h23 and hipped18deg unchanged. R16/R32: Campidoglio
+    individual palaces and angled fronts. Their25x60m bodies,23m eaves and18deg hipped
+    roofs are source-plan/mature-palazzo comparison estimates, not surveyed elevations.
+    No1940 star paving or simultaneous1538 completion. research/rome_director_v9_0507_facade_patch.md;
+    P01/P10 ground loggia and 2 principal levels/7 bays, completed1568; R16 1628 conflict
+    retained, not reinterpreted as rear wing. Body25x60 becomes60x25 with instance
+    +/-90deg compensation; h23 and hipped18deg unchanged. Same-landmark phase configuration:
+    body is fixed60x25/h23/hipped18deg, early_face and late_face are inside-body full-width
+    native window carriers h22.4/flat-top22.9. Root must stage late_face by part id
+    and lose early_face at the sourced phase boundary, preserving body and landmark
+    id. No invented construction date inside1593-1598 or1563-1568 ranges; use approved
+    film chronology. Old body plus facade variants are alternative representations;
+    never instantiate them together.'
+  parts:
+  - kind: long_hall
+    w_m: 60
+    d_m: 25
+    h_m: 23
+    roof:
+      shape: hipped
+      pitch_deg: 18
+    storeys: 0
+    id: body
+  - kind: long_hall
+    w_m: 60
+    d_m: 25
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: arcade
+    id: early_face
+  - kind: long_hall
+    w_m: 60
+    d_m: 25
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 8.57
+    ground_floor: arcade
+    id: late_face

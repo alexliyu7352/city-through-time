@@ -1,0 +1,400 @@
+rome11_olympic_restaurant36x34:
+  name: Olympic_restaurant_pavilion36x34
+  kind: parts
+  theta_deg: -83.97422112542424
+  exaggeration: 1
+  basis: "O01 original1960 report PDF236 full operating plan:restaurant1\u201310 on\
+    \ both sides ofCorsoFrancia,6north/4south,paired supply access. Printed91 gives\
+    \ each36x34m,cement supporting structures,tile/large-glass walls,light metal/corrugated\
+    \ roof,central kitchen/two dining halls.3.1m eaves,.25m roof,window bays/post\
+    \ grid estimated; exactItalian restaurant number and individual fa\xE7ade divisions\
+    \ unknown. Central kitchen is not an invented open court."
+  parts:
+  - kind: prism
+    plan_m:
+    - - -18
+      - -17
+    - - 18
+      - -17
+    - - 18
+      - 17
+    - - -18
+      - 17
+    h_m: 3.1
+  - kind: prism
+    plan_m:
+    - - -18.3
+      - -17.3
+    - - 18.3
+      - -17.3
+    - - 18.3
+      - 17.3
+    - - -18.3
+      - 17.3
+    h_m: 0.25
+    atop: 0
+  - kind: arches
+    at:
+    - 0
+    - -17.2
+    theta_deg: 0
+    length_m: 36
+    h_m: 2.5
+    z_m: 0.3
+    depth_m: 0.4
+    bays: 6
+    tiers: 1
+    arch: flat
+    opening: 0.8
+    spring: 0.85
+    through: false
+    recess_m: 0.25
+  - kind: arches
+    at:
+    - 0
+    - 17.2
+    theta_deg: 180
+    length_m: 36
+    h_m: 2.5
+    z_m: 0.3
+    depth_m: 0.4
+    bays: 6
+    tiers: 1
+    arch: flat
+    opening: 0.8
+    spring: 0.85
+    through: false
+    recess_m: 0.25
+  - kind: arches
+    at:
+    - -18.2
+    - 0
+    theta_deg: 270
+    length_m: 34
+    h_m: 2.5
+    z_m: 0.3
+    depth_m: 0.4
+    bays: 6
+    tiers: 1
+    arch: flat
+    opening: 0.8
+    spring: 0.85
+    through: false
+    recess_m: 0.25
+  - kind: arches
+    at:
+    - 18.2
+    - 0
+    theta_deg: 90
+    length_m: 34
+    h_m: 2.5
+    z_m: 0.3
+    depth_m: 0.4
+    bays: 6
+    tiers: 1
+    arch: flat
+    opening: 0.8
+    spring: 0.85
+    through: false
+    recess_m: 0.25
+rome11_olympic_reception_post_J:
+  kind: prism
+  theta_deg: -75.974
+  plan_m:
+  - - -11.865
+    - 10.206
+  - - 9.003
+    - 10.206
+  - - 16.368
+    - 2.84
+  - - 15.754
+    - -9.435
+  - - -11.252
+    - -9.435
+  - - -18.003
+    - -2.684
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; J post/telecommunications;
+    one of the4source reception volumes.3.1m single-storey height and flat light-roof
+    exterior estimated,not a measured elevation. Four reception footprints follow
+    the plan symbols; printed91 describes1200sqm occupied for the whole reception,not
+    an asserted1200sqm of these roofs.
+rome11_olympic_reception_bank_info:
+  kind: prism
+  theta_deg: -119.805
+  plan_m:
+  - - -10.201
+    - 10.626
+  - - 11.069
+    - 10.626
+  - - 10.201
+    - -10.626
+  - - -11.069
+    - -10.626
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; Ybank/Kreception/Winformation
+    in the central lozenge.3.1m single-storey height and flat light-roof exterior
+    estimated,not a measured elevation. Four reception footprints follow the plan
+    symbols; printed91 describes1200sqm occupied for the whole reception,not an asserted1200sqm
+    of these roofs.
+rome11_olympic_reception_K_west:
+  kind: prism
+  theta_deg: -123.464
+  plan_m:
+  - - -9.326
+    - 8.189
+  - - 0.665
+    - 8.189
+  - - 8.357
+    - 1.138
+  - - 8.771
+    - -8.401
+  - - -0.353
+    - -8.363
+  - - -8.044
+    - -1.313
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; K reception west.3.1m single-storey
+    height and flat light-roof exterior estimated,not a measured elevation. Four reception
+    footprints follow the plan symbols; printed91 describes1200sqm occupied for the
+    whole reception,not an asserted1200sqm of these roofs.
+rome11_olympic_reception_K_east:
+  kind: prism
+  theta_deg: -123.464
+  plan_m:
+  - - -9.098
+    - 7.982
+  - - 0.893
+    - 7.982
+  - - 8.132
+    - 1.346
+  - - 8.547
+    - -8.193
+  - - -0.577
+    - -8.155
+  - - -7.817
+    - -1.519
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; K reception east.3.1m single-storey
+    height and flat light-roof exterior estimated,not a measured elevation. Four reception
+    footprints follow the plan symbols; printed91 describes1200sqm occupied for the
+    whole reception,not an asserted1200sqm of these roofs.
+rome11_olympic_cinema:
+  kind: prism
+  theta_deg: -83.309
+  plan_m:
+  - - -31.474
+    - 8.944
+  - - 31.028
+    - 8.944
+  - - 31.474
+    - -8.944
+  - - -31.028
+    - -8.944
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; CINEMA explicitly labelled
+    on the1960 operating plan, distinct from the unbuilt permanent1958cinema/theatre
+    scheme.3.1m single-storey height and flat light-roof exterior estimated,not a
+    measured elevation. Four reception footprints follow the plan symbols; printed91
+    describes1200sqm occupied for the whole reception,not an asserted1200sqm of these
+    roofs.
+rome11_olympic_public_hex_C:
+  kind: prism
+  theta_deg: -41.594
+  plan_m:
+  - - -9.6
+    - 17.685
+  - - 4.53
+    - 17.685
+  - - 15.967
+    - 6.141
+  - - 14.208
+    - -12.734
+  - - -4.081
+    - -18.813
+  - - -17.198
+    - -5.376
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; Hexagonal pavilionC:report
+    glossaryRestRoom; Ministry4535 describes the permanent hexagonal market; do not
+    call this a newly invented church.3.1m single-storey height and flat light-roof
+    exterior estimated,not a measured elevation. Four reception footprints follow
+    the plan symbols; printed91 describes1200sqm occupied for the whole reception,not
+    an asserted1200sqm of these roofs.
+rome11_olympic_stores_MG_north:
+  kind: prism
+  theta_deg: -51.069
+  plan_m:
+  - - -12.752
+    - 32.141
+  - - 6.195
+    - 32.141
+  - - 12.697
+    - -31.104
+  - - -5.913
+    - -33.291
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; MG central stores outside
+    the housing boundary.3.1m single-storey height and flat light-roof exterior estimated,not
+    a measured elevation. Four reception footprints follow the plan symbols; printed91
+    describes1200sqm occupied for the whole reception,not an asserted1200sqm of these
+    roofs.
+rome11_olympic_stores_MG_middle:
+  kind: prism
+  theta_deg: -85.84
+  plan_m:
+  - - -7.252
+    - 8.175
+  - - 7.076
+    - 8.175
+  - - 7.497
+    - -8.572
+  - - -7.647
+    - -7.468
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; MG central stores outside
+    the housing boundary.3.1m single-storey height and flat light-roof exterior estimated,not
+    a measured elevation. Four reception footprints follow the plan symbols; printed91
+    describes1200sqm occupied for the whole reception,not an asserted1200sqm of these
+    roofs.
+rome11_olympic_stores_MG_connector:
+  kind: prism
+  theta_deg: -85.702
+  plan_m:
+  - - -10.688
+    - 4.998
+  - - 11.107
+    - 4.998
+  - - 10.346
+    - -5.096
+  - - -10.844
+    - -4.993
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; MG central stores small
+    connecting shed.3.1m single-storey height and flat light-roof exterior estimated,not
+    a measured elevation. Four reception footprints follow the plan symbols; printed91
+    describes1200sqm occupied for the whole reception,not an asserted1200sqm of these
+    roofs.
+rome11_olympic_stores_MG_south:
+  kind: prism
+  theta_deg: -85.284
+  plan_m:
+  - - -19.035
+    - 7.916
+  - - 18.904
+    - 7.916
+  - - 19.57
+    - -7.524
+  - - -18.876
+    - -8.229
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; MG central stores outside
+    the housing boundary.3.1m single-storey height and flat light-roof exterior estimated,not
+    a measured elevation. Four reception footprints follow the plan symbols; printed91
+    describes1200sqm occupied for the whole reception,not an asserted1200sqm of these
+    roofs.
+rome11_olympic_luggage_MB:
+  kind: prism
+  theta_deg: -84.72
+  plan_m:
+  - - -7.883
+    - 9.437
+  - - 8.263
+    - 9.437
+  - - 8.123
+    - -9.836
+  - - -8.816
+    - -8.716
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; MB luggage stores single
+    drawn building; open surrounding depot area is not filled with invented sheds.3.1m
+    single-storey height and flat light-roof exterior estimated,not a measured elevation.
+    Four reception footprints follow the plan symbols; printed91 describes1200sqm
+    occupied for the whole reception,not an asserted1200sqm of these roofs.
+rome11_olympic_sauna:
+  kind: prism
+  theta_deg: -57.539
+  plan_m:
+  - - -7.086
+    - 28.468
+  - - 2.619
+    - 28.468
+  - - 7.277
+    - -27.43
+  - - -2.816
+    - -28.594
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; SAUNA labelled service
+    strip outside the housing boundary.3.1m single-storey height and flat light-roof
+    exterior estimated,not a measured elevation. Four reception footprints follow
+    the plan symbols; printed91 describes1200sqm occupied for the whole reception,not
+    an asserted1200sqm of these roofs.
+rome11_olympic_shops_west:
+  kind: prism
+  theta_deg: -82.066
+  plan_m:
+  - - -77.561
+    - 5.916
+  - - 78.604
+    - 5.916
+  - - 78.011
+    - -5.875
+  - - -78.765
+    - -5.941
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; West long shop/service
+    pavilion; numbered openings are not a count of independent warehouses.3.1m single-storey
+    height and flat light-roof exterior estimated,not a measured elevation. Four reception
+    footprints follow the plan symbols; printed91 describes1200sqm occupied for the
+    whole reception,not an asserted1200sqm of these roofs.
+rome11_olympic_shops_east:
+  kind: prism
+  theta_deg: -80.808
+  plan_m:
+  - - -82.489
+    - 5.65
+  - - 85.052
+    - 5.65
+  - - 82.925
+    - -5.617
+  - - -85.228
+    - -5.669
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; East long shop/service
+    pavilion, not a row of copied permanent residences.3.1m single-storey height and
+    flat light-roof exterior estimated,not a measured elevation. Four reception footprints
+    follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not
+    an asserted1200sqm of these roofs.
+rome11_olympic_infirmary33:
+  kind: prism
+  theta_deg: -84.429
+  plan_m:
+  - - -22.736
+    - 6.054
+  - - 23.182
+    - 6.054
+  - - 23.075
+    - -5.752
+  - - -22.753
+    - -6.359
+  h_m: 3.1
+  exaggeration: 1
+  basis: O01 originalPDF236 source operating-plan outline; 33 infirmary explicitly
+    labelled next to the east long residential spine.3.1m single-storey height and
+    flat light-roof exterior estimated,not a measured elevation. Four reception footprints
+    follow the plan symbols; printed91 describes1200sqm occupied for the whole reception,not
+    an asserted1200sqm of these roofs.

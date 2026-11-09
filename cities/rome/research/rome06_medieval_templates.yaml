@@ -1,0 +1,887 @@
+rome06_medieval_old_stpeter:
+  kind: parts
+  basis: research/rome06_medieval_whole_basis.md SP. Approved late-antique core retained
+    as medieval massing; M18 pp38-39 andquadriporticus references support the maintained
+    roof and atrium by800. Alfarano1590 gives older/later outline relationships only.
+    Atrium68x70m and6m covered-walk height are graphical estimates, not800 measured
+    dimensions.
+  parts:
+  - kind: long_hall
+    id: nave
+    w_m: 66
+    d_m: 91
+    h_m: 32.54
+    aisles:
+      n: 2
+      w_m: 10.75
+      h_m: 16
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.6
+  - kind: long_hall
+    id: transept
+    at:
+    - 0
+    - 54.5
+    theta_deg: 90
+    w_m: 18
+    d_m: 90
+    h_m: 20.8
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.6
+  - kind: dome
+    id: apse
+    at:
+    - 0
+    - 63.5
+    d_m: 23
+    drum_h_m: 20.8
+    sweep_deg: 180
+    dome:
+      shape: cone
+      rise_m: 4.2
+  site: cut
+rome06_medieval_stpeter_atrium:
+  kind: parts
+  site: raised
+  basis: research/rome06_medieval_whole_basis.md SP. Approved late-antique core retained
+    as medieval massing; M18 pp38-39 andquadriporticus references support the maintained
+    roof and atrium by800. Alfarano1590 gives older/later outline relationships only.
+    Atrium68x70m and6m covered-walk height are graphical estimates, not800 measured
+    dimensions. The atrium is a separate native site on the slope, preserving its
+    independent ground level rather than grading the whole basilica/forecourt as one
+    slab.
+  parts:
+  - kind: arches
+    at:
+    - -33
+    - 0
+    theta_deg: 90
+    repeat:
+      mirror: x
+    length_m: 70
+    h_m: 6
+    depth_m: 3.5
+    bays: 12
+    arch: flat
+    opening: 0.75
+    through: true
+  - kind: arches
+    at:
+    - 0
+    - -35
+    length_m: 66
+    h_m: 6
+    depth_m: 3.5
+    bays: 12
+    arch: flat
+    opening: 0.75
+    through: true
+rome06_medieval_stpaul:
+  kind: long_hall
+  site: cut
+  exaggeration: 1
+  w_m: 65
+  d_m: 121
+  h_m: 25
+  aisles:
+    n: 2
+    w_m: 4.875
+    h_m: 13.750000000000002
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.5
+  apse:
+    r_m: 11.7
+    h_m: 15.0
+  basis: 'research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. Church outline
+    and current geographic site are massing controls; roof, nave/aisle height and
+    minor proportions estimated after the old StPeter comparison. No baroque facade
+    or modern dome. SPaul official history/nave: three-emperor basilica390,135x65m
+    repeated in nineteenth-century reconstruction;121m rectangular body plus apse/transverse
+    wing is a bounded approximation.30m overall height gives25m eaves after25deg nave
+    roof.'
+  transept:
+    span_m: 73
+    w_m: 18
+    h_m: 17.5
+    at: 0.86
+rome06_medieval_lateran:
+  kind: long_hall
+  site: cut
+  exaggeration: 1
+  w_m: 55
+  d_m: 91
+  h_m: 24
+  aisles:
+    n: 2
+    w_m: 4.125
+    h_m: 13.200000000000001
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.5
+  apse:
+    r_m: 9.9
+    h_m: 14.399999999999999
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. Church outline
+    and current geographic site are massing controls; roof, nave/aisle height and
+    minor proportions estimated after the old StPeter comparison. No baroque facade
+    or modern dome. LA06 Guidobaldi:91m rectangularbody,55m exterior width beforeapse.800
+    omits the later13c transept;1300 adds it;1377 repaired shell is a stated condition
+    after fires, not an exact reconstruction.
+rome06_medieval_maggiore:
+  kind: long_hall
+  site: cut
+  exaggeration: 1
+  w_m: 35
+  d_m: 75
+  h_m: 22
+  aisles:
+    n: 1
+    w_m: 5.25
+    h_m: 12.100000000000001
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.5
+  apse:
+    r_m: 6.3
+    h_m: 13.2
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. Church outline
+    and current geographic site are massing controls; roof, nave/aisle height and
+    minor proportions estimated after the old StPeter comparison. No baroque facade
+    or modern dome.
+rome06_medieval_trastevere_church:
+  kind: long_hall
+  site: raised
+  w_m: 28
+  d_m: 54
+  h_m: 17
+  aisles:
+    n: 1
+    w_m: 4.2
+    h_m: 9.350000000000001
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.5
+  apse:
+    r_m: 5.04
+    h_m: 10.2
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. Church outline
+    and current geographic site are massing controls; roof, nave/aisle height and
+    minor proportions estimated after the old StPeter comparison. No baroque facade
+    or modern dome. M26 TurismoRoma official POINT(12.470233 41.889348) locates the
+    visitor address east of the building; M27 OSM way51368975 controls the actual
+    nave-body centre12.469455,41.889425. InnocentII rebuilding gives the later-period
+    shell.800 uses an explicitly comparative earlier basilica body, not a measured
+    pre1130 plan.1702 portico omitted.
+rome06_medieval_s_crisogono:
+  kind: long_hall
+  site: cut
+  exaggeration: 1
+  w_m: 22
+  d_m: 45
+  h_m: 15
+  aisles:
+    n: 1
+    w_m: 3.3
+    h_m: 8.25
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.5
+  apse:
+    r_m: 3.96
+    h_m: 9.0
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. Church outline
+    and current geographic site are massing controls; roof, nave/aisle height and
+    minor proportions estimated after the old StPeter comparison. No baroque facade
+    or modern dome.
+rome06_medieval_s_sabina:
+  kind: long_hall
+  site: cut
+  exaggeration: 1
+  w_m: 25
+  d_m: 53
+  h_m: 18
+  aisles:
+    n: 1
+    w_m: 3.75
+    h_m: 9.9
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.5
+  apse:
+    r_m: 4.5
+    h_m: 10.799999999999999
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. Church outline
+    and current geographic site are massing controls; roof, nave/aisle height and
+    minor proportions estimated after the old StPeter comparison. No baroque facade
+    or modern dome.
+rome06_medieval_s_clemente:
+  kind: long_hall
+  site: cut
+  exaggeration: 1
+  w_m: 25
+  d_m: 44
+  h_m: 17
+  aisles:
+    n: 1
+    w_m: 3.75
+    h_m: 9.350000000000001
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.5
+  apse:
+    r_m: 4.5
+    h_m: 10.2
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. Church outline
+    and current geographic site are massing controls; roof, nave/aisle height and
+    minor proportions estimated after the old StPeter comparison. No baroque facade
+    or modern dome.
+rome06_medieval_s_gregorio:
+  kind: long_hall
+  site: cut
+  exaggeration: 1
+  w_m: 20
+  d_m: 40
+  h_m: 14
+  aisles:
+    n: 1
+    w_m: 3.0
+    h_m: 7.700000000000001
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.5
+  apse:
+    r_m: 3.5999999999999996
+    h_m: 8.4
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. Church outline
+    and current geographic site are massing controls; roof, nave/aisle height and
+    minor proportions estimated after the old StPeter comparison. No baroque facade
+    or modern dome.
+rome06_medieval_s_maria_antiqua:
+  kind: long_hall
+  site: cut
+  exaggeration: 1
+  w_m: 21
+  d_m: 32
+  h_m: 13
+  aisles:
+    n: 1
+    w_m: 3.15
+    h_m: 7.15
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.5
+  apse:
+    r_m: 3.78
+    h_m: 7.8
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. Church outline
+    and current geographic site are massing controls; roof, nave/aisle height and
+    minor proportions estimated after the old StPeter comparison. No baroque facade
+    or modern dome.
+rome06_medieval_colosseum_north:
+  kind: parts
+  exaggeration: 1
+  site: cut
+  parts:
+  - kind: arches
+    at:
+    - 93.91827409312026
+    - 6.100944136569004
+    theta_deg: 95.44669422350437
+    length_m: 12.2572304193518
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 91.60569448806626
+    - 18.152606917191953
+    theta_deg: 106.21784608669735
+    length_m: 12.394661254778157
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 87.03747866284638
+    - 29.75729227046527
+    theta_deg: 116.64912993362914
+    length_m: 12.651950583045103
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 80.32611125211665
+    - 40.62925432924878
+    theta_deg: 126.59136461359043
+    length_m: 12.997752483577354
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 71.63684839528064
+    - 50.500789305681806
+    theta_deg: 135.9784616604531
+    length_m: 13.392854296920552
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 61.18364858188373
+    - 59.128827246898304
+    theta_deg: 144.81786708714694
+    length_m: 13.796090686145966
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 49.223904283512944
+    - 66.3009172239693
+    theta_deg: 153.16953913424916
+    length_m: 14.168948260706067
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 36.05210409690986
+    - 71.84045857885732
+    theta_deg: 161.124926086222
+    length_m: 14.478563840488164
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 21.99258145736718
+    - 75.61104941872136
+    theta_deg: 168.7914592184484
+    length_m: 14.699423009703745
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - 7.391528473150914
+    - 77.51984528321037
+    theta_deg: 176.28328029295406
+    length_m: 14.814215027662577
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -7.391528473150893
+    - 77.51984528321037
+    theta_deg: -176.28328029295406
+    length_m: 14.814215027662556
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -21.99258145736716
+    - 75.61104941872136
+    theta_deg: -168.7914592184485
+    length_m: 14.699423009703763
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -36.052104096909844
+    - 71.84045857885734
+    theta_deg: -161.12492608622196
+    length_m: 14.478563840488166
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -49.22390428351293
+    - 66.3009172239693
+    theta_deg: -153.16953913424916
+    length_m: 14.168948260706067
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -61.183648581883716
+    - 59.12882724689831
+    theta_deg: -144.817867087147
+    length_m: 13.796090686145975
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -71.63684839528062
+    - 50.50078930568181
+    theta_deg: -135.97846166045304
+    length_m: 13.392854296920541
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -80.32611125211665
+    - 40.62925432924878
+    theta_deg: -126.59136461359049
+    length_m: 12.997752483577363
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -87.03747866284638
+    - 29.75729227046528
+    theta_deg: -116.64912993362914
+    length_m: 12.6519505830451
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -91.60569448806626
+    - 18.15260691719196
+    theta_deg: -106.21784608669728
+    length_m: 12.394661254778157
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  - kind: arches
+    at:
+    - -93.91827409312026
+    - 6.100944136569012
+    theta_deg: -95.44669422350445
+    length_m: 12.257230419351798
+    h_m: 48
+    depth_m: 4
+    bays: 2
+    tiers: 3
+    attic_m: 8
+    opening: 0.62
+    spring: 0.55
+    through: true
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. S86 outer189x156m/48m,3arcade
+    tiers/80bays; northernhalf40bays shown withnativechords. M25PArCo medievalfortress
+    andearlierloss ofsouthoutergalleries. Southernshell/cavea,fortress11bays/tower
+    and1349lossprofile deliberatelyunreconstructed, notdeclaredabsent. Throughopenings
+    and8mattic are estimates; nofullgladiatorialstadium restored.
+rome06_medieval_titus_arch:
+  kind: arches
+  length_m: 13.5
+  depth_m: 4.75
+  h_m: 15.4
+  bays: 1
+  tiers: 1
+  opening: 0.56
+  spring: 0.63
+  attic_m: 3
+  through: true
+  site: cut
+  exaggeration: 1
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. S98/PArCo13.5x4.75x15.4m;
+    M03p288medievalprocessionalroute crossesTitusarch. Opening,spring,attic estimate
+    retained.
+rome06_medieval_severus_arch:
+  kind: arches
+  length_m: 23
+  depth_m: 11
+  h_m: 21
+  bays: 3
+  tiers: 1
+  opening: 0.55
+  spring: 0.55
+  attic_m: 6
+  through: true
+  site: cut
+  exaggeration: 1
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. M03p288explicitpassage
+    underSeverusarch.23x11x21m retainedmonument envelope; genericthreeequalbays are
+    a limitation, noexactarchaeologicalfacade claimed.
+rome06_medieval_pantheon:
+  kind: parts
+  site: cut
+  exaggeration: 1
+  basis: 'research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. S101 andM18:
+    standingPantheon, dome lead repaired in early medieval period.43.3m internal dome/drum;
+    outer46m andportico34x18m from same monument comparison; minor dimensions estimated.'
+  parts:
+  - kind: dome
+    d_m: 46
+    drum_h_m: 21.65
+    dome:
+      shape: hemisphere
+    oculus_m: 8.9
+  - kind: long_hall
+    at:
+    - 0
+    - -31
+    w_m: 34
+    d_m: 18
+    h_m: 14
+    roof:
+      shape: gabled
+      pitch_deg: 20
+    colonnade:
+      at: front
+      n_front: 8
+      h_m: 12
+rome06_medieval_castel:
+  kind: dome
+  d_m: 64
+  drum_h_m: 21
+  dome:
+    shape: cone
+    rise_m: 0.5
+  site: cut
+  exaggeration: 1
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. M21 identifies
+    Hadrian mausoleum incorporated into the defence.64m drum and21m retained mass
+    are old monument comparative estimates; missing medieval roofs and upper fortification
+    are not invented. No star fort.
+rome06_medieval_bridge_aelius:
+  kind: arches
+  h_m: 8
+  depth_m: 7
+  bays: 5
+  arch: round
+  opening: 0.72
+  deck_m: 7
+  exaggeration: 1
+  basis: 'research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. M03 p288: four
+    ancient bridges still usable in lateMiddleAges, Aelius,Cestius,Fabricius,S.Maria.7m
+    width,8m top andbay outlines are estimates fromFabricius comparison; not modernembankments.800
+    survival selected as continuityestimate.'
+rome06_medieval_bridge_fabricius:
+  kind: arches
+  h_m: 8
+  depth_m: 7
+  bays: 2
+  arch: round
+  opening: 0.72
+  deck_m: 7
+  exaggeration: 1
+  basis: 'research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. M03 p288: four
+    ancient bridges still usable in lateMiddleAges, Aelius,Cestius,Fabricius,S.Maria.7m
+    width,8m top andbay outlines are estimates fromFabricius comparison; not modernembankments.800
+    survival selected as continuityestimate.'
+rome06_medieval_bridge_cestius:
+  kind: arches
+  h_m: 8
+  depth_m: 7
+  bays: 1
+  arch: round
+  opening: 0.72
+  deck_m: 7
+  exaggeration: 1
+  basis: 'research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. M03 p288: four
+    ancient bridges still usable in lateMiddleAges, Aelius,Cestius,Fabricius,S.Maria.7m
+    width,8m top andbay outlines are estimates fromFabricius comparison; not modernembankments.800
+    survival selected as continuityestimate.'
+rome06_medieval_bridge_s_maria:
+  kind: arches
+  h_m: 8
+  depth_m: 7
+  bays: 3
+  arch: round
+  opening: 0.72
+  deck_m: 7
+  exaggeration: 1
+  basis: 'research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. M03 p288: four
+    ancient bridges still usable in lateMiddleAges, Aelius,Cestius,Fabricius,S.Maria.7m
+    width,8m top andbay outlines are estimates fromFabricius comparison; not modernembankments.800
+    survival selected as continuityestimate.'
+rome06_medieval_vatican_palace:
+  kind: parts
+  site: raised
+  basis: research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement
+    and continuing road corridors; M13/M17 for later medieval intensification, M01/M04
+    for house form. Domain limits, ordinary parcels and individual heights are bounded
+    production estimates, not a medieval cadastre or population count. M10 localises
+    survivingInnocentIII/NicholasIII palace rooms; L-shapednorth/eastwings are bounded
+    massing estimates, not exactmedieval perimeter. Two3m levels selected as supported
+    ground/firstfloor minimum; noSistineChapel orBelvedere.
+  parts:
+  - kind: long_hall
+    at:
+    - 0
+    - 0
+    w_m: 20
+    d_m: 100
+    h_m: 6
+    roof:
+      shape: gabled
+      pitch_deg: 25
+  - kind: long_hall
+    at:
+    - 38
+    - 39
+    w_m: 76
+    d_m: 22
+    h_m: 6
+    roof:
+      shape: gabled
+      pitch_deg: 25
+rome06_medieval_benedictine_cloister:
+  kind: parts
+  site: cut
+  basis: research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013
+    pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300
+    cadastre. Street widths, individual lots, two/three storeys and roof heights are
+    bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc;
+    M01 p68 gives two/three low levels, occasional porticoes. The monastic enclosure
+    and tiny chapel follow the published hypothetical plan; 3m storey and6m church
+    eaves are estimates after its axonometric, not a preserved medieval elevation.
+  parts:
+  - kind: long_hall
+    at:
+    - 0
+    - 17
+    theta_deg: 0
+    w_m: 35
+    d_m: 7
+    h_m: 6
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.25
+  - kind: long_hall
+    at:
+    - 0
+    - -17
+    theta_deg: 0
+    w_m: 35
+    d_m: 7
+    h_m: 3
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.25
+  - kind: long_hall
+    at:
+    - -14
+    - 0
+    theta_deg: 0
+    w_m: 7
+    d_m: 28
+    h_m: 3
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.25
+  - kind: long_hall
+    at:
+    - 14
+    - 0
+    theta_deg: 0
+    w_m: 7
+    d_m: 28
+    h_m: 3
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.25
+  - kind: long_hall
+    at:
+    - 14.391430000390447
+    - -14.897193790845204
+    theta_deg: 0
+    w_m: 10
+    d_m: 19
+    h_m: 6
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.25
+rome06_medieval_s_benedetto_church:
+  kind: parts
+  site: cut
+  basis: research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013
+    pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300
+    cadastre. Street widths, individual lots, two/three storeys and roof heights are
+    bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc;
+    M01 p68 gives two/three low levels, occasional porticoes. The monastic enclosure
+    and tiny chapel follow the published hypothetical plan; 3m storey and6m church
+    eaves are estimates after its axonometric, not a preserved medieval elevation.
+  parts:
+  - kind: long_hall
+    at:
+    - 0
+    - 0
+    theta_deg: 0
+    w_m: 13
+    d_m: 21
+    h_m: 7
+    roof:
+      shape: gabled
+      pitch_deg: 25
+      overhang_m: 0.25

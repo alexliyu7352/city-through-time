@@ -1,0 +1,173 @@
+# Existing completed landmark: no 1656–1667 colonnade. Model proportions and all original records remain unchanged.
+id: new_st_peters
+node: made_again
+landmark: {kind: parts, id: rome07_renaissance_newstpeter}
+exaggeration: 1
+stage_m: [40000, 40000]
+name: {zh: 新圣彼得大教堂, en: New St Peter's Basilica}
+era: {zh: 1506–1626年建成；不含1656–1667年的广场柱廊, en: "Built 1506–1626; without the colonnade of 1656–1667"}
+where: {zh: 梵蒂冈，旧圣彼得大教堂所在的同一片土地, en: "The Vatican, on the site of Old St Peter's Basilica"}
+label:
+  - head: {zh: 一百多年，重建同一座圣地, en: Rebuilding the same sacred site}
+    text:
+      zh: >-
+        1506年，教宗儒略二世为新大殿奠基；到1626年，建筑才完成。新旧两座教堂都以传为彼得墓的地点为中心。另一页「旧圣彼得大教堂」展示它的前身：旧殿不是1506年一下子全部拆掉，一部分中殿仍与新工地并存到17世纪初。
+      en: >-
+        Pope Julius II laid the foundation of the new basilica in 1506; the building was completed in 1626. Both old and new churches centred on the place venerated as Peter's tomb. The companion page, Old St Peter's Basilica, shows its predecessor. The old church did not disappear at once in 1506: part of its nave remained beside the new building site into the early seventeenth century.
+    cite: [V1, V2, A1]
+  - head: {zh: 谁完成了这座穹顶, en: Who completed the dome}
+    text:
+      zh: >-
+        米开朗基罗设计穹顶，1564年去世时只建到鼓座。Giacomo della Porta与Domenico Fontana在1588–1590年完成穹顶主体，顶端的球和十字架在1593年安置。后来，Carlo Maderno延长东侧中殿，建起宽大的入口立面。1626年的建筑包含这些不同年代的工作。
+      en: >-
+        Michelangelo designed the dome, but construction had reached only its drum when he died in 1564. Giacomo della Porta and Domenico Fontana completed the main vault in 1588–1590, and the ball and cross were placed in 1593. Carlo Maderno later extended the eastern nave and built its broad entrance façade. The building of 1626 brings together work from these different stages.
+    cite: [V1, V3, V4]
+  - head: {zh: 还没有柱廊的广场, en: Before the colonnade}
+    text:
+      zh: >-
+        今天环抱广场的Bernini柱廊属于1656–1667年，不在这座1626年的模型里。但教堂外不是空旷乡野：北面已有教宗宫殿群，东面通向Borgo街区，西面是梵蒂冈丘地和园地。页面只抽出教堂，空白底板没有复原这些周边，也不是当年广场的边界测绘。
+      en: >-
+        Bernini's colonnade, which now embraces the square, belongs to 1656–1667 and is absent from this model of 1626. The setting was already inhabited: papal buildings stood to the north, Borgo lay to the east, and Vatican hills and gardens extended westward. This page isolates the church; its blank stand neither reconstructs those surroundings nor surveys the limits of the square.
+    cite: [V5, V6, F1]
+  - head: {zh: 有尺寸依据，也有量体估值, en: Dimensions and interpretation}
+    text:
+      zh: >-
+        立面采用梵蒂冈公布的116米宽、45.5米高（不含顶像）；穹顶沿用同一来源从街面到十字顶133.3米的口径。白模按原高度展示，堂身、侧翼、鼓座分层和小穹顶的许多细尺寸仍是图像约束的估值。模型简化了窗饰、雕像与室内，没有把今天的全部装饰当作1626年的完成状态。
+      en: >-
+        The façade follows the Vatican's published width of 116 m and height of 45.5 m excluding statues; the dome follows its 133.3 m street-to-cross measurement. The white model uses unstretched heights, while many dimensions of the body, wings, drum and smaller domes remain estimates constrained by images. Window decoration, statues and the interior are simplified; today's complete decoration is not presented as the state of 1626.
+    cite: [V3, V4, A1, F1]
+life:
+  text:
+    zh: >-
+      重建延续了一百多年，朝圣和礼拜仍围绕彼得纪念地进行。这里的三幅生活想象让少量朝圣者经过1626年的教堂外部，以人物说明大殿的尺度；衣着、材料风化和未测的地面细节是想象。图中没有后来的椭圆柱廊，也没有20世纪拆出、直通教堂的和解大道。
+    en: >-
+      Through more than a century of rebuilding, pilgrimage and worship continued around Peter's memorial. The three imagined views place a few pilgrims outside the basilica in 1626 to convey its scale. Clothing, weathering and unmeasured ground detail remain interpretation. The later oval colonnade and the twentieth-century Via della Conciliazione are absent.
+  cite: [A1, V2, V5, F1]
+parts:
+  - id: facade
+    labels: [facade, facade_pediment, facade_giant_columns_*]
+    status: sourced
+    name: {zh: Maderno立面与巨柱, en: Maderno's façade and giant columns}
+    note:
+      zh: >-
+        官方记立面116×45.50米、巨柱高27.48米、直径2.77米、中央山墙30×7.50米。模型保留这些尺寸，八根柱子分段表示柱脚、柱身和简化柱头；柱位、洞口细形及进深为图像估值，科林斯叶饰和顶像未复原。
+      en: >-
+        The official dimensions are 116 by 45.50 m for the façade, columns 27.48 m high and 2.77 m across, and a central pediment 30 by 7.50 m. The model retains these values and gives the eight columns simplified bases, shafts and capitals. Positions, opening shapes and depths are image-based estimates; Corinthian foliage and rooftop figures are not reconstructed.
+    cite: [V4]
+  - id: facade_detail
+    labels: [facade_*]
+    status: estimated
+    name: {zh: 立面细部, en: Façade details}
+    note:
+      zh: >-
+        入口、上层阳台和中央祝福阳台的存在有官方说明。模型使用规则化拱口、薄凸段、檐口、阁楼窗和低栏墙表示它们；开口比例、位置、层高与进深是图像估值，没有完整复原四壁龛、雕塑和栏杆。
+      en: >-
+        Official descriptions establish the entrances, upper balconies and central Loggia. Regularised arches, shallow projections, cornices, attic windows and low rails suggest them here. Opening proportions, positions, levels and depths are image-based estimates; niches, sculpture and balustrades are incomplete.
+    cite: [V4]
+  - id: drum
+    labels: [drum, drum_columns, drum_columns_pair, drum_cornice]
+    status: estimated
+    name: {zh: 鼓座与成对柱, en: Drum and paired columns}
+    note:
+      zh: 鼓座和成对柱形制有据，但模型的50米鼓座、20米分层高度、柱位和檐口剖面是量体估值。41.50米内口借官方穹顶内径作比较，不是鼓座壁厚的实测；内部双壳未复原。
+      en: >-
+        The drum and paired-column articulation are documented, while the model's 50 m drum, 20 m height, column positions and cornice profile are massing estimates. Its 41.50 m opening borrows the published dome interior diameter as a comparison, rather than a measured drum wall thickness. The internal double shell is not reconstructed.
+    cite: [V3]
+  - id: dome
+    labels: [shell, lantern, lantern_columns, lantern_columns_pair]
+    status: estimated
+    name: {zh: 穹顶与灯亭, en: Dome and lantern}
+    note:
+      zh: >-
+        官方给出外部总高133.30米，并说明砖砌双壳和铅覆面。模型只画外形；主壳曲线、35米升高、肋的宽与凸出量、灯亭各段比例是估值。可见的16条肋和灯亭成对柱表示结构节奏，不能当逐件测绘。
+      en: >-
+        The Vatican gives an overall exterior height of 133.30 m and describes a brick double shell with lead covering. This model shows the exterior only. The shell curve, 35 m rise, rib dimensions and lantern proportions are estimated. Sixteen ribs and paired lantern columns suggest the articulation rather than a measured reconstruction of every member.
+    cite: [V3]
+  - id: finial
+    labels: [ball, cross, cross_bar]
+    status: sourced
+    name: {zh: 顶球与十字架, en: Ball and cross}
+    note:
+      zh: >-
+        顶球与十字架在1593年安置；官方列球径2.50米、十字高3.33米。模型保留这一尺寸分支，细部剖面和结构连接经过简化。它们不属于米开朗基罗1564年去世时已完成的部分。
+      en: >-
+        The ball and cross were installed in 1593; the official figures give a ball 2.50 m across and a cross 3.33 m high. The model retains this dimensional branch with simplified profiles and connections. They were not complete at Michelangelo's death in 1564.
+    cite: [V3]
+  - id: small_domes
+    labels: [small_dome_north, small_dome_south]
+    status: estimated
+    name: {zh: 两侧小穹顶, en: The smaller domes}
+    note:
+      zh: >-
+        两侧小穹顶帮助辨认大殿的轮廓；模型的20米直径、位置、基座高度、壳形及灯亭均为图像约束的估值，不是有尺测绘。后期图像只作形制比较，不把图上所有广场设施提前到1626年。
+      en: >-
+        The smaller domes help define the basilica's outline. Their 20 m diameter, positions, base heights, shell curves and lanterns are image-constrained estimates, not a measured survey. Later images serve as comparisons without carrying their complete square arrangements back to 1626.
+    cite: [A1, F1]
+  - id: main
+    labels: [western_body, cross_arm, western_apse, attic, long_nave]
+    status: estimated
+    name: {zh: 十字堂身与东侧长殿, en: Crossing body and eastern nave}
+    note:
+      zh: >-
+        西部中央体、横向两翼、后殿和Maderno延长的东中殿有据。模型的具体房体尺度、42米堂身檐高、屋面和窗列是量体估配；不是把一张1590年旧新叠图当作1626年完整竣工图。内部礼拜堂与祭坛未画。
+      en: >-
+        The western core, transverse arms, apse and Maderno's eastern nave extension are documented. Specific body dimensions, 42 m eaves, roofs and window rows remain schematic estimates. A 1590 overlay of old and new is not treated as a complete as-built plan of 1626. Internal chapels and altars are omitted.
+    cite: [V1, V4, A1, F1]
+viewpoints:
+  - {id: front, main: true, name: {zh: 从东面看立面, en: Façade from the east}, az: 90, el: 25, d_m: 480, fov: 36, at_m: [17.29, -0.3, 40]}
+  - {id: side, name: {zh: 从西南面看穹顶, en: Dome from the southwest}, az: 210, el: 25, d_m: 480, fov: 36, at_m: [17.29, -0.3, 40]}
+  - {id: rear, name: {zh: 从西北面看后殿, en: Apse from the northwest}, az: 330, el: 25, d_m: 480, fov: 36, at_m: [17.29, -0.3, 40]}
+sources:
+  V1:
+    short: {zh: 圣彼得营造处，建筑史, en: Fabbrica, building history}
+    zh: Pietro Zander，圣彼得营造处《The Basilica》：1506年奠基、彼得墓中心及Maderno延长大殿。正文已核读。
+    en: >-
+      Pietro Zander, Fabbrica di San Pietro, The Basilica: foundation in 1506, the tomb as centre, and Maderno's extension. The text was consulted.
+    url: https://www.basilicasanpietro.va/en/san-pietro/the-basilica
+  V2:
+    short: {zh: 圣彼得营造处，1506–1626, en: Fabbrica on 1506–1626}
+    zh: >-
+      圣彼得营造处《Quando è stata costruita la Basilica di San Pietro?》：1506年开建、1626年完成，替代4世纪旧殿。正文已核读。
+    en: >-
+      Fabbrica di San Pietro, Quando è stata costruita la Basilica di San Pietro?: construction from 1506 to 1626, replacing the fourth-century church. The text was consulted.
+    url: https://www.basilicasanpietro.va/it/faq/quando-e-stata-costruita-la-basilica-di-san-pietro
+  V3:
+    short: {zh: 梵蒂冈，穹顶与灯亭, en: Vatican, dome and lantern}
+    zh: >-
+      梵蒂冈《Cupolone e Lanterna》：1564／1590／1593分期、133.30米外高、58.90米外径与41.50米内径、顶球和十字尺寸。本文已核读；营造处另有136.57米口径，基准未解，不平均。
+    en: >-
+      Vatican, Cupolone e Lanterna: stages in 1564, 1590 and 1593; exterior height 133.30 m, exterior diameter 58.90 m, interior diameter 41.50 m, and finial dimensions. The text was consulted. A separate Fabbrica figure of 136.57 m has an unresolved datum and is not averaged with it.
+    url: https://www.vatican.va/content/vatican/it/ra/cupolone-lanterna.html
+  V4:
+    short: {zh: 梵蒂冈，Maderno立面, en: Vatican, Maderno's façade}
+    zh: >-
+      梵蒂冈《Facciata Basilica》：立面1607–1614、116×45.50米、巨柱及中央山墙尺寸、五入口／五阳台。本文已核读；营造处概述1608–1612，作主施工阶段比较，不抹平差异。
+    en: >-
+      Vatican, Facciata Basilica: façade dated 1607–1614, dimensions 116 by 45.50 m, giant columns, pediment, five entrances and five balconies. The text was consulted. The Fabbrica's summary gives 1608–1612, retained as a different account of the main building stage.
+    url: https://www.vatican.va/content/vatican/it/ra/facciata-basilica.html
+  V5:
+    short: {zh: 梵蒂冈，1656–1667年柱廊, en: Vatican, colonnade of 1656–1667}
+    zh: 梵蒂冈《Colonnato》：1656年委托、1657年起工、1667年结束；不用于补画1626年广场。正文已核读。
+    en: >-
+      Vatican, Colonnato: commissioned in 1656, building begun in 1657 and concluded in 1667; excluded from the model of 1626. The text was consulted.
+    url: https://www.vatican.va/content/vatican/it/ra/colonnato-statue-santi.html
+  V6:
+    short: {zh: 梵蒂冈城国宫史, en: Vatican State history}
+    zh: 梵蒂冈城国《Storia》：中世纪宫殿、西斯廷礼拜堂与Belvedere的分期。用作周边存在性约束，不冒称1626年每个宫翼都有测绘。
+    en: >-
+      Vatican State, Storia: medieval palaces, the Sistine Chapel and the Belvedere. Used to establish the surrounding complex, without claiming a surveyed plan of every wing in 1626.
+    url: https://www.vaticanstate.va/it/stato-e-governo/storia.html
+  A1:
+    short: {zh: 意大利参议院，旧新大殿图记, en: Italian Senate, old and new basilicas}
+    zh: >-
+      意大利参议院《San Pietro in Vaticano》：Alfarano／Bonifacio1590年平面、旧殿余部使用到1609年及后期版画。所读为展览说明，不是Alfarano全部原稿。
+    en: >-
+      Italian Senate, San Pietro in Vaticano: Alfarano and Bonifacio's 1590 plan, the old nave's use until 1609 and later prints. The exhibition commentary was consulted, not Alfarano's complete manuscript.
+    url: https://antiquorum-habet.senato.it/index.php/section/section_61_it/
+  F1:
+    short: {zh: Falda，1667年罗马图, en: Falda's map of Rome, 1667}
+    zh: >-
+      Giovanni Battista Falda，1667年罗马图，Emory／Pitts馆藏。既有研究用它约束堂身与Borgo、园地的形制关系；它是后期鸟瞰图，不是1626年的实测竣工图。
+    en: >-
+      Giovanni Battista Falda, map of Rome, 1667, Emory/Pitts collection. Existing research uses its views of the basilica, Borgo and gardens as formal comparisons; this later bird's-eye map is not a measured as-built plan of 1626.
+    url: https://digital.pitts.emory.edu/s/digital-collections/item/6418

@@ -1,0 +1,171 @@
+rome_round10_sites_aemilia_four_levels:
+  kind: parts
+  site: parts
+  parts:
+  - id: level_river
+    kind: prism
+    site: raised
+    at:
+    - 0
+    - 22.5
+    plan_m:
+    - - -243.5
+      - -7.5
+    - - 243.5
+      - -7.5
+    - - 243.5
+      - 7.5
+    - - -243.5
+      - 7.5
+    h_m: 0.15
+  - id: level_river_middle
+    kind: prism
+    site: raised
+    at:
+    - 0
+    - 7.5
+    plan_m:
+    - - -243.5
+      - -7.5
+    - - 243.5
+      - -7.5
+    - - 243.5
+      - 7.5
+    - - -243.5
+      - 7.5
+    h_m: 0.15
+  - id: level_land_middle
+    kind: prism
+    site: raised
+    at:
+    - 0
+    - -7.5
+    plan_m:
+    - - -243.5
+      - -7.5
+    - - 243.5
+      - -7.5
+    - - 243.5
+      - 7.5
+    - - -243.5
+      - 7.5
+    h_m: 0.15
+  - id: level_land
+    kind: prism
+    site: raised
+    at:
+    - 0
+    - -22.5
+    plan_m:
+    - - -243.5
+      - -7.5
+    - - 243.5
+      - -7.5
+    - - 243.5
+      - 7.5
+    - - -243.5
+      - 7.5
+    h_m: 0.15
+  - kind: long_hall
+    z_m: 0.0
+    at:
+    - -238.63
+    - 22.5
+    repeat:
+      line:
+        n: 50
+        step_m:
+        - 9.74
+        - 0.0
+    w_m: 9.74
+    d_m: 15
+    h_m: 8.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+    storeys: 0
+    bay_m: 4.5
+    ground_floor: windows
+    id: vaults_river
+    atop: 0
+  - kind: long_hall
+    z_m: 0.0
+    at:
+    - -238.63
+    - 7.5
+    repeat:
+      line:
+        n: 50
+        step_m:
+        - 9.74
+        - 0.0
+    w_m: 9.74
+    d_m: 15
+    h_m: 8.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+    storeys: 0
+    bay_m: 4.5
+    ground_floor: windows
+    id: vaults_river_middle
+    atop: 1
+  - kind: long_hall
+    z_m: 0.0
+    at:
+    - -238.63
+    - -7.5
+    repeat:
+      line:
+        n: 50
+        step_m:
+        - 9.74
+        - 0.0
+    w_m: 9.74
+    d_m: 15
+    h_m: 8.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+    storeys: 0
+    bay_m: 4.5
+    ground_floor: windows
+    id: vaults_land_middle
+    atop: 2
+  - kind: long_hall
+    z_m: 0.0
+    at:
+    - -238.63
+    - -22.5
+    repeat:
+      line:
+        n: 50
+        step_m:
+        - 9.74
+        - 0.0
+    w_m: 9.74
+    d_m: 15
+    h_m: 8.0
+    roof:
+      shape: vault
+      eaves: 1
+      flared: false
+      rise: 0.5
+    storeys: 0
+    bay_m: 4.5
+    ground_floor: windows
+    id: vaults_land
+    atop: 3
+  basis: research/rome_round10_sites_aemilia_courts.md AEM. DAR Porticus Aemilia (Emporium):487x60m,50
+    transverse vaulted naves,four levels descending towards Tiber. Retained43degree
+    axis and original8m wall/vault profile. Four15m depth bands and0.15m floor skins
+    are SCHEMATIC ESTIMATES,not measured bay divisions or ancient floor heights. Each
+    full487m floor is one site; all50 vault pieces of that band share it via native
+    atop,never one DEM site per vault. Native placement heights remain present-plate
+    proxies,not surveyed ancient levels; original ID and period phases retained.

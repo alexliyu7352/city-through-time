@@ -1,0 +1,4006 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5000662,
+      41.9048552
+     ],
+     [
+      12.498564,
+      41.9037677
+     ],
+     [
+      12.4969697,
+      41.9023718
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_001",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5004027,
+      41.9021876
+     ],
+     [
+      12.4994063,
+      41.9027952
+     ],
+     [
+      12.4984019,
+      41.9036257
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_002",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4995718,
+      41.9026942
+     ],
+     [
+      12.4988884,
+      41.9022419
+     ],
+     [
+      12.4981586,
+      41.901534
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_003",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4990051,
+      41.9023191
+     ],
+     [
+      12.4984312,
+      41.9026281
+     ],
+     [
+      12.4978474,
+      41.9031403
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_004",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4990446,
+      41.9030943
+     ],
+     [
+      12.4987035,
+      41.9029375
+     ],
+     [
+      12.4984284,
+      41.9026306
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_005",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4983379,
+      41.9027101
+     ],
+     [
+      12.4980236,
+      41.9023782
+     ],
+     [
+      12.4974389,
+      41.9020412
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_006",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4996329,
+      41.9015779
+     ],
+     [
+      12.4993071,
+      41.9018965
+     ],
+     [
+      12.4987901,
+      41.9021465
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_007",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5012594,
+      41.9040144
+     ],
+     [
+      12.5005498,
+      41.9033529
+     ],
+     [
+      12.4995624,
+      41.9027
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_008",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5013797,
+      41.9029613
+     ],
+     [
+      12.5010767,
+      41.9032631
+     ],
+     [
+      12.5006632,
+      41.9034586
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_009",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5008107,
+      41.9025106
+     ],
+     [
+      12.5003896,
+      41.902719
+     ],
+     [
+      12.5000795,
+      41.9030419
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_010",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5005957,
+      41.9033956
+     ],
+     [
+      12.5000958,
+      41.9038763
+     ],
+     [
+      12.4993419,
+      41.9043308
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_011",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5000782,
+      41.9038869
+     ],
+     [
+      12.4996341,
+      41.9034985
+     ],
+     [
+      12.4989622,
+      41.9031624
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_012",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5008437,
+      41.9043073
+     ],
+     [
+      12.5004536,
+      41.9041031
+     ],
+     [
+      12.5001794,
+      41.903796
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_013",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.498781,
+      41.9039247
+     ],
+     [
+      12.4981167,
+      41.9043105
+     ],
+     [
+      12.4973902,
+      41.9049445
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_014",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4977579,
+      41.9030619
+     ],
+     [
+      12.4971718,
+      41.9035621
+     ],
+     [
+      12.4962822,
+      41.9040669
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_015",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4970003,
+      41.9036594
+     ],
+     [
+      12.4966677,
+      41.9033043
+     ],
+     [
+      12.496103,
+      41.9029826
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_016",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.497384,
+      41.9027346
+     ],
+     [
+      12.4970646,
+      41.9030437
+     ],
+     [
+      12.496605,
+      41.9032686
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_017",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4982332,
+      41.9042428
+     ],
+     [
+      12.4978511,
+      41.9038568
+     ],
+     [
+      12.4972516,
+      41.903494
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_018",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4979253,
+      41.9039317
+     ],
+     [
+      12.4975484,
+      41.9042853
+     ],
+     [
+      12.4969449,
+      41.9045918
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_019",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4994363,
+      41.9052991
+     ],
+     [
+      12.4989121,
+      41.904786
+     ],
+     [
+      12.4981356,
+      41.9042995
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_020",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4994984,
+      41.9044441
+     ],
+     [
+      12.4992846,
+      41.9046814
+     ],
+     [
+      12.4989553,
+      41.9048282
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_021",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4988169,
+      41.9047263
+     ],
+     [
+      12.4983499,
+      41.904968
+     ],
+     [
+      12.4979368,
+      41.9053773
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_lane_022",
+    "kind": "street",
+    "w_m": 4.2,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    },
+    "through": true
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4985748,
+       41.9017514
+      ],
+      [
+       12.4988612,
+       41.9015866
+      ],
+      [
+       12.4991258,
+       41.9018433
+      ],
+      [
+       12.4988395,
+       41.9020081
+      ],
+      [
+       12.4985748,
+       41.9017514
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b001_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 230.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b001",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4988621,
+       41.90154
+      ],
+      [
+       12.4985777,
+       41.9017067
+      ],
+      [
+       12.4983099,
+       41.9014517
+      ],
+      [
+       12.4985943,
+       41.901285
+      ],
+      [
+       12.4988621,
+       41.90154
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b001_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 50.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b001",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4994104,
+       41.9014417
+      ],
+      [
+       12.4991458,
+       41.9015967
+      ],
+      [
+       12.4988968,
+       41.9013595
+      ],
+      [
+       12.4991613,
+       41.9012045
+      ],
+      [
+       12.4994104,
+       41.9014417
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b001_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     33.49,
+     27.91
+    ],
+    "theta_deg": 230.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b001",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.499118,
+       41.9012197
+      ],
+      [
+       12.498904,
+       41.9013452
+      ],
+      [
+       12.4987025,
+       41.9011533
+      ],
+      [
+       12.4989166,
+       41.9010278
+      ],
+      [
+       12.499118,
+       41.9012197
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b001_04",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     27.09,
+     22.58
+    ],
+    "theta_deg": 230.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b001",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4979184,
+       41.9021492
+      ],
+      [
+       12.4981392,
+       41.9019354
+      ],
+      [
+       12.4984826,
+       41.9021334
+      ],
+      [
+       12.4982618,
+       41.9023472
+      ],
+      [
+       12.4979184,
+       41.9021492
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b002_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 215.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b002",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4985457,
+       41.9024885
+      ],
+      [
+       12.4983429,
+       41.9022783
+      ],
+      [
+       12.4986805,
+       41.9020965
+      ],
+      [
+       12.4988833,
+       41.9023066
+      ],
+      [
+       12.4985457,
+       41.9024885
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b002_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     34.54,
+     28.78
+    ],
+    "theta_deg": 142.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b002",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4975248,
+       41.90206
+      ],
+      [
+       12.4977805,
+       41.9018124
+      ],
+      [
+       12.4980457,
+       41.9019652
+      ],
+      [
+       12.49779,
+       41.9022128
+      ],
+      [
+       12.4975248,
+       41.90206
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b002_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     27.79,
+     34.74
+    ],
+    "theta_deg": 215.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b002",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4978588,
+       41.9017747
+      ],
+      [
+       12.4981701,
+       41.9015955
+      ],
+      [
+       12.498362,
+       41.9017816
+      ],
+      [
+       12.4980507,
+       41.9019607
+      ],
+      [
+       12.4978588,
+       41.9017747
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b002_04",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     26.09,
+     32.61
+    ],
+    "theta_deg": 50.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b002",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4981676,
+       41.9024581
+      ],
+      [
+       12.4983744,
+       41.9023488
+      ],
+      [
+       12.49855,
+       41.9025342
+      ],
+      [
+       12.4983432,
+       41.9026435
+      ],
+      [
+       12.4981676,
+       41.9024581
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b002_05",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     25.23,
+     21.03
+    ],
+    "theta_deg": 233.05,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b002",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4991111,
+       41.9022762
+      ],
+      [
+       12.4993508,
+       41.9020741
+      ],
+      [
+       12.4996754,
+       41.902289
+      ],
+      [
+       12.4994357,
+       41.9024911
+      ],
+      [
+       12.4991111,
+       41.9022762
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b003_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 219.87,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b003",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5002224,
+       41.9021209
+      ],
+      [
+       12.4999359,
+       41.9022856
+      ],
+      [
+       12.4996714,
+       41.9020288
+      ],
+      [
+       12.4999578,
+       41.9018641
+      ],
+      [
+       12.5002224,
+       41.9021209
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b003_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 230.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b003",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4996818,
+       41.9020056
+      ],
+      [
+       12.4994422,
+       41.9018687
+      ],
+      [
+       12.499662,
+       41.9016539
+      ],
+      [
+       12.4999016,
+       41.9017907
+      ],
+      [
+       12.4996818,
+       41.9020056
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b003_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     30.04,
+     25.03
+    ],
+    "theta_deg": 305.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b003",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4996707,
+       41.9025776
+      ],
+      [
+       12.4995163,
+       41.9024363
+      ],
+      [
+       12.4997433,
+       41.9022979
+      ],
+      [
+       12.4998977,
+       41.9024392
+      ],
+      [
+       12.4996707,
+       41.9025776
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b003_04",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     24.31,
+     20.26
+    ],
+    "theta_deg": 139.11,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b003",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5003218,
+       41.9026744
+      ],
+      [
+       12.5001221,
+       41.9024493
+      ],
+      [
+       12.5004837,
+       41.9022703
+      ],
+      [
+       12.5006834,
+       41.9024954
+      ],
+      [
+       12.5003218,
+       41.9026744
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b004_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 144.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b004",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4996798,
+       41.9027451
+      ],
+      [
+       12.4999114,
+       41.9025497
+      ],
+      [
+       12.5002254,
+       41.9027573
+      ],
+      [
+       12.4999938,
+       41.9029527
+      ],
+      [
+       12.4996798,
+       41.9027451
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b004_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     34.8,
+     29.0
+    ],
+    "theta_deg": 219.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b004",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4973867,
+       41.9025204
+      ],
+      [
+       12.4976617,
+       41.9023452
+      ],
+      [
+       12.4979432,
+       41.9025917
+      ],
+      [
+       12.4976683,
+       41.9027669
+      ],
+      [
+       12.4973867,
+       41.9025204
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b005_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 227.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b005",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4971584,
+       41.9023219
+      ],
+      [
+       12.4974234,
+       41.9020653
+      ],
+      [
+       12.4976982,
+       41.9022237
+      ],
+      [
+       12.4974332,
+       41.9024802
+      ],
+      [
+       12.4971584,
+       41.9023219
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b005_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     28.8,
+     36.0
+    ],
+    "theta_deg": 35.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b005",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4975816,
+       41.9028701
+      ],
+      [
+       12.497897,
+       41.902669
+      ],
+      [
+       12.4981123,
+       41.9028575
+      ],
+      [
+       12.4977969,
+       41.9030586
+      ],
+      [
+       12.4975816,
+       41.9028701
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b005_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     27.53,
+     34.41
+    ],
+    "theta_deg": 227.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b005",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4989657,
+       41.9029148
+      ],
+      [
+       12.4986975,
+       41.9027338
+      ],
+      [
+       12.4989883,
+       41.9024934
+      ],
+      [
+       12.4992565,
+       41.9026744
+      ],
+      [
+       12.4989657,
+       41.9029148
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b006_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 130.43,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b006",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4966756,
+       41.9030528
+      ],
+      [
+       12.4964776,
+       41.9028269
+      ],
+      [
+       12.4968404,
+       41.9026493
+      ],
+      [
+       12.4970385,
+       41.9028752
+      ],
+      [
+       12.4966756,
+       41.9030528
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b007_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 145.1,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b007",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4969314,
+       41.9027423
+      ],
+      [
+       12.4971633,
+       41.9025945
+      ],
+      [
+       12.4973215,
+       41.9027331
+      ],
+      [
+       12.4970897,
+       41.9028809
+      ],
+      [
+       12.4969314,
+       41.9027423
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b007_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     20.24,
+     25.3
+    ],
+    "theta_deg": 47.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b007",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4961908,
+       41.9029618
+      ],
+      [
+       12.4963401,
+       41.9028155
+      ],
+      [
+       12.4965751,
+       41.9029493
+      ],
+      [
+       12.4964258,
+       41.9030956
+      ],
+      [
+       12.4961908,
+       41.9029618
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b007_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     24.52,
+     20.43
+    ],
+    "theta_deg": 215.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b007",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4967457,
+       41.9025297
+      ],
+      [
+       12.4969335,
+       41.90241
+      ],
+      [
+       12.4971258,
+       41.9025784
+      ],
+      [
+       12.496938,
+       41.9026981
+      ],
+      [
+       12.4967457,
+       41.9025297
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b007_04",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     24.59,
+     20.49
+    ],
+    "theta_deg": 47.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b007",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5009578,
+       41.9031709
+      ],
+      [
+       12.5006686,
+       41.9030089
+      ],
+      [
+       12.5009288,
+       41.9027496
+      ],
+      [
+       12.501218,
+       41.9029116
+      ],
+      [
+       12.5009578,
+       41.9031709
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b008_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 125.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b008",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5005607,
+       41.9029631
+      ],
+      [
+       12.5004026,
+       41.9027848
+      ],
+      [
+       12.5006889,
+       41.9026431
+      ],
+      [
+       12.500847,
+       41.9028214
+      ],
+      [
+       12.5005607,
+       41.9029631
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b008_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     28.51,
+     23.75
+    ],
+    "theta_deg": 324.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b008",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5001419,
+       41.9030186
+      ],
+      [
+       12.5002908,
+       41.9028929
+      ],
+      [
+       12.5004927,
+       41.9030264
+      ],
+      [
+       12.5003438,
+       41.903152
+      ],
+      [
+       12.5001419,
+       41.9030186
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b008_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     22.37,
+     18.64
+    ],
+    "theta_deg": 219.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b008",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4981127,
+       41.9031711
+      ],
+      [
+       12.4983022,
+       41.9029411
+      ],
+      [
+       12.4986716,
+       41.903111
+      ],
+      [
+       12.4984822,
+       41.9033409
+      ],
+      [
+       12.4981127,
+       41.9031711
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b009_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 209.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b009",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4984453,
+       41.9029887
+      ],
+      [
+       12.4982275,
+       41.9028502
+      ],
+      [
+       12.4983759,
+       41.9027201
+      ],
+      [
+       12.4985936,
+       41.9028586
+      ],
+      [
+       12.4984453,
+       41.9029887
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b009_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     18.99,
+     23.73
+    ],
+    "theta_deg": 308.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b009",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4972332,
+       41.9033855
+      ],
+      [
+       12.4969471,
+       41.9032204
+      ],
+      [
+       12.4972122,
+       41.9029639
+      ],
+      [
+       12.4974983,
+       41.903129
+      ],
+      [
+       12.4972332,
+       41.9033855
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b010_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 306.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b010",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4968624,
+       41.9034065
+      ],
+      [
+       12.4970593,
+       41.9033036
+      ],
+      [
+       12.4972246,
+       41.9034801
+      ],
+      [
+       12.4970278,
+       41.903583
+      ],
+      [
+       12.4968624,
+       41.9034065
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b010_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     23.93,
+     19.94
+    ],
+    "theta_deg": 233.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b010",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4992965,
+       41.9031318
+      ],
+      [
+       12.4994976,
+       41.9029074
+      ],
+      [
+       12.499858,
+       41.9030877
+      ],
+      [
+       12.4996569,
+       41.9033121
+      ],
+      [
+       12.4992965,
+       41.9031318
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b011_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 212.14,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b011",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4997852,
+       41.9034193
+      ],
+      [
+       12.5000247,
+       41.9032171
+      ],
+      [
+       12.5003496,
+       41.9034318
+      ],
+      [
+       12.50011,
+       41.9036341
+      ],
+      [
+       12.4997852,
+       41.9034193
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b011_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 39.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b011",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5017544,
+       41.9034719
+      ],
+      [
+       12.5014679,
+       41.9036366
+      ],
+      [
+       12.5012033,
+       41.9033798
+      ],
+      [
+       12.5014898,
+       41.9032151
+      ],
+      [
+       12.5017544,
+       41.9034719
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b012_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 230.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b012",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4960281,
+       41.9035128
+      ],
+      [
+       12.4963242,
+       41.903358
+      ],
+      [
+       12.4965729,
+       41.9036235
+      ],
+      [
+       12.4962767,
+       41.9037783
+      ],
+      [
+       12.4960281,
+       41.9035128
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b013_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 53.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b013",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4958253,
+       41.9032941
+      ],
+      [
+       12.4960883,
+       41.9030364
+      ],
+      [
+       12.4963643,
+       41.9031936
+      ],
+      [
+       12.4961013,
+       41.9034513
+      ],
+      [
+       12.4958253,
+       41.9032941
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b013_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     28.8,
+     36.0
+    ],
+    "theta_deg": 35.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b013",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4960964,
+       41.9036026
+      ],
+      [
+       12.4959114,
+       41.9037421
+      ],
+      [
+       12.4956032,
+       41.9035141
+      ],
+      [
+       12.4957882,
+       41.9033745
+      ],
+      [
+       12.4960964,
+       41.9036026
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b013_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     21.82
+    ],
+    "theta_deg": 223.05,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b013",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4964399,
+       41.9034586
+      ],
+      [
+       12.4966553,
+       41.903346
+      ],
+      [
+       12.496904,
+       41.9036115
+      ],
+      [
+       12.4966886,
+       41.9037241
+      ],
+      [
+       12.4964399,
+       41.9034586
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b013_04",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     21.82
+    ],
+    "theta_deg": 53.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b013",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4962364,
+       41.9040307
+      ],
+      [
+       12.4960943,
+       41.9038909
+      ],
+      [
+       12.4963188,
+       41.9037635
+      ],
+      [
+       12.4964609,
+       41.9039033
+      ],
+      [
+       12.4962364,
+       41.9040307
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b013_05",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     23.4,
+     19.5
+    ],
+    "theta_deg": 141.11,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b013",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4977262,
+       41.903663
+      ],
+      [
+       12.4979538,
+       41.9034532
+      ],
+      [
+       12.4982908,
+       41.9036572
+      ],
+      [
+       12.4980633,
+       41.903867
+      ],
+      [
+       12.4977262,
+       41.903663
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b014_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 217.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b014",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4982907,
+       41.9041137
+      ],
+      [
+       12.4980689,
+       41.9039005
+      ],
+      [
+       12.4984114,
+       41.9037016
+      ],
+      [
+       12.4986332,
+       41.9039148
+      ],
+      [
+       12.4982907,
+       41.9041137
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b014_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 140.47,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b014",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.497629,
+       41.9036748
+      ],
+      [
+       12.497357,
+       41.9034969
+      ],
+      [
+       12.4976428,
+       41.9032531
+      ],
+      [
+       12.4979147,
+       41.903431
+      ],
+      [
+       12.497629,
+       41.9036748
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b014_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 309.53,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b014",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4984707,
+       41.9036352
+      ],
+      [
+       12.498771,
+       41.9034437
+      ],
+      [
+       12.4989761,
+       41.9036232
+      ],
+      [
+       12.4986757,
+       41.9038147
+      ],
+      [
+       12.4984707,
+       41.9036352
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b015_04",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     26.21,
+     32.77
+    ],
+    "theta_deg": 227.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b015",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4990335,
+       41.9035465
+      ],
+      [
+       12.4987682,
+       41.9033675
+      ],
+      [
+       12.4989599,
+       41.903209
+      ],
+      [
+       12.4992251,
+       41.903388
+      ],
+      [
+       12.4990335,
+       41.9035465
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b015_05",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     23.73,
+     29.66
+    ],
+    "theta_deg": 310.43,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b015",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5004322,
+       41.903863
+      ],
+      [
+       12.5007143,
+       41.9036942
+      ],
+      [
+       12.5009856,
+       41.9039471
+      ],
+      [
+       12.5007035,
+       41.9041159
+      ],
+      [
+       12.5004322,
+       41.903863
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b016_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 49.63,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b016",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4970618,
+       41.9042141
+      ],
+      [
+       12.4968432,
+       41.9039991
+      ],
+      [
+       12.4971886,
+       41.9038031
+      ],
+      [
+       12.4974073,
+       41.9040181
+      ],
+      [
+       12.4970618,
+       41.9042141
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b017_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 321.11,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b017",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4965906,
+       41.9043112
+      ],
+      [
+       12.4963743,
+       41.9040985
+      ],
+      [
+       12.496716,
+       41.9039046
+      ],
+      [
+       12.4969323,
+       41.9041173
+      ],
+      [
+       12.4965906,
+       41.9043112
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b017_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     35.61,
+     29.67
+    ],
+    "theta_deg": 321.11,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b017",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4969308,
+       41.9045681
+      ],
+      [
+       12.4966869,
+       41.9043001
+      ],
+      [
+       12.4969739,
+       41.9041544
+      ],
+      [
+       12.4972177,
+       41.9044224
+      ],
+      [
+       12.4969308,
+       41.9045681
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b017_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     28.8,
+     36.0
+    ],
+    "theta_deg": 144.12,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b017",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.49766,
+       41.9041325
+      ],
+      [
+       12.4973396,
+       41.9039419
+      ],
+      [
+       12.4975437,
+       41.9037504
+      ],
+      [
+       12.4978641,
+       41.903941
+      ],
+      [
+       12.49766,
+       41.9041325
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b017_04",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     27.19,
+     33.99
+    ],
+    "theta_deg": 126.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b017",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.497124,
+       41.9037381
+      ],
+      [
+       12.4972964,
+       41.9035792
+      ],
+      [
+       12.4975517,
+       41.9037337
+      ],
+      [
+       12.4973793,
+       41.9038927
+      ],
+      [
+       12.497124,
+       41.9037381
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b017_05",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     27.27,
+     22.72
+    ],
+    "theta_deg": 37.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b017",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4973503,
+       41.9043234
+      ],
+      [
+       12.4972071,
+       41.9041661
+      ],
+      [
+       12.4974598,
+       41.9040377
+      ],
+      [
+       12.497603,
+       41.904195
+      ],
+      [
+       12.4973503,
+       41.9043234
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b017_06",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     25.36,
+     21.13
+    ],
+    "theta_deg": 144.12,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b017",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4969458,
+       41.9039335
+      ],
+      [
+       12.4968088,
+       41.9037986
+      ],
+      [
+       12.4970253,
+       41.9036757
+      ],
+      [
+       12.4971624,
+       41.9038106
+      ],
+      [
+       12.4969458,
+       41.9039335
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b017_07",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     22.57,
+     18.81
+    ],
+    "theta_deg": 321.11,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b017",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4998261,
+       41.9043461
+      ],
+      [
+       12.5000335,
+       41.9041249
+      ],
+      [
+       12.5003888,
+       41.9043109
+      ],
+      [
+       12.5001813,
+       41.904532
+      ],
+      [
+       12.4998261,
+       41.9043461
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b018_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 33.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b018",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4998653,
+       41.904641
+      ],
+      [
+       12.5000665,
+       41.9044859
+      ],
+      [
+       12.5003155,
+       41.9046662
+      ],
+      [
+       12.5001144,
+       41.9048213
+      ],
+      [
+       12.4998653,
+       41.904641
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b018_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     28.78,
+     23.98
+    ],
+    "theta_deg": 222.43,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b018",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4996488,
+       41.9044918
+      ],
+      [
+       12.4994505,
+       41.9043082
+      ],
+      [
+       12.4996471,
+       41.9041897
+      ],
+      [
+       12.4998454,
+       41.9043733
+      ],
+      [
+       12.4996488,
+       41.9044918
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b018_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     20.96,
+     26.2
+    ],
+    "theta_deg": 319.42,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b018",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5003552,
+       41.9043826
+      ],
+      [
+       12.5005447,
+       41.9041805
+      ],
+      [
+       12.5007611,
+       41.9042938
+      ],
+      [
+       12.5005715,
+       41.9044958
+      ],
+      [
+       12.5003552,
+       41.9043826
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b018_04",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     21.93,
+     27.41
+    ],
+    "theta_deg": 33.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b018",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4999733,
+       41.9039911
+      ],
+      [
+       12.5001727,
+       41.9038917
+      ],
+      [
+       12.5003323,
+       41.9040704
+      ],
+      [
+       12.5001329,
+       41.9041698
+      ],
+      [
+       12.4999733,
+       41.9039911
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b018_05",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     23.87,
+     19.89
+    ],
+    "theta_deg": 54.63,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b018",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4985463,
+       41.9043733
+      ],
+      [
+       12.4987786,
+       41.9041664
+      ],
+      [
+       12.499111,
+       41.9043746
+      ],
+      [
+       12.4988787,
+       41.9045815
+      ],
+      [
+       12.4985463,
+       41.9043733
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b019_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 218.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b019",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4991279,
+       41.904723
+      ],
+      [
+       12.4989453,
+       41.9046312
+      ],
+      [
+       12.499148,
+       41.9044063
+      ],
+      [
+       12.4993305,
+       41.904498
+      ],
+      [
+       12.4991279,
+       41.904723
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b019_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     30.12,
+     18.26
+    ],
+    "theta_deg": 122.27,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b019",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4975007,
+       41.9046671
+      ],
+      [
+       12.4972975,
+       41.9044437
+      ],
+      [
+       12.4976562,
+       41.9042615
+      ],
+      [
+       12.4978594,
+       41.9044849
+      ],
+      [
+       12.4975007,
+       41.9046671
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b020_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 324.12,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b020",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4979584,
+       41.9044051
+      ],
+      [
+       12.4976634,
+       41.9042164
+      ],
+      [
+       12.4978654,
+       41.9040401
+      ],
+      [
+       12.4981605,
+       41.9042288
+      ],
+      [
+       12.4979584,
+       41.9044051
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b020_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     25.78,
+     32.23
+    ],
+    "theta_deg": 128.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b020",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4972245,
+       41.9048025
+      ],
+      [
+       12.4970232,
+       41.9045814
+      ],
+      [
+       12.4972601,
+       41.9044611
+      ],
+      [
+       12.4974613,
+       41.9046822
+      ],
+      [
+       12.4972245,
+       41.9048025
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b020_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     23.76,
+     29.7
+    ],
+    "theta_deg": 324.12,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b020",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4978948,
+       41.9047032
+      ],
+      [
+       12.498127,
+       41.9044963
+      ],
+      [
+       12.4984594,
+       41.9047045
+      ],
+      [
+       12.4982271,
+       41.9049115
+      ],
+      [
+       12.4978948,
+       41.9047032
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b021_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 38.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b021",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4979022,
+       41.9052159
+      ],
+      [
+       12.4976136,
+       41.9050533
+      ],
+      [
+       12.4978748,
+       41.9047946
+      ],
+      [
+       12.4981634,
+       41.9049572
+      ],
+      [
+       12.4979022,
+       41.9052159
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b021_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 125.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b021",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4995493,
+       41.9050929
+      ],
+      [
+       12.4992495,
+       41.9049421
+      ],
+      [
+       12.4994917,
+       41.9046733
+      ],
+      [
+       12.4997915,
+       41.904824
+      ],
+      [
+       12.4995493,
+       41.9050929
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b022_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 302.27,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b022",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4987004,
+       41.9055565
+      ],
+      [
+       12.4984117,
+       41.905394
+      ],
+      [
+       12.4986729,
+       41.9051352
+      ],
+      [
+       12.4989615,
+       41.9052978
+      ],
+      [
+       12.4987004,
+       41.9055565
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b023_01",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     36.0,
+     30.0
+    ],
+    "theta_deg": 305.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b023",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4985175,
+       41.9049347
+      ],
+      [
+       12.498795,
+       41.9047765
+      ],
+      [
+       12.4990491,
+       41.9050253
+      ],
+      [
+       12.4987716,
+       41.9051835
+      ],
+      [
+       12.4985175,
+       41.9049347
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b023_02",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     34.76,
+     28.97
+    ],
+    "theta_deg": 50.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b023",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4988402,
+       41.9057035
+      ],
+      [
+       12.4986213,
+       41.9058685
+      ],
+      [
+       12.4983561,
+       41.9056723
+      ],
+      [
+       12.498575,
+       41.9055072
+      ],
+      [
+       12.4988402,
+       41.9057035
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b023_03",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     30.97,
+     25.81
+    ],
+    "theta_deg": 223.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b023",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4982224,
+       41.9055511
+      ],
+      [
+       12.4979934,
+       41.9054221
+      ],
+      [
+       12.4982006,
+       41.9052168
+      ],
+      [
+       12.4984297,
+       41.9053458
+      ],
+      [
+       12.4982224,
+       41.9055511
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b023_04",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     28.57,
+     23.81
+    ],
+    "theta_deg": 305.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b023",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.498935,
+       41.9052615
+      ],
+      [
+       12.4991682,
+       41.9051286
+      ],
+      [
+       12.4993817,
+       41.9053376
+      ],
+      [
+       12.4991485,
+       41.9054705
+      ],
+      [
+       12.498935,
+       41.9052615
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b023_05",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     29.21,
+     24.34
+    ],
+    "theta_deg": 50.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b023",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4984438,
+       41.9053301
+      ],
+      [
+       12.4981912,
+       41.9051879
+      ],
+      [
+       12.4984198,
+       41.9049614
+      ],
+      [
+       12.4986724,
+       41.9051037
+      ],
+      [
+       12.4984438,
+       41.9053301
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b023_06",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     31.5,
+     26.25
+    ],
+    "theta_deg": 305.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b023",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4987882,
+       41.9054793
+      ],
+      [
+       12.4990089,
+       41.9053535
+      ],
+      [
+       12.4991436,
+       41.9054854
+      ],
+      [
+       12.4989229,
+       41.9056112
+      ],
+      [
+       12.4987882,
+       41.9054793
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome04_lateantique_pre306_b023_07",
+    "kind": "block",
+    "typ": "subura_court_3",
+    "lot": [
+     18.43,
+     23.04
+    ],
+    "theta_deg": 50.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome04_lateantique_pre306_b023",
+     "buildings": 1,
+     "basis": "LA18 TESS13255 and LA16: earlier urban buildings were acquired/removed for the298–306 baths. Exact former lots and floors are unknown: native source-constrained retained3-level court comparison, not an excavated pre298 cadastre. The later bath site comes from citygen.landmark_site, not a separate buffer rectangle."
+    }
+   }
+  }
+ ],
+ "provenance": {
+  "source": "rome04_lateantique_pre306_parcels.geojson",
+  "basis": "Formal active trace omits only five native zero-house residual block inputs (b015_01,02,03,06,07). Original geometry/source remains in the source trace; no houses or geometry are added. Exact pre-bath lots are estimates, LA16/LA18, not a cadastral count."
+ }
+}

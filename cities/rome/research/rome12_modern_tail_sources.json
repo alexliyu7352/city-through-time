@@ -1,0 +1,72 @@
+[
+  {
+    "file": "cities/rome/research/model_reference/rome12_modern/pia2024/designer.html",
+    "url": "https://via.it/portfolio/piazza-pia-sottovia-e-nuovo-spazio-urbano/",
+    "bytes": 124774,
+    "sha256": "f05c33c54b2c82b6703c11e86fd0fce6556270a4b41166d9aa9187a123de0161"
+  },
+  {
+    "file": "cities/rome/research/model_reference/rome12_modern/pia2024/general_plan.jpg",
+    "url": "https://via.it/wp-content/uploads/2024/09/piazza-pia_-6.jpg",
+    "bytes": 788813,
+    "sha256": "c783ab4400e91538697310a63ffcaab92b5f3e5cee34f7dbe89fc982ade0fdfc",
+    "size": [
+      1920,
+      1611
+    ]
+  },
+  {
+    "file": "cities/rome/research/model_reference/rome12_modern/pia2024/designer_detail.jpg",
+    "url": "https://via.it/wp-content/uploads/2024/09/piazza-pia_09_T00PS00ARCPL04A_Piazza-Lungo-Tevere-Vaticano-Pianta-di-dettaglio.jpg",
+    "bytes": 670518,
+    "sha256": "a6fd8091da7a00c95f511c587efd0238d78c54682e42e39d9bb4623e0dc27e6c",
+    "size": [
+      1554,
+      1321
+    ]
+  },
+  {
+    "file": "cities/rome/research/model_reference/rome12_modern/pia2024/anas_complete.html",
+    "url": "https://www.fsitaliane.it/it/media/comunicati-stampa/2024/12/23/giubileo-anas-ultimati-lavori-piazza-pia.html",
+    "bytes": 136024,
+    "sha256": "77b8287eb2e0a6031829baa508915ac7d7fc7aad95d6102befe8b589fe0758ed"
+  },
+  {
+    "file": "cities/rome/research/model_reference/rome12_modern/pia2024/mobility.html",
+    "url": "https://romamobilita.it/piani-e-progetti/piazza-pia/",
+    "bytes": 386262,
+    "sha256": "7d342baa9f1b9ee4f78a77b1e86df3e8c8d7485ec27fda2a8616314e4f2bb471"
+  },
+  {
+    "file": "cities/rome/research/model_reference/rome12_modern/pia2024/completed_fountains2.jpg",
+    "url": "https://via.it/wp-content/uploads/2024/09/low-_0000_GP6C5257-copia.jpg-1024x683.jpg",
+    "bytes": 223683,
+    "sha256": "bf248f1ad9448f403a61e103bd4b729da24848047990004688cd5b578609c3b3",
+    "size": [
+      1024,
+      683
+    ]
+  },
+  {
+    "file": "cities/rome/research/model_reference/rome12_modern/pia2024/completed_fountain.jpg",
+    "url": "https://via.it/wp-content/uploads/2024/09/low-_0003_GP6C5330-copia.jpg-1024x683.jpg",
+    "bytes": 158716,
+    "sha256": "41068635a7ba6c93f36b19039a4a97036c5cd9578ae99c22e2efe070754b0610",
+    "size": [
+      1024,
+      683
+    ],
+    "actual_subject": "Vehicle ramp, not a fountain; file retained, not used to size fountain."
+  },
+  {
+    "file": "cities/rome/research/model_reference/rome12_modern/pia2024/completed_square.jpg",
+    "url": "https://via.it/wp-content/uploads/2024/09/low-_0004_GP6C5330_1-copia.jpg-1024x683.jpg",
+    "bytes": 112208,
+    "sha256": "418ddfad7adbc4d9a20c4a8b36c2aa134982c17ed5a9f9b1afa726637dc56405",
+    "size": [
+      1024,
+      683
+    ],
+    "actual_subject": "Inside completed tunnel, not the square; file retained, not used to reconstruct underground geometry."
+  }
+]

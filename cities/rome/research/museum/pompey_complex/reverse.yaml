@@ -1,0 +1,26 @@
+# Camera: az120, el28, d650m, fov42; same unchanged Curia origin and full complex.
+# Make no image before the root's native multi-landmark build and bright true-height review.
+place: "The connected Theatre of Pompey, porticoes and Curia of Pompey in Rome's Campus Martius, viewed from the northeast toward the theatre at the western end"
+when: "44 BCE before Caesar's assassination, a clear ordinary daytime scene, eleven years after the complex opened in 55 BCE"
+picture: |
+  Edit the attached native museum reference at its exact northeast viewpoint. Preserve every visible roof, wall, column, doorway and seating contour. This view should explain the same connected complex from the opposite side, with the theatre farther west and the independent meeting hall at the eastern end. Do not rotate the theatre or shift the porticoes to create a cleaner axis.
+  Keep the theatre as the reference's semicircular east-facing seating, with the existing straight stage building. The source model uses a schematic 36 m height, a 44 m orchestra and simplified exterior divisions. Treat these as the model's estimates; do not replace them with the more elaborate appearance of an imperial theatre. Use subdued pale stone and plaster surface tones, retaining the exact plain stage silhouette.
+  The nearer hall remains a separate almost square volume, with its existing low pitched roof and whatever walls or entrance are visible from this camera. The entrance is on its garden-facing western side: do not add a second front door on the eastern rear merely to make this angle look welcoming. Use muted terracotta tiles and restrained pale plaster as comparative material estimates.
+  Follow the lower portico roofs around the open garden exactly as shown. Leave the existing small assembly seams and the theatre-stage gap unchanged. The gap is a model approximation, not an invitation to invent a monumental gate or a new building.
+  Fill empty level ground softly with compacted-earth tones and a little low surface greenery inside unobstructed garden areas, without exact rectangular pools, planted beds, new tree rows or statuary. The ancient floor level and exact planting scheme are not known. Fade the distant level ground naturally toward a pale clear sky, without a visible platform edge or a rise in terrain invented from the display stand.
+  A few distant people in simple tunics and cloaks use the covered walks. Their small scale should help read the difference between hall and portico heights. Nobody faces the viewer or plays a named historical role. Keep buildings sharp across the view, in natural daylight with soft shadows.
+avoid: >-
+  changing the camera, lens, crop, geometry or relative positions; a new axis or connected stage-portico bridge;
+  a circular amphitheatre or Colosseum; restored Venus temple, ornate scaenae frons or later curved recesses;
+  new doors or windows on the hall's rear; temple facade, Senate furniture, cutaway roof or transparent walls;
+  Augustan closure block, later latrines; modern Largo Argentina streets; an invented central covered avenue;
+  new pools, fountains, sculptural collections, towering trees or exact double groves; added housing or temples;
+  Caesar, Pompey or identifiable conspirators, staged violence; artificial cliff, moat, plinth rim or excavation trench;
+  modern objects, text, watermark, border
+sources:
+  - "research/museum/pompey_complex/sources.md: seven exact canonical matchers, actual component bounds and existing alignment/gap limitations; no source geometry may be moved"
+  - "M01/M02: official Curia account and Marra et al. 2021 pp4–5, the eastern independent hall and the complex's 55 BCE opening"
+  - "M03: Monterroso Checa 2022 pp300–301 figs17/18, preserve the Pompeian hall and omit later closure/latrines; original facade remains uncertain"
+  - "M04/M05: Vitruvius5.9 covered walks and green open space; Fano dimensions in5.1 are comparative estimates, not Pompeian measurements"
+  - "M06: Stanford fragment39ac, the later stone plan's features have disputed meanings and are not a Republican planting plan"
+  - "M07/M08: existing DAR syntheses for theatre direction, portico relationship and phase limits; colour, materials, vegetation and ordinary small figures are explicitly illustrative estimates"

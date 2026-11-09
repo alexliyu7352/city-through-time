@@ -1,0 +1,1313 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_via_lata",
+    "kind": "street",
+    "model": {
+     "w_m": 8
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       872.8873381043668,
+       773.3779235824477
+      ],
+      [
+       853.2750550386263,
+       658.9729390325956
+      ],
+      [
+       827.1253442844609,
+       518.4182437283453
+      ],
+      [
+       761.7510673986981,
+       315.75798538303934
+      ],
+      [
+       725.7952151116333,
+       165.39714854536578
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4822,
+      41.8952
+     ],
+     [
+      12.4816,
+      41.8987
+     ],
+     [
+      12.4808,
+      41.903
+     ],
+     [
+      12.4788,
+      41.9092
+     ],
+     [
+      12.4777,
+      41.9138
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_alta_semita",
+    "kind": "street",
+    "model": {
+     "w_m": 7
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       1006.9046057199594,
+       708.0036466971505
+      ],
+      [
+       1160.5341564012342,
+       596.86737599154
+      ],
+      [
+       1323.9698486154084,
+       475.92496375297196
+      ],
+      [
+       1487.4055408295244,
+       354.98255151417106
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4863,
+      41.8972
+     ],
+     [
+      12.491,
+      41.9006
+     ],
+     [
+      12.496,
+      41.9043
+     ],
+     [
+      12.501,
+      41.908
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_vicus_patricius",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       1160.5341564012342,
+       779.9153512713965
+      ],
+      [
+       1301.0888517054264,
+       681.8539359425195
+      ],
+      [
+       1438.3748331652605,
+       551.1053821712267
+      ],
+      [
+       1549.5111038709292,
+       443.2378253098577
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.491,
+      41.895
+     ],
+     [
+      12.4953,
+      41.898
+     ],
+     [
+      12.4995,
+      41.902
+     ],
+     [
+      12.5029,
+      41.9053
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_clivus_suburanus",
+    "kind": "street",
+    "model": {
+     "w_m": 7
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       1072.2788826056058,
+       819.1399174025282
+      ],
+      [
+       1160.5341564012342,
+       779.9153512713965
+      ],
+      [
+       1350.1195593696903,
+       753.7656405169982
+      ],
+      [
+       1529.8988208051887,
+       701.4662190084346
+      ],
+      [
+       1726.0216514621861,
+       616.4796590567566
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4883,
+      41.8938
+     ],
+     [
+      12.491,
+      41.895
+     ],
+     [
+      12.4968,
+      41.8958
+     ],
+     [
+      12.5023,
+      41.8974
+     ],
+     [
+      12.5083,
+      41.9
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_argiletum",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       987.2923226542189,
+       851.8270558451768
+      ],
+      [
+       1052.6665995398653,
+       832.2147727797274
+      ],
+      [
+       1072.2788826056058,
+       819.1399174025282
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4857,
+      41.8928
+     ],
+     [
+      12.4877,
+      41.8934
+     ],
+     [
+      12.4883,
+      41.8938
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_via_sacra_east",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       1078.8163102941471,
+       920.470046575414
+      ],
+      [
+       1118.0408764255699,
+       936.8136157973204
+      ],
+      [
+       1153.9967287126929,
+       953.1571850185283
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4885,
+      41.8907
+     ],
+     [
+      12.4897,
+      41.8902
+     ],
+     [
+      12.4908,
+      41.8897
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_via_sacra_forum",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       982.6344054261572,
+       877.519146661507
+      ],
+      [
+       1013.4420334085589,
+       877.9767665998079
+      ],
+      [
+       1042.8604580070241,
+       897.589049665723
+      ],
+      [
+       1078.8163102941471,
+       920.470046575414
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4855575,
+      41.892014
+     ],
+     [
+      12.4865,
+      41.892
+     ],
+     [
+      12.4874,
+      41.8914
+     ],
+     [
+      12.4885,
+      41.8907
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_celian_east",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       1291.282710172527,
+       1090.4431664780714
+      ],
+      [
+       1330.5072763039498,
+       1008.7253203708678
+      ],
+      [
+       1448.1809746981598,
+       976.0381819282193
+      ],
+      [
+       1585.466956157994,
+       976.0381819279864
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.495,
+      41.8855
+     ],
+     [
+      12.4962,
+      41.888
+     ],
+     [
+      12.4998,
+      41.889
+     ],
+     [
+      12.504,
+      41.889
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_esquiline_axis",
+    "kind": "street",
+    "model": {
+     "w_m": 7
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       1180.1464394669747,
+       894.3203358212486
+      ],
+      [
+       1225.9084332869388,
+       845.2896281569265
+      ],
+      [
+       1402.4189808781957,
+       792.9902066485956
+      ],
+      [
+       1614.8853807566338,
+       704.7349328531418
+      ],
+      [
+       1824.0830667907721,
+       672.0477944095619
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4916,
+      41.8915
+     ],
+     [
+      12.493,
+      41.893
+     ],
+     [
+      12.4984,
+      41.8946
+     ],
+     [
+      12.5049,
+      41.8973
+     ],
+     [
+      12.5113,
+      41.8983
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_oppian_south",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       1153.9967287126929,
+       953.1571850185283
+      ],
+      [
+       1258.5955717297038,
+       953.1571850182954
+      ],
+      [
+       1405.6876947224955,
+       936.8136157968547
+      ],
+      [
+       1585.466956157994,
+       897.589049665723
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4908,
+      41.8897
+     ],
+     [
+      12.494,
+      41.8897
+     ],
+     [
+      12.4985,
+      41.8902
+     ],
+     [
+      12.504,
+      41.8914
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_vicus_tuscus_south_link",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       935.9996650098474,
+       933.8750420508441
+      ],
+      [
+       905.57447654719,
+       954.7915419405326
+      ],
+      [
+       882.6934796372661,
+       969.5007542397361
+      ],
+      [
+       859.8124827272841,
+       982.5756096164696
+      ],
+      [
+       869.6186242601252,
+       1038.1437449699733
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4841308,
+      41.8902899
+     ],
+     [
+      12.4832,
+      41.88965
+     ],
+     [
+      12.4825,
+      41.8892
+     ],
+     [
+      12.4818,
+      41.8888
+     ],
+     [
+      12.4821,
+      41.8871
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_circus_north_edge",
+    "kind": "street",
+    "model": {
+     "w_m": 7
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       859.8124827272841,
+       982.5756096164696
+      ],
+      [
+       902.3057627028902,
+       1034.875031125266
+      ],
+      [
+       1033.0543164742412,
+       1103.5180218552705
+      ],
+      [
+       1180.1464394669747,
+       1028.337603436783
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4818,
+      41.8888
+     ],
+     [
+      12.4831,
+      41.8872
+     ],
+     [
+      12.4871,
+      41.8851
+     ],
+     [
+      12.4916,
+      41.8874
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_vicus_armilustri",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       869.6186242601252,
+       1038.1437449699733
+      ],
+      [
+       846.737627350085,
+       1116.5928772324696
+      ],
+      [
+       843.4689135057852,
+       1185.2358679622412
+      ],
+      [
+       882.6934796372079,
+       1227.7291479380801
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4821,
+      41.8871
+     ],
+     [
+      12.4814,
+      41.8847
+     ],
+     [
+      12.4813,
+      41.8826
+     ],
+     [
+      12.4825,
+      41.8813
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_via_ostiensis",
+    "kind": "street",
+    "model": {
+     "w_m": 8
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       800.975633530179,
+       972.7694680839777
+      ],
+      [
+       755.2136397101567,
+       1061.0247418796644
+      ],
+      [
+       768.2884950872394,
+       1198.310723339906
+      ],
+      [
+       823.8566304401029,
+       1335.596704799449
+      ],
+      [
+       843.4689135058434,
+       1410.7771232181694
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.48,
+      41.8891
+     ],
+     [
+      12.4786,
+      41.8864
+     ],
+     [
+      12.479,
+      41.8822
+     ],
+     [
+      12.4807,
+      41.878
+     ],
+     [
+      12.4813,
+      41.8757
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_emporium_axis",
+    "kind": "street",
+    "model": {
+     "w_m": 7
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       768.2884950872394,
+       1198.310723339906
+      ],
+      [
+       689.8393628245103,
+       1230.9978617825545
+      ],
+      [
+       591.7779474959825,
+       1302.9095663568005
+      ],
+      [
+       565.6282367417007,
+       1348.671560176881
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.479,
+      41.8822
+     ],
+     [
+      12.4766,
+      41.8812
+     ],
+     [
+      12.4736,
+      41.879
+     ],
+     [
+      12.4728,
+      41.8776
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_campus_tiber_route",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       800.975633530179,
+       972.7694680839777
+      ],
+      [
+       771.5572089315974,
+       910.6639050426893
+      ],
+      [
+       725.7952151116333,
+       877.9767665995751
+      ],
+      [
+       617.9276582503226,
+       848.5583420014009
+      ],
+      [
+       490.44781832321314,
+       806.0650620257948
+      ],
+      [
+       392.38640299474355,
+       708.0036466971505
+      ],
+      [
+       421.8048275933834,
+       603.404803680256
+      ],
+      [
+       539.478525987477,
+       482.4623914414551
+      ],
+      [
+       653.8835105373873,
+       387.66968995705247
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.48,
+      41.8891
+     ],
+     [
+      12.4791,
+      41.891
+     ],
+     [
+      12.4777,
+      41.892
+     ],
+     [
+      12.4744,
+      41.8929
+     ],
+     [
+      12.4705,
+      41.8942
+     ],
+     [
+      12.4675,
+      41.8972
+     ],
+     [
+      12.4684,
+      41.9004
+     ],
+     [
+      12.472,
+      41.9041
+     ],
+     [
+      12.4755,
+      41.907
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_campus_pompey",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       464.2981075689895,
+       737.4220712955575
+      ],
+      [
+       565.6282367417007,
+       730.8846436068416
+      ],
+      [
+       676.7645074474276,
+       734.1533574508503
+      ],
+      [
+       787.9007781530381,
+       737.4220712960232
+      ],
+      [
+       853.2750550386263,
+       658.9729390325956
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4697,
+      41.8963
+     ],
+     [
+      12.4728,
+      41.8965
+     ],
+     [
+      12.4762,
+      41.8964
+     ],
+     [
+      12.4796,
+      41.8963
+     ],
+     [
+      12.4816,
+      41.8987
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_campus_stadium_west",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       464.2981075689895,
+       737.4220712955575
+      ],
+      [
+       529.6723844546941,
+       694.9287913199514
+      ],
+      [
+       526.4036706103943,
+       623.0170867457055
+      ],
+      [
+       539.478525987477,
+       538.0305267937947
+      ],
+      [
+       539.478525987477,
+       482.4623914414551
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4697,
+      41.8963
+     ],
+     [
+      12.4717,
+      41.8976
+     ],
+     [
+      12.4716,
+      41.8998
+     ],
+     [
+      12.472,
+      41.9024
+     ],
+     [
+      12.472,
+      41.9041
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_campus_east_cross",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       631.0025136274635,
+       567.4489513929002
+      ],
+      [
+       735.6013566444744,
+       570.7176652366761
+      ],
+      [
+       840.2001996614854,
+       580.5238067698665
+      ],
+      [
+       931.7241873014136,
+       583.7925206141081
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4748,
+      41.9015
+     ],
+     [
+      12.478,
+      41.9014
+     ],
+     [
+      12.4812,
+      41.9011
+     ],
+     [
+      12.484,
+      41.901
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_transtiberim_main",
+    "kind": "street",
+    "model": {
+     "w_m": 7
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       307.3998430434149,
+       828.946058935253
+      ],
+      [
+       421.8048275933834,
+       887.7829081327654
+      ],
+      [
+       523.1349567660945,
+       943.3510434853379
+      ],
+      [
+       634.2712274717051,
+       992.38175114966
+      ],
+      [
+       614.6589444059646,
+       1083.905738789821
+      ],
+      [
+       581.9718059630832,
+       1162.3548710525502
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4649,
+      41.8935
+     ],
+     [
+      12.4684,
+      41.8917
+     ],
+     [
+      12.4715,
+      41.89
+     ],
+     [
+      12.4749,
+      41.8885
+     ],
+     [
+      12.4743,
+      41.8857
+     ],
+     [
+      12.4733,
+      41.8833
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_transtiberim_cross",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; LA32 documents persistent street network; this registered imperial corridor is a schematic connection, not a fourth-century paving survey.",
+     "source_pixels": [
+      [
+       402.1925445275847,
+       1002.1878926828504
+      ],
+      [
+       474.10424910183065,
+       969.5007542395033
+      ],
+      [
+       539.478525987477,
+       933.5449019523803
+      ],
+      [
+       640.8086551603046,
+       930.2761881086044
+      ],
+      [
+       709.4516458902508,
+       949.888471173821
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4678,
+      41.8882
+     ],
+     [
+      12.47,
+      41.8892
+     ],
+     [
+      12.472,
+      41.8903
+     ],
+     [
+      12.4751,
+      41.8904
+     ],
+     [
+      12.4772,
+      41.8898
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_clivus_north_join",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; Schematic source-constrained continuation to the approved Clivus Scauri window; approved streets themselves remain unchanged.",
+     "source_pixels": [
+      [
+       1153.9967287126929,
+       953.1571850185283
+      ],
+      [
+       1150.728014868393,
+       1028.337603436783
+      ],
+      [
+       1131.1157318027108,
+       1028.337603436783
+      ],
+      [
+       1127.8470179584692,
+       1056.1216711131856
+      ],
+      [
+       1137.2936009684927,
+       1062.2733905683272
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4908,
+      41.8897
+     ],
+     [
+      12.4907,
+      41.8874
+     ],
+     [
+      12.4901,
+      41.8874
+     ],
+     [
+      12.49,
+      41.88655
+     ],
+     [
+      12.490289,
+      41.8863618
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome04_clivus_east_join",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome04_lateantique_whole_basis.md; Schematic source-constrained continuation to the approved Clivus Scauri window; approved streets themselves remain unchanged.",
+     "source_pixels": [
+      [
+       1290.9329577912576,
+       1084.9353836502414
+      ],
+      [
+       1291.282710172527,
+       1090.4431664780714
+      ],
+      [
+       1487.4055408295244,
+       1110.0554495437536
+      ],
+      [
+       1618.1540946009336,
+       1080.6370249453466
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4949893,
+      41.8856685
+     ],
+     [
+      12.495,
+      41.8855
+     ],
+     [
+      12.501,
+      41.8849
+     ],
+     [
+      12.505,
+      41.8858
+     ]
+    ]
+   }
+  }
+ ]
+}

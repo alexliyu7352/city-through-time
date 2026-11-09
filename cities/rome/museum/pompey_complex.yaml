@@ -1,0 +1,241 @@
+# Requires the native multi-landmark `pieces` support in f75c04f.
+# All seven pieces retain the canonical coordinates and geometry; the first Curia anchor is the camera origin.
+# Source review, native bounds and the remaining visual gate: research/museum/pompey_complex/sources.md.
+id: pompey_complex
+node: republic_pompey_observation
+pieces:
+  - id: curia_pompeia_east_frontage
+    node: republic_pompey_observation
+    landmark: { kind: parts, id: curia_pompeia_east_frontage }
+  - id: rome02_quarter_north_gallery
+    node: republic_pompey_observation
+    landmark: { kind: parts, id: rome02_quarter_north_gallery }
+  - id: rome02_quarter_south_gallery
+    node: republic_pompey_observation
+    landmark: { kind: parts, id: rome02_quarter_south_gallery }
+  - id: pompey_theatre
+    node: republic_late_city
+    landmark: { kind: ring, id: pompey_theatre }
+  - id: pompey_gallery_north_west
+    node: republic_late_city
+    landmark: { kind: parts, id: pompey_gallery_north_west }
+  - id: pompey_gallery_south_west
+    node: republic_late_city
+    landmark: { kind: parts, id: pompey_gallery_south_west }
+  - id: pompey_gallery_west_cross
+    node: republic_late_city
+    landmark: { kind: parts, id: pompey_gallery_west_cross }
+exaggeration: 1
+stage_m: [40000, 40000]
+
+name: { zh: 庞培剧场、柱廊与议事厅, en: "Pompey's Theatre, Porticoes and Senate Meeting Hall" }
+era: { zh: "前55年启用；展示前44年遇刺前的示意形态", en: "Opened in 55 BCE; a schematic view before the assassination in 44 BCE" }
+where: { zh: "罗马战神广场南部；议事厅遗址今在银塔广场考古区西侧", en: "Southern Campus Martius, Rome; the meeting hall survives on the west side of the Largo Argentina archaeological area" }
+
+label:
+  - head: { zh: 一组相连的公共建筑, en: A connected public complex }
+    text:
+      zh: 庞培在前55年启用的建筑群，把剧场、舞台后方的柱廊与露天园庭连在一起。剧场的半圆形观众席朝东；园庭的另一端是庞培议事厅，一座供元老院不时开会的近方形大厅。这里展示的是整组建筑在前44年遇刺以前的示意形态，并非三个互不相干的地点。
+      en: >-
+        Opened by Pompey in 55 BCE, this complex joined a theatre to covered walks and an open garden behind its stage.
+        The semicircular seating faced east. At the far end of the garden stood Pompey's meeting hall, an almost square
+        building where the Senate sometimes met. This is a schematic view of the connected buildings before the
+        assassination in 44 BCE.
+    cite: [M01, M02, M07, M08]
+  - head: { zh: 凯撒在这里遇刺, en: Where Caesar was assassinated }
+    text:
+      zh: 前44年3月15日，尤利乌斯·凯撒在庞培议事厅参加元老院会议时被杀。地点是园庭东端的大厅，今天遗址位于银塔广场的B、C两座神庙后方。它不是罗马广场上的尤利乌斯议事堂，也不是剧场的舞台。模型保留遇刺以前的大厅，不加入后来封闭它的构筑物。
+      en: >-
+        On 15 March 44 BCE, Julius Caesar was killed during a Senate meeting in Pompey's hall at the eastern end of the
+        garden. Its remains lie behind Temples B and C at Largo Argentina. This was a different building from the Curia
+        Julia in the Roman Forum. The model shows the hall before the assassination and omits its later closure.
+    cite: [M01, M02, M03]
+  - head: { zh: 平面有依据，上部仍需推测, en: Evidence for the plan, estimates for the elevations }
+    text:
+      zh: 银塔广场的遗构和分期研究支持一座约24×27米的独立议事厅。三世纪的《罗马城大理石平面图》保存了较晚柱廊的部分布局；其图形与文献能帮助辨认建筑关系，却不能直接当成前44年的完整平面。图上长方形区域和点状方块究竟表示园地、水池或柱子，仍有不同解释。剧场舞台、廊柱和大厅的高度、屋顶、门窗与装饰都没有完整留下来。
+      en: >-
+        Remains at Largo Argentina and studies of their building phases support a separate hall about 24 by 27 metres.
+        The third-century Marble Plan of Rome records parts of a later portico layout. It helps establish relationships,
+        but cannot supply a complete plan for 44 BCE. Its rectangular areas and dotted squares have been interpreted
+        as gardens, pools or columns. The heights, roofs, openings and decoration of the stage, porticoes and hall are
+        incompletely known.
+    cite: [M02, M03, M06, M07]
+  - head: { zh: 怎样阅读这座模型, en: Reading the model }
+    text:
+      zh: 模型沿用影片中的建筑位置和形体，垂直方向不放大。这不表示原高已经测定：剧场以约36米、大厅以约14.8米檐高、廊柱以约5.92米作示意。后两项借用维特鲁威所述法诺公共会堂作有限比较，不是庞培建筑的实测值。剧场外圈开口、座席分级和舞台立面均作简化，没有复原全部门窗、柱式与雕饰。各段柱廊的衔接和剧场与庭院的对位保留现有模型的近似关系。所有可见建筑构件因此标为「推测」，具体平面依据另在构件说明中交代。园树、古地坪和室内席位没有逐项复原。
+      en: >-
+        The model keeps the film's building positions and forms without stretching their heights. This does not make
+        their original heights known: the theatre uses about 36 metres, the hall about 14.8 metres to its eaves, and the
+        portico columns about 5.92 metres. The last two are limited comparisons with Vitruvius's basilica at Fano, rather
+        than measurements of Pompey's buildings. Exterior openings, seating tiers and the stage facade are simplified;
+        complete openings, architectural orders and sculpture have not been reconstructed. Connections and alignment
+        retain the existing model's approximations.
+        All visible building components are therefore marked estimated; their notes distinguish the evidence for the
+        plan. Garden trees, ancient ground levels and interior seating have not been individually reconstructed.
+    cite: [M02, M03, M05, M06, M07]
+
+life:
+  text:
+    zh: 这里既能看演出，也能在柱廊下走动或避雨。维特鲁威直接以庞培柱廊为例，说明剧场后廊可让观众在突然下雨时暂避，也可准备舞台用具。他还主张露天步行空间安排绿植；这说明一种近时代的公共空间用途，并没有留下前44年逐株树木、逐条园路的清单。在另一端，同一组建筑还容纳了元老院的政治活动。
+    en: >-
+      Visitors could attend performances, walk under cover or shelter from rain. Vitruvius names Pompey's porticoes
+      as an example of covered space behind a theatre, where spectators could retreat during a shower and stage
+      equipment could be prepared. He also recommends greenery in open walks. This describes a contemporary use of
+      public space, rather than an inventory of trees and paths in 44 BCE. At the other end, the same complex also
+      accommodated the Senate's political business.
+  cite: [M01, M04]
+
+# Native pieces prefixes distinguish the seven sources even though their original labels are empty.
+# No component receives `sourced` merely because its plan or use is attested: every complete visible mass includes
+# estimated height, roofing or other unmeasured form. Do not relabel whole buildings to force a two-tone screenshot.
+parts:
+  - id: main
+    labels: [curia_pompeia_east_frontage, curia_pompeia_east_frontage/*]
+    status: estimated
+    name: { zh: 议事厅与东侧柱廊, en: Meeting hall and eastern portico }
+    note:
+      zh: 分期研究支持约24×27米的独立大厅，位于东侧柱廊中央。14.8米檐高、15度双坡顶、1.48米墙厚及4.8×5.92米中央门洞均为比较或通行关系下的推测。两翼柱廊的5.92米柱高、柱数、柱距和覆屋亦是估值。门后保留空厅；不复原席位、庞培像或行刺人物，不加入奥古斯都时期的封堵与后加厕所。
+      en: >-
+        Studies of the building phases support a separate hall about 24 by 27 metres at the middle of the eastern portico.
+        The 14.8-metre eaves, 15-degree roof, 1.48-metre walls and central opening of 4.8 by 5.92 metres are comparative or
+        circulation estimates. The portico's 5.92-metre columns, their number and spacing, and its roof are also estimated.
+        The hall remains empty, without reconstructed seating, Pompey's statue or an assassination scene. Augustan
+        blocking and later latrines are omitted.
+    cite: [M01, M02, M03, M05]
+  - id: theatre
+    labels: [pompey_theatre, pompey_theatre/*]
+    status: estimated
+    name: { zh: 半圆形剧场与平直舞台, en: Semicircular theatre and straight stage building }
+    note:
+      zh: 剧场前55年启用、观众席朝东有据。约150米外径是既有古图的近似读数；约36米高、44米乐池尺度、14米舞台深度与48个分段为模型估值，不是共和时期逐项实测。舞台画成平直体量；舞台与最高看台同高也是示意取值，不补公元80年火灾以后重建的曲折舞台立面或未建模的维纳斯神庙。
+      en: >-
+        The dedication in 55 BCE and east-facing seating are attested. The outer diameter of about 150 metres is an
+        approximate map reading. The 36-metre height, 44-metre orchestra, 14-metre stage depth and 48 divisions are model
+        estimates, rather than Republican measurements. The stage is a straight mass; matching its height to the upper
+        seating is also schematic. Later curved stage recesses and an unmodelled Temple of Venus are not supplied.
+    cite: [M03, M07]
+  - id: north_middle
+    labels: [rome02_quarter_north_gallery, rome02_quarter_north_gallery/*]
+    status: estimated
+    name: { zh: 北侧柱廊中段, en: Middle section of the northern portico }
+    note:
+      zh: 柱廊围合园庭的关系有文献与较晚平面依据。这一段69.6米长、18柱、5.92米柱高和屋顶形式承接东廊的估配；各段之间的小缝是模型衔接，不是古代廊界或出入口的证据。
+      en: >-
+        Texts and a later plan support porticoes around the garden. This section's length of 69.6 metres, 18 columns,
+        column height of 5.92 metres and roof form extend the eastern portico's estimates. Small joins between sections
+        are modelling seams, rather than evidence for ancient breaks or entrances.
+    cite: [M04, M05, M06, M08]
+  - id: south_middle
+    labels: [rome02_quarter_south_gallery, rome02_quarter_south_gallery/*]
+    status: estimated
+    name: { zh: 南侧柱廊中段与侧向通口, en: Middle section of the southern portico and side opening }
+    note:
+      zh: 这一段的长度、18柱、柱高、覆屋和侧向通口均为有界估配。中央4.8米门湾用来示意城街、柱廊与园庭的通行关系，并非已发掘的前44年侧门。南侧商住街坊不在本页模型内。
+      en: >-
+        This section's length, 18 columns, height, roof and side opening are bounded estimates. The central 4.8-metre
+        doorway bay illustrates access between the city, portico and garden; it is not an excavated entrance securely
+        dated to 44 BCE. Residential and commercial blocks to the south are outside this page's model.
+    cite: [M04, M05, M06, M08]
+  - id: north_west
+    labels: [pompey_gallery_north_west, pompey_gallery_north_west/*]
+    status: estimated
+    name: { zh: 北侧柱廊西段, en: Western section of the northern portico }
+    note:
+      zh: 西延段保留现有模型的72.8米长度、20柱、5.92米柱高及低坡覆屋。这些是以公共建筑关系为约束的示意尺寸；不能把三世纪大理石平面的全部凹室、园池或百柱廊倒放到前44年。
+      en: >-
+        This extension retains the existing model's length of 72.8 metres, 20 columns, 5.92-metre column height and low
+        roof. These are schematic dimensions constrained by the public complex's relationships. Later niches, pools and
+        the Hecatostylum are not transferred wholesale from the third-century Marble Plan to 44 BCE.
+    cite: [M04, M05, M06, M08]
+  - id: south_west
+    labels: [pompey_gallery_south_west, pompey_gallery_south_west/*]
+    status: estimated
+    name: { zh: 南侧柱廊西段, en: Western section of the southern portico }
+    note:
+      zh: 72.8米长、20柱、柱距、墙厚与屋面都是延续既有比较值的估配。它表示园庭南侧的覆顶步行空间，并没有逐间重建较晚平面记录的商铺，也不证明本段在前44年的每个细节。
+      en: >-
+        The length of 72.8 metres, 20 columns, spacing, wall thickness and roof extend the existing comparative estimates.
+        They represent the covered walk along the garden's south side. Shops recorded in the later plan are not
+        individually reconstructed, and the section's details are not claimed as a measured plan of 44 BCE.
+    cite: [M04, M05, M06, M08]
+  - id: west_cross
+    labels: [pompey_gallery_west_cross, pompey_gallery_west_cross/*]
+    status: estimated
+    name: { zh: 剧场后方横向柱廊, en: Cross portico behind the theatre }
+    note:
+      zh: 剧场后方有柱廊的用途有维特鲁威记载；此处135米长、35柱及具体位置是模型的近似衔接。剧场与柱廊之间约18.5米的空隙是模型的限制；实际上，柱廊直接接在剧场舞台建筑的后面。这不是一条已经考证的古街宽度，模型也不为接齐外观而移动现有建筑。
+      en: >-
+        Vitruvius attests porticoes behind the theatre. This cross section's length of 135 metres, 35 columns and exact
+        placement are approximate model connections. The gap of about 18.5 metres between theatre and portico is a
+        limitation of this model: the actual portico joined directly to the back of the theatre's stage building.
+        It is not a measured ancient street width. Existing buildings have not been moved to make the model join neatly.
+    cite: [M04, M06, M07, M08]
+
+# Proposed origin: the unchanged Curia landmark anchor, east/north/up metres.
+# The full model is about 337.45 m east-west by 175.69 m north-south at exaggeration 1.
+# overview and reverse frame the complex; hall is an intentional close detail of its eastern end.
+viewpoints:
+  - id: overview
+    main: true
+    name: { zh: 从南侧看整组建筑, en: The complex from the south }
+    az: 0
+    el: 28
+    d_m: 540
+    fov: 42
+    at_m: [-154.67, 13.64, 12]
+  - id: reverse
+    name: { zh: 从东北侧看剧场与园庭, en: Theatre and garden from the northeast }
+    az: 120
+    el: 28
+    d_m: 650
+    fov: 42
+    at_m: [-154.67, 13.64, 12]
+  - id: hall
+    name: { zh: 从园庭近看议事厅入口, en: The hall entrance from the garden }
+    az: 255
+    el: 18
+    d_m: 135
+    fov: 42
+    at_m: [-10, 0, 8]
+
+sources:
+  M01:
+    short: { zh: 罗马市文物局：庞培议事厅, en: "Rome heritage authority: Curia of Pompey" }
+    zh: 罗马市文物局《La Curia di Pompeo》。记述前44年3月15日的元老院会议、凯撒遇刺、B/C神庙后的遗址及其与剧场、柱廊的关系；不是共和立面图。
+    en: "Sovrintendenza Capitolina, La Curia di Pompeo: the Senate meeting and assassination on 15 March 44 BCE, remains behind Temples B and C, and the theatre-portico relationship; not a Republican elevation drawing."
+    url: https://www.sovraintendenzaroma.it/content/la-curia-di-pompeo/
+  M02:
+    short: { zh: Marra等，2021：议事厅材料与分期, en: "Marra et al., 2021: materials and building phases" }
+    zh: Marra、D'Ambrosio、Gaeta与Monterroso-Checa，《Petrographical and geochemical criteria for a chronology of Roman mortars…》，作者稿第4–5页。记24×27米独立厅、前55年建筑群及原期与奥古斯都封堵的区别；公开作者稿未附图像。
+    en: "Marra, D'Ambrosio, Gaeta and Monterroso-Checa, Petrographical and geochemical criteria for a chronology of Roman mortars…, 2021, author manuscript pp. 4–5: separate hall of 24 by 27 metres, the 55 BCE complex, and the distinction between its original phase and Augustan blocking. Figures are absent from this manuscript."
+    url: https://www.earth-prints.org/server/api/core/bitstreams/360b9464-fa88-42e6-8306-22f1e37bc193/content
+  M03:
+    short: { zh: Monterroso Checa，2022：考古平面与争论, en: "Monterroso Checa, 2022: archaeology and disputed reconstructions" }
+    zh: Antonio Monterroso Checa，《Il complesso pompeiano del Campo Marzio. Forma e dibattito》，第292–301页，尤第300–301页、图17与18。考古研究区分独立厅、庞培原期、奥古斯都封堵及后加厕所；不提供完整共和立面或实测原高。
+    en: "Antonio Monterroso Checa, Il complesso pompeiano del Campo Marzio. Forma e dibattito, 2022, pp. 292–301, especially pp. 300–301 and figs. 17–18. Distinguishes the independent hall, its Pompeian phase, Augustan blocking and later latrines; does not provide a complete Republican elevation or measured original height."
+    url: https://helvia.uco.es/bitstream/handle/10396/24612/17_Monterroso_Checa.pdf?isAllowed=y&sequence=1
+  M04:
+    short: { zh: 维特鲁威5.9：剧场后廊与步行空间, en: "Vitruvius 5.9: porticoes and walks" }
+    zh: 维特鲁威《建筑十书》5.9.1、5、7，Morgan英译。庞培柱廊是剧场后避雨及准备舞台用具的具名例；绿植、步行与排水是一般设计原则，不是前44年的逐项清单。
+    en: "Vitruvius, On Architecture 5.9.1, 5 and 7, Morgan translation. Names Pompey's porticoes as shelter and a place to prepare stage equipment. Greenery, walks and drainage are general design principles, not a site inventory for 44 BCE."
+    url: https://lexundria.com/vitr/5.9/mg
+  M05:
+    short: { zh: 维特鲁威5.1：法诺会堂的有限比较, en: "Vitruvius 5.1: a limited comparison with Fano" }
+    zh: 维特鲁威《建筑十书》5.1.6–9，Morgan英译。法诺会堂50罗马尺整柱与20尺支承被模型换算为14.8及5.92米作比较；这些不是庞培议事厅或其廊柱的考古测量。
+    en: "Vitruvius, On Architecture 5.1.6–9, Morgan translation. Fano's 50-Roman-foot columns and 20-foot supports are converted to 14.8 and 5.92 metres as model comparisons, not archaeological measurements of Pompey's hall or porticoes."
+    url: https://lexundria.com/vitr/5.1/mg
+  M06:
+    short: { zh: Stanford《大理石平面图》39ac编目, en: "Stanford Marble Plan catalogue, fragment 39ac" }
+    zh: Stanford Digital Forma Urbis Romae Project，39ac，Description、Identification与Significance。记录较晚柱廊及长方形、点方块的不同解释；编目明确指出图上长度与遗存不尽相符，不能当成前44年精确园池或植树图。
+    en: "Stanford Digital Forma Urbis Romae Project, fragment 39ac, Description, Identification and Significance. Catalogues a later portico and competing readings of its rectangles and dotted squares. Notes discrepancies in its represented length; it cannot be treated as an exact garden or planting plan for 44 BCE."
+    url: https://formaurbis.stanford.edu/fragment_39ac.html
+  M07:
+    short: { zh: Digital Augustan Rome：庞培剧场, en: "Digital Augustan Rome: Theatre of Pompey" }
+    zh: 《Theatrum Pompeium / Pompeianum》。既有学术综述支持前55年启用、朝东的半圆座席，并区分早期平直舞台的比较复原与公元80年火灾后的曲折立面；所引更早考古出版物本页未逐一核读。
+    en: "Theatrum Pompeium / Pompeianum. An existing scholarly synthesis supporting dedication in 55 BCE and east-facing seating, and distinguishing a comparative early straight stage from the recessed facade after the fire of AD 80. Earlier archaeological publications cited by the entry were not individually read for this page."
+    url: https://www.digitalaugustanrome.org/records/theatrum-pompeium-pompeianum/
+  M08:
+    short: { zh: Digital Augustan Rome：庞培柱廊, en: "Digital Augustan Rome: Porticoes of Pompey" }
+    zh: 《Porticus Pompeianae》。既有学术综述记剧场后方园廊、东端议事厅及约180×135米中央空间；主要平面证据属于塞维鲁时代，不逐项倒用到前44年。
+    en: "Porticus Pompeianae. An existing scholarly synthesis describing the garden portico behind the theatre, the hall at its eastern end and a central space of about 180 by 135 metres. Its principal plan evidence is Severan and is not transferred detail by detail to 44 BCE."
+    url: https://www.digitalaugustanrome.org/records/porticus-pompeianae/

@@ -1,0 +1,48 @@
+{
+  "title": "Fontane di Roma",
+  "composer": "Ottorino Respighi",
+  "performer": "Antonio Pedrotti / Czech Philharmonic",
+  "recording_date": "1961-02-19",
+  "source_page": "https://archive.org/details/lesgeniesduclassique_vol4no19",
+  "page_license": "Public Domain Mark 1.0 (uploader metadata)",
+  "rights_note": "Supraphon lists (P) 1961. Recording permission remains unresolved; not in film score.",
+  "checked": "2026-11-06",
+  "source_sha256": "6d00e0f23ccb12519157c5909187a59b8a8cbfb80705b96f7a502daa8597fce6",
+  "subjective_listening": false,
+  "clips": [
+    {
+      "name": "opening",
+      "source_t0": 25.0,
+      "source_t1": 85.0,
+      "wav": "cities/rome_music_trial_r2_all/build/audio/music/audition/fountains_pedrotti_opening_60s.wav",
+      "measure": {
+        "silent": 0.002,
+        "gap_s": 0.1,
+        "low": 0.071,
+        "thirds_db": [
+          -33.7,
+          -32.6,
+          -30.2
+        ]
+      },
+      "result": "silent 0%, gap 0.1 s, low 7%, level -34/-33/-30 dB"
+    },
+    {
+      "name": "late",
+      "source_t0": 735.0,
+      "source_t1": 795.0,
+      "wav": "cities/rome_music_trial_r2_all/build/audio/music/audition/fountains_pedrotti_late_60s.wav",
+      "measure": {
+        "silent": 0.389,
+        "gap_s": 9.2,
+        "low": 0.011,
+        "thirds_db": [
+          -48.4,
+          -37.1,
+          -34.6
+        ]
+      },
+      "result": "silent 39%, gap 9.2 s, low 1%, level -48/-37/-35 dB  ! silent, gap, no low end"
+    }
+  ]
+}

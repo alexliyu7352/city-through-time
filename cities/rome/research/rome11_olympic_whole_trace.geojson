@@ -1,0 +1,2742 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_north_approach",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 5,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible D1 access paths; O01 printed90 asphalt3.5–12.8m; individual widths approximate",
+     "source_pixels": [
+      [
+       85,
+       77
+      ],
+      [
+       94,
+       52
+      ],
+      [
+       109,
+       24
+      ],
+      [
+       139,
+       15
+      ],
+      [
+       171,
+       19
+      ],
+      [
+       189,
+       32
+      ],
+      [
+       207,
+       55
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4773148,
+      41.9349379
+     ],
+     [
+      12.4778729,
+      41.9348465
+     ],
+     [
+      12.4785116,
+      41.9346658
+     ],
+     [
+      12.4787869,
+      41.9342068
+     ],
+     [
+      12.4787905,
+      41.933689
+     ],
+     [
+      12.4785633,
+      41.9333755
+     ],
+     [
+      12.4781229,
+      41.9330412
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_western_walk",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 3.5,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible D1 access paths; O01 printed90 asphalt3.5–12.8m; individual widths approximate",
+     "source_pixels": [
+      [
+       85,
+       77
+      ],
+      [
+       95,
+       96
+      ],
+      [
+       89,
+       118
+      ],
+      [
+       83,
+       150
+      ],
+      [
+       101,
+       156
+      ],
+      [
+       159,
+       159
+      ],
+      [
+       168,
+       149
+      ],
+      [
+       167,
+       114
+      ],
+      [
+       169,
+       68
+      ],
+      [
+       191,
+       51
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4773148,
+      41.9349379
+     ],
+     [
+      12.4769375,
+      41.9347393
+     ],
+     [
+      12.4764517,
+      41.9347892
+     ],
+     [
+      12.4757527,
+      41.9348183
+     ],
+     [
+      12.4756748,
+      41.9345193
+     ],
+     [
+      12.475772,
+      41.9335897
+     ],
+     [
+      12.4760102,
+      41.9334671
+     ],
+     [
+      12.4767537,
+      41.9335557
+     ],
+     [
+      12.4777401,
+      41.9336192
+     ],
+     [
+      12.4781637,
+      41.9333042
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_central_walk",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 3.5,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible D1 access paths; O01 printed90 asphalt3.5–12.8m; individual widths approximate",
+     "source_pixels": [
+      [
+       113,
+       63
+      ],
+      [
+       133,
+       62
+      ],
+      [
+       159,
+       61
+      ],
+      [
+       166,
+       69
+      ],
+      [
+       168,
+       149
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4776911,
+      41.9345212
+     ],
+     [
+      12.477768,
+      41.9342049
+     ],
+     [
+      12.4778616,
+      41.933793
+     ],
+     [
+      12.4777105,
+      41.9336649
+     ],
+     [
+      12.4760102,
+      41.9334671
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_court_walk",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 3.5,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible D1 access paths; O01 printed90 asphalt3.5–12.8m; individual widths approximate",
+     "source_pixels": [
+      [
+       110,
+       92
+      ],
+      [
+       159,
+       92
+      ],
+      [
+       167,
+       101
+      ],
+      [
+       168,
+       149
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4770645,
+      41.9345088
+     ],
+     [
+      12.4772006,
+      41.9337287
+     ],
+     [
+      12.4770309,
+      41.9335826
+     ],
+     [
+      12.4760102,
+      41.9334671
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_southern_street",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 7,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible D1 access paths; O01 printed90 asphalt3.5–12.8m; individual widths approximate",
+     "source_pixels": [
+      [
+       83,
+       159
+      ],
+      [
+       126,
+       163
+      ],
+      [
+       161,
+       164
+      ],
+      [
+       180,
+       173
+      ],
+      [
+       208,
+       173
+      ],
+      [
+       219,
+       157
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4755608,
+      41.9347997
+     ],
+     [
+      12.475595,
+      41.9341067
+     ],
+     [
+      12.475671,
+      41.9335474
+     ],
+     [
+      12.4755319,
+      41.9332263
+     ],
+     [
+      12.4756097,
+      41.9327805
+     ],
+     [
+      12.4759814,
+      41.9326385
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_east_street",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 7,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible D1 access paths; O01 printed90 asphalt3.5–12.8m; individual widths approximate",
+     "source_pixels": [
+      [
+       207,
+       55
+      ],
+      [
+       214,
+       69
+      ],
+      [
+       212,
+       114
+      ],
+      [
+       210,
+       151
+      ],
+      [
+       219,
+       157
+      ],
+      [
+       244,
+       157
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4781229,
+      41.9330412
+     ],
+     [
+      12.4778438,
+      41.9329007
+     ],
+     [
+      12.4768788,
+      41.9328392
+     ],
+     [
+      12.4760843,
+      41.9327943
+     ],
+     [
+      12.4759814,
+      41.9326385
+     ],
+     [
+      12.4760509,
+      41.9322405
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A_north",
+    "group": "village_A",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A_north",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[3,3] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       103,
+       165
+      ],
+      [
+       203,
+       168
+      ],
+      [
+       203,
+       176
+      ],
+      [
+       103,
+       173
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      3,
+      3
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       153.00075998926417,
+       170.5017712227654
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4755101,
+     41.9336613
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A_second",
+    "group": "village_A",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A_second",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[3,3] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       103,
+       179
+      ],
+      [
+       202,
+       182
+      ],
+      [
+       202,
+       190
+      ],
+      [
+       103,
+       187
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      3,
+      3
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       152.50139501894282,
+       184.5018954761393
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4752102,
+     41.9336402
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A_bent_north",
+    "group": "village_A",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A_bent_north",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[3,3] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       113,
+       213
+      ],
+      [
+       146,
+       211
+      ],
+      [
+       173,
+       214
+      ],
+      [
+       194,
+       213
+      ],
+      [
+       194,
+       221
+      ],
+      [
+       173,
+       222
+      ],
+      [
+       146,
+       219
+      ],
+      [
+       113,
+       221
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      3,
+      3
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       153.49901826841548,
+       216.55657499425095
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4745295,
+     41.9335578
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A_bent_south",
+    "group": "village_A",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A_bent_south",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[3,3] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       114,
+       228
+      ],
+      [
+       147,
+       226
+      ],
+      [
+       174,
+       229
+      ],
+      [
+       192,
+       229
+      ],
+      [
+       192,
+       240
+      ],
+      [
+       174,
+       241
+      ],
+      [
+       147,
+       238
+      ],
+      [
+       114,
+       239
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      3,
+      3
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       153.17888093060262,
+       233.46913509717805
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.474168,
+     41.9335278
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A_spine_west",
+    "group": "village_A",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A_spine_west",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[3,3] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       229,
+       156
+      ],
+      [
+       237,
+       158
+      ],
+      [
+       235,
+       247
+      ],
+      [
+       227,
+       250
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      3,
+      3
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       231.9648277508885,
+       202.64875372142487
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4750441,
+     41.9323374
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A_spine_east",
+    "group": "village_A",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A_spine_east",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[3,3] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       243,
+       170
+      ],
+      [
+       251,
+       171
+      ],
+      [
+       249,
+       247
+      ],
+      [
+       241,
+       249
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      3,
+      3
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       245.9733229841801,
+       209.18806867757914
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4749436,
+     41.9321008
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A4_west_north",
+    "group": "village_A4",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A4_west_north",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[4,4] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       87,
+       371
+      ],
+      [
+       123,
+       379
+      ],
+      [
+       153,
+       378
+      ],
+      [
+       189,
+       372
+      ],
+      [
+       188,
+       381
+      ],
+      [
+       153,
+       387
+      ],
+      [
+       123,
+       388
+      ],
+      [
+       89,
+       381
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      4,
+      4
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       137.69872138118254,
+       380.5931501961211
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.470988,
+     41.9334689
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A4_west_south",
+    "group": "village_A4",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A4_west_south",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[4,4] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       91,
+       389
+      ],
+      [
+       123,
+       397
+      ],
+      [
+       154,
+       395
+      ],
+      [
+       188,
+       388
+      ],
+      [
+       187,
+       397
+      ],
+      [
+       154,
+       404
+      ],
+      [
+       122,
+       405
+      ],
+      [
+       93,
+       398
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      4,
+      4
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       140.45606506332032,
+       397.74295027829265
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.47063,
+     41.9333894
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A4_east_north",
+    "group": "village_A4",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A4_east_north",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[4,4] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       236,
+       372
+      ],
+      [
+       264,
+       376
+      ],
+      [
+       298,
+       374
+      ],
+      [
+       338,
+       366
+      ],
+      [
+       338,
+       375
+      ],
+      [
+       298,
+       383
+      ],
+      [
+       265,
+       384
+      ],
+      [
+       235,
+       381
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      4,
+      4
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       287.4484748480975,
+       377.04679121463545
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4714799,
+     41.9310921
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_A4_east_south",
+    "group": "village_A4",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_A4_east_south",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[4,4] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       236,
+       389
+      ],
+      [
+       265,
+       391
+      ],
+      [
+       299,
+       389
+      ],
+      [
+       337,
+       381
+      ],
+      [
+       336,
+       390
+      ],
+      [
+       299,
+       398
+      ],
+      [
+       265,
+       400
+      ],
+      [
+       235,
+       398
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      4,
+      4
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       285.7891322715911,
+       392.66453030036877
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4711423,
+     41.9310861
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_B_west",
+    "group": "village_B",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_B_west",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[5,5] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       104,
+       414
+      ],
+      [
+       196,
+       410
+      ],
+      [
+       196,
+       425
+      ],
+      [
+       104,
+       430
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      5,
+      5
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       149.5047575122223,
+       419.77471034184117
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4701854,
+     41.9331996
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_B_east",
+    "group": "village_B",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_B_east",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[5,5] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       236,
+       407
+      ],
+      [
+       331,
+       403
+      ],
+      [
+       330,
+       420
+      ],
+      [
+       237,
+       426
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      5,
+      5
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       282.5841178893938,
+       414.01853009035415
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4706781,
+     41.9310928
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_C_north",
+    "group": "village_C",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_C_north",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[4,4] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       286,
+       242
+      ],
+      [
+       327,
+       244
+      ],
+      [
+       327,
+       250
+      ],
+      [
+       286,
+       248
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      4,
+      4
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       306.49743192773246,
+       246.00067792517584
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4743269,
+     41.9310608
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_C_east",
+    "group": "village_C",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_C_east",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[4,4] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       325,
+       251
+      ],
+      [
+       332,
+       251
+      ],
+      [
+       331,
+       278
+      ],
+      [
+       325,
+       277
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      4,
+      4
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       328.28088803899624,
+       263.91893958020717
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4740054,
+     41.9306768
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_C_south",
+    "group": "village_C",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_C_south",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[4,4] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       288,
+       279
+      ],
+      [
+       329,
+       281
+      ],
+      [
+       328,
+       287
+      ],
+      [
+       287,
+       285
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      4,
+      4
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       307.999624601509,
+       283.00025833687386
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4735422,
+     41.9309601
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_C_west",
+    "group": "village_C",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_C_west",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[4,4] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       285,
+       251
+      ],
+      [
+       291,
+       251
+      ],
+      [
+       290,
+       277
+      ],
+      [
+       284,
+       276
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      4,
+      4
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       287.5185042040172,
+       263.7649050763595
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4738954,
+     41.9313261
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D1_short_west",
+    "group": "village_D1",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_D1_short_west",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[2,2] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       170,
+       149
+      ],
+      [
+       185,
+       149
+      ],
+      [
+       185,
+       162
+      ],
+      [
+       170,
+       162
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       177.49803705727402,
+       155.50201208423107
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.475898,
+     41.9333024
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D1_short_east",
+    "group": "village_D1",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_D1_short_east",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[2,2] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       188,
+       149
+      ],
+      [
+       203,
+       149
+      ],
+      [
+       203,
+       162
+      ],
+      [
+       188,
+       162
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       195.49976442305018,
+       155.498382357805
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4759481,
+     41.9330158
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_E_square_1",
+    "group": "village_E",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_E_square_1",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[2,2] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       89,
+       442
+      ],
+      [
+       101,
+       442
+      ],
+      [
+       101,
+       454
+      ],
+      [
+       89,
+       454
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       94.99782932001395,
+       448.00178304537604
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.469432,
+     41.9340088
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_E_square_2",
+    "group": "village_E",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_E_square_2",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[2,2] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       134,
+       438
+      ],
+      [
+       146,
+       438
+      ],
+      [
+       146,
+       450
+      ],
+      [
+       134,
+       450
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       140.00171116976352,
+       444.0024987521323
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4696424,
+     41.9333006
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_E_square_3",
+    "group": "village_E",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_E_square_3",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[2,2] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       157,
+       437
+      ],
+      [
+       169,
+       437
+      ],
+      [
+       169,
+       449
+      ],
+      [
+       157,
+       449
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       163.0015844436538,
+       443.00102098859713
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4697277,
+     41.9329365
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_E_square_4",
+    "group": "village_E",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_E_square_4",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[2,2] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       181,
+       435
+      ],
+      [
+       193,
+       435
+      ],
+      [
+       193,
+       447
+      ],
+      [
+       181,
+       447
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       186.99867370097368,
+       440.9992131470321
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4698371,
+     41.9325586
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_E_square_5",
+    "group": "village_E",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_E_square_5",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md O02 Ministry4535 plan silhouette; occupied storeys[2,2] by A/A4/B/C/D1/E zone. Native registered outline; 3.1m levels and pilotis, post spacing, floor edges and window bays are estimates from the approved crocetta comparison, not measured elevations. B11lightwell openings6x5m and E4m central stair opening estimated; fine balconies omitted.",
+     "footprint_pixels": [
+      [
+       264,
+       432
+      ],
+      [
+       276,
+       432
+      ],
+      [
+       276,
+       444
+      ],
+      [
+       264,
+       444
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "pilotis_is_residential_storey": false,
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       269.9979810493189,
+       437.99996316607195
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4701318,
+     41.9312434
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D_01",
+    "group": "village_D",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_Moretti_D",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md H-D,O02/O04 photoL. Two occupied floors and pilotis, cross with central stair; 32x33.3m footprint borrowed from approved same-village D1 scale comparison, not measured Moretti flat. Ribbon openings estimated; fine corner separation/drying towers omitted.",
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       275,
+       164
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4759877,
+     41.9317324
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D_02",
+    "group": "village_D",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_Moretti_D",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md H-D,O02/O04 photoL. Two occupied floors and pilotis, cross with central stair; 32x33.3m footprint borrowed from approved same-village D1 scale comparison, not measured Moretti flat. Ribbon openings estimated; fine corner separation/drying towers omitted.",
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       274,
+       194
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4753453,
+     41.9316861
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D_03",
+    "group": "village_D",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_Moretti_D",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md H-D,O02/O04 photoL. Two occupied floors and pilotis, cross with central stair; 32x33.3m footprint borrowed from approved same-village D1 scale comparison, not measured Moretti flat. Ribbon openings estimated; fine corner separation/drying towers omitted.",
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       299,
+       194
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4754148,
+     41.9312881
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D_04",
+    "group": "village_D",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_Moretti_D",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md H-D,O02/O04 photoL. Two occupied floors and pilotis, cross with central stair; 32x33.3m footprint borrowed from approved same-village D1 scale comparison, not measured Moretti flat. Ribbon openings estimated; fine corner separation/drying towers omitted.",
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       272,
+       219
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4748067,
+     41.9316661
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D_05",
+    "group": "village_D",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_Moretti_D",
+     "site": "cut"
+    },
+    "provenance": {
+     "basis": "research/rome11_olympic_survey.md H-D,O02/O04 photoL. Two occupied floors and pilotis, cross with central stair; 32x33.3m footprint borrowed from approved same-village D1 scale comparison, not measured Moretti flat. Ribbon openings estimated; fine corner separation/drying towers omitted.",
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       302,
+       221
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4748474,
+     41.9311843
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D1_compound_north_chain",
+    "group": "village_D1",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_D1_compound_north_chain",
+     "site": "parts"
+    },
+    "provenance": {
+     "basis": "O02 connected D1 chains/courts, checked against retained Overture61660/61700/61703; approved crocetta native parts unchanged, Source/local and native placed() arrange them; joining strips and unmeasured details estimated,not a household count",
+     "source_cross_centres": [
+      [
+       120,
+       40
+      ],
+      [
+       146,
+       40
+      ],
+      [
+       173,
+       41
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       146.33333333333334,
+       40.333333333333336
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4782671,
+     41.9340375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D1_compound_isolated",
+    "group": "village_D1",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_D1_compound_isolated",
+     "site": "parts"
+    },
+    "provenance": {
+     "basis": "O02 connected D1 chains/courts, checked against retained Overture61660/61700/61703; approved crocetta native parts unchanged, Source/local and native placed() arrange them; joining strips and unmeasured details estimated,not a household count",
+     "source_cross_centres": [
+      [
+       105,
+       72
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       105.0,
+       72.0
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.477477,
+     41.9346299
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D1_compound_west_courts",
+    "group": "village_D1",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_D1_compound_west_courts",
+     "site": "parts"
+    },
+    "provenance": {
+     "basis": "O02 connected D1 chains/courts, checked against retained Overture61660/61700/61703; approved crocetta native parts unchanged, Source/local and native placed() arrange them; joining strips and unmeasured details estimated,not a household count",
+     "source_cross_centres": [
+      [
+       124,
+       79
+      ],
+      [
+       150,
+       79
+      ],
+      [
+       122,
+       108
+      ],
+      [
+       148,
+       108
+      ],
+      [
+       104,
+       137
+      ],
+      [
+       130,
+       138
+      ],
+      [
+       156,
+       138
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       133.42857142857142,
+       112.42857142857143
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.476694,
+     41.9340934
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D1_compound_east_courts",
+    "group": "village_D1",
+    "kind": "landmark",
+    "model": {
+     "template": "rome11_olympic_D1_compound_east_courts",
+     "site": "parts"
+    },
+    "provenance": {
+     "basis": "O02 connected D1 chains/courts, checked against retained Overture61660/61700/61703; approved crocetta native parts unchanged, Source/local and native placed() arrange them; joining strips and unmeasured details estimated,not a household count",
+     "source_cross_centres": [
+      [
+       182,
+       79
+      ],
+      [
+       199,
+       80
+      ],
+      [
+       180,
+       105
+      ],
+      [
+       198,
+       106
+      ],
+      [
+       178,
+       132
+      ],
+      [
+       196,
+       133
+      ]
+     ],
+     "occupied_storeys_minmax": [
+      2,
+      2
+     ],
+     "ground_contact": "native site:parts on D1 chains,each approved cross's existing slab anchors its upper floors/window skins with atop; local level differences from current terrain are estimates,not1960 levels. Other pilotis masses use site:cut and require native checks.",
+     "source_pixels": [
+      [
+       188.83333333333334,
+       105.83333333333333
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     12.4769885,
+     41.933225
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_central_viale",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 9,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       63,
+       269
+      ],
+      [
+       106,
+       271
+      ],
+      [
+       199,
+       274
+      ],
+      [
+       246,
+       272
+      ],
+      [
+       362,
+       272
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4731598,
+      41.9348898
+     ],
+     [
+      12.4732366,
+      41.934201
+     ],
+     [
+      12.4734312,
+      41.9327142
+     ],
+     [
+      12.4736044,
+      41.93197
+     ],
+     [
+      12.4739268,
+      41.9301232
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_north_south_west",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 7,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       68,
+       159
+      ],
+      [
+       64,
+       211
+      ],
+      [
+       63,
+       269
+      ],
+      [
+       61,
+       305
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4755191,
+      41.9350385
+     ],
+     [
+      12.4743992,
+      41.9349943
+     ],
+     [
+      12.4731598,
+      41.9348898
+     ],
+     [
+      12.4723866,
+      41.9348469
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_residential_crossing",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 7,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       88,
+       159
+      ],
+      [
+       102,
+       156
+      ],
+      [
+       160,
+       162
+      ],
+      [
+       209,
+       169
+      ],
+      [
+       222,
+       176
+      ],
+      [
+       219,
+       211
+      ],
+      [
+       214,
+       251
+      ],
+      [
+       211,
+       273
+      ],
+      [
+       207,
+       305
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4755747,
+      41.93472
+     ],
+     [
+      12.4756776,
+      41.9345034
+     ],
+     [
+      12.4757108,
+      41.9335675
+     ],
+     [
+      12.4756977,
+      41.9327728
+     ],
+     [
+      12.4755846,
+      41.9325513
+     ],
+     [
+      12.47483,
+      41.9325265
+     ],
+     [
+      12.4739632,
+      41.9325231
+     ],
+     [
+      12.4734858,
+      41.9325252
+     ],
+     [
+      12.4727924,
+      41.9325225
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_court_east_road",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 7,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       365,
+       160
+      ],
+      [
+       363,
+       220
+      ],
+      [
+       363,
+       272
+      ],
+      [
+       365,
+       305
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4763231,
+      41.9303078
+     ],
+     [
+      12.4750383,
+      41.9302152
+     ],
+     [
+      12.4739296,
+      41.9301073
+     ],
+     [
+      12.4732316,
+      41.9300069
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_court_north_road",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 7,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       219,
+       157
+      ],
+      [
+       274,
+       150
+      ],
+      [
+       329,
+       152
+      ],
+      [
+       365,
+       153
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4759814,
+      41.9326385
+     ],
+     [
+      12.4762835,
+      41.9317774
+     ],
+     [
+      12.4763936,
+      41.9308976
+     ],
+     [
+      12.4764723,
+      41.9303223
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_D_C_gap",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 5,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       251,
+       240
+      ],
+      [
+       269,
+       236
+      ],
+      [
+       334,
+       236
+      ],
+      [
+       361,
+       238
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4743006,
+      41.9319568
+     ],
+     [
+      12.4744359,
+      41.9316786
+     ],
+     [
+      12.4746166,
+      41.9306437
+     ],
+     [
+      12.4746489,
+      41.9302097
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_west_south_access",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 7,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       62,
+       340
+      ],
+      [
+       65,
+       363
+      ],
+      [
+       63,
+       407
+      ],
+      [
+       64,
+       450
+      ],
+      [
+       201,
+       450
+      ],
+      [
+       206,
+       397
+      ],
+      [
+       206,
+       340
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4716431,
+      41.9347584
+     ],
+     [
+      12.471161,
+      41.9346629
+     ],
+     [
+      12.4702173,
+      41.9346034
+     ],
+     [
+      12.4693032,
+      41.9344982
+     ],
+     [
+      12.4696841,
+      41.932317
+     ],
+     [
+      12.4708281,
+      41.9323474
+     ],
+     [
+      12.4720434,
+      41.9324657
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_east_south_access",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 7,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       223,
+       342
+      ],
+      [
+       222,
+       386
+      ],
+      [
+       223,
+       449
+      ],
+      [
+       340,
+       449
+      ],
+      [
+       349,
+       400
+      ],
+      [
+       359,
+       372
+      ],
+      [
+       365,
+       344
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.472048,
+      41.9321909
+     ],
+     [
+      12.4711071,
+      41.9321155
+     ],
+     [
+      12.4697666,
+      41.9319688
+     ],
+     [
+      12.4700919,
+      41.9301061
+     ],
+     [
+      12.4711616,
+      41.9300645
+     ],
+     [
+      12.4717864,
+      41.9299634
+     ],
+     [
+      12.4724001,
+      41.929926
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_below_B_walk",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 3.5,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       83,
+       438
+      ],
+      [
+       199,
+       435
+      ],
+      [
+       207,
+       438
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4696119,
+      41.9342206
+     ],
+     [
+      12.4699984,
+      41.93238
+     ],
+     [
+      12.4699567,
+      41.9322464
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome11_olympic_east_B_walk",
+    "group": "village_circulation",
+    "kind": "street",
+    "model": {
+     "w_m": 3.5,
+     "shops": false,
+     "surface": "asphalt"
+    },
+    "provenance": {
+     "basis": "O02 visible general-plan road corridor; O01 printed90 asphalt3.5–12.8m. Widths and lane-centres approximate; work-window cuts follow continuing roads",
+     "source_pixels": [
+      [
+       224,
+       433
+      ],
+      [
+       332,
+       430
+      ],
+      [
+       343,
+       432
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4701105,
+      41.9319861
+     ],
+     [
+      12.4704747,
+      41.9302729
+     ],
+     [
+      12.4704627,
+      41.9300936
+     ]
+    ]
+   }
+  }
+ ]
+}

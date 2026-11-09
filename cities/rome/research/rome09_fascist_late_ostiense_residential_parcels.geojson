@@ -1,0 +1,6902 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4806624,
+      41.8709333
+     ],
+     [
+      12.4801931,
+      41.8708652
+     ],
+     [
+      12.4796222,
+      41.8706351
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_001",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4800195,
+      41.8724755
+     ],
+     [
+      12.4799764,
+      41.8724668
+     ],
+     [
+      12.4793892,
+      41.8725112
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_002",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4818596,
+      41.8679975
+     ],
+     [
+      12.481533,
+      41.8679471
+     ],
+     [
+      12.4810059,
+      41.8677192
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_003",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4810987,
+      41.869762
+     ],
+     [
+      12.4806875,
+      41.8696047
+     ],
+     [
+      12.48008,
+      41.8695503
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_004",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4814819,
+      41.8687334
+     ],
+     [
+      12.4810482,
+      41.8686883
+     ],
+     [
+      12.4805684,
+      41.8684892
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_005",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4844593,
+      41.8717644
+     ],
+     [
+      12.4827604,
+      41.8713128
+     ],
+     [
+      12.4806626,
+      41.8709326
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_006",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4852437,
+      41.8692308
+     ],
+     [
+      12.4837093,
+      41.868955
+     ],
+     [
+      12.4816063,
+      41.8683993
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_007",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4839652,
+      41.8671082
+     ],
+     [
+      12.4835618,
+      41.8676492
+     ],
+     [
+      12.4829727,
+      41.8687604
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_008",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4833757,
+      41.8680003
+     ],
+     [
+      12.4828106,
+      41.867863
+     ],
+     [
+      12.4821571,
+      41.8675329
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_009",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4838589,
+      41.8672507
+     ],
+     [
+      12.4833334,
+      41.8669913
+     ],
+     [
+      12.4826084,
+      41.866828
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_010",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4849632,
+      41.8685575
+     ],
+     [
+      12.4844969,
+      41.8684524
+     ],
+     [
+      12.4833647,
+      41.868021
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_011",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4834667,
+      41.8688909
+     ],
+     [
+      12.4829586,
+      41.869956
+     ],
+     [
+      12.482561,
+      41.8712767
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_012",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.483057,
+      41.8697498
+     ],
+     [
+      12.482246,
+      41.8696444
+     ],
+     [
+      12.4812537,
+      41.8693459
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_013",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4827377,
+      41.8706898
+     ],
+     [
+      12.4819346,
+      41.8704558
+     ],
+     [
+      12.4808872,
+      41.8703297
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_014",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4820412,
+      41.8695828
+     ],
+     [
+      12.4819699,
+      41.8699826
+     ],
+     [
+      12.481699,
+      41.8704274
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_015",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4826587,
+      41.8686774
+     ],
+     [
+      12.4823677,
+      41.8690955
+     ],
+     [
+      12.4822327,
+      41.8696404
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_016",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4850417,
+      41.8704942
+     ],
+     [
+      12.4840504,
+      41.8703215
+     ],
+     [
+      12.4829578,
+      41.8699586
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_017",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4842239,
+      41.8690475
+     ],
+     [
+      12.4839215,
+      41.869542
+     ],
+     [
+      12.4837425,
+      41.8702192
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_018",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4852431,
+      41.8700374
+     ],
+     [
+      12.4846037,
+      41.869986
+     ],
+     [
+      12.4838626,
+      41.8697647
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_019",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4838211,
+      41.8702453
+     ],
+     [
+      12.4835026,
+      41.8707518
+     ],
+     [
+      12.4833015,
+      41.8714567
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_020",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4847185,
+      41.8712271
+     ],
+     [
+      12.4840995,
+      41.8711437
+     ],
+     [
+      12.4834609,
+      41.870898
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_021",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4833792,
+      41.8733927
+     ],
+     [
+      12.4820204,
+      41.8730121
+     ],
+     [
+      12.4799582,
+      41.8726179
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_022",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4821214,
+      41.871197
+     ],
+     [
+      12.4818855,
+      41.872007
+     ],
+     [
+      12.4814064,
+      41.8728947
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_023",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4817412,
+      41.8722744
+     ],
+     [
+      12.4810956,
+      41.8720569
+     ],
+     [
+      12.4802462,
+      41.8719494
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_024",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.481323,
+      41.8710523
+     ],
+     [
+      12.4812223,
+      41.8715352
+     ],
+     [
+      12.4809184,
+      41.8720345
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_025",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4834578,
+      41.8714982
+     ],
+     [
+      12.483017,
+      41.8722625
+     ],
+     [
+      12.4827146,
+      41.8732066
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_026",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.483004,
+      41.872303
+     ],
+     [
+      12.4824702,
+      41.8722335
+     ],
+     [
+      12.4818814,
+      41.8720147
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_027",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4840516,
+      41.8723791
+     ],
+     [
+      12.483679,
+      41.8721962
+     ],
+     [
+      12.4831081,
+      41.8721045
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_028",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4820115,
+      41.8730104
+     ],
+     [
+      12.4817968,
+      41.873915
+     ],
+     [
+      12.4815309,
+      41.8744881
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_029",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4818118,
+      41.8738519
+     ],
+     [
+      12.4807824,
+      41.8735851
+     ],
+     [
+      12.4796019,
+      41.8734451
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_030",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4811475,
+      41.8728452
+     ],
+     [
+      12.4811049,
+      41.8732397
+     ],
+     [
+      12.4808819,
+      41.8736109
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_031",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4805506,
+      41.8735576
+     ],
+     [
+      12.4803557,
+      41.8740528
+     ],
+     [
+      12.4803467,
+      41.8745552
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_lane_032",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4828247,
+       41.8667724
+      ],
+      [
+       12.4829411,
+       41.8664836
+      ],
+      [
+       12.4834047,
+       41.8665881
+      ],
+      [
+       12.4832883,
+       41.8668768
+      ],
+      [
+       12.4828247,
+       41.8667724
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b001_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     40.2,
+     33.5
+    ],
+    "theta_deg": 195.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4815903,
+       41.8671629
+      ],
+      [
+       12.4819705,
+       41.8672989
+      ],
+      [
+       12.4817522,
+       41.86764
+      ],
+      [
+       12.481372,
+       41.8675039
+      ],
+      [
+       12.4815903,
+       41.8671629
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b002_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 113.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4819605,
+       41.866821
+      ],
+      [
+       12.4823407,
+       41.8669571
+      ],
+      [
+       12.4821224,
+       41.8672981
+      ],
+      [
+       12.4817422,
+       41.8671621
+      ],
+      [
+       12.4819605,
+       41.866821
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b002_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 113.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4813591,
+       41.8678449
+      ],
+      [
+       12.4814173,
+       41.8676341
+      ],
+      [
+       12.4818827,
+       41.8677058
+      ],
+      [
+       12.4818245,
+       41.8679166
+      ],
+      [
+       12.4813591,
+       41.8678449
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b002_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     39.45,
+     23.91
+    ],
+    "theta_deg": 189.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4822861,
+       41.8666259
+      ],
+      [
+       12.4825388,
+       41.8667163
+      ],
+      [
+       12.4823937,
+       41.866943
+      ],
+      [
+       12.4821409,
+       41.8668526
+      ],
+      [
+       12.4822861,
+       41.8666259
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b002_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.92,
+     23.27
+    ],
+    "theta_deg": 113.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810304,
+       41.8677027
+      ],
+      [
+       12.481201,
+       41.8674823
+      ],
+      [
+       12.4814369,
+       41.8675843
+      ],
+      [
+       12.4812663,
+       41.8678047
+      ],
+      [
+       12.4810304,
+       41.8677027
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b002_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     22.63,
+     28.29
+    ],
+    "theta_deg": 208.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4827113,
+       41.8674953
+      ],
+      [
+       12.4828329,
+       41.8671936
+      ],
+      [
+       12.4833172,
+       41.8673027
+      ],
+      [
+       12.4831956,
+       41.8676044
+      ],
+      [
+       12.4827113,
+       41.8674953
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b003_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 15.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4835034,
+       41.8676278
+      ],
+      [
+       12.4832388,
+       41.8675175
+      ],
+      [
+       12.4834821,
+       41.8671912
+      ],
+      [
+       12.4837467,
+       41.8673014
+      ],
+      [
+       12.4835034,
+       41.8676278
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b003_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     41.5,
+     25.15
+    ],
+    "theta_deg": 117.45,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825104,
+       41.8671615
+      ],
+      [
+       12.4827869,
+       41.8672605
+      ],
+      [
+       12.4825685,
+       41.8676015
+      ],
+      [
+       12.482292,
+       41.8675025
+      ],
+      [
+       12.4825104,
+       41.8671615
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b003_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     25.45
+    ],
+    "theta_deg": 293.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.482981,
+       41.8678447
+      ],
+      [
+       12.4830874,
+       41.8676
+      ],
+      [
+       12.4834803,
+       41.8676954
+      ],
+      [
+       12.4833739,
+       41.8679401
+      ],
+      [
+       12.482981,
+       41.8678447
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b003_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     34.3,
+     28.58
+    ],
+    "theta_deg": 196.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825512,
+       41.8671139
+      ],
+      [
+       12.4826379,
+       41.8668988
+      ],
+      [
+       12.4829831,
+       41.8669766
+      ],
+      [
+       12.4828964,
+       41.8671917
+      ],
+      [
+       12.4825512,
+       41.8671139
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b003_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     29.94,
+     24.95
+    ],
+    "theta_deg": 15.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4826319,
+       41.8676949
+      ],
+      [
+       12.4827831,
+       41.8675277
+      ],
+      [
+       12.4830516,
+       41.8676633
+      ],
+      [
+       12.4829004,
+       41.8678306
+      ],
+      [
+       12.4826319,
+       41.8676949
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b003_06",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     26.91,
+     22.43
+    ],
+    "theta_deg": 212.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4830149,
+       41.867199
+      ],
+      [
+       12.4830983,
+       41.8669923
+      ],
+      [
+       12.48343,
+       41.8670671
+      ],
+      [
+       12.4833467,
+       41.8672737
+      ],
+      [
+       12.4830149,
+       41.867199
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b003_07",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.77,
+     23.98
+    ],
+    "theta_deg": 15.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4837633,
+       41.8679132
+      ],
+      [
+       12.4839548,
+       41.8676326
+      ],
+      [
+       12.4844054,
+       41.8678043
+      ],
+      [
+       12.484214,
+       41.868085
+      ],
+      [
+       12.4837633,
+       41.8679132
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b004_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 205.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.484222,
+       41.8682684
+      ],
+      [
+       12.4844338,
+       41.8679579
+      ],
+      [
+       12.4847661,
+       41.8680845
+      ],
+      [
+       12.4845543,
+       41.868395
+      ],
+      [
+       12.484222,
+       41.8682684
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b004_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     30.97,
+     38.71
+    ],
+    "theta_deg": 205.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4841288,
+       41.8676447
+      ],
+      [
+       12.4837485,
+       41.8674862
+      ],
+      [
+       12.483918,
+       41.8672588
+      ],
+      [
+       12.4842983,
+       41.8674173
+      ],
+      [
+       12.4841288,
+       41.8676447
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b004_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.92,
+     36.15
+    ],
+    "theta_deg": 297.45,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4836871,
+       41.8680411
+      ],
+      [
+       12.483436,
+       41.8679667
+      ],
+      [
+       12.4836002,
+       41.8676571
+      ],
+      [
+       12.4838513,
+       41.8677314
+      ],
+      [
+       12.4836871,
+       41.8680411
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b004_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     37.0,
+     22.43
+    ],
+    "theta_deg": 289.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4822129,
+       41.8682961
+      ],
+      [
+       12.4823432,
+       41.8679964
+      ],
+      [
+       12.4828242,
+       41.8681133
+      ],
+      [
+       12.4826939,
+       41.8684129
+      ],
+      [
+       12.4822129,
+       41.8682961
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b005_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 196.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4831027,
+       41.8684313
+      ],
+      [
+       12.4827408,
+       41.8683241
+      ],
+      [
+       12.4829128,
+       41.8679995
+      ],
+      [
+       12.4832748,
+       41.8681067
+      ],
+      [
+       12.4831027,
+       41.8684313
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b005_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.79,
+     32.32
+    ],
+    "theta_deg": 109.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.482019,
+       41.8679389
+      ],
+      [
+       12.4822955,
+       41.8680379
+      ],
+      [
+       12.4820772,
+       41.8683789
+      ],
+      [
+       12.4818007,
+       41.86828
+      ],
+      [
+       12.482019,
+       41.8679389
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b005_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     25.45
+    ],
+    "theta_deg": 293.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4820414,
+       41.8678869
+      ],
+      [
+       12.4822684,
+       41.8676359
+      ],
+      [
+       12.482537,
+       41.8677716
+      ],
+      [
+       12.4823101,
+       41.8680226
+      ],
+      [
+       12.4820414,
+       41.8678869
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b005_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     26.92,
+     33.65
+    ],
+    "theta_deg": 32.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4829173,
+       41.8687209
+      ],
+      [
+       12.4826048,
+       41.8686283
+      ],
+      [
+       12.4827534,
+       41.8683481
+      ],
+      [
+       12.4830658,
+       41.8684406
+      ],
+      [
+       12.4829173,
+       41.8687209
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b005_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     33.48,
+     27.9
+    ],
+    "theta_deg": 109.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808838,
+       41.8682173
+      ],
+      [
+       12.4810949,
+       41.8679446
+      ],
+      [
+       12.4815327,
+       41.8681339
+      ],
+      [
+       12.4813217,
+       41.8684066
+      ],
+      [
+       12.4808838,
+       41.8682173
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b006_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 28.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4805898,
+       41.8684515
+      ],
+      [
+       12.4807759,
+       41.868201
+      ],
+      [
+       12.4811781,
+       41.8683679
+      ],
+      [
+       12.480992,
+       41.8686184
+      ],
+      [
+       12.4805898,
+       41.8684515
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b006_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.2,
+     31.83
+    ],
+    "theta_deg": 207.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4811114,
+       41.8686586
+      ],
+      [
+       12.4811583,
+       41.8684067
+      ],
+      [
+       12.4814279,
+       41.8684347
+      ],
+      [
+       12.4813811,
+       41.8686866
+      ],
+      [
+       12.4811114,
+       41.8686586
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b006_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     22.61,
+     28.26
+    ],
+    "theta_deg": 186.23,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4837627,
+       41.8687248
+      ],
+      [
+       12.4839542,
+       41.8684441
+      ],
+      [
+       12.4844048,
+       41.8686159
+      ],
+      [
+       12.4842134,
+       41.8688965
+      ],
+      [
+       12.4837627,
+       41.8687248
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b007_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 25.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.483122,
+       41.8687415
+      ],
+      [
+       12.4832625,
+       41.8684445
+      ],
+      [
+       12.4837394,
+       41.8685705
+      ],
+      [
+       12.4835989,
+       41.8688676
+      ],
+      [
+       12.483122,
+       41.8687415
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b007_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 197.79,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4843923,
+       41.8689318
+      ],
+      [
+       12.4844908,
+       41.8686254
+      ],
+      [
+       12.4849826,
+       41.8687138
+      ],
+      [
+       12.4848841,
+       41.8690201
+      ],
+      [
+       12.4843923,
+       41.8689318
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b007_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 191.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4832197,
+       41.8683581
+      ],
+      [
+       12.4833931,
+       41.8681038
+      ],
+      [
+       12.4838013,
+       41.8682594
+      ],
+      [
+       12.4836279,
+       41.8685137
+      ],
+      [
+       12.4832197,
+       41.8683581
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b007_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.05,
+     31.71
+    ],
+    "theta_deg": 25.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.48206,
+       41.8691173
+      ],
+      [
+       12.4816861,
+       41.8689719
+      ],
+      [
+       12.4819195,
+       41.8686365
+      ],
+      [
+       12.4822935,
+       41.8687819
+      ],
+      [
+       12.48206,
+       41.8691173
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b008_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 115.8,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4813598,
+       41.869291
+      ],
+      [
+       12.4815172,
+       41.8689987
+      ],
+      [
+       12.4819864,
+       41.8691398
+      ],
+      [
+       12.481829,
+       41.8694321
+      ],
+      [
+       12.4813598,
+       41.869291
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b008_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 200.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4821716,
+       41.869551
+      ],
+      [
+       12.4818892,
+       41.8695119
+      ],
+      [
+       12.481952,
+       41.8692585
+      ],
+      [
+       12.4822345,
+       41.8692976
+      ],
+      [
+       12.4821716,
+       41.869551
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b008_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.62,
+     23.85
+    ],
+    "theta_deg": 98.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4806161,
+       41.8689308
+      ],
+      [
+       12.4810221,
+       41.8690153
+      ],
+      [
+       12.4808864,
+       41.8693795
+      ],
+      [
+       12.4804804,
+       41.869295
+      ],
+      [
+       12.4806161,
+       41.8689308
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b009_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 103.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4803997,
+       41.8687949
+      ],
+      [
+       12.4805707,
+       41.8685647
+      ],
+      [
+       12.4809403,
+       41.8687181
+      ],
+      [
+       12.4807693,
+       41.8689483
+      ],
+      [
+       12.4803997,
+       41.8687949
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b009_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.1,
+     29.25
+    ],
+    "theta_deg": 27.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4809302,
+       41.868977
+      ],
+      [
+       12.4809737,
+       41.8687425
+      ],
+      [
+       12.4813501,
+       41.8687816
+      ],
+      [
+       12.4813066,
+       41.8690161
+      ],
+      [
+       12.4809302,
+       41.868977
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b009_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     31.55,
+     26.29
+    ],
+    "theta_deg": 6.23,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4801588,
+       41.8694941
+      ],
+      [
+       12.4801923,
+       41.8692849
+      ],
+      [
+       12.4805282,
+       41.869315
+      ],
+      [
+       12.4804946,
+       41.8695242
+      ],
+      [
+       12.4801588,
+       41.8694941
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b009_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.09,
+     23.41
+    ],
+    "theta_deg": 185.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810295,
+       41.8690173
+      ],
+      [
+       12.4812862,
+       41.8690707
+      ],
+      [
+       12.4812004,
+       41.8693009
+      ],
+      [
+       12.4809437,
+       41.8692475
+      ],
+      [
+       12.4810295,
+       41.8690173
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b009_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     26.55,
+     22.12
+    ],
+    "theta_deg": 103.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4829311,
+       41.8694395
+      ],
+      [
+       12.4825341,
+       41.8693337
+      ],
+      [
+       12.482704,
+       41.8689776
+      ],
+      [
+       12.483101,
+       41.8690834
+      ],
+      [
+       12.4829311,
+       41.8694395
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b010_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 107.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4826834,
+       41.8696477
+      ],
+      [
+       12.4822767,
+       41.8695914
+      ],
+      [
+       12.482337,
+       41.8693482
+      ],
+      [
+       12.4827437,
+       41.8694045
+      ],
+      [
+       12.4826834,
+       41.8696477
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b010_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.48,
+     34.35
+    ],
+    "theta_deg": 278.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4827544,
+       41.8696861
+      ],
+      [
+       12.4828139,
+       41.8694302
+      ],
+      [
+       12.4830878,
+       41.8694658
+      ],
+      [
+       12.4830283,
+       41.8697217
+      ],
+      [
+       12.4827544,
+       41.8696861
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b010_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     23.08,
+     28.85
+    ],
+    "theta_deg": 188.18,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4830048,
+       41.8690382
+      ],
+      [
+       12.4830986,
+       41.86884
+      ],
+      [
+       12.4834168,
+       41.8689241
+      ],
+      [
+       12.483323,
+       41.8691223
+      ],
+      [
+       12.4830048,
+       41.8690382
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b010_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.03,
+     23.36
+    ],
+    "theta_deg": 17.79,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825846,
+       41.8689398
+      ],
+      [
+       12.4826927,
+       41.8687113
+      ],
+      [
+       12.4830596,
+       41.8688083
+      ],
+      [
+       12.4829515,
+       41.8690368
+      ],
+      [
+       12.4825846,
+       41.8689398
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b010_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     32.31,
+     26.92
+    ],
+    "theta_deg": 17.79,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4835797,
+       41.8699731
+      ],
+      [
+       12.4831827,
+       41.8698673
+      ],
+      [
+       12.4833525,
+       41.8695112
+      ],
+      [
+       12.4837496,
+       41.869617
+      ],
+      [
+       12.4835797,
+       41.8699731
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b011_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 287.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4837831,
+       41.8694772
+      ],
+      [
+       12.4833997,
+       41.8693462
+      ],
+      [
+       12.48361,
+       41.8690024
+      ],
+      [
+       12.4839933,
+       41.8691333
+      ],
+      [
+       12.4837831,
+       41.8694772
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b011_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 112.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4843727,
+       41.8696407
+      ],
+      [
+       12.4845291,
+       41.8693481
+      ],
+      [
+       12.4849988,
+       41.8694884
+      ],
+      [
+       12.4848423,
+       41.869781
+      ],
+      [
+       12.4843727,
+       41.8696407
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b012_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 200.1,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4842807,
+       41.8697276
+      ],
+      [
+       12.4839355,
+       41.8696097
+      ],
+      [
+       12.4841249,
+       41.8693001
+      ],
+      [
+       12.48447,
+       41.869418
+      ],
+      [
+       12.4842807,
+       41.8697276
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b012_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     37.81,
+     31.51
+    ],
+    "theta_deg": 292.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4848817,
+       41.8699725
+      ],
+      [
+       12.4849307,
+       41.8696315
+      ],
+      [
+       12.4852957,
+       41.8696608
+      ],
+      [
+       12.4852467,
+       41.8700019
+      ],
+      [
+       12.4848817,
+       41.8699725
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b012_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     30.48,
+     38.1
+    ],
+    "theta_deg": 184.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4813669,
+       41.8697002
+      ],
+      [
+       12.481773,
+       41.8697847
+      ],
+      [
+       12.4816373,
+       41.8701489
+      ],
+      [
+       12.4812312,
+       41.8700644
+      ],
+      [
+       12.4813669,
+       41.8697002
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b013_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 283.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810051,
+       41.8702907
+      ],
+      [
+       12.4810507,
+       41.870079
+      ],
+      [
+       12.4813905,
+       41.8701199
+      ],
+      [
+       12.4813449,
+       41.8703315
+      ],
+      [
+       12.4810051,
+       41.8702907
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b013_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.58,
+     23.82
+    ],
+    "theta_deg": 187.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4812226,
+       41.8696175
+      ],
+      [
+       12.4813257,
+       41.869426
+      ],
+      [
+       12.4816331,
+       41.8695185
+      ],
+      [
+       12.48153,
+       41.8697099
+      ],
+      [
+       12.4812226,
+       41.8696175
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b013_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.51,
+     22.93
+    ],
+    "theta_deg": 20.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4813507,
+       41.8703415
+      ],
+      [
+       12.4813941,
+       41.8701402
+      ],
+      [
+       12.4817173,
+       41.8701791
+      ],
+      [
+       12.4816739,
+       41.8703804
+      ],
+      [
+       12.4813507,
+       41.8703415
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b013_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.18,
+     22.65
+    ],
+    "theta_deg": 187.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.481544,
+       41.8696995
+      ],
+      [
+       12.4816477,
+       41.8695069
+      ],
+      [
+       12.4819569,
+       41.8695999
+      ],
+      [
+       12.4818532,
+       41.8697925
+      ],
+      [
+       12.481544,
+       41.8696995
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b013_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.67,
+     23.06
+    ],
+    "theta_deg": 20.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4841642,
+       41.8702326
+      ],
+      [
+       12.4843206,
+       41.86994
+      ],
+      [
+       12.4847903,
+       41.8700803
+      ],
+      [
+       12.4846339,
+       41.8703729
+      ],
+      [
+       12.4841642,
+       41.8702326
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b014_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 20.1,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4838086,
+       41.8701147
+      ],
+      [
+       12.4839658,
+       41.8698207
+      ],
+      [
+       12.4842805,
+       41.8699147
+      ],
+      [
+       12.4841233,
+       41.8702086
+      ],
+      [
+       12.4838086,
+       41.8701147
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b014_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.13,
+     35.17
+    ],
+    "theta_deg": 20.1,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4846993,
+       41.8704105
+      ],
+      [
+       12.4847966,
+       41.8700982
+      ],
+      [
+       12.4851309,
+       41.8701564
+      ],
+      [
+       12.4850335,
+       41.8704687
+      ],
+      [
+       12.4846993,
+       41.8704105
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b014_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.5,
+     35.62
+    ],
+    "theta_deg": 191.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825833,
+       41.8703312
+      ],
+      [
+       12.4821655,
+       41.8702896
+      ],
+      [
+       12.4822323,
+       41.8699149
+      ],
+      [
+       12.4826501,
+       41.8699565
+      ],
+      [
+       12.4825833,
+       41.8703312
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b015_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 275.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4823812,
+       41.8705241
+      ],
+      [
+       12.4824805,
+       41.8703338
+      ],
+      [
+       12.482786,
+       41.8704229
+      ],
+      [
+       12.4826867,
+       41.8706131
+      ],
+      [
+       12.4823812,
+       41.8705241
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b015_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.22,
+     22.69
+    ],
+    "theta_deg": 199.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802051,
+       41.8699638
+      ],
+      [
+       12.4806111,
+       41.8700483
+      ],
+      [
+       12.4804754,
+       41.8704126
+      ],
+      [
+       12.4800694,
+       41.870328
+      ],
+      [
+       12.4802051,
+       41.8699638
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b016_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 103.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4800213,
+       41.8707418
+      ],
+      [
+       12.4801016,
+       41.8704325
+      ],
+      [
+       12.4805981,
+       41.8705046
+      ],
+      [
+       12.4805178,
+       41.8708139
+      ],
+      [
+       12.4800213,
+       41.8707418
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b016_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 189.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.480331,
+       41.8699552
+      ],
+      [
+       12.4803792,
+       41.8696545
+      ],
+      [
+       12.4808619,
+       41.8696977
+      ],
+      [
+       12.4808138,
+       41.8699984
+      ],
+      [
+       12.480331,
+       41.8699552
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b016_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     40.37,
+     33.64
+    ],
+    "theta_deg": 5.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4796483,
+       41.8706099
+      ],
+      [
+       12.4798235,
+       41.8703671
+      ],
+      [
+       12.4800834,
+       41.8704718
+      ],
+      [
+       12.4799082,
+       41.8707146
+      ],
+      [
+       12.4796483,
+       41.8706099
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b016_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.52,
+     30.64
+    ],
+    "theta_deg": 206.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4800008,
+       41.8699397
+      ],
+      [
+       12.4800416,
+       41.8696853
+      ],
+      [
+       12.4803138,
+       41.8697097
+      ],
+      [
+       12.4802731,
+       41.869964
+      ],
+      [
+       12.4800008,
+       41.8699397
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b016_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     22.77,
+     28.46
+    ],
+    "theta_deg": 5.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4832963,
+       41.8709228
+      ],
+      [
+       12.4828841,
+       41.8708571
+      ],
+      [
+       12.4829896,
+       41.8704873
+      ],
+      [
+       12.4834018,
+       41.870553
+      ],
+      [
+       12.4832963,
+       41.8709228
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b017_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 100.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4832056,
+       41.8713408
+      ],
+      [
+       12.4827934,
+       41.8712751
+      ],
+      [
+       12.4828989,
+       41.8709053
+      ],
+      [
+       12.4833111,
+       41.8709711
+      ],
+      [
+       12.4832056,
+       41.8713408
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b017_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 100.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4828693,
+       41.8703594
+      ],
+      [
+       12.4830387,
+       41.8700745
+      ],
+      [
+       12.4834962,
+       41.8702265
+      ],
+      [
+       12.4833268,
+       41.8705114
+      ],
+      [
+       12.4828693,
+       41.8703594
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b017_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     41.57,
+     34.64
+    ],
+    "theta_deg": 22.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4840007,
+       41.8707487
+      ],
+      [
+       12.4840963,
+       41.8704419
+      ],
+      [
+       12.484589,
+       41.8705277
+      ],
+      [
+       12.4844933,
+       41.8708345
+      ],
+      [
+       12.4840007,
+       41.8707487
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b018_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 11.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4845425,
+       41.8707802
+      ],
+      [
+       12.4846434,
+       41.8704565
+      ],
+      [
+       12.4849899,
+       41.8705168
+      ],
+      [
+       12.484889,
+       41.8708405
+      ],
+      [
+       12.4845425,
+       41.8707802
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b018_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     29.54,
+     36.92
+    ],
+    "theta_deg": 11.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4838544,
+       41.8708463
+      ],
+      [
+       12.4835787,
+       41.8707494
+      ],
+      [
+       12.4837925,
+       41.8704094
+      ],
+      [
+       12.4840682,
+       41.8705063
+      ],
+      [
+       12.4838544,
+       41.8708463
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b018_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     41.74,
+     25.3
+    ],
+    "theta_deg": 293.49,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4843297,
+       41.8711078
+      ],
+      [
+       12.4843923,
+       41.8708483
+      ],
+      [
+       12.4848089,
+       41.8709044
+      ],
+      [
+       12.4847464,
+       41.8711639
+      ],
+      [
+       12.4843297,
+       41.8711078
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b018_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.15,
+     29.29
+    ],
+    "theta_deg": 188.53,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4839166,
+       41.8710209
+      ],
+      [
+       12.4840893,
+       41.8707702
+      ],
+      [
+       12.4843578,
+       41.8708734
+      ],
+      [
+       12.4841851,
+       41.8711242
+      ],
+      [
+       12.4839166,
+       41.8710209
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b018_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.07,
+     31.33
+    ],
+    "theta_deg": 205.56,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4814281,
+       41.8709217
+      ],
+      [
+       12.4815274,
+       41.8706156
+      ],
+      [
+       12.482019,
+       41.8707047
+      ],
+      [
+       12.4819196,
+       41.8710109
+      ],
+      [
+       12.4814281,
+       41.8709217
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b019_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 191.95,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4824398,
+       41.8711632
+      ],
+      [
+       12.4820286,
+       41.8710941
+      ],
+      [
+       12.4821396,
+       41.8707252
+      ],
+      [
+       12.4825509,
+       41.8707944
+      ],
+      [
+       12.4824398,
+       41.8711632
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b019_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 101.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808465,
+       41.870852
+      ],
+      [
+       12.4809458,
+       41.8705458
+      ],
+      [
+       12.4814374,
+       41.8706349
+      ],
+      [
+       12.481338,
+       41.8709411
+      ],
+      [
+       12.4808465,
+       41.870852
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b019_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 191.95,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4837284,
+       41.8714668
+      ],
+      [
+       12.4838032,
+       41.8711568
+      ],
+      [
+       12.484301,
+       41.8712238
+      ],
+      [
+       12.4842262,
+       41.8715339
+      ],
+      [
+       12.4837284,
+       41.8714668
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b020_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 8.53,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4837064,
+       41.8714858
+      ],
+      [
+       12.4833464,
+       41.8714284
+      ],
+      [
+       12.4834079,
+       41.8712132
+      ],
+      [
+       12.4837678,
+       41.8712706
+      ],
+      [
+       12.4837064,
+       41.8714858
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b020_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.45,
+     30.56
+    ],
+    "theta_deg": 280.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4842765,
+       41.8714913
+      ],
+      [
+       12.4843457,
+       41.8712043
+      ],
+      [
+       12.4846529,
+       41.8712456
+      ],
+      [
+       12.4845837,
+       41.8715327
+      ],
+      [
+       12.4842765,
+       41.8714913
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b020_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.92,
+     32.4
+    ],
+    "theta_deg": 8.53,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4807086,
+       41.8712701
+      ],
+      [
+       12.4811099,
+       41.8713667
+      ],
+      [
+       12.4809549,
+       41.8717266
+      ],
+      [
+       12.4805536,
+       41.87163
+      ],
+      [
+       12.4807086,
+       41.8712701
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b021_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 286.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4803839,
+       41.8719064
+      ],
+      [
+       12.4804377,
+       41.8716691
+      ],
+      [
+       12.4808188,
+       41.8717173
+      ],
+      [
+       12.480765,
+       41.8719547
+      ],
+      [
+       12.4803839,
+       41.8719064
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b021_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     32.09,
+     26.74
+    ],
+    "theta_deg": 187.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808278,
+       41.8712688
+      ],
+      [
+       12.4809039,
+       41.8710341
+      ],
+      [
+       12.4812808,
+       41.8711024
+      ],
+      [
+       12.4812046,
+       41.8713371
+      ],
+      [
+       12.4808278,
+       41.8712688
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b021_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     32.2,
+     26.83
+    ],
+    "theta_deg": 11.95,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4797238,
+       41.8713262
+      ],
+      [
+       12.4798041,
+       41.8710169
+      ],
+      [
+       12.4803007,
+       41.8710889
+      ],
+      [
+       12.4802204,
+       41.8713982
+      ],
+      [
+       12.4797238,
+       41.8713262
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b022_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 9.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4797014,
+       41.8716902
+      ],
+      [
+       12.4801026,
+       41.8717867
+      ],
+      [
+       12.4799476,
+       41.8721466
+      ],
+      [
+       12.4795464,
+       41.87205
+      ],
+      [
+       12.4797014,
+       41.8716902
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b022_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 106.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4797496,
+       41.8713416
+      ],
+      [
+       12.4802311,
+       41.8714574
+      ],
+      [
+       12.4801071,
+       41.8717453
+      ],
+      [
+       12.4796256,
+       41.8716295
+      ],
+      [
+       12.4797496,
+       41.8713416
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b022_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     33.6,
+     42.0
+    ],
+    "theta_deg": 106.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4794735,
+       41.8724276
+      ],
+      [
+       12.4794378,
+       41.8721639
+      ],
+      [
+       12.4798611,
+       41.8721319
+      ],
+      [
+       12.4798968,
+       41.8723955
+      ],
+      [
+       12.4794735,
+       41.8724276
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b022_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.32,
+     29.44
+    ],
+    "theta_deg": 172.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4816059,
+       41.872009
+      ],
+      [
+       12.4812222,
+       41.8718785
+      ],
+      [
+       12.4814316,
+       41.8715344
+      ],
+      [
+       12.4818153,
+       41.8716649
+      ],
+      [
+       12.4816059,
+       41.872009
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b023_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 292.78,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4814322,
+       41.8714897
+      ],
+      [
+       12.4815316,
+       41.8711835
+      ],
+      [
+       12.4820232,
+       41.8712726
+      ],
+      [
+       12.4819238,
+       41.8715788
+      ],
+      [
+       12.4814322,
+       41.8714897
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b023_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 11.95,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4823125,
+       41.8718549
+      ],
+      [
+       12.4824537,
+       41.8715581
+      ],
+      [
+       12.4829303,
+       41.8716848
+      ],
+      [
+       12.4827891,
+       41.8719816
+      ],
+      [
+       12.4823125,
+       41.8718549
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b024_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 17.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4831178,
+       41.8719988
+      ],
+      [
+       12.4828363,
+       41.8719081
+      ],
+      [
+       12.4830365,
+       41.8715609
+      ],
+      [
+       12.483318,
+       41.8716516
+      ],
+      [
+       12.4831178,
+       41.8719988
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b024_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     25.45
+    ],
+    "theta_deg": 111.64,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4822656,
+       41.8719676
+      ],
+      [
+       12.4819661,
+       41.8719188
+      ],
+      [
+       12.4820737,
+       41.8715494
+      ],
+      [
+       12.4823732,
+       41.8715981
+      ],
+      [
+       12.4822656,
+       41.8719676
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b024_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     25.45
+    ],
+    "theta_deg": 280.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4820938,
+       41.8715415
+      ],
+      [
+       12.482193,
+       41.8712359
+      ],
+      [
+       12.48252,
+       41.8712952
+      ],
+      [
+       12.4824209,
+       41.8716008
+      ],
+      [
+       12.4820938,
+       41.8715415
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b024_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.94,
+     34.92
+    ],
+    "theta_deg": 11.95,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4822809,
+       41.8720894
+      ],
+      [
+       12.4824004,
+       41.8719099
+      ],
+      [
+       12.4827966,
+       41.8720572
+      ],
+      [
+       12.4826772,
+       41.8722367
+      ],
+      [
+       12.4822809,
+       41.8720894
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b024_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     36.74,
+     22.27
+    ],
+    "theta_deg": 204.76,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825524,
+       41.8715714
+      ],
+      [
+       12.4826716,
+       41.8713209
+      ],
+      [
+       12.4830738,
+       41.8714278
+      ],
+      [
+       12.4829546,
+       41.8716783
+      ],
+      [
+       12.4825524,
+       41.8715714
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b024_06",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.44,
+     29.54
+    ],
+    "theta_deg": 17.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4836058,
+       41.8720301
+      ],
+      [
+       12.483747,
+       41.8717333
+      ],
+      [
+       12.4842236,
+       41.87186
+      ],
+      [
+       12.4840824,
+       41.8721568
+      ],
+      [
+       12.4836058,
+       41.8720301
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b025_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 17.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4835198,
+       41.8721318
+      ],
+      [
+       12.4831964,
+       41.8720276
+      ],
+      [
+       12.4833637,
+       41.8717376
+      ],
+      [
+       12.4836871,
+       41.8718418
+      ],
+      [
+       12.4835198,
+       41.8721318
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b025_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.08,
+     29.24
+    ],
+    "theta_deg": 291.64,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4805603,
+       41.8725529
+      ],
+      [
+       12.4806647,
+       41.8722476
+      ],
+      [
+       12.4811548,
+       41.8723413
+      ],
+      [
+       12.4810503,
+       41.8726465
+      ],
+      [
+       12.4805603,
+       41.8725529
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b026_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 192.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802269,
+       41.8722077
+      ],
+      [
+       12.4806282,
+       41.8723043
+      ],
+      [
+       12.4804732,
+       41.8726642
+      ],
+      [
+       12.4800719,
+       41.8725676
+      ],
+      [
+       12.4802269,
+       41.8722077
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b026_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 286.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4814626,
+       41.8726849
+      ],
+      [
+       12.4810843,
+       41.8725708
+      ],
+      [
+       12.4812674,
+       41.8722316
+      ],
+      [
+       12.4816457,
+       41.8723456
+      ],
+      [
+       12.4814626,
+       41.8726849
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b026_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     40.64,
+     33.87
+    ],
+    "theta_deg": 110.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4819304,
+       41.8727034
+      ],
+      [
+       12.4820783,
+       41.8724084
+      ],
+      [
+       12.482552,
+       41.8725411
+      ],
+      [
+       12.482404,
+       41.8728361
+      ],
+      [
+       12.4819304,
+       41.8727034
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b027_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 198.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4818279,
+       41.8728303
+      ],
+      [
+       12.4815436,
+       41.8727446
+      ],
+      [
+       12.4817328,
+       41.872394
+      ],
+      [
+       12.4820171,
+       41.8724797
+      ],
+      [
+       12.4818279,
+       41.8728303
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b027_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     25.45
+    ],
+    "theta_deg": 290.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4827811,
+       41.8728426
+      ],
+      [
+       12.4824829,
+       41.8727893
+      ],
+      [
+       12.4826007,
+       41.8724216
+      ],
+      [
+       12.4828988,
+       41.8724749
+      ],
+      [
+       12.4827811,
+       41.8728426
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b027_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     25.45
+    ],
+    "theta_deg": 101.78,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4823284,
+       41.8730611
+      ],
+      [
+       12.4824642,
+       41.8727903
+      ],
+      [
+       12.482754,
+       41.8728715
+      ],
+      [
+       12.4826182,
+       41.8731423
+      ],
+      [
+       12.4823284,
+       41.8730611
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b027_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.7,
+     32.13
+    ],
+    "theta_deg": 198.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4817922,
+       41.8723323
+      ],
+      [
+       12.4819557,
+       41.8720866
+      ],
+      [
+       12.4822186,
+       41.8721843
+      ],
+      [
+       12.4820552,
+       41.87243
+      ],
+      [
+       12.4817922,
+       41.8723323
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b027_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.38,
+     30.48
+    ],
+    "theta_deg": 24.76,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4821008,
+       41.8723745
+      ],
+      [
+       12.4822245,
+       41.8721887
+      ],
+      [
+       12.4825229,
+       41.8722996
+      ],
+      [
+       12.4823992,
+       41.8724854
+      ],
+      [
+       12.4821008,
+       41.8723745
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b027_06",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.67,
+     23.06
+    ],
+    "theta_deg": 24.76,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4835813,
+       41.8727542
+      ],
+      [
+       12.4831714,
+       41.8726809
+      ],
+      [
+       12.4832891,
+       41.8723132
+      ],
+      [
+       12.4836991,
+       41.8723865
+      ],
+      [
+       12.4835813,
+       41.8727542
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b028_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 281.78,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b028",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4833581,
+       41.8732153
+      ],
+      [
+       12.4829482,
+       41.873142
+      ],
+      [
+       12.4830659,
+       41.8727743
+      ],
+      [
+       12.4834759,
+       41.8728476
+      ],
+      [
+       12.4833581,
+       41.8732153
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b028_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 281.78,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b028",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4801775,
+       41.8731406
+      ],
+      [
+       12.4802819,
+       41.8728353
+      ],
+      [
+       12.480772,
+       41.872929
+      ],
+      [
+       12.4806675,
+       41.8732342
+      ],
+      [
+       12.4801775,
+       41.8731406
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b029_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 12.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b029",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4797553,
+       41.8733923
+      ],
+      [
+       12.4798135,
+       41.8731184
+      ],
+      [
+       12.4802533,
+       41.8731705
+      ],
+      [
+       12.4801951,
+       41.8734445
+      ],
+      [
+       12.4797553,
+       41.8733923
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b029_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     36.97,
+     30.81
+    ],
+    "theta_deg": 187.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b029",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4805612,
+       41.8735147
+      ],
+      [
+       12.4806207,
+       41.8732346
+      ],
+      [
+       12.4809205,
+       41.8732702
+      ],
+      [
+       12.480861,
+       41.8735503
+      ],
+      [
+       12.4805612,
+       41.8735147
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b029_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.21,
+     31.51
+    ],
+    "theta_deg": 187.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b029",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810342,
+       41.8732608
+      ],
+      [
+       12.4807427,
+       41.8732432
+      ],
+      [
+       12.4807709,
+       41.8729816
+      ],
+      [
+       12.4810625,
+       41.8729992
+      ],
+      [
+       12.4810342,
+       41.8732608
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b029_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     29.15,
+     24.29
+    ],
+    "theta_deg": 92.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b029",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802087,
+       41.8734933
+      ],
+      [
+       12.4802731,
+       41.8731898
+      ],
+      [
+       12.4805981,
+       41.8732283
+      ],
+      [
+       12.4805336,
+       41.8735319
+      ],
+      [
+       12.4802087,
+       41.8734933
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b029_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.31,
+     34.14
+    ],
+    "theta_deg": 187.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b029",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4794595,
+       41.8728647
+      ],
+      [
+       12.4794175,
+       41.8725542
+      ],
+      [
+       12.4797498,
+       41.872529
+      ],
+      [
+       12.4797919,
+       41.8728395
+      ],
+      [
+       12.4794595,
+       41.8728647
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b030_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.73,
+     34.67
+    ],
+    "theta_deg": 352.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b030",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4794017,
+       41.8728771
+      ],
+      [
+       12.4797178,
+       41.8729531
+      ],
+      [
+       12.4796364,
+       41.8731421
+      ],
+      [
+       12.4793203,
+       41.8730661
+      ],
+      [
+       12.4794017,
+       41.8728771
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b030_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     22.06,
+     27.57
+    ],
+    "theta_deg": 106.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b030",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4811451,
+       41.8735194
+      ],
+      [
+       12.4812832,
+       41.8732217
+      ],
+      [
+       12.4817612,
+       41.8733456
+      ],
+      [
+       12.481623,
+       41.8736433
+      ],
+      [
+       12.4811451,
+       41.8735194
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b031_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 197.45,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b031",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4814668,
+       41.8732399
+      ],
+      [
+       12.4815548,
+       41.8729828
+      ],
+      [
+       12.4819675,
+       41.8730617
+      ],
+      [
+       12.4818796,
+       41.8733188
+      ],
+      [
+       12.4814668,
+       41.8732399
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b031_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.38,
+     29.48
+    ],
+    "theta_deg": 12.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b031",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4814622,
+       41.8731829
+      ],
+      [
+       12.4811855,
+       41.8731662
+      ],
+      [
+       12.4812123,
+       41.872918
+      ],
+      [
+       12.4814891,
+       41.8729347
+      ],
+      [
+       12.4814622,
+       41.8731829
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b031_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.67,
+     23.05
+    ],
+    "theta_deg": 272.94,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b031",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825537,
+       41.8738643
+      ],
+      [
+       12.4821387,
+       41.8738092
+      ],
+      [
+       12.4822271,
+       41.873437
+      ],
+      [
+       12.4826421,
+       41.873492
+      ],
+      [
+       12.4825537,
+       41.8738643
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b032_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 278.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b032",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4826769,
+       41.8736259
+      ],
+      [
+       12.4828371,
+       41.8733066
+      ],
+      [
+       12.4831789,
+       41.8734023
+      ],
+      [
+       12.4830187,
+       41.8737217
+      ],
+      [
+       12.4826769,
+       41.8736259
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b032_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     30.31,
+     37.88
+    ],
+    "theta_deg": 18.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b032",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4821487,
+       41.8741698
+      ],
+      [
+       12.4818392,
+       41.8740896
+      ],
+      [
+       12.481968,
+       41.873812
+      ],
+      [
+       12.4822775,
+       41.8738922
+      ],
+      [
+       12.4821487,
+       41.8741698
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b032_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     32.64,
+     27.2
+    ],
+    "theta_deg": 287.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b032",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.482395,
+       41.873426
+      ],
+      [
+       12.4819584,
+       41.8733681
+      ],
+      [
+       12.4820204,
+       41.8731071
+      ],
+      [
+       12.4824569,
+       41.873165
+      ],
+      [
+       12.482395,
+       41.873426
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b032_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     29.45,
+     36.81
+    ],
+    "theta_deg": 278.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b032",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4796879,
+       41.8739275
+      ],
+      [
+       12.479754,
+       41.8736164
+      ],
+      [
+       12.4802536,
+       41.8736756
+      ],
+      [
+       12.4801875,
+       41.8739868
+      ],
+      [
+       12.4796879,
+       41.8739275
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b033_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 7.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b033",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4796267,
+       41.8740122
+      ],
+      [
+       12.4800279,
+       41.8741088
+      ],
+      [
+       12.4798729,
+       41.8744686
+      ],
+      [
+       12.4794716,
+       41.8743721
+      ],
+      [
+       12.4796267,
+       41.8740122
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b033_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 286.16,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b033",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802689,
+       41.8745363
+      ],
+      [
+       12.4799656,
+       41.8745332
+      ],
+      [
+       12.4799705,
+       41.8742612
+      ],
+      [
+       12.4802738,
+       41.8742642
+      ],
+      [
+       12.4802689,
+       41.8745363
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b033_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     30.22,
+     25.18
+    ],
+    "theta_deg": 89.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b033",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4811045,
+       41.8744996
+      ],
+      [
+       12.4807062,
+       41.8743963
+      ],
+      [
+       12.480872,
+       41.8740391
+      ],
+      [
+       12.4812702,
+       41.8741424
+      ],
+      [
+       12.4811045,
+       41.8744996
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b034_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     42.0,
+     35.0
+    ],
+    "theta_deg": 107.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b034",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4809578,
+       41.8740318
+      ],
+      [
+       12.4804725,
+       41.8739252
+      ],
+      [
+       12.4805867,
+       41.873635
+      ],
+      [
+       12.481072,
+       41.8737417
+      ],
+      [
+       12.4809578,
+       41.8740318
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b034_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     33.6,
+     42.0
+    ],
+    "theta_deg": 284.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b034",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4816229,
+       41.8741959
+      ],
+      [
+       12.481145,
+       41.8740721
+      ],
+      [
+       12.4812775,
+       41.8737863
+      ],
+      [
+       12.4817555,
+       41.8739102
+      ],
+      [
+       12.4816229,
+       41.8741959
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b034_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     33.6,
+     42.0
+    ],
+    "theta_deg": 107.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b034",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4807456,
+       41.8742605
+      ],
+      [
+       12.4804466,
+       41.8742575
+      ],
+      [
+       12.4804514,
+       41.8739894
+      ],
+      [
+       12.4807504,
+       41.8739924
+      ],
+      [
+       12.4807456,
+       41.8742605
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b034_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     29.79,
+     24.83
+    ],
+    "theta_deg": 269.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b034",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4814311,
+       41.8745394
+      ],
+      [
+       12.4811687,
+       41.8744714
+      ],
+      [
+       12.4812779,
+       41.874236
+      ],
+      [
+       12.4815403,
+       41.8743041
+      ],
+      [
+       12.4814311,
+       41.8745394
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b034_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.68,
+     23.06
+    ],
+    "theta_deg": 107.44,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b034",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4806759,
+       41.8745598
+      ],
+      [
+       12.4804073,
+       41.8745571
+      ],
+      [
+       12.4804116,
+       41.8743162
+      ],
+      [
+       12.4806802,
+       41.8743189
+      ],
+      [
+       12.4806759,
+       41.8745598
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_residential_b034_06",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     26.76,
+     22.3
+    ],
+    "theta_deg": 269.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_1944_ostiense_residential_b034",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 ostiense_residential source envelope and corresponding approved low-villa/urban-court comparison; no type prevalence census. Lots and access lanes estimated; no assignment of1944 construction years."
+    }
+   }
+  }
+ ]
+}

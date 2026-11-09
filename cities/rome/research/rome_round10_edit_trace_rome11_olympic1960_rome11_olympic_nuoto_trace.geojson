@@ -1,0 +1,456 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_nuoto_main",
+        "group": "north_new1960",
+        "kind": "landmark",
+        "model": {
+          "kind": "pool",
+          "theta_deg": 83.04646484175775,
+          "w_m": 50,
+          "d_m": 25,
+          "basis": "O01 catalogue64 printed65:main50x25m,diving20x18m,school25x12.5/12.5x4/20x10; O02 Ministry3882 numbered general plan. Main corners fitted to retained OSM220568159, other centre identifications approximate; modern plate is not a recovered1960 water level. Default native dug basin, no banks override."
+        },
+        "provenance": {
+          "basis": "O01 printed65/O02 Ministry3882 plan",
+          "centre_interpretation": "main four retained corners; teaching pool ids inferred from source diagram,not historic cadastral vertices",
+          "source_pixels": [
+            [
+              474.5,
+              186.5
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4576602,
+          41.9294716
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_nuoto_diving",
+        "group": "north_new1960",
+        "kind": "landmark",
+        "model": {
+          "kind": "pool",
+          "theta_deg": 83.04646484175775,
+          "w_m": 20,
+          "d_m": 18,
+          "basis": "O01 catalogue64 printed65:main50x25m,diving20x18m,school25x12.5/12.5x4/20x10; O02 Ministry3882 numbered general plan. Main corners fitted to retained OSM220568159, other centre identifications approximate; modern plate is not a recovered1960 water level. Default native dug basin, no banks override."
+        },
+        "provenance": {
+          "basis": "O01 printed65/O02 Ministry3882 plan",
+          "centre_interpretation": "main four retained corners; teaching pool ids inferred from source diagram,not historic cadastral vertices",
+          "source_pixels": [
+            [
+              365,
+              186
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4576032,
+          41.9290307
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_nuoto_school25",
+        "group": "north_new1960",
+        "kind": "landmark",
+        "model": {
+          "kind": "pool",
+          "theta_deg": 83.04646484175775,
+          "w_m": 25,
+          "d_m": 12.5,
+          "basis": "O01 catalogue64 printed65:main50x25m,diving20x18m,school25x12.5/12.5x4/20x10; O02 Ministry3882 numbered general plan. Main corners fitted to retained OSM220568159, other centre identifications approximate; modern plate is not a recovered1960 water level. Default native dug basin, no banks override."
+        },
+        "provenance": {
+          "basis": "O01 printed65/O02 Ministry3882 plan",
+          "centre_interpretation": "main four retained corners; teaching pool ids inferred from source diagram,not historic cadastral vertices",
+          "source_pixels": [
+            [
+              182,
+              149
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4573129,
+          41.9283073
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_nuoto_school_small",
+        "group": "north_new1960",
+        "kind": "landmark",
+        "model": {
+          "kind": "pool",
+          "theta_deg": 173.04646484175777,
+          "w_m": 12.5,
+          "d_m": 4,
+          "basis": "O01 catalogue64 printed65:main50x25m,diving20x18m,school25x12.5/12.5x4/20x10; O02 Ministry3882 numbered general plan. Main corners fitted to retained OSM220568159, other centre identifications approximate; modern plate is not a recovered1960 water level. Default native dug basin, no banks override."
+        },
+        "provenance": {
+          "basis": "O01 printed65/O02 Ministry3882 plan",
+          "centre_interpretation": "main four retained corners; teaching pool ids inferred from source diagram,not historic cadastral vertices",
+          "source_pixels": [
+            [
+              232,
+              150
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4573431,
+          41.9285083
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_nuoto_school20",
+        "group": "north_new1960",
+        "kind": "landmark",
+        "model": {
+          "kind": "pool",
+          "theta_deg": 83.04646484175775,
+          "w_m": 20,
+          "d_m": 10,
+          "basis": "O01 catalogue64 printed65:main50x25m,diving20x18m,school25x12.5/12.5x4/20x10; O02 Ministry3882 numbered general plan. Main corners fitted to retained OSM220568159, other centre identifications approximate; modern plate is not a recovered1960 water level. Default native dug basin, no banks override."
+        },
+        "provenance": {
+          "basis": "O01 printed65/O02 Ministry3882 plan",
+          "centre_interpretation": "main four retained corners; teaching pool ids inferred from source diagram,not historic cadastral vertices",
+          "source_pixels": [
+            [
+              173,
+              228
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4577345,
+          41.9282418
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_nuoto_west_stand",
+        "group": "north_new1960",
+        "kind": "landmark",
+        "model": {
+          "kind": "prism",
+          "exaggeration": 1,
+          "theta_deg": -6.953535158242246,
+          "section_m": [
+            [
+              5.55,
+              1
+            ],
+            [
+              5.55,
+              1.6749999999999998
+            ],
+            [
+              4.1625000000000005,
+              1.6749999999999998
+            ],
+            [
+              4.1625000000000005,
+              2.3499999999999996
+            ],
+            [
+              2.7749999999999995,
+              2.3499999999999996
+            ],
+            [
+              2.7749999999999995,
+              3.0250000000000004
+            ],
+            [
+              1.3875000000000002,
+              3.0250000000000004
+            ],
+            [
+              1.3875000000000002,
+              3.7
+            ],
+            [
+              -0.0,
+              3.7
+            ],
+            [
+              -0.0,
+              4.375
+            ],
+            [
+              -1.3875000000000002,
+              4.375
+            ],
+            [
+              -1.3875000000000002,
+              5.050000000000001
+            ],
+            [
+              -2.775,
+              5.050000000000001
+            ],
+            [
+              -2.775,
+              5.7250000000000005
+            ],
+            [
+              -4.1625,
+              5.7250000000000005
+            ],
+            [
+              -4.1625,
+              6.4
+            ],
+            [
+              -5.55,
+              6.4
+            ],
+            [
+              -5.55,
+              6.4
+            ],
+            [
+              -5.55,
+              0
+            ],
+            [
+              5.55,
+              0
+            ]
+          ],
+          "length_m": 99,
+          "basis": "O02 Ministry3882 transverse section:11.10m footprint and about6.4m rise; plan's two long-side stands.99m source-plan length,step subdivision simplified; dimensions retained at factor1 rather than stretching the measured seating section. No later1994/2009 additions or invented full roof.",
+          "site": "cut"
+        },
+        "provenance": {
+          "source_pixels": [
+            [
+              444,
+              120
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4572864,
+          41.9293734
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_nuoto_east_stand",
+        "group": "north_new1960",
+        "kind": "landmark",
+        "model": {
+          "kind": "prism",
+          "exaggeration": 1,
+          "theta_deg": -6.953535158242246,
+          "section_m": [
+            [
+              -5.55,
+              0
+            ],
+            [
+              5.55,
+              0
+            ],
+            [
+              5.55,
+              6.4
+            ],
+            [
+              5.55,
+              6.4
+            ],
+            [
+              4.1625,
+              6.4
+            ],
+            [
+              4.1625,
+              5.7250000000000005
+            ],
+            [
+              2.775,
+              5.7250000000000005
+            ],
+            [
+              2.775,
+              5.050000000000001
+            ],
+            [
+              1.3875000000000002,
+              5.050000000000001
+            ],
+            [
+              1.3875000000000002,
+              4.375
+            ],
+            [
+              0.0,
+              4.375
+            ],
+            [
+              0.0,
+              3.7
+            ],
+            [
+              -1.3875000000000002,
+              3.7
+            ],
+            [
+              -1.3875000000000002,
+              3.0250000000000004
+            ],
+            [
+              -2.7749999999999995,
+              3.0250000000000004
+            ],
+            [
+              -2.7749999999999995,
+              2.3499999999999996
+            ],
+            [
+              -4.1625000000000005,
+              2.3499999999999996
+            ],
+            [
+              -4.1625000000000005,
+              1.6749999999999998
+            ],
+            [
+              -5.55,
+              1.6749999999999998
+            ],
+            [
+              -5.55,
+              1
+            ]
+          ],
+          "length_m": 99,
+          "basis": "O02 Ministry3882 transverse section:11.10m footprint and about6.4m rise; plan's two long-side stands.99m source-plan length,step subdivision simplified; dimensions retained at factor1 rather than stretching the measured seating section. No later1994/2009 additions or invented full roof.",
+          "site": "cut"
+        },
+        "provenance": {
+          "source_pixels": [
+            [
+              446,
+              253
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.4580048,
+          41.9293321
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "rome11_olympic_nuoto_service",
+        "group": "north_new1960",
+        "kind": "landmark",
+        "model": {
+          "kind": "prism",
+          "theta_deg": 83.046,
+          "plan_m": [
+            [
+              -4.943,
+              8.987
+            ],
+            [
+              4.943,
+              8.987
+            ],
+            [
+              4.943,
+              -8.987
+            ],
+            [
+              -4.943,
+              -8.987
+            ]
+          ],
+          "h_m": 3.2,
+          "basis": "O02 numbered plan central service silhouette;3.2m single-storey service height estimated from contemporary village3.1m level; no claim of a surveyed elevation"
+        },
+        "provenance": {
+          "footprint_pixels": [
+            [
+              204,
+              207
+            ],
+            [
+              226,
+              207
+            ],
+            [
+              226,
+              247
+            ],
+            [
+              204,
+              247
+            ]
+          ],
+          "source_pixels": [
+            [
+              214.9953843059117,
+              227.00290157206075
+            ]
+          ]
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.45775,
+          41.9284113
+        ]
+      }
+    }
+  ]
+}

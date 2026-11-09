@@ -1,0 +1,330 @@
+[
+  {
+    "file": "rome_A_en_wide.jpg",
+    "thumbnail": "rome_A_en_wide_320.jpg",
+    "size": [
+      3840,
+      2160
+    ],
+    "native_generated_size": [
+      1672,
+      941
+    ],
+    "text": {
+      "title": "ROME",
+      "date": "753 BCE → 2026",
+      "mark": "A City Through Time"
+    },
+    "bounds": {
+      "title": [
+        928,
+        121,
+        2912,
+        566
+      ],
+      "date": [
+        1246,
+        613,
+        2594,
+        756
+      ],
+      "mark": [
+        537,
+        2012,
+        1154,
+        2080
+      ]
+    },
+    "safe_x": [
+      480,
+      3360
+    ]
+  },
+  {
+    "file": "rome_A_zh_wide.jpg",
+    "thumbnail": "rome_A_zh_wide_320.jpg",
+    "size": [
+      3840,
+      2160
+    ],
+    "native_generated_size": [
+      1672,
+      941
+    ],
+    "text": {
+      "title": "罗马",
+      "date": "公元前753 → 2026",
+      "mark": "一城春秋"
+    },
+    "bounds": {
+      "title": [
+        1371,
+        97,
+        2469,
+        579
+      ],
+      "date": [
+        1240,
+        613,
+        2600,
+        769
+      ],
+      "mark": [
+        538,
+        2012,
+        822,
+        2083
+      ]
+    },
+    "safe_x": [
+      480,
+      3360
+    ]
+  },
+  {
+    "file": "rome_A_en_portrait.jpg",
+    "thumbnail": "rome_A_en_portrait_320.jpg",
+    "size": [
+      1080,
+      1440
+    ],
+    "native_generated_size": [
+      1086,
+      1448
+    ],
+    "text": {
+      "title": "ROME",
+      "date": "753 BCE → 2026",
+      "mark": "A City Through Time"
+    },
+    "bounds": {
+      "title": [
+        106,
+        121,
+        974,
+        319
+      ],
+      "date": [
+        199,
+        374,
+        881,
+        447
+      ],
+      "mark": [
+        67,
+        1363,
+        327,
+        1392
+      ]
+    },
+    "safe_x": [
+      0,
+      1080
+    ]
+  },
+  {
+    "file": "rome_A_zh_portrait.jpg",
+    "thumbnail": "rome_A_zh_portrait_320.jpg",
+    "size": [
+      1080,
+      1440
+    ],
+    "native_generated_size": [
+      1086,
+      1448
+    ],
+    "text": {
+      "title": "罗马",
+      "date": "公元前753 → 2026",
+      "mark": "一城春秋"
+    },
+    "bounds": {
+      "title": [
+        265,
+        93,
+        815,
+        339
+      ],
+      "date": [
+        191,
+        374,
+        889,
+        455
+      ],
+      "mark": [
+        67,
+        1363,
+        189,
+        1395
+      ]
+    },
+    "safe_x": [
+      0,
+      1080
+    ]
+  },
+  {
+    "file": "rome_B_en_wide.jpg",
+    "thumbnail": "rome_B_en_wide_320.jpg",
+    "size": [
+      3840,
+      2160
+    ],
+    "native_generated_size": [
+      1672,
+      941
+    ],
+    "text": {
+      "title": "ROME",
+      "date": "753 BCE → 2026",
+      "mark": "A City Through Time"
+    },
+    "bounds": {
+      "title": [
+        928,
+        121,
+        2912,
+        566
+      ],
+      "date": [
+        1246,
+        613,
+        2594,
+        756
+      ],
+      "mark": [
+        537,
+        2012,
+        1154,
+        2080
+      ]
+    },
+    "safe_x": [
+      480,
+      3360
+    ]
+  },
+  {
+    "file": "rome_B_zh_wide.jpg",
+    "thumbnail": "rome_B_zh_wide_320.jpg",
+    "size": [
+      3840,
+      2160
+    ],
+    "native_generated_size": [
+      1672,
+      941
+    ],
+    "text": {
+      "title": "罗马",
+      "date": "公元前753 → 2026",
+      "mark": "一城春秋"
+    },
+    "bounds": {
+      "title": [
+        1371,
+        97,
+        2469,
+        579
+      ],
+      "date": [
+        1240,
+        613,
+        2600,
+        769
+      ],
+      "mark": [
+        538,
+        2012,
+        822,
+        2083
+      ]
+    },
+    "safe_x": [
+      480,
+      3360
+    ]
+  },
+  {
+    "file": "rome_B_en_portrait.jpg",
+    "thumbnail": "rome_B_en_portrait_320.jpg",
+    "size": [
+      1080,
+      1440
+    ],
+    "native_generated_size": [
+      1086,
+      1448
+    ],
+    "text": {
+      "title": "ROME",
+      "date": "753 BCE → 2026",
+      "mark": "A City Through Time"
+    },
+    "bounds": {
+      "title": [
+        106,
+        121,
+        974,
+        319
+      ],
+      "date": [
+        199,
+        374,
+        881,
+        447
+      ],
+      "mark": [
+        67,
+        1363,
+        327,
+        1392
+      ]
+    },
+    "safe_x": [
+      0,
+      1080
+    ]
+  },
+  {
+    "file": "rome_B_zh_portrait.jpg",
+    "thumbnail": "rome_B_zh_portrait_320.jpg",
+    "size": [
+      1080,
+      1440
+    ],
+    "native_generated_size": [
+      1086,
+      1448
+    ],
+    "text": {
+      "title": "罗马",
+      "date": "公元前753 → 2026",
+      "mark": "一城春秋"
+    },
+    "bounds": {
+      "title": [
+        265,
+        93,
+        815,
+        339
+      ],
+      "date": [
+        191,
+        374,
+        889,
+        455
+      ],
+      "mark": [
+        67,
+        1363,
+        189,
+        1395
+      ]
+    },
+    "safe_x": [
+      0,
+      1080
+    ]
+  }
+]

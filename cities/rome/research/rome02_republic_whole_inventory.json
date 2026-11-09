@@ -1,0 +1,1808 @@
+{
+ "model_year": -44,
+ "native_registration": {
+  "method": "geotiff",
+  "crs": "EPSG:3857",
+  "m_per_px": 3.5606
+ },
+ "landmarks": [
+  {
+   "id": "pompey_theatre",
+   "position": [
+    12.47355,
+    41.8953
+   ],
+   "template": "rome02_republic_whole_pompey_theatre",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R11.55BCE Pompey theatre,registered cavea centre,faces east.150m outer diameter read approximately from Lanciani;36m high,44m orchestra,14m straight stage and48bays use named Caen Pompey reconstruction estimates. No Domitian three-exedra stage; Venus projection not asserted."
+  },
+  {
+   "id": "aemilia_warehouses",
+   "position": [
+    12.4743,
+    41.88054
+   ],
+   "template": "rome02_republic_whole_aemilia_warehouses",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/S100. Republican Porticus Aemilia traditional identification,487x60m and50transverse vaults from official source; name/date contested but proposed phases pre44.8m wall/roof estimates from named warehouse reconstruction. No later Emporium quay vaults or Testaccio mound."
+  },
+  {
+   "id": "fabricius_bridge",
+   "position": [
+    12.4782528,
+    41.8910748
+   ],
+   "template": "rome02_republic_whole_fabricius_bridge",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/S100.62BCE two-main-arch bridge. OSM5676411 modern retained envelope66x8.2m is location/scale control,not Republican measurement;DAR62x5.5m reported dimensions differ.12m high,.82opening,.35spring,1.2mattic estimated from same bridge. No modern embankment."
+  },
+  {
+   "id": "cestio_bridge",
+   "position": [
+    12.4773272,
+    41.8900575
+   ],
+   "template": "rome02_republic_whole_cestio_bridge",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/S100 and whole_evidence_decisions. Conditional branch:49–43BCE range crosses44; choose bridge present44,not secure completion date.60x8m/10m high one-main-arch massing is estimated by Republican Fabricius comparison. No AD365/modern81.6m bridge."
+  },
+  {
+   "id": "portunus_temple",
+   "position": [
+    12.4809039,
+    41.8892462
+   ],
+   "template": "rome02_republic_whole_portunus_temple",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/S98. Official Republican harbour temple;OSM251331418 controls11.6x23.3m podium envelope. Native body10.6x22.3m,8m eaves,2.5m podium,6.5m four-front columns,4m porch,15deg roof/.6m eaves are same-temple reconstruction estimates; no AD6 Castor analogy or church fittings."
+  },
+  {
+   "id": "hercules_temple",
+   "position": [
+    12.480766,
+    41.8887404
+   ],
+   "template": "rome02_republic_whole_hercules_temple",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/S98. Republican Boarium round temple,OSM251342364 location;approx19m outer order.14m cella,20columns7m tall/2m gap/.5m diameter,7m drum/3m conical roof are named Hercules reconstruction estimates. No imperial Vesta proxy or Christian fittings."
+  },
+  {
+   "id": "jupiter_capitolinus",
+   "position": [
+    12.48185,
+    41.89232
+   ],
+   "template": "rome02_republic_whole_jupiter_capitolinus",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R08. Catulan69BCE temple on62x53m/3.6m reported foundation.52x61m body plus native podium margin;17.67m columns from Vitruvius4.7.2 Tuscan width/3 rule,19.8m eaves,15deg roof/.6m overhang and30.5m deep porch are ideal/type estimates,not measured Catulan elevation.6front columns; triple cellae/three column rows not fully represented. Caffarelli site control retained; no Augustus restoration or Domitian column datum."
+  },
+  {
+   "id": "magna_mater_palatine",
+   "position": [
+    12.4849781,
+    41.8894921
+   ],
+   "template": "rome02_republic_whole_magna_mater_palatine",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R08 Republican sacred site and podium envelope; not AD3 restoration. Upper7m columns/9m eaves/22deg roof are Portunus Republican temple comparison estimates; no AD6 Castor columns."
+  },
+  {
+   "id": "victoria_palatine",
+   "position": [
+    12.4852728,
+    41.889251
+   ],
+   "template": "rome02_republic_whole_victoria_palatine",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R08 Republican sacred site and podium envelope; not AD3 restoration. Upper7m columns/9m eaves/22deg roof are Portunus Republican temple comparison estimates; no AD6 Castor columns."
+  },
+  {
+   "id": "circus_maximus",
+   "position": [
+    12.48531,
+    41.88592
+   ],
+   "template": "rome02_republic_whole_circus_maximus",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R22. Caesar46BCE enlargement;621x118m literary conversion branch versus650x125m alternative.28m seat depth is reconstruction;three stepped bands compare later Augustan description,not a measured44 timber frame.17m rise estimated as28*.5+3 from Vitruvius5.6.3 theatre seating.12carceres/4.25m estimate. No33BCE dolphins,31BCE fire repair,10BCE obelisk,pulvinar or continuous imperial spina."
+  },
+  {
+   "id": "julia_caesarean_working_hall",
+   "position": [
+    12.4847834,
+    41.8919606
+   ],
+   "template": "rome02_republic_whole_julia_caesarean_working_hall",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R01/R03. Dedicated unfinished46BCE.25.1m is Gerding2022 three-aisle earlier-foundation hypothesis,73m is bounded working reconstruction from source orientation; not measured44 length.14.8m eaves and two low aisles7.4m use named Fano/Vitruvius5.1 comparison; roof22deg estimated. No AD12 five-aisle101x49m or two-tier facade."
+  },
+  {
+   "id": "paulli_rebuilding",
+   "position": [
+    12.485848,
+    41.892543
+   ],
+   "template": "rome02_republic_whole_paulli_rebuilding",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R04.54BCE rebuilding before34BCE dedication. Footprint lies within later Paulli site;70m by25.1m is a deliberately bounded comparative public hall, not a recovered44 plan. Eaves14.8m/aisles7.4m Fano and Republican Sempronia comparison; no Augustan15-shops/16-arches/two-level front."
+  },
+  {
+   "id": "castor_metellan",
+   "position": [
+    12.4856301,
+    41.8916788
+   ],
+   "template": "rome02_republic_whole_castor_metellan",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R15/R16. Republican same-site temple, preserved site controls only. Chosen smaller25x42m /23x33m working envelope,9m eaves,7m columns and3m podium are Portunus temple comparison estimates, not measured Metellan/old Saturn superstructure. No AD6 octastyle or late-antique Saturn columns."
+  },
+  {
+   "id": "saturn_preplancan",
+   "position": [
+    12.4840868,
+    41.8924028
+   ],
+   "template": "rome02_republic_whole_saturn_preplancan",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R15/R16. Republican same-site temple, preserved site controls only. Chosen smaller25x42m /23x33m working envelope,9m eaves,7m columns and3m podium are Portunus temple comparison estimates, not measured Metellan/old Saturn superstructure. No AD6 octastyle or late-antique Saturn columns."
+  },
+  {
+   "id": "vesta_republican",
+   "position": [
+    12.4861979,
+    41.8916941
+   ],
+   "template": "rome02_republic_whole_vesta_republican",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R17. Republican circular sacred site.13m approximate envelope from surviving site is location/scale control; cone7m drum/3m rise/18columns are Republican Boarium Hercules comparison estimates. No Severan details or claimed44 column census."
+  },
+  {
+   "id": "tabularium_catulan",
+   "position": [
+    12.48329,
+    41.89279
+   ],
+   "template": "rome02_republic_whole_tabularium_catulan",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R07. Post83fire78–65BCE polygonal complex; footprint estimated from DAR retained outline.11Forum arches sourced; polygon dimensions,8m base,7.4m gallery and rear upper hall compare Fano public module, not Palazzo Senatorio or a certain complete archive plan."
+  },
+  {
+   "id": "forum_iulium_caesarean",
+   "position": [
+    12.4849,
+    41.89392
+   ],
+   "template": "rome02_republic_whole_forum_iulium_caesarean",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/R10.46BCE first dedication; unfinished interfaces in early44 unknown.3sided colonnades only. Site/160x75m envelope approximate; portico8m/10m and shops5m/7m schematic Fano module. Temple9m columns/11m eaves/3.6m podium use Republican Portunus/Jupiter comparison, not Trajan Venus. No Chalcidicum/Augustan double east portico."
+  },
+  {
+   "id": "regia_republican",
+   "position": [
+    12.48691,
+    41.89194
+   ],
+   "template": "rome02_republic_whole_regia_republican",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03. R17 trapezoidal court and three small room groups; before36fire. Room offsets and roofs are source-constrained estimates, not the Calvinus rebuilding.3.5m roofs compare earlier Livia residence. Full room plan unknown; illustrative bounded precinct, not an excavated complete restoration."
+  },
+  {
+   "id": "atrium_vestae_republican",
+   "position": [
+    12.48667,
+    41.8912
+   ],
+   "template": "rome02_republic_whole_atrium_vestae_republican",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03. R17 and HV early sacred residence; no12BCE union with Domus Publica and no later104x55m court.3.5m roofs compare earlier Livia residence. Full room plan unknown; illustrative bounded precinct, not an excavated complete restoration."
+  },
+  {
+   "id": "domus_publica_republican",
+   "position": [
+    12.4872,
+    41.89169
+   ],
+   "template": "rome02_republic_whole_domus_publica_republican",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03. R17/HV early pontifical residential use; separate from Vestals before12BCE.3.5m roofs compare earlier Livia residence. Full room plan unknown; illustrative bounded precinct, not an excavated complete restoration."
+  },
+  {
+   "id": "pompey_gallery_north_west",
+   "position": [
+    12.4744756711191,
+    41.89561285700357
+   ],
+   "template": "rome02_republic_whole_pompey_gallery_north_west",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W04 approved-gallery native parts vocabulary extended west: .74m columns/5.92m height/.15m display floor/15deg roof unchanged comparison.72.8m north/south and135m west length,19/35columns and assembly gaps estimated; no closed long-hall facade substitutes for the walking colonnade. Approved eastern583primitives untouched."
+  },
+  {
+   "id": "pompey_gallery_south_west",
+   "position": [
+    12.474569003160699,
+    41.89446199553673
+   ],
+   "template": "rome02_republic_whole_pompey_gallery_south_west",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W04 approved-gallery native parts vocabulary extended west: .74m columns/5.92m height/.15m display floor/15deg roof unchanged comparison.72.8m north/south and135m west length,19/35columns and assembly gaps estimated; no closed long-hall facade substitutes for the walking colonnade. Approved eastern583primitives untouched."
+  },
+  {
+   "id": "pompey_gallery_west_cross",
+   "position": [
+    12.474035270011099,
+    41.89501537512897
+   ],
+   "template": "rome02_republic_whole_pompey_gallery_west_cross",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W04 approved-gallery native parts vocabulary extended west: .74m columns/5.92m height/.15m display floor/15deg roof unchanged comparison.72.8m north/south and135m west length,19/35columns and assembly gaps estimated; no closed long-hall facade substitutes for the walking colonnade. Approved eastern583primitives untouched."
+  },
+  {
+   "id": "largo_a",
+   "position": [
+    12.477207183837876,
+    41.895632915910106
+   ],
+   "template": "rome02_republic_whole_largo_a",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03 and whole_evidence_decisions. Largo Republican sacred area; source outlines approximate. A selects earlierIIcentury hexastyle bounded12x19m estimate,not final50–25BCE15x27.5m/30columns. C17x27m working tufa podium proxy/four front columns; D23.5x37m sourced podium represented by22.5x36m body+native margin.8/9m eaves,7m columns/3m podium compare Portunus; no Domitian superstructures."
+  },
+  {
+   "id": "largo_c",
+   "position": [
+    12.477293014526353,
+    41.89499402130215
+   ],
+   "template": "rome02_republic_whole_largo_c",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03 and whole_evidence_decisions. Largo Republican sacred area; source outlines approximate. A selects earlierIIcentury hexastyle bounded12x19m estimate,not final50–25BCE15x27.5m/30columns. C17x27m working tufa podium proxy/four front columns; D23.5x37m sourced podium represented by22.5x36m body+native margin.8/9m eaves,7m columns/3m podium compare Portunus; no Domitian superstructures."
+  },
+  {
+   "id": "largo_d",
+   "position": [
+    12.477250099182116,
+    41.89461068146964
+   ],
+   "template": "rome02_republic_whole_largo_d",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03 and whole_evidence_decisions. Largo Republican sacred area; source outlines approximate. A selects earlierIIcentury hexastyle bounded12x19m estimate,not final50–25BCE15x27.5m/30columns. C17x27m working tufa podium proxy/four front columns; D23.5x37m sourced podium represented by22.5x36m body+native margin.8/9m eaves,7m columns/3m podium compare Portunus; no Domitian superstructures."
+  },
+  {
+   "id": "largo_b",
+   "position": [
+    12.477293014526353,
+    41.895281524666636
+   ],
+   "template": "rome02_republic_whole_largo_b",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03 source Fortuna Huiusce Diei,originaldedication before87BCE. Select earlier free circular cella/18columns branch before midIcentury15.5m pseudo-monopteros,renovation precise date unknown.9.3m published original module used as approximate core;1.5m gap/.5m columns/7m height3m cone compare Boarium Hercules,not an exact original diameter interpretation."
+  },
+  {
+   "id": "porticus_metelli",
+   "position": [
+    12.478837966918933,
+    41.89294951560849
+   ],
+   "template": "rome02_republic_whole_porticus_metelli",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/evidence Porticus Octaviae.146BCE Metelli predecessor with Juno Regina/Jupiter Stator temples. Working80x96m precinct is bounded smaller branch within retained temple ground,not23BCE NE extension119x132m. Portico6.5m/5.92m columns compare approved Fano;temples8m/6.5m/2.5m podium compare Republican Portunus. Internal dimensions estimated;no Augustan library/curia or Severan gateway."
+  },
+  {
+   "id": "minucia_vetus",
+   "position": [
+    12.478194236755359,
+    41.895153745553316
+   ],
+   "template": "rome02_republic_whole_minucia_vetus",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/evidence Porticus Minucia. Republican Vetus public colonnade east of Largo,not Claudian Frumentaria or an enclosure around all4temples.34x62m working branch and5.92m Fano-comparison height estimated;precise Republican perimeter unknown."
+  },
+  {
+   "id": "apollo_medicus",
+   "position": [
+    12.478709220886216,
+    41.89211891647655
+   ],
+   "template": "rome02_republic_whole_apollo_medicus",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/whole_evidence_decisions. Republican Apollo Medicus predecessor at excavated site,tetrastyle diastyle;no34BCE six-column Sosianus rebuilding. Source-map approximate site,dimensions and8m eaves/6.5m columns/2.5m podium are bounded Republican Portunus comparison estimates;not measured44 superstructure."
+  },
+  {
+   "id": "janus_holitorium",
+   "position": [
+    12.480039596557605,
+    41.890585474318264
+   ],
+   "template": "rome02_republic_whole_janus_holitorium",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/whole_evidence_decisions. Republican northern Janus temple;laterAugustan plan is location comparison only. Source-map approximate site,dimensions and8m eaves/6.5m columns/2.5m podium are bounded Republican Portunus comparison estimates;not measured44 superstructure."
+  },
+  {
+   "id": "juno_sospita",
+   "position": [
+    12.480039596557603,
+    41.890266002568474
+   ],
+   "template": "rome02_republic_whole_juno_sospita",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/whole_evidence_decisions. central Juno Sospita90BCE version,same-site envelope. Source-map approximate site,dimensions and8m eaves/6.5m columns/2.5m podium are bounded Republican Portunus comparison estimates;not measured44 superstructure."
+  },
+  {
+   "id": "spes_holitorium",
+   "position": [
+    12.479996681213366,
+    41.88994652922093
+   ],
+   "template": "rome02_republic_whole_spes_holitorium",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/whole_evidence_decisions. southern Republican Spes;exclude post31fire reconstruction. Source-map approximate site,dimensions and8m eaves/6.5m columns/2.5m podium are bounded Republican Portunus comparison estimates;not measured44 superstructure."
+  },
+  {
+   "id": "ceres_aventine_schematic",
+   "position": [
+    12.482099533081042,
+    41.88777406808545
+   ],
+   "template": "rome02_republic_whole_ceres_aventine_schematic",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/whole_evidence_decisions. Ceres at northAventine above Circus carceres;no known remains,position is schematic source-zone branch,not exact temple footprint;Tuscan form comparative,notAD17. Source-map approximate site,dimensions and8m eaves/6.5m columns/2.5m podium are bounded Republican Portunus comparison estimates;not measured44 superstructure."
+  },
+  {
+   "id": "diana_aventine_schematic",
+   "position": [
+    12.482914924621568,
+    41.88346087484331
+   ],
+   "template": "rome02_republic_whole_diana_aventine_schematic",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/whole_evidence_decisions. Diana Aventina knownRepublican sanctuary;location disputed byabout300m and no identifiedremains. Choose source-zone schematic sanctuary,notCornificius Augustan eight-column/doubleportico plan. Source-map approximate site,dimensions and8m eaves/6.5m columns/2.5m podium are bounded Republican Portunus comparison estimates;not measured44 superstructure."
+  },
+  {
+   "id": "galbana_republican",
+   "position": [
+    12.4752089381,
+    41.8793031602
+   ],
+   "template": "rome02_republic_whole_galbana_republican",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W03/evidence DAR Horrea Galbana lateIIcenturyBCE warehouseuse. Source envelope182x130m only location-scale comparison;two unequal workyards/open loading area and lowroofranges selected within it,notSeveran threecourts.4.25m singlelevel is approvedRepublican H3/PorticusAemilia function comparison,not Agrippiana floor count. Everyrange/yard boundaryestimated."
+  },
+  {
+   "id": "servian_corridor_1_1_0",
+   "position": [
+    12.4985189,
+    41.9067199
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_1_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_1_1",
+   "position": [
+    12.4985704,
+    41.9065347
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_1_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_1_2",
+   "position": [
+    12.4986219,
+    41.9063494
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_1_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_1_3",
+   "position": [
+    12.4986734,
+    41.9061642
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_1_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_1_4",
+   "position": [
+    12.4987249,
+    41.9059789
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_1_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_2_0",
+   "position": [
+    12.4987979,
+    41.9057969
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_2_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_2_1",
+   "position": [
+    12.4988923,
+    41.905618
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_2_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_2_2",
+   "position": [
+    12.4989867,
+    41.9054391
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_2_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_2_3",
+   "position": [
+    12.4990811,
+    41.9052603
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_2_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_2_4",
+   "position": [
+    12.4991755,
+    41.9050814
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_2_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_3_0",
+   "position": [
+    12.4992657,
+    41.9048994
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_3_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_3_1",
+   "position": [
+    12.4993515,
+    41.9047141
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_3_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_3_2",
+   "position": [
+    12.4994373,
+    41.9045289
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_3_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_3_3",
+   "position": [
+    12.4995232,
+    41.9043436
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_3_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_3_4",
+   "position": [
+    12.499609,
+    41.9041584
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_3_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_4_0",
+   "position": [
+    12.4996905,
+    41.9039731
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_4_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_4_1",
+   "position": [
+    12.4997678,
+    41.9037878
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_4_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_4_2",
+   "position": [
+    12.499845,
+    41.9036026
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_4_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_4_3",
+   "position": [
+    12.4999223,
+    41.9034173
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_4_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_1_4_4",
+   "position": [
+    12.4999995,
+    41.9032321
+   ],
+   "template": "rome02_republic_whole_servian_corridor_1_4_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_1_0",
+   "position": [
+    12.5001669,
+    41.9027584
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_1_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_1_1",
+   "position": [
+    12.5002527,
+    41.9025714
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_1_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_1_2",
+   "position": [
+    12.5003386,
+    41.9023843
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_1_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_1_3",
+   "position": [
+    12.5004244,
+    41.9021972
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_1_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_1_4",
+   "position": [
+    12.5005102,
+    41.9020101
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_1_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_1_5",
+   "position": [
+    12.500596,
+    41.901823
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_1_5",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_1_6",
+   "position": [
+    12.5006819,
+    41.9016359
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_1_6",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_2_0",
+   "position": [
+    12.5007646,
+    41.9014443
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_2_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_2_1",
+   "position": [
+    12.5008443,
+    41.9012481
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_2_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_2_2",
+   "position": [
+    12.500924,
+    41.9010519
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_2_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_2_3",
+   "position": [
+    12.5010037,
+    41.9008556
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_2_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_2_4",
+   "position": [
+    12.5010834,
+    41.9006594
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_2_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_2_5",
+   "position": [
+    12.5011631,
+    41.9004632
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_2_5",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_2_6",
+   "position": [
+    12.5012428,
+    41.900267
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_2_6",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_3_0",
+   "position": [
+    12.5012934,
+    41.9000731
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_3_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_3_1",
+   "position": [
+    12.5013149,
+    41.8998814
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_3_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_3_2",
+   "position": [
+    12.5013363,
+    41.8996897
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_3_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_3_3",
+   "position": [
+    12.5013578,
+    41.8994981
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_3_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_3_4",
+   "position": [
+    12.5013793,
+    41.8993064
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_3_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_3_5",
+   "position": [
+    12.5014007,
+    41.8991148
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_3_5",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_4_0",
+   "position": [
+    12.501415,
+    41.8989231
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_4_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_4_1",
+   "position": [
+    12.5014222,
+    41.8987315
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_4_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_4_2",
+   "position": [
+    12.5014293,
+    41.8985398
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_4_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_4_3",
+   "position": [
+    12.5014365,
+    41.8983481
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_4_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_4_4",
+   "position": [
+    12.5014436,
+    41.8981565
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_4_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_2_4_5",
+   "position": [
+    12.5014508,
+    41.8979648
+   ],
+   "template": "rome02_republic_whole_servian_corridor_2_4_5",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_3_1_0",
+   "position": [
+    12.5014061,
+    41.8974178
+   ],
+   "template": "rome02_republic_whole_servian_corridor_3_1_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_3_1_1",
+   "position": [
+    12.5013095,
+    41.8972181
+   ],
+   "template": "rome02_republic_whole_servian_corridor_3_1_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_3_1_2",
+   "position": [
+    12.501213,
+    41.8970185
+   ],
+   "template": "rome02_republic_whole_servian_corridor_3_1_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_3_1_3",
+   "position": [
+    12.5011164,
+    41.8968188
+   ],
+   "template": "rome02_republic_whole_servian_corridor_3_1_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_3_2_0",
+   "position": [
+    12.5010324,
+    41.8966179
+   ],
+   "template": "rome02_republic_whole_servian_corridor_3_2_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_3_2_1",
+   "position": [
+    12.5009608,
+    41.8964156
+   ],
+   "template": "rome02_republic_whole_servian_corridor_3_2_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_3_2_2",
+   "position": [
+    12.5008893,
+    41.8962132
+   ],
+   "template": "rome02_republic_whole_servian_corridor_3_2_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_1_0",
+   "position": [
+    12.5005317,
+    41.8953454
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_1_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_1_1",
+   "position": [
+    12.5004029,
+    41.8951537
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_1_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_1_2",
+   "position": [
+    12.5002742,
+    41.8949621
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_1_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_1_3",
+   "position": [
+    12.5001454,
+    41.8947704
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_1_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_1_4",
+   "position": [
+    12.5000167,
+    41.8945787
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_1_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_2_0",
+   "position": [
+    12.4998965,
+    41.8943966
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_2_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_2_1",
+   "position": [
+    12.4997849,
+    41.8942241
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_2_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_2_2",
+   "position": [
+    12.4996734,
+    41.8940516
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_2_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_2_3",
+   "position": [
+    12.4995618,
+    41.8938791
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_2_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_2_4",
+   "position": [
+    12.4994502,
+    41.8937066
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_2_4",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_3_0",
+   "position": [
+    12.4993354,
+    41.8935325
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_3_0",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_3_1",
+   "position": [
+    12.4992174,
+    41.8933568
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_3_1",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_3_2",
+   "position": [
+    12.4990994,
+    41.8931811
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_3_2",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  },
+  {
+   "id": "servian_corridor_4_3_3",
+   "position": [
+    12.4989814,
+    41.8930054
+   ],
+   "template": "rome02_republic_whole_servian_corridor_4_3_3",
+   "basis": "research/rome02_republic_whole_sources.md; 44BCE before assassination; source-constrained schematic, not a cadastral survey. W06/R21. Official716x800Servian fullcircuit map and DAR blackN/Eline control broadcorridor and Collina/Viminalis/Esquilina order. Breaks retain roadopenings;no gate towers.4m width/1.5m lowstanding display height are conservation-state schematic estimates,not originalfullwall height or proof44preservation. Native segments at most25m follow todayterrain,avoiding an unsourced largelevel platform;source line unchanged. Missingrest of11km not invented;noAurelian circuit."
+  }
+ ],
+ "coverage": {
+  "core": [
+   [
+    765,
+    837
+   ],
+   [
+    740,
+    805
+   ],
+   [
+    728,
+    777
+   ],
+   [
+    742,
+    741
+   ],
+   [
+    785,
+    714
+   ],
+   [
+    829,
+    700
+   ],
+   [
+    867,
+    708
+   ],
+   [
+    890,
+    681
+   ],
+   [
+    884,
+    646
+   ],
+   [
+    896,
+    615
+   ],
+   [
+    911,
+    595
+   ],
+   [
+    908,
+    570
+   ],
+   [
+    927,
+    547
+   ],
+   [
+    959,
+    532
+   ],
+   [
+    994,
+    527
+   ],
+   [
+    1027,
+    499
+   ],
+   [
+    1062,
+    476
+   ],
+   [
+    1098,
+    448
+   ],
+   [
+    1141,
+    414
+   ],
+   [
+    1167,
+    447
+   ],
+   [
+    1183,
+    489
+   ],
+   [
+    1193,
+    526
+   ],
+   [
+    1214,
+    566
+   ],
+   [
+    1238,
+    607
+   ],
+   [
+    1241,
+    648
+   ],
+   [
+    1222,
+    696
+   ],
+   [
+    1205,
+    741
+   ],
+   [
+    1195,
+    778
+   ],
+   [
+    1199,
+    815
+   ],
+   [
+    1201,
+    852
+   ],
+   [
+    1185,
+    892
+   ],
+   [
+    1154,
+    928
+   ],
+   [
+    1112,
+    953
+   ],
+   [
+    1074,
+    974
+   ],
+   [
+    1035,
+    986
+   ],
+   [
+    996,
+    994
+   ],
+   [
+    959,
+    1007
+   ],
+   [
+    950,
+    1042
+   ],
+   [
+    937,
+    1088
+   ],
+   [
+    951,
+    1129
+   ],
+   [
+    938,
+    1162
+   ],
+   [
+    896,
+    1174
+   ],
+   [
+    867,
+    1193
+   ],
+   [
+    825,
+    1188
+   ],
+   [
+    793,
+    1174
+   ],
+   [
+    765,
+    1151
+   ],
+   [
+    740,
+    1110
+   ],
+   [
+    735,
+    1067
+   ],
+   [
+    746,
+    1029
+   ],
+   [
+    761,
+    994
+   ],
+   [
+    781,
+    965
+   ],
+   [
+    780,
+    935
+   ],
+   [
+    758,
+    913
+   ],
+   [
+    751,
+    879
+   ]
+  ],
+  "campus_south": [
+   [
+    578,
+    843
+   ],
+   [
+    581,
+    820
+   ],
+   [
+    594,
+    790
+   ],
+   [
+    609,
+    762
+   ],
+   [
+    635,
+    744
+   ],
+   [
+    660,
+    746
+   ],
+   [
+    680,
+    748
+   ],
+   [
+    696,
+    757
+   ],
+   [
+    711,
+    788
+   ],
+   [
+    738,
+    811
+   ],
+   [
+    741,
+    836
+   ],
+   [
+    724,
+    851
+   ],
+   [
+    698,
+    860
+   ],
+   [
+    664,
+    862
+   ],
+   [
+    628,
+    854
+   ]
+  ],
+  "transtiberim": [
+   [
+    624,
+    919
+   ],
+   [
+    647,
+    910
+   ],
+   [
+    672,
+    911
+   ],
+   [
+    693,
+    928
+   ],
+   [
+    713,
+    956
+   ],
+   [
+    710,
+    988
+   ],
+   [
+    692,
+    1018
+   ],
+   [
+    670,
+    1045
+   ],
+   [
+    648,
+    1077
+   ],
+   [
+    628,
+    1092
+   ],
+   [
+    604,
+    1086
+   ],
+   [
+    600,
+    1064
+   ],
+   [
+    616,
+    1035
+   ],
+   [
+    624,
+    1003
+   ],
+   [
+    617,
+    968
+   ]
+  ],
+  "emporium": [
+   [
+    616,
+    1164
+   ],
+   [
+    647,
+    1147
+   ],
+   [
+    677,
+    1137
+   ],
+   [
+    695,
+    1156
+   ],
+   [
+    689,
+    1185
+   ],
+   [
+    672,
+    1215
+   ],
+   [
+    650,
+    1243
+   ],
+   [
+    626,
+    1274
+   ],
+   [
+    597,
+    1296
+   ],
+   [
+    563,
+    1290
+   ],
+   [
+    560,
+    1258
+   ],
+   [
+    572,
+    1217
+   ],
+   [
+    590,
+    1188
+   ]
+  ]
+ },
+ "open_uses": {
+  "forum_public": [
+   [
+    846,
+    820
+   ],
+   [
+    864,
+    810
+   ],
+   [
+    889,
+    825
+   ],
+   [
+    917,
+    841
+   ],
+   [
+    910,
+    850
+   ],
+   [
+    885,
+    840
+   ],
+   [
+    865,
+    831
+   ]
+  ],
+  "capitol_sacred": [
+   [
+    767,
+    813
+   ],
+   [
+    786,
+    792
+   ],
+   [
+    811,
+    791
+   ],
+   [
+    824,
+    809
+   ],
+   [
+    811,
+    834
+   ],
+   [
+    789,
+    843
+   ],
+   [
+    775,
+    831
+   ]
+  ],
+  "pompey_public": [
+   [
+    582,
+    703
+   ],
+   [
+    682,
+    708
+   ],
+   [
+    686,
+    757
+   ],
+   [
+    585,
+    752
+   ]
+  ],
+  "circus_flaminius": [
+   [
+    630,
+    823
+   ],
+   [
+    654,
+    803
+   ],
+   [
+    693,
+    808
+   ],
+   [
+    722,
+    827
+   ],
+   [
+    719,
+    845
+   ],
+   [
+    683,
+    843
+   ],
+   [
+    650,
+    838
+   ]
+  ],
+  "villa_publica_field": [
+   [
+    732,
+    653
+   ],
+   [
+    780,
+    642
+   ],
+   [
+    794,
+    682
+   ],
+   [
+    804,
+    720
+   ],
+   [
+    779,
+    741
+   ],
+   [
+    749,
+    728
+   ]
+  ],
+  "campus_field": [
+   [
+    454,
+    551
+   ],
+   [
+    515,
+    528
+   ],
+   [
+    582,
+    521
+   ],
+   [
+    641,
+    529
+   ],
+   [
+    682,
+    520
+   ],
+   [
+    709,
+    490
+   ],
+   [
+    736,
+    476
+   ],
+   [
+    754,
+    493
+   ],
+   [
+    769,
+    552
+   ],
+   [
+    783,
+    594
+   ],
+   [
+    774,
+    632
+   ],
+   [
+    742,
+    651
+   ],
+   [
+    715,
+    684
+   ],
+   [
+    675,
+    708
+   ],
+   [
+    636,
+    711
+   ],
+   [
+    600,
+    701
+   ],
+   [
+    570,
+    684
+   ],
+   [
+    531,
+    659
+   ],
+   [
+    494,
+    618
+   ]
+  ],
+  "north_hill_gardens": [
+   [
+    747,
+    276
+   ],
+   [
+    787,
+    264
+   ],
+   [
+    827,
+    277
+   ],
+   [
+    868,
+    307
+   ],
+   [
+    918,
+    318
+   ],
+   [
+    978,
+    316
+   ],
+   [
+    1038,
+    294
+   ],
+   [
+    1082,
+    291
+   ],
+   [
+    1112,
+    321
+   ],
+   [
+    1135,
+    358
+   ],
+   [
+    1127,
+    394
+   ],
+   [
+    1093,
+    421
+   ],
+   [
+    1057,
+    449
+   ],
+   [
+    1016,
+    466
+   ],
+   [
+    974,
+    486
+   ],
+   [
+    930,
+    508
+   ],
+   [
+    889,
+    516
+   ],
+   [
+    853,
+    494
+   ],
+   [
+    826,
+    450
+   ],
+   [
+    795,
+    419
+   ],
+   [
+    776,
+    373
+   ]
+  ],
+  "east_garden_cemetery": [
+   [
+    1202,
+    545
+   ],
+   [
+    1231,
+    548
+   ],
+   [
+    1244,
+    587
+   ],
+   [
+    1261,
+    620
+   ],
+   [
+    1309,
+    641
+   ],
+   [
+    1349,
+    677
+   ],
+   [
+    1395,
+    720
+   ],
+   [
+    1428,
+    773
+   ],
+   [
+    1427,
+    823
+   ],
+   [
+    1394,
+    848
+   ],
+   [
+    1350,
+    866
+   ],
+   [
+    1305,
+    881
+   ],
+   [
+    1260,
+    882
+   ],
+   [
+    1228,
+    869
+   ],
+   [
+    1217,
+    834
+   ],
+   [
+    1224,
+    791
+   ],
+   [
+    1236,
+    745
+   ],
+   [
+    1252,
+    706
+   ],
+   [
+    1260,
+    663
+   ]
+  ],
+  "curia_iulia_works": [
+   [
+    835,
+    797
+   ],
+   [
+    847,
+    791
+   ],
+   [
+    858,
+    807
+   ],
+   [
+    844,
+    818
+   ]
+  ]
+ },
+ "approved_preservation": "Separate unchanged native quarter city because citygen RNG is city-wide; no flattened compiled-model mirror. All583records must match freeze ignoring rise rank only.",
+ "types": {
+  "rome02_republic_domestic_1": {
+   "where": "Rome; the earlier Casa di Livia is the named same-city comparison",
+   "when": "Late Republic, first century BCE; not for the 509 BCE city",
+   "basis": "research/rome02_republic_forms.md H1; sources R20. Unchanged approved subura_domus_1 geometry. DAR describes an earlier one-storey Casa di Livia phase, perhaps75-50BCE. This is one generic residential court, not that named house or its roof reconstruction. Whole-house symmetry,3.5m/storey,court fraction.28,25deg roof,.35m eaves and closed ground are inherited massing estimates. No local frequency. Quarter placement and counts: research/rome02_republic_quarter_sources.md, not an excavated local census.",
+   "form": "court",
+   "storeys": 1,
+   "storey_m": 3.5,
+   "roof": {
+    "shape": "gabled",
+    "pitch_deg": 25,
+    "overhang_m": 0.35
+   },
+   "court": {
+    "frac": 0.28
+   },
+   "ground": "closed"
+  },
+  "rome02_republic_domestic_2": {
+   "where": "Rome; generic court form and separately attested Republican upstairs lodging",
+   "when": "Late Republic; Plutarch describes earlier Republican life retrospectively",
+   "basis": "research/rome02_republic_forms.md H2; sources R20/R23/R24. Unchanged approved subura_domus_2 geometry, with period evidence replaced. Plutarch Sulla1.4 describes upper and lower rented accommodation in one house, not its total floors, courtyard, height or address. A complete uniformly two-level court is a schematic combination of the court comparison and this minimum vertical distinction.3.5m/storey,court.28, 25deg roof,.35m eaves and closed ground remain inherited estimates. No Hadrianic Ostia,Severan FUR or Augustan Livia addition is used as a Republican floor census. Not a two-storey maximum or named Sulla house. Quarter placement and counts: research/rome02_republic_quarter_sources.md, not an excavated local census.",
+   "form": "court",
+   "storeys": 2,
+   "storey_m": 3.5,
+   "roof": {
+    "shape": "gabled",
+    "pitch_deg": 25,
+    "overhang_m": 0.35
+   },
+   "court": {
+    "frac": 0.28
+   },
+   "ground": "closed"
+  },
+  "rome02_republic_shop_range_1": {
+   "where": "Rome Forum and Vicus Tuscus; Republican tabernae as the functional comparison",
+   "when": "Republican commercial range; the sheet is observed at44BCE",
+   "basis": "research/rome02_republic_forms.md H3; sources R01/R09/R19. Unchanged approved roman_taberna geometry: one detached complete range, one fixed4.25m level,25deg roof,.35m eaves. Republican shop rows and adjoining passages are sourced; roof height,plot size and the single simplified range are comparative estimates. This is not a surveyed Tabernae Veteres unit, not a separate tenant per doorway, and does not establish that all commercial buildings were one-storey. Quarter placement and counts: research/rome02_republic_quarter_sources.md, not an excavated local census.",
+   "form": "detached",
+   "storeys": 1,
+   "storey_m": 4.25,
+   "roof": {
+    "shape": "gabled",
+    "pitch_deg": 25,
+    "overhang_m": 0.35,
+    "ridge": "along"
+   },
+   "ground": "shops"
+  }
+ },
+ "native_outline_basis": "W07 original source workwindows,not known44BCE city boundary or walls",
+ "public_assemblies_excluding_wall_segments": 36,
+ "wall_display_segments": 67,
+ "native_compile_geometry": {
+  "approved_primitives": 583,
+  "final_preserved_primitives": 583,
+  "exact_native_geometry_ignoring_rank": true,
+  "whole_primitives": 49274,
+  "zero_candidate_removal_preserved_actual_whole_geometry": true,
+  "whole_geometry_sha256_without_rank": "a87099558ca45e91624553023911dcd7f1443b0299fd9afa0eb6c6a6aa7b68a3",
+  "fully_risen_at": 15.719,
+  "screenshot_at": 16.72,
+  "eras": [
+   {
+    "id": "rome02_republic_quarter",
+    "on": 0.289,
+    "off": null
+   },
+   {
+    "id": "rome02_republic_whole",
+    "on": 10.263,
+    "off": 30.86
+   }
+  ]
+ }
+}

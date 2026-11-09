@@ -1,0 +1,5343 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4814608,
+      41.8855526
+     ],
+     [
+      12.4801244,
+      41.8854495
+     ],
+     [
+      12.4786253,
+      41.8851974
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_lane_001",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_lane_001"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4803311,
+      41.8835773
+     ],
+     [
+      12.4801876,
+      41.8840389
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_lane_002",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_lane_002"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4800691,
+      41.8844223
+     ],
+     [
+      12.4799598,
+      41.8854218
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_lane_003",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_lane_003"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4800406,
+      41.8846833
+     ],
+     [
+      12.4794342,
+      41.8845583
+     ],
+     [
+      12.4786468,
+      41.8845374
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_lane_004",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_lane_004"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.481294,
+      41.8844915
+     ],
+     [
+      12.4809407,
+      41.8844975
+     ],
+     [
+      12.4801908,
+      41.884385
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_lane_005",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_lane_005"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4809888,
+      41.8844966
+     ],
+     [
+      12.4808602,
+      41.8849268
+     ],
+     [
+      12.4808821,
+      41.8855079
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_lane_006",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_lane_006"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4799622,
+      41.8854222
+     ],
+     [
+      12.4799058,
+      41.8859938
+     ],
+     [
+      12.479708,
+      41.886525
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_lane_007",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_lane_007"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4791139,
+       41.8842484
+      ],
+      [
+       12.4791211,
+       41.8840985
+      ],
+      [
+       12.4793618,
+       41.8841049
+      ],
+      [
+       12.4793547,
+       41.8842548
+      ],
+      [
+       12.4791139,
+       41.8842484
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 180.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4792715,
+       41.8840856
+      ],
+      [
+       12.4792786,
+       41.8839356
+      ],
+      [
+       12.4795194,
+       41.883942
+      ],
+      [
+       12.4795122,
+       41.884092
+      ],
+      [
+       12.4792715,
+       41.8840856
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 180.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4792941,
+       41.8837954
+      ],
+      [
+       12.4790985,
+       41.8837614
+      ],
+      [
+       12.479153,
+       41.883586
+      ],
+      [
+       12.4793486,
+       41.88362
+      ],
+      [
+       12.4792941,
+       41.8837954
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 101.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4794333,
+       41.8844134
+      ],
+      [
+       12.4794867,
+       41.8842687
+      ],
+      [
+       12.4797189,
+       41.8843166
+      ],
+      [
+       12.4796655,
+       41.8844612
+      ],
+      [
+       12.4794333,
+       41.8844134
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 193.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4788059,
+       41.8844273
+      ],
+      [
+       12.478813,
+       41.8842774
+      ],
+      [
+       12.4790538,
+       41.8842838
+      ],
+      [
+       12.4790466,
+       41.8844337
+      ],
+      [
+       12.4788059,
+       41.8844273
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 180.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4789244,
+       41.8840062
+      ],
+      [
+       12.4789315,
+       41.8838563
+      ],
+      [
+       12.4791723,
+       41.8838627
+      ],
+      [
+       12.4791651,
+       41.8840126
+      ],
+      [
+       12.4789244,
+       41.8840062
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 180.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4796435,
+       41.8837584
+      ],
+      [
+       12.479448,
+       41.8837244
+      ],
+      [
+       12.4795025,
+       41.8835491
+      ],
+      [
+       12.4796981,
+       41.883583
+      ],
+      [
+       12.4796435,
+       41.8837584
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 101.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4791189,
+       41.8844669
+      ],
+      [
+       12.479126,
+       41.884317
+      ],
+      [
+       12.4793668,
+       41.8843234
+      ],
+      [
+       12.4793596,
+       41.8844733
+      ],
+      [
+       12.4791189,
+       41.8844669
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 180.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4788142,
+       41.8842144
+      ],
+      [
+       12.4788214,
+       41.8840645
+      ],
+      [
+       12.4790621,
+       41.8840709
+      ],
+      [
+       12.479055,
+       41.8842208
+      ],
+      [
+       12.4788142,
+       41.8842144
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 180.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4801829,
+       41.8837738
+      ],
+      [
+       12.4799873,
+       41.8837399
+      ],
+      [
+       12.4800418,
+       41.8835645
+      ],
+      [
+       12.4802374,
+       41.8835985
+      ],
+      [
+       12.4801829,
+       41.8837738
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 101.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4799394,
+       41.8837211
+      ],
+      [
+       12.4797048,
+       41.8836803
+      ],
+      [
+       12.4797484,
+       41.88354
+      ],
+      [
+       12.479983,
+       41.8835808
+      ],
+      [
+       12.4799394,
+       41.8837211
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 101.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.479662,
+       41.8845517
+      ],
+      [
+       12.4797154,
+       41.8844071
+      ],
+      [
+       12.4799476,
+       41.8844549
+      ],
+      [
+       12.4798942,
+       41.8845996
+      ],
+      [
+       12.479662,
+       41.8845517
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 193.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4794863,
+       41.8842416
+      ],
+      [
+       12.4795459,
+       41.8840802
+      ],
+      [
+       12.4797188,
+       41.8841158
+      ],
+      [
+       12.4796592,
+       41.8842772
+      ],
+      [
+       12.4794863,
+       41.8842416
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.88,
+     18.6
+    ],
+    "theta_deg": 193.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_13"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4795012,
+       41.8839357
+      ],
+      [
+       12.4793077,
+       41.8839021
+      ],
+      [
+       12.4793617,
+       41.8837286
+      ],
+      [
+       12.4795551,
+       41.8837622
+      ],
+      [
+       12.4795012,
+       41.8839357
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.79,
+     16.49
+    ],
+    "theta_deg": 101.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_14"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4791317,
+       41.8836165
+      ],
+      [
+       12.4789459,
+       41.8835842
+      ],
+      [
+       12.4789977,
+       41.8834176
+      ],
+      [
+       12.4791836,
+       41.8834498
+      ],
+      [
+       12.4791317,
+       41.8836165
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.0,
+     15.84
+    ],
+    "theta_deg": 101.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_15"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4788889,
+       41.8838493
+      ],
+      [
+       12.4788968,
+       41.8836834
+      ],
+      [
+       12.4790743,
+       41.8836882
+      ],
+      [
+       12.4790664,
+       41.883854
+      ],
+      [
+       12.4788889,
+       41.8838493
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.75,
+     18.43
+    ],
+    "theta_deg": 180.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_16"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4794721,
+       41.8836209
+      ],
+      [
+       12.479269,
+       41.8835857
+      ],
+      [
+       12.4793068,
+       41.8834642
+      ],
+      [
+       12.4795099,
+       41.8834995
+      ],
+      [
+       12.4794721,
+       41.8836209
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b001_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.85,
+     17.31
+    ],
+    "theta_deg": 101.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b001_17"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4807602,
+       41.883974
+      ],
+      [
+       12.4805646,
+       41.8839401
+      ],
+      [
+       12.4806192,
+       41.8837647
+      ],
+      [
+       12.4808147,
+       41.8837987
+      ],
+      [
+       12.4807602,
+       41.883974
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 281.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.480583,
+       41.8841233
+      ],
+      [
+       12.4806225,
+       41.8839762
+      ],
+      [
+       12.4808587,
+       41.8840116
+      ],
+      [
+       12.4808192,
+       41.8841587
+      ],
+      [
+       12.480583,
+       41.8841233
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 189.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4804773,
+       41.884145
+      ],
+      [
+       12.4802818,
+       41.884111
+      ],
+      [
+       12.4803363,
+       41.8839356
+      ],
+      [
+       12.4805319,
+       41.8839696
+      ],
+      [
+       12.4804773,
+       41.884145
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 281.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808907,
+       41.8841305
+      ],
+      [
+       12.4808862,
+       41.8839806
+      ],
+      [
+       12.4811271,
+       41.8839765
+      ],
+      [
+       12.4811316,
+       41.8841265
+      ],
+      [
+       12.4808907,
+       41.8841305
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 177.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808466,
+       41.8843825
+      ],
+      [
+       12.480842,
+       41.8842325
+      ],
+      [
+       12.4810829,
+       41.8842285
+      ],
+      [
+       12.4810874,
+       41.8843785
+      ],
+      [
+       12.4808466,
+       41.8843825
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 177.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4804703,
+       41.8843354
+      ],
+      [
+       12.4805098,
+       41.8841883
+      ],
+      [
+       12.480746,
+       41.8842237
+      ],
+      [
+       12.4807065,
+       41.8843708
+      ],
+      [
+       12.4804703,
+       41.8843354
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 189.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4805459,
+       41.8838157
+      ],
+      [
+       12.4803504,
+       41.8837817
+      ],
+      [
+       12.4804049,
+       41.8836064
+      ],
+      [
+       12.4806005,
+       41.8836403
+      ],
+      [
+       12.4805459,
+       41.8838157
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 281.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810237,
+       41.883968
+      ],
+      [
+       12.4808281,
+       41.883934
+      ],
+      [
+       12.4808827,
+       41.8837587
+      ],
+      [
+       12.4810782,
+       41.8837926
+      ],
+      [
+       12.4810237,
+       41.883968
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 281.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802891,
+       41.8842772
+      ],
+      [
+       12.4803251,
+       41.8841429
+      ],
+      [
+       12.480469,
+       41.8841645
+      ],
+      [
+       12.4804329,
+       41.8842988
+      ],
+      [
+       12.4802891,
+       41.8842772
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.18,
+     15.22
+    ],
+    "theta_deg": 189.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808505,
+       41.8837946
+      ],
+      [
+       12.4806929,
+       41.8837672
+      ],
+      [
+       12.4807369,
+       41.8836259
+      ],
+      [
+       12.4808945,
+       41.8836533
+      ],
+      [
+       12.4808505,
+       41.8837946
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.12,
+     13.43
+    ],
+    "theta_deg": 281.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4804931,
+       41.8839568
+      ],
+      [
+       12.480264,
+       41.8839171
+      ],
+      [
+       12.4803066,
+       41.8837801
+      ],
+      [
+       12.4805356,
+       41.8838199
+      ],
+      [
+       12.4804931,
+       41.8839568
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.62,
+     19.52
+    ],
+    "theta_deg": 281.4,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4811084,
+       41.8844735
+      ],
+      [
+       12.4811044,
+       41.8843412
+      ],
+      [
+       12.481246,
+       41.8843388
+      ],
+      [
+       12.48125,
+       41.8844711
+      ],
+      [
+       12.4811084,
+       41.8844735
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b002_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.75,
+     14.69
+    ],
+    "theta_deg": 177.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b002_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.480299,
+       41.8852321
+      ],
+      [
+       12.4803197,
+       41.8850828
+      ],
+      [
+       12.4805593,
+       41.8851013
+      ],
+      [
+       12.4805387,
+       41.8852505
+      ],
+      [
+       12.480299,
+       41.8852321
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 184.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4805571,
+       41.8848526
+      ],
+      [
+       12.480357,
+       41.8848404
+      ],
+      [
+       12.4803767,
+       41.884661
+      ],
+      [
+       12.4805768,
+       41.8846732
+      ],
+      [
+       12.4805571,
+       41.8848526
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 272.99,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4805546,
+       41.8850389
+      ],
+      [
+       12.4803539,
+       41.8850432
+      ],
+      [
+       12.4803471,
+       41.8848632
+      ],
+      [
+       12.4805478,
+       41.884859
+      ],
+      [
+       12.4805546,
+       41.8850389
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 86.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802809,
+       41.8850678
+      ],
+      [
+       12.4800808,
+       41.8850556
+      ],
+      [
+       12.4801004,
+       41.8848761
+      ],
+      [
+       12.4803005,
+       41.8848884
+      ],
+      [
+       12.4802809,
+       41.8850678
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 272.99,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808009,
+       41.8850709
+      ],
+      [
+       12.4806002,
+       41.8850752
+      ],
+      [
+       12.4805934,
+       41.8848952
+      ],
+      [
+       12.4807941,
+       41.884891
+      ],
+      [
+       12.4808009,
+       41.8850709
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 86.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4801239,
+       41.8846084
+      ],
+      [
+       12.4801634,
+       41.8844613
+      ],
+      [
+       12.4803996,
+       41.8844967
+      ],
+      [
+       12.4803601,
+       41.8846438
+      ],
+      [
+       12.4801239,
+       41.8846084
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 9.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.480778,
+       41.8854283
+      ],
+      [
+       12.4805773,
+       41.8854325
+      ],
+      [
+       12.4805705,
+       41.8852525
+      ],
+      [
+       12.4807712,
+       41.8852483
+      ],
+      [
+       12.480778,
+       41.8854283
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 86.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808162,
+       41.8847275
+      ],
+      [
+       12.4806202,
+       41.8846948
+      ],
+      [
+       12.4806728,
+       41.8845191
+      ],
+      [
+       12.4808687,
+       41.8845518
+      ],
+      [
+       12.4808162,
+       41.8847275
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 100.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4800342,
+       41.8853749
+      ],
+      [
+       12.4800548,
+       41.8852256
+      ],
+      [
+       12.4802944,
+       41.8852441
+      ],
+      [
+       12.4802738,
+       41.8853933
+      ],
+      [
+       12.4800342,
+       41.8853749
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 184.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4803009,
+       41.8848427
+      ],
+      [
+       12.4801008,
+       41.8848305
+      ],
+      [
+       12.4801204,
+       41.8846511
+      ],
+      [
+       12.4803205,
+       41.8846633
+      ],
+      [
+       12.4803009,
+       41.8848427
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 272.99,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802949,
+       41.8854147
+      ],
+      [
+       12.4803156,
+       41.8852654
+      ],
+      [
+       12.4805552,
+       41.8852839
+      ],
+      [
+       12.4805346,
+       41.8854332
+      ],
+      [
+       12.4802949,
+       41.8854147
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 184.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4803823,
+       41.8846199
+      ],
+      [
+       12.4804217,
+       41.8844728
+      ],
+      [
+       12.480658,
+       41.8845082
+      ],
+      [
+       12.4806185,
+       41.8846553
+      ],
+      [
+       12.4803823,
+       41.8846199
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 9.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4807798,
+       41.8848831
+      ],
+      [
+       12.4805656,
+       41.8848473
+      ],
+      [
+       12.4806039,
+       41.8847192
+      ],
+      [
+       12.4808181,
+       41.884755
+      ],
+      [
+       12.4807798,
+       41.8848831
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.58,
+     18.22
+    ],
+    "theta_deg": 100.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_13"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808432,
+       41.8852277
+      ],
+      [
+       12.4806116,
+       41.8852326
+      ],
+      [
+       12.4806063,
+       41.8850941
+      ],
+      [
+       12.480838,
+       41.8850892
+      ],
+      [
+       12.4808432,
+       41.8852277
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.39,
+     19.24
+    ],
+    "theta_deg": 86.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_14"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802715,
+       41.8852336
+      ],
+      [
+       12.4800952,
+       41.8852229
+      ],
+      [
+       12.4801125,
+       41.8850648
+      ],
+      [
+       12.4802888,
+       41.8850756
+      ],
+      [
+       12.4802715,
+       41.8852336
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b003_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.62,
+     14.68
+    ],
+    "theta_deg": 272.99,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b003_15"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4791418,
+       41.8849765
+      ],
+      [
+       12.4791489,
+       41.8848266
+      ],
+      [
+       12.4793897,
+       41.884833
+      ],
+      [
+       12.4793825,
+       41.8849829
+      ],
+      [
+       12.4791418,
+       41.8849765
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 0.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4795134,
+       41.8851638
+      ],
+      [
+       12.4795575,
+       41.8850174
+      ],
+      [
+       12.4797926,
+       41.8850569
+      ],
+      [
+       12.4797485,
+       41.8852033
+      ],
+      [
+       12.4795134,
+       41.8851638
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4786906,
+       41.8850303
+      ],
+      [
+       12.4787347,
+       41.8848839
+      ],
+      [
+       12.4789698,
+       41.8849235
+      ],
+      [
+       12.4789257,
+       41.8850698
+      ],
+      [
+       12.4786906,
+       41.8850303
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4795242,
+       41.8848786
+      ],
+      [
+       12.4795775,
+       41.884734
+      ],
+      [
+       12.4798098,
+       41.8847819
+      ],
+      [
+       12.4797564,
+       41.8849265
+      ],
+      [
+       12.4795242,
+       41.8848786
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 13.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4788191,
+       41.8848094
+      ],
+      [
+       12.4788262,
+       41.8846594
+      ],
+      [
+       12.479067,
+       41.8846658
+      ],
+      [
+       12.4790598,
+       41.8848158
+      ],
+      [
+       12.4788191,
+       41.8848094
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 0.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4791652,
+       41.8851903
+      ],
+      [
+       12.4792093,
+       41.885044
+      ],
+      [
+       12.4794443,
+       41.8850835
+      ],
+      [
+       12.4794003,
+       41.8852298
+      ],
+      [
+       12.4791652,
+       41.8851903
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4792644,
+       41.8847744
+      ],
+      [
+       12.4792715,
+       41.8846245
+      ],
+      [
+       12.4795123,
+       41.8846309
+      ],
+      [
+       12.4795052,
+       41.8847808
+      ],
+      [
+       12.4792644,
+       41.8847744
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 0.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4788967,
+       41.8851927
+      ],
+      [
+       12.4789399,
+       41.8850492
+      ],
+      [
+       12.4791704,
+       41.8850879
+      ],
+      [
+       12.4791272,
+       41.8852315
+      ],
+      [
+       12.4788967,
+       41.8851927
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.61,
+     16.34
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4797125,
+       41.8853494
+      ],
+      [
+       12.4797609,
+       41.8851887
+      ],
+      [
+       12.479933,
+       41.8852176
+      ],
+      [
+       12.4798846,
+       41.8853783
+      ],
+      [
+       12.4797125,
+       41.8853494
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.64,
+     18.3
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4786,
+       41.8848745
+      ],
+      [
+       12.478608,
+       41.8847075
+      ],
+      [
+       12.4787868,
+       41.8847123
+      ],
+      [
+       12.4787788,
+       41.8848793
+      ],
+      [
+       12.4786,
+       41.8848745
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.85,
+     18.56
+    ],
+    "theta_deg": 0.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4799355,
+       41.8850573
+      ],
+      [
+       12.479771,
+       41.8850473
+      ],
+      [
+       12.4797872,
+       41.8848998
+      ],
+      [
+       12.4799516,
+       41.8849098
+      ],
+      [
+       12.4799355,
+       41.8850573
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.44,
+     13.7
+    ],
+    "theta_deg": 92.99,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4784882,
+       41.885115
+      ],
+      [
+       12.4785153,
+       41.8850248
+      ],
+      [
+       12.4787145,
+       41.8850583
+      ],
+      [
+       12.4786873,
+       41.8851485
+      ],
+      [
+       12.4784882,
+       41.885115
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.95,
+     10.27
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4794573,
+       41.8853149
+      ],
+      [
+       12.4795014,
+       41.8851685
+      ],
+      [
+       12.4797364,
+       41.885208
+      ],
+      [
+       12.4796923,
+       41.8853544
+      ],
+      [
+       12.4794573,
+       41.8853149
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_13"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4793883,
+       41.8850098
+      ],
+      [
+       12.4794408,
+       41.8848676
+      ],
+      [
+       12.4795931,
+       41.884899
+      ],
+      [
+       12.4795406,
+       41.8850412
+      ],
+      [
+       12.4793883,
+       41.8850098
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.11,
+     16.39
+    ],
+    "theta_deg": 13.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_14"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4786876,
+       41.8851744
+      ],
+      [
+       12.478724,
+       41.8850536
+      ],
+      [
+       12.4789179,
+       41.8850862
+      ],
+      [
+       12.4788816,
+       41.885207
+      ],
+      [
+       12.4786876,
+       41.8851744
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.51,
+     13.75
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_15"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4799732,
+       41.8848244
+      ],
+      [
+       12.4798281,
+       41.8848156
+      ],
+      [
+       12.4798424,
+       41.8846854
+      ],
+      [
+       12.4799875,
+       41.8846943
+      ],
+      [
+       12.4799732,
+       41.8848244
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.5,
+     12.09
+    ],
+    "theta_deg": 92.99,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_16"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.478646,
+       41.8847027
+      ],
+      [
+       12.4786529,
+       41.8845591
+      ],
+      [
+       12.4788066,
+       41.8845632
+      ],
+      [
+       12.4787997,
+       41.8847068
+      ],
+      [
+       12.478646,
+       41.8847027
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.77,
+     15.96
+    ],
+    "theta_deg": 0.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_17"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4790865,
+       41.8847134
+      ],
+      [
+       12.4790934,
+       41.8845704
+      ],
+      [
+       12.4792465,
+       41.8845745
+      ],
+      [
+       12.4792396,
+       41.8847175
+      ],
+      [
+       12.4790865,
+       41.8847134
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_18",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.72,
+     15.9
+    ],
+    "theta_deg": 0.36,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_18"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4785176,
+       41.8849848
+      ],
+      [
+       12.4785493,
+       41.8848793
+      ],
+      [
+       12.4787188,
+       41.8849077
+      ],
+      [
+       12.478687,
+       41.8850132
+      ],
+      [
+       12.4785176,
+       41.8849848
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_19",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.42,
+     12.01
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_19"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4799362,
+       41.885197
+      ],
+      [
+       12.4797943,
+       41.8851883
+      ],
+      [
+       12.4798082,
+       41.885061
+      ],
+      [
+       12.4799502,
+       41.8850697
+      ],
+      [
+       12.4799362,
+       41.885197
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_20",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.18,
+     11.82
+    ],
+    "theta_deg": 92.99,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_20"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4789594,
+       41.8850456
+      ],
+      [
+       12.4789981,
+       41.8849172
+      ],
+      [
+       12.4791357,
+       41.8849403
+      ],
+      [
+       12.479097,
+       41.8850688
+      ],
+      [
+       12.4789594,
+       41.8850456
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_21",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.7,
+     14.63
+    ],
+    "theta_deg": 191.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_21"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4795163,
+       41.8847124
+      ],
+      [
+       12.4795548,
+       41.8846081
+      ],
+      [
+       12.479785,
+       41.8846555
+      ],
+      [
+       12.4797465,
+       41.8847598
+      ],
+      [
+       12.4795163,
+       41.8847124
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b004_22",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.83,
+     12.02
+    ],
+    "theta_deg": 13.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b004_22"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.481307,
+       41.8852763
+      ],
+      [
+       12.4811064,
+       41.8852805
+      ],
+      [
+       12.4810996,
+       41.8851006
+      ],
+      [
+       12.4813003,
+       41.8850963
+      ],
+      [
+       12.481307,
+       41.8852763
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 266.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4812297,
+       41.8850073
+      ],
+      [
+       12.4810338,
+       41.8849746
+      ],
+      [
+       12.4810864,
+       41.8847989
+      ],
+      [
+       12.4812823,
+       41.8848316
+      ],
+      [
+       12.4812297,
+       41.8850073
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 280.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4812288,
+       41.8847672
+      ],
+      [
+       12.4810329,
+       41.8847345
+      ],
+      [
+       12.4810854,
+       41.8845588
+      ],
+      [
+       12.4812814,
+       41.8845915
+      ],
+      [
+       12.4812288,
+       41.8847672
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 280.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4812621,
+       41.8854616
+      ],
+      [
+       12.4812827,
+       41.8853123
+      ],
+      [
+       12.4815224,
+       41.8853308
+      ],
+      [
+       12.4815018,
+       41.88548
+      ],
+      [
+       12.4812621,
+       41.8854616
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 184.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4809231,
+       41.8854546
+      ],
+      [
+       12.4809438,
+       41.8853054
+      ],
+      [
+       12.4811834,
+       41.8853239
+      ],
+      [
+       12.4811628,
+       41.8854731
+      ],
+      [
+       12.4809231,
+       41.8854546
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 184.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4814283,
+       41.8850878
+      ],
+      [
+       12.4812658,
+       41.8850912
+      ],
+      [
+       12.4812603,
+       41.8849455
+      ],
+      [
+       12.4814228,
+       41.8849421
+      ],
+      [
+       12.4814283,
+       41.8850878
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.19,
+     13.49
+    ],
+    "theta_deg": 266.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810794,
+       41.8851227
+      ],
+      [
+       12.4809285,
+       41.8851259
+      ],
+      [
+       12.4809234,
+       41.8849905
+      ],
+      [
+       12.4810743,
+       41.8849874
+      ],
+      [
+       12.4810794,
+       41.8851227
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.04,
+     12.54
+    ],
+    "theta_deg": 266.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4813308,
+       41.8853037
+      ],
+      [
+       12.4813504,
+       41.8851621
+      ],
+      [
+       12.481502,
+       41.8851738
+      ],
+      [
+       12.4814824,
+       41.8853154
+      ],
+      [
+       12.4813308,
+       41.8853037
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.65,
+     15.82
+    ],
+    "theta_deg": 184.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.481088,
+       41.8852855
+      ],
+      [
+       12.4809129,
+       41.8852892
+      ],
+      [
+       12.480907,
+       41.8851322
+      ],
+      [
+       12.481082,
+       41.8851285
+      ],
+      [
+       12.481088,
+       41.8852855
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.45,
+     14.54
+    ],
+    "theta_deg": 266.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810501,
+       41.8848619
+      ],
+      [
+       12.4809243,
+       41.8848408
+      ],
+      [
+       12.480958,
+       41.884728
+      ],
+      [
+       12.4810839,
+       41.884749
+      ],
+      [
+       12.4810501,
+       41.8848619
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.85,
+     10.71
+    ],
+    "theta_deg": 280.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810138,
+       41.8849769
+      ],
+      [
+       12.4808916,
+       41.8849565
+      ],
+      [
+       12.4809244,
+       41.8848469
+      ],
+      [
+       12.4810466,
+       41.8848673
+      ],
+      [
+       12.4810138,
+       41.8849769
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b005_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.48,
+     10.4
+    ],
+    "theta_deg": 280.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b005_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4796104,
+       41.8857631
+      ],
+      [
+       12.4794102,
+       41.885752
+      ],
+      [
+       12.4794279,
+       41.8855725
+      ],
+      [
+       12.4796281,
+       41.8855835
+      ],
+      [
+       12.4796104,
+       41.8857631
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 92.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4796831,
+       41.88607
+      ],
+      [
+       12.4794897,
+       41.8860298
+      ],
+      [
+       12.4795542,
+       41.8858563
+      ],
+      [
+       12.4797476,
+       41.8858965
+      ],
+      [
+       12.4796831,
+       41.88607
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 103.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4790527,
+       41.8855555
+      ],
+      [
+       12.4790968,
+       41.8854091
+      ],
+      [
+       12.4793318,
+       41.8854486
+      ],
+      [
+       12.4792877,
+       41.885595
+      ],
+      [
+       12.4790527,
+       41.8855555
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 11.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4798617,
+       41.8856239
+      ],
+      [
+       12.4796615,
+       41.8856129
+      ],
+      [
+       12.4796792,
+       41.8854333
+      ],
+      [
+       12.4798794,
+       41.8854444
+      ],
+      [
+       12.4798617,
+       41.8856239
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 92.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4791326,
+       41.8857568
+      ],
+      [
+       12.4791734,
+       41.8856215
+      ],
+      [
+       12.4793906,
+       41.8856581
+      ],
+      [
+       12.4793499,
+       41.8857933
+      ],
+      [
+       12.4791326,
+       41.8857568
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.49,
+     15.4
+    ],
+    "theta_deg": 11.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4788186,
+       41.8854338
+      ],
+      [
+       12.4788596,
+       41.8852976
+      ],
+      [
+       12.4790784,
+       41.8853344
+      ],
+      [
+       12.4790374,
+       41.8854706
+      ],
+      [
+       12.4788186,
+       41.8854338
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.61,
+     15.51
+    ],
+    "theta_deg": 11.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4797167,
+       41.8862803
+      ],
+      [
+       12.4795382,
+       41.8862432
+      ],
+      [
+       12.4795978,
+       41.8860831
+      ],
+      [
+       12.4797762,
+       41.8861202
+      ],
+      [
+       12.4797167,
+       41.8862803
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.45,
+     15.38
+    ],
+    "theta_deg": 103.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4798484,
+       41.8858753
+      ],
+      [
+       12.4796482,
+       41.8858642
+      ],
+      [
+       12.479666,
+       41.8856847
+      ],
+      [
+       12.4798662,
+       41.8856957
+      ],
+      [
+       12.4798484,
+       41.8858753
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 92.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4793353,
+       41.8855202
+      ],
+      [
+       12.4793794,
+       41.8853738
+      ],
+      [
+       12.4796144,
+       41.8854133
+      ],
+      [
+       12.4795703,
+       41.8855597
+      ],
+      [
+       12.4793353,
+       41.8855202
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 11.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.479477,
+       41.8859701
+      ],
+      [
+       12.4793083,
+       41.8859608
+      ],
+      [
+       12.4793232,
+       41.8858095
+      ],
+      [
+       12.4794919,
+       41.8858188
+      ],
+      [
+       12.479477,
+       41.8859701
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.85,
+     14.04
+    ],
+    "theta_deg": 92.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4798407,
+       41.8860581
+      ],
+      [
+       12.4797169,
+       41.8860324
+      ],
+      [
+       12.4797582,
+       41.8859214
+      ],
+      [
+       12.479882,
+       41.8859472
+      ],
+      [
+       12.4798407,
+       41.8860581
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b006_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.8,
+     10.66
+    ],
+    "theta_deg": 103.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b006_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4805249,
+       41.8859542
+      ],
+      [
+       12.4803247,
+       41.8859431
+      ],
+      [
+       12.4803424,
+       41.8857636
+      ],
+      [
+       12.4805426,
+       41.8857746
+      ],
+      [
+       12.4805249,
+       41.8859542
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 272.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.480282,
+       41.8863
+      ],
+      [
+       12.4800885,
+       41.8862598
+      ],
+      [
+       12.4801531,
+       41.8860864
+      ],
+      [
+       12.4803465,
+       41.8861266
+      ],
+      [
+       12.480282,
+       41.8863
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 283.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4807072,
+       41.8858095
+      ],
+      [
+       12.4807278,
+       41.8856602
+      ],
+      [
+       12.4809674,
+       41.8856787
+      ],
+      [
+       12.4809468,
+       41.885828
+      ],
+      [
+       12.4807072,
+       41.8858095
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 4.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_03"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4800927,
+       41.8865571
+      ],
+      [
+       12.4798993,
+       41.8865169
+      ],
+      [
+       12.4799639,
+       41.8863435
+      ],
+      [
+       12.4801573,
+       41.8863837
+      ],
+      [
+       12.4800927,
+       41.8865571
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 283.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.480058,
+       41.8857047
+      ],
+      [
+       12.4800786,
+       41.8855555
+      ],
+      [
+       12.4803183,
+       41.885574
+      ],
+      [
+       12.4802976,
+       41.8857232
+      ],
+      [
+       12.480058,
+       41.8857047
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 4.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802198,
+       41.8860354
+      ],
+      [
+       12.4800196,
+       41.8860244
+      ],
+      [
+       12.4800373,
+       41.8858448
+      ],
+      [
+       12.4802375,
+       41.8858559
+      ],
+      [
+       12.4802198,
+       41.8860354
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 272.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4806314,
+       41.8861961
+      ],
+      [
+       12.4804312,
+       41.8861851
+      ],
+      [
+       12.4804489,
+       41.8860055
+      ],
+      [
+       12.4806491,
+       41.8860166
+      ],
+      [
+       12.4806314,
+       41.8861961
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 272.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4803738,
+       41.8856989
+      ],
+      [
+       12.4803944,
+       41.8855497
+      ],
+      [
+       12.4806341,
+       41.8855682
+      ],
+      [
+       12.4806134,
+       41.8857174
+      ],
+      [
+       12.4803738,
+       41.8856989
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 4.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4806483,
+       41.8860045
+      ],
+      [
+       12.480669,
+       41.8858552
+      ],
+      [
+       12.4809086,
+       41.8858737
+      ],
+      [
+       12.480888,
+       41.886023
+      ],
+      [
+       12.4806483,
+       41.8860045
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 4.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_09"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810172,
+       41.8857433
+      ],
+      [
+       12.4810419,
+       41.8855643
+      ],
+      [
+       12.4812337,
+       41.8855791
+      ],
+      [
+       12.4812089,
+       41.8857581
+      ],
+      [
+       12.4810172,
+       41.8857433
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 4.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_10"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4801002,
+       41.8861824
+      ],
+      [
+       12.4798903,
+       41.8861388
+      ],
+      [
+       12.479937,
+       41.8860133
+      ],
+      [
+       12.4801469,
+       41.8860569
+      ],
+      [
+       12.4801002,
+       41.8861824
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.47,
+     18.09
+    ],
+    "theta_deg": 283.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_11"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4800217,
+       41.8867281
+      ],
+      [
+       12.4798557,
+       41.8866935
+      ],
+      [
+       12.4799111,
+       41.8865446
+      ],
+      [
+       12.4800772,
+       41.8865791
+      ],
+      [
+       12.4800217,
+       41.8867281
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.17,
+     14.31
+    ],
+    "theta_deg": 283.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_12"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4804725,
+       41.8863656
+      ],
+      [
+       12.4803141,
+       41.8863327
+      ],
+      [
+       12.480367,
+       41.8861906
+      ],
+      [
+       12.4805254,
+       41.8862235
+      ],
+      [
+       12.4804725,
+       41.8863656
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.38,
+     13.65
+    ],
+    "theta_deg": 283.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_13"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4800499,
+       41.8863417
+      ],
+      [
+       12.4798236,
+       41.8862946
+      ],
+      [
+       12.4798739,
+       41.8861593
+      ],
+      [
+       12.4801003,
+       41.8862064
+      ],
+      [
+       12.4800499,
+       41.8863417
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.6,
+     19.5
+    ],
+    "theta_deg": 283.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_14"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4803015,
+       41.8865055
+      ],
+      [
+       12.480174,
+       41.886479
+      ],
+      [
+       12.4802325,
+       41.8863218
+      ],
+      [
+       12.4803601,
+       41.8863483
+      ],
+      [
+       12.4803015,
+       41.8865055
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.13,
+     10.99
+    ],
+    "theta_deg": 283.86,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_15"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4804315,
+       41.8861011
+      ],
+      [
+       12.4802223,
+       41.8860895
+      ],
+      [
+       12.4802347,
+       41.8859644
+      ],
+      [
+       12.4804439,
+       41.885976
+      ],
+      [
+       12.4804315,
+       41.8861011
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.93,
+     17.42
+    ],
+    "theta_deg": 272.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_16"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4806327,
+       41.885647
+      ],
+      [
+       12.4806514,
+       41.8855114
+      ],
+      [
+       12.4808691,
+       41.8855282
+      ],
+      [
+       12.4808504,
+       41.8856638
+      ],
+      [
+       12.4806327,
+       41.885647
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.17,
+     15.14
+    ],
+    "theta_deg": 4.21,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_17"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4801384,
+       41.8858363
+      ],
+      [
+       12.4799508,
+       41.8858259
+      ],
+      [
+       12.4799618,
+       41.8857137
+      ],
+      [
+       12.4801495,
+       41.8857241
+      ],
+      [
+       12.4801384,
+       41.8858363
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_18",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.5,
+     15.62
+    ],
+    "theta_deg": 272.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_18"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4803162,
+       41.8858426
+      ],
+      [
+       12.4801466,
+       41.8858332
+      ],
+      [
+       12.4801566,
+       41.8857318
+      ],
+      [
+       12.4803262,
+       41.8857412
+      ],
+      [
+       12.4803162,
+       41.8858426
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "riverfix_rome06_medieval_800_aventine_b007_19",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.29,
+     14.12
+    ],
+    "theta_deg": 272.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_aventine_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowaventine/800: comparative type allocation, not a known prevalence.",
+     "native_generated_id": "rome06_medieval_800_aventine_b007_19"
+    }
+   }
+  }
+ ]
+}

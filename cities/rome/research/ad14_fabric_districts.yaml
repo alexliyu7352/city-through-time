@@ -1,0 +1,778 @@
+policy:
+  default: Subtract early public reservations, gardens, water and frozen sample; assemble connected blocks
+    inside source built coverage. Use each street edge direction. District windows only choose basis/type
+    applicability, never create ruler-cut housing edges.
+  seam: Overlapping windows are context transitions, not duplicate housing. Assign each whole block to
+    its dominant local context, record the choice; no house is cut at a district line.
+  shares: No population, building count or percentage target. Place complete domestic/work courts in deep
+    buildable plots, commercial front buildings on evidenced business streets. Resulting counts are production
+    inventory only.
+  edge: Brown DAR edge is approximate and source white is no-information. Sparse road-edge service buildings/fields/gardens
+    beyond it may be schematic only when separately justified; never treat the entire map-white as vacant
+    ground.
+  floor_rule: Fixed whole-building floor count. One/two-storey courts are simplified whole buildings.
+    Three-storey street-building height uses pre79 Insula Orientalis II comparison, independently schematic
+    Roman street-house plot; no proof the same AD14 structure existed.
+type_keys:
+  F2: ad14_fabric_front_2
+  F3: ad14_fabric_front_3
+  D1: ad14_fabric_domestic_1
+  D2: ad14_fabric_domestic_2
+  W2: ad14_fabric_workcourt_2
+districts:
+- id: velabrum_boarium
+  pixels:
+  - - 744
+    - 864
+  - - 767
+    - 844
+  - - 816
+    - 844
+  - - 827
+    - 868
+  - - 819
+    - 900
+  - - 836
+    - 950
+  - - 816
+    - 980
+  - - 792
+    - 956
+  - - 755
+    - 933
+  - - 749
+    - 901
+  types:
+  - F2
+  - D1
+  - D2
+  source_ids:
+  - D10
+  - S126
+  - S127
+  allocation: Frozen sample first; continuous shop fronts on the sourced business approaches, deep interior
+    courts one/two levels. Do not extrapolate sample32-unit mix. South Tuscus course disputed.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Commercial street-front2; compact deep court directly behind business frontage2; deeper
+      domestic court reached only by interior lane1. Frozen sample overrides all.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: capitoline_foot_aemiliana
+  pixels:
+  - - 740
+    - 748
+  - - 789
+    - 700
+  - - 851
+    - 701
+  - - 872
+    - 715
+  - - 915
+    - 698
+  - - 935
+    - 738
+  - - 919
+    - 778
+  - - 877
+    - 814
+  - - 816
+    - 844
+  - - 767
+    - 844
+  - - 747
+    - 804
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D01
+  - D02
+  - D07
+  allocation: Street-facing commerce uses2-level frontage; selected complete3-level front buildings in
+    deeper business frontage show Augustan vertical housing with explicit pre79 analogy. Deep court plots1/2.
+    No AD14 AraCoeli five-storey assumption; future Trajan slope retains mixed urban fabric, not later
+    plaza.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Select3 only on declared Argiletum/Aemiliana commercial segments; other frontage2.
+      Courts behind business fronts2; quiet inner or slope/garden edge courts1.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: campus_flaminius
+  pixels:
+  - - 585
+    - 845
+  - - 590
+    - 817
+  - - 603
+    - 781
+  - - 611
+    - 760
+  - - 669
+    - 767
+  - - 710
+    - 781
+  - - 747
+    - 804
+  - - 767
+    - 844
+  - - 744
+    - 864
+  - - 710
+    - 835
+  - - 673
+    - 843
+  - - 640
+    - 835
+  - - 608
+    - 847
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D02
+  allocation: Public theatres/temples/porticoes first; service/commercial rows on street edges and1/2-level
+    courts behind.3-level frontage only as declared height comparison, not citywide majority.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Service/commercial fronts2; compact service courts2 adjacent public-business streets,
+      quiet internal courts1. No3 default without an explicit block decision.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: regola_southwest_campus
+  pixels:
+  - - 516
+    - 807
+  - - 544
+    - 793
+  - - 565
+    - 777
+  - - 589
+    - 748
+  - - 611
+    - 760
+  - - 603
+    - 781
+  - - 590
+    - 817
+  - - 585
+    - 845
+  - - 560
+    - 839
+  - - 538
+    - 823
+  types:
+  - F2
+  - D1
+  - D2
+  - W2
+  source_ids:
+  - D01
+  - D02
+  - D03
+  - D12
+  allocation: Limited river/service transition between garden and Flaminius. Underlying DAR no-information
+    means exact parcels are custom, not brown-area tracing. Horrea-based2-level workcourts and shop fronts
+    may complete the corridor; do not transplant Domitian SanPaolo stores or Severan residences.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: W2
+    inner_or_garden_transition_court: D1
+    decision_basis: River working/storage court2 only where warehouse/work function chosen and recorded;
+      shops2; domestic inner/garden-edge court1. Do not call every court warehouse.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: campus_public_southcentral
+  pixels:
+  - - 478
+    - 659
+  - - 600
+    - 642
+  - - 727
+    - 615
+  - - 803
+    - 680
+  - - 819
+    - 715
+  - - 740
+    - 748
+  - - 589
+    - 748
+  - - 560
+    - 734
+  types:
+  - F2
+  - D1
+  - D2
+  source_ids:
+  - D02
+  - D03
+  allocation: Public complex/water/grove dominates; only small complete service structures where roads
+    and source public reservations leave appropriate margins. Do not fill Saepta, Diribitorium, Pompey
+    portico, Stagnum or Nemus with homes.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: No housing fill across public precinct. Individual street-edge service fronts2, exceptional
+      compact service courts2, garden-edge ancillary courts1, all separately justified.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: campus_north_and_flaminia
+  pixels:
+  - - 413
+    - 558
+  - - 647
+    - 454
+  - - 737
+    - 465
+  - - 655
+    - 200
+  - - 700
+    - 287
+  - - 761
+    - 550
+  - - 791
+    - 605
+  - - 727
+    - 615
+  - - 600
+    - 642
+  - - 478
+    - 659
+  types:
+  - F2
+  - D1
+  source_ids:
+  - D02
+  allocation: Public open field/garden masks take precedence. No general residential fill within field.
+    Only separately documented roadside service opportunities can receive low structures; north tomb corridor
+    not uniformly residential.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D1
+    inner_or_garden_transition_court: D1
+    decision_basis: Open-field/garden no residential fill. Separately justified roadside service front2
+      or small domestic/service court1; no general court2/3 spread.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: subura_argiletum
+  pixels:
+  - - 919
+    - 778
+  - - 935
+    - 738
+  - - 960
+    - 700
+  - - 1000
+    - 710
+  - - 1034
+    - 716
+  - - 1083
+    - 738
+  - - 1122
+    - 722
+  - - 1168
+    - 714
+  - - 1209
+    - 715
+  - - 1245
+    - 716
+  - - 1227
+    - 748
+  - - 1205
+    - 785
+  - - 1157
+    - 777
+  - - 1117
+    - 781
+  - - 1083
+    - 778
+  - - 1056
+    - 797
+  - - 1019
+    - 826
+  - - 973
+    - 815
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D07
+  - D05
+  - D06
+  allocation: Connected commercial valley.2/3-level complete front buildings line business streets, with3-level
+    option justified separately by Vitruvius plus pre79 IOII; deeper1/2-level courts and working rooms
+    complete blocks. Do not quantify ancient shares or reuse69-house AD113 sample.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Declared Argiletum/Patricius corridor segments3, all local-lane commerce2. Compact
+      court behind commercial frontage2; court whose only access is deeper interior lane1. These are composition
+      choices, not source height correlations.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: carinae_velia
+  pixels:
+  - - 877
+    - 814
+  - - 897
+    - 798
+  - - 919
+    - 778
+  - - 973
+    - 815
+  - - 1019
+    - 826
+  - - 982
+    - 849
+  - - 1016
+    - 895
+  - - 965
+    - 896
+  - - 944
+    - 866
+  - - 909
+    - 846
+  - - 875
+    - 852
+  - - 840
+    - 871
+  - - 816
+    - 844
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D04
+  - D07
+  - D13
+  allocation: Early elite domus and commercial streets coexist. Deep independent courts1/2; street fronts2
+    and selected3 by stated height analogy. No later Peace/Maxentius/VenusRoma footprints; complete buildings
+    fit each curving block.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Frontages2; compact domestic courts beside main access2; deeper domestic/garden courts1.3
+      only if source-aligned principal commercial segment is separately adopted.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: quirinal
+  pixels:
+  - - 892
+    - 551
+  - - 907
+    - 537
+  - - 933
+    - 528
+  - - 974
+    - 517
+  - - 987
+    - 522
+  - - 1005
+    - 496
+  - - 1042
+    - 474
+  - - 1091
+    - 446
+  - - 1117
+    - 416
+  - - 1190
+    - 367
+  - - 1151
+    - 412
+  - - 1105
+    - 462
+  - - 1061
+    - 509
+  - - 1017
+    - 553
+  - - 973
+    - 601
+  - - 947
+    - 635
+  - - 940
+    - 684
+  - - 935
+    - 738
+  - - 915
+    - 698
+  - - 888
+    - 658
+  - - 884
+    - 617
+  - - 903
+    - 585
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D01
+  - D13
+  allocation: Hill/ridge houses and locally denser frontages, not all villas and not uniform Subura.1/2-level
+    courts;2-level street fronts,3-level option at constrained commercial approach only. Northern source
+    garden/open context prevents continuous high-density tiling.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Ridge frontage2 and compact access court2; set-back domestic/garden-edge court1. No3
+      default; a named commercial-foot segment must be declared to use3.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: viminal
+  pixels:
+  - - 1190
+    - 367
+  - - 1204
+    - 402
+  - - 1234
+    - 475
+  - - 1247
+    - 506
+  - - 1190
+    - 531
+  - - 1218
+    - 568
+  - - 1263
+    - 591
+  - - 1265
+    - 635
+  - - 1244
+    - 672
+  - - 1245
+    - 716
+  - - 1209
+    - 715
+  - - 1168
+    - 714
+  - - 1122
+    - 722
+  - - 1083
+    - 738
+  - - 1034
+    - 716
+  - - 1000
+    - 710
+  - - 960
+    - 700
+  - - 935
+    - 738
+  - - 940
+    - 684
+  - - 947
+    - 635
+  - - 973
+    - 601
+  - - 1017
+    - 553
+  - - 1061
+    - 509
+  - - 1105
+    - 462
+  - - 1151
+    - 412
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D01
+  - D05
+  - D13
+  allocation: Source house finds establish occupation, not whole footprints. Deep1/2-level courts;2/3
+    frontage near Patricius valley. Retain non-dense north/garden margin; no Castra rectangle and no Diocletian
+    bath footprint.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Selected lowerPatricius street front3; other frontage2. Valley-side compact courts2;
+      ridge/interior/garden-transition courts1.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: oppian_esquiline_inside
+  pixels:
+  - - 1019
+    - 826
+  - - 1056
+    - 797
+  - - 1083
+    - 778
+  - - 1117
+    - 781
+  - - 1157
+    - 777
+  - - 1205
+    - 785
+  - - 1227
+    - 748
+  - - 1245
+    - 716
+  - - 1230
+    - 745
+  - - 1246
+    - 773
+  - - 1235
+    - 810
+  - - 1216
+    - 834
+  - - 1245
+    - 855
+  - - 1257
+    - 885
+  - - 1242
+    - 936
+  - - 1227
+    - 944
+  - - 1170
+    - 929
+  - - 1111
+    - 918
+  - - 1063
+    - 907
+  - - 1016
+    - 895
+  - - 982
+    - 849
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D08
+  - D13
+  allocation: Early hill housing restored across future Trajan bath footprint.1/2-level courts,2-level
+    fronts; selected3 along main merchant corridor by pre79 comparison. PorticusLiviae and early sacred
+    sites remain; outer green belt wins. No later bath axis or great Nero lake.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Street frontage2, compact interior courts2, garden-belt-facing and deeper domestic
+      courts1.3 only on adopted Subura-bound corridor segment; not across futureTrajan site as default.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: caelian
+  pixels:
+  - - 982
+    - 881
+  - - 1016
+    - 895
+  - - 1063
+    - 907
+  - - 1111
+    - 918
+  - - 1170
+    - 929
+  - - 1227
+    - 944
+  - - 1227
+    - 967
+  - - 1192
+    - 1002
+  - - 1128
+    - 1020
+  - - 1050
+    - 1063
+  - - 1010
+    - 1086
+  - - 975
+    - 1061
+  - - 983
+    - 974
+  - - 979
+    - 930
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D09
+  - D13
+  allocation: Houses along rising roads,1/2-level courts and2-level fronts;3-level isolated whole street
+    building only at valley commerce. No Claudius podium. Named remains as anchors, late churches not
+    footprint substitutes.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Main rising street front2; compact courts adjacent access2; interior and outer slope/garden-transition
+      court1. No default3 from lateCelio finds.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: aventine
+  pixels:
+  - - 792
+    - 956
+  - - 816
+    - 980
+  - - 907
+    - 1047
+  - - 948
+    - 1081
+  - - 975
+    - 1061
+  - - 1010
+    - 1086
+  - - 961
+    - 1138
+  - - 981
+    - 1182
+  - - 914
+    - 1210
+  - - 886
+    - 1238
+  - - 855
+    - 1245
+  - - 839
+    - 1235
+  - - 852
+    - 1211
+  - - 824
+    - 1202
+  - - 763
+    - 1200
+  - - 714
+    - 1199
+  - - 685
+    - 1174
+  - - 660
+    - 1141
+  - - 649
+    - 1103
+  - - 674
+    - 1065
+  - - 704
+    - 1037
+  - - 732
+    - 1002
+  - - 750
+    - 973
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D01
+  - D11
+  - D13
+  allocation: Temple precincts reserve first; hill1/2-level courts,2-level commercial fronts;3-level choice
+    only on source-constrained main passage. No all-elite social inference. Actual central-depression
+    road itself an Augustan reconstruction hypothesis.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Roadside shops2, courts alongside principal access2, interior sanctuary/garden-side
+      courts1. No3 default, only specifically declared commercial segment option.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: emporium
+  coverage_id: dar_built_emporium
+  types:
+  - W2
+  - F2
+  - D1
+  - D2
+  source_ids:
+  - D01
+  - D12
+  allocation: Warehouse/work courts primary by local harbour purpose, not arbitrary percentage. Named
+    Republican stores retained;2-level generic workcourts use HorreaAgrippiana multi-level comparison,
+    uniform court simplification. Small2-level shop/living units at street margins; service1/2-level courts
+    inside.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: W2
+    inner_or_garden_transition_court: D1
+    decision_basis: Known working strip chooses complete2-level workcourt; frontages2. Domestic/service
+      rear court1; domestic2 only with an explicit local-layout choice, not alternation.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: transtiberim
+  coverage_id: dar_built_transtiberim
+  types:
+  - W2
+  - F2
+  - F3
+  - D1
+  - D2
+  source_ids:
+  - D01
+  - D06
+  - D12
+  allocation: Small bridgehead commercial focus,2-level frontage and occasional whole3-level comparison
+    near crossing;1/2-level inner courts and2-level river workcourts. Naumachia/grove remains early public/landscape
+    use; no mirrored east-bank density.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Bridgefront shops2;3 only if separately designated a bridgehead commercial block.
+      River workcourts2, compact innercourts2, garden/Naumachia transition domestic1. No randommix.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+- id: palatine
+  coverage_id: palatine_early_housing_window
+  types:
+  - D1
+  - D2
+  - F2
+  source_ids:
+  - D04
+  - S125
+  - S127
+  allocation: Individual sourced houses/temples first.1/2-level whole domestic courts fill unexcavated
+    hill windows, with modest service buildings along separate alleyways; garden within and between house
+    compounds. North/NW richer house context; E/S custom only. No sitewide two-storey claim and no Flavian
+    rectangles.
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Sourced elite house geometry has priority. Compact residence along principal ascent2;
+      inner/garden residence1; modest service frontage2 only when needed. Entire hill plateau streets
+      remain schematic.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+three_storey_candidate_segments:
+- street_id: argiletum_pre_nerva
+  segment_index_zero_based:
+  - 1
+  - 2
+  - 3
+  type: F3
+  basis: Chosen central commercial-frontage demonstration of Vitruvius vertical housing with D06 pre79
+    height comparison. No archaeological frequency claimed.
+- street_id: vicus_patricius
+  segment_index_zero_based:
+  - 0
+  - 1
+  - 2
+  type: F3
+  basis: Chosen lower valley business-frontage continuation;3 levels an explicit comparative composition
+    decision, not inferred from terrain or knownAD14 addresses.

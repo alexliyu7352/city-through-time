@@ -1,0 +1,2288 @@
+source_map: model_reference/ad14_fabric_dar_city_z15.tif
+pixel_coordinates: '[column, row], original 1792x1536 raster; source-owned EPSG:3857 XYZ registration'
+features:
+- id: dar_built_core
+  kind: coverage
+  use: built_up_candidate
+  source_ids:
+  - D01
+  - D02
+  - D04
+  - D07
+  status: traced_reconstruction
+  basis: Hand-traced brown approximate built-up tint of DAR AD14 map. Includes public buildings, streets
+    and courts; subtract period-correct public/garden/water reservations before housing. This is not a
+    density or parcel survey.
+  pixels:
+  - - 585
+    - 845
+  - - 590
+    - 817
+  - - 603
+    - 781
+  - - 611
+    - 760
+  - - 747
+    - 746
+  - - 789
+    - 700
+  - - 824
+    - 696
+  - - 851
+    - 701
+  - - 872
+    - 715
+  - - 915
+    - 698
+  - - 900
+    - 679
+  - - 888
+    - 658
+  - - 884
+    - 617
+  - - 903
+    - 585
+  - - 892
+    - 551
+  - - 907
+    - 537
+  - - 933
+    - 528
+  - - 974
+    - 517
+  - - 987
+    - 522
+  - - 1005
+    - 496
+  - - 1042
+    - 474
+  - - 1091
+    - 446
+  - - 1117
+    - 416
+  - - 1190
+    - 367
+  - - 1204
+    - 402
+  - - 1234
+    - 475
+  - - 1247
+    - 506
+  - - 1190
+    - 531
+  - - 1218
+    - 568
+  - - 1263
+    - 591
+  - - 1265
+    - 635
+  - - 1244
+    - 672
+  - - 1246
+    - 717
+  - - 1230
+    - 745
+  - - 1246
+    - 773
+  - - 1235
+    - 810
+  - - 1216
+    - 834
+  - - 1245
+    - 855
+  - - 1257
+    - 885
+  - - 1242
+    - 936
+  - - 1227
+    - 967
+  - - 1192
+    - 1002
+  - - 1128
+    - 1020
+  - - 1050
+    - 1063
+  - - 1010
+    - 1086
+  - - 961
+    - 1138
+  - - 981
+    - 1182
+  - - 914
+    - 1210
+  - - 886
+    - 1238
+  - - 855
+    - 1245
+  - - 839
+    - 1235
+  - - 852
+    - 1211
+  - - 824
+    - 1202
+  - - 763
+    - 1200
+  - - 714
+    - 1199
+  - - 685
+    - 1174
+  - - 660
+    - 1141
+  - - 649
+    - 1103
+  - - 674
+    - 1065
+  - - 704
+    - 1037
+  - - 732
+    - 1002
+  - - 750
+    - 973
+  - - 755
+    - 933
+  - - 749
+    - 901
+  - - 737
+    - 873
+  - - 706
+    - 853
+  - - 673
+    - 843
+  - - 640
+    - 835
+  - - 608
+    - 847
+  review_status: proposal; root must adopt before generation
+- id: dar_built_emporium
+  kind: coverage
+  use: working_built_up_candidate
+  source_ids:
+  - D01
+  status: traced_reconstruction
+  basis: DAR brown southwest warehouse/harbour extension; exact edge approximate in the source. Named
+    Republican stores have priority; source white beyond is unknown, not a surveyed field.
+  pixels:
+  - - 733
+    - 1003
+  - - 704
+    - 1037
+  - - 674
+    - 1065
+  - - 649
+    - 1103
+  - - 660
+    - 1141
+  - - 685
+    - 1174
+  - - 714
+    - 1199
+  - - 714
+    - 1221
+  - - 689
+    - 1235
+  - - 659
+    - 1242
+  - - 638
+    - 1260
+  - - 633
+    - 1290
+  - - 642
+    - 1318
+  - - 653
+    - 1348
+  - - 646
+    - 1360
+  - - 616
+    - 1358
+  - - 591
+    - 1350
+  - - 559
+    - 1342
+  - - 540
+    - 1318
+  - - 534
+    - 1275
+  - - 542
+    - 1227
+  - - 562
+    - 1182
+  - - 587
+    - 1148
+  - - 625
+    - 1113
+  - - 674
+    - 1060
+  - - 710
+    - 1020
+  review_status: proposal; root must adopt before generation
+- id: dar_built_transtiberim
+  kind: coverage
+  use: mixed_built_up_candidate
+  source_ids:
+  - D01
+  status: traced_reconstruction
+  basis: DAR smaller brown west-bank urban concentration. Naumachia/grove west of it is a distinct use;
+    river line and edge are reconstructed, not ancient cadastral boundaries.
+  pixels:
+  - - 638
+    - 917
+  - - 655
+    - 902
+  - - 682
+    - 900
+  - - 715
+    - 917
+  - - 725
+    - 941
+  - - 731
+    - 964
+  - - 724
+    - 997
+  - - 706
+    - 1030
+  - - 683
+    - 1056
+  - - 655
+    - 1088
+  - - 626
+    - 1117
+  - - 593
+    - 1149
+  - - 566
+    - 1180
+  - - 542
+    - 1227
+  - - 515
+    - 1271
+  - - 503
+    - 1307
+  - - 478
+    - 1300
+  - - 488
+    - 1271
+  - - 501
+    - 1230
+  - - 520
+    - 1191
+  - - 546
+    - 1152
+  - - 575
+    - 1119
+  - - 606
+    - 1087
+  - - 624
+    - 1065
+  - - 628
+    - 1020
+  - - 627
+    - 974
+  review_status: proposal; root must adopt before generation
+- id: dar_horti_north
+  kind: reservation
+  use: garden_estates
+  source_ids:
+  - D01
+  - D02
+  status: traced_reconstruction
+  basis: DAR green Collis Hortulorum/Lucullani/Sallustiani landscape tint traced as aggregate garden estate
+    zone, not fences or a single owner. Divide named gardens only with their own qualified source; remove
+    early buildings/streets locally, no later Hadrianic pavilions.
+  pixels:
+  - - 725
+    - 220
+  - - 748
+    - 201
+  - - 779
+    - 202
+  - - 813
+    - 217
+  - - 846
+    - 249
+  - - 866
+    - 274
+  - - 897
+    - 285
+  - - 936
+    - 287
+  - - 985
+    - 278
+  - - 1038
+    - 260
+  - - 1080
+    - 246
+  - - 1125
+    - 246
+  - - 1165
+    - 260
+  - - 1191
+    - 302
+  - - 1195
+    - 348
+  - - 1190
+    - 367
+  - - 1117
+    - 416
+  - - 1091
+    - 446
+  - - 1042
+    - 474
+  - - 1005
+    - 496
+  - - 987
+    - 522
+  - - 962
+    - 506
+  - - 937
+    - 479
+  - - 910
+    - 463
+  - - 877
+    - 460
+  - - 848
+    - 438
+  - - 827
+    - 417
+  - - 812
+    - 387
+  - - 794
+    - 353
+  - - 781
+    - 321
+  - - 760
+    - 286
+  - - 739
+    - 263
+  review_status: proposal; root must adopt before generation
+- id: campus_agrippae
+  kind: reservation
+  use: public_garden
+  source_ids:
+  - D02
+  status: traced_reconstruction
+  basis: DAR light-green Campus Agrippae band east of Via Flaminia and below Collis Hortulorum, checked
+    against Campus Martius text. Approximate planted/use extent, not estate wall. Porticus Vipsania and
+    Aqua Virgo are separate public features.
+  pixels:
+  - - 737
+    - 465
+  - - 772
+    - 470
+  - - 804
+    - 476
+  - - 826
+    - 479
+  - - 852
+    - 469
+  - - 864
+    - 475
+  - - 853
+    - 490
+  - - 843
+    - 512
+  - - 834
+    - 539
+  - - 842
+    - 566
+  - - 840
+    - 579
+  - - 815
+    - 590
+  - - 791
+    - 605
+  - - 781
+    - 579
+  - - 768
+    - 545
+  - - 754
+    - 507
+  review_status: proposal; root must adopt before generation
+- id: mausoleum_public_park
+  kind: reservation
+  use: public_garden
+  source_ids:
+  - D02
+  status: traced_reconstruction
+  basis: DAR green public park around Augustus mausoleum, source text says opened29BC. Exclude mausoleum
+    body and access; planting positions estimated.
+  pixels:
+  - - 650
+    - 292
+  - - 679
+    - 283
+  - - 700
+    - 287
+  - - 709
+    - 330
+  - - 717
+    - 367
+  - - 726
+    - 410
+  - - 737
+    - 465
+  - - 700
+    - 467
+  - - 675
+    - 458
+  - - 647
+    - 454
+  - - 646
+    - 428
+  - - 651
+    - 397
+  - - 651
+    - 371
+  - - 643
+    - 340
+  - - 627
+    - 310
+  review_status: proposal; root must adopt before generation
+- id: campus_north_open
+  kind: reservation
+  use: public_open_field
+  source_ids:
+  - D02
+  status: source_constrained_schematic
+  basis: DAR Campus Martius explicitly describes North Central Campus as spacious public field between
+    Saepta/Pantheon and mausoleum. Envelope follows source riverward corridor, Flaminia and public complexes;
+    internal edge is estimated. Draw open civic/training ground, paths and separately sourced tombs; not
+    blanket woodland or missing houses.
+  pixels:
+  - - 413
+    - 558
+  - - 453
+    - 547
+  - - 494
+    - 541
+  - - 539
+    - 532
+  - - 586
+    - 516
+  - - 620
+    - 487
+  - - 647
+    - 454
+  - - 675
+    - 458
+  - - 700
+    - 467
+  - - 737
+    - 465
+  - - 754
+    - 507
+  - - 768
+    - 545
+  - - 781
+    - 579
+  - - 791
+    - 605
+  - - 761
+    - 612
+  - - 727
+    - 615
+  - - 680
+    - 614
+  - - 665
+    - 642
+  - - 651
+    - 663
+  - - 617
+    - 669
+  - - 579
+    - 668
+  - - 540
+    - 670
+  - - 505
+    - 664
+  - - 475
+    - 650
+  - - 444
+    - 615
+  review_status: proposal; root must adopt before generation
+- id: nemus_agrippae
+  kind: reservation
+  use: grove
+  source_ids:
+  - D03
+  status: source_constrained_schematic
+  basis: Source places grove between Stagnum and Euripus; north/west borders expressly unknown. Small
+    intervening green tint traced as conservative planting core, not a complete estate extent. No Domitian
+    stadium outline.
+  pixels:
+  - - 600
+    - 642
+  - - 621
+    - 640
+  - - 617
+    - 670
+  - - 621
+    - 697
+  - - 613
+    - 710
+  - - 593
+    - 704
+  - - 578
+    - 695
+  - - 580
+    - 680
+  - - 586
+    - 659
+  review_status: proposal; root must adopt before generation
+- id: horti_agrippae_west
+  kind: reservation
+  use: garden_estate
+  source_ids:
+  - D02
+  - D03
+  status: traced_reconstruction
+  basis: DAR green Horti Agrippae west of theatre, bequeathed to public12BC per Campus text. Precise edge
+    and trees reconstruction; no San Paolo Domitian store outline imposed.
+  pixels:
+  - - 452
+    - 705
+  - - 476
+    - 700
+  - - 506
+    - 711
+  - - 534
+    - 735
+  - - 560
+    - 761
+  - - 565
+    - 777
+  - - 544
+    - 793
+  - - 516
+    - 807
+  - - 495
+    - 797
+  - - 483
+    - 779
+  - - 468
+    - 758
+  - - 455
+    - 737
+  review_status: proposal; root must adopt before generation
+- id: dar_horti_esquiline
+  kind: reservation
+  use: garden_estates
+  source_ids:
+  - D01
+  status: traced_reconstruction
+  basis: DAR green external Esquiline garden belt (Maecenatis, Lamiani and neighbouring estates), not
+    one named estate or exact ownership line. Approximate full belt follows map, replacing113 regular
+    polygons; subtract named early buildings/streets.
+  pixels:
+  - - 1264
+    - 563
+  - - 1305
+    - 578
+  - - 1342
+    - 600
+  - - 1383
+    - 628
+  - - 1421
+    - 653
+  - - 1468
+    - 672
+  - - 1498
+    - 711
+  - - 1523
+    - 755
+  - - 1561
+    - 799
+  - - 1607
+    - 839
+  - - 1619
+    - 850
+  - - 1588
+    - 865
+  - - 1554
+    - 885
+  - - 1514
+    - 904
+  - - 1468
+    - 920
+  - - 1423
+    - 929
+  - - 1373
+    - 929
+  - - 1314
+    - 933
+  - - 1270
+    - 933
+  - - 1242
+    - 936
+  - - 1257
+    - 885
+  - - 1245
+    - 855
+  - - 1216
+    - 834
+  - - 1235
+    - 810
+  - - 1246
+    - 773
+  - - 1230
+    - 745
+  - - 1246
+    - 717
+  - - 1244
+    - 672
+  - - 1265
+    - 635
+  review_status: proposal; root must adopt before generation
+- id: palatine_early_housing_window
+  kind: district
+  use: domestic_sanctuary_mixed
+  source_ids:
+  - D04
+  status: source_constrained_schematic
+  basis: Early residential hill window within DAR built-up area; northern/northwestern luxurious house
+    clusters attested, E/S layout unknown. Subtract individual early public/domestic reservations, then
+    complete houses/alley/court-gardens by Augustan custom. This is not a Flavian palace reservation and
+    not a single garden.
+  pixels:
+  - - 819
+    - 900
+  - - 840
+    - 871
+  - - 875
+    - 852
+  - - 909
+    - 846
+  - - 944
+    - 866
+  - - 965
+    - 896
+  - - 965
+    - 936
+  - - 954
+    - 973
+  - - 956
+    - 1024
+  - - 937
+    - 1032
+  - - 907
+    - 1008
+  - - 866
+    - 976
+  - - 836
+    - 950
+  review_status: proposal; root must adopt before generation
+- id: via_flaminia_ad14
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D02
+  status: traced_reconstruction
+  width_m: 8
+  source_line: Published reconstruction corridor, solid double line; archaeological certainty of each
+    segment not individually established here.
+  basis: DAR Via Flaminia long straight axis through Campus, as discussed in Campus Martius. Hand-traced
+    road corridor; width8m estimated. North endpoint is study/map edge, south junction Aemiliana; no post-Augustan
+    Via Tecta across north-central field invented.
+  pixels:
+  - - 655
+    - 200
+  - - 681
+    - 290
+  - - 708
+    - 382
+  - - 737
+    - 465
+  - - 761
+    - 550
+  - - 782
+    - 605
+  - - 803
+    - 680
+  - - 819
+    - 715
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'north: map/study edge; route continues'
+  - 'south: Aemiliana road junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: aemiliana_forum_connection
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D02
+  status: traced_reconstruction
+  width_m: 6
+  source_line: Source double-line corridor; intermediate bends follow reconstruction, not excavated street
+    edges.
+  basis: Road at east side of Capitoline/Aemiliana connecting Flaminia to Forum approaches, read on registered
+    early map. Exact junctions/width estimated; early Caesar/Augustus public reservations must refine
+    local building clearance.
+  pixels:
+  - - 819
+    - 715
+  - - 848
+    - 747
+  - - 863
+    - 782
+  - - 877
+    - 814
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: campus_via_tecta
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D02
+  status: traced_reconstruction
+  width_m: 6
+  source_line: Mapped reconstruction line, with both hypothetical and evidenced course possible; do not
+    style the whole line as excavated.
+  basis: Southwest-to-west Campus route follows DAR discussion of Via Tecta1 toward Tarentum, unlike the
+    unsupported pre-Augustan north-central route. Whole centreline and width are schematic within the
+    mapped corridor.
+  pixels:
+  - - 669
+    - 818
+  - - 606
+    - 777
+  - - 560
+    - 734
+  - - 478
+    - 659
+  - - 425
+    - 584
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'southeast: Flaminius junction'
+  - 'northwest: source western Campus route continuing toward Tarentum'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: campus_flaminius_axis
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D02
+  status: source_constrained_schematic
+  width_m: 6
+  source_line: Source light double line; schematic intersection snap.
+  basis: Early Campus Flaminius public street relation between Porticus/Marcellus and southwest bank;
+    not a modern embankment road. Trace generalized to connected centreline, width estimated. Centreline
+    skirts Marcellus west/south instead of crossing cavea; local passage is a schematic interpretation
+    and must be trimmed to the public reservation.
+  pixels:
+  - - 606
+    - 777
+  - - 647
+    - 801
+  - - 669
+    - 818
+  - - 696
+    - 826
+  - - 710
+    - 835
+  - - 716
+    - 856
+  - - 729
+    - 879
+  - - 755
+    - 900
+  - - 767
+    - 896
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: campus_saepta_south
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D02
+  status: traced_reconstruction
+  width_m: 6
+  source_line: Mapped corridor south of Diribitorium and eastward Pallacinae connection; junction snapped
+    to source corridor.
+  basis: Saepta/Diribitorium southern neighbourhood connection on DAR; source black building extents take
+    priority. Do not copy113 later-building detours.
+  pixels:
+  - - 589
+    - 748
+  - - 668
+    - 748
+  - - 740
+    - 748
+  - - 792
+    - 732
+  - - 819
+    - 715
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: via_tecta_saepta_connector
+  kind: lane
+  use: schematic_connection
+  source_ids:
+  - D02
+  status: contemporary_custom_schematic
+  width_m: 4.2
+  basis: Short logical connector around Pompey western/southern service frontage, from early source axis
+    to Saepta southern corridor; exact line not claimed excavated.
+  pixels:
+  - - 606
+    - 777
+  - - 589
+    - 748
+  - - 560
+    - 734
+  review_status: proposal; root must adopt before generation
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: argiletum_pre_nerva
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D07
+  status: traced_reconstruction
+  width_m: 6
+  source_line: Early DAR corridor; no Nerva Forum enclosure imposed.
+  basis: Forum-to-Subura route in early map before Nerva/Peace. Public Augustan four-exedra geometry must
+    be reserved separately, never shrink it to retain a schematic line. Width6m estimated.
+  pixels:
+  - - 877
+    - 814
+  - - 897
+    - 798
+  - - 919
+    - 778
+  - - 960
+    - 766
+  - - 1006
+    - 751
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments:
+  - street_id: argiletum_pre_nerva
+    segment_index_zero_based:
+    - 1
+    - 2
+    - 3
+    type: F3
+    basis: Chosen central commercial-frontage demonstration of Vitruvius vertical housing with D06 pre79
+      height comparison. No archaeological frequency claimed.
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: clivus_suburanus
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D07
+  status: traced_reconstruction
+  width_m: 6
+  source_line: Generalized published early double-line corridor; not a survey of the complete paving.
+  basis: DAR Subura valley axis follows the early map across Cispian/Oppian toward Esquiline gate. Curve/width
+    approximate; source row preserved in pixels.
+  pixels:
+  - - 1006
+    - 751
+  - - 1043
+    - 747
+  - - 1083
+    - 738
+  - - 1122
+    - 722
+  - - 1168
+    - 714
+  - - 1209
+    - 715
+  - - 1245
+    - 716
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: vicus_patricius
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D05
+  - D07
+  status: traced_reconstruction
+  width_m: 6
+  source_line: Source reconstructed corridor; course in late antiquity not automatically copied to14.
+  basis: DAR valley street broadly Via Urbana; traced up Viminal/Cispian valley, then joins ridge network.
+    No claim of straight continuation to Porta Viminalis. Width6m estimated.
+  pixels:
+  - - 1006
+    - 751
+  - - 1034
+    - 716
+  - - 1060
+    - 685
+  - - 1091
+    - 651
+  - - 1121
+    - 615
+  - - 1145
+    - 579
+  - - 1159
+    - 543
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments:
+  - street_id: vicus_patricius
+    segment_index_zero_based:
+    - 0
+    - 1
+    - 2
+    type: F3
+    basis: Chosen lower valley business-frontage continuation;3 levels an explicit comparative composition
+      decision, not inferred from terrain or knownAD14 addresses.
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: alta_semita
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D01
+  status: traced_reconstruction
+  width_m: 6
+  source_line: Mapped early ridge-road corridor; plan precision mixed; map textual road identification.
+  basis: Early-map Alta Semita/Quirinal ridge network, compared to DAR named places. Broad corridor traced;
+    6m width, simplification and junctions estimated, not modern Via XX Settembre surveyed as ancient.
+  pixels:
+  - - 935
+    - 738
+  - - 940
+    - 684
+  - - 947
+    - 635
+  - - 973
+    - 601
+  - - 1017
+    - 553
+  - - 1061
+    - 509
+  - - 1105
+    - 462
+  - - 1151
+    - 412
+  - - 1190
+    - 367
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'south: connect to Argiletum with a labelled local lane around four-exedra Augustan public reservation;
+    current117m gap is not complete final street'
+  - 'north: source city/garden transition and continuing route'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: viminal_ridge_connector
+  kind: lane
+  use: schematic_connection
+  source_ids:
+  - D01
+  - D05
+  status: contemporary_custom_schematic
+  width_m: 4.2
+  basis: Short source-constrained link across ridge neighbourhood joining Patricius to Alta Semita, not
+    recovered AD14 paving. Interior layout constrained by early houses and open garden belt.
+  pixels:
+  - - 1159
+    - 543
+  - - 1124
+    - 538
+  - - 1090
+    - 526
+  - - 1061
+    - 509
+  review_status: proposal; root must adopt before generation
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: carinae_axis
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D07
+  status: traced_reconstruction
+  width_m: 5
+  source_line: DAR Carinae streets corridor, mixed visible/hypothetical plan; exact connected line schematic.
+  basis: Early-map road from Velia across Carinae into Oppian/Porticus Liviae approach. No later Trajan-bath
+    perimeter imposed; width5m estimated.
+  pixels:
+  - - 945
+    - 863
+  - - 982
+    - 849
+  - - 1019
+    - 826
+  - - 1056
+    - 797
+  - - 1083
+    - 778
+  - - 1117
+    - 781
+  - - 1157
+    - 777
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: carinae_subura_link
+  kind: lane
+  use: schematic_connection
+  source_ids:
+  - D07
+  status: contemporary_custom_schematic
+  width_m: 4.2
+  basis: Connect source Carinae and Subura corridors along local sloping block edge; unknown exact ancient
+    alignment. Not FUR10g relocated as georeferenced.
+  pixels:
+  - - 982
+    - 849
+  - - 973
+    - 815
+  - - 960
+    - 766
+  review_status: proposal; root must adopt before generation
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: oppian_early_south
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D08
+  status: source_constrained_schematic
+  width_m: 6
+  source_line: DAR Oppius street has local evidence, reconstruction between discrete remains; western
+    valley link schematic.
+  basis: Early valley/upper Oppian road relationship based on DAR Oppius Mons street and two pre64 houses
+    east of later Colosseum. Whole connected path not excavated. No Nero lake or Colosseum road-ring.
+  pixels:
+  - - 945
+    - 863
+  - - 982
+    - 881
+  - - 1016
+    - 895
+  - - 1063
+    - 907
+  - - 1111
+    - 918
+  - - 1170
+    - 929
+  - - 1227
+    - 944
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'west: Velia/Carinae node'
+  - 'east: source built-up edge; no Ludus/Colosseum complex to terminate at14'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: oppian_cross_link
+  kind: lane
+  use: schematic_connection
+  source_ids:
+  - D08
+  status: contemporary_custom_schematic
+  width_m: 4.2
+  basis: Schematic local connection between early Oppian south corridor and Carinae/Liviae approach, following
+    source slope/corridor direction; not Trajan-bath axial geometry.
+  pixels:
+  - - 1063
+    - 907
+  - - 1056
+    - 860
+  - - 1056
+    - 797
+  review_status: proposal; root must adopt before generation
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: clivus_palatinus_early
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D04
+  status: source_constrained_schematic
+  width_m: 5
+  source_line: Initial ascent attested in DAR discussion; beyond ascent no certain hilltop network.
+  basis: Early northern ascent from Velia to Palatine, traced broad corridor. Stop at hill neighbourhood
+    junction; do not continue into Flavian palace axis.
+  pixels:
+  - - 945
+    - 863
+  - - 938
+    - 884
+  - - 926
+    - 910
+  - - 921
+    - 929
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: palatine_domestic_lane
+  kind: lane
+  use: schematic_connection
+  source_ids:
+  - D04
+  status: contemporary_custom_schematic
+  width_m: 4.2
+  basis: Connecting lane among early hilltop houses by DAR account of minor streets between residences;
+    full plateau route unknown. Adjust around individual source house reservations; this is not an excavated
+    axis.
+  pixels:
+  - - 921
+    - 929
+  - - 906
+    - 947
+  - - 887
+    - 952
+  - - 867
+    - 937
+  review_status: proposal; root must adopt before generation
+  endpoint_contract:
+  - 'east: Clivus Palatinus junction'
+  - 'west: fit an actual early house/public access face after early public reservations; do not stop arbitrarily
+    or assert surveyed Apollo entry'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: caelian_approach
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D09
+  status: source_constrained_schematic
+  width_m: 5
+  source_line: Mapped slope corridor, not complete Clivus Scauri excavation.
+  basis: Clivus Scauri/Caelian source approach, generalized where exact early route unknown. No Claudius
+    sanctuary reservation. Width5m estimated.
+  pixels:
+  - - 982
+    - 881
+  - - 979
+    - 930
+  - - 983
+    - 974
+  - - 1001
+    - 1009
+  - - 1054
+    - 1021
+  - - 1114
+    - 1020
+  - - 1178
+    - 1013
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'west: valley spine'
+  - 'east: source built-up edge/local approach; extend or trim to edge/early access after public overlay'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: velabrum_south_extension
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D10
+  status: source_constrained_schematic
+  width_m: 6
+  source_line: Tuscus south of Horrea disputed; this is general Boarium connection, not a definitive Tuscus
+    claim.
+  basis: Generalized early Boarium/Circus approach from DAR; connect to actual frozen quarter street endpoint
+    through a separately recorded lane, never move approved six streets. Width6m estimated.
+  pixels:
+  - - 767
+    - 896
+  - - 776
+    - 926
+  - - 792
+    - 956
+  - - 816
+    - 980
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'north: Boarium network'
+  - 'south: fit Circus northwest approach or add labelled connecting lane to Aventine, avoiding seating'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: aventine_hill_lane
+  kind: lane
+  use: schematic_connection
+  source_ids:
+  - D11
+  status: contemporary_custom_schematic
+  width_m: 5
+  source_line: No claim of excavated alignment; schematic hill-lane spine.
+  basis: Unnamed illustrative hill neighbourhood lane, not the central-depression street of DAR Aventinus
+    Street. Follows terrain and joins Boarium access; exact route/floors/plots unknown. 5m width estimated.
+  pixels:
+  - - 792
+    - 956
+  - - 768
+    - 1001
+  - - 748
+    - 1043
+  - - 727
+    - 1081
+  - - 730
+    - 1120
+  - - 755
+    - 1159
+  - - 783
+    - 1186
+  review_status: proposal; root must adopt before generation
+  endpoint_contract:
+  - 'north: Boarium link'
+  - 'south: add local interior loop or end at a complete dwelling access; not a source-claimed central-depression
+    route'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: emporium_road
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D01
+  status: traced_reconstruction
+  width_m: 6
+  source_line: Source road corridor adjacent to harbour/storehouses, approximate.
+  basis: DAR southwest harbour axis from Boarium/Aventine foot to Emporium; river-adjacent course is early
+    reconstruction, not modern embankment. Width6m estimated.
+  pixels:
+  - - 767
+    - 896
+  - - 755
+    - 933
+  - - 748
+    - 975
+  - - 727
+    - 1011
+  - - 704
+    - 1037
+  - - 674
+    - 1065
+  - - 641
+    - 1105
+  - - 604
+    - 1146
+  - - 568
+    - 1187
+  - - 547
+    - 1229
+  - - 539
+    - 1271
+  - - 550
+    - 1314
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'north: Boarium route'
+  - 'south: fit named early warehouse access or study built edge, not a free floating endpoint'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: transtiberim_island_connection
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D01
+  status: source_constrained_schematic
+  width_m: 6
+  source_line: Early bridge/urban corridor; not current Cestius bridge geometry.
+  basis: Island crossing approach to smaller Transtiberim urban zone from DAR; exact bridge ends supplied
+    by public agent. Width6m estimated.
+  pixels:
+  - - 710
+    - 901
+  - - 682
+    - 900
+  - - 655
+    - 902
+  - - 638
+    - 917
+  - - 612
+    - 916
+  - - 575
+    - 912
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'east: snap to public-agent early island bridge approach, not presentCestius geometry'
+  - 'west: Naumachia/public access or local continuation; no arbitrary stop'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: transtiberim_south_axis
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D01
+  status: source_constrained_schematic
+  width_m: 6
+  source_line: Schematic early roadside course constrained by DAR built-up/Naumachia boundary.
+  basis: Smaller right-bank strip between river and early Naumachia/grove; no SeveranFUR138 road identification
+    asserted. Match bridge approach; width6m estimated.
+  pixels:
+  - - 638
+    - 917
+  - - 660
+    - 956
+  - - 667
+    - 988
+  - - 651
+    - 1024
+  - - 631
+    - 1061
+  - - 604
+    - 1100
+  - - 575
+    - 1136
+  - - 550
+    - 1179
+  - - 530
+    - 1220
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'north: island approach junction'
+  - 'south: source built strip/study edge; route continues'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: aventine_depression_road
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D11
+  status: traced_reconstruction
+  width_m: 6
+  source_line: DAR itself marks an inferred Augustan route; not directly attested before Aurelian period.
+  basis: DAR Aventinus Street infers early course from Cestius tomb alignment and traffic geography. Trace
+    reconstructed central-depression corridor, not a known excavated AD14 street. Avoid insecure Vicus
+    Piscinae Publicae/Raudusculanae names; width6m estimated.
+  pixels:
+  - - 980
+    - 974
+  - - 980
+    - 1026
+  - - 975
+    - 1061
+  - - 948
+    - 1096
+  - - 900
+    - 1137
+  - - 856
+    - 1165
+  - - 837
+    - 1225
+  - - 812
+    - 1292
+  - - 780
+    - 1355
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'north: Caelian valley route via local connector'
+  - 'south: continuing extraurban road/study edge'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: oppius_curved_street
+  kind: street
+  use: source_road_corridor
+  source_ids:
+  - D08
+  status: traced_reconstruction
+  width_m: 5
+  source_line: Attested short Republican paving near Via Mecenate; north continuation hypothetical in
+    DAR; entire geometry must not be labelled excavation.
+  basis: DAR Oppius Mons Street runs from Clivus Suburanus south along western Horti Maecenatis boundary
+    into Colosseum valley. Curve hand-traced from early map; sections between remains estimated. Width5m
+    estimated.
+  pixels:
+  - - 1245
+    - 716
+  - - 1227
+    - 748
+  - - 1205
+    - 785
+  - - 1181
+    - 832
+  - - 1169
+    - 866
+  - - 1170
+    - 929
+  review_status: proposal; root must adopt before generation
+  default_frontage_type: F2
+  three_storey_segments: []
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: caelian_circus_link
+  kind: lane
+  use: schematic_connection
+  source_ids:
+  - D09
+  status: contemporary_custom_schematic
+  width_m: 4.2
+  basis: Connect Caelian/S.Gregorio valley spine to Circus southeast entrance approach, following early
+    valley geography; exact early junction estimated. Must meet public Circus approach, not terminate
+    in seating.
+  pixels:
+  - - 983
+    - 974
+  - - 980
+    - 974
+  - - 975
+    - 1061
+  - - 948
+    - 1096
+  review_status: proposal; root must adopt before generation
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: oppius_to_subura_link
+  kind: lane
+  use: schematic_connection
+  source_ids:
+  - D07
+  - D08
+  status: contemporary_custom_schematic
+  width_m: 4.2
+  basis: Short east Oppian connection between Carinae/Liviae branch and source curved street, around public
+    portico not through it. Exact crossing schematic.
+  pixels:
+  - - 1157
+    - 777
+  - - 1174
+    - 800
+  - - 1205
+    - 785
+  review_status: proposal; root must adopt before generation
+  endpoint_contract:
+  - 'start: join the coincident backbone node or fit local block-access junction'
+  - 'end: join the coincident backbone node or fit local block-access junction'
+  native_ready: false
+  native_ready_reason: Research corridor only; public/frozen-sample/river intersections and final endpoint
+    contact require layout integration. No native connectivity pass claimed.
+- id: district_velabrum_boarium
+  kind: district
+  use: classification_window
+  source_ids:
+  - D10
+  - S126
+  - S127
+  status: source_constrained_schematic
+  basis: Frozen sample first; continuous shop fronts on the sourced business approaches, deep interior
+    courts one/two levels. Do not extrapolate sample32-unit mix. South Tuscus course disputed. Window
+    is contextual classification only, not a property or density boundary; intersect source coverage and
+    reservations first.
+  types:
+  - F2
+  - D1
+  - D2
+  pixels:
+  - - 744
+    - 864
+  - - 767
+    - 844
+  - - 816
+    - 844
+  - - 827
+    - 868
+  - - 819
+    - 900
+  - - 836
+    - 950
+  - - 816
+    - 980
+  - - 792
+    - 956
+  - - 755
+    - 933
+  - - 749
+    - 901
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Commercial street-front2; compact deep court directly behind business frontage2; deeper
+      domestic court reached only by interior lane1. Frozen sample overrides all.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_capitoline_foot_aemiliana
+  kind: district
+  use: classification_window
+  source_ids:
+  - D01
+  - D02
+  - D07
+  status: source_constrained_schematic
+  basis: Street-facing commerce uses2-level frontage; selected complete3-level front buildings in deeper
+    business frontage show Augustan vertical housing with explicit pre79 analogy. Deep court plots1/2.
+    No AD14 AraCoeli five-storey assumption; future Trajan slope retains mixed urban fabric, not later
+    plaza. Window is contextual classification only, not a property or density boundary; intersect source
+    coverage and reservations first.
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  pixels:
+  - - 740
+    - 748
+  - - 789
+    - 700
+  - - 851
+    - 701
+  - - 872
+    - 715
+  - - 915
+    - 698
+  - - 935
+    - 738
+  - - 919
+    - 778
+  - - 877
+    - 814
+  - - 816
+    - 844
+  - - 767
+    - 844
+  - - 747
+    - 804
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Select3 only on declared Argiletum/Aemiliana commercial segments; other frontage2.
+      Courts behind business fronts2; quiet inner or slope/garden edge courts1.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_campus_flaminius
+  kind: district
+  use: classification_window
+  source_ids:
+  - D02
+  status: source_constrained_schematic
+  basis: Public theatres/temples/porticoes first; service/commercial rows on street edges and1/2-level
+    courts behind.3-level frontage only as declared height comparison, not citywide majority. Window is
+    contextual classification only, not a property or density boundary; intersect source coverage and
+    reservations first.
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  pixels:
+  - - 585
+    - 845
+  - - 590
+    - 817
+  - - 603
+    - 781
+  - - 611
+    - 760
+  - - 669
+    - 767
+  - - 710
+    - 781
+  - - 747
+    - 804
+  - - 767
+    - 844
+  - - 744
+    - 864
+  - - 710
+    - 835
+  - - 673
+    - 843
+  - - 640
+    - 835
+  - - 608
+    - 847
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Service/commercial fronts2; compact service courts2 adjacent public-business streets,
+      quiet internal courts1. No3 default without an explicit block decision.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_regola_southwest_campus
+  kind: district
+  use: classification_window
+  source_ids:
+  - D01
+  - D02
+  - D03
+  - D12
+  status: source_constrained_schematic
+  basis: Limited river/service transition between garden and Flaminius. Underlying DAR no-information
+    means exact parcels are custom, not brown-area tracing. Horrea-based2-level workcourts and shop fronts
+    may complete the corridor; do not transplant Domitian SanPaolo stores or Severan residences. Window
+    is contextual classification only, not a property or density boundary; intersect source coverage and
+    reservations first.
+  types:
+  - F2
+  - D1
+  - D2
+  - W2
+  pixels:
+  - - 516
+    - 807
+  - - 544
+    - 793
+  - - 565
+    - 777
+  - - 589
+    - 748
+  - - 611
+    - 760
+  - - 603
+    - 781
+  - - 590
+    - 817
+  - - 585
+    - 845
+  - - 560
+    - 839
+  - - 538
+    - 823
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: W2
+    inner_or_garden_transition_court: D1
+    decision_basis: River working/storage court2 only where warehouse/work function chosen and recorded;
+      shops2; domestic inner/garden-edge court1. Do not call every court warehouse.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_campus_public_southcentral
+  kind: district
+  use: classification_window
+  source_ids:
+  - D02
+  - D03
+  status: source_constrained_schematic
+  basis: Public complex/water/grove dominates; only small complete service structures where roads and
+    source public reservations leave appropriate margins. Do not fill Saepta, Diribitorium, Pompey portico,
+    Stagnum or Nemus with homes. Window is contextual classification only, not a property or density boundary;
+    intersect source coverage and reservations first.
+  types:
+  - F2
+  - D1
+  - D2
+  pixels:
+  - - 478
+    - 659
+  - - 600
+    - 642
+  - - 727
+    - 615
+  - - 803
+    - 680
+  - - 819
+    - 715
+  - - 740
+    - 748
+  - - 589
+    - 748
+  - - 560
+    - 734
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: No housing fill across public precinct. Individual street-edge service fronts2, exceptional
+      compact service courts2, garden-edge ancillary courts1, all separately justified.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_campus_north_and_flaminia
+  kind: district
+  use: classification_window
+  source_ids:
+  - D02
+  status: source_constrained_schematic
+  basis: Public open field/garden masks take precedence. No general residential fill within field. Only
+    separately documented roadside service opportunities can receive low structures; north tomb corridor
+    not uniformly residential. Window is contextual classification only, not a property or density boundary;
+    intersect source coverage and reservations first.
+  types:
+  - F2
+  - D1
+  pixels:
+  - - 413
+    - 558
+  - - 647
+    - 454
+  - - 737
+    - 465
+  - - 655
+    - 200
+  - - 700
+    - 287
+  - - 761
+    - 550
+  - - 791
+    - 605
+  - - 727
+    - 615
+  - - 600
+    - 642
+  - - 478
+    - 659
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D1
+    inner_or_garden_transition_court: D1
+    decision_basis: Open-field/garden no residential fill. Separately justified roadside service front2
+      or small domestic/service court1; no general court2/3 spread.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_subura_argiletum
+  kind: district
+  use: classification_window
+  source_ids:
+  - D07
+  - D05
+  - D06
+  status: source_constrained_schematic
+  basis: Connected commercial valley.2/3-level complete front buildings line business streets, with3-level
+    option justified separately by Vitruvius plus pre79 IOII; deeper1/2-level courts and working rooms
+    complete blocks. Do not quantify ancient shares or reuse69-house AD113 sample. Window is contextual
+    classification only, not a property or density boundary; intersect source coverage and reservations
+    first.
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  pixels:
+  - - 919
+    - 778
+  - - 935
+    - 738
+  - - 960
+    - 700
+  - - 1000
+    - 710
+  - - 1034
+    - 716
+  - - 1083
+    - 738
+  - - 1122
+    - 722
+  - - 1168
+    - 714
+  - - 1209
+    - 715
+  - - 1245
+    - 716
+  - - 1227
+    - 748
+  - - 1205
+    - 785
+  - - 1157
+    - 777
+  - - 1117
+    - 781
+  - - 1083
+    - 778
+  - - 1056
+    - 797
+  - - 1019
+    - 826
+  - - 973
+    - 815
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Declared Argiletum/Patricius corridor segments3, all local-lane commerce2. Compact
+      court behind commercial frontage2; court whose only access is deeper interior lane1. These are composition
+      choices, not source height correlations.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_carinae_velia
+  kind: district
+  use: classification_window
+  source_ids:
+  - D04
+  - D07
+  - D13
+  status: source_constrained_schematic
+  basis: Early elite domus and commercial streets coexist. Deep independent courts1/2; street fronts2
+    and selected3 by stated height analogy. No later Peace/Maxentius/VenusRoma footprints; complete buildings
+    fit each curving block. Window is contextual classification only, not a property or density boundary;
+    intersect source coverage and reservations first.
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  pixels:
+  - - 877
+    - 814
+  - - 897
+    - 798
+  - - 919
+    - 778
+  - - 973
+    - 815
+  - - 1019
+    - 826
+  - - 982
+    - 849
+  - - 1016
+    - 895
+  - - 965
+    - 896
+  - - 944
+    - 866
+  - - 909
+    - 846
+  - - 875
+    - 852
+  - - 840
+    - 871
+  - - 816
+    - 844
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Frontages2; compact domestic courts beside main access2; deeper domestic/garden courts1.3
+      only if source-aligned principal commercial segment is separately adopted.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_quirinal
+  kind: district
+  use: classification_window
+  source_ids:
+  - D01
+  - D13
+  status: source_constrained_schematic
+  basis: Hill/ridge houses and locally denser frontages, not all villas and not uniform Subura.1/2-level
+    courts;2-level street fronts,3-level option at constrained commercial approach only. Northern source
+    garden/open context prevents continuous high-density tiling. Window is contextual classification only,
+    not a property or density boundary; intersect source coverage and reservations first.
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  pixels:
+  - - 892
+    - 551
+  - - 907
+    - 537
+  - - 933
+    - 528
+  - - 974
+    - 517
+  - - 987
+    - 522
+  - - 1005
+    - 496
+  - - 1042
+    - 474
+  - - 1091
+    - 446
+  - - 1117
+    - 416
+  - - 1190
+    - 367
+  - - 1151
+    - 412
+  - - 1105
+    - 462
+  - - 1061
+    - 509
+  - - 1017
+    - 553
+  - - 973
+    - 601
+  - - 947
+    - 635
+  - - 940
+    - 684
+  - - 935
+    - 738
+  - - 915
+    - 698
+  - - 888
+    - 658
+  - - 884
+    - 617
+  - - 903
+    - 585
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Ridge frontage2 and compact access court2; set-back domestic/garden-edge court1. No3
+      default; a named commercial-foot segment must be declared to use3.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_viminal
+  kind: district
+  use: classification_window
+  source_ids:
+  - D01
+  - D05
+  - D13
+  status: source_constrained_schematic
+  basis: Source house finds establish occupation, not whole footprints. Deep1/2-level courts;2/3 frontage
+    near Patricius valley. Retain non-dense north/garden margin; no Castra rectangle and no Diocletian
+    bath footprint. Window is contextual classification only, not a property or density boundary; intersect
+    source coverage and reservations first.
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  pixels:
+  - - 1190
+    - 367
+  - - 1204
+    - 402
+  - - 1234
+    - 475
+  - - 1247
+    - 506
+  - - 1190
+    - 531
+  - - 1218
+    - 568
+  - - 1263
+    - 591
+  - - 1265
+    - 635
+  - - 1244
+    - 672
+  - - 1245
+    - 716
+  - - 1209
+    - 715
+  - - 1168
+    - 714
+  - - 1122
+    - 722
+  - - 1083
+    - 738
+  - - 1034
+    - 716
+  - - 1000
+    - 710
+  - - 960
+    - 700
+  - - 935
+    - 738
+  - - 940
+    - 684
+  - - 947
+    - 635
+  - - 973
+    - 601
+  - - 1017
+    - 553
+  - - 1061
+    - 509
+  - - 1105
+    - 462
+  - - 1151
+    - 412
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Selected lowerPatricius street front3; other frontage2. Valley-side compact courts2;
+      ridge/interior/garden-transition courts1.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_oppian_esquiline_inside
+  kind: district
+  use: classification_window
+  source_ids:
+  - D08
+  - D13
+  status: source_constrained_schematic
+  basis: Early hill housing restored across future Trajan bath footprint.1/2-level courts,2-level fronts;
+    selected3 along main merchant corridor by pre79 comparison. PorticusLiviae and early sacred sites
+    remain; outer green belt wins. No later bath axis or great Nero lake. Window is contextual classification
+    only, not a property or density boundary; intersect source coverage and reservations first.
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  pixels:
+  - - 1019
+    - 826
+  - - 1056
+    - 797
+  - - 1083
+    - 778
+  - - 1117
+    - 781
+  - - 1157
+    - 777
+  - - 1205
+    - 785
+  - - 1227
+    - 748
+  - - 1245
+    - 716
+  - - 1230
+    - 745
+  - - 1246
+    - 773
+  - - 1235
+    - 810
+  - - 1216
+    - 834
+  - - 1245
+    - 855
+  - - 1257
+    - 885
+  - - 1242
+    - 936
+  - - 1227
+    - 944
+  - - 1170
+    - 929
+  - - 1111
+    - 918
+  - - 1063
+    - 907
+  - - 1016
+    - 895
+  - - 982
+    - 849
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Street frontage2, compact interior courts2, garden-belt-facing and deeper domestic
+      courts1.3 only on adopted Subura-bound corridor segment; not across futureTrajan site as default.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_caelian
+  kind: district
+  use: classification_window
+  source_ids:
+  - D09
+  - D13
+  status: source_constrained_schematic
+  basis: Houses along rising roads,1/2-level courts and2-level fronts;3-level isolated whole street building
+    only at valley commerce. No Claudius podium. Named remains as anchors, late churches not footprint
+    substitutes. Window is contextual classification only, not a property or density boundary; intersect
+    source coverage and reservations first.
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  pixels:
+  - - 982
+    - 881
+  - - 1016
+    - 895
+  - - 1063
+    - 907
+  - - 1111
+    - 918
+  - - 1170
+    - 929
+  - - 1227
+    - 944
+  - - 1227
+    - 967
+  - - 1192
+    - 1002
+  - - 1128
+    - 1020
+  - - 1050
+    - 1063
+  - - 1010
+    - 1086
+  - - 975
+    - 1061
+  - - 983
+    - 974
+  - - 979
+    - 930
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Main rising street front2; compact courts adjacent access2; interior and outer slope/garden-transition
+      court1. No default3 from lateCelio finds.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation
+- id: district_aventine
+  kind: district
+  use: classification_window
+  source_ids:
+  - D01
+  - D11
+  - D13
+  status: source_constrained_schematic
+  basis: Temple precincts reserve first; hill1/2-level courts,2-level commercial fronts;3-level choice
+    only on source-constrained main passage. No all-elite social inference. Actual central-depression
+    road itself an Augustan reconstruction hypothesis. Window is contextual classification only, not a
+    property or density boundary; intersect source coverage and reservations first.
+  types:
+  - F2
+  - F3
+  - D1
+  - D2
+  pixels:
+  - - 792
+    - 956
+  - - 816
+    - 980
+  - - 907
+    - 1047
+  - - 948
+    - 1081
+  - - 975
+    - 1061
+  - - 1010
+    - 1086
+  - - 961
+    - 1138
+  - - 981
+    - 1182
+  - - 914
+    - 1210
+  - - 886
+    - 1238
+  - - 855
+    - 1245
+  - - 839
+    - 1235
+  - - 852
+    - 1211
+  - - 824
+    - 1202
+  - - 763
+    - 1200
+  - - 714
+    - 1199
+  - - 685
+    - 1174
+  - - 660
+    - 1141
+  - - 649
+    - 1103
+  - - 674
+    - 1065
+  - - 704
+    - 1037
+  - - 732
+    - 1002
+  - - 750
+    - 973
+  placement_rules:
+    commercial_frontage_default: F2
+    compact_court_with_main_street_access: D2
+    inner_or_garden_transition_court: D1
+    decision_basis: Roadside shops2, courts alongside principal access2, interior sanctuary/garden-side
+      courts1. No3 default, only specifically declared commercial segment option.
+    floor_assignment_status: Explicit model composition estimate, not measured ancient distribution. Record
+      which rule selected every complete building; never alternate/rand to reach a ratio.
+  review_status: proposal; root must adopt before generation

@@ -1,0 +1,316 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4719813,
+       41.8969673
+      ],
+      [
+       12.4722269,
+       41.8969013
+      ],
+      [
+       12.472333,
+       41.8971215
+      ],
+      [
+       12.4720874,
+       41.8971875
+      ],
+      [
+       12.4719813,
+       41.8969673
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_window_front_b003_01",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     26.0,
+     21.67
+    ],
+    "theta_deg": 68.51,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_window_front_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_window_basis.md; native whole lots are schematic subdivisions of the traced pre-Corso housing blocks; courtyard-bearing blocks use the approved Palma comparison; narrow frontages use the approved Gregoriana comparison. No census proportion asserted. Fig6 west/Aquila parcels are narrow independent frontages; the east parcels have larger explicit courts. This assigns the form by that graphic distinction, without a global percentage."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4720981,
+       41.8971847
+      ],
+      [
+       12.4722855,
+       41.8972938
+      ],
+      [
+       12.4721102,
+       41.8974618
+      ],
+      [
+       12.4719228,
+       41.8973527
+      ],
+      [
+       12.4720981,
+       41.8971847
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_window_front_b003_02",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     23.67,
+     19.72
+    ],
+    "theta_deg": 126.25,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_window_front_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_window_basis.md; native whole lots are schematic subdivisions of the traced pre-Corso housing blocks; courtyard-bearing blocks use the approved Palma comparison; narrow frontages use the approved Gregoriana comparison. No census proportion asserted. Fig6 west/Aquila parcels are narrow independent frontages; the east parcels have larger explicit courts. This assigns the form by that graphic distinction, without a global percentage."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4722609,
+       41.89689
+      ],
+      [
+       12.4725065,
+       41.896824
+      ],
+      [
+       12.4726126,
+       41.8970442
+      ],
+      [
+       12.472367,
+       41.8971102
+      ],
+      [
+       12.4722609,
+       41.89689
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_window_front_b003_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     26.0,
+     21.67
+    ],
+    "theta_deg": 68.51,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_window_front_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_window_basis.md; native whole lots are schematic subdivisions of the traced pre-Corso housing blocks; courtyard-bearing blocks use the approved Palma comparison; narrow frontages use the approved Gregoriana comparison. No census proportion asserted. Fig6 west/Aquila parcels are narrow independent frontages; the east parcels have larger explicit courts. This assigns the form by that graphic distinction, without a global percentage."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4720625,
+       41.8974539
+      ],
+      [
+       12.4722094,
+       41.8975919
+      ],
+      [
+       12.4720616,
+       41.8976797
+      ],
+      [
+       12.4719147,
+       41.8975417
+      ],
+      [
+       12.4720625,
+       41.8974539
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_window_front_b003_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     15.67,
+     19.59
+    ],
+    "theta_deg": 139.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_window_front_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_window_basis.md; native whole lots are schematic subdivisions of the traced pre-Corso housing blocks; courtyard-bearing blocks use the approved Palma comparison; narrow frontages use the approved Gregoriana comparison. No census proportion asserted. Fig6 west/Aquila parcels are narrow independent frontages; the east parcels have larger explicit courts. This assigns the form by that graphic distinction, without a global percentage."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4741551,
+      41.8973286
+     ],
+     [
+      12.4737285,
+      41.8973693
+     ],
+     [
+      12.4735483,
+      41.8973437
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_window_court_lane_001",
+    "kind": "street",
+    "w_m": 3.6,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_window_basis.md; native whole lots are schematic subdivisions of the traced pre-Corso housing blocks; courtyard-bearing blocks use the approved Palma comparison; narrow frontages use the approved Gregoriana comparison. No census proportion asserted. Fig6 west/Aquila parcels are narrow independent frontages; the east parcels have larger explicit courts. This assigns the form by that graphic distinction, without a global percentage."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4737189,
+       41.8967599
+      ],
+      [
+       12.4740849,
+       41.8968073
+      ],
+      [
+       12.4740088,
+       41.8971354
+      ],
+      [
+       12.4736427,
+       41.897088
+      ],
+      [
+       12.4737189,
+       41.8967599
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_window_court_b002_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 278.14,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_window_court_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_window_basis.md; native whole lots are schematic subdivisions of the traced pre-Corso housing blocks; courtyard-bearing blocks use the approved Palma comparison; narrow frontages use the approved Gregoriana comparison. No census proportion asserted. Fig6 west/Aquila parcels are narrow independent frontages; the east parcels have larger explicit courts. This assigns the form by that graphic distinction, without a global percentage."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4737748,
+       41.8975117
+      ],
+      [
+       12.4740828,
+       41.8975749
+      ],
+      [
+       12.4740151,
+       41.8977591
+      ],
+      [
+       12.473707,
+       41.8976958
+      ],
+      [
+       12.4737748,
+       41.8975117
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_window_court_b003_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     21.21,
+     26.52
+    ],
+    "theta_deg": 283.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_window_court_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_window_basis.md; native whole lots are schematic subdivisions of the traced pre-Corso housing blocks; courtyard-bearing blocks use the approved Palma comparison; narrow frontages use the approved Gregoriana comparison. No census proportion asserted. Fig6 west/Aquila parcels are narrow independent frontages; the east parcels have larger explicit courts. This assigns the form by that graphic distinction, without a global percentage."
+    }
+   }
+  }
+ ]
+}

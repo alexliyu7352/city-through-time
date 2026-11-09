@@ -1,0 +1,3805 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_ripetta_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       977,
+       193
+      ],
+      [
+       968,
+       252
+      ],
+      [
+       963,
+       303
+      ],
+      [
+       953,
+       359
+      ],
+      [
+       935,
+       415
+      ],
+      [
+       910,
+       468
+      ],
+      [
+       887,
+       506
+      ],
+      [
+       856,
+       534
+      ],
+      [
+       806,
+       545
+      ],
+      [
+       754,
+       548
+      ],
+      [
+       716,
+       566
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4753231,
+      41.9101452
+     ],
+     [
+      12.4750063,
+      41.9086939
+     ],
+     [
+      12.4748241,
+      41.9074399
+     ],
+     [
+      12.4744754,
+      41.906062
+     ],
+     [
+      12.4738634,
+      41.9046827
+     ],
+     [
+      12.4730219,
+      41.9033757
+     ],
+     [
+      12.4722515,
+      41.9024377
+     ],
+     [
+      12.4712211,
+      41.9017439
+     ],
+     [
+      12.469571,
+      41.9014641
+     ],
+     [
+      12.4678578,
+      41.9013805
+     ],
+     [
+      12.4666004,
+      41.900931
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_corso_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1007,
+       197
+      ],
+      [
+       1021,
+       253
+      ],
+      [
+       1035,
+       307
+      ],
+      [
+       1051,
+       365
+      ],
+      [
+       1063,
+       421
+      ],
+      [
+       1073,
+       473
+      ],
+      [
+       1086,
+       529
+      ],
+      [
+       1096,
+       587
+      ],
+      [
+       1110,
+       643
+      ],
+      [
+       1118,
+       696
+      ],
+      [
+       1124,
+       749
+      ],
+      [
+       1142,
+       805
+      ],
+      [
+       1163,
+       856
+      ],
+      [
+       1199,
+       906
+      ],
+      [
+       1230,
+       935
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4763096,
+      41.9100526
+     ],
+     [
+      12.4767513,
+      41.9086793
+     ],
+     [
+      12.4771936,
+      41.9073551
+     ],
+     [
+      12.4777004,
+      41.9059331
+     ],
+     [
+      12.4780762,
+      41.9045594
+     ],
+     [
+      12.4783874,
+      41.9032836
+     ],
+     [
+      12.4787961,
+      41.9019101
+     ],
+     [
+      12.4791052,
+      41.9004869
+     ],
+     [
+      12.4795468,
+      41.8991135
+     ],
+     [
+      12.4797918,
+      41.8978128
+     ],
+     [
+      12.4799709,
+      41.8965117
+     ],
+     [
+      12.4805441,
+      41.8951391
+     ],
+     [
+      12.4812178,
+      41.8938899
+     ],
+     [
+      12.4823856,
+      41.8926681
+     ],
+     [
+      12.4833961,
+      41.8919614
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_babuino_condotti_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1028,
+       195
+      ],
+      [
+       1070,
+       246
+      ],
+      [
+       1112,
+       299
+      ],
+      [
+       1156,
+       350
+      ],
+      [
+       1194,
+       400
+      ],
+      [
+       1180,
+       420
+      ],
+      [
+       1134,
+       438
+      ],
+      [
+       1070,
+       455
+      ],
+      [
+       1018,
+       470
+      ],
+      [
+       971,
+       486
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4770019,
+      41.9101057
+     ],
+     [
+      12.4783673,
+      41.9088605
+     ],
+     [
+      12.479732,
+      41.9075661
+     ],
+     [
+      12.4811632,
+      41.9063213
+     ],
+     [
+      12.4823971,
+      41.9050998
+     ],
+     [
+      12.4819292,
+      41.9046058
+     ],
+     [
+      12.4804082,
+      41.904155
+     ],
+     [
+      12.4782949,
+      41.9037253
+     ],
+     [
+      12.4765774,
+      41.903347
+     ],
+     [
+      12.4750243,
+      41.902945
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_north_river_cross_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       940,
+       301
+      ],
+      [
+       992,
+       301
+      ],
+      [
+       1043,
+       297
+      ],
+      [
+       1107,
+       283
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4740674,
+      41.9074847
+     ],
+     [
+      12.4757797,
+      41.9074945
+     ],
+     [
+      12.4774605,
+      41.9076023
+     ],
+     [
+      12.4795729,
+      41.9079583
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_north_cross_350_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       936,
+       359
+      ],
+      [
+       987,
+       354
+      ],
+      [
+       1047,
+       346
+      ],
+      [
+       1106,
+       333
+      ],
+      [
+       1153,
+       319
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4739156,
+      41.9060588
+     ],
+     [
+      12.4755968,
+      41.9061913
+     ],
+     [
+      12.4775753,
+      41.9063991
+     ],
+     [
+      12.4795226,
+      41.9067296
+     ],
+     [
+      12.4810752,
+      41.9070824
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_north_cross_410_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       922,
+       421
+      ],
+      [
+       983,
+       406
+      ],
+      [
+       1059,
+       386
+      ],
+      [
+       1126,
+       364
+      ],
+      [
+       1170,
+       352
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4734333,
+      41.9045328
+     ],
+     [
+      12.4754471,
+      41.9049129
+     ],
+     [
+      12.4779566,
+      41.9054186
+     ],
+     [
+      12.4801705,
+      41.9059717
+     ],
+     [
+      12.4816235,
+      41.9062747
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_croce_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       910,
+       465
+      ],
+      [
+       982,
+       442
+      ],
+      [
+       1066,
+       418
+      ],
+      [
+       1143,
+       394
+      ],
+      [
+       1190,
+       382
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.473023,
+      41.9034494
+     ],
+     [
+      12.4754017,
+      41.9040282
+     ],
+     [
+      12.478176,
+      41.9046336
+     ],
+     [
+      12.4807198,
+      41.9052377
+     ],
+     [
+      12.4822717,
+      41.9055414
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_spanish_approach_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1205,
+       432
+      ],
+      [
+       1225,
+       467
+      ],
+      [
+       1250,
+       506
+      ],
+      [
+       1278,
+       544
+      ],
+      [
+       1309,
+       580
+      ],
+      [
+       1343,
+       614
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4827482,
+      41.9043156
+     ],
+     [
+      12.4833946,
+      41.9034594
+     ],
+     [
+      12.4842042,
+      41.9025058
+     ],
+     [
+      12.4851129,
+      41.9015773
+     ],
+     [
+      12.486121,
+      41.9006985
+     ],
+     [
+      12.4872286,
+      41.8998694
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_tritone_corridor_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1073,
+       473
+      ],
+      [
+       1137,
+       463
+      ],
+      [
+       1190,
+       447
+      ],
+      [
+       1235,
+       426
+      ],
+      [
+       1278,
+       408
+      ],
+      [
+       1319,
+       389
+      ],
+      [
+       1360,
+       399
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4783874,
+      41.9032836
+     ],
+     [
+      12.4804983,
+      41.9035413
+     ],
+     [
+      12.4822491,
+      41.9039443
+     ],
+     [
+      12.4837381,
+      41.9044686
+     ],
+     [
+      12.4851604,
+      41.9049189
+     ],
+     [
+      12.4865171,
+      41.9053934
+     ],
+     [
+      12.4878637,
+      41.9051552
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_northern_cross_old_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       887,
+       506
+      ],
+      [
+       950,
+       515
+      ],
+      [
+       1020,
+       529
+      ],
+      [
+       1090,
+       545
+      ],
+      [
+       1155,
+       557
+      ],
+      [
+       1217,
+       553
+      ],
+      [
+       1278,
+       544
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4722515,
+      41.9024377
+     ],
+     [
+      12.4743228,
+      41.9022285
+     ],
+     [
+      12.4766229,
+      41.9018977
+     ],
+     [
+      12.4789222,
+      41.9015177
+     ],
+     [
+      12.4810583,
+      41.901235
+     ],
+     [
+      12.4831012,
+      41.9013449
+     ],
+     [
+      12.4851129,
+      41.9015773
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_via_pia_0",
+    "w_m": 9,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1228,
+       590
+      ],
+      [
+       1287,
+       545
+      ],
+      [
+       1354,
+       498
+      ],
+      [
+       1414,
+       453
+      ],
+      [
+       1478,
+       409
+      ],
+      [
+       1540,
+       365
+      ],
+      [
+       1600,
+       325
+      ],
+      [
+       1663,
+       283
+      ],
+      [
+       1721,
+       266
+      ],
+      [
+       1778,
+       222
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4834505,
+      41.9004378
+     ],
+     [
+      12.4854089,
+      41.9015544
+     ],
+     [
+      12.4876314,
+      41.9027216
+     ],
+     [
+      12.4896229,
+      41.9038384
+     ],
+     [
+      12.4917458,
+      41.9049313
+     ],
+     [
+      12.4938029,
+      41.9060238
+     ],
+     [
+      12.4957928,
+      41.9070175
+     ],
+     [
+      12.4978823,
+      41.908061
+     ],
+     [
+      12.4997983,
+      41.9084892
+     ],
+     [
+      12.501006932697456,
+      41.909090352572306
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_pia_branch_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1414,
+       453
+      ],
+      [
+       1372,
+       423
+      ],
+      [
+       1344,
+       394
+      ],
+      [
+       1319,
+       389
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4896229,
+      41.9038384
+     ],
+     [
+      12.4882504,
+      41.9045678
+     ],
+     [
+      12.4873386,
+      41.9052751
+     ],
+     [
+      12.4865171,
+      41.9053934
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_via_papale_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       716,
+       566
+      ],
+      [
+       739,
+       609
+      ],
+      [
+       771,
+       645
+      ],
+      [
+       812,
+       670
+      ],
+      [
+       854,
+       695
+      ],
+      [
+       894,
+       716
+      ],
+      [
+       935,
+       742
+      ],
+      [
+       980,
+       769
+      ],
+      [
+       1020,
+       797
+      ],
+      [
+       1059,
+       826
+      ],
+      [
+       1098,
+       849
+      ],
+      [
+       1140,
+       870
+      ],
+      [
+       1180,
+       886
+      ],
+      [
+       1215,
+       912
+      ],
+      [
+       1230,
+       935
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4666004,
+      41.900931
+     ],
+     [
+      12.467343,
+      41.8998788
+     ],
+     [
+      12.4683843,
+      41.8990004
+     ],
+     [
+      12.4697257,
+      41.8983939
+     ],
+     [
+      12.4710999,
+      41.8977877
+     ],
+     [
+      12.471916667703292,
+      41.89747067091132
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_via_papale_2",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       716,
+       566
+      ],
+      [
+       739,
+       609
+      ],
+      [
+       771,
+       645
+      ],
+      [
+       812,
+       670
+      ],
+      [
+       854,
+       695
+      ],
+      [
+       894,
+       716
+      ],
+      [
+       935,
+       742
+      ],
+      [
+       980,
+       769
+      ],
+      [
+       1020,
+       797
+      ],
+      [
+       1059,
+       826
+      ],
+      [
+       1098,
+       849
+      ],
+      [
+       1140,
+       870
+      ],
+      [
+       1180,
+       886
+      ],
+      [
+       1215,
+       912
+      ],
+      [
+       1230,
+       935
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.472814054074911,
+      41.89708898912173
+     ],
+     [
+      12.472875097333654,
+      41.89706025886549
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_via_papale_3",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       716,
+       566
+      ],
+      [
+       739,
+       609
+      ],
+      [
+       771,
+       645
+      ],
+      [
+       812,
+       670
+      ],
+      [
+       854,
+       695
+      ],
+      [
+       894,
+       716
+      ],
+      [
+       935,
+       742
+      ],
+      [
+       980,
+       769
+      ],
+      [
+       1020,
+       797
+      ],
+      [
+       1059,
+       826
+      ],
+      [
+       1098,
+       849
+      ],
+      [
+       1140,
+       870
+      ],
+      [
+       1180,
+       886
+      ],
+      [
+       1215,
+       912
+      ],
+      [
+       1230,
+       935
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.473130832658264,
+      41.896939896002216
+     ],
+     [
+      12.4737506,
+      41.8966482
+     ],
+     [
+      12.4752229,
+      41.8959933
+     ],
+     [
+      12.4765302,
+      41.8953128
+     ],
+     [
+      12.4778042,
+      41.8946076
+     ],
+     [
+      12.4790802,
+      41.8940498
+     ],
+     [
+      12.4804557,
+      41.8935417
+     ],
+     [
+      12.481767,
+      41.893156
+     ],
+     [
+      12.4829102,
+      41.8925237
+     ],
+     [
+      12.4833961,
+      41.8919614
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_navona_west_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       910,
+       560
+      ],
+      [
+       907,
+       606
+      ],
+      [
+       900,
+       653
+      ],
+      [
+       903,
+       691
+      ],
+      [
+       908,
+       708
+      ],
+      [
+       895,
+       732
+      ],
+      [
+       873,
+       768
+      ],
+      [
+       849,
+       807
+      ],
+      [
+       826,
+       843
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4729902,
+      41.9011153
+     ],
+     [
+      12.4728756,
+      41.8999845
+     ],
+     [
+      12.4726289,
+      41.8988283
+     ],
+     [
+      12.4727146,
+      41.8978952
+     ],
+     [
+      12.4728734,
+      41.8974785
+     ],
+     [
+      12.472677802558968,
+      41.897213011105706
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_navona_west_1",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       910,
+       560
+      ],
+      [
+       907,
+       606
+      ],
+      [
+       900,
+       653
+      ],
+      [
+       903,
+       691
+      ],
+      [
+       908,
+       708
+      ],
+      [
+       895,
+       732
+      ],
+      [
+       873,
+       768
+      ],
+      [
+       849,
+       807
+      ],
+      [
+       826,
+       843
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.472390508022732,
+      41.89683009490946
+     ],
+     [
+      12.4717004,
+      41.8959976
+     ],
+     [
+      12.4708968,
+      41.8950348
+     ],
+     [
+      12.4701272,
+      41.8941459
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_navona_east_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       934,
+       560
+      ],
+      [
+       943,
+       603
+      ],
+      [
+       944,
+       654
+      ],
+      [
+       944,
+       697
+      ],
+      [
+       937,
+       721
+      ],
+      [
+       935,
+       742
+      ],
+      [
+       953,
+       779
+      ],
+      [
+       973,
+       821
+      ],
+      [
+       990,
+       857
+      ],
+      [
+       1011,
+       894
+      ],
+      [
+       1043,
+       910
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4737805,
+      41.9011198
+     ],
+     [
+      12.474062,
+      41.900065
+     ],
+     [
+      12.4740773,
+      41.8988121
+     ],
+     [
+      12.474062685025372,
+      41.897768709311315
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_navona_east_2",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       934,
+       560
+      ],
+      [
+       943,
+       603
+      ],
+      [
+       944,
+       654
+      ],
+      [
+       944,
+       697
+      ],
+      [
+       937,
+       721
+      ],
+      [
+       935,
+       742
+      ],
+      [
+       953,
+       779
+      ],
+      [
+       973,
+       821
+      ],
+      [
+       990,
+       857
+      ],
+      [
+       1011,
+       894
+      ],
+      [
+       1043,
+       910
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.473760991061006,
+      41.89672159131049
+     ],
+     [
+      12.4737506,
+      41.8966482
+     ],
+     [
+      12.4743305,
+      41.8957425
+     ],
+     [
+      12.4749745,
+      41.8947143
+     ],
+     [
+      12.4755217,
+      41.8938329
+     ],
+     [
+      12.4762003,
+      41.8929278
+     ],
+     [
+      12.4772483,
+      41.8925407
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_pantheon_west_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1000,
+       539
+      ],
+      [
+       1002,
+       579
+      ],
+      [
+       1007,
+       619
+      ],
+      [
+       1010,
+       652
+      ],
+      [
+       1010,
+       690
+      ],
+      [
+       1013,
+       735
+      ],
+      [
+       1020,
+       781
+      ],
+      [
+       1020,
+       797
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4759609,
+      41.9016482
+     ],
+     [
+      12.4760129,
+      41.9006658
+     ],
+     [
+      12.4761637,
+      41.8996839
+     ],
+     [
+      12.4762511,
+      41.8988736
+     ],
+     [
+      12.4762379,
+      41.89794
+     ],
+     [
+      12.4763212,
+      41.8968349
+     ],
+     [
+      12.4765357,
+      41.8957059
+     ],
+     [
+      12.4765302,
+      41.8953128
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_pantheon_east_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1053,
+       566
+      ],
+      [
+       1069,
+       607
+      ],
+      [
+       1070,
+       650
+      ],
+      [
+       1073,
+       695
+      ],
+      [
+       1074,
+       739
+      ],
+      [
+       1086,
+       782
+      ],
+      [
+       1106,
+       821
+      ],
+      [
+       1140,
+       870
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4776967,
+      41.9009948
+     ],
+     [
+      12.4782093,
+      41.8999904
+     ],
+     [
+      12.4782273,
+      41.8989341
+     ],
+     [
+      12.4783105,
+      41.8978289
+     ],
+     [
+      12.4783282,
+      41.896748
+     ],
+     [
+      12.4787083,
+      41.8956938
+     ],
+     [
+      12.4793533,
+      41.8947393
+     ],
+     [
+      12.4804557,
+      41.8935417
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross1_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       739,
+       609
+      ],
+      [
+       788,
+       591
+      ],
+      [
+       844,
+       577
+      ],
+      [
+       910,
+       575
+      ],
+      [
+       972,
+       581
+      ],
+      [
+       1028,
+       595
+      ],
+      [
+       1096,
+       587
+      ],
+      [
+       1153,
+       579
+      ],
+      [
+       1217,
+       580
+      ],
+      [
+       1265,
+       598
+      ],
+      [
+       1307,
+       617
+      ],
+      [
+       1354,
+       647
+      ],
+      [
+       1403,
+       678
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.467343,
+      41.8998788
+     ],
+     [
+      12.4689625,
+      41.9003304
+     ],
+     [
+      12.4708112,
+      41.9006851
+     ],
+     [
+      12.4729851,
+      41.9007467
+     ],
+     [
+      12.4750244,
+      41.900611
+     ],
+     [
+      12.4768635,
+      41.9002775
+     ],
+     [
+      12.4791052,
+      41.9004869
+     ],
+     [
+      12.4809848,
+      41.9006941
+     ],
+     [
+      12.4830918,
+      41.9006815
+     ],
+     [
+      12.484666,
+      41.9002481
+     ],
+     [
+      12.4860422,
+      41.8997891
+     ],
+     [
+      12.4875793,
+      41.8990606
+     ],
+     [
+      12.4891818,
+      41.898308
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross2_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       771,
+       645
+      ],
+      [
+       811,
+       629
+      ],
+      [
+       863,
+       615
+      ],
+      [
+       908,
+       606
+      ],
+      [
+       966,
+       615
+      ],
+      [
+       1007,
+       619
+      ],
+      [
+       1069,
+       607
+      ],
+      [
+       1127,
+       615
+      ],
+      [
+       1179,
+       631
+      ],
+      [
+       1237,
+       650
+      ],
+      [
+       1300,
+       659
+      ],
+      [
+       1356,
+       679
+      ],
+      [
+       1405,
+       707
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4683843,
+      41.8990004
+     ],
+     [
+      12.4697068,
+      41.8994011
+     ],
+     [
+      12.4714238,
+      41.899755
+     ],
+     [
+      12.4729085,
+      41.8999846
+     ],
+     [
+      12.4748151,
+      41.8997745
+     ],
+     [
+      12.4761637,
+      41.8996839
+     ],
+     [
+      12.4782093,
+      41.8999904
+     ],
+     [
+      12.4801162,
+      41.8998047
+     ],
+     [
+      12.4818228,
+      41.8994213
+     ],
+     [
+      12.4837259,
+      41.8989652
+     ],
+     [
+      12.4857971,
+      41.8987558
+     ],
+     [
+      12.4876339,
+      41.8982748
+     ],
+     [
+      12.4892374,
+      41.8975958
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross3_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       703,
+       681
+      ],
+      [
+       750,
+       694
+      ],
+      [
+       794,
+       704
+      ],
+      [
+       846,
+       711
+      ],
+      [
+       894,
+       716
+      ],
+      [
+       937,
+       721
+      ],
+      [
+       985,
+       717
+      ],
+      [
+       1032,
+       721
+      ],
+      [
+       1078,
+       724
+      ],
+      [
+       1130,
+       716
+      ],
+      [
+       1190,
+       706
+      ],
+      [
+       1250,
+       695
+      ],
+      [
+       1312,
+       693
+      ],
+      [
+       1357,
+       698
+      ],
+      [
+       1405,
+       707
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.466133,
+      41.8981029
+     ],
+     [
+      12.4676761,
+      41.8977925
+     ],
+     [
+      12.4691213,
+      41.8975551
+     ],
+     [
+      12.470831,
+      41.897393
+     ],
+     [
+      12.47192106423025,
+      41.89731449217522
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross3_1",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       703,
+       681
+      ],
+      [
+       750,
+       694
+      ],
+      [
+       794,
+       704
+      ],
+      [
+       846,
+       711
+      ],
+      [
+       894,
+       716
+      ],
+      [
+       937,
+       721
+      ],
+      [
+       985,
+       717
+      ],
+      [
+       1032,
+       721
+      ],
+      [
+       1078,
+       724
+      ],
+      [
+       1130,
+       716
+      ],
+      [
+       1190,
+       706
+      ],
+      [
+       1250,
+       695
+      ],
+      [
+       1312,
+       693
+      ],
+      [
+       1357,
+       698
+      ],
+      [
+       1405,
+       707
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.472632556226465,
+      41.897261206722206
+     ],
+     [
+      12.472985859775577,
+      41.897232522671686
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross3_2",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       703,
+       681
+      ],
+      [
+       750,
+       694
+      ],
+      [
+       794,
+       704
+      ],
+      [
+       846,
+       711
+      ],
+      [
+       894,
+       716
+      ],
+      [
+       937,
+       721
+      ],
+      [
+       985,
+       717
+      ],
+      [
+       1032,
+       721
+      ],
+      [
+       1078,
+       724
+      ],
+      [
+       1130,
+       716
+      ],
+      [
+       1190,
+       706
+      ],
+      [
+       1250,
+       695
+      ],
+      [
+       1312,
+       693
+      ],
+      [
+       1357,
+       698
+      ],
+      [
+       1405,
+       707
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.473075222985493,
+      41.89722526744078
+     ],
+     [
+      12.47350225910979,
+      41.897190597181186
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross3_3",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       703,
+       681
+      ],
+      [
+       750,
+       694
+      ],
+      [
+       794,
+       704
+      ],
+      [
+       846,
+       711
+      ],
+      [
+       894,
+       716
+      ],
+      [
+       937,
+       721
+      ],
+      [
+       985,
+       717
+      ],
+      [
+       1032,
+       721
+      ],
+      [
+       1078,
+       724
+      ],
+      [
+       1130,
+       716
+      ],
+      [
+       1190,
+       706
+      ],
+      [
+       1250,
+       695
+      ],
+      [
+       1312,
+       693
+      ],
+      [
+       1357,
+       698
+      ],
+      [
+       1405,
+       707
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.474159092959031,
+      41.89718727228714
+     ],
+     [
+      12.4754055,
+      41.8972719
+     ],
+     [
+      12.4769516,
+      41.8971824
+     ],
+     [
+      12.4784651,
+      41.8971173
+     ],
+     [
+      12.4801799,
+      41.8973236
+     ],
+     [
+      12.4821589,
+      41.8975805
+     ],
+     [
+      12.4841382,
+      41.897862
+     ],
+     [
+      12.4861803,
+      41.8979226
+     ],
+     [
+      12.4876602,
+      41.8978081
+     ],
+     [
+      12.4892374,
+      41.8975958
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross4_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       736,
+       765
+      ],
+      [
+       781,
+       748
+      ],
+      [
+       823,
+       739
+      ],
+      [
+       873,
+       731
+      ],
+      [
+       894,
+       738
+      ],
+      [
+       935,
+       742
+      ],
+      [
+       985,
+       756
+      ],
+      [
+       1031,
+       761
+      ],
+      [
+       1080,
+       761
+      ],
+      [
+       1124,
+       749
+      ],
+      [
+       1185,
+       744
+      ],
+      [
+       1252,
+       742
+      ],
+      [
+       1310,
+       744
+      ],
+      [
+       1377,
+       745
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4671908,
+      41.8960453
+     ],
+     [
+      12.4686782,
+      41.8964716
+     ],
+     [
+      12.4700641,
+      41.8967007
+     ],
+     [
+      12.4717131,
+      41.8969067
+     ],
+     [
+      12.472378766325525,
+      41.89674438948811
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross4_1",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       736,
+       765
+      ],
+      [
+       781,
+       748
+      ],
+      [
+       823,
+       739
+      ],
+      [
+       873,
+       731
+      ],
+      [
+       894,
+       738
+      ],
+      [
+       935,
+       742
+      ],
+      [
+       985,
+       756
+      ],
+      [
+       1031,
+       761
+      ],
+      [
+       1080,
+       761
+      ],
+      [
+       1124,
+       749
+      ],
+      [
+       1185,
+       744
+      ],
+      [
+       1252,
+       742
+      ],
+      [
+       1310,
+       744
+      ],
+      [
+       1377,
+       745
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.472533499358091,
+      41.89672988157812
+     ],
+     [
+      12.472602670243795,
+      41.89672523940892
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross4_2",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       736,
+       765
+      ],
+      [
+       781,
+       748
+      ],
+      [
+       823,
+       739
+      ],
+      [
+       873,
+       731
+      ],
+      [
+       894,
+       738
+      ],
+      [
+       935,
+       742
+      ],
+      [
+       985,
+       756
+      ],
+      [
+       1031,
+       761
+      ],
+      [
+       1080,
+       761
+      ],
+      [
+       1124,
+       749
+      ],
+      [
+       1185,
+       744
+      ],
+      [
+       1252,
+       742
+      ],
+      [
+       1310,
+       744
+      ],
+      [
+       1377,
+       745
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.473019734219061,
+      41.89669724957596
+     ],
+     [
+      12.473160615725087,
+      41.8966877947919
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross4_3",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       736,
+       765
+      ],
+      [
+       781,
+       748
+      ],
+      [
+       823,
+       739
+      ],
+      [
+       873,
+       731
+      ],
+      [
+       894,
+       738
+      ],
+      [
+       935,
+       742
+      ],
+      [
+       985,
+       756
+      ],
+      [
+       1031,
+       761
+      ],
+      [
+       1080,
+       761
+      ],
+      [
+       1124,
+       749
+      ],
+      [
+       1185,
+       744
+      ],
+      [
+       1252,
+       742
+      ],
+      [
+       1310,
+       744
+      ],
+      [
+       1377,
+       745
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.473535324134527,
+      41.896662647508954
+     ],
+     [
+      12.4737506,
+      41.8966482
+     ],
+     [
+      12.475392,
+      41.8963136
+     ],
+     [
+      12.4769048,
+      41.8961994
+     ],
+     [
+      12.4785181,
+      41.8962086
+     ],
+     [
+      12.4799709,
+      41.8965117
+     ],
+     [
+      12.481981,
+      41.8966459
+     ],
+     [
+      12.4841877,
+      41.8967075
+     ],
+     [
+      12.4860966,
+      41.8966692
+     ],
+     [
+      12.4883022,
+      41.896657
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross5_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       764,
+       797
+      ],
+      [
+       810,
+       779
+      ],
+      [
+       849,
+       769
+      ],
+      [
+       891,
+       780
+      ],
+      [
+       937,
+       794
+      ],
+      [
+       974,
+       804
+      ],
+      [
+       1020,
+       797
+      ],
+      [
+       1078,
+       802
+      ],
+      [
+       1142,
+       805
+      ],
+      [
+       1202,
+       813
+      ],
+      [
+       1262,
+       817
+      ],
+      [
+       1320,
+       817
+      ],
+      [
+       1354,
+       823
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4681017,
+      41.8952644
+     ],
+     [
+      12.4696224,
+      41.8957154
+     ],
+     [
+      12.4709099,
+      41.8959685
+     ],
+     [
+      12.4722889,
+      41.8957062
+     ],
+     [
+      12.4737985,
+      41.8953709
+     ],
+     [
+      12.4750133,
+      41.8951322
+     ],
+     [
+      12.4765302,
+      41.8953128
+     ],
+     [
+      12.478438,
+      41.8952008
+     ],
+     [
+      12.4805441,
+      41.8951391
+     ],
+     [
+      12.4825167,
+      41.8949537
+     ],
+     [
+      12.4844908,
+      41.8948666
+     ],
+     [
+      12.4864003,
+      41.8948774
+     ],
+     [
+      12.4875176,
+      41.8947362
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_old_centre_cross6_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       818,
+       855
+      ],
+      [
+       854,
+       835
+      ],
+      [
+       897,
+       833
+      ],
+      [
+       943,
+       844
+      ],
+      [
+       989,
+       849
+      ],
+      [
+       1037,
+       844
+      ],
+      [
+       1098,
+       849
+      ],
+      [
+       1163,
+       856
+      ],
+      [
+       1223,
+       865
+      ],
+      [
+       1284,
+       866
+      ],
+      [
+       1339,
+       866
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4698597,
+      41.8938496
+     ],
+     [
+      12.4710518,
+      41.8943478
+     ],
+     [
+      12.4724682,
+      41.8944051
+     ],
+     [
+      12.4739788,
+      41.8941435
+     ],
+     [
+      12.4754916,
+      41.8940293
+     ],
+     [
+      12.4770736,
+      41.8941612
+     ],
+     [
+      12.4790802,
+      41.8940498
+     ],
+     [
+      12.4812178,
+      41.8938899
+     ],
+     [
+      12.48319,
+      41.89368
+     ],
+     [
+      12.485198,
+      41.8936667
+     ],
+     [
+      12.4870087,
+      41.8936769
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_regola_long_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       789,
+       707
+      ],
+      [
+       803,
+       748
+      ],
+      [
+       824,
+       788
+      ],
+      [
+       847,
+       830
+      ],
+      [
+       861,
+       866
+      ],
+      [
+       889,
+       903
+      ],
+      [
+       908,
+       932
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4689557,
+      41.8974805
+     ],
+     [
+      12.4694026,
+      41.8964757
+     ],
+     [
+      12.4700802,
+      41.8954969
+     ],
+     [
+      12.470823,
+      41.8944693
+     ],
+     [
+      12.4712716,
+      41.8935874
+     ],
+     [
+      12.4721807,
+      41.8926836
+     ],
+     [
+      12.4727962,
+      41.8919747
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_regola_farnese_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       854,
+       695
+      ],
+      [
+       866,
+       733
+      ],
+      [
+       892,
+       778
+      ],
+      [
+       914,
+       822
+      ],
+      [
+       935,
+       862
+      ],
+      [
+       954,
+       908
+      ],
+      [
+       973,
+       933
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4710999,
+      41.8977877
+     ],
+     [
+      12.4714819,
+      41.8968563
+     ],
+     [
+      12.4723225,
+      41.8957555
+     ],
+     [
+      12.4730316,
+      41.8946786
+     ],
+     [
+      12.4737092,
+      41.8936997
+     ],
+     [
+      12.4743189,
+      41.8925731
+     ],
+     [
+      12.4749358,
+      41.8919624
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_pigna_long_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1153,
+       579
+      ],
+      [
+       1163,
+       620
+      ],
+      [
+       1179,
+       661
+      ],
+      [
+       1190,
+       706
+      ],
+      [
+       1196,
+       757
+      ],
+      [
+       1202,
+       813
+      ],
+      [
+       1215,
+       858
+      ],
+      [
+       1243,
+       897
+      ],
+      [
+       1260,
+       918
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4809848,
+      41.9006941
+     ],
+     [
+      12.4812998,
+      41.8996886
+     ],
+     [
+      12.4818124,
+      41.8986842
+     ],
+     [
+      12.4821589,
+      41.8975805
+     ],
+     [
+      12.4823387,
+      41.8963286
+     ],
+     [
+      12.4825167,
+      41.8949537
+     ],
+     [
+      12.4829291,
+      41.8938505
+     ],
+     [
+      12.4838373,
+      41.8928974
+     ],
+     [
+      12.4843897,
+      41.8923846
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_gesu_long_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1237,
+       650
+      ],
+      [
+       1245,
+       698
+      ],
+      [
+       1252,
+       742
+      ],
+      [
+       1262,
+       790
+      ],
+      [
+       1272,
+       832
+      ],
+      [
+       1284,
+       866
+      ],
+      [
+       1284,
+       899
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4837259,
+      41.8989652
+     ],
+     [
+      12.4839726,
+      41.8977873
+     ],
+     [
+      12.4841877,
+      41.8967075
+     ],
+     [
+      12.4845002,
+      41.89553
+     ],
+     [
+      12.4848148,
+      41.8944999
+     ],
+     [
+      12.485198,
+      41.8936667
+     ],
+     [
+      12.4851864,
+      41.8928559
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_quirinal_south_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1307,
+       617
+      ],
+      [
+       1337,
+       654
+      ],
+      [
+       1357,
+       698
+      ],
+      [
+       1377,
+       745
+      ],
+      [
+       1375,
+       783
+      ],
+      [
+       1354,
+       823
+      ],
+      [
+       1339,
+       866
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4860422,
+      41.8997891
+     ],
+     [
+      12.4870171,
+      41.8988855
+     ],
+     [
+      12.4876602,
+      41.8978081
+     ],
+     [
+      12.4883022,
+      41.896657
+     ],
+     [
+      12.488223,
+      41.8957229
+     ],
+     [
+      12.4875176,
+      41.8947362
+     ],
+     [
+      12.4870087,
+      41.8936769
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_monti_axis_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1365,
+       475
+      ],
+      [
+       1405,
+       521
+      ],
+      [
+       1443,
+       565
+      ],
+      [
+       1481,
+       611
+      ],
+      [
+       1524,
+       655
+      ],
+      [
+       1565,
+       700
+      ],
+      [
+       1611,
+       744
+      ],
+      [
+       1654,
+       786
+      ],
+      [
+       1699,
+       826
+      ],
+      [
+       1741,
+       852
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4880017,
+      41.9032888
+     ],
+     [
+      12.4893027,
+      41.9021659
+     ],
+     [
+      12.4905385,
+      41.9010918
+     ],
+     [
+      12.4917735,
+      41.8999686
+     ],
+     [
+      12.4931739,
+      41.8988954
+     ],
+     [
+      12.4945079,
+      41.8977972
+     ],
+     [
+      12.4960069,
+      41.8967245
+     ],
+     [
+      12.4974078,
+      41.8957004
+     ],
+     [
+      12.4988753,
+      41.8947257
+     ],
+     [
+      12.5002488,
+      41.8940945
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_monti_lanes1_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1407,
+       580
+      ],
+      [
+       1449,
+       623
+      ],
+      [
+       1490,
+       667
+      ],
+      [
+       1524,
+       710
+      ],
+      [
+       1548,
+       754
+      ],
+      [
+       1566,
+       799
+      ],
+      [
+       1565,
+       844
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4893478,
+      41.9007167
+     ],
+     [
+      12.4907157,
+      41.8996679
+     ],
+     [
+      12.4920501,
+      41.8985943
+     ],
+     [
+      12.4931545,
+      41.897544
+     ],
+     [
+      12.4939292,
+      41.8964673
+     ],
+     [
+      12.4945059,
+      41.8953649
+     ],
+     [
+      12.4944571,
+      41.894259
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_monti_lanes2_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1415,
+       683
+      ],
+      [
+       1461,
+       701
+      ],
+      [
+       1502,
+       725
+      ],
+      [
+       1548,
+       754
+      ],
+      [
+       1590,
+       778
+      ],
+      [
+       1640,
+       798
+      ],
+      [
+       1699,
+       826
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4895751,
+      41.8981874
+     ],
+     [
+      12.4910834,
+      41.8977536
+     ],
+     [
+      12.4924248,
+      41.8971714
+     ],
+     [
+      12.4939292,
+      41.8964673
+     ],
+     [
+      12.4953035,
+      41.8958853
+     ],
+     [
+      12.4969427,
+      41.895403
+     ],
+     [
+      12.4988753,
+      41.8947257
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_monti_lanes3_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1380,
+       724
+      ],
+      [
+       1428,
+       752
+      ],
+      [
+       1473,
+       778
+      ],
+      [
+       1511,
+       808
+      ],
+      [
+       1566,
+       822
+      ],
+      [
+       1623,
+       858
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4884083,
+      41.8971735
+     ],
+     [
+      12.4899789,
+      41.8964944
+     ],
+     [
+      12.4914514,
+      41.8958638
+     ],
+     [
+      12.4926919,
+      41.8951337
+     ],
+     [
+      12.4944978,
+      41.8947998
+     ],
+     [
+      12.4963617,
+      41.8939256
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_vincoli_approach_0",
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1375,
+       783
+      ],
+      [
+       1424,
+       800
+      ],
+      [
+       1469,
+       817
+      ],
+      [
+       1500,
+       851
+      ],
+      [
+       1468,
+       887
+      ],
+      [
+       1450,
+       919
+      ]
+     ]
+    },
+    "w_m": 6
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.488223,
+      41.8957229
+     ],
+     [
+      12.4898304,
+      41.8953143
+     ],
+     [
+      12.491306,
+      41.8949049
+     ],
+     [
+      12.4923146,
+      41.8940751
+     ],
+     [
+      12.4912484,
+      41.8931847
+     ],
+     [
+      12.4906446,
+      41.8923952
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome08_capital_felice_existing_0",
+    "w_m": 8,
+    "kind": "street",
+    "provenance": {
+     "basis": "research/rome08_capital_whole_basis.md; C02 existing street read from the1866 map; 6m width and simplified bends estimated.",
+     "source_pixels": [
+      [
+       1194,
+       400
+      ],
+      [
+       1322,
+       491
+      ],
+      [
+       1450,
+       583
+      ],
+      [
+       1571,
+       676
+      ],
+      [
+       1668,
+       749
+      ],
+      [
+       1753,
+       820
+      ],
+      [
+       1834,
+       887
+      ],
+      [
+       1906,
+       951
+      ],
+      [
+       1974,
+       1014
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4823971,
+      41.9050998
+     ],
+     [
+      12.4865802,
+      41.9028877
+     ],
+     [
+      12.4907626,
+      41.9006509
+     ],
+     [
+      12.494714,
+      41.898388
+     ],
+     [
+      12.4978819,
+      41.896612
+     ],
+     [
+      12.5006553,
+      41.8948829
+     ],
+     [
+      12.5032982,
+      41.8932513
+     ],
+     [
+      12.5056459,
+      41.8916918
+     ],
+     [
+      12.507862,
+      41.890156
+     ]
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,553 @@
+{
+  "checked_date": "2026-11-07",
+  "scope": "使用者指定US Marine Band／Commons版本；本輪以各File頁標示Public domain作來源採用門檻。",
+  "verification_method": "以web逐頁讀Summary/Permission或Licensing及Metadata，並讀Commons imageinfo API取得原檔URL、精確bytes、時長、sample rate；下載端僅發HEAD，未下載音訊。",
+  "selection_groups": {
+    "janiculum": [
+      "janiculum"
+    ],
+    "appian_way": [
+      "appian_way"
+    ],
+    "catacomb": [
+      "catacomb"
+    ],
+    "villa_borghese": [
+      "villa_borghese"
+    ],
+    "ancient_airs_suite_1": [
+      "ancient_airs_1",
+      "ancient_airs_2",
+      "ancient_airs_3",
+      "ancient_airs_4"
+    ]
+  },
+  "total_file_size_bytes": 64371734,
+  "tracks": [
+    {
+      "id": "janiculum",
+      "work": "Pines of Rome",
+      "movement": "III",
+      "title": "The Pines of the Janiculum",
+      "composer": "Ottorino Respighi",
+      "performer": "\"The President's Own\" United States Marine Band",
+      "conductor": null,
+      "album": "Director's Choice",
+      "performance_date": null,
+      "performance_place": null,
+      "page_date": "29 August 2007",
+      "date_note": "頁面Date=29 August 2007、檔案內DATE為2007；頁面未另列實際錄音日或指揮，勿把此欄當已確認錄音日期。",
+      "commons_title": "File:Respighi Pines of the Janiculum.ogg",
+      "commons_page": "https://commons.wikimedia.org/wiki/File:Respighi_Pines_of_the_Janiculum.ogg",
+      "page_id": 14626285,
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/Respighi_Pines_of_the_Janiculum.ogg",
+      "file_size_bytes": 6297319,
+      "duration_s": 411.672,
+      "format": "Ogg Vorbis",
+      "sample_rate_hz": 24000,
+      "channels": 2,
+      "license_label": "Public domain",
+      "license_original_sentence": "As a work of the U.S. federal government, it is in the public domain.",
+      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "license_page_tags": [
+        "PD US Government",
+        "PD Old",
+        "PD US Marines",
+        "CC-PD-Mark"
+      ],
+      "license_confirmed_date": "2026-11-07",
+      "source_field": "United States Marine Band: Director's Choice",
+      "embedded_metadata": {
+        "TITLE": "The Pines of the Janiculum (The Pines of Rome)",
+        "ARTIST": "Us Marine Band",
+        "ALBUM": "Director's Choice",
+        "DATE": "2007",
+        "TRACKNUMBER": "11",
+        "GENRE": "Classical",
+        "COMPOSER": "Ottorino Respighi",
+        "COPYRIGHT": "2007 Altissimo!"
+      },
+      "download_head_check": {
+        "error": "HTTP Error 429: Too many requests (f061ab2)",
+        "method": "HEAD"
+      }
+    },
+    {
+      "id": "appian_way",
+      "work": "Pines of Rome",
+      "movement": "IV",
+      "title": "The Pines of the Appian Way",
+      "composer": "Ottorino Respighi",
+      "performer": "\"The President's Own\" United States Marine Band",
+      "conductor": null,
+      "album": "Director's Choice",
+      "performance_date": null,
+      "performance_place": null,
+      "page_date": "29 August 2007",
+      "date_note": "頁面Date=29 August 2007、檔案內DATE為2007；頁面未另列實際錄音日或指揮，勿把此欄當已確認錄音日期。",
+      "commons_title": "File:Respighi Pines of the Appian way.oga",
+      "commons_page": "https://commons.wikimedia.org/wiki/File:Respighi_Pines_of_the_Appian_way.oga",
+      "page_id": 14626290,
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/2/28/Respighi_Pines_of_the_Appian_way.oga",
+      "file_size_bytes": 5280538,
+      "duration_s": 319.536,
+      "format": "Ogg Vorbis",
+      "sample_rate_hz": 24000,
+      "channels": 2,
+      "license_label": "Public domain",
+      "license_original_sentence": "As a work of the U.S. federal government, it is in the public domain.",
+      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "license_page_tags": [
+        "PD US Government",
+        "PD Old",
+        "PD US Marines",
+        "CC-PD-Mark"
+      ],
+      "license_confirmed_date": "2026-11-07",
+      "source_field": "United States Marine Band: Director's Choice",
+      "embedded_metadata": {
+        "TITLE": "The Pines of the Appian Way (The Pines of Rome)",
+        "ARTIST": "Us Marine Band",
+        "ALBUM": "Director's Choice",
+        "DATE": "2007",
+        "TRACKNUMBER": "12",
+        "GENRE": "Classical",
+        "COMPOSER": "Ottorino Respighi",
+        "encoder": "Lavf58.29.100"
+      },
+      "download_head_check": {
+        "error": "HTTP Error 429: Too many requests (f061ab2)",
+        "method": "HEAD"
+      }
+    },
+    {
+      "id": "catacomb",
+      "work": "Pines of Rome",
+      "movement": "II",
+      "title": "Pines Near a Catacomb",
+      "composer": "Ottorino Respighi",
+      "performer": "\"The President's Own\" United States Marine Band",
+      "conductor": null,
+      "album": "Director's Choice",
+      "performance_date": null,
+      "performance_place": null,
+      "page_date": "29 August 2007",
+      "date_note": "頁面Date=29 August 2007、檔案內DATE為2007；頁面未另列實際錄音日或指揮，勿把此欄當已確認錄音日期。",
+      "commons_title": "File:Respighi Pines near a catacomb.ogg",
+      "commons_page": "https://commons.wikimedia.org/wiki/File:Respighi_Pines_near_a_catacomb.ogg",
+      "page_id": 14626298,
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/3/35/Respighi_Pines_near_a_catacomb.ogg",
+      "file_size_bytes": 5961738,
+      "duration_s": 379.68,
+      "format": "Ogg Vorbis",
+      "sample_rate_hz": 24000,
+      "channels": 2,
+      "license_label": "Public domain",
+      "license_original_sentence": "As a work of the U.S. federal government, it is in the public domain.",
+      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "license_page_tags": [
+        "PD US Government",
+        "PD Old",
+        "PD US Marines",
+        "CC-PD-Mark"
+      ],
+      "license_confirmed_date": "2026-11-07",
+      "source_field": "United States Marine Band: Director's Choice",
+      "embedded_metadata": {
+        "TITLE": "The Pines Near a Catacomb (The Pines of Rome)",
+        "ARTIST": "Us Marine Band",
+        "ALBUM": "Director's Choice",
+        "DATE": "2007",
+        "TRACKNUMBER": "10",
+        "GENRE": "Classical",
+        "COMPOSER": "Ottorino Respighi"
+      },
+      "download_head_check": {
+        "status": 200,
+        "content_length_bytes": "5961738",
+        "content_type": "application/ogg",
+        "final_url": "https://upload.wikimedia.org/wikipedia/commons/3/35/Respighi_Pines_near_a_catacomb.ogg",
+        "method": "HEAD"
+      }
+    },
+    {
+      "id": "villa_borghese",
+      "work": "Pines of Rome",
+      "movement": "I",
+      "title": "The Pines of Villa Borghese",
+      "composer": "Ottorino Respighi",
+      "performer": "\"The President's Own\" United States Marine Band",
+      "conductor": null,
+      "album": "Director's Choice",
+      "performance_date": null,
+      "performance_place": null,
+      "page_date": "29 August 2007",
+      "date_note": "頁面Date=29 August 2007、檔案內DATE為2007；頁面未另列實際錄音日或指揮，勿把此欄當已確認錄音日期。",
+      "commons_title": "File:Respighi Pines of Villa Borghese.ogg",
+      "commons_page": "https://commons.wikimedia.org/wiki/File:Respighi_Pines_of_Villa_Borghese.ogg",
+      "page_id": 14626077,
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/1/18/Respighi_Pines_of_Villa_Borghese.ogg",
+      "file_size_bytes": 2663327,
+      "duration_s": 159.72,
+      "format": "Ogg Vorbis",
+      "sample_rate_hz": 24000,
+      "channels": 2,
+      "license_label": "Public domain",
+      "license_original_sentence": "As a work of the U.S. federal government, it is in the public domain.",
+      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "license_page_tags": [
+        "PD US Government",
+        "PD Old",
+        "PD US Marines",
+        "CC-PD-Mark"
+      ],
+      "license_confirmed_date": "2026-11-07",
+      "source_field": "United States Marine Band: Director's Choice",
+      "embedded_metadata": {
+        "TITLE": "The Pines of the Villa Borghese (The Pines of Rome)",
+        "ARTIST": "Us Marine Band",
+        "ALBUM": "Director's Choice",
+        "DATE": "2007-01-01",
+        "GENRE": "Classical",
+        "COPYRIGHT": "2007 Altissimo!",
+        "TRACKNUMBER": "9",
+        "COMPOSER": "Ottorino Respighi"
+      },
+      "download_head_check": {
+        "error": "HTTP Error 429: Too many requests (f061ab2)",
+        "method": "HEAD"
+      },
+      "official_derivatives_checked_date": "2026-11-07",
+      "videoinfo_api_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=videoinfo&titles=File%3ARespighi+Pines+of+Villa+Borghese.ogg&viprop=url%7Csize%7Cderivatives",
+      "official_derivatives": [
+        {
+          "download_url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/1/18/Respighi_Pines_of_Villa_Borghese.ogg/Respighi_Pines_of_Villa_Borghese.ogg.mp3",
+          "mime_type": "audio/mpeg",
+          "transcode_key": "mp3",
+          "bandwidth_bps": 181784,
+          "file_size_bytes": null,
+          "source_duration_s": 159.72,
+          "duration_note": "同一Commons檔的官方轉碼；實際轉碼檔時長未下載／ffprobe確認。",
+          "same_commons_file": true,
+          "license_label": "Public domain",
+          "license_confirmed_date": "2026-11-07",
+          "head_check": {
+            "method": "HEAD",
+            "status": 429,
+            "content_type": "text/html; charset=utf-8",
+            "retry_after_seconds": 1,
+            "checked_date": "2026-11-07"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ancient_airs_1",
+      "work": "Ancient Airs and Dances, Suite No. 1",
+      "movement": "I",
+      "title": "Balletto detto Il conte Orlando",
+      "composer": "Ottorino Respighi",
+      "performer": "\"The President's Own\" United States Marine Band",
+      "conductor": "Colonel Michael J. Colburn",
+      "album": "Web Exclusives",
+      "performance_date": "2010-04-11",
+      "performance_place": "Bishop Ireton High School Auditorium, Alexandria, Virginia",
+      "page_date": "Composed in 1917, Performed on April 11, 2010",
+      "date_note": "頁面明列演出日2010-04-11；檔案內DATE=2010-01-01是metadata日期。",
+      "commons_title": "File:Balletto detto Il conte Orlando.ogg",
+      "commons_page": "https://commons.wikimedia.org/wiki/File:Balletto_detto_Il_conte_Orlando.ogg",
+      "page_id": 14354744,
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Balletto_detto_Il_conte_Orlando.ogg",
+      "file_size_bytes": 8417596,
+      "duration_s": 179.48734693877552,
+      "format": "Ogg Vorbis",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "license_label": "Public domain",
+      "license_original_sentence": "As a work of the U.S. federal government, it is in the public domain in the United States.",
+      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "license_page_tags": [
+        "PD US Government",
+        "PD Old",
+        "PD US Navy",
+        "CC-PD-Mark"
+      ],
+      "license_confirmed_date": "2026-11-07",
+      "source_field": "http://marineband.usmc.mil/downloads/audio/201010_web_exclusives/ancient_airs_and_dances_1.mp3",
+      "embedded_metadata": {
+        "TITLE": "Ancient Airs and Dances, Suite No. 1: 1. Baletto detto \"Il conte Orlando\"",
+        "ARTIST": "\"The President's Own\" United States Marine Band",
+        "ALBUM": "Web Exclusives",
+        "DATE": "2010-01-01",
+        "GENRE": "Classical",
+        "ALBUMARTIST": "\"The President's Own\" United States Marine Band",
+        "COMPOSER": "Ottorino Respighi",
+        "COMMENT": "Performed April 11, 2010 at Bishop Ireton High School Auditorium in Alexandria, VA. Colonel Michael J. Colburn, conducting."
+      },
+      "download_head_check": {
+        "error": "HTTP Error 429: Too many requests (f061ab2)",
+        "method": "HEAD"
+      },
+      "official_derivatives_checked_date": "2026-11-07",
+      "videoinfo_api_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=videoinfo&titles=File%3ABalletto+detto+Il+conte+Orlando.ogg&viprop=url%7Csize%7Cderivatives",
+      "official_derivatives": [
+        {
+          "download_url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/1/17/Balletto_detto_Il_conte_Orlando.ogg/Balletto_detto_Il_conte_Orlando.ogg.mp3",
+          "mime_type": "audio/mpeg",
+          "transcode_key": "mp3",
+          "bandwidth_bps": 207600,
+          "file_size_bytes": 4657775,
+          "source_duration_s": 179.48734693877552,
+          "duration_note": "同一Commons檔的官方轉碼；實際轉碼檔時長未下載／ffprobe確認。",
+          "same_commons_file": true,
+          "license_label": "Public domain",
+          "license_confirmed_date": "2026-11-07",
+          "head_check": {
+            "method": "HEAD",
+            "status": 200,
+            "content_type": "audio/mpeg",
+            "retry_after_seconds": null,
+            "checked_date": "2026-11-07"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ancient_airs_2",
+      "work": "Ancient Airs and Dances, Suite No. 1",
+      "movement": "II",
+      "title": "Gagliarda",
+      "composer": "Ottorino Respighi",
+      "performer": "\"The President's Own\" United States Marine Band",
+      "conductor": "Colonel Michael J. Colburn",
+      "album": "Web Exclusives",
+      "performance_date": "2010-04-11",
+      "performance_place": "Bishop Ireton High School Auditorium, Alexandria, Virginia",
+      "page_date": "Composed in 1917, Performed on April 11, 2010",
+      "date_note": "頁面明列演出日2010-04-11；檔案內DATE=2010-01-01是metadata日期。",
+      "commons_title": "File:Gagliarda.ogg",
+      "commons_page": "https://commons.wikimedia.org/wiki/File:Gagliarda.ogg",
+      "page_id": 14354992,
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Gagliarda.ogg",
+      "file_size_bytes": 10661924,
+      "duration_s": 228.67591836734695,
+      "format": "Ogg Vorbis",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "license_label": "Public domain",
+      "license_original_sentence": "As a work of the U.S. federal government, it is in the public domain in the United States.",
+      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "license_page_tags": [
+        "PD US Government",
+        "PD Old",
+        "PD US Navy",
+        "CC-PD-Mark"
+      ],
+      "license_confirmed_date": "2026-11-07",
+      "source_field": "http://marineband.usmc.mil/downloads/audio/201010_web_exclusives/ancient_airs_and_dances_2.mp3",
+      "embedded_metadata": {
+        "TITLE": "Ancient Airs and Dances, Suite No. 1: 2. Gagliarda",
+        "ARTIST": "\"The President's Own\" United States Marine Band",
+        "ALBUM": "Web Exclusives",
+        "DATE": "2010-01-01",
+        "GENRE": "Classical",
+        "ALBUMARTIST": "\"The President's Own\" United States Marine Band",
+        "COMPOSER": "Ottorino Respighi",
+        "COMMENT": "Performed April 11, 2010 at Bishop Ireton High School Auditorium in Alexandria, VA. Colonel Michael J. Colburn, conducting."
+      },
+      "download_head_check": {
+        "error": "HTTP Error 429: Too many requests (f061ab2)",
+        "method": "HEAD"
+      },
+      "official_derivatives_checked_date": "2026-11-07",
+      "videoinfo_api_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=videoinfo&titles=File%3AGagliarda.ogg&viprop=url%7Csize%7Cderivatives",
+      "official_derivatives": [
+        {
+          "download_url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/1/17/Gagliarda.ogg/Gagliarda.ogg.mp3",
+          "mime_type": "audio/mpeg",
+          "transcode_key": "mp3",
+          "bandwidth_bps": 207768,
+          "file_size_bytes": 5939015,
+          "source_duration_s": 228.67591836734695,
+          "duration_note": "同一Commons檔的官方轉碼；實際轉碼檔時長未下載／ffprobe確認。",
+          "same_commons_file": true,
+          "license_label": "Public domain",
+          "license_confirmed_date": "2026-11-07",
+          "head_check": {
+            "method": "HEAD",
+            "status": 200,
+            "content_type": "audio/mpeg",
+            "retry_after_seconds": null,
+            "checked_date": "2026-11-07"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ancient_airs_3",
+      "work": "Ancient Airs and Dances, Suite No. 1",
+      "movement": "III",
+      "title": "Villanella",
+      "composer": "Ottorino Respighi",
+      "performer": "\"The President's Own\" United States Marine Band",
+      "conductor": "Colonel Michael J. Colburn",
+      "album": "Web Exclusives",
+      "performance_date": "2010-04-11",
+      "performance_place": "Bishop Ireton High School Auditorium, Alexandria, Virginia",
+      "page_date": "Composed in 1917, Performed on April 11, 2010",
+      "date_note": "頁面明列演出日2010-04-11；檔案內DATE=2010-01-01是metadata日期。",
+      "commons_title": "File:Villanella.ogg",
+      "commons_page": "https://commons.wikimedia.org/wiki/File:Villanella.ogg",
+      "page_id": 14355231,
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/8/85/Villanella.ogg",
+      "file_size_bytes": 13501823,
+      "duration_s": 292.41469387755103,
+      "format": "Ogg Vorbis",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "license_label": "Public domain",
+      "license_original_sentence": "As a work of the U.S. federal government, it is in the public domain in the United States.",
+      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "license_page_tags": [
+        "PD US Government",
+        "PD Old",
+        "PD US Navy",
+        "CC-PD-Mark"
+      ],
+      "license_confirmed_date": "2026-11-07",
+      "source_field": "http://marineband.usmc.mil/downloads/audio/201010_web_exclusives/ancient_airs_and_dances_3.mp3",
+      "embedded_metadata": {
+        "TITLE": "Ancient Airs and Dances, Suite No. 1: 3. Villanella",
+        "ARTIST": "\"The President's Own\" United States Marine Band",
+        "ALBUM": "Web Exclusives",
+        "DATE": "2010-01-01",
+        "GENRE": "Classical",
+        "ALBUMARTIST": "\"The President's Own\" United States Marine Band",
+        "COMPOSER": "Ottorino Respighi",
+        "COMMENT": "Performed April 11, 2010 at Bishop Ireton High School Auditorium in Alexandria, VA. Colonel Michael J. Colburn, conducting."
+      },
+      "download_head_check": {
+        "error": "HTTP Error 429: Too many requests (f061ab2)",
+        "method": "HEAD"
+      },
+      "official_derivatives_checked_date": "2026-11-07",
+      "videoinfo_api_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=videoinfo&titles=File%3AVillanella.ogg&viprop=url%7Csize%7Cderivatives",
+      "official_derivatives": [
+        {
+          "download_url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/8/85/Villanella.ogg/Villanella.ogg.mp3",
+          "mime_type": "audio/mpeg",
+          "transcode_key": "mp3",
+          "bandwidth_bps": 193536,
+          "file_size_bytes": null,
+          "source_duration_s": 292.41469387755103,
+          "duration_note": "同一Commons檔的官方轉碼；實際轉碼檔時長未下載／ffprobe確認。",
+          "same_commons_file": true,
+          "license_label": "Public domain",
+          "license_confirmed_date": "2026-11-07",
+          "head_check": {
+            "method": "HEAD",
+            "status": 429,
+            "content_type": "text/html; charset=utf-8",
+            "retry_after_seconds": 1,
+            "checked_date": "2026-11-07"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ancient_airs_4",
+      "work": "Ancient Airs and Dances, Suite No. 1",
+      "movement": "IV",
+      "title": "Passo mezzo e mascherada",
+      "composer": "Ottorino Respighi",
+      "performer": "\"The President's Own\" United States Marine Band",
+      "conductor": "Colonel Michael J. Colburn",
+      "album": "Web Exclusives",
+      "performance_date": "2010-04-11",
+      "performance_place": "Bishop Ireton High School Auditorium, Alexandria, Virginia",
+      "page_date": "Composed in 1917, Performed on April 11, 2010",
+      "date_note": "頁面明列演出日2010-04-11；檔案內DATE=2010-01-01是metadata日期。",
+      "commons_title": "File:Passo mezzo e mascherada.ogg",
+      "commons_page": "https://commons.wikimedia.org/wiki/File:Passo_mezzo_e_mascherada.ogg",
+      "page_id": 14355204,
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Passo_mezzo_e_mascherada.ogg",
+      "file_size_bytes": 11587469,
+      "duration_s": 241.24081632653062,
+      "format": "Ogg Vorbis",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "license_label": "Public domain",
+      "license_original_sentence": "As a work of the U.S. federal government, it is in the public domain in the United States.",
+      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "license_page_tags": [
+        "PD US Government",
+        "PD Old",
+        "PD US Navy",
+        "CC-PD-Mark"
+      ],
+      "license_confirmed_date": "2026-11-07",
+      "source_field": "http://marineband.usmc.mil/downloads/audio/201010_web_exclusives/ancient_airs_and_dances_4.mp3",
+      "embedded_metadata": {
+        "TITLE": "Ancient Airs and Dances, Suite No. 1: 4. Passo mezzo e mascherada",
+        "ARTIST": "\"The President's Own\" United States Marine Band",
+        "ALBUM": "Web Exclusives",
+        "DATE": "2010-01-01",
+        "GENRE": "Classical",
+        "ALBUMARTIST": "\"The President's Own\" United States Marine Band",
+        "COMPOSER": "Ottorino Respighi",
+        "COMMENT": "Performed April 11, 2010 at Bishop Ireton High School Auditorium in Alexandria, VA. Colonel Michael J. Colburn, conducting."
+      },
+      "download_head_check": {
+        "status": 200,
+        "content_length_bytes": "11587469",
+        "content_type": "application/ogg",
+        "final_url": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Passo_mezzo_e_mascherada.ogg",
+        "method": "HEAD"
+      },
+      "official_derivatives_checked_date": "2026-11-07",
+      "videoinfo_api_url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=videoinfo&titles=File%3APasso+mezzo+e+mascherada.ogg&viprop=url%7Csize%7Cderivatives",
+      "official_derivatives": [
+        {
+          "download_url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0a/Passo_mezzo_e_mascherada.ogg/Passo_mezzo_e_mascherada.ogg.mp3",
+          "mime_type": "audio/mpeg",
+          "transcode_key": "mp3",
+          "bandwidth_bps": 207592,
+          "file_size_bytes": null,
+          "source_duration_s": 241.24081632653062,
+          "duration_note": "同一Commons檔的官方轉碼；實際轉碼檔時長未下載／ffprobe確認。",
+          "same_commons_file": true,
+          "license_label": "Public domain",
+          "license_confirmed_date": "2026-11-07",
+          "head_check": {
+            "method": "HEAD",
+            "status": 429,
+            "content_type": "text/html; charset=utf-8",
+            "retry_after_seconds": 1,
+            "checked_date": "2026-11-07"
+          }
+        }
+      ]
+    }
+  ],
+  "download_retry_note": "本次官方MP3轉碼HEAD有三檔429，均帶Retry-After: 1秒；只核URL/headers，未重試或下載。429回應的3223 bytes是錯誤頁，未當成音檔大小。",
+  "official_origin_lookup": {
+    "checked_date": "2026-11-07",
+    "scope": "只短查Commons引用的201010_web_exclusives同一錄音官方來源；未請求Commons下載host。",
+    "confirmed_current_mp3_url": null,
+    "attempts": [
+      {
+        "url": "https://marineband.usmc.mil/downloads/audio/201010_web_exclusives/ancient_airs_and_dances_1.mp3",
+        "method": "HEAD",
+        "result": "DNS lookup failed: Name or service not known"
+      },
+      {
+        "url": "https://www.marineband.marines.mil/downloads/audio/201010_web_exclusives/ancient_airs_and_dances_1.mp3",
+        "method": "HEAD",
+        "status": 403,
+        "result": "Forbidden；未取得成功重導或音檔headers"
+      }
+    ],
+    "search_result": "官方網域Ancient Airs與2010／201010查無對應索引結果。",
+    "conclusion": "未找到可確認的現行官方URL，結束短查；403不代表檔案不存在。"
+  }
+}

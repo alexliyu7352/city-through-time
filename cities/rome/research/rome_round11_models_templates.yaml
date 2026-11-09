@@ -1,0 +1,332 @@
+rome_round11_quirinal_1871_core:
+  kind: parts
+  exaggeration: 2
+  site: cut
+  basis: 'Falda1667 named Quirinal palace, source-graphic outer body and central court,
+    not a garden or ordinary houses. Native prism is a plain court massing;23m height
+    uses R21 Caprini named palazzo comparison. Roofs, ornament and exact historical
+    ground footprint are not reconstructed. Shown only in the late complete-city observation,
+    not asserted newly built1667 or copied into1506. research/rome_director_v9_0507_facade_patch.md;
+    P06/P07:2 principal model levels adopted as E, not a reconstruction of every mezzanine.
+    Named contemporary Farnese P03/P05 average57/13≈4.38m; adjusted native carrier
+    pitch gives26 model bays on its existing115.8m front, not26 actual Quirinal windows.
+    No18c Manica Lunga or whole-front ground arcade. Original23m flat top/plan/holes
+    retained. Original prism is part[0]; all native long_hall wings append. Their2m
+    bodies are inside the source prism; flat roof tops stay0.1m below the retained
+    core top (Massimo ground carriers below5m) to avoid coplanar roof faces. Native
+    windows project0.2m and ledges project at most0.4m normal to the corresponding
+    source edge, including court sides; this approved facade detail is not bitwise-identical
+    exterior bounds. No nested parts or per-window bespoke geometry. research/rome_round11_models.md:
+    1871-only display snapshot, not1871 construction. The retained23m physical body
+    is shown x2, matching the neighbouring15m/18m houses at city exaggeration2; this
+    is a display-scale correction, not a new measured height or added historical storey.
+    The original9 body/facade parts are retained verbatim. Four18deg hipped roof carriers
+    fit wholly inside the existing four wing bands, eaves at the retained23m top;
+    their dimensions are source-plan-constrained schematic estimates. Official Presidency
+    palace history and official virtual-tour text p1 establish four building campaigns,
+    the rear Mascarino villa with its Torrino, and the17c bell/clock addition. Torrino14x12m,7m
+    belvedere plus4m bell screen above23m eaves are rounded graphic massing estimates
+    against the existing R21/Falda comparison, not a survey or the unsourced52m figure.
+    Facade ornament, clock dial, flags, Swiss Court and room-by-room roofs are not
+    reconstructed. All new plan bounds stay inside the prior court body; existing
+    reserve remains valid.'
+  parts:
+  - kind: prism
+    plan_m:
+    - - -62.125
+      - 50.346
+    - - 44.759
+      - 50.346
+    - - 68.836
+      - -49.912
+    - - -46.968
+      - -52.608
+    holes_m:
+    - - - -36.178
+        - 24.312
+      - - 28.993
+        - 23.917
+      - - 41.984
+        - -31.636
+      - - -21.453
+        - -31.899
+    h_m: 23
+    id: v9_original_prism_core
+  - kind: long_hall
+    id: v9_outer_0_facade
+    at:
+    - -8.683
+    - 49.346
+    theta_deg: -180.0
+    w_m: 106.06400000000001
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_1_facade
+    at:
+    - 55.82514589703534
+    - -0.01651123837579238
+    theta_deg: 103.5038816119101
+    w_m: 102.22852774140459
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_2_facade
+    at:
+    - 10.910725590722171
+    - -50.26027088575316
+    theta_deg: 1.333645846340969
+    w_m: 114.95537815365391
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.421359698217458
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_outer_3_facade
+    at:
+    - -53.55716398546924
+    - -0.9853488745241299
+    theta_deg: -81.62501376652514
+    w_m: 103.24373414883785
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_0_facade
+    at:
+    - -3.586439133280944
+    - 25.114481632778627
+    theta_deg: -0.3472642092886479
+    w_m: 64.3521970321701
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_1_facade
+    at:
+    - 36.46223003384211
+    - -3.6317944418907544
+    theta_deg: -76.83797410066728
+    w_m: 56.23174747542795
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_2_facade
+    at:
+    - 10.269645809855488
+    - -32.76749140609339
+    theta_deg: -179.7624619121564
+    w_m: 62.61754517633859
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: v9_court_0_3_facade
+    at:
+    - -29.782859267112375
+    - -4.046908856064288
+    theta_deg: 104.67932283744679
+    w_m: 57.28767716920028
+    d_m: 2.0
+    h_m: 22.4
+    roof:
+      shape: flat
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: long_hall
+    id: rome11_wing_0_roof
+    at:
+    - -3.599213734080363
+    - 37.49023611111111
+    theta_deg: 0.0
+    w_m: 65.79835664108104
+    d_m: 25.111527777777773
+    h_m: 1
+    z_m: 22
+    roof:
+      shape: hipped
+      pitch_deg: 18
+      overhang_m: 0
+    storeys: 0
+  - kind: long_hall
+    id: rome11_wing_1_roof
+    at:
+    - 46.27762544270661
+    - -1.48283043658317
+    theta_deg: -76.49611838808991
+    w_m: 57.99322405216957
+    d_m: 20.651945397466292
+    h_m: 1
+    z_m: 22
+    roof:
+      shape: hipped
+      pitch_deg: 18
+      overhang_m: 0
+    storeys: 0
+  - kind: long_hall
+    id: rome11_wing_2_roof
+    at:
+    - 9.723025467772423
+    - -41.77277469433692
+    theta_deg: -178.66635415365903
+    w_m: 64.85262792393284
+    d_m: 18.425680136757748
+    h_m: 1
+    z_m: 22
+    roof:
+      shape: hipped
+      pitch_deg: 18
+      overhang_m: 0
+    storeys: 0
+  - kind: long_hall
+    id: rome11_wing_3_roof
+    at:
+    - -42.40635537222643
+    - -7.6831477357796745
+    theta_deg: 98.37498623347487
+    w_m: 61.07098780819261
+    d_m: 21.512709219736173
+    h_m: 1
+    z_m: 22
+    roof:
+      shape: hipped
+      pitch_deg: 18
+      overhang_m: 0
+    storeys: 0
+  - kind: long_hall
+    id: rome11_torrino_belvedere
+    at:
+    - -3.5924999999999994
+    - 37.23025
+    w_m: 14
+    d_m: 12
+    h_m: 7
+    z_m: 23
+    storeys: 1
+    bay_m: 4.38
+    ground_floor: windows
+    roof:
+      shape: hipped
+      pitch_deg: 18
+      overhang_m: 0
+  - kind: arches
+    id: rome11_torrino_bell_screen
+    at:
+    - -3.5924999999999994
+    - 37.23025
+    z_m: 30.8
+    length_m: 7
+    depth_m: 2
+    h_m: 4
+    bays: 1
+    tiers: 1
+    arch: round
+    opening: 0.62
+    spring: 0.45
+    attic_m: 0.35
+    through: true
+rome_round11_quirinal_1871_manica:
+  kind: parts
+  site: cut
+  exaggeration: 2
+  basis: 'research/rome_round10_quirinal.md. Presidency official history and imperiali.pdf:
+    Manica Lunga is the south side of the palace, begun under Sixtus V, extended by
+    Bernini1656-1659 and Specchi, completed by Fuga under Clement XII1730-1740. Constitutional
+    Court official booklet gives approximately360m. Censo1866 registered by the existing
+    native affine controls: the long narrow wing and Fuga terminal are source-graphic
+    traces, not a present-day footprint. The 351.3m axis,14m body width,18m eaves/two
+    principal levels,21m terminal and18deg hip roof are constrained massing estimates,
+    not surveyed dimensions. Height compares with the retained23m main court; bay4.38m
+    retains its named Farnese comparison, not a count of real Manica windows. Undated
+    later Savoyard heightening is not assigned to1871. Existing palace stock, not1871
+    construction. The connector shares the existing core edge without duplicating
+    its court. research/rome_round11_models.md:18m body/21m terminal remain unchanged;
+    1871-only display factor2 matches the neighbouring schematic buildings. The independent
+    cut site and original3 parts remain verbatim; no later Savoyard heightening is
+    retrojected into1871.'
+  parts:
+  - kind: prism
+    id: manica_court_join
+    at:
+    - 52.03127291958819
+    - 35.77585254914456
+    plan_m:
+    - - 1.2418676967439808
+      - -20.883219244008146
+    - - 4.177332248161932
+      - -20.883219244008146
+    - - 3.498011513688539
+      - 14.22414745085544
+    - - -7.189180877057922
+      - 14.22414745085544
+    h_m: 18
+  - kind: long_hall
+    id: manica_long_body
+    at:
+    - 59.809107849514746
+    - 190.64672868386373
+    theta_deg: 91.10852388229068
+    w_m: 351.30309228332266
+    d_m: 14.0
+    h_m: 18
+    roof:
+      shape: hipped
+      pitch_deg: 18
+      overhang_m: 0
+    storeys: 2
+    bay_m: 4.38
+    ground_floor: windows
+  - kind: prism
+    id: manica_fuga_terminal
+    at:
+    - 55.89363011060029
+    - 382.57529316319335
+    plan_m:
+    - - -32.6412336493619
+      - -9.0298490660291
+    - - -26.446065216978944
+      - 10.97705399890333
+    - - 21.11557088686869
+      - 16.50384124456815
+    - - 29.284303605399806
+      - -16.103188680163044
+    h_m: 21

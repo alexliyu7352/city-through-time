@@ -1,0 +1,4521 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4636266,
+      41.8959846
+     ],
+     [
+      12.4635103,
+      41.8959502
+     ],
+     [
+      12.463248,
+      41.8957356
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_001",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4659995,
+      41.8929134
+     ],
+     [
+      12.4656971,
+      41.8928281
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_002",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4624187,
+      41.8976371
+     ],
+     [
+      12.4621401,
+      41.897562
+     ],
+     [
+      12.4619438,
+      41.8973899
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_003",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4610893,
+      41.8992234
+     ],
+     [
+      12.4608691,
+      41.8990223
+     ],
+     [
+      12.4605529,
+      41.8989398
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_004",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4644265,
+      41.8942558
+     ],
+     [
+      12.4642826,
+      41.8942042
+     ],
+     [
+      12.4639845,
+      41.8939784
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_005",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4617877,
+      41.8975697
+     ],
+     [
+      12.4615723,
+      41.897391
+     ],
+     [
+      12.4614615,
+      41.8973705
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_006",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.466429,
+      41.8920362
+     ],
+     [
+      12.4662225,
+      41.8919529
+     ],
+     [
+      12.4658905,
+      41.8916525
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_007",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4657268,
+      41.892796
+     ],
+     [
+      12.4655376,
+      41.8926452
+     ],
+     [
+      12.4651605,
+      41.892574
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_008",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4672348,
+      41.8913119
+     ],
+     [
+      12.4669104,
+      41.8911544
+     ],
+     [
+      12.4666388,
+      41.8908411
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_009",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4680668,
+      41.8906745
+     ],
+     [
+      12.467862,
+      41.8904167
+     ],
+     [
+      12.4674357,
+      41.8901989
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_lane_010",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4675647,
+       41.8902206
+      ],
+      [
+       12.4676643,
+       41.8901117
+      ],
+      [
+       12.467781,
+       41.8901713
+      ],
+      [
+       12.4676813,
+       41.8902802
+      ],
+      [
+       12.4675647,
+       41.8902206
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b001_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.73,
+     14.66
+    ],
+    "theta_deg": 212.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b001",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.467157,
+       41.8906548
+      ],
+      [
+       12.4673666,
+       41.8904257
+      ],
+      [
+       12.4677346,
+       41.8906136
+      ],
+      [
+       12.4675249,
+       41.8908427
+      ],
+      [
+       12.467157,
+       41.8906548
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b002_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 32.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4668801,
+       41.8909878
+      ],
+      [
+       12.4670825,
+       41.8907551
+      ],
+      [
+       12.4674563,
+       41.8909366
+      ],
+      [
+       12.4672539,
+       41.8911693
+      ],
+      [
+       12.4668801,
+       41.8909878
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b002_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 211.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4678406,
+       41.8904357
+      ],
+      [
+       12.4677046,
+       41.8905843
+      ],
+      [
+       12.4672814,
+       41.8903682
+      ],
+      [
+       12.4674174,
+       41.8902195
+      ],
+      [
+       12.4678406,
+       41.8904357
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b002_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.18,
+     20.0
+    ],
+    "theta_deg": 32.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 3 shop-houses on one street front",
+     "parent_block": "rome08_capital_lungara_b002",
+     "buildings": 3,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4676704,
+       41.8909299
+      ],
+      [
+       12.4675411,
+       41.8908356
+      ],
+      [
+       12.4678908,
+       41.8905677
+      ],
+      [
+       12.4680201,
+       41.890662
+      ],
+      [
+       12.4676704,
+       41.8909299
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b002_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.86,
+     15.0
+    ],
+    "theta_deg": 132.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 3 shop-houses on one street front",
+     "parent_block": "rome08_capital_lungara_b002",
+     "buildings": 3,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4666669,
+       41.8908279
+      ],
+      [
+       12.4668894,
+       41.8907203
+      ],
+      [
+       12.4669961,
+       41.8908434
+      ],
+      [
+       12.4667736,
+       41.8909511
+      ],
+      [
+       12.4666669,
+       41.8908279
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b002_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     8.15,
+     22.0
+    ],
+    "theta_deg": 235.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome08_capital_lungara_b002",
+     "buildings": 2,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4668686,
+       41.8906507
+      ],
+      [
+       12.4670627,
+       41.8905568
+      ],
+      [
+       12.4671632,
+       41.8906728
+      ],
+      [
+       12.4669692,
+       41.8907667
+      ],
+      [
+       12.4668686,
+       41.8906507
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b002_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     15.35,
+     19.19
+    ],
+    "theta_deg": 235.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4670233,
+       41.8905366
+      ],
+      [
+       12.4671441,
+       41.8904046
+      ],
+      [
+       12.4672855,
+       41.8904768
+      ],
+      [
+       12.4671647,
+       41.8906089
+      ],
+      [
+       12.4670233,
+       41.8905366
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b002_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.22,
+     17.77
+    ],
+    "theta_deg": 32.67,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4665195,
+       41.8912528
+      ],
+      [
+       12.4667854,
+       41.8914466
+      ],
+      [
+       12.4664742,
+       41.891685
+      ],
+      [
+       12.4662083,
+       41.8914912
+      ],
+      [
+       12.4665195,
+       41.8912528
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b003_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 132.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4663903,
+       41.8910616
+      ],
+      [
+       12.4666222,
+       41.8909494
+      ],
+      [
+       12.4668024,
+       41.8911573
+      ],
+      [
+       12.4665705,
+       41.8912696
+      ],
+      [
+       12.4663903,
+       41.8910616
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b003_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     27.52,
+     22.93
+    ],
+    "theta_deg": 55.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4661405,
+       41.8917751
+      ],
+      [
+       12.4663526,
+       41.8916442
+      ],
+      [
+       12.4665628,
+       41.8918344
+      ],
+      [
+       12.4663507,
+       41.8919653
+      ],
+      [
+       12.4661405,
+       41.8917751
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b003_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     27.4,
+     22.83
+    ],
+    "theta_deg": 228.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.466687,
+       41.8913504
+      ],
+      [
+       12.4668318,
+       41.8911838
+      ],
+      [
+       12.4670993,
+       41.8913137
+      ],
+      [
+       12.4669544,
+       41.8914802
+      ],
+      [
+       12.466687,
+       41.8913504
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b003_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     26.48,
+     22.06
+    ],
+    "theta_deg": 31.33,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4659182,
+       41.8916161
+      ],
+      [
+       12.4661588,
+       41.8914676
+      ],
+      [
+       12.4663179,
+       41.8916114
+      ],
+      [
+       12.4660772,
+       41.89176
+      ],
+      [
+       12.4659182,
+       41.8916161
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b003_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     20.73,
+     25.91
+    ],
+    "theta_deg": 228.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4662213,
+       41.8912172
+      ],
+      [
+       12.4664122,
+       41.8911248
+      ],
+      [
+       12.4665111,
+       41.8912389
+      ],
+      [
+       12.4663202,
+       41.8913313
+      ],
+      [
+       12.4662213,
+       41.8912172
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b003_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     15.1,
+     18.88
+    ],
+    "theta_deg": 55.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.466091,
+       41.8913887
+      ],
+      [
+       12.4662365,
+       41.8912988
+      ],
+      [
+       12.4663327,
+       41.8913858
+      ],
+      [
+       12.4661872,
+       41.8914757
+      ],
+      [
+       12.466091,
+       41.8913887
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b003_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.54,
+     15.67
+    ],
+    "theta_deg": 228.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4673467,
+       41.8912976
+      ],
+      [
+       12.4675941,
+       41.8914779
+      ],
+      [
+       12.4673045,
+       41.8916997
+      ],
+      [
+       12.4670571,
+       41.8915194
+      ],
+      [
+       12.4673467,
+       41.8912976
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     34.42,
+     28.69
+    ],
+    "theta_deg": 312.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4680957,
+       41.8907016
+      ],
+      [
+       12.4683857,
+       41.8907154
+      ],
+      [
+       12.4683635,
+       41.8909755
+      ],
+      [
+       12.4680735,
+       41.8909616
+      ],
+      [
+       12.4680957,
+       41.8907016
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     28.94,
+     24.12
+    ],
+    "theta_deg": 271.96,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4679293,
+       41.8908647
+      ],
+      [
+       12.4681851,
+       41.8910512
+      ],
+      [
+       12.4678857,
+       41.8912805
+      ],
+      [
+       12.4676299,
+       41.8910941
+      ],
+      [
+       12.4679293,
+       41.8908647
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     35.59,
+     29.66
+    ],
+    "theta_deg": 312.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.467641,
+       41.8911103
+      ],
+      [
+       12.4678658,
+       41.8912742
+      ],
+      [
+       12.4676026,
+       41.8914758
+      ],
+      [
+       12.4673778,
+       41.8913119
+      ],
+      [
+       12.467641,
+       41.8911103
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     31.28,
+     26.07
+    ],
+    "theta_deg": 312.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4670558,
+       41.8915266
+      ],
+      [
+       12.46727,
+       41.8916827
+      ],
+      [
+       12.4670193,
+       41.8918747
+      ],
+      [
+       12.4668051,
+       41.8917186
+      ],
+      [
+       12.4670558,
+       41.8915266
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     29.8,
+     24.83
+    ],
+    "theta_deg": 312.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4665834,
+       41.891975
+      ],
+      [
+       12.4667737,
+       41.8920732
+      ],
+      [
+       12.4665568,
+       41.8923079
+      ],
+      [
+       12.4663665,
+       41.8922097
+      ],
+      [
+       12.4665834,
+       41.891975
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     31.68,
+     19.2
+    ],
+    "theta_deg": 302.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4667889,
+       41.8917546
+      ],
+      [
+       12.4669749,
+       41.8918506
+      ],
+      [
+       12.4668207,
+       41.8920173
+      ],
+      [
+       12.4666347,
+       41.8919214
+      ],
+      [
+       12.4667889,
+       41.8917546
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_07",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     22.52,
+     18.76
+    ],
+    "theta_deg": 302.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4658253,
+       41.8928306
+      ],
+      [
+       12.465919,
+       41.892645
+      ],
+      [
+       12.4661177,
+       41.892701
+      ],
+      [
+       12.466024,
+       41.8928866
+      ],
+      [
+       12.4658253,
+       41.8928306
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_08",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     17.63,
+     22.03
+    ],
+    "theta_deg": 198.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.466084,
+       41.8924668
+      ],
+      [
+       12.4663056,
+       41.8925811
+      ],
+      [
+       12.4661832,
+       41.8927136
+      ],
+      [
+       12.4659616,
+       41.8925993
+      ],
+      [
+       12.466084,
+       41.8924668
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_09",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     17.88,
+     22.35
+    ],
+    "theta_deg": 302.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4662656,
+       41.8922854
+      ],
+      [
+       12.466468,
+       41.8923898
+      ],
+      [
+       12.4663003,
+       41.8925713
+      ],
+      [
+       12.4660979,
+       41.8924668
+      ],
+      [
+       12.4662656,
+       41.8922854
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b004_10",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     24.5,
+     20.41
+    ],
+    "theta_deg": 302.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4656696,
+       41.8921578
+      ],
+      [
+       12.4659752,
+       41.8923155
+      ],
+      [
+       12.4657219,
+       41.8925895
+      ],
+      [
+       12.4654163,
+       41.8924318
+      ],
+      [
+       12.4656696,
+       41.8921578
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b005_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 122.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b005",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4656327,
+       41.8919918
+      ],
+      [
+       12.4659178,
+       41.8918158
+      ],
+      [
+       12.4662004,
+       41.8920715
+      ],
+      [
+       12.4659153,
+       41.8922474
+      ],
+      [
+       12.4656327,
+       41.8919918
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b005_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.83,
+     30.69
+    ],
+    "theta_deg": 48.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b005",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4652316,
+       41.8925619
+      ],
+      [
+       12.4652729,
+       41.8924397
+      ],
+      [
+       12.4655012,
+       41.8924829
+      ],
+      [
+       12.4654599,
+       41.892605
+      ],
+      [
+       12.4652316,
+       41.8925619
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b005_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     9.77,
+     14.0
+    ],
+    "theta_deg": 192.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome08_capital_lungara_b005",
+     "buildings": 2,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4660405,
+       41.8921778
+      ],
+      [
+       12.4661614,
+       41.8922402
+      ],
+      [
+       12.4660612,
+       41.8923486
+      ],
+      [
+       12.4659402,
+       41.8922862
+      ],
+      [
+       12.4660405,
+       41.8921778
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b005_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.64,
+     12.2
+    ],
+    "theta_deg": 122.93,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b005",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4647947,
+       41.8931564
+      ],
+      [
+       12.4651047,
+       41.8933094
+      ],
+      [
+       12.464859,
+       41.8935873
+      ],
+      [
+       12.4645491,
+       41.8934343
+      ],
+      [
+       12.4647947,
+       41.8931564
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b006_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 121.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b006",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4650143,
+       41.8929393
+      ],
+      [
+       12.4651054,
+       41.8926702
+      ],
+      [
+       12.4655375,
+       41.8927519
+      ],
+      [
+       12.4654464,
+       41.8930209
+      ],
+      [
+       12.4650143,
+       41.8929393
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b006_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 12.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b006",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4645106,
+       41.8934812
+      ],
+      [
+       12.4648205,
+       41.8936342
+      ],
+      [
+       12.4645749,
+       41.8939121
+      ],
+      [
+       12.4642649,
+       41.8937591
+      ],
+      [
+       12.4645106,
+       41.8934812
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b006_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 121.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b006",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4641051,
+       41.8939778
+      ],
+      [
+       12.4643268,
+       41.8938145
+      ],
+      [
+       12.464589,
+       41.8940132
+      ],
+      [
+       12.4643673,
+       41.8941765
+      ],
+      [
+       12.4641051,
+       41.8939778
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b006_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     31.0,
+     25.83
+    ],
+    "theta_deg": 223.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b006",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4650462,
+       41.8929513
+      ],
+      [
+       12.4653645,
+       41.8931084
+      ],
+      [
+       12.4651963,
+       41.8932987
+      ],
+      [
+       12.464878,
+       41.8931416
+      ],
+      [
+       12.4650462,
+       41.8929513
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b006_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     25.33,
+     31.66
+    ],
+    "theta_deg": 121.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b006",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633222,
+       41.8957285
+      ],
+      [
+       12.4636107,
+       41.8955317
+      ],
+      [
+       12.4638214,
+       41.8957041
+      ],
+      [
+       12.463533,
+       41.8959009
+      ],
+      [
+       12.4633222,
+       41.8957285
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     25.94,
+     32.42
+    ],
+    "theta_deg": 225.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4647824,
+       41.893941
+      ],
+      [
+       12.4650078,
+       41.8940522
+      ],
+      [
+       12.4647622,
+       41.8943301
+      ],
+      [
+       12.4645368,
+       41.8942189
+      ],
+      [
+       12.4647824,
+       41.893941
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     22.42
+    ],
+    "theta_deg": 301.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637257,
+       41.895252
+      ],
+      [
+       12.4639941,
+       41.8953695
+      ],
+      [
+       12.4638053,
+       41.8956101
+      ],
+      [
+       12.4635369,
+       41.8954926
+      ],
+      [
+       12.4637257,
+       41.895252
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     30.99,
+     25.82
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4645143,
+       41.8942237
+      ],
+      [
+       12.464757,
+       41.8943435
+      ],
+      [
+       12.4645647,
+       41.894561
+      ],
+      [
+       12.464322,
+       41.8944413
+      ],
+      [
+       12.4645143,
+       41.8942237
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     28.96,
+     24.14
+    ],
+    "theta_deg": 301.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4640321,
+       41.8948285
+      ],
+      [
+       12.4642652,
+       41.8949306
+      ],
+      [
+       12.4640397,
+       41.8952179
+      ],
+      [
+       12.4638067,
+       41.8951159
+      ],
+      [
+       12.4640321,
+       41.8948285
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     22.42
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4651243,
+       41.8935624
+      ],
+      [
+       12.4653497,
+       41.8936736
+      ],
+      [
+       12.4651041,
+       41.8939515
+      ],
+      [
+       12.4648786,
+       41.8938403
+      ],
+      [
+       12.4651243,
+       41.8935624
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     22.42
+    ],
+    "theta_deg": 301.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4654396,
+       41.8931914
+      ],
+      [
+       12.465665,
+       41.8933026
+      ],
+      [
+       12.4654193,
+       41.8935805
+      ],
+      [
+       12.4651939,
+       41.8934693
+      ],
+      [
+       12.4654396,
+       41.8931914
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_07",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     22.42
+    ],
+    "theta_deg": 301.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4656189,
+       41.892979
+      ],
+      [
+       12.4658471,
+       41.8930916
+      ],
+      [
+       12.4656663,
+       41.8932962
+      ],
+      [
+       12.4654381,
+       41.8931836
+      ],
+      [
+       12.4656189,
+       41.892979
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_08",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     27.24,
+     22.7
+    ],
+    "theta_deg": 301.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4643255,
+       41.8944614
+      ],
+      [
+       12.464531,
+       41.8945514
+      ],
+      [
+       12.4643864,
+       41.8947357
+      ],
+      [
+       12.4641809,
+       41.8946457
+      ],
+      [
+       12.4643255,
+       41.8944614
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_09",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     23.73,
+     19.78
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4641773,
+       41.8946512
+      ],
+      [
+       12.4643717,
+       41.8947363
+      ],
+      [
+       12.464235,
+       41.8949106
+      ],
+      [
+       12.4640406,
+       41.8948255
+      ],
+      [
+       12.4641773,
+       41.8946512
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_10",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     22.45,
+     18.7
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4659486,
+       41.8929255
+      ],
+      [
+       12.4658848,
+       41.8930518
+      ],
+      [
+       12.4656559,
+       41.8929873
+      ],
+      [
+       12.4657197,
+       41.892861
+      ],
+      [
+       12.4659486,
+       41.8929255
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_11",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     10.15,
+     15.0
+    ],
+    "theta_deg": 18.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 2,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4637785,
+       41.8951236
+      ],
+      [
+       12.4639422,
+       41.8951953
+      ],
+      [
+       12.4638654,
+       41.8952931
+      ],
+      [
+       12.4637017,
+       41.8952214
+      ],
+      [
+       12.4637785,
+       41.8951236
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_12",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.6,
+     15.75
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4639562,
+       41.8951932
+      ],
+      [
+       12.4640831,
+       41.8952488
+      ],
+      [
+       12.4639938,
+       41.8953626
+      ],
+      [
+       12.4638669,
+       41.895307
+      ],
+      [
+       12.4639562,
+       41.8951932
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_13",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.65,
+     12.21
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4648488,
+       41.8938369
+      ],
+      [
+       12.4649949,
+       41.8939091
+      ],
+      [
+       12.4649177,
+       41.8939964
+      ],
+      [
+       12.4647716,
+       41.8939243
+      ],
+      [
+       12.4648488,
+       41.8938369
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b007_14",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     11.63,
+     14.54
+    ],
+    "theta_deg": 301.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b007",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4638992,
+       41.8941788
+      ],
+      [
+       12.4642197,
+       41.8943192
+      ],
+      [
+       12.4639942,
+       41.8946065
+      ],
+      [
+       12.4636738,
+       41.8944662
+      ],
+      [
+       12.4638992,
+       41.8941788
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4636848,
+       41.8944926
+      ],
+      [
+       12.4640052,
+       41.894633
+      ],
+      [
+       12.4637798,
+       41.8949203
+      ],
+      [
+       12.4634593,
+       41.8947799
+      ],
+      [
+       12.4636848,
+       41.8944926
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4634866,
+       41.8947987
+      ],
+      [
+       12.463789,
+       41.8949311
+      ],
+      [
+       12.4635763,
+       41.8952022
+      ],
+      [
+       12.4632739,
+       41.8950698
+      ],
+      [
+       12.4634866,
+       41.8947987
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     34.91,
+     29.09
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4623468,
+       41.8962501
+      ],
+      [
+       12.4626673,
+       41.8963905
+      ],
+      [
+       12.4624418,
+       41.8966778
+      ],
+      [
+       12.4621214,
+       41.8965374
+      ],
+      [
+       12.4623468,
+       41.8962501
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4621352,
+       41.8965503
+      ],
+      [
+       12.4624223,
+       41.8966761
+      ],
+      [
+       12.4622203,
+       41.8969335
+      ],
+      [
+       12.4619332,
+       41.8968077
+      ],
+      [
+       12.4621352,
+       41.8965503
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     33.15,
+     27.63
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4619137,
+       41.896806
+      ],
+      [
+       12.4622341,
+       41.8969464
+      ],
+      [
+       12.4620087,
+       41.8972337
+      ],
+      [
+       12.4616882,
+       41.8970933
+      ],
+      [
+       12.4619137,
+       41.896806
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4625778,
+       41.8960014
+      ],
+      [
+       12.4628626,
+       41.8961262
+      ],
+      [
+       12.4626622,
+       41.8963815
+      ],
+      [
+       12.4623775,
+       41.8962568
+      ],
+      [
+       12.4625778,
+       41.8960014
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_07",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     32.88,
+     27.4
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.463019,
+       41.8954739
+      ],
+      [
+       12.4632932,
+       41.895594
+      ],
+      [
+       12.4631003,
+       41.8958398
+      ],
+      [
+       12.4628262,
+       41.8957197
+      ],
+      [
+       12.463019,
+       41.8954739
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_08",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     31.65,
+     26.37
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4615434,
+       41.8972695
+      ],
+      [
+       12.4617427,
+       41.8971354
+      ],
+      [
+       12.461958,
+       41.8973141
+      ],
+      [
+       12.4617587,
+       41.8974481
+      ],
+      [
+       12.4615434,
+       41.8972695
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_09",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     26.71,
+     22.26
+    ],
+    "theta_deg": 226.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4633034,
+       41.8950895
+      ],
+      [
+       12.46358,
+       41.8952106
+      ],
+      [
+       12.4633854,
+       41.8954586
+      ],
+      [
+       12.4631089,
+       41.8953375
+      ],
+      [
+       12.4633034,
+       41.8950895
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_10",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     31.93,
+     26.61
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4627876,
+       41.8957579
+      ],
+      [
+       12.4630604,
+       41.8958774
+      ],
+      [
+       12.4628685,
+       41.896122
+      ],
+      [
+       12.4625957,
+       41.8960025
+      ],
+      [
+       12.4627876,
+       41.8957579
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_11",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     31.49,
+     26.25
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4641554,
+       41.8941431
+      ],
+      [
+       12.4640353,
+       41.8942316
+      ],
+      [
+       12.4638745,
+       41.8941097
+      ],
+      [
+       12.4639946,
+       41.8940212
+      ],
+      [
+       12.4641554,
+       41.8941431
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_12",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     9.51,
+     14.0
+    ],
+    "theta_deg": 43.71,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 2,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.463112,
+       41.8953575
+      ],
+      [
+       12.4632846,
+       41.8954331
+      ],
+      [
+       12.4632036,
+       41.8955362
+      ],
+      [
+       12.4630311,
+       41.8954606
+      ],
+      [
+       12.463112,
+       41.8953575
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b008_13",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.28,
+     16.6
+    ],
+    "theta_deg": 118.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b008",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4630057,
+       41.8961743
+      ],
+      [
+       12.4633261,
+       41.8963147
+      ],
+      [
+       12.4631007,
+       41.896602
+      ],
+      [
+       12.4627802,
+       41.8964616
+      ],
+      [
+       12.4630057,
+       41.8961743
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b009_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b009",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4627725,
+       41.8964761
+      ],
+      [
+       12.463093,
+       41.8966165
+      ],
+      [
+       12.4628676,
+       41.8969038
+      ],
+      [
+       12.4625471,
+       41.8967634
+      ],
+      [
+       12.4627725,
+       41.8964761
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b009_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b009",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4620428,
+       41.8973433
+      ],
+      [
+       12.462307,
+       41.897175
+      ],
+      [
+       12.4625772,
+       41.8974119
+      ],
+      [
+       12.4623131,
+       41.8975801
+      ],
+      [
+       12.4620428,
+       41.8973433
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b009_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     34.58,
+     28.81
+    ],
+    "theta_deg": 227.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b009",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4624862,
+       41.8968645
+      ],
+      [
+       12.4628035,
+       41.8970034
+      ],
+      [
+       12.4625803,
+       41.8972879
+      ],
+      [
+       12.462263,
+       41.897149
+      ],
+      [
+       12.4624862,
+       41.8968645
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b009_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.63,
+     30.53
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b009",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4632475,
+       41.8958625
+      ],
+      [
+       12.463568,
+       41.8960029
+      ],
+      [
+       12.4633426,
+       41.8962902
+      ],
+      [
+       12.4630221,
+       41.8961498
+      ],
+      [
+       12.4632475,
+       41.8958625
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b009_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 298.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b009",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4614996,
+       41.8981031
+      ],
+      [
+       12.4618112,
+       41.8982541
+      ],
+      [
+       12.4615686,
+       41.8985335
+      ],
+      [
+       12.461257,
+       41.8983824
+      ],
+      [
+       12.4614996,
+       41.8981031
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b010_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 301.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b010",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4608063,
+       41.8987967
+      ],
+      [
+       12.4610938,
+       41.898621
+      ],
+      [
+       12.4613761,
+       41.8988787
+      ],
+      [
+       12.4610885,
+       41.8990545
+      ],
+      [
+       12.4608063,
+       41.8987967
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b010_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 229.02,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b010",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4617862,
+       41.89777
+      ],
+      [
+       12.4620978,
+       41.8979211
+      ],
+      [
+       12.4618552,
+       41.8982005
+      ],
+      [
+       12.4615435,
+       41.8980494
+      ],
+      [
+       12.4617862,
+       41.89777
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b010_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 301.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b010",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4612978,
+       41.898454
+      ],
+      [
+       12.4616188,
+       41.8986096
+      ],
+      [
+       12.4614522,
+       41.8988015
+      ],
+      [
+       12.4611311,
+       41.8986458
+      ],
+      [
+       12.4612978,
+       41.898454
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b010_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     25.41,
+     31.76
+    ],
+    "theta_deg": 301.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b010",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4618861,
+       41.897802
+      ],
+      [
+       12.461991,
+       41.8975849
+      ],
+      [
+       12.4623397,
+       41.897679
+      ],
+      [
+       12.4622348,
+       41.8978961
+      ],
+      [
+       12.4618861,
+       41.897802
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b010_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     30.77,
+     25.64
+    ],
+    "theta_deg": 18.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b010",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4606846,
+       41.898924
+      ],
+      [
+       12.4607279,
+       41.8988314
+      ],
+      [
+       12.4608766,
+       41.8988702
+      ],
+      [
+       12.4608334,
+       41.8989628
+      ],
+      [
+       12.4606846,
+       41.898924
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b010_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.08,
+     10.9
+    ],
+    "theta_deg": 197.55,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b010",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4611642,
+       41.898347
+      ],
+      [
+       12.461317,
+       41.898421
+      ],
+      [
+       12.461198,
+       41.898558
+      ],
+      [
+       12.4610453,
+       41.8984839
+      ],
+      [
+       12.4611642,
+       41.898347
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b010_07",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     18.13,
+     15.11
+    ],
+    "theta_deg": 301.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b010",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4618161,
+       41.8976212
+      ],
+      [
+       12.4619368,
+       41.8976797
+      ],
+      [
+       12.4618428,
+       41.897788
+      ],
+      [
+       12.4617221,
+       41.8977294
+      ],
+      [
+       12.4618161,
+       41.8976212
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b010_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     14.33,
+     11.95
+    ],
+    "theta_deg": 301.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b010",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4599888,
+       41.8988943
+      ],
+      [
+       12.4602772,
+       41.8990693
+      ],
+      [
+       12.4599962,
+       41.8993278
+      ],
+      [
+       12.4597078,
+       41.8991528
+      ],
+      [
+       12.4599888,
+       41.8988943
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 127.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4602445,
+       41.8986829
+      ],
+      [
+       12.4605516,
+       41.8988692
+      ],
+      [
+       12.4603521,
+       41.8990528
+      ],
+      [
+       12.4600449,
+       41.8988664
+      ],
+      [
+       12.4602445,
+       41.8986829
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     26.27,
+     32.84
+    ],
+    "theta_deg": 127.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.459756,
+       41.8991974
+      ],
+      [
+       12.4600034,
+       41.8993475
+      ],
+      [
+       12.4597623,
+       41.8995693
+      ],
+      [
+       12.4595149,
+       41.8994192
+      ],
+      [
+       12.459756,
+       41.8991974
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     31.74,
+     26.45
+    ],
+    "theta_deg": 127.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4606001,
+       41.8984608
+      ],
+      [
+       12.4608098,
+       41.8985881
+      ],
+      [
+       12.4605288,
+       41.8988466
+      ],
+      [
+       12.460319,
+       41.8987194
+      ],
+      [
+       12.4606001,
+       41.8984608
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     22.42
+    ],
+    "theta_deg": 127.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4613047,
+       41.8975889
+      ],
+      [
+       12.4615478,
+       41.8974254
+      ],
+      [
+       12.4617228,
+       41.8975707
+      ],
+      [
+       12.4614798,
+       41.8977342
+      ],
+      [
+       12.4613047,
+       41.8975889
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     21.72,
+     27.15
+    ],
+    "theta_deg": 46.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4613091,
+       41.8976584
+      ],
+      [
+       12.461527,
+       41.8977641
+      ],
+      [
+       12.4613573,
+       41.8979594
+      ],
+      [
+       12.4611394,
+       41.8978538
+      ],
+      [
+       12.4613091,
+       41.8976584
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     25.87,
+     21.56
+    ],
+    "theta_deg": 121.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4595628,
+       41.8994615
+      ],
+      [
+       12.45976,
+       41.8995811
+      ],
+      [
+       12.4595678,
+       41.8997579
+      ],
+      [
+       12.4593706,
+       41.8996383
+      ],
+      [
+       12.4595628,
+       41.8994615
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_07",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     25.3,
+     21.08
+    ],
+    "theta_deg": 127.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4611448,
+       41.8978634
+      ],
+      [
+       12.4613666,
+       41.8979709
+      ],
+      [
+       12.4611939,
+       41.8981697
+      ],
+      [
+       12.4609722,
+       41.8980622
+      ],
+      [
+       12.4611448,
+       41.8978634
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_08",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     26.33,
+     21.94
+    ],
+    "theta_deg": 121.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4607878,
+       41.8983063
+      ],
+      [
+       12.4609784,
+       41.8983987
+      ],
+      [
+       12.46083,
+       41.8985696
+      ],
+      [
+       12.4606393,
+       41.8984771
+      ],
+      [
+       12.4607878,
+       41.8983063
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_09",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     22.63,
+     18.86
+    ],
+    "theta_deg": 121.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4609929,
+       41.8980792
+      ],
+      [
+       12.4611867,
+       41.8981732
+      ],
+      [
+       12.4610358,
+       41.898347
+      ],
+      [
+       12.460842,
+       41.898253
+      ],
+      [
+       12.4609929,
+       41.8980792
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_10",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     23.01,
+     19.18
+    ],
+    "theta_deg": 121.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4593832,
+       41.8996969
+      ],
+      [
+       12.4595369,
+       41.8997901
+      ],
+      [
+       12.459437,
+       41.8998819
+      ],
+      [
+       12.4592834,
+       41.8997887
+      ],
+      [
+       12.4593832,
+       41.8996969
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b011_11",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     13.14,
+     16.43
+    ],
+    "theta_deg": 127.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b011",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4602841,
+       41.8994179
+      ],
+      [
+       12.4605725,
+       41.8995929
+      ],
+      [
+       12.4602914,
+       41.8998514
+      ],
+      [
+       12.4600031,
+       41.8996765
+      ],
+      [
+       12.4602841,
+       41.8994179
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b012_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 307.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b012",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4606171,
+       41.8990902
+      ],
+      [
+       12.4609055,
+       41.8992651
+      ],
+      [
+       12.4606244,
+       41.8995237
+      ],
+      [
+       12.4603361,
+       41.8993487
+      ],
+      [
+       12.4606171,
+       41.8990902
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b012_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 307.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_lungara_b012",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4598818,
+       41.8996107
+      ],
+      [
+       12.4601063,
+       41.8997469
+      ],
+      [
+       12.4599564,
+       41.8998848
+      ],
+      [
+       12.4597319,
+       41.8997486
+      ],
+      [
+       12.4598818,
+       41.8996107
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b012_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     9.87,
+     24.0
+    ],
+    "theta_deg": 307.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome08_capital_lungara_b012",
+     "buildings": 2,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4601508,
+       41.8993611
+      ],
+      [
+       12.4602622,
+       41.8994288
+      ],
+      [
+       12.4601129,
+       41.8995662
+      ],
+      [
+       12.4600014,
+       41.8994986
+      ],
+      [
+       12.4601508,
+       41.8993611
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_lungara_b012_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     19.66,
+     11.92
+    ],
+    "theta_deg": 307.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_lungara_b012",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4679966,
+       41.8902215
+      ],
+      [
+       12.4681218,
+       41.8903746
+      ],
+      [
+       12.4679579,
+       41.8904494
+      ],
+      [
+       12.4678327,
+       41.8902963
+      ],
+      [
+       12.4679966,
+       41.8902215
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_formal_junction_b001_01",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     15.95,
+     19.94
+    ],
+    "theta_deg": 146.89,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_formal_junction_b001",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 narrow Lungara/Riario street frontages on the west bank; Farnesina, Corsini and the hillside cultivated enclosures are reserved separately.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio. Formal junction correction: the separately traced Lungara and Trastevere coverage domains describe the same source street block at their junction. Keep the existing Trastevere lots and natively subdivide only Lungara outside that registered domain; not a relocated historic street or a new house type."
+    }
+   }
+  }
+ ]
+}

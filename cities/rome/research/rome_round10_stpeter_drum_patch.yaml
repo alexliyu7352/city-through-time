@@ -1,0 +1,23 @@
+node: made_again
+landmark_id: rome07_renaissance_newstpeter
+existing_template: rome_round10_stpeter
+part_id: drum
+replace_part:
+  kind: revolve
+  id: drum
+  atop: 3
+  sides: 48
+  profile_m:
+  - - 20.75
+    - 0
+  - - 25
+    - 0
+  - - 25
+    - 20
+  - - 20.75
+    - 20
+stage_select_unchanged: true
+alternative_library: research/rome_round10_stpeter_drum_templates.yaml
+alternative_template: rome_round10_stpeter_open_drum
+notes: Apply the one-part replacement OR select the copied template; do not append
+  another drum or change stages.

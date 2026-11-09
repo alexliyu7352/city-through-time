@@ -1,0 +1,1091 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_north_prati_trionfale_0",
+    "kind": "street",
+    "w_m": 10,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       126,
+       587
+      ],
+      [
+       149,
+       553
+      ],
+      [
+       171,
+       517
+      ],
+      [
+       187,
+       488
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4553726,
+      41.91391039999999
+     ],
+     [
+      12.457556500000003,
+      41.9163299
+     ],
+     [
+      12.4596441,
+      41.918892199999995
+     ],
+     [
+      12.461161200000001,
+      41.9209566
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_north_prati_mazzini_0",
+    "kind": "street",
+    "w_m": 10,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       135,
+       560
+      ],
+      [
+       177,
+       564
+      ],
+      [
+       220,
+       566
+      ],
+      [
+       259,
+       575
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4562212,
+      41.9158338
+     ],
+     [
+      12.4602376,
+      41.91553939999999
+     ],
+     [
+      12.464348700000002,
+      41.9153873
+     ],
+     [
+      12.4680803,
+      41.9147368
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_flaminia_0",
+    "kind": "street",
+    "w_m": 11,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       320,
+       562
+      ],
+      [
+       302,
+       517
+      ],
+      [
+       286,
+       470
+      ],
+      [
+       264,
+       417
+      ],
+      [
+       243,
+       365
+      ],
+      [
+       224,
+       315
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4739058,
+      41.91564990000001
+     ],
+     [
+      12.4721666,
+      41.91886290000001
+     ],
+     [
+      12.470617700000002,
+      41.92221799999999
+     ],
+     [
+      12.468492400000002,
+      41.9260023
+     ],
+     [
+      12.466463,
+      41.929715099999996
+     ],
+     [
+      12.4646253,
+      41.933284700000016
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_parioli_axis_0",
+    "kind": "street",
+    "w_m": 9,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       330,
+       456
+      ],
+      [
+       370,
+       431
+      ],
+      [
+       414,
+       403
+      ],
+      [
+       455,
+       378
+      ],
+      [
+       492,
+       348
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4748182,
+      41.923206300000004
+     ],
+     [
+      12.4786321,
+      41.924979699999994
+     ],
+     [
+      12.482827300000002,
+      41.926965900000006
+     ],
+     [
+      12.486737200000002,
+      41.92873879999999
+     ],
+     [
+      12.4902629,
+      41.9308691
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_parioli_loop_0",
+    "kind": "street",
+    "w_m": 8,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       347,
+       450
+      ],
+      [
+       370,
+       472
+      ],
+      [
+       414,
+       485
+      ],
+      [
+       451,
+       470
+      ],
+      [
+       483,
+       440
+      ],
+      [
+       505,
+       410
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.476441,
+      41.9236302
+     ],
+     [
+      12.4786487,
+      41.922056
+     ],
+     [
+      12.482860200000001,
+      41.9211186
+     ],
+     [
+      12.486391300000001,
+      41.922179400000005
+     ],
+     [
+      12.4894386,
+      41.924310899999995
+     ],
+     [
+      12.491530100000002,
+      41.926444799999985
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_salaria_late_0",
+    "kind": "street",
+    "w_m": 10,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       547,
+       522
+      ],
+      [
+       584,
+       488
+      ],
+      [
+       616,
+       456
+      ],
+      [
+       646,
+       412
+      ],
+      [
+       682,
+       369
+      ],
+      [
+       712,
+       326
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.49713516736807,
+      41.9195077796995
+     ],
+     [
+      12.4991127,
+      41.92086310000001
+     ],
+     [
+      12.5021597,
+      41.9231369
+     ],
+     [
+      12.505011100000003,
+      41.92626689999999
+     ],
+     [
+      12.5084369,
+      41.9293239
+     ],
+     [
+      12.5112893,
+      41.932382399999995
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_nomentana_late_0",
+    "kind": "street",
+    "w_m": 11,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       686,
+       613
+      ],
+      [
+       724,
+       565
+      ],
+      [
+       765,
+       514
+      ],
+      [
+       805,
+       461
+      ],
+      [
+       841,
+       415
+      ],
+      [
+       878,
+       365
+      ],
+      [
+       918,
+       312
+      ],
+      [
+       944,
+       281
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.50891,
+      41.9119234
+     ],
+     [
+      12.512524500000001,
+      41.9153363
+     ],
+     [
+      12.5164252,
+      41.91896229999999
+     ],
+     [
+      12.5202299,
+      41.92273099999999
+     ],
+     [
+      12.5236552,
+      41.9260015
+     ],
+     [
+      12.527175,
+      41.92955690000001
+     ],
+     [
+      12.5309809,
+      41.93332529999999
+     ],
+     [
+      12.533456300000001,
+      41.93552869999999
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_tiburtina_late_0",
+    "kind": "street",
+    "w_m": 10,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       739,
+       630
+      ],
+      [
+       778,
+       647
+      ],
+      [
+       823,
+       663
+      ],
+      [
+       862,
+       646
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5139821,
+      41.91069729999999
+     ],
+     [
+      12.517716,
+      41.9094746
+     ],
+     [
+      12.522022800000002,
+      41.90832160000001
+     ],
+     [
+      12.5257443,
+      41.909523199999995
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_montesacro_main_0",
+    "kind": "street",
+    "w_m": 9,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       944,
+       281
+      ],
+      [
+       950,
+       251
+      ],
+      [
+       954,
+       217
+      ],
+      [
+       949,
+       177
+      ],
+      [
+       938,
+       143
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.533456300000001,
+      41.93552869999999
+     ],
+     [
+      12.5340197,
+      41.937666300000004
+     ],
+     [
+      12.5343904,
+      41.940089699999994
+     ],
+     [
+      12.5338985,
+      41.9429435
+     ],
+     [
+      12.532834800000002,
+      41.945371099999996
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_montesacro_loop_0",
+    "kind": "street",
+    "w_m": 7,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       929,
+       277
+      ],
+      [
+       938,
+       303
+      ],
+      [
+       958,
+       329
+      ],
+      [
+       980,
+       350
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5320206,
+      41.9358181
+     ],
+     [
+      12.5328902,
+      41.933961499999995
+     ],
+     [
+      12.5348114,
+      41.93210189999999
+     ],
+     [
+      12.5369221,
+      41.93059819999999
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_monteverde_late_axis_0",
+    "kind": "street",
+    "w_m": 8,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       139,
+       252
+      ],
+      [
+       159,
+       284
+      ],
+      [
+       174,
+       318
+      ],
+      [
+       187,
+       352
+      ],
+      [
+       194,
+       390
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4553908,
+      41.88525799999999
+     ],
+     [
+      12.457380700000002,
+      41.882862599999996
+     ],
+     [
+      12.45887,
+      41.880318800000005
+     ],
+     [
+      12.460159200000001,
+      41.87777549999999
+     ],
+     [
+      12.4608473,
+      41.874934700000004
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_appia_late_0",
+    "kind": "street",
+    "w_m": 12,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       609,
+       257
+      ],
+      [
+       657,
+       287
+      ],
+      [
+       702,
+       315
+      ],
+      [
+       748,
+       347
+      ],
+      [
+       791,
+       380
+      ],
+      [
+       838,
+       421
+      ],
+      [
+       871,
+       456
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.502382500000001,
+      41.88476839999999
+     ],
+     [
+      12.507171,
+      41.882513900000006
+     ],
+     [
+      12.509617430642137,
+      41.88136705100265
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_appia_late_1",
+    "kind": "street",
+    "w_m": 12,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       609,
+       257
+      ],
+      [
+       657,
+       287
+      ],
+      [
+       702,
+       315
+      ],
+      [
+       748,
+       347
+      ],
+      [
+       791,
+       380
+      ],
+      [
+       838,
+       421
+      ],
+      [
+       871,
+       456
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.516468164634945,
+      41.877877965172196
+     ],
+     [
+      12.5205335,
+      41.875528
+     ],
+     [
+      12.5252164,
+      41.87245120000002
+     ],
+     [
+      12.528501700000001,
+      41.869826499999995
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_tuscolana_late_0",
+    "kind": "street",
+    "w_m": 10,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       717,
+       225
+      ],
+      [
+       758,
+       258
+      ],
+      [
+       801,
+       293
+      ],
+      [
+       848,
+       329
+      ],
+      [
+       894,
+       369
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.513805486041402,
+      41.88675868043307
+     ],
+     [
+      12.516944391480596,
+      41.88485642088271
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_tuscolana_late_1",
+    "kind": "street",
+    "w_m": 10,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       717,
+       225
+      ],
+      [
+       758,
+       258
+      ],
+      [
+       801,
+       293
+      ],
+      [
+       848,
+       329
+      ],
+      [
+       894,
+       369
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.517186274873819,
+      41.88470982471247
+     ],
+     [
+      12.5172802,
+      41.88465289999999
+     ],
+     [
+      12.5215663,
+      41.88202559999999
+     ],
+     [
+      12.5262516,
+      41.8793223
+     ],
+     [
+      12.530835,
+      41.8763203
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_prenestina_late_0",
+    "kind": "street",
+    "w_m": 11,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       735,
+       182
+      ],
+      [
+       788,
+       198
+      ],
+      [
+       837,
+       210
+      ],
+      [
+       887,
+       224
+      ],
+      [
+       932,
+       251
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.516671855752653,
+      41.889957606719015
+     ],
+     [
+      12.520302500000001,
+      41.8891275
+     ],
+     [
+      12.525197600000002,
+      41.8882169
+     ],
+     [
+      12.5301918,
+      41.8871564
+     ],
+     [
+      12.5346807,
+      41.8851258
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_garbatella_axis_0",
+    "kind": "street",
+    "w_m": 8,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       414,
+       522
+      ],
+      [
+       446,
+       541
+      ],
+      [
+       477,
+       559
+      ],
+      [
+       513,
+       579
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4827963,
+      41.86501899999999
+     ],
+     [
+      12.4859884,
+      41.86359130000001
+     ],
+     [
+      12.489080800000002,
+      41.862238500000004
+     ],
+     [
+      12.492672100000002,
+      41.860734900000004
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_garbatella_ring_0",
+    "kind": "street",
+    "w_m": 7,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       420,
+       572
+      ],
+      [
+       451,
+       565
+      ],
+      [
+       473,
+       541
+      ],
+      [
+       504,
+       535
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.483379200000002,
+      41.86128169999999
+     ],
+     [
+      12.48648,
+      41.861796799999986
+     ],
+     [
+      12.488687200000001,
+      41.86358440000001
+     ],
+     [
+      12.4917878,
+      41.864024699999995
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome09_fascist_1944_ostiense_0",
+    "kind": "street",
+    "w_m": 10,
+    "provenance": {
+     "basis": "research/rome09_fascist_whole_basis.md; AMS1944 own street alignment, width and small bends estimated; not modernOSM.",
+     "source_pixels": [
+      [
+       377,
+       395
+      ],
+      [
+       391,
+       438
+      ],
+      [
+       402,
+       477
+      ],
+      [
+       416,
+       506
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4791401,
+      41.87451719999999
+     ],
+     [
+      12.4805254,
+      41.871300999999995
+     ],
+     [
+      12.4816119,
+      41.868384299999995
+     ],
+     [
+      12.4830016,
+      41.86621400000001
+     ]
+    ]
+   }
+  }
+ ]
+}

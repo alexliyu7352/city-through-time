@@ -1,0 +1,1148 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_via_recta",
+    "kind": "street",
+    "model": {
+     "w_m": 5.5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       337,
+       315
+      ],
+      [
+       410,
+       326
+      ],
+      [
+       476,
+       327
+      ],
+      [
+       533,
+       319
+      ],
+      [
+       600,
+       321
+      ],
+      [
+       657,
+       324
+      ]
+     ],
+     "river_fix": "M03_streets.txt pp284–288 supports the continuing Aelius crossing and approximate Vatican/left-bank corridors; research/rome_restart_lm02_bridge_audit.md supplies G surviving axis control. E: the estimated bank connector is reconnected to the native low-deck replacement bank entry; the north connector also replaces the old second river point with local[-70,-137]m, the unsurveyed connector, width and present shoreline are not a1300 street/bank reconstruction. No street is drawn along the riverbed or over the bridge deck, which belongs to the800 owner."
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.466520965903417,
+      41.901218140805604
+     ],
+     [
+      12.4709742,
+      41.9013408
+     ],
+     [
+      12.4751213,
+      41.9013207
+     ],
+     [
+      12.4786981,
+      41.9017192
+     ],
+     [
+      12.4829086,
+      41.9016522
+     ],
+     [
+      12.4864914,
+      41.9015342
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_via_lata",
+    "kind": "street",
+    "model": {
+     "w_m": 6
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       474,
+       197
+      ],
+      [
+       487,
+       256
+      ],
+      [
+       505,
+       322
+      ],
+      [
+       528,
+       390
+      ],
+      [
+       560,
+       448
+      ],
+      [
+       599,
+       488
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4749251,
+      41.9074216
+     ],
+     [
+      12.4757739,
+      41.9046576
+     ],
+     [
+      12.4769406,
+      41.9015671
+     ],
+     [
+      12.4784223,
+      41.8983847
+     ],
+     [
+      12.4804639,
+      41.8956753
+     ],
+     [
+      12.4829354,
+      41.8938134
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_via_papalis",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       337,
+       315
+      ],
+      [
+       378,
+       342
+      ],
+      [
+       420,
+       380
+      ],
+      [
+       460,
+       410
+      ],
+      [
+       500,
+       435
+      ],
+      [
+       555,
+       465
+      ],
+      [
+       575,
+       490
+      ],
+      [
+       619,
+       516
+      ],
+      [
+       659,
+       537
+      ],
+      [
+       703,
+       558
+      ],
+      [
+       746,
+       567
+      ],
+      [
+       822,
+       611
+      ],
+      [
+       906,
+       643
+      ]
+     ],
+     "river_fix": "M03_streets.txt pp284–288 supports the continuing Aelius crossing and approximate Vatican/left-bank corridors; research/rome_restart_lm02_bridge_audit.md supplies G surviving axis control. E: the estimated bank connector is reconnected to the native low-deck replacement bank entry; the north connector also replaces the old second river point with local[-70,-137]m, the unsurveyed connector, width and present shoreline are not a1300 street/bank reconstruction. No street is drawn along the riverbed or over the bridge deck, which belongs to the800 owner."
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.466520965903417,
+      41.901218140805604
+     ],
+     [
+      12.4689725,
+      41.9005768
+     ],
+     [
+      12.4716319,
+      41.8988103
+     ],
+     [
+      12.4741611,
+      41.8974185
+     ],
+     [
+      12.4766876,
+      41.8962612
+     ],
+     [
+      12.4801589,
+      41.8948753
+     ],
+     [
+      12.4814288,
+      41.89371
+     ],
+     [
+      12.4842067,
+      41.8925072
+     ],
+     [
+      12.4867307,
+      41.8915375
+     ],
+     [
+      12.4895058,
+      41.8905694
+     ],
+     [
+      12.4922117,
+      41.890164
+     ],
+     [
+      12.4970088,
+      41.8881287
+     ],
+     [
+      12.502302,
+      41.8866596
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_arenula",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       429,
+       351
+      ],
+      [
+       452,
+       405
+      ],
+      [
+       481,
+       452
+      ],
+      [
+       520,
+       497
+      ],
+      [
+       555,
+       530
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4721815,
+      41.9001751
+     ],
+     [
+      12.4736558,
+      41.8976499
+     ],
+     [
+      12.4755032,
+      41.8954556
+     ],
+     [
+      12.4779775,
+      41.8933593
+     ],
+     [
+      12.4801939,
+      41.8918245
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_pelligrino",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       429,
+       351
+      ],
+      [
+       477,
+       375
+      ],
+      [
+       519,
+       398
+      ],
+      [
+       549,
+       431
+      ],
+      [
+       575,
+       461
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4721815,
+      41.9001751
+     ],
+     [
+      12.4752101,
+      41.8990681
+     ],
+     [
+      12.4778612,
+      41.8980056
+     ],
+     [
+      12.4797637,
+      41.8964688
+     ],
+     [
+      12.4814132,
+      41.8950711
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_regola_axis",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       440,
+       411
+      ],
+      [
+       478,
+       448
+      ],
+      [
+       521,
+       492
+      ],
+      [
+       547,
+       524
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4729052,
+      41.8973634
+     ],
+     [
+      12.4753125,
+      41.8956422
+     ],
+     [
+      12.4780376,
+      41.8935944
+     ],
+     [
+      12.4796881,
+      41.8921029
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_coronari_link",
+    "kind": "street",
+    "model": {
+     "w_m": 4
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       476,
+       311
+      ],
+      [
+       477,
+       375
+      ],
+      [
+       481,
+       412
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4751126,
+      41.9020716
+     ],
+     [
+      12.4752101,
+      41.8990681
+     ],
+     [
+      12.4754815,
+      41.8973331
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_navona_east",
+    "kind": "street",
+    "model": {
+     "w_m": 4
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       533,
+       319
+      ],
+      [
+       545,
+       357
+      ],
+      [
+       549,
+       389
+      ],
+      [
+       549,
+       431
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4786981,
+      41.9017192
+     ],
+     [
+      12.4794725,
+      41.8999404
+     ],
+     [
+      12.4797411,
+      41.8984401
+     ],
+     [
+      12.4797637,
+      41.8964688
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_campus_cross",
+    "kind": "street",
+    "model": {
+     "w_m": 4
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       452,
+       405
+      ],
+      [
+       481,
+       412
+      ],
+      [
+       520,
+       420
+      ],
+      [
+       563,
+       424
+      ],
+      [
+       602,
+       424
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4736558,
+      41.8976499
+     ],
+     [
+      12.4754815,
+      41.8973331
+     ],
+     [
+      12.4779359,
+      41.8969734
+     ],
+     [
+      12.4806394,
+      41.8968029
+     ],
+     [
+      12.4830895,
+      41.8968186
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_capitol_west",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       547,
+       524
+      ],
+      [
+       573,
+       512
+      ],
+      [
+       599,
+       488
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4796881,
+      41.8921029
+     ],
+     [
+      12.4813149,
+      41.8926765
+     ],
+     [
+      12.4829354,
+      41.8938134
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_forum_velabrum",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       599,
+       488
+      ],
+      [
+       619,
+       516
+      ],
+      [
+       628,
+       545
+      ],
+      [
+       616,
+       579
+      ],
+      [
+       605,
+       608
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4829354,
+      41.8938134
+     ],
+     [
+      12.4842067,
+      41.8925072
+     ],
+     [
+      12.4847876,
+      41.8911497
+     ],
+     [
+      12.484052,
+      41.889549
+     ],
+     [
+      12.4833766,
+      41.8881835
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_subura",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       659,
+       537
+      ],
+      [
+       699,
+       500
+      ],
+      [
+       747,
+       467
+      ],
+      [
+       795,
+       442
+      ],
+      [
+       845,
+       405
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4867307,
+      41.8915375
+     ],
+     [
+      12.4892237,
+      41.8932901
+     ],
+     [
+      12.4922216,
+      41.894858
+     ],
+     [
+      12.4952238,
+      41.8960504
+     ],
+     [
+      12.4983455,
+      41.8978067
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_via_ostiensis",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       605,
+       608
+      ],
+      [
+       596,
+       662
+      ],
+      [
+       589,
+       723
+      ],
+      [
+       577,
+       782
+      ],
+      [
+       566,
+       852
+      ],
+      [
+       570,
+       918
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4833766,
+      41.8881835
+     ],
+     [
+      12.4828402,
+      41.8856453
+     ],
+     [
+      12.4824332,
+      41.8827794
+     ],
+     [
+      12.4817111,
+      41.8800053
+     ],
+     [
+      12.4810579,
+      41.8767153
+     ],
+     [
+      12.4813445,
+      41.8736191
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_trastevere_main",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       556,
+       565
+      ],
+      [
+       518,
+       588
+      ],
+      [
+       481,
+       617
+      ],
+      [
+       447,
+       644
+      ],
+      [
+       409,
+       660
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4802755,
+      41.8901821
+     ],
+     [
+      12.477901,
+      41.8890873
+     ],
+     [
+      12.4755925,
+      41.8877112
+     ],
+     [
+      12.4734715,
+      41.8864301
+     ],
+     [
+      12.4710934,
+      41.8856637
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_trastevere_cross",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       481,
+       558
+      ],
+      [
+       481,
+       617
+      ],
+      [
+       484,
+       670
+      ],
+      [
+       491,
+       717
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4755606,
+      41.8904804
+     ],
+     [
+      12.4755925,
+      41.8877112
+     ],
+     [
+      12.4758096,
+      41.8852247
+     ],
+     [
+      12.4762747,
+      41.8830216
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_clivus_scauri",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       746,
+       567
+      ],
+      [
+       733,
+       614
+      ],
+      [
+       767,
+       650
+      ],
+      [
+       810,
+       679
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4922117,
+      41.890164
+     ],
+     [
+      12.49142,
+      41.8879528
+     ],
+     [
+      12.4935747,
+      41.8862765
+     ],
+     [
+      12.4962908,
+      41.8849323
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_esquiline",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       747,
+       467
+      ],
+      [
+       783,
+       453
+      ],
+      [
+       845,
+       405
+      ],
+      [
+       906,
+       363
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4922216,
+      41.894858
+     ],
+     [
+      12.4944757,
+      41.8955294
+     ],
+     [
+      12.4983455,
+      41.8978067
+     ],
+     [
+      12.5021558,
+      41.8998019
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_alta_semita",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       623,
+       449
+      ],
+      [
+       700,
+       365
+      ],
+      [
+       780,
+       293
+      ],
+      [
+       869,
+       210
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4844222,
+      41.8956536
+     ],
+     [
+      12.4892148,
+      41.8996269
+     ],
+     [
+      12.4942028,
+      41.9030381
+     ],
+     [
+      12.499751,
+      41.9069688
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_borgo_approach",
+    "kind": "street",
+    "model": {
+     "w_m": 5.5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count.",
+     "source_pixels": [
+      [
+       337,
+       315
+      ],
+      [
+       312,
+       314
+      ],
+      [
+       260,
+       313
+      ],
+      [
+       220,
+       312
+      ]
+     ],
+     "river_fix": "M03_streets.txt pp284–288 supports the continuing Aelius crossing and approximate Vatican/left-bank corridors; research/rome_restart_lm02_bridge_audit.md supplies G surviving axis control. E: the estimated bank connector is reconnected to the native low-deck replacement bank entry; the north connector also replaces the old second river point with local[-70,-137]m, the unsurveyed connector, width and present shoreline are not a1300 street/bank reconstruction. No street is drawn along the riverbed or over the bridge deck, which belongs to the800 owner."
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.466414877217957,
+      41.90245336589278
+     ],
+     [
+      12.464761659482226,
+      41.90244176134192
+     ],
+     [
+      12.4615431,
+      41.9018895
+     ],
+     [
+      12.4590294,
+      41.9019199
+     ]
+    ]
+   }
+  }
+ ]
+}

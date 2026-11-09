@@ -1,0 +1,41 @@
+{
+  "time_basis": "Asset-relative seconds; full_film_seconds are expected from protected old 0507 baseline only, not source at values.",
+  "g1_g2": {
+    "file": "assets/restart_sources/rome02_g1_g2.mp4",
+    "source_with": "r02_007",
+    "expected_on": 109.3,
+    "rendered_duration": 21.0,
+    "events": [
+      {"event": "Italian peninsula highlighted; Rome pin", "asset": [0, 4.65], "full_film_seconds": [109.3, 113.95]},
+      {"event": "Italy-to-Mediterranean crossfade", "asset": [4.65, 5.4], "full_film_seconds": [113.95, 114.7]},
+      {"event": "Outward expansion arrows draw", "asset": [5.4, 8.4], "full_film_seconds": [114.7, 117.7]},
+      {"event": "Outward arrows erased; grain/tribute/spoils arrows draw INTO Rome", "asset": [15, 19], "full_film_seconds": [124.3, 128.3]},
+      {"event": "Incoming supply relationships hold", "asset": [19, 21], "full_film_seconds": [128.3, 130.3]}
+    ]
+  },
+  "g3_g4": {
+    "file": "assets/restart_sources/rome02_g3_g4.mp4",
+    "source_with": "r02_017",
+    "expected_on": 153.4,
+    "rendered_duration": 23.334,
+    "events": [
+      {"event": "Gaul locality wash, roughly today's France; Rubicon/Rome named", "asset": [0, 4.65], "full_film_seconds": [153.4, 158.05]},
+      {"event": "Gaul-to-Rubicon schematic direction draws; complete before163.45", "asset": [4.65, 10.0], "full_film_seconds": [158.05, 163.4]},
+      {"event": "Rubicon-to-Rome direction draws", "asset": [10.7, 15.2], "full_film_seconds": [164.1, 168.6]},
+      {"event": "Civil war relationship and Romans-against-Romans label appear", "asset": [16.55, 23.3], "full_film_seconds": [169.95, 176.7]}
+    ],
+    "layout": "Rubicon label moved right/above the river pin with a short leader. First direction leg finishes163.40 on the rendered frame, before163.45 and before second starts164.1."
+  },
+  "native_contract_blockers": [
+    {"full_film_seconds": [108.8, 112.0], "kind": "full-screen node ring", "affects": "g1_g2"},
+    {"full_film_seconds": [163.6, 166.8], "kind": "full-screen node ring", "affects": "g3_g4"},
+    {"full_film_seconds": [172.6, 175.8], "kind": "full-screen node ring", "affects": "g3_g4"},
+    {"full_film_seconds": [212.7, 215.9], "kind": "full-screen node ring", "affects": "IP02"}
+  ],
+  "proposed_native_window_only_not_applied": {
+    "G1": "Delay start until about112.05 while retaining007; change start offset or re-render to preserve Italian emphasis before008.",
+    "G3": "153.4–163.3, then clear before next node ring. This already names Rubicon and Rome before019.",
+    "G4": "166.85–172.3; MP4 start13.45. Route arrivesRome168.6; civil relation visible169.95–172.3. Late-node readout should carry civil-war opponents173–175 on the model.",
+    "IP02": "Requires root decision; current requested8.68s cross-node panel is blocked. No force flag or engine changes."
+  }
+}

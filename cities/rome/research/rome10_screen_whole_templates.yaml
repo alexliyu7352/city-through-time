@@ -1,0 +1,30 @@
+rome10_screen_whole_stage:
+  kind: long_hall
+  name: 1953_soundstage_envelope
+  w_m: 20
+  d_m: 40
+  h_m: 12
+  roof:
+    shape: gabled
+    pitch_deg: 25
+    overhang_m: 0.35
+  basis: research/rome10_screen_whole_sources.md:1953 numbered soundstage footprints,
+    individually measured by native Source. Upper enclosure compares Peressutti1937
+    15x30x10.5 and20x40x12 theatres. 25degree roof/eaves height interpretation retained
+    from approved sheet; doors and trusses not reconstructed.
+rome10_screen_whole_auxiliary:
+  kind: prism
+  name: 1953_low_auxiliary_envelope
+  plan_m:
+  - - -2
+    - -2
+  - - 2
+    - -2
+  - - 2
+    - 2
+  - - -2
+    - 2
+  h_m: 4
+  basis: research/rome10_screen_whole_sources.md:1953 individually traced outer footprint.
+    Flat4m working height compares Peressutti1937 4m service room;8m where noted compares
+    its two-storey support wing. No measured elevations, windows or equipment claimed.

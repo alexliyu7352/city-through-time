@@ -1,0 +1,441 @@
+{
+  "baseline": "cities/rome_round13d_all",
+  "candidate": "cities/rome_round14_music_all",
+  "duration": 1808.233,
+  "status": "Complete: ten native audio/audition.py alternatives, five cue takes unset; waiting for user listening and Copy my picks",
+  "review_limit": "Measurements and story-based editing only; no claim of human listening",
+  "cues": [
+    {
+      "id": "R14_01",
+      "node": "founding_price",
+      "t0": 23.27,
+      "t1": 282.652,
+      "gain": -3,
+      "fade_in": 2.5,
+      "source": "Janiculum",
+      "reason": "Founding and republic start at the opening, 23.270s. The short fire prologue is narration only to preserve its flight-and-question storytelling.",
+      "alternatives": [
+        {
+          "take": "A",
+          "label": "漸次展開：從較輕的段落推進，剪去中段低谷，再收弱",
+          "direct_source": "janiculum",
+          "from": 32.9,
+          "to": 344.0,
+          "skips": [
+            [
+              95.9,
+              143.8
+            ]
+          ],
+          "quality_note": "原錄音pp段會被絕對-45dBFS靜音門檻標記；是有意保留的低密度樂句，非音檔中斷，待使用者實聽。",
+          "description_zh": "漸次展開：從較輕的段落推進，剪去中段低谷，再收弱"
+        },
+        {
+          "take": "B",
+          "label": "主題先進場：直接從較濃的抒情段開始，保留夜色收句",
+          "direct_source": "janiculum",
+          "from": 119.0,
+          "to": 410.0,
+          "skips": [
+            [
+              343.8,
+              369.9
+            ]
+          ],
+          "quality_note": "保留原曲夜色尾段及鳥鳴；波形選點不等於樂句聽審。",
+          "description_zh": "主題先進場：直接從較濃的抒情段開始，保留夜色收句"
+        }
+      ]
+    },
+    {
+      "id": "R14_02",
+      "node": "imperial_height",
+      "t0": 282.652,
+      "t1": 472.21,
+      "gain": -4,
+      "fade_in": 2.5,
+      "source": "Appian Way",
+      "reason": "Empire and fire: compare restrained early/middle development; avoid the victorious final brass under tragedy.",
+      "alternatives": [
+        {
+          "take": "A",
+          "label": "克制的逼近：由低密度開場連續推進，較強段留到還地與競技場",
+          "direct_source": "appian_way",
+          "from": 0.3,
+          "to": 195.858,
+          "skips": [],
+          "quality_note": "前段長pp／行進由弱至強屬刻意保留；原生量測可能標記silent/gap，並非跑完或數位靜音。",
+          "description_zh": "克制的逼近：由低密度開場連續推進，較強段留到還地與競技場"
+        },
+        {
+          "take": "B",
+          "label": "更快的建城高潮：略過後段重複推進，較強奏放到競技場與帝國峰頂",
+          "direct_source": "appian_way",
+          "from": 33.9,
+          "to": 260.0,
+          "skips": [
+            [
+              164.1,
+              197.2
+            ]
+          ],
+          "quality_note": "較強銅管於火災及逃難後出現，cue另降9dB；仍待實際聽審。",
+          "description_zh": "更快的建城高潮：略過後段重複推進，較強奏放到競技場與帝國峰頂"
+        }
+      ]
+    },
+    {
+      "id": "R14_03",
+      "node": "another_centre",
+      "t0": 472.21,
+      "t1": 911.112,
+      "gain": -7,
+      "fade_in": 2.5,
+      "source": "Catacomb",
+      "reason": "Decline, smaller medieval city and returning pilgrims; any repeated musical phrases must be declared.",
+      "alternatives": [
+        {
+          "take": "A",
+          "label": "保留原章大弧線：中段延展一次，保留較強聖詠與自然收弱",
+          "from": 6.098,
+          "to": 448.0,
+          "seam_s": 1.5,
+          "segments": [
+            {
+              "source": "catacomb",
+              "from": 0.3,
+              "to": 192.5
+            },
+            {
+              "source": "catacomb",
+              "from": 119.9,
+              "to": 377.2
+            }
+          ],
+          "quality_note": "119.9–192.5秒重複一次；不是足長單次原曲。",
+          "description_zh": "保留原章大弧線：中段延展一次，保留較強聖詠與自然收弱"
+        },
+        {
+          "take": "B",
+          "label": "較低密度的縮城：重用中段，刪去最大強奏，以尾段低聲收束",
+          "from": 0.898,
+          "to": 442.8,
+          "seam_s": 1.5,
+          "segments": [
+            {
+              "source": "catacomb",
+              "from": 34.4,
+              "to": 232.4
+            },
+            {
+              "source": "catacomb",
+              "from": 119.9,
+              "to": 242.6
+            },
+            {
+              "source": "catacomb",
+              "from": 178.2,
+              "to": 232.4
+            },
+            {
+              "source": "catacomb",
+              "from": 304.8,
+              "to": 377.2
+            }
+          ],
+          "quality_note": "中段兩處重複、242.6–304.8秒最大強奏省略；交叉需使用者聽審。",
+          "description_zh": "較低密度的縮城：重用中段，刪去最大強奏，以尾段低聲收束"
+        }
+      ]
+    },
+    {
+      "id": "R14_04",
+      "node": "made_again",
+      "t0": 911.112,
+      "t1": 1492.095,
+      "gain": -4,
+      "fade_in": 2.5,
+      "source": "Ancient Airs and Dances Suite No. 1",
+      "reason": "Papal rebuilding through capital and war: reserve a restrained section for clearances, 1943 and the empty room; no festive dance imposed on these scenes.",
+      "alternatives": [
+        {
+          "take": "A",
+          "label": "較早重建：Villanella柔和開場後較早轉Balletto，戰前回Villanella並壓低迫害段",
+          "from": 0.017,
+          "to": 587.0,
+          "seam_s": 2.0,
+          "segments": [
+            {
+              "source": "ancient_airs_3",
+              "from": 20.9,
+              "to": 80.9,
+              "gain_db": 8
+            },
+            {
+              "source": "ancient_airs_1",
+              "from": 3.4,
+              "to": 173.1
+            },
+            {
+              "source": "ancient_airs_3",
+              "from": 20.9,
+              "to": 162.2,
+              "gain_db": 8
+            },
+            {
+              "source": "ancient_airs_3",
+              "from": 57.9,
+              "to": 279.9,
+              "gain_db": 8
+            }
+          ],
+          "envelope_db": [
+            [
+              0,
+              -3
+            ],
+            [
+              45,
+              -3
+            ],
+            [
+              58,
+              0
+            ],
+            [
+              350,
+              0
+            ],
+            [
+              365,
+              -4
+            ],
+            [
+              429,
+              -6
+            ],
+            [
+              469,
+              -8
+            ],
+            [
+              511,
+              -11
+            ],
+            [
+              566,
+              -11
+            ],
+            [
+              587,
+              -8
+            ]
+          ],
+          "quality_note": "只取Suite I與III；III20.9–80.9、57.9–162.2等處重複。刪III開頭約20秒低谷及279.9秒後12.5秒低尾，不用靜音補長；365秒後用Villanella連續承載清拆/迫害/空房並下壓。",
+          "description_zh": "較早重建：Villanella柔和開場後較早轉Balletto，戰前回Villanella並壓低迫害段"
+        },
+        {
+          "take": "B",
+          "label": "較久停留失落：柔和開場延長40秒，重建舞曲較晚進，迫害與空房更克制",
+          "from": 0.017,
+          "to": 587.0,
+          "seam_s": 2.0,
+          "segments": [
+            {
+              "source": "ancient_airs_3",
+              "from": 20.9,
+              "to": 120.9,
+              "gain_db": 8
+            },
+            {
+              "source": "ancient_airs_1",
+              "from": 3.4,
+              "to": 110.8
+            },
+            {
+              "source": "ancient_airs_3",
+              "from": 39.7,
+              "to": 203.3,
+              "gain_db": 8
+            },
+            {
+              "source": "ancient_airs_3",
+              "from": 57.9,
+              "to": 279.9,
+              "gain_db": 8
+            }
+          ],
+          "envelope_db": [
+            [
+              0,
+              -5
+            ],
+            [
+              86,
+              -5
+            ],
+            [
+              98,
+              0
+            ],
+            [
+              350,
+              -2
+            ],
+            [
+              365,
+              -6
+            ],
+            [
+              429,
+              -8
+            ],
+            [
+              469,
+              -10
+            ],
+            [
+              511,
+              -14
+            ],
+            [
+              566,
+              -14
+            ],
+            [
+              587,
+              -10
+            ]
+          ],
+          "quality_note": "Suite III多處重複；舞曲進場比A晚40秒，悲劇段較低電平。III低尾已去除，逐段+8dB只平衡同錄音不同樂章原始音量，非額外樂器或假低頻。 B於1116.5秒前後提前回Villanella，讓1849戰鬥前已離開Balletto；III39.7–203.3秒內部重複已列。",
+          "description_zh": "較久停留失落：柔和開場延長40秒，重建舞曲較晚進，迫害與空房更克制；舞曲在1849戰鬥前交回Villanella"
+        }
+      ]
+    },
+    {
+      "id": "R14_05",
+      "node": "screen_rome",
+      "t0": 1492.095,
+      "t1": 1808.233,
+      "gain": -4,
+      "fade_in": 2.5,
+      "source": "Villa Borghese",
+      "reason": "Start lively Villa only after war; compare reordered phrases, lower sparse passage at pandemic, complete phrase into ending.",
+      "alternatives": [
+        {
+          "take": "A",
+          "label": "戰後活力轉夜色：Villa只用前110秒，疫情前轉Janiculum，尾聲回夜曲",
+          "from": 5.262,
+          "to": 321.4,
+          "seam_s": 2.0,
+          "segments": [
+            {
+              "source": "villa_borghese",
+              "from": 0.3,
+              "to": 110.7
+            },
+            {
+              "source": "janiculum",
+              "from": 0.3,
+              "to": 119.0,
+              "gain_db": 16
+            },
+            {
+              "source": "janiculum",
+              "from": 313.7,
+              "to": 410.0,
+              "gain_db": 10
+            }
+          ],
+          "envelope_db": [
+            [
+              0,
+              0
+            ],
+            [
+              166,
+              -2
+            ],
+            [
+              174,
+              -8
+            ],
+            [
+              193,
+              -8
+            ],
+            [
+              203,
+              -3
+            ],
+            [
+              321.4,
+              -3
+            ]
+          ],
+          "quality_note": "兩首同團Respighi來源，疫情使用Janiculum低密度段；沒有重複整首Villa。",
+          "description_zh": "戰後活力轉夜色：Villa只用前110秒，疫情前轉Janiculum，尾聲回夜曲"
+        },
+        {
+          "take": "B",
+          "label": "保留較多城市律動：Villa內部樂句重複，疫情轉弱，尾聲同樣回收Janiculum",
+          "from": 7.162,
+          "to": 323.3,
+          "seam_s": 2.0,
+          "segments": [
+            {
+              "source": "villa_borghese",
+              "from": 0.3,
+              "to": 110.7
+            },
+            {
+              "source": "villa_borghese",
+              "from": 44.1,
+              "to": 110.7
+            },
+            {
+              "source": "janiculum",
+              "from": 32.9,
+              "to": 119.0,
+              "gain_db": 16
+            },
+            {
+              "source": "janiculum",
+              "from": 343.8,
+              "to": 410.0,
+              "gain_db": 16
+            }
+          ],
+          "envelope_db": [
+            [
+              0,
+              0
+            ],
+            [
+              162,
+              -3
+            ],
+            [
+              172,
+              -10
+            ],
+            [
+              194,
+              -10
+            ],
+            [
+              204,
+              -3
+            ],
+            [
+              323.3,
+              -3
+            ]
+          ],
+          "quality_note": "Villa44.1–110.7秒重複一次；疫情前後以低密度Janiculum取代歡騰律動。 原生low=0.016標no low end，本版保較輕薄音色，是否過薄由使用者實聽，不補假低頻。",
+          "description_zh": "保留較多城市律動：Villa內部樂句重複，疫情轉弱，尾聲同樣回收Janiculum"
+        }
+      ]
+    }
+  ]
+}

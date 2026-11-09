@@ -1,0 +1,49 @@
+place: The native east bank of the Tiber beside the early Emporium and Aventine service quarter, working shore point 12.4732845 E, 41.8815492 N; native camera aim 12.47312 E, 41.88155 N just over the water
+when: Around 160 BCE; an anonymous grain delivery after the 174 BCE Emporium improvements, not a particular documented shipload
+picture: >-
+  EDIT the native white-model reference, preserving exactly its camera, framing, lens,
+  every existing building outline, ground slope and the ACTUAL river mask and shoreline.
+  This is a genuinely close native camera at the river bank. Use the exact visible water
+  on the left/foreground for one modest low wooden cargo riverboat lying alongside the
+  bank, with its long axis following the native NE-SW shoreline. The boat is a conservative
+  imagined working vessel, not a reconstruction of a particular excavated ship. It can
+  continue beyond the near frame edge if perspective requires. Show timber gunwales,
+  plain grain sacks and a few ordinary clay amphorae in its open hold, with no tall masts.
+
+  The main action is a clear transfer of one heavy plant-fibre grain sack from the boat
+  to an ordinary adult porter ashore. One person on the boat steadies the load, a second
+  on the bank shoulders it, a third farther away carries another sack toward the existing
+  inland service quarter. A short plain removable timber gangplank may bridge only the
+  actual small bank/water gap. No new stone quay, long pier, embankment or invented stairs.
+  Workers have true ordinary adult proportions and plain short tunics, no specific
+  occupational uniform; physical weight and believable hands and feet. At the close
+  foreground native depth the nearest ordinary workers should be about 120–200px tall
+  at 1920×1080. Do not enlarge people relative to the reference's ground perspective.
+  Put legible boat/cargo/unloading in the lower-middle and foreground so the frame
+  does not become an empty muddy court. Unloading leads inland toward the existing
+  early port/service buildings about 250m away, which remain a much smaller backdrop.
+
+  Continue the model's actual river, earth bank and plain loading approach into natural
+  muted water, worn earth, timber and restrained stone surfaces. Paint only the visible
+  existing building forms with weathered plaster and muted roof tiles; distant buildings
+  are not the later enormous concrete barrel-vault warehouse. Natural readable daylight,
+  low-saturation documentary realism with extremely light painterly texture matching the
+  approved Rome living set. Fill black sky with natural sky, not black dots or stars.
+  Same native landscape 16:9 composition; no crop, postzoom or camera movement.
+avoid: >-
+  No relocated shoreline, new water outside the native mask, land replacing river,
+  Portus or imperial Ostia, fifty-vault Porticus Aemilia, Sullan concrete warehouse,
+  seagoing giant ship, tall merchant rig, Roman imperial relief copied as ship plan,
+  cranes, stone quays, extensive piers, regular monumental stairs, later Annona officials,
+  uniformed stevedores, modern packaging, labels, pallets, vehicles, chains, triumph,
+  general portrait, invented named cargo, giant people, empty lower half, text, watermark,
+  black starry sky, border, changed camera or changed building silhouettes.
+sources:
+  - research/rome_round13b_arrivals_sources.md; native water-mask east-bank point and NE-SW shore direction, about 10 m mapping uncertainty, not an ancient quay survey
+  - research/rome02_mid_whole_plan.md and rome02_mid_whole_review.md; approved 160 BCE early Emporium/service proxies, not the later vaulted warehouse
+  - research/rome02_mid_whole_spec.yaml; existing early-portico service ranges retain exact positions and estimated 8 × 55 m / h 3.5 m forms
+  - Livy 41.27.8, https://www.thelatinlibrary.com/livy/liv.41.shtml ; 174 BCE Emporium paving, timber boundary, repairs and river access
+  - Digital Augustan Rome, Porticus Aemilia (Emporium), https://www.digitalaugustanrome.org/records/porticus-aemilia-emporium/ ; early-portico versus later-warehouse chronology
+  - Livy 33.42 and 37.2, https://www.thelatinlibrary.com/livy/liv.33.shtml and https://www.thelatinlibrary.com/livy/liv.37.shtml ; second-century grain arriving in Rome, not this precise consignment
+  - Ostia Antica archaeological park, Grain and Bread, https://ostiaantica.cultura.gov.it/en/trails/grain-and-bread/ ; bounded comparison for river transfer and sacks carried on shoulders only, no imperial ship-plan/architecture/costume claim
+  - research/rome_round13_living_sources.md; r02_011; anonymous source-constrained delivery, not a composite triumph

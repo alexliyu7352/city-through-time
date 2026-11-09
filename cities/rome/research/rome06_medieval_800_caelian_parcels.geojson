@@ -1,0 +1,6911 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4955141,
+      41.8880862
+     ],
+     [
+      12.4945778,
+      41.8875326
+     ],
+     [
+      12.4938038,
+      41.8869229
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_lane_001",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.496749,
+      41.8870688
+     ],
+     [
+      12.4959206,
+      41.8864263
+     ],
+     [
+      12.4949072,
+      41.8858365
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_lane_002",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4967232,
+      41.8856399
+     ],
+     [
+      12.4963011,
+      41.8859565
+     ],
+     [
+      12.4956602,
+      41.8862747
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_lane_003",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4960424,
+      41.8865207
+     ],
+     [
+      12.4953747,
+      41.8869839
+     ],
+     [
+      12.4947345,
+      41.8876253
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_lane_004",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4954083,
+      41.8869605
+     ],
+     [
+      12.4948803,
+      41.8866801
+     ],
+     [
+      12.4943137,
+      41.8862044
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_lane_005",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4960454,
+      41.8876485
+     ],
+     [
+      12.4957231,
+      41.8873541
+     ],
+     [
+      12.4952373,
+      41.8871215
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_lane_006",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4946582,
+      41.8884142
+     ],
+     [
+      12.4942347,
+      41.8882852
+     ],
+     [
+      12.4932067,
+      41.8878128
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_lane_007",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4943994,
+      41.8873921
+     ],
+     [
+      12.4939944,
+      41.8876487
+     ],
+     [
+      12.4936585,
+      41.8880204
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_lane_008",
+    "kind": "street",
+    "w_m": 3.5,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.495925,
+       41.8857672
+      ],
+      [
+       12.4958139,
+       41.8856422
+      ],
+      [
+       12.4960146,
+       41.8855426
+      ],
+      [
+       12.4961257,
+       41.8856675
+      ],
+      [
+       12.495925,
+       41.8857672
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 144.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.495361,
+       41.8858203
+      ],
+      [
+       12.4954843,
+       41.885702
+      ],
+      [
+       12.4956744,
+       41.8858126
+      ],
+      [
+       12.4955511,
+       41.885931
+      ],
+      [
+       12.495361,
+       41.8858203
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 216.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.496231,
+       41.8852319
+      ],
+      [
+       12.4963419,
+       41.8853569
+      ],
+      [
+       12.496141,
+       41.8854564
+      ],
+      [
+       12.4960302,
+       41.8853313
+      ],
+      [
+       12.496231,
+       41.8852319
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 324.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4963651,
+       41.8857023
+      ],
+      [
+       12.4962229,
+       41.8855964
+      ],
+      [
+       12.4963929,
+       41.8854689
+      ],
+      [
+       12.4965351,
+       41.8855748
+      ],
+      [
+       12.4963651,
+       41.8857023
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 133.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4958047,
+       41.8860546
+      ],
+      [
+       12.4956936,
+       41.8859297
+      ],
+      [
+       12.4958943,
+       41.88583
+      ],
+      [
+       12.4960054,
+       41.885955
+      ],
+      [
+       12.4958047,
+       41.8860546
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 144.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4956668,
+       41.8854738
+      ],
+      [
+       12.4957777,
+       41.8855989
+      ],
+      [
+       12.4955768,
+       41.8856983
+      ],
+      [
+       12.4954659,
+       41.8855732
+      ],
+      [
+       12.4956668,
+       41.8854738
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 324.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.495918,
+       41.8853169
+      ],
+      [
+       12.4960289,
+       41.885442
+      ],
+      [
+       12.495828,
+       41.8855414
+      ],
+      [
+       12.4957172,
+       41.8854164
+      ],
+      [
+       12.495918,
+       41.8853169
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 324.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4961065,
+       41.8859458
+      ],
+      [
+       12.4959953,
+       41.8858209
+      ],
+      [
+       12.496196,
+       41.8857212
+      ],
+      [
+       12.4963071,
+       41.8858462
+      ],
+      [
+       12.4961065,
+       41.8859458
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 144.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4954415,
+       41.88606
+      ],
+      [
+       12.4955648,
+       41.8859417
+      ],
+      [
+       12.4957549,
+       41.8860523
+      ],
+      [
+       12.4956315,
+       41.8861706
+      ],
+      [
+       12.4954415,
+       41.88606
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 216.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4950329,
+       41.8858236
+      ],
+      [
+       12.4951562,
+       41.8857052
+      ],
+      [
+       12.4953463,
+       41.8858159
+      ],
+      [
+       12.4952229,
+       41.8859342
+      ],
+      [
+       12.4950329,
+       41.8858236
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 216.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4952168,
+       41.8859612
+      ],
+      [
+       12.4953401,
+       41.8858429
+      ],
+      [
+       12.4955302,
+       41.8859535
+      ],
+      [
+       12.4954069,
+       41.8860719
+      ],
+      [
+       12.4952168,
+       41.8859612
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 216.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4962891,
+       41.885023
+      ],
+      [
+       12.4963958,
+       41.8851433
+      ],
+      [
+       12.4962025,
+       41.8852389
+      ],
+      [
+       12.4960959,
+       41.8851186
+      ],
+      [
+       12.4962891,
+       41.885023
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.24,
+     16.03
+    ],
+    "theta_deg": 324.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4953748,
+       41.8855924
+      ],
+      [
+       12.4954679,
+       41.8856975
+      ],
+      [
+       12.4952992,
+       41.885781
+      ],
+      [
+       12.495206,
+       41.8856759
+      ],
+      [
+       12.4953748,
+       41.8855924
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.8,
+     14.0
+    ],
+    "theta_deg": 324.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4957267,
+       41.8858435
+      ],
+      [
+       12.4955957,
+       41.8856962
+      ],
+      [
+       12.4957534,
+       41.8856179
+      ],
+      [
+       12.4958844,
+       41.8857652
+      ],
+      [
+       12.4957267,
+       41.8858435
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.72,
+     19.65
+    ],
+    "theta_deg": 144.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4964581,
+       41.8854852
+      ],
+      [
+       12.4963203,
+       41.8853827
+      ],
+      [
+       12.4964301,
+       41.8853003
+      ],
+      [
+       12.4965679,
+       41.8854029
+      ],
+      [
+       12.4964581,
+       41.8854852
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.91,
+     16.14
+    ],
+    "theta_deg": 133.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4965768,
+       41.8857187
+      ],
+      [
+       12.4964658,
+       41.885636
+      ],
+      [
+       12.4965985,
+       41.8855365
+      ],
+      [
+       12.4967096,
+       41.8856191
+      ],
+      [
+       12.4965768,
+       41.8857187
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.61,
+     13.01
+    ],
+    "theta_deg": 133.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4963718,
+       41.8851629
+      ],
+      [
+       12.4964699,
+       41.8852736
+      ],
+      [
+       12.4963514,
+       41.8853322
+      ],
+      [
+       12.4962533,
+       41.8852216
+      ],
+      [
+       12.4963718,
+       41.8851629
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.79,
+     14.74
+    ],
+    "theta_deg": 324.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4961338,
+       41.8856198
+      ],
+      [
+       12.4960349,
+       41.8855461
+      ],
+      [
+       12.4961532,
+       41.8854574
+      ],
+      [
+       12.4962522,
+       41.885531
+      ],
+      [
+       12.4961338,
+       41.8856198
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_18",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.92,
+     11.6
+    ],
+    "theta_deg": 133.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4960941,
+       41.8851272
+      ],
+      [
+       12.4961876,
+       41.8852327
+      ],
+      [
+       12.4960182,
+       41.8853165
+      ],
+      [
+       12.4959247,
+       41.885211
+      ],
+      [
+       12.4960941,
+       41.8851272
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_19",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.87,
+     14.05
+    ],
+    "theta_deg": 324.81,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.496359,
+       41.8858537
+      ],
+      [
+       12.4962663,
+       41.8857847
+      ],
+      [
+       12.4963771,
+       41.8857016
+      ],
+      [
+       12.4964698,
+       41.8857706
+      ],
+      [
+       12.496359,
+       41.8858537
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_20",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.03,
+     10.86
+    ],
+    "theta_deg": 133.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4962736,
+       41.8855353
+      ],
+      [
+       12.4961845,
+       41.885469
+      ],
+      [
+       12.496291,
+       41.8853891
+      ],
+      [
+       12.4963801,
+       41.8854555
+      ],
+      [
+       12.4962736,
+       41.8855353
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b001_21",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.53,
+     10.44
+    ],
+    "theta_deg": 133.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b001",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4963575,
+       41.8863451
+      ],
+      [
+       12.4965021,
+       41.8862411
+      ],
+      [
+       12.4966693,
+       41.8863707
+      ],
+      [
+       12.4965247,
+       41.8864748
+      ],
+      [
+       12.4963575,
+       41.8863451
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4967731,
+       41.8863474
+      ],
+      [
+       12.4969177,
+       41.8862433
+      ],
+      [
+       12.4970848,
+       41.8863729
+      ],
+      [
+       12.4969402,
+       41.886477
+      ],
+      [
+       12.4967731,
+       41.8863474
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4959249,
+       41.8863289
+      ],
+      [
+       12.4960695,
+       41.8862248
+      ],
+      [
+       12.4962366,
+       41.8863544
+      ],
+      [
+       12.496092,
+       41.8864585
+      ],
+      [
+       12.4959249,
+       41.8863289
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4966031,
+       41.8866777
+      ],
+      [
+       12.4967477,
+       41.8865736
+      ],
+      [
+       12.4969148,
+       41.8867033
+      ],
+      [
+       12.4967702,
+       41.8868074
+      ],
+      [
+       12.4966031,
+       41.8866777
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4966376,
+       41.8861576
+      ],
+      [
+       12.4964953,
+       41.8860518
+      ],
+      [
+       12.4966654,
+       41.8859242
+      ],
+      [
+       12.4968076,
+       41.8860301
+      ],
+      [
+       12.4966376,
+       41.8861576
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 313.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4962505,
+       41.8862814
+      ],
+      [
+       12.4961394,
+       41.8861565
+      ],
+      [
+       12.49634,
+       41.8860568
+      ],
+      [
+       12.4964512,
+       41.8861818
+      ],
+      [
+       12.4962505,
+       41.8862814
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 324.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4969033,
+       41.886585
+      ],
+      [
+       12.4970479,
+       41.8864809
+      ],
+      [
+       12.4972151,
+       41.8866106
+      ],
+      [
+       12.4970705,
+       41.8867147
+      ],
+      [
+       12.4969033,
+       41.886585
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4962853,
+       41.8865899
+      ],
+      [
+       12.4964299,
+       41.8864858
+      ],
+      [
+       12.4965971,
+       41.8866155
+      ],
+      [
+       12.4964525,
+       41.8867195
+      ],
+      [
+       12.4962853,
+       41.8865899
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4968707,
+       41.8862487
+      ],
+      [
+       12.4967297,
+       41.8861438
+      ],
+      [
+       12.4968982,
+       41.8860173
+      ],
+      [
+       12.4970392,
+       41.8861223
+      ],
+      [
+       12.4968707,
+       41.8862487
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.83,
+     16.52
+    ],
+    "theta_deg": 313.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4965821,
+       41.8864796
+      ],
+      [
+       12.4967556,
+       41.8863547
+      ],
+      [
+       12.4968894,
+       41.8864584
+      ],
+      [
+       12.4967159,
+       41.8865834
+      ],
+      [
+       12.4965821,
+       41.8864796
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4966247,
+       41.8868987
+      ],
+      [
+       12.4967556,
+       41.8868045
+      ],
+      [
+       12.4969069,
+       41.8869218
+      ],
+      [
+       12.4967761,
+       41.8870161
+      ],
+      [
+       12.4966247,
+       41.8868987
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.1,
+     15.09
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4967172,
+       41.8859381
+      ],
+      [
+       12.4965477,
+       41.885812
+      ],
+      [
+       12.4966828,
+       41.8857107
+      ],
+      [
+       12.4968522,
+       41.8858368
+      ],
+      [
+       12.4967172,
+       41.8859381
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.88,
+     19.85
+    ],
+    "theta_deg": 313.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4961114,
+       41.8864549
+      ],
+      [
+       12.4962559,
+       41.8863508
+      ],
+      [
+       12.4964231,
+       41.8864804
+      ],
+      [
+       12.4962785,
+       41.8865845
+      ],
+      [
+       12.4961114,
+       41.8864549
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4966788,
+       41.8863653
+      ],
+      [
+       12.4965397,
+       41.8862618
+      ],
+      [
+       12.496706,
+       41.8861371
+      ],
+      [
+       12.4968451,
+       41.8862406
+      ],
+      [
+       12.4966788,
+       41.8863653
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.55,
+     16.3
+    ],
+    "theta_deg": 313.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4964115,
+       41.8867572
+      ],
+      [
+       12.4965453,
+       41.8866609
+      ],
+      [
+       12.4966999,
+       41.8867808
+      ],
+      [
+       12.4965662,
+       41.8868772
+      ],
+      [
+       12.4964115,
+       41.8867572
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.51,
+     15.42
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4967857,
+       41.8868194
+      ],
+      [
+       12.4969434,
+       41.8867058
+      ],
+      [
+       12.497065,
+       41.8868001
+      ],
+      [
+       12.4969073,
+       41.8869136
+      ],
+      [
+       12.4967857,
+       41.8868194
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.54,
+     18.18
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4964043,
+       41.8860964
+      ],
+      [
+       12.4962898,
+       41.8860112
+      ],
+      [
+       12.4964267,
+       41.8859085
+      ],
+      [
+       12.4965412,
+       41.8859937
+      ],
+      [
+       12.4964043,
+       41.8860964
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.1,
+     13.42
+    ],
+    "theta_deg": 313.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4970284,
+       41.8864306
+      ],
+      [
+       12.4971327,
+       41.8863555
+      ],
+      [
+       12.4972533,
+       41.886449
+      ],
+      [
+       12.497149,
+       41.8865241
+      ],
+      [
+       12.4970284,
+       41.8864306
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_18",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.43,
+     12.02
+    ],
+    "theta_deg": 224.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4958483,
+       41.8863531
+      ],
+      [
+       12.4957634,
+       41.8862575
+      ],
+      [
+       12.4958656,
+       41.8862068
+      ],
+      [
+       12.4959505,
+       41.8863023
+      ],
+      [
+       12.4958483,
+       41.8863531
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_19",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.19,
+     12.74
+    ],
+    "theta_deg": 324.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4968445,
+       41.886025
+      ],
+      [
+       12.4967343,
+       41.885943
+      ],
+      [
+       12.4968221,
+       41.8858771
+      ],
+      [
+       12.4969323,
+       41.8859591
+      ],
+      [
+       12.4968445,
+       41.886025
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_20",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.33,
+     12.91
+    ],
+    "theta_deg": 313.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4965564,
+       41.885989
+      ],
+      [
+       12.4964265,
+       41.8858924
+      ],
+      [
+       12.49653,
+       41.8858148
+      ],
+      [
+       12.4966598,
+       41.8859114
+      ],
+      [
+       12.4965564,
+       41.885989
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b002_21",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.17,
+     15.21
+    ],
+    "theta_deg": 313.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b002",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4950018,
+       41.886396
+      ],
+      [
+       12.4951251,
+       41.8862777
+      ],
+      [
+       12.4953152,
+       41.8863883
+      ],
+      [
+       12.4951918,
+       41.8865067
+      ],
+      [
+       12.4950018,
+       41.886396
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.495419,
+       41.8863978
+      ],
+      [
+       12.4955423,
+       41.8862794
+      ],
+      [
+       12.4957324,
+       41.8863901
+      ],
+      [
+       12.4956091,
+       41.8865084
+      ],
+      [
+       12.495419,
+       41.8863978
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4946313,
+       41.8861971
+      ],
+      [
+       12.4947813,
+       41.8860974
+      ],
+      [
+       12.4949414,
+       41.8862318
+      ],
+      [
+       12.4947915,
+       41.8863316
+      ],
+      [
+       12.4946313,
+       41.8861971
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 226.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4953756,
+       41.8867729
+      ],
+      [
+       12.495239,
+       41.886663
+      ],
+      [
+       12.4954156,
+       41.8865405
+      ],
+      [
+       12.4955521,
+       41.8866504
+      ],
+      [
+       12.4953756,
+       41.8867729
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 135.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4949278,
+       41.8861427
+      ],
+      [
+       12.4950512,
+       41.8860244
+      ],
+      [
+       12.4952412,
+       41.886135
+      ],
+      [
+       12.4951179,
+       41.8862534
+      ],
+      [
+       12.4949278,
+       41.8861427
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4948636,
+       41.8865827
+      ],
+      [
+       12.4949799,
+       41.8864604
+      ],
+      [
+       12.4951763,
+       41.8865647
+      ],
+      [
+       12.49506,
+       41.886687
+      ],
+      [
+       12.4948636,
+       41.8865827
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 213.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4947183,
+       41.8860058
+      ],
+      [
+       12.4948417,
+       41.8858875
+      ],
+      [
+       12.4950318,
+       41.8859981
+      ],
+      [
+       12.4949084,
+       41.8861164
+      ],
+      [
+       12.4947183,
+       41.8860058
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4951888,
+       41.8862624
+      ],
+      [
+       12.4953122,
+       41.8861441
+      ],
+      [
+       12.4955022,
+       41.8862547
+      ],
+      [
+       12.4953789,
+       41.886373
+      ],
+      [
+       12.4951888,
+       41.8862624
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.495773,
+       41.8866333
+      ],
+      [
+       12.4956364,
+       41.8865233
+      ],
+      [
+       12.495813,
+       41.8864009
+      ],
+      [
+       12.4959496,
+       41.8865108
+      ],
+      [
+       12.495773,
+       41.8866333
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 135.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4946645,
+       41.8864455
+      ],
+      [
+       12.4948445,
+       41.8863258
+      ],
+      [
+       12.4949726,
+       41.8864334
+      ],
+      [
+       12.4947927,
+       41.8865531
+      ],
+      [
+       12.4946645,
+       41.8864455
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.0,
+     20.0
+    ],
+    "theta_deg": 226.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4943657,
+       41.8861854
+      ],
+      [
+       12.4945002,
+       41.8860959
+      ],
+      [
+       12.494644,
+       41.8862166
+      ],
+      [
+       12.4945094,
+       41.8863061
+      ],
+      [
+       12.4943657,
+       41.8861854
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.94,
+     14.95
+    ],
+    "theta_deg": 226.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.494518,
+       41.8863258
+      ],
+      [
+       12.4946483,
+       41.8862391
+      ],
+      [
+       12.4947874,
+       41.8863559
+      ],
+      [
+       12.4946571,
+       41.8864426
+      ],
+      [
+       12.494518,
+       41.8863258
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.37,
+     14.48
+    ],
+    "theta_deg": 226.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4952436,
+       41.8864905
+      ],
+      [
+       12.4953652,
+       41.8863739
+      ],
+      [
+       12.49549,
+       41.8864466
+      ],
+      [
+       12.4953685,
+       41.8865632
+      ],
+      [
+       12.4952436,
+       41.8864905
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.14,
+     16.42
+    ],
+    "theta_deg": 36.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4956438,
+       41.8867398
+      ],
+      [
+       12.495547,
+       41.8866619
+      ],
+      [
+       12.4956721,
+       41.8865752
+      ],
+      [
+       12.4957688,
+       41.8866531
+      ],
+      [
+       12.4956438,
+       41.8867398
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.16,
+     11.8
+    ],
+    "theta_deg": 135.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4950395,
+       41.8867224
+      ],
+      [
+       12.4951306,
+       41.8866265
+      ],
+      [
+       12.4952846,
+       41.8867083
+      ],
+      [
+       12.4951934,
+       41.8868041
+      ],
+      [
+       12.4950395,
+       41.8867224
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.68,
+     13.06
+    ],
+    "theta_deg": 213.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4945137,
+       41.8860984
+      ],
+      [
+       12.4946577,
+       41.8860027
+      ],
+      [
+       12.4947602,
+       41.8860887
+      ],
+      [
+       12.4946162,
+       41.8861845
+      ],
+      [
+       12.4945137,
+       41.8860984
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.8,
+     15.99
+    ],
+    "theta_deg": 226.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4952999,
+       41.8868664
+      ],
+      [
+       12.4953922,
+       41.8867693
+      ],
+      [
+       12.4954961,
+       41.8868245
+      ],
+      [
+       12.4954038,
+       41.8869216
+      ],
+      [
+       12.4952999,
+       41.8868664
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.58,
+     13.23
+    ],
+    "theta_deg": 213.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4948477,
+       41.8863197
+      ],
+      [
+       12.4949822,
+       41.8862302
+      ],
+      [
+       12.495078,
+       41.8863106
+      ],
+      [
+       12.4949435,
+       41.8864001
+      ],
+      [
+       12.4948477,
+       41.8863197
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_18",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.96,
+     14.95
+    ],
+    "theta_deg": 226.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4955222,
+       41.8868369
+      ],
+      [
+       12.4954278,
+       41.8867609
+      ],
+      [
+       12.4955498,
+       41.8866763
+      ],
+      [
+       12.4956442,
+       41.8867522
+      ],
+      [
+       12.4955222,
+       41.8868369
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_19",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.82,
+     11.52
+    ],
+    "theta_deg": 135.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.495569,
+       41.8866388
+      ],
+      [
+       12.4954617,
+       41.8865524
+      ],
+      [
+       12.4955541,
+       41.8864882
+      ],
+      [
+       12.4956614,
+       41.8865746
+      ],
+      [
+       12.495569,
+       41.8866388
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b003_20",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.47,
+     13.09
+    ],
+    "theta_deg": 135.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b003",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4943371,
+       41.8867887
+      ],
+      [
+       12.4944871,
+       41.886689
+      ],
+      [
+       12.4946473,
+       41.8868235
+      ],
+      [
+       12.4944973,
+       41.8869232
+      ],
+      [
+       12.4943371,
+       41.8867887
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 46.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4945245,
+       41.8871615
+      ],
+      [
+       12.4946702,
+       41.8870582
+      ],
+      [
+       12.494836,
+       41.8871888
+      ],
+      [
+       12.4946903,
+       41.8872921
+      ],
+      [
+       12.4945245,
+       41.8871615
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4949914,
+       41.8871234
+      ],
+      [
+       12.4948305,
+       41.8870337
+      ],
+      [
+       12.4949745,
+       41.8868893
+      ],
+      [
+       12.4951355,
+       41.886979
+      ],
+      [
+       12.4949914,
+       41.8871234
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 125.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4941836,
+       41.8865175
+      ],
+      [
+       12.4943336,
+       41.8864178
+      ],
+      [
+       12.4944938,
+       41.8865522
+      ],
+      [
+       12.4943438,
+       41.886652
+      ],
+      [
+       12.4941836,
+       41.8865175
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 46.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4939559,
+       41.8868569
+      ],
+      [
+       12.4941015,
+       41.8867537
+      ],
+      [
+       12.4942673,
+       41.8868843
+      ],
+      [
+       12.4941217,
+       41.8869875
+      ],
+      [
+       12.4939559,
+       41.8868569
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4941783,
+       41.8870568
+      ],
+      [
+       12.4943239,
+       41.8869535
+      ],
+      [
+       12.4944898,
+       41.8870841
+      ],
+      [
+       12.4943441,
+       41.8871874
+      ],
+      [
+       12.4941783,
+       41.8870568
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4946639,
+       41.886835
+      ],
+      [
+       12.4947802,
+       41.8867128
+      ],
+      [
+       12.4949766,
+       41.886817
+      ],
+      [
+       12.4948603,
+       41.8869393
+      ],
+      [
+       12.4946639,
+       41.886835
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 33.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4945438,
+       41.8874061
+      ],
+      [
+       12.4946895,
+       41.8873029
+      ],
+      [
+       12.4948553,
+       41.8874335
+      ],
+      [
+       12.4947096,
+       41.8875367
+      ],
+      [
+       12.4945438,
+       41.8874061
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4939921,
+       41.886659
+      ],
+      [
+       12.4941655,
+       41.8865361
+      ],
+      [
+       12.4942971,
+       41.8866397
+      ],
+      [
+       12.4941237,
+       41.8867627
+      ],
+      [
+       12.4939921,
+       41.886659
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.87,
+     19.84
+    ],
+    "theta_deg": 224.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4943411,
+       41.8872789
+      ],
+      [
+       12.4944868,
+       41.8871757
+      ],
+      [
+       12.4946526,
+       41.8873063
+      ],
+      [
+       12.494507,
+       41.8874095
+      ],
+      [
+       12.4943411,
+       41.8872789
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 224.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4944604,
+       41.8866214
+      ],
+      [
+       12.4946103,
+       41.8865216
+      ],
+      [
+       12.4947705,
+       41.8866561
+      ],
+      [
+       12.4946205,
+       41.8867559
+      ],
+      [
+       12.4944604,
+       41.8866214
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 46.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4945098,
+       41.8869643
+      ],
+      [
+       12.4946174,
+       41.8868511
+      ],
+      [
+       12.4947992,
+       41.8869477
+      ],
+      [
+       12.4946915,
+       41.8870609
+      ],
+      [
+       12.4945098,
+       41.8869643
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.51,
+     15.42
+    ],
+    "theta_deg": 33.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4948783,
+       41.8874085
+      ],
+      [
+       12.4947282,
+       41.8873249
+      ],
+      [
+       12.4948625,
+       41.8871903
+      ],
+      [
+       12.4950126,
+       41.8872739
+      ],
+      [
+       12.4948783,
+       41.8874085
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.65,
+     15.54
+    ],
+    "theta_deg": 125.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4950347,
+       41.8869156
+      ],
+      [
+       12.4951152,
+       41.886831
+      ],
+      [
+       12.4953019,
+       41.8869302
+      ],
+      [
+       12.4952215,
+       41.8870148
+      ],
+      [
+       12.4950347,
+       41.8869156
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.02,
+     11.53
+    ],
+    "theta_deg": 33.73,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4941916,
+       41.886345
+      ],
+      [
+       12.4943249,
+       41.8862564
+      ],
+      [
+       12.4944198,
+       41.886336
+      ],
+      [
+       12.4942865,
+       41.8864247
+      ],
+      [
+       12.4941916,
+       41.886345
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.85,
+     14.81
+    ],
+    "theta_deg": 46.65,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4950287,
+       41.8872736
+      ],
+      [
+       12.4949146,
+       41.8872101
+      ],
+      [
+       12.4950167,
+       41.8871078
+      ],
+      [
+       12.4951308,
+       41.8871714
+      ],
+      [
+       12.4950287,
+       41.8872736
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.17,
+     11.81
+    ],
+    "theta_deg": 125.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4941398,
+       41.8867753
+      ],
+      [
+       12.4942642,
+       41.8866871
+      ],
+      [
+       12.4943587,
+       41.8867615
+      ],
+      [
+       12.4942342,
+       41.8868497
+      ],
+      [
+       12.4941398,
+       41.8867753
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.39,
+     14.24
+    ],
+    "theta_deg": 224.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.495154,
+       41.8871697
+      ],
+      [
+       12.4950261,
+       41.8870984
+      ],
+      [
+       12.4951405,
+       41.8869838
+      ],
+      [
+       12.4952684,
+       41.887055
+      ],
+      [
+       12.495154,
+       41.8871697
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b004_18",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.88,
+     13.24
+    ],
+    "theta_deg": 125.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b004",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4958733,
+       41.8870581
+      ],
+      [
+       12.4960287,
+       41.8869631
+      ],
+      [
+       12.4961813,
+       41.8871024
+      ],
+      [
+       12.4960259,
+       41.8871974
+      ],
+      [
+       12.4958733,
+       41.8870581
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b005_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 229.05,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4955867,
+       41.8871887
+      ],
+      [
+       12.4954501,
+       41.8870788
+      ],
+      [
+       12.4956266,
+       41.8869563
+      ],
+      [
+       12.4957632,
+       41.8870663
+      ],
+      [
+       12.4955867,
+       41.8871887
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b005_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 315.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4962875,
+       41.8870874
+      ],
+      [
+       12.4964321,
+       41.8869833
+      ],
+      [
+       12.4965992,
+       41.8871129
+      ],
+      [
+       12.4964547,
+       41.887217
+      ],
+      [
+       12.4962875,
+       41.8870874
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b005_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 44.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4959212,
+       41.887348
+      ],
+      [
+       12.4960767,
+       41.887253
+      ],
+      [
+       12.4962292,
+       41.8873924
+      ],
+      [
+       12.4960738,
+       41.8874874
+      ],
+      [
+       12.4959212,
+       41.887348
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b005_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 229.05,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4958768,
+       41.8867749
+      ],
+      [
+       12.4960214,
+       41.8866708
+      ],
+      [
+       12.4961886,
+       41.8868005
+      ],
+      [
+       12.496044,
+       41.8869046
+      ],
+      [
+       12.4958768,
+       41.8867749
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b005_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 44.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4956573,
+       41.8872322
+      ],
+      [
+       12.4957657,
+       41.8871059
+      ],
+      [
+       12.4959685,
+       41.887203
+      ],
+      [
+       12.4958602,
+       41.8873293
+      ],
+      [
+       12.4956573,
+       41.8872322
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b005_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 210.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.495801,
+       41.8870365
+      ],
+      [
+       12.4956644,
+       41.8869266
+      ],
+      [
+       12.4958409,
+       41.8868041
+      ],
+      [
+       12.4959775,
+       41.886914
+      ],
+      [
+       12.495801,
+       41.8870365
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b005_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 315.46,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4961244,
+       41.8869004
+      ],
+      [
+       12.496269,
+       41.8867963
+      ],
+      [
+       12.4964362,
+       41.8869259
+      ],
+      [
+       12.4962916,
+       41.88703
+      ],
+      [
+       12.4961244,
+       41.8869004
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b005_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 44.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4961442,
+       41.8872562
+      ],
+      [
+       12.4962888,
+       41.8871521
+      ],
+      [
+       12.496456,
+       41.8872817
+      ],
+      [
+       12.4963114,
+       41.8873858
+      ],
+      [
+       12.4961442,
+       41.8872562
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b005_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 44.39,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b005",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4938484,
+       41.8874866
+      ],
+      [
+       12.4937185,
+       41.8873722
+      ],
+      [
+       12.4939023,
+       41.8872557
+      ],
+      [
+       12.4940321,
+       41.8873702
+      ],
+      [
+       12.4938484,
+       41.8874866
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 138.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4936533,
+       41.8877512
+      ],
+      [
+       12.4934869,
+       41.8876672
+      ],
+      [
+       12.4936217,
+       41.887518
+      ],
+      [
+       12.4937881,
+       41.887602
+      ],
+      [
+       12.4936533,
+       41.8877512
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 122.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4936741,
+       41.8871321
+      ],
+      [
+       12.4938198,
+       41.8870288
+      ],
+      [
+       12.4939856,
+       41.8871594
+      ],
+      [
+       12.4938399,
+       41.8872627
+      ],
+      [
+       12.4936741,
+       41.8871321
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 44.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.493248,
+       41.8877736
+      ],
+      [
+       12.4933532,
+       41.8876458
+      ],
+      [
+       12.4935584,
+       41.8877401
+      ],
+      [
+       12.4934532,
+       41.8878679
+      ],
+      [
+       12.493248,
+       41.8877736
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 209.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4940792,
+       41.887556
+      ],
+      [
+       12.4939494,
+       41.8874415
+      ],
+      [
+       12.4941331,
+       41.8873251
+      ],
+      [
+       12.494263,
+       41.8874395
+      ],
+      [
+       12.4940792,
+       41.887556
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 138.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4936405,
+       41.887966
+      ],
+      [
+       12.4934764,
+       41.8878832
+      ],
+      [
+       12.4936094,
+       41.887736
+      ],
+      [
+       12.4937735,
+       41.8878189
+      ],
+      [
+       12.4936405,
+       41.887966
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.73,
+     16.44
+    ],
+    "theta_deg": 122.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4935818,
+       41.8875225
+      ],
+      [
+       12.4934685,
+       41.8874227
+      ],
+      [
+       12.4936288,
+       41.8873211
+      ],
+      [
+       12.4937421,
+       41.8874209
+      ],
+      [
+       12.4935818,
+       41.8875225
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.45,
+     14.54
+    ],
+    "theta_deg": 138.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4938778,
+       41.8876719
+      ],
+      [
+       12.4937609,
+       41.8875689
+      ],
+      [
+       12.4939263,
+       41.887464
+      ],
+      [
+       12.4940432,
+       41.887567
+      ],
+      [
+       12.4938778,
+       41.8876719
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     18.0,
+     15.0
+    ],
+    "theta_deg": 138.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4939267,
+       41.8872523
+      ],
+      [
+       12.4940478,
+       41.8871665
+      ],
+      [
+       12.4941856,
+       41.887275
+      ],
+      [
+       12.4940646,
+       41.8873609
+      ],
+      [
+       12.4939267,
+       41.8872523
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.62,
+     13.85
+    ],
+    "theta_deg": 44.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4935743,
+       41.887265
+      ],
+      [
+       12.4937052,
+       41.8871722
+      ],
+      [
+       12.4938045,
+       41.8872505
+      ],
+      [
+       12.4936736,
+       41.8873432
+      ],
+      [
+       12.4935743,
+       41.887265
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     11.98,
+     14.97
+    ],
+    "theta_deg": 44.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4933782,
+       41.8875573
+      ],
+      [
+       12.4934492,
+       41.887471
+      ],
+      [
+       12.4935877,
+       41.8875347
+      ],
+      [
+       12.4935167,
+       41.8876209
+      ],
+      [
+       12.4933782,
+       41.8875573
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.5,
+     11.25
+    ],
+    "theta_deg": 209.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4938046,
+       41.8878128
+      ],
+      [
+       12.4936738,
+       41.8877468
+      ],
+      [
+       12.4937798,
+       41.8876295
+      ],
+      [
+       12.4939106,
+       41.8876955
+      ],
+      [
+       12.4938046,
+       41.8878128
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b006_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     15.72,
+     13.1
+    ],
+    "theta_deg": 122.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b006",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4952626,
+       41.887608
+      ],
+      [
+       12.4953872,
+       41.8874903
+      ],
+      [
+       12.4955762,
+       41.8876021
+      ],
+      [
+       12.4954516,
+       41.8877197
+      ],
+      [
+       12.4952626,
+       41.887608
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 216.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4948721,
+       41.8876199
+      ],
+      [
+       12.4949967,
+       41.8875023
+      ],
+      [
+       12.4951856,
+       41.887614
+      ],
+      [
+       12.495061,
+       41.8877316
+      ],
+      [
+       12.4948721,
+       41.8876199
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 216.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.495301,
+       41.8874685
+      ],
+      [
+       12.4951401,
+       41.8873788
+      ],
+      [
+       12.4952841,
+       41.8872345
+      ],
+      [
+       12.4954451,
+       41.8873242
+      ],
+      [
+       12.495301,
+       41.8874685
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 305.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4953543,
+       41.88787
+      ],
+      [
+       12.4954789,
+       41.8877524
+      ],
+      [
+       12.4956678,
+       41.8878641
+      ],
+      [
+       12.4955432,
+       41.8879817
+      ],
+      [
+       12.4953543,
+       41.88787
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 216.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4956112,
+       41.8876387
+      ],
+      [
+       12.4957667,
+       41.8875437
+      ],
+      [
+       12.4959192,
+       41.887683
+      ],
+      [
+       12.4957638,
+       41.887778
+      ],
+      [
+       12.4956112,
+       41.8876387
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 49.05,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4954386,
+       41.8874711
+      ],
+      [
+       12.495547,
+       41.8873448
+      ],
+      [
+       12.4957498,
+       41.8874419
+      ],
+      [
+       12.4956415,
+       41.8875682
+      ],
+      [
+       12.4954386,
+       41.8874711
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 30.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4950915,
+       41.8877575
+      ],
+      [
+       12.4952161,
+       41.8876398
+      ],
+      [
+       12.495405,
+       41.8877516
+      ],
+      [
+       12.4952804,
+       41.8878692
+      ],
+      [
+       12.4950915,
+       41.8877575
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 216.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4952398,
+       41.8876211
+      ],
+      [
+       12.4950624,
+       41.8875222
+      ],
+      [
+       12.4951682,
+       41.8874161
+      ],
+      [
+       12.4953457,
+       41.887515
+      ],
+      [
+       12.4952398,
+       41.8876211
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.7,
+     18.37
+    ],
+    "theta_deg": 305.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4954639,
+       41.887721
+      ],
+      [
+       12.4955524,
+       41.8876374
+      ],
+      [
+       12.4956867,
+       41.8877168
+      ],
+      [
+       12.4955981,
+       41.8878004
+      ],
+      [
+       12.4954639,
+       41.887721
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.21,
+     11.84
+    ],
+    "theta_deg": 216.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4950645,
+       41.8875102
+      ],
+      [
+       12.4949491,
+       41.8874459
+      ],
+      [
+       12.4950524,
+       41.8873423
+      ],
+      [
+       12.4951679,
+       41.8874067
+      ],
+      [
+       12.4950645,
+       41.8875102
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b007_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.35,
+     11.96
+    ],
+    "theta_deg": 305.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b007",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4943194,
+       41.887855
+      ],
+      [
+       12.494444,
+       41.8877373
+      ],
+      [
+       12.4946329,
+       41.887849
+      ],
+      [
+       12.4945083,
+       41.8879667
+      ],
+      [
+       12.4943194,
+       41.887855
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4947104,
+       41.8880903
+      ],
+      [
+       12.494835,
+       41.8879726
+      ],
+      [
+       12.4950239,
+       41.8880843
+      ],
+      [
+       12.4948993,
+       41.888202
+      ],
+      [
+       12.4947104,
+       41.8880903
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4940929,
+       41.8880691
+      ],
+      [
+       12.4939265,
+       41.8879851
+      ],
+      [
+       12.4940613,
+       41.8878359
+      ],
+      [
+       12.4942277,
+       41.8879199
+      ],
+      [
+       12.4940929,
+       41.8880691
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 302.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4941979,
+       41.8881243
+      ],
+      [
+       12.4943031,
+       41.8879966
+      ],
+      [
+       12.4945083,
+       41.8880909
+      ],
+      [
+       12.4944031,
+       41.8882187
+      ],
+      [
+       12.4941979,
+       41.8881243
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 209.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4950598,
+       41.8881222
+      ],
+      [
+       12.4951844,
+       41.8880046
+      ],
+      [
+       12.4953734,
+       41.8881163
+      ],
+      [
+       12.4952488,
+       41.8882339
+      ],
+      [
+       12.4950598,
+       41.8881222
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4944784,
+       41.8882647
+      ],
+      [
+       12.4945542,
+       41.8881257
+      ],
+      [
+       12.4947773,
+       41.8881937
+      ],
+      [
+       12.4947015,
+       41.8883326
+      ],
+      [
+       12.4944784,
+       41.8882647
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 200.51,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4941758,
+       41.8878441
+      ],
+      [
+       12.4940459,
+       41.8877297
+      ],
+      [
+       12.4942297,
+       41.8876132
+      ],
+      [
+       12.4943595,
+       41.8877277
+      ],
+      [
+       12.4941758,
+       41.8878441
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 318.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.494646,
+       41.8878498
+      ],
+      [
+       12.4947706,
+       41.8877322
+      ],
+      [
+       12.4949595,
+       41.8878439
+      ],
+      [
+       12.4948349,
+       41.8879615
+      ],
+      [
+       12.494646,
+       41.8878498
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4942891,
+       41.8876062
+      ],
+      [
+       12.4944326,
+       41.8875044
+      ],
+      [
+       12.494596,
+       41.8876331
+      ],
+      [
+       12.4944524,
+       41.8877349
+      ],
+      [
+       12.4942891,
+       41.8876062
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.7,
+     16.42
+    ],
+    "theta_deg": 44.84,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.494879,
+       41.88796
+      ],
+      [
+       12.4950036,
+       41.8878423
+      ],
+      [
+       12.4951925,
+       41.887954
+      ],
+      [
+       12.4950679,
+       41.8880717
+      ],
+      [
+       12.494879,
+       41.88796
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4949063,
+       41.8882731
+      ],
+      [
+       12.4949725,
+       41.8881516
+      ],
+      [
+       12.4951675,
+       41.888211
+      ],
+      [
+       12.4951013,
+       41.8883325
+      ],
+      [
+       12.4949063,
+       41.8882731
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     17.48,
+     14.57
+    ],
+    "theta_deg": 20.51,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4944927,
+       41.8879936
+      ],
+      [
+       12.4946173,
+       41.8878759
+      ],
+      [
+       12.4948062,
+       41.8879876
+      ],
+      [
+       12.4946816,
+       41.8881053
+      ],
+      [
+       12.4944927,
+       41.8879936
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 36.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4944866,
+       41.8877551
+      ],
+      [
+       12.4946237,
+       41.8876256
+      ],
+      [
+       12.4947623,
+       41.8877076
+      ],
+      [
+       12.4946252,
+       41.887837
+      ],
+      [
+       12.4944866,
+       41.8877551
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     14.67,
+     18.34
+    ],
+    "theta_deg": 36.68,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4947297,
+       41.888334
+      ],
+      [
+       12.4947762,
+       41.8882487
+      ],
+      [
+       12.4949133,
+       41.8882904
+      ],
+      [
+       12.4948667,
+       41.8883758
+      ],
+      [
+       12.4947297,
+       41.888334
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     12.28,
+     10.24
+    ],
+    "theta_deg": 200.51,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4938384,
+       41.8880722
+      ],
+      [
+       12.4937254,
+       41.8880152
+      ],
+      [
+       12.4938169,
+       41.8879139
+      ],
+      [
+       12.4939299,
+       41.8879709
+      ],
+      [
+       12.4938384,
+       41.8880722
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_15",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.58,
+     11.31
+    ],
+    "theta_deg": 302.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4940277,
+       41.8878607
+      ],
+      [
+       12.4938992,
+       41.8877959
+      ],
+      [
+       12.4939686,
+       41.8877191
+      ],
+      [
+       12.4940971,
+       41.8877839
+      ],
+      [
+       12.4940277,
+       41.8878607
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_16",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.3,
+     12.87
+    ],
+    "theta_deg": 302.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4939238,
+       41.8879608
+      ],
+      [
+       12.493813,
+       41.8879048
+      ],
+      [
+       12.4939028,
+       41.8878054
+      ],
+      [
+       12.4940136,
+       41.8878614
+      ],
+      [
+       12.4939238,
+       41.8879608
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b008_17",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     13.32,
+     11.1
+    ],
+    "theta_deg": 302.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b008",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4932193,
+       41.8883244
+      ],
+      [
+       12.4933245,
+       41.8881966
+      ],
+      [
+       12.4935297,
+       41.8882909
+      ],
+      [
+       12.4934245,
+       41.8884187
+      ],
+      [
+       12.4932193,
+       41.8883244
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_01",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4936479,
+       41.8883735
+      ],
+      [
+       12.4937531,
+       41.8882457
+      ],
+      [
+       12.4939583,
+       41.88834
+      ],
+      [
+       12.4938531,
+       41.8884678
+      ],
+      [
+       12.4936479,
+       41.8883735
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_02",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4929007,
+       41.8885139
+      ],
+      [
+       12.4930059,
+       41.8883861
+      ],
+      [
+       12.4932111,
+       41.8884804
+      ],
+      [
+       12.493106,
+       41.8886082
+      ],
+      [
+       12.4929007,
+       41.8885139
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_03",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4931191,
+       41.8880627
+      ],
+      [
+       12.4932243,
+       41.8879349
+      ],
+      [
+       12.4934295,
+       41.8880292
+      ],
+      [
+       12.4933243,
+       41.888157
+      ],
+      [
+       12.4931191,
+       41.8880627
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_04",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4934337,
+       41.8881791
+      ],
+      [
+       12.4935389,
+       41.8880513
+      ],
+      [
+       12.4937441,
+       41.8881456
+      ],
+      [
+       12.4936389,
+       41.8882734
+      ],
+      [
+       12.4934337,
+       41.8881791
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_05",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4934149,
+       41.8885056
+      ],
+      [
+       12.4935201,
+       41.8883778
+      ],
+      [
+       12.4937253,
+       41.8884721
+      ],
+      [
+       12.4936201,
+       41.8885999
+      ],
+      [
+       12.4934149,
+       41.8885056
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_06",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4939546,
+       41.8884094
+      ],
+      [
+       12.4940598,
+       41.8882816
+      ],
+      [
+       12.494265,
+       41.8883759
+      ],
+      [
+       12.4941598,
+       41.8885037
+      ],
+      [
+       12.4939546,
+       41.8884094
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_07",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4929621,
+       41.8882272
+      ],
+      [
+       12.4930673,
+       41.8880995
+      ],
+      [
+       12.4932725,
+       41.8881938
+      ],
+      [
+       12.4931674,
+       41.8883216
+      ],
+      [
+       12.4929621,
+       41.8882272
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_08",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4926808,
+       41.8886456
+      ],
+      [
+       12.492786,
+       41.8885178
+      ],
+      [
+       12.4929912,
+       41.8886121
+      ],
+      [
+       12.492886,
+       41.8887399
+      ],
+      [
+       12.4926808,
+       41.8886456
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_09",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     16.67
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4931746,
+       41.8885793
+      ],
+      [
+       12.493261,
+       41.8884742
+      ],
+      [
+       12.4934297,
+       41.8885517
+      ],
+      [
+       12.4933433,
+       41.8886568
+      ],
+      [
+       12.4931746,
+       41.8885793
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_10",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     16.44,
+     13.7
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4928789,
+       41.8883208
+      ],
+      [
+       12.4929519,
+       41.8882321
+      ],
+      [
+       12.4931479,
+       41.8883221
+      ],
+      [
+       12.4930748,
+       41.8884109
+      ],
+      [
+       12.4928789,
+       41.8883208
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_11",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     19.09,
+     11.57
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4937644,
+       41.888233
+      ],
+      [
+       12.4938409,
+       41.8881401
+      ],
+      [
+       12.4940461,
+       41.8882344
+      ],
+      [
+       12.4939696,
+       41.8883273
+      ],
+      [
+       12.4937644,
+       41.888233
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_12",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     20.0,
+     12.12
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4931305,
+       41.8884351
+      ],
+      [
+       12.4932161,
+       41.888331
+      ],
+      [
+       12.4933276,
+       41.8883822
+      ],
+      [
+       12.4932419,
+       41.8884863
+      ],
+      [
+       12.4931305,
+       41.8884351
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_13",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.86,
+     13.57
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4934941,
+       41.888359
+      ],
+      [
+       12.4935751,
+       41.8882606
+      ],
+      [
+       12.4936804,
+       41.888309
+      ],
+      [
+       12.4935995,
+       41.8884074
+      ],
+      [
+       12.4934941,
+       41.888359
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome06_medieval_800_caelian_b009_14",
+    "kind": "block",
+    "typ": "rome06_medieval_reused_low2",
+    "lot": [
+     10.26,
+     12.83
+    ],
+    "theta_deg": 29.92,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome06_medieval_800_caelian_b009",
+     "buildings": 1,
+     "basis": "research/rome06_medieval_whole_basis.md. M03/M18 for dispersed800 settlement and continuing road corridors; M13/M17 for later medieval intensification, M01/M04 for house form. Domain limits, ordinary parcels and individual heights are bounded production estimates, not a medieval cadastre or population count. Windowcaelian/800: comparative type allocation, not a known prevalence."
+    }
+   }
+  }
+ ]
+}

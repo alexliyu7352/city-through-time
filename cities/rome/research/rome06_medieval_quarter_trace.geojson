@@ -1,0 +1,201 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_s_paolo",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes.",
+     "source_pixels": [
+      [
+       750,
+       719
+      ],
+      [
+       1211,
+       719
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4726179,
+      41.8937973
+     ],
+     [
+      12.4735599,
+      41.8931178
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_pettinari",
+    "kind": "street",
+    "model": {
+     "w_m": 5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes.",
+     "source_pixels": [
+      [
+       750,
+       719
+      ],
+      [
+       750,
+       1186
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4726179,
+      41.8937973
+     ],
+     [
+      12.4716967,
+      41.8930843
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_conservatorio",
+    "kind": "street",
+    "model": {
+     "w_m": 4.2
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes.",
+     "source_pixels": [
+      [
+       1211,
+       719
+      ],
+      [
+       1211,
+       1186
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4735599,
+      41.8931178
+     ],
+     [
+      12.4726387,
+      41.8924048
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_zoccolette",
+    "kind": "street",
+    "model": {
+     "w_m": 4.5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes.",
+     "source_pixels": [
+      [
+       750,
+       1186
+      ],
+      [
+       1211,
+       1186
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4716967,
+      41.8930843
+     ],
+     [
+      12.4726387,
+      41.8924048
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "rome06_medieval_internal_access",
+    "kind": "street",
+    "model": {
+     "w_m": 3.5
+    },
+    "provenance": {
+     "basis": "research/rome06_medieval_quarter_basis.md; M13 Ciancio/Jacobs/Scheggi2013 pp38,51fig15 medieval panel and52fig16-17 hypotheses, not excavated complete1300 cadastre. Street widths, individual lots, two/three storeys and roof heights are bounded graphical/comparative estimates. M04 dates intensive narrow houses XII-XIIIc; M01 p68 gives two/three low levels, occasional porticoes.",
+     "source_pixels": [
+      [
+       730,
+       964
+      ],
+      [
+       935,
+       956
+      ],
+      [
+       1003,
+       929
+      ],
+      [
+       1230,
+       929
+      ]
+     ]
+    }
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4720938,
+      41.8934527
+     ],
+     [
+      12.4725284,
+      41.8931628
+     ],
+     [
+      12.4727206,
+      41.8931038
+     ],
+     [
+      12.4731845,
+      41.8927692
+     ]
+    ]
+   }
+  }
+ ]
+}

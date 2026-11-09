@@ -1,0 +1,5762 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4834218,
+      41.8798687
+     ],
+     [
+      12.4821322,
+      41.8789916
+     ],
+     [
+      12.4807552,
+      41.8778217
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_001",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4842476,
+      41.8770169
+     ],
+     [
+      12.4833281,
+      41.8776969
+     ],
+     [
+      12.4820253,
+      41.8789007
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_002",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.483327,
+      41.8776978
+     ],
+     [
+      12.4826813,
+      41.8773531
+     ],
+     [
+      12.4825127,
+      41.8772134
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_003",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4825369,
+      41.878428
+     ],
+     [
+      12.4819156,
+      41.8779658
+     ],
+     [
+      12.4810897,
+      41.8775745
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_004",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4825041,
+      41.8772149
+     ],
+     [
+      12.4822137,
+      41.8775911
+     ],
+     [
+      12.4817629,
+      41.8778935
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_005",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4846286,
+      41.8790026
+     ],
+     [
+      12.4839465,
+      41.8784749
+     ],
+     [
+      12.4830112,
+      41.8779897
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_006",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4853682,
+      41.8783597
+     ],
+     [
+      12.484564,
+      41.8779434
+     ],
+     [
+      12.4837948,
+      41.8773517
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_007",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.48484,
+      41.8772595
+     ],
+     [
+      12.4845971,
+      41.8774429
+     ],
+     [
+      12.484386,
+      41.8778064
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_008",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4847022,
+      41.8780149
+     ],
+     [
+      12.4844651,
+      41.8783055
+     ],
+     [
+      12.4840516,
+      41.8785562
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_009",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4837549,
+      41.8783755
+     ],
+     [
+      12.4831754,
+      41.8787557
+     ],
+     [
+      12.4826327,
+      41.879332
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_010",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4839076,
+      41.8795237
+     ],
+     [
+      12.4834496,
+      41.879262
+     ],
+     [
+      12.4830794,
+      41.8788576
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_011",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4819618,
+      41.8788468
+     ],
+     [
+      12.4810036,
+      41.8794543
+     ],
+     [
+      12.4801747,
+      41.8801569
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_012",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4811754,
+      41.8793454
+     ],
+     [
+      12.4805814,
+      41.8789803
+     ],
+     [
+      12.4799787,
+      41.8783957
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_013",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4804766,
+      41.879901
+     ],
+     [
+      12.4799498,
+      41.8794481
+     ],
+     [
+      12.4795675,
+      41.8792437
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_014",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4812805,
+      41.878268
+     ],
+     [
+      12.480939,
+      41.8785787
+     ],
+     [
+      12.4804112,
+      41.8788152
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_015",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4823961,
+      41.8805971
+     ],
+     [
+      12.4817933,
+      41.8800899
+     ],
+     [
+      12.4808717,
+      41.8795661
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_016",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4826046,
+      41.8793129
+     ],
+     [
+      12.4822232,
+      41.8797116
+     ],
+     [
+      12.4816869,
+      41.8800294
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_lane_017",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4833614,
+       41.8774129
+      ],
+      [
+       12.483185,
+       41.8772796
+      ],
+      [
+       12.483399,
+       41.8771213
+      ],
+      [
+       12.4835755,
+       41.8772546
+      ],
+      [
+       12.4833614,
+       41.8774129
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b001_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 133.63,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4827473,
+       41.8773206
+      ],
+      [
+       12.4828931,
+       41.877168
+      ],
+      [
+       12.4831382,
+       41.8772988
+      ],
+      [
+       12.4829923,
+       41.8774514
+      ],
+      [
+       12.4827473,
+       41.8773206
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b001_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4837151,
+       41.8773008
+      ],
+      [
+       12.4835386,
+       41.8771675
+      ],
+      [
+       12.4837526,
+       41.8770093
+      ],
+      [
+       12.4839291,
+       41.8771426
+      ],
+      [
+       12.4837151,
+       41.8773008
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b001_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 133.63,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.482997,
+       41.8774673
+      ],
+      [
+       12.4831429,
+       41.8773147
+      ],
+      [
+       12.4833879,
+       41.8774455
+      ],
+      [
+       12.4832421,
+       41.8775981
+      ],
+      [
+       12.482997,
+       41.8774673
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b001_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4840502,
+       41.8773747
+      ],
+      [
+       12.4842302,
+       41.877244
+      ],
+      [
+       12.48444,
+       41.8774054
+      ],
+      [
+       12.48426,
+       41.8775361
+      ],
+      [
+       12.4840502,
+       41.8773747
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b002_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 224.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4845498,
+       41.8774217
+      ],
+      [
+       12.4843359,
+       41.8772633
+      ],
+      [
+       12.4845054,
+       41.8771354
+      ],
+      [
+       12.4847194,
+       41.8772938
+      ],
+      [
+       12.4845498,
+       41.8774217
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b002_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.0,
+     25.0
+    ],
+    "theta_deg": 133.05,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4816949,
+       41.8776443
+      ],
+      [
+       12.4815273,
+       41.8775047
+      ],
+      [
+       12.4817514,
+       41.8773544
+      ],
+      [
+       12.481919,
+       41.877494
+      ],
+      [
+       12.4816949,
+       41.8776443
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b003_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 136.41,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4821584,
+       41.8775591
+      ],
+      [
+       12.4819047,
+       41.8774497
+      ],
+      [
+       12.4820218,
+       41.877298
+      ],
+      [
+       12.4822755,
+       41.8774074
+      ],
+      [
+       12.4821584,
+       41.8775591
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b003_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     19.45,
+     24.32
+    ],
+    "theta_deg": 118.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4812035,
+       41.8775525
+      ],
+      [
+       12.4813163,
+       41.8774196
+      ],
+      [
+       12.4815296,
+       41.8775207
+      ],
+      [
+       12.4814169,
+       41.8776536
+      ],
+      [
+       12.4812035,
+       41.8775525
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b003_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.97,
+     17.48
+    ],
+    "theta_deg": 210.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4851436,
+       41.8777955
+      ],
+      [
+       12.4852865,
+       41.8776413
+      ],
+      [
+       12.485534,
+       41.8777694
+      ],
+      [
+       12.4853912,
+       41.8779236
+      ],
+      [
+       12.4851436,
+       41.8777955
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b004_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4849291,
+       41.8774305
+      ],
+      [
+       12.4851343,
+       41.8775383
+      ],
+      [
+       12.4849611,
+       41.8777224
+      ],
+      [
+       12.4847559,
+       41.8776146
+      ],
+      [
+       12.4849291,
+       41.8774305
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b004_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 303.43,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4851522,
+       41.8781173
+      ],
+      [
+       12.4852951,
+       41.8779631
+      ],
+      [
+       12.4855426,
+       41.8780912
+      ],
+      [
+       12.4853998,
+       41.8782454
+      ],
+      [
+       12.4851522,
+       41.8781173
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b004_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4847547,
+       41.8779153
+      ],
+      [
+       12.4848976,
+       41.8777611
+      ],
+      [
+       12.4851451,
+       41.8778892
+      ],
+      [
+       12.4850022,
+       41.8780434
+      ],
+      [
+       12.4847547,
+       41.8779153
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b004_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4855451,
+       41.8778349
+      ],
+      [
+       12.485688,
+       41.8776807
+      ],
+      [
+       12.4859355,
+       41.8778088
+      ],
+      [
+       12.4857927,
+       41.877963
+      ],
+      [
+       12.4855451,
+       41.8778349
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b004_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4853775,
+       41.877991
+      ],
+      [
+       12.4855204,
+       41.8778368
+      ],
+      [
+       12.4857679,
+       41.8779649
+      ],
+      [
+       12.485625,
+       41.8781191
+      ],
+      [
+       12.4853775,
+       41.877991
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b004_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4826029,
+       41.8779411
+      ],
+      [
+       12.4823855,
+       41.8778474
+      ],
+      [
+       12.482536,
+       41.8776525
+      ],
+      [
+       12.4827533,
+       41.8777462
+      ],
+      [
+       12.4826029,
+       41.8779411
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b005_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 298.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4821675,
+       41.8779335
+      ],
+      [
+       12.4819999,
+       41.877794
+      ],
+      [
+       12.482224,
+       41.8776437
+      ],
+      [
+       12.4823916,
+       41.8777832
+      ],
+      [
+       12.4821675,
+       41.8779335
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b005_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 316.41,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4829162,
+       41.8779836
+      ],
+      [
+       12.4827211,
+       41.8778657
+      ],
+      [
+       12.4829105,
+       41.8776907
+      ],
+      [
+       12.4831056,
+       41.8778086
+      ],
+      [
+       12.4829162,
+       41.8779836
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b005_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 127.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4823187,
+       41.8781056
+      ],
+      [
+       12.4824957,
+       41.8779727
+      ],
+      [
+       12.4827091,
+       41.8781314
+      ],
+      [
+       12.4825321,
+       41.8782643
+      ],
+      [
+       12.4823187,
+       41.8781056
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b005_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 223.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825867,
+       41.8776417
+      ],
+      [
+       12.4823693,
+       41.877548
+      ],
+      [
+       12.4825198,
+       41.8773531
+      ],
+      [
+       12.4827371,
+       41.8774468
+      ],
+      [
+       12.4825867,
+       41.8776417
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b005_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 298.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4826261,
+       41.8776333
+      ],
+      [
+       12.4828011,
+       41.8774502
+      ],
+      [
+       12.4829971,
+       41.8775548
+      ],
+      [
+       12.4828221,
+       41.877738
+      ],
+      [
+       12.4826261,
+       41.8776333
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b005_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.0,
+     25.0
+    ],
+    "theta_deg": 33.85,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4827985,
+       41.8781489
+      ],
+      [
+       12.4825907,
+       41.8780233
+      ],
+      [
+       12.4827252,
+       41.8778991
+      ],
+      [
+       12.482933,
+       41.8780247
+      ],
+      [
+       12.4827985,
+       41.8781489
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b005_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     17.75,
+     22.19
+    ],
+    "theta_deg": 127.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4820605,
+       41.8780406
+      ],
+      [
+       12.4822475,
+       41.8779002
+      ],
+      [
+       12.4823978,
+       41.878012
+      ],
+      [
+       12.4822108,
+       41.8781524
+      ],
+      [
+       12.4820605,
+       41.8780406
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b005_08",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     17.6,
+     22.0
+    ],
+    "theta_deg": 223.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4835855,
+       41.8779308
+      ],
+      [
+       12.4837286,
+       41.8777767
+      ],
+      [
+       12.483976,
+       41.877905
+      ],
+      [
+       12.4838329,
+       41.8780591
+      ],
+      [
+       12.4835855,
+       41.8779308
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b006_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4835968,
+       41.8776004
+      ],
+      [
+       12.4837768,
+       41.8774698
+      ],
+      [
+       12.4839866,
+       41.8776312
+      ],
+      [
+       12.4838066,
+       41.8777619
+      ],
+      [
+       12.4835968,
+       41.8776004
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b006_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 44.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.483369,
+       41.878098
+      ],
+      [
+       12.4831739,
+       41.8779801
+      ],
+      [
+       12.4833632,
+       41.8778051
+      ],
+      [
+       12.4835583,
+       41.877923
+      ],
+      [
+       12.483369,
+       41.878098
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b006_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 307.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4836797,
+       41.8782316
+      ],
+      [
+       12.4838227,
+       41.8780775
+      ],
+      [
+       12.4840701,
+       41.8782058
+      ],
+      [
+       12.483927,
+       41.8783599
+      ],
+      [
+       12.4836797,
+       41.8782316
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b006_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4839898,
+       41.8778855
+      ],
+      [
+       12.4841698,
+       41.8777549
+      ],
+      [
+       12.4843796,
+       41.8779163
+      ],
+      [
+       12.4841996,
+       41.8780469
+      ],
+      [
+       12.4839898,
+       41.8778855
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b006_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 44.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4833888,
+       41.8781192
+      ],
+      [
+       12.4835319,
+       41.8779652
+      ],
+      [
+       12.4837793,
+       41.8780935
+      ],
+      [
+       12.4836362,
+       41.8782475
+      ],
+      [
+       12.4833888,
+       41.8781192
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b006_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.08,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4835253,
+       41.8778924
+      ],
+      [
+       12.4833488,
+       41.877759
+      ],
+      [
+       12.4835628,
+       41.8776008
+      ],
+      [
+       12.4837393,
+       41.8777341
+      ],
+      [
+       12.4835253,
+       41.8778924
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b006_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 313.63,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4839638,
+       41.8779301
+      ],
+      [
+       12.4841766,
+       41.8780419
+      ],
+      [
+       12.4840569,
+       41.8781692
+      ],
+      [
+       12.483844,
+       41.8780573
+      ],
+      [
+       12.4839638,
+       41.8779301
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b006_08",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     17.28,
+     21.6
+    ],
+    "theta_deg": 123.43,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4838277,
+       41.8777547
+      ],
+      [
+       12.4840345,
+       41.8776046
+      ],
+      [
+       12.4841952,
+       41.8777282
+      ],
+      [
+       12.4839884,
+       41.8778784
+      ],
+      [
+       12.4838277,
+       41.8777547
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b006_09",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     19.15,
+     23.94
+    ],
+    "theta_deg": 44.15,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4815151,
+       41.8781834
+      ],
+      [
+       12.4816921,
+       41.8780505
+      ],
+      [
+       12.4819056,
+       41.8782092
+      ],
+      [
+       12.4817285,
+       41.8783421
+      ],
+      [
+       12.4815151,
+       41.8781834
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b007_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 43.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4820167,
+       41.8786308
+      ],
+      [
+       12.4818216,
+       41.8785128
+      ],
+      [
+       12.482011,
+       41.8783379
+      ],
+      [
+       12.4822061,
+       41.8784558
+      ],
+      [
+       12.4820167,
+       41.8786308
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b007_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 127.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4811734,
+       41.8779624
+      ],
+      [
+       12.4813618,
+       41.8778385
+      ],
+      [
+       12.4815607,
+       41.8780075
+      ],
+      [
+       12.4813723,
+       41.8781313
+      ],
+      [
+       12.4811734,
+       41.8779624
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b007_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 226.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4809013,
+       41.8778126
+      ],
+      [
+       12.4810356,
+       41.8776542
+      ],
+      [
+       12.4812899,
+       41.8777747
+      ],
+      [
+       12.4811556,
+       41.8779331
+      ],
+      [
+       12.4809013,
+       41.8778126
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b007_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 30.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4806577,
+       41.8784677
+      ],
+      [
+       12.4804638,
+       41.8783487
+      ],
+      [
+       12.480655,
+       41.8781748
+      ],
+      [
+       12.4808489,
+       41.8782938
+      ],
+      [
+       12.4806577,
+       41.8784677
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b008_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 127.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802814,
+       41.8785387
+      ],
+      [
+       12.4804802,
+       41.8784243
+      ],
+      [
+       12.480664,
+       41.8786025
+      ],
+      [
+       12.4804652,
+       41.878717
+      ],
+      [
+       12.4802814,
+       41.8785387
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b008_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 230.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4805293,
+       41.8780172
+      ],
+      [
+       12.4807177,
+       41.8778934
+      ],
+      [
+       12.4809165,
+       41.8780624
+      ],
+      [
+       12.4807281,
+       41.8781862
+      ],
+      [
+       12.4805293,
+       41.8780172
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b008_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 46.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4800848,
+       41.8783335
+      ],
+      [
+       12.4802835,
+       41.8782191
+      ],
+      [
+       12.4804673,
+       41.8783973
+      ],
+      [
+       12.4802686,
+       41.8785118
+      ],
+      [
+       12.4800848,
+       41.8783335
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b008_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 230.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810025,
+       41.8784714
+      ],
+      [
+       12.4808086,
+       41.8783524
+      ],
+      [
+       12.4809997,
+       41.8781785
+      ],
+      [
+       12.4811936,
+       41.8782975
+      ],
+      [
+       12.4810025,
+       41.8784714
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b008_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 127.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4802763,
+       41.8781881
+      ],
+      [
+       12.480492,
+       41.8780639
+      ],
+      [
+       12.480625,
+       41.8781929
+      ],
+      [
+       12.4804093,
+       41.8783171
+      ],
+      [
+       12.4802763,
+       41.8781881
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b008_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     18.09,
+     22.61
+    ],
+    "theta_deg": 230.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.484776,
+       41.8786133
+      ],
+      [
+       12.4845617,
+       41.8785157
+      ],
+      [
+       12.4847185,
+       41.8783235
+      ],
+      [
+       12.4849327,
+       41.8784212
+      ],
+      [
+       12.484776,
+       41.8786133
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b009_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 299.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4844447,
+       41.8787297
+      ],
+      [
+       12.4846252,
+       41.8785994
+      ],
+      [
+       12.4848344,
+       41.8787613
+      ],
+      [
+       12.4846539,
+       41.8788916
+      ],
+      [
+       12.4844447,
+       41.8787297
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b009_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 224.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4841844,
+       41.8785555
+      ],
+      [
+       12.4843649,
+       41.8784252
+      ],
+      [
+       12.4845741,
+       41.8785871
+      ],
+      [
+       12.4843936,
+       41.8787174
+      ],
+      [
+       12.4841844,
+       41.8785555
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b009_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 224.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4849266,
+       41.87844
+      ],
+      [
+       12.4850913,
+       41.8782622
+      ],
+      [
+       12.4852816,
+       41.8783607
+      ],
+      [
+       12.4851169,
+       41.8785385
+      ],
+      [
+       12.4849266,
+       41.87844
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b009_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     19.22,
+     24.02
+    ],
+    "theta_deg": 33.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4845698,
+       41.8782222
+      ],
+      [
+       12.484708,
+       41.878073
+      ],
+      [
+       12.4849475,
+       41.878197
+      ],
+      [
+       12.4848093,
+       41.8783462
+      ],
+      [
+       12.4845698,
+       41.8782222
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b009_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     24.19,
+     20.16
+    ],
+    "theta_deg": 33.03,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4829141,
+       41.8786919
+      ],
+      [
+       12.4827486,
+       41.878551
+      ],
+      [
+       12.4829749,
+       41.8784025
+      ],
+      [
+       12.4831404,
+       41.8785435
+      ],
+      [
+       12.4829141,
+       41.8786919
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b010_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 137.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825723,
+       41.8790227
+      ],
+      [
+       12.4823772,
+       41.8789048
+      ],
+      [
+       12.4825666,
+       41.8787298
+      ],
+      [
+       12.4827617,
+       41.8788477
+      ],
+      [
+       12.4825723,
+       41.8790227
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b010_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 307.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4832743,
+       41.8785395
+      ],
+      [
+       12.4831087,
+       41.8783986
+      ],
+      [
+       12.483335,
+       41.8782501
+      ],
+      [
+       12.4835006,
+       41.878391
+      ],
+      [
+       12.4832743,
+       41.8785395
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b010_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 137.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4830583,
+       41.8783717
+      ],
+      [
+       12.4828632,
+       41.8782538
+      ],
+      [
+       12.4830525,
+       41.8780788
+      ],
+      [
+       12.4832476,
+       41.8781967
+      ],
+      [
+       12.4830583,
+       41.8783717
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b010_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 307.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4826412,
+       41.8787611
+      ],
+      [
+       12.4824071,
+       41.8786196
+      ],
+      [
+       12.4825585,
+       41.8784796
+      ],
+      [
+       12.4827927,
+       41.8786212
+      ],
+      [
+       12.4826412,
+       41.8787611
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b010_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.0,
+     25.0
+    ],
+    "theta_deg": 307.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4829585,
+       41.8789406
+      ],
+      [
+       12.4827226,
+       41.8788166
+      ],
+      [
+       12.4828554,
+       41.8786755
+      ],
+      [
+       12.4830913,
+       41.8787996
+      ],
+      [
+       12.4829585,
+       41.8789406
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b010_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     19.16,
+     23.95
+    ],
+    "theta_deg": 123.45,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4828212,
+       41.8784942
+      ],
+      [
+       12.4826471,
+       41.8783889
+      ],
+      [
+       12.482816,
+       41.8782328
+      ],
+      [
+       12.4829901,
+       41.878338
+      ],
+      [
+       12.4828212,
+       41.8784942
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b010_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     22.31,
+     18.59
+    ],
+    "theta_deg": 307.28,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4812525,
+       41.8788592
+      ],
+      [
+       12.4810586,
+       41.8787401
+      ],
+      [
+       12.4812498,
+       41.8785663
+      ],
+      [
+       12.4814437,
+       41.8786853
+      ],
+      [
+       12.4812525,
+       41.8788592
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b011_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 307.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4815595,
+       41.8789715
+      ],
+      [
+       12.4813972,
+       41.8788285
+      ],
+      [
+       12.4816268,
+       41.8786829
+      ],
+      [
+       12.4817891,
+       41.8788259
+      ],
+      [
+       12.4815595,
+       41.8789715
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b011_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 138.01,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4812879,
+       41.8791579
+      ],
+      [
+       12.4811255,
+       41.8790149
+      ],
+      [
+       12.4813551,
+       41.8788693
+      ],
+      [
+       12.4815175,
+       41.8790123
+      ],
+      [
+       12.4812879,
+       41.8791579
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b011_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 138.01,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808092,
+       41.8789466
+      ],
+      [
+       12.4806801,
+       41.8787857
+      ],
+      [
+       12.4809383,
+       41.87867
+      ],
+      [
+       12.4810674,
+       41.8788308
+      ],
+      [
+       12.4808092,
+       41.8789466
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b011_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 327.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4811279,
+       41.8784437
+      ],
+      [
+       12.481282,
+       41.8783424
+      ],
+      [
+       12.4814447,
+       41.8784806
+      ],
+      [
+       12.4812906,
+       41.8785819
+      ],
+      [
+       12.4811279,
+       41.8784437
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b011_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.45,
+     17.04
+    ],
+    "theta_deg": 46.98,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4838124,
+       41.8789998
+      ],
+      [
+       12.4839928,
+       41.8788695
+      ],
+      [
+       12.484202,
+       41.8790314
+      ],
+      [
+       12.4840216,
+       41.8791617
+      ],
+      [
+       12.4838124,
+       41.8789998
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b012_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 44.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4834495,
+       41.8791334
+      ],
+      [
+       12.4836019,
+       41.8789844
+      ],
+      [
+       12.4838411,
+       41.8791211
+      ],
+      [
+       12.4836887,
+       41.87927
+      ],
+      [
+       12.4834495,
+       41.8791334
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b012_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 215.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4837243,
+       41.8793106
+      ],
+      [
+       12.4838767,
+       41.8791616
+      ],
+      [
+       12.484116,
+       41.8792983
+      ],
+      [
+       12.4839636,
+       41.8794473
+      ],
+      [
+       12.4837243,
+       41.8793106
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b012_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 215.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4842064,
+       41.8790376
+      ],
+      [
+       12.484423,
+       41.8788812
+      ],
+      [
+       12.4845903,
+       41.8790107
+      ],
+      [
+       12.4843738,
+       41.8791671
+      ],
+      [
+       12.4842064,
+       41.8790376
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b012_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.0,
+     25.0
+    ],
+    "theta_deg": 44.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4837876,
+       41.8787425
+      ],
+      [
+       12.4840042,
+       41.8785862
+      ],
+      [
+       12.4841716,
+       41.8787157
+      ],
+      [
+       12.483955,
+       41.878872
+      ],
+      [
+       12.4837876,
+       41.8787425
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b012_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.0,
+     25.0
+    ],
+    "theta_deg": 44.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4840046,
+       41.8788443
+      ],
+      [
+       12.4841816,
+       41.8787166
+      ],
+      [
+       12.4843868,
+       41.8788753
+      ],
+      [
+       12.4842098,
+       41.879003
+      ],
+      [
+       12.4840046,
+       41.8788443
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b012_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     24.51,
+     20.43
+    ],
+    "theta_deg": 44.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4833315,
+       41.8789646
+      ],
+      [
+       12.483175,
+       41.8788313
+      ],
+      [
+       12.4833889,
+       41.878691
+      ],
+      [
+       12.4835454,
+       41.8788242
+      ],
+      [
+       12.4833315,
+       41.8789646
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b012_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     23.63,
+     19.7
+    ],
+    "theta_deg": 317.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4840049,
+       41.879204
+      ],
+      [
+       12.4842047,
+       41.8790598
+      ],
+      [
+       12.4843591,
+       41.8791792
+      ],
+      [
+       12.4841593,
+       41.8793235
+      ],
+      [
+       12.4840049,
+       41.879204
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b012_08",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     18.45,
+     23.06
+    ],
+    "theta_deg": 44.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4835271,
+       41.8787838
+      ],
+      [
+       12.4833869,
+       41.8786645
+      ],
+      [
+       12.4835785,
+       41.8785388
+      ],
+      [
+       12.4837187,
+       41.8786581
+      ],
+      [
+       12.4835271,
+       41.8787838
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b012_09",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     21.17,
+     17.64
+    ],
+    "theta_deg": 317.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.479996,
+       41.8790821
+      ],
+      [
+       12.4801948,
+       41.8789677
+      ],
+      [
+       12.4803786,
+       41.8791459
+      ],
+      [
+       12.4801798,
+       41.8792604
+      ],
+      [
+       12.479996,
+       41.8790821
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b013_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 50.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4804737,
+       41.879591
+      ],
+      [
+       12.4802854,
+       41.879467
+      ],
+      [
+       12.4804846,
+       41.8792982
+      ],
+      [
+       12.4806728,
+       41.8794222
+      ],
+      [
+       12.4804737,
+       41.879591
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b013_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 129.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4801363,
+       41.8788345
+      ],
+      [
+       12.4800005,
+       41.8789922
+      ],
+      [
+       12.4797473,
+       41.8788704
+      ],
+      [
+       12.4798831,
+       41.8787127
+      ],
+      [
+       12.4801363,
+       41.8788345
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b013_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 31.07,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4796061,
+       41.8791612
+      ],
+      [
+       12.4797521,
+       41.8790087
+      ],
+      [
+       12.479997,
+       41.8791397
+      ],
+      [
+       12.479851,
+       41.8792922
+      ],
+      [
+       12.4796061,
+       41.8791612
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b013_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 213.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4804086,
+       41.8792185
+      ],
+      [
+       12.480568,
+       41.8790736
+      ],
+      [
+       12.4808006,
+       41.8792166
+      ],
+      [
+       12.4806412,
+       41.8793614
+      ],
+      [
+       12.4804086,
+       41.8792185
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b013_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 37.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4799501,
+       41.8793652
+      ],
+      [
+       12.4801395,
+       41.8792421
+      ],
+      [
+       12.4803371,
+       41.879412
+      ],
+      [
+       12.4801477,
+       41.879535
+      ],
+      [
+       12.4799501,
+       41.8793652
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b013_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 227.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4806796,
+       41.8793479
+      ],
+      [
+       12.480839,
+       41.8792031
+      ],
+      [
+       12.4810715,
+       41.879346
+      ],
+      [
+       12.4809121,
+       41.8794909
+      ],
+      [
+       12.4806796,
+       41.8793479
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b013_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 37.75,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4803045,
+       41.8797087
+      ],
+      [
+       12.4805086,
+       41.8795761
+      ],
+      [
+       12.4806505,
+       41.8796981
+      ],
+      [
+       12.4804465,
+       41.8798307
+      ],
+      [
+       12.4803045,
+       41.8797087
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b013_08",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     17.96,
+     22.45
+    ],
+    "theta_deg": 227.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4830697,
+       41.8794401
+      ],
+      [
+       12.4832221,
+       41.8792911
+      ],
+      [
+       12.4834613,
+       41.8794278
+      ],
+      [
+       12.4833089,
+       41.8795768
+      ],
+      [
+       12.4830697,
+       41.8794401
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b014_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 35.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4829663,
+       41.8794437
+      ],
+      [
+       12.4827611,
+       41.8793358
+      ],
+      [
+       12.4829344,
+       41.8791517
+      ],
+      [
+       12.4831396,
+       41.8792597
+      ],
+      [
+       12.4829663,
+       41.8794437
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b014_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 303.45,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4833895,
+       41.8795597
+      ],
+      [
+       12.4835419,
+       41.8794107
+      ],
+      [
+       12.4837811,
+       41.8795474
+      ],
+      [
+       12.4836287,
+       41.8796964
+      ],
+      [
+       12.4833895,
+       41.8795597
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b014_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 35.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4832659,
+       41.8797101
+      ],
+      [
+       12.4834128,
+       41.8795896
+      ],
+      [
+       12.4836064,
+       41.8797213
+      ],
+      [
+       12.4834595,
+       41.8798418
+      ],
+      [
+       12.4832659,
+       41.8797101
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b014_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     21.73,
+     18.11
+    ],
+    "theta_deg": 220.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4818256,
+       41.8796126
+      ],
+      [
+       12.4816898,
+       41.8797703
+      ],
+      [
+       12.4814366,
+       41.8796486
+      ],
+      [
+       12.4815723,
+       41.8794909
+      ],
+      [
+       12.4818256,
+       41.8796126
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b015_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 31.07,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4818971,
+       41.8792887
+      ],
+      [
+       12.4817347,
+       41.8791457
+      ],
+      [
+       12.4819643,
+       41.8790001
+      ],
+      [
+       12.4821267,
+       41.8791431
+      ],
+      [
+       12.4818971,
+       41.8792887
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b015_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 318.01,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4819925,
+       41.8797828
+      ],
+      [
+       12.4818366,
+       41.8796358
+      ],
+      [
+       12.4820726,
+       41.879496
+      ],
+      [
+       12.4822285,
+       41.879643
+      ],
+      [
+       12.4819925,
+       41.8797828
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b015_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 139.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.481028,
+       41.8796163
+      ],
+      [
+       12.4811799,
+       41.879467
+      ],
+      [
+       12.4814196,
+       41.8796033
+      ],
+      [
+       12.4812677,
+       41.8797525
+      ],
+      [
+       12.481028,
+       41.8796163
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b015_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 215.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4816369,
+       41.8793513
+      ],
+      [
+       12.4814665,
+       41.8792012
+      ],
+      [
+       12.4816272,
+       41.8790993
+      ],
+      [
+       12.4817976,
+       41.8792494
+      ],
+      [
+       12.4816369,
+       41.8793513
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b015_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     17.49,
+     21.87
+    ],
+    "theta_deg": 318.01,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4822508,
+       41.8795746
+      ],
+      [
+       12.4820824,
+       41.8794846
+      ],
+      [
+       12.4822269,
+       41.8793335
+      ],
+      [
+       12.4823953,
+       41.8794235
+      ],
+      [
+       12.4822508,
+       41.8795746
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b015_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.63,
+     17.19
+    ],
+    "theta_deg": 123.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.481609,
+       41.8794359
+      ],
+      [
+       12.4814733,
+       41.8795936
+      ],
+      [
+       12.48122,
+       41.8794718
+      ],
+      [
+       12.4813558,
+       41.8793141
+      ],
+      [
+       12.481609,
+       41.8794359
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b015_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 31.07,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4796034,
+       41.8797298
+      ],
+      [
+       12.4797927,
+       41.8796068
+      ],
+      [
+       12.4799903,
+       41.8797766
+      ],
+      [
+       12.4798009,
+       41.8798997
+      ],
+      [
+       12.4796034,
+       41.8797298
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b016_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 47.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4800774,
+       41.8800929
+      ],
+      [
+       12.4798892,
+       41.8799689
+      ],
+      [
+       12.4800883,
+       41.8798001
+      ],
+      [
+       12.4802766,
+       41.8799241
+      ],
+      [
+       12.4800774,
+       41.8800929
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b016_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 129.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.479498,
+       41.8795354
+      ],
+      [
+       12.4796732,
+       41.8793524
+      ],
+      [
+       12.4798691,
+       41.8794572
+      ],
+      [
+       12.4796939,
+       41.8796402
+      ],
+      [
+       12.479498,
+       41.8795354
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b016_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.0,
+     25.0
+    ],
+    "theta_deg": 33.9,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4798911,
+       41.8796754
+      ],
+      [
+       12.4800468,
+       41.8795742
+      ],
+      [
+       12.4802092,
+       41.8797138
+      ],
+      [
+       12.4800535,
+       41.879815
+      ],
+      [
+       12.4798911,
+       41.8796754
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b016_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.55,
+     17.13
+    ],
+    "theta_deg": 47.31,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825837,
+       41.8801159
+      ],
+      [
+       12.4823796,
+       41.8800068
+      ],
+      [
+       12.4825547,
+       41.8798238
+      ],
+      [
+       12.4827589,
+       41.8799329
+      ],
+      [
+       12.4825837,
+       41.8801159
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 303.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4820963,
+       41.8801037
+      ],
+      [
+       12.4819404,
+       41.8799568
+      ],
+      [
+       12.4821763,
+       41.879817
+      ],
+      [
+       12.4823322,
+       41.8799639
+      ],
+      [
+       12.4820963,
+       41.8801037
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 319.91,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.482803,
+       41.8799686
+      ],
+      [
+       12.4829719,
+       41.8798299
+      ],
+      [
+       12.4831946,
+       41.8799814
+      ],
+      [
+       12.4830257,
+       41.8801201
+      ],
+      [
+       12.482803,
+       41.8799686
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 40.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4822411,
+       41.8802689
+      ],
+      [
+       12.4824287,
+       41.8801443
+      ],
+      [
+       12.4826287,
+       41.8803126
+      ],
+      [
+       12.4824411,
+       41.8804371
+      ],
+      [
+       12.4822411,
+       41.8802689
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 226.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.482665,
+       41.8797836
+      ],
+      [
+       12.4824609,
+       41.8796746
+      ],
+      [
+       12.482636,
+       41.8794915
+      ],
+      [
+       12.4828402,
+       41.8796006
+      ],
+      [
+       12.482665,
+       41.8797836
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 303.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4825855,
+       41.8801236
+      ],
+      [
+       12.4827731,
+       41.879999
+      ],
+      [
+       12.4829731,
+       41.8801673
+      ],
+      [
+       12.4827855,
+       41.8802918
+      ],
+      [
+       12.4825855,
+       41.8801236
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 226.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.48243,
+       41.8799334
+      ],
+      [
+       12.4821851,
+       41.8798025
+      ],
+      [
+       12.4823252,
+       41.879656
+      ],
+      [
+       12.4825701,
+       41.8797869
+      ],
+      [
+       12.48243,
+       41.8799334
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.0,
+     25.0
+    ],
+    "theta_deg": 303.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4827351,
+       41.8797387
+      ],
+      [
+       12.4829378,
+       41.8795723
+      ],
+      [
+       12.4831159,
+       41.8796935
+      ],
+      [
+       12.4829133,
+       41.8798599
+      ],
+      [
+       12.4827351,
+       41.8797387
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_08",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.0,
+     25.0
+    ],
+    "theta_deg": 40.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4819746,
+       41.8802072
+      ],
+      [
+       12.4821672,
+       41.8800794
+      ],
+      [
+       12.4823041,
+       41.8801945
+      ],
+      [
+       12.4821115,
+       41.8803223
+      ],
+      [
+       12.4819746,
+       41.8802072
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_09",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     17.11,
+     21.38
+    ],
+    "theta_deg": 226.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4830504,
+       41.8798693
+      ],
+      [
+       12.4831939,
+       41.8797514
+      ],
+      [
+       12.4833832,
+       41.8798801
+      ],
+      [
+       12.4832396,
+       41.879998
+      ],
+      [
+       12.4830504,
+       41.8798693
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b017_10",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     21.25,
+     17.71
+    ],
+    "theta_deg": 40.62,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.480742,
+       41.8800489
+      ],
+      [
+       12.4808939,
+       41.8798997
+      ],
+      [
+       12.4811335,
+       41.8800359
+      ],
+      [
+       12.4809816,
+       41.8801852
+      ],
+      [
+       12.480742,
+       41.8800489
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_01",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 35.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4812385,
+       41.8801531
+      ],
+      [
+       12.4813904,
+       41.8800038
+      ],
+      [
+       12.4816301,
+       41.88014
+      ],
+      [
+       12.4814782,
+       41.8802893
+      ],
+      [
+       12.4812385,
+       41.8801531
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_02",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 35.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4815424,
+       41.8803861
+      ],
+      [
+       12.4817301,
+       41.8802616
+      ],
+      [
+       12.48193,
+       41.8804298
+      ],
+      [
+       12.4817424,
+       41.8805544
+      ],
+      [
+       12.4815424,
+       41.8803861
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_03",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 46.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4818508,
+       41.8805508
+      ],
+      [
+       12.4820384,
+       41.8804263
+      ],
+      [
+       12.4822384,
+       41.8805945
+      ],
+      [
+       12.4820507,
+       41.880719
+      ],
+      [
+       12.4818508,
+       41.8805508
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_04",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 46.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4805395,
+       41.8802543
+      ],
+      [
+       12.4803512,
+       41.8801303
+      ],
+      [
+       12.4805504,
+       41.8799615
+      ],
+      [
+       12.4807386,
+       41.8800855
+      ],
+      [
+       12.4805395,
+       41.8802543
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_05",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 309.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4809412,
+       41.8802998
+      ],
+      [
+       12.4810931,
+       41.8801506
+      ],
+      [
+       12.4813328,
+       41.8802868
+      ],
+      [
+       12.4811809,
+       41.8804361
+      ],
+      [
+       12.4809412,
+       41.8802998
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_06",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 35.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4807042,
+       41.879775
+      ],
+      [
+       12.4808561,
+       41.8796257
+      ],
+      [
+       12.4810958,
+       41.8797619
+      ],
+      [
+       12.4809439,
+       41.8799112
+      ],
+      [
+       12.4807042,
+       41.879775
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_07",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 35.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4808226,
+       41.8803599
+      ],
+      [
+       12.4806109,
+       41.8802205
+      ],
+      [
+       12.4807602,
+       41.8800939
+      ],
+      [
+       12.4809719,
+       41.8802334
+      ],
+      [
+       12.4808226,
+       41.8803599
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_08",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     18.74,
+     23.43
+    ],
+    "theta_deg": 309.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4810475,
+       41.8799557
+      ],
+      [
+       12.4811994,
+       41.8798065
+      ],
+      [
+       12.4814391,
+       41.8799427
+      ],
+      [
+       12.4812872,
+       41.880092
+      ],
+      [
+       12.4810475,
+       41.8799557
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_09",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     25.0,
+     20.83
+    ],
+    "theta_deg": 35.57,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4812334,
+       41.8804018
+      ],
+      [
+       12.4813879,
+       41.8802993
+      ],
+      [
+       12.4815525,
+       41.8804378
+      ],
+      [
+       12.481398,
+       41.8805403
+      ],
+      [
+       12.4812334,
+       41.8804018
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_10",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     20.58,
+     17.15
+    ],
+    "theta_deg": 46.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4806924,
+       41.8800386
+      ],
+      [
+       12.4805268,
+       41.8799295
+      ],
+      [
+       12.480702,
+       41.8797811
+      ],
+      [
+       12.4808675,
+       41.8798901
+      ],
+      [
+       12.4806924,
+       41.8800386
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_saba_b018_11",
+    "kind": "block",
+    "typ": "rome09_fascist_villino23",
+    "lot": [
+     21.99,
+     18.32
+    ],
+    "theta_deg": 309.72,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_saba_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_saba source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  }
+ ]
+}

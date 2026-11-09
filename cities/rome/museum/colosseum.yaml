@@ -1,0 +1,118 @@
+# Canonical imperial_height/colosseum only; no later hypogeum or separate attic is added.
+# Source receipt and native model inspection: research/museum/colosseum/sources.md.
+id: colosseum
+node: imperial_height
+landmark: { kind: ring, id: colosseum }
+exaggeration: 1
+stage_m: [40000, 40000]
+
+name: { zh: 罗马斗兽场, en: Colosseum }
+era: { zh: 公元80年启用时的概括形制, en: "A schematic view at its inauguration in 80 CE" }
+where: { zh: 罗马帕拉蒂尼、埃斯奎林和凯利乌斯山之间，原尼禄金宫人工湖的位置, en: "Between Rome's Palatine, Esquiline and Caelian hills, on the site of Nero's artificial lake" }
+
+label:
+  - head: { zh: 围着场地坐下, en: Around the arena }
+    text:
+      zh: 这座椭圆形的大建筑原名弗拉维圆形竞技场，由提图斯在公元80年启用。它建在尼禄金宫人工湖的原址，观众席围着中央场地，可以容纳约五万人。这里举行角斗和猎兽表演。
+      en: >-
+        Originally called the Flavian amphitheatre, this oval building was inaugurated by Titus in 80 CE.
+        It occupied the site of the artificial lake of Nero's palace. Seating surrounded the central arena,
+        accommodating around 50,000 spectators for gladiatorial contests and animal hunts.
+    cite: [S06, S86]
+  - head: { zh: 尺寸有据，细节有别, en: Dimensions and their limits }
+    text:
+      zh: 罗马市府列出的外部尺寸约为189×156米，高逾48米，中央场地约76×46米；外立面有三层拱廊，每层80个券，其上还有实墙层。这些是整座建筑的概括资料，不能证明公元80年启用时所有顶层工程已经完成。模型保留48米的概括高度，没有另画顶层实墙和其装饰。
+      en: >-
+        Rome's municipal account gives an exterior about 189 by 156 m, over 48 m high, and an arena about
+        76 by 46 m. Three arcaded levels each had 80 bays, with a solid-walled storey above. These are
+        descriptions of the monument as a whole, rather than a survey of every part completed in 80 CE.
+        The model retains a rounded overall height of 48 m without drawing the attic storey and its decoration separately.
+    cite: [S86, S86V, E08]
+  - head: { zh: 这座模型画到哪里, en: What this model shows }
+    text:
+      zh: 模型采用影片中的同一座椭圆座席环，高度恢复为原比例。它的座席断面经过简化，中央场地成为79×46米，长轴比市府数字多3米；场边4米矮墙也是估值。三排深色矩形只标示外廊开口，没有复原真正的圆拱、柱式、雕刻、屋顶或遮阳篷。这些部分因此标为推测。模型没有表现地下设施；开幕时已有木构技术空间，多米提安时期才改为永久砌体，不能把今天露出的地下走廊搬到80年。
+      en: >-
+        This is the film's oval seating-ring model at its true height. Its simplified section produces an arena
+        of 79 by 46 m, 3 m longer than the municipal figure; the 4 m arena wall is also an estimate. Three rows
+        of dark rectangles indicate the exterior openings, without reconstructing real arches, architectural orders,
+        sculpture, roofs or the awning. The modelled parts are therefore marked as estimated. Substructures are
+        omitted: timber technical spaces existed at the inauguration and were replaced in permanent masonry
+        under Domitian. The underground corridors exposed today must not be placed in the 80 CE scene.
+    cite: [S06, S86, S86V, E07, E08]
+
+life:
+  text:
+    zh: 观众席围着一片覆沙的木地板，表演在沙面上进行，准备工作则在下面完成。考古公园把开幕时的木构设施与后来永久砌筑的地下空间分开介绍。这座模型只让人看清观众席和场地的关系，没有复原木地板下的房间、升降机械或某一天的节目。
+    en: >-
+      Spectators faced a sand-covered timber arena floor. Performances took place above it and preparations below.
+      The archaeological park distinguishes the timber structures at the inauguration from the later permanent
+      masonry below the arena. This model explains the relationship between seating and arena; it does not reconstruct
+      the rooms below the timber floor, lifting machinery or a particular day's programme.
+  cite: [S86, E07]
+
+# Native ring labels are all empty. DARK is selected first; the single indivisible
+# revolve record then belongs to main. Its estimated seating section and upper edge
+# cannot be marked separately without changing the canonical model.
+parts:
+  - id: openings
+    labels: ['*']
+    kinds: [dark]
+    status: estimated
+    name: { zh: 三排外廊开口的示意, en: Schematic exterior openings }
+    note:
+      zh: 三层拱廊、每层80个券有文献依据；模型只以240个深色矩形代替。开口高度、宽度、间距和三层等分的办法都是简化估配，矩形没有凿穿主体，也没有圆拱顶、半柱或柱头。它们不代表已测得的80年立面。
+      en: >-
+        Sources describe three arcaded levels of 80 bays each. The model substitutes 240 dark rectangles.
+        Their dimensions, spacing and division into three equal-height levels are schematic estimates.
+        They do not cut through the body and have no curved arch heads, engaged columns or capitals;
+        they are not a measured reconstruction of the facade in 80 CE.
+    cite: [S06, S86, S86V]
+  - id: main
+    labels: ['*']
+    status: estimated
+    name: { zh: 椭圆主体和座席的简化复原, en: Simplified oval body and seating }
+    note:
+      zh: 外框189×156米和高约48米依整座建筑的公开尺寸取值；座席坡度、分带和4米场边墙为估配。等厚座席环使中央场地成为79×46米，长轴比市府的76米多3米。主体是一整件，无法把有据外框与推测断面分开着色，因此整体标为推测。上缘没有另分顶层实墙、屋顶、雕刻或遮阳篷，也不证明80年全部顶层完工；地下木构和后来永久砌体都没有建模。
+      en: >-
+        The 189 by 156 m exterior and rounded 48 m height follow published overall dimensions. Seating slopes,
+        bands and the 4 m arena wall are estimates. A constant-depth band makes the arena 79 by 46 m,
+        3 m longer than the municipal figure. The body is one indivisible model record, so its sourced outline
+        cannot be tinted separately from its estimated section; the whole is marked as estimated. Its upper
+        edge does not separately model the attic, roofs, sculpture or awning, or establish their completion
+        in 80 CE. Neither the early timber substructures nor the later permanent masonry are modelled.
+    cite: [S86, S86V, E07, E08]
+
+# True-model bounds and perspective projection were checked numerically before
+# choosing distances. These also leave the whole body inside a phone's central
+# 62.5% image band. Root must inspect native clean refs before generating pictures.
+viewpoints:
+  - { id: south, main: true, at_m: [0, 0, 22], az: 0, el: 22, d_m: 300, fov: 38, name: { zh: 从南面看, en: From the south } }
+  - { id: northeast, at_m: [0, 0, 22], az: 120, el: 38, d_m: 310, fov: 38, name: { zh: 东北面俯瞰, en: Above the north-east } }
+  - { id: northwest, at_m: [0, 0, 22], az: 240, el: 22, d_m: 300, fov: 38, name: { zh: 从西北面看, en: From the north-west } }
+
+sources:
+  S06:
+    short: { zh: 伦敦国王学院, en: King's College London }
+    zh: 伦敦国王学院《Art of Making》，Colosseum条目：80年启用、观众容量、材料和外廊构成；所列考古书目未另行核读
+    en: "King's College London, Art of Making, Colosseum entry: inauguration, capacity, materials and exterior; its archaeological bibliography was not separately read"
+    url: https://aofm-os.kdl.kcl.ac.uk/explore/monuments/113/
+  S86:
+    short: { zh: 罗马市府, en: Roma Capitale }
+    zh: 罗马市府旅游局《L'Anfiteatro Flavio (Colosseo)》：整体尺寸、外廊、座席和覆沙木地板；不作为80年各部分完工的逐项证明
+    en: "Roma Capitale, L'Anfiteatro Flavio (Colosseo): overall dimensions, arcades, seating and the sand-covered timber floor; not a part-by-part completion record for 80 CE"
+    url: https://www.turismoroma.it/it/node/1155
+  S86V:
+    short: { zh: 博洛尼亚遮阳篷研究，第22页, en: Bologna awning study, p. 22 }
+    zh: Eugenio D'Anna与Pier Gabriele Molari《Il velarium del Colosseo：una nuova interpretazione》，第22页：三层拱廊、每层80券及上方实墙；不采用其遮阳篷复原和不同的场地尺寸
+    en: "Eugenio D'Anna and Pier Gabriele Molari, Il velarium del Colosseo: una nuova interpretazione, p. 22: three arcaded levels, 80 bays and the wall above; its awning reconstruction and differing arena dimensions are not adopted"
+    url: https://amsacta.unibo.it/6307/1/Velarium%2007-01-2020%2B.pdf
+  E07:
+    short: { zh: 考古公园地下设施介绍, en: Archaeological park, substructures }
+    zh: 罗马斗兽场考古公园《I sotterranei del Colosseo》：开幕时木构技术空间，多米提安时期改为永久砌体；本轮核读项目留存的正文
+    en: "Parco archeologico del Colosseo, I sotterranei del Colosseo: timber technical spaces at the inauguration and permanent masonry under Domitian; read in the project's archived text"
+    url: https://colosseo.it/mirabilia/i-sotterranei-del-colosseo/
+  E08:
+    short: { zh: Taylor等，2016，注29, en: Taylor et al., 2016, note 29 }
+    zh: Rabun Taylor等《New Wine for Old Bottles》，The Waters of Rome 9（2016），第26页注29：引用晚期编年史讨论多米提安完成顶层；未核读所引古代原文
+    en: "Rabun Taylor et al., New Wine for Old Bottles, The Waters of Rome 9 (2016), p. 26, note 29: cites a late chronicle for Domitian's completion of the attic; the cited ancient text was not separately read"
+    url: https://waters.iath.virginia.edu/Journal9Taylor_et_al.pdf

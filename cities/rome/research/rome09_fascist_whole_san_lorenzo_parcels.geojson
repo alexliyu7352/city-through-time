@@ -1,0 +1,5130 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5159926,
+      41.8958121
+     ],
+     [
+      12.5159735,
+      41.8958543
+     ],
+     [
+      12.5149438,
+      41.8976969
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_001",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5159452,
+      41.8959049
+     ],
+     [
+      12.5138651,
+      41.8952692
+     ],
+     [
+      12.5114085,
+      41.8947009
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_002",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5130303,
+      41.8950761
+     ],
+     [
+      12.5126773,
+      41.8961562
+     ],
+     [
+      12.5120429,
+      41.8973743
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_003",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5152538,
+      41.8971421
+     ],
+     [
+      12.5140599,
+      41.8967909
+     ],
+     [
+      12.512495,
+      41.8965063
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_004",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5143062,
+      41.895404
+     ],
+     [
+      12.5141319,
+      41.8960446
+     ],
+     [
+      12.513733,
+      41.8967315
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_005",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5140636,
+      41.8961622
+     ],
+     [
+      12.5134844,
+      41.8959752
+     ],
+     [
+      12.5127581,
+      41.895909
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_006",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5155981,
+      41.896526
+     ],
+     [
+      12.5148165,
+      41.896359
+     ],
+     [
+      12.5141189,
+      41.8960669
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_007",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.513451,
+      41.8966802
+     ],
+     [
+      12.5132315,
+      41.8970786
+     ],
+     [
+      12.5131928,
+      41.8974987
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_008",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5145473,
+      41.8969343
+     ],
+     [
+      12.514514,
+      41.8972717
+     ],
+     [
+      12.5143077,
+      41.8976129
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_009",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.512692,
+      41.8961111
+     ],
+     [
+      12.5118953,
+      41.8958249
+     ],
+     [
+      12.5108767,
+      41.8956441
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_010",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5123187,
+      41.8968447
+     ],
+     [
+      12.5114782,
+      41.8966876
+     ],
+     [
+      12.5105401,
+      41.8963404
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_011",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5117733,
+      41.8958032
+     ],
+     [
+      12.5114961,
+      41.8961615
+     ],
+     [
+      12.5113651,
+      41.8966458
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_012",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.51203,
+      41.8948447
+     ],
+     [
+      12.5119073,
+      41.8953033
+     ],
+     [
+      12.5115811,
+      41.8957691
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_013",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5148808,
+      41.8938353
+     ],
+     [
+      12.5146332,
+      41.8942638
+     ],
+     [
+      12.5142244,
+      41.895379
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_014",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5146874,
+      41.89417
+     ],
+     [
+      12.5134179,
+      41.8939338
+     ],
+     [
+      12.5125641,
+      41.8936737
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_015",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.513488,
+      41.8939469
+     ],
+     [
+      12.5132004,
+      41.8944194
+     ],
+     [
+      12.5130373,
+      41.8950777
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_016",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5144529,
+      41.8947555
+     ],
+     [
+      12.513847,
+      41.8946931
+     ],
+     [
+      12.5131895,
+      41.8944633
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_017",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5124619,
+      41.8937426
+     ],
+     [
+      12.5121997,
+      41.8941849
+     ],
+     [
+      12.5120475,
+      41.8948487
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_018",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5131524,
+      41.8946131
+     ],
+     [
+      12.5126909,
+      41.8945693
+     ],
+     [
+      12.5121582,
+      41.8943659
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_019",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5138809,
+      41.8930923
+     ],
+     [
+      12.5136451,
+      41.8933972
+     ],
+     [
+      12.5134708,
+      41.8939437
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_020",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5155083,
+      41.895019
+     ],
+     [
+      12.514977,
+      41.8952534
+     ],
+     [
+      12.5142561,
+      41.8953887
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_021",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5170759,
+      41.897108
+     ],
+     [
+      12.5168627,
+      41.8973218
+     ],
+     [
+      12.5161842,
+      41.8982863
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_022",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5170157,
+      41.8970607
+     ],
+     [
+      12.5163511,
+      41.896919
+     ],
+     [
+      12.5155675,
+      41.8965808
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_023",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5165222,
+      41.8978058
+     ],
+     [
+      12.5159194,
+      41.8974767
+     ],
+     [
+      12.51519,
+      41.8972563
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_024",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5177426,
+      41.8976319
+     ],
+     [
+      12.517476,
+      41.8980351
+     ],
+     [
+      12.5168521,
+      41.8986037
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_025",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.5182406,
+      41.8986482
+     ],
+     [
+      12.5178411,
+      41.8983884
+     ],
+     [
+      12.5172815,
+      41.8982123
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_lane_026",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5133794,
+       41.8937267
+      ],
+      [
+       12.5130083,
+       41.8936606
+      ],
+      [
+       12.5131144,
+       41.8933279
+      ],
+      [
+       12.5134855,
+       41.8933939
+      ],
+      [
+       12.5133794,
+       41.8937267
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b001_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 101.74,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b001",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5137699,
+       41.8935429
+      ],
+      [
+       12.5141282,
+       41.893445
+      ],
+      [
+       12.5142855,
+       41.8937662
+      ],
+      [
+       12.5139272,
+       41.8938642
+      ],
+      [
+       12.5137699,
+       41.8935429
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b002_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 68.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5140279,
+       41.8934639
+      ],
+      [
+       12.5137955,
+       41.8933635
+      ],
+      [
+       12.5139567,
+       41.8931552
+      ],
+      [
+       12.5141891,
+       41.8932555
+      ],
+      [
+       12.5140279,
+       41.8934639
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b002_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     26.73,
+     22.28
+    ],
+    "theta_deg": 298.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5141257,
+       41.8939883
+      ],
+      [
+       12.5141874,
+       41.8938033
+      ],
+      [
+       12.5144844,
+       41.8938586
+      ],
+      [
+       12.5144228,
+       41.8940436
+      ],
+      [
+       12.5141257,
+       41.8939883
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b002_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.41,
+     21.17
+    ],
+    "theta_deg": 192.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b002",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5125078,
+       41.8942242
+      ],
+      [
+       12.5126519,
+       41.8939603
+      ],
+      [
+       12.5130758,
+       41.8940895
+      ],
+      [
+       12.5129317,
+       41.8943534
+      ],
+      [
+       12.5125078,
+       41.8942242
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b003_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 20.52,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5133156,
+       41.8941645
+      ],
+      [
+       12.5130315,
+       41.894068
+      ],
+      [
+       12.5131349,
+       41.8938981
+      ],
+      [
+       12.513419,
+       41.8939947
+      ],
+      [
+       12.5133156,
+       41.8941645
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b003_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     20.73,
+     25.91
+    ],
+    "theta_deg": 112.79,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5124479,
+       41.8942885
+      ],
+      [
+       12.5122247,
+       41.8942146
+      ],
+      [
+       12.5123878,
+       41.8939394
+      ],
+      [
+       12.512611,
+       41.8940133
+      ],
+      [
+       12.5124479,
+       41.8942885
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b003_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     33.43,
+     20.26
+    ],
+    "theta_deg": 292.23,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5125247,
+       41.8939152
+      ],
+      [
+       12.5126239,
+       41.8937335
+      ],
+      [
+       12.5130252,
+       41.8938558
+      ],
+      [
+       12.512926,
+       41.8940375
+      ],
+      [
+       12.5125247,
+       41.8939152
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b003_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.98,
+     21.8
+    ],
+    "theta_deg": 20.52,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b003",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5136603,
+       41.8944392
+      ],
+      [
+       12.5137525,
+       41.8941626
+      ],
+      [
+       12.5141967,
+       41.8942453
+      ],
+      [
+       12.5141045,
+       41.8945219
+      ],
+      [
+       12.5136603,
+       41.8944392
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b004_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 12.32,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5144907,
+       41.8945519
+      ],
+      [
+       12.5141274,
+       41.8944775
+      ],
+      [
+       12.5142468,
+       41.8941518
+      ],
+      [
+       12.5146101,
+       41.8942261
+      ],
+      [
+       12.5144907,
+       41.8945519
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b004_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     37.52,
+     31.26
+    ],
+    "theta_deg": 103.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5135207,
+       41.8945294
+      ],
+      [
+       12.5132681,
+       41.8944435
+      ],
+      [
+       12.5134577,
+       41.8941322
+      ],
+      [
+       12.5137102,
+       41.894218
+      ],
+      [
+       12.5135207,
+       41.8945294
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b004_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     23.03
+    ],
+    "theta_deg": 292.79,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b004",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.511965,
+       41.8947585
+      ],
+      [
+       12.511589,
+       41.8947103
+      ],
+      [
+       12.5116663,
+       41.8943732
+      ],
+      [
+       12.5120423,
+       41.8944213
+      ],
+      [
+       12.511965,
+       41.8947585
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b005_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 98.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5121035,
+       41.8944232
+      ],
+      [
+       12.5117772,
+       41.8943814
+      ],
+      [
+       12.5118219,
+       41.8941864
+      ],
+      [
+       12.5121482,
+       41.8942282
+      ],
+      [
+       12.5121035,
+       41.8944232
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b005_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     21.98,
+     27.48
+    ],
+    "theta_deg": 98.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b005",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5148401,
+       41.8952336
+      ],
+      [
+       12.5144721,
+       41.8951583
+      ],
+      [
+       12.514593,
+       41.8948283
+      ],
+      [
+       12.514961,
+       41.8949036
+      ],
+      [
+       12.5148401,
+       41.8952336
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b006_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 283.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5149362,
+       41.8945224
+      ],
+      [
+       12.5151666,
+       41.8944594
+      ],
+      [
+       12.5153057,
+       41.8947435
+      ],
+      [
+       12.5150753,
+       41.8948065
+      ],
+      [
+       12.5149362,
+       41.8945224
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b006_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     33.6,
+     20.36
+    ],
+    "theta_deg": 248.24,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.515261,
+       41.8951007
+      ],
+      [
+       12.5150954,
+       41.8948912
+      ],
+      [
+       12.5153197,
+       41.8947922
+      ],
+      [
+       12.5154853,
+       41.8950017
+      ],
+      [
+       12.515261,
+       41.8951007
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b006_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     21.62,
+     27.02
+    ],
+    "theta_deg": 147.78,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5147778,
+       41.894831
+      ],
+      [
+       12.5145396,
+       41.8947823
+      ],
+      [
+       12.5146179,
+       41.8945687
+      ],
+      [
+       12.5148561,
+       41.8946174
+      ],
+      [
+       12.5147778,
+       41.894831
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b006_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.6,
+     20.5
+    ],
+    "theta_deg": 283.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b006",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5123471,
+       41.8948526
+      ],
+      [
+       12.5123953,
+       41.8945698
+      ],
+      [
+       12.5128494,
+       41.894613
+      ],
+      [
+       12.5128013,
+       41.8948958
+      ],
+      [
+       12.5123471,
+       41.8948526
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b007_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 5.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b007",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5136219,
+       41.8950736
+      ],
+      [
+       12.5132468,
+       41.8950217
+      ],
+      [
+       12.5133302,
+       41.8946853
+      ],
+      [
+       12.5137053,
+       41.8947373
+      ],
+      [
+       12.5136219,
+       41.8950736
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b008_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 278.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5141147,
+       41.8951863
+      ],
+      [
+       12.5137467,
+       41.895111
+      ],
+      [
+       12.5138676,
+       41.8947811
+      ],
+      [
+       12.5142356,
+       41.8948564
+      ],
+      [
+       12.5141147,
+       41.8951863
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b008_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 103.66,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b008",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.511668,
+       41.8953218
+      ],
+      [
+       12.5112939,
+       41.895266
+      ],
+      [
+       12.5113836,
+       41.8949305
+      ],
+      [
+       12.5117577,
+       41.8949864
+      ],
+      [
+       12.511668,
+       41.8953218
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b009_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 99.64,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5111507,
+       41.8956014
+      ],
+      [
+       12.5112389,
+       41.8953241
+      ],
+      [
+       12.5116843,
+       41.8954032
+      ],
+      [
+       12.5115962,
+       41.8956805
+      ],
+      [
+       12.5111507,
+       41.8956014
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b009_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 191.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b009",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5151583,
+       41.8955403
+      ],
+      [
+       12.5153027,
+       41.8952765
+      ],
+      [
+       12.5157265,
+       41.895406
+      ],
+      [
+       12.515582,
+       41.8956698
+      ],
+      [
+       12.5151583,
+       41.8955403
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b010_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 200.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b010",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5123741,
+       41.8957628
+      ],
+      [
+       12.512036,
+       41.8956307
+      ],
+      [
+       12.5122482,
+       41.8953276
+      ],
+      [
+       12.5125863,
+       41.8954597
+      ],
+      [
+       12.5123741,
+       41.8957628
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b011_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 295.95,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5123758,
+       41.8953222
+      ],
+      [
+       12.5124887,
+       41.8950499
+      ],
+      [
+       12.512926,
+       41.8951511
+      ],
+      [
+       12.5128132,
+       41.8954234
+      ],
+      [
+       12.5123758,
+       41.8953222
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b011_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 15.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5123583,
+       41.895279
+      ],
+      [
+       12.5120076,
+       41.8952266
+      ],
+      [
+       12.5120917,
+       41.8949122
+      ],
+      [
+       12.5124424,
+       41.8949646
+      ],
+      [
+       12.5123583,
+       41.895279
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b011_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.62,
+     29.68
+    ],
+    "theta_deg": 279.64,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5126345,
+       41.8960146
+      ],
+      [
+       12.5123526,
+       41.8959632
+      ],
+      [
+       12.5124353,
+       41.8957104
+      ],
+      [
+       12.5127172,
+       41.8957619
+      ],
+      [
+       12.5126345,
+       41.8960146
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b011_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.9,
+     24.08
+    ],
+    "theta_deg": 102.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5117088,
+       41.8957658
+      ],
+      [
+       12.5117837,
+       41.8955303
+      ],
+      [
+       12.5120358,
+       41.8955751
+      ],
+      [
+       12.511961,
+       41.8958106
+      ],
+      [
+       12.5117088,
+       41.8957658
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b011_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     21.51,
+     26.89
+    ],
+    "theta_deg": 191.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.512744,
+       41.8957516
+      ],
+      [
+       12.5125025,
+       41.8957075
+      ],
+      [
+       12.5125732,
+       41.895491
+      ],
+      [
+       12.5128148,
+       41.8955351
+      ],
+      [
+       12.512744,
+       41.8957516
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b011_06",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.76,
+     20.64
+    ],
+    "theta_deg": 102.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b011",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5131344,
+       41.8956592
+      ],
+      [
+       12.5132473,
+       41.8953869
+      ],
+      [
+       12.5136846,
+       41.895488
+      ],
+      [
+       12.5135718,
+       41.8957603
+      ],
+      [
+       12.5131344,
+       41.8956592
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b012_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 15.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5139999,
+       41.8960257
+      ],
+      [
+       12.5136261,
+       41.8959689
+      ],
+      [
+       12.5137173,
+       41.8956337
+      ],
+      [
+       12.5140912,
+       41.8956905
+      ],
+      [
+       12.5139999,
+       41.8960257
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b012_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 99.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5136675,
+       41.8955492
+      ],
+      [
+       12.5137956,
+       41.8953152
+      ],
+      [
+       12.5141713,
+       41.8954301
+      ],
+      [
+       12.5140432,
+       41.895664
+      ],
+      [
+       12.5136675,
+       41.8955492
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b012_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     33.69,
+     28.08
+    ],
+    "theta_deg": 20.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5128399,
+       41.8958612
+      ],
+      [
+       12.5128737,
+       41.8956541
+      ],
+      [
+       12.5132063,
+       41.8956844
+      ],
+      [
+       12.5131725,
+       41.8958915
+      ],
+      [
+       12.5128399,
+       41.8958612
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b012_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.81,
+     23.18
+    ],
+    "theta_deg": 185.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5133033,
+       41.8953911
+      ],
+      [
+       12.5129824,
+       41.8953325
+      ],
+      [
+       12.5130451,
+       41.8951407
+      ],
+      [
+       12.513366,
+       41.8951993
+      ],
+      [
+       12.5133033,
+       41.8953911
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b012_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     21.93,
+     27.41
+    ],
+    "theta_deg": 282.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5133111,
+       41.8953919
+      ],
+      [
+       12.5133953,
+       41.8951887
+      ],
+      [
+       12.5137217,
+       41.8952642
+      ],
+      [
+       12.5136375,
+       41.8954674
+      ],
+      [
+       12.5133111,
+       41.8953919
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b012_06",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.36,
+     23.63
+    ],
+    "theta_deg": 15.54,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.513179,
+       41.8959054
+      ],
+      [
+       12.5132087,
+       41.8957235
+      ],
+      [
+       12.5135009,
+       41.8957501
+      ],
+      [
+       12.5134712,
+       41.895932
+      ],
+      [
+       12.513179,
+       41.8959054
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b012_07",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.43,
+     20.36
+    ],
+    "theta_deg": 185.29,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5131361,
+       41.8956353
+      ],
+      [
+       12.512901,
+       41.8955924
+      ],
+      [
+       12.5129699,
+       41.8953816
+      ],
+      [
+       12.513205,
+       41.8954245
+      ],
+      [
+       12.5131361,
+       41.8956353
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b012_08",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.1,
+     20.09
+    ],
+    "theta_deg": 282.06,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b012",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5147886,
+       41.8961204
+      ],
+      [
+       12.5148935,
+       41.8958464
+      ],
+      [
+       12.5153336,
+       41.8959404
+      ],
+      [
+       12.5152287,
+       41.8962145
+      ],
+      [
+       12.5147886,
+       41.8961204
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b013_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 194.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5156564,
+       41.8962541
+      ],
+      [
+       12.5153043,
+       41.8961443
+      ],
+      [
+       12.5154807,
+       41.8958287
+      ],
+      [
+       12.5158328,
+       41.8959385
+      ],
+      [
+       12.5156564,
+       41.8962541
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b013_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 111.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5145816,
+       41.895788
+      ],
+      [
+       12.5142988,
+       41.8957451
+      ],
+      [
+       12.5143678,
+       41.8954916
+      ],
+      [
+       12.5146505,
+       41.8955345
+      ],
+      [
+       12.5145816,
+       41.895788
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b013_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     28.73,
+     23.95
+    ],
+    "theta_deg": 279.83,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5151916,
+       41.8964038
+      ],
+      [
+       12.5152817,
+       41.8961684
+      ],
+      [
+       12.5155338,
+       41.8962222
+      ],
+      [
+       12.5154437,
+       41.8964576
+      ],
+      [
+       12.5151916,
+       41.8964038
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b013_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     21.76,
+     27.2
+    ],
+    "theta_deg": 194.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b013",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5111937,
+       41.8963625
+      ],
+      [
+       12.5108198,
+       41.896306
+      ],
+      [
+       12.5109105,
+       41.8959707
+      ],
+      [
+       12.5112845,
+       41.8960272
+      ],
+      [
+       12.5111937,
+       41.8963625
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b014_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 99.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5112524,
+       41.8960155
+      ],
+      [
+       12.5113307,
+       41.8957692
+      ],
+      [
+       12.5115944,
+       41.895816
+      ],
+      [
+       12.5115161,
+       41.8960623
+      ],
+      [
+       12.5112524,
+       41.8960155
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b014_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     22.5,
+     28.12
+    ],
+    "theta_deg": 11.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5108019,
+       41.8959408
+      ],
+      [
+       12.5108869,
+       41.8956734
+      ],
+      [
+       12.5111732,
+       41.8957242
+      ],
+      [
+       12.5110882,
+       41.8959916
+      ],
+      [
+       12.5108019,
+       41.8959408
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b014_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.43,
+     30.53
+    ],
+    "theta_deg": 11.7,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b014",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5136682,
+       41.8961017
+      ],
+      [
+       12.5135329,
+       41.8963416
+      ],
+      [
+       12.5131476,
+       41.8962203
+      ],
+      [
+       12.5132829,
+       41.8959804
+      ],
+      [
+       12.5136682,
+       41.8961017
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b015_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     34.7,
+     28.92
+    ],
+    "theta_deg": 201.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.512887,
+       41.8965195
+      ],
+      [
+       12.5129527,
+       41.8963181
+      ],
+      [
+       12.5133975,
+       41.896399
+      ],
+      [
+       12.5133319,
+       41.8966004
+      ],
+      [
+       12.512887,
+       41.8965195
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b015_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     23.03
+    ],
+    "theta_deg": 192.02,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5138536,
+       41.8964367
+      ],
+      [
+       12.5135564,
+       41.8963404
+      ],
+      [
+       12.5137111,
+       41.8960739
+      ],
+      [
+       12.5140084,
+       41.8961702
+      ],
+      [
+       12.5138536,
+       41.8964367
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b015_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     32.27,
+     26.89
+    ],
+    "theta_deg": 111.79,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5128132,
+       41.8965401
+      ],
+      [
+       12.5125848,
+       41.8964737
+      ],
+      [
+       12.5126915,
+       41.8962689
+      ],
+      [
+       12.5129199,
+       41.8963353
+      ],
+      [
+       12.5128132,
+       41.8965401
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b015_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.41,
+     20.34
+    ],
+    "theta_deg": 289.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5133349,
+       41.896616
+      ],
+      [
+       12.5133953,
+       41.8964305
+      ],
+      [
+       12.5136932,
+       41.8964847
+      ],
+      [
+       12.5136328,
+       41.8966701
+      ],
+      [
+       12.5133349,
+       41.896616
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b015_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.45,
+     21.21
+    ],
+    "theta_deg": 192.02,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b015",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5120886,
+       41.8965722
+      ],
+      [
+       12.511733,
+       41.8964688
+      ],
+      [
+       12.5118991,
+       41.89615
+      ],
+      [
+       12.5122546,
+       41.8962534
+      ],
+      [
+       12.5120886,
+       41.8965722
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b016_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 109.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.512414,
+       41.8965662
+      ],
+      [
+       12.5121554,
+       41.896491
+      ],
+      [
+       12.5123214,
+       41.8961722
+      ],
+      [
+       12.51258,
+       41.8962474
+      ],
+      [
+       12.512414,
+       41.8965662
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b016_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     23.03
+    ],
+    "theta_deg": 109.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5117109,
+       41.896521
+      ],
+      [
+       12.5114684,
+       41.8964844
+      ],
+      [
+       12.5115493,
+       41.8961854
+      ],
+      [
+       12.5117918,
+       41.896222
+      ],
+      [
+       12.5117109,
+       41.896521
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b016_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     33.89,
+     20.54
+    ],
+    "theta_deg": 279.77,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.511861,
+       41.8961773
+      ],
+      [
+       12.5116412,
+       41.8960824
+      ],
+      [
+       12.5117937,
+       41.8958853
+      ],
+      [
+       12.5120135,
+       41.8959802
+      ],
+      [
+       12.511861,
+       41.8961773
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b016_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.29,
+     21.08
+    ],
+    "theta_deg": 298.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.512262,
+       41.89681
+      ],
+      [
+       12.512028,
+       41.896742
+      ],
+      [
+       12.5121373,
+       41.8965321
+      ],
+      [
+       12.5123713,
+       41.8966001
+      ],
+      [
+       12.512262,
+       41.89681
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b016_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.02,
+     20.85
+    ],
+    "theta_deg": 109.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b016",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5161142,
+       41.8966765
+      ],
+      [
+       12.5157621,
+       41.8965667
+      ],
+      [
+       12.5159385,
+       41.896251
+      ],
+      [
+       12.5162906,
+       41.8963609
+      ],
+      [
+       12.5161142,
+       41.8966765
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b017_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 291.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5161116,
+       41.8967335
+      ],
+      [
+       12.5162477,
+       41.8965574
+      ],
+      [
+       12.5165305,
+       41.8966794
+      ],
+      [
+       12.5163944,
+       41.8968555
+      ],
+      [
+       12.5161116,
+       41.8967335
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b017_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.1,
+     22.58
+    ],
+    "theta_deg": 208.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b017",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5149418,
+       41.8967514
+      ],
+      [
+       12.5150467,
+       41.8964773
+      ],
+      [
+       12.5154869,
+       41.8965714
+      ],
+      [
+       12.515382,
+       41.8968455
+      ],
+      [
+       12.5149418,
+       41.8967514
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b018_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 14.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5144431,
+       41.8966135
+      ],
+      [
+       12.514548,
+       41.8963394
+      ],
+      [
+       12.5149882,
+       41.8964335
+      ],
+      [
+       12.5148833,
+       41.8967076
+      ],
+      [
+       12.5144431,
+       41.8966135
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b018_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 14.3,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b018",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5110241,
+       41.8966876
+      ],
+      [
+       12.5109032,
+       41.896958
+      ],
+      [
+       12.510469,
+       41.8968495
+      ],
+      [
+       12.5105899,
+       41.8965792
+      ],
+      [
+       12.5110241,
+       41.8966876
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b019_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 16.82,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5113531,
+       41.8969676
+      ],
+      [
+       12.5114411,
+       41.8967048
+      ],
+      [
+       12.5118631,
+       41.8967837
+      ],
+      [
+       12.5117752,
+       41.8970465
+      ],
+      [
+       12.5113531,
+       41.8969676
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b019_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     36.11,
+     30.09
+    ],
+    "theta_deg": 12.38,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5109849,
+       41.8968541
+      ],
+      [
+       12.5111511,
+       41.8966035
+      ],
+      [
+       12.5114195,
+       41.8967028
+      ],
+      [
+       12.5112533,
+       41.8969534
+      ],
+      [
+       12.5109849,
+       41.8968541
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b019_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.86,
+     31.07
+    ],
+    "theta_deg": 24.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5120877,
+       41.8971354
+      ],
+      [
+       12.5118029,
+       41.8970526
+      ],
+      [
+       12.5119359,
+       41.8967973
+      ],
+      [
+       12.5122207,
+       41.8968801
+      ],
+      [
+       12.5120877,
+       41.8971354
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b019_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     30.43,
+     25.36
+    ],
+    "theta_deg": 109.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b019",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5125567,
+       41.8969707
+      ],
+      [
+       12.512647,
+       41.8966937
+      ],
+      [
+       12.5130918,
+       41.8967746
+      ],
+      [
+       12.5130016,
+       41.8970516
+      ],
+      [
+       12.5125567,
+       41.8969707
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b020_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 12.02,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5131679,
+       41.8973493
+      ],
+      [
+       12.5127535,
+       41.897328
+      ],
+      [
+       12.5127763,
+       41.8970803
+      ],
+      [
+       12.5131907,
+       41.8971016
+      ],
+      [
+       12.5131679,
+       41.8973493
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b020_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.58,
+     34.47
+    ],
+    "theta_deg": 92.27,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5125603,
+       41.8972559
+      ],
+      [
+       12.5121937,
+       41.8971494
+      ],
+      [
+       12.5123078,
+       41.8969302
+      ],
+      [
+       12.5126744,
+       41.8970368
+      ],
+      [
+       12.5125603,
+       41.8972559
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b020_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     26.12,
+     32.65
+    ],
+    "theta_deg": 289.6,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b020",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5161333,
+       41.8975093
+      ],
+      [
+       12.5163534,
+       41.8972842
+      ],
+      [
+       12.5167149,
+       41.8974816
+      ],
+      [
+       12.5164947,
+       41.8977066
+      ],
+      [
+       12.5161333,
+       41.8975093
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b021_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     37.15,
+     30.96
+    ],
+    "theta_deg": 214.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5154418,
+       41.8968665
+      ],
+      [
+       12.5155995,
+       41.8966626
+      ],
+      [
+       12.515927,
+       41.8968039
+      ],
+      [
+       12.5157693,
+       41.8970078
+      ],
+      [
+       12.5154418,
+       41.8968665
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b021_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     31.39,
+     26.16
+    ],
+    "theta_deg": 28.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5165449,
+       41.8972691
+      ],
+      [
+       12.5166366,
+       41.8970288
+      ],
+      [
+       12.5168939,
+       41.8970836
+      ],
+      [
+       12.5168022,
+       41.8973239
+      ],
+      [
+       12.5165449,
+       41.8972691
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b021_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     22.21,
+     27.76
+    ],
+    "theta_deg": 14.27,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5158134,
+       41.8973523
+      ],
+      [
+       12.5159919,
+       41.8971697
+      ],
+      [
+       12.5162851,
+       41.8973298
+      ],
+      [
+       12.5161065,
+       41.8975123
+      ],
+      [
+       12.5158134,
+       41.8973523
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b021_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     30.14,
+     25.11
+    ],
+    "theta_deg": 214.5,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5153333,
+       41.8972652
+      ],
+      [
+       12.5154687,
+       41.8970152
+      ],
+      [
+       12.5158702,
+       41.8971366
+      ],
+      [
+       12.5157348,
+       41.8973866
+      ],
+      [
+       12.5153333,
+       41.8972652
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b021_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.95,
+     29.96
+    ],
+    "theta_deg": 200.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5157939,
+       41.8969877
+      ],
+      [
+       12.5159438,
+       41.8967938
+      ],
+      [
+       12.5162552,
+       41.8969282
+      ],
+      [
+       12.5161053,
+       41.8971221
+      ],
+      [
+       12.5157939,
+       41.8969877
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b021_06",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     29.85,
+     24.87
+    ],
+    "theta_deg": 28.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5162387,
+       41.8971537
+      ],
+      [
+       12.5163139,
+       41.8969568
+      ],
+      [
+       12.5166302,
+       41.8970242
+      ],
+      [
+       12.516555,
+       41.8972212
+      ],
+      [
+       12.5162387,
+       41.8971537
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b021_07",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     27.3,
+     22.75
+    ],
+    "theta_deg": 14.27,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b021",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5135201,
+       41.8972645
+      ],
+      [
+       12.5136103,
+       41.8969875
+      ],
+      [
+       12.5140551,
+       41.8970684
+      ],
+      [
+       12.5139649,
+       41.8973454
+      ],
+      [
+       12.5135201,
+       41.8972645
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b022_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 12.02,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5144271,
+       41.8973586
+      ],
+      [
+       12.5140586,
+       41.8973383
+      ],
+      [
+       12.5140912,
+       41.8970079
+      ],
+      [
+       12.5144597,
+       41.8970282
+      ],
+      [
+       12.5144271,
+       41.8973586
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b022_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     36.8,
+     30.67
+    ],
+    "theta_deg": 92.55,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5133931,
+       41.8969225
+      ],
+      [
+       12.5134535,
+       41.8967372
+      ],
+      [
+       12.5137511,
+       41.8967913
+      ],
+      [
+       12.5136908,
+       41.8969767
+      ],
+      [
+       12.5133931,
+       41.8969225
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b022_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.43,
+     21.19
+    ],
+    "theta_deg": 12.02,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5138878,
+       41.8973774
+      ],
+      [
+       12.5138076,
+       41.8975617
+      ],
+      [
+       12.5134006,
+       41.8974628
+      ],
+      [
+       12.5134808,
+       41.8972785
+      ],
+      [
+       12.5138878,
+       41.8973774
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b022_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.52,
+     21.53
+    ],
+    "theta_deg": 196.35,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5142566,
+       41.8976026
+      ],
+      [
+       12.5139817,
+       41.8975098
+      ],
+      [
+       12.514081,
+       41.8973454
+      ],
+      [
+       12.514356,
+       41.8974382
+      ],
+      [
+       12.5142566,
+       41.8976026
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b022_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     20.03,
+     25.04
+    ],
+    "theta_deg": 112.64,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5137111,
+       41.8969909
+      ],
+      [
+       12.5137819,
+       41.8967735
+      ],
+      [
+       12.514131,
+       41.896837
+      ],
+      [
+       12.5140602,
+       41.8970544
+      ],
+      [
+       12.5137111,
+       41.8969909
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b022_06",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     29.82,
+     24.85
+    ],
+    "theta_deg": 12.02,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b022",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5149501,
+       41.8975288
+      ],
+      [
+       12.5145696,
+       41.8975079
+      ],
+      [
+       12.5146033,
+       41.8971668
+      ],
+      [
+       12.5149838,
+       41.8971877
+      ],
+      [
+       12.5149501,
+       41.8975288
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b023_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 272.55,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b023",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.515435,
+       41.8978125
+      ],
+      [
+       12.5155781,
+       41.8975483
+      ],
+      [
+       12.5160025,
+       41.8976765
+      ],
+      [
+       12.5158594,
+       41.8979408
+      ],
+      [
+       12.515435,
+       41.8978125
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b024_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 20.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5162853,
+       41.8980657
+      ],
+      [
+       12.5158853,
+       41.8979086
+      ],
+      [
+       12.5160535,
+       41.8976695
+      ],
+      [
+       12.5164535,
+       41.8978266
+      ],
+      [
+       12.5162853,
+       41.8980657
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b024_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     30.0,
+     37.5
+    ],
+    "theta_deg": 116.07,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5154109,
+       41.8978231
+      ],
+      [
+       12.5149884,
+       41.8976913
+      ],
+      [
+       12.5151295,
+       41.8974388
+      ],
+      [
+       12.515552,
+       41.8975706
+      ],
+      [
+       12.5154109,
+       41.8978231
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b024_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     30.4,
+     38.0
+    ],
+    "theta_deg": 291.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b024",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.517129,
+       41.8980504
+      ],
+      [
+       12.516787,
+       41.8979241
+      ],
+      [
+       12.5169898,
+       41.8976175
+      ],
+      [
+       12.5173318,
+       41.8977437
+      ],
+      [
+       12.517129,
+       41.8980504
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b025_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 114.63,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5168606,
+       41.8984293
+      ],
+      [
+       12.5165656,
+       41.8982486
+      ],
+      [
+       12.5168558,
+       41.8979841
+      ],
+      [
+       12.5171509,
+       41.8981648
+      ],
+      [
+       12.5168606,
+       41.8984293
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b025_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 127.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5171392,
+       41.8976585
+      ],
+      [
+       12.5168333,
+       41.8974881
+      ],
+      [
+       12.5171069,
+       41.8972138
+      ],
+      [
+       12.5174128,
+       41.8973842
+      ],
+      [
+       12.5171392,
+       41.8976585
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b025_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 305.04,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5167085,
+       41.8980117
+      ],
+      [
+       12.51648,
+       41.897922
+      ],
+      [
+       12.5166781,
+       41.8976403
+      ],
+      [
+       12.5169066,
+       41.89773
+      ],
+      [
+       12.5167085,
+       41.8980117
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b025_04",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.34,
+     21.42
+    ],
+    "theta_deg": 296.07,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.517443,
+       41.8980283
+      ],
+      [
+       12.5172115,
+       41.8979428
+      ],
+      [
+       12.5174002,
+       41.8976575
+      ],
+      [
+       12.5176316,
+       41.8977429
+      ],
+      [
+       12.517443,
+       41.8980283
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b025_05",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     35.35,
+     21.43
+    ],
+    "theta_deg": 114.63,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5165776,
+       41.8982284
+      ],
+      [
+       12.5163536,
+       41.8981404
+      ],
+      [
+       12.5164949,
+       41.8979396
+      ],
+      [
+       12.5167189,
+       41.8980275
+      ],
+      [
+       12.5165776,
+       41.8982284
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b025_06",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     25.2,
+     21.0
+    ],
+    "theta_deg": 296.07,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b025",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5176227,
+       41.898202
+      ],
+      [
+       12.5177708,
+       41.8979393
+      ],
+      [
+       12.5181927,
+       41.8980721
+      ],
+      [
+       12.5180446,
+       41.8983348
+      ],
+      [
+       12.5176227,
+       41.898202
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b026_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 201.19,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5180725,
+       41.8983002
+      ],
+      [
+       12.5183038,
+       41.8981017
+      ],
+      [
+       12.5185164,
+       41.8982399
+      ],
+      [
+       12.5182852,
+       41.8984385
+      ],
+      [
+       12.5180725,
+       41.8983002
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b026_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     23.39,
+     29.24
+    ],
+    "theta_deg": 219.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b026",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5179271,
+       41.8985165
+      ],
+      [
+       12.5177532,
+       41.8987702
+      ],
+      [
+       12.5173457,
+       41.8986143
+      ],
+      [
+       12.5175196,
+       41.8983606
+      ],
+      [
+       12.5179271,
+       41.8985165
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b027_01",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     38.0,
+     31.66
+    ],
+    "theta_deg": 205.47,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.517785,
+       41.8987367
+      ],
+      [
+       12.5180103,
+       41.8985432
+      ],
+      [
+       12.5182175,
+       41.8986779
+      ],
+      [
+       12.5179922,
+       41.8988714
+      ],
+      [
+       12.517785,
+       41.8987367
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b027_02",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     22.79,
+     28.49
+    ],
+    "theta_deg": 39.37,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.5172545,
+       41.89861
+      ],
+      [
+       12.5170668,
+       41.898495
+      ],
+      [
+       12.5172514,
+       41.8983268
+      ],
+      [
+       12.5174391,
+       41.8984417
+      ],
+      [
+       12.5172545,
+       41.89861
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome09_fascist_san_lorenzo_b027_03",
+    "kind": "block",
+    "typ": "rome09_fascist_court5",
+    "lot": [
+     24.17,
+     20.14
+    ],
+    "theta_deg": 307.69,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome09_fascist_san_lorenzo_b027",
+     "buildings": 1,
+     "basis": "research/rome09_fascist_whole_basis.md; san_lorenzo source footprint and its own named housing comparison. Whole lots and inferred access lanes are estimated, not individual dwelling counts. Native court-first/frontage remainder is layout output, not a sourced census share."
+    }
+   }
+  }
+ ]
+}

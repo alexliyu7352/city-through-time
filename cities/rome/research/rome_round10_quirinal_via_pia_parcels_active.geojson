@@ -1,0 +1,1928 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4874242,
+      41.9043813
+     ],
+     [
+      12.4870302,
+      41.9038579
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_lane_001",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4893262,
+      41.9031308
+     ],
+     [
+      12.4890436,
+      41.90287
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_lane_002",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.487041,
+      41.9055151
+     ],
+     [
+      12.4864794,
+      41.9050721
+     ],
+     [
+      12.4859751,
+      41.9044021
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_lane_003",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4857907,
+      41.9058229
+     ],
+     [
+      12.4855727,
+      41.9055258
+     ],
+     [
+      12.4849942,
+      41.9050661
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_lane_004",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      12.4863755,
+      41.904934
+     ],
+     [
+      12.4860046,
+      41.9052095
+     ],
+     [
+      12.4854292,
+      41.9054118
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_lane_005",
+    "kind": "street",
+    "w_m": 4,
+    "provenance": {
+     "role": "access lane splitting a large block (its place and bends estimated)",
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.491042,
+       41.9024326
+      ],
+      [
+       12.4913801,
+       41.9026497
+      ],
+      [
+       12.4911477,
+       41.9028517
+      ],
+      [
+       12.4908096,
+       41.9026346
+      ],
+      [
+       12.491042,
+       41.9024326
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b001_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     29.6,
+     37.0
+    ],
+    "theta_deg": 309.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b001",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4891397,
+       41.9028483
+      ],
+      [
+       12.4894246,
+       41.902676
+      ],
+      [
+       12.4897013,
+       41.9029314
+      ],
+      [
+       12.4894164,
+       41.9031036
+      ],
+      [
+       12.4891397,
+       41.9028483
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b001_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.5,
+     30.41
+    ],
+    "theta_deg": 229.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b001",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4894831,
+       41.9027208
+      ],
+      [
+       12.4898266,
+       41.9025131
+      ],
+      [
+       12.490049,
+       41.9027183
+      ],
+      [
+       12.4897055,
+       41.902926
+      ],
+      [
+       12.4894831,
+       41.9027208
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b001_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     29.33,
+     36.67
+    ],
+    "theta_deg": 229.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b001",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4901267,
+       41.9023872
+      ],
+      [
+       12.4903382,
+       41.9025229
+      ],
+      [
+       12.4901201,
+       41.9027125
+      ],
+      [
+       12.4899086,
+       41.9025767
+      ],
+      [
+       12.4901267,
+       41.9023872
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b001_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     27.77,
+     23.14
+    ],
+    "theta_deg": 309.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b001",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4911714,
+       41.9028424
+      ],
+      [
+       12.4914212,
+       41.9026913
+      ],
+      [
+       12.4915829,
+       41.9028406
+      ],
+      [
+       12.4913331,
+       41.9029917
+      ],
+      [
+       12.4911714,
+       41.9028424
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b001_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     21.34,
+     26.67
+    ],
+    "theta_deg": 229.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b001",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4879981,
+       41.9034327
+      ],
+      [
+       12.488279,
+       41.9036144
+      ],
+      [
+       12.4879872,
+       41.9038662
+      ],
+      [
+       12.4877063,
+       41.9036845
+      ],
+      [
+       12.4879981,
+       41.9034327
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b002_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 309.2,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.487265,
+       41.9038603
+      ],
+      [
+       12.4875888,
+       41.9037243
+      ],
+      [
+       12.4878073,
+       41.9040146
+      ],
+      [
+       12.4874835,
+       41.9041506
+      ],
+      [
+       12.487265,
+       41.9038603
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b002_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 238.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4886465,
+       41.9031001
+      ],
+      [
+       12.488934,
+       41.9029263
+      ],
+      [
+       12.4892132,
+       41.903184
+      ],
+      [
+       12.4889257,
+       41.9033578
+      ],
+      [
+       12.4886465,
+       41.9031001
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b002_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     36.83,
+     30.69
+    ],
+    "theta_deg": 49.34,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4887016,
+       41.9034032
+      ],
+      [
+       12.488434,
+       41.9036695
+      ],
+      [
+       12.4881488,
+       41.9035096
+      ],
+      [
+       12.4884164,
+       41.9032432
+      ],
+      [
+       12.4887016,
+       41.9034032
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b002_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     29.6,
+     37.0
+    ],
+    "theta_deg": 35.22,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4873393,
+       41.9042181
+      ],
+      [
+       12.4875074,
+       41.9041475
+      ],
+      [
+       12.4876023,
+       41.9042736
+      ],
+      [
+       12.4874343,
+       41.9043442
+      ],
+      [
+       12.4873393,
+       41.9042181
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b002_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     8.03,
+     16.0
+    ],
+    "theta_deg": 238.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b002",
+     "buildings": 2,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4877637,
+       41.9038894
+      ],
+      [
+       12.4879072,
+       41.9038292
+      ],
+      [
+       12.4880041,
+       41.9039578
+      ],
+      [
+       12.4878606,
+       41.9040181
+      ],
+      [
+       12.4877637,
+       41.9038894
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b002_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     16.39,
+     13.66
+    ],
+    "theta_deg": 238.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b002",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4864629,
+       41.9044564
+      ],
+      [
+       12.4867867,
+       41.9043204
+      ],
+      [
+       12.4870052,
+       41.9046107
+      ],
+      [
+       12.4866814,
+       41.9047467
+      ],
+      [
+       12.4864629,
+       41.9044564
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 238.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4866393,
+       41.9040662
+      ],
+      [
+       12.4869631,
+       41.9039301
+      ],
+      [
+       12.4871817,
+       41.9042204
+      ],
+      [
+       12.4868578,
+       41.9043565
+      ],
+      [
+       12.4866393,
+       41.9040662
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 58.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4860482,
+       41.9044514
+      ],
+      [
+       12.4863535,
+       41.9043232
+      ],
+      [
+       12.4865596,
+       41.9045969
+      ],
+      [
+       12.4862542,
+       41.9047251
+      ],
+      [
+       12.4860482,
+       41.9044514
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     34.88,
+     29.07
+    ],
+    "theta_deg": 238.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4868705,
+       41.9044003
+      ],
+      [
+       12.4872113,
+       41.9042571
+      ],
+      [
+       12.4873647,
+       41.9044608
+      ],
+      [
+       12.4870238,
+       41.904604
+      ],
+      [
+       12.4868705,
+       41.9044003
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     25.96,
+     32.45
+    ],
+    "theta_deg": 58.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4863774,
+       41.9048474
+      ],
+      [
+       12.4866591,
+       41.9047291
+      ],
+      [
+       12.4867858,
+       41.9048974
+      ],
+      [
+       12.4865041,
+       41.9050157
+      ],
+      [
+       12.4863774,
+       41.9048474
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_05",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     21.45,
+     26.82
+    ],
+    "theta_deg": 238.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4863212,
+       41.9042221
+      ],
+      [
+       12.4866452,
+       41.904086
+      ],
+      [
+       12.486791,
+       41.9042796
+      ],
+      [
+       12.4864669,
+       41.9044158
+      ],
+      [
+       12.4863212,
+       41.9042221
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_06",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     24.68,
+     30.85
+    ],
+    "theta_deg": 238.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4867066,
+       41.9051899
+      ],
+      [
+       12.4868934,
+       41.9050578
+      ],
+      [
+       12.4870349,
+       41.9051694
+      ],
+      [
+       12.4868481,
+       41.9053015
+      ],
+      [
+       12.4867066,
+       41.9051899
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_07",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     17.07,
+     21.34
+    ],
+    "theta_deg": 224.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4865143,
+       41.9050636
+      ],
+      [
+       12.4866718,
+       41.9049522
+      ],
+      [
+       12.4868416,
+       41.9050861
+      ],
+      [
+       12.4866841,
+       41.9051976
+      ],
+      [
+       12.4865143,
+       41.9050636
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_08",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     10.25,
+     18.0
+    ],
+    "theta_deg": 224.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 2,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4867025,
+       41.9047653
+      ],
+      [
+       12.4868666,
+       41.9046963
+      ],
+      [
+       12.4869405,
+       41.9047945
+      ],
+      [
+       12.4867763,
+       41.9048634
+      ],
+      [
+       12.4867025,
+       41.9047653
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_09",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.5,
+     15.63
+    ],
+    "theta_deg": 238.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.486341,
+       41.9046954
+      ],
+      [
+       12.4865451,
+       41.9046097
+      ],
+      [
+       12.4866369,
+       41.9047316
+      ],
+      [
+       12.4864328,
+       41.9048174
+      ],
+      [
+       12.486341,
+       41.9046954
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_10",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     15.54,
+     19.43
+    ],
+    "theta_deg": 238.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4870949,
+       41.9054513
+      ],
+      [
+       12.487071,
+       41.9053584
+      ],
+      [
+       12.4872761,
+       41.9053288
+      ],
+      [
+       12.4873001,
+       41.9054217
+      ],
+      [
+       12.4870949,
+       41.9054513
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b003_11",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     17.34,
+     10.51
+    ],
+    "theta_deg": 347.41,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b003",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4855234,
+       41.9047196
+      ],
+      [
+       12.4858472,
+       41.9045836
+      ],
+      [
+       12.4860657,
+       41.9048739
+      ],
+      [
+       12.4857419,
+       41.9050099
+      ],
+      [
+       12.4855234,
+       41.9047196
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b004_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 58.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4856538,
+       41.9051503
+      ],
+      [
+       12.4855513,
+       41.9053139
+      ],
+      [
+       12.48519,
+       41.9051875
+      ],
+      [
+       12.4852925,
+       41.9050239
+      ],
+      [
+       12.4856538,
+       41.9051503
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b004_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     33.11,
+     20.06
+    ],
+    "theta_deg": 23.41,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.486335,
+       41.9049308
+      ],
+      [
+       12.4861775,
+       41.9049969
+      ],
+      [
+       12.4858024,
+       41.9044987
+      ],
+      [
+       12.48596,
+       41.9044325
+      ],
+      [
+       12.486335,
+       41.9049308
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b004_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.7,
+     15.0
+    ],
+    "theta_deg": 58.97,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 5 shop-houses on one street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b004",
+     "buildings": 5,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4860013,
+       41.905177
+      ],
+      [
+       12.4858228,
+       41.905043
+      ],
+      [
+       12.4860097,
+       41.9049042
+      ],
+      [
+       12.4861881,
+       41.9050382
+      ],
+      [
+       12.4860013,
+       41.905177
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b004_04",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     10.93,
+     21.0
+    ],
+    "theta_deg": 133.48,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b004",
+     "buildings": 2,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4856005,
+       41.904834
+      ],
+      [
+       12.4855171,
+       41.9049672
+      ],
+      [
+       12.4853032,
+       41.9048923
+      ],
+      [
+       12.4853866,
+       41.9047592
+      ],
+      [
+       12.4856005,
+       41.904834
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b004_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     19.6,
+     16.33
+    ],
+    "theta_deg": 203.41,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4850396,
+       41.9050563
+      ],
+      [
+       12.4851724,
+       41.904963
+      ],
+      [
+       12.4852723,
+       41.9050424
+      ],
+      [
+       12.4851395,
+       41.9051356
+      ],
+      [
+       12.4850396,
+       41.9050563
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b004_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     12.1,
+     15.12
+    ],
+    "theta_deg": 225.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b004",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4857211,
+       41.9054435
+      ],
+      [
+       12.4860469,
+       41.9053101
+      ],
+      [
+       12.4862612,
+       41.9056021
+      ],
+      [
+       12.4859354,
+       41.9057355
+      ],
+      [
+       12.4857211,
+       41.9054435
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b005_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 239.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b005",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4861571,
+       41.9051292
+      ],
+      [
+       12.4863263,
+       41.9050095
+      ],
+      [
+       12.4865187,
+       41.9051612
+      ],
+      [
+       12.4863494,
+       41.905281
+      ],
+      [
+       12.4861571,
+       41.9051292
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b005_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     23.22,
+     19.35
+    ],
+    "theta_deg": 44.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b005",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.486591,
+       41.9055063
+      ],
+      [
+       12.4864961,
+       41.9056578
+      ],
+      [
+       12.4862527,
+       41.9055727
+      ],
+      [
+       12.4863477,
+       41.9054212
+      ],
+      [
+       12.486591,
+       41.9055063
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b005_03",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     22.3,
+     18.58
+    ],
+    "theta_deg": 23.41,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b005",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4866214,
+       41.905593
+      ],
+      [
+       12.48658,
+       41.9054327
+      ],
+      [
+       12.4868375,
+       41.9053956
+      ],
+      [
+       12.4868789,
+       41.9055559
+      ],
+      [
+       12.4866214,
+       41.905593
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b005_04",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     21.76,
+     18.13
+    ],
+    "theta_deg": 347.41,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b005",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.486675,
+       41.9052624
+      ],
+      [
+       12.4865438,
+       41.9053552
+      ],
+      [
+       12.4864078,
+       41.905248
+      ],
+      [
+       12.4865391,
+       41.9051551
+      ],
+      [
+       12.486675,
+       41.9052624
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b005_05",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     8.2,
+     15.0
+    ],
+    "theta_deg": 44.88,
+    "empty": 0,
+    "provenance": {
+     "role": "a row of 2 shop-houses on one street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b005",
+     "buildings": 2,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4855785,
+       41.9054851
+      ],
+      [
+       12.4857048,
+       41.9054334
+      ],
+      [
+       12.485819,
+       41.905589
+      ],
+      [
+       12.4856927,
+       41.9056407
+      ],
+      [
+       12.4855785,
+       41.9054851
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b005_06",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     19.71,
+     11.95
+    ],
+    "theta_deg": 239.59,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b005",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4846846,
+       41.905387
+      ],
+      [
+       12.4849553,
+       41.9051969
+      ],
+      [
+       12.4852607,
+       41.9054396
+      ],
+      [
+       12.48499,
+       41.9056297
+      ],
+      [
+       12.4846846,
+       41.905387
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b006_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     37.0,
+     30.83
+    ],
+    "theta_deg": 45.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b006",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4851406,
+       41.90554
+      ],
+      [
+       12.4853007,
+       41.9054276
+      ],
+      [
+       12.4855489,
+       41.9056248
+      ],
+      [
+       12.4853889,
+       41.9057372
+      ],
+      [
+       12.4851406,
+       41.90554
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b006_02",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     30.08,
+     18.23
+    ],
+    "theta_deg": 45.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b006",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4844981,
+       41.9054621
+      ],
+      [
+       12.4846279,
+       41.9053709
+      ],
+      [
+       12.4847744,
+       41.9054873
+      ],
+      [
+       12.4846445,
+       41.9055785
+      ],
+      [
+       12.4844981,
+       41.9054621
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome08_capital_via_pia_existing_frontage_b006_03",
+    "kind": "block",
+    "typ": "rome08_capital_street_house3",
+    "lot": [
+     17.75,
+     14.79
+    ],
+    "theta_deg": 45.09,
+    "empty": 0,
+    "provenance": {
+     "role": "a single shop-house on a street front",
+     "parent_block": "rome08_capital_via_pia_existing_frontage_b006",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       12.4908415,
+       41.9022494
+      ],
+      [
+       12.49103,
+       41.9023705
+      ],
+      [
+       12.4907626,
+       41.9026029
+      ],
+      [
+       12.4905741,
+       41.9024818
+      ],
+      [
+       12.4908415,
+       41.9022494
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "rome_round10_quirinal_via_pia_edge_b001_01",
+    "kind": "block",
+    "typ": "rome08_capital_palazzetto3",
+    "lot": [
+     34.04,
+     20.63
+    ],
+    "theta_deg": 309.0,
+    "empty": 0,
+    "provenance": {
+     "role": "a whole courtyard house, the largest that fits here, turned to its street",
+     "parent_block": "rome_round10_quirinal_via_pia_edge_b001",
+     "buildings": 1,
+     "basis": "research/rome08_capital_whole_basis.md; C02 limited existing frontage near Quirinale and the ViaPia axis. The PortaPia approach itself stays predominantly gardens; no later Sallustiano grid.; native lots are schematic subdivisions, types and three-level bounds use the two approved named Letarouilly comparisons. Court/row counts are output, not a historical census or fixed district ratio. Round10: native parcel regeneration only inside source lots that physically intersect the already-standing Quirinal wing or its Censo palace garden. research/rome_round10_quirinal.md. The original quarter settings are retained; this is a schematic source-layout correction, not a1871 demolition or a historical household count."
+    }
+   }
+  }
+ ]
+}

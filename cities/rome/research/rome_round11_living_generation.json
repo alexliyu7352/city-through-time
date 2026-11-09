@@ -1,0 +1,94 @@
+{
+  "mode": "built-in edit",
+  "candidate_modified": false,
+  "records": [
+    {
+      "id": "rome_round11_stpeter_drum1564",
+      "tool": "built-in image_gen.imagegen EDIT",
+      "source_generated_image": "本機生成原圖/exec-47ddec80-ebe9-42f5-ae31-17c44948ec3e.png",
+      "saved_asset": "cities/rome/assets/living/rome_round11_stpeter_drum1564.png",
+      "image_size": [
+        1672,
+        941
+      ],
+      "ref": "本機候選/rome_round11_all/build/review/living/rome_round11_stpeter_drum1564_ref.jpg",
+      "ref_sha1": "1d144821e3eeaafd9175a860aea288702bda1a26",
+      "png_sha256": "c0f000cc5c387f46371b2a9bffd6ae53cefda65fad5160daa3c1151896b9b050",
+      "cam": [
+        -0.37908,
+        0.01511,
+        -0.03454,
+        105,
+        10,
+        0.0035,
+        42
+      ],
+      "on_at_reference_compile": 1029.056,
+      "scene": "cities/rome/research/living/rome_round11_stpeter_drum1564.yaml",
+      "review_sheet": "本機候選/rome_round11_living_generated/rome_round11_stpeter_drum1564_check.jpg",
+      "review_blend": "本機候選/rome_round11_living_generated/rome_round11_stpeter_drum1564_blend.jpg",
+      "adopted": false,
+      "generation_ref": "本機候選/rome_round11_living_generated/rome_round11_stpeter_drum1564_ref.jpg",
+      "self_review": "Native reference, generated PNG and 50% blend all viewed; no candidate mutation or adopt."
+    },
+    {
+      "id": "rome_round11_prayer2020",
+      "tool": "built-in image_gen.imagegen EDIT",
+      "source_generated_image": "本機生成原圖/exec-37fa3cc8-06b0-45f9-848e-679acfc667ab.png",
+      "saved_asset": "cities/rome/assets/living/rome_round11_prayer2020.png",
+      "image_size": [
+        1672,
+        941
+      ],
+      "ref": "本機候選/rome_round11_all/build/review/living/rome_round11_prayer2020_ref.jpg",
+      "ref_sha1": "608f52f4b0afe4ac0d636679a35da0c321161738",
+      "png_sha256": "1d6c18fbc27d3a58335a74bdbc05b53e3a130e15c9003d0ee39f47a420a68a5c",
+      "cam": [
+        -0.36595,
+        0.00626,
+        -0.03481,
+        90,
+        10,
+        0.035,
+        42
+      ],
+      "on_at_reference_compile": 1664.341,
+      "scene": "cities/rome/research/living/rome_round11_prayer2020.yaml",
+      "review_sheet": "本機候選/rome_round11_living_generated/rome_round11_prayer2020_check.jpg",
+      "review_blend": "本機候選/rome_round11_living_generated/rome_round11_prayer2020_blend.jpg",
+      "adopted": false,
+      "generation_ref": "本機候選/rome_round11_living_generated/rome_round11_prayer2020_ref.jpg",
+      "self_review": "Native reference, generated PNG and 50% blend all viewed; no candidate mutation or adopt."
+    },
+    {
+      "id": "rome_round11_piazza_pia2024",
+      "tool": "built-in image_gen.imagegen EDIT",
+      "source_generated_image": "本機生成原圖/exec-2e9e03c3-2ba9-4740-8f0a-2c93d0049335.png",
+      "saved_asset": "cities/rome/assets/living/rome_round11_piazza_pia2024.png",
+      "image_size": [
+        1672,
+        941
+      ],
+      "ref": "本機候選/rome_round11_all/build/review/living/rome_round11_piazza_pia2024_ref.jpg",
+      "ref_sha1": "a8d0a98124799a13de12baed921d78985fd03d0a",
+      "png_sha256": "c912228f32279c7cff3b1f9cd475e23ccffcde4d8eec3d0ec83044abf06c2b7b",
+      "cam": [
+        -0.29415,
+        0.00307,
+        -0.03435,
+        90,
+        8,
+        0.0065,
+        42
+      ],
+      "on_at_reference_compile": 1700.907,
+      "scene": "cities/rome/research/living/rome_round11_piazza_pia2024.yaml",
+      "review_sheet": "本機候選/rome_round11_living_generated/rome_round11_piazza_pia2024_check.jpg",
+      "review_blend": "本機候選/rome_round11_living_generated/rome_round11_piazza_pia2024_blend.jpg",
+      "adopted": false,
+      "generation_ref": "本機候選/rome_round11_living_generated/rome_round11_piazza_pia2024_ref.jpg",
+      "self_review": "Native reference, generated PNG and 50% blend all viewed; no candidate mutation or adopt."
+    }
+  ],
+  "prompts": "cities/rome/research/rome_round11_living_prompts.json"
+}

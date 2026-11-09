@@ -1,0 +1,373 @@
+rome_director_v9_0507_stpeter:
+  kind: parts
+  exaggeration: 1
+  basis: 'research/rome07_renaissance_survey.md R01-R07 and R03_plan_work.jpg. Vatican
+    exterior dome diameter58.90m and facade116x45.50m. Plan articulation follows Alfarano1590
+    and Falda1667, not a solid church box. The body42m, crossing attic12.5m, drum20m,
+    shell35m, lantern18.17m and all wings/openings/roof slopes are source-constrained
+    massing estimates, not a surveyed elevation;133.30m is the selected Vatican overall
+    exterior-height branch. No internal double-shell/rib restoration. Formal native
+    child stages retain one level site. Drum and peristyle, shell, lantern, ball/cross
+    and Maderno nave are separate native classes with the same sourced dimensions.
+    Cut removes an anachronistic whole-footprint platform while the old east nave
+    stands; current DEM remains a schematic grade, not the ancient church floor. 05b-07
+    adaptation: work1606 and work1609 are exact copies of the last low construction
+    long_hall in research/rome07_renaissance_landmark_types.yaml#rome07_renaissance_newstpeter_1606/_1609,
+    also used in the approved phase study. The old east nave follows the approved
+    formal whole-part retirement; the separate 30m study remnant is not introduced
+    into the unchanged prefix.'
+  name: St Peter sourced construction stages
+  parts:
+  - kind: long_hall
+    at:
+    - -18
+    - 0
+    theta_deg: 90
+    w_m: 64
+    d_m: 112
+    h_m: 42
+    aisles:
+      n: 1
+      w_m: 15
+      h_m: 26
+    roof:
+      shape: flat
+    id: western_body
+  - kind: long_hall
+    at:
+    - -10
+    - 0
+    w_m: 42
+    d_m: 126
+    h_m: 42
+    roof:
+      shape: gabled
+      pitch_deg: 18
+    id: cross_arm
+  - kind: dome
+    at:
+    - -73
+    - 0
+    theta_deg: 90
+    d_m: 42
+    drum_h_m: 26
+    sweep_deg: 180
+    dome:
+      shape: saucer
+      rise_m: 6
+    id: western_apse
+  - kind: column
+    atop: 0
+    w_m: 50
+    h_m: 12.5
+    id: attic
+  - kind: column
+    id: drum
+    atop: 3
+    w_m: 50
+    h_m: 20
+  - kind: column
+    id: drum_columns
+    atop: 3
+    w_m: 1.2
+    h_m: 20
+    repeat:
+      ring:
+        n: 32
+        r_m: 28.25
+  - kind: revolve
+    id: drum_cornice
+    atop: 4
+    profile_m:
+    - - 25
+      - 0
+    - - 29.45
+      - 0
+    - - 29.45
+      - 2
+    - - 25
+      - 2
+  - kind: dome
+    id: shell
+    atop: 4
+    d_m: 50
+    drum_h_m: 0
+    dome:
+      shape: pointed
+      d_m: 46.5
+      rise_m: 35
+  - kind: dome
+    id: lantern
+    atop: 4
+    z_m: 34.3
+    d_m: 8
+    drum_h_m: 12.719000000000001
+    dome:
+      shape: hemisphere
+      rise_m: 5.4510000000000005
+  - kind: revolve
+    atop: 7
+    sides: 24
+    profile_m:
+    - - 7.654042494670958e-17
+      - 0.0
+    - - 0.19554308130028866
+      - 0.015389574256077787
+    - - 0.3862712429686843
+      - 0.061179354631058086
+    - - 0.5674881246744335
+      - 0.13624184476454027
+    - - 0.7347315653655915
+      - 0.23872875703131569
+    - - 0.8838834764831844
+      - 0.3661165235168157
+    - - 1.0112712429686843
+      - 0.5152684346344085
+    - - 1.1137581552354598
+      - 0.6825118753255666
+    - - 1.1888206453689418
+      - 0.8637287570313157
+    - - 1.2346104257439223
+      - 1.0544569186997115
+    - - 1.25
+      - 1.25
+    - - 1.2346104257439223
+      - 1.4455430813002885
+    - - 1.1888206453689418
+      - 1.6362712429686843
+    - - 1.1137581552354598
+      - 1.8174881246744334
+    - - 1.0112712429686843
+      - 1.9847315653655915
+    - - 0.8838834764831844
+      - 2.1338834764831844
+    - - 0.7347315653655915
+      - 2.261271242968684
+    - - 0.5674881246744335
+      - 2.36375815523546
+    - - 0.3862712429686843
+      - 2.438820645368942
+    - - 0.19554308130028866
+      - 2.4846104257439223
+    - - 7.654042494670958e-17
+      - 2.5
+    id: ball
+    z_m: 17.470000000000002
+  - kind: column
+    atop: 9
+    section: rect
+    w_m: 0.4
+    h_m: 3.33
+    id: cross
+  - kind: prism
+    atop: 9
+    z_m: 2.1
+    plan_m:
+    - - -1.2
+      - -0.2
+    - - 1.2
+      - -0.2
+    - - 1.2
+      - 0.2
+    - - -1.2
+      - 0.2
+    h_m: 0.4
+    id: cross_bar
+  - kind: long_hall
+    at:
+    - 68
+    - 0
+    theta_deg: 90
+    w_m: 76
+    d_m: 94
+    h_m: 42
+    aisles:
+      n: 1
+      w_m: 18
+      h_m: 26
+    roof:
+      shape: gabled
+      pitch_deg: 18
+    id: long_nave
+  - kind: long_hall
+    at:
+    - 117
+    - 0
+    w_m: 116
+    d_m: 18
+    h_m: 45.5
+    theta_deg: 90
+    roof:
+      shape: flat
+    colonnade:
+      at: front
+      n_front: 8
+      depth_m: 4
+    id: facade
+  - kind: long_hall
+    at:
+    - 60
+    - 0
+    theta_deg: 90
+    w_m: 76
+    d_m: 40
+    h_m: 10
+    roof:
+      shape: flat
+    id: work1606
+  - kind: long_hall
+    at:
+    - 60
+    - 0
+    theta_deg: 90
+    w_m: 76
+    d_m: 80
+    h_m: 22
+    roof:
+      shape: flat
+    id: work1609
+  site: cut
+rome08_capital_braschi_body:
+  name: Palazzo Braschi; 1871 ministry in the existing palace
+  basis: research/rome08_capital_window_basis.md; C03 Fig6 footprint and courtyard;
+    pp19–21 explicitly distinguish ground, mezzanines and three piani nobili. The
+    30m outer eaves is a graphic estimate compatible with the named multi-level palace,
+    not three uniform floors. Irregular footprint retained; rooms, pitched roof and
+    internal mezzanines not reconstructed.
+  exaggeration: 1
+  kind: parts
+  parts:
+  - kind: prism
+    plan_m:
+    - - -35.597
+      - 23.073
+    - - 32.207
+      - 23.073
+    - - 19.147
+      - -31.803
+    - - -5.373
+      - -35.072
+    holes_m:
+    - - - -2.072
+        - 9.191
+      - - 13.006
+        - 11.292
+      - - 16.017
+        - 9.435
+      - - 17.873
+        - 5.501
+      - - 17.532
+        - -15.332
+      - - 14.552
+        - -17.915
+      - - 1.319
+        - -18.932
+      - - -2.55
+        - -15.69
+      - - -3.647
+        - 5.393
+    h_m: 30
+  - kind: long_hall
+    at:
+    - -1.6950000000000003
+    - 19.073
+    atop: 0
+    w_m: 8
+    d_m: 66.804
+    h_m: 1
+    theta_deg: -90.0
+    roof:
+      shape: hipped
+      pitch_deg: 25
+      overhang_m: 0.25
+  - kind: long_hall
+    at:
+    - 21.78568385834021
+    - -3.4389013628894807
+    atop: 0
+    w_m: 8
+    d_m: 55.408678197596515
+    h_m: 1
+    theta_deg: -193.3868514401233
+    roof:
+      shape: hipped
+      pitch_deg: 25
+      overhang_m: 0.25
+  - kind: long_hall
+    at:
+    - 6.358398078661366
+    - -29.472581336426042
+    atop: 0
+    w_m: 8
+    d_m: 23.736951327922363
+    h_m: 1
+    theta_deg: -262.4061219261356
+    roof:
+      shape: hipped
+      pitch_deg: 25
+      overhang_m: 0.25
+  - kind: long_hall
+    at:
+    - -16.935848011133555
+    - -4.15463681810131
+    atop: 0
+    w_m: 8
+    d_m: 64.53114680058637
+    h_m: 1
+    theta_deg: 27.465588425717627
+    roof:
+      shape: hipped
+      pitch_deg: 25
+      overhang_m: 0.25
+  detail: low
+rome08_capital_sanpantaleo_body:
+  kind: prism
+  plan_m:
+  - - -10.461
+    - 9.787
+  - - -5.669
+    - 9.787
+  - - -5.147
+    - 11.533
+  - - -1.532
+    - 11.402
+  - - -1.432
+    - 9.932
+  - - 5.475
+    - 9.191
+  - - 5.245
+    - 5.612
+  - - 11.828
+    - 4.391
+  - - 14.574
+    - 1.35
+  - - 15.115
+    - -2.053
+  - - 13.965
+    - -5.704
+  - - 11.304
+    - -7.392
+  - - 6.554
+    - -7.653
+  - - 6.282
+    - -10.97
+  - - -4.198
+    - -10.359
+  - - -3.926
+    - -7.043
+  - - -11.563
+    - -6.737
+  - - -11.54
+    - -1.85
+  - - -13.679
+    - -1.791
+  - - -13.417
+    - 4.1
+  h_m: 19
+  name: San Pantaleo; documented church footprint
+  basis: research/rome08_capital_window_basis.md; C03 Fig6 parcel476 has articulated
+    nave and rounded apse.19m height estimated by the previously documented Rome urban
+    basilica comparison; neither a new1871 church nor a modern grey proxy. Exterior
+    envelope only, no exact roof or facade reconstruction.
+  exaggeration: 1
+  detail: low
