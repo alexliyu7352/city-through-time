@@ -30,12 +30,6 @@ export class Geo {
     this.quad(P(-hw, 0, -hd), P(hw, 0, -hd), P(hw, h, -hd), P(-hw, h, -hd), N(0, -1), data, B0);
     this.quad(P(-hw, h, hd), P(hw, h, hd), P(hw, h, -hd), P(-hw, h, -hd), [0, 1, 0], data, B0);
   }
-  // a flat piece on the ground, its top face only, y0 high (a house's lot: the trodden ground it stands on)
-  slab(cx, y0, cz, w, d, rot = 0, data = [0, 0, 0, 1], base = null) {
-    const c = Math.cos(rot), s = Math.sin(rot), hw = w / 2, hd = d / 2;
-    const P = (x, z) => { const X = cx + x * c - z * s, Z = cz + x * s + z * c; return [X, y0 + this.gx * (X - cx) + this.gz * (Z - cz), Z]; };
-    this.quad(P(-hw, hd), P(hw, hd), P(hw, -hd), P(-hw, -hd), [0, 1, 0], data, base == null ? y0 : base);
-  }
   // truncated pyramid: base w0 x d0 at y0, top w1 x d1 at y0 + h (a rammed-earth tier, a hip roof when w1, d1 are small)
   frustum(cx, y0, cz, w0, d0, w1, d1, h, rot = 0, data = [0, 0, 0, 1], base = null) {
     const B0 = base == null ? y0 : base;
@@ -345,19 +339,13 @@ export function makeTally(opts = {}) {
 // ---------------------------------------------------------------- era cities: primitive list (pipeline/citygen.py) -> one geometry
 // record: [type, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx, gz, bx, bz, shape]; aData = [year, part, rank, 3 + loss]; aBase = g (the rise pivot)
 // lost: per record 0, or the number of the loss that takes it (compile lost_parts; the era's own ring, studio.js uLoss*)
-// lot: { m, lift } (model units): every house body standing on the ground gets the trodden ground of its lot under it, m wider on
-// each side, lift above the ground at its middle, drawn as the city's paving (the streets' rammed earth). It is the house's own record, so it
-// rises with the house and a loss takes it with the house: the quarter is earth wherever houses stand (lots m apart or closer
-// join into one ground with the lanes), and where they are gone, burned or never were, the plate (docs/MODEL.md)
-const FAB = 0, PAVE = 7;
-export function buildEra(prims, year = 0, lost = null, lot = null) {
+export function buildEra(prims, year = 0, lost = null) {
   const G = new Geo();
   for (const [i, p] of prims.entries()) {
     const [t, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx = 0, gz = 0, bx = cx, bz = cz] = p;
     const data = [t === 0 && d === 1 ? 10 + rot : t === 0 && d === 2 ? 30 + rot : year, part, rank, 3 + (lost ? lost[i] : 0)];   // a road piece carries its direction (the engine draws ruts along it); an asphalt one 30 + it (smooth, no ruts)
     G.gx = gx; G.gz = gz;   // a piece laid along a slope (citygen: walls, corridors, paving)
     G.cc = [bx, bz];        // the building it belongs to: rises and falls as one
-    if (t === 0 && lot && part === FAB && y0 <= g + 1e-9) G.slab(cx, g + lot.lift, cz, a + 2 * lot.m, b + 2 * lot.m, rot, [year, PAVE, rank, data[3]], g);   // (its lot on the ground, the body's foot sunk below it)
     if (t === 0) G.box(cx, y0, cz, a, c, b, rot, data, g);
     else if (t === 1) G.gable(cx, y0, cz, a, b, c, rot, d, data, g);
     else if (t === 2) G.frustum(cx, y0, cz, a, b, d, e, c, rot, data, g);

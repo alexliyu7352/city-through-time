@@ -754,9 +754,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   // era cities: one mesh per period, each with its own rise/sink/colour uniforms
   const eras = {};
-  const LOT_M = 7, LOT_LIFT_M = .15;   // a house's lot: its trodden ground 7 m round the house (props.js buildEra), just over the ground
   function addEra(id, prims, col, lost = null) {
-    const geo = buildEra(prims, 0, lost, { m: LOT_M * M.scale, lift: LOT_LIFT_M * M.scale * ((M.terrain && M.terrain.exaggeration) || 3) });
+    const geo = buildEra(prims, 0, lost);
     const u = { uGroundSelf: { value: -1 }, uEraT: { value: -1 }, uEraSpan: { value: 1 }, uEraGrow: { value: 1 }, uEraFallR: { value: -1 }, uEraFallIn: { value: 0 }, uEraFallW: { value: .01 }, uEraO: { value: new THREE.Vector2() }, uEraInk: { value: 0 }, uEraInk0: { value: 0 }, uEraA: { value: 0 }, uEraBurn: { value: 0 }, uEraCol: { value: lin(col || '#ffd9a0') }, uEraCol0: { value: lin(col || '#ffd9a0') }, uEraFab: { value: 1.0 }, uEraGlow: { value: 0 },
       uLossR: { value: Array(Z.L).fill(-1) }, uLossIn: { value: Array(Z.L).fill(0) }, uLossW: { value: Array(Z.L).fill(.01) }, uLossBurn: { value: Array(Z.L).fill(0) }, uLossO: { value: Array.from({ length: Z.L }, () => new THREE.Vector2()) } };
     const mesh = new THREE.Mesh(geo, projMaterial(0, { color: '#f4f2ee', roughness: .86, metalness: 0 }, u));
