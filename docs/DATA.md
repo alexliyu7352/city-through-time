@@ -49,7 +49,7 @@ CMAB download: the provincial zips of figshare article 27992417 (Shaanxi = `shan
 
 `pipeline/osm.py` fetches by theme and caches by query hash in the city's own raw folder (`<raw root>/cities/<slug>/osm/`): water (water surfaces and river lines), roads, rail, historic (heritage sites, protected areas, tombs), places, aeroway.
 Of the Overpass servers only overpass-api.de is stable, and it is slow (10–60 seconds a query); if the cache exists, do not fetch again.
-Credit: write © OpenStreetMap contributors on the identity tag and the end card; write ODbL in CREDITS. Derived databases (raw/, data/) carry the same licence; the video itself is not restricted.
+Credit: write © OpenStreetMap contributors on the end card (and in the description); write ODbL in CREDITS. The identity line at the top keeps where and how big the city is: a credit there is too small to read on a phone, and compile faults one. Derived databases (raw/, data/) carry the same licence; the video itself is not restricted.
 
 ## Extent and scale
 

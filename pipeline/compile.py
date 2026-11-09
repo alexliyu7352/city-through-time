@@ -2928,6 +2928,9 @@ film = {
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),
 }
+if re.search(r'©|\(c\)|contributors|licen[cs]e', film['identity']['l2'] or '', re.I):   # (docs/DATA.md "Credit")
+    fault(f"film.identity.l2 carries a data credit ({film['identity']['l2']!r}): a credit up there is too small to read on a phone; "
+          f"keep where and how big the city is there and give the credit on the end card (film.end), the description and CREDITS")
 # pictures must not hide a change (docs/STAGING.md 5b). Full-frame footage hides everything, so it never
 # shows during one. A half-screen panel (engine/overlay.js: the right 64 % of the frame, melting in over 260 px) may show beside a
 # city that grows or burns on the left of the frame; it may not cover more than a third of that place on screen, sampled four times

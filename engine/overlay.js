@@ -15,16 +15,21 @@ export function setUI(ui, sub) { if (ui) UI = { ...UI, ...ui }; if (sub) { SUB.a
 const plain = s => !/[^\x00-\x7f]/.test(s);   // (an ASCII word may take the mono face; any other script takes the first language's)
 export const font = (k, px) => { if (!F[k]) throw new Error(`no font for the job ${k} (film.fonts)`); return F[k].replace('{}', px); };
 export const SUB = { a: ['zh_strong', 38], b: ['en', 30], safe: 1500 };
+// The film is watched on phones held sideways, where the frame is about 700 points wide, a third of these pixels: a line meant to
+// be read is 24 px or more (about 9 pt there) at .85 alpha or more, and what matters more is set larger or bolder, never fainter
+// (docs/CHECKS.md "Phone look"). Nothing on the frame is smaller than TYPE_MIN.
+export const READ_PX = 24, TYPE_MIN = 18;
 const SUBTOP = H - 145;   // the subtitle strip starts here: pins and labels keep out of it
 
 // size: the layer's size in its own pixels, the film's 1920 x 1080 picture unless a page that fills its window (engine/view.js's
 // public mode) draws its pins on a layer of the window's size
 export function makeOverlay(canvas, size = { w: W, h: H }) {
-  const g = canvas.getContext('2d'), LW = size.w, LH = size.h, LSUB = LH - (size.bottom ?? 145), LTOP = size.top ?? 128;   // (LSUB: SUBTOP on this layer; size.top, .bottom: a page's own bars instead of the film's timeline and subtitles)
+  const g = canvas.getContext('2d'), LW = size.w, LH = size.h, LSUB = LH - (size.bottom ?? 145), LTOP = size.top ?? 168;   // (LSUB: SUBTOP on this layer; size.top, .bottom: a page's own bars instead of the film's timeline and subtitles)
   let TX = [], DRAWN = [];   // DRAWN: every text drawn opaque, named or not, its letters' band (tools/readcheck.mjs: texts over texts)
   const begin = () => { g.clearRect(0, 0, LW, LH); TX = []; DRAWN = []; };
   function txt(id, s, x, y, k, px, col, a = 1, o = {}) {
     if (a <= .001 || !s) return 0;
+    if (px < TYPE_MIN) throw new Error(`overlay: "${s}" at ${px} px, under the ${TYPE_MIN} px a phone can show (READ_PX for a line to read)`);
     g.save(); g.globalAlpha = a; g.font = font(k, px); g.fillStyle = col; g.textBaseline = 'alphabetic';
     if (o.ls) g.letterSpacing = o.ls + 'px';
     if (o.shadow) { g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = o.shadow; }
@@ -52,19 +57,22 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
   // a readout's source note in lines that stay on the dark ground on the left: broken at its separators (a · with a space after
   // it, not the one inside 《史记·秦始皇本纪》) to at most NOTE_W px a line (one source wider than that stays whole); noteDrop: how
   // far its extra lines push what is below it down
-  const NOTE_W = 620, NOTE_LH = 22;
+  const NOTE_W = 700, NOTE_LH = 32, NOTE_PX = 24;
   function noteLines(s) {
     if (!s) return [];
     const tk = s.split(/(\s*·\s+)/), out = []; let cur = tk[0];   // [source, separator, source, ...]
     for (let i = 1; i < tk.length; i += 2) {
       const nx = cur + tk[i] + tk[i + 1];
-      if (width(nx, 'mono', 16, 1) > NOTE_W) { out.push(cur); cur = tk[i + 1]; } else cur = nx;
+      if (width(nx, 'mono', NOTE_PX, 1) > NOTE_W) { out.push(cur); cur = tk[i + 1]; } else cur = nx;
     }
     return [...out, cur];
   }
   const noteDrop = s => Math.max(0, noteLines(s).length - 1) * NOTE_LH;
   // a readout's room below its source line: the longest of its notes, so the legend stays put when the note changes
   const notesDrop = o => Math.max(noteDrop(o.note), ...(o.notes || []).map(n => noteDrop(n.note)));
+  // how far a readout reaches below its source line (legend rows, bar, a note's extra lines): what sits under it moves down by this
+  const LEG_LH = 40, BAR_H = 64;
+  const readoutDrop = o => (o.legend ? o.legend.length * LEG_LH : 0) + (o.bar ? BAR_H : 0) + notesDrop(o);
   // the source note at t and its fade: a chapter told over several nodes changes it where a node begins (compile: readout continues
   // with a note), the old one out over the .3 s before, the new one in over the .3 s after
   function noteAt(o, t) {
@@ -79,8 +87,8 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     const a = env(t, o.t0, o.t1); if (a <= 0) return;
     const k = eo(seg(t, o.t0, o.t0 + .6)), dy = (1 - k) * 26, X = 96, Y = 568 + dy;
     // chapter line: index · name, a hairline in the era's colour
-    const ch = UI.chapter.replace('{n}', o.idx); txt(o.id + 'i', ch, X, Y - 150, plain(ch) ? 'mono' : 'zh', 15, 'rgba(235,238,242,.7)', a, { ls: 4, shadow: 6 });
-    txt(o.id + 'n', o.name, X, Y - 112, 'zh_strong', 30, '#f4f1ea', a, { ls: 6, shadow: 8 });
+    const ch = UI.chapter.replace('{n}', o.idx); txt(o.id + 'i', ch, X, Y - 156, plain(ch) ? 'mono' : 'zh', 22, 'rgba(235,238,242,.9)', a, { ls: 3, shadow: 6 });
+    txt(o.id + 'n', o.name, X, Y - 112, 'zh_strong', 32, '#f4f1ea', a, { ls: 5, shadow: 8 });
     g.save(); g.globalAlpha = a; g.fillStyle = o.col; g.fillRect(X, Y - 92, 220 * k, 1.5); g.restore();
     const bigId = o.live ? null : o.id + 'b';
     const big = String(o.big), sp = big.match(/^(\D*?)\s*(\d[\d,.]*)\s*(\D*)$/), cjk = sp && !plain(sp[1] + sp[3]);
@@ -95,20 +103,20 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     // the source note: bright enough and shadowed to read over a lit map or the satellite plate, in lines;
     // readcheck reads it as one text, the whole note (it sets how short the stop may be: docs/STAGING.md 5d)
     const [note, nk] = noteAt(o, t), nl = noteLines(note), dn = notesDrop(o);
-    nl.forEach((q, i) => txt(null, q, X, Y + 94 + i * NOTE_LH, 'mono', 16, 'rgba(225,230,236,.85)', a * nk, { ls: 1, shadow: 8 }));
-    if (nl.length && a * nk > .98) TX.push({ id: o.id + 's', text: note, x0: X, y0: Y + 94 - 16 * .9, x1: X + Math.max(...nl.map(q => width(q, 'mono', 16, 1))), y1: Y + 94 + noteDrop(note) + 16 * .25 });
+    nl.forEach((q, i) => txt(null, q, X, Y + 104 + i * NOTE_LH, 'mono', NOTE_PX, 'rgba(230,234,240,.92)', a * nk, { ls: 1, shadow: 8 }));
+    if (nl.length && a * nk > .98) TX.push({ id: o.id + 's', text: note, x0: X, y0: Y + 104 - NOTE_PX * .9, x1: X + Math.max(...nl.map(q => width(q, 'mono', NOTE_PX, 1))), y1: Y + 104 + noteDrop(note) + NOTE_PX * .25 });
     if (o.legend) o.legend.forEach((row, i) => {
       const ra = a * (row.t0 != null ? seg(t, row.t0, row.t0 + .25) : 1); if (ra <= 0) return;
-      const yy = Y + 128 + dn + i * 32;
-      if (row.col) { g.save(); g.globalAlpha = ra; g.fillStyle = row.col; g.fillRect(X, yy - 12, 28, 14); g.restore(); }
-      const w1 = row.text ? txt(o.id + 'g' + i, row.text, X + (row.col ? 44 : 0), yy, 'mono', 17, 'rgba(235,238,242,.85)', ra, { shadow: 6 }) : 0;
-      if (row.text2) txt(o.id + 'h' + i, row.text2, X + Math.max(210, (row.col ? 44 : 0) + w1 + 18), yy, 'mono', 17, 'rgba(235,238,242,.85)', ra, { shadow: 6 });   // (after a long first name, not over it)
+      const yy = Y + 150 + dn + i * LEG_LH;
+      if (row.col) { g.save(); g.globalAlpha = ra; g.fillStyle = row.col; g.fillRect(X, yy - 17, 34, 18); g.restore(); }
+      const w1 = row.text ? txt(o.id + 'g' + i, row.text, X + (row.col ? 50 : 0), yy, 'mono', READ_PX, 'rgba(235,238,242,.92)', ra, { shadow: 6 }) : 0;
+      if (row.text2) txt(o.id + 'h' + i, row.text2, X + Math.max(270, (row.col ? 50 : 0) + w1 + 22), yy, 'mono', READ_PX, 'rgba(235,238,242,.92)', ra, { shadow: 6 });   // (after a long first name, not over it)
     });
     if (o.bar) {   // a gradient bar with end labels
       const gr = g.createLinearGradient(X, 0, X + 300, 0); o.bar.cols.forEach((c, i) => gr.addColorStop(i / (o.bar.cols.length - 1), c));
-      g.save(); g.globalAlpha = a; g.fillStyle = gr; g.fillRect(X, Y + 128 + dn, 300, 4); g.restore();
-      txt(null, o.bar.l0, X, Y + 158 + dn, 'mono', 17, 'rgba(230,234,240,.7)', a, { shadow: 6 });
-      txt(null, o.bar.l1, X + 300, Y + 158 + dn, 'mono', 17, 'rgba(230,234,240,.7)', a, { right: true, shadow: 6 });
+      g.save(); g.globalAlpha = a; g.fillStyle = gr; g.fillRect(X, Y + 140 + dn, 360, 5); g.restore();
+      txt(null, o.bar.l0, X, Y + 176 + dn, 'mono', READ_PX, 'rgba(230,234,240,.9)', a, { shadow: 6 });
+      txt(null, o.bar.l1, X + 360, Y + 176 + dn, 'mono', READ_PX, 'rgba(230,234,240,.9)', a, { right: true, shadow: 6 });
     }
   }
 
@@ -116,9 +124,9 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
   // the edge of a small dark box with the name (and a second line). The pole's length and the side of the box are laid out
   // by compile (pipeline/tags.py: tags clear of each other and of the subtitles, readout and locator). a: alpha; grow: 0..1
   // how far the pole has drawn. Returns where its box is drawn ({ x, y, w, h }: a page that makes it a link puts the link there)
-  const TAG = { a: ['zh_strong', 20], b: ['en_strong', 14], pad: 11, top: LTOP };
+  const TAG = { a: ['zh_strong', 27], b: ['en_strong', 21], pad: 14, top: LTOP };   // (pipeline/tags.py lays the boxes out at these sizes)
   function tag(x, y, o, a, grow = 1) {
-    const boxH = o.sub ? 50 : 32, col = o.col || '#ffffff';
+    const boxH = o.sub ? 68 : 42, col = o.col || '#ffffff';
     let L = (o.len || 160), yTop = y - L - boxH;
     yTop = Math.min(yTop, LSUB - 14 - boxH); yTop = Math.max(yTop, TAG.top); L = y - yTop - boxH; if (L < 24) return;   // clear of the subtitles and the timeline
     const ta = a * (o.ta ?? 1);
@@ -133,11 +141,11 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     g.restore();
     if (ta <= 0) return;
     const bx = left ? x - w : x;
-    g.save(); g.globalAlpha = ta * .6; g.fillStyle = '#07080c'; g.fillRect(bx, yTop, w, boxH); g.restore();
+    g.save(); g.globalAlpha = ta * .72; g.fillStyle = '#07080c'; g.fillRect(bx, yTop, w, boxH); g.restore();
     g.save(); g.globalAlpha = ta; g.fillStyle = col; g.fillRect(left ? x - 1 : x - 1, yTop, 2, boxH); g.restore();   // the pole as the box's edge
     const tx_ = left ? x - TAG.pad : x + TAG.pad;
-    txt(o.id, o.text, tx_, yTop + 23, TAG.a[0], TAG.a[1], '#ffffff', ta, { shadow: 8, right: left, ls: 1 });
-    if (o.sub) txt(o.id ? o.id + 's' : null, o.sub, tx_, yTop + 42, TAG.b[0], TAG.b[1], 'rgba(240,242,245,.85)', ta, { shadow: 6, right: left, ls: .3 });
+    txt(o.id, o.text, tx_, yTop + 31, TAG.a[0], TAG.a[1], '#ffffff', ta, { shadow: 8, right: left, ls: 1 });
+    if (o.sub) txt(o.id ? o.id + 's' : null, o.sub, tx_, yTop + 58, TAG.b[0], TAG.b[1], 'rgba(240,242,245,.94)', ta, { shadow: 6, right: left, ls: .3 });
     return { x: bx, y: yTop, w, h: boxH };
   }
   function pin(t, p, o, k = 1) {
@@ -189,17 +197,17 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     g.strokeStyle = 'rgba(235,238,242,.28)'; g.lineWidth = 1; g.beginPath(); g.moveTo(X0, Y); g.lineTo(X1, Y); g.stroke();
     g.strokeStyle = 'rgba(255,255,255,.9)'; g.lineWidth = 1.2; g.beginPath(); g.moveTo(X0, Y); g.lineTo(X0 + (X1 - X0) * k, Y); g.stroke();
     g.fillStyle = 'rgba(235,238,242,.55)';
-    let lastX = -999;
+    let lastX = -999, lastW = 0;
     for (const tk of bar.ticks) {
-      const x = X0 + (X1 - X0) * clamp((tk.t - bar.from) / (bar.to - bar.from), 0, 1);
-      g.fillRect(x - .5, Y - 5, 1, 10);
-      if (x - lastX > 58) { txt(null, tk.yearLabel, x, Y + 24, 'mono', 13, 'rgba(225,230,236,.5)', a, { center: true }); lastX = x; }
+      const x = X0 + (X1 - X0) * clamp((tk.t - bar.from) / (bar.to - bar.from), 0, 1), w = width(tk.yearLabel, 'mono', 20);
+      g.fillRect(x - .5, Y - 6, 1, 12);
+      if (x - lastX > (lastW + w) / 2 + 14) { txt(null, tk.yearLabel, x, Y + 30, 'mono', 20, 'rgba(225,230,236,.85)', a, { center: true }); lastX = x; lastW = w; }   // (labels that would touch: the later one left out)
     }
     const cx = X0 + (X1 - X0) * k;
     g.fillStyle = '#ffffff'; g.beginPath(); g.arc(cx, Y, 3.2, 0, 7); g.fill();
     g.restore();
-    txt(null, yearText, cx, Y - 16, 'numeral_strong', 26, '#ffffff', a, { center: true, shadow: 8 });
-    if (label) txt(null, label, X0 - 28, Y + 6, 'zh', 17, 'rgba(230,234,240,.78)', a, { right: true, ls: 2 });
+    txt(null, yearText, cx, Y - 16, 'numeral_strong', 32, '#ffffff', a, { center: true, shadow: 8 });
+    if (label) txt(null, label, X0 - 30, Y + 8, 'zh', READ_PX, 'rgba(235,238,242,.94)', a, { right: true, ls: 1.5, shadow: 6 });
   }
 
   // terrain section: a profile of the ground along a line, with labelled steps (metres), drawn as a small instrument panel
@@ -207,7 +215,7 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     if (a <= 0) return;
     const X0 = 1240, Y0 = 760, Wd = 580, Hd = 150; const k = eo(seg(t, sec.t0, sec.t0 + 1.2));
     g.save(); g.globalAlpha = a;
-    g.fillStyle = 'rgba(5,6,10,.5)'; g.fillRect(X0 - 24, Y0 - 150, Wd + 48, Hd + 110);
+    g.fillStyle = 'rgba(5,6,10,.55)'; g.fillRect(X0 - 24, Y0 - 166, Wd + 48, Hd + 136);
     const n = sec.profile.length, lo = sec.lo, hi = sec.hi;
     const px = i => X0 + Wd * i / (n - 1), py = h => Y0 - (h - lo) / (hi - lo) * Hd;
     g.beginPath(); g.moveTo(px(0), Y0 + 2);
@@ -219,16 +227,16 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     g.stroke();
     g.strokeStyle = 'rgba(235,238,242,.25)'; g.lineWidth = 1; g.beginPath(); g.moveTo(X0, Y0 + 2); g.lineTo(X0 + Wd, Y0 + 2); g.stroke();
     g.restore();
-    txt(null, sec.title, X0, Y0 - 118, 'zh_strong', 20, '#f4f1ea', a, { ls: 3 });
-    txt(null, sec.sub, X0, Y0 - 92, 'mono', 13, 'rgba(225,230,236,.6)', a, { ls: 1 });
+    txt(null, sec.title, X0, Y0 - 128, 'zh_strong', 27, '#f4f1ea', a, { ls: 2 });
+    txt(null, sec.sub, X0, Y0 - 96, 'mono', 20, 'rgba(225,230,236,.88)', a, { ls: .5 });
     for (const L of sec.labels) {   // {k: 0..1 along the line, text, h}
       const i = Math.round(L.k * (n - 1)); if (i > n * k) continue;
       const x = px(i), y = py(sec.profile[i]);
       g.save(); g.globalAlpha = a; g.fillStyle = '#ffe3b0'; g.beginPath(); g.arc(x, y, 3, 0, 7); g.fill(); g.restore();
-      txt(null, L.text, x, y - 14, 'zh', 16, '#ffffff', a, { center: true, shadow: 6 });
-      txt(null, `${Math.round(sec.profile[i])} m`, x, y + 24, 'numeral_strong', 17, 'rgba(255,227,176,.95)', a, { center: true });
+      txt(null, L.text, x, y - 16, 'zh', 22, '#ffffff', a, { center: true, shadow: 6 });
+      txt(null, `${Math.round(sec.profile[i])} m`, x, y + 30, 'numeral_strong', 22, 'rgba(255,227,176,.95)', a, { center: true });
     }
-    txt(null, sec.l0, X0, Y0 + 44, 'mono', 13, 'rgba(225,230,236,.6)', a); txt(null, sec.l1, X0 + Wd, Y0 + 44, 'mono', 13, 'rgba(225,230,236,.6)', a, { right: true });
+    txt(null, sec.l0, X0, Y0 + 52, 'mono', 20, 'rgba(225,230,236,.88)', a); txt(null, sec.l1, X0 + Wd, Y0 + 52, 'mono', 20, 'rgba(225,230,236,.88)', a, { right: true });
   }
 
   // a real clip inside the frame: letterboxed with a thin rule and a credit line
@@ -248,16 +256,19 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
   // the caption's left edge: x, or further left as far as its widest line (and the credit under it) needs to end inside the frame's
   // right margin, where a card on the right side ends (a long title under a narrow card ran off the frame)
   function captionX(f, x, o = {}) {
-    const ws = [width(f.kicker || '今天 · TODAY · 实拍', 'mono', 14, 4), width(f.title || '', 'zh_strong', o.big ? 40 : 32, 3)];
-    if (f.sub) ws.push(width(f.sub, 'en', o.big ? 22 : 19));
-    if (f.credit) ws.push(width(f.credit, 'mono', 13));
+    const ws = [width(f.kicker || '今天 · TODAY · 实拍', 'mono', CAP.kick, 3), width(f.title || '', 'zh_strong', o.big ? CAP.titleBig : CAP.title, 3)];
+    if (f.sub) ws.push(width(f.sub, 'en', o.big ? CAP.subBig : CAP.sub));
+    if (f.credit) ws.push(width(f.credit, 'mono', CAP.credit));
     return Math.max(96, Math.min(x, W - 120 - Math.max(...ws)));
   }
+  // a picture's caption: kicker, title, second language, then the credit (CAP.under: where the credit sits below the kicker); all
+  // white, over a picture as over the map (a grey line sinks into a light picture)
+  const CAP = { kick: 20, title: 34, titleBig: 42, sub: 25, subBig: 27, credit: 20, under: f => f.sub ? 124 : 88 };
   function caption(f, x, y, a, o = {}) {
     if (a <= 0) return;
-    txt(null, f.kicker || '今天 · TODAY · 实拍', x, y, 'mono', 14, 'rgba(240,242,245,.78)', a, { ls: 4, shadow: 8 });
-    txt(null, f.title || '', x, y + 42, 'zh_strong', o.big ? 40 : 32, '#ffffff', a, { ls: 3, shadow: 14 });
-    if (f.sub) txt(null, f.sub, x, y + (o.big ? 78 : 70), 'en', o.big ? 22 : 19, 'rgba(240,242,245,.88)', a, { shadow: 10 });
+    txt(null, f.kicker || '今天 · TODAY · 实拍', x, y, 'mono', CAP.kick, '#ffffff', a, { ls: 3, shadow: 10 });
+    txt(null, f.title || '', x, y + (o.big ? 50 : 44), 'zh_strong', o.big ? CAP.titleBig : CAP.title, '#ffffff', a, { ls: 3, shadow: 14 });
+    if (f.sub) txt(null, f.sub, x, y + (o.big ? 90 : 82), 'en', o.big ? CAP.subBig : CAP.sub, '#ffffff', a, { shadow: 12 });
   }
   function footage(src, e, f, anchor) {
     if (!src || (e.in <= 0 && e.out <= 0)) return;
@@ -280,7 +291,7 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
         g.fillStyle = gl; g.fillRect(ex - 40, 0, 80, H);
       }
       caption(f, 96, H - bar - 150, ta, { big: true });
-      if (f.credit) txt(null, f.credit, W - 96, H - bar - 24, 'mono', 13, 'rgba(225,230,236,.72)', ta, { right: true, shadow: 8 });
+      if (f.credit) txt(null, f.credit, W - 96, H - bar - 24, 'mono', CAP.credit, '#ffffff', ta, { right: true, shadow: 10 });
       return;
     }
     if (mode === 'panel') {
@@ -294,15 +305,15 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
       o.fillStyle = sh; o.fillRect(px0 + slide + 200, H - 380, pw, 380);
       g.save(); g.globalAlpha = vis; g.drawImage(oc, 0, 0); g.restore();
       const capX = captionX(f, px0 + 240) + slide;
-      caption(f, capX, H - 330, ta);
-      if (f.credit) txt(null, f.credit, capX, H - 236, 'mono', 13, 'rgba(225,230,236,.75)', ta, { shadow: 8 });
+      caption(f, capX, H - 350, ta);
+      if (f.credit) txt(null, f.credit, capX, H - 350 + CAP.under(f), 'mono', CAP.credit, '#ffffff', ta, { shadow: 10 });
       return;
     }
     // card and doc: a framed picture with a shadow
     const isDoc = mode === 'doc';
     const sw = isVid ? src.videoWidth : src.naturalWidth, shh = isVid ? src.videoHeight : src.naturalHeight, ar = sw / shh;
-    // a document fills the band between the top furniture (150) and its caption, which ends 140 px under the picture, above the subtitles
-    const DOC0 = 150, DOCH = SUBTOP - 160 - DOC0;
+    // a document fills the band between the top furniture (150) and its caption, which ends 175 px under the picture, above the subtitles
+    const DOC0 = 150, DOCH = SUBTOP - 190 - DOC0;
     const ch = isDoc ? Math.min(640, DOCH) : 330, cw = Math.min(isDoc ? 820 : 600, ch * ar), chh = cw / ar;
     const cx = f.side === 'left' ? 120 : W - 120 - cw, cy = isDoc ? DOC0 + (DOCH - chh) / 2 : 170;
     const lift = (1 - eo(e.in)) * 60 + ss(e.out) * 30;
@@ -320,31 +331,31 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     g.restore();
     const capX = captionX(f, cx);
     caption(f, capX, cy + lift + chh + 44, ta);
-    if (f.credit) txt(null, f.credit, capX, cy + lift + chh + (f.sub ? 140 : 110), 'mono', 12, 'rgba(225,230,236,.72)', ta, { shadow: 8 });
+    if (f.credit) txt(null, f.credit, capX, cy + lift + chh + 44 + CAP.under(f), 'mono', CAP.credit, '#ffffff', ta, { shadow: 10 });
   }
 
   // a route's label: a dark pill with a coloured rule, sitting just above the arc
   function routeLabel(p, a, aTxt, bTxt, col) {
     if (a <= 0 || !p) return;
-    const w1 = width(aTxt, 'zh_strong', 22, 2), w2 = bTxt ? width(bTxt, 'en_strong', 14, 1) : 0, w = Math.max(w1, w2) + 36, h = bTxt ? 64 : 42;
+    const w1 = width(aTxt, 'zh_strong', 27, 2), w2 = bTxt ? width(bTxt, 'en_strong', 21, 1) : 0, w = Math.max(w1, w2) + 40, h = bTxt ? 78 : 50;
     const x = p[0] - w / 2, y = Math.min(p[1] - h - 18, SUBTOP - h);
     g.save(); g.globalAlpha = a * .9; g.fillStyle = 'rgba(8,10,14,.78)'; g.fillRect(x, y, w, h); g.fillStyle = col; g.fillRect(x, y, 3, h);
     g.strokeStyle = col; g.globalAlpha = a * .7; g.beginPath(); g.moveTo(p[0], p[1] - 18); g.lineTo(p[0], p[1] - 4); g.stroke(); g.restore();
-    txt(null, aTxt, x + 18, y + 30, 'zh_strong', 22, '#ffffff', a, { ls: 2 });
-    if (bTxt) txt(null, bTxt, x + 18, y + 52, 'en_strong', 14, 'rgba(235,238,242,.85)', a, { ls: 1 });
+    txt(null, aTxt, x + 20, y + 35, 'zh_strong', 27, '#ffffff', a, { ls: 2 });
+    if (bTxt) txt(null, bTxt, x + 20, y + 64, 'en_strong', 21, 'rgba(235,238,242,.94)', a, { ls: 1 });
   }
 
   // counters under the readout: what changed so far (e.g. new buildings), numbers rolling with the year
   function counters(t, C, vals, a, dy = 0) {   // dy: below a readout's legend or bar (they share the left column)
     if (a <= 0) return;
-    const X = 96, Y = 724 + dy;
+    const X = 96, Y = 744 + dy;
     g.save(); g.globalAlpha = a * .5; g.fillStyle = 'rgba(255,255,255,.35)'; g.fillRect(X, Y - 34, 240, 1); g.restore();
     vals.forEach((v, i) => {
-      const x = X + i * 200;
+      const x = X + i * 270;
       txt(null, Math.round(v).toLocaleString('en-US'), x, Y + 8, 'numeral', 40, '#ffffff', a, { shadow: 12 });
-      const A = C.a || C.zh, B = C.a ? C.b : C.en; txt(null, B ? `${A[i]} · ${B[i]}` : A[i], x, Y + 36, 'zh', 15, 'rgba(240,242,245,.8)', a, { shadow: 8, ls: 1 });
+      const A = C.a || C.zh, B = C.a ? C.b : C.en; txt(null, B ? `${A[i]} · ${B[i]}` : A[i], x, Y + 42, 'zh', 22, 'rgba(240,242,245,.92)', a, { shadow: 8, ls: .5 });
     });
-    txt(null, C.note, X, Y + 62, 'mono', 13, 'rgba(225,230,236,.8)', a, { ls: 1, shadow: 6 });
+    txt(null, C.note, X, Y + 76, 'mono', 20, 'rgba(225,230,236,.88)', a, { ls: .5, shadow: 6 });
   }
 
   // the sky over a city laid out after it: a night scrim over the model, a sparse field of stars, then each asterism drawn on
@@ -396,8 +407,8 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     for (const G of SK.groups) {   // the pair of names: the star's, then the place's
       const k = seg(t, G.on + G.draw * .6, G.on + G.draw * .6 + .5), p = G.lab && P(G.lab[0], G.lab[2], G.lab[1]);
       if (k <= 0 || !p || !G.a) continue;
-      txt('sky_' + G.id, G.a, p[0], p[1], 'zh_sans_strong', 26, rgba(1), a * k, { center: true, shadow: 12, ls: 4 });
-      if (G.b) txt('sky_' + G.id + 'e', G.b, p[0], p[1] + 26, 'en_strong', 15, rgba(.85), a * k, { center: true, shadow: 8, ls: 1 });
+      txt('sky_' + G.id, G.a, p[0], p[1], 'zh_sans_strong', 28, rgba(1), a * k, { center: true, shadow: 12, ls: 4 });
+      if (G.b) txt('sky_' + G.id + 'e', G.b, p[0], p[1] + 30, 'en_strong', 21, rgba(.94), a * k, { center: true, shadow: 8, ls: 1 });
     }
     return a;
   }
@@ -415,7 +426,7 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     if (a <= 0 || !img || !img.naturalWidth) return;
     const Wm = 300, Hm = Wm * img.naturalHeight / img.naturalWidth, X = W - 96 - Wm, Y = H - 150 - Hm;
     g.save(); g.globalAlpha = a;
-    g.fillStyle = 'rgba(6,7,11,.72)'; g.fillRect(X - 12, Y - 34, Wm + 24, Hm + 46);
+    g.fillStyle = 'rgba(6,7,11,.72)'; g.fillRect(X - 12, Y - 42, Wm + 24, Hm + 54);
     g.drawImage(img, X, Y, Wm, Hm);
     g.strokeStyle = 'rgba(255,255,255,.35)'; g.lineWidth = 1; g.strokeRect(X, Y, Wm, Hm);
     for (const ring of eraRings || []) {
@@ -427,22 +438,28 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
       g.strokeStyle = 'rgba(255,255,255,.85)'; g.setLineDash([3, 3]); g.lineWidth = 1.2; g.stroke(); g.setLineDash([]);
     }
     g.restore();
-    // the era's name right of the word LOCATOR, in the room left between them: a long name is set smaller (down to 11 px); one too
-    // long even then takes the box's whole width without the word (down to 9 px), never over it
-    const lk = plain(UI.locator) ? 'mono' : 'zh', room = Wm - width(UI.locator, lk, 12, 3) - 18;
-    let ep = 14, word = true;
-    while (eraName && ep > 11 && width(eraName, 'zh', ep, 2) > room) ep -= .5;
-    if (eraName && width(eraName, 'zh', ep, 2) > room) { word = false; ep = 14; while (ep > 9 && width(eraName, 'zh', ep, 2) > Wm) ep -= .5; }
-    if (word) txt(null, UI.locator, X, Y - 14, lk, 12, 'rgba(225,230,236,.55)', a, { ls: 3 });
-    if (eraName) txt(null, eraName, X + Wm, Y - 14, 'zh', ep, 'rgba(240,242,245,.85)', a, { right: true, ls: 2 });
-    txt(null, 'N ↑', X + Wm - 4, Y + 16, 'mono', 12, 'rgba(240,242,245,.7)', a, { right: true });
+    // the era's name right of the word LOCATOR, in the room left between them: a long name is set smaller (down to 20 px); one too
+    // long even then drops the word, and one longer still runs out to the left of the box (never smaller: a phone must read it)
+    const lk = plain(UI.locator) ? 'mono' : 'zh', room = Wm - width(UI.locator, lk, 18, 2) - 18;
+    let ep = 24, word = true;
+    while (eraName && ep > 20 && width(eraName, 'zh', ep, 1) > room) ep -= .5;
+    if (eraName && width(eraName, 'zh', ep, 1) > room) word = false;
+    if (word) txt(null, UI.locator, X, Y - 15, lk, 18, 'rgba(225,230,236,.85)', a, { ls: 2 });
+    if (eraName) txt(null, eraName, X + Wm, Y - 15, 'zh', ep, 'rgba(240,242,245,.94)', a, { right: true, ls: 1, shadow: 6 });
+    txt(null, 'N ↑', X + Wm - 6, Y + 24, 'mono', 18, 'rgba(240,242,245,.88)', a, { right: true, shadow: 6 });
   }
 
-  // identity label, top-left, quiet
+  // identity label, top-left: the city and scale, then the extent and sources; a second line wider than the room left of the
+  // timeline's label is broken at its last separator (a · with a space after it) that fits
   function identity(t, t0, t1, l1, l2) {
-    const ia = env(t, t0, t1, .6, .4);
-    txt('id1', l1, 96, 90, 'zh_strong', 22, '#f4f1ea', ia, { ls: 4, shadow: 10 });
-    txt('id2', l2, 96, 120, 'mono', 15, 'rgba(225,230,236,.6)', ia, { ls: 1.5 });
+    const ia = env(t, t0, t1, .6, .4); if (ia <= .001) return;
+    txt('id1', l1, 96, 88, 'zh_strong', 28, '#f4f1ea', ia, { ls: 3, shadow: 10 });
+    const ID_W = 820, tk = (l2 || '').split(/(\s*·\s+)/); let rows = [tk[0]];
+    for (let i = 1; i < tk.length; i += 2) {
+      const cur = rows[rows.length - 1], nx = cur + tk[i] + tk[i + 1];
+      if (width(nx, 'mono', 21, .5) > ID_W) rows.push(tk[i + 1]); else rows[rows.length - 1] = nx;
+    }
+    rows.forEach((q, i) => txt(i ? 'id2_' + i : 'id2', q, 96, 124 + i * 28, 'mono', 21, 'rgba(228,232,238,.88)', ia, { ls: .5, shadow: 8 }));
   }
 
   // end card: over the white model, left-aligned block
@@ -457,10 +474,10 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     if (e.title_b) { txt('end_b', e.title_b, X, y, 'numeral', 44, 'rgba(240,243,246,.92)', a, { ls: 1 }); y += 40; }
     g.save(); g.globalAlpha = a; g.fillStyle = e.rule || '#ffa13d'; g.fillRect(X, y + 14, 120 * k, 2); g.restore(); y += 58;
     // the first `bright` lines (the credits, or the first source line) in the brighter mono, the rest quieter
-    (e.lines || []).forEach((s, i) => { const hi = i < (e.bright || 1); txt('end_l' + i, s, X, y, hi ? 'mono' : 'zh_sans', hi ? 22 : 21, hi ? 'rgba(230,234,240,.85)' : 'rgba(225,230,236,.7)', a, { ls: hi ? 2 : 1 }); y += 36; });
+    (e.lines || []).forEach((s, i) => { const hi = i < (e.bright || 1); txt('end_l' + i, s, X, y, hi ? 'mono' : 'zh_sans', hi ? 24 : 22, hi ? 'rgba(232,236,242,.94)' : 'rgba(228,232,238,.86)', a, { ls: hi ? 1.5 : .5 }); y += 38; });
     // the project's credit, on every film whatever its city.yaml says (LICENSE, condition 2a: whoever publishes a film keeps it legible)
-    txt('end_credit', CREDIT, X, y + 22, 'mono', 20, 'rgba(225,230,236,.66)', a, { ls: 1 });
+    txt('end_credit', CREDIT, X, y + 22, 'mono', 22, 'rgba(228,232,238,.86)', a, { ls: .5 });
   }
 
-  return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, notesDrop };
+  return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, notesDrop, readoutDrop };
 }

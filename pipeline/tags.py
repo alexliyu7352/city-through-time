@@ -1,12 +1,12 @@
 """Tag layout (docs/STAGING.md 9h): every tag on the map (pins and place names) is a dot, a pole straight up and a small box on
 the pole. Compile picks each tag's pole length and box side once per stretch of time it shows, so that tags shown together do
 not cover each other and keep clear of the subtitles, the readout, the locator and the timeline; the engine (overlay.js tag)
-draws what is chosen. Screen sizes follow overlay.js TAG (name 20 px, second line 14 px)."""
+draws what is chosen. Screen sizes follow overlay.js TAG (name 27 px, second line 21 px, pad 14, boxes 42 / 68 high)."""
 import math, re
 
 W, H = 1920, 1080
 SUBTOP = H - 145
-UI = [(0, SUBTOP - 10, W, H), (60, 400, 640, 800), (1500, 680, 1840, 945), (0, 0, W, 125)]   # subtitles, readout, locator, timeline
+UI = [(0, SUBTOP - 10, W, H), (60, 390, 740, 880), (1500, 660, 1840, 945), (0, 0, W, 165)]   # subtitles, readout, locator, timeline and identity
 LENS = (110, 150, 190, 240, 300)
 CJK = re.compile(r'[　-鿿豈-﫿]')
 
@@ -19,7 +19,7 @@ def text_w(s, px, ls=0.0):
 
 def box_of(sx, sy, L, left, w, h):
     """the box and the pole for a tag anchored at (sx, sy): as overlay.js tag() places them"""
-    top = min(sy - L - h, SUBTOP - 14 - h); top = max(top, 128)
+    top = min(sy - L - h, SUBTOP - 14 - h); top = max(top, 168)
     x0 = sx - w if left else sx
     return (x0, top, x0 + w, top + h), (sx - 2, top, sx + 2, sy)
 
@@ -35,7 +35,7 @@ def layout(tags, project, step=.25):
     slot = lambda t: int(round(t / step))
     out = {}
     for tg in tags:
-        w = max(text_w(tg['text'], 20, 1), text_w(tg.get('sub'), 14, .3)) + 22; h = 50 if tg.get('sub') else 32
+        w = max(text_w(tg['text'], 27, 1), text_w(tg.get('sub'), 21, .3)) + 28; h = 68 if tg.get('sub') else 42
         for t0, t1 in tg['spans']:
             samples = []
             t = t0

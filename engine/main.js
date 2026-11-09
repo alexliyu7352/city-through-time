@@ -515,14 +515,14 @@ function drawOverlay(t) {
   OV.begin();
   const { g } = OV;
   const skyA = FILM.sky ? OV.sky(sceneAt(t), FILM.sky, proj3) : 0;   // under everything else on the overlay (part of the city: the prologue's moment)
-  let fa = LV ? LV.k : 0, ffull = fa, fcorner = 0;   // how much of the frame real footage (or a living moment's picture) covers (full mode hides the map, the other modes only quiet it); fcorner: a panel or a right-hand document over the locator's corner
+  let fa = LV ? LV.k : 0, ffull = fa, fcorner = 0;   // how much of the frame real footage (or a living moment's picture) covers (full mode hides the map, the other modes only quiet it); fcorner: a panel or a right-hand card or document over the locator's corner
   for (const f of FILM.footage || []) {
     if (t < f.on - .01 || t > f.on + f.dur + .01) continue;
     const e = { in: seg(t, f.on, f.on + f.fin), out: seg(t, f.on + f.dur - f.fout, f.on + f.dur), k: seg(t, f.on, f.on + f.dur) };
     const anc = f.anchor ? proj3(f.anchor[0], f.anchor[2], f.anchor[1]) : null;
     OV.footage(VID[f.id], e, f, anc);
     const v = ss(e.in) * (1 - ss(e.out)); fa = Math.max(fa, (f.mode || 'full') === 'full' ? v : .6 * v); if ((f.mode || 'full') === 'full') ffull = Math.max(ffull, v);
-    if (f.mode === 'panel' || (f.mode === 'doc' && f.side !== 'left')) fcorner = Math.max(fcorner, v);
+    if (f.mode === 'panel' || ((f.mode === 'doc' || f.mode === 'card') && f.side !== 'left')) fcorner = Math.max(fcorner, v);   // (a card's caption reaches down to the locator)
   }
   for (const r of FILM.arrows || []) {   // an arrow's name, at its head once it has arrived
     if (!r.a) continue;
@@ -587,7 +587,7 @@ function drawOverlay(t) {
   }
   if (FILM.grow && FILM.grow.counters && FILM.change) {   // the buildings new so far (cumulative, by the year counter): one column per label
     const C = FILM.grow.counters, cs = FILM.change.counts, Y = yearAt(t), i = Math.max(0, Math.min(cs.length - 2, Math.floor(Y - cs[0][0]))), f = Math.max(0, Math.min(1, Y - cs[i][0]));
-    const rdy = Math.max(0, ...(FILM.readouts || []).map(q => ((q.legend ? q.legend.length * 32 : 0) + (q.bar ? 50 : 0) + OV.notesDrop(q)) * OV.env(t, q.t0 - .6, q.t1 + .6, .6, .6)));   // (eased: no jump)
+    const rdy = Math.max(0, ...(FILM.readouts || []).map(q => OV.readoutDrop(q) * OV.env(t, q.t0 - .6, q.t1 + .6, .6, .6)));   // (eased: no jump)
     OV.counters(t, C, (C.a || C.zh).map((_, k) => cs[i][k + 1] + (cs[i + 1][k + 1] - cs[i][k + 1]) * f), OV.env(t, C.t0, C.t1, .6, .6) * (1 - fa), rdy);
   }
   if (ffull < .99) for (const p of FILM.pins || []) OV.pin(t, at([p.pos[0], p.pos[1], (p.pos[2] || 0) + .002]), p, 1 - ffull);   // (no pins over a full-screen clip)

@@ -54,6 +54,12 @@ camcheck's `spin` does not fail a check: compile unwraps the azimuth, and the ju
 - Flags: a whole-film mean YAVG under 80, or a minute whose mean is under 60, sends the film or that minute to the phone look above; a deliberately dark stretch (night, a fire, a sack; the closing night city, STAGING.md 9i, whose lit windows carry the frame) passes when its subject still reads there. The event with the most room must not be darker than the whole-film mean. Reference values: YHIGH of the lit faces of the subject about 140–190,
   plate 26–38 (visibly dark blue, not black), black level 18–24; the white of subtitles and interface does not exceed 235 (check with `signalstats=stat=brng`).
 
+## Type on a phone
+
+- Most viewers watch on a phone held sideways, where the 1920-wide frame is about 700 points wide (a third): a line set at 13 px is under 5 pt there and cannot be read, a grey one even less. Every line meant to be read (the identity and sources line, the timeline's years and label, a readout's notes and legend, a tag's second line, a picture's kicker, caption and credit, the locator) is set at 24 px or more (`READ_PX` in `engine/overlay.js`) at .85 alpha or more;
+  what matters more is set larger or bolder, never fainter. Nothing on the frame is under `TYPE_MIN` (18 px): `txt()` stops the render on it. A new piece of type takes its size from these, and a long line wraps or drops a word before it shrinks.
+- Judge it on stills shrunk to 700 px wide: every line on the frame reads there without leaning in.
+
 ## Acceptance and reporting
 
 - **The audience pass:** play the stretch at speed, with the subtitles, as a viewer who does not know the city, then write down what it leaves (SKILL.md "Judge as the audience").
