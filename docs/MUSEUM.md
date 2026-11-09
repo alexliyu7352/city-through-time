@@ -58,7 +58,8 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
   page opens there). Each gets an imagined picture made as a living moment's is (STAGING.md "Living moments"): its scene card
   `research/museum/<page>/<viewpoint>.yaml`, then `uv run python -I tools/living.py ref|gen|sheet cities/<slug> <page>/<viewpoint>` (the
   still is the page's model alone at that camera, `node tools/museum.mjs still`). The picture is exact only from its own camera: the page
-  shows it full within 10 degrees of it and none past 25 (and as the distance leaves it), it comes back near any viewpoint by itself, and
+  shows it full within 10 degrees of it and none past 25 (and as the distance leaves it), and only on what that camera sees (a
+  wall's far side or the floor behind it takes none of it: engine/studio.js projDepth), it comes back near any viewpoint by itself, and
   while it shows a label says it is an AI reconstruction from the sources. The page opens on the main picture as a plain image and the
   model takes over on the same camera, so the visitor sees the picture at once.
 - **Languages:** Chinese as the film writes it (`zh`), Traditional Chinese for Taiwan and English (`&lang=zh-Hans|zh-Hant|en`). The

@@ -37,6 +37,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     return mix(a, wCh(w4, uWT.y), 1. - smoothstep(f - uWTE, f + uWTE, dot(xz, uWTF.xy))); }`;
   const K = !!opts.keep;   // keep maps (film.keepMaps: a city with today_from): what of it still stands, where today's city steps aside once it comes back round it   // era channels (hide, edge maps): 8, or 12 for a film with more cities standing at once (film.eraSlots: hide3, edge3)   // (the shaders' uniform arrays: more than 32 only for a film that needs them, small devices have few)
   const LOW = !!opts.low;   // live preview: pixel ratio 1, no supersampling
+  const PDEP = !!opts.projDepth;   // the projector sees what it lights (a museum page, turned away from a picture's camera): aimProjector draws its depth
   const renderer = new THREE.WebGLRenderer({ antialias: LOW, preserveDrawingBuffer: true });
   renderer.setPixelRatio(LOW ? 1 : 2); renderer.setSize(W, H);
   renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
@@ -133,15 +134,19 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     // picture's frame); 0 in the film, where the picture fills the frame
     uPI: { value: null }, uPM: { value: new THREE.Matrix4() }, uPA: { value: 0 }, uPRC: { value: new THREE.Vector2(0, 0) }, uPRR: { value: 0 }, uPF: { value: 0 },
     uLiveSink: { value: 0 }, uPE: { value: 0 },
+    // (opts.projDepth) the depth the projector sees (aimProjector draws it), and its near and far: a surface behind another, as
+    // seen from the picture's camera, takes none of the picture (a page turned off its camera showed the front wall's picture
+    // again on the ground and the far side behind it, as a second outline)
+    uPD: { value: null }, uPN: { value: new THREE.Vector2(.02, 2) },
   };
 
   // the shaders' uniform arrays and the textures they read, by Z: FULL has room for any film (the engine's slots above); on
   // graphics that cannot link shaders that large (a phone's: 16 textures a shader and 224 to 256 uniform vectors a stage, where
   // Xianyang's full ones read 18 and pack into about 250) Z is the film's own (fitOf: what opts.fit says it uses), the same
   // picture without the slots it leaves empty (linkTest below; tools/phonecheck.mjs measures them)
-  const FULL = { B: BMAX, R: RM, L: LM, E: EMAX, G: GM, N: NM, Y: YM, D: 4, live: true, ground: true };
+  const FULL = { B: BMAX, R: RM, L: LM, E: EMAX, G: GM, N: NM, Y: YM, D: 4, live: true, ground: true, pd: PDEP };
   const fitOf = f => ({ B: Math.max(1, f.basins), R: 1 + (f.rings || 0), L: Math.max(1, f.losses), E: Math.max(1, Math.min(EMAX, f.epochs)), G: Math.max(1, Math.min(GM, f.grounds)),
-    N: Math.max(1, f.bands), Y: Math.max(2, f.yl), D: Math.max(1, Math.min(4, f.decals)), live: !!f.living, ground: f.grounds > 0 });
+    N: Math.max(1, f.bands), Y: Math.max(2, f.yl), D: Math.max(1, Math.min(4, f.decals)), live: !!f.living, ground: f.grounds > 0, pd: PDEP });
   let Z = FULL;   // (the sizes the shaders are built with now: projMaterial and deformMaterial read it when three.js builds their programs)
   const decalTex = Z => { let e = `texture2D(uD${Z.D - 1}, duv)`; for (let k = Z.D - 2; k >= 0; k--) e = `i == ${k} ? texture2D(uD${k}, duv) : ${e}`; return e; };   // (one sampler per decal the film has)
   // the film's year line from the modern growth on (compile: grow.yl): when the counter first reaches a year. Today's buildings
@@ -176,7 +181,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uFootM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[${HMAX}];
   uniform vec3 uShadeL, uShadeC; uniform float uShadeK, uNightDeep;
   uniform float uSpotR, uSpotK, uSpotB; uniform vec2 uSpotC;
-  uniform sampler2D uPI; uniform mat4 uPM; uniform float uPA, uPRR, uPF, uPE; uniform vec2 uPRC;
+  uniform sampler2D uPI; uniform mat4 uPM; uniform float uPA, uPRR, uPF, uPE; uniform vec2 uPRC;${Z.pd ? ' uniform sampler2D uPD; uniform vec2 uPN;' : ''}
   float peK(vec2 u){ return uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.; }   // (uPE: the picture's feathered edge)
   uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''};
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
@@ -581,7 +586,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    vec4 pc_ = uPM * vec4(vWP, 1.); vec2 pu_ = pc_.xy / pc_.w * .5 + .5; float dr_ = length(vWP.xz - uPRC) - uPRR;
    if (pc_.w > 0. && pu_.x > 0. && pu_.x < 1. && pu_.y > 0. && pu_.y < 1.) {
      float in_ = smoothstep(.0012, -.0012, dr_);   // (one front, near to far: nothing beyond the ring shows the picture before it arrives)
-     outgoingLight = mix(outgoingLight, texture2D(uPI, pu_).rgb, uPA * in_ * peK(pu_)); }
+     ${Z.pd ? 'float pz_ = uPN.x * uPN.y / (uPN.y - (uPN.y - uPN.x) * texture2D(uPD, pu_).r); in_ *= 1. - smoothstep(pz_ * 1.003, pz_ * 1.01, pc_.w);   // (behind what the projector sees: none of the picture)\n     ' : ''}outgoingLight = mix(outgoingLight, texture2D(uPI, pu_).rgb, uPA * in_ * peK(pu_)); }
    float gw_ = max(1.5e-4, distance(cameraPosition, vWP) * .012); outgoingLight += vec3(1., .84, .6) * exp(-dr_ * dr_ / (gw_ * gw_)) * uPA * .9 * step(.0001, uPRR) * (1. - uPF); }` : ''}
 #include <opaque_fragment>${kind === 1 ? '\n gl_FragColor.a = 1. - .5 * wDrapedK;   // (.5 on a draped pool: the edge pass leaves it out; the scene buffer\'s alpha is read for nothing else)' : ''}`);
     };
@@ -1103,7 +1108,18 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     PCAM.updateProjectionMatrix(); PCAM.updateMatrixWorld(); U.uPM.value.multiplyMatrices(PCAM.projectionMatrix, PCAM.matrixWorldInverse);
     const dist = .3, hh = 2 * dist * Math.tan(THREE.MathUtils.degToRad(pfov / 2)), fwd = new THREE.Vector3(); PCAM.getWorldDirection(fwd);   // the sky card behind the town
     liveSky.position.copy(PCAM.position).addScaledVector(fwd, dist); liveSky.quaternion.copy(PCAM.quaternion); liveSky.scale.set(hh * PCAM.aspect * 1.6, hh * 1.6, 1);
+    if (PDEP) projDepth();
     return PCAM;
+  }
+  // (opts.projDepth) the scene as the projector sees it, its depth only, drawn once each time it is aimed (the model stands still
+  // on a page): its own materials, so the depth is the surfaces as drawn; the sky card left out, the depth unbound while it is drawn
+  let PDT = null;
+  function projDepth() {
+    const w = 2048, h = Math.max(1, Math.round(w / PCAM.aspect));
+    if (!PDT || PDT.width !== w || PDT.height !== h) { if (PDT) PDT.dispose(); PDT = new THREE.WebGLRenderTarget(w, h); PDT.depthTexture = new THREE.DepthTexture(w, h); }
+    const sky = liveSky.visible, rt = renderer.getRenderTarget(); liveSky.visible = false; U.uPD.value = null;
+    renderer.setRenderTarget(PDT); renderer.clear(); renderer.render(scene, PCAM); renderer.setRenderTarget(rt);
+    liveSky.visible = sky; U.uPD.value = PDT.depthTexture; U.uPN.value.set(PCAM.near, PCAM.far);
   }
   // a page that fills its window (the viewer's public mode, a museum page) instead of the film's 1920 x 1080 picture: the
   // canvas at the window's size w x h (CSS pixels), drawn with k pixels to each of them (the screen's pixel ratio, at most 2)
