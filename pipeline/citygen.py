@@ -1732,7 +1732,11 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     # them; streets, lanes and shop rows still keep off it (a lane is one piece across the city: no loss could take just its stretch)
     later_ = {n for ls in spec.get('lose') or [] for n in ls.get('for') or []}
     own_ = [li for li, L in enumerate(spec.get('landmarks', [])) if later_ & {L.get('id'), L.get('group')} - {None}]
-    if sites is not None: sites.update({li: unary_union(lm_foot[lm_at[li]:lm_at[li + 1]]) for li in own_})
+    if sites is not None:
+        sites.update({li: unary_union(lm_foot[lm_at[li]:lm_at[li + 1]]) for li in own_})
+        # every landmark's site, for the check that no other city's house stands in it while it stands (compile sites.json,
+        # tools/clipcheck.py houses_in_sites)
+        sites['every'] = {li: unary_union(lm_foot[lm_at[li]:lm_at[li + 1]]) for li in range(len(lm_at) - 1) if lm_at[li + 1] > lm_at[li]}
     drop_ = {k for li in own_ for k in range(lm_at[li], lm_at[li + 1])}
     fab_foot = [f for k, f in enumerate(lm_foot) if k not in drop_]
     if len(B.basins) > 1:   # one body of water, one level: pools that touch (an L-shaped lake drawn as two) take the lowest top among them

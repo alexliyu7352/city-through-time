@@ -1026,7 +1026,8 @@ def basin_outline(b):
 def basin_piece(era_id, b):
     """the index of a pool's water among its era's pieces (a dug pool's water, a draped pool's 1 m mark that times it)"""
     return next(i for i, (m_, p_) in enumerate(zip(CITY_META[era_id], PRIMS[era_id])) if m_[0] == b['gid'] and p_[11] == citygen.WATER)
-SITES = {}   # era id -> {landmark index: its site (metres)} for the landmarks a loss clears the ground for (citygen)
+SITES = {}   # era id -> {landmark index: its site (metres)} for the landmarks a loss clears the ground for (citygen); 'every': all of them
+_SITES_OUT = {}   # era id -> its landmarks' sites in model units, courts and arenas filled (data/sites.json: tools/clipcheck.py)
 SITE_ON = {}   # era id -> {landmark index: the building groups on its site} (lost_parts; they must be gone before it rises)
 CITY_META = {}
 
@@ -2183,6 +2184,10 @@ for e, pd, ranks_ in TIMED:   # write the cities (ranks), their hide masks and e
         prims[basin_piece(e['id'], b_)][10] = round((t_ - e['on']) / e['span'], 5)
         print(f"  ground {e['id']}.{b_['name']}: rises at {t_:.1f} s")
     json.dump({'prims': prims, **({'lost': LOST[e['id']]} if LOST.get(e['id']) else {})}, open(LAYOUT.build(D, e['file']), 'w'), separators=(',', ':'))   # (film.json's file references are relative to build/)
+    _SITES_OUT[e['id']] = [[F.model(x_, y_) for x_, y_ in pg_.exterior.coords]   # (closed over a colonnade's gaps, the court or arena inside kept)
+                           for g_ in ((SITES.get(e['id']) or {}).get('every') or {}).values() for c_ in [g_.buffer(3).buffer(-3)]
+                           for pg_ in getattr(c_, 'geoms', [c_]) if pg_.geom_type == 'Polygon' and not pg_.is_empty]
+    json.dump(_SITES_OUT, open(LAYOUT.data(D, 'sites.json'), 'w'), separators=(',', ':'))
     fx_, fz_ = F.model_lonlat(*(cs.get('fall_from') or cs['origin']))
     e['fallC'] = [round(fx_, 5), round(fz_, 5)]
     e['_dist'] = [math.hypot(p[15] - fx_, p[16] - fz_) for p in prims]; e['_bc'] = [(p[15], p[16]) for p in prims]
@@ -2381,7 +2386,7 @@ if gnd_:
         for (_, ba_, ga_), (_, bb_, gb_) in _it.combinations(lst_, 2):
             if ga_.intersection(gb_).area > max((5 * F.scale) ** 2, .01 * min(ga_.area, gb_.area)):
                 raise SystemExit(f"compile: era {eid_}: grounds {ba_['name']} and {bb_['name']} overlap: a place has one surface (citygen cuts a later one out of an earlier one: a fault there)")
-    for eid_, lst_ in geo_.items():   # a ground is open space: one under a built-up quarter hides its houses (docs/MODEL.md)
+    for eid_, lst_ in geo_.items():   # a ground is open space: under a built-up quarter it doubles the lots' own earth and outlives them (docs/MODEL.md)
         e_ = next(e for e in eras_out if e['id'] == eid_); L_ = LOST.get(eid_); off_ = e_.get('off') or 1e9
         end_ = lambda j: e_['losses'][j - 1]['gone'] if j else off_   # (when a piece lost by loss j, or none, is gone)
         fi_ = [i for i, p in enumerate(PRIMS[eid_]) if p[0] == citygen.BOX and p[11] == citygen.FAB and p[4] <= p[12] + 1e-9]
@@ -2396,7 +2401,7 @@ if gnd_:
             share_ = float(A_[on_].sum()) / max(g_.area, 1e-12)
             if share_ > .25:   # (hidden while they stand, it shows once they are lost: where to look)
                 last_ = min(g1_, off_); gone_ = _np.sort(T1_[on_ & (T1_ > g0_) & (T1_ < last_)])
-                print(f"  WARN era {eid_}: ground {b_['name']}: houses cover {share_:.0%} of it: a ground is open space, the ground between the houses of a quarter stays the plate (docs/MODEL.md)"
+                print(f"  WARN era {eid_}: ground {b_['name']}: houses cover {share_:.0%} of it: a ground is open space, the quarter's own lots are earth already (docs/MODEL.md)"
                       + (f"; they are lost {gone_[0]:.1f}-{gone_[-1]:.1f} s, and from then to {last_:.1f} s it shows wherever no building stands on it, a slab with lots cut in it: look at it there, not while they stand" if len(gone_) else ""))
     px_ = GND_PX
     while True:

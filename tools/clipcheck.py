@@ -24,6 +24,9 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
   cross_era           bodies of a city that overlap bodies of another city standing at the same time (the empire over Qin);
                       a wall that ends in another's tower, gate or wall (one end in, one out) is a joint as built: only where
                       the wall's line ends, not at a bend of it (a vertex set inside the other wall leaves a crossing a crossing)
+  houses_in_sites     a house of one city standing inside the site of another city's landmark while that landmark stands (its
+                      court or arena too: a circus, a portico round its square; compile data/sites.json, citygen landmark_site,
+                      less 4 m of its apron): the older city's houses must be gone by the time the newer landmark rises
   paving_under        paving (roads, lanes, yards) the plate rises through by more than 0.3 m: a road comes out in dashes
   tall_foundation     houses and halls whose foundation on screen is over 30% of the building's height, counted only when
                       they are more than a tenth of the era's buildings: then the plate's exaggeration is too high for this
@@ -106,6 +109,8 @@ def main():
             bl = lambda a: (a[j0, i0] * (1 - fu) + a[j0, i0 + 1] * fu) * (1 - fv) + (a[j0 + 1, i0] * (1 - fu) + a[j0 + 1, i0 + 1] * fu) * fv
             return bl(large_), bl(fine_)
     bodies_by_era, tops_, hid_ = {}, [], []
+    SITES_J = json.load(open(os.path.join(D, 'sites.json'))) if os.path.exists(os.path.join(D, 'sites.json')) else {}
+    sites_by_era, houses_by_era = {}, {}   # (houses_in_sites, after every city)
     for e in FILM.get('eras', []):
         J_ = json.load(open(os.path.join(city, 'build', e['file']))); prims = J_['prims']
         # when each record stands: from its rise to the city's end, or to the moment its loss (lose:) has taken it: a part lost and
@@ -118,6 +123,12 @@ def main():
         body = lambda parts: [p for p in ground if p[11] in parts and p[0] in SOLID]
         hp_, wp0_, sp_ = body((FAB,)), body((WALL, LMK, EARTH, WATER)), [p for p in body((PAVE,)) if p[5] > 12 * S or p[6] > 12 * S]
         houses = [rect(p, .3 * S) for p in hp_]
+        houses_by_era[e['id']] = [(rect(p), *span_[id(p)]) for p in hp_]
+        lp_ = [p for p in prims if p[11] == LMK]; sites_by_era[e['id']] = []
+        for r_ in SITES_J.get(e['id'], []):   # each landmark's site, standing from its first part's rise to its last part's end
+            pg_ = Polygon(r_).buffer(-4 * S)
+            inn_ = [span_[id(p)] for p in lp_ if not pg_.is_empty and pg_.contains(shapely.Point(p[1], p[2]))]
+            if inn_: sites_by_era[e['id']].append((pg_, min(a for a, _ in inn_), max(b for _, b in inn_)))
         hard = [rect(p, .3 * S) for p in wp0_]
         streets = [rect(p, .5 * S) for p in sp_]
         trunks = [p for p in prims if p[11] == TREE and p[0] == 3]
@@ -348,6 +359,23 @@ def main():
         bad = sum(v for k, v in R.items() if isinstance(v, int))
         total += bad
         print(f"{e['id']:10s} " + '  '.join(f"{k} {v}" for k, v in R.items() if isinstance(v, int)) + f"  ({notes[e['id']]})")
+    hs_at = []   # houses_in_sites: [house's city, landmark's city, x, z, from s, to s]
+    for eid, ss_ in sites_by_era.items():
+        for oid, hs_ in houses_by_era.items():
+            if oid == eid or not hs_ or not ss_: continue
+            tree = STRtree([h[0] for h in hs_])
+            for pg_, a0, a1 in ss_:
+                for j in tree.query(pg_, predicate='intersects'):
+                    h_, b0, b1 = hs_[j]
+                    if b0 < a1 and a0 < b1 and h_.intersection(pg_).area > .5 * h_.area:
+                        c_ = h_.centroid; hs_at.append([oid, eid, round(c_.x, 4), round(c_.y, 4), round(max(a0, b0), 2), round(min(a1, b1), 2)])
+    report['houses_in_sites'] = {'count': len(hs_at), 'at': hs_at[:300]}
+    total += len(hs_at)
+    grp_ = {}
+    for oid, eid, x_, z_, t0_, t1_ in hs_at:
+        k_ = (oid, eid, round(x_, 2), round(z_, 2)); g_ = grp_.setdefault(k_, [0, t0_, t1_]); g_[0] += 1; g_[1] = min(g_[1], t0_); g_[2] = max(g_[2], t1_)
+    print(f"houses_in_sites {len(hs_at)}" + ''.join(f"\n  {n} of {k[0]} in a landmark of {k[1]} near {k[2]:.2f}, {k[3]:.2f}: {a:.1f}-{b:.1f} s"
+                                                for k, (n, a, b) in sorted(grp_.items(), key=lambda q: q[1][1])[:20]))
     if plate_ is not None:   # today's buildings on the plate (prep.py seat)
         fl = [r for r in M['p'] if len(r[2][0]) >= 3 and r[3] - plate_.lowest(r[2][0]) * S * tex > 1.0 * S * tex]
         report['today'] = {'floating': len(fl), 'floating_at': [[round(sum(p[0] for p in r[2][0]) / len(r[2][0]), 4), round(sum(p[1] for p in r[2][0]) / len(r[2][0]), 4)] for r in fl[:5]]}
