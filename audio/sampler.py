@@ -358,7 +358,7 @@ def _analyze(nm, zs):
     def one(z):
         x, sr = _read(z['f']); on = _onset(x); y = x[on:]
         w = int(sr * (.4 if s['kind'] == 'sus' else .1)); seg = y[:int(sr * 4)].astype(np.float64)  # rms 取前 4 秒最响的窗（长音 0.4s / 衰减型 0.1s）
-        r = np.sqrt(uniform_filter1d(seg ** 2, w)[w // 2::w // 4].max()) if len(seg) > w else np.sqrt(np.mean(seg ** 2))
+        r = np.sqrt(max(uniform_filter1d(seg ** 2, w)[w // 2::w // 4].max(), 0)) if len(seg) > w else np.sqrt(np.mean(seg ** 2))
         z.update(on=on, n=len(y), sr=sr, rms=float(r) + 1e-9, pk=float(np.abs(y).max() + 1e-9))
         if pitched:
             det, conf = _yin(y, sr, z['root'])
@@ -518,7 +518,7 @@ def _region(z, y, r):
     if z.get('loop'):
         a, b = z['loop']; a = int((a - z['on']) * SR / (z['sr'] * r)); b = int((b - z['on']) * SR / (z['sr'] * r))
         if 0 < a < b <= len(y) and b - a > SR * .05: return a, b
-    hop = int(.02 * SR); e = np.sqrt(uniform_filter1d(y.astype(np.float64) ** 2, hop)[::hop] + 1e-12)
+    hop = int(.02 * SR); e = np.sqrt(np.maximum(uniform_filter1d(y.astype(np.float64) ** 2, hop)[::hop], 0) + 1e-12)
     pk = e.max(); st = max(int(.3 * SR / hop), int(np.argmax(e > .5 * pk)))
     thr = .45 * np.median(e[e > .1 * pk]) if (e > .1 * pk).any() else 0
     good = e > thr; best, cur, bs = (0, 0), 0, 0

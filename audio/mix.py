@@ -111,8 +111,11 @@ def main():
     shelf = 10 ** (-5 / 20)
     x = hpf(stems['music'], 38, 2); stems['music'] = x - (1 - shelf) * lpf(x, 62, 2)   # (the fx track was filtered in --kit)
     bus = stems['music'] + stems['fx']
-    lvl = np.sqrt(uniform_filter1d((bus ** 2).max(1), int(.012 * SR)))
+    # (a running mean of a square can dip a hair below 0 where loud music meets silence: a NaN there would make thr NaN
+    # and pass the whole bus through uncompressed, without a word)
+    lvl = np.sqrt(np.maximum(uniform_filter1d((bus ** 2).max(1), int(.012 * SR)), 0))
     thr = 10 ** (-12 / 20) * np.percentile(lvl, 99.9)
+    if not np.isfinite(thr): raise SystemExit('mix: the music bus has non-finite samples (NaN or inf): check the score and fx tracks')
     g = np.where(lvl > thr, (thr + (lvl - thr) / 2.5) / np.maximum(lvl, 1e-9), 1.0)
     g = uniform_filter1d(-maximum_filter1d(-g, int(.008 * SR)), int(.03 * SR))
     mix = bus * g[:, None] + stems.get('voice', 0)
@@ -120,6 +123,7 @@ def main():
     fade = int(1.2 * SR); mix[-fade:] *= np.linspace(1, 0, fade)[:, None] ** 1.5
     for _ in range(3):
         I = lufs(mix); mix = mix * 10 ** ((-14.4 - I) / 20); mix = tp_limit(mix, 10 ** (-4.6 / 20))
+    if not np.isfinite(mix).all(): raise SystemExit('mix: the master has non-finite samples (NaN or inf); nothing written')
     print(f'master: {lufs(mix):.2f} LUFS, true peak {20 * np.log10(true_peak(mix)):.2f} dBTP')
     os.makedirs(os.path.join(B_, 'audio', 'stems'), exist_ok=True)
     sf.write(os.path.join(B_, 'audio', 'mix.wav'), mix.astype(np.float32), SR)
