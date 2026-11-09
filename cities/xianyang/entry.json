@@ -27,7 +27,7 @@
   },
   "poster": "cities/xianyang/poster.jpg",
   "thumb": "cities/xianyang/poster_thumb.webp",
-  "watch": [{ "site": "YouTube", "url": "https://www.youtube.com/watch?v=Z17apk9c2a8" }],
+  "watch": [{ "site": "YouTube", "url": "https://www.youtube.com/watch?v=Z17apk9c2a8" }, { "site": "Bilibili", "url": "https://www.bilibili.com/video/BV1cjna65EqU/" }],
   "bundle": { "url": "cities/xianyang/web/", "mb": 125 },
   "download": null,
   "ai": [
