@@ -138,6 +138,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     // seen from the picture's camera, takes none of the picture (a page turned off its camera showed the front wall's picture
     // again on the ground and the far side behind it, as a second outline)
     uPD: { value: null }, uPN: { value: new THREE.Vector2(.02, 2) },
+    // (opts.projDepth) the picture's colour row by row, a 1-pixel-wide texture (a museum page sets it): where the sky card would
+    // show the picture's own copy of the model (the projector saw the model there), it shows its row's colour instead (sky in
+    // the sky, land on the land): the far land without the building
+    uPG: { value: (() => { const t = new THREE.DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1); t.needsUpdate = true; return t; })() },
   };
 
   // the shaders' uniform arrays and the textures they read, by Z: FULL has room for any film (the engine's slots above); on
@@ -1093,9 +1097,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
 
   // a living moment's sky: the picture's sky and far land on a card far behind the shot, facing its camera (placed by aimProjector);
   // uW: how far up the picture it shows (a film's moment wipes it in from the bottom after the ring has reached the horizon; 2: all)
-  const liveSky = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ uniforms: { uPI: U.uPI, uPM: U.uPM, uPE: U.uPE, uA: { value: 0 }, uW: { value: 2 } }, depthWrite: false, transparent: true,
+  const liveSky = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ uniforms: { uPI: U.uPI, uPM: U.uPM, uPE: U.uPE, uA: { value: 0 }, uW: { value: 2 }, ...(PDEP ? { uPD: U.uPD, uPG: U.uPG } : {}) }, depthWrite: false, transparent: true,
     vertexShader: 'varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
-    fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA, uPE, uW; varying vec3 vW; void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(texture2D(uPI, u).rgb, uA * (1. - smoothstep(uW - .1, uW, u.y)) * (uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.)); }' }));
+    fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA, uPE, uW; varying vec3 vW;' + (PDEP ? ' uniform sampler2D uPD, uPG;' : '') + ' void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(' + (PDEP ? '(texture2D(uPD, u).r < 1. ? texture2D(uPG, vec2(.5, u.y)).rgb : texture2D(uPI, u).rgb)' : 'texture2D(uPI, u).rgb') + ', uA * (1. - smoothstep(uW - .1, uW, u.y)) * (uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.)); }' }));
   liveSky.visible = false; liveSky.renderOrder = -1; liveSky.frustumCulled = false; scene.add(liveSky);
   // the projector of a picture made from one shot of the model (a living moment, a museum page's viewpoint): that shot's camera
   // [x, y, z, az, el, d, fov] (az, el in degrees round its target, as the camera keys count them), no drift, no zoom, at the
@@ -1117,9 +1121,12 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   function projDepth() {
     const w = 2048, h = Math.max(1, Math.round(w / PCAM.aspect));
     if (!PDT || PDT.width !== w || PDT.height !== h) { if (PDT) PDT.dispose(); PDT = new THREE.WebGLRenderTarget(w, h); PDT.depthTexture = new THREE.DepthTexture(w, h); }
+    // (left out too: what is marked noProjDepth, a museum's stand: the depth is the model's alone, so the sky card can tell the
+    // picture's building from its ground)
+    const off = []; scene.traverse(o => { if (o.userData.noProjDepth && o.visible) { o.visible = false; off.push(o); } });
     const sky = liveSky.visible, rt = renderer.getRenderTarget(); liveSky.visible = false; U.uPD.value = null;
     renderer.setRenderTarget(PDT); renderer.clear(); renderer.render(scene, PCAM); renderer.setRenderTarget(rt);
-    liveSky.visible = sky; U.uPD.value = PDT.depthTexture; U.uPN.value.set(PCAM.near, PCAM.far);
+    liveSky.visible = sky; for (const o of off) o.visible = true; U.uPD.value = PDT.depthTexture; U.uPN.value.set(PCAM.near, PCAM.far);
   }
   // a page that fills its window (the viewer's public mode, a museum page) instead of the film's 1920 x 1080 picture: the
   // canvas at the window's size w x h (CSS pixels), drawn with k pixels to each of them (the screen's pixel ratio, at most 2)
