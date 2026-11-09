@@ -26,6 +26,8 @@ build runs subcheck, clipcheck, camcheck, readcheck (including: text must not si
 The whole-film checks run in this step; ask the user first whether the computer can be taken over now. For a change that touches the whole film (terrain, fonts, the whole-film timeline) when only the affected stations were run,
 note at that time "run the whole film before rendering the final film", and catch up in this step. The whole-film brightness is also measured in this step; for the threshold see CHECKS.md "Brightness".
 Report the loudness and peak taken from the final film as measured by `render/mux.mjs`, not those of the mix (the two differ by a few tenths of a LUFS).
+`uv run python -I tools/delivercheck.py <film.mp4> [--closing <s>] [--json <file>]` measures the delivered file in one pass and flags what CHECKS.md and this step ask: its length, picture and sound,
+brightness minute by minute with the darkest 60 s (a closing night city left out from `--closing`), black frames, loudness and true peak, and metadata (tags, chapters, encoder strings).
 When motioncheck reports "looks like a cut", pull out a few frames to see whether it is a bad frame or the camera turning fast; report the latter to the user, who decides whether to slow it down.
 The user judges the finished film on the review page, not from stills: `node tools/preview.mjs <slug> --film <the film> --at <s>:<what>,...` prints its address (the film plays and seeks anywhere, the second it is at shows large,
 M writes that second into notes the user copies back; `--at` gives a button a few seconds before each moment to look at, such as the fast camera moves). Give the address with every finished film and every moment to judge.
