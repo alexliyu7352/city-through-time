@@ -74,16 +74,22 @@ def find_landmark(C, D, nid, want, page):
 
 
 def pieces(P, page):
-    """the page's landmarks: [(piece id or None, node, landmark)]; one landmark (node, landmark), or `pieces`"""
+    """the page's landmarks: [(piece id or None, node, landmark, fix)]; one landmark (node, landmark), or `pieces`. fix: a piece
+    the film puts out of line with the others (two periods' models traced apart) is moved on this page alone: move_m [east,
+    north] metres and turn_deg about its own place, with why (the sources' layout); the film and city.yaml keep theirs"""
     if 'pieces' not in P:
         if 'landmark' not in P: stop(page, 'landmark is missing (or pieces: [{id, node, landmark}], for a building the film tells in several periods)')
-        return [(None, P['node'], P['landmark'])]
+        return [(None, P['node'], P['landmark'], {})]
     if 'landmark' in P: stop(page, 'landmark and pieces: give one of them')
     out, seen = [], set()
     for i, q in enumerate(P['pieces'] or []):
         if not isinstance(q, dict) or any(k not in q for k in ('id', 'node', 'landmark')): stop(page, f'pieces[{i}]: id, node and landmark (kind with lon, lat or id)')
         if q['id'] in seen: stop(page, f'pieces: id {q["id"]!r} twice')
-        seen.add(q['id']); out.append((str(q['id']), q['node'], q['landmark']))
+        fix = {k: q[k] for k in ('move_m', 'turn_deg', 'why') if k in q}
+        if fix and not str((q.get('why') or {}).get('en') if isinstance(q.get('why'), dict) else '').strip():
+            stop(page, f'pieces[{i}] {q["id"]}: move_m / turn_deg need why: {{zh, en}} (what the sources say and where the film has it)')
+        if 'move_m' in fix and (not isinstance(fix['move_m'], list) or len(fix['move_m']) != 2): stop(page, f'pieces[{i}] {q["id"]}: move_m: [east, north] metres')
+        seen.add(q['id']); out.append((str(q['id']), q['node'], q['landmark'], fix))
     if not out: stop(page, 'pieces: none given')
     return out
 
@@ -179,9 +185,16 @@ def build_page(D, C, page):
     if P.get('id') != page: stop(page, f'id: {P.get("id")!r}: the file name\'s ({page})')
     for k in ('node', 'name', 'parts', 'viewpoints', 'sources', 'label'):
         if k not in P: stop(page, f'{k} is missing' + (' (with pieces: the period whose hall the page belongs to)' if k == 'node' and 'pieces' in P else ''))
-    found = []
-    for pid, nid, want in pieces(P, page):
-        F, cs, L = find_landmark(C, D, nid, want, page); found.append((pid, cs, L))
+    found, moved = [], []
+    for pid, nid, want, fix in pieces(P, page):
+        F, cs, L = find_landmark(C, D, nid, want, page)
+        if fix.get('move_m') or fix.get('turn_deg'):
+            L = copy.deepcopy(L); e_, n_ = fix.get('move_m') or (0, 0)
+            if 'lon' not in L: stop(page, f'piece {pid}: move_m and turn_deg move a landmark placed by lon, lat')
+            x_, y_ = F.to_utm.transform(L['lon'], L['lat']); L['lon'], L['lat'] = F.to_wgs.transform(x_ + e_, y_ + n_)
+            L['theta_deg'] = L.get('theta_deg', cs.get('theta_deg', 0)) + float(fix.get('turn_deg', 0))
+            moved.append({'piece': pid, 'move_m': [float(e_), float(n_)], 'turn_deg': float(fix.get('turn_deg', 0)), 'why': words(page, fix['why'], f'piece {pid}: why')})
+        found.append((pid, cs, L))
     prims, labels, stand, (mx, mz), r, scale, anchor = build_model(F, found, P, page)
     srcs = {k: {**words(page, v, f'sources.{k}'), 'short': words(page, v.get('short'), f'sources.{k}.short'), **({'url': v['url']} if v.get('url') else {})} for k, v in P['sources'].items()}
     cites = lambda c, what: [x if x in srcs else stop(page, f'{what}: cite {x!r} is not in sources ({", ".join(srcs)})') for x in (c or [])]
@@ -215,7 +228,8 @@ def build_page(D, C, page):
                                   for i, q in enumerate(life.get('pictures') or [])],
                      'photo': ({'file': small(D, life['photo']['file'], out, 'photo.jpg'), 'caption': words(page, life['photo'], 'life photo'), 'credit': words(page, life['photo'].get('credit'), 'life photo: credit')}
                                if life.get('photo') else None)} if life else None,
-            'parts': [{k: p[k] for k in ('id', 'status', 'name', 'note', 'cite')} for p in parts], 'viewpoints': vps, 'sources': srcs}
+            'parts': [{k: p[k] for k in ('id', 'status', 'name', 'note', 'cite')} for p in parts], 'viewpoints': vps, 'sources': srcs,
+            **({'moved': moved} if moved else {})}   # (pieces set where the sources put them, not where the film has them)
     json.dump(meta, open(os.path.join(D, 'build', 'museum', page + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     n = sum(len(v) for v in by.values())
     print(f'{page}: {n} records in {len(parts)} parts ({", ".join(f"{p["id"]} {len(by[p["id"]])}" for p in parts)}), {len(vps)} viewpoints, '

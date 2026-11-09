@@ -46,7 +46,9 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
   stand round the first piece's place (`at_m` and `stage_m` are measured from there; make the stand cover every piece). `node` then
   names the period whose hall the page belongs to. A piece's records are labelled with its id first (`curia/hall`), so a part takes
   them by piece (`labels: [curia/*]`). List the pieces the page shows: two nodes that both carry the same building at one place give
-  it twice.
+  it twice. Two periods' models are traced apart, and a piece can stand out of line with the others (a theatre
+  30 m off the axis of the portico behind its stage): the page sets it where the sources put it, `move_m: [east, north]` and
+  `turn_deg` about its own place with `why: {zh, en}`, and says so on the page; the film and city.yaml keep their own.
 - **Parts:** each record goes to the first part whose `labels` (fnmatch on the label path, `west/platform`) and `kinds` (`roof`) take it;
   a record no part takes stops the build. Each part has `status: sourced` (an excavation report, or a text relaying one, says so) or
   `estimated` (a reconstruction, a mirror of the half that was dug, a guess), a short `note` in the page's languages saying what the sources
