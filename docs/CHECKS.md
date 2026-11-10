@@ -89,8 +89,8 @@ camcheck's `spin` does not fail a check: compile unwraps the azimuth, and the ju
   `build/film.json` before and after the change (framing is computed from pins, areas and lines, so removing one tag also moves the composition). When a test fails, first examine the test itself (a mistyped URL, a missing file),
   then draw a conclusion.
 - **Report in proportion to the change:** a small fix reports what changed, the link, and the checks of the stretch it touched; time spent on proofs, receipts and
-  repeated reviews of unchanged parts is time the user waits. To verify is to run the check and give its result in a line; it is not to write a receipt, an audit
-  script or an equivalence file for it. Iterate on the touched station with its neighbours (a candidate of those stations only), then put it back.
+  repeated reviews of unchanged parts is time the user waits. To verify is to run the check and give its result in a line (what counts and what does not: SKILL.md
+  "The record is git and the checks, not documents"). Iterate on the touched station with its neighbours (a candidate of those stations only), then put it back.
   Make a candidate with `uv run python -I tools/candidate.py make <slug> <name> --from <a> --through <b>` (the stations changed and one either side: a cut's first
   node has no film before it; without `--from`/`--through`, the whole city), not with a script of your own: it handles every reference to what the cut leaves out
   the same way and says what of the base the cut does not show, copies what compile writes and links what it only reads (a link written through is a write into

@@ -55,9 +55,14 @@ Working with the user
   preview to look at, the checks' result lines, and what is still wrong or deferred (a list, picked up in the next round without being asked); not how it was done.
   If only half is done, say which parts are still wrong; if the previous report was wrong, correct it first in the next one. Before saying "checks pass" or "the
   picture is unchanged", actually run and compare (CHECKS.md "Report in proportion to the change").
-- **The record is git and the checks, not documents.** Commit the city folder when a step is done and after each round of changes, the message saying what changed and
-  the checks' own result lines; the checks are programs (compile's, `tools/rangecheck.py`'s report). Do not write receipts, audits or proof files: the user neither reads
-  nor needs them, and they cost the time the film needs.
+- **The record is git and the checks, not documents.** Three things show that a change is right: the checks' own result lines (the checks are programs: compile's,
+  `tools/round.py`'s and `tools/rangecheck.py`'s reports), the stills or sheets that show the change beside the version before it (`tools/linesheet.py --against`),
+  and the commit (the city folder committed when a step is done and after each round of changes, the message saying what changed and those result lines).
+  Nothing more: no receipts, audits, equivalence files or proof scripts, and none asked of a subagent; the user neither reads nor needs them, and they cost the
+  time the film needs. Keeping what was approved is the comparison's work (`--against`, `tools/filmdiff.py`), not a document for each inner state.
+  When the user asks for something to stay exactly as it was (only the last seconds rendered again, the sources moved with the film unchanged), the exact
+  comparison is the acceptance: run it (the frames of the stretch kept, for instance ffmpeg's `framemd5` of both films, or the files byte for byte) and give its
+  result in a line. No result line stands in for watching the change as the audience ("Judge as the audience").
 - **Use the tool as it actually is.** Before asking the user to operate a tool, look at its real interface (ask the user for a screenshot if you cannot get it); look up a model's parameters in the code of the exact version that will run.
   For a design you are unsure about (timeline, music workflow, staging), look at how comparable works and open-source projects do it, then propose.
 - **Pushing, uploading and publishing each need the user's go-ahead on that occasion.** Consent for the last one covers only the last one; after a commit, report "not pushed yet".
