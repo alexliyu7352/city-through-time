@@ -14,7 +14,8 @@ from mathutils import Euler, Vector
 
 import kit
 
-KINDS = {'amphitheatre': 'amphitheatre'}
+HERE = os.path.dirname(os.path.abspath(__file__))
+KINDS = sorted(f[:-3] for f in os.listdir(HERE) if f.endswith('.py') and f not in ('build.py', 'kit.py'))   # (a kind: a module here with build(spec) and from_landmark(L))
 
 
 def args():
@@ -54,7 +55,7 @@ def main():
     o = args()
     if o['kind'] not in KINDS: sys.exit(f'build: --kind one of {", ".join(KINDS)}')
     kit.reset()
-    mod = __import__(KINDS[o['kind']])
+    mod = __import__(o['kind'])
     spec = {**(mod.from_landmark(json.load(open(o['landmark']))) if o['landmark'] else {}), **(json.load(open(o['spec'])) if o['spec'] else {})}
     print('build: spec ' + json.dumps(spec, sort_keys=True))
     parts = mod.build(spec)

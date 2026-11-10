@@ -4,7 +4,8 @@ the landmark's theta_deg afterwards (build.py), as the film's generator turns it
 
 A building is a few named objects, one per part a museum page can say is sourced or estimated (amphitheatre.py: facade_arcades,
 orders, attic, cavea, ...), each built from meshes made here: bays placed round a plan curve, profiles swept along it, steps,
-columns. Two materials: stone (the model's white) and dark (an opening seen into, as the film's dark parts)."""
+columns; the classical orders (column, entablature) for any building that has them. Two materials: stone (the model's white)
+and dark (an opening seen into, as the film's dark parts). A helper two kinds need belongs here, not copied into each."""
 import math
 
 import bmesh
@@ -206,3 +207,54 @@ def arch_band(bm, r, cz, profile, seg=12, mat=0, xf=None):
     for ring in (rings[0], rings[-1]):   # (its ends closed: they stand on the impost)
         if len(profile) > 2:
             f = bm.faces.new(ring); f.material_index = mat
+
+
+# ---- the classical orders (any building with columns, pilasters and entablatures)
+
+def column(bm, order, rc, z0, z1, M):
+    """an engaged half-column from z0 to the top of its capital z1 (radius rc at its foot, tapering a twelfth), its front half
+    turned (the rest is in the wall): a Tuscan base and capital, an Attic base under Ionic (volutes) and Corinthian (a bell of
+    two rows of leaves) capitals; plinth and abacus square"""
+    half = dict(seg=8, a0=0.0, a1=math.pi, xf=M); rt = rc * .92
+    if order == 'tuscan':
+        box(bm, -rc * 1.3, rc * 1.3, -.05, rc * 1.3, z0, z0 + .2, xf=M)
+        lathe(bm, [(rc * 1.22, z0 + .2), (rc * 1.28, z0 + .27), (rc * 1.22, z0 + .36), (rc * 1.06, z0 + .4), (rc, z0 + .45)], **half)
+        cap0 = z1 - .55
+        lathe(bm, [(rc, z0 + .45), (rt, cap0)], **half)
+        lathe(bm, [(rt, cap0), (rt * 1.08, cap0 + .04), (rt, cap0 + .09), (rt, cap0 + .22), (rt * 1.05, cap0 + .25), (rc * 1.22, cap0 + .37)], **half)
+        box(bm, -rc * 1.32, rc * 1.32, -.05, rc * 1.32, z1 - .18, z1, xf=M)
+        return
+    box(bm, -rc * 1.35, rc * 1.35, -.05, rc * 1.35, z0, z0 + .16, xf=M)   # the Attic base: torus, scotia, torus
+    lathe(bm, [(rc * 1.28, z0 + .16), (rc * 1.34, z0 + .22), (rc * 1.28, z0 + .29), (rc * 1.12, z0 + .31), (rc * 1.1, z0 + .37),
+                   (rc * 1.18, z0 + .4), (rc * 1.12, z0 + .46), (rc * 1.03, z0 + .48), (rc, z0 + .52)], **half)
+    if order == 'ionic':
+        cap0 = z1 - .45
+        lathe(bm, [(rc, z0 + .52), (rt, cap0)], **half)
+        lathe(bm, [(rt, cap0), (rt * 1.07, cap0 + .04), (rt, cap0 + .08), (rt * 1.25, cap0 + .22)], **half)   # the astragal, the echinus
+        box(bm, -rc * 1.15, rc * 1.15, -.05, rc * .95, cap0 + .14, z1 - .1, xf=M)   # the cushion between the volutes
+        for sx in (-1, 1):   # the volutes, their eyes facing out
+            Mv = M @ Matrix.Translation((sx * rc * 1.15, 0, cap0 + .14)) @ Matrix.Rotation(math.pi / 2, 4, 'X')
+            cylinder(bm, 0, 0, -rc * 1.0, 0, .2, seg=12, xf=Mv)
+            cylinder(bm, 0, 0, -rc * 1.05, -rc * 1.0, .09, seg=10, xf=Mv)
+        box(bm, -rc * 1.4, rc * 1.4, -.05, rc * 1.25, z1 - .1, z1, xf=M)
+        return
+    cap0 = z1 - 1.15   # Corinthian
+    lathe(bm, [(rc, z0 + .52), (rt, cap0)], **half)
+    lathe(bm, [(rt, cap0), (rt * 1.07, cap0 + .04), (rt, cap0 + .08), (rt * 1.3, cap0 + .3), (rt * 1.02, cap0 + .36),   # two rows of leaves curling out
+                   (rt * 1.5, cap0 + .68), (rt * 1.15, cap0 + .74), (rc * 1.42, cap0 + .97)], seg=12, a0=0.0, a1=math.pi, xf=M)
+    box(bm, -rc * 1.55, rc * 1.55, -.05, rc * 1.45, z1 - .18, z1, xf=M)   # the abacus
+    box(bm, -rc * .3, rc * .3, -.05, rc * 1.55, z1 - .16, z1 - .02, xf=M)   # the flower on its face
+    for sx in (-1, 1):   # the corner scrolls under the abacus
+        box(bm, sx * rc * 1.15 - .12, sx * rc * 1.15 + .12, rc * .9, rc * 1.4, z1 - .42, z1 - .18, xf=M)
+
+
+def entablature(ent, z):
+    """the profile (out, z) of an entablature from z: [architrave, frieze, cornice] as [projection, height]; the architrave in three
+    fasciae, the frieze plain, the cornice in a bed moulding, the corona and the crowning moulding"""
+    (pa, ha), (pf, hf), (pc, hc) = ent
+    p = [(0, z), (pa * .6, z), (pa * .6, z + ha * .3), (pa * .78, z + ha * .33), (pa * .78, z + ha * .62), (pa * .92, z + ha * .66),
+         (pa * .92, z + ha * .88), (pa, z + ha * .92), (pa, z + ha)]
+    z += ha; p += [(pf, z), (pf, z + hf)]; z += hf
+    p += [(pf + (pc - pf) * .25, z + hc * .12), (pf + (pc - pf) * .25, z + hc * .25), (pf + (pc - pf) * .5, z + hc * .3),
+          (pc * .9, z + hc * .45), (pc * .9, z + hc * .7), (pc, z + hc * .85), (pc, z + hc), (0, z + hc)]
+    return p
