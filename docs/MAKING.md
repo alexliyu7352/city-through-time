@@ -2,7 +2,7 @@
 
 English · [繁體中文](MAKING.zh-Hant.md) · [简体中文](MAKING.zh-Hans.md)
 
-This guide takes you from zero to a city film, using the A City Through Time skill. Claude Code (the coding agent) makes the film. You decide the story and watch the film in the browser. The rules are in [`SKILL.md`](../SKILL.md) and the step guides it points to (`docs/`), and the agent follows them.
+This guide takes you from zero to a city film, using the A City Through Time skill. Claude Code (the coding agent) makes the film. You decide the story and watch the film in the browser. The rules are in [`AGENTS.md`](../AGENTS.md) and the step guides it points to (`docs/`), and the agent follows them.
 
 ## 1. Watch one first
 
@@ -25,17 +25,16 @@ For scale (Xianyang, a 12 min 30 s film, on a 2019 desktop): one compile takes a
 ## 3. Install
 
 ```sh
-git clone https://github.com/alexliyu7352/city-through-time.git
-ln -s "$PWD/city-through-time" ~/.claude/skills/city-through-time
+npx skills add alexliyu7352/city-through-time-skill -g
 ```
 
-The second line lets Claude Code find the skill. Then open Claude Code inside the `city-through-time` folder.
+This installs only the skill ([city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)), for every agent on this computer that reads skills. In Claude Code you can install it as a plugin instead: `/plugin marketplace add alexliyu7352/city-through-time-skill`, then `/plugin install city-through-time@city-through-time`. You do not clone this repository yourself: the agent does it on first use.
 
 ## 4. First use
 
-Tell the agent: "Use A City Through Time to make <city>, starting from <era>." The first time, it runs the "first use" step:
+Tell the agent: "Use A City Through Time to make <city>, starting from <era>." The first time, it asks where to put the workspace (this repository: the code, the rules and the cities made so far; about 300 MB, plus about 5 GB per city) and clones it there. Then it runs the "first use" step:
 
-- It asks where on this computer to keep data, and writes the answer to `local/config.json` (not in git). We suggest keeping everything under `local/` in the project; if the disk is too small, large files can go on another drive.
+- It asks where on this computer to keep data, and writes the answer to `local/config.json` (not in git). We suggest keeping everything under `local/` in the workspace; if the disk is too small, large files can go on another drive.
 - It checks that the tools are installed, and sets up the environment with `npm ci` and `uv sync`.
 
 ## 5. The workflow

@@ -1,9 +1,7 @@
----
-name: city-through-time
-description: "Make “A City Through Time” (《一城春秋》) data films: given a city and a starting era, research the sources, fetch building and map data, and render a white-model projection film that lights the city up era by era (white model, dark room, light as the actor; local language plus English, English only for English-speaking cities). Trigger words: 一城春秋, A City Through Time, 城市變遷影片 (city-change film), 白模城市影片 (white-model city film), 按年代點亮城市 (light a city up by era)."
----
-
 # city-through-time · 一城春秋 · A City Through Time
+
+The rules for any agent working in this repository (the workspace). The installable skill
+(github.com/alexliyu7352/city-through-time-skill, published from `skill/`) clones this repository and sends the agent here.
 
 Input: a city name and a starting era (for example "Xianyang, from the Neolithic"). Output: the film, subtitles, cover and description in `cities/<slug>/dist/`,
 plus `TREATMENT.md`, `FACTS.md` and `CREDITS` in the city folder. The project root is the folder this file is in; `cities/xianyang/` is a complete example,
@@ -152,7 +150,7 @@ Writing rules
   goes in that city's own files. A habit of one particular user is kept in the agent's own memory, not in a public file.
 - **Write for an agent with no context.** Write only the rule and the reasons that are needed. No renames, no version history, no dates, no who-said-what-when, no "I/we", and nothing the reader cannot see
   (local reference videos, internal notes, code names from a conversation). Give examples from settings and numbers that can be looked up in `cities/xianyang/`.
-- **Skill files are written in English:** `SKILL.md`, the step files in `docs/`, and the comments in the templates. Keep Chinese only where it is data (quoted narration or on-screen text, place names, book titles), with an English gloss in parentheses the first time.
+- **Skill files are written in English:** `AGENTS.md`, the step files in `docs/`, and the comments in the templates. Keep Chinese only where it is data (quoted narration or on-screen text, place names, book titles), with an English gloss in parentheses the first time.
 
 ## Workflow
 
@@ -197,5 +195,6 @@ the voice's timing follows the final copy, and the timing of music and effects f
   `levels.py` (the music under the narration, cue by cue), `seams.py` (a generated voice's clicks mended); `tools/` `delivercheck.py` (the finished film's own numbers), `job.py` (a long job in the background), `gaps.py` (the narration's silences, and the lines a change moved against a base), `candidate.py` (a working copy of a city, whole or cut to a few stations, to try a change on, then delete), checks (subcheck, readcheck, clipcheck,
   camcheck, motioncheck, geocheck, phonecheck (the film's shaders on a phone's graphics); `round.py` compiles a round of changes and checks every stretch it changed in one command (compile, filmdiff, rangecheck); `rangecheck.py` runs the checks and stills of every stretch a change touched in one command; `linesheet.py`, which it runs, lays each line's stills under its words, beside the previous version's with `--against`; `filmdiff.py` lists the stretches a revision changed and one `rangecheck.py --against` command for all of them), `pipeline/register.py` (an old map or a plan registered and traced into lon/lat, with an overlay to check), `parcels.py` (a quarter's whole-building lots along its streets, as a trace), `freeze.py` (an approved study kept as it was, checked later), `modelview.py` (stills of a period city before it is in the film; `--sheet`: its house types and landmarks side by side), `eraview.mjs` (every period city from every side; the page `play.html?city=<slug>&view` to look round by hand), `living.py` (the pictures of living moments: the shot's still, the prompt, the picture, its check; a museum page's viewpoints too), `museum.py` and `museum.mjs` (a museum page for one building: its model, parts, label and pictures, `docs/MUSEUM.md`), `blender/` (a museum page's detailed models, built in Blender: MUSEUM.md "Detailed models"), `hant.py` (its Traditional Chinese, OpenCC s2twp, read through), `build.mjs` (one command renders the film), `music.py`, `web.py` (web player bundle), `registry.mjs` and `site.mjs` (portal site; `--city`: one city's own site), `deploy.mjs` (the user's city as a site of its own on Cloudflare Pages, never a copy of the portal).
 - A city folder holds what is written and brought in by hand (goes into git); `build/` holds what is generated (not in git; `build/data` is slow to rebuild, so do not delete it casually); `dist/` holds the finished products (`pipeline/layout.py`).
+- `skill/` the installable skill: it only finds or clones this repository and sends the agent to this file, so it stays short and holds no rule of its own (rules go here and in `docs/`). Published to github.com/alexliyu7352/city-through-time-skill with `git subtree push --prefix=skill <that repository> main`.
 - `templates/` templates; `types/` the shared library of house types (docs/MODEL.md "House types"); `i18n/` language packs; `fonts/` fonts; `index.html` + `site/` the portal page (the land `site/land.bin` is produced by `tools/portal_land.py`;
   `?lite` shows how the phone version draws); `play.html` the player (`?bundle=` reads an external player bundle; `?view&free` the old cities to walk round); `museum.html` a museum page (`docs/MUSEUM.md`).

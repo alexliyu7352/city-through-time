@@ -1,0 +1,9 @@
+{
+  "name": "city-through-time",
+  "version": "1.0.0",
+  "description": "A City Through Time (《一城春秋》): data films that light a city up era by era. The skill clones its workspace (github.com/alexliyu7352/city-through-time) on first use.",
+  "author": { "name": "alexliyu7352", "url": "https://github.com/alexliyu7352" },
+  "homepage": "https://cities.go5.si",
+  "repository": "https://github.com/alexliyu7352/city-through-time",
+  "license": "MIT"
+}

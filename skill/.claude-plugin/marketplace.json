@@ -1,0 +1,12 @@
+{
+  "name": "city-through-time",
+  "description": "A City Through Time (《一城春秋》): data films that light a city up era by era",
+  "owner": { "name": "alexliyu7352", "url": "https://github.com/alexliyu7352" },
+  "plugins": [
+    {
+      "name": "city-through-time",
+      "source": "./",
+      "description": "Make a city's film through time from sources and map data; the agent clones the workspace on first use"
+    }
+  ]
+}

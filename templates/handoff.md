@@ -1,10 +1,10 @@
 # Handoff: <city>, round <n>
 
 What a new session needs to do this round, and nothing else. Written when the round's list is set; the session that takes the
-round starts here, not from the old conversation (SKILL.md "A round of revisions starts with a fresh context").
+round starts here, not from the old conversation (AGENTS.md "A round of revisions starts with a fresh context").
 
 ## The version to compare against
-The city folder at its last commit, which holds what the last round kept (SKILL.md "Try things on a copy"), and what of it the
+The city folder at its last commit, which holds what the last round kept (AGENTS.md "Try things on a copy"), and what of it the
 user has seen and passed: the `--against` of `tools/round.py`. The round's candidate is made from it: keep the fixes already
 accepted, and redo only what was sent back.
 

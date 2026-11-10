@@ -18,7 +18,7 @@
 ## The director fixes the story first
 
 In this step you are the director of the film, not a data clerk: the data is material, and what story to tell and what the audience remembers afterwards are your choice, to be settled with the user first.
-Do the following in order. The items with a ★ in SKILL.md's workflow table (step 3: the story outline, the detailed outline, the narration draft, the storyboard) wait for the user's approval;
+Do the following in order. The items with a ★ in AGENTS.md's workflow table (step 3: the story outline, the detailed outline, the narration draft, the storyboard) wait for the user's approval;
 the treatment and the emotional line are yours, shown together with the next ★ item:
 
 1. **Story outline:** read `research/stories.md` and the confirmed station list, and write an outline for the user to read:
@@ -71,7 +71,7 @@ the treatment and the emotional line are yours, shown together with the next ★
    in passing ("Copy"); then estimate its length from the speaking rate: about 4.3 CJK characters a second (Xianyang: 92 lines, about 2,600 characters, 604 seconds of voice) or about 2.5 English words a second,
    plus the pauses, the prologue, the opening and the picture holds the outline needs (compile times the lines the same way until the voice is recorded: "Subtitles and the timeline").
    Get real timing whenever it helps (for instance compile a draft with `CT_SCRIPT`, "Subtitles and the timeline").
-   Before showing it, review it as a listener (SKILL.md "Judge as the audience"): read it all aloud, in every language the film shows, then write down what you remember. Set the draft's strongest
+   Before showing it, review it as a listener (AGENTS.md "Judge as the audience"): read it all aloud, in every language the film shows, then write down what you remember. Set the draft's strongest
    moments (its highest and lowest, its turns, its ending) beside the example film's strongest lines, for strength, not slot for slot, and rewrite what is vaguer. Then read it for the links ("Copy"): each sentence follows from
    the one before, each scene hands on to the next, and no one sentence shape keeps coming back.
    - **Cast.** The city is the protagonist. The people who drive its fate (rulers, builders, invaders, artists, the person a station's story is about) are its leading and

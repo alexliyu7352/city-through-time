@@ -9,7 +9,7 @@
 
 `uv run python -I pipeline/compile.py cities/<slug>` (a period city whose inputs did not change since an earlier compile, of this version of the city or another, is read back from `local/cache/gen` instead of built again, and so are its masks (`local/cache/hide`, `local/cache/edge`): most of a compile on a large city; `CT_GEN_CACHE=0` builds every city and mask);
 `node tools/preview.mjs <slug>` starts a local server, and the user opens in Chrome the `play.html?city=<slug>&play=1` it prints to play live; judge each node yourself when it is done (the audience pass below), then lay the next one,
-and show the user long stretches of the film (SKILL.md workflow).
+and show the user long stretches of the film (AGENTS.md workflow).
 On the contact sheets the round makes ("After every change"), check section by section: whether pins are out of frame, whether layers are visible, whether the camera is aimed at the subject.
 A period city that has no place in the film yet is looked at with `tools/modelview.py` (MODEL.md), its house types with `--sheet` (MODEL.md "House types"); the period cities a change can reach, from every side, with `tools/eraview.mjs` and the `play.html?city=<slug>&view` page (MODEL.md).
 Before showing the user, follow "Acceptance and reporting" below: the server is still running, you have taken a screenshot yourself to confirm it is the new version, remind the user to refresh, and speak only of what the preview really has.
@@ -62,7 +62,7 @@ camcheck's `spin` does not fail a check: compile unwraps the azimuth, and the ju
 
 ## Acceptance and reporting
 
-- **The audience pass:** play the stretch at speed, with the subtitles, as a viewer who does not know the city, then write down what it leaves (SKILL.md "Judge as the audience").
+- **The audience pass:** play the stretch at speed, with the subtitles, as a viewer who does not know the city, then write down what it leaves (AGENTS.md "Judge as the audience").
   Then go through it line by line against the storyboard: each line carried by what is on screen as it is said, a far place on a map as it is named (STAGING.md "A picture
   for every key beat"); each change on the model seen happening and read at that camera distance, with no picture beside it (STAGING.md 5b); the year counter only forward
   (STAGING.md "Basic grammar"); tags in plain words, readable at their size. Compare a revised stretch with its previous version, frame beside frame, every stretch the
@@ -89,7 +89,7 @@ camcheck's `spin` does not fail a check: compile unwraps the azimuth, and the ju
   `build/film.json` before and after the change (framing is computed from pins, areas and lines, so removing one tag also moves the composition). When a test fails, first examine the test itself (a mistyped URL, a missing file),
   then draw a conclusion.
 - **Report in proportion to the change:** a small fix reports what changed, the link, and the checks of the stretch it touched; time spent on proofs, receipts and
-  repeated reviews of unchanged parts is time the user waits. To verify is to run the check and give its result in a line (what counts and what does not: SKILL.md
+  repeated reviews of unchanged parts is time the user waits. To verify is to run the check and give its result in a line (what counts and what does not: AGENTS.md
   "The record is git and the checks, not documents"). Iterate on the touched station with its neighbours (a candidate of those stations only), then put it back.
   Make a candidate with `uv run python -I tools/candidate.py make <slug> <name> --from <a> --through <b>` (the stations changed and one either side: a cut's first
   node has no film before it; without `--from`/`--through`, the whole city), not with a script of your own: it handles every reference to what the cut leaves out

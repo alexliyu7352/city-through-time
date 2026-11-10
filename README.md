@@ -18,7 +18,7 @@ Each city's data lives in `cities/<city>/`: `entry.json` for the entry page, the
 
 ## How a film is made
 
-[Claude Code](https://claude.com/claude-code) makes the film, following the skill description in [`SKILL.md`](SKILL.md) step by step. A person sets the direction and checks every step in the browser.
+[Claude Code](https://claude.com/claude-code) (or another agent that reads skills) makes the film, following the rules in [`AGENTS.md`](AGENTS.md) step by step. A person sets the direction and checks every step in the browser.
 
 1. **Research**: build a timeline of the city, with the source and original text for every fact, written into `FACTS.md`.
 2. **Data**: today's buildings (CMAB in China, Overture Maps plus GHSL years elsewhere), OpenStreetMap water and roads, and Copernicus terrain and satellite imagery.
@@ -32,14 +32,17 @@ For every city, a fixed set of checks is run: model clipping, camera clipping, s
 
 ## Make one yourself
 
-You need Claude Code, Node 20 or later, [uv](https://docs.astral.sh/uv/), ffmpeg, exiftool, and a computer with a graphics card and Chrome installed.
+You need Claude Code (or another agent that reads skills), Node 20 or later, [uv](https://docs.astral.sh/uv/), ffmpeg, exiftool, git, and a computer with a graphics card and Chrome installed.
+
+Install the skill ([city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)):
 
 ```sh
-git clone https://github.com/alexliyu7352/city-through-time.git
-ln -s "$PWD/city-through-time" ~/.claude/skills/city-through-time   # lets Claude Code find this skill
+npx skills add alexliyu7352/city-through-time-skill -g
 ```
 
-Then tell Claude Code: "Use A City Through Time to make <city>, starting from <era>." The first time, it asks where on this computer to keep data and models (by default everything goes under `local/` in the project), then sets up the environment.
+or, in Claude Code, `/plugin marketplace add alexliyu7352/city-through-time-skill`, then `/plugin install city-through-time@city-through-time`.
+
+Then tell the agent: "Use A City Through Time to make <city>, starting from <era>." The first time, it asks where to put the workspace (this repository) and clones it there, asks where on this computer to keep data and models (by default everything goes under `local/` in the workspace), then sets up the environment. You do not clone anything yourself.
 
 Full guide: [`docs/MAKING.md`](docs/MAKING.md).
 

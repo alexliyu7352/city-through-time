@@ -49,7 +49,7 @@ Test: if this station is removed, does the audience understand a piece less of "
 A world event that only took place in the city (a treaty signed there, a match played there) passes this test only if the city or its people changed because of it;
 otherwise it is a line of narration or a short transition.
 
-**Know the audience.** The audience is the world (SKILL.md): viewers who know neither the city nor its country. Places, people and moments known worldwide (a famous
+**Know the audience.** The audience is the world (AGENTS.md): viewers who know neither the city nor its country. Places, people and moments known worldwide (a famous
 ruler, a war, a film) are anchors: use them by name, and give them what they did not know about them. A topic few of them know needs a reason to be in the film and must say at once why it matters.
 
 **The story is the city's arc, not an argument.** The theme comes out of what the city won, lost and became. A thesis of your own (a social or political point the film
@@ -107,7 +107,7 @@ Record not only "what happened" but also what makes it a story, in `research/sto
   narration falls back on a report's wording.
 - **What the audience will remember:** the city's best-known stories, sayings and images (the ones a viewer may already know, or will retell afterwards), and the
   magnitudes that make a change felt: how many lived there at its height and its lowest, how far it spread, how long a fire or a siege lasted, how many left and how many came back.
-  Verify them like any fact (SKILL.md "Careful means checked, not left out").
+  Verify them like any fact (AGENTS.md "Careful means checked, not left out").
 - **Poems and allusions:** poems, idioms and legends about this place (Xianyang: Wang Wei's 《送元二使安西》 (Seeing Yuan the Second Off to Anxi) and its 「渭城朝雨」 ("morning rain at Weicheng")). Mark legends as "legend".
 - **Scenes worth a picture:** the city at its most prosperous, the scenes of major events, the mood of a poem; note the source where there is a picture, and mark the scene even where there is none (DATA.md "Pictures and footage").
 - **Threads that can echo:** an early event and a later one that can be set against each other (Xianyang: in Qin times the two banks of the Wei were one Xianyang; over 2,000 years later Xianyang and Xi'an grew into one city across the Wei).

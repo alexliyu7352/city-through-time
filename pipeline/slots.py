@@ -1,4 +1,4 @@
-"""Machine slots: at most CT_SLOTS (2) heavy jobs at once on this machine, across every agent and worktree (SKILL.md
+"""Machine slots: at most CT_SLOTS (2) heavy jobs at once on this machine, across every agent and worktree (AGENTS.md
 "Subagents and parallel work"): with many subagents at work, studies and stills started together would freeze the desktop.
 A city's compile, a model study and every browser page a tool opens (stills, eraview, the checks that open the film, each
 render worker) takes one, waiting for a free one; a job started by a job that holds one (CT_SLOT in its environment) takes none.

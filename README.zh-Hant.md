@@ -18,7 +18,7 @@
 
 ## 片子怎麼做出來
 
-做片的是 [Claude Code](https://claude.com/claude-code)，照 [`SKILL.md`](SKILL.md) 這份技能說明一步步做；人負責定方向，並在瀏覽器裡檢查每一步。
+做片的是 [Claude Code](https://claude.com/claude-code)（或其他讀得懂技能的代理），照 [`AGENTS.md`](AGENTS.md) 裡的規則一步步做；人負責定方向，並在瀏覽器裡檢查每一步。
 
 1. **研究**：建立這座城的年代表，每條史實都附出處和原文，寫進 `FACTS.md`。
 2. **資料**：今天的建築（中國用 CMAB，其他地方用 Overture Maps 加 GHSL 年份）、OpenStreetMap 的水系和路網、Copernicus 地形和衛星影像。
@@ -32,14 +32,17 @@
 
 ## 自己做一部
 
-要準備：Claude Code、Node 20 以上、[uv](https://docs.astral.sh/uv/)、ffmpeg、exiftool，以及一台有顯示卡、裝了 Chrome 的電腦。
+要準備：Claude Code（或其他讀得懂技能的代理）、Node 20 以上、[uv](https://docs.astral.sh/uv/)、ffmpeg、exiftool、git，以及一台有顯示卡、裝了 Chrome 的電腦。
+
+安裝技能（[city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)）：
 
 ```sh
-git clone https://github.com/alexliyu7352/city-through-time.git
-ln -s "$PWD/city-through-time" ~/.claude/skills/city-through-time   # 讓 Claude Code 認得這個技能
+npx skills add alexliyu7352/city-through-time-skill -g
 ```
 
-然後在 Claude Code 裡說：「用一城春秋做〇〇，從〇〇時代開始」。第一次使用時，它會先問你這台電腦要把資料、模型放在哪裡（預設全部放在專案的 `local/` 下），再裝好環境。
+或在 Claude Code 裡：`/plugin marketplace add alexliyu7352/city-through-time-skill`，再 `/plugin install city-through-time@city-through-time`。
+
+然後跟代理說：「用一城春秋做〇〇，從〇〇時代開始」。第一次使用時，它會問你工作區（就是這個倉庫）放在哪裡，自己 clone 過去；再問你這台電腦要把資料、模型放在哪裡（預設全部放在工作區的 `local/` 下），然後裝好環境。你不用自己 clone 任何東西。
 
 完整教學：[`docs/MAKING.zh-Hant.md`](docs/MAKING.zh-Hant.md)。
 

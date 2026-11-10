@@ -2,7 +2,7 @@
 
 [English](MAKING.md) · 繁體中文 · [简体中文](MAKING.zh-Hans.md)
 
-這份教學帶你從零開始，用《一城春秋》的技能做出一部城市影片。做片的是 Claude Code（程式代理），你負責定故事、在瀏覽器裡看片；規則寫在 [`SKILL.md`](../SKILL.md) 和它指向的各步驟說明（`docs/`），代理會照它做。
+這份教學帶你從零開始，用《一城春秋》的技能做出一部城市影片。做片的是 Claude Code（程式代理），你負責定故事、在瀏覽器裡看片；規則寫在 [`AGENTS.md`](../AGENTS.md) 和它指向的各步驟說明（`docs/`），代理會照它做。
 
 ## 1. 先看一部
 
@@ -25,17 +25,16 @@
 ## 3. 安裝
 
 ```sh
-git clone https://github.com/alexliyu7352/city-through-time.git
-ln -s "$PWD/city-through-time" ~/.claude/skills/city-through-time
+npx skills add alexliyu7352/city-through-time-skill -g
 ```
 
-第二行讓 Claude Code 認得這個技能。之後在 `city-through-time` 資料夾裡打開 Claude Code。
+這只裝技能本身（[city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)），這台電腦上讀得懂技能的代理都能用。在 Claude Code 裡也可以用外掛裝：`/plugin marketplace add alexliyu7352/city-through-time-skill`，再 `/plugin install city-through-time@city-through-time`。這個倉庫不用你自己 clone，代理第一次使用時會做。
 
 ## 4. 第一次使用
 
-跟代理說：「用一城春秋做〇〇，從〇〇時代開始」。第一次它會先做「第一次使用」這一步：
+跟代理說：「用一城春秋做〇〇，從〇〇時代開始」。第一次它會先問你工作區（就是這個倉庫：程式、規則和已做好的城市；約 300 MB，每座城另需約 5 GB）放在哪裡，clone 過去，再做「第一次使用」這一步：
 
-- 問你這台電腦的資料放在哪裡，寫進 `local/config.json`（不進 git）。建議全部放在專案的 `local/` 下；硬碟不夠時，也可以把大檔放到別顆硬碟。
+- 問你這台電腦的資料放在哪裡，寫進 `local/config.json`（不進 git）。建議全部放在工作區的 `local/` 下；硬碟不夠時，也可以把大檔放到別顆硬碟。
 - 檢查工具裝了沒有，用 `npm ci` 和 `uv sync` 裝好環境。
 
 ## 5. 做片的流程
