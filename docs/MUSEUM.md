@@ -91,8 +91,13 @@ model made in Blender instead: `detailed: {kind, spec}` beside `landmark` (or in
   seating in bands, the arena wall), built with `tools/blender/kit.py` (profiles swept round a plan curve, arched bays, columns).
   It takes the sizes the film gives the landmark (its `from_landmark`: for an amphitheatre `outer_m`, `inner_m`, `h_m`, `bays`,
   `arena_wall_m`), then the page's `spec` over them; what neither gives is the module's `DEFAULT`, an estimate, and the part it
-  shapes says so in its note. A building of another type is a new module (`DEFAULT`, `from_landmark(L)`, `build(spec)` returning one
-  object per part), listed in `tools/blender/build.py` `KINDS`.
+  shapes says so in its note. A building of another type is a new module in tools/blender (`DEFAULT`, `from_landmark(L)`, `build(spec)`
+  returning one object per part; its file name is the kind). The kinds so far: `amphitheatre`, `theatre` (a half ring, its stage
+  and the temple on its top), `portico` (colonnades of any plan), `hall` (a hall among porticoes), `basilica` (nave, aisles,
+  clerestory, transept, apse), `atrium` (a colonnaded forecourt), `domed_church` (a cross plan, drum, ribbed dome, lantern, giant
+  order, facade), `taixie` (a Chinese terrace palace: rammed-earth tiers, timber halls, tiled roofs). Faces take one of the kit's
+  materials: stone, dark (an opening), roof (a roof's covering, a dome's shell), sand; the page shades each as the film's part.
+  Object names have no `/` (three.js drops it from a node's name).
 - **Parts:** the model's objects, by name (an amphitheatre's: `facade_arcades`, `orders`, `attic`, `cavea`, `podium`, `arena`), are
   taken by `labels` as records are, a piece's with its id first (`theatre/cavea`); `kinds` take records only.
 - **Building it:** `tools/museum.py` runs Blender headless (local/config.json `blender`, docs/SETUP.md; a second or two) and writes

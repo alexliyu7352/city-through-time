@@ -57,7 +57,7 @@ def main():
     kit.reset()
     mod = __import__(o['kind'])
     spec = {**(mod.from_landmark(json.load(open(o['landmark']))) if o['landmark'] else {}), **(json.load(open(o['spec'])) if o['spec'] else {})}
-    print('build: spec ' + json.dumps(spec, sort_keys=True))
+    print('build: spec ' + json.dumps({k: f'[{len(v)} parts]' if k == 'parts' and isinstance(v, list) else v for k, v in spec.items()}, sort_keys=True))   # (a parts landmark's list in full ran to pages)
     parts = mod.build(spec)
     for p in parts: p.rotation_euler = (0, 0, math.radians(float(o['theta'])))
     tris = sum(sum(len(f.vertices) - 2 for f in p.data.polygons) for p in parts)

@@ -26,7 +26,7 @@ const KEY_AZ = 95;                           // the key light: 50 degrees left o
 const TONE = { sourced: '#e9c08a', estimated: '#8fa6c6' }, WHITE = '#f4f2ee', PICK = new THREE.Color('#ffb347');
 const STAND = { look: '#efede8', clean: '#8c8c8c' }, FADE_M = [130, 300];   // (FADE_M: the stand whole within 130 m of the building's middle, gone by 300 m)   // the stand: a light floor in the room; mid grey in the reference, so the model stands clear of it
 const ROOM = { look: [['#eef0f1', 0], ['#e3e6e8', .55], ['#d2d6da', 1]], clean: [['#3a3f47', 0], ['#22262c', 1]] };   // the room behind: exhibition, reference
-const MAT_PART = { stone: 1, dark: 6, sand: 10 };   // a detailed model's materials (tools/blender/kit.py) as the records' parts (citygen LMK, DARK, EARTH): the same light and shade
+const MAT_PART = { stone: 1, dark: 6, roof: 9, sand: 10 };   // a detailed model's materials (tools/blender/kit.py) as the records' parts (citygen LMK, DARK, LROOF, EARTH): the same light and shade
 
 // the detailed models (model.detailed: [{file, at: [x, z], theta_deg, scale}]), each loaded once -> its glTF scene, placed
 async function detailedModels(base, list) {

@@ -5,7 +5,8 @@ the landmark's theta_deg afterwards (build.py), as the film's generator turns it
 A building is a few named objects, one per part a museum page can say is sourced or estimated (amphitheatre.py: facade_arcades,
 orders, attic, cavea, ...), each built from meshes made here: bays placed round a plan curve, profiles swept along it, steps,
 columns; the classical orders (column, entablature) for any building that has them. Two materials: stone (the model's white)
-and dark (an opening seen into, as the film's dark parts). A helper two kinds need belongs here, not copied into each."""
+dark (an opening seen into, as the film's dark parts) and roof (a roof's covering, a dome's shell: shaded as the film's roofs).
+A helper two kinds need belongs here, not copied into each."""
 import math
 
 import bmesh
@@ -29,6 +30,7 @@ def material(name, rgb, rough=.85):
 
 def stone(): return material('stone', (.86, .84, .80))
 def dark(): return material('dark', (.06, .06, .07), .95)
+def roof(): return material('roof', (.62, .60, .58))   # (a roof's covering, tiles or lead: the page shades it as the film's roofs, darker than the walls)
 
 
 def obj(name, bm, mats):
