@@ -30,7 +30,7 @@ npx skills add alexliyu7352/city-through-time-skill -g -y
 
 Run it in a terminal: it installs the skill for every agent it finds on this computer (Claude Code, Codex, Cursor, Gemini CLI and others) and into the shared `~/.agents/skills`. Run from inside an agent, it installs for that agent alone.
 
-This installs only the skill ([city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)), for every agent on this computer that reads skills. In Claude Code you can install it as a plugin instead: `/plugin marketplace add alexliyu7352/city-through-time-skill`, then `/plugin install city-through-time@city-through-time`. You do not clone this repository yourself: the agent does it on first use.
+This installs only the skill ([city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)), for every agent on this computer that reads skills. In Claude Code you can install it as a plugin instead: `/plugin marketplace add alexliyu7352/city-through-time-skill`, then `/plugin install city-through-time@city-through-time`. You do not clone this repository yourself: the agent does it on first use. (To work on the code, you can instead clone it and link `skill/skills/city-through-time` into your agent's skills folder: see the README.)
 
 ## 4. First use
 

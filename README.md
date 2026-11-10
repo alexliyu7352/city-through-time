@@ -34,7 +34,7 @@ For every city, a fixed set of checks is run: model clipping, camera clipping, s
 
 You need Claude Code (or another agent that reads skills), Node 20 or later, [uv](https://docs.astral.sh/uv/), ffmpeg, exiftool, git, and a computer with a graphics card and Chrome installed.
 
-Install the skill ([city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)):
+**Recommended: install the skill.** ([city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill))
 
 ```sh
 npx skills add alexliyu7352/city-through-time-skill -g -y
@@ -45,6 +45,15 @@ Run it in a terminal: it installs the skill for every agent it finds on this com
 or, in Claude Code, `/plugin marketplace add alexliyu7352/city-through-time-skill`, then `/plugin install city-through-time@city-through-time`.
 
 Then tell the agent: "Use A City Through Time to make <city>, starting from <era>." The first time, it asks where to put the workspace (this repository) and clones it there, asks where on this computer to keep data and models (by default everything goes under `local/` in the workspace), then sets up the environment. You do not clone anything yourself.
+
+**Or clone it yourself and link it as a skill.** For working on the project's code, or keeping the workspace where you like:
+
+```sh
+git clone https://github.com/alexliyu7352/city-through-time.git
+ln -s "$PWD/city-through-time/skill/skills/city-through-time" ~/.claude/skills/city-through-time   # Claude Code; for other agents, their own skills folder (for example ~/.agents/skills)
+```
+
+Then open the agent inside `city-through-time` and say the same sentence: the skill finds the workspace it is in and goes on from there. To send your city back to this site, fork the repository first and clone your fork.
 
 Full guide: [`docs/MAKING.md`](docs/MAKING.md).
 

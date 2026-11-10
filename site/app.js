@@ -346,6 +346,10 @@ function paint() {
   if (open) { show(open, null, false); renderShare(); }
 }
 
+// the skill's install command, copied with a click
+{ const b = $('skill-copy'); if (b) b.addEventListener('click', () => navigator.clipboard?.writeText($('skill-cmd').textContent).then(() => {
+  b.textContent = W.t('copied'); setTimeout(() => { b.textContent = W.t('copy'); }, 1600); }).catch(() => {})); }
+
 const bar = $('bar');
 addEventListener('scroll', () => bar.classList.toggle('scrolled', scrollY > 8), { passive: true });
 if (!reduced) document.documentElement.classList.add('intro');

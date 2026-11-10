@@ -34,7 +34,7 @@
 
 要准备：Claude Code（或其他读得懂技能的代理）、Node 20 以上、[uv](https://docs.astral.sh/uv/)、ffmpeg、exiftool、git，以及一台有显卡、装了 Chrome 的电脑。
 
-安装技能（[city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)）：
+**推荐：安装技能。**（[city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)）
 
 ```sh
 npx skills add alexliyu7352/city-through-time-skill -g -y
@@ -45,6 +45,15 @@ npx skills add alexliyu7352/city-through-time-skill -g -y
 或在 Claude Code 里：`/plugin marketplace add alexliyu7352/city-through-time-skill`，再 `/plugin install city-through-time@city-through-time`。
 
 然后跟代理说：“用一城春秋做〇〇，从〇〇时代开始”。第一次使用时，它会问你工作区（就是这个仓库）放在哪里，自己 clone 过去；再问你这台电脑要把数据、模型放在哪里（默认全部放在工作区的 `local/` 下），然后装好环境。你不用自己 clone 任何东西。
+
+**或者自己 clone，再把它链接成技能。** 想改项目的代码，或想自己决定工作区放哪里，可以这样做：
+
+```sh
+git clone https://github.com/alexliyu7352/city-through-time.git
+ln -s "$PWD/city-through-time/skill/skills/city-through-time" ~/.claude/skills/city-through-time   # Claude Code；其他代理放到它自己的技能文件夹（例如 ~/.agents/skills）
+```
+
+然后在 `city-through-time` 文件夹里打开代理，说同一句话：技能会认出自己所在的工作区，接着做下去。想把你的城市送回这个网站，先 fork 这个仓库，再 clone 你的 fork。
 
 完整教程：[`docs/MAKING.zh-Hans.md`](docs/MAKING.zh-Hans.md)。
 

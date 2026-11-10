@@ -209,6 +209,12 @@ kbd { font: 500 12px/1 var(--text); color: var(--ink-3); border: 1px solid var(-
 .steps li::before { content: counter(k); grid-row: span 3; font: 500 30px/1.1 var(--display); color: var(--lamp); font-variant-numeric: lining-nums; }
 .steps h3 { font-size: 26px; line-height: 1.25; }
 .steps p { margin: 8px 0 0; color: var(--ink-2); max-width: 38em; }
+.cmd { grid-column: 2; margin-top: 14px; display: flex; align-items: center; gap: 10px; max-width: 38em; min-width: 0; padding: 10px 10px 10px 14px; background: var(--night); border: 1px solid var(--line-2); border-radius: 10px; }
+.cmd code { flex: 1; min-width: 0; overflow-wrap: anywhere; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--ink); }   /* (wrapped, not scrolled: the flags at its end in sight) */
+.cmd .nw { white-space: nowrap; }   /* (the flags kept together: a break at a hyphen read as "- g") */
+.cmd-copy { flex: none; padding: 6px 12px; border: 1px solid var(--line-2); border-radius: 8px; background: none; color: var(--lamp); font: 500 14px/1 var(--text); cursor: pointer; }
+.cmd-copy:hover { background: var(--night-3); }
+.steps .more { grid-column: 2; justify-self: start; }
 
 .foot { border-top: 1px solid var(--line); background: var(--night-2); }
 .foot-inner { max-width: 1320px; margin: 0 auto; padding: 40px var(--gutter) calc(48px + env(safe-area-inset-bottom)); font-size: 14px; color: var(--ink-3); }

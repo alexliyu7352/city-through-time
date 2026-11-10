@@ -30,7 +30,7 @@ npx skills add alexliyu7352/city-through-time-skill -g -y
 
 在终端里运行：它会给这台电脑上找得到的每个代理（Claude Code、Codex、Cursor、Gemini CLI 等）都装上，也装进共用的 `~/.agents/skills`。在某个代理里面运行的话，只会装给那一个代理。
 
-这只装技能本身（[city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)），这台电脑上读得懂技能的代理都能用。在 Claude Code 里也可以用插件装：`/plugin marketplace add alexliyu7352/city-through-time-skill`，再 `/plugin install city-through-time@city-through-time`。这个仓库不用你自己 clone，代理第一次使用时会做。
+这只装技能本身（[city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)），这台电脑上读得懂技能的代理都能用。在 Claude Code 里也可以用插件装：`/plugin marketplace add alexliyu7352/city-through-time-skill`，再 `/plugin install city-through-time@city-through-time`。这个仓库不用你自己 clone，代理第一次使用时会做。（想改代码的话，也可以自己 clone，再把 `skill/skills/city-through-time` 链接到代理的技能文件夹，见 README。）
 
 ## 4. 第一次使用
 
