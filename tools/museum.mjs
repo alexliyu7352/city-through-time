@@ -2,7 +2,7 @@
 // usage: node tools/museum.mjs still <city> <page> <viewpoint>[,<viewpoint>..] [--out <dir>] [--name <file.jpg>]
 //          the model alone at the viewpoint, 1920 x 1080, the reference look (what tools/living.py ref gives the image tool)
 //        node tools/museum.mjs shots <city> <page> [--out <dir>] [--lang zh|en]
-//          the page as a visitor sees it: at the main viewpoint (its picture), turned 5, 15 and 30 degrees (the picture fading),
+//          the page as a visitor sees it: at the main viewpoint (its picture), turned 3, 5 and 10 degrees (the picture full, fading, gone),
 //          the white model with its sourced and estimated parts, a part's note open; at desktop size (1600 x 1000) and at a
 //          phone's (390 x 844, 3 pixels to each); default cities/<city>/build/review/museum/<page>/
 import fs from 'fs'; import path from 'path';
@@ -46,9 +46,9 @@ if (cmd === 'still') {   // (several viewpoints, a,b,c: one page, each in turn)
       const bad = r.share > .0005; if (bad) process.exitCode = 1;
       console.log(`museum shots ${page} ${tag}: ${r.id} at its own camera: ${(r.share * 100).toFixed(3)}% of the picture changed by what its camera saw${bad ? ' FAULT (over 0.05%: the picture no longer shows as made; engine/studio.js pdSeen)' : ''}`);
     }
-    await at(P, `${tag}_5deg.jpg`, { turn: 5 });   // (the far land behind the model still shows here: a copy of the building in it, beside the model, was missed at 15)
-    await at(P, `${tag}_15deg.jpg`, { turn: 15 });
-    await at(P, `${tag}_30deg.jpg`, { turn: 30 });
+    await at(P, `${tag}_3deg.jpg`, { turn: 3 });   // (the far land behind the model still shows here: a copy of the building in it, beside the model, was missed further off)
+    await at(P, `${tag}_5deg.jpg`, { turn: 5 });   // (the picture fading: engine/museum.js FULL_DEG, GONE_DEG)
+    await at(P, `${tag}_10deg.jpg`, { turn: 10 });
     if (tag === 'desktop') {
       await P.click('#tones'); await at(P, `${tag}_tones.jpg`, { turn: 25, up: 15 });
       // a click on the model itself: the middles of its faces on screen, the part named main first (else every part), nearest the

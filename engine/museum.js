@@ -19,7 +19,9 @@ import { makeStudio } from './studio.js';
 import { buildEra } from './props.js';
 import { ss, seg, lerp, clamp, frameOf } from './lib.js';
 
-const FULL_DEG = 10, GONE_DEG = 25, SKY_DEG = 14;   // the picture by the angle from its camera (its sky: SKY_DEG)
+const FULL_DEG = 3, GONE_DEG = 7, SKY_DEG = 5;   // the picture by the angle from its camera (its sky: SKY_DEG). (Full to 10 and gone by 25,
+// a visitor turned 15 degrees off still saw it: the shadows it paints lay on the floor and the terrace as dark stains with
+// stepped edges, the people as smears; past a few degrees a picture is no longer the place, the white model is)
 const FULL_D = .14, GONE_D = .45;            // and by the distance (|ln| of the ratio to its own: within 15 %, gone past about 50 %)
 const EYE_M = 1.6, FLY_S = 1.4;              // the lowest the eye goes over the ground; a flight's seconds
 const KEY_AZ = 95;                           // the key light: 50 degrees left of this bearing (studio followShadow), 45 up: from the south-east
@@ -124,9 +126,13 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
     // the floor the picture's camera did not see (behind a wall, as it saw it: projDepth) takes the land beside it in the picture
     // (engine/studio.js projFill), not the white of the room: turned off a viewpoint, a white print of the building lay on the
     // grass beside it
+    // (in the projector's own mix, in place of a face's blurred colours: on top of it, as the picture faded out the floor beside the
+    // building faded later than the rest, a darker band round it)
+    const hidden = 'pi_ = mix(pgBody(pu_), pi_, pdSeen(pu_, pc_.w));', floor = 'pi_ = mix(pi_, pgLand(pu_), max(1. - pdSeen(pu_, pc_.w), pgBand(pu_)));';
     m.onBeforeCompile = (sh, r) => { own(sh, r); sh.uniforms.uFade = fadeU; sh.uniforms.uFadeC = fadeC;
-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade; uniform vec2 uFadeC;')
-        .replace('#include <opaque_fragment>', 'if (uPA > 0.) { vec4 gc_ = uPM * vec4(vWP, 1.); vec2 gu_ = gc_.xy / gc_.w * .5 + .5;\n if (gc_.w > 0. && gu_.x > 0. && gu_.x < 1. && gu_.y > 0. && gu_.y < 1.)\n  outgoingLight = mix(outgoingLight, pgLand(gu_), uPA * max(1. - pdSeen(gu_, gc_.w), pgBand(gu_)) * peK(gu_)); }\ndiffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz - uFadeC))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
+      if (!sh.fragmentShader.includes(hidden)) throw new Error('museum: the stand\'s floor fill needs engine/studio.js\'s projection line: ' + hidden);
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade; uniform vec2 uFadeC;').replace(hidden, floor)
+        .replace('#include <opaque_fragment>', 'diffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz - uFadeC))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
     m.customProgramCacheKey = () => 'proj0fade';
   }
   // the viewpoints and their pictures (the main one is on screen already, as the page's first picture)

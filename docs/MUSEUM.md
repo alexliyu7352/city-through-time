@@ -61,7 +61,7 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
   page opens there). Each gets an imagined picture made as a living moment's is (STAGING.md "Living moments"): its scene card
   `research/museum/<page>/<viewpoint>.yaml`, then `uv run python -I tools/living.py ref|gen|sheet cities/<slug> <page>/<viewpoint>` (the
   still is the page's model alone at that camera, `node tools/museum.mjs still`). The picture is exact only from its own camera: the page
-  shows it full within 10 degrees of it and none past 25 (and as the distance leaves it), and only on what that camera sees (a
+  shows it full within 3 degrees of it and none past 7 (and as the distance leaves it; turned farther, the shadows and people it paints lay on the floor as stains), and only on what that camera sees (a
   wall's far side or the floor behind it takes none of it: engine/studio.js projDepth); what that camera did not see takes colours
   from the picture beside it (a face, the model's colours there blurred; the floor and the far land, the land beside the building
   carried in along its row: engine/studio.js projFill), so a few degrees off a viewpoint no white or flat patch shows where the
@@ -76,7 +76,7 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
   own, to its building's hall, looking at it.
 - **Publishable only:** the page ships the model, its pictures and the life pictures, small; never a non-CC picture, a reference drawing
   or an internal plate. The pictures are AI-generated: list them in CREDITS with their date and tool.
-- **Check:** `node tools/museum.mjs shots <slug> <page>` (desktop and phone: the main picture, turned 5, 15 and 30 degrees, the two tones,
+- **Check:** `node tools/museum.mjs shots <slug> <page>` (desktop and phone: the main picture, turned 3, 5 and 10 degrees, the two tones,
   a part's note); look at each at full size, the eaves, posts and edges in a crop. It also checks each viewpoint at its own camera:
   there the page is its picture, and a line says what share of it the projector's test of what its camera saw changes (over 0.05%
   is a fault: thin edges taken for hidden showed a white dash along every eave).
