@@ -139,7 +139,7 @@ def build(s):
     for dw, za, zb_ in walls:   # openings in the walls between bands
         for i in range(nv):
             M = kit.bay_frame(ov, (i + .5) * ov.length / nv, dw)
-            kit.box(bm, -.9, .9, -.02, .5, za + .05, min(zb_, za + 2.1), mat=1, xf=M)
+            kit.box(bm, -.9, .9, -.04, 0, za + .05, min(zb_ - .25, za + 2.1), mat=1, xf=M)   # (a dark panel on the wall's face, short of its top: an opening, not a block)
     pc = S['portico']   # the colonnade on the terrace and its roof
     dpc = d_in + S['inner_wall_m'] + .6
     for i in range(pc['columns']):
