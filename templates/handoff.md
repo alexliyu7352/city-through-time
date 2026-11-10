@@ -4,8 +4,9 @@ What a new session needs to do this round, and nothing else. Written when the ro
 round starts here, not from the old conversation (SKILL.md "A round of revisions starts with a fresh context").
 
 ## The version to compare against
-The last version the user passed (a city folder or a candidate), and what of it the user has seen and passed: the
-`--against` of `tools/round.py`. The round builds on the latest candidate: keep the fixes already accepted in it, and redo only what was sent back.
+The city folder at its last commit, which holds what the last round kept (SKILL.md "Try things on a copy"), and what of it the
+user has seen and passed: the `--against` of `tools/round.py`. The round's candidate is made from it: keep the fixes already
+accepted, and redo only what was sent back.
 
 ## The round's list (frozen)
 Each note as the user gave it, with the place in the film (station, line id, seconds) and the decision taken on it, if any.
@@ -16,7 +17,7 @@ The approved narration and subtitles, approved stations and models, anything the
 looking at (the preview being watched).
 
 ## Where the work is
-The candidate's folder, the files it is made from (city.yaml, script.yaml, the scripts that build it), the shared tools'
+The round's candidate (made from the city folder with `tools/candidate.py`), the files it is made from (city.yaml, script.yaml, the scripts that build it), the shared tools'
 version (git commit).
 
 ## Known limits and open questions

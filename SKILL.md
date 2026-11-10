@@ -23,8 +23,17 @@ Working with the user
 - **Propose first, then act.** Propose, with the reason and the approach, any change that outlives this film or changes what the user approved (the engine's look, data formats, the
   workflow, other cities' output), and make it only after the user agrees. Bug fixes, a city's own generators and tools that serve a round's notes are yours: list them in the commit
   and the report. When the user says "let's discuss first", only look things up and take screenshots; change no files.
-  A request made midway is placed, not lost and not mixed in silently: say where it fits (now, this round, a later step). Do it now when it is small and touches nothing in
-  progress, or when the user wants it now; otherwise put it on the plan with a note of which step it falls in. List any addition in the report.
+- **A round's list is set before it starts, then frozen.** A round is the user's notes, sorted first: quick fixes (a tag moved, a label, a picture found or swapped,
+  a line's binding) make one round, done and shown first; rebuilds (a section restaged as a tour, a model re-traced from new sources, a new picture generated) the
+  next. One round for both keeps the user waiting for the slowest item while the quick ones sit done. A request made midway is placed, not lost and not mixed in
+  silently: it goes to the next round's list (or the plan, with the step it falls in), unless it is small and touches nothing in progress, or the user wants it now;
+  say where it went, and list any addition in the report. A list that grows while the round runs keeps the round from ever ending, and every addition reopens
+  checks already done. Research for a note stops when the picture is right; the rest goes to the notes for later. Build a tool now when it saves time in this round.
+- **Make sure it fits before building it.** Before modelling, staging or compiling what a note, a decision or the plan asks for, add up what it needs against what it
+  has: a stretch's seconds against the lines that tell it, the stages it must show and the flights between them (STAGING.md "A picture for every key beat"); the
+  narration's length against the film's; a render's disk against the free space. When it cannot fit, say so with the sum and the ways to make it fit (stages the
+  words do not tell apart made one, a pause, a longer line, a part left out) and let the one who asked choose, the user included, before any compile. A compile is
+  the dearest way to find that a plan cannot fit: each try costs a whole compile, and a plan that cannot fit fails every try.
 - **The user judges the story and the film; you judge the steps towards them.** The user's approvals are the ★ in the workflow table: the story, the narration, the scale,
   the film in the preview, the music, the render and what is published. House types, quarters, samples, a station's camera and timing are yours: judge them against the
   step's done line and the example city, and go on. Do not wait for an approval no ★ asks for: each such round stalls the work and leaves the user judging details while
@@ -42,8 +51,10 @@ Working with the user
   against the approved version, for instance `tools/round.py --against`), and report each place it touched (mm:ss). Where the fix would change how an approved passage looks or sounds,
   show it in the next preview; do not stop the work to wait for a confirmation.
 - **Praised passages are the baseline.** Record them in TREATMENT.md (seconds, what works), and check every later batch of changes against them; they must not regress.
-- **Reports must be checkable.** Give film time (mm:ss), node and file name; if only half is done, say which parts are still wrong; record deferred problems as a list and pick it up in the next round without being asked;
-  if the previous report was wrong, correct it first in the next one. Before saying "checks pass" or "the picture is unchanged", actually run and compare (CHECKS.md).
+- **A report is the result, the pictures and what is not done.** What changed and where (film time (mm:ss), node and file name), the stills or the stretch of the
+  preview to look at, the checks' result lines, and what is still wrong or deferred (a list, picked up in the next round without being asked); not how it was done.
+  If only half is done, say which parts are still wrong; if the previous report was wrong, correct it first in the next one. Before saying "checks pass" or "the
+  picture is unchanged", actually run and compare (CHECKS.md "Report in proportion to the change").
 - **The record is git and the checks, not documents.** Commit the city folder when a step is done and after each round of changes, the message saying what changed and
   the checks' own result lines; the checks are programs (compile's, `tools/rangecheck.py`'s report). Do not write receipts, audits or proof files: the user neither reads
   nor needs them, and they cost the time the film needs.
@@ -53,17 +64,27 @@ Working with the user
 
 Computer and files
 - Local paths and settings live only in `local/config.json` (SETUP.md); always run Python as `uv run python -I …`.
-- **One heavy job at a time:** do not run rendering, mixing, music generation, DuckDB scans and whole-film screenshots at the same time. Render with 2 workers and nice by default. Write the progress of long jobs to a log file
-  and read it with a separate command; do not pipe into `| tail`. `uv run python -I tools/job.py start <name> -- <command>` runs one niced in its own session with its log and a record of its pid and exit code
-  (`status`, and `wait <name>` blocks until it ends and exits with its code); to wait for any other background job, wait on its PID or output file, not on the process name (`pgrep` matches its own shell).
-  **Wait without spending turns, and notice an early failure** (compile says at its start how long the last one took): for instance a notification when the job
-  exits, or a blocking wait on the process that returns when it dies; never a look every half-minute, and never a fixed sleep that outlasts a crash. Each look is a whole turn of yours, which in a long conversation takes longer than the half-minute
-  it waits: a ten-minute compile watched that way costs twenty turns. Whole-film screenshots and checks freeze the user's computer so they cannot type:
+- **One heavy job at a time:** do not run rendering, mixing, music generation, DuckDB scans and whole-film screenshots at the same time. Render with 2 workers and nice by default.
+  **Every long job goes through one entry** (a compile, a round, a render, a mix, a whole-film check, a model study): `uv run python -I tools/job.py start <name> -- <command>`
+  runs it niced in its own session with its log and a record of its command, pid, start, end and exit code (`status`, and `wait <name>` blocks until it ends and exits
+  with its code). Not a helper of your own that spawns it, and not piped into `| tail`: a job started another way leaves no record of how it ended or how long it took.
+  To wait for a job something else started, wait on its PID or output file, not on the process name (`pgrep` matches its own shell).
+  **A job comes back to you only when it ends or fails.** Between its start and its end the one thing to do with it is wait, without spending turns, noticing an early
+  failure (compile says at its start how long the last one took): for instance a notification when the job exits, or a blocking wait on the process that returns when
+  it dies, with the longest time limit the environment allows; never a look every half-minute, never a fixed sleep that outlasts a crash, and no progress report.
+  A wait the environment cuts short (its own time limit; `job.py wait --timeout` exits 124) says nothing new: wait again at once, without reading the log. Each look is
+  a whole turn of yours, which in a long conversation takes longer than the half-minute it waits: a ten-minute compile watched that way costs twenty turns. Light work
+  that does not depend on the job goes on meanwhile. Whole-film screenshots and checks freeze the user's computer so they cannot type:
   normally check only the stations you changed; run the whole film only in the round that fixes the whole film and before rendering the final film, and ask the user first.
 - **Try things on a copy.** For A/B tests and removing a part to see the effect, use a temporary folder or a git worktree. If you touched `build/` or a city's settings, restore it afterwards and confirm it is back to what it was.
   Undo changes by hand; do not use `git checkout --` or `git reset --hard` (they also throw away other uncommitted changes). Try new languages and new ways of writing things in a copied
   city folder, delete it afterwards, and do not change the real settings. A copied city folder is a candidate made and deleted with `tools/candidate.py`, whole or
   cut to a few stations (CHECKS.md "Report in proportion"), never a script of your own.
+  **A copy lives one round; the city folder is the film's one source.** Before the next round starts, the changes the last round keeps are in `cities/<slug>/`,
+  committed and compiled there (`tools/filmdiff.py` between that build and the round's candidate lists no stretch), and the round's candidates are deleted; the
+  next round's candidate is made from the city folder. Nothing the film is built from lives only in a candidate, a temporary folder, another disk or a script
+  outside the project. A copy kept on as the next round's base becomes a second source: its timing drifts from the first, its files point into other rounds, and
+  gathering the film's real sources back together costs a round of its own.
 - **Keep scripts in the project.** Put generator, measurement and check scripts in the city's `research/` or `tools/`, not only in a temp directory (it is cleared between rounds).
 - **List before deleting.** Delete only what the user named and obvious junk. Research notes, reports and source texts are the city's data; do not delete them. Before deleting, check file by file whether it is in git,
   whether a copy exists elsewhere, and whether a process is using it (`lsof +D <directory>`, `ps`).
@@ -75,19 +96,15 @@ Subagents and parallel work
   and the work slows to a crawl. Keep the main session for the plan, the user's decisions, review and merging, and give each self-contained piece to a subagent started with a fresh
   context (one that does not inherit this conversation: Codex `spawn_agent` without forking the turns, Claude Code's Agent tool, or whatever the environment offers). Where no subagent can
   be started, start each piece in a new session from the same brief.
-- **A round of revisions starts with a fresh context.** Once a round's list is set (the user's notes, frozen: a later note goes to the next round unless it is small and touches nothing in progress, or the user wants it now), write the
+- **A round of revisions starts with a fresh context.** Once a round's list is set and frozen ("A round's list is set before it starts" above), write the
   handoff (`templates/handoff.md`, into the city's `research/`) and do the round in a new session or a subagent with a fresh context started from it. The old
   conversation is looked up, not carried: it holds withdrawn rulings and earlier versions, which a long context takes for current (a lost close shot put back
   wide, a base chosen from the wrong version), and every action in it costs more. A round is the user's list; what review sends back inside it (a fix that
   missed, a fix that broke something next to it) stays in the round and goes to the same subagent (Review before merging), which already knows the code and
   the files: a new one spends its first quarter of an hour reading them again. The fetches of a round that do not wait on each other (the sources a note
   needs, the pictures to find and check for their licence) start at once in parallel subagents, each returning its file, its source and its licence; the
-  staging waits only for what it uses.
-- **Sort a long list before the round starts.** Quick fixes (a tag moved, a label, a picture found or swapped, a line's binding) make one round, handed over
-  first; rebuilds (a section restaged as a tour, a model re-traced from new sources, a new picture generated) the next. One round for both keeps the user
-  waiting for the slowest item while the quick ones sit done. Research for a note stops when the picture is right; the rest goes to the notes for later.
-  Build a tool now when it saves time in this round. A fresh session with a handoff is for a context grown stale or large, not for a batch the agent holding the
-  files can finish in minutes.
+  staging waits only for what it uses. A fresh session with a handoff is for a context grown stale or large, not for a batch the agent holding the files can
+  finish in minutes.
 - **A piece** is work with its own inputs and its own files: one period city (step 4, once the research, the extent and the approved house types exist), one research question (step 1),
   the candidates for one music cue (step 7). Not a piece: what the user decides, the stations' staging (step 5 goes station by station, each building on the last), and a change to
   files several pieces share (the engine, the pipeline, types shared by periods, the shared keys of `city.yaml`): those stay with the main agent.
@@ -109,7 +126,9 @@ Subagents and parallel work
   below. A stronger model, or a level above the main agent's, can spend the user's whole quota on one piece. When a piece seems to need a stronger model than the main
   agent's, ask the user first, with the reason; do not start it.
 - **Wait for the subagents in the same turn.** After starting them, wait for each to finish (the environment's wait call), then collect, review and report, all before the turn
-  ends: a session that ends its turn while its subagents work may not wake when they finish, and their work sits until someone writes to it.
+  ends: a session that ends its turn while its subagents work may not wake when they finish, and their work sits until someone writes to it. A subagent, like a job,
+  comes back when it is done or needs a decision: wait with the longest time limit the wait call takes, and when a wait returns with nothing new, wait again at once;
+  do not ask a subagent how far it has got. Each wait that returns is a turn of the main agent's, in the largest context of all.
 - **Review before merging.** The main agent checks each piece against its step's done line and the rules before it goes into the film; a piece sent back goes to the same subagent with the
   reason (it keeps its context), not to a new one. The user's approvals (★ in the table) are asked by the main agent.
 
