@@ -262,6 +262,10 @@
     {
       "site": "YouTube",
       "url": "https://www.youtube.com/watch?v=yca4JiR3Peg"
+    },
+    {
+      "site": "Bilibili",
+      "url": "https://www.bilibili.com/video/BV1kEWu6sEVc/"
     }
   ],
   "bundle": {
