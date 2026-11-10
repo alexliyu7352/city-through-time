@@ -37,8 +37,10 @@
 安裝技能（[city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)）：
 
 ```sh
-npx skills add alexliyu7352/city-through-time-skill -g
+npx skills add alexliyu7352/city-through-time-skill -g -y
 ```
+
+在終端機裡執行：它會替這台電腦上找得到的每個代理（Claude Code、Codex、Cursor、Gemini CLI 等）都裝上，也裝進共用的 `~/.agents/skills`。在某個代理裡面執行的話，只會裝給那一個代理。
 
 或在 Claude Code 裡：`/plugin marketplace add alexliyu7352/city-through-time-skill`，再 `/plugin install city-through-time@city-through-time`。
 

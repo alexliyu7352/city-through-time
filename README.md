@@ -37,8 +37,10 @@ You need Claude Code (or another agent that reads skills), Node 20 or later, [uv
 Install the skill ([city-through-time-skill](https://github.com/alexliyu7352/city-through-time-skill)):
 
 ```sh
-npx skills add alexliyu7352/city-through-time-skill -g
+npx skills add alexliyu7352/city-through-time-skill -g -y
 ```
+
+Run it in a terminal: it installs the skill for every agent it finds on this computer (Claude Code, Codex, Cursor, Gemini CLI and others) and into the shared `~/.agents/skills`. Run from inside an agent, it installs for that agent alone.
 
 or, in Claude Code, `/plugin marketplace add alexliyu7352/city-through-time-skill`, then `/plugin install city-through-time@city-through-time`.
 

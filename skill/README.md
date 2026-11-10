@@ -10,11 +10,13 @@ starts your city. You answer its questions and approve the story and the film.
 
 ## Install
 
-Any agent that reads skills (Claude Code, Codex, Cursor, Gemini CLI and others), with the [skills CLI](https://skills.sh):
+Every agent on this computer that reads skills (Claude Code, Codex, Cursor, Gemini CLI and others), with the [skills CLI](https://skills.sh):
 
 ```sh
-npx skills add alexliyu7352/city-through-time-skill -g
+npx skills add alexliyu7352/city-through-time-skill -g -y
 ```
+
+Run it in a terminal: it installs the skill for every agent it finds on this computer (Claude Code, Codex, Cursor, Gemini CLI and others) and into the shared `~/.agents/skills`. Run from inside an agent, it installs for that agent alone.
 
 Claude Code, as a plugin:
 
@@ -32,8 +34,10 @@ You need Node 20 or newer, [uv](https://docs.astral.sh/uv/), ffmpeg, exiftool, g
 這個倉庫只放技能本身。第一次使用時，代理會把工作區（[city-through-time](https://github.com/alexliyu7352/city-through-time)：程式、規則和已做好的城市）clone 到你指定的位置，裝好環境，再開始做你的城市。
 
 ```sh
-npx skills add alexliyu7352/city-through-time-skill -g
+npx skills add alexliyu7352/city-through-time-skill -g -y
 ```
+
+在終端機裡執行：它會替這台電腦上找得到的每個代理（Claude Code、Codex、Cursor、Gemini CLI 等）都裝上，也裝進共用的 `~/.agents/skills`。在某個代理裡面執行的話，只會裝給那一個代理。
 
 或在 Claude Code 裡：`/plugin marketplace add alexliyu7352/city-through-time-skill`，再 `/plugin install city-through-time@city-through-time`。
 
@@ -44,8 +48,10 @@ npx skills add alexliyu7352/city-through-time-skill -g
 这个仓库只放技能本身。第一次使用时，代理会把工作区（[city-through-time](https://github.com/alexliyu7352/city-through-time)：代码、规则和已做好的城市）clone 到你指定的位置，装好环境，再开始做你的城市。
 
 ```sh
-npx skills add alexliyu7352/city-through-time-skill -g
+npx skills add alexliyu7352/city-through-time-skill -g -y
 ```
+
+在终端里运行：它会给这台电脑上找得到的每个代理（Claude Code、Codex、Cursor、Gemini CLI 等）都装上，也装进共用的 `~/.agents/skills`。在某个代理里面运行的话，只会装给那一个代理。
 
 或在 Claude Code 里：`/plugin marketplace add alexliyu7352/city-through-time-skill`，再 `/plugin install city-through-time@city-through-time`。
 
