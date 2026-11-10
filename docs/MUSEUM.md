@@ -74,7 +74,9 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
 - **Publishable only:** the page ships the model, its pictures and the life pictures, small; never a non-CC picture, a reference drawing
   or an internal plate. The pictures are AI-generated: list them in CREDITS with their date and tool.
 - **Check:** `node tools/museum.mjs shots <slug> <page>` (desktop and phone: the main picture, turned 5, 15 and 30 degrees, the two tones,
-  a part's note); look at each at full size.
+  a part's note); look at each at full size, the eaves, posts and edges in a crop. It also checks each viewpoint at its own camera:
+  there the page is its picture, and a line says what share of it the projector's test of what its camera saw changes (over 0.05%
+  is a fault: thin edges taken for hidden showed a white dash along every eave).
 
 ## Detailed models
 

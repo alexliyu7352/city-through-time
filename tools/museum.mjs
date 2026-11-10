@@ -30,6 +30,22 @@ if (cmd === 'still') {   // (several viewpoints, a,b,c: one page, each in turn)
   for (const [tag, view, dpr] of [['desktop', { width: 1600, height: 1000 }, 1], ['phone', { width: 390, height: 844 }, 3]]) {
     const { browser, page: P } = await openFilm(city, { q, html: 'museum.html', view, dpr, warnings: true });
     await at(P, `${tag}_0_picture.jpg`);
+    // each viewpoint at its own camera shows its picture as made: the projector's test of what its camera saw (engine/studio.js
+    // pdSeen) changes next to nothing there (sampled at one texel it left a white dash along every eave and post). The share of
+    // pixels it changes by more than 40 of 255, against the same frame drawn without it
+    for (const r of await P.evaluate(() => {
+      const M = window.MUSEUM.m, U = M.studio.U, gl = M.studio.renderer.getContext(), out = [];
+      if (!U.uPD || !U.uPD.value) return out;
+      const read = () => { M.redraw(); const a = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4); gl.readPixels(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight, gl.RGBA, gl.UNSIGNED_BYTE, a); return a; };
+      for (const id of M.viewpoints) {
+        M.view({ vp: id }); const a = read(), n = U.uPN.value.clone(); U.uPN.value.set(1e6, 1e6 + 1); const b = read(); U.uPN.value.copy(n); M.redraw();
+        let k = 0; for (let i = 0; i < a.length; i += 4) if (Math.max(Math.abs(a[i] - b[i]), Math.abs(a[i + 1] - b[i + 1]), Math.abs(a[i + 2] - b[i + 2])) > 40) k++;
+        out.push({ id, share: k / (a.length / 4) });
+      }
+      M.view({}); return out; })) {
+      const bad = r.share > .0005; if (bad) process.exitCode = 1;
+      console.log(`museum shots ${page} ${tag}: ${r.id} at its own camera: ${(r.share * 100).toFixed(3)}% of the picture changed by what its camera saw${bad ? ' FAULT (over 0.05%: the picture no longer shows as made; engine/studio.js pdSeen)' : ''}`);
+    }
     await at(P, `${tag}_5deg.jpg`, { turn: 5 });   // (the far land behind the model still shows here: a copy of the building in it, beside the model, was missed at 15)
     await at(P, `${tag}_15deg.jpg`, { turn: 15 });
     await at(P, `${tag}_30deg.jpg`, { turn: 30 });

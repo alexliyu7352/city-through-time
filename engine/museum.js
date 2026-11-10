@@ -125,7 +125,7 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
     // the white of the room: turned off a viewpoint, a white print of the building lay on the grass beside it
     m.onBeforeCompile = (sh, r) => { own(sh, r); sh.uniforms.uFade = fadeU; sh.uniforms.uFadeC = fadeC; sh.uniforms.uPicGround = picGround;
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade; uniform vec2 uFadeC; uniform sampler2D uPicGround;')
-        .replace('#include <opaque_fragment>', 'if (uPA > 0.) { vec4 gc_ = uPM * vec4(vWP, 1.); vec2 gu_ = gc_.xy / gc_.w * .5 + .5;\n if (gc_.w > 0. && gu_.x > 0. && gu_.x < 1. && gu_.y > 0. && gu_.y < 1.) { float gz_ = uPN.x * uPN.y / (uPN.y - (uPN.y - uPN.x) * texture2D(uPD, gu_).r);\n  outgoingLight = mix(outgoingLight, texture2D(uPicGround, vec2(.5, gu_.y)).rgb, uPA * smoothstep(gz_ * 1.003, gz_ * 1.01, gc_.w) * peK(gu_)); } }\ndiffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz - uFadeC))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
+        .replace('#include <opaque_fragment>', 'if (uPA > 0.) { vec4 gc_ = uPM * vec4(vWP, 1.); vec2 gu_ = gc_.xy / gc_.w * .5 + .5;\n if (gc_.w > 0. && gu_.x > 0. && gu_.x < 1. && gu_.y > 0. && gu_.y < 1.)\n  outgoingLight = mix(outgoingLight, texture2D(uPicGround, vec2(.5, gu_.y)).rgb, uPA * (1. - pdSeen(gu_, gc_.w)) * peK(gu_)); }\ndiffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz - uFadeC))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
     m.customProgramCacheKey = () => 'proj0fade';
   }
   // the viewpoints and their pictures (the main one is on screen already, as the page's first picture)
@@ -253,6 +253,7 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
       lensVp = best; controls.enabled = false; fly = { t0: performance.now(), a: p, b: camOf(best), f0: camera.fov, f1: fovFor(best) };
     },
     studio: S, redraw: draw,   // (for a look from the console, window.MUSEUM.m)
+    viewpoints: VP.filter(v => v.tex).map(v => v.id),   // (the viewpoints with a picture: tools/museum.mjs checks each at its own camera)
     tones(v) { toned = !!v; paint(); dirty = true; },
     select(id) { picked = id; paint(); dirty = true; },
     // tools/museum.mjs: the camera turned `turn` degrees round from a viewpoint (and `up` degrees higher), drawn now

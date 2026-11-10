@@ -137,7 +137,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     // (opts.projDepth) the depth the projector sees (aimProjector draws it), and its near and far: a surface behind another, as
     // seen from the picture's camera, takes none of the picture (a page turned off its camera showed the front wall's picture
     // again on the ground and the far side behind it, as a second outline)
-    uPD: { value: null }, uPN: { value: new THREE.Vector2(.02, 2) },
+    uPD: { value: null }, uPN: { value: new THREE.Vector2(.02, 2) }, uPDS: { value: new THREE.Vector2(1 / 2048, 1 / 2048) },
     // (opts.projDepth) the picture's colour row by row, a 1-pixel-wide texture (a museum page sets it): where the sky card would
     // show the picture's own copy of the model (the projector saw the model there), it shows its row's colour instead (sky in
     // the sky, land on the land): the far land without the building
@@ -185,7 +185,14 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   uniform float uEraA, uEraFab, uEraGlow, uNight, uLit, uScaleH, uScaleM, uFootM, uEraBurn, uPhotoK, uPlateEmit, uNodeA; uniform vec3 uEraCol, cWater, uNodeCol, uHideCol[${HMAX}];
   uniform vec3 uShadeL, uShadeC; uniform float uShadeK, uNightDeep;
   uniform float uSpotR, uSpotK, uSpotB; uniform vec2 uSpotC;
-  uniform sampler2D uPI; uniform mat4 uPM; uniform float uPA, uPRR, uPF, uPE; uniform vec2 uPRC;${Z.pd ? ' uniform sampler2D uPD; uniform vec2 uPN;' : ''}
+  uniform sampler2D uPI; uniform mat4 uPM; uniform float uPA, uPRR, uPF, uPE; uniform vec2 uPRC;${Z.pd ? ` uniform sampler2D uPD; uniform vec2 uPN, uPDS;
+  // what the projector's camera saw: a point at view depth w is in its picture unless something nearer stands in front. The depth
+  // is a 2048-wide picture of its own, sampled where the screen's pixel lands: on a thin edge (an eave, a rafter's end, a post) its
+  // nearest texel can be the edge's while the pixel is the wall just behind, and the picture's own camera showed a white dash along
+  // every eave. The farthest of the 3 x 3 texels round it decides: what the camera saw passes everywhere, a hidden face can take a
+  // texel's width of the picture next to the edge that hides it
+  float pdSeen(vec2 u, float w){ float z = 0.; for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) z = max(z, texture2D(uPD, u + vec2(float(i), float(j)) * uPDS).r);
+    float pz = uPN.x * uPN.y / (uPN.y - (uPN.y - uPN.x) * z); return 1. - smoothstep(pz * 1.003, pz * 1.01, w); }` : ''}
   float peK(vec2 u){ return uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.; }   // (uPE: the picture's feathered edge)
   uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''};
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
@@ -590,7 +597,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    vec4 pc_ = uPM * vec4(vWP, 1.); vec2 pu_ = pc_.xy / pc_.w * .5 + .5; float dr_ = length(vWP.xz - uPRC) - uPRR;
    if (pc_.w > 0. && pu_.x > 0. && pu_.x < 1. && pu_.y > 0. && pu_.y < 1.) {
      float in_ = smoothstep(.0012, -.0012, dr_);   // (one front, near to far: nothing beyond the ring shows the picture before it arrives)
-     ${Z.pd ? 'float pz_ = uPN.x * uPN.y / (uPN.y - (uPN.y - uPN.x) * texture2D(uPD, pu_).r); in_ *= 1. - smoothstep(pz_ * 1.003, pz_ * 1.01, pc_.w);   // (behind what the projector sees: none of the picture)\n     ' : ''}outgoingLight = mix(outgoingLight, texture2D(uPI, pu_).rgb, uPA * in_ * peK(pu_)); }
+     ${Z.pd ? 'in_ *= pdSeen(pu_, pc_.w);   // (behind what the projector sees: none of the picture)\n     ' : ''}outgoingLight = mix(outgoingLight, texture2D(uPI, pu_).rgb, uPA * in_ * peK(pu_)); }
    float gw_ = max(1.5e-4, distance(cameraPosition, vWP) * .012); outgoingLight += vec3(1., .84, .6) * exp(-dr_ * dr_ / (gw_ * gw_)) * uPA * .9 * step(.0001, uPRR) * (1. - uPF); }` : ''}
 #include <opaque_fragment>${kind === 1 ? '\n gl_FragColor.a = 1. - .5 * wDrapedK;   // (.5 on a draped pool: the edge pass leaves it out; the scene buffer\'s alpha is read for nothing else)' : ''}`);
     };
@@ -1126,7 +1133,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     const off = []; scene.traverse(o => { if (o.userData.noProjDepth && o.visible) { o.visible = false; off.push(o); } });
     const sky = liveSky.visible, rt = renderer.getRenderTarget(); liveSky.visible = false; U.uPD.value = null;
     renderer.setRenderTarget(PDT); renderer.clear(); renderer.render(scene, PCAM); renderer.setRenderTarget(rt);
-    liveSky.visible = sky; for (const o of off) o.visible = true; U.uPD.value = PDT.depthTexture; U.uPN.value.set(PCAM.near, PCAM.far);
+    liveSky.visible = sky; for (const o of off) o.visible = true; U.uPD.value = PDT.depthTexture; U.uPN.value.set(PCAM.near, PCAM.far); U.uPDS.value.set(1 / w, 1 / h);
   }
   // a page that fills its window (the viewer's public mode, a museum page) instead of the film's 1920 x 1080 picture: the
   // canvas at the window's size w x h (CSS pixels), drawn with k pixels to each of them (the screen's pixel ratio, at most 2)
