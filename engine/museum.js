@@ -4,13 +4,19 @@
 // the camera it was made from (the living moments' projector: uPI, uPM, uPA, aimProjector), shows exactly as the picture.
 // The picture is exact only from its own camera: it is full within FULL_DEG of it and gone by GONE_DEG (and as the distance
 // leaves it), and comes back by itself near any viewpoint. Each part of the model is its own mesh: it can be picked, and
-// tinted by whether it rests on sources or is estimated.
+// tinted by whether it rests on sources or is estimated. A part can be drawn by a detailed model made in Blender (tools/museum.py
+// `detailed`: a glb, Draco-compressed), whose objects take the white model's material as the records do, so the pictures, the
+// tones and the picking treat them alike.
 // startMuseum({ stage, base, meta, model, clean, vp, on }) -> the page's handle: { flyToNearest, tones, select, view }.
 // clean (tools/museum.mjs, tools/living.py ref): the model alone at viewpoint vp in the reference look (dark room, grey stand),
 // no picture: the still an image tool paints over.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { makeStudio } from './studio.js';
+import { buildEra } from './props.js';
 import { ss, seg, lerp, clamp, frameOf } from './lib.js';
 
 const FULL_DEG = 10, GONE_DEG = 25, SKY_DEG = 14;   // the picture by the angle from its camera (its sky: SKY_DEG)
@@ -20,6 +26,49 @@ const KEY_AZ = 95;                           // the key light: 50 degrees left o
 const TONE = { sourced: '#e9c08a', estimated: '#8fa6c6' }, WHITE = '#f4f2ee', PICK = new THREE.Color('#ffb347');
 const STAND = { look: '#efede8', clean: '#8c8c8c' }, FADE_M = [130, 300];   // (FADE_M: the stand whole within 130 m of the building's middle, gone by 300 m)   // the stand: a light floor in the room; mid grey in the reference, so the model stands clear of it
 const ROOM = { look: [['#eef0f1', 0], ['#e3e6e8', .55], ['#d2d6da', 1]], clean: [['#3a3f47', 0], ['#22262c', 1]] };   // the room behind: exhibition, reference
+const MAT_PART = { stone: 1, dark: 6, sand: 10 };   // a detailed model's materials (tools/blender/kit.py) as the records' parts (citygen LMK, DARK, EARTH): the same light and shade
+
+// the detailed models (model.detailed: [{file, at: [x, z], theta_deg, scale}]), each loaded once -> its glTF scene, placed
+async function detailedModels(base, list) {
+  if (!list || !list.length) return [];
+  const map = (() => { try { return JSON.parse(document.querySelector('script[type=importmap]').textContent).imports['three/addons/']; } catch (e) { return null; } })();
+  const draco = new DRACOLoader().setDecoderPath((map || 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/') + 'libs/draco/gltf/');
+  const gl = new GLTFLoader().setDRACOLoader(draco); gl.setCrossOrigin('anonymous');
+  const out = await Promise.all(list.map(async d => {
+    const g = await gl.loadAsync(base + d.file); g.scene.updateMatrixWorld(true);   // (x east, y up, z south, metres; turned about its place as the film turns the landmark)
+    const M = new THREE.Matrix4().makeTranslation(d.at[0], 0, d.at[1]).multiply(new THREE.Matrix4().makeScale(d.scale, d.scale, d.scale))
+      .multiply(new THREE.Matrix4().makeRotationY(THREE.MathUtils.degToRad(d.theta_deg)));
+    return { scene: g.scene, M, at: d.at };
+  }));
+  draco.dispose(); return out;
+}
+
+// a detailed model's object as a geometry with the records' attributes (engine/props.js Geo: position, normal, aData, aBase, aCtr)
+function objectGeometry(D, name) {
+  const o = D.scene.getObjectByName(name); if (!o) throw new Error(`museum: the detailed model has no object ${name}`);
+  const gs = [];
+  o.traverse(m => {
+    if (!m.isMesh) return;
+    const g = (m.geometry.index ? m.geometry.toNonIndexed() : m.geometry.clone()); g.applyMatrix4(new THREE.Matrix4().multiplyMatrices(D.M, m.matrixWorld));
+    for (const k of Object.keys(g.attributes)) if (k !== 'position' && k !== 'normal') g.deleteAttribute(k);
+    if (!g.attributes.normal) g.computeVertexNormals();
+    const n = g.attributes.position.count, dat = new Float32Array(n * 4), ctr = new Float32Array(n * 2), code = MAT_PART[(m.material && m.material.name) || ''] ?? 1;
+    for (let i = 0; i < n; i++) { dat[i * 4 + 1] = code; dat[i * 4 + 3] = 3; ctr[i * 2] = D.at[0]; ctr[i * 2 + 1] = D.at[1]; }   // (a period city's, standing: year 0, rank 0)
+    g.setAttribute('aData', new THREE.BufferAttribute(dat, 4)); g.setAttribute('aBase', new THREE.BufferAttribute(new Float32Array(n), 1)); g.setAttribute('aCtr', new THREE.BufferAttribute(ctr, 2));
+    g.morphAttributes = {}; gs.push(g);
+  });
+  return gs;
+}
+
+// a part's geometry: its records and its detailed objects, one mesh
+function partGeometry(p, glbs) {
+  const gs = [];
+  if (p.prims.length) { const g = buildEra(p.prims, 0, null);
+    if (!g.attributes.aCtr) g.setAttribute('aCtr', new THREE.BufferAttribute(new Float32Array(g.attributes.position.count * 2), 2));
+    gs.push(g); }
+  for (const [i, name] of p.objects || []) gs.push(...objectGeometry(glbs[i], name));
+  return gs.length === 1 ? gs[0] : mergeGeometries(gs, false);
+}
 
 export async function startMuseum({ stage, base, meta, model, clean = false, vp: vp0 = null, on = {} }) {
   const W0 = Math.max(1, stage.clientWidth), H0 = Math.max(1, stage.clientHeight);
@@ -44,13 +93,14 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
   U.uPRR.value = 1e3; U.uPF.value = 0; U.uPRC.value.set(0, 0);   // the picture over the whole model: no ring, no far land
   const edge = post.dof.coc.material.uniforms.edgeAmt;
   // the parts, each a mesh of its own (a period city's: risen at once, standing, in white light)
-  const parts = [];
+  const parts = [], glbs = await detailedModels(base, model.detailed);
   for (const p of model.parts.concat([{ id: '_stand', prims: model.stand }])) {
-    const E = S.addEra(p.id, p.prims, WHITE), u = E.u;
+    const E = S.addEra(p.id, p.objects ? partGeometry(p, glbs) : p.prims, WHITE), u = E.u;
     u.uEraT.value = 1e6; u.uEraSpan.value = 1; u.uEraGrow.value = 1; u.uEraA.value = 0; u.uEraGlow.value = 0;
     u.uEraCol.value.set(1, 1, 1); u.uEraCol0.value.set(1, 1, 1); u.uEraInk.value = u.uEraInk0.value = 0;
     E.mesh.visible = true; E.mesh.castShadow = true;
     E.mesh.material.shadowSide = THREE.DoubleSide;   // (from its back faces alone, the default, the model cast no shadow on its stand)
+    if (p.objects) E.mesh.material.side = THREE.DoubleSide;   // (a detailed model is partly open sheets, a floor, a profile swept round: seen from either side)
     parts.push({ id: p.id, mesh: E.mesh, status: (meta.parts.find(q => q.id === p.id) || {}).status });
   }
   const pickable = parts.filter(p => p.id !== '_stand');

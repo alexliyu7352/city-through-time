@@ -21,9 +21,13 @@ page gives (1: true heights). A building the film tells in more than one period 
 is a page of `pieces` ({id, node, landmark}): each built from its own node's city where the film puts it, all on one stand round
 the first; the labels of a piece's records begin with its id (curia/hall), so parts take them by piece. Each record goes to the first part whose `labels` (the paths the generator labels its sections
 with: Builder.labelled) and `kinds` (roof: roofs) it matches; a record no part takes stops the build, so every piece of the model
-is either sourced or estimated. A viewpoint's picture is used only while the viewpoint is still the one it was made from.
+is either sourced or estimated. A viewpoint's picture is used only while the viewpoint and the model are still the ones it was
+made from (its record's cam, and model: the model's fingerprint, the film's generator's when it has none).
+A landmark (or a piece) with `detailed: {kind, spec}` is drawn on its page by a detailed model made in Blender (tools/blender, its
+kind's module; local/config.json `blender`) from the film's own sizes for it and the page's spec, in place of the generator's:
+its parts are the model's objects, labelled by their names (with the piece's id first), taken by parts as records are.
 """
-import copy, fnmatch, json, math, os, sys
+import copy, fnmatch, hashlib, json, math, os, struct, subprocess, sys, tempfile
 
 import yaml
 from PIL import Image
@@ -33,6 +37,7 @@ sys.path.insert(0, os.path.join(ROOT, 'pipeline'))
 import citygen
 import geo
 import landmarks
+import local
 
 KINDS = {'roof': (citygen.ROOF, citygen.LROOF), 'dark': (citygen.DARK,), 'earth': (citygen.EARTH,)}   # (kinds: a part may take records by what they are)
 STATUS = ('sourced', 'estimated')
@@ -79,7 +84,7 @@ def pieces(P, page):
     north] metres and turn_deg about its own place, with why (the sources' layout); the film and city.yaml keep theirs"""
     if 'pieces' not in P:
         if 'landmark' not in P: stop(page, 'landmark is missing (or pieces: [{id, node, landmark}], for a building the film tells in several periods)')
-        return [(None, P['node'], P['landmark'], {})]
+        return [(None, P['node'], P['landmark'], {'detailed': P['detailed']} if P.get('detailed') else {})]
     if 'landmark' in P: stop(page, 'landmark and pieces: give one of them')
     out, seen = [], set()
     for i, q in enumerate(P['pieces'] or []):
@@ -89,27 +94,58 @@ def pieces(P, page):
         if fix and not str((q.get('why') or {}).get('en') if isinstance(q.get('why'), dict) else '').strip():
             stop(page, f'pieces[{i}] {q["id"]}: move_m / turn_deg need why: {{zh, en}} (what the sources say and where the film has it)')
         if 'move_m' in fix and (not isinstance(fix['move_m'], list) or len(fix['move_m']) != 2): stop(page, f'pieces[{i}] {q["id"]}: move_m: [east, north] metres')
+        if q.get('detailed'): fix['detailed'] = q['detailed']
         seen.add(q['id']); out.append((str(q['id']), q['node'], q['landmark'], fix))
     if not out: stop(page, 'pieces: none given')
     return out
 
 
-def build_model(F, found, P, page):
-    """the landmark alone on level ground, centred on its place: its records, each record's label, and the stand. found: [(piece
-    id or None, its node's city spec, the landmark)]; several pieces stand where the film has them, round the first one's place"""
+def glb_names(f):
+    """the names of a glb's mesh nodes (Blender's objects: a detailed model's parts)"""
+    b = open(f, 'rb').read(); n, kind = struct.unpack_from('<II', b, 12)
+    if b[:4] != b'glTF' or kind != 0x4E4F534A: raise SystemExit(f'museum: {f}: not a glb')
+    return [x['name'] for x in json.loads(b[20:20 + n]).get('nodes', []) if 'mesh' in x]
+
+
+def blender(page, pid, L, det, out):
+    """a detailed model (docs/MUSEUM.md "Detailed models"): tools/blender/build.py run in Blender, headless, on the landmark as the
+    film has it and the page's spec -> (the glb, its objects' names, what build printed)"""
+    who = f'piece {pid}' if pid else 'landmark'
+    if not isinstance(det, dict) or not det.get('kind'): stop(page, f'{who}: detailed: {{kind, spec}} (kind: a module of tools/blender, for instance amphitheatre)')
+    exe = os.path.expanduser(str(local.get('blender') or ''))
+    if not os.path.isfile(exe): stop(page, f'{who}: detailed needs Blender: local/config.json "blender" ({exe!r}) is not its program (docs/SETUP.md)')
+    f = os.path.join(out, (pid or 'model') + '.glb')
+    if os.path.exists(f): os.remove(f)
+    with tempfile.TemporaryDirectory() as W:
+        lf, sf = os.path.join(W, 'landmark.json'), os.path.join(W, 'spec.json')
+        json.dump(L, open(lf, 'w', encoding='utf-8')); json.dump(det.get('spec') or {}, open(sf, 'w', encoding='utf-8'))
+        r = subprocess.run([exe, '-b', '--factory-startup', '--python-exit-code', '1', '--python', os.path.join(ROOT, 'tools', 'blender', 'build.py'), '--',
+                            '--kind', str(det['kind']), '--landmark', lf, '--spec', sf, '--out', f], capture_output=True, text=True)
+    said = [x for x in r.stdout.splitlines() if x.startswith('build:')]
+    if r.returncode or not os.path.exists(f): stop(page, f'{who}: Blender did not build its detailed model (exit {r.returncode}):\n' + '\n'.join((r.stdout + r.stderr).splitlines()[-25:]))
+    return f, glb_names(f), said
+
+
+def build_model(F, found, P, page, out):
+    """the landmark alone on level ground, centred on its place: its records, each record's label, the stand, and the detailed
+    models drawn in place of the generator's (each placed: where, turned how, at what scale) with their objects' labels.
+    found: [(piece id or None, its node's city spec, the landmark, its detailed: or None)]; several pieces stand where the film
+    has them, round the first one's place"""
     place = lambda L: (L['lon'], L['lat']) if 'lon' in L else L['from']
     level = lambda x, y: 0.0
-    prims, labels, film_, sites = [], [], [], []
-    for pid, cs, L0 in found:
+    prims, labels, film_, sites, todo = [], [], [], [], []
+    for pid, cs, L0, det in found:
         lon_, lat_ = place(L0)
         L = {**copy.deepcopy(L0), 'exaggeration': float(P.get('exaggeration', 1))}
         spec = {'origin': [lon_, lat_], 'theta_deg': cs.get('theta_deg', 0), 'detail': cs.get('detail', 'medium'), 'exaggeration': L['exaggeration'], 'landmarks': [L]}
-        lab = []
-        prims += citygen.build_city(spec, F, level, 1.0, labels=lab)
-        labels += lab if pid is None else [f'{pid}/{x}' if x else pid for x in lab]
+        if det: todo.append((pid, cs, L0, det))   # (its detailed model, placed once the origin is known)
+        else:
+            lab = []
+            prims += citygen.build_city(spec, F, level, 1.0, labels=lab)
+            labels += lab if pid is None else [f'{pid}/{x}' if x else pid for x in lab]
         film_ += citygen.build_city({**spec, 'exaggeration': cs.get('exaggeration', 2.0), 'landmarks': [L0]}, F, level, 1.0)   # (as the film draws it: its top, for the walk-round view's mark)
         sites += citygen.landmark_site(L, F, cs.get('theta_deg', 0))[4]
-    _, cs, L = found[0]; lon, lat = place(L)
+    _, cs, L, _ = found[0]; lon, lat = place(L)
     ox, oy = F.to_utm.transform(lon, lat); th = math.radians(L.get('theta_deg', cs.get('theta_deg', 0)))
     B = citygen.Builder(F, level, 1.0, 1.0, (ox, oy))   # the stand: a level slab under it, its top the ground
     sw, sd = P.get('stage_m', [300, 200]); a, b = B.frame(ox, oy, th)(-sw / 2, 0), B.frame(ox, oy, th)(sw / 2, 0)
@@ -125,21 +161,29 @@ def build_model(F, found, P, page):
     else:   # (round the first piece's place: every piece's ground)
         bs = [g.bounds for g in sites] or [(ox - 50, oy - 50, ox + 50, oy + 50)]
         x0, y0, x1, y1 = min(b[0] for b in bs), min(b[1] for b in bs), max(b[2] for b in bs), max(b[3] for b in bs)
-    return [centred(p) for p in prims], labels, [centred(p) for p in stand], (mx, mz), math.hypot(x1 - x0, y1 - y0) / 2 * F.scale, F.scale, anchor
+    detailed, objects = [], []
+    for pid, cs_, L0, det in todo:   # (x east, y up, z south, metres: the glb as Blender writes it, turned about its place as the generator turns the landmark)
+        f, names, said = blender(page, pid, L0, det, out)
+        dx, dz = F.model(*F.to_utm.transform(*place(L0)))
+        detailed.append({'file': f, 'piece': pid, 'kind': str(det['kind']), 'at': [round(dx - mx, 7), round(dz - mz, 7)],
+                         'theta_deg': float(L0.get('theta_deg', cs_.get('theta_deg', 0))), 'scale': F.scale, 'said': said})
+        objects += [((len(detailed) - 1, n), n if pid is None else f'{pid}/{n}') for n in names]
+    return [centred(p) for p in prims], labels, [centred(p) for p in stand], (mx, mz), math.hypot(x1 - x0, y1 - y0) / 2 * F.scale, F.scale, anchor, detailed, objects
 
 
-def assign(prims, labels, parts, page):
-    """each record to the first part that takes it -> {part id: [records]}"""
-    out = {p['id']: [] for p in parts}; left = {}
-    for r, lab in zip(prims, labels):
+def assign(prims, labels, parts, page, objects=()):
+    """each record, and each object of a detailed model, to the first part that takes it -> {part id: [records]}, {part id: [objects]}
+    (a part's kinds take records by what they are: a detailed model's object is taken by its label alone)"""
+    out = {p['id']: [] for p in parts}; obj = {p['id']: [] for p in parts}; left = {}
+    for r, lab in list(zip(prims, labels)) + [(None, lab) for _, lab in objects]:
         for p in parts:
-            if any(fnmatch.fnmatch(lab, g) for g in p['labels']) and (not p.get('kinds') or any(r[11] in KINDS[k] for k in p['kinds'])):
-                out[p['id']].append(r); break
+            if any(fnmatch.fnmatch(lab, g) for g in p['labels']) and (not p.get('kinds') or (r is not None and any(r[11] in KINDS[k] for k in p['kinds']))):
+                (out if r is not None else obj)[p['id']].append(r if r is not None else lab); break
         else: left[lab or '(no label)'] = left.get(lab or '(no label)', 0) + 1
     if left: stop(page, 'records no part takes (label: count): ' + ', '.join(f'{k}: {v}' for k, v in sorted(left.items())) + ' (add their labels to a part)')
     for p in parts:
-        if not out[p['id']]: stop(page, f'part {p["id"]}: takes no record (labels {p["labels"]}{", kinds " + str(p["kinds"]) if p.get("kinds") else ""}; the labels there: {", ".join(sorted(set(labels)))})')
-    return out
+        if not out[p['id']] and not obj[p['id']]: stop(page, f'part {p["id"]}: takes no record (labels {p["labels"]}{", kinds " + str(p["kinds"]) if p.get("kinds") else ""}; the labels there: {", ".join(sorted(set(labels) | {lab for _, lab in objects}))})')
+    return out, obj
 
 
 def camera(v, scale, page):
@@ -156,14 +200,20 @@ def apart(a, b):
     return math.degrees(math.acos(max(-1.0, min(1.0, sum(x * y for x, y in zip(u(a), u(b)))))))
 
 
-def picture(D, page, vp, cam, out_dir, notes):
-    """a viewpoint's picture as the page loads it (a JPEG beside the model), if it is made and still belongs to this viewpoint"""
+def picture(D, page, vp, cam, out_dir, notes, model_sha, detailed):
+    """a viewpoint's picture as the page loads it (a JPEG beside the model), if it is made and still belongs to this viewpoint and
+    this model (its record's model: the fingerprint of the model its still showed, tools/living.py; a record with none was made from
+    the film's generator, before records had one)"""
     src, rec = (os.path.join(D, 'assets', 'museum', page, vp + x) for x in ('.jpg', '.json'))
     if not os.path.exists(src): notes.append(f'{vp}: no picture yet (uv run python -I tools/living.py ref {os.path.relpath(D, ROOT)} {page}/{vp}, then gen)'); return None
     if not os.path.exists(rec): notes.append(f'{vp}: its picture has no record of the camera it was made from: tools/living.py adopt {page}/{vp} once it is checked'); return None
     made = json.load(open(rec, encoding='utf-8')).get('cam', [])
     if len(made) != 7 or any(abs(float(p) - float(q)) > 1e-6 for p, q in zip(made, cam)):
         notes.append(f'{vp}: the viewpoint moved since its picture was made ({made} -> {cam}): it no longer lines up; make it again (tools/living.py ref, gen)'); return None
+    had = json.load(open(rec, encoding='utf-8')).get('model')
+    if had != model_sha and (had or detailed):
+        notes.append(f'{vp}: its picture was made for ' + (f'another model ({had}, now {model_sha})' if had else "the film's generator's model, and this page now draws a detailed one")
+                     + ': it no longer lies on the model; make it again (tools/living.py ref, gen), or, if the change does not show, adopt it again after looking at its sheet'); return None
     im = Image.open(src).convert('RGB')
     if im.width > PIC_W: im = im.resize((PIC_W, round(im.height * PIC_W / im.width)), Image.LANCZOS)
     f = os.path.join(out_dir, vp + '.jpg'); im.save(f, quality=88, optimize=True, progressive=True)
@@ -194,8 +244,9 @@ def build_page(D, C, page):
             x_, y_ = F.to_utm.transform(L['lon'], L['lat']); L['lon'], L['lat'] = F.to_wgs.transform(x_ + e_, y_ + n_)
             L['theta_deg'] = L.get('theta_deg', cs.get('theta_deg', 0)) + float(fix.get('turn_deg', 0))
             moved.append({'piece': pid, 'move_m': [float(e_), float(n_)], 'turn_deg': float(fix.get('turn_deg', 0)), 'why': words(page, fix['why'], f'piece {pid}: why')})
-        found.append((pid, cs, L))
-    prims, labels, stand, (mx, mz), r, scale, anchor = build_model(F, found, P, page)
+        found.append((pid, cs, L, fix.get('detailed')))
+    out = os.path.join(D, 'build', 'museum', page); os.makedirs(out, exist_ok=True)
+    prims, labels, stand, (mx, mz), r, scale, anchor, detailed, objects = build_model(F, found, P, page, out)
     srcs = {k: {**words(page, v, f'sources.{k}'), 'short': words(page, v.get('short'), f'sources.{k}.short'), **({'url': v['url']} if v.get('url') else {})} for k, v in P['sources'].items()}
     cites = lambda c, what: [x if x in srcs else stop(page, f'{what}: cite {x!r} is not in sources ({", ".join(srcs)})') for x in (c or [])]
     parts = []
@@ -205,19 +256,23 @@ def build_page(D, C, page):
             if k not in KINDS: stop(page, f'part {p["id"]}: kind {k!r}: one of {", ".join(KINDS)}')
         parts.append({'id': p['id'], 'labels': list(p.get('labels') or []), 'kinds': list(p.get('kinds') or []), 'status': p['status'],
                       'name': words(page, p.get('name'), f'part {p["id"]}: name'), 'note': words(page, p.get('note'), f'part {p["id"]}: note'), 'cite': cites(p.get('cite'), f'part {p["id"]}')})
-    by = assign(prims, labels, parts, page)
-    out = os.path.join(D, 'build', 'museum', page); os.makedirs(out, exist_ok=True)
+    by, byo = assign(prims, labels, parts, page, objects)
+    where = dict((lab, list(io)) for io, lab in objects)   # (an object's label -> [its glb's index in detailed, its name there])
     sw, sd = P.get('stage_m', [300, 200])
     json.dump({'scale': scale, 'size': [round(sw * scale, 7), round(sd * scale, 7)], 'exaggeration': float(P.get('exaggeration', 1)),
-               'parts': [{'id': p['id'], 'prims': by[p['id']]} for p in parts], 'stand': stand},
+               'parts': [{'id': p['id'], 'prims': by[p['id']], **({'objects': [where[x] for x in byo[p['id']]]} if byo[p['id']] else {})} for p in parts], 'stand': stand,
+               **({'detailed': [{'file': os.path.relpath(d['file'], D).replace(os.sep, '/'), **{k: d[k] for k in ('at', 'theta_deg', 'scale')}} for d in detailed]} if detailed else {})},
               open(os.path.join(out, 'model.json'), 'w'), separators=(',', ':'))
+    h = hashlib.sha1(open(os.path.join(out, 'model.json'), 'rb').read())   # the model's fingerprint: a picture is made for one model (picture)
+    for d in detailed: h.update(open(d['file'], 'rb').read())
+    model_sha = h.hexdigest()[:16]
     vps, notes = [], []
     for v in P['viewpoints']:
         cam = camera(v, scale, page)
         for w in vps:
             if apart(cam, w['cam']) < MIN_APART: stop(page, f'viewpoints {w["id"]} and {v["id"]} are {apart(cam, w["cam"]):.0f} degrees apart: {MIN_APART:g} or more (one picture shows at a time)')
         vps.append({'id': v['id'], 'main': bool(v.get('main')), 'cam': cam, 'name': words(page, v.get('name'), f'viewpoint {v["id"]}: name'),
-                    'picture': picture(D, page, v['id'], cam, out, notes)})
+                    'picture': picture(D, page, v['id'], cam, out, notes, model_sha, bool(detailed))})
     if sum(v['main'] for v in vps) != 1: stop(page, 'viewpoints: exactly one is main: true (the page opens there)')
     life = P.get('life') or {}
     meta = {'id': page, 'city': os.path.basename(D), 'cityName': words(page, C.get('name'), 'city.yaml name'), 'node': P['node'], 'name': words(page, P['name'], 'name'), 'era': words(page, P.get('era'), 'era'),
@@ -228,11 +283,12 @@ def build_page(D, C, page):
                                   for i, q in enumerate(life.get('pictures') or [])],
                      'photo': ({'file': small(D, life['photo']['file'], out, 'photo.jpg'), 'caption': words(page, life['photo'], 'life photo'), 'credit': words(page, life['photo'].get('credit'), 'life photo: credit')}
                                if life.get('photo') else None)} if life else None,
-            'parts': [{k: p[k] for k in ('id', 'status', 'name', 'note', 'cite')} for p in parts], 'viewpoints': vps, 'sources': srcs,
+            'parts': [{k: p[k] for k in ('id', 'status', 'name', 'note', 'cite')} for p in parts], 'viewpoints': vps, 'sources': srcs, 'model_sha': model_sha,
             **({'moved': moved} if moved else {})}   # (pieces set where the sources put them, not where the film has them)
     json.dump(meta, open(os.path.join(D, 'build', 'museum', page + '.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     n = sum(len(v) for v in by.values())
-    print(f'{page}: {n} records in {len(parts)} parts ({", ".join(f"{p["id"]} {len(by[p["id"]])}" for p in parts)}), {len(vps)} viewpoints, '
+    for d in detailed: print(f'{page}: {d["piece"] or "landmark"}: detailed model ({d["kind"]}) {os.path.relpath(d["file"], D)}, {os.path.getsize(d["file"]) / 1e6:.1f} MB; ' + '; '.join(x[len('build: '):] for x in d['said'] if not x.startswith('build: wrote')))
+    print(f'{page}: {n} records{f" and {len(objects)} objects" if objects else ""} in {len(parts)} parts ({", ".join(f"{p["id"]} {len(by[p["id"]]) + len(byo[p["id"]])}" for p in parts)}), {len(vps)} viewpoints, '
           f'{sum(1 for v in vps if v["picture"])} with a picture -> build/museum/{page}.json')
     for m in notes: print('  ' + m)
     return {'id': page, 'node': P['node'], 'x': mx, 'z': mz, 'r': round(r, 6), 'anchor': anchor, 'name': meta['name']}

@@ -12,6 +12,7 @@ reads it; template `templates/local.json`). When this file is missing, do this s
    - `ref`: the original downloads of footage and photos (each city's `assets/footage/make.sh` cuts clips from here);
    - `stable_audio`, `hf_cache`: needed only if Stable Audio 3 is chosen for the music (program about 2.5 GB, weights about 3.2 GB);
    - `instruments`: needed only if the code score is chosen (sample library about 670 MB);
+   - `blender`: needed only for a museum page's detailed models (docs/MUSEUM.md "Detailed models"): the path of Blender 4.5 LTS's program (the portable build from blender.org unpacks anywhere, about 1 GB); an empty string when not used;
    - `chrome`: when Playwright's own headless shell cannot be installed (for example Ubuntu 20.04), the path of the system Chrome to use instead; an empty string means Playwright's own;
    - `workers`: how many pages to render at once; give 2 if the user keeps using the computer while it renders.
 3. Write `local/config.json` from the answers and create the folders.

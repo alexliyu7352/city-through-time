@@ -40,7 +40,8 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
 `uv run python -I tools/museum.py cities/<slug>` into `build/museum/` (the model, a few tens of kilobytes, and the pictures as the page loads them).
 
 - **The building:** `node` and `landmark` (its kind and place, as in city.yaml) name it; the model is the film's generator run for it alone
-  on level ground, `exaggeration: 1`. A generator labels the sections it draws (citygen `Builder.labelled`); a kind with no labels is one part.
+  on level ground, `exaggeration: 1`, or its detailed model ("Detailed models" below). A generator labels the sections it draws (citygen
+  `Builder.labelled`); a kind with no labels is one part.
   A building the film tells over more than one period (a theatre in one city, the hall where a ruler was killed in the next) is one
   page of `pieces`: `[{id, node, landmark}]`, each landmark found in its own node's city and built where the film puts it, all on one
   stand round the first piece's place (`at_m` and `stage_m` are measured from there; make the stand cover every piece). `node` then
@@ -74,3 +75,26 @@ freely. It is written in `cities/<slug>/museum/<page>.yaml` (Xianyang's `qin_pal
   or an internal plate. The pictures are AI-generated: list them in CREDITS with their date and tool.
 - **Check:** `node tools/museum.mjs shots <slug> <page>` (desktop and phone: the main picture, turned 5, 15 and 30 degrees, the two tones,
   a part's note); look at each at full size.
+
+## Detailed models
+
+The film's generator draws a landmark as massing: right at a city's scale, plain on a page where the visitor stands at its foot (an
+amphitheatre as one ring with dark rectangles for its arches). A page can draw the landmark, or one of its pieces, from a detailed
+model made in Blender instead: `detailed: {kind, spec}` beside `landmark` (or in the piece). The film keeps the generator's.
+
+- **Kinds:** a kind is a module of `tools/blender/` (`amphitheatre`: an oval of arcaded storeys with their orders, the attic, the
+  seating in bands, the arena wall), built with `tools/blender/kit.py` (profiles swept round a plan curve, arched bays, columns).
+  It takes the sizes the film gives the landmark (its `from_landmark`: for an amphitheatre `outer_m`, `inner_m`, `h_m`, `bays`,
+  `arena_wall_m`), then the page's `spec` over them; what neither gives is the module's `DEFAULT`, an estimate, and the part it
+  shapes says so in its note. A building of another type is a new module (`DEFAULT`, `from_landmark(L)`, `build(spec)` returning one
+  object per part), listed in `tools/blender/build.py` `KINDS`.
+- **Parts:** the model's objects, by name (an amphitheatre's: `facade_arcades`, `orders`, `attic`, `cavea`, `podium`, `arena`), are
+  taken by `labels` as records are, a piece's with its id first (`theatre/cavea`); `kinds` take records only.
+- **Building it:** `tools/museum.py` runs Blender headless (local/config.json `blender`, docs/SETUP.md; a second or two) and writes
+  `build/museum/<page>/<piece or model>.glb`, Draco-compressed (an amphitheatre of 182,000 triangles is under 1 MB), turned and placed
+  as the generator places the landmark. The page draws it with the white model's material: the tones, the picking and the pictures
+  lie on it as on records. To look at a kind alone: `<blender> -b --factory-startup --python tools/blender/build.py -- --kind <kind>
+  --out <file>.glb --render <file>.png --cam az,el,d,fov,tx,ty,tz` (a still in Blender's own renderer, the page's light).
+- **Pictures:** a picture is made for one model. Its record keeps the model's fingerprint (tools/living.py), and tools/museum.py uses
+  it only on that model: a page turned to its detailed model drops the pictures made from the generator's, to be made again from the
+  new still (`tools/living.py ref`, then `gen`).

@@ -72,9 +72,9 @@ def viewpoints(D, ids):
     for i in ids:
         page, vp = i.split('/', 1); f = os.path.join(D, 'build', 'museum', page + '.json')
         if not os.path.exists(f): sys.exit(f'{f}: build the page first (uv run python -I tools/museum.py {D} {page})')
-        v = next((q for q in json.load(open(f, encoding='utf-8'))['viewpoints'] if q['id'] == vp), None)
+        meta = json.load(open(f, encoding='utf-8')); v = next((q for q in meta['viewpoints'] if q['id'] == vp), None)
         if not v: sys.exit(f'museum {page}: no viewpoint {vp}')
-        out.append({'id': i, 'cam': v['cam'], 'page': page, 'vp': vp})
+        out.append({'id': i, 'cam': v['cam'], 'page': page, 'vp': vp, 'model': meta.get('model_sha')})   # (model: the page's model's fingerprint, kept with its picture)
     return out
 
 
@@ -125,6 +125,7 @@ def cmd_ref(D, R, ids):
         c = card(D, m)
         f = shoot(D, m, os.path.dirname(os.path.join(R, m['id'])), os.path.basename(m['id']) + '_ref_')
         os.replace(f, os.path.join(R, m['id'] + '_ref.jpg'))
+        if m.get('model'): open(os.path.join(R, m['id'] + '_ref_model.txt'), 'w').write(m['model'])   # (the model this still shows: the picture's record keeps it)
         place, when = c['place'].strip(), c['when'].strip()
         open(os.path.join(R, m['id'] + '_prompt.txt'), 'w', encoding='utf-8').write(
             PROMPT.format(out=os.path.basename(m['id']) + '.png', still=STILL[kind(m)].format(place=place, when=when), picture=c['picture'].strip(), avoid=c['avoid'].strip()))
@@ -137,8 +138,10 @@ def record(D, R, m, made):
     ref = os.path.join(R, m['id'] + '_ref.jpg')
     if not os.path.exists(ref): sys.exit(f'{ref}: run ref first')
     shutil.copyfile(ref, picture(D, m, '_ref.jpg'))
+    mf = os.path.join(R, m['id'] + '_ref_model.txt')   # (a museum still's model, from its ref: tools/museum.py uses the picture only on that model)
     json.dump({'cam': m['cam'], 'made': made, 'date': datetime.date.today().isoformat(), 'ref': os.path.basename(m['id']) + '_ref.jpg',
-               'ref_sha1': hashlib.sha1(open(ref, 'rb').read()).hexdigest()}, open(picture(D, m, '.json'), 'w'), indent=1)
+               'ref_sha1': hashlib.sha1(open(ref, 'rb').read()).hexdigest(), **({'model': open(mf).read().strip()} if kind(m) == 'museum' and os.path.exists(mf) else {})},
+              open(picture(D, m, '.json'), 'w'), indent=1)
 
 
 def cmd_gen(D, R, ids):

@@ -44,6 +44,7 @@ def files(D):
         for e in json.load(open(os.path.join(M, 'index.json'), encoding='utf-8')):
             P = json.load(open(os.path.join(M, e['id'] + '.json'), encoding='utf-8'))
             out += [f'build/museum/{e["id"]}.json', P['model']] + [v['picture']['file'] for v in P['viewpoints'] if v.get('picture')]
+            out += [d['file'] for d in json.load(open(os.path.join(D, P['model']), encoding='utf-8')).get('detailed') or []]   # (its detailed models' glb)
             out += [q['file'] for q in (P.get('life') or {}).get('pictures') or []] + ([P['life']['photo']['file']] if (P.get('life') or {}).get('photo') else [])
     # every file of the build that film.json names (a `file` or `tfile`, at any depth) must be in: the page loads it by that name, and
     # a texture added to the film but not to this list left the bundle's player stopped on a missing file

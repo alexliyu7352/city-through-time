@@ -767,8 +767,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   // era cities: one mesh per period, each with its own rise/sink/colour uniforms
   const eras = {};
-  function addEra(id, prims, col, lost = null) {
-    const geo = buildEra(prims, 0, lost);
+  function addEra(id, prims, col, lost = null) {   // prims: a period city's records, or a geometry made with the same attributes (engine/museum.js: a detailed model)
+    const geo = prims && prims.isBufferGeometry ? prims : buildEra(prims, 0, lost);
     const u = { uGroundSelf: { value: -1 }, uEraT: { value: -1 }, uEraSpan: { value: 1 }, uEraGrow: { value: 1 }, uEraFallR: { value: -1 }, uEraFallIn: { value: 0 }, uEraFallW: { value: .01 }, uEraO: { value: new THREE.Vector2() }, uEraInk: { value: 0 }, uEraInk0: { value: 0 }, uEraA: { value: 0 }, uEraBurn: { value: 0 }, uEraCol: { value: lin(col || '#ffd9a0') }, uEraCol0: { value: lin(col || '#ffd9a0') }, uEraFab: { value: 1.0 }, uEraGlow: { value: 0 },
       uLossR: { value: Array(Z.L).fill(-1) }, uLossIn: { value: Array(Z.L).fill(0) }, uLossW: { value: Array(Z.L).fill(.01) }, uLossBurn: { value: Array(Z.L).fill(0) }, uLossO: { value: Array.from({ length: Z.L }, () => new THREE.Vector2()) } };
     const mesh = new THREE.Mesh(geo, projMaterial(0, { color: '#f4f2ee', roughness: .86, metalness: 0 }, u));
