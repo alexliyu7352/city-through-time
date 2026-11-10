@@ -159,8 +159,10 @@ def build(s):
             column(bm, st['order'], rc, col0, col1, M)
             if ped:
                 Mc = kit.bay_frame(ov, (i + .5) * bw)
-                kit.box(bm, -st['arch_w'] / 2, st['arch_w'] / 2, -T * .7, -T * .3, zb, zb + ped + 1.0, xf=Mc)   # the parapet
-                kit.box(bm, -st['arch_w'] / 2, st['arch_w'] / 2, -T * .7 - .08, -T * .3 + .08, zb + ped + 1.0, zb + ped + 1.15, xf=Mc)   # its coping
+                # the parapet: a thin wall across the arch at the face, as high as the pedestals (a block a metre thick set back in
+                # the arch, a metre over them, read as something standing in every arch), and its coping
+                kit.box(bm, -st['arch_w'] / 2, st['arch_w'] / 2, -.35, 0, zb, zb + ped, xf=Mc)
+                kit.box(bm, -st['arch_w'] / 2, st['arch_w'] / 2, -.42, .06, zb + ped, zb + ped + .12, xf=Mc)
         kit.sweep(bm, ov, entablature(ent, zt - eh), 4 * N)
     kit.sweep(bm, ov, [(1.6, 0), (1.6, z0 / 2), (.8, z0 / 2), (.8, z0), (0, z0)], 4 * N)   # the steps round its foot
     objs.append(kit.obj('orders', bm, mats))
