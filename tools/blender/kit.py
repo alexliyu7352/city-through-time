@@ -31,9 +31,13 @@ def dark(): return material('dark', (.06, .06, .07), .95)
 
 
 def obj(name, bm, mats):
-    """a bmesh as an object of its own (its faces' material_index into mats), normals made consistent"""
+    """a bmesh as an object of its own (its faces' material_index into mats), normals made consistent; the edges where faces meet
+    at more than 40 degrees split, so a turned profile is smooth round its axis and keeps its steps (a base's torus, an abacus's
+    edge) sharp: shaded smooth across them, a step showed as a soft gradient"""
     bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-4)
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    sharp = [e for e in bm.edges if len(e.link_faces) == 2 and e.calc_face_angle(0.0) > math.radians(40)]
+    if sharp: bmesh.ops.split_edges(bm, edges=sharp)
     me = bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
     for m in mats: me.materials.append(m)
     o = bpy.data.objects.new(name, me); bpy.context.collection.objects.link(o)
@@ -150,3 +154,55 @@ def bay_frame(oval, s, d=0.0, z=0.0):
     """the Matrix that puts a bay (x along the wall, y outward, z up) at arc length s, d inside the curve"""
     p, tg, nr = oval.frame(s, d)
     return Matrix(((tg.x, nr.x, 0, p.x), (tg.y, nr.y, 0, p.y), (0, 0, 1, z), (0, 0, 0, 1)))
+
+
+def rect_panel(bm, w, h, t, ow=0.0, oz0=0.0, oz1=0.0, z0=0.0, mat=0, xf=None, reveal=None):
+    """a panel w wide, h high, t thick (front at y=0, back at y=-t), from z0, in a bay's frame; with ow > 0 a rectangular opening
+    ow wide from oz0 to oz1 (heights above z0), its sides, sill and head as faces through the wall (a window seen in depth), in
+    the material reveal (mat if None: dark, a small opening reads as one from any side, its sides lit white did not)"""
+    M = xf or Matrix.Identity(4); top = z0 + h
+    V = lambda x, y, z: bm.verts.new(M @ Vector((x, y, z)))
+    quads = []
+    for y in (0.0, -t):
+        if ow > 0:
+            a, b, za, zb = ow / 2, w / 2, z0 + oz0, z0 + oz1
+            quads += [((-b, y, z0), (-a, y, z0), (-a, y, top), (-b, y, top)), ((a, y, z0), (b, y, z0), (b, y, top), (a, y, top)),
+                      ((-a, y, z0), (a, y, z0), (a, y, za), (-a, y, za)), ((-a, y, zb), (a, y, zb), (a, y, top), (-a, y, top))]
+        else:
+            quads.append(((-w / 2, y, z0), (w / 2, y, z0), (w / 2, y, top), (-w / 2, y, top)))
+    quads.append(((-w / 2, 0, top), (w / 2, 0, top), (w / 2, -t, top), (-w / 2, -t, top)))
+    rev = []
+    if ow > 0:
+        a, za, zb = ow / 2, z0 + oz0, z0 + oz1
+        rev += [((sx * a, 0, za), (sx * a, -t, za), (sx * a, -t, zb), (sx * a, 0, zb)) for sx in (-1, 1)]
+        rev += [((-a, 0, z), (a, 0, z), (a, -t, z), (-a, -t, z)) for z in (za, zb)]
+    for qs, m in ((quads, mat), (rev, mat if reveal is None else reveal)):
+        for q in qs:
+            f = bm.faces.new([V(*p) for p in q]); f.material_index = m
+
+
+def lathe(bm, profile, seg=16, x=0.0, y=0.0, a0=0.0, a1=math.tau, mat=0, xf=None):
+    """a profile [(r, z), ...] turned round the upright line through (x, y) of a bay's frame, from angle a0 to a1 (a whole turn,
+    or a half from 0 to pi: an engaged column's front, y >= 0, the rest in the wall); shaded smooth round the turn"""
+    M = xf or Matrix.Identity(4); whole = abs(a1 - a0 - math.tau) < 1e-9; n = seg if whole else seg + 1
+    rings = [[bm.verts.new(M @ Vector((x + r * math.cos(a), y + r * math.sin(a), z))) for r, z in profile]
+             for a in (a0 + (a1 - a0) * i / seg for i in range(n))]
+    for i in range(seg):
+        r0, r1 = rings[i], rings[(i + 1) % n]
+        for k in range(len(profile) - 1):
+            if profile[k] == profile[k + 1]: continue
+            f = bm.faces.new((r0[k], r1[k], r1[k + 1], r0[k + 1])); f.material_index = mat; f.smooth = True
+
+
+def arch_band(bm, r, cz, profile, seg=12, mat=0, xf=None):
+    """a moulding round a round arch of radius r springing at cz (a bay's frame, the wall's face at y=0): the profile
+    [(dr, out), ...] (dr metres beyond the arch's edge, out metres in front of the face) carried round the half circle"""
+    M = xf or Matrix.Identity(4)
+    rings = [[bm.verts.new(M @ Vector(((r + dr) * math.cos(a), out, cz + (r + dr) * math.sin(a)))) for dr, out in profile]
+             for a in (math.pi * i / seg for i in range(seg + 1))]
+    for i in range(seg):
+        for k in range(len(profile) - 1):
+            f = bm.faces.new((rings[i][k], rings[i + 1][k], rings[i + 1][k + 1], rings[i][k + 1])); f.material_index = mat
+    for ring in (rings[0], rings[-1]):   # (its ends closed: they stand on the impost)
+        if len(profile) > 2:
+            f = bm.faces.new(ring); f.material_index = mat

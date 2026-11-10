@@ -96,7 +96,7 @@ model made in Blender instead: `detailed: {kind, spec}` beside `landmark` (or in
 - **Parts:** the model's objects, by name (an amphitheatre's: `facade_arcades`, `orders`, `attic`, `cavea`, `podium`, `arena`), are
   taken by `labels` as records are, a piece's with its id first (`theatre/cavea`); `kinds` take records only.
 - **Building it:** `tools/museum.py` runs Blender headless (local/config.json `blender`, docs/SETUP.md; a second or two) and writes
-  `build/museum/<page>/<piece or model>.glb`, Draco-compressed (an amphitheatre of 182,000 triangles is under 1 MB), turned and placed
+  `build/museum/<page>/<piece or model>.glb`, Draco-compressed (an amphitheatre of 349,000 triangles, its mouldings and capitals turned, is 1.7 MB), turned and placed
   as the generator places the landmark. The page draws it with the white model's material: the tones, the picking and the pictures
   lie on it as on records. To look at a kind alone: `<blender> -b --factory-startup --python tools/blender/build.py -- --kind <kind>
   --out <file>.glb --render <file>.png --cam az,el,d,fov,tx,ty,tz` (a still in Blender's own renderer, the page's light).
