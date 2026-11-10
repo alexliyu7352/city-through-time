@@ -273,33 +273,33 @@
   },
   {
    "path": "build/museum/qin_palace1.json",
-   "bytes": 22814,
-   "sha256": "4bf9c6478dbcddbe1ac4b2a67f5c45eb7189230a2e3e70e5297852a306a3b0da"
+   "bytes": 23117,
+   "sha256": "35ab676a68ff488579b1d8656ad9b4aaf59ebf4d983e641459b4baab5e849617"
   },
   {
    "path": "build/museum/qin_palace1/model.json",
-   "bytes": 26121,
-   "sha256": "d9cd25cfeae941621e30663b88825cea29e9c2f8ddfb6ea0d5d6748a84ea3220"
+   "bytes": 1037,
+   "sha256": "b47a96d3bf31ec1732ccdd5818ab7bcf9b2a9c7dba654b1db00d7b7858c9004f"
   },
   {
    "path": "build/museum/qin_palace1/front.jpg",
-   "bytes": 450596,
-   "sha256": "5f575dfe6218cf654e27e4dd99878419cac16cd86638d0752b9956615cb915fc"
+   "bytes": 277947,
+   "sha256": "490daaf2e5acdae23f2a053e6d8d033aea1f05cac8bb9128b20f80a64f82ffe1"
   },
   {
    "path": "build/museum/qin_palace1/aerial.jpg",
-   "bytes": 440361,
-   "sha256": "0cb3892d0b5b362aed6f934c03bd2a5c59f232ec6a05ddd2810d5961c14910c0"
+   "bytes": 414602,
+   "sha256": "9c207570b053d8f806ead1c7233ebd0864b1ba567b5353f338e3e6c37ca5dae3"
   },
   {
    "path": "build/museum/qin_palace1/northwest.jpg",
-   "bytes": 380103,
-   "sha256": "4e0ced7111253a33f205a63206de222d224698768d4dbf85baa6c3dc5777e62d"
+   "bytes": 286526,
+   "sha256": "960e5232d23a53c9b9affd98b8cd1399f792b0b6a14665a7827b75551e840011"
   },
   {
    "path": "build/museum/qin_palace1/street.jpg",
-   "bytes": 287386,
-   "sha256": "c08b893d9e5e3c17ab1e14a71b0745f0041bf2ac0c5655ce6b2a888962e61eee"
+   "bytes": 250283,
+   "sha256": "5e0d7f0f91b51accb338c1d84a6d63b3a89d3b9b91e6c34a2dd3f5f26c3fb5cf"
   },
   {
    "path": "build/museum/qin_palace1/life_0.jpg",
@@ -325,6 +325,11 @@
    "path": "poster_thumb.webp",
    "bytes": 39294,
    "sha256": "5ec6504d47393f4be70f6f4b40d78787c9ddbb465c80b1cf31fe74f25d6114eb"
+  },
+  {
+   "path": "build/museum/qin_palace1/model.glb",
+   "bytes": 810100,
+   "sha256": "5279cb5e71a5935b310c783c930cd6ab06b4a4807542dc1de33abe74ece262b9"
   }
  ],
  "bytes": 124996173

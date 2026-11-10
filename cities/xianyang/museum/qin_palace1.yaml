@@ -127,8 +127,8 @@ parts:
     status: sourced
     name: { zh: 主殿, en: The main hall }
     note:
-      zh: 台基中央的主殿东西 13.4 米、南北 12 米，南、北墙各开两道门，东墙一道；正中有一根直径 60 厘米的「都柱」，地面涂成朱红色，殿上还有一层楼。模型的主殿连同四周的走廊一起画，比 13.4 × 12 米的殿室大。
-      en: The main hall in the middle of the platform measured 13.4 m east to west and 12 m north to south, with two doors in the south and north walls and one in the east wall; a central post 60 cm across stood in the middle, the floor was painted red, and there was an upper floor. The model draws the hall with the walks round it, larger than the 13.4 by 12 m room.
+      zh: 台基中央的主殿东西 13.4 米、南北 12 米，南、北墙各开两道门，东墙一道；正中有一根直径 60 厘米的「都柱」，地面涂成朱红色，殿上还有一层楼。模型照 13.4 × 12 米画出殿室和南墙的两道门；两侧的小室、前面一排廊柱和上层楼的样子，是照杨鸿勋复原图推测的。
+      en: The main hall in the middle of the platform measured 13.4 m east to west and 12 m north to south, with two doors in the south and north walls and one in the east wall; a central post 60 cm across stood in the middle, the floor was painted red, and there was an upper floor. The model draws the room at 13.4 by 12 m with its two south doors; the small rooms on either side, the row of posts in front and the form of the upper floor are estimated from Yang Hongxun's reconstruction.
     cite: [S2, S1]
   - id: stair
     labels: [west_stair]
