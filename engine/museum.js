@@ -126,7 +126,7 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
     // grass beside it
     m.onBeforeCompile = (sh, r) => { own(sh, r); sh.uniforms.uFade = fadeU; sh.uniforms.uFadeC = fadeC;
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade; uniform vec2 uFadeC;')
-        .replace('#include <opaque_fragment>', 'if (uPA > 0.) { vec4 gc_ = uPM * vec4(vWP, 1.); vec2 gu_ = gc_.xy / gc_.w * .5 + .5;\n if (gc_.w > 0. && gu_.x > 0. && gu_.x < 1. && gu_.y > 0. && gu_.y < 1.)\n  outgoingLight = mix(outgoingLight, pgLand(gu_), uPA * (1. - pdSeen(gu_, gc_.w)) * peK(gu_)); }\ndiffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz - uFadeC))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
+        .replace('#include <opaque_fragment>', 'if (uPA > 0.) { vec4 gc_ = uPM * vec4(vWP, 1.); vec2 gu_ = gc_.xy / gc_.w * .5 + .5;\n if (gc_.w > 0. && gu_.x > 0. && gu_.x < 1. && gu_.y > 0. && gu_.y < 1.)\n  outgoingLight = mix(outgoingLight, pgLand(gu_), uPA * max(1. - pdSeen(gu_, gc_.w), pgBand(gu_)) * peK(gu_)); }\ndiffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz - uFadeC))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
     m.customProgramCacheKey = () => 'proj0fade';
   }
   // the viewpoints and their pictures (the main one is on screen already, as the page's first picture)
@@ -188,6 +188,7 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
     if (P.v && P.v !== shown) {   // (what its camera did not see: engine/studio.js projFill, once a viewpoint; white if its picture cannot be read)
       S.aimProjector(P.v.cam, P.v.A); U.uPI.value = P.v.tex; if (P.v.fill === undefined) P.v.fill = S.projFill(P.v.tex.image); U.uPG.value = P.v.fill || PG0; shown = P.v; }
     U.uPA.value = P.v ? P.a : 0;
+    U.uPH.value = ss(seg(P.ang ?? 0, .3, 1.5));   // (on its camera the picture as made; a degree off, the band round the model's place is land: engine/studio.js uPH)
     const sky = U.uPA.value * (1 - ss(seg(P.ang ?? 0, 4, SKY_DEG)));   // (the far land and sky, on a card far behind the model, part from it soonest: gone by SKY_DEG)
     S.liveSky.material.uniforms.uA.value = sky; S.liveSky.visible = sky > 0;
     U.uPE.value = .035;   // (the picture's edges feathered: on a narrow stage the band of the picture shows them)

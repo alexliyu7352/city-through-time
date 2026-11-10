@@ -142,6 +142,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     // lower half the land beside the model carried in over the model's place (the sky card shows it there: the far land without
     // the building), its upper half the model's own colours blurred (a face the camera did not see takes them); white until set
     uPG: { value: (() => { const t = new THREE.DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1); t.needsUpdate = true; return t; })() },
+    // (opts.projDepth) how far the view has turned off the picture's camera, 0 on it, 1 a degree or two off (a museum page sets it):
+    // the land carried in over the band round the model's place too (projFill's alpha), not only over the model's place. A picture
+    // draws a building a few pixels wider than the model (an eave's tip, a ridge's end); on its own camera that band lies beside
+    // the model's edge as drawn, turned it fell on the floor and the far land behind as a thin dark copy of the outline
+    uPH: { value: 0 },
   };
 
   // the shaders' uniform arrays and the textures they read, by Z: FULL has room for any film (the engine's slots above); on
@@ -193,9 +198,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // texel's width of the picture next to the edge that hides it
   float pdSeen(vec2 u, float w){ float z = 0.; for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) z = max(z, texture2D(uPD, u + vec2(float(i), float(j)) * uPDS).r);
     float pz = uPN.x * uPN.y / (uPN.y - (uPN.y - uPN.x) * z); return 1. - smoothstep(pz * 1.003, pz * 1.01, w); }
-  uniform sampler2D uPG;   // (projFill's two halves: the land, the model's colours)
+  uniform sampler2D uPG; uniform float uPH;   // (projFill's two halves: the land, the model's colours; uPH above)
   vec3 pgLand(vec2 u){ return texture2D(uPG, vec2(u.x, clamp(u.y, .005, .995) * .5)).rgb; }
-  vec3 pgBody(vec2 u){ return texture2D(uPG, vec2(u.x, .5 + clamp(u.y, .005, .995) * .5)).rgb; }` : ''}
+  vec3 pgBody(vec2 u){ return texture2D(uPG, vec2(u.x, .5 + clamp(u.y, .005, .995) * .5)).rgb; }
+  float pgBand(vec2 u){ return uPH * (1. - texture2D(uPG, vec2(u.x, clamp(u.y, .005, .995) * .5)).a); }   // (the band round the model's place, turned)` : ''}
   float peK(vec2 u){ return uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.; }   // (uPE: the picture's feathered edge)
   uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''};
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
@@ -1108,9 +1114,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
 
   // a living moment's sky: the picture's sky and far land on a card far behind the shot, facing its camera (placed by aimProjector);
   // uW: how far up the picture it shows (a film's moment wipes it in from the bottom after the ring has reached the horizon; 2: all)
-  const liveSky = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ uniforms: { uPI: U.uPI, uPM: U.uPM, uPE: U.uPE, uA: { value: 0 }, uW: { value: 2 }, ...(PDEP ? { uPD: U.uPD, uPG: U.uPG } : {}) }, depthWrite: false, transparent: true,
+  const liveSky = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ uniforms: { uPI: U.uPI, uPM: U.uPM, uPE: U.uPE, uA: { value: 0 }, uW: { value: 2 }, ...(PDEP ? { uPD: U.uPD, uPG: U.uPG, uPH: U.uPH } : {}) }, depthWrite: false, transparent: true,
     vertexShader: 'varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
-    fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA, uPE, uW; varying vec3 vW;' + (PDEP ? ' uniform sampler2D uPD, uPG;' : '') + ' void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(' + (PDEP ? '(texture2D(uPD, u).r < 1. ? texture2D(uPG, vec2(u.x, clamp(u.y, .005, .995) * .5)).rgb : texture2D(uPI, u).rgb)' : 'texture2D(uPI, u).rgb') + ', uA * (1. - smoothstep(uW - .1, uW, u.y)) * (uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.)); }' }));
+    fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA, uPE, uW; varying vec3 vW;' + (PDEP ? ' uniform sampler2D uPD, uPG; uniform float uPH;' : '') + ' void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(' + (PDEP ? 'mix(texture2D(uPI, u).rgb, texture2D(uPG, vec2(u.x, clamp(u.y, .005, .995) * .5)).rgb, texture2D(uPD, u).r < 1. ? 1. : uPH * (1. - texture2D(uPG, vec2(u.x, clamp(u.y, .005, .995) * .5)).a))' : 'texture2D(uPI, u).rgb') + ', uA * (1. - smoothstep(uW - .1, uW, u.y)) * (uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.)); }' }));
   liveSky.visible = false; liveSky.renderOrder = -1; liveSky.frustumCulled = false; scene.add(liveSky);
   // the projector of a picture made from one shot of the model (a living moment, a museum page's viewpoint): that shot's camera
   // [x, y, z, az, el, d, fov] (az, el in degrees round its target, as the camera keys count them), no drift, no zoom, at the
@@ -1141,7 +1147,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   // (opts.projDepth) the picture's two fills for what its camera did not see (uPG), made once it is aimed (a page keeps them by its
   // viewpoint), FW pixels wide in the picture's frame. Where the projector saw the model (any of the depth texels under a pixel,
-  // and 4 pixels round it), the lower half carries the land beside it in along the row, mirrored about the model's edge from
+  // and 8 pixels round it: the band uPH takes, its alpha 0), the lower half carries the land beside it in along the row, mirrored about the model's edge from
   // the left and the right, the nearer side weighing more: the ground's own grain up to the outline, the horizon kept in its
   // row (a row's mean colour, the building in it, showed a flat brown copy of its outline beside it as the visitor turned).
   // The upper half is the model's own colours in the picture, a mean over some 20 pixels (a post's side, a ridge's end the camera
@@ -1170,8 +1176,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (A[y * w + x] === v) for (let i = Math.max(0, x - r); i <= Math.min(w - 1, x + r); i++) T[y * w + i] = v;
       for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (T[y * w + x] === v) for (let j = Math.max(0, y - r); j <= Math.min(h - 1, y + r); j++) B[j * w + x] = v;
       return B; };
-    const held = grow(M, 4, 1), out = new Uint8Array(n * 8).fill(255), gap = new Uint8Array(n);
-    for (let i = 0; i < n; i++) { out[i * 4] = C[i * 3]; out[i * 4 + 1] = C[i * 3 + 1]; out[i * 4 + 2] = C[i * 3 + 2]; }
+    const held = grow(M, 8, 1), out = new Uint8Array(n * 8).fill(255), gap = new Uint8Array(n);
+    for (let i = 0; i < n; i++) { out[i * 4] = C[i * 3]; out[i * 4 + 1] = C[i * 3 + 1]; out[i * 4 + 2] = C[i * 3 + 2]; if (held[i]) out[i * 4 + 3] = 0; }
     for (let y = 0; y < h; y++) {   // the lower half
       const r0 = y * w;
       for (let x = 0; x < w;) {
