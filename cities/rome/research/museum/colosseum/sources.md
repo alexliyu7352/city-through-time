@@ -1,6 +1,6 @@
 # Colosseum：詳細模型、尺寸證據與80年界線
 
-本輪只改本頁YAML、此筆記與三張場景卡；未動影片、共用模型或相機，未build／render／gen。
+本筆記記錄尺寸查證與文字修訂；影片、共用模型及相機不變。詳細模型與新圖的最終檢查另由原生工具完成。
 已看 `internal/blender_pilot/five_pages.jpg`（main工作樹），逐段讀
 `tools/blender/amphitheatre.py` 的 `DEFAULT`、`from_landmark` 和 `build`。
 舊筆記中241個generator records、矩形暗標、未分attic及其投影檢查，**不適用於新模型**。
@@ -69,7 +69,7 @@ p4注5明說由Rea／Taylor／Wilson Jones圖換算；p6 Table6列spring4.95／4
 - `podium`／`arena`：4m是傳入參數，build的pod_top=4+.9，欄牆再加.9，故平台約4.9m、牆頂約5.8m。頁文已改正，不再聲稱畫面牆高只有4m。沙面在arena物件，沒有地下室或木板厚度物件。
 
 六個object由五個parts各配一次；arena part同收podium及arena。每個part含估配細節，故全部estimated。
-相機沿用south／northeast／northwest；本輪未重跑詳細模型bounds，不能沿用舊generator241件的取景通過聲明。
+相機沿用south／northeast／northwest；舊generator241件的取景聲明不適用。最終原生詳細模型為6objects／5parts，三鏡新圖均已採用，桌面與手機實看完成。
 最終GLB名稱與分件、refs／sheet／adopt、桌機手機shots由runtime驗收。
 
-本輪輕量驗證：YAML／zh-en／cite存在通過；由實際模組AST取得六個object名後呼叫原生`museum.assign`，六件各配一次、五part皆非空；三張卡欄位齊全；相機與HEAD一致且方向間距≥50°；spring／pedestal備載值與實際DEFAULT相等。未執行Hant、Blender、build或圖片流程。
+查證階段的輕量驗證：YAML／zh-en／cite存在通過；由實際模組AST取得六個object名後呼叫原生`museum.assign`，六件各配一次、五part皆非空；三張卡欄位齊全；相機與HEAD一致且方向間距≥50°；spring／pedestal備載值與實際DEFAULT相等。其後已完成Hant逐字核讀、原生詳細模型建置、三鏡ref／gen／sheet／adopt、livingcheck及桌面／手機shots；不是沿用舊模型的檢查。
