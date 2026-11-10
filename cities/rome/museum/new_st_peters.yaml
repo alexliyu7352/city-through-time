@@ -2,6 +2,7 @@
 id: new_st_peters
 node: made_again
 landmark: {kind: parts, id: rome07_renaissance_newstpeter}
+detailed: {kind: domed_church, spec: {}}
 exaggeration: 1
 stage_m: [40000, 40000]
 name: {zh: 新圣彼得大教堂, en: New St Peter's Basilica}
@@ -45,7 +46,7 @@ life:
   cite: [A1, V2, V5, F1]
 parts:
   - id: facade
-    labels: [facade, facade_pediment, facade_giant_columns_*]
+    labels: [facade, facade_pediment, facade_giant_columns*]
     status: sourced
     name: {zh: Maderno立面与巨柱, en: Maderno's façade and giant columns}
     note:

@@ -7,15 +7,19 @@ pieces:
   - id: curia_pompeia_east_frontage
     node: republic_pompey_observation
     landmark: { kind: parts, id: curia_pompeia_east_frontage }
+    detailed: { kind: hall }
   - id: rome02_quarter_north_gallery
     node: republic_pompey_observation
     landmark: { kind: parts, id: rome02_quarter_north_gallery }
+    detailed: { kind: portico }
   - id: rome02_quarter_south_gallery
     node: republic_pompey_observation
     landmark: { kind: parts, id: rome02_quarter_south_gallery }
+    detailed: { kind: portico }
   - id: pompey_theatre
     node: republic_late_city
     landmark: { kind: ring, id: pompey_theatre }
+    detailed: { kind: theatre }
     move_m: [20.6, -33.4]
     turn_deg: 1.7803785541
     why:
@@ -29,12 +33,15 @@ pieces:
   - id: pompey_gallery_north_west
     node: republic_late_city
     landmark: { kind: parts, id: pompey_gallery_north_west }
+    detailed: { kind: portico }
   - id: pompey_gallery_south_west
     node: republic_late_city
     landmark: { kind: parts, id: pompey_gallery_south_west }
+    detailed: { kind: portico }
   - id: pompey_gallery_west_cross
     node: republic_late_city
     landmark: { kind: parts, id: pompey_gallery_west_cross }
+    detailed: { kind: portico }
 exaggeration: 1
 stage_m: [40000, 40000]
 

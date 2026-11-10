@@ -4,6 +4,7 @@
 id: qin_palace1
 node: qin
 landmark: { kind: taixie, lon: 108.8575, lat: 34.4143 }
+detailed: { kind: taixie, spec: { main_room_m: [13.4, 12.0], main_doors: [2, 2] } }   # the detailed model (tools/blender/taixie.py): the main hall's room and its doors as excavated
 exaggeration: 1           # the heights as built: the platform's 6 m is 6 m (the film draws this landmark 1.25 times as tall)
 stage_m: [40000, 40000]   # the flat ground it is shown on, faded out round it (engine/museum.js), to the horizon: no viewpoint sees its edge (the gully that cuts the site today formed after Qin: L1)
 
@@ -66,8 +67,7 @@ life:   # life in that time: what the rooms held, and the Qin pictures the film 
 # reconstruction, or a guess); where it is unclear, estimated
 parts:
   - id: roofs
-    labels: [west/*, gallery]
-    kinds: [roof]
+    labels: [west_roof_*, gallery_roof]
     status: estimated
     name: { zh: 屋顶, en: Roofs }
     note:
@@ -75,7 +75,7 @@ parts:
       en: No roof survives and no text gives the roof forms. The eave tiles found are mostly round, with cloud patterns. The roof forms of the model are estimated from Yang Hongxun's reconstruction drawings.
     cite: [S1, S3, R2]
   - id: twin
-    labels: [east/*]
+    labels: [east_*]
     status: estimated
     name: { zh: 东半座, en: The eastern half }
     note:
@@ -83,7 +83,7 @@ parts:
       en: The group spans both sides of today's gully and is symmetrical, but only the western half was cleared; east of the gully the ground is now flat. The model draws the eastern half as a mirror image of the western one.
     cite: [S3, L1]
   - id: platform
-    labels: [west/platform]
+    labels: [west_platform]
     status: sourced
     name: { zh: 夯土台基, en: The rammed-earth platform }
     note:
@@ -91,7 +91,7 @@ parts:
       en: The platform is 6 m high. The western half is about 60 m east to west and 45 m north to south, roughly L-shaped; the rammed earth begins below the ground, up to 4 m deep. The model draws it as a rectangle, without the L's missing corner.
     cite: [L1, S2, S8]
   - id: rooms
-    labels: [west/rooms]
+    labels: [west_rooms]
     status: sourced
     name: { zh: 台里的房间, en: Rooms inside the platform }
     note:
@@ -99,7 +99,7 @@ parts:
       en: The lower rooms are all inside the platform, five on the south side and two on the north. The four western rooms on the south were bedrooms; the easternmost had a fireplace, a pottery floor drain and drain pipes, likely a bathroom. The model shows only their doors, whose places and sizes are estimated.
     cite: [S1, S2]
   - id: walk
-    labels: [west/walk]
+    labels: [west_walk]
     status: sourced
     name: { zh: 回廊, en: The covered walk }
     note:
@@ -107,7 +107,7 @@ parts:
       en: A covered walk ran round the whole platform, its outer edge paved with pebbles bordered by square bricks to carry off the rain. Another account gives it on three sides only (south, west, north); the model draws all four. Its roof is estimated.
     cite: [S1, S5, S2]
   - id: terrace
-    labels: [west/terrace]
+    labels: [west_terrace]
     status: sourced
     name: { zh: 台顶与露台, en: The top and its open terrace }
     note:
@@ -115,7 +115,7 @@ parts:
       en: An open terrace lay in front of the main hall; Yang Hongxun's reconstruction leaves a wide terrace on the south of the top. The low wall at its edge is estimated.
     cite: [S1, R2]
   - id: halls
-    labels: [west/halls]
+    labels: [west_halls]
     status: estimated
     name: { zh: 台顶四周的房间, en: Rooms round the top }
     note:
@@ -123,7 +123,7 @@ parts:
       en: Accounts give a small room with a fireplace east of the main hall, and a ramp up to its upper floor on the west. Yang Hongxun's reconstruction has two rooms on the west, one in the south-east corner and an open corner hall in the north-east, all with walks round them. The model draws a ring of single-storey rooms round the main hall; their layout is estimated.
     cite: [S1, R2]
   - id: main
-    labels: [west/main]
+    labels: [west_main]
     status: sourced
     name: { zh: 主殿, en: The main hall }
     note:
@@ -131,7 +131,7 @@ parts:
       en: The main hall in the middle of the platform measured 13.4 m east to west and 12 m north to south, with two doors in the south and north walls and one in the east wall; a central post 60 cm across stood in the middle, the floor was painted red, and there was an upper floor. The model draws the hall with the walks round it, larger than the 13.4 by 12 m room.
     cite: [S2, S1]
   - id: stair
-    labels: [west/stair]
+    labels: [west_stair]
     status: estimated
     name: { zh: 台阶, en: The stair }
     note:

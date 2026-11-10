@@ -2,8 +2,12 @@
 id: old_st_peters
 node: people_return
 pieces:
-  - {id: core, node: people_return, landmark: {kind: parts, id: rome06_medieval_old_stpeter}}
-  - {id: atrium, node: people_return, landmark: {kind: parts, id: rome06_medieval_stpeter_atrium}}
+  - {id: core, node: people_return, landmark: {kind: parts, id: rome06_medieval_old_stpeter}, detailed: {kind: basilica, spec: {}}}
+  - id: atrium
+    node: people_return
+    landmark: {kind: parts, id: rome06_medieval_stpeter_atrium}
+    # the fourth walk, along the basilica's front, leans on it (no wall of its own); the film's walks end 0.5 m short of it
+    detailed: {kind: atrium, spec: {walks: [front, left, right, back], walls: [front, left, right], extend_m: {back: 0.5}}}
 exaggeration: 1
 stage_m: [40000, 40000]
 name: {zh: 旧圣彼得大教堂, en: Old St Peter's Basilica}
@@ -47,8 +51,7 @@ life:
   cite: [V1, V2, M1]
 parts:
   - id: roofs
-    labels: [core/nave_east, core/nave_west, core/transept, core/apse]
-    kinds: [roof]
+    labels: ['core/*_roof']
     status: estimated
     name: {zh: 屋面, en: Roofs}
     note:
@@ -57,8 +60,7 @@ parts:
         Texts and reconstructions support a high nave above lower aisles. The model uses 25-degree pitched roofs and a simplified half-conical apse roof. Slopes, eaves, overhangs and surface detail are estimates, not a survey of the roofs in 800.
     cite: [D1, G1, M1]
   - id: openings
-    labels: [core/nave_east, core/nave_west]
-    kinds: [dark]
+    labels: ['core/*_openings']
     status: estimated
     name: {zh: 简化窗列, en: Schematic windows}
     note:
@@ -94,7 +96,7 @@ parts:
         The western semicircular apse and its relationship to Peter's memorial are documented. Its approximately 23 m width, wall height and surfaces are simplified estimates. The underground tomb, internal altar and successive alterations are not modelled.
     cite: [V1, G1, D1]
   - id: atrium
-    labels: [atrium]
+    labels: ['atrium/*']
     status: estimated
     name: {zh: 前院与三面廊体, en: Forecourt and three covered walks}
     note:
