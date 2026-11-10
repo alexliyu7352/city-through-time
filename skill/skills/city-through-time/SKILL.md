@@ -32,7 +32,25 @@ The rules live in the workspace, next to the code they describe, so they always 
 4. **An existing workspace, a new city:** bring it up to date before starting, with `git pull --ff-only` when its
    working tree is clean. If it has local changes, ask the user before touching them.
 
-## 2. Work inside it
+## 2. Make the workspace's rules your standing instructions
+
+`AGENTS.md` at the workspace root holds the rules, and every session in the workspace must have them. Many agents load
+`AGENTS.md` by themselves. Others load only a file of their own name, for example:
+- Claude Code: `CLAUDE.md`;
+- Gemini CLI: `GEMINI.md`.
+
+If your agent is one of those, each time you find or make a workspace, check its root for your file. If it is missing,
+create it as a symbolic link to `AGENTS.md`:
+```sh
+ln -s AGENTS.md CLAUDE.md
+```
+Where links are not available (Windows without developer mode), make it a file whose only line imports the rules. For
+Claude Code that line is `@AGENTS.md`.
+
+Then add its name to `.git/info/exclude`, not to `.gitignore`, so it never goes into a commit. Without it, a later
+session in the workspace starts without the rules.
+
+## 3. Work inside it
 
 From here on the workspace is the project root: run every command from it.
 
