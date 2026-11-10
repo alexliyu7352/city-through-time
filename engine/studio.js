@@ -138,9 +138,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     // seen from the picture's camera, takes none of the picture (a page turned off its camera showed the front wall's picture
     // again on the ground and the far side behind it, as a second outline)
     uPD: { value: null }, uPN: { value: new THREE.Vector2(.02, 2) }, uPDS: { value: new THREE.Vector2(1 / 2048, 1 / 2048) },
-    // (opts.projDepth) the picture's colour row by row, a 1-pixel-wide texture (a museum page sets it): where the sky card would
-    // show the picture's own copy of the model (the projector saw the model there), it shows its row's colour instead (sky in
-    // the sky, land on the land): the far land without the building
+    // (opts.projDepth) what the picture's camera did not see, in the picture's frame (projFill makes it, a museum page sets it): its
+    // lower half the land beside the model carried in over the model's place (the sky card shows it there: the far land without
+    // the building), its upper half the model's own colours blurred (a face the camera did not see takes them); white until set
     uPG: { value: (() => { const t = new THREE.DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1); t.needsUpdate = true; return t; })() },
   };
 
@@ -192,7 +192,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // every eave. The farthest of the 3 x 3 texels round it decides: what the camera saw passes everywhere, a hidden face can take a
   // texel's width of the picture next to the edge that hides it
   float pdSeen(vec2 u, float w){ float z = 0.; for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) z = max(z, texture2D(uPD, u + vec2(float(i), float(j)) * uPDS).r);
-    float pz = uPN.x * uPN.y / (uPN.y - (uPN.y - uPN.x) * z); return 1. - smoothstep(pz * 1.003, pz * 1.01, w); }` : ''}
+    float pz = uPN.x * uPN.y / (uPN.y - (uPN.y - uPN.x) * z); return 1. - smoothstep(pz * 1.003, pz * 1.01, w); }
+  uniform sampler2D uPG;   // (projFill's two halves: the land, the model's colours)
+  vec3 pgLand(vec2 u){ return texture2D(uPG, vec2(u.x, clamp(u.y, .005, .995) * .5)).rgb; }
+  vec3 pgBody(vec2 u){ return texture2D(uPG, vec2(u.x, .5 + clamp(u.y, .005, .995) * .5)).rgb; }` : ''}
   float peK(vec2 u){ return uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.; }   // (uPE: the picture's feathered edge)
   uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''};
   varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase;
@@ -597,7 +600,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    vec4 pc_ = uPM * vec4(vWP, 1.); vec2 pu_ = pc_.xy / pc_.w * .5 + .5; float dr_ = length(vWP.xz - uPRC) - uPRR;
    if (pc_.w > 0. && pu_.x > 0. && pu_.x < 1. && pu_.y > 0. && pu_.y < 1.) {
      float in_ = smoothstep(.0012, -.0012, dr_);   // (one front, near to far: nothing beyond the ring shows the picture before it arrives)
-     ${Z.pd ? 'in_ *= pdSeen(pu_, pc_.w);   // (behind what the projector sees: none of the picture)\n     ' : ''}outgoingLight = mix(outgoingLight, texture2D(uPI, pu_).rgb, uPA * in_ * peK(pu_)); }
+     vec3 pi_ = texture2D(uPI, pu_).rgb;
+     ${Z.pd ? 'pi_ = mix(pgBody(pu_), pi_, pdSeen(pu_, pc_.w));   // (behind what the projector sees: not the picture of what is in front, the model\'s colours round it there, blurred)\n     ' : ''}outgoingLight = mix(outgoingLight, pi_, uPA * in_ * peK(pu_)); }
    float gw_ = max(1.5e-4, distance(cameraPosition, vWP) * .012); outgoingLight += vec3(1., .84, .6) * exp(-dr_ * dr_ / (gw_ * gw_)) * uPA * .9 * step(.0001, uPRR) * (1. - uPF); }` : ''}
 #include <opaque_fragment>${kind === 1 ? '\n gl_FragColor.a = 1. - .5 * wDrapedK;   // (.5 on a draped pool: the edge pass leaves it out; the scene buffer\'s alpha is read for nothing else)' : ''}`);
     };
@@ -1106,7 +1110,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // uW: how far up the picture it shows (a film's moment wipes it in from the bottom after the ring has reached the horizon; 2: all)
   const liveSky = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShaderMaterial({ uniforms: { uPI: U.uPI, uPM: U.uPM, uPE: U.uPE, uA: { value: 0 }, uW: { value: 2 }, ...(PDEP ? { uPD: U.uPD, uPG: U.uPG } : {}) }, depthWrite: false, transparent: true,
     vertexShader: 'varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
-    fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA, uPE, uW; varying vec3 vW;' + (PDEP ? ' uniform sampler2D uPD, uPG;' : '') + ' void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(' + (PDEP ? '(texture2D(uPD, u).r < 1. ? texture2D(uPG, vec2(.5, u.y)).rgb : texture2D(uPI, u).rgb)' : 'texture2D(uPI, u).rgb') + ', uA * (1. - smoothstep(uW - .1, uW, u.y)) * (uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.)); }' }));
+    fragmentShader: 'uniform sampler2D uPI; uniform mat4 uPM; uniform float uA, uPE, uW; varying vec3 vW;' + (PDEP ? ' uniform sampler2D uPD, uPG;' : '') + ' void main(){ vec4 c = uPM * vec4(vW, 1.); vec2 u = c.xy / c.w * .5 + .5; if (u.x < 0. || u.x > 1. || u.y < 0. || u.y > 1.) discard; gl_FragColor = vec4(' + (PDEP ? '(texture2D(uPD, u).r < 1. ? texture2D(uPG, vec2(u.x, clamp(u.y, .005, .995) * .5)).rgb : texture2D(uPI, u).rgb)' : 'texture2D(uPI, u).rgb') + ', uA * (1. - smoothstep(uW - .1, uW, u.y)) * (uPE > 0. ? smoothstep(0., uPE, min(min(u.x, 1. - u.x), min(u.y, 1. - u.y))) : 1.)); }' }));
   liveSky.visible = false; liveSky.renderOrder = -1; liveSky.frustumCulled = false; scene.add(liveSky);
   // the projector of a picture made from one shot of the model (a living moment, a museum page's viewpoint): that shot's camera
   // [x, y, z, az, el, d, fov] (az, el in degrees round its target, as the camera keys count them), no drift, no zoom, at the
@@ -1134,6 +1138,80 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     const sky = liveSky.visible, rt = renderer.getRenderTarget(); liveSky.visible = false; U.uPD.value = null;
     renderer.setRenderTarget(PDT); renderer.clear(); renderer.render(scene, PCAM); renderer.setRenderTarget(rt);
     liveSky.visible = sky; for (const o of off) o.visible = true; U.uPD.value = PDT.depthTexture; U.uPN.value.set(PCAM.near, PCAM.far); U.uPDS.value.set(1 / w, 1 / h);
+  }
+  // (opts.projDepth) the picture's two fills for what its camera did not see (uPG), made once it is aimed (a page keeps them by its
+  // viewpoint), FW pixels wide in the picture's frame. Where the projector saw the model (any of the depth texels under a pixel,
+  // and 4 pixels round it), the lower half carries the land beside it in along the row, mirrored about the model's edge from
+  // the left and the right, the nearer side weighing more: the ground's own grain up to the outline, the horizon kept in its
+  // row (a row's mean colour, the building in it, showed a flat brown copy of its outline beside it as the visitor turned).
+  // The upper half is the model's own colours in the picture, a mean over some 20 pixels (a post's side, a ridge's end the camera
+  // did not see took the room's white). null if the picture cannot be read (another origin)
+  const FW = 1024; let PFQ = null;
+  function projFill(img) {
+    if (!PDT) return null;
+    const w = FW, h = Math.max(1, Math.round(w / PCAM.aspect)), n = w * h;
+    if (!PFQ) {   // (the model's place: a pass reading the depth, 4 x 4 samples a pixel)
+      const m = new THREE.ShaderMaterial({ uniforms: { uD: { value: null }, uS: { value: new THREE.Vector2() } }, depthTest: false, depthWrite: false,
+        vertexShader: 'varying vec2 vU; void main(){ vU = uv; gl_Position = vec4(position.xy, 0., 1.); }',
+        fragmentShader: 'uniform sampler2D uD; uniform vec2 uS; varying vec2 vU; void main(){ float z = 1.; for (int i = 0; i < 4; i++) for (int j = 0; j < 4; j++) z = min(z, texture2D(uD, vU + (vec2(float(i), float(j)) - 1.5) * uS).r); gl_FragColor = vec4(z < 1. ? 1. : 0., 0., 0., 1.); }' });
+      const q = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), m); q.frustumCulled = false;
+      PFQ = { scene: new THREE.Scene().add(q), cam: new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), m };
+    }
+    let pic;
+    try { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0, w, h); pic = g.getImageData(0, 0, w, h).data; }
+    catch (e) { return null; }
+    const rt = new THREE.WebGLRenderTarget(w, h, { depthBuffer: false }), was = renderer.getRenderTarget(), buf = new Uint8Array(n * 4);
+    PFQ.m.uniforms.uD.value = PDT.depthTexture; PFQ.m.uniforms.uS.value.set(1 / w / 4, 1 / h / 4);
+    renderer.setRenderTarget(rt); renderer.render(PFQ.scene, PFQ.cam); renderer.readRenderTargetPixels(rt, 0, 0, w, h, buf); renderer.setRenderTarget(was); rt.dispose();
+    // rows from the picture's bottom, as the texture's: C its colour (r, g, b), M the model's place
+    const C = new Uint8Array(n * 3), M = new Uint8Array(n);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const i = y * w + x, j = ((h - 1 - y) * w + x) * 4; C[i * 3] = pic[j]; C[i * 3 + 1] = pic[j + 1]; C[i * 3 + 2] = pic[j + 2]; M[i] = buf[i * 4] > 127 ? 1 : 0; }
+    const grow = (A, r, v) => { const T = A.slice(), B = A.slice();   // (v spread r pixels round: along the rows, then the columns)
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (A[y * w + x] === v) for (let i = Math.max(0, x - r); i <= Math.min(w - 1, x + r); i++) T[y * w + i] = v;
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (T[y * w + x] === v) for (let j = Math.max(0, y - r); j <= Math.min(h - 1, y + r); j++) B[j * w + x] = v;
+      return B; };
+    const held = grow(M, 4, 1), out = new Uint8Array(n * 8).fill(255), gap = new Uint8Array(n);
+    for (let i = 0; i < n; i++) { out[i * 4] = C[i * 3]; out[i * 4 + 1] = C[i * 3 + 1]; out[i * 4 + 2] = C[i * 3 + 2]; }
+    for (let y = 0; y < h; y++) {   // the lower half
+      const r0 = y * w;
+      for (let x = 0; x < w;) {
+        if (!held[r0 + x]) { x++; continue; }
+        let b = x; while (b < w && held[r0 + b]) b++;   // (a run x .. b-1 of the model's place, the land beside it sl and sr pixels long)
+        let sl = 0; while (x - 1 - sl >= 0 && !held[r0 + x - 1 - sl]) sl++;
+        let sr = 0; while (b + sr < w && !held[r0 + b + sr]) sr++;
+        for (let i = x; i < b; i++) {
+          const dl = i - x + 1, dr = b - i, wl = dl <= sl ? 1 / (dl * dl) : 0, wr = dr <= sr ? 1 / (dr * dr) : 0, o = (r0 + i) * 4;
+          if (!(wl + wr)) { gap[r0 + i] = 1; continue; }
+          const L = (r0 + x - dl) * 3, R = (r0 + b - 1 + dr) * 3;
+          for (let k = 0; k < 3; k++) out[o + k] = ((wl ? wl * C[L + k] : 0) + (wr ? wr * C[R + k] : 0)) / (wl + wr);
+        }
+        x = b;
+      }
+    }
+    for (let x = 0; x < w; x++) for (let y = 0; y < h; y++) if (gap[y * w + x]) {   // (farther from land than the row has beside it: the nearest filled pixel up or down its column)
+      let s = -1; for (let d = 1; d < h && s < 0; d++) { if (y - d >= 0 && !gap[(y - d) * w + x]) s = y - d; else if (y + d < h && !gap[(y + d) * w + x]) s = y + d; }
+      if (s >= 0) for (let k = 0; k < 3; k++) out[(y * w + x) * 4 + k] = out[(s * w + x) * 4 + k];
+    }
+    // the upper half: the model's colours, a mean over 5 x 5 cells of Q x Q pixels (cells inside its outline first: those on it
+    // are part sky), as running sums along the rows, then the columns; spread back over the pixels between the cells' middles
+    const Q = 4, qw = Math.ceil(w / Q), qh = Math.ceil(h / Q), qn = qw * qh, R = 2, A = new Float32Array(qn * 4), B = new Float32Array(qn * 4), cnt = new Uint16Array(qn);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const i = y * w + x; if (!M[i]) continue;
+      const q = ((y / Q) | 0) * qw + ((x / Q) | 0); cnt[q]++; A[q * 4] += C[i * 3]; A[q * 4 + 1] += C[i * 3 + 1]; A[q * 4 + 2] += C[i * 3 + 2]; }
+    for (let q = 0; q < qn; q++) { const qx = q % qw, qy = (q / qw) | 0; let inner = cnt[q] > 0;
+      for (let j = -1; j <= 1 && inner; j++) for (let i = -1; i <= 1 && inner; i++) { const X = qx + i, Y = qy + j; inner = X >= 0 && Y >= 0 && X < qw && Y < qh && cnt[Y * qw + X] === Q * Q; }
+      const f = inner ? 1 : .15; A[q * 4] *= f; A[q * 4 + 1] *= f; A[q * 4 + 2] *= f; A[q * 4 + 3] = cnt[q] * f; }
+    const run = (S, D, L, N, step, line) => {   // (N lines of L cells, a cell step apart, the lines line apart)
+      for (let c = 0; c < N; c++) { const o = c * line;
+        for (let k = 0; k < 4; k++) { let s = 0; for (let l = 0; l <= Math.min(L - 1, R); l++) s += S[o + l * step + k];
+          for (let l = 0; l < L; l++) { D[o + l * step + k] = s; if (l + R + 1 < L) s += S[o + (l + R + 1) * step + k]; if (l >= R) s -= S[o + (l - R) * step + k]; } } } };
+    run(A, B, qw, qh, 4, qw * 4); run(B, A, qh, qw, qw * 4, 4);
+    for (let y = 0; y < h; y++) { const fy = Math.min(qh - 1, Math.max(0, (y + .5) / Q - .5)), y0 = Math.floor(fy), y1 = Math.min(qh - 1, y0 + 1), ty = fy - y0;
+      for (let x = 0; x < w; x++) { const fx = Math.min(qw - 1, Math.max(0, (x + .5) / Q - .5)), x0 = Math.floor(fx), x1 = Math.min(qw - 1, x0 + 1), tx = fx - x0;
+        const a = (y0 * qw + x0) * 4, b = (y0 * qw + x1) * 4, c = (y1 * qw + x0) * 4, d = (y1 * qw + x1) * 4, o = (n + y * w + x) * 4, i = y * w + x;
+        const at = k => (A[a + k] * (1 - tx) + A[b + k] * tx) * (1 - ty) + (A[c + k] * (1 - tx) + A[d + k] * tx) * ty, f = at(3);
+        for (let k = 0; k < 3; k++) out[o + k] = f > 1e-3 ? at(k) / f : C[i * 3 + k]; } }
+    const t = new THREE.DataTexture(out, w, 2 * h); t.colorSpace = THREE.SRGBColorSpace; t.magFilter = t.minFilter = THREE.LinearFilter; t.needsUpdate = true;
+    return t;
   }
   // a page that fills its window (the viewer's public mode, a museum page) instead of the film's 1920 x 1080 picture: the
   // canvas at the window's size w x h (CSS pixels), drawn with k pixels to each of them (the screen's pixel ratio, at most 2)
@@ -1167,5 +1245,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     if (!tries.some(z => { Z = z; gpu.path = z === FULL ? 'full' : 'fit'; if (z !== FULL) fitTo(z); return linkTest(); })) gpu.fail = 'shaders';
     gpu.limits = { textures: g.getParameter(g.MAX_TEXTURE_IMAGE_UNITS), fragment: g.getParameter(g.MAX_FRAGMENT_UNIFORM_VECTORS), vertex: g.getParameter(g.MAX_VERTEX_UNIFORM_VECTORS), size: g.getParameter(g.MAX_TEXTURE_SIZE) };
   }
-  return { gpu, renderer, scene, camera, post, U, liveSky, aimProjector, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

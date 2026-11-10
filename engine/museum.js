@@ -116,31 +116,23 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
     if (!b.isEmpty() && Math.max(...[b.min.x, b.max.x].flatMap(x => [b.min.z, b.max.z].map(z => Math.hypot(x, z)))) > f0) {
       fadeC.value.set((b.min.x + b.max.x) / 2, (b.min.z + b.max.z) / 2);
       f0 = Math.max(f0, Math.hypot(b.max.x - b.min.x, b.max.z - b.min.z) / 2 + 30 * SC); f1 = Math.max(f1, f0 + (FADE_M[1] - FADE_M[0]) * SC); } }
-  const fadeU = { value: clean ? new THREE.Vector4(1e3, 2e3, 1e5, 2e5) : new THREE.Vector4(f0, f1, 1e5, 2e5) }, picGround = U.uPG;
+  const fadeU = { value: clean ? new THREE.Vector4(1e3, 2e3, 1e5, 2e5) : new THREE.Vector4(f0, f1, 1e5, 2e5) }, PG0 = U.uPG.value;
   { // the stand fades out round the building, into the room (no square edge: in a still an image tool reads a slab's edge as a cliff)
     const sm = parts.find(p => p.id === '_stand').mesh, m = sm.material, own = m.onBeforeCompile;
     sm.userData.noProjDepth = true;   // (the projector's depth is the model's alone: engine/studio.js projDepth)
     m.transparent = true;
-    // the floor the picture's camera did not see (behind a wall, as it saw it: projDepth) takes its row's colour in the picture, not
-    // the white of the room: turned off a viewpoint, a white print of the building lay on the grass beside it
-    m.onBeforeCompile = (sh, r) => { own(sh, r); sh.uniforms.uFade = fadeU; sh.uniforms.uFadeC = fadeC; sh.uniforms.uPicGround = picGround;
-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade; uniform vec2 uFadeC; uniform sampler2D uPicGround;')
-        .replace('#include <opaque_fragment>', 'if (uPA > 0.) { vec4 gc_ = uPM * vec4(vWP, 1.); vec2 gu_ = gc_.xy / gc_.w * .5 + .5;\n if (gc_.w > 0. && gu_.x > 0. && gu_.x < 1. && gu_.y > 0. && gu_.y < 1.)\n  outgoingLight = mix(outgoingLight, texture2D(uPicGround, vec2(.5, gu_.y)).rgb, uPA * (1. - pdSeen(gu_, gc_.w)) * peK(gu_)); }\ndiffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz - uFadeC))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
+    // the floor the picture's camera did not see (behind a wall, as it saw it: projDepth) takes the land beside it in the picture
+    // (engine/studio.js projFill), not the white of the room: turned off a viewpoint, a white print of the building lay on the
+    // grass beside it
+    m.onBeforeCompile = (sh, r) => { own(sh, r); sh.uniforms.uFade = fadeU; sh.uniforms.uFadeC = fadeC;
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uFade; uniform vec2 uFadeC;')
+        .replace('#include <opaque_fragment>', 'if (uPA > 0.) { vec4 gc_ = uPM * vec4(vWP, 1.); vec2 gu_ = gc_.xy / gc_.w * .5 + .5;\n if (gc_.w > 0. && gu_.x > 0. && gu_.x < 1. && gu_.y > 0. && gu_.y < 1.)\n  outgoingLight = mix(outgoingLight, pgLand(gu_), uPA * (1. - pdSeen(gu_, gc_.w)) * peK(gu_)); }\ndiffuseColor.a *= (1. - smoothstep(uFade.x, uFade.y, length(vWP.xz - uFadeC))) * (1. - smoothstep(uFade.z, uFade.w, gl_FragCoord.y));\n#include <opaque_fragment>'); };   // (no discard: the ground goes on in depth to the horizon, so the crisp edges draw no line where it fades)
     m.customProgramCacheKey = () => 'proj0fade';
   }
   // the viewpoints and their pictures (the main one is on screen already, as the page's first picture)
   const VP = meta.viewpoints.map(v => ({ ...v, tex: null, A: v.picture ? v.picture.w / v.picture.h : 16 / 9 }));
   const loader = new THREE.TextureLoader(); loader.setCrossOrigin('anonymous');
-  // (each picture's colour row by row, the mean of each of 64 rows: for what its camera did not see, the floor behind a wall and
-  // the far land behind the building on the sky card, below and engine/studio.js uPG)
-  const groundOf = im => { const R = 64, C = 48, c = document.createElement('canvas'); c.width = C; c.height = R; const g = c.getContext('2d'); g.drawImage(im, 0, 0, C, R);
-    const d = g.getImageData(0, 0, C, R).data, out = new Uint8Array(R * 4);
-    for (let y = 0; y < R; y++) { const o = (R - 1 - y) * 4; let r = 0, gr = 0, b = 0;   // (row 0 of the texture is the picture's bottom, as the picture's own)
-      for (let x = 0; x < C; x++) { const i = (y * C + x) * 4; r += d[i]; gr += d[i + 1]; b += d[i + 2]; }
-      out[o] = r / C; out[o + 1] = gr / C; out[o + 2] = b / C; out[o + 3] = 255; }
-    const t = new THREE.DataTexture(out, 1, R); t.colorSpace = THREE.SRGBColorSpace; t.magFilter = t.minFilter = THREE.LinearFilter; t.needsUpdate = true; return t; };
-  const loads = clean ? [] : VP.filter(v => v.picture).map(v => loader.loadAsync(base + v.picture.file).then(t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; v.tex = t;
-    try { v.ground = groundOf(t.image); } catch (e) { v.ground = null; } }));
+  const loads = clean ? [] : VP.filter(v => v.picture).map(v => loader.loadAsync(base + v.picture.file).then(t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; v.tex = t; }));
   const main = VP.find(v => v.id === vp0) || VP.find(v => v.main) || VP[0];
 
   // the camera: a target and a place round it (az, el as the film's camera keys count them: 0 south of the target, 90 east)
@@ -193,7 +185,8 @@ export async function startMuseum({ stage, base, meta, model, clean = false, vp:
       fadeU.value.set(1e3, 2e3, y - .25 * k, y);
     }
     const P = clean ? { v: null, a: 0 } : pictureNow();
-    if (P.v && P.v !== shown) { S.aimProjector(P.v.cam, P.v.A); U.uPI.value = P.v.tex; if (P.v.ground) picGround.value = P.v.ground; shown = P.v; }
+    if (P.v && P.v !== shown) {   // (what its camera did not see: engine/studio.js projFill, once a viewpoint; white if its picture cannot be read)
+      S.aimProjector(P.v.cam, P.v.A); U.uPI.value = P.v.tex; if (P.v.fill === undefined) P.v.fill = S.projFill(P.v.tex.image); U.uPG.value = P.v.fill || PG0; shown = P.v; }
     U.uPA.value = P.v ? P.a : 0;
     const sky = U.uPA.value * (1 - ss(seg(P.ang ?? 0, 4, SKY_DEG)));   // (the far land and sky, on a card far behind the model, part from it soonest: gone by SKY_DEG)
     S.liveSky.material.uniforms.uA.value = sky; S.liveSky.visible = sky > 0;
