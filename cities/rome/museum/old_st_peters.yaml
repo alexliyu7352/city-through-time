@@ -1,4 +1,4 @@
-# Two existing film landmarks at true height and their original positions; no geometry is added to either.
+# Detailed exteriors read the two film landmarks at true height and their original positions.
 id: old_st_peters
 node: people_return
 pieces:
@@ -31,9 +31,9 @@ label:
   - head: {zh: 前院不是一块没有历史的空地, en: The forecourt has its own history}
     text:
       zh: >-
-        800年以前已有铺地的前院和有顶廊道，通向教堂；它们在后来的岁月中不断维修、改建。模型用三条简化廊体表示前院，大小和高度都是图式估值，没有完整复原门廊、阶梯、钟楼和旁殿。大殿入口墙面也未画门洞，不能当作当年没有入口。更不能把1590年图上的全部附件倒放到君士坦丁或查理曼的时代。
+        800年以前已有铺地的前院和有顶廊道，通向教堂；它们在后来的岁月中不断维修、改建。模型画四面有顶柱廊，其中一面贴着大殿正面，大殿有五个入口门洞。院廊的尺度、柱跨、柱头、坡屋面及门窗细形都是估配，没有完整复原阶梯、钟楼和旁殿。1590年图上的全部附件也不能倒放到君士坦丁或查理曼的时代。
       en: >-
-        Before 800, a paved forecourt and covered walks already formed the approach to the church; they were repaired and altered over time. Three simplified walks indicate the court here, with estimated dimensions and heights. The entrance porch, stairs, bell tower and adjoining chapels are incomplete. Doors are also omitted from the basilica's entrance wall, rather than claimed historically absent. The additions on a 1590 plan cannot all be carried back to Constantine's or Charlemagne's time.
+        Before 800, a paved forecourt and covered walks already formed the approach to the church; they were repaired and altered over time. The model shows four roofed colonnades, one against the basilica's front, and five entrance doorways in the church. Court dimensions, bays, capitals, sloping roofs and opening details are estimated. Stairs, the bell tower and adjoining chapels are incomplete. The additions on a 1590 plan cannot all be carried back to Constantine's or Charlemagne's time.
     cite: [M1, V1, A1]
   - head: {zh: 同一片土地上的新圣彼得, en: New St Peter's on the same site}
     text:
@@ -55,55 +55,55 @@ parts:
     status: estimated
     name: {zh: 屋面, en: Roofs}
     note:
-      zh: 高中殿和低侧廊有文献与复原研究支持；模型采用25度坡屋顶及简化的后殿半锥顶。坡度、檐高、出檐和覆面细节是估值，不是800年的屋顶测绘。
+      zh: 高中殿和低侧廊有文献与复原研究支持。模型中殿与横厅用25度双坡顶，侧廊用14度单坡顶；内侧廊高于外侧廊，阶差参数为1.6米。后殿用半锥顶。坡度、阶差、檐高、出檐、屋面厚度与瓦垄细节都是估值，不是800年的屋顶测绘。
       en: >-
-        Texts and reconstructions support a high nave above lower aisles. The model uses 25-degree pitched roofs and a simplified half-conical apse roof. Slopes, eaves, overhangs and surface detail are estimates, not a survey of the roofs in 800.
+        Texts and reconstructions support a high nave above lower aisles. The model gives the nave and transept 25-degree gabled roofs and the aisles 14-degree lean-to roofs; inner aisles stand above outer aisles with a 1.6 m step setting. The apse has a half-conical roof. Slopes, steps, eaves, overhangs, roof thickness and tile rows are estimated, not surveyed roofs of 800.
     cite: [D1, G1, M1]
   - id: openings
     labels: ['core/*_openings']
     status: estimated
-    name: {zh: 简化窗列, en: Schematic windows}
+    name: {zh: 门窗与窗框, en: Doors, windows and frames}
     note:
-      zh: 研究记有高侧窗，但模型的小暗窗仅表示采光节奏，位置、数量和大小不能逐个当作古窗证据。长殿分成两段是影片表现后来拆建的接口，不是800年中殿有一道横向分隔。
+      zh: 研究记有宽大的高侧窗。模型画带框的拱顶高侧窗、外侧廊窗和横厅窗，以及正面五个平顶门洞与上方窗洞。开口数量、位置、宽高、进深和边框剖面都是规则化估值，不是逐窗测绘；被其他房体挡住的窗不画。长殿的两段沿同一屋脊与窗列衔接，不表示800年有中隔墙。
       en: >-
-        Research records clerestory windows, but the small dark openings only suggest a rhythm of light. Their individual positions, number and size are not archaeological evidence. The two nave segments serve the film's later rebuilding sequence; they do not imply a cross-wall in 800.
+        Research records large clerestory windows. The model shows framed round-headed clerestory, outer-aisle and transept windows, plus five lintelled front doorways and windows above. Counts, positions, dimensions, recess depths and frame profiles are regularised estimates, not a window-by-window survey; openings hidden by other volumes are omitted. The two nave segments share continuous ridges and window rows, rather than a cross-wall in 800.
     cite: [G1, D1]
   - id: main
     labels: [core/nave_east, core/nave_west]
-    status: sourced
+    status: estimated
     name: {zh: 中殿与四条侧廊, en: Nave and four aisles}
     note:
-      zh: 五廊布局有据。模型沿用约91米长殿、约64米内宽及约23米中殿宽这一研究分支；以66米外宽表示墙厚。墙高和分廊细尺寸仍含估配，未复原内部柱列、墓葬和装饰。
+      zh: 五廊布局有据。模型沿用约91米长殿、约64米内宽及约23米中殿宽这一研究分支；以66米外宽表示墙厚。每边内侧廊高于外侧廊；侧廊分宽、墙高、墙厚、墙脚及檐口剖面仍是估配，未复原内部柱列、墓葬和装饰。
       en: >-
-        The five-aisled layout is documented. The model follows the research branch with a body about 91 m long, an internal width near 64 m and a central nave about 23 m wide, using 66 m externally to allow for walls. Heights and aisle details still include estimates; internal colonnades, burials and decoration are not reconstructed.
+        The five-aisled layout is documented. The model follows the research branch with a body about 91 m long, an internal width near 64 m and a central nave about 23 m wide, using 66 m externally to allow for walls. Each inner aisle stands above its outer neighbour. Aisle widths, wall heights and thickness, plinths and cornice profiles remain estimates; internal colonnades, burials and decoration are not reconstructed.
     cite: [G1, D1]
   - id: transept
     labels: [core/transept]
-    status: sourced
+    status: estimated
     name: {zh: 西端横厅, en: Western transept}
     note:
-      zh: 突出两侧的横厅有据。模型采用约90米横跨、18米进深；另一研究记17米，属于不同口径，未将两数平均。立面高度和构造仍是量体估值。
+      zh: 突出两侧的横厅有据。模型采用约90米横跨、18米进深；另一研究记17米，属于不同口径，未将两数平均。墙高、墙脚、檐口与山墙线脚仍是估值；可见立面有拱窗，不是无窗实心块。
       en: >-
-        The projecting transept is documented. The model uses a span near 90 m and a depth of 18 m; another study gives 17 m, a different measurement that is not averaged with it. Elevation and construction remain schematic estimates.
+        The projecting transept is documented. The model uses a span near 90 m and a depth of 18 m; another study gives 17 m, a different measurement that is not averaged with it. Wall heights, plinths, cornices and gable mouldings remain estimates. Its exposed faces have arched windows.
     cite: [G1, D1]
   - id: apse
     labels: [core/apse]
-    status: sourced
+    status: estimated
     name: {zh: 半圆后殿, en: Semicircular apse}
     note:
-      zh: 西端半圆后殿及其与彼得纪念地的关系有据。模型约23米宽的外轮廓、墙高和表面是简化估配，没有画地下墓室、内部祭坛或历次改建。
+      zh: 西端半圆后殿及其与彼得纪念地的关系有据。模型约23米宽的外轮廓、墙高、墙脚和檐口是简化估配，半锥形瓦屋顶也不是实测复原。地下墓室、内部祭坛和历次改建未画。
       en: >-
-        The western semicircular apse and its relationship to Peter's memorial are documented. Its approximately 23 m width, wall height and surfaces are simplified estimates. The underground tomb, internal altar and successive alterations are not modelled.
+        The western semicircular apse and its relationship to Peter's memorial are documented. Its approximately 23 m width, wall height, plinth and cornice are simplified estimates, as is its half-conical tiled roof. The underground tomb, internal altar and successive alterations are not modelled.
     cite: [V1, G1, D1]
   - id: atrium
     labels: ['atrium/*']
     status: estimated
-    name: {zh: 前院与三面廊体, en: Forecourt and three covered walks}
+    name: {zh: 前院与四面柱廊, en: Forecourt and four colonnades}
     note:
       zh: >-
-        800年以前已有铺地前院及有顶廊道，后世仍多次改建。模型沿用影片中的三条低廊体，约66米宽、70米深、6米高及规则柱跨均是图式估值，不是800年院落测绘。它表示进入大殿前的空间，没有完整复原门廊、屋架、阶梯、钟楼和附属建筑，也没有给空白的入口墙补上未经模型记录的门。
+        800年以前已有铺地前院及有顶廊道，后世仍多次改建。模型画四面柱廊，靠大殿的一面不另立背墙；另三面有外墙，前墙有拱门。外轮廓约70×72米、顶高约6米，柱跨、柱头、梁、20度单坡瓦顶、台阶及铺地均是估配。它不是800年院落测绘，未完整复原屋架、外部阶梯、钟楼和附属建筑。
       en: >-
-        A paved court and covered walks existed before 800 and were altered later. The model reuses the film's three low walks; an approximate width of 66 m, depth of 70 m, height of 6 m and regular bays are schematic estimates, not a survey of the court in 800. They indicate the approach without fully reconstructing the entrance porch, roof framing, stairs, bell tower or adjoining buildings. No doors are added to the model's blank entrance wall.
+        A paved court and covered walks existed before 800 and were altered later. The model shows four colonnades, one against the basilica without a separate back wall; the other three have outer walls, with an arched gate in the front. Its outline of about 70 by 72 m, roof height near 6 m, bays, capitals, beams, 20-degree lean-to tiled roofs, floor steps and paving are estimated. It is not a survey of the court in 800; roof framing, approach stairs, the bell tower and adjoining buildings are incomplete.
     cite: [M1, V1, A1]
 viewpoints:
   - {id: front, main: true, name: {zh: 从东南面看前院与长殿, en: Forecourt and nave from the southeast}, az: 120, el: 25, d_m: 330, fov: 36, at_m: [22.425, 2.527, 18]}

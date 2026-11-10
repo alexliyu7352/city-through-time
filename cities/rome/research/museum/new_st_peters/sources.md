@@ -1,32 +1,36 @@
 # 新聖彼得博物館頁：來源與模型界線
 
-## 選用的原生模型
+## 展示的建築與詳細模型
 
-`museum/new_st_peters.yaml` → canonical `city.yaml` 的 `made_again` → `kind: parts / id: rome07_renaissance_newstpeter`，實例使用 `rome_round10_stpeter_open_drum`。保留全部37子件、225 primitives、既有1626完成形制；不改原模型、施工接口或city。博物館只抽此地標，不抽取另一個1656–1667柱廊地標。
+`museum/new_st_peters.yaml` 的 `made_again` 頁取 `rome07_renaissance_newstpeter`，實例模板為 `rome_round10_stpeter_open_drum`。頁面用 `tools/blender/domed_church.py` 的詳細外觀，在原址、原方向與 `exaggeration: 1` 下展示1626完成建築；不抽取另一個1656–1667柱廊地標。電影、城市與施工接口未改。
 
-輕量直接原生 `citygen.build_city` 的真高度檢查：`exaggeration:1`、地坪0，記錄最低−3m為埋地裙基，最高133.450m。既有R9／R10研究名義頂高133.300m，與此原生生成相差0.150m；如實保留，不偷偷補償或改原模型。官方RA133.30m與Fabbrica另頁136.57m是未解基準差，頁面明列沿用前一分支，不平均。
+本輪逐段核讀 `DEFAULT`、`from_landmark`、`spec_of`、堂身／後殿、鼓座／穹頂／燈亭、小穹頂與立面的建造函式，並實看提供的 `five_pages.jpg` 模型比較圖。37子件／225 primitives及133.450m外包是前一輪電影生成器的結果，不能拿來當詳細模型檢查結果；正式細模物件分配和外包由museum build確認。
 
-## 原生museum工具缺口
+- **原地標傳入、已有來源尺寸**：立面116×45.50m（不含頂像）、巨柱27.48m高／2.77m徑、中央山牆30×7.50m；頂球2.50m徑、十字3.33m高／橫臂2.40m；名義總高沿Vatican RA133.30m分支。這些主要尺寸有據，不表示每條輪廓與節點都已測繪。Fabbrica另頁136.57m的基準差沿既有研究保留未解，不平均。
+- **原地標仍屬估配的尺度**：堂身42m高、側廊26m高、各房體平面、側翼、後殿、18°屋面、鼓座50m外徑／20m高、主殼46.5m徑／35m升高、16肋及其1.4m寬／0.7m凸出、柱位、燈亭比例、兩個20m小穹頂，均沿既有圖像約束的量體估值。58.90m官方外徑不冒稱為46.5m裸殼徑的直接來源。
+- **堂身與後殿的新增細部**：`order`估計9m壁柱跨、2.6m寬／0.5m凸出的巨壁柱、牆腳、柱頭、分層檐線、頂層壁柱帶及三種窗區；窗框與三角／弧形山花、高側窗和屋面斷面都已建。其剖面、位置、比例與密度是依現存外觀的預設，未逐件核為1626形制，不能因更細緻便改成sourced。
+- **鼓座與穹頂的新增細部**：成對柱前後有扶壁、柱基、上下基座分層；鼓座窗有交替山花、檐部有逐層凸出及板框。`drum_detail`的2.6m柱基、3.4×2.4m扶壁、窗寬／窗高、2.5m頂層，以及檐口剖面均估值。主殼上三層老虎窗分別以7／17／25m相對高度與2.6／2／1.4m寬生成，窗體、山花和排列的細尺寸是預設；三層的存在有V3明文。燈亭窗、扶壁、柱頭、檐口和頂部小殼比例也估配。
+- **鼓座內徑的界線**：`from_landmark`會讀取原地標41.50m內口參數，但本細模的 `crossing` 只建鼓座外觀，`r_in_m`未用來造內壁。頁面已改為說明41.50m是官方穹頂內徑，不再聲稱細模展示這一鼓座內口或有實測壁厚；內部雙殼與登頂通道均未建。
+- **立面的新增細部**：八圓柱與端壁柱有分段柱腳、收分柱身、示意科林斯柱頭及卷渦；不是逐葉雕刻。`front_detail`建五個平頂入口、拱頂上層開口、中央祝福陽台、壁龕凹部、端通道、窗框／山花、頂層窗，以及陽台和頂層瓶形欄杆。洞深、位置、欄杆間距、線腳及小構件比例都是預設估值。雕像、浮雕、紋章、銘文與後世時鐘未建；不能再寫「只有薄凸段」「欄杆未復原」或「沒有壁龕」。
+- **小穹頂與頂飾**：小穹頂基座有壁柱和窗框，鼓座有窗，主殼有肋，燈亭有窗；其細尺寸沒有逐件1626測繪。頂球下頸部、十字厚度、端部小塊與連接是估值，`cross_bar`合入詳細物件`cross`。來源支持的球徑／十字高，不替這些細部背書。
 
-確切原生子件`drum`、`drum_cornice`、`ball`是`kind: revolve`，原實例未明填`sweep_deg`（`drum`欄位kind,id,atop,sides,profile_m；`drum_cornice`欄位kind,id,atop,profile_m；`ball`欄位kind,atop,sides,profile_m,id,z_m）。museum必須像compile一樣，先透過`landmarks.checked`完成正式預設，再呼叫`citygen.landmark_site`；否則`landmarks.bounds`直接讀`sweep_deg`會失敗。現行主線museum已完成這項初始化，原生`find_landmark/build_model/assign`已驗225筆全分配。writer未改canonical／shared，也未假填default繞過；此處沒有待補的歷史模型。
+分件維持first-match：`facade`先取主牆、中央山牆及巨柱，`facade_detail`取其餘`facade_*`；`drum`取鼓座／柱／檐部，`dome`取主殼／燈亭／燈亭柱，`finial`取球與十字，`small_domes`取兩側小穹頂，`main`取堂身／側翼／後殿／下部基座。七組全部estimated：`facade`同一物件含估配柱頭、線腳等；`finial`的十字同一物件含估配杆厚及端部小塊，無法由既有labels把有據尺寸與估細部分開。note仍保留主要尺寸的來源，不以整件有據色調替細部背書。
 
 ## 來源與實際閱讀
 
-- [Pietro Zander／Fabbrica, The Basilica](https://www.basilicasanpietro.va/en/san-pietro/the-basilica)：本輪重開正文。1506首石、彼得墓同址中心、Maderno及後來Bernini；正文立面主施工1608–1612，與Vatican RA1607–1614分口徑保留。
-- [Fabbrica施工日期FAQ](https://www.basilicasanpietro.va/it/faq/quando-e-stata-costruita-la-basilica-di-san-pietro)：本輪重開，1506至1626完成，替代4世紀舊殿。
-- [Vatican RA, Cupolone e Lanterna](https://www.vatican.va/content/vatican/it/ra/cupolone-lanterna.html)：本輪重開，並核既有R05全文。1564至鼓座、1588–1590殼、1593球與十字；133.30m街面至十字頂、58.90m外徑、41.50m內徑、球2.50m／十字高3.33m；鉛覆面、雙殼、燈亭呼應成對柱。58.90m不得當裸殼徑；50m鼓座／35m殼升高／20m分層等均為原模型的量體估值。41.50m鼓座內口為已標示比較，不主張有4.25m實測壁厚。
-- [Vatican RA, Facciata Basilica](https://www.vatican.va/content/vatican/it/ra/facciata-basilica.html)：本輪重開並核既有R07全文。1607–1614立面、1612–1614頂像；116×45.50m（不含像）、柱27.48m／直徑2.77m、山牆30×7.50m；五下層入口／五上層陽台／四壁龕。模型的柱位、分層、開口規則化、檐口／欄牆厚度等仍估值。現代照片只用於既有R10形制比對，不拿其後世時鐘與完整雕飾當1626紀實；本頁不附現代照片。
-- [Vatican RA, Colonnato](https://www.vatican.va/content/vatican/it/ra/colonnato-statue-santi.html)：本輪重開，1656委託、1657起工、1667結束；1626場景與模型都排除。也不能把其頂像1662–1703全數當1667一次完成。
-- [Senato, San Pietro in Vaticano](https://antiquorum-habet.senato.it/index.php/section/section_61_it/)：本輪重開正文；Alfarano／Bonifacio1590疊圖、舊殿餘部至1609、方尖碑1586移置、1623起的Baldacchino至1633等各自分期。**未讀Alfarano手稿全本**，1590圖不是1626完成圖。本輪沒有核讀Grimaldi原稿或Krautheimer全本；其轉引路徑詳舊殿頁sources，不虛列為新殿測繪來源。
-- [Vatican State, Storia](https://www.vaticanstate.va/it/stato-e-governo/storia.html)：本輪重開宮史，中世紀宮群、Sistine、Belvedere先於1626存在。西側園地與Borgo的定性環境沿既有 `rome07_renaissance_survey.md`、FACTS S207，不冒稱全部宮翼、每條園路已測繪。
-- [Falda1667，Emory/Pitts](https://digital.pitts.emory.edu/s/digital-collections/item/6418)：沿用已有原圖及 `rome07_renaissance_survey.md`／R9／R10研究對堂身、側小穹頂、宮園和Borgo的圖像約束；本輪沒有重新實看完整60MB原圖。它晚於1626，而且可能畫方案，不把其柱廊、廣場或每戶布局提前。量體估值不升格為有尺考古復原。
+- [Pietro Zander／Fabbrica, The Basilica](https://www.basilicasanpietro.va/en/san-pietro/the-basilica)：本輪重開，核1506首石、彼得墓共同中心及Maderno完成立面。其1608–1612與Vatican RA1607–1614分口徑保留。
+- [Fabbrica施工日期FAQ](https://www.basilicasanpietro.va/it/faq/quando-e-stata-costruita-la-basilica-di-san-pietro)：本輪重開，核1506至1626完成並替代4世紀舊殿。
+- [Vatican RA, Cupolone e Lanterna](https://www.vatican.va/content/vatican/it/ra/cupolone-lanterna.html)：本輪重開，並讀本機 `model_reference/rome07_renaissance/R05_dome.txt`。核1564停於鼓座、1590主殼、1593球與十字，以及外高／內外徑、球與十字尺寸、鉛覆面、雙殼、三層帶山花老虎窗、燈亭成對柱。本文沒有給每扇窗及每道檐口的尺寸。
+- [Vatican RA, Facciata Basilica](https://www.vatican.va/content/vatican/it/ra/facciata-basilica.html)：本輪重開，並讀本機 `R07_facade.txt`。核立面／頂像年代、主要尺寸、五下層入口、五上層陽台與四小壁龕。頁面亦描述現存裝飾及1667後變動，不能將整段視為1626清單；模型也不完整復原其雕刻。現代圖像只供形式估配。
+- [Vatican RA, Colonnato](https://www.vatican.va/content/vatican/it/ra/colonnato-statue-santi.html)：本輪重開，核1656委託、1657起工、1667結束，排除於1626場景。
+- [Senato, San Pietro in Vaticano](https://antiquorum-habet.senato.it/index.php/section/section_61_it/)：本輪重開展覽正文，核1590疊圖和舊中殿續用到1609；只透過其說明認識Alfarano，**未讀手稿全本**。該圖不是1626完整竣工圖。
+- [Vatican State, Storia](https://www.vaticanstate.va/it/stato-e-governo/storia.html)：本輪重開，核中世紀宮群、Sistine及Belvedere先於1626。西園地與東Borgo的定性環境另沿既有 `rome07_renaissance_survey.md`、FACTS S207，不冒稱每條園路與每個宮翼均有測繪。
+- [Falda1667，Emory/Pitts](https://digital.pitts.emory.edu/s/digital-collections/item/6418)：沿既有原圖及R9／R10研究對堂身、小穹頂、宮園和Borgo的圖像約束，**本輪未重看完整原圖**。它晚於1626，且可能含方案，不把全部廣場或住宅布局提前。亦未核讀Grimaldi、Krautheimer等原書，不虛列為細模測繪依據。
 
-## 分件與相機
+## 相機與三張場景卡
 
-225 records的37個label均由頁面7個parts first-match接住：`facade`34筆先收主立面、中央山牆和四段巨柱；`facade_detail`26筆收其餘`facade_*`；`drum`34筆收鼓座／兩組成對柱／檐口；`dome`35筆收主殼／燈亭與其柱；`finial`3筆收ball/cross/cross_bar；`small_domes`10筆收兩肩小穹頂；`main`83筆收western_body/cross_arm/western_apse/attic/long_nave。維持`main`固定ID以供原生phone shots開note。sourced的立面／頂球十字仍在note區分有據尺寸和估配細節，其餘整組estimated。
+沿用已批准 `at_m: [17.29, -0.3, 40]`，az90／210／330、el25、fov36、距離均480m。既有原生成器的角點計算與手機構圖經驗只是機位來由，不代替細模的ref、sheet和desktop／phone檢查。
 
-真records保守旋轉框（x,y,z，m）`[-94.620,129.198] / [-3,133.450] / [-63.754,64.354]`。取`at_m:[17.29,-0.3,40]`（east,north,up；原生engine把target高度限制40m），az90/210/330、el25、fov36。以與舊頁相同的角點透視公式、16:9參考幅計得必要距離348.749/347.688/347.688m，最初按16:9參考幅選400m，但桌面和手機的展館舞台較窄，原生shots實看時立面下緣被控制列擋住。三view改用480m，重新拍ref並配準生成；不是從城市片中誇張高度照搬鏡距。三方向球面夾角大於100°。最後desktop／phone構圖由root實看。
+三卡定1626完成狀態，保留新增壁柱、窗框／山花、扶壁、三層老虎窗、壁龕與欄杆，不將其重新抹成粗略量體，也不讓生成圖把估值變成新的假精測。東面機位朝西丘，北側宮群仍在北，Borgo仍在東；西南／西北機位可在遠東方向帶出低資訊屋頂。前地為通行與禮儀空間，沒有後世橢圓柱廊或和解大道；未抽取的方尖碑／噴泉不搬入原本不可見的位置。
 
-場景定1626完成外觀。東面機位看向西丘／北側宮群，Borgo在觀者東側，不能把它搬到西後殿背後；西南／西北機位可在遠東方向帶出Borgo低資訊屋頂。廣場是通行與禮儀前地，不是湖、荒野或現代廣闊大道。1586方尖碑／17世紀前期噴泉等未抽入此單體，卡片不胡亂擺一套對稱廣場設施；在畫外時不強行搬入構圖。
-
-writer未跑GPU、生成圖片或正式museum build；只驗原生模型與parts分配。root接手真高度白模檢視和living ref/gen/sheet/adopt；既有電影幾何的辨識度不等於本頁構圖已通過。
+本件只修文字與場景卡，不執行Blender、GPU、living生成或正式museum build。新圖配準、細模物件分配及手機構圖由統一建置流程檢查。

@@ -8,8 +8,9 @@
   0.03,
   38.0
  ],
- "made": "codex",
- "date": "2026-11-09",
+ "made": "adopted",
+ "date": "2026-11-10",
  "ref": "south_ref.jpg",
- "ref_sha1": "8747c087412b16ef18cc2b91425e1eb26a6f8233"
+ "ref_sha1": "74a26abcba2793f13f71cb4ce0f67f35322220cd",
+ "model": "92be140c6160f370"
 }

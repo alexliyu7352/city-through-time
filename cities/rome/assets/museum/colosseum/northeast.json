@@ -8,8 +8,9 @@
   0.031,
   38.0
  ],
- "made": "codex",
- "date": "2026-11-09",
+ "made": "adopted",
+ "date": "2026-11-10",
  "ref": "northeast_ref.jpg",
- "ref_sha1": "87fff5effeb0199dca89418249c5ba3a7c440dca"
+ "ref_sha1": "b34a1b3ae8e9c302b3c0398bb6d98a3cd1206a16",
+ "model": "92be140c6160f370"
 }

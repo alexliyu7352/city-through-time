@@ -1,6 +1,6 @@
 # Pompey museum：來源、原生模型與頁面校正
 
-> 以下校正節以前為初次建置紀錄，當時待辦已完成；本次校正與最新驗收見末節。舊紀錄的「待root生成／未生成圖片／待實看」不表示目前仍未驗收。
+> 前段及2026-11-09驗收是舊generator模型的歷史紀錄；2026-11-10改用詳細模型，其當前範圍及估值見末節。舊302records、bounds與圖片驗收不適用於新GLB；新圖須重新ref／gen／sheet／adopt後才可採用。
 
 本頁的對象是**龐培劇場＋柱廊＋龐培議事廳**，前55年起，展示前44年遇刺以前的形態。不是劇場單件頁，也不把Curia Julia混入。`museum/pompey_complex.yaml`採原生`pieces`，首件Curia作共同座標中心，頁面node指定`republic_pompey_observation`展廳。下列原始錨點、尺寸和初建檢查保留作校正前依據；本次頁面定位、重新生圖與視覺結果見末節。只修本展館頁，不改共享工具、canonical city、film或script。
 
@@ -16,7 +16,7 @@
 |M04|[Vitruvius5.9](https://lexundria.com/vitr/5.9/mg)；`research/model_reference/rome02_republic_quarter/vitruvius_5_9.html`全文|§1具名Pompey劇場後廊、避雨／準備舞台用具；§5、7的露天綠植、步行與排水原則|一般理想不是44年逐樹清冊、已知路寬、逐條排水或已知地坪。不能從理想柱式直接確定Pompey實際柱式|
 |M05|[Vitruvius5.1](https://lexundria.com/vitr/5.1/mg)；`research/model_reference/ad14_campus_completion_vitruvius_5_1.html`全文，重點§6–9|Fano公共會堂50 Roman ft整柱、20ft支承；已有模型將其換算14.8／5.92m作有限比較|不是Curia Pompeia考古高程，不是共和建築通用層高；14.8m與5.92m均estimated|
 |M06|[Stanford FUR39ac編目](https://formaurbis.stanford.edu/fragment_39ac.html)；`research/model_reference/rome02_republic_quarter/garden_stanford_39ac.html`，Description／Identification／Significance全文|大理石原件的圖形編目；較晚柱廊、長方形與點方塊的園池／柱／樹解讀爭議；長與寬精確性並不相同|Severan圖不是44年園庭調查；不能逐點種樹、復原兩池或把每個房間倒放。此輪未另外取得石片原始3D掃描|
-|M07|[DAR Theatrum Pompeium](https://www.digitalaugustanrome.org/records/theatrum-pompeium-pompeianum/)；`research/model_reference/rome02_republic/dar_pompey_theatre.txt`全文|既有學術綜述：55BCE、向東cavea、原期與AD80後舞台分開；早期平直舞台為比較復原|本頁未親讀其所引Capoferro Cencetti、Sear、Gros全部原著；這是明列的二手綜述，不升格為新發掘。未用Severan曲折stage或爭議Venus突出部補模型|
+|M07|[DAR Theatrum Pompeium](https://www.digitalaugustanrome.org/records/theatrum-pompeium-pompeianum/)；`research/model_reference/rome02_republic/dar_pompey_theatre.txt`全文|既有學術綜述：55BCE、向東cavea、原期與AD80後舞台分開；早期平直舞台為比較復原|本頁未親讀其所引Capoferro Cencetti、Sear、Gros全部原著；這是明列的二手綜述，不升格為新發掘。不採Severan曲折stage；神廟存在有據，但外伸／後殿與大小仍有爭論，不能證當前四柱山牆估形|
 |M08|[DAR Porticus Pompeianae](https://www.digitalaugustanrome.org/records/porticus-pompeianae/)；`research/model_reference/rome02_republic/dar_porticus_pompeianae.txt`全文|既有學術綜述：舞台後園廊、東端Curia及約180×135m中央區概述|以Severan平面為主；不能宣稱每一段44BCE長度、商鋪、niche或植物點位已知|
 
 M01–M06為官方、原研究、古典原文或原石刻編目；M07/M08是明列的**既有學術綜述**。本輪沒有新來源，所以沒有以非primary新查補證。Lanciani配準與Caen尺寸只沿canonical geometry的既有basis認定為**先前模型值**，本輪未重看Lanciani該劇場圖版／未找到可逐數核對36／44／14／48的Caen原件，不能宣稱新核實測。不要引用它們冒充共和原高的直接證據。
@@ -37,7 +37,7 @@ M01–M06為官方、原研究、古典原文或原石刻編目；M07/M08是明�
 
 共**302 geometry records**，不含stand；資料子件38個，ring另為1件。各landmark既有`exaggeration:1`均保留。Curia原資料16子件沒有id，不能把現有空labels誤寫成`hall`、`roof`、`east/*`等不存在路徑。劇場ring同樣無細分labels。
 
-本頁只選這七件既有建築；保留形制、repeat、atop與比例，僅在展館頁校正劇場位置與方向（見下節）。影片與city.yaml原位保留。園內31樹群、grounds、貼地小徑、南側商住、北側百柱廊、四神廟與Venus寺不在`build_model`的單件landmark輸出內。三張scene cards不得把缺席建築「補得比較像」。植物用途在life與來源說明，配圖只用不遮輪廓的低植被色澤示意，不創造確定逐樹布局。
+本頁只選這七件既有建築；保留形制、repeat、atop與比例，僅在展館頁校正劇場位置與方向（見下節）。影片與city.yaml原位保留。園內31樹群、grounds、貼地小徑、南側商住、北側百柱廊、四神廟不在舊`build_model`單件landmark輸出內；舊generator亦未畫Venus寺，2026-11-10的詳細theatre已加入估形神廟。三張scene cards不得把缺席建築「補得比較像」。植物用途在life與來源說明，配圖只用不遮輪廓的低植被色澤示意，不創造確定逐樹布局。
 
 ## 實際mesh bounds／真高度
 
@@ -86,7 +86,7 @@ native records最低y=−3m是平地生成時的工具裙基／展示基礎，**
 
 ### 實看來源後的選擇
 
-本次實看既存Monterroso2022印刷293頁Fig14（`rome02_republic_quarter/garden_monterroso-17.png`，Baltard/Canina歷史復原）、294頁Fig15（`garden_monterroso-18.png`，博物館模型）、301頁Fig17/18（`rome02_pompey_refine/monterroso_p301_fig17_18.png`，廳遺構及分期），以及已配準DAR地圖`ad14_public_dar_campus_z17.png`。另重讀M08既存原文：柱廊“directly behind the stage building”、西邊為stage building，廳在東廊中央；M04是具名劇場後廊的古典原文。這些圖與文字共同支持**同軸且相接**，因此不只南移/轉向，亦關閉劇場與西廊分離的大空隙。Fig14/15是文中討論的復原，不冒充共和遺構測繪；其晚期曲折舞台、神廟、樹池等均不移植到本頁。301頁考古圖只約束廳與東廊，不能獨立給出全組長度。
+本次實看既存Monterroso2022印刷293頁Fig14（`rome02_republic_quarter/garden_monterroso-17.png`，Baltard/Canina歷史復原）、294頁Fig15（`garden_monterroso-18.png`，博物館模型）、301頁Fig17/18（`rome02_pompey_refine/monterroso_p301_fig17_18.png`，廳遺構及分期），以及已配準DAR地圖`ad14_public_dar_campus_z17.png`。另重讀M08既存原文：柱廊“directly behind the stage building”、西邊為stage building，廳在東廊中央；M04是具名劇場後廊的古典原文。這些圖與文字共同支持**同軸且相接**，因此不只南移/轉向，亦關閉劇場與西廊分離的大空隙。Fig14/15是文中討論的復原，不冒充共和遺構測繪；其晚期曲折舞台、樹池等均不移植到本頁；神廟不據該圖定形，2026-11-10的theatre用另明標的四柱山牆估形。301頁考古圖只約束廳與東廊，不能獨立給出全組長度。
 
 來源支持的是建築關係，不是本次位移小數。片中劇場與柱廊來自不同node的既有近似定位；只在`museum/pompey_complex.yaml`的theatre piece設定`move_m: [20.6, -33.4]`（東20.6m、南33.4m）和`turn_deg: 1.7803785541`，繞自身錨點轉動。其餘六件與所有302個records的形制、尺寸、parts及節點不變。`why`、頁面“Reading the model”及西橫廊note明說影片仍偏北且分離，city.yaml與既定成片未變。
 
@@ -129,8 +129,21 @@ native records最低y=−3m是平地生成時的工具裙基／展示基礎，**
 
 ## 本次最新驗收結果（2026-11-09）
 
-原生`museum.py cities/rome pompey_complex`完成：302 records、7 parts、3 viewpoints、3 with a picture。三張圖均經原生`living.py ref/gen/sheet`：先逐一實看ref，再生成並看完整圖與sheet；metadata的ref SHA1一致，工具記為codex、日期2026-11-09。最終reverse遵照ref保留近東廊、右長廊以及舞台腳下西橫廊的實背牆；沒有把它們換成開口柱列。圖中材質、屋瓦色、低植被與微小人物仍只是示意，沒有用成圖補上模型缺席的神廟、池、樹列或屋內席位。
+原生`museum.py cities/rome pompey_complex`完成：302 records、7 parts、3 viewpoints、3 with a picture。三張圖均經原生`living.py ref/gen/sheet`：先逐一實看ref，再生成並看完整圖與sheet；metadata的ref SHA1一致，工具記為codex、日期2026-11-09。最終reverse遵照ref保留近東廊、右長廊以及舞台腳下西橫廊的實背牆；沒有把它們換成開口柱列。圖中材質、屋瓦色、低植被與微小人物仍只是示意，當時沒有用成圖補上舊generator缺席的神廟、池、樹列或屋內席位；新theatre已含神廟，須按新ref重生成圖。
 
 `living.py check`三鏡都通過：overview平均差0.1、局部最大2.2；reverse 0.0/0.0；hall 0.3/3.9（工具門檻平均6、局部12）。這只驗證ref未在圖片下改掉；幾何與圖像的貼合另由sheet及現場頁面實看驗收，沒有以數值替代。
 
 原生`tools/museum.mjs shots rome pompey_complex --lang zh-Hant`輸出11張桌面/手機圖，已逐張看主圖、轉15°、轉30°、有據/推測切換、部件note與手機全文；另實看`pompey_complex_alignment/desktop_*.jpg`與`phone_*.jpg`的三鏡及新西橫廊note。兩個全景鏡在桌面和390px手機均容納整組，hall保留原本局部近景用途；15°時圖片淡出、30°回到白模，切換和點選可用。所有完整上部體量仍標推測，沒有為雙色把整棟改標有據。新note明寫本頁移劇場而影片仍保留錯位/空隙；繁體字及腳注可讀、面板沒有截文。DOM的document/viewport寬分別1600/1600、390/390，無橫向溢出。前後clean overhead和明亮原生三鏡亦已實看；本次沒有更改三鏡camera、建築尺寸、節點、標籤或既定成片。
+
+
+## 2026-11-10 詳細模型：本輪文字與圖卡範圍
+
+已讀`tools/blender/theatre.py`、`hall.py`、`portico.py`的說明與DEFAULT，並實看主線`internal/blender_pilot/five_pages.jpg`。本輪保留七件來源、劇場頁內move／turn、三個既定camera及真高倍率；以原生詳細hall、portico、theatre替代舊generator表面。前段302records與bounds僅是舊模型歷史資料，不能當成新GLB驗收。
+
+- 劇場現在有兩層外拱廊（托斯卡納、愛奧尼）、閣樓窗、分帶座席、階梯與出入口；平直scaenae frons有三層科林斯柱、三門、台面、兩翼與覆屋。高度／比例沿原landmark，但外拱廊層高、開口、柱式、線腳、座席細分及舞台細部是DEFAULT的類型估配。不能再寫「平直實塊」或「未復原柱式」；不採AD80火災後曲折凹室。
+- M07既存全文明記Venus Victrix神廟在`summa cavea`，並列Tertullian／Gellius等古文；同一綜述也記大後殿、外伸與小神龕的爭議。此輪只重讀既存DAR全文，未另核所引古文或新增研究。模型看台頂端軸線上的12×12m四柱山牆小廟、7.5m科林斯柱、門廊、15°頂與外伸承托，全部是估形；不能把「神廟存在」當作四柱形制的證明。
+- 議事廳現在門上有三扇高窗：`hall.py`明說借Curia Julia類型。2.4m窗寬、窗台8.2m／窗頂12m、7m窗心距、框、牆腳、檐口、山牆線腳與瓦面均為估值；不能以此把Curia Pompeia混同Curia Julia或聲稱已發掘本廳三窗。門窗後的暗面是空廳陰影表現，並非可見原室內。
+- 柱廊保留原尺寸與柱數，但DEFAULT增加托斯卡納柱式、柱礎柱頭、額枋／檐壁／檐口層次、梁、線腳、蓋瓦及簷端細節；這些都未由M04的用途記載或M05的Fano比較逐一證實，故各part及總label明標推測。所有完整可見構件仍為estimated。
+- 三張scene cards已跟新細部同步：保留三層三門舞台和頂端神廟、廳正面三窗及柱廊細部；不添加額外門窗、雕像、晚期曲折舞台、園池、樹列或室內席位。reverse保留庭側西橫廊與近東／右長廊的實背牆，不用生成圖開成柱列；hall局部鏡仍不硬塞劇場。
+
+本輪詳細模型已由原生museum完成：Pompey為41objects／7parts，三鏡3/3新圖片，均先ref、gen、全尺寸sheet與成圖實看再明確adopt。overview首版錯把門窗移到廳南牆、reverse首版把山牆誤畫斜頂，皆拒絕並重生；採用版修正且保留原相機。最終livingcheck三鏡mean／local分別0.2／2.5、0.1／2.0、0.5／5.4，通過6／12門檻。新版原生桌面與手機shots及各viewpoint完整頁面、未縮放的edgecrops均已實看，三鏡projDepth變動各為0.000%；3°全顯、5°淡出、10°回白模。手機長構件說明可從scrollTop0捲至109／底部，末文與來源可讀；模型沒有發現須退回共享模組的錯誤。

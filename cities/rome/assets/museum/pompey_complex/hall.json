@@ -8,8 +8,9 @@
   0.0135,
   42.0
  ],
- "made": "codex",
- "date": "2026-11-09",
+ "made": "adopted",
+ "date": "2026-11-10",
  "ref": "hall_ref.jpg",
- "ref_sha1": "d31d60c127e30c54f521cf4fcc6cb4c6e89e9cff"
+ "ref_sha1": "d4ae612dadef8cb5e4454c7dd87416198ec5c3ac",
+ "model": "a1ff430c165afe14"
 }

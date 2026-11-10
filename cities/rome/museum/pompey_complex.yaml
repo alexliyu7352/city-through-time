@@ -79,15 +79,20 @@ label:
     cite: [M02, M03, M06, M07]
   - head: { zh: 怎样阅读这座模型, en: Reading the model }
     text:
-      zh: 模型沿用影片中的建筑形体，垂直方向不放大；剧场只在本页调整位置与方向，使它与园廊、议事厅同轴并接近相连。影片中的剧场仍偏北、与柱廊分离，city.yaml和成片不变。这不表示原高已经测定：剧场以约36米、大厅以约14.8米檐高、廊柱以约5.92米作示意。后两项借用维特鲁威所述法诺公共会堂作有限比较，不是庞培建筑的实测值。剧场外圈开口、座席分级和舞台立面均作简化，没有复原全部门窗、柱式与雕饰。各段柱廊的小接缝仍是模型近似；剧场的位置校正以同轴相连的有据关系为约束，公尺数不是遗址实测值。所有可见建筑构件因此标为「推测」，具体平面依据另在构件说明中交代。园树、古地坪和室内席位没有逐项复原。
+      zh: 模型以影片的建筑平面与主要尺寸为底稿，用细部模型表现，垂直方向不放大；剧场只在本页调整位置与方向，使它与园廊、议事厅同轴并接近相连。影片中的剧场仍偏北、与柱廊分离，city.yaml和成片不变。这不表示原高已经测定：剧场以约36米、大厅以约14.8米檐高、廊柱以约5.92米作示意。后两项借用维特鲁威所述法诺公共会堂作有限比较，不是庞培建筑的实测值。剧场现有两层外拱廊、阁楼层、分区座席、阶梯和出入口，以及三层柱式、三门的平直舞台立面、舞台台面与两翼；拱券、层高、柱式、门洞和座席细分均为类型估配。看台顶端轴线上有胜利维纳斯神庙的文献依据，但模型的四柱山墙、尺度与外伸基座仍是推测。大厅正面门上三窗借用尤利乌斯议事堂的类型，并非本厅已知立面；柱廊柱式、檐部层次、梁、线脚和瓦面细节也为估值。各段柱廊的小接缝仍是模型近似；剧场的位置校正以同轴相连的有据关系为约束，公尺数不是遗址实测值。所有可见建筑构件因此标为「推测」，具体平面依据另在构件说明中交代。园树、古地坪和室内席位没有逐项复原。
       en: >-
-        The model keeps the film's building forms without stretching their heights. On this page alone, the theatre is
+        Detailed models use the film's footprints and principal dimensions without stretching their heights. On this page alone, the theatre is
         repositioned and turned to share the garden and hall's axis and meet the portico. The film retains its northern
         offset and detached placement; city.yaml and the finished film are unchanged. This does not make
         their original heights known: the theatre uses about 36 metres, the hall about 14.8 metres to its eaves, and the
         portico columns about 5.92 metres. The last two are limited comparisons with Vitruvius's basilica at Fano, rather
-        than measurements of Pompey's buildings. Exterior openings, seating tiers and the stage facade are simplified;
-        complete openings, architectural orders and sculpture have not been reconstructed. Small joins between portico sections remain approximate. The theatre correction follows the attested connected,
+        than measurements of Pompey's buildings. The theatre shows two external arcaded storeys, an attic, seating bands, stairs and exits,
+        plus a straight stage front with three tiers of columns and three doors, a stage platform and side wings.
+        Arch profiles, storey heights, orders, doors and seating divisions are type-based estimates. A Temple of Venus
+        Victrix is attested on the axis at the top of the seating; its four-column pedimented form, dimensions and
+        projecting support are estimated. The hall's three windows above its door borrow the Curia Julia type, rather
+        than a known elevation of this hall. Portico orders, entablature divisions, beams, mouldings and roof tiles are
+        also estimated. Small joins between portico sections remain approximate. The theatre correction follows the attested connected,
         axial relationship; its distances are estimates for this model, rather than site measurements.
         All visible building components are therefore marked estimated; their notes distinguish the evidence for the
         plan. Garden trees, ancient ground levels and interior seating have not been individually reconstructed.
@@ -113,57 +118,67 @@ parts:
     status: estimated
     name: { zh: 议事厅与东侧柱廊, en: Meeting hall and eastern portico }
     note:
-      zh: 分期研究支持约24×27米的独立大厅，位于东侧柱廊中央。14.8米檐高、15度双坡顶、1.48米墙厚及4.8×5.92米中央门洞均为比较或通行关系下的推测。两翼柱廊的5.92米柱高、柱数、柱距和覆屋亦是估值。门后保留空厅；不复原席位、庞培像或行刺人物，不加入奥古斯都时期的封堵与后加厕所。
+      zh: 分期研究支持约24×27米的独立大厅，位于东侧柱廊中央。14.8米檐高、15度双坡顶、1.48米墙厚及4.8×5.92米中央门洞均为比较或通行关系下的推测。正面门上三扇有框高窗参照尤利乌斯议事堂类型：窗宽2.4米、窗台与窗顶距地8.2与12米、窗心距7米，均非本厅实测；墙脚、门框、檐口、山墙线脚和瓦面也是估配。两翼柱廊的5.92米柱高、柱数、柱距、托斯卡纳柱式、梁及覆屋细节亦是估值。门窗后用阴影表示空厅；不复原席位、庞培像或行刺人物，不加入奥古斯都时期的封堵与后加厕所。
       en: >-
         Studies of the building phases support a separate hall about 24 by 27 metres at the middle of the eastern portico.
         The 14.8-metre eaves, 15-degree roof, 1.48-metre walls and central opening of 4.8 by 5.92 metres are comparative or
-        circulation estimates. The portico's 5.92-metre columns, their number and spacing, and its roof are also estimated.
-        The hall remains empty, without reconstructed seating, Pompey's statue or an assassination scene. Augustan
+        circulation estimates. Three framed high windows over the door borrow the Curia Julia type: their 2.4-metre
+        width, sill and head at 8.2 and 12 metres, and 7-metre centre spacing are unmeasured here. Plinths, door frames,
+        cornices, pediment mouldings and tiles are estimated too. The portico's 5.92-metre columns, their number and
+        spacing, Tuscan order, beams and roof details are also estimated. Shaded openings suggest an empty hall, without reconstructed seating, Pompey's statue or an assassination scene. Augustan
         blocking and later latrines are omitted.
     cite: [M01, M02, M03, M05]
   - id: theatre
     labels: [pompey_theatre, pompey_theatre/*]
     status: estimated
-    name: { zh: 半圆形剧场与平直舞台, en: Semicircular theatre and straight stage building }
+    name: { zh: 半圆形剧场、舞台与维纳斯神庙, en: Semicircular theatre, stage and Temple of Venus }
     note:
-      zh: 剧场前55年启用、观众席朝东有据。约150米外径是既有古图的近似读数；约36米高、44米乐池尺度、14米舞台深度与48个分段为模型估值，不是共和时期逐项实测。舞台画成平直体量；舞台与最高看台同高也是示意取值，不补公元80年火灾以后重建的曲折舞台立面或未建模的维纳斯神庙。
+      zh: 剧场前55年启用、观众席朝东有据。约150米外径是既有古图的近似读数；约36米高、44米乐池尺度、14米舞台深度与48个分段为模型估值，不是共和时期逐项实测。舞台保持平直立面，现有三层科林斯柱式、三门、台面与两翼；层数、柱高、柱距、门洞和覆屋都按剧场类型估配，并非前44年立面的逐项证据。外墙两层拱廊的托斯卡纳与爱奥尼柱式、阁楼窗、座席排数、阶梯及出入口也属估值。文献记胜利维纳斯神庙位于看台顶端；模型以轴线上12×12米、四根科林斯柱和山墙的小神庙表示，柱高7.5米及向外伸出的承托同为推测。庙的存在不证明这套形制；不移植公元80年火灾后的曲折舞台凹室。
       en: >-
         The dedication in 55 BCE and east-facing seating are attested. The outer diameter of about 150 metres is an
         approximate map reading. The 36-metre height, 44-metre orchestra, 14-metre stage depth and 48 divisions are model
-        estimates, rather than Republican measurements. The stage is a straight mass; matching its height to the upper
-        seating is also schematic. Later curved stage recesses and an unmodelled Temple of Venus are not supplied.
+        estimates, rather than Republican measurements. The straight stage front now has three tiers of Corinthian columns,
+        three doors, a stage platform and side wings. Their tiers, column sizes and spacing, openings and roof are type-based
+        estimates, not a documented elevation of 44 BCE. The exterior's two arcaded storeys with Tuscan and Ionic orders,
+        attic windows, seating rows, stairs and exits are estimated too. Texts place the Temple of Venus Victrix at the
+        top of the seating. The model uses an axial 12-by-12-metre temple with four Corinthian columns and a pediment; its
+        7.5-metre columns and projecting support are estimates. Its attested presence does not establish this form.
+        The recessed stage facade built after the fire of AD 80 is not transferred here.
     cite: [M03, M07]
   - id: north_middle
     labels: [rome02_quarter_north_gallery, rome02_quarter_north_gallery/*]
     status: estimated
     name: { zh: 北侧柱廊中段, en: Middle section of the northern portico }
     note:
-      zh: 柱廊围合园庭的关系有文献与较晚平面依据。这一段69.6米长、18柱、5.92米柱高和屋顶形式承接东廊的估配；各段之间的小缝是模型衔接，不是古代廊界或出入口的证据。
+      zh: 柱廊围合园庭的关系有文献与较晚平面依据。这一段69.6米长、18柱、5.92米柱高和屋顶形式承接东廊的估配；各段之间的小缝是模型衔接，不是古代廊界或出入口的证据。托斯卡纳柱式、柱础柱头、檐部层次、梁、线脚和瓦面细节也由类型估配。
       en: >-
         Texts and a later plan support porticoes around the garden. This section's length of 69.6 metres, 18 columns,
         column height of 5.92 metres and roof form extend the eastern portico's estimates. Small joins between sections
-        are modelling seams, rather than evidence for ancient breaks or entrances.
+        are modelling seams, rather than evidence for ancient breaks or entrances. Tuscan columns, bases and capitals,
+        entablature divisions, beams, mouldings and tiles are type-based estimates too.
     cite: [M04, M05, M06, M08]
   - id: south_middle
     labels: [rome02_quarter_south_gallery, rome02_quarter_south_gallery/*]
     status: estimated
     name: { zh: 南侧柱廊中段与侧向通口, en: Middle section of the southern portico and side opening }
     note:
-      zh: 这一段的长度、18柱、柱高、覆屋和侧向通口均为有界估配。中央4.8米门湾用来示意城街、柱廊与园庭的通行关系，并非已发掘的前44年侧门。南侧商住街坊不在本页模型内。
+      zh: 这一段的长度、18柱、柱高、覆屋和侧向通口均为有界估配。中央4.8米门湾用来示意城街、柱廊与园庭的通行关系，并非已发掘的前44年侧门。托斯卡纳柱式、柱础柱头、檐梁、线脚和瓦面细节亦为类型估配。南侧商住街坊不在本页模型内。
       en: >-
         This section's length, 18 columns, height, roof and side opening are bounded estimates. The central 4.8-metre
         doorway bay illustrates access between the city, portico and garden; it is not an excavated entrance securely
-        dated to 44 BCE. Residential and commercial blocks to the south are outside this page's model.
+        dated to 44 BCE. Tuscan columns, bases and capitals, entablatures, beams, mouldings and tiles are type-based estimates.
+        Residential and commercial blocks to the south are outside this page's model.
     cite: [M04, M05, M06, M08]
   - id: north_west
     labels: [pompey_gallery_north_west, pompey_gallery_north_west/*]
     status: estimated
     name: { zh: 北侧柱廊西段, en: Western section of the northern portico }
     note:
-      zh: 西延段保留现有模型的72.8米长度、20柱、5.92米柱高及低坡覆屋。这些是以公共建筑关系为约束的示意尺寸；不能把三世纪大理石平面的全部凹室、园池或百柱廊倒放到前44年。
+      zh: 西延段保留现有模型的72.8米长度、20柱、5.92米柱高及低坡覆屋。这些是以公共建筑关系为约束的示意尺寸；托斯卡纳柱式、柱础柱头、檐梁、线脚和瓦面细节也为估配。不能把三世纪大理石平面的全部凹室、园池或百柱廊倒放到前44年。
       en: >-
         This extension retains the existing model's length of 72.8 metres, 20 columns, 5.92-metre column height and low
-        roof. These are schematic dimensions constrained by the public complex's relationships. Later niches, pools and
+        roof. These are schematic dimensions constrained by the public complex's relationships. Tuscan columns, bases and
+        capitals, entablatures, beams, mouldings and tiles are estimated too. Later niches, pools and
         the Hecatostylum are not transferred wholesale from the third-century Marble Plan to 44 BCE.
     cite: [M04, M05, M06, M08]
   - id: south_west
@@ -171,9 +186,10 @@ parts:
     status: estimated
     name: { zh: 南侧柱廊西段, en: Western section of the southern portico }
     note:
-      zh: 72.8米长、20柱、柱距、墙厚与屋面都是延续既有比较值的估配。它表示园庭南侧的覆顶步行空间，并没有逐间重建较晚平面记录的商铺，也不证明本段在前44年的每个细节。
+      zh: 72.8米长、20柱、柱距、墙厚与屋面都是延续既有比较值的估配。托斯卡纳柱式、柱础柱头、檐梁、线脚和瓦面细节同为类型估配。它表示园庭南侧的覆顶步行空间，并没有逐间重建较晚平面记录的商铺，也不证明本段在前44年的每个细节。
       en: >-
         The length of 72.8 metres, 20 columns, spacing, wall thickness and roof extend the existing comparative estimates.
+        Tuscan columns, bases and capitals, entablatures, beams, mouldings and tiles are type-based estimates.
         They represent the covered walk along the garden's south side. Shops recorded in the later plan are not
         individually reconstructed, and the section's details are not claimed as a measured plan of 44 BCE.
     cite: [M04, M05, M06, M08]
@@ -182,10 +198,11 @@ parts:
     status: estimated
     name: { zh: 剧场后方横向柱廊, en: Cross portico behind the theatre }
     note:
-      zh: 剧场后方有柱廊的用途有维特鲁威记载；此处135米长、35柱及具体位置是模型的近似衔接。文献与既存平面支持柱廊紧接舞台背面；本页据此把剧场移到园廊与议事厅的共同轴线上，舞台背面接近横廊屋檐，保留约0.2米的墙面至廊地坪余量。校正量由既有模型形体估配，不能当成古代街宽或发掘坐标；影片仍保留原来的错位与空隙。
+      zh: 剧场后方有柱廊的用途有维特鲁威记载；此处135米长、35柱及具体位置是模型的近似衔接；托斯卡纳柱式、柱础柱头、檐梁、线脚和瓦面细节亦为估配。文献与既存平面支持柱廊紧接舞台背面；本页据此把剧场移到园廊与议事厅的共同轴线上，舞台背面接近横廊屋檐，保留约0.2米的墙面至廊地坪余量。校正量由既有模型形体估配，不能当成古代街宽或发掘坐标；影片仍保留原来的错位与空隙。
       en: >-
         Vitruvius attests porticoes behind the theatre. This cross section's length of 135 metres, 35 columns and exact
-        placement are approximate model connections. Texts and existing plans place the portico directly behind the stage. On this page the theatre is repositioned
+        placement are approximate model connections; Tuscan columns, bases and capitals, entablatures, beams, mouldings
+        and tiles are estimated too. Texts and existing plans place the portico directly behind the stage. On this page the theatre is repositioned
         on the garden and hall axis, with its stage back close to the cross portico eave and about 0.2 metres between
         the wall and portico floor. The correction is estimated from the existing model bodies, not a measured ancient
         street or excavated coordinates. The film retains its original offset and gap.
@@ -251,8 +268,8 @@ sources:
     url: https://formaurbis.stanford.edu/fragment_39ac.html
   M07:
     short: { zh: Digital Augustan Rome：庞培剧场, en: "Digital Augustan Rome: Theatre of Pompey" }
-    zh: 《Theatrum Pompeium / Pompeianum》。既有学术综述支持前55年启用、朝东的半圆座席，并区分早期平直舞台的比较复原与公元80年火灾后的曲折立面；所引更早考古出版物本页未逐一核读。
-    en: "Theatrum Pompeium / Pompeianum. An existing scholarly synthesis supporting dedication in 55 BCE and east-facing seating, and distinguishing a comparative early straight stage from the recessed facade after the fire of AD 80. Earlier archaeological publications cited by the entry were not individually read for this page."
+    zh: 《Theatrum Pompeium / Pompeianum》。既有学术综述支持前55年启用、朝东的半圆座席，并区分早期平直舞台的比较复原与公元80年火灾后的曲折立面；该条亦记看台顶端的胜利维纳斯神庙，并明确其大小、外伸与后殿重建仍有争论；不能据此证四柱山墙形制。所引更早考古出版物本页未逐一核读。
+    en: "Theatrum Pompeium / Pompeianum. An existing scholarly synthesis supporting dedication in 55 BCE and east-facing seating, and distinguishing a comparative early straight stage from the recessed facade after the fire of AD 80. It also records the Temple of Venus Victrix at the top of the seating and disputes over its size, projection and apse; it does not establish a four-column pedimented form. Earlier archaeological publications cited by the entry were not individually read for this page."
     url: https://www.digitalaugustanrome.org/records/theatrum-pompeium-pompeianum/
   M08:
     short: { zh: Digital Augustan Rome：庞培柱廊, en: "Digital Augustan Rome: Porticoes of Pompey" }

@@ -1,8 +1,19 @@
-# Canonical imperial_height/colosseum only; no later hypogeum or separate attic is added.
-# Source receipt and native model inspection: research/museum/colosseum/sources.md.
+# Canonical imperial_height/colosseum, drawn by the detailed amphitheatre module.
+# M01 describes the standing monument, not an 80 CE completion survey; all parts retain estimated status.
+# Source limits and the exact DEFAULT values: research/museum/colosseum/sources.md.
 id: colosseum
 node: imperial_height
 landmark: { kind: ring, id: colosseum }
+detailed:
+  kind: amphitheatre
+  spec:
+    # M01 p. 42: order heights (upper two include pedestals) and arch widths.
+    # storeys replaces the complete list: spring/pedestal below merely repeat DEFAULT estimates.
+    # spring is measured above the pedestal in build(), not necessarily M01's opening-height datum.
+    storeys:
+      - { h: 10.5, arch_w: 4.3, spring: 4.95, order: tuscan, pedestal: 0.0 }
+      - { h: 11.85, arch_w: 4.3, spring: 4.9, order: ionic, pedestal: 1.6 }
+      - { h: 11.6, arch_w: 4.3, spring: 4.9, order: corinthian, pedestal: 1.6 }
 exaggeration: 1
 stage_m: [40000, 40000]
 
@@ -21,24 +32,26 @@ label:
     cite: [S06, S86]
   - head: { zh: 尺寸有据，细节有别, en: Dimensions and their limits }
     text:
-      zh: 罗马市府列出的外部尺寸约为189×156米，高逾48米，中央场地约76×46米；外立面有三层拱廊，每层80个券，其上还有实墙层。这些是整座建筑的概括资料，不能证明公元80年启用时所有顶层工程已经完成。模型保留48米的概括高度，没有另画顶层实墙和其装饰。
+      zh: 罗马市府列出的外部尺寸约为189×156米，高逾48米，中央场地约76×46米；外立面有三层拱廊，每层80个券，其上还有实墙层。模型画出这些层次，保留48米的概括高度。80—81年的提图斯钱币也画出顶层与圆盾，但钱币可以提前表现尚未完工的建筑，不能据此认定开幕时每项工程均已完成。
       en: >-
         Rome's municipal account gives an exterior about 189 by 156 m, over 48 m high, and an arena about
-        76 by 46 m. Three arcaded levels each had 80 bays, with a solid-walled storey above. These are
-        descriptions of the monument as a whole, rather than a survey of every part completed in 80 CE.
-        The model retains a rounded overall height of 48 m without drawing the attic storey and its decoration separately.
-    cite: [S86, S86V, E08]
+        76 by 46 m. The model shows three arcaded levels of 80 bays and the solid attic above, retaining a
+        rounded height of 48 m. Titus's coins of 80–81 also show the attic and round shields. Coins could depict
+        unfinished buildings, however, so this does not establish that every part was complete at the opening.
+    cite: [S86, S86V, E09]
   - head: { zh: 这座模型画到哪里, en: What this model shows }
     text:
-      zh: 模型采用影片中的同一座椭圆座席环，高度恢复为原比例。它的座席断面经过简化，中央场地成为79×46米，长轴比市府数字多3米；场边4米矮墙也是估值。三排深色矩形只标示外廊开口，没有复原真正的圆拱、柱式、雕刻、屋顶或遮阳篷。这些部分因此标为推测。模型没有表现地下设施；开幕时已有木构技术空间，多米提安时期才改为永久砌体，不能把今天露出的地下走廊搬到80年。
+      zh: 这座详细模型沿用影片的椭圆外框，高度不作垂直放大，画出圆拱、半柱、檐部、顶层小窗，以及分段座席、阶梯和座席上方的有顶柱廊。三层高度与券宽参考Colagrossi于1913年所记建筑尺寸，并非80年完工清单；柱式顺序另有资料核实。起拱、柱座、座席分配和顶层细部仍为估配，全部分件标为推测。等宽座席环使场地成为约79×46米，比市府数字长3米。模型未画雕像、圆盾、遮阳篷及其桅杆、轴线入口门廊，也未画地下设施；开幕时的木构技术空间不能混同于多米提安时期的永久砌体。
       en: >-
-        This is the film's oval seating-ring model at its true height. Its simplified section produces an arena
-        of 79 by 46 m, 3 m longer than the municipal figure; the 4 m arena wall is also an estimate. Three rows
-        of dark rectangles indicate the exterior openings, without reconstructing real arches, architectural orders,
-        sculpture, roofs or the awning. The modelled parts are therefore marked as estimated. Substructures are
-        omitted: timber technical spaces existed at the inauguration and were replaced in permanent masonry
-        under Domitian. The underground corridors exposed today must not be placed in the 80 CE scene.
-    cite: [S06, S86, S86V, E07, E08]
+        This detailed model keeps the film's oval outline without vertical exaggeration, adding round arches, engaged columns,
+        entablatures, attic windows, seating bands, stairs and a roofed upper colonnade. Storey heights and arch
+        widths follow Colagrossi's 1913 description of the monument, not an 80 CE completion inventory; the order
+        sequence is independently documented. Springs, pedestals, seating divisions and attic details remain
+        estimates, so every part is marked estimated. A constant-depth ring gives an arena about 79 by 46 m, 3 m longer
+        than the municipal figure. Statues, shields, the awning and its masts, axial entrance porches and
+        substructures are omitted. The opening-period timber technical spaces must be distinguished from
+        Domitian's permanent masonry.
+    cite: [S06, S86, S86V, E07, E09, M01]
 
 life:
   text:
@@ -50,41 +63,75 @@ life:
       the rooms below the timber floor, lifting machinery or a particular day's programme.
   cite: [S86, E07]
 
-# Native ring labels are all empty. DARK is selected first; the single indivisible
-# revolve record then belongs to main. Its estimated seating section and upper edge
-# cannot be marked separately without changing the canonical model.
+# from_landmark supplies outer_m, ring_m, attic_to_m, bays and podium_m; storeys has the overrides above.
+# A part mixes documented form and estimated detail, so its status remains estimated.
 parts:
-  - id: openings
-    labels: ['*']
-    kinds: [dark]
+  - id: arcades
+    labels: [facade_arcades]
     status: estimated
-    name: { zh: 三排外廊开口的示意, en: Schematic exterior openings }
+    name: { zh: 外墙三层拱廊和第二圈拱, en: The three arcaded storeys and the second ring of arches }
     note:
-      zh: 三层拱廊、每层80个券有文献依据；模型只以240个深色矩形代替。开口高度、宽度、间距和三层等分的办法都是简化估配，矩形没有凿穿主体，也没有圆拱顶、半柱或柱头。它们不代表已测得的80年立面。
+      zh: 外墙三层、每层80券有据。模型各层高10.5、11.85、11.6米，外券宽均4.3米，采用Colagrossi所记建筑尺寸；他未在这段逐项区分原构与后修，不能把这些数值称作80年精密测绘。起拱沿用默认值，在本层地面上4.95、6.5、6.5米，后两数含估定的1.6米柱座。内圈券宽取外券九成，廊道进深4.5米、墙厚、券边线脚和筒拱也为估配。
       en: >-
-        Sources describe three arcaded levels of 80 bays each. The model substitutes 240 dark rectangles.
-        Their dimensions, spacing and division into three equal-height levels are schematic estimates.
-        They do not cut through the body and have no curved arch heads, engaged columns or capitals;
-        they are not a measured reconstruction of the facade in 80 CE.
-    cite: [S06, S86, S86V]
-  - id: main
-    labels: ['*']
+        Three exterior levels of 80 bays are documented. Model storeys are 10.5, 11.85 and 11.6 m high,
+        with 4.3 m exterior arches, following Colagrossi's description. That passage does not distinguish
+        original fabric from later repairs; these are not a precise survey of the state in 80 CE.
+        Default springs stand 4.95, 6.5 and 6.5 m above each storey's floor; the upper values include
+        estimated 1.6 m pedestals.
+        Inner arches at nine tenths of the exterior width, the 4.5 m corridor, wall depths, mouldings and
+        barrel vaults are also estimates.
+    cite: [S86, S86V, M01]
+  - id: orders
+    labels: [orders]
     status: estimated
-    name: { zh: 椭圆主体和座席的简化复原, en: Simplified oval body and seating }
+    name: { zh: 半柱、檐部和栏墙, en: Half-columns, entablatures and parapets }
     note:
-      zh: 外框189×156米和高约48米依整座建筑的公开尺寸取值；座席坡度、分带和4米场边墙为估配。等厚座席环使中央场地成为79×46米，长轴比市府的76米多3米。主体是一整件，无法把有据外框与推测断面分开着色，因此整体标为推测。上缘没有另分顶层实墙、屋顶、雕刻或遮阳篷，也不证明80年全部顶层完工；地下木构和后来永久砌体都没有建模。
+      zh: 国王学院的建筑条目逐层列明托斯卡纳、爱奥尼、科林斯式半柱，与模型一致。模型半柱半径0.5米，上两层柱座和栏墙高1.6米，三层统一采用高1.7米的简化檐部；这些尺寸、脚部台阶和柱础柱头轮廓均为默认估值，不能当作80年实测。柱头没有雕刻细节。
       en: >-
-        The 189 by 156 m exterior and rounded 48 m height follow published overall dimensions. Seating slopes,
-        bands and the 4 m arena wall are estimates. A constant-depth band makes the arena 79 by 46 m,
-        3 m longer than the municipal figure. The body is one indivisible model record, so its sourced outline
-        cannot be tinted separately from its estimated section; the whole is marked as estimated. Its upper
-        edge does not separately model the attic, roofs, sculpture or awning, or establish their completion
-        in 80 CE. Neither the early timber substructures nor the later permanent masonry are modelled.
-    cite: [S86, S86V, E07, E08]
+        The King's College entry identifies Tuscan, Ionic and Corinthian engaged columns in ascending
+        order, matching the model. Half-column radius 0.5 m, upper pedestals and parapets 1.6 m high,
+        uniform 1.7 m entablatures, foot steps, bases and capital profiles are default estimates, not
+        measurements established for 80 CE. Capitals omit carved detail.
+    cite: [S06]
+  - id: attic
+    labels: [attic]
+    status: estimated
+    name: { zh: 顶层实墙, en: The attic }
+    note:
+      zh: 实墙层画出壁柱、隔券一窗、外托架和檐口桅杆孔，但没有桅杆。0.6米估定台基与三层拱廊之和使其从34.55米升至48米，高13.45米；这只是模型分配，不是80年顶层实测。窗、壁柱柱头和托架尺寸为估值。同期钱币画出完整顶层，晚期编年史又把完成工程归于多米提安，因此开幕时状态仍有保留。
+      en: >-
+        The solid attic has pilasters, alternate-bay windows, outer corbels and mast sockets in the cornice,
+        without masts. An estimated 0.6 m base plus the three storeys places it between 34.55 and 48 m: its 13.45 m height
+        is a model allocation, not an 80 CE measurement. Windows, pilaster capitals and corbels are estimates.
+        Contemporary coins show a complete attic, while a late chronicle credits Domitian with completion;
+        its opening-period state remains uncertain.
+    cite: [S06, S86V, E09]
+  - id: cavea
+    labels: [cavea]
+    status: estimated
+    name: { zh: 座席和顶上柱廊, en: The seating and the colonnade above it }
+    note:
+      zh: 模型座席分三段，由上向下为10、24、4排，段间有通道、矮墙和暗色出口，64条阶梯分开座席。顶上柱廊有160柱，高7米，带一圈平顶。排数、坡度、阶梯和出口数量、40米平台高度及柱廊细部均为默认估配；尤其不能把这套完整顶层安排认定为80年开幕实况。
+      en: >-
+        Three seating bands have 10, 24 and 4 rows from top to bottom, with passages, dividing walls,
+        dark entrance panels and 64 stairs. A flat-roofed upper colonnade has 160 columns, 7 m high.
+        Row counts, rake, stair and entrance counts, the 40 m terrace and colonnade details are default
+        estimates. This complete upper arrangement is not established as the state at the opening in 80 CE.
+    cite: [S86]
+  - id: arena
+    labels: [podium, arena]
+    status: estimated
+    name: { zh: 场边矮墙和中央场地, en: The arena wall and the arena }
+    note:
+      zh: 中央场地由55米等宽环算成约79×46米，比市府所列长3米。场边平台面约4.9米、栏墙顶约5.8米；这些高度都是模型估值。沙面有文献依据，木地板厚度、下部房间和机械没有建模，不能画成今天的露天地下遗址。
+      en: >-
+        A 55 m constant-depth ring gives an arena about 79 by 46 m, 3 m longer than the municipal figure.
+        The arena-side terrace is about 4.9 m high and the wall top about 5.8 m; these heights are model estimates. Sand is documented.
+        Timber floor thickness, rooms below and machinery are not modelled; the arena must not become
+        today's open excavation.
+    cite: [S86, E07]
 
-# True-model bounds and perspective projection were checked numerically before
-# choosing distances. These also leave the whole body inside a phone's central
-# 62.5% image band. Root must inspect native clean refs before generating pictures.
+# Approved viewpoints retained. Detailed-model refs, framing and final pictures require runtime review.
 viewpoints:
   - { id: south, main: true, at_m: [0, 0, 22], az: 0, el: 22, d_m: 300, fov: 38, name: { zh: 从南面看, en: From the south } }
   - { id: northeast, at_m: [0, 0, 22], az: 120, el: 38, d_m: 310, fov: 38, name: { zh: 东北面俯瞰, en: Above the north-east } }
@@ -93,8 +140,8 @@ viewpoints:
 sources:
   S06:
     short: { zh: 伦敦国王学院, en: King's College London }
-    zh: 伦敦国王学院《Art of Making》，Colosseum条目：80年启用、观众容量、材料和外廊构成；所列考古书目未另行核读
-    en: "King's College London, Art of Making, Colosseum entry: inauguration, capacity, materials and exterior; its archaeological bibliography was not separately read"
+    zh: 伦敦国王学院《Art of Making》，Colosseum条目正文：80年启用、材料、三层依次托斯卡纳／爱奥尼／科林斯式半柱及顶层壁柱；所列考古书目未另行核读
+    en: "King's College London, Art of Making, Colosseum entry: inauguration, materials, Tuscan/Ionic/Corinthian engaged columns and attic pilasters; its archaeological bibliography was not separately read"
     url: https://aofm-os.kdl.kcl.ac.uk/explore/monuments/113/
   S86:
     short: { zh: 罗马市府, en: Roma Capitale }
@@ -103,8 +150,8 @@ sources:
     url: https://www.turismoroma.it/it/node/1155
   S86V:
     short: { zh: 博洛尼亚遮阳篷研究，第22页, en: Bologna awning study, p. 22 }
-    zh: Eugenio D'Anna与Pier Gabriele Molari《Il velarium del Colosseo：una nuova interpretazione》，第22页：三层拱廊、每层80券及上方实墙；不采用其遮阳篷复原和不同的场地尺寸
-    en: "Eugenio D'Anna and Pier Gabriele Molari, Il velarium del Colosseo: una nuova interpretazione, p. 22: three arcaded levels, 80 bays and the wall above; its awning reconstruction and differing arena dimensions are not adopted"
+    zh: Eugenio D'Anna与Pier Gabriele Molari《Il velarium del Colosseo：una nuova interpretazione》，第3、9、22页：初期遮阳的保留、提图斯币图像与外墙构成；不采用其遮阳篷结构复原和不同的场地尺寸
+    en: "Eugenio D'Anna and Pier Gabriele Molari, Il velarium del Colosseo: una nuova interpretazione, pp. 3, 9, 22: uncertainty about the earliest awning, Titus coin imagery and exterior composition; its awning design and differing arena dimensions are not adopted"
     url: https://amsacta.unibo.it/6307/1/Velarium%2007-01-2020%2B.pdf
   E07:
     short: { zh: 考古公园地下设施介绍, en: Archaeological park, substructures }
@@ -116,3 +163,13 @@ sources:
     zh: Rabun Taylor等《New Wine for Old Bottles》，The Waters of Rome 9（2016），第26页注29：引用晚期编年史讨论多米提安完成顶层；未核读所引古代原文
     en: "Rabun Taylor et al., New Wine for Old Bottles, The Waters of Rome 9 (2016), p. 26, note 29: cites a late chronicle for Domitian's completion of the attic; the cited ancient text was not separately read"
     url: https://waters.iath.virginia.edu/Journal9Taylor_et_al.pdf
+  E09:
+    short: { zh: Elkins，2006，第212页, en: Elkins, 2006, p. 212 }
+    zh: Nathan T. Elkins《The Flavian Colosseum Sestertii：Currency or Largess?》，Numismatic Chronicle 166（2006），第212页：80—81年钱币已画顶层圆盾，但图像不证明工程完成；实读作者上传的原论文正文
+    en: "Nathan T. Elkins, The Flavian Colosseum Sestertii: Currency or Largess?, Numismatic Chronicle 166 (2006), p. 212: coins of 80–81 depict the attic and shields without establishing completion; read in the author's uploaded article"
+    url: https://www.academia.edu/354684/_The_Flavian_Colosseum_Sestertii_Currency_or_Largess_Numismatic_Chronicle_166_2006_211_221
+  M01:
+    short: { zh: Colagrossi，1913，第42页, en: Colagrossi, 1913, p. 42 }
+    zh: P. Colagrossi《L'Anfiteatro Flavio nei suoi venti secoli di storia》（1913），第一部第二章第42页：三层总高与券宽；这段描述现存建筑，没有提供80年状态的逐项分期测绘
+    en: "P. Colagrossi, L'Anfiteatro Flavio nei suoi venti secoli di storia (1913), Part I, chapter II, p. 42: storey heights and arch widths; describes the monument without a phase-by-phase survey of its state in 80 CE"
+    url: https://www.gutenberg.org/files/68663/68663-h/68663-h.htm#cap2-1

@@ -1,4 +1,4 @@
-# Existing completed landmark: no 1656–1667 colonnade. Model proportions and all original records remain unchanged.
+# Detailed exterior from the completed film landmark; no colonnade of 1656–1667.
 id: new_st_peters
 node: made_again
 landmark: {kind: parts, id: rome07_renaissance_newstpeter}
@@ -33,9 +33,9 @@ label:
   - head: {zh: 有尺寸依据，也有量体估值, en: Dimensions and interpretation}
     text:
       zh: >-
-        立面采用梵蒂冈公布的116米宽、45.5米高（不含顶像）；穹顶沿用同一来源从街面到十字顶133.3米的口径。白模按原高度展示，堂身、侧翼、鼓座分层和小穹顶的许多细尺寸仍是图像约束的估值。模型简化了窗饰、雕像与室内，没有把今天的全部装饰当作1626年的完成状态。
+        立面采用梵蒂冈公布的116米宽、45.5米高（不含顶像）；穹顶沿用同一来源从街面到十字顶133.3米的名义总高。白模按原高度展示。堂身壁柱、窗框与山花、鼓座扶壁和檐口、穹顶三层老虎窗、阳台与栏杆都已画出，但多数细尺寸与剖面是依现存外观估配，未逐一证实为1626年的形制。雕像、铭文和室内未复原。
       en: >-
-        The façade follows the Vatican's published width of 116 m and height of 45.5 m excluding statues; the dome follows its 133.3 m street-to-cross measurement. The white model uses unstretched heights, while many dimensions of the body, wings, drum and smaller domes remain estimates constrained by images. Window decoration, statues and the interior are simplified; today's complete decoration is not presented as the state of 1626.
+        The façade follows the Vatican's published width of 116 m and height of 45.5 m excluding statues; the dome follows its nominal 133.3 m street-to-cross height. The white model uses unstretched heights. Body pilasters, window frames and pediments, drum buttresses and cornices, three rows of dome dormers, balconies and balustrades are modelled. Most smaller dimensions and profiles are estimated from the standing building and are not individually verified for 1626. Statues, inscriptions and the interior are not reconstructed.
     cite: [V3, V4, A1, F1]
 life:
   text:
@@ -47,13 +47,13 @@ life:
 parts:
   - id: facade
     labels: [facade, facade_pediment, facade_giant_columns*]
-    status: sourced
+    status: estimated
     name: {zh: Maderno立面与巨柱, en: Maderno's façade and giant columns}
     note:
       zh: >-
-        官方记立面116×45.50米、巨柱高27.48米、直径2.77米、中央山墙30×7.50米。模型保留这些尺寸，八根柱子分段表示柱脚、柱身和简化柱头；柱位、洞口细形及进深为图像估值，科林斯叶饰和顶像未复原。
+        官方记立面116×45.50米、巨柱高27.48米、直径2.77米、中央山墙30×7.50米。模型保留这些主要尺寸，画八根圆柱、端部壁柱及带线脚的中央山墙；柱脚、收分柱身和柱头分开表现。柱位、分段比例、卷涡和檐线剖面仍是估配，未逐叶雕刻科林斯柱头，也未复原顶像。
       en: >-
-        The official dimensions are 116 by 45.50 m for the façade, columns 27.48 m high and 2.77 m across, and a central pediment 30 by 7.50 m. The model retains these values and gives the eight columns simplified bases, shafts and capitals. Positions, opening shapes and depths are image-based estimates; Corinthian foliage and rooftop figures are not reconstructed.
+        The official dimensions are 116 by 45.50 m for the façade, columns 27.48 m high and 2.77 m across, and a central pediment 30 by 7.50 m. The model retains these principal values, with eight round columns, end pilasters and a moulded central pediment. Bases, tapering shafts and capitals are articulated. Positions, member proportions, scrolls and moulding profiles are estimated; individual Corinthian leaves and rooftop figures are not reconstructed.
     cite: [V4]
   - id: facade_detail
     labels: [facade_*]
@@ -61,18 +61,18 @@ parts:
     name: {zh: 立面细部, en: Façade details}
     note:
       zh: >-
-        入口、上层阳台和中央祝福阳台的存在有官方说明。模型使用规则化拱口、薄凸段、檐口、阁楼窗和低栏墙表示它们；开口比例、位置、层高与进深是图像估值，没有完整复原四壁龛、雕塑和栏杆。
+        官方记五个下层入口、五个上层阳台及四个较小壁龛。模型画平顶门洞、拱顶上层开口、中央祝福阳台、壁龛凹部、端部通道、窗框与山花，以及阳台和顶层的瓶形栏杆。开口比例、位置、进深、层高及栏杆形状和间距都是规则化估值，未逐项核定为1626年的细部；雕像、浮雕、纹章和铭文未画。
       en: >-
-        Official descriptions establish the entrances, upper balconies and central Loggia. Regularised arches, shallow projections, cornices, attic windows and low rails suggest them here. Opening proportions, positions, levels and depths are image-based estimates; niches, sculpture and balustrades are incomplete.
+        The official description records five lower entrances, five upper balconies and four smaller niches. The model shows lintelled portals, arched upper openings, the central Loggia, niche recesses, end passages, framed and pedimented windows, and turned balusters on balconies and the attic. Opening proportions, positions, depths, levels and baluster shapes and spacing are regularised estimates, not individually verified details of 1626. Statues, reliefs, coats of arms and inscriptions are omitted.
     cite: [V4]
   - id: drum
     labels: [drum, drum_columns, drum_columns_pair, drum_cornice]
     status: estimated
     name: {zh: 鼓座与成对柱, en: Drum and paired columns}
     note:
-      zh: 鼓座和成对柱形制有据，但模型的50米鼓座、20米分层高度、柱位和檐口剖面是量体估值。41.50米内口借官方穹顶内径作比较，不是鼓座壁厚的实测；内部双壳未复原。
+      zh: 鼓座的成对柱与扶壁关系有官方说明。模型画16组成对柱、扶壁、带交替山花的窗、柱基、檐口和上下基座分层。50米鼓座外径、20米高度及柱位、窗洞、扶壁和线脚细尺寸均是估配。官方41.50米是穹顶内径，不能当作鼓座实测壁厚；本页没有复原鼓座内壁或内部双壳。
       en: >-
-        The drum and paired-column articulation are documented, while the model's 50 m drum, 20 m height, column positions and cornice profile are massing estimates. Its 41.50 m opening borrows the published dome interior diameter as a comparison, rather than a measured drum wall thickness. The internal double shell is not reconstructed.
+        The official account describes paired columns associated with the buttresses. The model shows sixteen pairs, buttresses, windows with alternating pediments, pedestals, cornices and layered bases above and below the drum. Its 50 m outer diameter, 20 m height, positions and smaller dimensions are estimated. The published 41.50 m dimension is the dome's interior diameter, not a measured drum wall thickness; the drum's inner wall and the double shell are not reconstructed.
     cite: [V3]
   - id: dome
     labels: [shell, lantern, lantern_columns, lantern_columns_pair]
@@ -80,19 +80,19 @@ parts:
     name: {zh: 穹顶与灯亭, en: Dome and lantern}
     note:
       zh: >-
-        官方给出外部总高133.30米，并说明砖砌双壳和铅覆面。模型只画外形；主壳曲线、35米升高、肋的宽与凸出量、灯亭各段比例是估值。可见的16条肋和灯亭成对柱表示结构节奏，不能当逐件测绘。
+        官方给出133.30米外部总高，并说明砖砌双壳、铅覆面、三层带山花的老虎窗及灯亭成对柱。模型画外部主壳、16条肋、三层老虎窗和带窗灯亭。主壳曲线与35米升高、肋的尺寸、老虎窗位置和形状、灯亭柱列与各段比例都是估配；内部双壳和登顶通道未画。
       en: >-
-        The Vatican gives an overall exterior height of 133.30 m and describes a brick double shell with lead covering. This model shows the exterior only. The shell curve, 35 m rise, rib dimensions and lantern proportions are estimated. Sixteen ribs and paired lantern columns suggest the articulation rather than a measured reconstruction of every member.
+        The Vatican gives an overall exterior height of 133.30 m and describes a brick double shell, lead covering, three rows of pedimented dormers and paired lantern columns. The model shows the outer shell, sixteen ribs, three dormer rows and a windowed lantern. The shell curve and 35 m rise, rib dimensions, dormer positions and forms, lantern columns and member proportions are estimated; the internal shells and ascent passage are omitted.
     cite: [V3]
   - id: finial
     labels: [ball, cross, cross_bar]
-    status: sourced
+    status: estimated
     name: {zh: 顶球与十字架, en: Ball and cross}
     note:
       zh: >-
-        顶球与十字架在1593年安置；官方列球径2.50米、十字高3.33米。模型保留这一尺寸分支，细部剖面和结构连接经过简化。它们不属于米开朗基罗1564年去世时已完成的部分。
+        顶球与十字架在1593年安置；官方列球径2.50米、十字高3.33米、横臂宽2.40米。模型保留这些主要尺寸；球下颈部、杆件厚度、端部小块与连接形状是估配。它们不属于米开朗基罗1564年去世时已完成的部分。
       en: >-
-        The ball and cross were installed in 1593; the official figures give a ball 2.50 m across and a cross 3.33 m high. The model retains this dimensional branch with simplified profiles and connections. They were not complete at Michelangelo's death in 1564.
+        The ball and cross were installed in 1593; the official figures give a ball 2.50 m across and a cross 3.33 m high with a 2.40 m crossbar. The model retains these principal dimensions. The neck beneath the ball, member thicknesses, terminal blocks and connections are estimated. They were not complete at Michelangelo's death in 1564.
     cite: [V3]
   - id: small_domes
     labels: [small_dome_north, small_dome_south]
@@ -100,9 +100,9 @@ parts:
     name: {zh: 两侧小穹顶, en: The smaller domes}
     note:
       zh: >-
-        两侧小穹顶帮助辨认大殿的轮廓；模型的20米直径、位置、基座高度、壳形及灯亭均为图像约束的估值，不是有尺测绘。后期图像只作形制比较，不把图上所有广场设施提前到1626年。
+        两侧小穹顶帮助辨认大殿的轮廓。模型还画基座壁柱与窗框、鼓座窗、壳上肋条和带窗灯亭；20米直径、位置、各段高度、屋面曲线和这些细部均为图像约束的估值，没有逐件的1626年测绘。后期图像只作形制比较，不把图上所有广场设施提前。
       en: >-
-        The smaller domes help define the basilica's outline. Their 20 m diameter, positions, base heights, shell curves and lanterns are image-constrained estimates, not a measured survey. Later images serve as comparisons without carrying their complete square arrangements back to 1626.
+        The smaller domes help define the basilica's outline. The model also shows pilasters and framed windows on their bases, drum windows, ribs and windowed lanterns. Their 20 m diameter, positions, heights, roof curves and smaller details are image-constrained estimates without an individual survey of their state in 1626. Later images serve as formal comparisons without carrying their complete square arrangements back in time.
     cite: [A1, F1]
   - id: main
     labels: [western_body, cross_arm, western_apse, attic, long_nave]
@@ -110,9 +110,9 @@ parts:
     name: {zh: 十字堂身与东侧长殿, en: Crossing body and eastern nave}
     note:
       zh: >-
-        西部中央体、横向两翼、后殿和Maderno延长的东中殿有据。模型的具体房体尺度、42米堂身檐高、屋面和窗列是量体估配；不是把一张1590年旧新叠图当作1626年完整竣工图。内部礼拜堂与祭坛未画。
+        西部中央体、横向两翼、后殿和Maderno延长的东中殿有据。模型在堂身与后殿外墙画巨壁柱、分层檐线、带三角或弧形山花的窗，以及侧廊上方的高侧窗。房体尺度、42米堂身檐高、屋面、柱跨与这些细部都是估配；1590年旧新叠图不是1626年竣工图，细部也未逐一确认为当时形制。内部礼拜堂与祭坛未画。
       en: >-
-        The western core, transverse arms, apse and Maderno's eastern nave extension are documented. Specific body dimensions, 42 m eaves, roofs and window rows remain schematic estimates. A 1590 overlay of old and new is not treated as a complete as-built plan of 1626. Internal chapels and altars are omitted.
+        The western core, transverse arms, apse and Maderno's eastern nave extension are documented. Their exteriors carry giant pilasters, layered cornices, windows with triangular or segmental pediments, and clerestories above the aisles. Body dimensions, 42 m eaves, roofs, bays and smaller details are estimated. The 1590 overlay is not an as-built plan of 1626, and these details are not individually verified for that date. Internal chapels and altars are omitted.
     cite: [V1, V4, A1, F1]
 viewpoints:
   - {id: front, main: true, name: {zh: 从东面看立面, en: Façade from the east}, az: 90, el: 25, d_m: 480, fov: 36, at_m: [17.29, -0.3, 40]}
@@ -135,9 +135,9 @@ sources:
   V3:
     short: {zh: 梵蒂冈，穹顶与灯亭, en: Vatican, dome and lantern}
     zh: >-
-      梵蒂冈《Cupolone e Lanterna》：1564／1590／1593分期、133.30米外高、58.90米外径与41.50米内径、顶球和十字尺寸。本文已核读；营造处另有136.57米口径，基准未解，不平均。
+      梵蒂冈《Cupolone e Lanterna》：1564／1590／1593分期、133.30米外高、58.90米外径与41.50米内径、顶球和十字尺寸、三层老虎窗及灯亭成对柱。本文已核读；营造处另有136.57米口径，基准未解，不平均。
     en: >-
-      Vatican, Cupolone e Lanterna: stages in 1564, 1590 and 1593; exterior height 133.30 m, exterior diameter 58.90 m, interior diameter 41.50 m, and finial dimensions. The text was consulted. A separate Fabbrica figure of 136.57 m has an unresolved datum and is not averaged with it.
+      Vatican, Cupolone e Lanterna: stages in 1564, 1590 and 1593; exterior height 133.30 m, exterior diameter 58.90 m, interior diameter 41.50 m, finial dimensions, three dormer rows and paired lantern columns. The text was consulted. A separate Fabbrica figure of 136.57 m has an unresolved datum and is not averaged with it.
     url: https://www.vatican.va/content/vatican/it/ra/cupolone-lanterna.html
   V4:
     short: {zh: 梵蒂冈，Maderno立面, en: Vatican, Maderno's façade}
