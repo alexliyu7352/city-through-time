@@ -88,7 +88,13 @@ Computer and files
   next round's candidate is made from the city folder. Nothing the film is built from lives only in a candidate, a temporary folder, another disk or a script
   outside the project. A copy kept on as the next round's base becomes a second source: its timing drifts from the first, its files point into other rounds, and
   gathering the film's real sources back together costs a round of its own.
-- **Keep scripts in the project.** Put generator, measurement and check scripts in the city's `research/` or `tools/`, not only in a temp directory (it is cleared between rounds).
+- **Use the workspace's tools, and grow them in place.** Every step already has its tools here (the file map below; each step's doc names its own):
+  compile, the checks, `round.py`, `candidate.py`, `job.py`, stills, render, mixing, the web bundle. Run them as they are. When one falls short (a case it
+  does not handle, a check it lacks, a step that is too slow), change that tool in the workspace, generic for any city, with its doc, and list it in the
+  commit and the report. Never a parallel set of scripts of your own, a private copy of a pipeline step, or a build kept outside the city's folder: a
+  second tool chain drifts from the one the docs describe, and the next round, the next agent and anyone who clones the workspace can neither find, rerun
+  nor rebuild what it made. Scripts that only serve one city's sources (tracing a plan, measuring a picture, a generator for one quarter) go in the city's
+  `research/`, never only in a temp directory (it is cleared between rounds).
 - **List before deleting.** Delete only what the user named and obvious junk. Research notes, reports and source texts are the city's data; do not delete them. Before deleting, check file by file whether it is in git,
   whether a copy exists elsewhere, and whether a process is using it (`lsof +D <directory>`, `ps`).
 - **A new city is configuration, not code changes.** When fixing a problem, ask whether a mountain city, a city with no building data, or a non-Chinese city would hit it too; if the fix can be general, change the shared code.
