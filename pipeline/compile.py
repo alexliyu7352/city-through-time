@@ -89,6 +89,8 @@ if not (C.get('film') or {}).get('nodes'):
           f'node render/still.mjs {os.path.basename(D)} 3 8', flush=True)
 FM = C['film']
 LAYOUT.ensure(D)
+if FM.get('satellite_source', 'sentinel') not in ('sentinel', 'hr'):   # (read here, so a film with no satellite plate yet is not told the template's key is unread)
+    raise SystemExit(f"compile: film.satellite_source {FM['satellite_source']!r}: sentinel or hr (docs/DATA.md)")
 LANG = FM.get('lang', ['zh', 'en'])
 # the languages (pipeline/i18n.py, i18n/<code>.yaml): one or two, any that has a pack; the program's own words come from the packs
 import i18n
