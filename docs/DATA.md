@@ -7,7 +7,7 @@
 ## Getting started
 
 Copy `templates/city.yaml` to `cities/<slug>/city.yaml` and fill in the extent (box), scale and data sources;
-fetch OSM with `uv run python -I pipeline/osm.py cities/<slug>` (it fetches the city's area, worked out from the box in city.yaml); run `pipeline/terrain.py` (DEM) and `pipeline/satellite.py` (Sentinel-2) once each;
+fetch OSM with `uv run python -I pipeline/osm.py cities/<slug>` (it fetches the city's area, worked out from the box in city.yaml); fetch the buildings (CMAB unzipped, or for `overture_ghsl` both `pipeline/overture_ghsl.py fetch` and `ghsl`, below: `terrain.py` takes today's buildings out of the surface, so it stops until they are there); run `pipeline/terrain.py` (DEM) and `pipeline/satellite.py` (Sentinel-2) once each;
 produce the model with `uv run python -I pipeline/prep.py cities/<slug>`. Then render one white-model still to confirm the extent and scale.
 
 **Where downloads live.** Downloads stay outside git, under this machine's raw root (`raw` in `local/config.json`). What only one city uses, its OSM answers and
