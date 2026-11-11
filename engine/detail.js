@@ -3,17 +3,20 @@
 // boxes stay as they are, and what a body, a wall piece or a tower is gives what it carries, in its region's way (STYLES):
 // windows on every storey of its open faces, a door, a cornice under the eaves and a base at its foot (a Roman house); timber
 // posts and a beam across the front its door opens in, a stone base, ornaments at the ends of its ridge (a Chinese hall); a
-// small tiled coping on a yard wall; courses on a city wall (brick courses on an upright curtain, the lifts of rammed earth
-// on a battered one) and windows high in a curtain wall's towers. Nothing here knows a city: the same records of any city in a
-// region get the same detail.
-// eraDetail(prims, { scale, hex, style }) -> { kinds: { <kind>: { n, m: Float32Array (16 per instance), k: Float32Array (a
-//   lightness each), ctr: Float32Array (its building's centre, x z), rank: Float32Array (its building's rank) } }, count }:
+// small tiled coping on a yard wall; a city wall's courses as its face is built (WALL_FACES: the lifts of rammed earth, brick, stone,
+// stone with bands of brick), windows high in a curtain wall's towers; a gate's passage arched at both ends, its gatehouse
+// crenellated; a Chinese hall's columns lacquered and its beams painted. Nothing here knows a city: the same records of any city
+// in a region get the same detail.
+// eraDetail(prims, { scale, hex, style, face }) -> { kinds: { <kind>: { n, m: Float32Array (16 per instance), k: Float32Array (a
+//   lightness each), ctr: Float32Array (its building's centre, x z), rank: Float32Array (its building's rank), size: the piece's
+//   own size (model units: what detailMeshes fades it out by, as it gets too small to draw) } }, count }:
 //   plain arrays, so any look draws them (detailMeshes: one InstancedMesh a kind, coloured by the look); ctr and rank are the
 //   records' own (aCtr, aData.z), so a film that raises a city building by building can raise these pieces with their building.
-// hex: the period city's height exaggeration (city.yaml era `exaggeration`, the generator's default 2): a storey's drawn height
-// and every piece's height scale with it, widths do not.
+// hex: the period city's height exaggeration (city.yaml era `exaggeration`, film.json's era `exaggeration`; the generator's
+// default 2): a storey's drawn height and every piece's height scale with it, widths do not. face: what the city's walls are
+// faced with where its walls say (city.yaml walls `face`, film.json's era `wall_face`): else a battered wall's rammed earth and an
+// upright one's its region's (STYLES wall).
 import * as THREE from 'three';
-import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const FAB = 0, LMK = 1, WALL = 2, DARK = 6, ROOF = 8, LROOF = 9;
 // what a region's buildings carry, in metres (heights before the exaggeration). storey: a storey's height where the records do
@@ -22,22 +25,26 @@ const FAB = 0, LMK = 1, WALL = 2, DARK = 6, ROOF = 8, LROOF = 9;
 // openings are on its front, the generator's own); door: { w, h, arch }; cornice: { h, out } a band under the eaves; base: { h,
 // out } a plinth course at the foot; front: { post, every, beam } timber posts and a beam across the face the generator opened
 // (its door, its windows); ridgeEnds: ornaments at the ends of a ridge; coping: { h, over } a small roof on a yard wall;
-// courses: { every, h, from } bands on a city wall's faces (from: on 'upright' curtains, 'battered' earthworks or 'all');
-// towerWindows: { w, h, n } on each open face of a curtain wall's tower, high up; tiles: { every, w, t, verge: { w, t } } the
+// wall: what an upright city wall is faced with, where its walls do not say (WALL_FACES); towerWindows: { w, h, n } on each open face of a curtain wall's tower, high up; tiles: { every, w, t, verge: { w, t } } the
 // rows of a tiled roof down each slope of a gable (筒瓦 rows, drawn wider apart than they are, so they read at a model's scale)
 // and the heavier ridge down each of its gable edges (垂脊)
 export const STYLES = {
   roman: {
     storey: 3.5, window: { w: 1.0, h: 1.5, every: 3.6, sill: .38, arch: true }, door: { w: 1.5, h: 2.5, arch: true },
     cornice: { h: .38, out: .22 }, base: { h: .55, out: .06 }, front: null, ridgeEnds: false, coping: { h: .32, over: .14 },
-    courses: { every: 1.6, h: .32, from: 'all' }, towerWindows: { w: 1.3, h: 2.1, n: 2 }, tiles: null,
+    wall: 'brick', towerWindows: { w: 1.3, h: 2.1, n: 2 }, tiles: null, halls: null,
   },
   chinese: {
     storey: 3.6, window: null, door: null, cornice: null, base: { h: .6, out: .1 },
     front: { post: .34, every: 2.8, beam: .45 }, ridgeEnds: true, coping: { h: .42, over: .2 },
-    courses: { every: 1.1, h: .1, from: 'battered' }, towerWindows: null, tiles: { every: .75, w: .24, t: .13, verge: { w: .42, t: .32 } },
+    wall: 'earth', towerWindows: null, tiles: { every: .75, w: .24, t: .13, verge: { w: .42, t: .32 } }, halls: { column: .65, beam: .7 },
   },
 };
+// halls: { column, beam } a timber hall's (citygen hall) columns this thick and its architrave this high, in metres: the columns
+// lacquered, the beam painted (a Chinese hall's)
+// a city wall's face (city.yaml walls `face`): the courses it shows, every `every` metres, `h` high: rammed earth's lifts, brick's
+// courses (faint), stone's, a stone wall's bands of brick
+export const WALL_FACES = { earth: { every: 1.1, h: .1 }, brick: { every: .8, h: .07 }, stone: { every: 1.0, h: .06 }, banded: { every: 1.6, h: .32 } };
 STYLES.modern = STYLES.roman;   // (the palette `modern`: a European town's houses)
 
 // the pieces' shapes, each a unit: x across (-.5..5), y up (0..1), z out of the face (-.5..5; a flat one at z 0, facing +z)
@@ -56,13 +63,27 @@ function hornGeometry() {   // a ridge's end (a common house's 蠍子尾, simply
   const s = new THREE.Shape(); s.moveTo(-.5, 0); s.lineTo(.15, 0); s.lineTo(.5, .62); s.lineTo(.62, 1); s.lineTo(.3, .96); s.lineTo(.02, .5); s.lineTo(-.5, .5); s.closePath();
   return new THREE.ExtrudeGeometry(s, { depth: 1, bevelEnabled: false }).translate(0, 0, -.5);
 }
+function spandrelGeometry(spring = .6, apex = .94, n = 9) {   // a passage's end above its arch: the wall's face across the corners, the arch cut out of it
+  const s = new THREE.Shape(); s.moveTo(.5, spring); s.lineTo(.5, 1); s.lineTo(-.5, 1); s.lineTo(-.5, spring);
+  for (let i = n - 1; i > 0; i--) { const a = Math.PI * i / n; s.lineTo(.5 * Math.cos(a), spring + (apex - spring) * Math.sin(a)); }
+  s.closePath(); return new THREE.ShapeGeometry(s, 1);
+}
+function ringGeometry(spring = .6, apex = .94, band = .08, n = 9) {   // the arch's ring of voussoirs round it
+  const s = new THREE.Shape(), pts = [];
+  for (let i = 0; i <= n; i++) { const a = Math.PI * i / n; pts.push([(.5 + band) * Math.cos(a), spring + (apex - spring + band) * Math.sin(a)]); }
+  s.moveTo(...pts[0]); for (const q of pts.slice(1)) s.lineTo(...q);
+  for (let i = n; i >= 0; i--) { const a = Math.PI * i / n; s.lineTo(.5 * Math.cos(a), spring + (apex - spring) * Math.sin(a)); }
+  s.closePath(); return new THREE.ShapeGeometry(s, 1);
+}
 export const SHAPES = { window: () => arched(), door: () => arched(.66), pane: () => new THREE.PlaneGeometry(1, 1).translate(0, .5, 0),
+  spandrel: () => spandrelGeometry(), archRing: () => ringGeometry(), merlon: box, parapet: box, column: box,
+  course_earth: box, course_brick: box, course_stone: box, course_banded: box,
   cornice: box, base: box, post: box, beam: box, course: box, coping: capGeometry, ridgeEnd: hornGeometry,
   tile: () => new THREE.BoxGeometry(1, 1, 1), verge: () => new THREE.BoxGeometry(1, 1, 1) };   // (a row of tiles: x down the slope, y out of it, centred)
 // which kinds cast a shadow (a flat opening or a thin course does not: it would only darken itself)
-export const SHADOW = { cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true };
+export const SHADOW = { cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true };
 
-export function eraDetail(prims, { scale, hex = 2, style = 'roman' } = {}) {
+export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null } = {}) {
   const ST = STYLES[style] || STYLES.roman, M = scale, V = scale * hex;   // M: a metre across; V: a metre up, as drawn
   const R = prims.map(p => ({ t: p[0], x: p[1], z: p[2], rot: p[3], y0: p[4], a: p[5], b: p[6], c: p[7], d: p[8], e: p[9], rank: p[10], part: p[11], g: p[12],
     gx: p[13] || 0, gz: p[14] || 0, bx: p[15] ?? p[1], bz: p[16] ?? p[2] }));
@@ -205,20 +226,18 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman' } = {}) {
   }
 
   // ---------------------------------------------------------------- city walls: courses; windows high in a curtain's towers
-  const CO = ST.courses;
+  const faceOfWall = battered => face || (battered ? 'earth' : ST.wall);   // (what a wall piece is faced with)
   for (const r of R) {
     if (r.part !== WALL || !(r.t === 0 || r.t === 2) || r.d === 1) continue;
     const y0 = r.y0, h = r.c, g = r.g, faces = r.t === 0 && Math.abs(r.a - r.b) < .5 * Math.max(r.a, r.b) ? [0, 1, 2, 3] : [2, 3];   // (a tower: all round; a wall piece: its two long faces)
     if (Math.min(r.a, r.b) < 1.5 * M || (top(r) - Math.max(y0, g)) / V < 2.5) continue;   // (not a parapet, a merlon)
-    const battered = r.t === 2, tower = faces.length === 4;
-    if (CO && (CO.from === 'all' || CO.from === (battered ? 'battered' : 'upright'))) {
-      for (const f of faces) {
-        const F = faceOf(r, f), lean = battered ? Math.atan2((F.nx ? r.a - r.d : r.b - r.e) / 2, h) : 0;   // (a battered face leans in as it rises)
-        for (let y = g + CO.every * V; y < top(r) - .4 * V; y += CO.every * V) {
-          const fr = (y - y0) / h, half = battered ? F.half + ((F.nx ? r.d : r.e) / 2 - F.half) * fr : F.half, w = battered ? F.w + ((F.nx ? r.e : r.d) - F.w) * fr : F.w;
-          const lx = F.nx ? F.nx * (half + .02 * M) : 0, lz = F.nz ? F.nz * (half + .02 * M) : 0, [X, Z] = world(r, lx, lz);
-          put('course', r, X, y + shear(r, X, Z), Z, F.phi, w + .04 * M, CO.h * V, .06 * M, -lean, .9 + .2 * hash(X, y));
-        }
+    const battered = r.t === 2, tower = faces.length === 4, fk = faceOfWall(battered), CO = WALL_FACES[fk];
+    for (const f of faces) {
+      const F = faceOf(r, f), lean = battered ? Math.atan2((F.nx ? r.a - r.d : r.b - r.e) / 2, h) : 0;   // (a battered face leans in as it rises)
+      for (let y = g + CO.every * V; y < top(r) - .4 * V; y += CO.every * V) {
+        const fr = (y - y0) / h, half = battered ? F.half + ((F.nx ? r.d : r.e) / 2 - F.half) * fr : F.half, w = battered ? F.w + ((F.nx ? r.e : r.d) - F.w) * fr : F.w;
+        const lx = F.nx ? F.nx * (half + .02 * M) : 0, lz = F.nz ? F.nz * (half + .02 * M) : 0, [X, Z] = world(r, lx, lz);
+        put('course_' + fk, r, X, y + shear(r, X, Z), Z, F.phi, w + .04 * M, CO.h * V, .06 * M, -lean, .9 + .2 * hash(X, y));
       }
     }
     if (tower && ST.towerWindows && !battered && r.c > 0) {
@@ -231,15 +250,63 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman' } = {}) {
     }
   }
 
+  // ---------------------------------------------------------------- gates: a passage (a dark box the generator cut through a
+  // wall piece of its own building, citygen walls) arched at both its ends, the wall's face across the corners above the arch
+  // and a ring of voussoirs round it; its gatehouse crenellated along both its long edges (a parapet, merlons), a curtain's
+  // with windows high above the passage
+  const wallsOf = new Map();
+  for (const r of R) if (r.part === WALL && r.t === 0 && Math.min(r.a, r.b) >= 1.5 * M) (wallsOf.get(bkey(r)) || wallsOf.set(bkey(r), []).get(bkey(r))).push(r);
+  const gated = new Set();
+  for (const q of R) {
+    if (q.part !== DARK || q.t !== 0) continue;
+    const host = (wallsOf.get(bkey(q)) || []).find(r => { const [lx, lz] = local(r, q.x, q.z); return Math.abs(lx) < r.a / 2 && Math.abs(lz) < r.b / 2 && q.b > r.b * .8; });
+    if (!host) continue;
+    const fl = Math.max(q.y0, floor(host)), H = top(q) - fl, fk = faceOfWall(false);
+    for (const e of [-1, 1]) {   // (each end of the passage, out of the gatehouse's face)
+      const [X, Z] = world(q, 0, e * (q.b / 2 + .03 * M)), phi = -q.rot + (e > 0 ? 0 : Math.PI);
+      put('spandrel_' + fk, q, X, fl + shear(q, X, Z), Z, phi, q.a, H, 1);
+      const [X2, Z2] = world(q, 0, e * (q.b / 2 + .05 * M)); put('archRing', q, X2, fl + shear(q, X2, Z2), Z2, phi, q.a, H, 1);
+    }
+    if (gated.has(host)) continue; gated.add(host);
+    const lng = host.a >= host.b, L = lng ? host.a : host.b, Tk = lng ? host.b : host.a, ph = -host.rot + (lng ? 0 : Math.PI / 2), yt = top(host);
+    for (const side of [-1, 1]) {   // (both long edges: the field side and the city's)
+      const off = side * (Tk / 2 - .4 * M), [PX, PZ] = world(host, lng ? 0 : off, lng ? off : 0);
+      put('parapet_' + fk, host, PX, yt + shear(host, PX, PZ), PZ, ph, L, .9 * V, .8 * M);
+      const nm = Math.max(2, Math.floor(L / M / 2.8));
+      for (let i = 0; i < nm; i++) { const a_ = L * ((i + .5) / nm - .5), [X, Z] = world(host, lng ? a_ : off, lng ? off : a_);
+        put('merlon_' + fk, host, X, yt + .9 * V + shear(host, X, Z), Z, ph, 1.4 * M, 1.0 * V, .8 * M); }
+    }
+    if (ST.towerWindows) {   // (a curtain's gatehouse: two arched windows on each long face, over the passage)
+      const TW = ST.towerWindows, yw = yt - (TW.h + 1.6) * V;
+      if (yw > top(q) + .6 * V) for (const f of (lng ? [2, 3] : [0, 1])) { const F = faceOf(host, f);
+        for (const s_ of [-.28, .28]) { const [X, Z] = onFace(host, F, F.w * s_, .05 * M); put('window', host, X, yw + shear(host, X, Z), Z, F.phi, TW.w * M, TW.h * V, 1, 0, .8); } }
+    }
+  }
+
+  // ---------------------------------------------------------------- a timber hall's columns lacquered, its architrave painted
+  if (ST.halls) for (const r of R) {
+    if (r.part !== LMK || r.t !== 0) continue;
+    const HL = ST.halls;
+    if (Math.abs(r.a - HL.column * M) < .06 * M && Math.abs(r.b - HL.column * M) < .06 * M && r.c > 1.5 * V)
+      put('column', r, r.x, floor(r) + shear(r, r.x, r.z), r.z, -r.rot, (HL.column + .08) * M, top(r) - floor(r), (HL.column + .08) * M);
+    else if (Math.abs(r.c - HL.beam * V) < .04 * V && Math.min(r.a, r.b) > 3 * M)
+      put('beam', r, r.x, r.y0 - .02 * V + shear(r, r.x, r.z), r.z, -r.rot, r.a + .06 * M, r.c + .04 * V, r.b + .06 * M);
+  }
+
   // ---------------------------------------------------------------- packed
   const kinds = {}, m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(0, 0, 0, 'YXZ'), p = new THREE.Vector3(), sc = new THREE.Vector3();
+  // each kind's size as it is seen (model units): the faint courses by their spacing, a row of tiles by the rows' spacing, a
+  // band by its height, the rest by their width
+  const T_ = ST.tiles || {}, SIZE = { window: 1 * M, door: 1.5 * M, cornice: .38 * V, base: .55 * V, post: .34 * M, beam: .45 * V, coping: .4 * M, ridgeEnd: .6 * M,
+    tile: (T_.every || .75) * M, verge: .42 * M, spandrel: 4 * M, archRing: 4 * M, merlon: 1.4 * M, parapet: .9 * V, column: .7 * M,
+    ...Object.fromEntries(Object.entries(WALL_FACES).flatMap(([k, F]) => [['course_' + k, F.every * V], ['spandrel_' + k, 4 * M], ['parapet_' + k, .9 * V], ['merlon_' + k, 1.4 * M]])) };
   let count = 0;
   for (const [kind, L] of Object.entries(out)) {
     const n = L.length, m = new Float32Array(n * 16), k = new Float32Array(n), ctr = new Float32Array(n * 2), rank = new Float32Array(n);
     L.forEach(([x, y, z, phi, sx, sy, sz, tilt, kk, bx, bz, rk, roll], i) => {
       e.set(tilt, phi, roll); q.setFromEuler(e); m4.compose(p.set(x, y, z), q, sc.set(sx, sy, sz)).toArray(m, i * 16);
       k[i] = kk; ctr[i * 2] = bx; ctr[i * 2 + 1] = bz; rank[i] = rk; });
-    kinds[kind] = { n, m, k, ctr, rank }; count += n;
+    kinds[kind] = { n, m, k, ctr, rank, size: SIZE[kind] || M }; count += n;
   }
   return { kinds, count };
 }
@@ -260,20 +327,37 @@ export function gableEnds(g) {
   return out;
 }
 
+// the fade: a piece shrinks to nothing about its own origin as it gets too small on screen to draw (its size, kinds[].size, under
+// FADE_PX pixels: from FADE_PX[1] down to FADE_PX[0]), so a far roof's rows of tiles, a far wall's courses and windows neither
+// shimmer as the camera moves nor sum to a darker grey; a near one is drawn whole. pxK: { value } a model unit's pixels at one model
+// unit's distance (projectionMatrix[1][1] times half the picture's height in pixels), the look's to set each frame
+export const FADE_PX = [1.1, 2.6];
+const FADE_GLSL = /* glsl */`
+  { vec4 o_ = modelMatrix * instanceMatrix * vec4(0., 0., 0., 1.);
+    float px_ = uDetSize * uPxK / max(distance(cameraPosition, o_.xyz), 1e-6);
+    transformed *= smoothstep(${FADE_PX[0].toFixed(2)}, ${FADE_PX[1].toFixed(2)}, px_); }`;
+function fading(mat, size, pxK) {
+  mat.onBeforeCompile = sh => { sh.uniforms.uDetSize = { value: size }; sh.uniforms.uPxK = pxK;
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uDetSize, uPxK;').replace('#include <begin_vertex>', '#include <begin_vertex>' + FADE_GLSL); };
+  mat.customProgramCacheKey = () => 'detail-fade'; return mat;
+}
+
 // one InstancedMesh a kind: cols { <kind>: colour, or (bx, bz) -> THREE.Color: its building's own (a roof's tiles in that roof's
-// colour) }, each piece that colour times its lightness; o.layer: the layer it is drawn on
+// colour) }, each piece that colour times its lightness; o.layer: the layer it is drawn on; o.pxK: the fade's (FADE_PX; none: no fade)
 export function detailMeshes(D, cols, o = {}) {
   const group = new THREE.Group(), c = new THREE.Color(), base = new THREE.Color();
   for (const [kind, K] of Object.entries(D.kinds)) {
     if (!cols[kind]) continue;
-    const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .92, metalness: 0, side: kind === 'window' || kind === 'door' ? THREE.DoubleSide : THREE.FrontSide });
-    const mesh = new THREE.InstancedMesh(SHAPES[kind](), mat, K.n);
+    const root = kind.split('_')[0];   // (a kind by a wall's face: course_brick, merlon_earth ..: its shape and its shadow the root's)
+    const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .92, metalness: 0, side: ['window', 'door', 'spandrel', 'archRing'].includes(root) ? THREE.DoubleSide : THREE.FrontSide });
+    const mesh = new THREE.InstancedMesh((SHAPES[kind] || SHAPES[root])(), o.pxK ? fading(mat, K.size, o.pxK) : mat, K.n);
     mesh.instanceMatrix.array.set(K.m); mesh.instanceMatrix.needsUpdate = true;
     const own = typeof cols[kind] === 'function'; if (!own) base.set(cols[kind]);
     for (let i = 0; i < K.n; i++) mesh.setColorAt(i, (own ? c.copy(cols[kind](K.ctr[i * 2], K.ctr[i * 2 + 1])) : c.copy(base)).multiplyScalar(K.k[i]));
     mesh.instanceColor.needsUpdate = true;
     mesh.geometry.setAttribute('iCtr', new THREE.InstancedBufferAttribute(K.ctr, 2)); mesh.geometry.setAttribute('iRank', new THREE.InstancedBufferAttribute(K.rank, 1));
-    mesh.castShadow = !!SHADOW[kind]; mesh.receiveShadow = true; mesh.frustumCulled = false;
+    mesh.castShadow = !!SHADOW[root]; mesh.receiveShadow = true; mesh.frustumCulled = false;
+    if (mesh.castShadow && o.pxK) mesh.customDepthMaterial = fading(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), K.size, o.pxK);
     if (o.layer != null) mesh.layers.set(o.layer);
     mesh.name = 'detail:' + kind; group.add(mesh);
   }

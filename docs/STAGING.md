@@ -263,12 +263,15 @@ and `&ground=land|modern` (open land, or a paved city's ground); `node tools/loo
   in the white model, and none of them needs the colour look. The colour look draws only in the period cities' viewer (no film, no
   live player, nothing on a phone): a city may use it to look at its period cities with the palette of its region and period
   (lookshots stills beside eraview's sheets, MODEL.md), never in place of the white model's checks, and no step waits on it.
-- **Detail in the colour look** (`engine/detail.js`) is read from a period city's records, so it needs no setting and no compile:
+- **Detail in the colour look** (`engine/detail.js`) is read from a period city's records and its entry in film.json (its height
+  exaggeration, what its walls are faced with), so it needs no setting of its own:
   what a body, a roof, a yard wall, a city wall or a tower is gives what it carries, in its region's way (`STYLES`, chosen by the
   palette): a Roman house its windows on every storey of its open faces, a door, a cornice and a base; a Chinese hall its posts and
-  beam across the front the generator opened, a stone base, its roof's rows of tiles and its ridge's ends; a yard wall its coping; a
-  city wall its courses (brick on an upright curtain, the lifts of rammed earth on a battered one), a curtain's towers their windows.
-  A region with buildings of its own (a 1900s Shanghai lane house, 里弄 (lane neighbourhood), say) gets a style there and its
+  beam across the front the generator opened, a stone base, its roof's rows of tiles and its ridge's ends, a hall its lacquered
+  columns and painted beam; a yard wall its coping; a city wall its face and courses as its walls say it is faced (MODEL.md walls
+  `face`; else a battered wall rammed earth, an upright one its region's), a curtain's towers their windows, a gate its arched
+  passage and crenellated gatehouse. Each piece fades out as it gets too small on screen to draw (detail.js `FADE_PX`), so far roofs
+  and walls neither shimmer as the camera moves nor turn a darker grey. A region with buildings of its own (a 1900s Shanghai lane house, 里弄 (lane neighbourhood), say) gets a style there and its
   palette's colours for those pieces, not edits to one city. `&detail=0` draws without it (beside it, for a sheet: lookshots
   `--seed` keeps the trees where they stood).
 - **The film itself (`engine/main.js`) draws only in the white look.** A film in the colour look is an engine change: propose it

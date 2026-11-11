@@ -17,7 +17,7 @@ import { VerticalTiltShiftShader } from 'three/addons/shaders/VerticalTiltShiftS
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { makePost } from './post.js';
 import { FX_SKY, RELIEF_GLSL, LAND_PALETTES, landLookGLSL, landPalette, woodsFn, treeField, makeSky, fxLens, fxAoRadius } from './fx.js';
-import { eraDetail, detailMeshes, gableEnds } from './detail.js';
+import { eraDetail, detailMeshes, gableEnds, STYLES } from './detail.js';
 
 const L = 1;   // the layer this look draws
 // with the effects: a bright day, as bright and as coloured as the look without them (the low warm sun, the haze and the occlusion
@@ -26,7 +26,8 @@ const MINI_LIFT = { sun: 1.5, sky: 1.45, haze: 3.5, ao: .3 };
 // the parts (pipeline/citygen.py): FAB 0, LMK 1, WALL 2, BRIDGE 3, TREE 4, WATER 5, DARK 6, PAVE 7, ROOF 8, LROOF 9, EARTH 10, PLINTH 11.
 // A house (FAB walls, ROOF) takes one of the walls and one of the roofs by its building's centre; the other parts their colour.
 // land: the fields' greens and straw (fx.js LAND_PALETTES, the white model's land under fx land too); glb: a detailed model's materials (tools/blender/kit.py); cypress: the share of tall
-// narrow trees; detail: the colours of the pieces engine/detail.js puts on the houses and walls (its kinds), in the palette's region's way (detail.js STYLES)
+// narrow trees; detail: the colours of the pieces engine/detail.js puts on the houses and walls (its kinds), in the palette's region's way (detail.js STYLES);
+// faces: a city wall's colour by what it is faced with (detail.js WALL_FACES), its courses a shade darker (a stone wall's bands of brick)
 const PALETTES = {
   roman: {
     walls: ['#ebe1cc', '#e8d4ab', '#ddc196', '#f1eadc', '#e4c9b0', '#d6b78f', '#efdcc0'],
@@ -34,7 +35,8 @@ const PALETTES = {
     parts: { 1: '#e6dcc8', 2: '#cdb38c', 3: '#cbbd9f', 4: '#5a7340', 5: '#4f8aa3', 6: '#2f2620', 7: '#d6caae', 9: '#a65d45', 10: '#c9b086', 11: '#bcae92' },
     land: LAND_PALETTES.mediterranean,
     glb: { stone: '#e8dfcc', dark: '#2b231d', roof: '#a85b43', sand: '#d2b98c' }, cypress: .3,
-    detail: { window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#b9a588', coping: '#b0603f', course: '#a8704e' },
+    detail: { window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#b9a588', coping: '#b0603f', archRing: '#ebe3d2' },
+    faces: { earth: '#c9ad86', brick: '#b8805c', stone: '#ddd3c0', banded: '#e6dbc6' },
   },
   chinese: {
     walls: ['#ddcca8', '#d4bd94', '#e6d8bb', '#cdb38c', '#e0cfae'],
@@ -42,14 +44,16 @@ const PALETTES = {
     parts: { 1: '#e2d5b8', 2: '#bfa070', 3: '#cbbd9f', 4: '#5f7d3c', 5: '#5d8fa8', 6: '#2f2620', 7: '#d8cbaa', 9: '#5d5955', 10: '#c9a978', 11: '#b8a58a' },
     land: LAND_PALETTES.loess,   // the loess plain: wheat, millet, bare earth
     glb: { stone: '#e3d6b8', dark: '#2b231d', roof: '#5f5b56', sand: '#c8a676' }, cypress: .08, tree: { size: .6, keep: .35, dark: .78 },   // (tree: its size, the share of places kept, its lightness)
-    detail: { base: '#97918a', post: '#7a3524', beam: '#4e3b2e', ridgeEnd: '#4f4b47', coping: '#5b5853', course: '#a88a5c' },
+    detail: { base: '#97918a', post: '#7a3524', beam: '#4e3b2e', ridgeEnd: '#4f4b47', coping: '#5b5853', archRing: '#8f8b85', column: '#8a2e20' },
+    faces: { earth: '#bfa070', brick: '#8f8b84', stone: '#cac2b3', banded: '#d9cdb6' },
   },
   modern: {
     walls: ['#e9dfcf', '#f1ebe0', '#ddd2bf'], roofs: ['#c0714c', '#9d6a52', '#a8a39b'],
     parts: { 1: '#f1ebe0', 2: '#cdb08a', 3: '#d4d0c8', 4: '#5f7d3c', 5: '#5d8fa8', 6: '#3a3a3c', 7: '#c9c6bf', 9: '#9d6a52', 10: '#cdb48c', 11: '#bdb6aa' },
     land: LAND_PALETTES.temperate,
     glb: { stone: '#efe9de', dark: '#2b2b2d', roof: '#9d6a52', sand: '#cdb48c' }, cypress: .1,
-    detail: { window: '#33302c', door: '#4b3a2c', cornice: '#f4f0e8', base: '#b8b0a2', coping: '#9d6a52', course: '#b49a78' },
+    detail: { window: '#33302c', door: '#4b3a2c', cornice: '#f4f0e8', base: '#b8b0a2', coping: '#9d6a52', archRing: '#efe9de' },
+    faces: { earth: '#cdb08a', brick: '#b37e5e', stone: '#ddd6c8', banded: '#e6ddcc' },
   },
 };
 const hash = (x, z) => { const s = Math.sin(x * 127.1 + z * 311.7) * 43758.5453; return s - Math.floor(s); };
@@ -57,15 +61,19 @@ const hash = (x, z) => { const s = Math.sin(x * 127.1 + z * 311.7) * 43758.5453;
 // a house's roof colour, by its building's centre (aCtr): one of the palette's, a little lighter or darker (its tiles' rows: detail.js)
 const roofOf = (pal, x, z) => { const h = hash(x, z); return new THREE.Color(pal.roofs[Math.floor((h * 7.31) % 1 * pal.roofs.length)]).multiplyScalar(.9 + .18 * ((h * 13.7) % 1)); };
 // a period city's colour per vertex: a house's walls and roof each one of the palette's, by its building; a little lighter or darker;
-// with the detail (detail.js), a gable's end in its wall's colour
-function colourMesh(mesh, pal, detail) {
+// with the detail (detail.js; wall: { face: the city's walls' (film.json wall_face) or null, upright: its region's for an upright
+// wall }), a gable's end in its wall's colour and a city wall in the colour of what it is faced with (a battered side rammed earth)
+function colourMesh(mesh, pal, detail, wall) {
   const g = mesh.geometry, d = g.attributes.aData, c = g.attributes.aCtr, n = g.attributes.position.count, out = new Float32Array(n * 3), col = new THREE.Color();
   const walls = pal.walls.map(v => new THREE.Color(v)), roofs = pal.roofs.map(v => new THREE.Color(v)), gable = detail ? gableEnds(g) : new Uint8Array(n);
   const parts = Object.fromEntries(Object.entries(pal.parts).map(([k, v]) => [k, new THREE.Color(v)]));
+  const faces = detail && pal.faces ? Object.fromEntries(Object.entries(pal.faces).map(([k, v]) => [k, new THREE.Color(v)])) : null, N = g.attributes.normal;
+  const faceAt = i => { if (wall.face) return faces[wall.face]; const ny = Math.abs(N.getY(i - i % 3) + N.getY(i - i % 3 + 1) + N.getY(i - i % 3 + 2)) / 3; return faces[ny > .02 && ny < .9 ? 'earth' : wall.upright]; };
   for (let i = 0; i < n; i++) {
     const part = d ? Math.round(d.getY(i)) : 0, h = c ? hash(c.getX(i), c.getY(i)) : .5, h2 = (h * 7.31) % 1, h3 = (h * 13.7) % 1;
     if (part === 0 || gable[i]) col.copy(walls[Math.floor(h * walls.length)]);
     else if (part === 8) col.copy(roofs[Math.floor(h2 * roofs.length)]);
+    else if (part === 2 && faces) col.copy(faceAt(i));
     else col.copy(parts[part] || walls[0]);
     const k = part === 0 || part === 8 ? .9 + .18 * h3 : .96 + .08 * h3;
     out[i * 3] = col.r * k; out[i * 3 + 1] = col.g * k; out[i * 3 + 2] = col.b * k;
@@ -132,7 +140,8 @@ ${pop ? `<div style="position:absolute;right:72px;top:60px;font:500 34px/1 'Noto
 
 // prims: id -> (a promise of) that period city's records, for its detail (none: no detail); hex: id -> that city's height
 // exaggeration (city.yaml era `exaggeration`, which film.json does not carry: the generator's default 2)
-export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', ground = 'land', card = null, prims = null, hex = () => 2 }) {
+// face: id -> what that city's walls are faced with where they say (film.json era wall_face), else null
+export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', ground = 'land', card = null, prims = null, hex = () => 2, face = () => null }) {
   const { scene, camera, renderer, U } = S, PW = S.PW, PD = S.PD;
   const pal = PALETTES[palette] || PALETTES.roman;
   // the meshes this look draws: the period cities, today's city, the plate
@@ -155,7 +164,11 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // each period city's detail (engine/detail.js), made the first time it is shown: era id -> a promise of its group
   const DET = prims ? new Map() : null;
   const dcols = { ...(pal.detail || PALETTES.roman.detail), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(1.12), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(.78) };   // (a roof's tiles in its own colour)
-  const detailOf = async id => { const D = eraDetail(await prims(id), { scale, hex: hex(id), style: palette }), g = detailMeshes(D, dcols, { layer: L });
+  for (const [f, v] of Object.entries(pal.faces || PALETTES.roman.faces)) {   // (a wall's face: its courses a shade darker, a stone wall's bands brick; a gate's parts the wall's)
+    dcols['course_' + f] = f === 'banded' ? (pal.faces || PALETTES.roman.faces).brick : new THREE.Color(v).multiplyScalar(.84);
+    dcols['spandrel_' + f] = dcols['parapet_' + f] = dcols['merlon_' + f] = v; }
+  const pxK = { value: 1 }, idOf = new Map(Object.entries(S.eras).map(([id, E]) => [E.mesh, id])), upright = (STYLES[palette] || STYLES.roman).wall;   // (the fade's scale: detail.js FADE_PX)
+  const detailOf = async id => { const D = eraDetail(await prims(id), { scale, hex: hex(id), style: palette, face: face(id) }), g = detailMeshes(D, dcols, { layer: L, pxK });
     g.userData.count = D.count; scene.add(g); return g; };
   const TF = treeField(scene, renderer, U, PW, PD, scale, { size: 1, keep: 1, dark: 1, ...pal.tree, cypress: pal.cypress, woods, ground: S.ground, layer: L, tone: 'mini' });
   const info = card ? infoPanel(card) : null;
@@ -206,10 +219,11 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
 
   async function render({ target, d }) {
     window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
+    renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / 2;
     if (DET) { for (const [id, E] of Object.entries(S.eras)) if (E.mesh.visible && !DET.has(id)) DET.set(id, detailOf(id));
       for (const [id, g] of DET) (await g).visible = S.eras[id].mesh.visible; }
     const swapM = [];   // (the studio's materials back after the frame)
-    for (const m of [...eraMeshes, cityMesh]) if (m.visible && !m.userData.mini) m.userData.mini = m === cityMesh ? colourToday(m) : colourMesh(m, pal, !!DET);   // (coloured when first shown)
+    for (const m of [...eraMeshes, cityMesh]) if (m.visible && !m.userData.mini) m.userData.mini = m === cityMesh ? colourToday(m) : colourMesh(m, pal, !!DET, { face: face(idOf.get(m)), upright });   // (coloured when first shown)
     for (const m of [...eraMeshes, cityMesh, plate].filter(Boolean)) { if (!m.userData.mini) continue; swapM.push([m, m.material, m.customDepthMaterial]); m.material = m.userData.mini; m.customDepthMaterial = undefined; m.layers.enable(L); m.castShadow = m.receiveShadow = true; }
     { const src = [...eraMeshes.filter(m => m.visible), ...(cityMesh.visible ? [cityMesh] : [])]; for (const l of landmarks) l.traverse(o => { if (o.isMesh) src.push(o); });
       TF.update(target, d, src); }
