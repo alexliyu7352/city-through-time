@@ -27,12 +27,16 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
   const g = canvas.getContext('2d'), LW = size.w, LH = size.h, LSUB = LH - (size.bottom ?? 145), LTOP = size.top ?? 140;   // (LSUB: SUBTOP on this layer; size.top, .bottom: a page's own bars instead of the film's timeline and subtitles)
   let TX = [], DRAWN = [];   // DRAWN: every text drawn opaque, named or not, its letters' band (tools/readcheck.mjs: texts over texts)
   const begin = () => { g.clearRect(0, 0, LW, LH); TX = []; DRAWN = []; };
+  // a light picture under the words (the colour film, engine/mini.js: a sunlit land and a pale sky): every word gets a shade of
+  // its own, a deeper one, and the bands the words stand in (the top, setLight's scrims) a soft dark ground; the white film's
+  // dark room needs none of it
+  let LIGHT = false; const setLight = v => { LIGHT = !!v; };
   function txt(id, s, x, y, k, px, col, a = 1, o = {}) {
     if (a <= .001 || !s) return 0;
     if (px < TYPE_MIN) throw new Error(`overlay: "${s}" at ${px} px, under the ${TYPE_MIN} px a phone can show (READ_PX for a line to read)`);
     g.save(); g.globalAlpha = a; g.font = font(k, px); g.fillStyle = col; g.textBaseline = 'alphabetic';
     if (o.ls) g.letterSpacing = o.ls + 'px';
-    if (o.shadow) { g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = o.shadow; }
+    if (o.shadow || LIGHT) { g.shadowColor = LIGHT ? 'rgba(0,0,0,.78)' : 'rgba(0,0,0,.6)'; g.shadowBlur = LIGHT ? Math.max(o.shadow || 0, 7) : o.shadow; }
     const w = g.measureText(s).width, xx = o.right ? x - w : o.center ? x - w / 2 : x;
     g.fillText(s, xx, y); g.restore();
     if (id && a > .98) TX.push({ id, text: s, x0: xx, y0: y - px * .9, x1: xx + w, y1: y + px * .25 });
@@ -42,7 +46,11 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
   const width = (s, k, px, ls = 0) => { g.save(); g.font = font(k, px); g.letterSpacing = ls + 'px'; const w = g.measureText(s).width; g.restore(); return w; };
   const env = (t, t0, t1, fin = .35, fout = .3) => Math.min(eo(seg(t, t0, t0 + fin)), 1 - ss(seg(t, t1 - fout, t1)));
 
-  function scrims(a, sub) {
+  function scrims(a, sub, top = 0) {
+    if (LIGHT && top > 0) {   // (a light picture: the top band, where the place, the year and the timeline stand)
+      const g4 = g.createLinearGradient(0, 0, 0, 190); g4.addColorStop(0, `rgba(4,5,8,${.5 * top})`); g4.addColorStop(.6, `rgba(4,5,8,${.22 * top})`); g4.addColorStop(1, 'rgba(4,5,8,0)');
+      g.fillStyle = g4; g.fillRect(0, 0, W, 190);
+    }
     if (a > 0) {
       const gr = g.createRadialGradient(300, 600, 40, 300, 600, 640);
       gr.addColorStop(0, `rgba(4,5,8,${.6 * a})`); gr.addColorStop(.55, `rgba(4,5,8,${.36 * a})`); gr.addColorStop(1, 'rgba(4,5,8,0)');
@@ -198,6 +206,7 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     const X0 = 1040, X1 = 1824, Y = 66;
     const k = clamp((t - bar.from) / Math.max(1e-6, bar.to - bar.from), 0, 1);
     g.save(); g.globalAlpha = a;
+    if (LIGHT) { g.shadowColor = 'rgba(0,0,0,.7)'; g.shadowBlur = 4; }   // (a light picture: the line and its ticks shaded too)
     g.strokeStyle = 'rgba(235,238,242,.28)'; g.lineWidth = 1; g.beginPath(); g.moveTo(X0, Y); g.lineTo(X1, Y); g.stroke();
     g.strokeStyle = 'rgba(255,255,255,.9)'; g.lineWidth = 1.2; g.beginPath(); g.moveTo(X0, Y); g.lineTo(X0 + (X1 - X0) * k, Y); g.stroke();
     g.fillStyle = 'rgba(235,238,242,.55)';
@@ -483,5 +492,5 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     txt('end_credit', CREDIT, X, y + 22, 'mono', 22, 'rgba(228,232,238,.86)', a, { ls: .5 });
   }
 
-  return { g, begin, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, notesDrop, readoutDrop };
+  return { g, begin, setLight, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, notesDrop, readoutDrop };
 }

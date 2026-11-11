@@ -4,7 +4,8 @@
 // the model is then not drawn: the buildings and the plate go black while the lines and the dust still show). There the page
 // sizes its shaders to what the film uses (engine/studio.js fit); a film that still needs more than a phone has (more decals,
 // more period cities standing at once, more epoch channels) prints OVER and the tool exits 1: on a phone the page would say it
-// cannot draw the film. Run it after a change that adds uniforms or textures to the shaders, and for a film with more of them.
+// cannot draw the film. Run it after a change that adds uniforms or textures to the shaders, and for a film with more of them. A film
+// in the colour look (film.look) is checked in it: the look's shaders of its cities and land with the studio's.
 // usage: node tools/phonecheck.mjs <city_slug> [--q 'k=v&..'] (more of the page's address: e.g. fx=1, the effects a film may turn on)
 import { openFilm, closeServer } from '../render/page.mjs';
 
@@ -59,7 +60,7 @@ const rows = await page.evaluate(() => {
   const stubV = fs => `#version 300 es\n#define varying out\nprecision highp float; precision highp int;\n${fs.split('\n').filter(l => (/^\s*#/.test(l) && !/^\s*#(version|extension)|#define\s+(varying|gl_FragColor|gl_FragDepth|texture|layout)/.test(l)) || (/\bvarying\b/.test(l) && !/#define/.test(l))).join('\n')}\nvoid main(){ gl_Position = vec4(0.); }`;
   const seen = new Set(), out = [];
   for (const [vs, fs] of [...window.__progs]) {
-    const key = vs + '\0' + fs; if (seen.has(key) || !/projLight/.test(fs)) continue; seen.add(key);   // (the scene's model shaders: the city, the plate, the plinth, the period cities)
+    const key = vs + '\0' + fs; if (seen.has(key) || !/projLight|\(look: mini\)/.test(fs)) continue; seen.add(key);   // (the scene's model shaders: the city, the plate, the plinth, the period cities; a film in the colour look, its own: engine/mini.js marks them)
     const v = active(vs, STUBF), f = active(stubV(fs), fs);
     if (!v || !f) { out.push({ name: '(a shader that would not link in parts)' }); continue; }
     out.push({ name: (fs.match(/#define SHADER_NAME (.*)/) || [, ''])[1] || 'MeshStandardMaterial', textures: f.filter(x => sampler(x.type)).length,

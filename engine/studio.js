@@ -532,8 +532,6 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   float eraRiseK(){ float ry;
      ${ERA_RY(Z, 'iRank', 'iW')}
      return ry; }`;
-  // how far today's building has come by its year (0 not yet .. 1 up; yr its year, aData.x): RISE's, and the colour film's colours by year
-  const GROW_BY = 'yr > 0. ? (uYLn > 1.5 ? smoothstep(0., uGrowDur, uNow - (aGrowT > 0. ? aGrowT : tOfYear(yr - .5))) : smoothstep(yr - .5, yr + 2.5, uYear)) : smoothstep(1985., 1988., uYear)';
   const RISE_DECL = Z => `${YL_GLSL(Z)}
   uniform float uNow; attribute vec4 aData; attribute float aBase; varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase; uniform float uToday, uGrowRise, uYear, uGhost, uLiveSink; uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''}; uniform vec2 uPlateV; attribute vec2 aCtr; uniform vec2 uResetC; uniform float uResetR, uResetY; varying vec2 aCtrV; attribute vec3 aGrowH; attribute float aGrowT; varying float vGrowT;
   uniform float uHideT[${HMAX}], uHideG[${HMAX}], uHideFR[${HMAX}], uHideFI[${HMAX}], uHideFW[${HMAX}]; uniform vec2 uHideO[${HMAX}];${K ? ` uniform sampler2D uKeep, uKeep2${H3 ? ', uKeep3' : ''}; uniform float uHideKeep[${HMAX}];` : ''}
@@ -549,7 +547,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
  { // rise: buildings grow from the plate as the year counter passes their first-seen year; mounds/props appear at their year; everything is up "today"
    float yr = aData.x; float ry = 1.;
    if (aData.w > -.5 && aData.w < .5) {
-     float by = ${GROW_BY};
+     float by = yr > 0. ? (uYLn > 1.5 ? smoothstep(0., uGrowDur, uNow - (aGrowT > 0. ? aGrowT : tOfYear(yr - .5))) : smoothstep(yr - .5, yr + 2.5, uYear)) : smoothstep(1985., 1988., uYear);
      float keep = uGhost;   // the latent city: today's footprints before they grow; a reset ring takes back what came after uResetY
      // rebuilt taller later: f0 of today's height until yA, today's height by yB (only while the modern growth is told)
      float hf = aGrowH.x < .999 ? mix(aGrowH.x, 1., smoothstep(aGrowH.y, aGrowH.z, uYear)) : 1.;
@@ -575,6 +573,25 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
      if (bs.r > .5 && bs.g + bs.b > .5 / 255.) { int k = int(bs.a * 255. + .5) - 1; float on = 0.; for (int i = 0; i < ${Z.B}; i++) if (i == k) on = uBasinA[i];
        float wy = (uBasinLo + (bs.g * 65280. + bs.b * 255.) / 65535. * (uBasinHi - uBasinLo)) * uBasinK;
        transformed.y = mix(transformed.y, min(transformed.y, wy - .6 * uBasinK), on); } } }`;
+  // the colour film's light (COLOUR): the projector's light on the plate alone, as the white film lays it (projLight: its rings,
+  // the fronts where a city rises, the rings that take one back, the washes, a standing city's light round its edge, decals, the
+  // pick, a landing's shock), not its grid or its room light, over the colour land in a screen blend (it lifts the dark, it never
+  // burns a bright field to white), at a restrained strength (LIGHTK, the look's: engine/mini.js). ground: a period city's open
+  // ground instead (the studio's grounds: its paving's texture where it stands), in the look's paving colour (GROUNDC), laid over
+  // the land by its cover, lit by the look's sun
+  const LIGHTK = { value: .55 }, GROUNDC = { value: new THREE.Color('#d6caae') };
+  function lightMaterial(ground = false) {
+    const m = projMaterial(1, { color: '#ffffff', roughness: .95 }, { uPlateTop: { value: 1 }, uBase: { value: 0 } }), made = m.onBeforeCompile, key = m.customProgramCacheKey;
+    m.onBeforeCompile = sh => { made(sh); sh.uniforms.uLightK = LIGHTK; sh.uniforms.uPaveC = GROUNDC;
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\n// (look: mini)\nuniform float uLightK; uniform vec3 uPaveC;')
+        .replace('#include <opaque_fragment>', ground ? 'outgoingLight = outgoingLight * uPaveC; float gA_ = gCover * (1. - wm);\n#include <opaque_fragment>'
+          : 'outgoingLight = projLight(1., wm) * uLightK;\n#include <opaque_fragment>');
+      if (ground) sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>', '#include <dithering_fragment>\n gl_FragColor = vec4(gl_FragColor.rgb * gA_, gA_);   // (premultiplied, by its cover)'); };
+    m.customProgramCacheKey = () => (ground ? 'ground ' : 'light ') + key();   // (not 'proj1': the look finds the plate by that)
+    Object.assign(m, { transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1, blending: THREE.CustomBlending, blendSrc: THREE.OneFactor },
+      ground ? { blendDst: THREE.OneMinusSrcAlphaFactor } : { blendDst: THREE.OneMinusSrcColorFactor });
+    return m;
+  }
   // the same deformation for depth-only passes (ambient-occlusion normals/depth, shadow maps), so they see the city the camera sees
   function deformMaterial(m, extra = null) {
     m.onBeforeCompile = sh => {
@@ -825,6 +842,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     const geo = buildProp(p, ground, M.scale, (M.terrain && M.terrain.exaggeration) || 3);
     const mesh = new THREE.Mesh(geo, projMaterial(0, { color: '#f3f3f1', roughness: .88, metalness: 0 }));
     mesh.castShadow = mesh.receiveShadow = true; mesh.frustumCulled = false; scene.add(mesh);
+    if (COLOUR) mesh.layers.enable(1);   // (the colour film: a schematic model stays white there, as schematic)
     props[p.id] = mesh;
     return mesh;
   }
@@ -839,6 +857,59 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     mesh.castShadow = !LOW; mesh.receiveShadow = true; mesh.frustumCulled = false; mesh.visible = false; scene.add(mesh);   // live preview: era cities cast no shadow (the shadow pass would draw them twice)
     eras[id] = { mesh, u, base: u.uEraCol.value.clone() };
     return eras[id];
+  }
+  // a fire as the colour film shows it by day (addFire, COLOUR; drawn there alone, layer 1): a flame on each burning building,
+  // flickering, and columns of smoke over the fire, rising, spreading and drifting downwind, the same fire's uniforms (its
+  // strength, its clock, the ring past which it is out). Sizes in metres as drawn (the period cities stand twice their height)
+  function fireByDay(centres, ground, u) {
+    let sd = 7; const rnd = () => { sd = (sd * 16807) % 2147483647; return sd / 2147483647; };
+    const at = c => [c[0], c.length > 2 ? c[2] : ground(c[0], c[1]), c[1]];
+    const points = (n, fill, vert, frag, order) => { const pos = new Float32Array(n * 3), seed = new Float32Array(n * 2);
+      for (let i = 0; i < n; i++) fill(i, pos, seed);
+      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('aSeed', new THREE.BufferAttribute(seed, 2));
+      const mat = new THREE.ShaderMaterial({ uniforms: { ...u, uM: { value: M.scale } }, vertexShader: vert, fragmentShader: frag, transparent: true, depthWrite: false,
+        blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor });   // (premultiplied: a flame or a puff over what is behind it)
+      const o = new THREE.Points(g, mat); o.frustumCulled = false; o.visible = false; o.renderOrder = order; o.layers.set(1); o.userData.fxGlow = true; scene.add(o); return o; };
+    const head = `attribute vec2 aSeed; uniform float uT, uR, uPxH, uM; uniform vec2 uO; varying float vK, vA, vS;
+      float px(vec4 mv, float m){ return clamp(uPxH * projectionMatrix[1][1] / max(.0005, -mv.z) * m, 1.5, 256.); }`;
+    // flames: two on each building, a metre or few above its floor, 30 to 50 m tall as drawn (a model's flames, larger than
+    // life: a city's fire reads from afar), each its own flicker
+    const NF = Math.min(24000, centres.length * 2);
+    const flames = points(NF, (i, pos, seed) => { const c = at(centres[i % centres.length]); pos[i * 3] = c[0] + (rnd() - .5) * 6 * M.scale; pos[i * 3 + 1] = c[1]; pos[i * 3 + 2] = c[2] + (rnd() - .5) * 6 * M.scale; seed[i * 2] = rnd(); seed[i * 2 + 1] = rnd(); },
+      `${head}
+      void main(){ float f = .55 + .45 * sin(uT * (7. + 6. * aSeed.y) + aSeed.x * 60.) * sin(uT * 3.1 + aSeed.y * 17.);
+        vec3 p = position; p.y += (2. + 4. * aSeed.y) * uM;
+        vec4 mv = modelViewMatrix * vec4(p, 1.); gl_Position = projectionMatrix * mv;
+        vA = length(position.xz - uO) < uR ? 1. : 0.; vK = f; vS = aSeed.x;   // (the ring that takes the city back has passed: out)
+        gl_PointSize = max(px(mv, (30. + 20. * aSeed.y) * (.75 + .35 * f) * uM), 3.) * vA; }`,
+      `uniform float uA; varying float vK, vA, vS;
+      void main(){ vec2 c = gl_PointCoord - .5; float y = .5 - c.y;   // (0 at its foot .. 1 at its tip)
+        float w = .42 * (1. - y) * sqrt(max(y, 0.) + .04) * 1.6 * (1. + .25 * sin(y * 9. + vS * 30. + vK * 4.));
+        float m = smoothstep(w, w * .55, abs(c.x)) * smoothstep(1., .75, y) * smoothstep(0., .1, y);
+        float hot = smoothstep(w * .7, 0., abs(c.x)) * smoothstep(.75, .1, y);
+        vec3 col = mix(vec3(.95, .22, .03), vec3(1., .62, .12), hot) + vec3(.6, .45, .2) * hot * hot;
+        float a = m * uA * vA * (.75 + .25 * vK); if (a < .01) discard;
+        gl_FragColor = vec4(col * 1.6 * a, a); }`, 8);
+    // smoke: a few thick columns over the fire (one for about every 60 burning buildings, 2 to 40), puffs rising 1100 m as drawn
+    // over 9 to 13 s, growing from 120 to 560 m and drifting downwind as they go, near black at the fire and greying as they thin
+    // (a city's smoke, larger than life as its flames)
+    const cols = Math.max(2, Math.min(40, Math.round(centres.length / 60))), per = 110, NS = cols * per, base = [];
+    for (let k = 0; k < cols; k++) base.push(at(centres[Math.floor(rnd() * centres.length)]));
+    const smoke = points(NS, (i, pos, seed) => { const c = base[Math.floor(i / per)]; pos[i * 3] = c[0]; pos[i * 3 + 1] = c[1]; pos[i * 3 + 2] = c[2]; seed[i * 2] = rnd(); seed[i * 2 + 1] = rnd(); },
+      `${head}
+      void main(){ float life = 9. + 4. * aSeed.y, k = fract(uT / life + aSeed.x); vK = k; vS = aSeed.y;
+        vec3 p = position; float h = 1100. * uM * k;
+        p.y += h; p.x += (520. * pow(k, 1.5) + 60. * sin(aSeed.x * 40. + uT * .4)) * uM; p.z += (160. * pow(k, 1.5) + 60. * cos(aSeed.y * 40. + uT * .3)) * uM;
+        vec4 mv = modelViewMatrix * vec4(p, 1.); gl_Position = projectionMatrix * mv;
+        vA = length(position.xz - uO) < uR ? 1. : 0.;
+        gl_PointSize = px(mv, (120. + 440. * k) * uM) * vA; }`,
+      `uniform float uA; varying float vK, vA, vS;
+      void main(){ vec2 c = gl_PointCoord - .5; float r = length(c) * 2.;
+        float n = .75 + .25 * sin(c.x * 9. + vS * 20.) * sin(c.y * 7. + vS * 13.);
+        float a = smoothstep(1., .3, r / n) * pow(1. - vK, 1.1) * smoothstep(0., .05, vK) * .8 * uA * vA; if (a < .004) discard;
+        vec3 col = mix(vec3(.06, .055, .05), vec3(.3, .29, .28), smoothstep(.1, .8, vK));
+        gl_FragColor = vec4(col * a, a); }`, 9);
+    return [flames, smoke];
   }
   // light routes: a glowing path drawn along a raised arc (a capital moving, a river shifting, a distance): the head is a
   // comet, the drawn part carries travelling pulses; additive, so it reads as light over the model
@@ -950,6 +1021,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   // the emblem (a tiger tally), bronze with gold inlay
   const tally = makeTally({ length: .095 }); tally.visible = false; scene.add(tally);
+  if (COLOUR) tally.traverse(o => o.layers.enable(1));   // (the colour film: the tally drawn there too)
   const tallyLight = new THREE.PointLight('#ffe2b0', 0, 1.2, 1.4); tallyLight.position.set(.06, .09, .08); tally.add(tallyLight);
   const tallyFill = new THREE.PointLight('#bcd0ff', 0, 1.0, 1.4); tallyFill.position.set(-.08, .05, -.06); tally.add(tallyFill);
   tally.setLight = (k) => { tallyLight.intensity = .012 * k; tallyFill.intensity = .005 * k; };
@@ -1118,6 +1190,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     const plateTop = new THREE.Mesh(plateGeometry(), projMaterial(1, { color: plateCol, roughness: .9 }, { uPlateTop: { value: 1 } }));
     plateTop.customDepthMaterial = deformMaterial(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), { uPlateTop: { value: 1 } });   // (its shadow lowered in a pool too)
     plateTop.receiveShadow = true; plateTop.castShadow = !!HF; scene.add(plateTop);
+    if (COLOUR) {   // the colour film's open ground and light over its land (lightMaterial), on the colour look's layer alone
+      const ground = new THREE.Mesh(plateTop.geometry, lightMaterial(true)); ground.layers.set(1); ground.renderOrder = .5; ground.frustumCulled = false; ground.receiveShadow = true; scene.add(ground);
+      const light = new THREE.Mesh(plateTop.geometry, lightMaterial()); light.layers.set(1); light.renderOrder = 1; light.frustumCulled = false; light.userData.fxGlow = true; scene.add(light); }
     const plateBox = new THREE.Mesh(zero(new THREE.BoxGeometry(PW + RIM * 2, PT, PD + RIM * 2)), projMaterial(1, { color: PAL.plateSide || '#e9e6e0', roughness: .9 }));
     plateBox.position.y = -PT / 2 - .0005; plateBox.receiveShadow = true; scene.add(plateBox);
     const plinth = new THREE.Mesh(zero(new THREE.BoxGeometry(PW + .34, .9, PD + .34)), projMaterial(2, { color: '#17181a', roughness: .5 }));
@@ -1197,8 +1272,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
           if (a < .003) discard;
           gl_FragColor = vec4(col * a, 1.); }` });
     const pts = new THREE.Points(g, mat); pts.frustumCulled = false; pts.visible = false; pts.renderOrder = 7; scene.add(pts);
+    const more = COLOUR ? fireByDay(centres, ground, u) : [];
     if (COLOUR) { pts.layers.enable(1); pts.userData.fxGlow = true; }
-    fires[id] = { u, set(a, t, R, o) { u.uA.value = a; u.uT.value = t; u.uR.value = R; if (o) u.uO.value.set(o[0], o[1]); pts.visible = a > .002; } };
+    fires[id] = { u, set(a, t, R, o) { u.uA.value = a; u.uT.value = t; u.uR.value = R; if (o) u.uO.value.set(o[0], o[1]); pts.visible = a > .002; for (const q of more) q.visible = a > .002; } };
     return fires[id];
   }
 
@@ -1346,5 +1422,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // fx land trees: trees in the land's woods and open ground in the white model too, planted as the miniature plants them, in a pale
   // sage that sits with the white city (fx.js treeField; the viewer's, engine/view.js)
   const fxTrees = () => treeField(scene, renderer, U, PW, PD, M.scale, { size: .8, keep: .25, ...(landPalette(FXL).trees || {}), dark: 1, cypress: .1, woods: woodsFn(FXL, EXG, M.scale, ground, FXR), ground, layer: 0, tone: 'film' });
-  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, deformMaterial, eraRiseGLSL, growByGLSL: GROW_BY, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, deformMaterial, eraRiseGLSL, eraRy: (rank, w) => ERA_RY(Z, rank, w), colourLight: LIGHTK, colourGround: GROUNDC, wThenGLSL: T ? WTHEN : null, context: () => ctxMesh, slots: HMAX, slots3: H3, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

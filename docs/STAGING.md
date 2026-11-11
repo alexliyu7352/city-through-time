@@ -253,16 +253,43 @@ dissolves back to the model, and the camera goes on. It shows what the plate can
 
 ## Look and effects
 
-**Two looks.** The white model (`engine/studio.js`, `engine/post.js`) is the look of the film, the player, the walk-round, the museum
-pages and every check. The colour look (`engine/mini.js`) draws the same period cities as a coloured miniature in daylight: each house
-in its own wall and roof colours, trees in the open land and the gardens, fields and water, a hazy sky. It draws in the period cities'
-viewer, `play.html?city=<slug>&view&look=mini`, with `&palette=roman|chinese|modern` (the building colours of the region and period)
-and `&ground=land|modern` (open land, or a paved city's ground); `node tools/lookshots.mjs <slug> <out_prefix> <cams.json> --q
-'look=mini&palette=chinese'` takes its stills at named cameras (the tool's header gives the cameras' format).
-- **The white model is the whole path; the colour look is optional.** Every step's done line, check, preview, render and player is
-  in the white model, and none of them needs the colour look. The colour look draws only in the period cities' viewer (no film, no
-  live player, nothing on a phone): a city may use it to look at its period cities with the palette of its region and period
-  (lookshots stills beside eraview's sheets, MODEL.md), never in place of the white model's checks, and no step waits on it.
+**Two looks.** The white model (`engine/studio.js`, `engine/post.js`) draws the film in a dark room, light as the actor. The colour
+look (`engine/mini.js`) draws the same film as a coloured miniature in daylight: each house in its own wall and roof colours, trees,
+fields and water, a hazy sky. A film is in one look or the other; the player, its timeline, camera, overlay, checks, stills and render
+are the same for both. The colour look also draws in the period cities' viewer, `play.html?city=<slug>&view&look=mini`, with
+`&palette=roman|chinese|modern` (the building colours of the region and period) and `&ground=land|modern` (open land, or a paved
+city's ground); `node tools/lookshots.mjs <slug> <out_prefix> <cams.json> --q 'look=mini&palette=chinese'` takes its stills at named
+cameras (the tool's header gives the cameras' format).
+- **A city chooses the colour look for its film** with `film: { look: { kind: mini, palette: <its period cities'>, today: <today's
+  city's> } }`, each one of `roman` (Mediterranean plaster and tile), `chinese` (grey tile, rammed earth, timber halls) and `modern`
+  (a modern city: concrete, glass, flat roofs; for period cities, a European town of the 19th–20th century). compile stops on a missing
+  or unknown palette: a city's colours are its region's, never a default. A period city of another region or time names its own:
+  its node's `city: { palette: modern }` (a city's mills or concession, say). Absent, or `kind: white`, the film is the white model and
+  film.json has no `look` key. The page's `&look=white|mini` (with `&palette=` and `&today=` for a film without `film.look`) shows a
+  film in the other look without compiling it again; tools/still.mjs, lookshots and phonecheck pass it with `--q`.
+- **What the colour film shows, and how.** The film tells the same things; what differs is how:
+  - a period city rises in place, building by building as in the white model, its detail with it; a faint light along the rise front
+    on the ground (the white film's light, restrained) keeps a quiet rise readable;
+  - a burning city (`sinkStyle: burn`, `lose: burn`) burns with flames and columns of smoke, its walls charred and glowing (embers at
+    night); a building taken back or lost leaves its foundations, charred after a fire, until a later period city rises on that ground
+    or the modern growth begins;
+  - today's city is drawn in colour where the white film shows it fully, and goes, building by building, where the white film dims it
+    under a period city (a then-and-now moment that keeps it in the white film keeps it here); it grows by year as in the white film;
+  - the projector's light on the plate (node rings, the rings that take a city back, a beam's landing, area washes, decals, the pick,
+    a standing city's light round its edge) is laid over the land in a screen blend at a restrained strength; beams are always fx
+    glow's (a column of light where one lands); lines, arrows and props are drawn as in the white film; the neon line round a city
+    is left out;
+  - the land is fields close by, calming with distance into soft large areas, and goes on beyond the plate to the horizon (the
+    context relief where the film has one); water as it was, dug pools and a city's open ground as in the white film;
+  - night lowers the sun to a moon's light and darkens the sky; windows light on the walls and the studio's light grows;
+  - a living moment's picture is laid on the frame from the shot's camera under the white film's climbing front; tools/living.py's
+    reference still is the colour frame (it renders the film as it is);
+  - the overlay is the film's own; on the light picture every word gets a deeper shade and the top band a soft dark ground.
+- **Checks in colour.** compile, camcheck, readcheck, subcheck and clipcheck read the film, not its pixels: the same in both looks.
+  rangecheck and linesheet take their stills in the film's look; geocheck and eraview look at the period cities' geometry in the
+  white model, as the colour look draws the same geometry. phonecheck checks the colour look's own shaders with the studio's.
+- **On a phone** the colour film leaves out the detail and the ambient occlusion and draws smaller shadows (engine/main.js `phone`);
+  run `node tools/phonecheck.mjs <slug>` (it reads `film.look`).
 - **Detail in the colour look** (`engine/detail.js`) is read from a period city's records and its entry in film.json (its height
   exaggeration, what its walls are faced with), so it needs no setting of its own:
   what a body, a roof, a yard wall, a city wall or a tower is gives what it carries, in its region's way (`STYLES`, chosen by the
@@ -277,8 +304,7 @@ and `&ground=land|modern` (open land, or a paved city's ground); `node tools/loo
   palette's colours for those pieces, not edits to one city. `&detail=0` draws without it (beside it, for a sheet: lookshots
   `--seed` keeps the trees where they stood); lookshots `--seed 1 --pan detail=0` at a mid camera checks a slow pan for shimmer
   (a ratio near 1: the detail is drawn steadily; well over 1: pieces too small to draw crawl from frame to frame).
-- **The film itself (`engine/main.js`) draws only in the white look.** A film in the colour look is an engine change: propose it
-  first (AGENTS.md "Propose first"). A city whose film the user has approved keeps the look it was approved in.
+- **A city whose film the user has approved keeps the look it was approved in.** Changing a finished film's look is the user's choice.
 
 **Effects** (`film.fx`, `engine/fx.js`) are shared by both looks and are **off unless the city turns them on**: a film without
 `film.fx` draws exactly as it would without the effects in the engine. Each effect is `true` (its defaults below) or a dict of

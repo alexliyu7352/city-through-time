@@ -265,7 +265,7 @@ for (const f of FREE ? [] : FILM.footage || []) {
 }
 const LOC = FREE ? newImage() : await image(B + 'data/locator.png', true) || newImage();
 const seekTo = (v, time) => new Promise(res => { if (Math.abs(v.currentTime - time) < 1 / 60) return res(); const done = () => { v.removeEventListener('seeked', done); res(); }; v.addEventListener('seeked', done); v.currentTime = time; });
-const OV = makeOverlay(document.getElementById('ov'));
+const OV = makeOverlay(document.getElementById('ov')); OV.setLight(COLOUR);   // (the colour film: a light picture under the words)
 
 // projected lines: groups of OSM / custom polylines
 const lineA = {};
@@ -480,7 +480,7 @@ function setLayers(t) {
     const fo = FR ? FR.o : [0, 0];
     const fr = FR ? curveAt(FR.curve, t) : (fin ? 1e3 : -1), fr1 = FR ? curveAt(FR.curve, t - SD) : fr;
     const gone = FR != null && t > FR.gone;
-    E.mesh.visible = tE > -.01 && !gone;
+    E.mesh.visible = tE > -.01 && (!gone || (COLOUR && t < RUINS_TO)); E.mesh.userData.gone = gone;   // (the colour film: its foundations stay, engine/mini.js filmMaterial)
     eraShape(e, t);
     E.u.uEraFallR.value = fr; E.u.uEraFallIn.value = fin ? 1 : 0; E.u.uEraFallW.value = fr1; E.u.uEraO.value.set(fo[0], fo[1]);
     E.u.uEraA.value = Math.max(e.tint, later(e, nodes_[ci]) ? (nodes_[ci].era_tint ?? nodes_[ci].tint) : 0) * (1 - .5 * today);   // a later node recolours at its own strength
@@ -586,7 +586,7 @@ function drawOverlay(t) {
   }
   if (LV && LIVETEX[LV.L.id]) OV.caption(LV.L, 96, 170, LV.sky * LV.pa);   // the living moment's label: AI-generated reconstruction, from the sources
   const left = Math.max(...(FILM.readouts || []).map(r => OV.env(t, r.t0 - .3, r.t1 + .2)), 0);
-  OV.scrims(left, 1);
+  OV.scrims(left, 1, COLOUR ? 1 - ffull : 0);   // (the colour film: the top band shaded too)
   OV.identity(t, (PRO ? PRO.dur : 0) + .3, FILM.end.t - .2, FILM.identity.l1, FILM.identity.l2);   // (not over the prologue)
   if (FILM.bar) {
     const node = (FILM.nodes || []).find(nd => t >= nd.t0 && t < nd.t1) || null;
@@ -694,10 +694,26 @@ const renderSync = t => { stateAt(t); if (!(PLAY && PLAYING && fullCover(t))) { 
 // the colour film (film.look mini): the same state, drawn by the look (engine/mini.js film); each period city's detail is made the
 // first time it shows (its records read again, then let go: a film's period cities all kept would be the most of its memory)
 const ERAJ = {}, eraJ = id => ERAJ[id] ||= fetch(B + FILM.eras.find(e => e.id === id).file).then(r => r.json()), eraOf = id => FILM.eras.find(e => e.id === id) || {};
-const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, cityMesh: CITYMESH, scale: M.scale, lens, film: true, palette: QS.get('palette') || (FILM.look && FILM.look.palette) || 'roman',
-  prims: QS.get('detail') === '0' ? null : id => eraJ(id).then(J => J.prims), lost: id => eraJ(id).then(J => { delete ERAJ[id]; return J.lost || null; }),   // (the look asks for the records, then their losses: the last of them)
+// its palettes: the film's (film.look), each period city's own where it has one, today's city's; the page's ?palette=, ?today= in
+// their place (a film without film.look seen with ?look=mini must name them: a city's colours are its region's, never a default)
+const PAL = COLOUR ? { palette: QS.get('palette') || (FILM.look && FILM.look.palette), today: QS.get('today') || (FILM.look && FILM.look.today) } : null;
+if (PAL && !(PAL.palette && PAL.today)) throw new Error('look=mini: this film has no film.look; give &palette=roman|chinese|modern&today=roman|chinese|modern (its region\'s colours)');
+const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, cityMesh: CITYMESH, scale: M.scale, lens, film: true, palette: PAL.palette, today: PAL.today, paletteOf: id => eraOf(id).palette || PAL.palette,
+  fadeAt: LOOK.dim ?? .8, phone: TOUCH, prims: QS.get('detail') === '0' || TOUCH ? null : id => eraJ(id).then(J => J.prims),   // (a phone: no detail, as the viewer's look on a touch screen)
+  lost: id => eraJ(id).then(J => { delete ERAJ[id]; return J.lost || null; }),   // (the look asks for the records, then their losses: the last of them)
   hex: id => eraOf(id).exaggeration ?? 2, face: id => eraOf(id).wall_face ?? null }) : null;
-const renderColour = async t => { stateAt(t); if (!(PLAY && PLAYING && fullCover(t))) await MINI.render({ target: tgt, d: camDist }); overlayAt(t); };
+// the colour film's ruins (engine/mini.js filmMaterial): a period city's foundations stay until a later city rises on that ground
+// (each channel's city: how far it has risen, never back, and whether it is later than the city the foundations are of) or the
+// modern growth begins (RUINS_TO: the city taken back by then); a loss a fire took leaves them charred
+const RUINS_TO = FILM.grow ? FILM.grow.on + 1 : Infinity;
+function ruinsAt(t) {
+  const ch = {}; for (const e of FILM.eras || []) if (e.hide != null && inChannel(e)) ch[e.hide] = e;
+  for (const [h, q] of Object.entries(ch)) MINI.ruinT.value[h] = (t - q.on) / q.span;
+  for (const e of FILM.eras || []) { const u = S.eras[e.id] && S.eras[e.id].u; if (!u || !u.uRuinLater) continue;
+    for (let h = 0; h < u.uRuinLater.value.length; h++) u.uRuinLater.value[h] = ch[h] && ch[h].on > e.on ? 1 : 0;
+    (e.losses || []).forEach((q, j) => { u.uLossBurnt.value[j] = q.burn && t >= q.burn[0] ? 1 : 0; }); }
+}
+const renderColour = async t => { stateAt(t); ruinsAt(sceneAt(t)); if (!(PLAY && PLAYING && fullCover(t))) await MINI.render({ target: tgt, d: camDist }); overlayAt(t); };
 const seekFootage = async t => {
   for (const f of FILM.footage || []) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;
@@ -742,6 +758,7 @@ await window.render(QS.has('t') ? +QS.get('t') : 0);
   for (const [E] of keep) { E.mesh.visible = true; E.u.uEraT.value = 1e6; E.u.uEraFallR.value = E.u.uEraFallIn.value > .5 ? 1e3 : -1; }
   S.renderer.render(S.scene, S.camera);
   for (const [E, v, r, f] of keep) { E.mesh.visible = v; E.u.uEraT.value = r; E.u.uEraFallR.value = f; }
+  if (MINI) MINI.warm();   // (the colour film's: engine/mini.js)
 }
 // the period cities' viewer (?view, engine/view.js): this scene and light without the timeline, the camera the viewer's
 if (QS.has('view')) {

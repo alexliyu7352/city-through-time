@@ -963,17 +963,21 @@ if _fx is not None:
             for lk_, ok_ in FX_LAND.items():
                 if lk_ in v_ and v_[lk_] not in ok_: raise SystemExit(f'compile: film.fx.land.{lk_}: one of {sorted(ok_)} (got {v_[lk_]!r})')
     FX_OUT = {k_: v_ for k_, v_ in _fx.items() if v_ is not False} or None
-# film.look: { kind: mini, palette: roman | chinese | modern }: the film drawn in the colour miniature (engine/mini.js; its palette
-# the region's colours and detail, mini.js PALETTES and detail.js STYLES); absent or kind white: the white model, and film.json
-# carries no key (docs/STAGING.md "Look and effects")
+# film.look: { kind: mini, palette: <the period cities'>, today: <today's city's> }: the film drawn in the colour miniature
+# (engine/mini.js): palette, the colours and detail of the region the period cities stand in (mini.js PALETTES, detail.js STYLES;
+# a period city of another region or time says its own: its node's city `palette`); today, today's city's colours (mini.js
+# TODAY: an old town's plasters and tiles, or a modern city's concrete and glass). Both asked for, never guessed: a city's
+# colours are its region's. Absent or kind white: the white model, and film.json carries no key (docs/STAGING.md "Look and effects")
 LOOK_PALETTES = {'roman', 'chinese', 'modern'}
 LOOK_OUT = None; _lk = FM.get('look')
 if _lk is not None:
-    if not isinstance(_lk, dict) or set(_lk) - {'kind', 'palette'} or _lk.get('kind') not in ('white', 'mini'):
-        raise SystemExit(f'compile: film.look: {{ kind: white | mini, palette: {" | ".join(sorted(LOOK_PALETTES))} }} (got {_lk})')
+    if not isinstance(_lk, dict) or set(_lk) - {'kind', 'palette', 'today'} or _lk.get('kind') not in ('white', 'mini'):
+        raise SystemExit(f'compile: film.look: {{ kind: white | mini, palette: <{" | ".join(sorted(LOOK_PALETTES))}>, today: <the same> }} (got {_lk})')
     if _lk['kind'] == 'mini':
-        if _lk.get('palette') not in LOOK_PALETTES: raise SystemExit(f'compile: film.look.palette: one of {sorted(LOOK_PALETTES)}, the region\'s colours (got {_lk.get("palette")!r})')
-        LOOK_OUT = {'kind': 'mini', 'palette': _lk['palette']}
+        for k_ in ('palette', 'today'):
+            what_ = 'its period cities' if k_ == 'palette' else "today's city"
+            if _lk.get(k_) not in LOOK_PALETTES: raise SystemExit(f'compile: film.look.{k_}: one of {sorted(LOOK_PALETTES)}, the colours of the region of {what_}, never a default (got {_lk.get(k_)!r})')
+        LOOK_OUT = {'kind': 'mini', 'palette': _lk['palette'], 'today': _lk['today']}
 # ------------------------------------------------------------------ layout: opening -> nodes -> closing
 OP = FM.get('opening', {'dur': 5.0}); CL = FM.get('closing', {})
 cursor = PD + float(OP.get('dur', 5.0))
@@ -1900,6 +1904,9 @@ for i, node in enumerate(FM['nodes']):
         wf_ = sorted({w_['face'] for w_ in cs.get('walls', []) if w_.get('face')})   # what its walls are faced with (walls face; the colour look's detail, engine/detail.js; no picture of the film changes)
         if len(wf_) > 1: WARN.append(f'node {node["id"]}: its walls are faced with {", ".join(wf_)}: the colour look draws one face a period city ({wf_[0]})')
         if wf_: e['wall_face'] = wf_[0]
+        if 'palette' in cs:   # the colour look's palette for this period city, in place of film.look's (another region's or time's houses)
+            if cs['palette'] not in LOOK_PALETTES: raise SystemExit(f'compile: node {node["id"]}: city palette: one of {sorted(LOOK_PALETTES)} (got {cs["palette"]!r})')
+            e['palette'] = cs['palette']
         e['hide'] = None   # its channel (where today's buildings step aside, its front and its edge are lit): given once the timing is known (era_slots)
         e['_pend'] = {'cs': cs, 'node': node, 'prims': prims, 'meta': meta_, 'at_of': at_of, 'bnd': bnd, 'ebnd': ebnd}
         eras_out.append(e); print(f'  city {node["id"]}: {len(prims)} primitives' + (f'; its edge leaves out {len(bnd) - len(ebnd)} island(s) of one building on cleared ground (edge_rings)' if len(ebnd) < len(bnd) else ''))
