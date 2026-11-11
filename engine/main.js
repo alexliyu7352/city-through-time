@@ -116,7 +116,7 @@ if (FILM.context && !QS.has('flat') && !FREE) {
 const CTXK = FILM.context && FILM.context.keys.length ? track(FILM.context.keys) : null;
 // props: schematic models per node
 for (const p of FILM.props || []) S.addProp(p);
-for (const r of FILM.routes || []) S.addRoute(r.id, r.pts, r.col, r.w);
+for (const r of FILM.routes || []) S.addRoute(r.id, r.pts, r.col, r.w, { column: r.column !== false });   // (column: fx glow's column where it lands, unless the beam leaves it out)
 for (const r of FILM.arrows || []) S.addArrow(r.id, r.pts, r.col, r.w);
 // era cities: one generated city per period
 const ERABOX = {};   // each period city's extent on the plate [x0, z0, x1, z1]; for the viewer (?view) the moments it is shown at (engine/eralife.js), each with its densest 200 m square [x, z] then

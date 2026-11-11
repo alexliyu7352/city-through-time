@@ -28,8 +28,9 @@ import * as THREE from 'three';
 //             land's last this many km before the end of the model fade wholly into the haze (no step against the sky) }
 //   dof:    { k: the aperture times the film's own, max: the largest blur in pixels of a 1080 picture, band: [close, wide] the
 //             sharp band's half-depth round the focus as a share of its distance, for a close shot and a wide one }
-//   glow:   { lines: glowing lines (a hot core, a halo, light flowing along them), column: a column of light where a beam lands,
-//             flare: a flare where it lands and at the line's head, sparks: a burst of sparks where it lands }
+//   glow:   { lines: glowing lines (a hot core, a halo, light flowing along them), column: a column of light where a beam lands
+//             (a beam's own column: false in staging leaves it out for that beam), flare: a flare where it lands and at the
+//             line's head, sparks: a burst of sparks where it lands }
 //   land:   { source: 'quiet' (one soil-and-grass ground, soft variation, no field blocks) or 'fields' (a patchwork of fields),
 //             palette: the land's colours (LAND_PALETTES), mute: 0..1 the white model's land toward grey, warm: 0..1 toward a
 //             warm sepia, dark: its lightness (the white models stay the subject), scrub: a slope in percent from which the land

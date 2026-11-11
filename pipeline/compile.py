@@ -1861,6 +1861,7 @@ for i, node in enumerate(FM['nodes']):
         e['_pend'] = {'cs': cs, 'node': node, 'prims': prims, 'meta': meta_, 'at_of': at_of, 'bnd': bnd, 'ebnd': ebnd}
         eras_out.append(e); print(f'  city {node["id"]}: {len(prims)} primitives' + (f'; its edge leaves out {len(bnd) - len(ebnd)} island(s) of one building on cleared ground (edge_rings)' if len(ebnd) < len(bnd) else ''))
     for rt in node.get('routes', []):      # a light path: a move, a shift, a distance (lon/lat points; each hop arcs up by `arc` x its length)
+        if 'column' in rt and (rt['column'] is not False or not rt.get('impact')): raise SystemExit(f'compile: node {node["id"]} route {rt["id"]}: column takes only false, on a beam that lands (impact: true) (got {rt["column"]!r})')
         ll = rt['pts'] if 'pts' in rt else [rt['from'], rt['to']]
         P3, pts3 = route_pts3(rt)
         km = sum(math.hypot(*(lambda u, v: (u[0] - v[0], u[1] - v[1]))(F.to_utm.transform(*u_), F.to_utm.transform(*v_))) for u_, v_ in zip(ll[:-1], ll[1:])) / 1000
@@ -1880,7 +1881,8 @@ for i, node in enumerate(FM['nodes']):
             IMPACT[node['id']] = {'route': rt['id'], 'land': round(on_r + draw_r, 3), 'end': [ex_, ez_], 'dir': [(ex_ - sx_) / L_, (ez_ - sz_) / L_], 'follow': bool(rt.get('follow')),
                                   'arrive': round(on_r + fs_['end'], 3) if rt.get('follow') else round(on_r + draw_r, 3)}
         routes_out.append({'id': rt['id'], 'pts': [[round(v, 5) for v in q] for q in pts3], 'col': rt.get('col', node.get('col', '#ffffff')), 'w': rt.get('w', .0011),
-                           'on': on_r, 'draw': draw_r, 'impact': bool(rt.get('impact')), 'off': T(rt['off_at']) if 'off_at' in rt else round(on_r + float(rt.get('draw', 2.5)) + float(rt.get('hold', 3.5)), 3), 'a': fill(a_), 'b': fill(b_), 'lab': [mid[0], mid[2], mid[1]], 'km': round(km, 2)})
+                           'on': on_r, 'draw': draw_r, 'impact': bool(rt.get('impact')), 'off': T(rt['off_at']) if 'off_at' in rt else round(on_r + float(rt.get('draw', 2.5)) + float(rt.get('hold', 3.5)), 3), 'a': fill(a_), 'b': fill(b_), 'lab': [mid[0], mid[2], mid[1]], 'km': round(km, 2),
+                           **({'column': False} if rt.get('column') is False else {})})   # (column: false: no fx glow column where this beam lands)
     for ar in node.get('arrows', []):      # a light arrow: a movement or the way to a place, on the ground, drawn from its tail to its head
         P_ = [F.model_lonlat(*q) for q in ar['pts']]; pts_ = []   # (lon/lat points, tail first; every ARROW_STEP_M on the plate, so it lies on the slopes)
         for (ax_, az_), (bx_, bz_) in zip(P_[:-1], P_[1:]):

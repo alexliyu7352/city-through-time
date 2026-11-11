@@ -825,8 +825,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // comet, the drawn part carries travelling pulses; additive, so it reads as light over the model
   const routes = {};
   const LREF = 1.2, LKMIN = .1;   // lines and routes keep their width from 1.2 model units out, and thin to a tenth closer in
-  function addRoute(id, pts, col, width = .0018) {
-    if (FXG && FXG.lines) return addGlowRoute(id, pts, col, width);
+  function addRoute(id, pts, col, width = .0018, o = {}) {   // (o.column false: no fx glow column where this beam lands)
+    if (FXG && FXG.lines) return addGlowRoute(id, pts, col, width, o);
     const curve = new THREE.CatmullRomCurve3(pts.map(p => new THREE.Vector3(...p)), false, 'centripetal');
     const geo = new THREE.TubeGeometry(curve, Math.max(64, pts.length * 48), width, 8, false);
     const u = { uProg: { value: 0 }, uA: { value: 0 }, uCol: { value: lin(col) }, uNow: U.uNow, uW0: { value: width }, uRef: { value: LREF }, uKmin: { value: LKMIN } };
@@ -850,14 +850,15 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   // a beam as a glowing line (fx glow): a hot core and a wide soft halo, comets of light running along it, a flare on its head while
   // it draws; where it lands (main.js: a beam with impact) a column of light, a flare and sparks (fx.js makeLanding), as the
-  // settings keep them. set(prog, a, flash) as addRoute's; land(t, a): t seconds since it landed
-  function addGlowRoute(id, pts, col, width) {
+  // settings keep them (a beam with o.column false: no column, the flare and sparks as they are). set(prog, a, flash) as addRoute's;
+  // land(t, a): t seconds since it landed
+  function addGlowRoute(id, pts, col, width, o = {}) {
     const curve = new THREE.CatmullRomCurve3(pts.map(p => new THREE.Vector3(...p)), false, 'centripetal'), len = curve.getLength(), segs = Math.max(64, pts.length * 48);
     const core = glowLineMaterial(col, width, len, LREF, LKMIN, U.uNow), halo = glowLineMaterial(col, width * 4.5, len, LREF, LKMIN, U.uNow, true);
     const meshes = [new THREE.Mesh(new THREE.TubeGeometry(curve, segs, width * 4.5, 10, false), halo.mat), new THREE.Mesh(new THREE.TubeGeometry(curve, segs, width, 8, false), core.mat)];
     meshes.forEach((m, i) => { m.frustumCulled = false; m.renderOrder = 5 + i; m.layers.enable(1); m.layers.enable(2); m.layers.enable(3); m.userData.fxGlow = true; scene.add(m); });
     const head = FXG.flare ? makeFlare(col) : null; if (head) scene.add(head.mesh);
-    const landing = makeLanding(scene, col, DIAG * .045, FXG), end = curve.getPointAt(1);
+    const landing = makeLanding(scene, col, DIAG * .045, { ...FXG, column: FXG.column && o.column !== false }), end = curve.getPointAt(1);
     routes[id] = { curve, u: core.u, clock(t) { for (const u of [core.u, halo.u]) u.uNow = t; }, set(prog, a, flash = 0) {   // (clock: a uniform of its own for the light's flow, in place of the film's time)
       for (const u of [core.u, halo.u]) { u.uProg.value = prog; u.uA.value = a; }
       for (const m of meshes) m.visible = a > .002 && prog > .001;
