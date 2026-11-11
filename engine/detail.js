@@ -8,10 +8,12 @@
 // crenellated; a Chinese hall's columns lacquered and its beams painted. Nothing here knows a city: the same records of any city
 // in a region get the same detail.
 // eraDetail(prims, { scale, hex, style, face }) -> { kinds: { <kind>: { n, m: Float32Array (16 per instance), k: Float32Array (a
-//   lightness each), ctr: Float32Array (its building's centre, x z), rank: Float32Array (its building's rank), size: the piece's
-//   own size (model units: what detailMeshes fades it out by, as it gets too small to draw) } }, count }:
-//   plain arrays, so any look draws them (detailMeshes: one InstancedMesh a kind, coloured by the look); ctr and rank are the
-//   records' own (aCtr, aData.z), so a film that raises a city building by building can raise these pieces with their building.
+//   lightness each), ctr: Float32Array (its building's centre, x z), rank: Float32Array (its building's rank), base: Float32Array
+//   (its record's ground, what the building rises from: aBase), src: Float32Array (its record's index, for its loss), size: the
+//   piece's own size (model units: what detailMeshes fades it out by, as it gets too small to draw) } }, count }:
+//   plain arrays, so any look draws them (detailMeshes: one InstancedMesh a kind, coloured by the look); ctr, rank and base are the
+//   records' own (aCtr, aData.z, aBase), so a film that raises a city building by building raises these pieces with their building
+//   (detailMeshes o.rise).
 // hex: the period city's height exaggeration (city.yaml era `exaggeration`, film.json's era `exaggeration`; the generator's
 // default 2): a storey's drawn height and every piece's height scale with it, widths do not. face: what the city's walls are
 // faced with where its walls say (city.yaml walls `face`, film.json's era `wall_face`): else a battered wall's rammed earth and an
@@ -99,9 +101,9 @@ export const SHADOW = { cornice: true, post: true, beam: true, coping: true, rid
 
 export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null } = {}) {
   const ST = STYLES[style] || STYLES.roman, M = scale, V = scale * hex;   // M: a metre across; V: a metre up, as drawn
-  const R = prims.map(p => ({ t: p[0], x: p[1], z: p[2], rot: p[3], y0: p[4], a: p[5], b: p[6], c: p[7], d: p[8], e: p[9], rank: p[10], part: p[11], g: p[12],
-    gx: p[13] || 0, gz: p[14] || 0, bx: p[15] ?? p[1], bz: p[16] ?? p[2] }));
-  const out = {}, put = (kind, r, x, y, z, phi, sx, sy, sz, tilt = 0, k = 1, roll = 0) => (out[kind] ||= []).push([x, y, z, phi, sx, sy, sz, tilt, k, r.bx, r.bz, r.rank, roll]);
+  const R = prims.map((p, i) => ({ t: p[0], x: p[1], z: p[2], rot: p[3], y0: p[4], a: p[5], b: p[6], c: p[7], d: p[8], e: p[9], rank: p[10], part: p[11], g: p[12],
+    gx: p[13] || 0, gz: p[14] || 0, bx: p[15] ?? p[1], bz: p[16] ?? p[2], i }));
+  const out = {}, put = (kind, r, x, y, z, phi, sx, sy, sz, tilt = 0, k = 1, roll = 0) => (out[kind] ||= []).push([x, y, z, phi, sx, sy, sz, tilt, k, r.bx, r.bz, r.rank, roll, r.g ?? r.y0, r.i]);
   const local = (r, X, Z) => { const c = Math.cos(r.rot), s = Math.sin(r.rot), dx = X - r.x, dz = Z - r.z; return [dx * c + dz * s, -dx * s + dz * c]; };
   const world = (r, lx, lz) => { const c = Math.cos(r.rot), s = Math.sin(r.rot); return [r.x + lx * c - lz * s, r.z + lx * s + lz * c]; };
   const shear = (r, X, Z) => r.gx * (X - r.x) + r.gz * (Z - r.z);
@@ -401,11 +403,11 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
     ...Object.fromEntries(Object.entries(WALL_FACES).flatMap(([k, F]) => [['course_' + k, F.every * V], ['spandrel_' + k, 4 * M], ['parapet_' + k, .9 * V], ['merlon_' + k, 1.4 * M]])) };
   let count = 0;
   for (const [kind, L] of Object.entries(out)) {
-    const n = L.length, m = new Float32Array(n * 16), k = new Float32Array(n), ctr = new Float32Array(n * 2), rank = new Float32Array(n);
-    L.forEach(([x, y, z, phi, sx, sy, sz, tilt, kk, bx, bz, rk, roll], i) => {
+    const n = L.length, m = new Float32Array(n * 16), k = new Float32Array(n), ctr = new Float32Array(n * 2), rank = new Float32Array(n), base = new Float32Array(n), src = new Float32Array(n);
+    L.forEach(([x, y, z, phi, sx, sy, sz, tilt, kk, bx, bz, rk, roll, b0, si], i) => {
       e.set(tilt, phi, roll); q.setFromEuler(e); m4.compose(p.set(x, y, z), q, sc.set(sx, sy, sz)).toArray(m, i * 16);
-      k[i] = kk; ctr[i * 2] = bx; ctr[i * 2 + 1] = bz; rank[i] = rk; });
-    kinds[kind] = { n, m, k, ctr, rank, size: SIZE[kind] || M, fade: kind === 'tile' ? FADE_ROWS : FADE_PX }; count += n;
+      k[i] = kk; ctr[i * 2] = bx; ctr[i * 2 + 1] = bz; rank[i] = rk; base[i] = b0; src[i] = si; });
+    kinds[kind] = { n, m, k, ctr, rank, base, src, size: SIZE[kind] || M, fade: kind === 'tile' ? FADE_ROWS : FADE_PX }; count += n;
   }
   return { kinds, count, treeOK };
 }
@@ -474,17 +476,28 @@ const FADE_GLSL = /* glsl */`
     float px_ = uDetSize * uPxK / max(distance(cameraPosition, o_.xyz), 1e-6);
     vDetF = smoothstep(uDetFade.x, uDetFade.y, px_);
     if (uDetFlat > 0.) transformed *= vec3(smoothstep(0., .3, vDetF), vDetF, smoothstep(0., .3, vDetF)); else transformed *= vDetF; }`;   // (a flat one gone at last too: left lying on its face it caught the face's shadow and shimmered)
-function fading(mat, size, pxK, flat = 0, fade = FADE_PX) {
-  mat.onBeforeCompile = sh => { sh.uniforms.uDetSize = { value: size }; sh.uniforms.uPxK = pxK; sh.uniforms.uDetFlat = { value: flat }; sh.uniforms.uDetFade = { value: new THREE.Vector2(...fade) };
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uDetSize, uPxK, uDetFlat; uniform vec2 uDetFade; varying float vDetF;').replace('#include <begin_vertex>', '#include <begin_vertex>' + FADE_GLSL);
-    if (sh.fragmentShader.includes('#include <color_fragment>'))
+// a piece rising with its building (detailMeshes o.rise): the look's float eraRiseK() of the instance's building (0 not up or gone
+// .. 1 standing), and the piece raised as its building is, about the building's ground (iBase): up to it as the building rises,
+// down as it falls; not drawn at all while its building is not up
+const RISE_PIECE = /* glsl */`
+  { float ry_ = eraRiseK();
+    if (ry_ < .002) transformed = vec3(0.);
+    else { vec4 w_ = instanceMatrix * vec4(transformed, 1.); w_.y = iBase + (w_.y - iBase) * ry_; transformed = (inverse(instanceMatrix) * w_).xyz; } }`;
+function fading(mat, size, pxK, flat = 0, fade = FADE_PX, rise = null) {
+  mat.onBeforeCompile = sh => { if (pxK) { sh.uniforms.uDetSize = { value: size }; sh.uniforms.uPxK = pxK; sh.uniforms.uDetFlat = { value: flat }; sh.uniforms.uDetFade = { value: new THREE.Vector2(...fade) }; }
+    if (rise) Object.assign(sh.uniforms, rise.uniforms);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + (pxK ? 'uniform float uDetSize, uPxK, uDetFlat; uniform vec2 uDetFade; varying float vDetF;' : '') + (rise ? '\nattribute float iBase;\n' + rise.glsl : ''))
+      .replace('#include <begin_vertex>', '#include <begin_vertex>' + (pxK ? FADE_GLSL : '') + (rise ? RISE_PIECE : ''));
+    if (pxK && sh.fragmentShader.includes('#include <color_fragment>'))
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uDetFlat; varying float vDetF;')
         .replace('#include <color_fragment>', '#include <color_fragment>\n  if (uDetFlat > 0.) diffuseColor.rgb *= mix(1. / uDetFlat, 1., vDetF);'); };
-  mat.customProgramCacheKey = () => 'detail-fade'; return mat;
+  mat.customProgramCacheKey = () => (pxK ? 'detail-fade' : 'detail') + (rise ? '-rise' : ''); return mat;
 }
 
 // one InstancedMesh a kind: cols { <kind>: colour, or (bx, bz) -> THREE.Color: its building's own (a roof's tiles in that roof's
-// colour) }, each piece that colour times its lightness; o.layer: the layer it is drawn on; o.pxK: the fade's (FADE_PX; none: no fade)
+// colour) }, each piece that colour times its lightness; o.layer: the layer it is drawn on; o.pxK: the fade's (FADE_PX; none: no fade);
+// o.rise: { glsl, uniforms, w } each piece rising and falling with its building (a film's period city: engine/studio.js eraRiseGLSL,
+// its declarations and float eraRiseK() from iCtr, iRank and iW; the era's uniforms; w: the loss code of each record, aData.w, or null)
 export function detailMeshes(D, cols, o = {}) {
   const group = new THREE.Group(), c = new THREE.Color(), base = new THREE.Color();
   for (const [kind, K] of Object.entries(D.kinds)) {
@@ -492,15 +505,18 @@ export function detailMeshes(D, cols, o = {}) {
     const root = kind.split('_')[0];   // (a kind by a wall's face: course_brick, merlon_earth ..: its shape and its shadow the root's)
     const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .92, metalness: 0, side: ['window', 'door', 'spandrel', 'archRing', 'flag', 'sail'].includes(root) ? THREE.DoubleSide : THREE.FrontSide });   // (a flat piece seen from either side)
     const flat = FLAT[root] && !kind.endsWith('_banded') ? FLAT[root] : 0;   // (a stone wall's bands of brick are its face's own colour: they fade by their size)
-    const mesh = new THREE.InstancedMesh((SHAPES[kind] || SHAPES[root])(), o.pxK ? fading(mat, K.size, o.pxK, flat, K.fade) : mat, K.n);
+    const rise = o.rise && K.base ? o.rise : null;
+    const mesh = new THREE.InstancedMesh((SHAPES[kind] || SHAPES[root])(), o.pxK || rise ? fading(mat, K.size, o.pxK, flat, K.fade, rise) : mat, K.n);
     mesh.instanceMatrix.array.set(K.m); mesh.instanceMatrix.needsUpdate = true;
     const own = typeof cols[kind] === 'function'; if (!own) base.set(cols[kind]);
     for (let i = 0; i < K.n; i++) mesh.setColorAt(i, (own ? c.copy(cols[kind](K.ctr[i * 2], K.ctr[i * 2 + 1])) : c.copy(base)).multiplyScalar(K.k[i]));
     mesh.instanceColor.needsUpdate = true;
     mesh.geometry.setAttribute('iCtr', new THREE.InstancedBufferAttribute(K.ctr, 2)); mesh.geometry.setAttribute('iRank', new THREE.InstancedBufferAttribute(K.rank, 1));
+    if (rise) { mesh.geometry.setAttribute('iBase', new THREE.InstancedBufferAttribute(K.base, 1));
+      mesh.geometry.setAttribute('iW', new THREE.InstancedBufferAttribute(K.src.map(i => rise.w ? rise.w[i] : 3), 1)); }
     mesh.castShadow = !!SHADOW[root]; mesh.receiveShadow = true; mesh.frustumCulled = false;
     if (flat) mesh.userData.noAO = true;   // (an ambient occlusion pass draws a scene with its own material, whole: a flat piece faded away there still shaded its roof in stripes; the look leaves these out of it)
-    if (mesh.castShadow && o.pxK) mesh.customDepthMaterial = fading(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), K.size, o.pxK, flat, K.fade);
+    if (mesh.castShadow && (o.pxK || rise)) mesh.customDepthMaterial = fading(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), K.size, o.pxK, flat, K.fade, rise);
     if (o.layer != null) mesh.layers.set(o.layer);
     mesh.name = 'detail:' + kind; group.add(mesh);
   }

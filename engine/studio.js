@@ -41,7 +41,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const PDEP = !!opts.projDepth;   // the projector sees what it lights (a museum page, turned away from a picture's camera): aimProjector draws its depth
   // the effects a film or the page asks for (engine/fx.js fxSettings; null: none, and every shader as it was). The relief reads one
   // more texture on the plate: only on the full path (Z), never on a phone's
-  const FX = opts.fx || null, FXR = !!(FX && FX.relief), FXG = (FX && FX.glow) || null, FXL = (FX && FX.land) || null;   // (land: the plate as land, fx.js)
+  const FX = opts.fx || null, FXR = !!(FX && FX.relief), FXG = (FX && FX.glow) || opts.glow || null, FXL = (FX && FX.land) || null;   // (land: the plate as land, fx.js; glow: fx glow's beams for a film in the colour look)
+  // the film in the colour look (engine/mini.js, which draws layer 1 alone): the light the studio adds (lines, arrows, fire) drawn there too
+  const COLOUR = !!opts.colour;
   const EXG = (M.terrain && M.terrain.exaggeration) || 3, FXRO = FXR ? { ...FX.relief, light: FXL ? 0 : FX.relief.light } : null;   // (a lit land needs no light added on its slopes: that was for a dark plate)
   const SUN = FX && FX.light && FX.light.az != null ? sunVector(new THREE.Vector3(), FX.light.az, FX.light.el) : null;   // (fx light: the key a sun fixed in the world)
   const RSETS = [];   // (the relief uniforms whose strength follows the shot: the plate's, the land beyond's; followShadow)
@@ -511,16 +513,34 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     return L * (1. - .55 * wm);
   }`;
 
+  // a ring that takes a city back (RISE), and how far a period city's building stands at its rank (ERA_RY: ry, from its rank and
+  // its loss code, aData's z and w): kept as text the white model's shaders and the colour look's pieces (eraRiseGLSL) share
+  const FALLK_GLSL = `// a ring that takes a city back: contracting (in) it takes what lies outside it, growing (out) what lies inside. R is the
+  // ring now, R1 where it was a sink-time ago: a building the ring passed sinks over that time (0 standing .. 1 gone)
+  float fallK(vec2 o, float R, float fin, float R1){ float d = length(aCtr - o);
+    float a = fin > .5 ? (d - R) / max(R1 - R, 1e-5) : (R - d) / max(R - R1, 1e-5); return smoothstep(0., 1., a); }`;
+  const ERA_RY = (Z, rank, w) => `float st = ${rank} * uEraSpan; ry = smoothstep(st, st + uEraGrow, uEraT) * (1. - fallK(uEraO, uEraFallR, uEraFallIn, uEraFallW));
+     for (int k = 0; k < ${Z.L}; k++) if (abs(${w} - 4. - float(k)) < .5) ry *= 1. - fallK(uLossO[k], uLossR[k], uLossIn[k], uLossW[k]);   // a lost part goes with its own ring`;
+  // a piece drawn as an instance on a period city's building (the colour look's detail, engine/detail.js detailMeshes rise): its
+  // building's centre, rank and loss code per instance (iCtr, iRank, iW), the era's uniforms (addEra's u): float eraRiseK(), as
+  // the building's own rise and fall
+  const eraRiseGLSL = () => `#define aCtr iCtr
+  attribute vec2 iCtr; attribute float iRank, iW;
+  uniform float uEraT, uEraSpan, uEraGrow, uEraFallR, uEraFallIn, uEraFallW; uniform vec2 uEraO;
+  uniform float uLossR[${Z.L}], uLossIn[${Z.L}], uLossW[${Z.L}]; uniform vec2 uLossO[${Z.L}];
+  ${FALLK_GLSL}
+  float eraRiseK(){ float ry;
+     ${ERA_RY(Z, 'iRank', 'iW')}
+     return ry; }`;
+  // how far today's building has come by its year (0 not yet .. 1 up; yr its year, aData.x): RISE's, and the colour film's colours by year
+  const GROW_BY = 'yr > 0. ? (uYLn > 1.5 ? smoothstep(0., uGrowDur, uNow - (aGrowT > 0. ? aGrowT : tOfYear(yr - .5))) : smoothstep(yr - .5, yr + 2.5, uYear)) : smoothstep(1985., 1988., uYear)';
   const RISE_DECL = Z => `${YL_GLSL(Z)}
   uniform float uNow; attribute vec4 aData; attribute float aBase; varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase; uniform float uToday, uGrowRise, uYear, uGhost, uLiveSink; uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''}; uniform vec2 uPlateV; attribute vec2 aCtr; uniform vec2 uResetC; uniform float uResetR, uResetY; varying vec2 aCtrV; attribute vec3 aGrowH; attribute float aGrowT; varying float vGrowT;
   uniform float uHideT[${HMAX}], uHideG[${HMAX}], uHideFR[${HMAX}], uHideFI[${HMAX}], uHideFW[${HMAX}]; uniform vec2 uHideO[${HMAX}];${K ? ` uniform sampler2D uKeep, uKeep2${H3 ? ', uKeep3' : ''}; uniform float uHideKeep[${HMAX}];` : ''}
   uniform float uEraT, uEraSpan, uEraGrow, uEraFallR, uEraFallIn, uEraFallW; uniform vec2 uEraO;
   uniform float uLossR[${Z.L}], uLossIn[${Z.L}], uLossW[${Z.L}]; uniform vec2 uLossO[${Z.L}];   // a part of the city lost (lose:): its ring
   uniform sampler2D uBasin; uniform float uBasinA[${Z.B}], uBasinLo, uBasinHi, uBasinK, uPlateTop;   // dug pools (compile basin map): the plate lowered in them${T ? '\n  uniform sampler2D uWater;' + WTHEN : ''}
-  // a ring that takes a city back: contracting (in) it takes what lies outside it, growing (out) what lies inside. R is the
-  // ring now, R1 where it was a sink-time ago: a building the ring passed sinks over that time (0 standing .. 1 gone)
-  float fallK(vec2 o, float R, float fin, float R1){ float d = length(aCtr - o);
-    float a = fin > .5 ? (d - R) / max(R1 - R, 1e-5) : (R - d) / max(R - R1, 1e-5); return smoothstep(0., 1., a); }
+  ${FALLK_GLSL}
   // today's building over era channel i (m: the rank code there): it steps aside just before the era building beside it rises,
   // and comes back where the era is taken back
   float hideK(float m, int i){ if (m < .02 || uHideT[i] < -.5) return 0.; float r = (m - .04) / .96, g = uHideG[i];
@@ -529,7 +549,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
  { // rise: buildings grow from the plate as the year counter passes their first-seen year; mounds/props appear at their year; everything is up "today"
    float yr = aData.x; float ry = 1.;
    if (aData.w > -.5 && aData.w < .5) {
-     float by = yr > 0. ? (uYLn > 1.5 ? smoothstep(0., uGrowDur, uNow - (aGrowT > 0. ? aGrowT : tOfYear(yr - .5))) : smoothstep(yr - .5, yr + 2.5, uYear)) : smoothstep(1985., 1988., uYear);
+     float by = ${GROW_BY};
      float keep = uGhost;   // the latent city: today's footprints before they grow; a reset ring takes back what came after uResetY
      // rebuilt taller later: f0 of today's height until yA, today's height by yB (only while the modern growth is told)
      float hf = aGrowH.x < .999 ? mix(aGrowH.x, 1., smoothstep(aGrowH.y, aGrowH.z, uYear)) : 1.;
@@ -546,8 +566,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    }
    else if (aData.w > .5 && aData.w < 1.5) { float by = smoothstep(yr - 1., yr + 3., uYear); ry = max(uToday, by); }
    else if (aData.w > 2.5) {   // era cities: each building rises at its own start (rank x span, from the stages), whole; a ring takes them back
-     float st = aData.z * uEraSpan; ry = smoothstep(st, st + uEraGrow, uEraT) * (1. - fallK(uEraO, uEraFallR, uEraFallIn, uEraFallW));
-     for (int k = 0; k < ${Z.L}; k++) if (abs(aData.w - 4. - float(k)) < .5) ry *= 1. - fallK(uLossO[k], uLossR[k], uLossIn[k], uLossW[k]);   // a lost part goes with its own ring
+     ${ERA_RY(Z, 'aData.z', 'aData.w')}
      if (ry < .002) ry = -1.; }
    vUp = max(ry, 0.); vBase = aBase; aCtrV = aCtr; vGrowT = aGrowT;
    transformed.y = ry < 0. ? aBase - .02 : aBase + (transformed.y - aBase) * max(ry, .0005);
@@ -969,6 +988,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     });
     g.computeBoundingSphere();
     const mesh = new THREE.Mesh(g, mat); mesh.position.y = .0025; mesh.renderOrder = 2; mesh.frustumCulled = false; scene.add(mesh);
+    if (COLOUR) { mesh.layers.enable(1); mesh.userData.fxGlow = true; }
     lineGroups[id] = mat.uniforms.uA;
     return mat.uniforms.uA;
   }
@@ -1019,6 +1039,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         void main(){ gl_Position = across(uHead, uHeadDir, aOff); }`,
       fragmentShader: `uniform float uA; uniform vec3 uCol; void main(){ gl_FragColor = vec4(uCol * 1.3 * uA, 1.); }` });
     const head = new THREE.Mesh(hg, hm); head.renderOrder = 8; head.frustumCulled = false; head.visible = false; scene.add(head);
+    if (COLOUR) for (const o of [mesh, head]) { o.layers.enable(1); o.userData.fxGlow = true; }
     const at = s => {   // the point s along the arrow and its direction there
       let acc = 0;
       for (let i = 1; i < pts.length; i++) {
@@ -1176,6 +1197,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
           if (a < .003) discard;
           gl_FragColor = vec4(col * a, 1.); }` });
     const pts = new THREE.Points(g, mat); pts.frustumCulled = false; pts.visible = false; pts.renderOrder = 7; scene.add(pts);
+    if (COLOUR) { pts.layers.enable(1); pts.userData.fxGlow = true; }
     fires[id] = { u, set(a, t, R, o) { u.uA.value = a; u.uT.value = t; u.uR.value = R; if (o) u.uO.value.set(o[0], o[1]); pts.visible = a > .002; } };
     return fires[id];
   }
@@ -1324,5 +1346,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // fx land trees: trees in the land's woods and open ground in the white model too, planted as the miniature plants them, in a pale
   // sage that sits with the white city (fx.js treeField; the viewer's, engine/view.js)
   const fxTrees = () => treeField(scene, renderer, U, PW, PD, M.scale, { size: .8, keep: .25, ...(landPalette(FXL).trees || {}), dark: 1, cypress: .1, woods: woodsFn(FXL, EXG, M.scale, ground, FXR), ground, layer: 0, tone: 'film' });
-  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, deformMaterial, eraRiseGLSL, growByGLSL: GROW_BY, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

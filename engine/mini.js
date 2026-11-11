@@ -8,6 +8,12 @@
 // (tools/blender) in place of the generator's, a hazy sky and a tilt-shift blur (sharp in a band across the middle, as a
 // photograph of a model).
 // Nothing of the film is changed: the studio draws with layer 0, this look with layer 1 alone.
+// The film in this look (film.look, engine/main.js; film: true): the same colours drawn with the studio's own deformation
+// (studio.js deformMaterial), so each period city rises at its station, falls and loses parts as the white model's does, today's
+// city grows by year and steps aside where a period city stands, and their shadows follow (the studio's depth materials kept); a
+// burning building charred and glowing; the detail rising and falling with its building (detail.js o.rise); today's city a pale
+// unpainted card outside its own story (filmMaterial); the sun from the bearing of the film's key light (it turns
+// with the shot, not the drift); the film's lens and depth of field, its ambient occlusion from the picture's own depth.
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
@@ -24,6 +30,7 @@ const L = 1;   // the layer this look draws
 // with the effects: a bright day, as bright and as coloured as the look without them (the low warm sun, the haze and the occlusion
 // had greyed it): the sun and the sky's light raised, the air thinner (its distance times haze), the occlusion lighter
 const MINI_LIFT = { sun: 1.5, sky: 1.45, haze: 3.5, ao: .3 };
+const FILM_AO = .45;   // (the film without the effects: the occlusion of its own passes)
 // the parts (pipeline/citygen.py): FAB 0, LMK 1, WALL 2, BRIDGE 3, TREE 4, WATER 5, DARK 6, PAVE 7, ROOF 8, LROOF 9, EARTH 10, PLINTH 11.
 // A house (FAB walls, ROOF) takes one of the walls and one of the roofs by its building's centre; the other parts their colour.
 // land: the fields' greens and straw (fx.js LAND_PALETTES, the white model's land under fx land too); glb: a detailed model's materials (tools/blender/kit.py); cypress: the share of tall
@@ -142,7 +149,8 @@ ${pop ? `<div style="position:absolute;right:72px;top:60px;font:500 34px/1 'Noto
 // prims: id -> (a promise of) that period city's records, for its detail (none: no detail); hex: id -> that city's height
 // exaggeration (city.yaml era `exaggeration`, which film.json does not carry: the generator's default 2)
 // face: id -> what that city's walls are faced with where they say (film.json era wall_face), else null
-export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', ground = 'land', card = null, prims = null, hex = () => 2, face = () => null }) {
+// film: the film's look (main.js; above); lost: id -> (a promise of) that period city's loss per record (film.json era file's lost), or null
+export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', ground = 'land', card = null, prims = null, hex = () => 2, face = () => null, film = false, lost = null }) {
   const { scene, camera, renderer, U } = S, PW = S.PW, PD = S.PD;
   const pal = PALETTES[palette] || PALETTES.roman;
   // the meshes this look draws: the period cities, today's city, the plate
@@ -175,7 +183,9 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     cone: (x, z) => { const [a, , c] = H3(x, z); return new THREE.Color().setHSL(.27 + a * .05, .4, (.18 + c * .06) * tdark); }, trunk: '#6b5440', pole: '#5b4a3a',
     flag: (x, z) => new THREE.Color(D_.flags[Math.floor(H3(x, z)[1] * D_.flags.length)]), hull: '#7a5236', mast: '#5b4a3a', sail: D_.sail, cabin: '#4a4038' });
   const pxK = { value: 1 }, idOf = new Map(Object.entries(S.eras).map(([id, E]) => [E.mesh, id])), upright = (STYLES[palette] || STYLES.roman).wall;   // (the fade's scale: detail.js FADE_PX)
-  const detailOf = async id => { const D = eraDetail(await prims(id), { scale, hex: hex(id), style: palette, face: face(id) }), g = detailMeshes(D, dcols, { layer: L, pxK });
+  const riseOf = async id => { if (!film) return null; const lo = lost ? await lost(id) : null;   // (the film: each piece rises and falls with its building)
+    return { glsl: S.eraRiseGLSL(), uniforms: S.eras[id].u, w: lo ? Float32Array.from(lo, v => 3 + v) : null }; };
+  const detailOf = async id => { const D = eraDetail(await prims(id), { scale, hex: hex(id), style: palette, face: face(id) }), g = detailMeshes(D, dcols, { layer: L, pxK, rise: await riseOf(id) });
     g.userData.count = D.count; g.userData.treeOK = D.treeOK; scene.add(g); return g; };
   // where trees may stand: off every shown city's wall bands and gate approaches (detail.js eraDetail treeOK)
   let clearNow = [];
@@ -193,13 +203,16 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // the tilt-shift: sharp in a band through the middle, blurred above and below
   // with the effects: the film's own passes (post.js: ambient occlusion, haze toward a sky dome, the stronger depth of field),
   // in place of the tilt-shift band
-  const FP = FX ? makePost(renderer, scene, camera, S.post.dof.rt.width / S.post.dof.s, S.post.dof.rt.height / S.post.dof.s,
-    { ssaa: S.post.dof.s, ao: true, aoAmt: MINI_LIFT.ao, ...S.gpu.targets, ...(FX.haze ? { haze: FX_SKY.mini } : {}), ...(FX.dof ? { dof2: true } : {}) }) : null;
+  // (the film: always the film's passes, its ambient occlusion from the picture's own depth: the geometry the passes would draw
+  // themselves is the city as built, not as it stands at that moment)
+  const FP = FX || film ? makePost(renderer, scene, camera, S.post.dof.rt.width / S.post.dof.s, S.post.dof.rt.height / S.post.dof.s,
+    { ssaa: S.post.dof.s, ao: true, aoAmt: FX ? MINI_LIFT.ao : FILM_AO, aoDepth: film, ...S.gpu.targets, ...(FX && FX.haze ? { haze: FX_SKY.mini } : {}), ...(FX && FX.dof ? { dof2: true } : {}) }) : null;
   const dome = FX && FX.haze ? makeSky(FX_SKY.mini) : null;
   if (FP) { FP.bloom.strength = .1; FP.bloom.threshold = 2.2;   // (a bright day: only the sun's glints glow, not every lit wall)
     FP.vig.uniforms.amt.value = .22;
     if (FP.dof.haze) { const ex = S.terrainEx; FP.dof.haze.uHazeD.value = 1 / (FX.haze.dist_km * 1000 * scale * MINI_LIFT.haze); FP.dof.haze.uHazeB.value = 1 / (FX.haze.height_m * scale * ex); FP.dof.haze.uHazeK.value = FX.haze.k; FP.dof.haze.uHazeS.value = FX.haze.start_km * 1000 * scale; FP.dof.haze.uHazeRect.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect.value : new THREE.Vector4(-PW / 2, -PD / 2, PW / 2, PD / 2)); FP.dof.haze.uHazeRect2.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect2.value : FP.dof.haze.uHazeRect.value); FP.dof.haze.uHazeEdge.value = FX.haze.edge_km * 1000 * scale; } }
   if (dome) { dome.mesh.layers.set(L); scene.add(dome.mesh); }
+  if (FP && film) FP.dof.ao.updatePdMaterial({ radius: 4 * S.post.dof.s });   // (its denoise a little tighter: the depth's own normals are noisier than a rendered normal pass)
   // the ambient occlusion passes leave out what detail.js marks noAO (they draw the scene with their own material, unfaded)
   const noAO = p => { if (!p) return; const o = p.overrideVisibility.bind(p); p.overrideVisibility = () => { o(); p.scene.traverse(x => { if (x.userData.noAO) x.visible = false; }); }; };
   if (FP) noAO(FP.dof.ao);
@@ -246,11 +259,13 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
       for (const [id, g] of DET) { const G = await g; G.visible = S.eras[id].mesh.visible; if (G.visible) clearNow.push(G.userData.treeOK); }
       boats(target, d); }
     const swapM = [];   // (the studio's materials back after the frame)
-    for (const m of [...eraMeshes, cityMesh]) if (m.visible && !m.userData.mini) m.userData.mini = m === cityMesh ? colourToday(m) : colourMesh(m, pal, !!DET, { face: face(idOf.get(m)), upright });   // (coloured when first shown)
-    for (const m of [...eraMeshes, cityMesh, plate].filter(Boolean)) { if (!m.userData.mini) continue; swapM.push([m, m.material, m.customDepthMaterial]); m.material = m.userData.mini; m.customDepthMaterial = undefined; m.layers.enable(L); m.castShadow = m.receiveShadow = true; }
+    for (const m of [...eraMeshes, cityMesh]) if (m.visible && !m.userData.mini) { m.userData.mini = m === cityMesh ? colourToday(m) : colourMesh(m, pal, !!DET, { face: face(idOf.get(m)), upright });   // (coloured when first shown)
+      if (film) filmMaterial(S, m.userData.mini, m === cityMesh ? null : S.eras[idOf.get(m)].u); }
+    for (const m of [...eraMeshes, cityMesh, plate].filter(Boolean)) { if (!m.userData.mini) continue; swapM.push([m, m.material, m.customDepthMaterial]); m.material = m.userData.mini; if (!film || m === plate) m.customDepthMaterial = undefined; m.layers.enable(L); m.castShadow = m.receiveShadow = true; }   // (the film: the studio's depth materials, deformed as the city stands)
     { const src = [...eraMeshes.filter(m => m.visible), ...(cityMesh.visible ? [cityMesh] : [])]; for (const l of landmarks) l.traverse(o => { if (o.isMesh) src.push(o); });
       TF.update(target, d, src); }
-    const v = camera.position.clone().sub(target), az = Math.atan2(v.x, v.z) + THREE.MathUtils.degToRad(SUN_SIDE), el = THREE.MathUtils.degToRad(SUN_EL), r = d * 1.2;   // the sun: behind the eye, to its left, 40 degrees up (fx light: lower)
+    const v = camera.position.clone().sub(target), kd = U.uKeyDir.value, el = THREE.MathUtils.degToRad(SUN_EL), r = d * 1.2;
+    const az = film ? Math.atan2(kd.x, kd.z) : Math.atan2(v.x, v.z) + THREE.MathUtils.degToRad(SUN_SIDE);   // the sun: behind the eye, to its left, 40 degrees up (fx light: lower); the film: from the key light's bearing
     sun.position.set(target.x + r * Math.sin(az) * Math.cos(el), target.y + r * Math.sin(el), target.z + r * Math.cos(az) * Math.cos(el)); sun.target.position.copy(target);
     if (S.fxSun) sun.position.copy(target).addScaledVector(S.fxSun, r);   // (fx light: the sun fixed in the world, as the white model's)
     const c = sun.shadow.camera; c.left = c.bottom = -d * 1.6; c.right = c.top = d * 1.6; c.near = r * .2; c.far = r * 2.5; c.updateProjectionMatrix();
@@ -260,8 +275,8 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     if (relief) { U.uFxSun.value.copy(sd); if (FX.light) { U.uFxLitC.value.setRGB(1, 1, 1).lerp(new THREE.Color(1.1, .99, .84), warm); U.uFxShadeC.value.setRGB(1, 1, 1).lerp(new THREE.Color(.82, .9, 1.1), warm); } }
     if (dome) dome.u.uSunD.value.copy(sd);
     if (FP) {   // the film's lens for this distance (main.js lens), with the stronger depth of field
-      if (lens) { lens(d); FP.dof.focus = S.post.dof.focus; FP.dof.aper = FX.dof ? S.post.dof.aper : 0; FP.dof.maxCoc = S.post.dof.maxCoc; FP.dof.band = S.post.dof.band; }
-      if (FX.dof && !S.post.dof.rtB) fxLens(FP.dof, FX.dof, d);   // (the studio's own pass applied it already where it has the stronger gather)
+      if (lens) { if (!film) lens(d); FP.dof.focus = S.post.dof.focus; FP.dof.aper = film || FX.dof ? S.post.dof.aper : 0; FP.dof.maxCoc = S.post.dof.maxCoc; FP.dof.band = S.post.dof.band; }   // (the film: as main.js set it for this frame, a living moment's sharp picture included)
+      if (FX && FX.dof && !S.post.dof.rtB) fxLens(FP.dof, FX.dof, d);   // (the studio's own pass applied it already where it has the stronger gather)
       if (FP.dof.haze) FP.dof.haze.uHazeSunD.value.copy(sd);
       if (FP.dof.ao) FP.dof.ao.updateGtaoMaterial({ radius: fxAoRadius(d) });
     }
@@ -273,4 +288,29 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     for (const [m, mat, dm] of swapM) { m.material = mat; m.customDepthMaterial = dm; }
   }
   return { render, sun, sky, card: info, swap };
+}
+
+// the film's materials (miniLook film): the look's colours on the studio's deformation; a period city's (u: its uniforms, studio.js
+// addEra) charred and glowing where it burns, today's (u null) a pale card from the lamp until its own year in the modern growth, and while a
+// period city is told (the white film's dimming, uDimToday, inside the node's ring as there): in colour, only the city being told
+// has its colours; today's painted in a period's story read as an old town of that period
+const CARD = new THREE.Color('#d8d3c8');
+function filmMaterial(S, mat, u) {
+  S.deformMaterial(mat, u); const deform = mat.onBeforeCompile, nL = u ? u.uLossBurn.value.length : 0;
+  mat.onBeforeCompile = (sh, r) => { deform(sh, r);
+    sh.vertexShader = sh.vertexShader.replace('#include <fog_vertex>', '#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz;' + (u ? '' : ` { float yr = aData.x; vBy = ${S.growByGLSL}; }`))
+      .replace('#include <common>', '#include <common>' + (u ? '' : '\nvarying float vBy;'));
+    if (u) sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\nvarying vec4 vData; varying vec3 vWP; varying float vUp; varying vec2 aCtrV; uniform float uNow, uEraBurn, uLossBurn[${nL}];`)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+  float burn_ = uEraBurn; for (int k = 0; k < ${nL}; k++) if (abs(vData.w - 4. - float(k)) < .5) burn_ = max(burn_, uLossBurn[k]);   // (studio.js eraBurnK)
+  diffuseColor.rgb *= 1. - .9 * burn_;`)
+      .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+  { float h_ = fract(sin(dot(aCtrV, vec2(127.1e3, 311.7e3))) * 43758.5453);   // each building its own fire: some ablaze, some smouldering, each flickering
+    float fl_ = smoothstep(.2, 1., .5 + .5 * sin(uNow * (6. + 5. * h_) + h_ * 40.)) * (.5 + .5 * sin(uNow * 13.7 + vWP.y * 3e4 + h_ * 9.));
+    totalEmissiveRadiance += vec3(1., .34, .06) * burn_ * vUp * (h_ > .35 ? .25 + 2.6 * fl_ : .12); }`);
+    else { sh.uniforms.uCard = { value: CARD }; sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vWP; varying float vBy; uniform float uDimToday, uDimToday0, uNodeR, uToday, uGrowRise; uniform vec2 uNodeC; uniform vec3 uCard;')
+      .replace('#include <color_fragment>', `#include <color_fragment>
+  diffuseColor.rgb = mix(diffuseColor.rgb, uCard, max(mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))), (1. - uToday) * (1. - uGrowRise * vBy)));`); } };
+  mat.customProgramCacheKey = () => 'mini-film ' + (u ? 'era ' + nL : 'today');
+  return mat;
 }

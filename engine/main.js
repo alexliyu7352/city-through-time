@@ -76,11 +76,16 @@ const FIT = { basins: most((FILM.eras || []).flatMap(e => (e.basins || []).map(b
 // the effects (engine/fx.js): film.fx, or the page's ?fx= (to look at them on a film that has none). On a phone no stronger depth of
 // field (its gather is the dearest pass) and no fixed sun, and no relief where the shaders are cut to the film's own size (studio.js)
 const FX = fxSettings(FILM.fx, QS); if (FX && TOUCH) { delete FX.dof; delete FX.light; }
+// the film's look (film.look, docs/STAGING.md "Look and effects"): the white model, or the colour miniature (engine/mini.js) drawing
+// the same film; the page's ?look=white|mini in place of the film's (the viewer, ?view, has looks of its own). Its beams are fx
+// glow's (a column of light where one lands), whether or not the film asks for the effects
+const COLOUR = !FREE && !QS.has('view') && (QS.get('look') ? QS.get('look') === 'mini' : !!(FILM.look && FILM.look.kind === 'mini'));
 if (FX && FX.light && FX.light.az == null) {   // (the fixed sun from the terrain's own side light, else from the north-west)
   const sh = FILM.shade || (FILM.context && FILM.context.shade) || null;
   FX.light.az = sh && sh.az != null ? sh.az : 315; if (sh && sh.el != null && !(FILM.fx && FILM.fx.light && FILM.fx.light.el != null)) FX.light.el = sh.el; }
 let S;
-try { S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, gmax: FILM.groundSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps, then: !FREE && !!FILM.waterThen, fit: FIT, fx: FX }); }   // (pools and grounds past the engine's 32 slots: compile basinSlots)
+try { S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, gmax: FILM.groundSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps, then: !FREE && !!FILM.waterThen, fit: FIT, fx: FX,
+  ...(COLOUR ? { colour: true, glow: FX && FX.glow ? null : fxSettings({ glow: true }, new URLSearchParams()).glow } : {}) }); }   // (pools and grounds past the engine's 32 slots: compile basinSlots)
 catch (e) { if (L.unable('gpuNone', e.message)) await new Promise(() => {}); throw e; }   // (no WebGL context after all)
 // what the graphics could not do, said on the page instead of a black city (live pages; renders and checks stop on the error)
 const GPU = S.gpu, gpuNote = () => `${GPU.path}; ${GPU.targets ? `${GPU.targets.half ? 'half-float' : '8-bit'}, ${GPU.targets.samples}x, depth ${GPU.targets.depth}` : 'no target'}; ${JSON.stringify(GPU.limits || {})}`;
@@ -244,7 +249,7 @@ function setLiving(t) {
   U.uLiveSink.value = LV ? LV.k * (LV.L.sink ?? 1) : 0; U.uEdgeGain.value = (LOOK.edge ?? 1) * (1 - (LV ? LV.k : 0));   // (a moment in the modern section keeps today's city: compile's sink)
   if (!tx_) { U.uPA.value = 0; S.liveSky.visible = false; Wp.enabled = false; return; }   // (no moment now, or its picture is not made yet: the white model holds the shot)
   const PJ = S.aimProjector(L.cam, W / H); U.uPI.value = tx_;   // the projector: the shot's camera, no drift, no zoom (and the sky card behind the town)
-  const fr = liveFront(PJ, L, t);
+  const fr = liveFront(PJ, L, t); LV.front = fr;   // (the colour film lays the picture on the frame by this front: drawOverlay)
   U.uPA.value = LV.pa; U.uPRC.value.set(L.origin[0], L.origin[1]); U.uPRR.value = fr.r; U.uPF.value = LV.sky;
   const sk = S.liveSky.material.uniforms; sk.uA.value = LV.pa; sk.uW.value = fr.w; S.liveSky.visible = LV.pa > 0 && fr.w > 0;
   const wk = LV.sky * LV.pa; Wp.enabled = wk > 0 && (L.rain > 0 || L.mist > 0);
@@ -541,6 +546,7 @@ const cueAt = t => (FILM.cues || []).find(c => t >= c.t0 && t < c.t1);
 function drawOverlay(t) {
   OV.begin();
   const { g } = OV;
+  if (COLOUR && LV && LV.front && LIVETEX[LV.L.id] && LV.pa > 0) livingOver(LV);   // (the white film projects it on the model: setLiving)
   const skyA = FILM.sky ? OV.sky(sceneAt(t), FILM.sky, proj3) : 0;   // under everything else on the overlay (part of the city: the prologue's moment)
   let fa = LV ? LV.k : 0, ffull = fa, fcorner = 0;   // how much of the frame real footage (or a living moment's picture) covers (full mode hides the map, the other modes only quiet it); fcorner: a panel or a right-hand card or document over the locator's corner
   for (const f of FILM.footage || []) {
@@ -634,6 +640,19 @@ function drawOverlay(t) {
   }
 }
 
+// the colour film's living moment: the shot's picture laid on the frame, as the projection would show it from the shot's camera
+// (exact there: the camera only zooms, the picture zooming with it), below a soft front climbing the shot as the white film's ring
+// and sky do (liveFront's w: the share of the shot's height)
+let LIVECV = null;
+function livingOver(V) {
+  const im = LIVETEX[V.L.id].image, f0 = V.L.cam[6], k = Math.tan(THREE.MathUtils.degToRad(f0 / 2)) / Math.tan(THREE.MathUtils.degToRad(f0 * V.zoom / 2));
+  LIVECV ||= Object.assign(document.createElement('canvas'), { width: W, height: H }); const c = LIVECV.getContext('2d');
+  c.globalCompositeOperation = 'source-over'; c.clearRect(0, 0, W, H); c.drawImage(im, W / 2 - W * k / 2, H / 2 - H * k / 2, W * k, H * k);
+  const y = H * (1 - V.front.w), soft = H * .06, gr = c.createLinearGradient(0, y - soft, 0, y + soft); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,1)');
+  c.globalCompositeOperation = 'destination-in'; c.fillStyle = gr; c.fillRect(0, 0, W, H);
+  OV.g.save(); OV.g.globalAlpha = V.pa; OV.g.drawImage(LIVECV, 0, 0); OV.g.restore();
+}
+
 // ------------------------------------------------------------------ events for the mix (window.EV) and checks
 const EV = [];
 const ev = (t, type, o = {}) => { if (t != null && t >= 0 && t <= DUR) EV.push({ t: +t.toFixed(4), type, ...o }); };
@@ -669,7 +688,16 @@ window.EV = EV;
 // frame the 3D scene is not drawn. Stills, scrubbing and the offline render seek every frame exactly (deterministic).
 let PLAYING = false;
 const fullCover = t => (FILM.footage || []).some(f => (f.mode || 'full') === 'full' && t >= f.on + f.fin && t <= f.on + f.dur - f.fout);
-const renderSync = t => { const s = sceneAt(t); LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); S.groundsNow(); setLiving(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } if (!QS.has('clean') && !FREE) drawOverlay(t); else OV.begin(); };   // clean: the model alone (tools/living.py's reference)
+const stateAt = t => { const s = sceneAt(t); LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); S.groundsNow(); setLiving(t); };
+const overlayAt = t => { if (!QS.has('clean') && !FREE) drawOverlay(t); else OV.begin(); };   // clean: the model alone (tools/living.py's reference)
+const renderSync = t => { stateAt(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } overlayAt(t); };
+// the colour film (film.look mini): the same state, drawn by the look (engine/mini.js film); each period city's detail is made the
+// first time it shows (its records read again, then let go: a film's period cities all kept would be the most of its memory)
+const ERAJ = {}, eraJ = id => ERAJ[id] ||= fetch(B + FILM.eras.find(e => e.id === id).file).then(r => r.json()), eraOf = id => FILM.eras.find(e => e.id === id) || {};
+const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, cityMesh: CITYMESH, scale: M.scale, lens, film: true, palette: QS.get('palette') || (FILM.look && FILM.look.palette) || 'roman',
+  prims: QS.get('detail') === '0' ? null : id => eraJ(id).then(J => J.prims), lost: id => eraJ(id).then(J => { delete ERAJ[id]; return J.lost || null; }),   // (the look asks for the records, then their losses: the last of them)
+  hex: id => eraOf(id).exaggeration ?? 2, face: id => eraOf(id).wall_face ?? null }) : null;
+const renderColour = async t => { stateAt(t); if (!(PLAY && PLAYING && fullCover(t))) await MINI.render({ target: tgt, d: camDist }); overlayAt(t); };
 const seekFootage = async t => {
   for (const f of FILM.footage || []) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;
@@ -687,7 +715,7 @@ const seekFootage = async t => {
     }
   }
 };
-window.render = (FILM.footage || []).length ? async t => { await seekFootage(t); renderSync(t); } : renderSync;
+window.render = MINI ? async t => { await seekFootage(t); await renderColour(t); } : (FILM.footage || []).length ? async t => { await seekFootage(t); renderSync(t); } : renderSync;
 // tools/readcheck.mjs: the words of frame t, the scene not drawn (the overlay reads the camera and the clips, never the 3D frame:
 // the scene drawn for every sample was nearly all of the check's time: Xianyang 0-260 s, 194 s before, 15 s now, the same report)
 window.TEXTS = async t => { await seekFootage(t); LV = liveAt(t); setCamera(t); if (!QS.has('clean') && !FREE) drawOverlay(t); else OV.begin(); return OV.texts(); };
@@ -707,7 +735,7 @@ if (!FREE) {   // single-line subtitle check with the real fonts (tools/subcheck
   const cues = (FILM.cues || []).map(q => { const wa = m(q.a, 'a'), wb = m(q.b, 'b'); return { id: q.id, a: q.a, b: q.b, wa, wb, ok: wa <= SUB.safe && wb <= SUB.safe }; });
   window.SUBCHECK = { safe: SUB.safe, cues, ok: cues.every(q => q.ok) };
 }
-window.render(QS.has('t') ? +QS.get('t') : 0);
+await window.render(QS.has('t') ? +QS.get('t') : 0);
 // warm-up: draw every era city once so its buffers and programs are on the GPU before playback (else the first frame it appears stalls)
 {
   const keep = Object.values(S.eras).map(E => [E, E.mesh.visible, E.u.uEraT.value, E.u.uEraFallR.value]);

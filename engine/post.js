@@ -170,6 +170,7 @@ class DofScenePass extends Pass {
     }
     if (o.ao) {
       this.ao = new GTAOPass(scene, camera, w, h);
+      if (o.aoDepth) this.ao.setGBuffer(this.rt.depthTexture);   // (aoDepth: from the picture's own depth, its normals from it: a scene whose shaders move what they draw, as a film's rising city, is occluded where it stands, not where its geometry lies. Set after it is made: made with it, three.js reads the normal target it then has not made)
       this.ao.output = GTAOPass.OUTPUT.Off;
       this.ao.updateGtaoMaterial({ radius: o.aoRadius ?? .25, distanceExponent: 1.2, thickness: o.aoThickness ?? 1, scale: o.aoScale ?? 2.5, distanceFallOff: .6, samples: 16 });
       this.ao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6 * this.s, rings: 2, samples: 16 });

@@ -963,6 +963,17 @@ if _fx is not None:
             for lk_, ok_ in FX_LAND.items():
                 if lk_ in v_ and v_[lk_] not in ok_: raise SystemExit(f'compile: film.fx.land.{lk_}: one of {sorted(ok_)} (got {v_[lk_]!r})')
     FX_OUT = {k_: v_ for k_, v_ in _fx.items() if v_ is not False} or None
+# film.look: { kind: mini, palette: roman | chinese | modern }: the film drawn in the colour miniature (engine/mini.js; its palette
+# the region's colours and detail, mini.js PALETTES and detail.js STYLES); absent or kind white: the white model, and film.json
+# carries no key (docs/STAGING.md "Look and effects")
+LOOK_PALETTES = {'roman', 'chinese', 'modern'}
+LOOK_OUT = None; _lk = FM.get('look')
+if _lk is not None:
+    if not isinstance(_lk, dict) or set(_lk) - {'kind', 'palette'} or _lk.get('kind') not in ('white', 'mini'):
+        raise SystemExit(f'compile: film.look: {{ kind: white | mini, palette: {" | ".join(sorted(LOOK_PALETTES))} }} (got {_lk})')
+    if _lk['kind'] == 'mini':
+        if _lk.get('palette') not in LOOK_PALETTES: raise SystemExit(f'compile: film.look.palette: one of {sorted(LOOK_PALETTES)}, the region\'s colours (got {_lk.get("palette")!r})')
+        LOOK_OUT = {'kind': 'mini', 'palette': _lk['palette']}
 # ------------------------------------------------------------------ layout: opening -> nodes -> closing
 OP = FM.get('opening', {'dur': 5.0}); CL = FM.get('closing', {})
 cursor = PD + float(OP.get('dur', 5.0))
@@ -3017,7 +3028,7 @@ film = {
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],
     'spots': spots_out,
     **({'waterThen': {'file': 'data/water_then.png', 'states': WT_STATES, 'events': WT_EVENTS, 'edge': WT_EDGE}} if WT_STATES else {}),
-    'night_look': NIGHT_LOOK, **({'fx': FX_OUT} if FX_OUT else {}),
+    'night_look': NIGHT_LOOK, **({'fx': FX_OUT} if FX_OUT else {}), **({'look': LOOK_OUT} if LOOK_OUT else {}),
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),
 }

@@ -82,7 +82,7 @@ export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = fa
     if (m.type() === 'error' || (warnings && m.type() === 'warning')) note('[page] ' + t.slice(0, 300));
   });
   if (onPage) onPage(page);
-  page.on('pageerror', e => { console.error('[pageerror]', e.message); process.exit(1); });   // stop rather than make a broken film
+  page.on('pageerror', e => { console.error('[pageerror]', e.message, process.env.CT_STACK ? e.stack : ''); process.exit(1); });   // stop rather than make a broken film
   page.on('response', r => {
     if (r.status() < 400) return;
     const u = r.url(), p = new URL(u).pathname, type = r.request().resourceType();
