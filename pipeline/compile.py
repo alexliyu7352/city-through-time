@@ -1633,6 +1633,10 @@ for i, node in enumerate(FM['nodes']):
     if i > 1 and node['_years'][0] < FM['nodes'][i - 1]['_years'][1]:   # (the first stop may span the whole story: a name, an overview)
         raise SystemExit(f"compile: node {node['id']} starts at year {node['_years'][0]:g}, before {FM['nodes'][i - 1]['_years'][1]:g} where "
                          f"{FM['nodes'][i - 1]['id']} ended: the year counter would run backward. Tell an earlier event in words under the later year, or put the stops in order (docs/STAGING.md \"Basic grammar\")")
+    if i > 0 and node.get('tour') and FM['nodes'][i - 1].get('tour') and node['_years'][0] > FM['nodes'][i - 1]['_years'][1]:   # (between two stops of
+        # the tour the counter runs in the flight from the one stop's last year to the next one's: a gap is crossed in no time, its growth unseen)
+        fault(f"node {node['id']} starts at year {node['_years'][0]:g}, after {FM['nodes'][i - 1]['_years'][1]:g} where the tour stop {FM['nodes'][i - 1]['id']} "
+              f"ended: the counter would jump the years between in no time. A stop's years run from the last stop's last year: years: [{FM['nodes'][i - 1]['_years'][1]:g}, {node['_years'][1]:g}] (docs/STAGING.md 9i)")
     if first_year is None: first_year = node['_years'][0]
     yearline += node_years(node)
     T = lambda v, d=None, _n=node: node_time(_n, v, d)
