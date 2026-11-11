@@ -38,3 +38,5 @@ cities/**/*.zip
 cities/*/assets/ref/
 # and its web bundle (tools/web.py), so the entry page plays it straight from GitHub Pages
 !cities/xianyang/web/**
+# the jobs started from the project root (tools/job.py: build/logs/jobs under the working directory)
+/build/
