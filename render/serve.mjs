@@ -53,6 +53,10 @@ export function serve(port = 0, { overlay, files = {} } = {}) {
         });
       } catch { send(400, 'bad request'); }
     });
+    s.once('error', e => {   // (another preview, of this checkout or another, holds the port: say so rather than a stack)
+      if (e.code !== 'EADDRINUSE') throw e;
+      console.error(`port ${port} is in use (another preview?): give a free one, node tools/preview.mjs <slug> <port>`); process.exit(1);
+    });
     s.listen(port, '127.0.0.1', () => res({ server: s, port: s.address().port }));
   });
 }
