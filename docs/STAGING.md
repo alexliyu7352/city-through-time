@@ -110,7 +110,7 @@ No cut between nodes: the camera travels on from where the previous node left it
    (a mask image has 7.6 m per cell, which is jagged up close, so effects for small areas are always drawn with geometry); things laid out along a line (`sweep`) use one sweep line. All rings and contracting rings share one drawing method:
    a bright core of 1–2 pixels, a soft glow of a few pixels, a faint trail on one side, with width computed in screen pixels; appearing and disappearing both fade in and out over about 0.4 seconds.
 9c. **The beam's landing point is the centre of the circle** (`routes: impact: true`): on landing, first a flash (decaying over 0.35 seconds), then a shock wave spreading for 1.6 seconds (shorter looks like nothing happened);
-   a ring with the new colour spreads from the landing point, and the city grows with it.
+   a ring with the new colour spreads from the landing point, and the city grows with it. With `film.fx.glow` the landing also raises a column of light ("Look and effects").
    **The camera follows the beam** (`follow: {el, d, land_d}`, and for one that does not land on a city add `hold` = seconds to stay after landing; compile's `follow_shot`): the algorithm chooses the direction — directly behind the beam, behind it 25° / 45° / 65° to the left or right,
    or straight from the side — simulates the whole flight for each, and the flight must satisfy "the start is in the picture at launch, the head of the beam stays in the picture throughout, the landing point is in the picture at landing"; among the directions that pass, it picks the one nearest the camera's current
    heading. The aim point is a little ahead of the beam head and rises with the arc of the beam (`FOLLOW_LIFT`), so the top of the arc does not shoot out of the top edge of the picture. A hand-written `follow.az` is only an exception
@@ -250,6 +250,43 @@ dissolves back to the model, and the camera goes on. It shows what the plate can
 
 **Spot** (node `spot:`): when the narration speaks of one place in a wide shot (the palaces on the north slope, a market, a gate), the light falls on it and the rest of the room goes dark:
 `{ ll: [lon, lat], r_m: 600, with | at, until, hold, dur, dim: 0.16, boost: 1.35, fade: 0.8 }`. The eye goes to the subject at once without the camera moving; keep it for the beats where a wide shot has to stay wide.
+
+## Look and effects
+
+**Two looks.** The white model (`engine/studio.js`, `engine/post.js`) is the look of the film, the player, the walk-round, the museum
+pages and every check. The colour look (`engine/mini.js`) draws the same period cities as a coloured miniature in daylight: each house
+in its own wall and roof colours, trees in the open land and the gardens, fields and water, a hazy sky. It draws in the period cities'
+viewer, `play.html?city=<slug>&view&look=mini`, with `&palette=roman|chinese|modern` (the building colours of the region and period)
+and `&ground=land|modern` (open land, or a paved city's ground); `node tools/lookshots.mjs <slug> <out_prefix> <cams.json> --q
+'look=mini&palette=chinese'` takes its stills at named cameras (the tool's header gives the cameras' format).
+- **A new city is made for the colour look.** Build and judge its period cities in it as well as in the white model (lookshots
+  stills beside eraview's sheets, MODEL.md), with the palette of its region and period.
+- **The film itself (`engine/main.js`) draws only in the white look.** A film in the colour look is an engine change: propose it
+  first (AGENTS.md "Propose first"). A city whose film the user has approved keeps the look it was approved in.
+
+**Effects** (`film.fx`, `engine/fx.js`) are shared by both looks and are **off unless the city turns them on**: a film without
+`film.fx` draws exactly as it would without the effects in the engine. Each effect is `true` (its defaults below) or a dict of
+some of its keys; `false` or absent leaves it off. compile stops on an effect or a key it does not know. For example
+`film: { fx: { relief: true, light: { az: 315 }, haze: true, dof: true, glow: true, land: { palette: loess, trees: true } } }`.
+To look at them on a film that has none, give the page's address `&fx=1` (every effect at its defaults), `&fx=relief,haze` (those
+alone), `&fx=<url-encoded JSON>` (as `film.fx` would write it) or `&fx=0` (none, whatever the film says); tools/lookshots.mjs and
+tools/phonecheck.mjs pass it with `--q`.
+
+| Effect | What the audience gets | Keys (defaults) |
+|---|---|---|
+| `relief` | The land's hills and valleys read in the light: slopes lit and shaded by a low sun across the picture, the land's own shadows, hollows darker. Strong in a close shot (the hills a city stands on), the land's own proportions in a wide one. While on, it replaces `terrain.shade` | `k: [7, 2.2]` how many times as steep the slopes look, close and wide (the terrain's exaggeration included; only the light changes, buildings stay seated); `el: 22` the sun's height; `side: -105` its bearing from the eye's, in degrees; `shadow: [.85, .4]`, `ao: [.75, .4]` cast shadows and darker hollows, 0..1; `light: .6` sunlit slopes lit in the ground's hue; `flat: 0` a slope in percent under which the ground is shaded as flat; `span_m: [600, 3000]` the shot distances between the close and the wide values |
+| `light` | One low sun fixed in the world in place of the lamp that follows the eye: every building and slope modelled by it, whichever way the camera turns, its light warm and the sky's fill cool | `warm: .5`; `ao: .5` ambient occlusion in the white model (none in the live preview); `az`, `el: 28` its compass bearing and height in degrees (`az` unset: `terrain.shade`'s bearing and height, else 315, the north-west) |
+| `haze` | Air between the eye and far land: what is far fades toward a sky at the horizon, and the model's edge fades into it in a low view instead of ending against the black | `dist_km: 9` where the air takes 63 % of what is behind it; `height_m: 200` the air's thickness; `k: 1`; `start_km: 1` none nearer; `edge_km: 6` the land's last km before the model's edge that fade wholly |
+| `dof` | A stronger depth of field: the subject sharp in a band, what is well nearer and farther blurred, as in a photograph of a model | `k: 1.4` times the film's aperture; `max: 11` the largest blur in pixels of a 1080 picture; `band: [.16, .45]` the sharp band's half-depth as a share of the focus distance, close and wide |
+| `glow` | Beams (`routes`) as glowing lines with light flowing along them; where a beam lands (`impact: true`) a column of light, a flare and sparks | `lines`, `column`, `flare`, `sparks`, each `true`. With `column` on, every landing beam gets a column; a beam leaves it out with `column: false` on its route (only on a beam with `impact: true`) |
+| `land` | The plate as land (soil and grass, woods on the steep slopes and in patches) in place of one plate colour, muted and darker so the white city stays the subject: the white look's ground | `source: quiet` one soft soil-and-grass ground (`fields`: a patchwork of fields); `palette: temperate` (`mediterranean`, `loess`); `mute: .35` toward grey; `dark: .85` its lightness; `warm: 0` toward sepia; `scrub: 6` the slope in percent from which it turns to scrub and woods; `trees: false` trees in the woods and open ground (in the period cities' viewer) |
+
+- **On a phone** the engine leaves out by itself what a phone cannot afford: no stronger depth of field and no fixed sun on a touch
+  screen, no relief on the shaders cut to a film's own size (PUBLISH.md, "On a phone"). Run `node tools/phonecheck.mjs <slug>` after
+  turning an effect on; it reads `film.fx`.
+- **Check what an effect changes** as any change to the look (MODEL.md "After any change to a period city's model or to the look"):
+  stills in both looks at a close low shot and a wide shot that shows the horizon (tools/lookshots.mjs), and the film's stills at
+  the stations it touches; a beam's landing judged over a few frames of its motion.
 
 ## Minimap, satellite and ending
 
