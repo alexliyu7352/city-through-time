@@ -110,6 +110,8 @@ class Builder:
         self.gid, self.tag, self.meta = 0, ('misc', 0), []   # building groups (a building rises whole) and what each came from (stages)
         self.label, self.labels = (), []   # what part of its building each record is (labelled): beside the records, never in them (a museum page's parts)
         self.types = {}    # the declared house types a fabric can name (house_types), name -> complete type
+        self.var = None    # the period's house variety (variety_spec): None, every lot of a fabric alike, as written
+        self.vrng = random.Random(seed * 7919 + 101)   # (variety's own draws: with it off, the houses' draws are what they were)
 
     # ------------------------------------------------------------------ low level
     def _emit(self, t, x, y, theta, z0, a, b, c, d=0.0, e=0.0, part=FAB, g_m=None, rank=None, shape=None):
@@ -408,6 +410,18 @@ class Builder:
                 for k in (-1, 1):
                     wx, wy = P(k * w * .3, front * (d / 2 + .05)); self._emit(BOX, wx, wy, th, hb * .35, min(1.6, w * .14), .2, hb * .32, part=DARK, g_m=g)
 
+    def wing(self, x, y, th, w, d, h, part, front, roof='gabled'):
+        """one wing of a built-in house with the roof shape given (variety's): gabled, gable_house's; a one-slope roof
+        (skillion) falling to its front (a 厦房 draining into the court), its back wall rising to the ridge; else that shape over
+        its walls (house_roof). The door on its front"""
+        if roof in ('gabled', 'gable'): return self.gable_house(x, y, th, w, d, h, part, front=front)
+        th_ = th if front == -1 else th + math.pi   # (house_roof's one slope falls to local -y: the front there)
+        g = self.gsite(x, y, th_, w, d); hb = h * .56
+        self._emit(BOX, x, y, th_, 0, w, d, hb, part=part, g_m=g)
+        self.house_roof(x, y, th_, hb, w, d, roof_as({'shape': 'gabled', 'pitch_deg': 25, 'overhang_m': .5}, roof), True, g)
+        if self.det >= 1 and w >= 4:
+            dx_, dy_ = self.frame(x, y, th_)(0, -(d / 2 + .05)); self._emit(BOX, dx_, dy_, th_, .1, 1.3, .2, min(2.3, hb * .8), part=DARK, g_m=g)
+
     def courtyard(self, x, y, th, w, d, h=6.0, part=FAB):
         """a courtyard house (合院) in a w x d lot facing south (local -y): main hall north, two side wings, a south row,
         the lot walls with a gate house at the south-east corner, a paved court and maybe a tree. On a lot made one plane
@@ -416,12 +430,25 @@ class Builder:
         if d > self.MANSION_D: return self.mansion(x, y, th, w, d, h, part)
         P = self.frame(x, y, th)
         md = min(8.0, d * .3); sd = min(5.5, w * .26); gd = min(4.5, d * .17)
-        self.gable_house(*P(0, d / 2 - md / 2 - .4), th, w * .88, md, h * 1.1, part, front=-1)                  # 正房
-        sl = d - md - gd - 3.0; cyc = (gd - md) / 2
-        if sl > 4:
-            self.gable_house(*P(-w / 2 + sd / 2 + .6, cyc), th + math.pi / 2, sl, sd, h * .92, part, front=-1)      # 厢房 west
-            self.gable_house(*P(w / 2 - sd / 2 - .6, cyc), th + math.pi / 2, sl, sd, h * .92, part, front=1)        # 厢房 east
-        self.gable_house(*P(-w * .1, -d / 2 + gd / 2 + .4), th, w * .66, gd, h * .82, part, front=1)             # 倒座
+        V, vr = self.var, self.vrng
+        if V:   # variety: the main hall's storeys (a hall of two at the back, 前厅后楼), each building a little taller or lower,
+                # a narrow lot one side hall (窄院), the side halls' roof one of the period's shapes (关中's 厦房: one slope into the
+                # court), some houses without a south row
+            k_ = lambda: vr.uniform(.9, 1.1); ns = self.pick(V['storeys'].get('courtyard', {1: 1}))
+            self.gable_house(*P(0, d / 2 - md / 2 - .4), th, w * .88, md, h * 1.1 * (1 + .6 * (ns - 1)) * k_(), part, front=-1)   # 正房
+            sl = d - md - gd - 3.0; cyc = (gd - md) / 2
+            if sl > 4:
+                rf = vr.choice(V['roofs']) if V['roofs'] else 'gabled'; hs = h * .92 * k_()
+                for s_ in ([vr.choice((-1, 1))] if w < 15 else (-1, 1)):
+                    self.wing(*P(s_ * (w / 2 - sd / 2 - .6), cyc), th + math.pi / 2, sl, sd, hs, part, s_, rf)   # 厢房, facing the court
+            if vr.random() > .25: self.gable_house(*P(-w * .1, -d / 2 + gd / 2 + .4), th, w * .66, gd, h * .82 * k_(), part, front=1)   # 倒座
+        else:
+            self.gable_house(*P(0, d / 2 - md / 2 - .4), th, w * .88, md, h * 1.1, part, front=-1)                  # 正房
+            sl = d - md - gd - 3.0; cyc = (gd - md) / 2
+            if sl > 4:
+                self.gable_house(*P(-w / 2 + sd / 2 + .6, cyc), th + math.pi / 2, sl, sd, h * .92, part, front=-1)      # 厢房 west
+                self.gable_house(*P(w / 2 - sd / 2 - .6, cyc), th + math.pi / 2, sl, sd, h * .92, part, front=1)        # 厢房 east
+            self.gable_house(*P(-w * .1, -d / 2 + gd / 2 + .4), th, w * .66, gd, h * .82, part, front=1)             # 倒座
         if self.det >= 1:
             wh = 2.6
             self.strip(P(-w / 2, d / 2 - .2), P(w / 2, d / 2 - .2), .4, wh, part=part)
@@ -470,9 +497,22 @@ class Builder:
         nx, ny = -math.sin(th) * side, math.cos(th) * side
         n = int(L // frontage); off = street_w / 2 + depth / 2 + .5; feet = []
         yd = min(5.0, depth * .35)   # the yard behind the house, inside the footprint (the lots around stay as they were)
+        V, f0, h0 = self.var, frontage, h
+        if V:   # variety: shops of frontages drawn as lots are (variety lots), each its own storeys, wall to wall: a row of
+                # houses of different heights, not one long block
+            fs_, at_ = [], 0.0
+            while L - at_ > f0 * .5:
+                f_ = f0 * self.vrng.uniform(*V['lots'])
+                if L - (at_ + f_) < f0 * V['lots'][0]: f_ = L - at_
+                fs_.append((at_ + f_ / 2, f_)); at_ += f_
+            n = len(fs_)
         for i in range(n):
             if self.rng.random() < gap: continue
-            k = (i + .5) / n; px, py = a[0] + (b[0] - a[0]) * k + nx * off, a[1] + (b[1] - a[1]) * k + ny * off
+            k = (i + .5) / n
+            if V:
+                k, frontage = fs_[i][0] / L, fs_[i][1]
+                h = h0 * (.24 + .38 * self.pick(V['storeys'].get('shops', {2: 1})))   # (2 storeys: the row's own height)
+            px, py = a[0] + (b[0] - a[0]) * k + nx * off, a[1] + (b[1] - a[1]) * k + ny * off
             P = self.frame(px, py, th); foot = Polygon([P(-frontage / 2, -depth / 2), P(frontage / 2, -depth / 2), P(frontage / 2, depth / 2), P(-frontage / 2, depth / 2)])
             if avoid is not None and foot.buffer(-.5).intersects(avoid): continue
             feet.append(foot); self.group()
@@ -991,6 +1031,9 @@ class Builder:
         front = m + pm + pz * 1.4   # (the stair before a podium)
         W, D = lw - 2 * m, ld - m - front   # the room the buildings have
         f = T['form']; R = T['roof']; along = R.get('ridge', 'along') == 'along'
+        if self.var:   # variety: the roof one of the shapes the period's sources give, a share of ridges turned to the street
+            if self.var['roofs']: T = {**T, 'roof': roof_as(R, self.vrng.choice(self.var['roofs']))}; R = T['roof']
+            if f in ('detached', 'row') and 'ridge' in R and self.vrng.random() < self.var['turn']: along = not along
         if f == 'detached':
             w, d = W * (.62 + .1 * j()), D * (.5 + .08 * j()); s = max(0.0, (ld - 2 * m) * .1 - pm)
             self.house_body(*P(0, -ld / 2 + front + s + d / 2), th, w, d, n, T, part, along=along)
@@ -1263,15 +1306,37 @@ class Builder:
         x0, y0, x1, y1 = R.bounds; lw, ld = lot
         xs = np.arange(x0, x1, lw); ys = np.arange(y0, y1, ld)
         if len(xs) * len(ys) == 0: return 0
-        X, Y = np.meshgrid(xs, ys); X = X.ravel(); Y = Y.ravel()
-        cells = shapely.box(X, Y, X + lw, Y + ld)
-        frac = shapely.area(shapely.intersection(cells, R)) / (lw * ld)
+        V = self.var
+        if V and V['lots'] != [1.0, 1.0]:   # (variety: each row's runs of whole ground, between its lanes and streets, cut into lots of widths
+            # drawn between lots[0] and lots[1] times the fabric's, the last of a run taking what is left)
+            X, Y, LW, RC = [], [], [], []; lo_, hi_ = V['lots']
+            for r_, y_ in enumerate(ys):
+                cx_ = np.arange(x0, x1, 1.0)   # (metre columns of the row: whole where the region covers them)
+                full = shapely.area(shapely.intersection(shapely.box(cx_, y_, cx_ + 1.0, y_ + ld), R)) > .985 * ld
+                k_ = 0
+                while k_ < len(cx_):
+                    if not full[k_]: k_ += 1; continue
+                    e_ = k_
+                    while e_ < len(cx_) and full[e_]: e_ += 1
+                    a_, b_ = cx_[k_], cx_[e_ - 1] + 1.0; k_ = e_
+                    if b_ - a_ < lw * lo_: continue
+                    while b_ - a_ > 1e-6:
+                        w_ = lw * self.vrng.uniform(lo_, hi_)
+                        if b_ - (a_ + w_) < lw * lo_: w_ = b_ - a_
+                        X.append(a_); Y.append(y_); LW.append(w_); RC.append((int((a_ + w_ / 2 - x0) // lw), r_)); a_ += w_
+            if not X: return 0
+            X, Y, LW = np.array(X), np.array(Y), np.array(LW)
+        else:
+            X, Y = np.meshgrid(xs, ys); X = X.ravel(); Y = Y.ravel(); LW = np.full(len(X), lw)
+            RC = [(int(i % len(xs)), int(i // len(xs))) for i in range(len(X))]
+        cells = shapely.box(X, Y, X + LW, Y + ld)
+        frac = shapely.area(shapely.intersection(cells, R)) / (LW * ld)
         keep = np.nonzero(frac > .985)[0]   # whole lots only: no house straddles a lane or a street
         c, s = math.cos(theta), math.sin(theta); n = 0
         placed = {}   # scattered lots by grid cell: a lot moved or turned off its cell must not land on a neighbour's
         for i in keep:
             if self.rng.random() < empty: continue
-            self.group()
+            self.group(); lw = LW[i].item()
             lx, ly = X[i] + lw / 2 - cx, Y[i] + ld / 2 - cy; lx0, ly0 = lx, ly
             if scatter: lx += (self.rng.random() - .5) * lw * scatter * .6; ly += (self.rng.random() - .5) * ld * scatter * .6
             px, py = cx + lx * c - ly * s, cy + lx * s + ly * c
@@ -1280,7 +1345,7 @@ class Builder:
             j = self.rng.random
             w_, d_ = lw * (1 - jitter * j()), ld * (1 - jitter * j())
             if scatter:   # (its yard against the lots already placed round its cell: back on its cell, square to the grid, or left empty)
-                ci_ = (int(i % len(xs)), int(i // len(xs)))
+                ci_ = RC[i]
                 near_ = [placed[(ci_[0] + a_, ci_[1] + b_)] for a_ in (-1, 0, 1) for b_ in (-1, 0, 1) if (ci_[0] + a_, ci_[1] + b_) in placed]
                 foot_ = lambda X_, Y_, T_: Polygon([self.frame(X_, Y_, T_)(u_ * w_ / 2, v_ * d_ / 2) for u_, v_ in ((-1, -1), (1, -1), (1, 1), (-1, 1))])
                 f_ = foot_(px, py, theta_i)
@@ -1288,9 +1353,24 @@ class Builder:
                     px, py, theta_i = cx + lx0 * c - ly0 * s, cy + lx0 * s + ly0 * c, theta; f_ = foot_(px, py, theta_i)
                     if any(f_.intersects(q_) for q_ in near_): continue
                 placed[ci_] = f_
-            with self.lot_site(px, py, theta_i, lw, ld): self._lot(typ, px, py, theta_i, lw, ld, w_, d_, h, part, j)
+            typ_i = self.pick(V['mix'][typ]) if V and typ in V['mix'] else typ   # (variety: the lot's house drawn from the types the period's sources give)
+            with self.lot_site(px, py, theta_i, lw, ld):
+                if not V: self._lot(typ_i, px, py, theta_i, lw, ld, w_, d_, h, part, j)
+                else:   # (a lot variety drew too small for the house drawn for it, a court round its court: the fabric's own, else none)
+                    try: self._lot(typ_i, px, py, theta_i, lw, ld, w_, d_, h, part, j)
+                    except SystemExit:
+                        try: self._lot(typ, px, py, theta_i, lw, ld, w_, d_, h, part, j)
+                        except SystemExit: continue
             n += 1
         return n
+
+    def pick(self, weights):
+        """one key of {key: weight}, drawn by its weight (variety's own draws)"""
+        t = self.vrng.random() * sum(weights.values())
+        for k, w in weights.items():
+            t -= w
+            if t < 0: return k
+        return k
 
     def _lot(self, typ, px, py, theta_i, lw, ld, w_, d_, h, part, j):
         """one lot of a fabric (fill): its house, on the lot made one plane (lot_site)"""
@@ -1384,6 +1464,57 @@ ONION = [(0.0, 0.0), (.7, 0.0), (.84, .16), (1.0, .36), (.96, .52), (.78, .68), 
 TYPE_KEYS = ('where', 'when', 'basis', 'form', 'storeys', 'storey_m', 'roof', 'court', 'yard_wall_m', 'ground', 'arcade_m', 'portico_m', 'podium_m')
 
 
+def roof_as(R, shape):
+    """a house type's roof (house_type's: shape, pitch_deg, overhang_m, ridge) as another shape: its pitch where both are
+    pitched, else that shape's usual one; no eaves on a round one"""
+    if shape == R['shape']: return R
+    pitched = lambda s_: s_ not in ('flat', 'mansard', 'gambrel') + ROOF_ROUND
+    p_ = R['pitch_deg'] if pitched(shape) and pitched(R['shape']) else ROOF_SHAPES[shape]
+    out = {**R, 'shape': shape, 'pitch_deg': float(p_), 'overhang_m': 0.0 if shape in ROOF_ROUND or shape == 'flat' and R['overhang_m'] < .2 else R['overhang_m']}
+    return out
+
+
+VARIETY_KEYS = ('basis', 'lots', 'mix', 'roofs', 'turn', 'storeys')
+BUILTIN_STOREYS = ('courtyard', 'shops')   # the built-in houses variety gives storeys to (house types have their own range)
+
+
+def variety_spec(V, types=None, src='city'):
+    """a period's house variety (docs/MODEL.md "House variety"), checked and completed; None (the key absent, or false): none,
+    every lot of a fabric as written. Each key a fact from the sources, basis saying which:
+      basis    required: the research the ranges come from
+      lots     [fewest, most]: a lot's width, times its fabric's, drawn lot by lot along each row (a shop's frontage too)
+      mix      {fabric typ: {house type: weight}}: the types a fabric's lots are drawn from (each a type of its own sources)
+      roofs    [shapes]: the roof shapes a house type's house is drawn from (ROOF_SHAPES); a built-in courtyard's side halls
+      turn     0..1: the share of detached and row houses whose ridge turns to the street
+      storeys  {courtyard: {n: weight}, shops: {n: weight}}: the built-in houses' storeys (a courtyard's main hall, a shop)"""
+    if V is None or V is False: return None
+    def no(m): raise SystemExit(f'citygen: {src}: variety: {m}')
+    if not isinstance(V, dict): no('a mapping of ' + ', '.join(VARIETY_KEYS) + ' (docs/MODEL.md "House variety")')
+    bad = sorted(set(V) - set(VARIETY_KEYS))
+    if bad: no(f'no key {", ".join(map(str, bad))} (variety has {", ".join(VARIETY_KEYS)})')
+    if not str(V.get('basis') or '').strip(): no('basis is missing: what in the sources the ranges, shares and shapes come from')
+    lots = V.get('lots', [1, 1])
+    if not (isinstance(lots, list) and len(lots) == 2 and all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in lots) and .3 <= lots[0] <= lots[1] <= 3):
+        no(f'lots: {lots!r}: [fewest, most], a share of the fabric\'s lot width from .3 to 3')
+    weights = lambda d, what: d if isinstance(d, dict) and d and all(isinstance(w, (int, float)) and not isinstance(w, bool) and w > 0 for w in d.values()) else no(f'{what}: {{key: weight}}, weights above 0')
+    mix = {}
+    for typ, d in (V.get('mix') or {}).items():
+        mix[str(typ)] = {str(k): float(w) for k, w in weights(d, f'mix.{typ}').items()}
+        for k in mix[str(typ)]:
+            if k not in BUILTIN_TYPES and k not in (types or {}): no(f'mix.{typ}: {k!r} is not a house type: built in ({", ".join(BUILTIN_TYPES)}) or declared')
+    roofs = list(V.get('roofs') or [])
+    for r_ in roofs:
+        if r_ not in ROOF_SHAPES: no(f'roofs: {r_!r}: one of {", ".join(ROOF_SHAPES)} (OpenStreetMap roof:shape)')
+    turn = V.get('turn', 0)
+    if isinstance(turn, bool) or not isinstance(turn, (int, float)) or not 0 <= turn <= 1: no(f'turn: {turn!r}: a share from 0 to 1')
+    st = {}
+    for k, d in (V.get('storeys') or {}).items():
+        if k not in BUILTIN_STOREYS: no(f'storeys.{k}: the built-in houses given storeys are {", ".join(BUILTIN_STOREYS)} (a house type has its own storeys)')
+        st[k] = {int(n): float(w) for n, w in weights(d, f'storeys.{k}').items()}
+        if any(not 1 <= n <= 6 for n in st[k]): no(f'storeys.{k}: storeys from 1 to 6')
+    return {'basis': str(V['basis']), 'lots': [float(lots[0]), float(lots[1])], 'mix': mix, 'roofs': roofs, 'turn': float(turn), 'storeys': st}
+
+
 def house_type(T, src):
     """a house type checked and completed with its defaults (docs/MODEL.md "House types"). Each key is a fact from the sources
     about the houses of one place and time, and where, when and basis say which: a type without them, a key it does not have,
@@ -1444,12 +1575,13 @@ def house_type(T, src):
     return out
 
 
-def house_types(spec, shared=None, label='city'):
+def house_types(spec, shared=None, label='city', variety=None):
     """the house types a period city can build, name -> complete type (house_type): each it declares (city.types) or the city
     declares for all its periods (city.yaml types), and each its fabric names, looked up in that order and then in the shared
     library, types/<name>.yaml. A type written in the city may start `from:` another (declared or in the library) and change
     some keys; it still says its own where, when and basis. A fabric typ neither built in nor found, or the fabric of a
-    declared type giving h_m (its height is its storeys), stops compile. Call it after with_trace: traced blocks name types."""
+    declared type giving h_m (its height is its storeys), stops compile. Call it after with_trace: traced blocks name types.
+    variety: the period's (variety_spec), whose mix may name types no fabric does"""
     own, common = spec.get('types') or {}, shared or {}
     for src, d in ((f'{label}: city.types', own), ('city.yaml: types', common)):
         if not isinstance(d, dict): raise SystemExit(f'citygen: {src}: a mapping, type name -> type')
@@ -1480,6 +1612,9 @@ def house_types(spec, shared=None, label='city'):
             T = M
         out[name] = house_type(T, src); return out[name]
     for name in list(own) + list(common): get(name)   # every declared type is checked, built or not
+    for d in ((variety or {}).get('mix') or {}).values():   # (and each a variety's mix draws lots from)
+        for name in d:
+            if name not in BUILTIN_TYPES: get(name)
     for fb in spec.get('fabric', []):
         typ = fb.get('typ', 'courtyard')
         if typ in BUILTIN_TYPES: continue
@@ -1495,6 +1630,7 @@ def _lines(geom):
 
 
 WALL_STYLES = ('tower', 'hip', 'han3', 'none', 'curtain')   # (Builder.walls)
+WALL_FACES = ('earth', 'brick', 'stone', 'banded')   # what a wall is faced with (walls face): rammed earth, brick, stone, stone with bands of brick (engine/detail.js FACES)
 
 
 def wall_shape(F, w, osm_rings=None):
@@ -1598,6 +1734,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     ox, oy = F.to_utm.transform(*spec['origin'])
     B = Builder(F, ground_m, exag, spec.get('exaggeration', 2.0), (ox, oy), seed=spec.get('seed', 7), detail=spec.get('detail', 'medium')); B.graded = graded
     B.types = spec.get('types') or {}   # complete (house_types, which the caller runs)
+    B.var = variety_spec(spec.get('variety'), B.types, 'city')   # (its house variety: none unless the period asks)
     for fb in spec.get('fabric', []):   # (a typ that is neither would leave its lots empty without a word)
         if fb.get('typ', 'courtyard') not in BUILTIN_TYPES and fb.get('typ') not in B.types:
             raise SystemExit(f'citygen: fabric typ {fb.get("typ")!r} is not a house type: built in ({", ".join(BUILTIN_TYPES)}) or declared (docs/MODEL.md "House types")')
@@ -1606,6 +1743,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
         B.group(('walls', wi))
         if sum(k in w for k in ('ring', 'osm', 'pts')) != 1: raise SystemExit(f'citygen: walls[{wi}]: write ring (closed), pts (an open run) or osm, one of them')
         if w.get('style', 'tower') not in WALL_STYLES: raise SystemExit(f'citygen: walls[{wi}]: style {w["style"]!r}: one of {", ".join(WALL_STYLES)}')
+        if w.get('face') is not None and w.get('face') not in WALL_FACES: raise SystemExit(f'citygen: walls[{wi}]: face {w["face"]!r}: one of {", ".join(WALL_FACES)} (what it is faced with: the colour look draws it)')
         if (w.get('tower_every_m') or w.get('tower_pts') or 'tower_shape' in w) and w.get('style') != 'curtain':
             raise SystemExit(f'citygen: walls[{wi}]: tower_every_m, tower_pts and tower_shape are a curtain wall\'s (style: curtain)')
         ring = [F.to_utm.transform(*p) for p in w['pts']] if 'pts' in w else to_utm_ring(F, w['ring']) if 'ring' in w else to_utm_ring(F, osm_rings(w['osm'])[0])

@@ -21,7 +21,7 @@ is fixed gets pushed into the film and shows changes no line explains.
 
 **Every historic period is a 3D model of a whole city:** write a `city:` spec in the node, and `pipeline/citygen.py` generates it (walls, gates and barbicans, main streets and lane network, courtyard / dwelling / dormitory plots,
 palace courtyards, terraces, elevated corridors, temples, bell towers, pagodas, cotton mills, stations, bridges, boats, trees; the houses of other regions and periods: "House types"). Follow the sources where there are sources (archaeological plans, gazetteer city maps, OSM site outlines); where there are none, follow the custom of contemporary cities of the same kind and label the picture "schematic".
-**Walls of any tradition:** `style: tower` (and `hip`, `han3`) builds the Chinese wall: a battered rammed-earth body, bastions (马面), gate towers with roofs, barbicans and a moat; `style: curtain` builds the masonry curtain wall of Rome, medieval Europe, the Islamic world and the like: an upright crenellated body, flat-topped towers projecting outward (`tower_shape: square | round`) at its corners, every `tower_every_m` along it and at `tower_pts`, each gate a dark passage between two towers, no roofs and no moat unless `moat: true`. A regular spacing written in a source (the Aurelian wall's 100 Roman feet) is a basis; one read off a map is an estimate, labelled so. A wall that does not close (one ending at a river or a cliff on both sides) is `pts:` instead of `ring:`, run with the city on its left; it has no inside, so a fabric on `region: walls` takes only the closed rings.
+**Walls of any tradition:** (`face: earth | brick | stone | banded` says what a wall is faced with: rammed earth, brick, stone, stone with bands of brick; the colour look draws its face and courses by it, a battered wall rammed earth and an upright one its region's when it does not say) `style: tower` (and `hip`, `han3`) builds the Chinese wall: a battered rammed-earth body, bastions (马面), gate towers with roofs, barbicans and a moat; `style: curtain` builds the masonry curtain wall of Rome, medieval Europe, the Islamic world and the like: an upright crenellated body, flat-topped towers projecting outward (`tower_shape: square | round`) at its corners, every `tower_every_m` along it and at `tower_pts`, each gate a dark passage between two towers, no roofs and no moat unless `moat: true`. A regular spacing written in a source (the Aurelian wall's 100 Roman feet) is a basis; one read off a map is an estimate, labelled so. A wall that does not close (one ending at a river or a cliff on both sides) is `pts:` instead of `ring:`, run with the city on its left; it has no inside, so a fabric on `region: walls` takes only the closed rings.
 **Every period city starts from its research:** from the survey of step 1 (`research/period_cities.md`), research what the model needs before laying anything: the plans and positions of its buildings, the
 house types and their share and storeys, the streets and lots of its quarters, its open ground, each item sourced or marked estimate, written into `research/<period>_*`. Periods are independent here:
 one research subagent per period, in parallel (AGENTS.md "Subagents and parallel work"). Research done only when a sample is sent back costs a round each time.
@@ -95,6 +95,28 @@ each type reads as itself.
 **How much of a quarter each type takes is a fact too:** write the share and its basis (a count in the sources, an excavated quarter, a named comparison) beside the layout before laying
 the city, quarter by quarter; a share written "schematic" with no basis decides what the whole city looks like. Heights vary between buildings as the sources' storey range says, not by copying one block in rows.
 
+
+## House variety
+
+A fabric lays its lots in one size and fills them with one type: from any distance a quarter reads as a barracks, row on row of the
+same house. `variety:` makes the houses of a quarter differ as far as the period's sources allow: in a node's `city:` (that period),
+or at the top of city.yaml (every period; `variety: false` in a node turns it off there). Absent, every lot is as its fabric writes
+it, so a film made before it is built exactly as it was. Every key is a fact from the sources, and `basis` says which are estimates:
+
+```yaml
+variety:
+  basis: research/<notes>.md, <what the ranges, shares and shapes come from; which are estimates>   # required
+  lots: [0.6, 1.5]          # a lot's width, times its fabric's, drawn lot by lot along each row's runs of whole ground (a shop's frontage too)
+  mix: { <fabric typ>: { <house type>: <weight> } }   # the types a fabric's lots are drawn from (each a type with its own where, when and basis)
+  roofs: [gabled, hipped]   # the roof shapes a house type's house is drawn from; a built-in courtyard's side halls (skillion: one slope into the court)
+  turn: 0.3                 # the share of detached and row houses whose ridge turns to the street
+  storeys: { courtyard: { 1: 4, 2: 1 }, shops: { 1: 1, 2: 3 } }   # the built-in houses' storeys by weight: a courtyard's main hall, a shop on a street
+```
+
+A house type keeps its own `storeys` range (each house draws its own); `mix` is how one quarter holds houses of one to four or
+more storeys, each type as its sources give it. A lot drawn too small for the house drawn for it takes its fabric's own type, else
+stays empty. Judge it as any change to a period city: the quarter with it and without it, close and from the film's distances
+(`tools/modelview.py --spec` with and without the key; the colour look's stills of the study, STAGING.md "Look and effects").
 ## Landmarks of any region
 
 The generator's own landmark kinds (`hall`, `terrace`, `palace`, `pagoda`, `court`…) are north China's. Elsewhere a landmark is one of a few classes of massing, written as data in

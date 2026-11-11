@@ -171,8 +171,10 @@ for nd in FM['nodes']:
         nd['city'] = cs_
     # its house types (the node's city.types, city.yaml types, the shared library types/): looked up and checked once, here
     if cs:
-        types_ = citygen.house_types(nd['city'], C.get('types'), f'node {nd.get("id")}')
+        V_ = nd['city'].get('variety', C.get('variety'))   # its house variety (MODEL.md "House variety"): the period's, else the city's for every period; false or absent: none
+        types_ = citygen.house_types(nd['city'], C.get('types'), f'node {nd.get("id")}', variety=V_ if isinstance(V_, dict) else None)
         if types_: nd['city']['types'] = types_
+        if V_: nd['city']['variety'] = citygen.variety_spec(V_, nd['city'].get('types'), f'node {nd.get("id")}')
         landmarks.checked(landmarks.templated(nd['city'], LMK_LIB, f'node {nd.get("id")}'), f'node {nd.get("id")}')   # its landmarks (a template's keys first): checked and completed once, here
 
 # ------------------------------------------------------------------ text templates and positions
@@ -1877,12 +1879,16 @@ for i, node in enumerate(FM['nodes']):
         e = {'id': node['id'], 'file': fn, 'n': len(prims), 'col': cs.get('col', node.get('col', '#ffd9a0')), 'tint': cs.get('tint', .75),
              'sink': cs.get('sink', 3.0), 'sinkStyle': cs.get('sinkStyle', 'sink'),
              'fall': cs.get('fall', 'in' if cs.get('sinkStyle') == 'burn' else 'out'), 'fallDur': float(cs.get('fall_dur', TIMING['fall_dur'])),
-             'off': T(cs['off_at']) if 'off_at' in cs else (None if cs.get('persist') else T('end'))}
+             'off': T(cs['off_at']) if 'off_at' in cs else (None if cs.get('persist') else T('end')),
+             'exaggeration': float(cs.get('exaggeration', 2.0))}   # (its height exaggeration, for what the engine puts on its houses: engine/detail.js; no picture changes)
         if 'until' in cs: e['off'] = ('t0', next(x for x in FM['nodes'] if x['id'] == cs['until']), float(cs.get('until_plus', 0)))
         if e['sinkStyle'] == 'burn': e['burn'] = cs.get('burn', 3.0)
         e['boundary'] = ebnd   # (the engine's neon line)
         e['outline'] = [[[round(x / F.size[0] + .5, 4), round(z / F.size[1] + .5, 4)] for x, z in r] for r in bnd]   # the locator's frame (plate uv)
         if 'reuse' in cs: e['reuse'] = cs['reuse']
+        wf_ = sorted({w_['face'] for w_ in cs.get('walls', []) if w_.get('face')})   # what its walls are faced with (walls face; the colour look's detail, engine/detail.js; no picture of the film changes)
+        if len(wf_) > 1: WARN.append(f'node {node["id"]}: its walls are faced with {", ".join(wf_)}: the colour look draws one face a period city ({wf_[0]})')
+        if wf_: e['wall_face'] = wf_[0]
         e['hide'] = None   # its channel (where today's buildings step aside, its front and its edge are lit): given once the timing is known (era_slots)
         e['_pend'] = {'cs': cs, 'node': node, 'prims': prims, 'meta': meta_, 'at_of': at_of, 'bnd': bnd, 'ebnd': ebnd}
         eras_out.append(e); print(f'  city {node["id"]}: {len(prims)} primitives' + (f'; its edge leaves out {len(bnd) - len(ebnd)} island(s) of one building on cleared ground (edge_rings)' if len(ebnd) < len(bnd) else ''))

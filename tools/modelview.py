@@ -39,6 +39,7 @@ import geo
 import landmarks
 import layout as LAYOUT
 
+SKIP_TOP = {'city.yaml', 'script.yaml', 'build', 'dist', 'candidate.json', 'plan_seed.json', 'entry.json', 'web'}   # (what a study makes or must not take: tools/candidate.py's own list)
 NODE_KEEP = ('id', 'years', 'dur', 'mood', 'label', 'col', 'tint', 'era_tint', 'ink', 'city')   # what a node's city looks like by
 CLOSE = {'az': 305.0, 'el': 12.0, 'd': .045}; WIDE = {'el': 30.0, 'd': .35}
 FORM_LOT = {'detached': [18, 24], 'row': [7, 18], 'court': [30, 36], 'compound': [24, 30]}   # (metres) the sheet's lot for a type no fabric names yet
@@ -153,11 +154,12 @@ def study_folder(city, name):
         p = LAYOUT.data(city, f)
         if re.match(r'(era|hide|edge)_.+\.(json|png)$', f): continue   # (the city's own period cities and their channel files: the study compiles its own; a copy of each, tens of MB, in every study filled the disk)
         if os.path.isfile(p): shutil.copy2(p, LAYOUT.data(S, f))
-    for d in ('research', 'assets'):   # read only: traces, areas, outlines
+    for d in sorted(os.listdir(city)):   # read only: traces, areas, outlines (research/, assets/, and what city.yaml names beside them: a file of landmark templates)
+        if d in SKIP_TOP or d.startswith('.'): continue
         link, real = os.path.join(S, d), os.path.join(city, d)
         if os.path.lexists(link): os.remove(link)
         # (relative from where the study really is: a study on another disk is a link under build/review/modelview, MODEL.md)
-        if os.path.isdir(real): os.symlink(os.path.relpath(os.path.realpath(real), os.path.realpath(S)), link)
+        os.symlink(os.path.relpath(os.path.realpath(real), os.path.realpath(S)), link)
     if os.path.exists(os.path.join(S, 'script.yaml')): os.remove(os.path.join(S, 'script.yaml'))   # (cues from city.yaml: none)
     return S
 
