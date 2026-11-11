@@ -5,13 +5,13 @@
 // sizes its shaders to what the film uses (engine/studio.js fit); a film that still needs more than a phone has (more decals,
 // more period cities standing at once, more epoch channels) prints OVER and the tool exits 1: on a phone the page would say it
 // cannot draw the film. Run it after a change that adds uniforms or textures to the shaders, and for a film with more of them.
-// usage: node tools/phonecheck.mjs <city_slug>
+// usage: node tools/phonecheck.mjs <city_slug> [--q 'k=v&..'] (more of the page's address: e.g. fx=1, the effects a film may turn on)
 import { openFilm, closeServer } from '../render/page.mjs';
 
-const city = process.argv[2];
-if (!city) { console.error('usage: node tools/phonecheck.mjs <city_slug>'); process.exit(2); }
+const args = process.argv.slice(2), qi = args.indexOf('--q'), extra = qi >= 0 ? args.splice(qi, 2)[1] || '' : '', city = args[0];
+if (!city) { console.error("usage: node tools/phonecheck.mjs <city_slug> [--q 'k=v&..']"); process.exit(2); }
 const LIM = { textures: 16, fragment: 224, vertex: 256 };
-const { browser, page } = await openFilm(city, { q: 'play=1', onPage: p => p.addInitScript(LIM => {
+const { browser, page } = await openFilm(city, { q: 'play=1' + (extra ? '&' + extra : ''), onPage: p => p.addInitScript(LIM => {
   const P = WebGL2RenderingContext.prototype, gp = P.getParameter, ss = P.shaderSource, at = P.attachShader, ln = P.linkProgram, src = new WeakMap();
   P.getParameter = function (k) { return k === this.MAX_TEXTURE_IMAGE_UNITS ? LIM.textures : k === this.MAX_FRAGMENT_UNIFORM_VECTORS ? LIM.fragment : k === this.MAX_VERTEX_UNIFORM_VECTORS ? LIM.vertex : gp.call(this, k); };
   P.shaderSource = function (s, t) { src.set(s, t); return ss.call(this, s, t); };
