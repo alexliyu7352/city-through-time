@@ -98,8 +98,9 @@ export async function startView(X) {
     if (film && S.fx && S.fx.land && S.fx.land.trees) { TREES ||= S.fxTrees();   // (fx land trees: the white model's, round where the eye looks)
       TREES.update(controls.target, d, [...Object.values(S.eras).map(e => e.mesh).filter(m => m.visible), ...(cityMesh.visible ? [cityMesh] : [])]); }
     if (FREE) { post.dof.aper = 0; post.dof.maxCoc = 0; }   // (everything sharp: the film's focus on its subject is the film's)
-    if (st.look === 'mini') { MINI ||= import('./mini.js').then(m => m.miniLook({ S, cityMesh, scale, lens, palette: QS.get('palette') || 'roman', ground: QS.get('ground') || 'land', card: QS.get('card') }));   // (the colour look, engine/mini.js: made once, however many draws wait on it)
-      (await MINI).render({ target: controls.target, d }); }
+    if (st.look === 'mini') { MINI ||= import('./mini.js').then(m => m.miniLook({ S, cityMesh, scale, lens, palette: QS.get('palette') || 'roman', ground: QS.get('ground') || 'land', card: QS.get('card'),   // (the colour look, engine/mini.js: made once, however many draws wait on it)
+        prims: QS.get('detail') === '0' || touch ? null : id => fetch(B + ERAS.find(e => e.id === id).file).then(r => r.json()).then(J => J.prims) }));   // (its detail, engine/detail.js: the period city's records read again, not kept since the city was built)
+      await (await MINI).render({ target: controls.target, d }); }
     else { renderer.shadowMap.needsUpdate = true; post.composer.render(); }
     if (pins) pins();
     const id0 = [...st.on][0];
