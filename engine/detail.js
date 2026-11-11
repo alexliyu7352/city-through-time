@@ -26,7 +26,7 @@ const FAB = 0, LMK = 1, WALL = 2, DARK = 6, ROOF = 8, LROOF = 9;
 // out } a plinth course at the foot; front: { post, every, beam } timber posts and a beam across the face the generator opened
 // (its door, its windows); ridgeEnds: ornaments at the ends of a ridge; coping: { h, over } a small roof on a yard wall;
 // wall: what an upright city wall is faced with, where its walls do not say (WALL_FACES); towerWindows: { w, h, n } on each open face of a curtain wall's tower, high up; tiles: { every, w, t, verge: { w, t } } the
-// rows of a tiled roof down each slope of a gable (筒瓦 rows, drawn wider apart than they are, so they read at a model's scale)
+// rows of a tiled roof down each slope of a gable (筒瓦 rows, drawn wider and further apart than they are, so they read at a model's scale)
 // and the heavier ridge down each of its gable edges (垂脊)
 export const STYLES = {
   roman: {
@@ -37,7 +37,7 @@ export const STYLES = {
   chinese: {
     storey: 3.6, window: null, door: null, cornice: null, base: { h: .6, out: .1 },
     front: { post: .34, every: 2.8, beam: .45 }, ridgeEnds: true, coping: { h: .42, over: .2 },
-    wall: 'earth', towerWindows: null, tiles: { every: .75, w: .24, t: .13, verge: { w: .42, t: .32 } }, halls: { column: .65, beam: .7 },
+    wall: 'earth', towerWindows: null, tiles: { every: 1.1, w: .36, t: .16, verge: { w: .46, t: .34 } }, halls: { column: .65, beam: .7 },
   },
 };
 // halls: { column, beam } a timber hall's (citygen hall) columns this thick and its architrave this high, in metres: the columns
@@ -295,10 +295,11 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
 
   // ---------------------------------------------------------------- packed
   const kinds = {}, m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(0, 0, 0, 'YXZ'), p = new THREE.Vector3(), sc = new THREE.Vector3();
-  // each kind's size as it is seen (model units): the faint courses by their spacing, a row of tiles by the rows' spacing, a
-  // band by its height, the rest by their width
+  // each kind's size as it is seen (model units): a band by its height, the courses by their spacing (they flatten into their
+  // face, FLAT), a row of tiles by under half its spacing (whole while the rows are six pixels apart or more, gone by two and a
+  // half: closer set, a sub-pixel pan at a mid shot showed them crawl), the rest by their width
   const T_ = ST.tiles || {}, SIZE = { window: 1 * M, door: 1.5 * M, cornice: .38 * V, base: .55 * V, post: .34 * M, beam: .45 * V, coping: .4 * M, ridgeEnd: .6 * M,
-    tile: (T_.every || .75) * M, verge: .42 * M, spandrel: 4 * M, archRing: 4 * M, merlon: 1.4 * M, parapet: .9 * V, column: .7 * M,
+    tile: (T_.every || 1.1) * .35 * M, verge: .46 * M, spandrel: 4 * M, archRing: 4 * M, merlon: 1.4 * M, parapet: .9 * V, column: .7 * M,
     ...Object.fromEntries(Object.entries(WALL_FACES).flatMap(([k, F]) => [['course_' + k, F.every * V], ['spandrel_' + k, 4 * M], ['parapet_' + k, .9 * V], ['merlon_' + k, 1.4 * M]])) };
   let count = 0;
   for (const [kind, L] of Object.entries(out)) {
@@ -328,17 +329,24 @@ export function gableEnds(g) {
 }
 
 // the fade: a piece shrinks to nothing about its own origin as it gets too small on screen to draw (its size, kinds[].size, under
-// FADE_PX pixels: from FADE_PX[1] down to FADE_PX[0]), so a far roof's rows of tiles, a far wall's courses and windows neither
-// shimmer as the camera moves nor sum to a darker grey; a near one is drawn whole. pxK: { value } a model unit's pixels at one model
-// unit's distance (projectionMatrix[1][1] times half the picture's height in pixels), the look's to set each frame
+// FADE_PX pixels: from FADE_PX[1] down to FADE_PX[0]), so a far wall's windows neither shimmer as the camera moves nor sum to a
+// darker grey; a near one is drawn whole. A thin piece laid on a face (a row of tiles, a gable's ridge, a wall's course: FLAT)
+// flattens into the face instead, its colour going to the face's own (FLAT's factor: the look colours it the face's colour times
+// that), so its lines are gone, not thinned to a stair-stepping pixel. pxK: { value } a model unit's pixels at one model unit's
+// distance (projectionMatrix[1][1] times half the picture's height in its own pixels, not a larger drawing buffer's), the look's to set each frame
 export const FADE_PX = [1.1, 2.6];
+export const FLAT = { tile: 1.12, verge: .78, course: .84 };
 const FADE_GLSL = /* glsl */`
   { vec4 o_ = modelMatrix * instanceMatrix * vec4(0., 0., 0., 1.);
     float px_ = uDetSize * uPxK / max(distance(cameraPosition, o_.xyz), 1e-6);
-    transformed *= smoothstep(${FADE_PX[0].toFixed(2)}, ${FADE_PX[1].toFixed(2)}, px_); }`;
-function fading(mat, size, pxK) {
-  mat.onBeforeCompile = sh => { sh.uniforms.uDetSize = { value: size }; sh.uniforms.uPxK = pxK;
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uDetSize, uPxK;').replace('#include <begin_vertex>', '#include <begin_vertex>' + FADE_GLSL); };
+    vDetF = smoothstep(${FADE_PX[0].toFixed(2)}, ${FADE_PX[1].toFixed(2)}, px_);
+    if (uDetFlat > 0.) transformed.y *= vDetF; else transformed *= vDetF; }`;
+function fading(mat, size, pxK, flat = 0) {
+  mat.onBeforeCompile = sh => { sh.uniforms.uDetSize = { value: size }; sh.uniforms.uPxK = pxK; sh.uniforms.uDetFlat = { value: flat };
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uDetSize, uPxK, uDetFlat; varying float vDetF;').replace('#include <begin_vertex>', '#include <begin_vertex>' + FADE_GLSL);
+    if (sh.fragmentShader.includes('#include <color_fragment>'))
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uDetFlat; varying float vDetF;')
+        .replace('#include <color_fragment>', '#include <color_fragment>\n  if (uDetFlat > 0.) diffuseColor.rgb *= mix(1. / uDetFlat, 1., vDetF);'); };
   mat.customProgramCacheKey = () => 'detail-fade'; return mat;
 }
 
@@ -350,14 +358,15 @@ export function detailMeshes(D, cols, o = {}) {
     if (!cols[kind]) continue;
     const root = kind.split('_')[0];   // (a kind by a wall's face: course_brick, merlon_earth ..: its shape and its shadow the root's)
     const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .92, metalness: 0, side: ['window', 'door', 'spandrel', 'archRing'].includes(root) ? THREE.DoubleSide : THREE.FrontSide });
-    const mesh = new THREE.InstancedMesh((SHAPES[kind] || SHAPES[root])(), o.pxK ? fading(mat, K.size, o.pxK) : mat, K.n);
+    const flat = FLAT[root] && !kind.endsWith('_banded') ? FLAT[root] : 0;   // (a stone wall's bands of brick are its face's own colour: they fade by their size)
+    const mesh = new THREE.InstancedMesh((SHAPES[kind] || SHAPES[root])(), o.pxK ? fading(mat, K.size, o.pxK, flat) : mat, K.n);
     mesh.instanceMatrix.array.set(K.m); mesh.instanceMatrix.needsUpdate = true;
     const own = typeof cols[kind] === 'function'; if (!own) base.set(cols[kind]);
     for (let i = 0; i < K.n; i++) mesh.setColorAt(i, (own ? c.copy(cols[kind](K.ctr[i * 2], K.ctr[i * 2 + 1])) : c.copy(base)).multiplyScalar(K.k[i]));
     mesh.instanceColor.needsUpdate = true;
     mesh.geometry.setAttribute('iCtr', new THREE.InstancedBufferAttribute(K.ctr, 2)); mesh.geometry.setAttribute('iRank', new THREE.InstancedBufferAttribute(K.rank, 1));
     mesh.castShadow = !!SHADOW[root]; mesh.receiveShadow = true; mesh.frustumCulled = false;
-    if (mesh.castShadow && o.pxK) mesh.customDepthMaterial = fading(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), K.size, o.pxK);
+    if (mesh.castShadow && o.pxK) mesh.customDepthMaterial = fading(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), K.size, o.pxK, flat);
     if (o.layer != null) mesh.layers.set(o.layer);
     mesh.name = 'detail:' + kind; group.add(mesh);
   }

@@ -17,7 +17,7 @@ import { VerticalTiltShiftShader } from 'three/addons/shaders/VerticalTiltShiftS
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { makePost } from './post.js';
 import { FX_SKY, RELIEF_GLSL, LAND_PALETTES, landLookGLSL, landPalette, woodsFn, treeField, makeSky, fxLens, fxAoRadius } from './fx.js';
-import { eraDetail, detailMeshes, gableEnds, STYLES } from './detail.js';
+import { eraDetail, detailMeshes, gableEnds, STYLES, FLAT } from './detail.js';
 
 const L = 1;   // the layer this look draws
 // with the effects: a bright day, as bright and as coloured as the look without them (the low warm sun, the haze and the occlusion
@@ -163,9 +163,9 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   const landmarks = [];   // detailed models drawn in place of the generator's (swap)
   // each period city's detail (engine/detail.js), made the first time it is shown: era id -> a promise of its group
   const DET = prims ? new Map() : null;
-  const dcols = { ...(pal.detail || PALETTES.roman.detail), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(1.12), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(.78) };   // (a roof's tiles in its own colour)
+  const dcols = { ...(pal.detail || PALETTES.roman.detail), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.tile), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.verge) };   // (a roof's tiles in its own colour, lighter, its gable ridges darker: detail.js FLAT)
   for (const [f, v] of Object.entries(pal.faces || PALETTES.roman.faces)) {   // (a wall's face: its courses a shade darker, a stone wall's bands brick; a gate's parts the wall's)
-    dcols['course_' + f] = f === 'banded' ? (pal.faces || PALETTES.roman.faces).brick : new THREE.Color(v).multiplyScalar(.84);
+    dcols['course_' + f] = f === 'banded' ? (pal.faces || PALETTES.roman.faces).brick : new THREE.Color(v).multiplyScalar(FLAT.course);
     dcols['spandrel_' + f] = dcols['parapet_' + f] = dcols['merlon_' + f] = v; }
   const pxK = { value: 1 }, idOf = new Map(Object.entries(S.eras).map(([id, E]) => [E.mesh, id])), upright = (STYLES[palette] || STYLES.roman).wall;   // (the fade's scale: detail.js FADE_PX)
   const detailOf = async id => { const D = eraDetail(await prims(id), { scale, hex: hex(id), style: palette, face: face(id) }), g = detailMeshes(D, dcols, { layer: L, pxK });
@@ -219,7 +219,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
 
   async function render({ target, d }) {
     window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
-    renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / 2;
+    renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     if (DET) { for (const [id, E] of Object.entries(S.eras)) if (E.mesh.visible && !DET.has(id)) DET.set(id, detailOf(id));
       for (const [id, g] of DET) (await g).visible = S.eras[id].mesh.visible; }
     const swapM = [];   // (the studio's materials back after the frame)
