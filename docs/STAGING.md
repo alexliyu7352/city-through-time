@@ -275,7 +275,8 @@ and `&ground=land|modern` (open land, or a paved city's ground); `node tools/loo
   boats on water wide enough to work, laid along it. Each piece fades out as it gets too small on screen to draw (detail.js `FADE_PX`), so far roofs
   and walls neither shimmer as the camera moves nor turn a darker grey. A region with buildings of its own (a 1900s Shanghai lane house, 里弄 (lane neighbourhood), say) gets a style there and its
   palette's colours for those pieces, not edits to one city. `&detail=0` draws without it (beside it, for a sheet: lookshots
-  `--seed` keeps the trees where they stood).
+  `--seed` keeps the trees where they stood); lookshots `--seed 1 --pan detail=0` at a mid camera checks a slow pan for shimmer
+  (a ratio near 1: the detail is drawn steadily; well over 1: pieces too small to draw crawl from frame to frame).
 - **The film itself (`engine/main.js`) draws only in the white look.** A film in the colour look is an engine change: propose it
   first (AGENTS.md "Propose first"). A city whose film the user has approved keeps the look it was approved in.
 

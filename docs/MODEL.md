@@ -200,6 +200,8 @@ are a few pixels wide at a kilometre and vanish in the wide shots; look at the p
 house types, and puts the stills in `sheet.jpg`; look at the sheet before laying the city. **Not drawn yet** (say so rather than stand in a solid): open frames of thin members (iron towers,
 gasholder frames, truss bridges: a solid shape reads as an obelisk), buildings below the ground (rock-hewn churches, stepwells), helical ramps (a stepped cone stands in), flutes on
 shafts (a dome's ribs are drawn: `ribs`). A form the classes cannot make is added to them, as a key of a class (its line in `FIELDS` and its drawing) or a new class, never as code in a city.
+**What is still massing:** `uv run python -I tools/modelview.py cities/<slug> --landmarks <out.md>` lists every landmark of every period city and every gate, the kind it is
+drawn as, its size, whether a museum page has its detailed model, and what its kind would need to read as the building it is (the order to detail them in, MUSEUM.md for a model).
 
 ## Boundaries, overlay and change
 

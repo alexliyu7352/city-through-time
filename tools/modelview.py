@@ -4,6 +4,7 @@ before the city has a place in the film's timeline; city.yaml, script.yaml and t
 usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,<el>[,<d>]]] [--at ...]
                                     [--spec <file.yaml> [--year <y>]] [--az 305] [--el 12] [--d .045] [--fov 42] [--wide] [--name <folder>]
        python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat> [--spec <file.yaml>] ...
+       python -I tools/modelview.py cities/<slug> --landmarks <out.md>
 
   <era>     the id of a node of city.yaml that has a city: block, or a new id given with --spec
   --spec    a YAML file holding a city: block (what a node's city: holds, docs/MODEL.md), shown in place of the node's own
@@ -20,6 +21,10 @@ usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,
             side (named by type)
   --name    the study's folder under build/review/modelview/ (default: the era's id): its city, its build and its stills. Studies
             run at the same time (subagents, one per period) need names of their own: a name in use stops the second run
+  --landmarks  no study: a table (markdown) of every landmark of every period city (city.yaml's and its traces'), the kind it is
+            drawn as, its size, whether a museum page has a detailed model of it (build/museum/index.json), and what its kind would
+            need to read as the building it is (NEED), with every period city's gates (their towers' halls, their gatehouses):
+            what is still the generator's massing, for the detail a look or a museum page would add
 
 What it does: writes a study city at build/review/modelview/<name>/ (a city folder of its own: a city.yaml with the film's
 settings and the one node, or that node after the earlier cities it stands on, avoid_eras; copies of the prepared data; links to
@@ -105,6 +110,91 @@ def sheet_city(C, era, spec, at, Fr, city, scale, d, az=None, el=12.0):
     return sheet, shots_
 
 
+# what each kind of landmark would need to read as the building it is (--landmarks), beyond the detail the colour look already
+# puts on it (engine/detail.js: tiled roofs, red columns, painted beams, ridge ends)
+NEED = {
+  'court': 'its halls: lattice doors and windows between the columns, bracket sets (斗拱) under the eaves, eave corners turned up, balustrades on its terraces; its wall: a tiled coping',
+  'terrace': 'brick or rammed-earth facing with its lifts, stairs with balustrades, a parapet round the top; its halls as a court\'s',
+  'palace': 'as a court\'s halls, on a tall stone platform (須彌座) with a balustrade and stairs',
+  'office': 'as a court\'s halls; a gate hall on its street, a screen wall (影壁)',
+  'temple': 'as a court\'s halls; a gate hall, a drum and a bell tower, incense burner in the court',
+  'front_hall': 'as a palace hall; its tiers faced, a central stair (御道)',
+  'hall': 'lattice doors and windows, bracket sets, turned-up eave corners, a plaque under the eaves',
+  'pagoda': 'each storey its eaves on brackets and its doors and windows on every face, a finial (塔刹)',
+  'belltower': 'its hall as a gate tower\'s on a brick base with arched passages, a bell',
+  'paifang': 'its posts, beams and small roofs painted, a plaque',
+  'market': 'stalls and awnings along its lanes, a market tower',
+  'workshops': 'sheds, kilns smoking, stacks of goods in the yards',
+  'kilns': 'domed kilns with chimneys, wood stacks',
+  'armoury': 'long sheds with doors, a walled yard',
+  'corridor': 'posts and a railing along an elevated gallery',
+  'bridge': 'piers and railings, its deck paved',
+  'boats': 'hulls, masts and cabins as the colour look\'s boats',
+  'pool': 'a stone edge, a pavilion or a landing',
+  'ditch': 'banks and a few bridges',
+  'village': 'its houses as the fabric\'s, a wall or a hedge',
+  'platform': 'faced sides with stairs, a parapet',
+  'taixie': 'its terraces faced, its halls as a court\'s, galleries with railings',
+  'factory': 'sawtooth roofs with skylights, windows in rows, a chimney',
+  'chimney': 'courses of brick, a cap',
+  'station': 'windows in rows, a platform canopy, tracks',
+  'long_hall': 'a colonnade (columns round or along its front), a pediment, steps to its podium, a clerestory with windows',
+  'ring': 'its outer wall in arcades (arches and engaged columns), the seats\' rows, entrances',
+  'dome': 'a portico of columns with a pediment, the dome\'s steps and coffers, an oculus',
+  'column': 'a spiral band of relief, a statue on top, a base with a door',
+  'arches': 'voussoirs and piers, a channel or a road along the top',
+  'revolve': 'what its section is (a drum: pilasters and a cornice; a tomb: its rings faced)',
+  'prism': 'what it is: a temple its columns and pediment, a hall its windows and doors, a tower its storeys',
+  'parts': 'each part as what it is (prism, long_hall, dome ...): columns, windows, doors, cornices',
+  'gate_tower': 'its hall (still the generator\'s white box): lattice doors and windows between the red columns, bracket sets, turned-up eave corners, a balustrade round the platform, a plaque over the passage',
+  'gatehouse': 'a cornice and a string course, the passage\'s doors, a portcullis slot; arched windows already on it',
+}
+
+
+def size_of(L):
+    for k in ('w_m', 'outer_m', 'length_m', 'h_m'):
+        if k in L:
+            v = L[k]; return f'{k[:-2]} ' + ('x'.join(f'{x:g}' for x in v) if isinstance(v, list) else f'{v:g}') + ' m'
+    if 'parts' in L: return f'{len(L["parts"])} parts'
+    return ''
+
+
+def landmark_list(city, out):
+    """--landmarks: the table of every period city's landmarks and gates, written to out"""
+    slug = os.path.basename(os.path.normpath(city))
+    C = yaml.load(open(os.path.join(city, 'city.yaml'), encoding='utf-8'), Loader=getattr(yaml, 'CSafeLoader', yaml.SafeLoader))
+    F = geo.Frame(tuple(C['box']), 1.0 / C['scale'])
+    try: idx = json.load(open(LAYOUT.build(city, 'museum', 'index.json'), encoding='utf-8'))
+    except (OSError, ValueError): idx = []
+    idx = idx if isinstance(idx, list) else idx.get('pages', [])
+    rows, kinds, gates = [], {}, []
+    for n in C['film'].get('nodes') or []:
+        cs = n.get('city')
+        if not cs: continue
+        try: cs = citygen.with_trace(cs, F, city)
+        except (OSError, ValueError, SystemExit): pass   # (a trace it cannot read: the city's own landmarks still listed)
+        for L in cs.get('landmarks') or []:
+            k = L.get('kind') or ('template ' + str(L.get('template'))); x, z = F.model_lonlat(L['lon'], L['lat']) if 'lon' in L else (None, None)
+            mus = next((m['id'] for m in idx if m.get('node') == n['id'] and x is not None and math.hypot(m['x'] - x, m['z'] - z) < max(m.get('r', .01), .005)), '')
+            rows.append((n['id'], L.get('id') or L.get('name') or '', k, size_of(L), mus)); kinds.setdefault(k, [0, 0]); kinds[k][0] += 1; kinds[k][1] += bool(mus)
+        for w in cs.get('walls') or []:
+            g = len(w.get('gates') or [])
+            if g: gates.append((n['id'], w.get('style', 'tower'), g))
+    md = [f'# {slug}: landmarks still drawn as the generator\'s massing', '',
+          'Each landmark of every period city (city.yaml\'s and its traces\'), the kind it is drawn as, its size, whether a museum page has a detailed model of it (tools/blender; the colour look can put it in place of the massing), and what its kind would need to read as the building it is. Gates are counted per period city: their towers\' halls (a Chinese wall) and gatehouses (a curtain wall) are the generator\'s.', '',
+          f'{len(rows)} landmarks in {len({r[0] for r in rows})} period cities; {sum(v[1] for v in kinds.values())} with a detailed model.', '',
+          '| kind | count | with a model | what it would need |', '|---|---|---|---|']
+    for k, (c, m) in sorted(kinds.items(), key=lambda kv: -kv[1][0]):
+        md.append(f'| {k} | {c} | {m} | {NEED.get(k, NEED["parts"])} |')
+    gt = sum(g for _, s_, g in gates if s_ in ('tower', 'hip', 'han3')); gh = sum(g for _, s_, g in gates if s_ == 'curtain')
+    md += ['', f'Gates: {gt} with a tower hall on a platform (Chinese walls), {gh} gatehouses between towers (curtain walls), over '
+           + (', '.join(sorted({e for e, _, _ in gates})) or 'no period city') + '.', f'- gate towers\' halls: {NEED["gate_tower"]}', f'- gatehouses: {NEED["gatehouse"]}', '',
+           '| period city | landmark | kind | size | detailed model |', '|---|---|---|---|---|']
+    md += [f'| {e} | {nm} | {k} | {sz} | {m} |' for e, nm, k, sz, m in rows]
+    open(out, 'w', encoding='utf-8').write('\n'.join(md) + '\n')
+    print(f'{out}: {len(rows)} landmarks, {gt + gh} gates')
+
+
 def study_film(C, era, spec, shots_, fov, year=None, sheet=False):
     """the study's city.yaml: the film's own settings, its nodes reduced to the era (and the cities it stands on), one camera key
     per still in the era's node"""
@@ -172,11 +262,16 @@ def run(cmd, log, env=None):
 
 def main():
     ap = argparse.ArgumentParser(description='stills of one period city as the film shows it (tools/modelview.py docstring)')
-    ap.add_argument('city'); ap.add_argument('era')
-    ap.add_argument('--at', action='append', required=True); ap.add_argument('--spec'); ap.add_argument('--year', type=int)
+    ap.add_argument('city'); ap.add_argument('era', nargs='?')
+    ap.add_argument('--at', action='append'); ap.add_argument('--spec'); ap.add_argument('--year', type=int)
     ap.add_argument('--az', type=float); ap.add_argument('--el', type=float); ap.add_argument('--d', type=float); ap.add_argument('--fov', type=float, default=42.0)
     ap.add_argument('--wide', action='store_true'); ap.add_argument('--name'); ap.add_argument('--sheet', action='store_true')
+    ap.add_argument('--landmarks', metavar='OUT.md')
     args = ap.parse_args()
+    if args.landmarks:
+        if not os.path.isfile(os.path.join(args.city, 'city.yaml')): raise SystemExit(f'modelview: {args.city}: no city.yaml here (give the city folder, cities/<slug>)')
+        return landmark_list(os.path.abspath(args.city), args.landmarks)
+    if not args.era or not args.at: ap.error('give the era and --at (or --landmarks <out.md>)')
     az_given = args.az; base = {**CLOSE, **(WIDE if args.wide else {})}
     for k in ('az', 'el', 'd'):
         if getattr(args, k) is None: setattr(args, k, base[k])
