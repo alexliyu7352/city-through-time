@@ -4,7 +4,7 @@ Give it a city and a starting era. A coding agent researches the sources, pulls 
 
 **Entry page: [cities.go5.si](https://cities.go5.si/)**. Turn the globe, pick a lit-up city to watch, or make a film of your own city.
 
-**Project introduction video**: [English](https://www.youtube.com/watch?v=ZeqlfaAadHg) · [中文](https://www.youtube.com/watch?v=CbMU4t607tc)
+**Project introduction video**: [English](https://www.youtube.com/watch?v=ZeqlfaAadHg) · Chinese on [Bilibili](https://www.bilibili.com/video/BV1qQWy6UE9w/) or [YouTube](https://www.youtube.com/watch?v=CbMU4t607tc)
 
 English · [繁體中文](README.zh-Hant.md) · [简体中文](README.zh-Hans.md)
 

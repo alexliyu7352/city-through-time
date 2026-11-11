@@ -51,16 +51,16 @@ const MUSEUMS = new Map();
 const museums = c => MUSEUMS.get(c.slug) || MUSEUMS.set(c.slug, fetch(at(c.bundle.url + 'build/museum/index.json')).then(r => r.ok ? r.json() : []).catch(() => [])).get(c.slug);
 const PAGE = 24;           // the collection shows this many at a time
 const player = $('player');
-// the film on one of its sites; when it is on several, the others are a click away in the player (a site can be out of reach in some countries)
-function watch(c, sites, i) {
+// a film on one of its sites; when it is on several, the others are a click away in the player (a site can be out of reach in some countries)
+function watch(title, sites, i) {
   const tabs = sites.length < 2 ? [] : sites.map((v, k) => {
     const b = el('button', { type: 'button', className: 'player-tab', textContent: v.site, attrs: { 'aria-pressed': String(k === i) } });
-    b.onclick = () => watch(c, sites, k); return b;
+    b.onclick = () => watch(title, sites, k); return b;
   });
   $('player-sites').replaceChildren(...tabs); $('player-sites').setAttribute('aria-label', W.t('videoSites'));
   // the site's player loads behind a line that says so (another site's page: no way to tell how far, only when it is there)
   const wait = el('p', { className: 'wait-line wait', attrs: { role: 'status' } }, el('span', { className: 'wl-track' }, el('i')), el('span', { className: 'wl-text', textContent: W.t('loading') }));
-  const frame = el('iframe', { src: sites[i].src, title: `${W.of(c.name)} · ${sites[i].site}`, allowFullscreen: true, attrs: { allow: 'autoplay; fullscreen; picture-in-picture; encrypted-media', referrerpolicy: 'strict-origin-when-cross-origin' } });
+  const frame = el('iframe', { src: sites[i].src, title: `${title} · ${sites[i].site}`, allowFullscreen: true, attrs: { allow: 'autoplay; fullscreen; picture-in-picture; encrypted-media', referrerpolicy: 'strict-origin-when-cross-origin' } });
   frame.addEventListener('load', () => wait.remove(), { once: true });
   $('player-frame').replaceChildren(wait, frame);
   if (!player.open) player.showModal();
@@ -68,6 +68,13 @@ function watch(c, sites, i) {
 player.addEventListener('close', () => $('player-frame').replaceChildren());   // (the film stops with the window)
 player.addEventListener('click', e => { if (e.target === player) player.close(); });
 let shown = PAGE;
+// the project's introduction (the gallery's alone): the Chinese pages play it in Chinese, first on Bilibili (YouTube is out of reach in
+// mainland China), the others in English on YouTube
+const INTRO = {
+  zh: [{ site: 'Bilibili', url: 'https://www.bilibili.com/video/BV1qQWy6UE9w/' }, { site: 'YouTube', url: 'https://www.youtube.com/watch?v=CbMU4t607tc' }],
+  en: [{ site: 'YouTube', url: 'https://www.youtube.com/watch?v=ZeqlfaAadHg' }],
+};
+{ const b = $('intro-video'); if (b) b.onclick = () => watch(W.t('introVideo'), INTRO[lang.startsWith('zh') ? 'zh' : 'en'].map(v => ({ ...v, src: embed(v.url) })), 0); }
 const guideURL = kind => `${REPO}/blob/main/${W.guide(kind)}`;
 const alt = c => lang !== 'en' && c.name.en && c.name.en !== W.of(c.name) ? c.name.en : '';
 // a poster from wherever the city keeps it (shown as an image, so another host needs no cross-origin permission); one that cannot
@@ -212,7 +219,7 @@ async function show(slug, from, push = true) {
   // model played live; then every site the film is on
   const acts = [], sites = c.watch || [], playable = sites.map(v => ({ ...v, src: embed(v.url) })).filter(v => v.src);
   const inPage = sites.length > 0 && playable[0] && playable[0].url === sites[0].url;
-  if (inPage) { const b = el('button', { type: 'button', className: 'btn btn-main' }, icon('i-play'), el('span', { textContent: W.t('watchFilm') })); b.onclick = () => watch(c, playable, 0); acts.push(b); }
+  if (inPage) { const b = el('button', { type: 'button', className: 'btn btn-main' }, icon('i-play'), el('span', { textContent: W.t('watchFilm') })); b.onclick = () => watch(W.of(c.name), playable, 0); acts.push(b); }
   else if (sites.length) acts.push(el('a', { className: 'btn btn-main', href: sites[0].url, target: '_blank', rel: 'noopener' }, icon('i-play'), el('span', { textContent: W.fmt('watchOn', { site: sites[0].site }) })));
   if (c.bundle && c.bundle.url) {
     acts.push(el('a', { className: 'btn ' + (acts.length ? 'btn-line' : 'btn-main'), href: at('play.html') + `?city=${encodeURIComponent(c.slug)}&play=1&lang=${lang}&bundle=${encodeURIComponent(c.bundle.url)}`, target: '_blank', rel: 'noopener' }, el('span', { textContent: W.t('play') })));

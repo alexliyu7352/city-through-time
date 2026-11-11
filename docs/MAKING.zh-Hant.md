@@ -6,7 +6,7 @@
 
 ## 1. 先看一部
 
-先看[專案介紹影片](https://www.youtube.com/watch?v=CbMU4t607tc)（[English](https://www.youtube.com/watch?v=ZeqlfaAadHg)），再看一部做好的片：[咸陽](https://cities.go5.si/xianyang/)（12 分 30 秒，中文旁白）或[羅馬](https://cities.go5.si/rome/)（30 分鐘，英文旁白），知道成品長什麼樣：白色模型、一個時代一種顏色、連貫的旁白、每條史實都有出處。
+先看專案介紹影片（[B 站](https://www.bilibili.com/video/BV1qQWy6UE9w/) · [YouTube](https://www.youtube.com/watch?v=CbMU4t607tc) · [English](https://www.youtube.com/watch?v=ZeqlfaAadHg)），再看一部做好的片：[咸陽](https://cities.go5.si/xianyang/)（12 分 30 秒，中文旁白）或[羅馬](https://cities.go5.si/rome/)（30 分鐘，英文旁白），知道成品長什麼樣：白色模型、一個時代一種顏色、連貫的旁白、每條史實都有出處。
 
 ## 2. 準備電腦
 

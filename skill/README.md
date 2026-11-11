@@ -3,7 +3,7 @@
 An agent skill that makes a city's film through time: the city's history from the sources, today's buildings from open map
 data, and the city of each era lit up on a white model, with narration, music and subtitles.
 - Films and the project: https://cities.go5.si (so far Xianyang and Rome)
-- Project introduction video: [English](https://www.youtube.com/watch?v=ZeqlfaAadHg) · [中文](https://www.youtube.com/watch?v=CbMU4t607tc)
+- Project introduction video: [English](https://www.youtube.com/watch?v=ZeqlfaAadHg) · Chinese on [Bilibili](https://www.bilibili.com/video/BV1qQWy6UE9w/) or [YouTube](https://www.youtube.com/watch?v=CbMU4t607tc)
 - The code, rules and finished cities (the workspace): https://github.com/alexliyu7352/city-through-time
 
 This repository holds only the skill. On first use the agent clones the workspace where you choose, sets up its tools and
@@ -34,7 +34,7 @@ You need Node 20 or newer, [uv](https://docs.astral.sh/uv/), ffmpeg, exiftool, g
 
 這個倉庫只放技能本身。第一次使用時，代理會把工作區（[city-through-time](https://github.com/alexliyu7352/city-through-time)：程式、規則和已做好的城市）clone 到你指定的位置，裝好環境，再開始做你的城市。
 
-專案介紹影片：[中文](https://www.youtube.com/watch?v=CbMU4t607tc) · [English](https://www.youtube.com/watch?v=ZeqlfaAadHg)。已經做好的片：[咸陽](https://cities.go5.si/xianyang/)、[羅馬](https://cities.go5.si/rome/)。
+專案介紹影片：中文 [B 站](https://www.bilibili.com/video/BV1qQWy6UE9w/) · [YouTube](https://www.youtube.com/watch?v=CbMU4t607tc)；[English](https://www.youtube.com/watch?v=ZeqlfaAadHg)。已經做好的片：[咸陽](https://cities.go5.si/xianyang/)、[羅馬](https://cities.go5.si/rome/)。
 
 ```sh
 npx skills add alexliyu7352/city-through-time-skill -g -y
@@ -50,7 +50,7 @@ npx skills add alexliyu7352/city-through-time-skill -g -y
 
 这个仓库只放技能本身。第一次使用时，代理会把工作区（[city-through-time](https://github.com/alexliyu7352/city-through-time)：代码、规则和已做好的城市）clone 到你指定的位置，装好环境，再开始做你的城市。
 
-项目介绍视频：[中文](https://www.youtube.com/watch?v=CbMU4t607tc) · [English](https://www.youtube.com/watch?v=ZeqlfaAadHg)。已经做好的片：[咸阳](https://cities.go5.si/xianyang/)、[罗马](https://cities.go5.si/rome/)。
+项目介绍视频：中文 [B 站](https://www.bilibili.com/video/BV1qQWy6UE9w/) · [YouTube](https://www.youtube.com/watch?v=CbMU4t607tc)；[English](https://www.youtube.com/watch?v=ZeqlfaAadHg)。已经做好的片：[咸阳](https://cities.go5.si/xianyang/)、[罗马](https://cities.go5.si/rome/)。
 
 ```sh
 npx skills add alexliyu7352/city-through-time-skill -g -y

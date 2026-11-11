@@ -6,7 +6,7 @@ This guide takes you from zero to a city film, using the A City Through Time ski
 
 ## 1. Watch one first
 
-Watch the [project introduction video](https://www.youtube.com/watch?v=ZeqlfaAadHg) ([中文](https://www.youtube.com/watch?v=CbMU4t607tc)) and one finished film, [Xianyang](https://cities.go5.si/xianyang/) (12 min 30 s, Chinese narration) or [Rome](https://cities.go5.si/rome/) (30 min, English narration), to see what the result looks like: a white model, one colour per era, a continuous narration, and a source for every fact.
+Watch the [project introduction video](https://www.youtube.com/watch?v=ZeqlfaAadHg) (in Chinese on [Bilibili](https://www.bilibili.com/video/BV1qQWy6UE9w/) or [YouTube](https://www.youtube.com/watch?v=CbMU4t607tc)) and one finished film, [Xianyang](https://cities.go5.si/xianyang/) (12 min 30 s, Chinese narration) or [Rome](https://cities.go5.si/rome/) (30 min, English narration), to see what the result looks like: a white model, one colour per era, a continuous narration, and a source for every fact.
 
 ## 2. Prepare your computer
 

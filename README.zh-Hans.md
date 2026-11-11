@@ -4,7 +4,7 @@
 
 **入口页：[cities.go5.si](https://cities.go5.si/)**：转动地球、挑一座亮着的城市观看，或者做一部你自己城市的片。
 
-**项目介绍视频**：[中文](https://www.youtube.com/watch?v=CbMU4t607tc) · [English](https://www.youtube.com/watch?v=ZeqlfaAadHg)
+**项目介绍视频**：中文 [B 站](https://www.bilibili.com/video/BV1qQWy6UE9w/) · [YouTube](https://www.youtube.com/watch?v=CbMU4t607tc)；[English](https://www.youtube.com/watch?v=ZeqlfaAadHg)
 
 [English](README.md) · [繁體中文](README.zh-Hant.md) · 简体中文
 
