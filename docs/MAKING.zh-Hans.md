@@ -6,7 +6,7 @@
 
 ## 1. 先看一部
 
-先在[入口页](https://cities.go5.si/xianyang/)看咸阳那部，知道成品长什么样：白色模型、一个时代一种颜色、连贯的旁白、每条史实都有出处。
+先看[项目介绍视频](https://www.youtube.com/watch?v=CbMU4t607tc)（[English](https://www.youtube.com/watch?v=ZeqlfaAadHg)），再看一部做好的片：[咸阳](https://cities.go5.si/xianyang/)（12 分 30 秒，中文旁白）或[罗马](https://cities.go5.si/rome/)（30 分钟，英文旁白），知道成品长什么样：白色模型、一个时代一种颜色、连贯的旁白、每条史实都有出处。
 
 ## 2. 准备电脑
 

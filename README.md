@@ -4,15 +4,18 @@ Give it a city and a starting era. A coding agent researches the sources, pulls 
 
 **Entry page: [cities.go5.si](https://cities.go5.si/)**. Turn the globe, pick a lit-up city to watch, or make a film of your own city.
 
+**Project introduction video**: [English](https://www.youtube.com/watch?v=ZeqlfaAadHg) · [中文](https://www.youtube.com/watch?v=CbMU4t607tc)
+
 English · [繁體中文](README.zh-Hant.md) · [简体中文](README.zh-Hans.md)
 
 ![Xianyang, which became a city in 1983](cities/xianyang/poster.jpg)
 
 ## Cities so far
 
-| City | Years | Length | Author |
-|---|---|---|---|
-| Xianyang | 4000 BCE – 2026 | 12 min 30 s | Alex |
+| City | Years | Length | Narration | Author |
+|---|---|---|---|---|
+| [Xianyang](https://cities.go5.si/xianyang/) | 4000 BCE – 2026 | 12 min 30 s | Chinese | Alex |
+| [Rome](https://cities.go5.si/rome/) | 753 BCE – 2026 | 30 min 8 s | English | Alex |
 
 Each city's data lives in `cities/<city>/`: `entry.json` for the entry page, the config and script, `FACTS.md` (sources for every historical fact), and `CREDITS` (third-party material and licences). The city index `cities.json` that the entry page reads, and each city's own page in five languages (for example [cities.go5.si/xianyang/](https://cities.go5.si/xianyang/)), are generated automatically by GitHub Actions from each city's `entry.json`. The repository holds text data only; finished films, web bundles and posters are kept elsewhere. The example city, Xianyang, is the exception: it keeps its images, poster and web bundle, and the entry page plays it straight from here.
 

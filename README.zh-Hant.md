@@ -4,15 +4,18 @@
 
 **入口頁：[cities.go5.si](https://cities.go5.si/)**：轉動地球、挑一座亮著的城市觀看，或者做一部你自己城市的片。
 
+**專案介紹影片**：[中文](https://www.youtube.com/watch?v=CbMU4t607tc) · [English](https://www.youtube.com/watch?v=ZeqlfaAadHg)
+
 [English](README.md) · 繁體中文 · [简体中文](README.zh-Hans.md)
 
 ![咸陽，1983 年設市](cities/xianyang/poster.jpg)
 
 ## 已經有的城市
 
-| 城市 | 年代 | 片長 | 作者 |
-|---|---|---|---|
-| 咸陽 | 前 4000 年 – 2026 年 | 12 分 30 秒 | Alex |
+| 城市 | 年代 | 片長 | 旁白 | 作者 |
+|---|---|---|---|---|
+| [咸陽](https://cities.go5.si/xianyang/) | 前 4000 年 – 2026 年 | 12 分 30 秒 | 中文 | Alex |
+| [羅馬](https://cities.go5.si/rome/) | 前 753 年 – 2026 年 | 30 分 8 秒 | 英文 | Alex |
 
 每座城的資料在 `cities/<城市>/`：入口頁用的 `entry.json`、設定和文案、史實出處 `FACTS.md`、第三方素材與授權 `CREDITS`。入口頁讀的城市索引 `cities.json`，和每座城五種語言的獨立頁面（例如 https://cities.go5.si/xianyang/ ），都由 GitHub Actions 從各城的 `entry.json` 自動產生。倉庫裡只放文字資料，成片、播放包和海報都放在外部；示例城市咸陽例外，保留了圖片、海報和網頁播放包，入口頁直接從這裡播放。
 
