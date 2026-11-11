@@ -68,7 +68,10 @@ const FATAL = new Set(['script', 'document']);   // module imports are scripts t
 export async function openFilm(city, { w = 1920, h = 1080, q = '', warnings = false, html = 'play.html', view = { width: 1920, height: 1080 }, dpr = null, onPage = null } = {}) {   // (html, view, dpr: another page, at another size, tools/museum.mjs; onPage: told of the page before it loads)
   const { port } = await server();
   const release = await takeSlot(`page ${city} ${q}`.slice(0, 160));
-  const browser = await chromium.launch({ executablePath: localPath('chrome') || undefined, args: ARGS });
+  const browser = await chromium.launch({ executablePath: localPath('chrome') || undefined, args: ARGS }).catch(e => {
+    release();   // (npm ci installs playwright-core alone, without a browser: docs/SETUP.md step 4 installs it or names the system Chrome)
+    throw new Error(`no browser to open the film: run \`npx playwright-core install chromium-headless-shell\`, or where that is not supported set "chrome" in local/config.json to the system Chrome (docs/SETUP.md)\n${String(e.message || e).split('\n')[0]}`);
+  });
   browser.on('disconnected', release);
   const page = await browser.newPage({ viewport: view, deviceScaleFactor: dpr ?? w / 1920 });   // (takeSize: 16:9)
   const log = [];   // the latest problems, printed with the hint when READY is slow
