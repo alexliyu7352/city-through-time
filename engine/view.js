@@ -42,7 +42,7 @@ export async function startView(X) {
   const info = key => { const [id, part] = key.split(':'), b = eraBox[id].box, [x, z] = part === 'dense' ? moment(id).dense : [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2];
     return { x, y: S.ground(x, z), z, r: Math.hypot(b[2] - b[0], b[3] - b[1]) / 2 }; };
   let hud = null;   // (the panel's camera readout)
-  const st = { on: new Set(QS.get('eras') ? QS.get('eras').split(',') : ERAS.slice(0, 1).map(e => e.id)), look: QS.get('look') === 'check' ? 'check' : 'film', today: QS.has('today'),
+  const st = { on: new Set(QS.get('eras') ? QS.get('eras').split(',') : ERAS.slice(0, 1).map(e => e.id)), look: ['check', 'mini'].includes(QS.get('look')) ? QS.get('look') : 'film', today: QS.has('today'),
     at: QS.has('at') ? +QS.get('at') : null, k: {} };   // (k: each city's moment, by its number)
 
   // fit the 1920x1080 picture to the window
@@ -81,7 +81,7 @@ export async function startView(X) {
     cityMesh.visible = st.today;
     U.uToday.value = 1; U.uDimToday.value = U.uDimToday0.value = film ? LOOK.dim ?? .8 : .3;
   }
-  let pending = false, LAND = null, ROUTE = null, TREES = null;
+  let pending = false, MINI = null, LAND = null, ROUTE = null, TREES = null;
   async function draw() {
     pending = false;
     const { az, el, d } = where(), t = controls.target, film = st.look === 'film';
@@ -98,7 +98,9 @@ export async function startView(X) {
     if (film && S.fx && S.fx.land && S.fx.land.trees) { TREES ||= S.fxTrees();   // (fx land trees: the white model's, round where the eye looks)
       TREES.update(controls.target, d, [...Object.values(S.eras).map(e => e.mesh).filter(m => m.visible), ...(cityMesh.visible ? [cityMesh] : [])]); }
     if (FREE) { post.dof.aper = 0; post.dof.maxCoc = 0; }   // (everything sharp: the film's focus on its subject is the film's)
-    renderer.shadowMap.needsUpdate = true; post.composer.render();
+    if (st.look === 'mini') { MINI ||= import('./mini.js').then(m => m.miniLook({ S, cityMesh, scale, lens, palette: QS.get('palette') || 'roman', ground: QS.get('ground') || 'land', card: QS.get('card') }));   // (the colour look, engine/mini.js: made once, however many draws wait on it)
+      (await MINI).render({ target: controls.target, d }); }
+    else { renderer.shadowMap.needsUpdate = true; post.composer.render(); }
     if (pins) pins();
     const id0 = [...st.on][0];
     if (hud) hud.textContent = `az ${az.toFixed(0)}  el ${el.toFixed(0)}  d ${(d / scale).toFixed(0)} m` + (id0 && eraBox[id0] ? `  ${timeOf(id0).toFixed(1)} s` : '');
