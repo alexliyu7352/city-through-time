@@ -1,5 +1,9 @@
 // Post-processing (adapted from lemo-opuscar core/three/post.js, MIT, (c) 2026 LemoLab; see NOTICE): scene -> (MSAA + depth) ->
-// [GTAO ambient occlusion] -> physical depth of field (CoC ~ |1/f - 1/z|, spiral sampling) -> bloom -> grade / vignette -> tone mapping -> dither.
+// [GTAO ambient occlusion] -> [haze] -> physical depth of field (CoC ~ |1/f - 1/z|, spiral sampling) -> bloom -> grade / vignette -> tone mapping -> dither.
+// Two effects only where asked (engine/fx.js, film.fx): haze (o.haze), the air between the eye and what it sees, by distance and
+// thinning upward, toward the sky's horizon colour; and a stronger depth of field (o.dof2), gathered at the picture's own size
+// from the supersampled one with a turning disc of samples and laid over the sharp picture by each pixel's blur (the depth of
+// field's gather after lemo-opuscar styles/tilt-shift/demo/post.js, MIT). Without them the passes are the film's as they were.
 // makePost(renderer, scene, camera, w, h, { ssaa: 2, ao: true, ...targets(renderer) }): ssaa is the internal supersampling factor (the
 // canvas shows at its CSS size; the browser scales it down in the screenshot); the targets' kind as targets() found it (by default the
 // film's: half-float, 4x multisampled, a depth texture)
@@ -10,6 +14,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { SKY_GLSL } from './fx.js';
 
 const cocShader = {
   uniforms: { tColor: { value: null }, tDepth: { value: null }, tAO: { value: null }, aoAmt: { value: 0 }, aoDebug: { value: 0 }, focus: { value: .3 }, aper: { value: 4 }, maxCoc: { value: 18 }, near: { value: .01 }, far: { value: 50 } },
@@ -22,7 +27,7 @@ const cocShader = {
       float z = -perspectiveDepthToViewZ(d, near, far);
       float c = clamp(aper * (1.0/focus - 1.0/z), -maxCoc, maxCoc);   // negative = near, positive = far (pixels)
       vec3 col = texture2D(tColor, vUv).rgb;
-      if (aoAmt > 0.) col *= mix(1., pow(texture2D(tAO, vUv).r, 1.6), aoAmt);
+      if (aoAmt > 0. && d < .99999) col *= mix(1., pow(max(texture2D(tAO, vUv).r, 1e-4), 1.6), aoAmt);   // (not on the sky: nothing there to occlude; pow(0, e) is NaN on some graphics)
       if (aoDebug > .5) col = vec3(pow(texture2D(tAO, vUv).r, 1.6));
       gl_FragColor = vec4(col, c);
     }`
@@ -52,6 +57,67 @@ const gatherShader = {
     }`
 };
 
+// haze: inserted into the CoC stage (it reads the depth already), before the blur, so far land blurs with its haze. The air's
+// density falls off with height (scale uHazeB^-1 above uHazeY0); along the ray from the eye its integral, toward the sky's colour
+// at the horizon on that bearing (fx.js fxSky), lit by uHazeI (the room's light in the white model). The sky itself (depth 1)
+// is drawn by the sky dome and left alone
+const HAZE_HEAD = `uniform mat4 uInvProj, uCamW; uniform vec3 uHazeHor, uHazeZen, uHazeSunC, uHazeSunD; uniform float uHazeD, uHazeB, uHazeY0, uHazeK, uHazeI, uHazeS, uHazeEdge; uniform vec4 uHazeRect, uHazeRect2;
+${SKY_GLSL}
+float fxRectSd(vec2 p, vec4 r){ return max(max(r.x - p.x, p.x - r.z), max(r.y - p.y, p.y - r.w)); }
+// the share of the light the air takes between the eye and depth dd at this pixel; vp: the point in the eye's space
+float fxHazeF(float dd, out vec3 vp){
+  vec4 vh = uInvProj * vec4(vUv * 2. - 1., dd * 2. - 1., 1.); vp = vh.xyz / vh.w;
+  vec3 wd = normalize(mat3(uCamW) * vp); float dist = max(length(vp) - uHazeS, 0.), dy = wd.y * dist * uHazeB;   // (none nearer than uHazeS: what is near keeps its colour)
+  float e0 = exp(-max(uCamW[3].y - uHazeY0, 0.) * uHazeB), fi = abs(dy) > 1e-3 ? (1. - exp(-dy)) / dy : 1. - .5 * dy;
+  return 1. - exp(-uHazeD * dist * e0 * fi); }`;
+const HAZE = `if (d < .99999 && uHazeK > 0.) {
+        vec3 vp_; float f_ = fxHazeF(d, vp_); vec3 wd_ = normalize(mat3(uCamW) * vp_);
+        if (uHazeEdge > 0.) {   // the land's last uHazeEdge before the end of the model (the plate uHazeRect and the land beyond it uHazeRect2, x0 z0 x1 z1) fades all the way into the haze, in a low view: no step where the land ends against the sky
+          vec3 wp_ = uCamW[3].xyz + wd_ * length(vp_); float sd_ = min(fxRectSd(wp_.xz, uHazeRect), fxRectSd(wp_.xz, uHazeRect2));
+          f_ = max(f_, smoothstep(-min(uHazeEdge, length(vp_) * .35), 0., sd_) * (1. - smoothstep(.12, .4, -wd_.y))); }   // (over at most a third of the way to it: an edge close behind the subject takes only its last stretch, not the subject)
+        col = mix(col, fxSky(normalize(vec3(wd_.x, 0., wd_.z)), uHazeHor, uHazeZen, uHazeSunC, uHazeSunD) * uHazeI, f_ * uHazeK);
+      }
+      /*GLOW*/gl_FragColor = vec4(col, c);/*GLOWADD*/`;
+// the stronger depth of field (o.dof2): the CoC picture (signed blur in supersampled pixels in alpha) box-filtered to the
+// picture's own size, gathered there with 128 samples on a disc turned per pixel (noise, not rings), its alpha the share of the
+// light that came from a nearer, wider blur (a blurred foreground spreads over what is behind it); then laid over the sharp
+// supersampled picture by the pixel's own blur or that share
+const gather2Shader = {
+  uniforms: { tIn: { value: null }, res: { value: new THREE.Vector2(1920, 1080) }, maxCoc: { value: 18 }, uS: { value: 2 } },
+  vertexShader: cocShader.vertexShader,
+  fragmentShader: `
+    varying vec2 vUv; uniform sampler2D tIn; uniform vec2 res; uniform float maxCoc, uS;
+    float h12(vec2 p){ vec3 p3 = fract(vec3(p.xyx) * .1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+    void main(){
+      vec4 c0 = texture2D(tIn, vUv); c0.a /= uS; float a0 = abs(c0.a);
+      vec3 acc = c0.rgb / (a0*a0 + 1.); float wsum = 1. / (a0*a0 + 1.), near = 0.;
+      float rot = h12(gl_FragCoord.xy) * 6.2832;
+      const int N = 128;
+      for (int i = 0; i < N; i++) {
+        float r = maxCoc * sqrt((float(i) + .5) / float(N));
+        float th = float(i) * 2.39996 + rot;
+        vec4 s = texture2D(tIn, vUv + vec2(cos(th), sin(th)) * r / res); s.a /= uS;
+        float sa = abs(s.a);
+        if (s.a > c0.a) sa = min(sa, max(a0, 0.));
+        float w = smoothstep(r - 1.5, r + .5, sa) / (sa*sa + 1.);
+        acc += s.rgb * w; wsum += w;
+        if (s.a < 0. && -s.a > a0 + 1.) near += w * smoothstep(1.5, 4., -s.a);   // (a nearer blur of a few pixels or more)
+      }
+      gl_FragColor = vec4(acc / wsum, clamp(2.5 * near / wsum, 0., 1.));
+    }`
+};
+const downShader = {
+  uniforms: { tIn: { value: null } }, vertexShader: cocShader.vertexShader,
+  fragmentShader: 'varying vec2 vUv; uniform sampler2D tIn; void main(){ gl_FragColor = texture2D(tIn, vUv); }'   // (at the centre of each 2 x 2 block: the linear filter averages it)
+};
+const layShader = {
+  uniforms: { tSharp: { value: null }, tBlur: { value: null }, uS: { value: 2 } }, vertexShader: cocShader.vertexShader,
+  fragmentShader: `varying vec2 vUv; uniform sampler2D tSharp, tBlur; uniform float uS;
+    void main(){ vec4 a = texture2D(tSharp, vUv), b = texture2D(tBlur, vUv);
+      float k = max(smoothstep(1., 2.5, abs(a.a) / uS), b.a);   // (under a pixel or so of blur at the picture's size: the sharp picture)
+      gl_FragColor = vec4(mix(a.rgb, b.rgb, k), 1.); }`
+};
+
 class DofScenePass extends Pass {
   constructor(scene, camera, w, h, o = {}) {
     super(); this.scene = scene; this.camera = camera; this.needsSwap = true; this.s = o.ssaa || 1;
@@ -60,10 +126,48 @@ class DofScenePass extends Pass {
     this.rtC = new THREE.WebGLRenderTarget(w, h, { type });
     // no depth of field where the blur's signed size cannot be kept (8-bit targets), nor it or the edge lines without a depth texture that reads right
     this.flat = o.half === false || o.depth === false; this.noDepth = o.depth === false;
-    this.coc = new FullScreenQuad(new THREE.ShaderMaterial(cocShader));
-    this.gat = new FullScreenQuad(new THREE.ShaderMaterial(gatherShader));
+    const own = sh => new THREE.ShaderMaterial({ ...sh, uniforms: THREE.UniformsUtils.clone(sh.uniforms) });   // (each pass its own uniforms: two looks' passes on one page)
+    this.coc = new FullScreenQuad(own(cocShader));
+    this.gat = new FullScreenQuad(own(gatherShader));
     this.gat.material.uniforms.res.value.set(w, h);
     this.focus = .3; this.aper = 4; this.maxCoc = 16; this.aoAmt = 0;
+    if (o.haze) {   // (the haze's uniforms and code only where it is asked for: the film's own shader stays as it was)
+      const m = this.coc.material, sky = o.haze;
+      Object.assign(m.uniforms, { uInvProj: { value: new THREE.Matrix4() }, uCamW: { value: new THREE.Matrix4() }, uHazeHor: { value: new THREE.Color(sky.horizon) }, uHazeZen: { value: new THREE.Color(sky.zenith) },
+        uHazeSunC: { value: new THREE.Color(sky.sun) }, uHazeSunD: { value: new THREE.Vector3(0, .3, 1) }, uHazeD: { value: 1 }, uHazeB: { value: 15 }, uHazeY0: { value: 0 }, uHazeK: { value: 1 }, uHazeI: { value: 1 }, uHazeS: { value: 0 }, uHazeEdge: { value: 0 }, uHazeRect: { value: new THREE.Vector4() }, uHazeRect2: { value: new THREE.Vector4() } });
+      m.fragmentShader = m.fragmentShader.replace('uniform float aoAmt,', HAZE_HEAD + '\n    uniform float aoAmt,').replace('gl_FragColor = vec4(col, c);', HAZE);
+      this.haze = m.uniforms;
+    }
+    if (o.dof2 && !this.flat) {
+      // a sharp band round the focus (uBand: its half-depth, a share of the focus distance; the blur grows only beyond it, a
+      // nearer blur at .7 of a farther one), and the depth of light itself (fx.js glow on layer 2, drawn into tGlowD alone):
+      // the column of light and the glowing lines are blurred by their own distance, not by the land behind them
+      const m = this.coc.material;
+      Object.assign(m.uniforms, { uBand: { value: 0 }, tGlowD: { value: null }, uGlowOn: { value: 0 } });
+      m.fragmentShader = m.fragmentShader.replace('uniform float aoAmt,', 'uniform float uBand, uGlowOn; uniform sampler2D tGlowD;\n    uniform float aoAmt,')
+        .replace('float c = clamp(aper * (1.0/focus - 1.0/z), -maxCoc, maxCoc);', `float zc = z;
+      if (uGlowOn > .5) { float dg = texture2D(tGlowD, vUv).x; if (dg < 1.) zc = min(z, -perspectiveDepthToViewZ(dg, near, far)); }
+      float c0_ = aper * (1.0/focus - 1.0/zc), c = sign(c0_) * max(abs(c0_) - aper * uBand / focus, 0.);
+      c = clamp(c < 0. ? c * .7 : c, -maxCoc, maxCoc);`);
+      // with the haze: light drawn on its own (layer 3, into tGlowC) and added after the haze, hazed by its own distance, hidden
+      // where the land is nearer (a column standing where the land ends in the haze had its middle taken by the haze's colour)
+      this.glowAfter = !!this.haze;
+      if (this.glowAfter) {
+        Object.assign(m.uniforms, { tGlowC: { value: null } });
+        m.fragmentShader = m.fragmentShader.replace('uniform float aoAmt,', 'uniform sampler2D tGlowC;\n    uniform float aoAmt,')
+          .replace('/*GLOW*/', `vec3 glow_ = vec3(0.); if (uGlowOn > .5) { float dg_ = texture2D(tGlowD, vUv).x; vec3 gp_; float fg_ = dg_ < .99999 && uHazeK > 0. ? fxHazeF(dg_, gp_) * uHazeK : 0.;
+        glow_ = texture2D(tGlowC, vUv).rgb * (dg_ < .99999 ? step(dg_, d + 1e-6) : 1.) * (1. - fg_); }   // (a flare or a spark has no depth of its own: shown)
+      `).replace('/*GLOWADD*/', ' gl_FragColor.rgb += glow_;');
+      }
+      this.rtG = new THREE.WebGLRenderTarget(w, h, { type, depthTexture: new THREE.DepthTexture(w, h, THREE.FloatType) });
+      this.glowMat = new THREE.MeshBasicMaterial({ colorWrite: false });
+      const s = this.s, lw = Math.round(w / s), lh = Math.round(h / s);
+      this.rtD = s > 1 ? new THREE.WebGLRenderTarget(lw, lh, { type, depthBuffer: false }) : null;
+      this.rtB = new THREE.WebGLRenderTarget(lw, lh, { type, depthBuffer: false });
+      this.down = new FullScreenQuad(own(downShader));
+      this.gat2 = new FullScreenQuad(own(gather2Shader)); this.gat2.material.uniforms.res.value.set(lw, lh);
+      this.lay = new FullScreenQuad(own(layShader));
+    }
     if (o.ao) {
       this.ao = new GTAOPass(scene, camera, w, h);
       this.ao.output = GTAOPass.OUTPUT.Off;
@@ -74,16 +178,40 @@ class DofScenePass extends Pass {
   }
   // a page that fills its window (studio resize; the film's picture is always 1920 x 1080). Not setSize: the composer calls that
   // with its pixel ratio on top of the supersampling when the pass is added, and the film's pass keeps the size it was made at
-  resize(w, h) { this.rt.setSize(w, h); this.rtC.setSize(w, h); this.gat.material.uniforms.res.value.set(w, h); if (this.ao) this.ao.setSize(w, h); }
+  resize(w, h) { this.rt.setSize(w, h); this.rtC.setSize(w, h); this.gat.material.uniforms.res.value.set(w, h); if (this.ao) this.ao.setSize(w, h);
+    if (this.rtG) this.rtG.setSize(w, h);
+    if (this.rtB) { const lw = Math.round(w / this.s), lh = Math.round(h / this.s); this.rtB.setSize(lw, lh); if (this.rtD) this.rtD.setSize(lw, lh); this.gat2.material.uniforms.res.value.set(lw, lh); } }
   render(renderer, writeBuffer) {
+    const lit = [];   // (light drawn after the haze: out of the scene's own picture)
+    if (this.glowAfter) this.scene.traverse(o => { if (o.userData.fxGlow && o.visible) { o.visible = false; lit.push(o); } });
     renderer.setRenderTarget(this.rt); renderer.clear(); renderer.render(this.scene, this.camera);
-    if (this.ao && this.aoAmt > 0) this.ao.render(renderer, null, null);
+    if (this.glowAfter) for (const o of lit) o.visible = true;
+    if (this.ao && this.aoAmt > 0) {   // (light itself, fx.js's glowing objects, is no occluder: hidden from the ambient occlusion's own render)
+      const lit = []; this.scene.traverse(o => { if (o.userData.fxGlow && o.visible) { o.visible = false; lit.push(o); } });
+      this.ao.render(renderer, null, null); for (const o of lit) o.visible = true; }
     const u = this.coc.material.uniforms;
     u.tColor.value = this.rt.texture; u.tDepth.value = this.rt.depthTexture; u.focus.value = this.focus; u.aper.value = this.aper * this.s; u.maxCoc.value = this.maxCoc * this.s;
     u.near.value = this.camera.near; u.far.value = this.camera.far;
     u.tAO.value = this.ao ? this.ao.gtaoMap : null; u.aoDebug.value = this.aoDebug ? 1 : 0; u.aoAmt.value = this.ao ? this.aoAmt : 0;
     if (this.flat) u.maxCoc.value = 0; if (this.noDepth && u.edgeAmt) u.edgeAmt.value = 0;
+    if (this.haze) { this.haze.uInvProj.value.copy(this.camera.projectionMatrixInverse); this.haze.uCamW.value.copy(this.camera.matrixWorld); }
+    if (this.rtG) {   // the light's own depth (layer 2), nothing else: no background, no colour
+      const sc = this.scene, bg = sc.background, ov = sc.overrideMaterial, mask = this.camera.layers.mask;
+      const ac = renderer.autoClear; sc.background = null; renderer.setRenderTarget(this.rtG); renderer.clear(); renderer.autoClear = false;
+      if (this.glowAfter) { this.camera.layers.set(3); renderer.render(sc, this.camera); }   // (the light itself, every kind, summed: none of it writes depth)
+      sc.overrideMaterial = this.glowMat; this.camera.layers.set(2); renderer.render(sc, this.camera);
+      sc.background = bg; sc.overrideMaterial = ov; this.camera.layers.mask = mask; renderer.autoClear = ac;
+      u.tGlowD.value = this.rtG.depthTexture; u.uGlowOn.value = 1; u.uBand.value = this.band || 0; if (this.glowAfter) u.tGlowC.value = this.rtG.texture;
+    }
     renderer.setRenderTarget(this.rtC); this.coc.render(renderer);
+    if (this.rtB && this.maxCoc > .5) {   // the stronger depth of field (o.dof2)
+      let src = this.rtC.texture;
+      if (this.rtD) { this.down.material.uniforms.tIn.value = src; renderer.setRenderTarget(this.rtD); this.down.render(renderer); src = this.rtD.texture; }
+      const g2 = this.gat2.material.uniforms; g2.tIn.value = src; g2.maxCoc.value = this.maxCoc; g2.uS.value = this.s;
+      renderer.setRenderTarget(this.rtB); this.gat2.render(renderer);
+      const l = this.lay.material.uniforms; l.tSharp.value = this.rtC.texture; l.tBlur.value = this.rtB.texture; l.uS.value = this.s;
+      renderer.setRenderTarget(this.renderToScreen ? null : writeBuffer); this.lay.render(renderer); return;
+    }
     const g = this.gat.material.uniforms; g.tIn.value = this.rtC.texture; g.maxCoc.value = this.flat ? 0 : this.maxCoc * this.s;
     renderer.setRenderTarget(this.renderToScreen ? null : writeBuffer); this.gat.render(renderer);
   }

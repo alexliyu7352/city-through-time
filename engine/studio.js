@@ -10,6 +10,7 @@ import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { makePost, targets } from './post.js';
 import { buildProp, makeTally, buildEra } from './props.js';
+import { FX_SKY, RELIEF_GLSL, SKY_GLSL, reliefTexture, reliefUniforms, reliefSun, reliefSpan, fxAt, landLookGLSL, landPalette, treeField, woodsFn, makeSky, glowLineMaterial, makeFlare, makeLanding, fxAoRadius, sunVector } from './fx.js';
 
 const lin = h => new THREE.Color(h);
 // the sizes the shaders are built with at least; a film that uses more is drawn with its own (makeStudio opts: what it uses)
@@ -38,7 +39,14 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const K = !!opts.keep;   // keep maps (film.keepMaps: a city with today_from): what of it still stands, where today's city steps aside once it comes back round it   // era channels (hide, edge maps): 8, or 12 for a film with more cities standing at once (film.eraSlots: hide3, edge3)   // (the shaders' uniform arrays: more than 32 only for a film that needs them, small devices have few)
   const LOW = !!opts.low;   // live preview: pixel ratio 1, no supersampling
   const PDEP = !!opts.projDepth;   // the projector sees what it lights (a museum page, turned away from a picture's camera): aimProjector draws its depth
+  // the effects a film or the page asks for (engine/fx.js fxSettings; null: none, and every shader as it was). The relief reads one
+  // more texture on the plate: only on the full path (Z), never on a phone's
+  const FX = opts.fx || null, FXR = !!(FX && FX.relief), FXG = (FX && FX.glow) || null, FXL = (FX && FX.land) || null;   // (land: the plate as land, fx.js)
+  const EXG = (M.terrain && M.terrain.exaggeration) || 3, FXRO = FXR ? { ...FX.relief, light: FXL ? 0 : FX.relief.light } : null;   // (a lit land needs no light added on its slopes: that was for a dark plate)
+  const SUN = FX && FX.light && FX.light.az != null ? sunVector(new THREE.Vector3(), FX.light.az, FX.light.el) : null;   // (fx light: the key a sun fixed in the world)
+  const RSETS = [];   // (the relief uniforms whose strength follows the shot: the plate's, the land beyond's; followShadow)
   const renderer = new THREE.WebGLRenderer({ antialias: LOW, preserveDrawingBuffer: true });
+  const FXF = renderer.extensions.has('OES_texture_float_linear');   // (the relief at full float precision where it can be filtered)
   renderer.setPixelRatio(LOW ? 1 : 2); renderer.setSize(W, H);
   renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap; renderer.shadowMap.autoUpdate = false;
@@ -59,9 +67,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const scene = new THREE.Scene();
   const PW = M.size[0], PD = M.size[1], DIAG = Math.hypot(PW, PD);
   const camera = new THREE.PerspectiveCamera(30, W / H, 0.02, 4 * DIAG);
-  // no screen-space ambient occlusion (GTAO): in every low view it turned all beyond some distance black, a straight band
-  // across the picture and the far half of each close-up a fifth as bright; the walls' dark foot and the shadows stand in for it
-  const post = makePost(renderer, scene, camera, W, H, { ssaa: LOW ? 1 : 2, ao: false, ...gpu.targets });
+  // no screen-space ambient occlusion (GTAO) in the film: with its radius fixed in model units, in every low view it turned all
+  // beyond some distance black, a straight band across the picture and the far half of each close-up a fifth as bright; the
+  // walls' dark foot and the shadows stand in for it. fx light.ao: on, its radius following the shot's distance (followShadow)
+  const post = makePost(renderer, scene, camera, W, H, { ssaa: LOW ? 1 : 2, ao: !!(FX && FX.light && FX.light.ao && !LOW), aoAmt: FX && FX.light ? FX.light.ao : 0, ...gpu.targets, ...(FX && FX.haze ? { haze: FX_SKY.film } : {}), ...(FX && FX.dof ? { dof2: true } : {}) });
   post.bloom.strength = .26; post.bloom.radius = .55; post.bloom.threshold = 1.1;   // only what is brighter than white glows: lit white walls bloomed into a milky haze
   post.vig.uniforms.amt.value = .25;   // the corners darken a little (at .42 they took a fifth of a wide shot's light)
   {   // crisp model edges: creases and silhouettes from the Laplacian of inverse depth (planes are linear in 1/z on screen)
@@ -76,7 +85,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         float wd = 1. / max(-perspectiveDepthToViewZ(texture2D(tDepth, vUv - vec2(0., px.y)).x, near, far), 1e-6);
         float wu = 1. / max(-perspectiveDepthToViewZ(texture2D(tDepth, vUv + vec2(0., px.y)).x, near, far), 1e-6);
         float lap = abs(wl + wr + wd + wu - 4. * w0) / w0;
-        col *= 1. - edgeAmt * smoothstep(.0025, .012, lap) * smoothstep(.02, .08, abs(texture2D(tColor, vUv).a - .5));   // (not on a draped pool: the ground's creases under its water are no edge)
+        col *= 1. - edgeAmt * smoothstep(.0025, .012, lap) * smoothstep(.02, .08, abs(texture2D(tColor, vUv).a - .5))${FX ? ' * (1. - smoothstep(focus * 1.2, focus * 2., z))' : ''};   // (not on a draped pool: the ground's creases under its water are no edge; fx: none far beyond what the shot looks at, where the sharper depth of field showed every hill's outline as an ink line)
       }
       gl_FragColor = vec4(col, c);`);
     m.needsUpdate = true;
@@ -125,6 +134,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     uEraA: { value: 0 }, uEraBurn: { value: 0 }, uPhotoK: { value: 1 }, uEraCol: { value: lin('#ffffff') }, uEraFab: { value: .9 },
     cWater: { value: lin(PAL.water || '#1a2129') }, uPlateEmit: { value: PAL.plateEmit ?? .1 }, uNight: { value: 0 }, uLit: { value: .35 }, uScaleH: { value: .0003 }, uScaleM: { value: .0001 }, uFootM: { value: 4 }, uHide: { value: null }, uHide2: { value: null }, uHideCol: { value: Array.from({ length: HMAX }, () => new THREE.Color(1, 1, 1)) }, uNodeCol: { value: new THREE.Color(1, 1, 1) }, uNodeA: { value: 0 }, uPlateV: { value: new THREE.Vector2(PW, PD) },
     uShadeL: { value: new THREE.Vector3(0, 1, 0) }, uShadeK: { value: 0 }, uShadeC: { value: lin('#3a4757') },   // terrain.shade (main.js): its hue, the plate's own unless col is written
+    ...(FXR ? reliefUniforms(null, [-PW / 2, -PD / 2, PW / 2, PD / 2], 1, FXRO, EXG) : {}),   // (the relief's: its texture once the terrain is read, build)
     uNightDeep: { value: 0 },   // film.night_look.deep: at night today's buildings go dark, a few windows burn brighter (the night city)
     uSpotC: { value: new THREE.Vector2(0, 0) }, uSpotR: { value: 9 }, uSpotK: { value: 1 }, uSpotB: { value: 1 },   // spot: the light falls on a subject, the rest of the room goes dark
     // a living moment: a picture of the period projected from its shot's camera onto the model (uPM), shown inside a ring of light
@@ -148,6 +158,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     // the model's edge as drawn, turned it fell on the floor and the far land behind as a thin dark copy of the outline
     uPH: { value: 0 },
   };
+  if (FXR) RSETS.push([U, EXG]);
 
   // the shaders' uniform arrays and the textures they read, by Z: FULL has room for any film (the engine's slots above); on
   // graphics that cannot link shaders that large (a phone's: 16 textures a shader and 224 to 256 uniform vectors a stage, where
@@ -556,6 +567,8 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
   function projMaterial(kind, opts, extra = null) {
     const m = new THREE.MeshStandardMaterial(opts);
+    const fxr = () => FXR && kind === 1 && Z === FULL;   // (the plate top's relief, fx.js: on the full path only)
+    const fxl = () => !!FXL && kind === 1;   // (the plate as land, fx.js: no texture of its own, so on a phone's path too)
     m.onBeforeCompile = sh => {
       Object.assign(sh.uniforms, U, extra || {});
       sh.vertexShader = sh.vertexShader
@@ -563,17 +576,18 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         .replace('#include <begin_vertex>', `#include <begin_vertex>${RISE(Z)}`)
         .replace('#include <fog_vertex>', `#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz; vWN = normalize(mat3(modelMatrix) * objectNormal);`);
       sh.fragmentShader = sh.fragmentShader
-        .replace('#include <common>', `#include <common>\n${HEAD(Z)}`)
-        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(${kind === 1 ? 'grounds(diffuseColor.rgb, -1, true)' : 'diffuseColor.rgb'}, cWater * .72, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * eraBurnK()); if (abs(vData.y - 5.) < .5 && normalize(vWN).y > .7) diffuseColor.rgb = cWater * .72; if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); if (abs(vData.y - 11.) < .5 && uGroundSelf > -.5 && normalize(vWN).y > .7) diffuseColor.rgb = grounds(diffuseColor.rgb, int(uGroundSelf + .5), false); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
+        .replace('#include <common>', `#include <common>\n${HEAD(Z)}${fxr() ? RELIEF_GLSL : ''}${fxl() ? landLookGLSL(landPalette(FXL), fxr(), FXL, EXG, M.scale, 'film') : ''}`)
+        .replace('#include <color_fragment>', `#include <color_fragment>\n float wm = ${kind === 1 ? 'wmask()' : '0.'}; diffuseColor.rgb = mix(${kind === 1 ? `grounds(${fxl() ? 'fxLandAt(vWP)' : 'diffuseColor.rgb'}, -1, true)` : 'diffuseColor.rgb'}, cWater * .72, wm);${kind === 0 ? ' vec3 eraKeyT = vec3(1.); if (vData.w > 2.5) { diffuseColor.rgb *= min(1., eraShade(vData.y)) * (1. - .88 * eraBurnK()); if (abs(vData.y - 5.) < .5 && normalize(vWN).y > .7) diffuseColor.rgb = cWater * .72; if (abs(vData.y - 7.) < .5) diffuseColor.rgb *= paveTex(); if (abs(vData.y - 11.) < .5 && uGroundSelf > -.5 && normalize(vWN).y > .7) diffuseColor.rgb = grounds(diffuseColor.rgb, int(uGroundSelf + .5), false); float iw_ = smoothstep(uNodeR + .012, uNodeR - .05, length(vWP.xz - uNodeC)); vec3 ec_ = mix(uEraCol0, uEraCol, iw_); float ik_ = mix(uEraInk0, uEraInk, iw_); eraKeyT = mix(vec3(1.), ec_ / max(max(ec_.r, ec_.g), max(ec_.b, .001)), uEraA * .85 * (1. - ik_)); diffuseColor.rgb *= 1. - .84 * ik_; } else if (vData.w > -.5 && vData.w < .5) { diffuseColor.rgb = epTint(diffuseColor.rgb); diffuseColor.rgb *= 1. - mix(uDimToday0, uDimToday, smoothstep(uNodeR + .004, uNodeR - .025, length(vWP.xz - uNodeC))); }' : ''}${kind < 2 ? ' { vec2 puv = plateUV(); if (uPhotoA > 0. && onPlate(puv)) { float up = smoothstep(.4, .7, normalize(vWN).y); diffuseColor.rgb = mix(diffuseColor.rgb, photoAt(puv) * mix(.6, 1., up), photoK(puv) * (' + (kind === 1 ? 'up' : '1.') + ')); } }' : ''}`)
         // a period city's colour is in the light that falls on it, not in its plaster: the lamps' direct light (key, fill, rim) takes
         // the era's colour, the room's soft light stays neutral, so its walls are warm where lit and grey in the shade
         .replace('#include <aomap_fragment>', `#include <aomap_fragment>${kind === 0 ? '\n reflectedLight.directDiffuse *= eraKeyT;' : kind === 1 ? '\n reflectedLight.directDiffuse *= mix(vec3(1.), gKeyT, gCover);' : ''}`)
         // water, the plate's (wmask) and a period city's own (its pools' and moats' tops, part 5): its ripples tilt the normal
         .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>${kind < 2 ? `\n float wq_ = ${kind === 1 ? 'wm' : '(vData.w > 2.5 && abs(vData.y - 5.) < .5 ? step(.7, normalize(vWN).y) : 0.)'}; vec2 wP_ = vWP.xz / uScaleM; float wPx_ = length(fwidth(wP_)), wEdge_ = fwidth(wm); vec2 wSl_ = wq_ > 0. ? waterSlope(wP_, wPx_) * wq_ : vec2(0.); normal = normalize(normal + (viewMatrix * vec4(-wSl_.x, 0., -wSl_.y, 0.)).xyz);` : ''}`)
-        .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, .28, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .28;' : ''}`)
+        .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>\n roughnessFactor = mix(roughnessFactor, ${SUN ? '.62' : '.28'}, wm);${kind === 0 ? ' if (vData.w > 2.5 && abs(vData.y - 5.) < .5) roughnessFactor = .28;' : ''}`)
         .replace('#include <opaque_fragment>', `outgoingLight += projLight(${kind}.0, wm) * mix(diffuseColor.rgb, vec3(1.), ${kind === 1 ? 'uPlateEmit' : '.1'}) * 1.35;
  ${kind < 2 ? '{ float sl_ = (1. - smoothstep(0., 1.5 * max(wEdge_, 1e-5), abs(wm - .5))) * smoothstep(.001, .006, wEdge_) * uWaterShore, wg_ = wq_ > .8 ? waterGlint(wP_, wPx_) * smoothstep(.8, .97, wq_) * uWaterGlint : 0.; outgoingLight += vec3(.78, .9, 1.) * sl_ * (.25 + uProj) * .5 + vec3(1., .96, .88) * wg_ * (.35 + uProj); }   // water: a fine lit line along its shore (a pixel or so wide at any distance; none inside a pool fading as a whole), and light caught on its ripples' : ''}
  ${kind === 1 ? '{ float sh_ = clamp((dot(normalize(vWN), uShadeL) - uShadeL.y) / max(1. - uShadeL.y, .01), -1., 1.) * (1. - wm) * step(.5, normalize(vWN).y); vec3 tn_ = mix(uShadeC / max(max(uShadeC.r, uShadeC.g), max(uShadeC.b, .001)), diffuseColor.rgb / max(max(diffuseColor.r, diffuseColor.g), max(diffuseColor.b, .001)), gCover); outgoingLight = outgoingLight * (sh_ < 0. ? max(.5, 1. + .35 * uShadeK * sh_) : 1.) + tn_ * .5 * uShadeK * max(sh_, 0.); }   // terrain.shade: a fixed low sun on the plate top (not its sides): a slope turned to it lit in the plate\'s own hue (a period city\'s ground: in the ground\'s) (at most .5 k, a steel blue on a dark blue plate), a slope turned away darker, flat ground and water as they are; a white light added on the dark plate read as snow on the hills' : ''}
+ ${fxr() ? 'outgoingLight = mix(outgoingLight, fxReliefLight(vWP, outgoingLight, diffuseColor.rgb), (1. - wm) * step(.5, normalize(vWN).y));   // the relief (fx.js): slopes lit and shaded by a low sun at the key\'s bearing, the land\'s own shadows, its hollows darker' : ''}
  ${kind === 0 ? `if (vData.w > -.5 && abs(vData.w - 1.) > .5 && abs(normalize(vWN).y) < .5 && !(vData.w > 2.5 && abs(vData.y - 11.) < .5)) {   // a wall darkens toward its foot, where the street and its neighbours hide the room's light: the city stands on the plate instead of floating over it (a period house's plinth is that foot already, and keeps its light). The band is uFootM metres (main.js: a few metres up close, a few pixels' worth from afar)
    float fh_ = (vWP.y - vBase) / uScaleH; outgoingLight *= mix(.62, 1., smoothstep(0., uFootM, fh_)); }
  if (vData.w > 2.5) { float eb_ = eraBurnK(); if (eb_ > 0.) outgoingLight += eraFire() * eb_ * 1.7 * uProj * vUp; }   // a building that has fallen no longer burns
@@ -611,7 +625,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
    float gw_ = max(1.5e-4, distance(cameraPosition, vWP) * .012); outgoingLight += vec3(1., .84, .6) * exp(-dr_ * dr_ / (gw_ * gw_)) * uPA * .9 * step(.0001, uPRR) * (1. - uPF); }` : ''}
 #include <opaque_fragment>${kind === 1 ? '\n gl_FragColor.a = 1. - .5 * wDrapedK;   // (.5 on a draped pool: the edge pass leaves it out; the scene buffer\'s alpha is read for nothing else)' : ''}`);
     };
-    m.customProgramCacheKey = () => 'proj' + kind + (Z === FULL ? '' : ' fit');
+    m.customProgramCacheKey = () => 'proj' + kind + (Z === FULL ? '' : ' fit') + (fxr() ? ' fx' : '') + (fxl() ? ' land' : '') + (SUN ? ' sun' : '');   // (sun: the plate's water rougher, a fixed sun's glare on a river blew it out white)
     return m;
   }
 
@@ -761,13 +775,26 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     geo.setAttribute('aShade', new THREE.BufferAttribute(shade, 1));
     const mat = new THREE.MeshStandardMaterial({ color: c.col || PAL.context || PAL.plate || '#262c33', roughness: 1, metalness: 0, transparent: true });
     ctxU.uCtxR.value.set(x0, x1, z0, z1); ctxU.uCtxF.value = c.fade || 1; ctxU.uCtxE.value = sd.k || 0; ctxU.uCtxS.value = lin(sd.col || '#c9d6e8');
+    // fx relief: the same light on this land as on the plate (its own relief texture, the plate's sun), in place of its fixed side light
+    const fxr = FXR && Z === FULL, cz = (z1 - z0) / (h - 1);
+    const cex = c.ex || EXG, ctxFx = fxr ? reliefUniforms(reliefTexture({ w, h, data: Float32Array.from({ length: w * h }, (_, k) => pos[k * 3 + 1]) }, cell, cz, fxAt(FX.relief.k, 0) / cex, M.scale, FXF),
+      [x0, z0, x1, z1], Math.max(cell, cz), FXRO, cex, U) : null;
+    if (fxr) { ctxU.uCtxE.value = 0; RSETS.push([ctxFx, cex]); }
+    // fx land: this land as the plate's; fx haze: opaque, its edges going into the sky's own colour at the horizon (a see-through
+    // edge showed the bright sky through the land, a pale band where it ends inside the haze's reach)
+    const ctxL = FXL ? landLookGLSL(landPalette(FXL), fxr, FXL, EXG, M.scale, 'film') : '', ctxSky = air ? { uHor: air.sky.u.uHor, uZen: air.sky.u.uZen, uSunC: air.sky.u.uSunC, uSunD: air.sky.u.uSunD, uSkyI: air.sky.u.uI } : null;
+    if (air) post.dof.haze.uHazeRect2.value.set(x0, z0, x1, z1);   // (the haze's end of the land: this land's edges too, where it reaches past the plate)
+    mat.customProgramCacheKey = () => 'ctx' + (fxr ? ' fx' : '') + (FXL ? ' land' : '') + (air ? ' air' : '');
     mat.onBeforeCompile = sh => {
-      Object.assign(sh.uniforms, ctxU);
+      Object.assign(sh.uniforms, ctxU, ctxFx || {}, ctxSky || {});
       sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vCW; attribute float aShade; varying float vShade;')
         .replace('#include <fog_vertex>', '#include <fog_vertex>\n vCW = (modelMatrix * vec4(transformed, 1.)).xyz; vShade = aShade;');
-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uCtxA, uCtxF, uCtxE; uniform vec3 uCtxS; uniform vec4 uCtxR; varying vec3 vCW; varying float vShade;')
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uCtxA, uCtxF, uCtxE; uniform vec3 uCtxS; uniform vec4 uCtxR; varying vec3 vCW; varying float vShade;' + (fxr ? RELIEF_GLSL : '') + ctxL + (air ? '\nuniform vec3 uHor, uZen, uSunC, uSunD; uniform float uSkyI;\n' + SKY_GLSL : ''))
+        .replace('#include <color_fragment>', '#include <color_fragment>' + (FXL ? '\n diffuseColor.rgb = fxLandAt(vCW);' : ''))
+        .replace('#include <opaque_fragment>', (fxr ? 'outgoingLight = fxReliefLight(vCW, outgoingLight, diffuseColor.rgb);\n' : '') + '#include <opaque_fragment>')
         .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n totalEmissiveRadiance += uCtxS * vShade * uCtxE;')
-        .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n float ce = min(min(vCW.x - uCtxR.x, uCtxR.y - vCW.x), min(vCW.z - uCtxR.z, uCtxR.w - vCW.z));\n gl_FragColor.a *= uCtxA * smoothstep(0., uCtxF, ce);');
+        .replace('#include <dithering_fragment>', '#include <dithering_fragment>\n float ce = min(min(vCW.x - uCtxR.x, uCtxR.y - vCW.x), min(vCW.z - uCtxR.z, uCtxR.w - vCW.z));\n ' + (air ? 'gl_FragColor.rgb = mix(fxSky(normalize(vec3(vCW.x - cameraPosition.x, 0., vCW.z - cameraPosition.z)), uHor, uZen, uSunC, uSunD) * uSkyI, gl_FragColor.rgb, smoothstep(0., uCtxF, ce)); gl_FragColor.a *= uCtxA;'
+          : 'gl_FragColor.a *= uCtxA * smoothstep(0., uCtxF, ce);'));
     };
     ctxMesh = new THREE.Mesh(geo, mat); ctxMesh.visible = false; ctxMesh.frustumCulled = false; ctxMesh.renderOrder = 1; scene.add(ctxMesh);
   }
@@ -799,6 +826,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const routes = {};
   const LREF = 1.2, LKMIN = .1;   // lines and routes keep their width from 1.2 model units out, and thin to a tenth closer in
   function addRoute(id, pts, col, width = .0018) {
+    if (FXG && FXG.lines) return addGlowRoute(id, pts, col, width);
     const curve = new THREE.CatmullRomCurve3(pts.map(p => new THREE.Vector3(...p)), false, 'centripetal');
     const geo = new THREE.TubeGeometry(curve, Math.max(64, pts.length * 48), width, 8, false);
     const u = { uProg: { value: 0 }, uA: { value: 0 }, uCol: { value: lin(col) }, uNow: U.uNow, uW0: { value: width }, uRef: { value: LREF }, uKmin: { value: LKMIN } };
@@ -818,6 +846,23 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     routes[id] = { curve, u, head, set(prog, a, flash = 0) { u.uProg.value = prog; u.uA.value = a; mesh.visible = head.visible = (a > .002 && prog > .001) || flash > .01; head.position.copy(curve.getPointAt(Math.min(1, prog)));
       head.material.opacity = Math.min(1, a * (prog < 1 ? 1 : .6) + flash);   // flash: the landing (a burst of light where the beam hits)
       head.scale.setScalar(Math.min(1, Math.max(LKMIN, head.position.distanceTo(camera.position) / LREF)) * (1 + 7 * flash)); } };   // camera is placed before the layers each frame
+    return routes[id];
+  }
+  // a beam as a glowing line (fx glow): a hot core and a wide soft halo, comets of light running along it, a flare on its head while
+  // it draws; where it lands (main.js: a beam with impact) a column of light, a flare and sparks (fx.js makeLanding), as the
+  // settings keep them. set(prog, a, flash) as addRoute's; land(t, a): t seconds since it landed
+  function addGlowRoute(id, pts, col, width) {
+    const curve = new THREE.CatmullRomCurve3(pts.map(p => new THREE.Vector3(...p)), false, 'centripetal'), len = curve.getLength(), segs = Math.max(64, pts.length * 48);
+    const core = glowLineMaterial(col, width, len, LREF, LKMIN, U.uNow), halo = glowLineMaterial(col, width * 4.5, len, LREF, LKMIN, U.uNow, true);
+    const meshes = [new THREE.Mesh(new THREE.TubeGeometry(curve, segs, width * 4.5, 10, false), halo.mat), new THREE.Mesh(new THREE.TubeGeometry(curve, segs, width, 8, false), core.mat)];
+    meshes.forEach((m, i) => { m.frustumCulled = false; m.renderOrder = 5 + i; m.layers.enable(1); m.layers.enable(2); m.layers.enable(3); m.userData.fxGlow = true; scene.add(m); });
+    const head = FXG.flare ? makeFlare(col) : null; if (head) scene.add(head.mesh);
+    const landing = makeLanding(scene, col, DIAG * .045, FXG), end = curve.getPointAt(1);
+    routes[id] = { curve, u: core.u, clock(t) { for (const u of [core.u, halo.u]) u.uNow = t; }, set(prog, a, flash = 0) {   // (clock: a uniform of its own for the light's flow, in place of the film's time)
+      for (const u of [core.u, halo.u]) { u.uProg.value = prog; u.uA.value = a; }
+      for (const m of meshes) m.visible = a > .002 && prog > .001;
+      if (head) head.set(curve.getPointAt(Math.min(1, prog)), prog > .001 && prog < 1 ? a * .7 : 0, .045);
+    }, land(t, a) { landing.set(end, t, a); } };
     return routes[id];
   }
   // the edge of a standing period city: a thin neon line draped on the ground along its outline (the reference's lit edge).
@@ -860,7 +905,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const KEY_SIDE = -50, KEY_EL = 45, RIM_SIDE = 150, RIM_EL = 28, keyDir = new THREE.Vector3(), rimDir = new THREE.Vector3();
   function followShadow(tx, ty, tz, d, az) {
     const S = Math.min(DIAG * .55, Math.max(.06, d * .75)), rad = THREE.MathUtils.degToRad;
-    keyDir.setFromSphericalCoords(1, rad(90 - KEY_EL), rad(az + KEY_SIDE)); rimDir.setFromSphericalCoords(1, rad(90 - RIM_EL), rad(az + RIM_SIDE));
+    if (SUN) keyDir.copy(SUN); else keyDir.setFromSphericalCoords(1, rad(90 - KEY_EL), rad(az + KEY_SIDE)); rimDir.setFromSphericalCoords(1, rad(90 - RIM_EL), rad(az + RIM_SIDE));
     house.position.set(tx + keyDir.x * DIAG * 1.2, ty + keyDir.y * DIAG * 1.2, tz + keyDir.z * DIAG * 1.2);
     house.target.position.set(tx, ty, tz); house.target.updateMatrixWorld(); U.uKeyDir.value.copy(keyDir);
     rim.position.set(tx + rimDir.x * DIAG, ty + rimDir.y * DIAG, tz + rimDir.z * DIAG);
@@ -868,6 +913,20 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     Object.assign(house.shadow.camera, { left: -S, right: S, top: S, bottom: -S, near: .05, far: DIAG * 2.6 });
     house.shadow.camera.updateProjectionMatrix();
     house.shadow.normalBias = .0015 * S / (DIAG * .55) + .00008; house.shadow.bias = -.00002;
+    if (FXR) { if (SUN) U.uFxSun.value.copy(SUN); else reliefSun(U.uFxSun.value, rad(az), FX.relief); reliefSpan(RSETS, FX.relief, d, M.scale); }   // (the relief's strength by the shot's distance)
+    if (post.dof.ao) post.dof.ao.updateGtaoMaterial({ radius: fxAoRadius(d) });
+    if (air) { const sd = FXR ? U.uFxSun.value : keyDir; air.sky.u.uSunD.value.copy(sd); if (post.dof.haze) post.dof.haze.uHazeSunD.value.copy(sd); }
+  }
+  // the air (fx haze): a sky dome for the room's dark, and the haze's settings in the depth of field's pass. Its light follows
+  // the room's (scene.backgroundIntensity: main.js setLight), so it is as dark as the room before the lamps
+  const air = FX && FX.haze ? { sky: makeSky(FX_SKY.film) } : null;
+  if (air) {
+    scene.add(air.sky.mesh);
+    const ex = (M.terrain && M.terrain.exaggeration) || 3, h = post.dof.haze;
+    h.uHazeD.value = 1 / (FX.haze.dist_km * 1000 * M.scale); h.uHazeB.value = 1 / (FX.haze.height_m * M.scale * ex); h.uHazeK.value = FX.haze.k; h.uHazeS.value = FX.haze.start_km * 1000 * M.scale;
+    h.uHazeRect.value.set(-PW / 2, -PD / 2, PW / 2, PD / 2); h.uHazeRect2.value.copy(h.uHazeRect.value); h.uHazeEdge.value = FX.haze.edge_km * 1000 * M.scale;   // (the land beyond the plate: its own rect, addContext)
+    air.sky.mesh.onBeforeRender = (r, sc, cam) => { const m = air.sky.mesh; m.position.copy(cam.position); m.scale.setScalar(cam.far * .9); m.updateMatrixWorld();
+      const k = scene.backgroundIntensity ?? 1; air.sky.u.uI.value = k; h.uHazeI.value = k; };
   }
   // the emblem (a tiger tally), bronze with gold inlay
   const tally = makeTally({ length: .095 }); tally.visible = false; scene.add(tally);
@@ -1026,6 +1085,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     for (let i = 0; i < 4; i++) setTex('uD' + i, decals[i] || null, true);
     setTex('uPhoto', photo, true);
     if (terrain) setTerrain(terrain.img, terrain.info, M.scale);
+    if (FXR && HF && Z === FULL) {   // the relief's texture (fx.js): heights, openness and slopes of the plate's own heightfield
+      const cx = PW / (HF.w - 1), cz = PD / (HF.h - 1);   // (the field's rows run from the plate's north edge, z = -PD / 2)
+      U.uFxHgt.value = reliefTexture(HF, cx, cz, fxAt(FX.relief.k, 0) / EXG, M.scale, FXF); U.uFxR.value.w = Math.max(cx, cz); U.uFxRA.value = 1; }
     const white = '#f3f3f1', plateCol = PAL.plate || white;   // the model stays white; only the plate takes the palette's colour
     const city = new THREE.Mesh(buildCity(), projMaterial(0, { color: white, roughness: .88, metalness: 0 }));
     city.customDepthMaterial = deformMaterial(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }));
@@ -1052,6 +1114,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const hemi = new THREE.HemisphereLight('#dfe7f2', '#141414', .3); scene.add(hemi);
   // a cool rim from behind the city (placed by followShadow): edges of buildings and props catch it while the projector runs
   const rim = new THREE.DirectionalLight('#9fc3ff', 0); scene.add(rim, rim.target);
+  if (FX && FX.light) {   // fx light: the key warm as a low sun's, the sky's light cooler, the ground's warmer; the relief's sunlit slopes warm, its shade cool
+    const w = FX.light.warm;
+    house.color.set('#ffffff').lerp(new THREE.Color('#ffd7a8'), w); hemi.color.set('#dfe7f2').lerp(new THREE.Color('#a9c0e6'), w); hemi.groundColor.set('#141414').lerp(new THREE.Color('#3a2a1c'), w);
+    if (FXR) { U.uFxLitC.value.setRGB(1, 1, 1).lerp(new THREE.Color(1.12, .98, .8), w); U.uFxShadeC.value.setRGB(1, 1, 1).lerp(new THREE.Color(.78, .88, 1.12), w); }
+  }
   // dust in the projector beam: a slow cloud of soft points above the plate, warm, brighter in the beam; embers during a burn
   const NP = 2600, pp = new Float32Array(NP * 3), ps = new Float32Array(NP);
   { let sd = 3; const rnd = () => { sd = (sd * 16807) % 2147483647; return sd / 2147483647; };
@@ -1251,5 +1318,10 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     if (!tries.some(z => { Z = z; gpu.path = z === FULL ? 'full' : 'fit'; if (z !== FULL) fitTo(z); return linkTest(); })) gpu.fail = 'shaders';
     gpu.limits = { textures: g.getParameter(g.MAX_TEXTURE_IMAGE_UNITS), fragment: g.getParameter(g.MAX_FRAGMENT_UNIFORM_VECTORS), vertex: g.getParameter(g.MAX_VERTEX_UNIFORM_VECTORS), size: g.getParameter(g.MAX_TEXTURE_SIZE) };
   }
-  return { gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  // a column of light, its flare and sparks anywhere (fx.js makeLanding): the viewer's look at them (engine/view.js VIEW({ land }))
+  const fxLanding = col => makeLanding(scene, col, DIAG * .045, FXG || { column: true, flare: true, sparks: true });
+  // fx land trees: trees in the land's woods and open ground in the white model too, planted as the miniature plants them, in a pale
+  // sage that sits with the white city (fx.js treeField; the viewer's, engine/view.js)
+  const fxTrees = () => treeField(scene, renderer, U, PW, PD, M.scale, { size: .8, keep: .25, ...(landPalette(FXL).trees || {}), dark: 1, cypress: .1, woods: woodsFn(FXL, EXG, M.scale, ground, FXR), ground, layer: 0, tone: 'film' });
+  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

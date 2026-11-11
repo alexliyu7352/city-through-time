@@ -924,6 +924,21 @@ NIGHT_LOOK = None; _nl = FM.get('night_look')
 if _nl is not None:
     if not isinstance(_nl, dict) or set(_nl) - {'deep'} or not 0 <= float(_nl.get('deep', 1)) <= 1: raise SystemExit(f'compile: film.night_look: {{ deep: 0..1 }} (got {_nl})')
     NIGHT_LOOK = {'deep': float(_nl.get('deep', 1))}
+# film.fx: the effects (engine/fx.js FX_DEFAULT: relief, light, haze, dof, glow, land; docs/STAGING.md "Look and effects"), each
+# true (its defaults) or a dict of its keys; absent: none, and the film draws as it did. Passed through as written, its keys checked
+# against the engine's (a key the engine does not know would be dropped there without a word)
+FX_KEYS = {'relief': {'k', 'el', 'side', 'shadow', 'ao', 'light', 'flat', 'span_m'}, 'light': {'warm', 'ao', 'az', 'el'}, 'haze': {'dist_km', 'height_m', 'k', 'start_km', 'edge_km'},
+           'dof': {'k', 'max', 'band'}, 'glow': {'lines', 'column', 'flare', 'sparks'}, 'land': {'source', 'palette', 'mute', 'dark', 'warm', 'scrub', 'trees'}}
+FX_LAND = {'source': {'quiet', 'fields'}, 'palette': {'temperate', 'mediterranean', 'loess'}}   # (fx.js landLookGLSL, LAND_PALETTES: any other falls back silently)
+FX_OUT = None; _fx = FM.get('fx')
+if _fx is not None:
+    if not isinstance(_fx, dict) or set(_fx) - set(FX_KEYS): raise SystemExit(f'compile: film.fx: a dict of {sorted(FX_KEYS)} (got {_fx})')
+    for k_, v_ in _fx.items():
+        if not (v_ is True or v_ is False or (isinstance(v_, dict) and not set(v_) - FX_KEYS[k_])): raise SystemExit(f'compile: film.fx.{k_}: true, false or a dict of {sorted(FX_KEYS[k_])} (got {v_})')
+        if k_ == 'land' and isinstance(v_, dict):
+            for lk_, ok_ in FX_LAND.items():
+                if lk_ in v_ and v_[lk_] not in ok_: raise SystemExit(f'compile: film.fx.land.{lk_}: one of {sorted(ok_)} (got {v_[lk_]!r})')
+    FX_OUT = {k_: v_ for k_, v_ in _fx.items() if v_ is not False} or None
 # ------------------------------------------------------------------ layout: opening -> nodes -> closing
 OP = FM.get('opening', {'dur': 5.0}); CL = FM.get('closing', {})
 cursor = PD + float(OP.get('dur', 5.0))
@@ -2967,7 +2982,7 @@ film = {
     'living': [{k_: v_ for k_, v_ in x_.items() if not k_.startswith('_')} for x_ in living_out],
     'spots': spots_out,
     **({'waterThen': {'file': 'data/water_then.png', 'states': WT_STATES, 'events': WT_EVENTS, 'edge': WT_EDGE}} if WT_STATES else {}),
-    'night_look': NIGHT_LOOK,
+    'night_look': NIGHT_LOOK, **({'fx': FX_OUT} if FX_OUT else {}),
     'change': {'renew': CHANGE['renew'], 'early': CHANGE.get('early', []), 'counts': CHANGE['counts']} if CHANGE else None,
     'rings_motif': ({'centre': F.model_lonlat(*FM['rings_motif']['centre']), 'spacing': FM['rings_motif'].get('spacing_m', 350) * F.scale, 'from': FM['rings_motif'].get('from', first_year), 'gain': FM['rings_motif'].get('gain', .5)} if FM.get('rings_motif') else None),
 }

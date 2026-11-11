@@ -81,8 +81,8 @@ export async function startView(X) {
     cityMesh.visible = st.today;
     U.uToday.value = 1; U.uDimToday.value = U.uDimToday0.value = film ? LOOK.dim ?? .8 : .3;
   }
-  let pending = false;
-  function draw() {
+  let pending = false, LAND = null, ROUTE = null, TREES = null;
+  async function draw() {
     pending = false;
     const { az, el, d } = where(), t = controls.target, film = st.look === 'film';
     if (FREE) {   // the eye stays over the ground, what it looks at on it
@@ -93,6 +93,10 @@ export async function startView(X) {
     setDist(d, el); setLight(TV); setLayers(TV); apply(); S.groundsNow();
     S.followShadow(t.x, t.y, t.z, d, film ? az : FIXED_AZ);
     lens(d); if (!film) post.dof.aper = 0;
+    if (S.fx && S.fx.relief) S.setContext(1);   // (fx relief: the land beyond the plate, lit as the plate, to the horizon)
+    if (ROUTE && ROUTE.state) ROUTE.set(...ROUTE.state);
+    if (film && S.fx && S.fx.land && S.fx.land.trees) { TREES ||= S.fxTrees();   // (fx land trees: the white model's, round where the eye looks)
+      TREES.update(controls.target, d, [...Object.values(S.eras).map(e => e.mesh).filter(m => m.visible), ...(cityMesh.visible ? [cityMesh] : [])]); }
     if (FREE) { post.dof.aper = 0; post.dof.maxCoc = 0; }   // (everything sharp: the film's focus on its subject is the film's)
     renderer.shadowMap.needsUpdate = true; post.composer.render();
     if (pins) pins();
@@ -179,8 +183,18 @@ export async function startView(X) {
     if (o.eras) st.on = new Set(o.eras.map(k => k.split(':')[0])); if (o.look) st.look = o.look; if (o.today != null) st.today = !!o.today; if ('at' in o) st.at = o.at ?? null;
     if (o.target) { const t = o.target, c = typeof t === 'string' ? info(t) : t.length === 2 ? { x: t[0], y: S.ground(t[0], t[1]), z: t[1] } : { x: t[0], y: t[1], z: t[2] }; controls.target.set(c.x, c.y, c.z); }
     const w = where(); place(o.az ?? w.az, o.el ?? w.el, o.d ?? w.d);
+    if (o.land) { const L_ = o.land; LAND ||= S.fxLanding(L_.col || '#ffd59a');   // a column of light, its flare and sparks at [x, z], t seconds after it landed (fx.js; null: gone)
+      LAND.set(new THREE.Vector3(L_.at[0], S.ground(L_.at[0], L_.at[1]), L_.at[1]), L_.t ?? 1, L_.a ?? 1); }
+    else if (o.land === null && LAND) LAND.set(new THREE.Vector3(), -1, 0);
+    if (o.route) { const R_ = o.route;   // a glowing line lying on the ground through [[x, z], ..] (fx.js glow lines: core, halo, light flowing along), drawn to prog, at time t
+      if (!ROUTE) { const pts = [];
+        for (let i = 0; i + 1 < R_.pts.length; i++) { const [x0, z0] = R_.pts[i], [x1, z1] = R_.pts[i + 1], n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, z1 - z0) / .002));
+          for (let k = 0; k < n; k++) { const x = x0 + (x1 - x0) * k / n, z = z0 + (z1 - z0) * k / n; pts.push([x, S.ground(x, z) + .0008, z]); } }
+        const [xl, zl] = R_.pts[R_.pts.length - 1]; pts.push([xl, S.ground(xl, zl) + .0008, zl]);
+        ROUTE = S.addRoute('_view_route', pts, R_.col || '#ffd59a', R_.w || .0011); ROUTE.t = { value: 0 }; if (ROUTE.clock) ROUTE.clock(ROUTE.t); }
+      ROUTE.state = [R_.prog ?? 1, R_.a ?? 1]; ROUTE.t.value = R_.t ?? 0; }   // (set in draw: the page's quiet() puts every route out)
     if (window.__viewSync) window.__viewSync();
-    draw(); await new Promise(r => requestAnimationFrame(r));
+    await draw(); await new Promise(r => requestAnimationFrame(r));
     return where();
   };
   if (FREE) {

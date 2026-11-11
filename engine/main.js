@@ -3,6 +3,7 @@
 import * as THREE from 'three';
 import { clamp, lerp, seg, ss, eio, eo, ei, track } from './lib.js';
 import { makeStudio } from './studio.js';
+import { fxSettings, fxLens } from './fx.js';
 import { makeOverlay, W, H, SUB, font, setFonts, setUI, REPO } from './overlay.js';
 import * as L from './load.js';
 import { phone, touch as TOUCH, FULL as FULLICON } from './phone.js';
@@ -72,8 +73,14 @@ const FIT = { basins: most((FILM.eras || []).flatMap(e => (e.basins || []).map(b
   rings: (FILM.eras || []).reduce((n, e) => n + new Set((e.basins || []).filter(b => b.draped && b.lost).map(b => b.lost)).size, 0),
   epochs: most((FILM.epochs || []).map(e => e.i + 1)), grounds: (FILM.eras || []).filter(e => e.ground).length, bands: (FILM.bands || []).length,
   yl: FILM.grow && FILM.grow.yl ? FILM.grow.yl.length : 0, decals: most((FILM.decals || []).map(d => d.i + 1)), living: !FREE && (FILM.living || []).length > 0 };
+// the effects (engine/fx.js): film.fx, or the page's ?fx= (to look at them on a film that has none). On a phone no stronger depth of
+// field (its gather is the dearest pass) and no fixed sun, and no relief where the shaders are cut to the film's own size (studio.js)
+const FX = fxSettings(FILM.fx, QS); if (FX && TOUCH) { delete FX.dof; delete FX.light; }
+if (FX && FX.light && FX.light.az == null) {   // (the fixed sun from the terrain's own side light, else from the north-west)
+  const sh = FILM.shade || (FILM.context && FILM.context.shade) || null;
+  FX.light.az = sh && sh.az != null ? sh.az : 315; if (sh && sh.el != null && !(FILM.fx && FILM.fx.light && FILM.fx.light.el != null)) FX.light.el = sh.el; }
 let S;
-try { S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, gmax: FILM.groundSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps, then: !FREE && !!FILM.waterThen, fit: FIT }); }   // (pools and grounds past the engine's 32 slots: compile basinSlots)
+try { S = makeStudio(W, H, M, FILM.palette, { low: LOW && QS.get('quality') !== 'high', bmax: FILM.basinSlots, gmax: FILM.groundSlots, slots: FILM.eraSlots, keep: !!FILM.keepMaps, then: !FREE && !!FILM.waterThen, fit: FIT, fx: FX }); }   // (pools and grounds past the engine's 32 slots: compile basinSlots)
 catch (e) { if (L.unable('gpuNone', e.message)) await new Promise(() => {}); throw e; }   // (no WebGL context after all)
 // what the graphics could not do, said on the page instead of a black city (live pages; renders and checks stop on the error)
 const GPU = S.gpu, gpuNote = () => `${GPU.path}; ${GPU.targets ? `${GPU.targets.half ? 'half-float' : '8-bit'}, ${GPU.targets.samples}x, depth ${GPU.targets.depth}` : 'no target'}; ${JSON.stringify(GPU.limits || {})}`;
@@ -193,7 +200,7 @@ S.U.uScaleM.value = M.scale;   // model units per metre (textures drawn at their
 // terrain.shade: a fixed low sun on the plate: the slopes turned to it lighter in the plate's own colour, those turned away darker,
 // so the relief reads in any light of the room; flat ground and water keep the plate's colour
 if (FILM.shade) { const a = THREE.MathUtils.degToRad(FILM.shade.az), e = THREE.MathUtils.degToRad(FILM.shade.el);
-  S.U.uShadeL.value.set(Math.sin(a) * Math.cos(e), Math.sin(e), -Math.cos(a) * Math.cos(e)); S.U.uShadeK.value = FILM.shade.k; S.U.uShadeC.value.set(FILM.shade.col || (FILM.palette || {}).plate || '#3a4757'); }
+  S.U.uShadeL.value.set(Math.sin(a) * Math.cos(e), Math.sin(e), -Math.cos(a) * Math.cos(e)); S.U.uShadeK.value = FX && FX.relief && S.U.uFxRA && S.U.uFxRA.value ? 0 : FILM.shade.k; S.U.uShadeC.value.set(FILM.shade.col || (FILM.palette || {}).plate || '#3a4757'); }   // (fx relief: it lights the slopes itself)
 const TK = FILM.tally && FILM.tally.keys && FILM.tally.keys.length ? track(FILM.tally.keys) : null;
 for (const d of FILM.decals || []) U.uDrect.value[d.i].set(d.uv[0], d.uv[1], d.uv[2], d.uv[3]);
 U.uNightDeep.value = (FILM.night_look && FILM.night_look.deep) || 0;   // film.night_look.deep: the night city (docs/STAGING.md)
@@ -304,7 +311,8 @@ function setCamera(t) {
   lens(d); if (LV) post.dof.aper *= 1 - LV.k;   // (no depth of field over a living moment: the picture is sharp throughout)
 }
 // depth of field: blur in pixels goes as aperture / distance, so close shots get a proportionally smaller aperture
-function lens(d) { post.dof.focus = d; post.dof.aper = d < .15 ? lerp(1.6, 3.2, seg(d, .04, .15)) * Math.max(.2, d / .15) : lerp(3.2, 1.6, seg(d, .15, 2.2)); post.dof.maxCoc = d < .15 ? 7 : 10; }
+function lens(d) { post.dof.focus = d; post.dof.aper = d < .15 ? lerp(1.6, 3.2, seg(d, .04, .15)) * Math.max(.2, d / .15) : lerp(3.2, 1.6, seg(d, .15, 2.2)); post.dof.maxCoc = d < .15 ? 7 : 10;
+  if (FX && FX.dof && post.dof.rtB) fxLens(post.dof, FX.dof, d); }   // (fx dof: the same focus, a wider aperture, a larger largest blur)
 
 // ------------------------------------------------------------------ light and projection state
 const LT = FILM.light;
@@ -321,8 +329,9 @@ function setLight(t) {
   const back = ss(seg(t, LT.lights, LT.lights + 1.0));
   const houseK = lerp(1, LT.base ?? .28, off) * (1 - back) + .9 * back;   // the room light comes back on the white city at the end
   const nt = nightAt(t);
-  house.intensity = 2.0 * houseK * (1 - .82 * nt); hemi.intensity = (.3 * houseK + .015) * (1 - .6 * nt);
-  scene.environmentIntensity = lerp(.03, .32, houseK) * (1 - .7 * nt);   // a neutral studio environment, kept low: its light panels mirror on the flat plate
+  const FXL = FX && FX.light ? 1 : 0;   // (fx light: the fixed sun stronger, the room's even light weaker, the sky's cool fill more: the low sun models every face)
+  house.intensity = 2.0 * houseK * (1 - .82 * nt) * (1 + .6 * FXL); hemi.intensity = (.3 * houseK + .015) * (1 - .6 * nt) * (1 + .6 * FXL);
+  scene.environmentIntensity = lerp(.03, .32, houseK) * (1 - .7 * nt) * (1 - .55 * FXL);   // a neutral studio environment, kept low: its light panels mirror on the flat plate
   scene.backgroundIntensity = lerp(.5, 1, houseK);
   post.bloom.threshold = lerp(1.6, 1.1, Math.min(off, 1 - back));
   U.uFootM.value = Math.max(4, 3 * camDist / M.scale * 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / 1080);   // the walls' dark foot: 4 m, or 3 pixels' worth at the target
@@ -511,7 +520,8 @@ function setLayers(t) {
   U.uDimToday.value = dimAt(t, eraUp) * (1 - today);
   U.uDimToday0.value = ci >= 0 ? dimBefore(nodes_[ci]) * (1 - today) : U.uDimToday.value;
   for (const r of FILM.routes || []) { const R = S.routes[r.id]; const land = r.on + r.draw;   // a landing beam flashes where it lands
-    if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - (LV ? LV.k : 0)), r.impact && t >= land ? Math.exp(-(t - land) / .35) : 0); }
+    if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - (LV ? LV.k : 0)), r.impact && t >= land ? Math.exp(-(t - land) / .35) : 0);
+    if (R && R.land) R.land(r.impact ? t - land : -1, (1 - ss(seg(t, r.off - .6, r.off + .6))) * (1 - (LV ? LV.k : 0))); }   // (fx glow: the column, flare and sparks where it lands, out with the line)
   for (const r of FILM.arrows || []) { const R = S.arrows[r.id];   // a light arrow: drawn tail to head, then its chevrons run
     if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - (LV ? LV.k : 0)), ss(seg(t, r.on + r.draw, r.on + r.draw + .8))); }
   U.uNight.value = nightAt(t);

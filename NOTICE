@@ -2,7 +2,9 @@ city-through-time (《一城春秋》 A City Through Time) includes code adapted
 (https://github.com/lemomo-ai/lemo-opuscar), used under the MIT License below:
 
 - engine/lib.js        from core/lib.js (interpolation and easing helpers)
-- engine/post.js       from core/three/post.js (post-processing)
+- engine/post.js       from core/three/post.js (post-processing); its stronger depth of field's gather (a turning disc of
+                       samples at the picture's own size) from styles/tilt-shift/demo/post.js
+- engine/fx.js         the sky's horizon brighter toward the sun after styles/tilt-shift/demo/sky.js
 - engine/studio.js     from the white-model demo (the showroom, the projection shader)
 - engine/overlay.js    from the white-model demo (the 2D layer)
 - tools/motioncheck.py from the white-model demo
