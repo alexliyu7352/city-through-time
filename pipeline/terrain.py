@@ -105,13 +105,14 @@ shown = large + (smooth - large) * (float(DT['exaggeration']) / EX)
 # x EX, the fine relief x1): the top tenth of its foundations should stay within 30% of its height. tools/clipcheck.py measures
 # the same on the built cities (tall_foundation)
 SUG = {}
-if any(n.get('city') for n in C['film']['nodes']):
+NODES = (C.get('film') or {}).get('nodes') or []   # (none yet in step 2: the extent and data come before the script)
+if any(n.get('city') for n in NODES):
     import citygen, osmgeo, shapely, layout
     OSM_ = osmgeo.elements(layout.raw(D), F.area); fine_ = smooth - large
     gl, gf = np.hypot(*np.gradient(large, RES)), np.hypot(*np.gradient(fine_, RES))
     Hh, Ww = smooth.shape; jj, ii = np.meshgrid(np.arange(Ww), np.arange(Hh))
     px_, py_ = F.x0 + jj / (Ww - 1) * (F.x1 - F.x0), F.y1 - ii / (Hh - 1) * (F.y1 - F.y0)
-    for n in C['film']['nodes']:
+    for n in NODES:
         if not n.get('city'): continue
         m_ = shapely.contains_xy(citygen.extent(citygen.with_trace(n['city'], F, D), F, lambda nm: osmgeo.rings(OSM_, nm)), px_, py_)
         if m_.sum() < 4: continue
