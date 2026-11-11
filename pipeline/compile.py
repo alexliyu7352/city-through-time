@@ -2647,9 +2647,10 @@ if grow and grow.get('yl'):
         pts_.append((sum(q[0] for q in r_) / len(r_), (base_ or 0) + h_ * .5, sum(q[1] for q in r_) / len(r_)))
     P_ = np.array(pts_); ty_ = np.array([t_of_year(y_ - .5) for y_ in yrs_]); seen_ = np.full(len(ids_), np.nan)
     Hh_ = np.outer(np.array(hs_) * .5, (0., 1., 0.))   # (half its height up and down: its foot and its top)
-    # the growth ends where today begins, or (without a today node) with the station in which the counter passes the year by which
-    # all but a hundredth of these buildings stand: the few dated after the data's last survey do not stretch it into the scenes after
-    td_ = next((n for n in FM['nodes'] if n['id'] == 'today'), None); t_q = t_of_year(float(np.percentile(yrs_, 99))) if len(yrs_) else DUR
+    # the growth ends where the overview `today` begins (a node of that id with no tour: of its own), or (without one) with the station
+    # in which the counter passes the year by which all but a hundredth of these buildings stand: the few dated after the data's last
+    # survey do not stretch it into the scenes after. A tour stop named today is a stop like the others: the growth runs through it
+    td_ = next((n for n in FM['nodes'] if n['id'] == 'today' and not n.get('tour')), None); t_q = t_of_year(float(np.percentile(yrs_, 99))) if len(yrs_) else DUR
     t_end = td_['_t0'] if td_ else next((n['_t1'] for n in FM['nodes'] if n['_t0'] <= t_q < n['_t1']), DUR)
     def big_(t, k_):   # which of the buildings k_ a viewer can watch rise at t: in the frame and see_px or more tall on screen
         p_, g_, fov_, _ = CAMERA.at(t)
