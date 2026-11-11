@@ -116,7 +116,7 @@ variety:
 A house type keeps its own `storeys` range (each house draws its own); `mix` is how one quarter holds houses of one to four or
 more storeys, each type as its sources give it. A lot drawn too small for the house drawn for it takes its fabric's own type, else
 stays empty. Judge it as any change to a period city: the quarter with it and without it, close and from the film's distances
-(`tools/modelview.py --spec` with and without the key; the colour look's stills of the study, STAGING.md "Look and effects").
+(`tools/modelview.py --spec` with and without the key; a city that also uses the colour look, its stills of the study too).
 ## Landmarks of any region
 
 The generator's own landmark kinds (`hall`, `terrace`, `palace`, `pagoda`, `court`…) are north China's. Elsewhere a landmark is one of a few classes of massing, written as data in

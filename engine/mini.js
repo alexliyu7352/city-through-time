@@ -2,8 +2,9 @@
 // (play.html?city=<slug>&view&look=mini; &palette=roman|chinese|modern, &ground=land|modern, &card=<year>|<period>|<population>: the
 // info on screen; &detail=0: without engine/detail.js's pieces). It leaves the studio's own scene and materials as they are and
 // draws the same geometry its own way: daylight from a sun and the sky, each building in its own wall and roof colours, its
-// windows, doors, cornices, posts, rows of tiles and copings and the city wall's courses (engine/detail.js, from the period city's
-// records; off on a touch screen), trees in the open land and the gardens, fields and water, a landmark's detailed model
+// windows, doors, cornices, posts, rows of tiles and copings, the city wall's courses, gates and flags, the town's trees, boats on
+// the river (engine/detail.js, from the period city's records and the water; off on a touch screen), trees in the open land and the
+// gardens (none against a city wall or in a gate's approach), fields and water, a landmark's detailed model
 // (tools/blender) in place of the generator's, a hazy sky and a tilt-shift blur (sharp in a band across the middle, as a
 // photograph of a model).
 // Nothing of the film is changed: the studio draws with layer 0, this look with layer 1 alone.
@@ -17,7 +18,7 @@ import { VerticalTiltShiftShader } from 'three/addons/shaders/VerticalTiltShiftS
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { makePost } from './post.js';
 import { FX_SKY, RELIEF_GLSL, LAND_PALETTES, landLookGLSL, landPalette, woodsFn, treeField, makeSky, fxLens, fxAoRadius } from './fx.js';
-import { eraDetail, detailMeshes, gableEnds, STYLES, FLAT } from './detail.js';
+import { eraDetail, detailMeshes, gableEnds, boatsAt, STYLES, FLAT } from './detail.js';
 
 const L = 1;   // the layer this look draws
 // with the effects: a bright day, as bright and as coloured as the look without them (the low warm sun, the haze and the occlusion
@@ -35,7 +36,7 @@ const PALETTES = {
     parts: { 1: '#e6dcc8', 2: '#cdb38c', 3: '#cbbd9f', 4: '#5a7340', 5: '#4f8aa3', 6: '#2f2620', 7: '#d6caae', 9: '#a65d45', 10: '#c9b086', 11: '#bcae92' },
     land: LAND_PALETTES.mediterranean,
     glb: { stone: '#e8dfcc', dark: '#2b231d', roof: '#a85b43', sand: '#d2b98c' }, cypress: .3,
-    detail: { window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#b9a588', coping: '#b0603f', archRing: '#ebe3d2' },
+    detail: { window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#b9a588', coping: '#b0603f', archRing: '#ebe3d2', flags: ['#a3262a', '#6e2a63'], sail: '#efe6d2' },
     faces: { earth: '#c9ad86', brick: '#b8805c', stone: '#ddd3c0', banded: '#e6dbc6' },
   },
   chinese: {
@@ -44,7 +45,7 @@ const PALETTES = {
     parts: { 1: '#e2d5b8', 2: '#bfa070', 3: '#cbbd9f', 4: '#5f7d3c', 5: '#5d8fa8', 6: '#2f2620', 7: '#d8cbaa', 9: '#5d5955', 10: '#c9a978', 11: '#b8a58a' },
     land: LAND_PALETTES.loess,   // the loess plain: wheat, millet, bare earth
     glb: { stone: '#e3d6b8', dark: '#2b231d', roof: '#5f5b56', sand: '#c8a676' }, cypress: .08, tree: { size: .6, keep: .35, dark: .78 },   // (tree: its size, the share of places kept, its lightness)
-    detail: { base: '#97918a', post: '#7a3524', beam: '#4e3b2e', ridgeEnd: '#4f4b47', coping: '#5b5853', archRing: '#8f8b85', column: '#8a2e20' },
+    detail: { base: '#97918a', post: '#7a3524', beam: '#4e3b2e', ridgeEnd: '#4f4b47', coping: '#5b5853', archRing: '#8f8b85', column: '#8a2e20', flags: ['#b3262c', '#d9a21b'], sail: '#a8764a' },
     faces: { earth: '#bfa070', brick: '#8f8b84', stone: '#cac2b3', banded: '#d9cdb6' },
   },
   modern: {
@@ -52,7 +53,7 @@ const PALETTES = {
     parts: { 1: '#f1ebe0', 2: '#cdb08a', 3: '#d4d0c8', 4: '#5f7d3c', 5: '#5d8fa8', 6: '#3a3a3c', 7: '#c9c6bf', 9: '#9d6a52', 10: '#cdb48c', 11: '#bdb6aa' },
     land: LAND_PALETTES.temperate,
     glb: { stone: '#efe9de', dark: '#2b2b2d', roof: '#9d6a52', sand: '#cdb48c' }, cypress: .1,
-    detail: { window: '#33302c', door: '#4b3a2c', cornice: '#f4f0e8', base: '#b8b0a2', coping: '#9d6a52', archRing: '#efe9de' },
+    detail: { window: '#33302c', door: '#4b3a2c', cornice: '#f4f0e8', base: '#b8b0a2', coping: '#9d6a52', archRing: '#efe9de', flags: ['#a3262a', '#2f4f7a'], sail: '#efe6d2' },
     faces: { earth: '#cdb08a', brick: '#b37e5e', stone: '#ddd6c8', banded: '#e6ddcc' },
   },
 };
@@ -167,10 +168,27 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   for (const [f, v] of Object.entries(pal.faces || PALETTES.roman.faces)) {   // (a wall's face: its courses a shade darker, a stone wall's bands brick; a gate's parts the wall's)
     dcols['course_' + f] = f === 'banded' ? (pal.faces || PALETTES.roman.faces).brick : new THREE.Color(v).multiplyScalar(FLAT.course);
     dcols['spandrel_' + f] = dcols['parapet_' + f] = dcols['merlon_' + f] = v; }
+  // the town's trees as the land's (fx.js plantTrees' colours), flags in the palette's colours (one or the other by the flag's
+  // building), the boats' wood, sails and mat roofs
+  const tdark = (pal.tree && pal.tree.dark) || 1, H3 = (x, z) => { const h = hash(x, z); return [h, (h * 7.31) % 1, (h * 13.7) % 1]; }, D_ = pal.detail || PALETTES.roman.detail;
+  Object.assign(dcols, { crown: (x, z) => { const [a, b, c] = H3(x, z); return new THREE.Color().setHSL(.2 + a * .09, .32 + b * .16, (.24 + c * .1) * tdark); },
+    cone: (x, z) => { const [a, , c] = H3(x, z); return new THREE.Color().setHSL(.27 + a * .05, .4, (.18 + c * .06) * tdark); }, trunk: '#6b5440', pole: '#5b4a3a',
+    flag: (x, z) => new THREE.Color(D_.flags[Math.floor(H3(x, z)[1] * D_.flags.length)]), hull: '#7a5236', mast: '#5b4a3a', sail: D_.sail, cabin: '#4a4038' });
   const pxK = { value: 1 }, idOf = new Map(Object.entries(S.eras).map(([id, E]) => [E.mesh, id])), upright = (STYLES[palette] || STYLES.roman).wall;   // (the fade's scale: detail.js FADE_PX)
   const detailOf = async id => { const D = eraDetail(await prims(id), { scale, hex: hex(id), style: palette, face: face(id) }), g = detailMeshes(D, dcols, { layer: L, pxK });
-    g.userData.count = D.count; scene.add(g); return g; };
-  const TF = treeField(scene, renderer, U, PW, PD, scale, { size: 1, keep: 1, dark: 1, ...pal.tree, cypress: pal.cypress, woods, ground: S.ground, layer: L, tone: 'mini' });
+    g.userData.count = D.count; g.userData.treeOK = D.treeOK; scene.add(g); return g; };
+  // where trees may stand: off every shown city's wall bands and gate approaches (detail.js eraDetail treeOK)
+  let clearNow = [];
+  const TF = treeField(scene, renderer, U, PW, PD, scale, { size: 1, keep: 1, dark: 1, ...pal.tree, cypress: pal.cypress, woods, ground: S.ground, layer: L, tone: 'mini',
+    clear: (x, z) => clearNow.every(f => f(x, z)) });
+  // boats on the water round where the eye looks (detail.js boatsAt), planted again when it moves away, as the trees are
+  let wpx = null; const water = () => { if (wpx) return wpx; const img = U.uWater.value && U.uWater.value.image; if (!img) return null;
+    const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0); return wpx = { d: g.getImageData(0, 0, img.width, img.height).data, w: img.width, h: img.height }; };
+  const wet = (x, z) => { const W_ = water(); if (!W_) return false; const u = Math.floor((x / PW + .5) * W_.w), v = Math.floor((z / PD + .5) * W_.h); return u >= 0 && v >= 0 && u < W_.w && v < W_.h && W_.d[(v * W_.w + u) * 4] > 90; };
+  const BF = { at: null, dAt: 1, g: null };
+  const boats = (target, d) => { if (BF.at && BF.at.distanceTo(target) <= d * .3 && Math.abs(Math.log(d / BF.dAt)) <= .4) return;
+    if (BF.g) { scene.remove(BF.g); BF.g.traverse(o => { if (o.isMesh) { o.geometry.dispose(); o.material.dispose(); } }); }
+    BF.g = detailMeshes(boatsAt(wet, target, d * 2.2, { scale, style: palette, ground: S.ground }), dcols, { layer: L, pxK }); scene.add(BF.g); BF.at = target.clone(); BF.dAt = d; };
   const info = card ? infoPanel(card) : null;
   // the tilt-shift: sharp in a band through the middle, blurred above and below
   // with the effects: the film's own passes (post.js: ambient occlusion, haze toward a sky dome, the stronger depth of field),
@@ -182,9 +200,12 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     FP.vig.uniforms.amt.value = .22;
     if (FP.dof.haze) { const ex = S.terrainEx; FP.dof.haze.uHazeD.value = 1 / (FX.haze.dist_km * 1000 * scale * MINI_LIFT.haze); FP.dof.haze.uHazeB.value = 1 / (FX.haze.height_m * scale * ex); FP.dof.haze.uHazeK.value = FX.haze.k; FP.dof.haze.uHazeS.value = FX.haze.start_km * 1000 * scale; FP.dof.haze.uHazeRect.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect.value : new THREE.Vector4(-PW / 2, -PD / 2, PW / 2, PD / 2)); FP.dof.haze.uHazeRect2.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect2.value : FP.dof.haze.uHazeRect.value); FP.dof.haze.uHazeEdge.value = FX.haze.edge_km * 1000 * scale; } }
   if (dome) { dome.mesh.layers.set(L); scene.add(dome.mesh); }
+  // the ambient occlusion passes leave out what detail.js marks noAO (they draw the scene with their own material, unfaded)
+  const noAO = p => { if (!p) return; const o = p.overrideVisibility.bind(p); p.overrideVisibility = () => { o(); p.scene.traverse(x => { if (x.userData.noAO) x.visible = false; }); }; };
+  if (FP) noAO(FP.dof.ao);
   const composer = new EffectComposer(renderer), rp = new RenderPass(scene, camera);
   const ht = new ShaderPass(HorizontalTiltShiftShader), vt = new ShaderPass(VerticalTiltShiftShader);
-  const ao = new GTAOPass(scene, camera, 1920, 1080); ao.updateGtaoMaterial({ radius: .0012, distanceExponent: 1, thickness: 1, scale: 1.2 }); ao.blendIntensity = 1;
+  const ao = new GTAOPass(scene, camera, 1920, 1080); ao.updateGtaoMaterial({ radius: .0012, distanceExponent: 1, thickness: 1, scale: 1.2 }); ao.blendIntensity = 1; noAO(ao);
   composer.addPass(rp); composer.addPass(ao); composer.addPass(ht); composer.addPass(vt); composer.addPass(new OutputPass());
   const size = new THREE.Vector2();
 
@@ -221,7 +242,9 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
     renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     if (DET) { for (const [id, E] of Object.entries(S.eras)) if (E.mesh.visible && !DET.has(id)) DET.set(id, detailOf(id));
-      for (const [id, g] of DET) (await g).visible = S.eras[id].mesh.visible; }
+      clearNow = [];
+      for (const [id, g] of DET) { const G = await g; G.visible = S.eras[id].mesh.visible; if (G.visible) clearNow.push(G.userData.treeOK); }
+      boats(target, d); }
     const swapM = [];   // (the studio's materials back after the frame)
     for (const m of [...eraMeshes, cityMesh]) if (m.visible && !m.userData.mini) m.userData.mini = m === cityMesh ? colourToday(m) : colourMesh(m, pal, !!DET, { face: face(idOf.get(m)), upright });   // (coloured when first shown)
     for (const m of [...eraMeshes, cityMesh, plate].filter(Boolean)) { if (!m.userData.mini) continue; swapM.push([m, m.material, m.customDepthMaterial]); m.material = m.userData.mini; m.customDepthMaterial = undefined; m.layers.enable(L); m.castShadow = m.receiveShadow = true; }

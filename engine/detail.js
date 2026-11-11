@@ -33,18 +33,23 @@ export const STYLES = {
     storey: 3.5, window: { w: 1.0, h: 1.5, every: 3.6, sill: .38, arch: true }, door: { w: 1.5, h: 2.5, arch: true },
     cornice: { h: .38, out: .22 }, base: { h: .55, out: .06 }, front: null, ridgeEnds: false, coping: { h: .32, over: .14 },
     wall: 'brick', towerWindows: { w: 1.3, h: 2.1, n: 2 }, tiles: null, halls: null,
+    trees: { court: 1, street: 30, cypress: .35 }, flags: { gate: 4 },
   },
   chinese: {
     storey: 3.6, window: null, door: null, cornice: null, base: { h: .6, out: .1 },
     front: { post: .34, every: 2.8, beam: .45 }, ridgeEnds: true, coping: { h: .42, over: .2 },
     wall: 'earth', towerWindows: null, tiles: { every: 1.1, w: .36, t: .16, verge: { w: .46, t: .34 } }, halls: { column: .65, beam: .7 },
+    trees: { court: 2, street: 16, cypress: .1 }, flags: { gate: 6 },
   },
 };
 // halls: { column, beam } a timber hall's (citygen hall) columns this thick and its architrave this high, in metres: the columns
-// lacquered, the beam painted (a Chinese hall's)
+// lacquered, the beam painted (a Chinese hall's); trees: { court: trees a court holds (the generator's own counted; on its paving
+// too), street: one every this many metres down each edge of a street 10 m wide or more (0: none), cypress: the share of them
+// tall and narrow }; flags: { gate: flags on a gatehouse, round its edges }, and one on each landmark
 // a city wall's face (city.yaml walls `face`): the courses it shows, every `every` metres, `h` high: rammed earth's lifts, brick's
 // courses (faint), stone's, a stone wall's bands of brick
 export const WALL_FACES = { earth: { every: 1.1, h: .1 }, brick: { every: .8, h: .07 }, stone: { every: 1.0, h: .06 }, banded: { every: 1.6, h: .32 } };
+STYLES.roman.boats = { sail: true, cabin: false }; STYLES.chinese.boats = { sail: false, cabin: true };   // (a Roman river boat under a square sail; a Chinese one under its mat roof)
 STYLES.modern = STYLES.roman;   // (the palette `modern`: a European town's houses)
 
 // the pieces' shapes, each a unit: x across (-.5..5), y up (0..1), z out of the face (-.5..5; a flat one at z 0, facing +z)
@@ -78,10 +83,19 @@ function ringGeometry(spring = .6, apex = .94, band = .08, n = 9) {   // the arc
 export const SHAPES = { window: () => arched(), door: () => arched(.66), pane: () => new THREE.PlaneGeometry(1, 1).translate(0, .5, 0),
   spandrel: () => spandrelGeometry(), archRing: () => ringGeometry(), merlon: box, parapet: box, column: box,
   course_earth: box, course_brick: box, course_stone: box, course_banded: box,
+  // a tree (fx.js plantTrees' own, 1 high): its round crown, a cypress's, its trunk; a flag on its pole, the cloth in the wind (+x)
+  crown: () => new THREE.IcosahedronGeometry(.345, 1).scale(1, .85, 1).translate(0, .62, 0), cone: () => new THREE.ConeGeometry(.15, 1.25, 7).translate(0, .72, 0),
+  trunk: () => new THREE.CylinderGeometry(.055, .07, .45, 5).translate(0, .22, 0), pole: () => new THREE.CylinderGeometry(.5, .5, 1, 5).translate(0, .5, 0),
+  flag: () => { const g = new THREE.PlaneGeometry(1, 1, 6, 1).translate(.5, -.5, 0), P = g.attributes.position; for (let i = 0; i < P.count; i++) P.setZ(i, Math.sin(P.getX(i) * 5.5) * .07 * P.getX(i)); g.computeVertexNormals(); return g; },
+  // a boat: its hull (a long low shape pointed at both ends), a mast, a square sail across it, a mat roof over its middle
+  hull: () => { const s = new THREE.Shape(); s.moveTo(-.5, 0); s.quadraticCurveTo(-.32, .5, 0, .5); s.quadraticCurveTo(.32, .5, .5, 0); s.quadraticCurveTo(.32, -.5, 0, -.5); s.quadraticCurveTo(-.32, -.5, -.5, 0);
+    return new THREE.ExtrudeGeometry(s, { depth: 1, bevelEnabled: false, curveSegments: 4 }).rotateX(-Math.PI / 2); },
+  mast: () => new THREE.CylinderGeometry(.5, .5, 1, 5).translate(0, .5, 0), sail: () => new THREE.PlaneGeometry(1, 1).translate(0, .5, 0).rotateY(Math.PI / 2),
+  cabin: () => new THREE.CylinderGeometry(.5, .5, 1, 8, 1, false, 0, Math.PI).rotateZ(Math.PI / 2),   // (its arch over the top, along x)
   cornice: box, base: box, post: box, beam: box, course: box, coping: capGeometry, ridgeEnd: hornGeometry,
   tile: () => new THREE.BoxGeometry(1, 1, 1), verge: () => new THREE.BoxGeometry(1, 1, 1) };   // (a row of tiles: x down the slope, y out of it, centred)
 // which kinds cast a shadow (a flat opening or a thin course does not: it would only darken itself)
-export const SHADOW = { cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true };
+export const SHADOW = { cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true, crown: true, cone: true, trunk: true, pole: true, flag: true, hull: true, sail: true, cabin: true };
 
 export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null } = {}) {
   const ST = STYLES[style] || STYLES.roman, M = scale, V = scale * hex;   // M: a metre across; V: a metre up, as drawn
@@ -256,11 +270,15 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
   // with windows high above the passage
   const wallsOf = new Map();
   for (const r of R) if (r.part === WALL && r.t === 0 && Math.min(r.a, r.b) >= 1.5 * M) (wallsOf.get(bkey(r)) || wallsOf.set(bkey(r), []).get(bkey(r))).push(r);
-  const gated = new Set();
+  const gated = new Set(), passages = new Map();   // (a gate built again higher on the same place, a wall raised: its tallest passage alone, arched)
   for (const q of R) {
     if (q.part !== DARK || q.t !== 0) continue;
     const host = (wallsOf.get(bkey(q)) || []).find(r => { const [lx, lz] = local(r, q.x, q.z); return Math.abs(lx) < r.a / 2 && Math.abs(lz) < r.b / 2 && q.b > r.b * .8; });
     if (!host) continue;
+    const pk = Math.round(q.x / (2 * M)) + ',' + Math.round(q.z / (2 * M)), was = passages.get(pk);
+    if (!was || top(q) > top(was[0])) passages.set(pk, [q, host]);
+  }
+  for (const [q, host] of passages.values()) {
     const fl = Math.max(q.y0, floor(host)), H = top(q) - fl, fk = faceOfWall(false);
     for (const e of [-1, 1]) {   // (each end of the passage, out of the gatehouse's face)
       const [X, Z] = world(q, 0, e * (q.b / 2 + .03 * M)), phi = -q.rot + (e > 0 ? 0 : Math.PI);
@@ -293,13 +311,93 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
       put('beam', r, r.x, r.y0 - .02 * V + shear(r, r.x, r.z), r.z, -r.rot, r.a + .06 * M, r.c + .04 * V, r.b + .06 * M);
   }
 
+  // ---------------------------------------------------------------- where no tree stands: a band along every city wall piece and
+  // tower as deep as it is high (as drawn), inside and out, and each gate's approach, out on both sides of its passage as far as
+  // twice the band; rects [x, z, rot, half width, half depth] (model units), with the test the planting of every tree takes
+  const clear = [];
+  for (const r of R) {
+    if (r.part !== WALL || !(r.t === 0 || r.t === 2) || r.d === 1 || Math.min(r.a, r.b) < 1.5 * M) continue;
+    const hh = top(r) - floor(r); if (hh / V < 2.5) continue;
+    const band = Math.max(hh, 10 * M); clear.push([r.x, r.z, r.rot, r.a / 2 + band, r.b / 2 + band]);
+  }
+  for (const [q, host] of passages.values()) {   // (each gate's passage: its approach)
+    const band = Math.max(top(host) - floor(host), 10 * M); clear.push([q.x, q.z, q.rot, q.a / 2 + 8 * M, q.b / 2 + 2 * band + 12 * M]);
+  }
+  const CC = 40 * M, ccells = new Map();
+  for (const c of clear) { const h = Math.hypot(c[3], c[4]);
+    for (let i = Math.floor((c[0] - h) / CC); i <= Math.floor((c[0] + h) / CC); i++) for (let j = Math.floor((c[1] - h) / CC); j <= Math.floor((c[1] + h) / CC); j++) {
+      const k = key(i, j); (ccells.get(k) || ccells.set(k, []).get(k)).push(c); } }
+  const treeOK = (X, Z) => { for (const c of ccells.get(key(Math.floor(X / CC), Math.floor(Z / CC))) || []) {
+    const cs = Math.cos(c[2]), sn = Math.sin(c[2]), dx = X - c[0], dz = Z - c[1];
+    if (Math.abs(dx * cs + dz * sn) < c[3] && Math.abs(-dx * sn + dz * cs) < c[4]) return false; } return true; };
+
+  // ---------------------------------------------------------------- trees in town: in the courts of houses round a court, along
+  // the streets, never in a wall's band or a gate's approach (treeOK), on a building or a street (any piece's plan, with room for
+  // the crown); a court's trees as many as its region's style gives, the generator's own counted
+  const solid = new Map(), SC = 16 * M;   // (every piece's plan but a tree's and the water's)
+  for (const r of R) {
+    if (r.part === 4 || r.part === 5 || !(r.t === 0 || r.t === 1 || r.t === 2)) continue;
+    const h = Math.hypot(r.a, r.b) / 2;
+    for (let i = Math.floor((r.x - h) / SC); i <= Math.floor((r.x + h) / SC); i++) for (let j = Math.floor((r.z - h) / SC); j <= Math.floor((r.z + h) / SC); j++) {
+      const k = key(i, j); (solid.get(k) || solid.set(k, []).get(k)).push(r); }
+  }
+  const free = (X, Z, rr) => { for (let a = 0; a < 9; a++) { const x = a ? X + Math.cos(a * Math.PI / 4) * rr : X, z = a ? Z + Math.sin(a * Math.PI / 4) * rr : Z;   // (paving does not stop a tree: a court's, a street's edge)
+      for (const r of solid.get(key(Math.floor(x / SC), Math.floor(z / SC))) || []) { if (r.part === 7) continue; const [lx, lz] = local(r, x, z); if (Math.abs(lx) < r.a / 2 && Math.abs(lz) < r.b / 2) return false; } }
+    return treeOK(X, Z); };
+  const TR = ST.trees, gTrees = new Map();   // (the generator's own trees, by building)
+  for (const r of R) if (r.part === 4) gTrees.set(bkey(r), (gTrees.get(bkey(r)) || 0) + 1);
+  const tree = (r, X, Z, size) => { const cyp = hash(X * 3.1, Z * 1.7) < TR.cypress, sz = size * (.85 + .3 * hash(Z, X)), g = r.g + shear(r, X, Z);
+    put(cyp ? 'cone' : 'crown', r, X, g, Z, hash(X, Z) * 6.28, sz, sz * (cyp ? 1.15 : .9 + .25 * hash(X * 2, Z)), sz, 0, .85 + .3 * hash(X * 5, Z * 3));
+    put('trunk', r, X, g, Z, 0, sz, sz, sz); };
+  if (TR) {
+    for (const [k, list] of byBuilding) {   // (a court: a building of three wings or more round a free middle)
+      if (list.length < 3 || (gTrees.get(k) || 0) >= TR.court) continue;
+      const b0 = list.reduce((m, q) => q.a * q.b > m.a * m.b ? q : m), X0 = b0.bx, Z0 = b0.bz, want = TR.court - (gTrees.get(k) || 0);
+      let rr = 0; while (rr < 14 * M && free(X0, Z0, rr + 1 * M)) rr += 1 * M;   // (the court's room round its middle)
+      const at = rr >= 3.5 * M && want === 1 ? [[X0, Z0, rr]] : [];
+      if (!at.length) for (const [ox, oz] of [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1]]) {   // (two to a court, or a small court: either side of its middle)
+        const [X, Z] = world(b0, ox * 3.2 * M, oz * 3.2 * M); if (free(X, Z, 2.2 * M) && at.every(([x, z]) => Math.hypot(x - X, z - Z) > 4 * M)) at.push([X, Z, 2.2 * M]); if (at.length >= want) break; }
+      for (const [X, Z, room] of at.slice(0, want)) tree(b0, X, Z, Math.min(11 * M, room * 2.6) * .8);
+    }
+    if (TR.street) for (const r of R) {   // (a street: a road piece, citygen strip; its trees down its edges, the way between them clear)
+      if (r.t !== 0 || r.d !== 1 || r.b < 10 * M || r.a < TR.street * M * .6) continue;
+      const n = Math.max(1, Math.floor(r.a / (TR.street * M)));
+      for (const side of [-1, 1]) for (let i = 0; i < n; i++) {
+        const along = r.a * ((i + .5 + (side > 0 ? .5 : 0)) / n - .5); if (Math.abs(along) > r.a / 2) continue;
+        const [X, Z] = world(r, along, side * (r.b / 2 - 2 * M));
+        if (free(X, Z, 2 * M)) tree(r, X, Z, 8 * M);
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------- flags: on each gatehouse (its outer corners and between), and
+  // one on each landmark at its highest point, the cloth all one way in the wind
+  const WIND = -Math.PI / 6;   // (a turn about y: the cloth's +x toward the east-north-east)
+  const flag = (r, X, Y, Z, h) => { put('pole', r, X, Y, Z, 0, .22 * M, h, .22 * M); put('flag', r, X, Y + h, Z, WIND, 4.5 * M, 1.5 * V, 4.5 * M, 0, .9 + .2 * hash(X, Z)); };   // (a banner as a model shows one, larger than life; its wave as deep as the cloth is long allows)
+  if (ST.flags) {
+    for (const host of gated) {
+      const lng = host.a >= host.b, L = lng ? host.a : host.b, Tk = lng ? host.b : host.a, n = ST.flags.gate, per = Math.ceil(n / 2);
+      for (let i = 0; i < n; i++) { const side = i < per ? 1 : -1, j = i % per, a_ = L * (per > 1 ? j / (per - 1) - .5 : 0) * .92, off = side * (Tk / 2 - .5 * M), [X, Z] = world(host, lng ? a_ : off, lng ? off : a_);
+        flag(host, X, top(host) + .9 * V + shear(host, X, Z), Z, 4.5 * V); }   // (half along its field side, half along the city's)
+      for (const r of R) {   // (and on the towers either side of it, which stand above it: a curtain's)
+        if (r.part !== WALL || r.t !== 0 || Math.abs(r.a - r.b) > .5 * Math.max(r.a, r.b) || top(r) <= top(host) || Math.min(r.a, r.b) < 3 * M) continue;
+        const [lx, lz] = local(host, r.x, r.z); if (Math.abs(lx) > (lng ? L / 2 : Tk / 2) + r.a || Math.abs(lz) > (lng ? Tk / 2 : L / 2) + r.a) continue;
+        flag(r, r.x, top(r) + 1 * V + shear(r, r.x, r.z), r.z, 4.5 * V);
+      }
+    }
+    const lmk = new Map();   // (a landmark: a building with landmark parts, its plan 300 m² or more)
+    for (const r of R) if ((r.part === LMK || r.part === LROOF) && (r.t === 0 || r.t === 1 || r.t === 2)) { const k = bkey(r), v = lmk.get(k) || { area: 0, hi: null };
+      if (r.part === LMK) v.area += r.a * r.b; if (!v.hi || top(r) > top(v.hi)) v.hi = r; lmk.set(k, v); }
+    for (const [, v] of lmk) if (v.area >= 300 * M * M && v.hi) flag(v.hi, v.hi.x, top(v.hi) + shear(v.hi, v.hi.x, v.hi.z), v.hi.z, 5 * V);
+  }
+
   // ---------------------------------------------------------------- packed
   const kinds = {}, m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(0, 0, 0, 'YXZ'), p = new THREE.Vector3(), sc = new THREE.Vector3();
   // each kind's size as it is seen (model units): a band by its height, the courses by their spacing (they flatten into their
-  // face, FLAT), a row of tiles by under half its spacing (whole while the rows are six pixels apart or more, gone by two and a
-  // half: closer set, a sub-pixel pan at a mid shot showed them crawl), the rest by their width
+  // face, FLAT), the rows of tiles by their spacing (FADE_ROWS), the rest by their width
   const T_ = ST.tiles || {}, SIZE = { window: 1 * M, door: 1.5 * M, cornice: .38 * V, base: .55 * V, post: .34 * M, beam: .45 * V, coping: .4 * M, ridgeEnd: .6 * M,
-    tile: (T_.every || 1.1) * .35 * M, verge: .46 * M, spandrel: 4 * M, archRing: 4 * M, merlon: 1.4 * M, parapet: .9 * V, column: .7 * M,
+    tile: (T_.every || 1.1) * M, verge: .46 * M, spandrel: 4 * M, archRing: 4 * M, merlon: 1.4 * M, parapet: .9 * V, column: .7 * M,
+    crown: 6 * M, cone: 3 * M, trunk: 6 * M, pole: 1.5 * M, flag: 4.5 * M,
     ...Object.fromEntries(Object.entries(WALL_FACES).flatMap(([k, F]) => [['course_' + k, F.every * V], ['spandrel_' + k, 4 * M], ['parapet_' + k, .9 * V], ['merlon_' + k, 1.4 * M]])) };
   let count = 0;
   for (const [kind, L] of Object.entries(out)) {
@@ -307,7 +405,38 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
     L.forEach(([x, y, z, phi, sx, sy, sz, tilt, kk, bx, bz, rk, roll], i) => {
       e.set(tilt, phi, roll); q.setFromEuler(e); m4.compose(p.set(x, y, z), q, sc.set(sx, sy, sz)).toArray(m, i * 16);
       k[i] = kk; ctr[i * 2] = bx; ctr[i * 2 + 1] = bz; rank[i] = rk; });
-    kinds[kind] = { n, m, k, ctr, rank, size: SIZE[kind] || M }; count += n;
+    kinds[kind] = { n, m, k, ctr, rank, size: SIZE[kind] || M, fade: kind === 'tile' ? FADE_ROWS : FADE_PX }; count += n;
+  }
+  return { kinds, count, treeOK };
+}
+
+// boats on the water round a point: where the water reaches `wide` metres every way (a river a boat can work on, not a ditch),
+// at least `apart` metres from each other, each laid along the water (the way it runs furthest); in its region's way (STYLES
+// boats: { sail, cabin }). wet(x, z): water there (the look's water map). -> { kinds, count } as eraDetail's
+// ground(x, z): the water's height there
+export function boatsAt(wet, centre, R, { scale, style = 'roman', wide = 30, apart = 70, most = 40, seed = 1, ground = () => 0 } = {}) {
+  const ST = STYLES[style] || STYLES.roman, B = ST.boats || { sail: true, cabin: false }, M = scale, out = [], put = (kind, x, y, z, phi, sx, sy, sz, k = 1) => (out[kind] ||= []).push([x, y, z, phi, sx, sy, sz, k]);
+  let a = seed >>> 0; const rnd = () => { a = a + 0x6D2B79F5 >>> 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const placed = [];
+  for (let tries = 0; tries < most * 40 && placed.length < most; tries++) {
+    const an = rnd() * Math.PI * 2, d = R * Math.sqrt(rnd()), x = centre.x + Math.cos(an) * d, z = centre.z + Math.sin(an) * d;
+    if (!wet(x, z) || placed.some(([px, pz]) => Math.hypot(px - x, pz - z) < apart * M)) continue;
+    let ok = true; for (let k = 0; k < 8 && ok; k++) ok = wet(x + Math.cos(k * Math.PI / 4) * wide / 2 * M, z + Math.sin(k * Math.PI / 4) * wide / 2 * M);
+    if (!ok) continue;
+    let best = 0, run = 0;   // (the way the water runs: the longest of eight)
+    for (let k = 0; k < 8; k++) { let s = 0; while (s < 200 && wet(x + Math.cos(k * Math.PI / 4) * s * M, z + Math.sin(k * Math.PI / 4) * s * M)) s += 10; if (s > run) { run = s; best = k; } }
+    const phi = -best * Math.PI / 4 + (rnd() - .5) * .3, L = (12 + rnd() * 10) * M, y = ground(x, z) - .3 * M;
+    placed.push([x, z]);
+    put('hull', x, y, z, phi, L, 1.4 * M, L * .26, .9 + .2 * rnd());
+    if (B.sail) { put('mast', x, y, z, 0, .25 * M, L * .55, .25 * M); put('sail', x, y + L * .12, z, phi, 1, L * .38, L * .32); }
+    if (B.cabin) put('cabin', x, y + 1.1 * M, z, phi, L * .38, L * .13, L * .18);
+  }
+  const kinds = {}, m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), p = new THREE.Vector3(), sc = new THREE.Vector3(), up = new THREE.Vector3(0, 1, 0);
+  let count = 0;
+  for (const [kind, L] of Object.entries(out)) {
+    const n = L.length, m = new Float32Array(n * 16), k = new Float32Array(n), ctr = new Float32Array(n * 2), rank = new Float32Array(n);
+    L.forEach(([x, y, z, phi, sx, sy, sz, kk], i) => { q.setFromAxisAngle(up, phi); m4.compose(p.set(x, y, z), q, sc.set(sx, sy, sz)).toArray(m, i * 16); k[i] = kk; ctr[i * 2] = x; ctr[i * 2 + 1] = z; });
+    kinds[kind] = { n, m, k, ctr, rank, size: 10 * M, fade: FADE_PX }; count += n;
   }
   return { kinds, count };
 }
@@ -335,15 +464,19 @@ export function gableEnds(g) {
 // that), so its lines are gone, not thinned to a stair-stepping pixel. pxK: { value } a model unit's pixels at one model unit's
 // distance (projectionMatrix[1][1] times half the picture's height in its own pixels, not a larger drawing buffer's), the look's to set each frame
 export const FADE_PX = [1.1, 2.6];
+// a roof's rows of tiles fade by their spacing, whole from seven pixels apart and gone by five: drawn closer, they crawl as the
+// camera moves (a slow pan at a mid shot: more change between frames than their edges account for); a close shot keeps them in
+// its foreground
+export const FADE_ROWS = [5, 7];
 export const FLAT = { tile: 1.12, verge: .78, course: .84 };
 const FADE_GLSL = /* glsl */`
   { vec4 o_ = modelMatrix * instanceMatrix * vec4(0., 0., 0., 1.);
     float px_ = uDetSize * uPxK / max(distance(cameraPosition, o_.xyz), 1e-6);
-    vDetF = smoothstep(${FADE_PX[0].toFixed(2)}, ${FADE_PX[1].toFixed(2)}, px_);
-    if (uDetFlat > 0.) transformed.y *= vDetF; else transformed *= vDetF; }`;
-function fading(mat, size, pxK, flat = 0) {
-  mat.onBeforeCompile = sh => { sh.uniforms.uDetSize = { value: size }; sh.uniforms.uPxK = pxK; sh.uniforms.uDetFlat = { value: flat };
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uDetSize, uPxK, uDetFlat; varying float vDetF;').replace('#include <begin_vertex>', '#include <begin_vertex>' + FADE_GLSL);
+    vDetF = smoothstep(uDetFade.x, uDetFade.y, px_);
+    if (uDetFlat > 0.) transformed *= vec3(smoothstep(0., .3, vDetF), vDetF, smoothstep(0., .3, vDetF)); else transformed *= vDetF; }`;   // (a flat one gone at last too: left lying on its face it caught the face's shadow and shimmered)
+function fading(mat, size, pxK, flat = 0, fade = FADE_PX) {
+  mat.onBeforeCompile = sh => { sh.uniforms.uDetSize = { value: size }; sh.uniforms.uPxK = pxK; sh.uniforms.uDetFlat = { value: flat }; sh.uniforms.uDetFade = { value: new THREE.Vector2(...fade) };
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uDetSize, uPxK, uDetFlat; uniform vec2 uDetFade; varying float vDetF;').replace('#include <begin_vertex>', '#include <begin_vertex>' + FADE_GLSL);
     if (sh.fragmentShader.includes('#include <color_fragment>'))
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uDetFlat; varying float vDetF;')
         .replace('#include <color_fragment>', '#include <color_fragment>\n  if (uDetFlat > 0.) diffuseColor.rgb *= mix(1. / uDetFlat, 1., vDetF);'); };
@@ -357,16 +490,17 @@ export function detailMeshes(D, cols, o = {}) {
   for (const [kind, K] of Object.entries(D.kinds)) {
     if (!cols[kind]) continue;
     const root = kind.split('_')[0];   // (a kind by a wall's face: course_brick, merlon_earth ..: its shape and its shadow the root's)
-    const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .92, metalness: 0, side: ['window', 'door', 'spandrel', 'archRing'].includes(root) ? THREE.DoubleSide : THREE.FrontSide });
+    const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .92, metalness: 0, side: ['window', 'door', 'spandrel', 'archRing', 'flag', 'sail'].includes(root) ? THREE.DoubleSide : THREE.FrontSide });   // (a flat piece seen from either side)
     const flat = FLAT[root] && !kind.endsWith('_banded') ? FLAT[root] : 0;   // (a stone wall's bands of brick are its face's own colour: they fade by their size)
-    const mesh = new THREE.InstancedMesh((SHAPES[kind] || SHAPES[root])(), o.pxK ? fading(mat, K.size, o.pxK, flat) : mat, K.n);
+    const mesh = new THREE.InstancedMesh((SHAPES[kind] || SHAPES[root])(), o.pxK ? fading(mat, K.size, o.pxK, flat, K.fade) : mat, K.n);
     mesh.instanceMatrix.array.set(K.m); mesh.instanceMatrix.needsUpdate = true;
     const own = typeof cols[kind] === 'function'; if (!own) base.set(cols[kind]);
     for (let i = 0; i < K.n; i++) mesh.setColorAt(i, (own ? c.copy(cols[kind](K.ctr[i * 2], K.ctr[i * 2 + 1])) : c.copy(base)).multiplyScalar(K.k[i]));
     mesh.instanceColor.needsUpdate = true;
     mesh.geometry.setAttribute('iCtr', new THREE.InstancedBufferAttribute(K.ctr, 2)); mesh.geometry.setAttribute('iRank', new THREE.InstancedBufferAttribute(K.rank, 1));
     mesh.castShadow = !!SHADOW[root]; mesh.receiveShadow = true; mesh.frustumCulled = false;
-    if (mesh.castShadow && o.pxK) mesh.customDepthMaterial = fading(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), K.size, o.pxK, flat);
+    if (flat) mesh.userData.noAO = true;   // (an ambient occlusion pass draws a scene with its own material, whole: a flat piece faded away there still shaded its roof in stripes; the look leaves these out of it)
+    if (mesh.castShadow && o.pxK) mesh.customDepthMaterial = fading(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), K.size, o.pxK, flat, K.fade);
     if (o.layer != null) mesh.layers.set(o.layer);
     mesh.name = 'detail:' + kind; group.add(mesh);
   }

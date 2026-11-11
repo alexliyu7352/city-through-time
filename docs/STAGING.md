@@ -270,7 +270,9 @@ and `&ground=land|modern` (open land, or a paved city's ground); `node tools/loo
   beam across the front the generator opened, a stone base, its roof's rows of tiles and its ridge's ends, a hall its lacquered
   columns and painted beam; a yard wall its coping; a city wall its face and courses as its walls say it is faced (MODEL.md walls
   `face`; else a battered wall rammed earth, an upright one its region's), a curtain's towers their windows, a gate its arched
-  passage and crenellated gatehouse. Each piece fades out as it gets too small on screen to draw (detail.js `FADE_PX`), so far roofs
+  passage, crenellated gatehouse and flags, a landmark a flag; trees in the courts and down the edges of the wide streets, and none
+  in a band along a city wall as deep as it is high, inside and out, nor in a gate's approach (the land's trees keep off them too);
+  boats on water wide enough to work, laid along it. Each piece fades out as it gets too small on screen to draw (detail.js `FADE_PX`), so far roofs
   and walls neither shimmer as the camera moves nor turn a darker grey. A region with buildings of its own (a 1900s Shanghai lane house, 里弄 (lane neighbourhood), say) gets a style there and its
   palette's colours for those pieces, not edits to one city. `&detail=0` draws without it (beside it, for a sheet: lookshots
   `--seed` keeps the trees where they stood).

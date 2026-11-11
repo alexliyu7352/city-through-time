@@ -276,7 +276,7 @@ export function plantTrees(scene, renderer, sources, U, PW, PD, centre, R, count
     if (Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2) continue;
     const grove = Math.sin(x * 900 + Math.sin(z * 400) * 2) * Math.sin(z * 700 + Math.sin(x * 300) * 2) > .2 || Math.random() < .07;   // in groves, a few alone
     const inWood = T.woods && Math.random() < T.woods(x, z) * (T.wood ?? .9);
-    if ((!inWood && (!grove || Math.random() > T.keep)) || wet(x, z) || !open(x, z)) continue;
+    if ((!inWood && (!grove || Math.random() > T.keep)) || wet(x, z) || !open(x, z) || (T.clear && !T.clear(x, z))) continue;   // (T.clear: where the look keeps trees off, a city wall's band, a gate's approach)
     const ki = Math.random() < T.cypress ? 1 : 0, k = kinds[ki], [ic, it] = ins[ki], y = T.ground ? T.ground(x, z) : 0, sc = (.7 + Math.random() * .7) * T.size;
     M.compose(p.set(x, y, z), q.setFromAxisAngle(up, Math.random() * 6.28), s.set(sc, sc * (.85 + Math.random() * .4), sc));
     ic.setMatrixAt(ic.count, M); it.setMatrixAt(it.count, M); ic.setColorAt(ic.count, film ? col.setHSL(.2 + Math.random() * .07, .1 + Math.random() * .08, .72 + Math.random() * .12) : col.setHSL(k.hue[0] + Math.random() * k.hue[1], .32 + Math.random() * .16, (k.l[0] + Math.random() * k.l[1]) * T.dark));
