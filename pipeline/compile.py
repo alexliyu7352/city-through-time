@@ -67,6 +67,26 @@ ST = json.load(open(LAYOUT.data(D, 'stats.json'), encoding='utf-8'))
 # a position more than a plate's width beyond the plate (and the land beyond it, terrain.context) is a typo and stops compile
 # (a latitude of 45.0 for 34.5 lands 1200 km north, which nothing else would show)
 F = Frame(tuple(C['box']), 1.0 / C['scale'], near=[b_ for b_ in [((C.get('terrain') or {}).get('context') or {}).get('box')] if b_])
+if not (C.get('film') or {}).get('nodes'):
+    # step 2 (docs/DATA.md): the extent and the data are in, the film is not written yet. The scale still needs a film to open,
+    # so compile writes one of the white model alone: an opening that rises from low over the plate's centre to the whole plate,
+    # and one station of this year, in the template's plate colours and the shipped fonts (Noto Sans SC draws Latin and Han alike)
+    _nm = C.get('name') or {}; _nm = _nm.get('en') or next(iter(_nm.values()), C.get('slug', '')) if isinstance(_nm, dict) else str(_nm)
+    _c, _d = ST['centre_wgs'], max(ST['size_m']); _y = _time.localtime().tm_year
+    _cam = lambda t, az, el, d: {'t': t, 'll': [round(_c[0], 5), round(_c[1], 5)], 'az': az, 'el': el, 'd': round(d * _d, 3)}
+    _f = {'family': 'Noto Sans SC', 'weight': 300}; _fs = {'family': 'Noto Sans SC', 'weight': 500}
+    C['film'] = yaml.load(yaml.safe_dump({
+        'lang': ['en'], 'emblem': 'none', 'light': {'base': 0.62},
+        'identity': {'l1': f'{_nm} · 1:{{cfg.scale:g}}', 'l2': '{plate_km[0]:.1f} × {plate_km[1]:.1f} km'},
+        'palette': {'plate': '#3a4757', 'plateSide': '#15191e', 'water': '#3a5670', 'plateEmit': 0.55},
+        'fonts': {'primary_strong': _fs, 'primary': _f, 'primary_sans': _f, 'primary_sans_strong': _fs, 'secondary': _f, 'secondary_strong': _fs,
+                  'numeral': {'family': 'Cormorant Garamond', 'weight': 300}, 'numeral_strong': {'family': 'Cormorant Garamond', 'weight': 500},
+                  'mono': {'family': 'IBM Plex Mono', 'weight': 400}},
+        'opening': {'dur': 6.0, 'camera': [_cam(0, 30, 12, .6), _cam(6, 34, 30, .9)]},
+        'nodes': [{'id': 'scale', 'mood': {'feel': 'calm', 'level': 1}, 'years': [_y, _y], 'dur': 4, 'label': {'en': _nm}, 'col': '#2f98ff',
+                   'camera': [_cam(0, 34, 30, .9), _cam(4, 38, 34, .9)]}]}, allow_unicode=True), Loader=_SeenLoader)
+    print(f'compile: city.yaml has no film nodes yet: a stand-in film of the white model alone for the scale still (docs/DATA.md); '
+          f'node render/still.mjs {os.path.basename(D)} 3 8', flush=True)
 FM = C['film']
 LAYOUT.ensure(D)
 LANG = FM.get('lang', ['zh', 'en'])

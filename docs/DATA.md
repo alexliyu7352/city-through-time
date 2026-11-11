@@ -8,7 +8,7 @@
 
 Copy `templates/city.yaml` to `cities/<slug>/city.yaml` and fill in the extent (box), scale and data sources;
 fetch OSM with `uv run python -I pipeline/osm.py cities/<slug>` (it fetches the city's area, worked out from the box in city.yaml); fetch the buildings (CMAB unzipped, or for `overture_ghsl` both `pipeline/overture_ghsl.py fetch` and `ghsl`, below: `terrain.py` takes today's buildings out of the surface, so it stops until they are there); run `pipeline/terrain.py` (DEM) and `pipeline/satellite.py` (Sentinel-2) once each;
-produce the model with `uv run python -I pipeline/prep.py cities/<slug>`. Then render one white-model still to confirm the extent and scale.
+produce the model with `uv run python -I pipeline/prep.py cities/<slug>`. Then render one white-model still to confirm the extent and scale: before the film has nodes, `uv run python -I pipeline/compile.py cities/<slug>` writes a stand-in film of the white model alone (the plate's centre from low, then the whole plate), and `node render/still.mjs <slug> 3 8` takes the low view and the whole plate.
 
 **Where downloads live.** Downloads stay outside git, under this machine's raw root (`raw` in `local/config.json`). What only one city uses, its OSM answers and
 its Overture footprints, goes in that city's own folder, `<raw root>/cities/<slug>/` (`pipeline/layout.py` `raw`). What serves many cities stays shared under the raw root:
