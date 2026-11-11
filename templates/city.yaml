@@ -24,7 +24,7 @@ landmarks:                                    # points for pins and the camera; 
 mounds: []                                    # earthworks that still exist today: { id, osm: <OSM way name> or lon/lat+base_m, h_m, top_ratio, year, zh, en }
 
 film:
-  lang: [zh, en]                              # one or two, any language with a language pack (i18n/<code>.yaml: zh, zh-Hant, en, ja, ko, fr); the first is the big-type line
+  lang: [zh, en]                              # one or two, any language with a language pack (i18n/<code>.yaml: zh, zh-Hant, en, ja, ko, fr, it); the first is the big-type line
   yearFmt: zh                                 # which language pack writes the years (default: the first language): zh "前 350", ja "紀元前350年", en "350 BCE"
   emblem: none                                # emblem: none, or { name: <object>, meaning: <what it stands for in this city>, nodes: [<nodes where it appears>] } (required)
   # voice: { lang: zh }                       # language of the voice (build/audio/voice/<lang>/<line id>.wav; default: the first language)

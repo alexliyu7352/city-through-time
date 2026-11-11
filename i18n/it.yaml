@@ -1,0 +1,25 @@
+# Pacchetto di lingua italiano (pipeline/i18n.py)
+name: Italiano
+script: latin
+max_line: 0
+numerals: none
+year: { bce: "{y} a.C.", ce: "{y}", tick_bce: "{y} a.C.", tick_ce: "{y}", label: "{name}, {year}" }
+words:
+  today: Oggi
+  footage: Riprese reali
+  reconstruction: Ricostruzione generata con IA
+  photo: Foto
+  archive: Archivio
+  source: Fonte
+  portrait: Ritratto
+  imagined: Immagine immaginata
+  from_sources: Dalle fonti
+  schematic: Schema
+  later_imagining: Immaginato in seguito
+  ai: Generata con IA
+  new: nuovi
+  chapter: "CAPITOLO {n}"
+  locator: LOCALIZZAZIONE
+  credit_author: Autore
+  credit_voice: Voce
+  credit_music: Musica
