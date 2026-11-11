@@ -1,5 +1,5 @@
 // The colour look, a second engine beside the white-model one: the coloured miniature, drawn in the period cities' viewer
-// (play.html?city=<slug>&view&look=mini; &palette=roman|chinese|modern, &ground=land|modern, &card=year|period|population: the
+// (play.html?city=<slug>&view&look=mini; &palette=roman|chinese|modern, &ground=land|modern, &card=<year>|<period>|<population>: the
 // info on screen). It leaves the studio's own scene and materials as they are and draws the same
 // geometry its own way: daylight from a sun and the sky, each building in its own wall and roof colours, trees in the open land
 // and the gardens, fields and water, a landmark's detailed model (tools/blender) in place of the generator's, a hazy sky and a
