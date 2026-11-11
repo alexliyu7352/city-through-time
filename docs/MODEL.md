@@ -54,7 +54,7 @@ risen), one set of sheets each (`<era>_m<k>_<look>.jpg`); `--at <seconds>` takes
 right-drag to move, the wheel to come closer, the arrow keys to turn, a double click to look at a point; tick the period cities to show, each at its place on the plate; 全 / 近 for the whole city or
 its houses up close; 成片 / 檢查 for the two looks; 時刻 1, 2 .. for the moments of a city that loses parts; `&at=<seconds>` shows every city ticked at that moment of the film;
 `&quality=low` is faster and leaves out the period cities' shadows).
-The colour look is looked at the same way, from its own stills: `tools/lookshots.mjs` (STAGING.md "Look and effects").
+A city that also uses the optional colour look looks at it from its own stills: `tools/lookshots.mjs` (STAGING.md "Look and effects"); the checks above stay in the white model.
 **Every compile checks the period cities' models** (geocheck, and clipcheck: things standing in one another, a tree in a house, a street stopping short) and stops when
 one fails, after writing the film, naming the check and its log (`build/logs/geocheck.log`, `clipcheck.log`); fix the model and compile again, never set the check to warn
 for the film (`CT_MODELCHECK=warn` is for model studies, tools/modelview.py). **A street ends at something:** another street, a gate, the foot of the stair or the face of

@@ -259,8 +259,10 @@ in its own wall and roof colours, trees in the open land and the gardens, fields
 viewer, `play.html?city=<slug>&view&look=mini`, with `&palette=roman|chinese|modern` (the building colours of the region and period)
 and `&ground=land|modern` (open land, or a paved city's ground); `node tools/lookshots.mjs <slug> <out_prefix> <cams.json> --q
 'look=mini&palette=chinese'` takes its stills at named cameras (the tool's header gives the cameras' format).
-- **A new city is made for the colour look.** Build and judge its period cities in it as well as in the white model (lookshots
-  stills beside eraview's sheets, MODEL.md), with the palette of its region and period.
+- **The white model is the whole path; the colour look is optional.** Every step's done line, check, preview, render and player is
+  in the white model, and none of them needs the colour look. The colour look draws only in the period cities' viewer (no film, no
+  live player, nothing on a phone): a city may use it to look at its period cities with the palette of its region and period
+  (lookshots stills beside eraview's sheets, MODEL.md), never in place of the white model's checks, and no step waits on it.
 - **The film itself (`engine/main.js`) draws only in the white look.** A film in the colour look is an engine change: propose it
   first (AGENTS.md "Propose first"). A city whose film the user has approved keeps the look it was approved in.
 
