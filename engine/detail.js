@@ -36,7 +36,7 @@ export const STYLES = {
     cornice: { h: .38, out: .22 }, base: { h: 1.0, out: .08 }, front: null, ridgeEnds: false, coping: { h: .32, over: .14 },
     wall: 'brick', towerWindows: { w: 1.3, h: 2.1, n: 2 }, tiles: null, halls: null,
     trees: { court: 2, street: 30, cypress: .5 }, tiles: { every: .9, w: .32, t: .14, verge: { w: .42, t: .3 } }, ridge: { w: .7, h: .5 },
-    court: { arcade: { every: 3.0, out: 2.2, col: .55, h: 3.4, lintel: .55 }, beds: { n: 3, size: [3.2, 1.8] } }, paving: { every: 3.2, w: .14 },
+    court: { floor: true, arcade: { every: 3.0, out: 2.2, col: .55, h: 3.4, lintel: .55 }, beds: { n: 3, size: [3.2, 1.8] } }, paving: { every: 3.2, w: .14 },
     vary: { front: [6, 12], deep: 9, raise: [.45, .4], most: .4, storey: 3.2, gable: .45, over: .45, rise: .27,
       shops: { w: 2.3, h: 2.2, every: 3.4 }, pent: { out: 1.3, t: .22, tilt: .3 } }, flags: { gate: 4 },   // (a dense town's open ground stays its streets' and yards': no gardens)
   },
@@ -139,7 +139,7 @@ export const SHAPES = { window: () => arched(), door: () => arched(.66), pane: (
   mast: () => new THREE.CylinderGeometry(.5, .5, 1, 5).translate(0, .5, 0), sail: () => new THREE.PlaneGeometry(1, 1).translate(0, .5, 0).rotateY(Math.PI / 2),
   cabin: () => new THREE.CylinderGeometry(.5, .5, 1, 8, 1, false, 0, Math.PI).rotateZ(Math.PI / 2),   // (its arch over the top, along x)
   cornice: box, base: box, post: box, beam: box, course: box, coping: capGeometry, ridgeEnd: hornGeometry,
-  tuft: () => new THREE.IcosahedronGeometry(.5, 1).scale(1, .55, 1), joint: box, gableZ: () => gableZGeometry(), hip: () => hipGeometry(), lean: () => leanGeometry(), upper: box, shop: () => SHAPES.pane(), pent: box,
+  floor: box, tuft: () => new THREE.IcosahedronGeometry(.5, 1).scale(1, .55, 1), joint: box, gableZ: () => gableZGeometry(), hip: () => hipGeometry(), lean: () => leanGeometry(), upper: box, shop: () => SHAPES.pane(), pent: box,
   lattice: () => SHAPES.pane(), leaf: () => SHAPES.pane(), hallroof: capGeometry, paving: box, patch: box, arcade: box, eaveslab: box,
   well: () => new THREE.CylinderGeometry(.5, .5, 1, 10).translate(0, .5, 0),
   tile: () => new THREE.BoxGeometry(1, 1, 1), verge: () => new THREE.BoxGeometry(1, 1, 1), eave: () => new THREE.BoxGeometry(1, 1, 1), ridge: () => new THREE.BoxGeometry(1, 1, 1) };   // (a row of tiles: x down the slope, y out of it, centred)
@@ -499,6 +499,9 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null,
       const CS = ST.court, X0 = list[0].bx, Z0 = list[0].bz, y = Math.min(...list.map(floor));
       if (inside(X0, y + 1 * V, Z0, null)) continue;   // (its middle free)
       const room = (ux, uz) => { let r = 0; while (r < 30 * M && !inside(X0 + ux * (r + .5 * M), y + 1 * V, Z0 + uz * (r + .5 * M), null)) r += .5 * M; return r; };
+      if (CS.floor) {   // the court's floor, wall to wall (a look gives it its colour: plaster, paving)
+        const c_ = Math.cos(list[0].rot), s_ = Math.sin(list[0].rot), rx = Math.min(room(c_, s_), room(-c_, -s_)), rz = Math.min(room(-s_, c_), room(s_, -c_));
+        if (rx > 1 * M && rz > 1 * M) put('floor', list[0], X0, y + .02 * V + shear(list[0], X0, Z0), Z0, -list[0].rot, 2 * rx + 1 * M, .05 * V, 2 * rz + 1 * M); }
       const W = list.map(b => { const [lx, lz] = local(b, X0, Z0), f = Math.abs(lx) / b.a > Math.abs(lz) / b.b ? (lx > 0 ? 0 : 1) : (lz > 0 ? 2 : 3), F = faceOf(b, f);
         return { b, F, gap: (F.nx ? Math.abs(lx) : Math.abs(lz)) - F.half }; });   // (gap: from the face to the middle)
       const gq = (darks.get(k) || []).filter(q => (q.y0 - y) / V < .6).sort((p, q) => q.a * q.b - p.a * p.b)[0];
@@ -580,7 +583,7 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null,
   const kinds = {}, m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(0, 0, 0, 'YXZ'), p = new THREE.Vector3(), sc = new THREE.Vector3();
   // each kind's size as it is seen (model units): a band by its height, the courses by their spacing (they flatten into their
   // face, FLAT), the rows of tiles by their spacing (FADE_ROWS), the rest by their width
-  const T_ = ST.tiles || {}, SIZE = { window: 1 * M, door: 1.5 * M, cornice: .38 * V, base: .55 * V, post: .34 * M, beam: .45 * V, coping: .4 * M, ridgeEnd: .6 * M,
+  const T_ = ST.tiles || {}, SIZE = { floor: 25 * M, window: 1 * M, door: 1.5 * M, cornice: .38 * V, base: .55 * V, post: .34 * M, beam: .45 * V, coping: .4 * M, ridgeEnd: .6 * M,
     tile: (T_.every || 1.1) * M, verge: .46 * M, eave: 6 * M, ridge: 6 * M, spandrel: 4 * M, archRing: 4 * M, merlon: 1.4 * M, parapet: .9 * V, column: .7 * M,
     crown: 6 * M, cone: 3 * M, trunk: 6 * M, pole: 1.5 * M, flag: 4.5 * M,
     ...Object.fromEntries(Object.entries(WALL_FACES).flatMap(([k, F]) => [['course_' + k, F.every * V], ['spandrel_' + k, 4 * M], ['parapet_' + k, .9 * V], ['merlon_' + k, 1.4 * M]])) };

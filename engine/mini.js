@@ -43,7 +43,7 @@ const SLATE = { slate: [.31, .31, .31], step: 6, edge: 1.45, resin: [.20, .14, .
 // the maquette's base: a photographed cleft slate (engine/tex/slate: Poly Haven dark_rock_02, CC0), its colour scaled to `slate`
 // (linear) over its own mean, `size` m a repeat (and 6.3 times that, turned, over it), its normal `bump` strong; the sheets of the
 // land's rise `step` m, their edges a faint `edge`; the water a glossy resin
-const SLATE_TEX = { tex: 'slate', slate: [.0047, .0046, .0046], mean: .032, size: 24, bump: 1.6, ground: '#2e2c2a', step: 6, edge: 1.12, resin: [.09, .065, .04] };
+const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, bump: 1.6, ground: '#2e2c2a', step: 6, edge: 1.12, resin: [.09, .065, .04] };
 // the colour film's picture, as a photograph of a model on a table: a warm key from a sun fixed in the world, low and to the side
 // of where the film's camera mostly looks from (sunSide degrees round from it: shadows fall across the frame and toward the eye,
 // where they read, and an orbit turns them as a real one would), a cool fill from the sky, the shadow fitted to the ground the
@@ -72,10 +72,10 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
   material: null,
   looks: {
     // a museum's architectural maquette: plaster walls, light wood roofs and landmarks, a dark slate base, water as dark resin
-    maquette: { pic: { sunEl: 52, sun: 1.12, sunC: '#ffe6c4', sky: .42, skyC: '#ece2d2', skyGround: '#3a3632', ao: .35, vignette: .55, pathW: 0, tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
-      roman: { walls: ['#efe6d3', '#e9dfca', '#f3ecdd', '#e4d9c2', '#ece2cf'], roofs: ['#e3cba2', '#ddc398', '#e8d2ad', '#d8bd90', '#e1c69c', '#dbc095'],
+    maquette: { pic: { sunEl: 52, sun: 1.12, sunC: '#ffe6c4', sky: .42, skyC: '#ece2d2', skyGround: '#3a3632', ao: .35, vignette: .55, pathW: 0, pool: [.08, .2], haze: [.55, 2.1], fogC: '#2f2b27', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
+      roman: { walls: ['#ead9bb', '#e5d2b0', '#eedfc4', '#e0cba8', '#e8d6b6'], roofs: ['#e3cba2', '#ddc398', '#e8d2ad', '#d8bd90', '#e1c69c', '#dbc095'],
         parts: { 1: '#e6d8bc', 4: '#1f231a', 7: '#3b3835', 9: '#d6bb8e', 10: '#3b3835', 11: '#33302d' }, tree: { dark: .32, sat: .45 }, flags: false,
-        detail: { joint: '#3c3e42', ridge: '#cfb184', shop: '#5a4a3a', base: '#d3c6ac' } } },
+        detail: { floor: '#e6d5b6', joint: '#3c3e42', ridge: '#cfb184', shop: '#5a4a3a', base: '#d3c6ac' } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
       soft: .6, tiles: 2.2, tufts: true,   // (soft: the share of a corner's averaged normal in each face's, a rounded edge; tiles: their rows' relief, times; tufts: moss at the walls' feet)
@@ -567,7 +567,8 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
       bgNow.copy(bg).lerp(NIGHT.bg, nt).lerp(PALL.sky, .3 * fk); fog.color.copy(FILM_PIC.fogC ? new THREE.Color(FILM_PIC.fogC) : FOG).lerp(NIGHT.fog, nt).lerp(PALL.sky, .3 * fk);
       S.colourLight.value = FP_ ? FILM_PIC.projector + .6 * nt : .55 + .6 * nt;   // (the film's picture: none of the projector's light by day, main.js QUIET) if (FP) { FP.bloom.threshold = THREE.MathUtils.lerp(2.2, .9, nt); FP.bloom.strength = THREE.MathUtils.lerp(.1, .45, nt); }
       if (ctx) { swapM.push([ctx, ctx.material, ctx.customDepthMaterial]); ctx.material = far; ctx.userData.vis0 = ctx.visible; ctx.visible = true; ctx.layers.enable(L); ctx.receiveShadow = true; } }
-    scene.background = film ? bgNow : bg; fog.near = d * (FP_ ? FILM_PIC.fogNear : film ? 2.6 : 1.6); fog.far = d * (FP_ ? FILM_PIC.fogFar : film ? 14 : 8); scene.fog = FX && FX.haze ? null : fog; camera.layers.set(L);   // (the film: less haze over the plate)
+    scene.background = film ? bgNow : bg; const kA_ = FP_ && FILM_PIC.pool ? THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]) : 0;   // (an aerial's share: its pool and haze)
+    fog.near = d * (FP_ && FILM_PIC.haze ? THREE.MathUtils.lerp(FILM_PIC.fogNear, FILM_PIC.haze[0], kA_) : FP_ ? FILM_PIC.fogNear : film ? 2.6 : 1.6); fog.far = d * (FP_ && FILM_PIC.haze ? THREE.MathUtils.lerp(FILM_PIC.fogFar, FILM_PIC.haze[1], kA_) : FP_ ? FILM_PIC.fogFar : film ? 14 : 8); scene.fog = FX && FX.haze ? null : fog; camera.layers.set(L);   // (the film: less haze over the plate)
     const sd = sun.position.clone().sub(target).normalize();
     if (relief) { U.uFxSun.value.copy(sd); if (FX.light) { U.uFxLitC.value.setRGB(1, 1, 1).lerp(new THREE.Color(1.1, .99, .84), warm); U.uFxShadeC.value.setRGB(1, 1, 1).lerp(new THREE.Color(.82, .9, 1.1), warm); } }
     if (dome) dome.u.uSunD.value.copy(sd);
@@ -579,7 +580,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
       const A_ = FILM_PIC.dof.A || (FILM_PIC.dof.Ak || 0) * d / scale;   // (Ak: the opening as a share of the shot's distance: every shot the same model seen as close)
       if (FP_ && lens && A_ && !(S.post.dof.aper < 1e-6)) { FP.dof.aper = 1080 * A_ * scale / (4 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)); FP.dof.focus = S.post.dof.focus * (FILM_PIC.dof.at || 1); }   // (a living moment's sharp picture kept where its aperture is 0; its fade in and out not yet followed)
       if (FP_ && MAT && MAT.base && MAT.base.tex && U.uGroundN) U.uGroundN.value = 0;   // (a material's plate: the period cities' open ground is the plate itself, not patches of earth and gravel on it)
-      if (FILM_PIC.pool) { const k_ = THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]); POOL.value.set(target.x, target.z, d * 1.1, THREE.MathUtils.lerp(1, FILM_PIC.pool[0], k_)); } else POOL.value.set(0, 0, 1e9, 1);
+      if (FILM_PIC.pool) { const k_ = THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]); POOL.value.set(target.x, target.z, d * .8, THREE.MathUtils.lerp(1, FILM_PIC.pool[0], k_)); } else POOL.value.set(0, 0, 1e9, 1);
       HSCALE.value = FP_ && FILM_PIC.hscale ? THREE.MathUtils.lerp(FILM_PIC.hscale.k, 1, THREE.MathUtils.smoothstep(d, FILM_PIC.hscale.near, FILM_PIC.hscale.far)) : 1;   // (a close shot's heights)
       if (FX && FX.dof && !S.post.dof.rtB) fxLens(FP.dof, FX.dof, d);   // (the studio's own pass applied it already where it has the stronger gather)
       if (FP.dof.haze) FP.dof.haze.uHazeSunD.value.copy(sd);
@@ -636,12 +637,13 @@ function baseGLSL(B, scale) {
   { float y_ = vFxW.y / ${scale.toFixed(6)} / ${B.step.toFixed(2)}, c_ = fract(y_), w_ = max(fwidth(y_), 1e-4);   // the photographed slate, two scales of it turned against each other (no repeat afar), lit by its own normal and roughness (slateN_, slateR_)
     vec2 a_ = m_ / ${B.size.toFixed(1)}, b_ = mat2(.8, -.6, .6, .8) * m_ / ${(B.size * 6.3).toFixed(1)};
     vec3 c1_ = texture2D(uSlateC, a_).rgb, c2_ = texture2D(uSlateC, b_).rgb; float l1_ = dot(c1_, vec3(.2126, .7152, .0722)), l2_ = dot(c2_, vec3(.2126, .7152, .0722));
-    vec3 sl_ = ${v3(B.slate)} * (c1_ / max(${B.mean.toFixed(3)}, 1e-3)) * mix(1., l2_ / ${B.mean.toFixed(3)}, .45);
+    float fd_ = smoothstep(.4, 2., length(fwidth(a_)) * 1024.);   // (texels a pixel: afar its pattern calms to its mean, no repeat)
+    vec3 sl_ = ${v3(B.slate)} * mix(l1_, ${B.mean.toFixed(3)}, fd_ * .75) / ${B.mean.toFixed(3)} * mix(1., l2_ / ${B.mean.toFixed(3)}, .35);   // (its grey only: a neutral charcoal)
     sl_ *= 1. + .05 * clamp(floor(y_ - ${(20 / B.step).toFixed(2)}), 0., 4.);   // (each sheet up a little lighter)
     sl_ *= mix(1., ${B.edge.toFixed(2)}, (1. - smoothstep(w_ * .8, w_ * 1.6, c_)) * step(w_, .15));   // (its edge, faint, close only)
     slateN_ = texture2D(uSlateN, a_).xyz * 2. - 1.; slateR_ = texture2D(uSlateR, a_).r;
     diffuseColor.rgb = mix(sl_, pow(${v3(B.resin)}, vec3(2.2)), wMask);
-    diffuseColor.rgb *= mix(1., uPool.w, smoothstep(uPool.z * .45, uPool.z * 1.3, length(vXZ - uPool.xy)));   // (a light pool: the plate falls off into shadow away from the city, FILM_PIC pool)
+    diffuseColor.rgb *= mix(1., uPool.w, smoothstep(uPool.z * .35, uPool.z * 1.05, length(vXZ - uPool.xy)));   // (a light pool: the plate falls off into shadow away from the city, FILM_PIC pool)
   }`;
   if (B.slate) return `
   { float y_ = vFxW.y / ${scale.toFixed(6)} / ${B.step.toFixed(2)}, c_ = fract(y_), w_ = max(fwidth(y_), 1e-4);   // a slate plate, the land's rise in stacked sheets, its edges catching the light
@@ -687,7 +689,7 @@ function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = 
       diffuseColor.rgb = mix(diffuseColor.rgb, ec_ * (.18 + 1.1 * l_), clamp(uEpA[i] * m_ * rv_ * 1.6, 0., 1.) * .8); } }`;
   mat.onBeforeCompile = (sh, r) => { deform(sh, r);
     Object.assign(sh.uniforms, back);   // (uBackdropY, uDataY0)
-    if (u) sh.uniforms.uHScale = HSCALE;
+    if (u) { sh.uniforms.uHScale = HSCALE; sh.uniforms.uPool = POOL; }
     if (u) Object.assign(sh.uniforms, { uRuinLater: u.uRuinLater, uRuinT: u.uRuinT, uRuinH: u.uRuinH, uLossBurnt: u.uLossBurnt, uLossBurntV: u.uLossBurnt, uRuinC: { value: ruin || new THREE.Color('#bcae92') } },
       fire ? { ...fire.day.F, uO: fire.u.uO } : {});
     else sh.uniforms.uFadeAt = { value: fadeAt };
@@ -725,7 +727,8 @@ ${FILM_PIC.material === 'clay' ? `
     }
     else if (pt_ > 6.5 && pt_ < 7.5) { vec2 e_ = abs(fract(vWP.xz / uScaleM / 3.) - .5) * 2.;   // paving in slabs
       diffuseColor.rgb *= 1. - .16 * smoothstep(.86, .97, max(e_.x, e_.y)) * (1. - smoothstep(.3, .7, px_ / 3.)); } }`);
-    if (u) sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+    if (u) sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uPool;').replace('#include <color_fragment>', `#include <color_fragment>
+  diffuseColor.rgb *= mix(1., uPool.w, smoothstep(uPool.z * .35, uPool.z * 1.05, length(vWP.xz - uPool.xy)));   // (the light pool, FILM_PIC pool)
   float burn_ = uEraBurn, burnt_ = uEraBurn, char_ = uEraBurn; for (int k = 0; k < ${nL}; k++) if (abs(vData.w - 4. - float(k)) < .5) { burn_ = max(burn_, uLossBurn[k]); char_ = max(char_, uLossBurn[k]); burnt_ = max(burnt_, uLossBurnt[k]); }   // (studio.js eraBurnK; burnt: a part a fire took)${fire ? `
   if (uEraBurn > 0.) { float e_ = uNow - ign(aCtrV, fireHash(aCtrV)); char_ = smoothstep(0., 2.5, e_); burn_ = smoothstep(0., .6, e_) * (1. - .7 * smoothstep(2.5, 5., e_)); }   // (the fire's front: studio.js fireByDay)` : ''}
   diffuseColor.rgb *= 1. - .88 * char_;
