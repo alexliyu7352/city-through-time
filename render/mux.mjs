@@ -39,10 +39,12 @@ if (!norm) console.error('mux: warning: the audio is silent or quieter than -70 
 // pass 2: the film
 const VD = dur(V), AD = dur(A);
 let pad = '';
-// (apad needs a named channel layout; a WAV from soundfile has none, and ffmpeg then refuses the graph: named here, samples unchanged)
-if (AD > 0 && VD > 0 && AD < VD - 0.02) { pad = `,aformat=channel_layouts=stereo|mono,apad=whole_dur=${VD}`; console.error(`mux: note: the audio (${AD} s) is shorter than the video (${VD} s); padding it with silence`); }
+if (AD > 0 && VD > 0 && AD < VD - 0.02) { pad = `,apad=whole_dur=${VD}`; console.error(`mux: note: the audio (${AD} s) is shorter than the video (${VD} s); padding it with silence`); }
 const VF = (GR ? `fps=${FPS},noise=c0s=${GR}:allf=t` : `fps=${FPS}`) + ',format=yuv420p';
-const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', V, '-i', A, '-filter_complex', `[0:v]${VF}[v];[1:a]${AF},aresample=48000${pad}[a]`,
+// the audio's channel layout named after the loudness filter (samples unchanged): a WAV from soundfile names none, and ffmpeg then
+// refuses the graph wherever it has to choose one: for apad, and when loudnorm cannot keep to linear and falls back to its dynamic
+// mode, which sets the graph up again mid-stream (a narration track with long silences between its lines did)
+const r = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', V, '-i', A, '-filter_complex', `[0:v]${VF}[v];[1:a]${AF},aresample=48000,aformat=channel_layouts=stereo|mono${pad}[a]`,
   '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-preset', 'slow', '-crf', '19', '-r', String(FPS), '-bsf:v', 'filter_units=remove_types=6',
   '-c:a', 'aac', '-b:a', '256k', '-flags:a', '+bitexact', '-map_metadata', '-1', '-map_chapters', '-1', '-fflags', '+bitexact',
   '-movflags', '+faststart', '-shortest', O], { stdio: ['ignore', 'inherit', 'inherit'] });
