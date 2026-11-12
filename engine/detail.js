@@ -37,8 +37,8 @@ export const STYLES = {
     wall: 'brick', towerWindows: { w: 1.3, h: 2.1, n: 2 }, tiles: null, halls: null,
     trees: { court: 2, street: 30, cypress: .5 }, tiles: { every: .9, w: .32, t: .14, verge: { w: .42, t: .3 } }, ridge: { w: .7, h: .5 },
     court: { arcade: { every: 3.0, out: 2.2, col: .55, h: 3.4, lintel: .55 }, beds: { n: 3, size: [3.2, 1.8] } },
-    vary: { tall: .55, add: [1, 3], most: 5, storey: 3.2, roofs: { hip: .45, gable: .35, lean: .2 }, over: .5, rise: .3,
-      window: { w: .75, h: 1.0, every: 2.9 }, shops: { w: 2.3, h: 2.2, every: 3.4 }, pent: { out: 1.3, t: .22, tilt: .3 } }, flags: { gate: 4 },   // (a dense town's open ground stays its streets' and yards': no gardens)
+    vary: { front: [6, 12], deep: 9, raise: [.45, .4], most: .4, storey: 3.2, gable: .45, over: .45, rise: .27,
+      shops: { w: 2.3, h: 2.2, every: 3.4 }, pent: { out: 1.3, t: .22, tilt: .3 } }, flags: { gate: 4 },   // (a dense town's open ground stays its streets' and yards': no gardens)
   },
   chinese: {
     storey: 3.6, window: null, door: null, cornice: { h: .55, out: .45 }, base: { h: .6, out: .1 },   // (cornice: the eave's dark underside over the wall's top)
@@ -58,11 +58,12 @@ export const STYLES = {
 // `reach` metres of a building, each rising with the nearest, its crown size[0] + up to size[1] metres (default 8 + 5); court: trees a court holds (the generator's own counted; on its paving
 // too), street: one every this many metres down each edge of a street 10 m wide or more (0: none), cypress: the share of them
 // tall and narrow }; flags: { gate: flags on a gatehouse, round its edges }, and one on each landmark
-// vary: houses that differ as a real quarter's do, each building its own from a hash of its place (the generator's records as
-// they are, the colour look's): `tall` of them raised by add[0]..add[1] storeys of `storey` m (to `most` storeys in all) in a
-// wash of their own, small windows on each open face of the storeys added, under a roof of their own (roofs: the share of each
-// form, hip, gable or lean-to; `over` m of eaves, `rise` its height over its depth); on every open face of the ground floor, shop
-// openings (shops: w, h, every) under a pent roof of tiles (pent: out, t, tilt in radians)
+// vary: houses that differ as a real quarter's do, each from a hash of its place (the generator's records as they are, the colour
+// look's): each open face of a body split into fronts front[0]..front[1] m wide, `deep` m deep at most; raise: the shares of
+// them raised by none and by one storey (the rest by two) of `storey` m, never more than `most` of the body's height; each
+// raised front in a wash of its own under a roof of its own, its gable to the street for `gable` of them (`over` m of eaves,
+// `rise` its height over its span), with windows, courses, tiles and ridges as the generator's own; on every open face of a
+// ground floor, shop openings (shops: w, h, every) and over half of them a pent roof of tiles (pent: out, t, tilt in radians)
 // court: what a court shows, read from a building of three wings or more round a free middle (the colour look's: the generator's
 // records unchanged): the face each wing turns to the middle; the wing with the generator's way in at its foot the gate's (else
 // the smallest), the one farthest across the middle from it the hall's. posts { every, out, t } under the eaves along those faces;
@@ -89,6 +90,11 @@ function roundCrown() {   // a tree's crown, round and full: its faces shaded as
   const g = new THREE.IcosahedronGeometry(.345, 1).scale(1, .85, 1).translate(0, .62, 0), P = g.attributes.position, N = g.attributes.normal;
   for (let i = 0; i < P.count; i++) { const x = P.getX(i), y = (P.getY(i) - .62) / .7225, z = P.getZ(i), l = Math.hypot(x, y, z) || 1; N.setXYZ(i, x / l, y / l, z / l); }
   return g;
+}
+function gableZGeometry() {   // a gable roof on a 1 x 1 base, 1 high, its ridge along z (a roof record's own frame: slopes across x)
+  const P = [[-.5, 0, -.5], [-.5, 0, .5], [0, 1, .5], [0, 1, -.5], [.5, 0, -.5], [.5, 0, .5]], F = [[0, 1, 2, 3], [4, 3, 2, 5], [0, 3, 4], [1, 5, 2]], pos = [];
+  for (const f of F) for (let i = 1; i < f.length - 1; i++) for (const j of [f[0], f[i], f[i + 1]]) pos.push(...P[j]);
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.computeVertexNormals(); return g;
 }
 function hipGeometry() {   // a hipped roof on a 1 x 1 base, 1 high, its ridge along x over the middle half
   const P = [[-.5, 0, -.5], [.5, 0, -.5], [.5, 0, .5], [-.5, 0, .5], [-.25, 1, 0], [.25, 1, 0]], F = [[0, 4, 5, 1], [1, 5, 2], [2, 5, 4, 3], [3, 4, 0]], pos = [];
@@ -133,12 +139,12 @@ export const SHAPES = { window: () => arched(), door: () => arched(.66), pane: (
   mast: () => new THREE.CylinderGeometry(.5, .5, 1, 5).translate(0, .5, 0), sail: () => new THREE.PlaneGeometry(1, 1).translate(0, .5, 0).rotateY(Math.PI / 2),
   cabin: () => new THREE.CylinderGeometry(.5, .5, 1, 8, 1, false, 0, Math.PI).rotateZ(Math.PI / 2),   // (its arch over the top, along x)
   cornice: box, base: box, post: box, beam: box, course: box, coping: capGeometry, ridgeEnd: hornGeometry,
-  hip: () => hipGeometry(), lean: () => leanGeometry(), upper: box, shop: () => SHAPES.pane(), pent: box,
+  gableZ: () => gableZGeometry(), hip: () => hipGeometry(), lean: () => leanGeometry(), upper: box, shop: () => SHAPES.pane(), pent: box,
   lattice: () => SHAPES.pane(), leaf: () => SHAPES.pane(), hallroof: capGeometry, paving: box, patch: box, arcade: box, eaveslab: box,
   well: () => new THREE.CylinderGeometry(.5, .5, 1, 10).translate(0, .5, 0),
   tile: () => new THREE.BoxGeometry(1, 1, 1), verge: () => new THREE.BoxGeometry(1, 1, 1), eave: () => new THREE.BoxGeometry(1, 1, 1), ridge: () => new THREE.BoxGeometry(1, 1, 1) };   // (a row of tiles: x down the slope, y out of it, centred)
 // which kinds cast a shadow (a flat opening or a thin course does not: it would only darken itself)
-export const SHADOW = { eave: true, ridge: true, cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true, hallroof: true, hip: true, lean: true, upper: true, pent: true, arcade: true, eaveslab: true, well: true, crown: true, cone: true, trunk: true, pole: true, flag: true, hull: true, sail: true, cabin: true };
+export const SHADOW = { eave: true, ridge: true, cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true, hallroof: true, gableZ: true, hip: true, lean: true, upper: true, pent: true, arcade: true, eaveslab: true, well: true, crown: true, cone: true, trunk: true, pole: true, flag: true, hull: true, sail: true, cabin: true };
 
 export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null } = {}) {
   const ST = STYLES[style] || STYLES.roman, M = scale, V = scale * hex;   // M: a metre across; V: a metre up, as drawn
@@ -171,6 +177,35 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
   const faceOf = (r, f) => { const [nx, nz, turn] = FACES[f]; return { nx, nz, w: nx ? r.b : r.a, half: nx ? r.a / 2 : r.b / 2, phi: -r.rot + turn }; };
   const onFace = (r, F, s, o) => { const lx = F.nx ? F.nx * (F.half + o) : -F.nz * s, lz = F.nz ? F.nz * (F.half + o) : F.nx * s; return world(r, lx, lz); };   // the point s along face F (from its middle), o out of it
 
+  // a street front split into narrow houses (STYLES vary): each open face of a body, `front` metres a house, some raised by a
+  // storey or two (no more than `most` of the body's height) under a roof of their own, gable or eaves to the street; drawn
+  // here as pieces, and added to the records as a body and a roof of their own, so the passes below give them what the
+  // generator's own get: windows on every storey, a base course and a cornice, tile rows, ridges and verges
+  if (ST.vary && ST.vary.front) {
+    const VY = ST.vary, sv = VY.storey * V, gen = R.filter(r => r.t === 0 && r.part === FAB && r.d !== 1 && Math.min(r.a, r.b) >= 4 * M);
+    const add = r => { R.push(r); const h = Math.hypot(r.a, r.b) / 2;
+      for (let i = Math.floor((r.x - h) / CELL); i <= Math.floor((r.x + h) / CELL); i++) for (let j = Math.floor((r.z - h) / CELL); j <= Math.floor((r.z + h) / CELL); j++) { const k = key(i, j); (cells.get(k) || cells.set(k, []).get(k)).push(r); } };
+    for (const b of gen) {
+      const y0 = floor(b), Hm = (top(b) - y0) / V, most = Math.round(VY.most * Hm / VY.storey); if (most < 1) continue;
+      for (let f = 0; f < 4; f++) {
+        const F = faceOf(b, f), [px, pz] = onFace(b, F, 0, 1.2 * M); if (F.w < 8 * M || inside(px, y0 + 1 * V, pz, b)) continue;
+        const n = Math.max(1, Math.round(F.w / ((VY.front[0] + (VY.front[1] - VY.front[0]) * hash(b.x * 2.9 + f, b.z)) * M))), w = F.w / n, deep = Math.min(2 * F.half, VY.deep * M);
+        for (let i = 0; i < n; i++) {
+          const s_ = (i + .5 - n / 2) * w, hh = hash(b.x * 7.1 + s_ * 13.3, b.z * 3.7 + f), up = hh < VY.raise[0] ? 0 : hh < VY.raise[0] + VY.raise[1] ? 1 : 2, st = Math.min(up, most);
+          if (!st) continue;
+          const [X, Z] = onFace(b, F, s_, -deep / 2), along = F.nx !== 0;   // (a face across x runs along z)
+          const A = along ? deep : w - .1 * M, Bz = along ? w - .1 * M : deep, c = st * sv, yb = top(b);
+          const body = { t: 0, part: FAB, d: 0, x: X, z: Z, rot: b.rot, y0: yb, a: A, b: Bz, c, e: 0, rank: b.rank, g: yb, gx: b.gx, gz: b.gz, bx: X, bz: Z, i: b.i, syn: true };
+          add(body); put('upper', body, X, yb - .05 * V + shear(b, X, Z), Z, -b.rot, A, c + .05 * V, Bz);
+          const toStreet = hash(X * 1.3, Z * 5.1) < VY.gable, ridgeX = toStreet ? !along : along;   // (the ridge across the face: its gable to the street)
+          const ra = ridgeX ? Bz : A, rb = ridgeX ? A : Bz, rot = b.rot + (ridgeX ? Math.PI / 2 : 0), rc = ra * VY.rise * hex, od = VY.over * M, drop = od * rc / (ra / 2);
+          const roof = { t: 1, part: ROOF, d: od, x: X, z: Z, rot, y0: yb + c, a: ra, b: rb, c: rc, e: 0, rank: b.rank, g: yb, gx: b.gx, gz: b.gz, bx: X, bz: Z, i: b.i, syn: true };
+          R.push(roof); put('gableZ', roof, X, yb + c - drop + shear(b, X, Z), Z, -rot, ra + 2 * od, rc + drop, rb + .3 * M);
+        }
+      }
+    }
+  }
+
   // ---------------------------------------------------------------- houses: the generator's bodies (a house's, a wing's, a hall's)
   const bodies = R.filter(r => r.t === 0 && r.part === FAB && r.d !== 1 && Math.min(r.a, r.b) >= 2.5 * M && (top(r) - floor(r)) / V >= 2.2);
   const byBuilding = new Map(); for (const b of bodies) (byBuilding.get(bkey(b)) || byBuilding.set(bkey(b), []).get(bkey(b))).push(b);
@@ -193,7 +228,7 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
     }));
     // a door where the building has none: on its largest body's longest open face, in the middle
     let door = null;
-    if (ST.door && !doored) {
+    if (ST.door && !doored && !list[0].syn) {
       const b = list.reduce((m, q) => q.a * q.b > m.a * m.b ? q : m);
       const fs = [0, 1, 2, 3].sort((p, q) => faceOf(b, q).w - faceOf(b, p).w);
       for (const f of fs) { const F = faceOf(b, f), [X, Z] = onFace(b, F, 0, .8 * M);
@@ -430,32 +465,18 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
         }
       }
     }
-    if (ST.vary) for (const [k, list] of byBuilding) {   // houses that differ (STYLES vary)
-      const VY = ST.vary, b0 = list[0], h0 = hash(b0.bx * 1.7 + .3, b0.bz * 2.3 + .1), sv = VY.storey * V;
-      const roofs = Object.entries(VY.roofs), tot = roofs.reduce((a, [, w]) => a + w, 0); let u = hash(b0.bz * 3.1, b0.bx * .7) * tot, form = roofs[0][0];
-      for (const [f_, w] of roofs) { if (u < w) { form = f_; break; } u -= w; }
+    if (ST.vary) for (const [k, list] of byBuilding) {   // a ground floor's open faces: shops, and over some a pent roof of tiles (STYLES vary)
+      const VY = ST.vary;
       for (const b of list) {
-        const y0 = floor(b), have = Math.max(1, Math.round((top(b) - y0) / sv));
-        const add = h0 < VY.tall ? Math.min(VY.most - have, VY.add[0] + Math.floor(hash(b.x * 5.3, b.z * 1.9) * (VY.add[1] - VY.add[0] + 1))) : 0;
-        for (let f = 0; f < 4; f++) {   // the ground floor's open faces: shops under a pent roof
+        if (b.syn) continue;   // (a front raised by `vary`: its ground floor is the body's below it)
+        const y0 = floor(b);
+        for (let f = 0; f < 4; f++) {
           const F = faceOf(b, f), [px, pz] = onFace(b, F, 0, 1.2 * M); if (inside(px, y0 + 1 * V, pz, b) || F.w < 4 * M) continue;
           if (VY.shops) { const S_ = VY.shops, n = Math.max(1, Math.floor(F.w / (S_.every * M)));
             for (let i = 0; i < n; i++) { const [X, Z] = onFace(b, F, (i + .5 - n / 2) * S_.every * M, .05 * M); put('shop', b, X, y0 + shear(b, X, Z), Z, F.phi, S_.w * M, S_.h * V, 1, 0, .8 + .3 * hash(X, Z)); } }
-          if (VY.pent && (add || hash(b.x + f, b.z) < .5)) { const P_ = VY.pent, [X, Z] = onFace(b, F, 0, P_.out * M / 2);
+          if (VY.pent && hash(b.x + f, b.z) < .5) { const P_ = VY.pent, [X, Z] = onFace(b, F, 0, P_.out * M / 2);
             put('pent', b, X, y0 + (VY.shops ? VY.shops.h : 2.4) * V + .5 * V + shear(b, X, Z), Z, F.phi, F.w, P_.t * V, P_.out * M, P_.tilt); }
         }
-        if (!add) continue;
-        // the storeys added: a box over the body (its own roof inside it), small windows, a roof of its own
-        const rf = R.find(r => r.t === 1 && tiled(r) && Math.hypot(r.x - b.x, r.z - b.z) < .5 * Math.min(b.a, b.b)), old = rf ? rf.y0 + rf.c - top(b) : 0;
-        const Hn = Math.max(add * sv, old + .2 * V), [X0, Z0] = world(b, 0, 0), yb = top(b) + shear(b, X0, Z0);
-        put('upper', b, X0, yb - .05 * V, Z0, -b.rot, b.a + .04 * M, Hn + .05 * V, b.b + .04 * M);
-        if (VY.window) for (let f = 0; f < 4; f++) { const F = faceOf(b, f), W_ = VY.window, n = Math.max(1, Math.floor(F.w / (W_.every * M)));
-          for (let st = 0; st < add; st++) for (let i = 0; i < n; i++) { const [X, Z] = onFace(b, F, (i + .5 - n / 2) * W_.every * M, .05 * M), yw = yb + st * sv + .4 * sv;
-            if (!inside(X + (X - X0) * .02, yw, Z + (Z - Z0) * .02, b)) put('window', b, X, yw + shear(b, X, Z) - shear(b, X0, Z0), Z, F.phi, W_.w * M, W_.h * V, 1, 0, .8); } }
-        const along = b.a >= b.b, len = along ? b.a : b.b, dep = along ? b.b : b.a, phi = -b.rot + (along ? 0 : Math.PI / 2), o = VY.over * M, yr = yb + Hn, rise = dep * VY.rise * hex;
-        if (form === 'hip') put('hip', b, X0, yr, Z0, phi, len + 2 * o, rise, dep + 2 * o);
-        else if (form === 'gable') { put('hallroof', b, X0, yr, Z0, phi, len + 2 * o, rise, dep + 2 * o); put('ridge', b, X0, yr + rise, Z0, phi, len + 2 * o, .4 * V, .5 * M); }
-        else put('lean', b, X0, yr, Z0, phi + (hash(b.x, b.z * 7) < .5 ? 0 : Math.PI), len + 2 * o, rise * .6, dep + 2 * o);
       }
     }
     if (ST.court) for (const [k, list] of byBuilding) {   // a court's inside (STYLES court)

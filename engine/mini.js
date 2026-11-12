@@ -370,7 +370,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   const DET = prims ? new Map() : null;
   const colsOf = pal => {   // the detail's colours in a palette
     const dcols = { ...(pal.detail || PALETTES.roman.detail), hallroof: (x, z) => roofOf(pal, x, z).multiplyScalar(.93), eaveslab: (x, z) => roofOf(pal, x, z).multiplyScalar(.93),
-      hip: (x, z) => roofOf(pal, x, z), lean: (x, z) => roofOf(pal, x, z).multiplyScalar(.96), pent: (x, z) => roofOf(pal, x, z).multiplyScalar(.9),
+      hip: (x, z) => roofOf(pal, x, z), gableZ: (x, z) => roofOf(pal, x, z), lean: (x, z) => roofOf(pal, x, z).multiplyScalar(.96), pent: (x, z) => roofOf(pal, x, z).multiplyScalar(.9),
       upper: (x, z) => new THREE.Color(pal.walls[Math.floor(hash(x * 3.7, z * 1.3) * pal.walls.length) % pal.walls.length]), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.tile), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.verge),
       eave: (x, z) => roofOf(pal, x, z), ridge: (pal.detail || {}).ridge || '#9a9da0' };   // (the eaves in the roof's own tile; the ridge a lighter grey)   // (a roof's tiles in its own colour, lighter, its gable ridges darker: detail.js FLAT)
     for (const [f, v] of Object.entries(pal.faces || PALETTES.roman.faces)) {   // (a wall's face: its courses a shade darker, a stone wall's bands brick; a gate's parts the wall's)
