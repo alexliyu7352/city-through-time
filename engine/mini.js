@@ -44,17 +44,27 @@ const BUILT = { value: null }, TREES = { value: null }, PLATE = { value: new THR
 function builtMask(eras, PW, PD, scale, reach, treeR) {   // (eras: S.eras; a building counts once its era's front has raised it halfway: uEraT past its rank's start)
   const meshes = eras.map(e => e.mesh), up = e => e.u && e.u.uEraT ? e.u.uEraT.value : 1e9, span = e => e.u && e.u.uEraSpan ? e.u.uEraSpan.value : 0, grow = e => e.u && e.u.uEraGrow ? e.u.uEraGrow.value : 0;
   const key = eras.filter(e => e.mesh.visible).map(e => e.mesh.uuid + ':' + up(e).toFixed(2)).join(); if (key === BUILT_K) return; BUILT_K = key; PLATE.value.set(PW, PD);
-  const N = 1024, mk = c => { c.width = c.height = N; const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, N, N); g.fillStyle = '#fff'; return g; };
+  const N = 2048, mk = c => { c.width = c.height = N; const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, N, N); g.fillStyle = '#fff'; return g; };
   const gb = mk(BUILT_C), gt = mk(TREES_C), r = Math.max(1, reach * scale / PW * N), rt = Math.max(1, treeR * scale / PW * N);
   for (const e of eras) { const m = e.mesh; if (!m.visible) continue; const C = m.geometry.attributes.aCtr, D = m.geometry.attributes.aData; if (!C) continue;
-    let lx = 1e9, lz = 1e9; const T_ = up(e), sp = span(e), gr = grow(e);
-    for (let i = 0; i < C.count; i += 6) { const x = C.getX(i), z = C.getY(i); if (x === lx && z === lz) continue; lx = x; lz = z;
-      if (D && T_ < D.getZ(i) * sp + gr * .5) continue;   // (not risen yet)
-      const pt = D ? Math.round(D.getY(i)) : 0, X = (x / PW + .5) * N, Z = (z / PD + .5) * N;
-      if (pt === 4) { gt.beginPath(); gt.arc(X, Z, rt, 0, 6.2832); gt.fill(); continue; }
-      if (pt !== 0 && pt !== 1 && pt !== 11) continue;   // (the buildings and their platforms: not walls, roads, earth or water)
-      gb.beginPath(); gb.arc(X, Z, r, 0, 6.2832); gb.fill(); } }
-  for (const [g, c, b] of [[gb, BUILT_C, r * 1.6], [gt, TREES_C, rt * 1.2]]) { g.filter = `blur(${b.toFixed(1)}px)`; g.drawImage(c, 0, 0); g.filter = 'none'; }   // (wide: a lone building outside the city fades under the threshold, a quarter stays)
+    let lx = 1e9, lz = 1e9; const T_ = up(e), sp = span(e), gr = grow(e), u = e.u || {}, v_ = k => u[k] ? u[k].value : 0;
+    const fO = u.uEraO ? u.uEraO.value : { x: 0, y: 0 }, fR = v_('uEraFallR'), fIn = v_('uEraFallIn'), fW = v_('uEraFallW'), LO = u.uLossO ? u.uLossO.value : [];
+    const fall = (cx, cz, o, R, fin, R1) => { const dd = Math.hypot(cx - o.x, cz - o.y), a = fin > .5 ? (dd - R) / Math.max(R1 - R, 1e-5) : (R - dd) / Math.max(R - R1, 1e-5), t = Math.min(1, Math.max(0, a)); return t * t * (3 - 2 * t); };   // (studio.js fallK: a city taken back, a part lost)
+    const P_ = m.geometry.attributes.position; let bx0 = 1e9, bz0 = 1e9, bx1 = -1e9, bz1 = -1e9, i0 = 0;
+    const flush = (i) => {   // (the record that ended at vertex i: its footprint, if it stands)
+      if (i0 >= i) return; const x = C.getX(i0), z = C.getY(i0);
+      if (D && T_ < D.getZ(i0) * sp + gr * .5) return;   // (not risen yet)
+      if (fall(x, z, fO, fR, fIn, fW) > .5) return;   // (taken back)
+      if (D) { const w = D.getW(i0), k = Math.round(w - 4); if (k >= 0 && k < LO.length && fall(x, z, LO[k], u.uLossR.value[k], u.uLossIn.value[k], u.uLossW.value[k]) > .5) return; }   // (a part lost)
+      const pt = D ? Math.round(D.getY(i0)) : 0, yr = D ? D.getX(i0) : 0;
+      if (pt === 4) { gt.beginPath(); gt.arc((x / PW + .5) * N, (z / PD + .5) * N, rt, 0, 6.2832); gt.fill(); return; }
+      if (!(pt === 0 || pt === 1 || pt === 11 || (pt === 7 && !(yr > 9.5 && yr < 49.5)))) return;   // (buildings, platforms, plazas and yards: not walls, roads, earth or water)
+      const e = reach * scale; gb.fillRect((bx0 - e) / PW * N + N / 2, (bz0 - e) / PD * N + N / 2, (bx1 - bx0 + 2 * e) / PW * N, (bz1 - bz0 + 2 * e) / PD * N); };
+    for (let i = 0; i < C.count; i++) { const x = C.getX(i), z = C.getY(i);
+      if (x !== lx || z !== lz) { flush(i); lx = x; lz = z; i0 = i; bx0 = bz0 = 1e9; bx1 = bz1 = -1e9; }
+      const px_ = P_.getX(i), pz_ = P_.getZ(i); if (px_ < bx0) bx0 = px_; if (px_ > bx1) bx1 = px_; if (pz_ < bz0) bz0 = pz_; if (pz_ > bz1) bz1 = pz_; }
+    flush(C.count); }
+  for (const [g, c, b] of [[gb, BUILT_C, r * 1.1], [gt, TREES_C, rt * 1.2]]) { g.filter = `blur(${b.toFixed(1)}px)`; g.drawImage(c, 0, 0); g.filter = 'none'; }   // (wide: a lone building outside the city fades under the threshold, a quarter stays)
   for (const [U_, c] of [[BUILT, BUILT_C], [TREES, TREES_C]]) { if (!U_.value) { U_.value = new THREE.CanvasTexture(c); U_.value.colorSpace = THREE.NoColorSpace; U_.value.flipY = false; } U_.value.needsUpdate = true; }   // (flipY off: rows as drawn, z down the canvas, as the plate's uv)
 }
 // the base every material stands on: a grey slate plate, its grain and veins, a sheen where the light grazes it; the land's rise in
@@ -63,8 +73,8 @@ const SLATE = { slate: [.31, .31, .31], step: 6, edge: 1.45, resin: [.20, .14, .
 // the maquette's base: a photographed cleft slate (engine/tex/slate: Poly Haven dark_rock_02, CC0), its colour scaled to `slate`
 // (linear) over its own mean, `size` m a repeat (and 6.3 times that, turned, over it), its normal `bump` strong; the sheets of the
 // land's rise `step` m, their edges a faint `edge`; the water a glossy resin
-const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.81, .79, .75], reach: 60 }, flock: { col: [.20, .27, .14], tree: 16, bank: .8, slope: .8, edge: .7, land: .35, cell: 12 },
-  land: { olive: [.56, .55, .42], ochre: [.66, .59, .44], field: 140, rock: [.16, .32], rockC: [.60, .57, .52], scrub: [.30, .33, .20] }, bump: 1.6, ground: '#bdb19c', step: 6, edge: 1.12, resin: [.60, .66, .70] };
+const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.81, .79, .75], reach: 24 }, flock: { col: [.20, .27, .14], tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 12 },
+  land: { olive: [.56, .55, .42], ochre: [.66, .59, .44], field: 140, rock: [.5, .8], rockC: [.47, .44, .39], scrub: [.30, .33, .20] }, bump: 1.6, ground: '#bdb19c', step: 6, edge: 1.12, resin: [.60, .66, .70] };   // (land rock: only the steep faces, the slope as drawn)
 // the colour film's picture, as a photograph of a model on a table: a warm key from a sun fixed in the world, low and to the side
 // of where the film's camera mostly looks from (sunSide degrees round from it: shadows fall across the frame and toward the eye,
 // where they read, and an orbit turns them as a real one would), a cool fill from the sky, the shadow fitted to the ground the
@@ -93,7 +103,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
   material: null,
   looks: {
     // a museum's architectural maquette: plaster walls, light wood roofs and landmarks, a dark slate base, water as dark resin
-    maquette: { pic: { sunEl: 50, rake: 22, relief: 3, sun: .95, sunC: '#ffe9cc', sky: .72, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
+    maquette: { pic: { sunEl: 50, rake: 22, relief: 3, sun: 1.12, dof: { k: 1.6, max: 24, band: .2, two: true, at: 1.0, Ak: .075 }, sunC: '#ffe9cc', sky: .55, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
       roman: { walls: ['#efe9dc', '#e9e1d0', '#f2ede2', '#e4dbc8', '#ece4d4'], roofs: ['#a9a59e', '#9e9a93', '#b4aea4', '#c08d72', '#b9826a', '#cfc3ad', '#a39d94', '#c69a80'],
         parts: { 1: '#f6f3ec', 2: '#cfc5b3', 4: '#2e4424', 7: '#c6c2ba', 9: '#a9a59e', 10: '#c6c2ba', 11: '#cdc8bf' }, tree: { dark: .55, sat: .7 }, flags: false,
         detail: { floor: '#e6d5b6', joint: '#3c3e42', ridge: '#cfb184', shop: '#5a4a3a', base: '#d3c6ac' } } },
@@ -477,7 +487,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     if (FL.at && FL.at.distanceTo(target) <= d * .3 && Math.abs(Math.log(d / FL.dAt)) <= .3) return;
     if (FL.mesh) { scene.remove(FL.mesh); FL.mesh.geometry.dispose(); FL.mesh.material.dispose(); FL.mesh = null; }
     FL.at = target.clone(); FL.dAt = d;
-    const N = 1024, bd = BUILT_C.getContext('2d').getImageData(0, 0, N, N).data, td = TREES_C.getContext('2d').getImageData(0, 0, N, N).data;
+    const N = BUILT_C.width, bd = BUILT_C.getContext('2d').getImageData(0, 0, N, N).data, td = TREES_C.getContext('2d').getImageData(0, 0, N, N).data;
     const px = (D_, x, z) => { const u = Math.floor((x / PW + .5) * N), v = Math.floor((z / PD + .5) * N); return u < 0 || v < 0 || u >= N || v >= N ? 0 : D_[(v * N + u) * 4] / 255; };
     const h2 = (i, j, k) => { const t = Math.sin(i * 127.1 + j * 311.7 + k * 74.7) * 43758.5453; return t - Math.floor(t); };
     const vn = (x, y) => { const i = Math.floor(x), j = Math.floor(y), fx = x - i, fy = y - j, a = h2(i, j, 9), b = h2(i + 1, j, 9), c = h2(i, j + 1, 9), e = h2(i + 1, j + 1, 9), sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy); return a + (b - a) * sx + (c - a) * sy + (a - b - c + e) * sx * sy; };
@@ -490,9 +500,9 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
       const m = [x / scale, z / scale], cl = sm(.42, .56, vn(m[0] / 52, m[1] / 52) * .65 + vn(m[0] / 17, m[1] / 17) * .35);
       const e = 2 * c, g0 = S.ground(x, z), sl = Math.hypot(S.ground(x + e, z) - g0, S.ground(x, z + e) - g0) / e;
       const bank = !wet(x, z) && (wet(x + 3 * c, z) || wet(x - 3 * c, z) || wet(x, z + 3 * c) || wet(x, z - 3 * c)) ? 1 : 0;
-      let k = Math.max(px(td, x, z) * (.6 + .4 * cl), cl * Math.max(F.bank * bank, F.slope * sm(.12, .3, sl), F.edge * sm(.08, .25, tw) * (1 - sm(.72, .9, tw))), F.land * cl * (1 - sm(.2, .4, tw)));
+      let k = Math.max(px(td, x, z) * (.5 + .5 * cl), F.bank * bank * (.55 + .45 * cl), cl * Math.max(F.slope * sm(.12, .3, sl), F.edge * sm(.08, .25, tw) * (1 - sm(.72, .9, tw))), F.land * sm(.75, .9, cl) * (1 - sm(.2, .4, tw)));   // (groves with clearings; the banks lined; in the open country only the heart of a grove)
       k *= 1 - sm(.7, .8, tw); if (h2(i, j, 3) >= k) continue;
-      out.push([x, g0, z, cellM * (.45 + .3 * h2(i, j, 4)) * scale, h2(i, j, 5)]); }
+      out.push([x, g0, z, cellM * .42 * (.6 + 1. * Math.pow(h2(i, j, 4), 1.4)) * (.8 + .4 * cl) * scale, h2(i, j, 5)]); }   // (a crown .6 to 1.6 times, the bigger in a grove's heart)
     const geo = new THREE.IcosahedronGeometry(1, 2).scale(1, .82, 1), mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95 }), mesh = new THREE.InstancedMesh(geo, mat, Math.max(out.length, 1));
     const M4 = new THREE.Matrix4(), col = new THREE.Color(), base = new THREE.Color().setRGB(...F.col.map(v => Math.pow(v, 2.2)));
     out.forEach(([x, y, z, r, h], n) => { M4.compose(new THREE.Vector3(x, y + r * .7, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), h * 6.28), new THREE.Vector3(r, r, r)); mesh.setMatrixAt(n, M4); mesh.setColorAt(n, col.copy(base).multiplyScalar(.75 + .5 * h)); });
@@ -692,7 +702,7 @@ function baseGLSL(B, scale, town = false) {
     sl_ *= 1. + .05 * clamp(floor(y_ - ${(20 / B.step).toFixed(2)}), 0., 4.);   // (each sheet up a little lighter)
     sl_ *= mix(1., ${B.edge.toFixed(2)}, (1. - smoothstep(w_ * .8, w_ * 1.6, c_)) * step(w_, .15));   // (its edge, faint, close only)
     slateN_ = texture2D(uSlateN, a_).xyz * 2. - 1.; slateR_ = texture2D(uSlateR, a_).r;
-    ${B.ground_in ? `{ float tw_ = texture2D(uBuilt, vXZ / uPlateM + .5).r, k_ = smoothstep(.42, .62, tw_), px_ = length(fwidth(m_));   // (px_: metres a pixel)
+    ${B.ground_in ? `{ float tw_ = texture2D(uBuilt, vXZ / uPlateM + .5).r, k_ = smoothstep(.5, .72, tw_), px_ = length(fwidth(m_));   // (px_: metres a pixel)
       float hs_ = length(vec2(dFdx(vFxW.y), dFdy(vFxW.y))) / max(length(vec2(dFdx(vFxW.x), dFdy(vFxW.x)) + vec2(dFdx(vFxW.z), dFdy(vFxW.z))), 1e-6), rk_ = 0.;   // (the ground's slope as drawn; rk_ its rock)
       ${B.land ? `// the countryside: the model's own land, a muted olive and ochre flock, fields faintly; on the steep slopes the rock (the photo: its light grey, its own normal) with scrub
       { float fq_ = fxLn(floor(m_ / ${B.land.field.toFixed(1)}) * 1.7);   // (a field a cell, faint)
@@ -701,7 +711,7 @@ function baseGLSL(B, scale, town = false) {
         vec3 rc_ = pow(${v3(B.land.rockC)}, vec3(2.2)) * mix(l1_, ${B.mean.toFixed(3)}, fd_ * .6) / ${B.mean.toFixed(3)};
         float sc_ = rk_ * smoothstep(.55, .7, fxLn(m_ / 4.3) * .7 + fxLn(m_ / 1.4) * .3);   // (scrub on the rock)
         ld_ = mix(ld_, rc_, rk_); ld_ = mix(ld_, pow(${v3(B.land.scrub)}, vec3(2.2)), sc_ * .8);
-        sl_ = ld_; slateN_ = normalize(mix(vec3(0., 0., 1.), slateN_, .35 + .65 * rk_)); slateR_ = mix(.95, slateR_, rk_); }` : ''}
+        sl_ = ld_; slateN_ = normalize(mix(vec3(0., 0., 1.), slateN_, rk_)); slateR_ = mix(.95, slateR_, rk_); }   // (the photo's relief on the rock only: on open land its broad undulation read as cloud)` : ''}
       vec3 pl_ = pow(${v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1));
       sl_ = mix(sl_, pl_, k_ * ${B.land ? '(1. - rk_ * (1. - smoothstep(.85, .97, tw_)))' : '1.'}); slateR_ = mix(slateR_, .9, k_); slateN_ = mix(slateN_, vec3(0., 0., 1.), k_ * ${B.land ? '(1. - rk_)' : '1.'});${B.flock ? `
       { // trees: round crowns in groves (a crown a cell of ${B.flock.cell} m, there by the groves' density): where the generator's trees stand, on the banks, the slopes and the open ground at the city's edge
@@ -796,7 +806,7 @@ ${FILM_PIC.material === 'clay' ? `
 ` : ''} }
     else if (${MAT ? 'true' : 'false'} && n_.y > .97 && (abs(pt_ - 1.) < .5 || abs(pt_ - 11.) < .5) && (vWP.y - vBase) / uScaleM < 9.) {   // (a material's: a landmark's open ground, a plaza, paved in stone slabs)
       vec2 e_ = abs(fract(vWP.xz / uScaleM / 3.2) - .5) * 2.; float h_ = fract(sin(dot(floor(vWP.xz / uScaleM / 3.2), vec2(12.99, 78.23))) * 43758.55);
-      diffuseColor.rgb = mix(vec3(dot(diffuseColor.rgb, vec3(.2126, .7152, .0722))), diffuseColor.rgb, ${FILM_PIC.material === 'clay' ? '.45' : '0.'}) * ${FILM_PIC.material === 'clay' ? '.62' : '.78'} * (.92 + .14 * h_) * (1. - .35 * smoothstep(.94, .99, max(e_.x, e_.y)) * (1. - smoothstep(.3, .7, px_ / 3.2))); }
+      diffuseColor.rgb = ${FILM_PIC.material === 'clay' ? 'mix(vec3(dot(diffuseColor.rgb, vec3(.2126, .7152, .0722))), diffuseColor.rgb, .45) * .62' : 'vec3(.55, .53, .49)'} * (.95 + .08 * h_) * (1. - ${FILM_PIC.material === 'clay' ? '.35' : '.12'} * smoothstep(.965, .995, max(e_.x, e_.y)) * (1. - smoothstep(.3, .7, px_ / 3.2))); }
     else if (pt_ > 6.5 && pt_ < 7.5 && ${FILM_PIC.material === 'clay' ? 'true' : 'false'}) { vec2 q_ = vWP.xz / uScaleM / .55, c_ = floor(q_ + .5 * vec2(0., mod(floor(q_.x), 2.)));   // (clay: cobbles)
       vec2 f_ = fract(q_ + .5 * vec2(0., mod(floor(q_.x), 2.))) - .5; float h_ = fract(sin(dot(c_, vec2(12.99, 78.23))) * 43758.55);
       diffuseColor.rgb *= (.8 + .3 * h_) * (1. - .45 * smoothstep(.32, .5, max(abs(f_.x), abs(f_.y))) * (1. - smoothstep(.3, .7, px_ / .55))) * (1.1 - 1.2 * dot(f_ + vec2(.12, .12), f_ + vec2(.12, .12)));   // (each stone domed, lit from one side)
@@ -805,7 +815,7 @@ ${FILM_PIC.material === 'clay' ? `
       diffuseColor.rgb *= 1. - .16 * smoothstep(.86, .97, max(e_.x, e_.y)) * (1. - smoothstep(.3, .7, px_ / 3.)); } }`);
     if (u) sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform vec4 uPool; uniform sampler2D uBuilt; uniform vec2 uPlateB;').replace('#include <color_fragment>', `#include <color_fragment>
   diffuseColor.rgb *= mix(1., uPool.w, smoothstep(uPool.z * .35, uPool.z * 1.05, length(vWP.xz - uPool.xy)));   // (the light pool, FILM_PIC pool)${MAT && MAT.base && MAT.base.ground_in ? `
-  { float bt_ = smoothstep(.3, .55, texture2D(uBuilt, vWP.xz / uPlateB + .5).r), pv_ = abs(vData.y - 7.) < .5 || abs(vData.y - 10.) < .5 ? 1. : 0.;
+  { float bt_ = smoothstep(.3, .55, texture2D(uBuilt, vWP.xz / uPlateB + .5).r), pv_ = abs(vData.y - 7.) < .5 || abs(vData.y - 10.) < .5 || abs(vData.y - 11.) < .5 ? 1. : 0.;   // (roads, earth and the platforms of lots: out of the built area they are the land)
     diffuseColor.rgb = mix(diffuseColor.rgb, pow(${MAT.base.land ? 'vec3(' + MAT.base.land.olive.map(v => v.toFixed(3)).join(', ') + ')' : 'vec3(' + MAT.base.slate.map(v => Math.pow(v, 1 / 2.2).toFixed(3)).join(', ') + ')'}, vec3(2.2)) * ${MAT.base.land ? '.92' : '1.3'}, pv_ * (1. - bt_)); }   // (a road out in the country laid in the land, not a line on it)` : ''}
   float burn_ = uEraBurn, burnt_ = uEraBurn, char_ = uEraBurn; for (int k = 0; k < ${nL}; k++) if (abs(vData.w - 4. - float(k)) < .5) { burn_ = max(burn_, uLossBurn[k]); char_ = max(char_, uLossBurn[k]); burnt_ = max(burnt_, uLossBurnt[k]); }   // (studio.js eraBurnK; burnt: a part a fire took)${fire ? `
   if (uEraBurn > 0.) { float e_ = uNow - ign(aCtrV, fireHash(aCtrV)); char_ = smoothstep(0., 2.5, e_); burn_ = smoothstep(0., .6, e_) * (1. - .7 * smoothstep(2.5, 5., e_)); }   // (the fire's front: studio.js fireByDay)` : ''}
