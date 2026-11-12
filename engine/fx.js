@@ -188,12 +188,12 @@ float fxWn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f);
 float fxWoodsN(vec2 m){ return fxWn(m / 520.) * .7 + fxWn(m / 110.) * .3; }
 // the colour film's woods (meadow): a few large rounded woods with clear edges, as a model's are laid, from sines (no grid in their
 // shapes, and meadowWoods in JS finds the same ones for the trees)
-float fxMeadowWoods(vec2 m){ vec2 q = m + 220. * vec2(sin(m.y / 1700. + 1.3), sin(m.x / 1900. + 4.1));
-  return .5 + .32 * sin(q.x / 1150.) * sin(q.y / 980. + 1.7) + .12 * sin(q.x / 470. + 2.3) * sin(q.y / 520. + .4) + .06 * sin((q.x + q.y) / 260. + 5.) * sin((q.x - q.y) / 300.); }
+float fxMeadowWoods(vec2 m){ vec2 q = m + 160. * vec2(sin(m.y / 900. + 1.3), sin(m.x / 1000. + 4.1));
+  return .5 + .22 * sin(q.x / 820.) * sin(q.y / 700. + 1.7) + .2 * sin(q.x / 260. + 2.3) * sin(q.y / 290. + .4) + .08 * sin((q.x + q.y) / 120. + 5.) * sin((q.x - q.y) / 140.); }
 float fxDetail(vec2 m){ return 1. + .2 * (fxLn(m / 610. + 3.1) - .5) + .16 * (fxLn(m / 140. + 7.7) - .5) + .12 * (fxLn(m / 23. + 1.3) - .5); }`;
   const wood = (lo, hi, k) => `
-  float wood = max(steep, ${meadow ? 'smoothstep(.6, .655, fxMeadowWoods(m_))' : `smoothstep(${lo}, ${hi}, fxWoodsN(m_))`});
-  land = mix(land, ${v3(p.wood)} * (.82 + .36 * fxLn(m_ / 26.)), wood * ${woods ? k : '0.'});`;
+  float wood = max(steep, ${meadow ? 'smoothstep(.64, .69, fxMeadowWoods(m_))' : `smoothstep(${lo}, ${hi}, fxWoodsN(m_))`});
+  land = mix(land, ${v3(p.wood)} * (.82 + .36 * fxLn(m_ / 26.)), wood * ${woods ? (meadow ? '.22' : k) : '0.'});`;
   if (style === 'quiet') return head + `
 vec3 fxLand(vec2 m_, float steep){
   float n1 = fxLn(m_ / 2300.), n2 = fxLn(m_ / 610. + 3.1), n3 = fxLn(m_ / 140. + 7.7);
@@ -201,14 +201,14 @@ vec3 fxLand(vec2 m_, float steep){
   vec3 land = mix(grass, earth, smoothstep(.2, .9, n1) * ${earth.toFixed(3)});   // (soil and grass shading into each other over kilometres)${meadow ? `
   { // (meadow: farmland in strips where the land is farmed, as a model's: blocks a few hundred metres across, each its own way,
     // cut into long parcels, each a crop in rows, a darker edge between; the rows and edges fade where they are under a pixel)
-    float farm = smoothstep(.44, .56, fxLn(m_ / 1900. + 5.3) * .7 + fxLn(m_ / 620. + 1.7) * .3);
+    float farm = smoothstep(.5, .56, fxLn(m_ / 2200. + 5.3) * .7 + fxLn(m_ / 700. + 1.7) * .3) * step(.42, fxLh(floor(m_ / 1100.) + 9.));   // (farmed blocks among meadow)
     if (farm > .001) {
-      vec2 bi = floor(m_ / 430.); float an = (fxLh(bi + 17.) > .5 ? 1.5708 : 0.) + (fxLh(floor(m_ / 2600.) + 5.) - .5) * .5 + (fxLh(bi + 3.) - .5) * .12;   // (a block lies one of two ways, as its region's land does)
-      vec2 q = mat2(cos(an), sin(an), -sin(an), cos(an)) * m_, pq = q / vec2(170., 60.); float ph = fxLh(floor(pq) + bi * 31.7);
+      vec2 bi = floor(m_ / 1100.); float an = (fxLh(bi + 17.) > .5 ? 1.5708 : 0.) + (fxLh(floor(m_ / 3300.) + 5.) - .5) * .5 + (fxLh(bi + 3.) - .5) * .12;   // (a block lies one of two ways, as its region's land does)
+      vec2 q = mat2(cos(an), sin(an), -sin(an), cos(an)) * m_, pq = q / vec2(340., 110.); float ph = fxLh(floor(pq) + bi * 31.7);
       vec3 crop = ph < .42 ? ${v3(p.grass1)} * vec3(1.02, 1.06, .97) : ph < .74 ? mix(${v3(p.grass0)}, ${v3(p.grass1)}, .35) : ph < .9 ? mix(${v3(p.grass1)}, ${v3(p.straw)}, .35) : mix(${v3(p.straw)}, ${v3(p.grass1)}, .25);   // (crops of a season, close in tone: their rows carry the texture)
       float pw = max(fwidth(q.x), fwidth(q.y));
-      crop *= 1. + .18 * (sin(q.y * .8976) * .5) * (1. - smoothstep(1.5, 3.5, pw));   // (rows 7 m apart)
-      vec2 fe = min(fract(pq), 1. - fract(pq)) * vec2(170., 60.); vec2 be = min(fract(m_ / 430.), 1. - fract(m_ / 430.)) * 430.;
+      crop *= 1. + .2 * (sin(q.y * .6283) * .5) * (1. - smoothstep(2., 4.5, pw));   // (rows 10 m apart)
+      vec2 fe = min(fract(pq), 1. - fract(pq)) * vec2(340., 110.); vec2 be = min(fract(m_ / 1100.), 1. - fract(m_ / 1100.)) * 1100.;
       crop = mix(crop, ${v3(p.grass0)} * .6, (1. - smoothstep(1.5, 1.5 + pw * 1.5, min(fe.x, fe.y))) * .5 * (1. - smoothstep(6., 14., pw)));   // (a parcel's edge)
       crop = mix(crop, ${v3(p.wood)} * .9, (1. - smoothstep(3., 3. + pw * 1.5, min(be.x, be.y))) * .7 * (1. - smoothstep(8., 20., pw)));   // (a block's hedge)
       land = mix(land, crop, farm); } }` : ''}
@@ -252,8 +252,8 @@ function woodsNoise(x, y) { const i = Math.floor(x), j = Math.floor(y); let u = 
   const a = woodsHash(i, j), b = woodsHash(i + 1, j), c = woodsHash(i, j + 1), d = woodsHash(i + 1, j + 1);
   return (a + (b - a) * u) + ((c + (d - c) * u) - (a + (b - a) * u)) * v; }
 export function woodsAt(mx, mz, lo = .62, hi = .7) { return THREE.MathUtils.smoothstep(woodsNoise(mx / 520, mz / 520) * .7 + woodsNoise(mx / 110, mz / 110) * .3, lo, hi); }
-export function meadowWoods(mx, mz) { const S = Math.sin, qx = mx + 220 * S(mz / 1700 + 1.3), qz = mz + 220 * S(mx / 1900 + 4.1);   // (fxMeadowWoods)
-  return THREE.MathUtils.smoothstep(.5 + .32 * S(qx / 1150) * S(qz / 980 + 1.7) + .12 * S(qx / 470 + 2.3) * S(qz / 520 + .4) + .06 * S((qx + qz) / 260 + 5) * S((qx - qz) / 300), .6, .655); }
+export function meadowWoods(mx, mz) { const S = Math.sin, qx = mx + 160 * S(mz / 900 + 1.3), qz = mz + 160 * S(mx / 1000 + 4.1);   // (fxMeadowWoods)
+  return THREE.MathUtils.smoothstep(.5 + .22 * S(qx / 820) * S(qz / 700 + 1.7) + .2 * S(qx / 260 + 2.3) * S(qz / 290 + .4) + .08 * S((qx + qz) / 120 + 5) * S((qx - qz) / 140), .64, .69); }
 
 // ---------------------------------------------------------------- trees
 // where something stands, seen from above round a centre: an orthographic render of the meshes' tops into a float target -> a test
@@ -327,7 +327,7 @@ function gridTrees(scene, ins, out, kinds, open, wet, PW, PD, centre, R, count, 
     if ((x - centre.x) ** 2 + (z - centre.z) ** 2 > R * R || Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2 || !stands(i, j, x, z) || wet(x, z) || !open(x, z) || (T.clear && !T.clear(x, z))) continue;
     const wood = inWood(i, j, x, z); if (wood && T.clearWood && !open(x, z, T.clearWood * scale)) continue;   // (a wood's tree not among the houses)
     const ki = hash(i, j, 6) < T.cypress ? 1 : 0, k = kinds[ki], [ic, it] = ins[ki]; if (ic.count >= ic.instanceMatrix.count) continue;
-    const y = T.ground ? T.ground(x, z) : 0, sc = (.7 + hash(i, j, 7) * .7) * T.size * (wood && T.woodSize ? T.woodSize : 1);
+    const y = T.ground ? T.ground(x, z) : 0, sc = (.7 + hash(i, j, 7) * .7) * T.size * (wood && T.woodSize ? T.woodSize : 1) * (T.grow ? Math.min(2.4, Math.pow(rank, -.5)) : 1);   // (T.grow: fewer trees afar, each the bigger, a wood's cover kept)
     M.compose(p.set(x, y, z), q.setFromAxisAngle(up, hash(i, j, 9) * 6.28), s.set(sc, sc * (.85 + hash(i, j, 10) * .4), sc));
     ic.setMatrixAt(ic.count, M); it.setMatrixAt(it.count, M); ic.setColorAt(ic.count, col.setHSL(k.hue[0] + (T.hue || 0) + hash(i, j, 11) * k.hue[1], .32 + hash(i, j, 12) * .16, (k.l[0] + hash(i, j, 13) * k.l[1]) * T.dark));
     ic.count++; it.count++;

@@ -37,12 +37,15 @@ const FILM_AO = .45;   // (the film without the effects: the occlusion of its ow
 // frame shows (every house and tree on its own hard shadow at any range) and the ambient occlusion full (every crevice and the foot
 // of every wall darker); a lens whose depth of field softens what is nearer as well as farther than the subject; no veil of air
 // over the plate. The land a meadow with fields in strips and woods in clusters of big canopies; trees big enough to read
-const FILM_PIC = { sunEl: 36, sunSide: 75, sun: 1.3, sunC: '#ffd8a6', sky: .68, skyC: '#b2c5e6', skyGround: '#7a7d5c', fogNear: 6, fogFar: 40,
-  ao: 1.0, vignette: .12, sat: 1.06, contrast: .1, dof: { k: 1.6, max: 11, band: .14 },
-  land: { source: 'quiet', scrub: 14, earth: .18, meadow: true }, tree: { size: 1.4, woodSize: 1.6, keep: .06, wood: .97, grid: 16, hue: .06, facets: true, clearWood: 40, count: 150000 },
+const FILM_PIC = { sunEl: 40, sunSide: 75, sun: 1.25, sunC: '#ffdcae', sky: .95, skyC: '#d0d6e2', skyGround: '#9a9578', fogNear: 6, fogFar: 40,
+  ao: 1.0, aoR: [.012, 4, 14], vignette: .12, sat: 1.06, contrast: .1, dof: { k: 1.6, max: 11, band: .14 },   // (aoR: the occlusion's reach, a share of the distance, between these metres)
+  land: { source: 'quiet', scrub: 14, earth: .18, meadow: true }, tree: { size: 1.4, woodSize: 1.6, keep: .06, wood: .97, grid: 16, hue: .06, facets: true, clearWood: 40, count: 150000, grow: true },
+  // a region's land in the film, where its palette's own greens read olive under the sun (LAND_PALETTES): a clean blue-green meadow
+  landTone: { loess: { grass0: [.38, .55, .29], grass1: [.47, .63, .34], straw: [.80, .76, .52], soil: [.70, .62, .46], wood: [.20, .36, .17] } },
+  town: .74,   // a standing city's ground: its palette's earth at this lightness, mostly grey, even (compacted earth, paving)
   // a period city's colours as a model's: roof against wall against ground (dark tile over light rammed earth or plaster, deep
   // terracotta over varied washes), a court paved, a ditch's water dark
-  tone: { chinese: { roofs: ['#4e5257', '#575b60', '#4a4d51', '#5d6064', '#52565b'], walls: ['#e0d0ad', '#d6c39c', '#e8dcc2', '#cdb790', '#ddcba6'], parts: { 5: '#3f6e7a', 7: '#a39c8f', 9: '#4f5358' } },
+  tone: { chinese: { roofs: ['#737980', '#7d8389', '#6e747b', '#848a90', '#787e85'], walls: ['#e0d0ad', '#d6c39c', '#e8dcc2', '#cdb790', '#ddcba6'], parts: { 5: '#3f6e7a', 7: '#a39c8f', 9: '#4f5358' } },
     roman: { roofs: ['#b5502f', '#c2603a', '#a54f37', '#c66d43', '#9c4b38', '#b85c3c', '#c97d50'], walls: ['#f0e6d2', '#e8cfa0', '#dcb48a', '#f3ece0', '#e6c4a6', '#d8a983', '#ecdcb6', '#cba486'] } },
   band: null };   // the tilt-shift band of screen blur (none: the lens's depth of field does it), else { mid, inner, outer, top, bottom }
 // the tilt-shift band (the colour film): blur in one direction per pass, as wide as the distance from the band asks
@@ -77,7 +80,7 @@ const PALETTES = {
     parts: { 1: '#e2d5b8', 2: '#bfa070', 3: '#cbbd9f', 4: '#5f7d3c', 5: '#5d8fa8', 6: '#2f2620', 7: '#d8cbaa', 9: '#5d5955', 10: '#c9a978', 11: '#b8a58a' },
     land: LAND_PALETTES.loess,   // the loess plain: wheat, millet, bare earth
     glb: { stone: '#e3d6b8', dark: '#2b231d', roof: '#5f5b56', sand: '#c8a676' }, cypress: .08, tree: { size: .6, keep: .35, dark: .78 },   // (tree: its size, the share of places kept, its lightness)
-    detail: { base: '#97918a', post: '#7a3524', beam: '#4e3b2e', ridgeEnd: '#4f4b47', coping: '#5b5853', archRing: '#8f8b85', column: '#8a2e20', cornice: '#3a3431', flags: ['#b3262c', '#d9a21b'], sail: '#a8764a' },
+    detail: { base: '#97918a', post: '#7a3524', beam: '#4e3b2e', ridgeEnd: '#4f4b47', coping: '#5b5853', archRing: '#8f8b85', column: '#8a2e20', cornice: '#3a3431', ridge: '#a3a6a8', flags: ['#b3262c', '#d9a21b'], sail: '#a8764a' },
     faces: { earth: '#bfa070', brick: '#8f8b84', stone: '#cac2b3', banded: '#d9cdb6' },
   },
   modern: {
@@ -174,13 +177,14 @@ float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv
   float wr_ = ${wr}, wMask = smoothstep(.35, .65, wr_);
 { vec3 land = fxLandAt(vFxW);${S ? `
   ${o && o.meadow ? '' : 'land = mix(land, fxLandFar(m_), smoothstep(1.2, 5., length(fwidth(m_))));   // (afar: the fields calm into soft large areas once one is under about 40 pixels of the drawn picture, gone by about 12)'}
-  land *= vec3(.5, .93, .98);   // (the film's land a clean meadow green, a sunlit model's: not olive, not lime)` : ''}
+  ${o && o.toned ? '' : 'land *= vec3(.5, .93, .98);   // (the film\'s land a clean meadow green, a sunlit model\'s: not olive, not lime)'}` : ''}
   if (uKind > .5) land = mix(land, vec3(.29, .27, .23), .55);   // a city's ground: paved, dusty${town ? `
   { vec2 uv_ = vXZ / uPlateM + .5, o_ = vec2(${(9).toFixed(1)} * ${scale.toFixed(8)}) / uPlateM;   // a town's ground: beaten-earth yards and lanes, plots in rows (its edge softened over a few cells of the map)
     float tn_ = (townAt(uv_) * 2. + townAt(uv_ + vec2(o_.x, 0.)) + townAt(uv_ - vec2(o_.x, 0.)) + townAt(uv_ + vec2(0., o_.y)) + townAt(uv_ - vec2(0., o_.y))) / 6.;
-    if (tn_ > .001) {   // (worn grass and beaten earth, softly varied: no cells to read as pixels)
-      vec3 yard_ = pow(mix(${p3(land.grass1)} * 1.02, mix(${p3(land.soil)}, ${p3(land.straw)}, .55) * 1.06, smoothstep(.35, .75, .55 * fxLn(m_ / 37.) + .45 * fxLn(m_ / 11. + 4.)) * .7), vec3(2.2)) * mix(vec3(.5, .93, .98), vec3(1.), .4);
-      land = mix(land, yard_, smoothstep(.15, .85, tn_) * .9); } }` : ''}
+    if (tn_ > .001) {   // (an even, light compacted earth: its grain only, at the scale of the material, never in patches)
+      vec3 e_ = mix(${p3(land.soil)}, ${p3(land.straw)}, .5); float l_ = dot(e_, vec3(.2126, .7152, .0722));
+      vec3 yard_ = pow(mix(vec3(l_), e_, .45) * ${(o.town || FILM_PIC.town).toFixed(3)} / l_ * (.97 + .06 * fxLn(m_ / 2.3) + .03 * fxLn(m_ / 7. + 3.)), vec3(2.2));
+      land = mix(land, yard_, smoothstep(.15, .85, tn_)); } }` : ''}
   float deep = smoothstep(.4, .98, wr_);
   vec3 water = mix(vec3(.38, .68, .70), vec3(.17, .42, .56), deep) * (.95 + .1 * fxLn(m_ / 40.));${S && o && o.meadow ? `
   water = mix(vec3(.42, .70, .68), vec3(.09, .30, .46), smoothstep(.45, .95, wr_)) * (.95 + .1 * fxLn(m_ / 40.));   // (shallows by the bank, the deep dark)
@@ -289,8 +293,10 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // the film's own uniforms: when the modern section begins and the data's earliest epoch (filmMaterial), the pall of a burning
   // city's smoke shading the ground beneath it (its centre, reach and strength: render)
   const BACK = { uBackdropY: { value: backdropFrom }, uDataY0: { value: dataFrom }, uPallC: { value: new THREE.Vector2() }, uPallR: { value: 1 }, uPallK: { value: 0 } };
-  const LANDO = FX && FX.land ? FX.land : film ? FILM_PIC.land : null;   // (the film: a meadow and woods, not the palette's patchwork of fields)
-  if (plate) plate.userData.mini = landMaterial(U, PW, PD, ground, FX && FX.land ? landPalette(FX.land) : pal.land, relief, LANDO, S.terrainEx, scale, film ? S : null, false, BACK);
+  const landName = Object.keys(LAND_PALETTES).find(k => LAND_PALETTES[k] === pal.land), LT = film && !S.fx && FILM_PIC.landTone[landName];
+  const LANDO = FX && FX.land ? FX.land : film ? { ...FILM_PIC.land, toned: !!LT } : null;   // (the film: a meadow and woods, not the palette's patchwork of fields)
+  const LANDP = FX && FX.land ? landPalette(FX.land) : LT || pal.land;
+  if (plate) plate.userData.mini = landMaterial(U, PW, PD, ground, LANDP, relief, LANDO, S.terrainEx, scale, film ? S : null, false, BACK);
   U.__ground = S.ground;
   // the film: the ruins' uniforms (filmMaterial; main.js sets their values each frame), the land beyond the plate (its context relief,
   // else a skirt of land to the horizon), the light the studio lays on the plate (S.colourLight: more of it at night)
@@ -298,7 +304,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   if (film) for (const [id, E] of Object.entries(S.eras)) Object.assign(E.u, { uRuinLater: { value: Array(S.slots).fill(0) }, uRuinT: RUIN_T, uRuinH: { value: 1.4 * hex(id) * scale },
     uLossBurnt: { value: Array(E.u.uLossBurn.value.length).fill(0) } });
   if (film) S.colourGround.value.set(pal.parts[7]);   // (a city's open ground in its paving's colour: studio.js lightMaterial ground)
-  const far = film ? landMaterial(U, PW, PD, 'land', FX && FX.land ? landPalette(FX.land) : pal.land, false, LANDO, S.terrainEx, scale, S, true, BACK) : null;
+  const far = film ? landMaterial(U, PW, PD, 'land', LANDP, false, LANDO, S.terrainEx, scale, S, true, BACK) : null;
   const ctx = film ? S.context() : null, skirt = film ? skirtMesh(S, far, ctx) : null, marks = film && plate ? marksMesh(S, plate) : null;
   // the land's woods where trees stand close (fx land: fx.js woodsFn)
   const woods = LANDO ? woodsFn(LANDO, S.terrainEx, scale, S.ground, relief) : null;
@@ -316,7 +322,8 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // each period city's detail (engine/detail.js), made the first time it is shown: era id -> a promise of its group
   const DET = prims ? new Map() : null;
   const colsOf = pal => {   // the detail's colours in a palette
-    const dcols = { ...(pal.detail || PALETTES.roman.detail), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.tile), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.verge) };   // (a roof's tiles in its own colour, lighter, its gable ridges darker: detail.js FLAT)
+    const dcols = { ...(pal.detail || PALETTES.roman.detail), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.tile), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.verge),
+      eave: (x, z) => roofOf(pal, x, z), ridge: (pal.detail || {}).ridge || '#9a9da0' };   // (the eaves in the roof's own tile; the ridge a lighter grey)   // (a roof's tiles in its own colour, lighter, its gable ridges darker: detail.js FLAT)
     for (const [f, v] of Object.entries(pal.faces || PALETTES.roman.faces)) {   // (a wall's face: its courses a shade darker, a stone wall's bands brick; a gate's parts the wall's)
       dcols['course_' + f] = f === 'banded' ? (pal.faces || PALETTES.roman.faces).brick : new THREE.Color(v).multiplyScalar(FLAT.course);
       dcols['spandrel_' + f] = dcols['parapet_' + f] = dcols['merlon_' + f] = v; }
@@ -475,7 +482,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
       if (lens) { if (!film) lens(d); FP.dof.focus = S.post.dof.focus; FP.dof.aper = FP_ ? S.post.dof.aper * FILM_PIC.dof.k : film || FX.dof ? S.post.dof.aper : 0; FP.dof.maxCoc = FP_ ? FILM_PIC.dof.max : S.post.dof.maxCoc; FP.dof.band = FP_ ? FILM_PIC.dof.band : S.post.dof.band; }   // (the film: as main.js set it for this frame, a living moment's sharp picture included)
       if (FX && FX.dof && !S.post.dof.rtB) fxLens(FP.dof, FX.dof, d);   // (the studio's own pass applied it already where it has the stronger gather)
       if (FP.dof.haze) FP.dof.haze.uHazeSunD.value.copy(sd);
-      if (FP.dof.ao) FP.dof.ao.updateGtaoMaterial({ radius: fxAoRadius(d) });
+      if (FP.dof.ao) FP.dof.ao.updateGtaoMaterial({ radius: FP_ ? THREE.MathUtils.clamp(d * FILM_PIC.aoR[0], scale * FILM_PIC.aoR[1], scale * FILM_PIC.aoR[2]) : fxAoRadius(d) });   // (the film: contact, a few metres at a crevice, never a whole court in shade)
     }
     if (BAND) { const rt = FP.composer.renderTarget1; for (const b of BAND) { b.uniforms.px.value.set(1 / rt.width, 1 / rt.height); b.uniforms.k.value = rt.height / 1080 * (1 - sharp); } }
     renderer.getDrawingBufferSize(size); composer.setSize(size.x / renderer.getPixelRatio(), size.y / renderer.getPixelRatio());

@@ -41,9 +41,12 @@ export const STYLES = {
     storey: 3.6, window: null, door: null, cornice: { h: .55, out: .45 }, base: { h: .6, out: .1 },   // (cornice: the eave's dark underside over the wall's top)
     front: { post: .34, every: 2.8, beam: .45 }, ridgeEnds: true, coping: { h: .42, over: .2 },
     wall: 'earth', towerWindows: null, tiles: { every: 1.1, w: .36, t: .16, verge: { w: .46, t: .34 } }, halls: { column: .65, beam: .7 },
+    eaves: { out: 1.8, t: .35 }, ridge: { w: 1.1, h: .9 },
     trees: { court: 2, street: 16, cypress: .1 }, flags: { gate: 6 },
   },
 };
+// eaves: { out, t } a gable roof's eaves carried this far out past the generator's own overhang, this thick, down its slope; ridge:
+// { w, h } a ridge this wide and high laid along its top (a Chinese roof, read from afar as a roof over its walls, not a slab on a ring)
 // halls: { column, beam } a timber hall's (citygen hall) columns this thick and its architrave this high, in metres: the columns
 // lacquered, the beam painted (a Chinese hall's); trees: { court: trees a court holds (the generator's own counted; on its paving
 // too), street: one every this many metres down each edge of a street 10 m wide or more (0: none), cypress: the share of them
@@ -95,9 +98,9 @@ export const SHAPES = { window: () => arched(), door: () => arched(.66), pane: (
   mast: () => new THREE.CylinderGeometry(.5, .5, 1, 5).translate(0, .5, 0), sail: () => new THREE.PlaneGeometry(1, 1).translate(0, .5, 0).rotateY(Math.PI / 2),
   cabin: () => new THREE.CylinderGeometry(.5, .5, 1, 8, 1, false, 0, Math.PI).rotateZ(Math.PI / 2),   // (its arch over the top, along x)
   cornice: box, base: box, post: box, beam: box, course: box, coping: capGeometry, ridgeEnd: hornGeometry,
-  tile: () => new THREE.BoxGeometry(1, 1, 1), verge: () => new THREE.BoxGeometry(1, 1, 1) };   // (a row of tiles: x down the slope, y out of it, centred)
+  tile: () => new THREE.BoxGeometry(1, 1, 1), verge: () => new THREE.BoxGeometry(1, 1, 1), eave: () => new THREE.BoxGeometry(1, 1, 1), ridge: () => new THREE.BoxGeometry(1, 1, 1) };   // (a row of tiles: x down the slope, y out of it, centred)
 // which kinds cast a shadow (a flat opening or a thin course does not: it would only darken itself)
-export const SHADOW = { cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true, crown: true, cone: true, trunk: true, pole: true, flag: true, hull: true, sail: true, cabin: true };
+export const SHADOW = { eave: true, ridge: true, cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true, crown: true, cone: true, trunk: true, pole: true, flag: true, hull: true, sail: true, cabin: true };
 
 export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null } = {}) {
   const ST = STYLES[style] || STYLES.roman, M = scale, V = scale * hex;   // M: a metre across; V: a metre up, as drawn
@@ -227,6 +230,14 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
         put(kind, r, X, r.y0 + fc * r.c + nU * t / 2 + shear(r, X, Z), Z, F.phi, fm * L, w, t, th, 1, Math.PI / 2); };
       for (let i = 0; i < n; i++) row('tile', -F.w / 2 + F.w * (i + .5) / n, T.w * M, T.t * M);
     }
+  }
+  if (ST.eaves || ST.ridge) for (const r of R) {   // a gable's eaves carried out and its ridge on top (ST.eaves, ST.ridge)
+    if (r.t !== 1 || !tiled(r) || r.a < 2 * M || r.b < 2 * M) continue;
+    const run = r.a / 2 + r.d, drop = r.d * r.c / Math.max(1e-9, r.a / 2), rise = r.c + drop, L = Math.hypot(run, rise), al = Math.atan2(rise, run), nU = run / L, nR = rise / L;
+    if (ST.eaves) { const o = ST.eaves.out * M, t = ST.eaves.t * V;
+      for (const side of [-1, 1]) { const lx = side * (run + o / 2 * Math.cos(al) + nR * t / 2), ly = -drop - o / 2 * Math.sin(al) + nU * t / 2, [X, Z] = world(r, lx, 0);
+        put('eave', r, X, r.y0 + ly + shear(r, X, Z), Z, -r.rot, o, t, r.b + o, 0, 1, -side * al); } }
+    if (ST.ridge) { const [X, Z] = world(r, 0, 0); put('ridge', r, X, r.y0 + r.c + ST.ridge.h * V / 2 + shear(r, X, Z), Z, -r.rot, ST.ridge.w * M, ST.ridge.h * V, r.b + (ST.eaves ? ST.eaves.out * M * .5 : 0)); }
   }
   if (ST.ridgeEnds) for (const r of R) {
     if (r.t !== 0 || r.part !== ROOF || r.a < 3 * M || r.b > .7 * M || r.c > 2.5 * V || r.a < r.b * 5) continue;
@@ -398,7 +409,7 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
   // each kind's size as it is seen (model units): a band by its height, the courses by their spacing (they flatten into their
   // face, FLAT), the rows of tiles by their spacing (FADE_ROWS), the rest by their width
   const T_ = ST.tiles || {}, SIZE = { window: 1 * M, door: 1.5 * M, cornice: .38 * V, base: .55 * V, post: .34 * M, beam: .45 * V, coping: .4 * M, ridgeEnd: .6 * M,
-    tile: (T_.every || 1.1) * M, verge: .46 * M, spandrel: 4 * M, archRing: 4 * M, merlon: 1.4 * M, parapet: .9 * V, column: .7 * M,
+    tile: (T_.every || 1.1) * M, verge: .46 * M, eave: 6 * M, ridge: 6 * M, spandrel: 4 * M, archRing: 4 * M, merlon: 1.4 * M, parapet: .9 * V, column: .7 * M,
     crown: 6 * M, cone: 3 * M, trunk: 6 * M, pole: 1.5 * M, flag: 4.5 * M,
     ...Object.fromEntries(Object.entries(WALL_FACES).flatMap(([k, F]) => [['course_' + k, F.every * V], ['spandrel_' + k, 4 * M], ['parapet_' + k, .9 * V], ['merlon_' + k, 1.4 * M]])) };
   let count = 0;
