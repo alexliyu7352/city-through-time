@@ -759,6 +759,7 @@ window.render = MINI ? async t => { await seekFootage(t); await renderColour(t);
 window.TEXTS = async t => { await seekFootage(t); LV = liveAt(t); setCamera(t); if (!QS.has('clean') && !FREE) drawOverlay(t); else OV.begin(); return OV.texts(); };
 window.DRAWN = () => OV.drawn();   // every text of the frame TEXTS last drew (tools/readcheck.mjs: texts over texts)
 // tools/camcheck.mjs: the camera at time t without drawing (position, target, near plane, distance)
+if (QS.has('export')) window.EXPORT = { S, THREE, CITYMESH };   // (tools/blender/scene_export.mjs: the scene as it stands, for an offline render)
 window.CAMAT = t => { LV = liveAt(t); setCamera(t); return { p: camera.position.toArray(), tg: tgt.toArray(), near: camera.near, d: camDist, fov: camera.fov }; };   // (the camera render(t) sets, a living moment's shot included, whatever was drawn last)
 
 // the film's fonts (FILM.fonts: the faces compile found in fonts/ for each job), all loaded before the first frame
