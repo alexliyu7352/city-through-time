@@ -38,7 +38,7 @@ export const STYLES = {
     trees: { court: 1, street: 30, cypress: .35 }, flags: { gate: 4 },
   },
   chinese: {
-    storey: 3.6, window: null, door: null, cornice: null, base: { h: .6, out: .1 },
+    storey: 3.6, window: null, door: null, cornice: { h: .55, out: .45 }, base: { h: .6, out: .1 },   // (cornice: the eave's dark underside over the wall's top)
     front: { post: .34, every: 2.8, beam: .45 }, ridgeEnds: true, coping: { h: .42, over: .2 },
     wall: 'earth', towerWindows: null, tiles: { every: 1.1, w: .36, t: .16, verge: { w: .46, t: .34 } }, halls: { column: .65, beam: .7 },
     trees: { court: 2, street: 16, cypress: .1 }, flags: { gate: 6 },

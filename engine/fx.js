@@ -198,7 +198,20 @@ float fxDetail(vec2 m){ return 1. + .2 * (fxLn(m / 610. + 3.1) - .5) + .16 * (fx
 vec3 fxLand(vec2 m_, float steep){
   float n1 = fxLn(m_ / 2300.), n2 = fxLn(m_ / 610. + 3.1), n3 = fxLn(m_ / 140. + 7.7);
   vec3 grass = mix(${v3(p.grass0)}, ${v3(p.grass1)}, n2), earth = mix(${v3(p.soil)}, ${v3(p.straw)}, n3 * .7);
-  vec3 land = mix(grass, earth, smoothstep(.2, .9, n1) * ${earth.toFixed(3)});   // (soil and grass shading into each other over kilometres)
+  vec3 land = mix(grass, earth, smoothstep(.2, .9, n1) * ${earth.toFixed(3)});   // (soil and grass shading into each other over kilometres)${meadow ? `
+  { // (meadow: farmland in strips where the land is farmed, as a model's: blocks a few hundred metres across, each its own way,
+    // cut into long parcels, each a crop in rows, a darker edge between; the rows and edges fade where they are under a pixel)
+    float farm = smoothstep(.44, .56, fxLn(m_ / 1900. + 5.3) * .7 + fxLn(m_ / 620. + 1.7) * .3);
+    if (farm > .001) {
+      vec2 bi = floor(m_ / 430.); float an = (fxLh(bi + 17.) > .5 ? 1.5708 : 0.) + (fxLh(floor(m_ / 2600.) + 5.) - .5) * .5 + (fxLh(bi + 3.) - .5) * .12;   // (a block lies one of two ways, as its region's land does)
+      vec2 q = mat2(cos(an), sin(an), -sin(an), cos(an)) * m_, pq = q / vec2(170., 60.); float ph = fxLh(floor(pq) + bi * 31.7);
+      vec3 crop = ph < .42 ? ${v3(p.grass1)} * vec3(1.02, 1.06, .97) : ph < .74 ? mix(${v3(p.grass0)}, ${v3(p.grass1)}, .35) : ph < .9 ? mix(${v3(p.grass1)}, ${v3(p.straw)}, .35) : mix(${v3(p.straw)}, ${v3(p.grass1)}, .25);   // (crops of a season, close in tone: their rows carry the texture)
+      float pw = max(fwidth(q.x), fwidth(q.y));
+      crop *= 1. + .18 * (sin(q.y * .8976) * .5) * (1. - smoothstep(1.5, 3.5, pw));   // (rows 7 m apart)
+      vec2 fe = min(fract(pq), 1. - fract(pq)) * vec2(170., 60.); vec2 be = min(fract(m_ / 430.), 1. - fract(m_ / 430.)) * 430.;
+      crop = mix(crop, ${v3(p.grass0)} * .6, (1. - smoothstep(1.5, 1.5 + pw * 1.5, min(fe.x, fe.y))) * .5 * (1. - smoothstep(6., 14., pw)));   // (a parcel's edge)
+      crop = mix(crop, ${v3(p.wood)} * .9, (1. - smoothstep(3., 3. + pw * 1.5, min(be.x, be.y))) * .7 * (1. - smoothstep(8., 20., pw)));   // (a block's hedge)
+      land = mix(land, crop, farm); } }` : ''}
   vec2 m = m_ + vec2(fxLn(m_ / 300.), fxLn(m_ / 300. + 7.)) * 60.;
   land *= fxDetail(m_) * (1. + .05 * (fxLh(floor(m / vec2(160., 105.) + vec2(.3, .7) * floor(m.y / 105.))) - .5));   // (the fields: a faint grain)${wood('.56', '.76', '.75')}
   return pow(land, vec3(2.2)); }`;
@@ -258,7 +271,7 @@ export function openTest(renderer, meshes, cx, cz, R, r) {
   const px = new Float32Array(N * N * 4); renderer.readRenderTargetPixels(rt, 0, 0, N, N, px);
   renderer.setRenderTarget(rt0); renderer.setClearColor(c0, a0); rt.dispose(); mat.dispose();
   const cov = (x, z) => { const i = Math.floor((x - cx + R) / (2 * R) * N), j = Math.floor((cz + R - z) / (2 * R) * N); return i < 0 || j < 0 || i >= N || j >= N || px[(j * N + i) * 4 + 3] > .5; };
-  return (x, z) => { if (cov(x, z)) return false; for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; if (cov(x + Math.cos(a) * r, z + Math.sin(a) * r)) return false; } return true; };
+  return (x, z, rr = r) => { if (cov(x, z)) return false; for (let k = 0; k < 8; k++) { const a = k * Math.PI / 4; if (cov(x + Math.cos(a) * rr, z + Math.sin(a) * rr)) return false; } return true; };   // (rr: clear of anything within it)
 }
 
 // trees: round crowns and (by T.cypress) tall narrow cypresses, in groves and alone, on the open land and in the city's gardens;
@@ -271,9 +284,9 @@ export function plantTrees(scene, renderer, sources, U, PW, PD, centre, R, count
   if (img) { const cv = document.createElement('canvas'); cv.width = ww = img.width; cv.height = wh = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0); wpx = g.getImageData(0, 0, ww, wh).data; }
   const wet = (x, z) => { if (!wpx) return false; const u = Math.floor((x / PW + .5) * ww), v = Math.floor((z / PD + .5) * wh); return u < 0 || v < 0 || u >= ww || v >= wh || wpx[(v * ww + u) * 4] > 90; };
   const h = 11 * scale, r = 3.8 * scale;
-  const kinds = [
-    { crown: new THREE.IcosahedronGeometry(r, 1).scale(1, .85, 1).translate(0, h * .62, 0), trunk: new THREE.CylinderGeometry(r * .16, r * .2, h * .45, 5).translate(0, h * .22, 0), hue: [.2, .09], l: [.24, .1] },
-    { crown: new THREE.ConeGeometry(r * .42, h * 1.25, 7).translate(0, h * .72, 0), trunk: new THREE.CylinderGeometry(r * .1, r * .12, h * .2, 5).translate(0, h * .1, 0), hue: [.27, .05], l: [.18, .06] },
+  const kinds = [   // (T.facets, the colour film: a model's trees, each crown a few big facets)
+    { crown: new THREE.IcosahedronGeometry(r, T.facets ? 0 : 1).scale(1, .85, 1).translate(0, h * .62, 0), trunk: new THREE.CylinderGeometry(r * .16, r * .2, h * .45, 5).translate(0, h * .22, 0), hue: [.2, .09], l: [.24, .1] },
+    { crown: new THREE.ConeGeometry(r * .42, h * 1.25, T.facets ? 5 : 7).translate(0, h * .72, 0), trunk: new THREE.CylinderGeometry(r * .1, r * .12, h * .2, 5).translate(0, h * .1, 0), hue: [.27, .05], l: [.18, .06] },
   ];
   const film = T.tone === 'film', tm = new THREE.MeshStandardMaterial({ color: film ? '#b5ae9f' : '#6b5440', roughness: 1 }), out = [];
   const M = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(), p = new THREE.Vector3(), col = new THREE.Color(), up = new THREE.Vector3(0, 1, 0);
@@ -301,8 +314,9 @@ export function plantTrees(scene, renderer, sources, U, PW, PD, centre, R, count
 function gridTrees(scene, ins, out, kinds, open, wet, PW, PD, centre, R, count, scale, T) {
   const c = T.grid * scale, i0 = Math.floor((centre.x - R) / c), i1 = Math.ceil((centre.x + R) / c), j0 = Math.floor((centre.z - R) / c), j1 = Math.ceil((centre.z + R) / c);
   const hash = (i, j, k) => { let h = Math.imul(i, 0x27d4eb2d) ^ Math.imul(j, 0x165667b1) ^ Math.imul(k + 1, 0x9e3779b1); h = Math.imul(h ^ h >>> 15, 0x85ebca6b); h = Math.imul(h ^ h >>> 13, 0xc2b2ae35); return ((h ^ h >>> 16) >>> 0) / 4294967296; };
+  const inWood = (i, j, x, z) => !!T.woods && hash(i, j, 4) < T.woods(x, z) * (T.wood ?? .9);
   const stands = (i, j, x, z) => { const grove = Math.sin(x * 900 + Math.sin(z * 400) * 2) * Math.sin(z * 700 + Math.sin(x * 300) * 2) > .2 || hash(i, j, 3) < .07;
-    const inWood = T.woods && hash(i, j, 4) < T.woods(x, z) * (T.wood ?? .9); return inWood || (grove && hash(i, j, 5) <= T.keep); };
+    return inWood(i, j, x, z) || (grove && hash(i, j, 5) <= T.keep); };
   // the share of cells that hold a tree here (a sample), and the rank under which a cell's tree is drawn: a power of a half
   let hit = 0; for (let k = 0; k < 400; k++) { const a = hash(k, 7, 8) * Math.PI * 2, d = R * Math.sqrt(hash(k, 9, 8)), x = centre.x + Math.cos(a) * d, z = centre.z + Math.sin(a) * d; if (stands(k, 11, x, z)) hit++; }
   const want = Math.PI * R * R / (c * c) * Math.max(hit, 4) / 400, rank = Math.min(1, Math.pow(.5, Math.max(0, Math.ceil(Math.log2(want / (count * .9))))));
@@ -311,8 +325,9 @@ function gridTrees(scene, ins, out, kinds, open, wet, PW, PD, centre, R, count, 
     if (hash(i, j, 0) >= rank) continue;
     const x = (i + hash(i, j, 1)) * c, z = (j + hash(i, j, 2)) * c;
     if ((x - centre.x) ** 2 + (z - centre.z) ** 2 > R * R || Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2 || !stands(i, j, x, z) || wet(x, z) || !open(x, z) || (T.clear && !T.clear(x, z))) continue;
+    const wood = inWood(i, j, x, z); if (wood && T.clearWood && !open(x, z, T.clearWood * scale)) continue;   // (a wood's tree not among the houses)
     const ki = hash(i, j, 6) < T.cypress ? 1 : 0, k = kinds[ki], [ic, it] = ins[ki]; if (ic.count >= ic.instanceMatrix.count) continue;
-    const y = T.ground ? T.ground(x, z) : 0, sc = (.7 + hash(i, j, 7) * .7) * T.size;
+    const y = T.ground ? T.ground(x, z) : 0, sc = (.7 + hash(i, j, 7) * .7) * T.size * (wood && T.woodSize ? T.woodSize : 1);
     M.compose(p.set(x, y, z), q.setFromAxisAngle(up, hash(i, j, 9) * 6.28), s.set(sc, sc * (.85 + hash(i, j, 10) * .4), sc));
     ic.setMatrixAt(ic.count, M); it.setMatrixAt(it.count, M); ic.setColorAt(ic.count, col.setHSL(k.hue[0] + (T.hue || 0) + hash(i, j, 11) * k.hue[1], .32 + hash(i, j, 12) * .16, (k.l[0] + hash(i, j, 13) * k.l[1]) * T.dark));
     ic.count++; it.count++;
@@ -329,7 +344,7 @@ export function treeField(scene, renderer, U, PW, PD, scale, T) {
     update(target, d, sources) {
       if (at && at.distanceTo(target) <= d * .3 && Math.abs(Math.log(d / dAt)) <= .4) return;
       if (objs) for (const o of objs) { scene.remove(o); o.dispose(); }
-      objs = plantTrees(scene, renderer, sources, U, PW, PD, target, d * 2.2, 90000, scale, T); at = target.clone(); dAt = d; } };
+      objs = plantTrees(scene, renderer, sources, U, PW, PD, target, d * 2.2, T.count || 90000, scale, T); at = target.clone(); dAt = d; } };
 }
 // the land's woods where trees stand close (fx land): its patches, and the slopes past its scrub (the shader's: landGLSL)
 export function woodsFn(o, ex, scale, ground, relief) {

@@ -703,17 +703,17 @@ const renderSync = t => { stateAt(t); if (!(PLAY && PLAYING && fullCover(t))) { 
 const ERAJ = {}, eraJ = id => ERAJ[id] ||= fetch(B + FILM.eras.find(e => e.id === id).file).then(r => r.json()), eraOf = id => FILM.eras.find(e => e.id === id) || {};
 // its palettes: the film's (film.look), each period city's own where it has one, today's city's; the page's ?palette=, ?today= in
 // their place (a film without film.look seen with ?look=mini must name them: a city's colours are its region's, never a default)
-// the colour film's sun, fixed in the world (engine/mini.js): to the left of where the film's camera mostly stands, so most shots are
-// lit from the front and side and an orbit turns the shadows as a real one would (the mean of the keys' bearings, by the time each holds)
-const SUN_AZ = COLOUR ? (() => { const K = FILM.camera || []; let x = 0, y = 0; for (let i = 0; i + 1 < K.length; i++) { const w = K[i + 1][0] - K[i][0], a = THREE.MathUtils.degToRad(K[i][1][3]); x += Math.sin(a) * w; y += Math.cos(a) * w; }
-  return (x || y ? THREE.MathUtils.radToDeg(Math.atan2(x, y)) : 0) + 55; })() : null;
+// the bearing the colour film's camera mostly looks from (the mean of the keys' bearings, by the time each holds): the colour look
+// fixes its sun from it, in the world, so an orbit turns the shadows as a real one would (engine/mini.js FILM_PIC sunSide)
+const CAM_AZ = COLOUR ? (() => { const K = FILM.camera || []; let x = 0, y = 0; for (let i = 0; i + 1 < K.length; i++) { const w = K[i + 1][0] - K[i][0], a = THREE.MathUtils.degToRad(K[i][1][3]); x += Math.sin(a) * w; y += Math.cos(a) * w; }
+  return x || y ? THREE.MathUtils.radToDeg(Math.atan2(x, y)) : 0; })() : null;
 const PAL = COLOUR ? { palette: QS.get('palette') || (FILM.look && FILM.look.palette), today: QS.get('today') || (FILM.look && FILM.look.today) } : null;
 if (PAL && !(PAL.palette && PAL.today)) throw new Error('look=mini: this film has no film.look; give &palette=roman|chinese|modern&today=roman|chinese|modern (its region\'s colours)');
 const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, cityMesh: CITYMESH, scale: M.scale, lens, film: true, palette: PAL.palette, today: PAL.today, paletteOf: id => eraOf(id).palette || PAL.palette,
   fadeAt: LOOK.dim ?? .8, phone: TOUCH, backdropFrom: (FILM.look && FILM.look.backdrop_from) ?? 1800,
   dataFrom: (M.b || []).reduce((m, b) => b[0] > 0 && b[0] < m ? b[0] : m, 1e4),   // (the data's earliest epoch: what it first sees then counts as standing before)
   prims: QS.get('detail') === '0' || TOUCH ? null : id => eraJ(id).then(J => J.prims),   // (a phone: no detail, as the viewer's look on a touch screen)
-  sunAz: SUN_AZ,
+  camAz: CAM_AZ,
   lost: id => eraJ(id).then(J => { delete ERAJ[id]; return J.lost || null; }),   // (the look asks for the records, then their losses: the last of them)
   hex: id => eraOf(id).exaggeration ?? 2, face: id => eraOf(id).wall_face ?? null }) : null;
 // the colour film's ruins (engine/mini.js filmMaterial): a period city's foundations stay until a later city rises on that ground
