@@ -52,6 +52,11 @@ const FILM_PIC = { sunEl: 40, sunSide: 75, sun: 1.25, sunC: '#ffdcae', sky: .95,
   tone: { chinese: { roofs: ['#737980', '#7d8389', '#6e747b', '#848a90', '#787e85'], walls: ['#e0d0ad', '#d6c39c', '#e8dcc2', '#cdb790', '#ddcba6'], parts: { 5: '#3f6e7a', 7: '#a39c8f', 9: '#4f5358' } },
     roman: { roofs: ['#b5502f', '#c2603a', '#a54f37', '#c66d43', '#9c4b38', '#b85c3c', '#c97d50'], walls: ['#f0e6d2', '#e8cfa0', '#dcb48a', '#f3ece0', '#e6c4a6', '#d8a983', '#ecdcb6', '#cba486'] } },
   band: null };   // the tilt-shift band of screen blur (none: the lens's depth of field does it), else { mid, inner, outer, top, bottom }
+// a still's own picture over the film's (?pic={json}: keys of FILM_PIC, an object merged into its own, e.g. pic={"dof":{"A":6}}):
+// a lens, a light or a far field tried on one frame before it goes into FILM_PIC; the colour film only
+try { const q = typeof location !== 'undefined' && new URLSearchParams(location.search).get('pic');
+  if (q) for (const [k, v] of Object.entries(JSON.parse(q))) FILM_PIC[k] = v && typeof v === 'object' && !Array.isArray(v) && FILM_PIC[k] ? { ...FILM_PIC[k], ...v } : v; }
+catch (e) { console.error(`pic=: ${e.message}`); }
 // the tilt-shift band (the colour film): blur in one direction per pass, as wide as the distance from the band asks
 const BAND_BLUR = {
   uniforms: { tDiffuse: { value: null }, dir: { value: new THREE.Vector2(1, 0) }, px: { value: new THREE.Vector2(1 / 1920, 1 / 1080) }, k: { value: 1 },
@@ -408,7 +413,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // (the film: always the film's passes, its ambient occlusion from the picture's own depth: the geometry the passes would draw
   // themselves is the city as built, not as it stands at that moment)
   const FP = FX || film ? makePost(renderer, scene, camera, S.post.dof.rt.width / S.post.dof.s, S.post.dof.rt.height / S.post.dof.s,
-    { ssaa: S.post.dof.s, ao: !phone, aoAmt: FX ? MINI_LIFT.ao : FP_ ? FILM_PIC.ao : FILM_AO, aoDepth: film, ...S.gpu.targets, ...(FX && FX.haze ? { haze: FX_SKY.mini } : {}), ...(FX && FX.dof ? { dof2: true } : {}) }) : null;
+    { ssaa: S.post.dof.s, ao: !phone, aoAmt: FX ? MINI_LIFT.ao : FP_ ? FILM_PIC.ao : FILM_AO, aoDepth: film, ...S.gpu.targets, ...(FX && FX.haze ? { haze: FX_SKY.mini } : {}), ...(FX && FX.dof || FP_ && FILM_PIC.dof.two ? { dof2: true } : {}) }) : null;
   const dome = FX && FX.haze ? makeSky(FX_SKY.mini) : null;
   if (FP) { FP.bloom.strength = .1; FP.bloom.threshold = 2.2;   // (a bright day: only the sun's glints glow, not every lit wall)
     FP.vig.uniforms.amt.value = .22;
@@ -524,6 +529,10 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     if (dome) dome.u.uSunD.value.copy(sd);
     if (FP) {   // the film's lens for this distance (main.js lens), with the stronger depth of field
       if (lens) { if (!film) lens(d); FP.dof.focus = S.post.dof.focus; FP.dof.aper = FP_ ? S.post.dof.aper * FILM_PIC.dof.k : film || FX.dof ? S.post.dof.aper : 0; FP.dof.maxCoc = FP_ ? FILM_PIC.dof.max : S.post.dof.maxCoc; FP.dof.band = FP_ ? FILM_PIC.dof.band : S.post.dof.band; }   // (the film: as main.js set it for this frame, a living moment's sharp picture included)
+      // a model's lens (FILM_PIC.dof.A: its opening in the city's metres, the model's own times its scale): the blur a camera that
+      // close to a model that small gives, the same opening at every distance (a wide shot from afar blurs less, as a photograph
+      // of the whole table does); at: the focus as a share of the shot's distance (beyond 1: the near ground the softer)
+      if (FP_ && lens && FILM_PIC.dof.A && !(S.post.dof.aper < 1e-6)) { FP.dof.aper = 1080 * FILM_PIC.dof.A * scale / (4 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)); FP.dof.focus = S.post.dof.focus * (FILM_PIC.dof.at || 1); }   // (a living moment's sharp picture kept where its aperture is 0; its fade in and out not yet followed)
       if (FX && FX.dof && !S.post.dof.rtB) fxLens(FP.dof, FX.dof, d);   // (the studio's own pass applied it already where it has the stronger gather)
       if (FP.dof.haze) FP.dof.haze.uHazeSunD.value.copy(sd);
       if (FP.dof.ao) FP.dof.ao.updateGtaoMaterial({ radius: FP_ ? THREE.MathUtils.clamp(d * FILM_PIC.aoR[0], scale * FILM_PIC.aoR[1], scale * FILM_PIC.aoR[2]) : fxAoRadius(d) });   // (the film: contact, a few metres at a crevice, never a whole court in shade)

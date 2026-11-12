@@ -275,6 +275,7 @@ for (const f of FREE ? [] : FILM.footage || []) {
 const LOC = FREE ? newImage() : await image(B + 'data/locator.png', true) || newImage();
 const seekTo = (v, time) => new Promise(res => { if (Math.abs(v.currentTime - time) < 1 / 60) return res(); const done = () => { v.removeEventListener('seeked', done); res(); }; v.addEventListener('seeked', done); v.currentTime = time; });
 const OV = makeOverlay(document.getElementById('ov')); OV.setLight(COLOUR);   // (the colour film: a light picture under the words)
+const SCRIM = COLOUR && QS.has('scrim') ? +QS.get('scrim') : 1;   // (a still of the colour film: its dark grounds under the words this much as deep, &scrim=)
 
 // projected lines: groups of OSM / custom polylines
 const lineA = {};
@@ -596,7 +597,7 @@ function drawOverlay(t) {
   }
   if (LV && LIVETEX[LV.L.id]) OV.caption(LV.L, 96, 170, LV.sky * LV.pa);   // the living moment's label: AI-generated reconstruction, from the sources
   const left = Math.max(...(FILM.readouts || []).map(r => OV.env(t, r.t0 - .3, r.t1 + .2)), 0);
-  OV.scrims(left, 1, COLOUR && !LEAN ? 1 - ffull : 0);   // (the colour film: the top band shaded too, where the place, scale and timeline stand)
+  OV.scrims(left * SCRIM, SCRIM, COLOUR && !LEAN ? (1 - ffull) * SCRIM : 0);   // (the colour film: the top band shaded too, where the place, scale and timeline stand)
   if (!LEAN) OV.identity(t, (PRO ? PRO.dur : 0) + .3, FILM.end.t - .2, FILM.identity.l1, FILM.identity.l2);   // (not over the prologue)
   if (FILM.bar && !LEAN) {
     const node = (FILM.nodes || []).find(nd => t >= nd.t0 && t < nd.t1) || null;
