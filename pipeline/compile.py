@@ -889,6 +889,53 @@ def camv(k):
     x, z = F.model_lonlat(*k['ll']); y = ground_ll(*k['ll']) + k.get('y', 0)
     return [round(x, 5), round(y, 5), round(z, 5), k['az'], k['el'], k['d'], fov]
 
+MINI_CITY = [None]   # the built area of the last period city (its corners, model xyz): the view of a node with none of its own
+def mini_camera(node):
+    """the colour film's camera (film.look kind mini; stagecraft.MINI, docs/STAGING.md "Look and effects"): the node's own keys,
+    still looking at what they look at and when, framed as a miniature is (stagecraft.mini_frame: the pitch and lens in range, no
+    farther than the node's city whole, no nearer than d_min_m; a key aimed at a landmark a pin names while it shows, that
+    landmark close), a landmark named with no key on it given an orbit of its own, and a drift wherever the camera would stand
+    still (stagecraft.mini_drift). A function of the node's keys, city and pins alone: every pass of the plan makes the same keys."""
+    M = MINI_CAM; L = M['landmark']; sc = F.scale
+    if node.get('city') and PRIMS.get(node['id']):   # (its built area: the middle 80 % of its houses and landmarks each way)
+        P_ = [p_ for p_ in PRIMS[node['id']] if p_[11] not in (4, 5, 7)]
+        if P_:
+            xs_, zs_ = sorted(p_[1] for p_ in P_), sorted(p_[2] for p_ in P_); q_ = lambda a, f: a[min(len(a) - 1, int(f * len(a)))]
+            x0, x1, z0, z1 = q_(xs_, .1), q_(xs_, .9), q_(zs_, .1), q_(zs_, .9)
+            MINI_CITY[0] = [(x_, model_ground(x_, z_), z_) for x_ in (x0, (x0 + x1) / 2, x1) for z_ in (z0, (z0 + z1) / 2, z1)]
+    city = MINI_CITY[0]
+    keys = [k for k in node.get('camera', []) if isinstance(k.get('t'), (int, float))]
+    if not keys: return
+    keys.sort(key=lambda k: float(k['t']))
+    near_city = lambda X: city is not None and min(c_[0] for c_ in city) - .02 <= X[0] <= max(c_[0] for c_ in city) + .02 and min(c_[2] for c_ in city) - .02 <= X[2] <= max(c_[2] for c_ in city) + .02
+    marks = []   # a landmark a pin names in the node's city, while its name shows: (from, to, model xyz)
+    for p_ in node.get('pins', []):
+        if not isinstance(p_.get('t0'), (int, float)) or not isinstance(p_.get('t1'), (int, float)) or 'lon' not in p_: continue
+        x_, z_ = F.model_lonlat(p_['lon'], p_['lat']); X_ = (x_, model_ground(x_, z_), z_)
+        if near_city(X_): marks.append((float(p_['t0']) - L['lead'], float(p_['t1']), X_))
+    def aimed(k_, v_):   # the landmark a key looks at while its name shows (its target within a third of the frame of it), or None
+        for a_, b_, X_ in marks:
+            if a_ - .05 <= float(k_['t']) <= b_ + .05 and math.dist(v_[:3], X_) <= max(3 * L['r_m'] * sc, v_[5] * math.tan(math.radians(v_[6] / 2)) * .66): return X_
+        return None
+    seq = []
+    for k_ in keys:
+        v_ = camv(k_); X_ = aimed(k_, v_)
+        seq.append([float(k_['t']), stagecraft.mini_frame(v_, city, sc, M, landmark=X_), L['orbit'] if X_ is not None else None, k_])
+    for a_, b_, X_ in marks:   # a landmark named with no key on it: an orbit of its own over its name
+        if any(r_[2] is not None and a_ - .05 <= r_[0] <= b_ + .05 and math.dist(r_[1][:3], X_) < 1e-6 for r_ in seq) or b_ - a_ < 2.5: continue
+        ts_ = [r_[0] for r_ in seq]; j_ = max(0, min(len(seq) - 1, sum(1 for t_ in ts_ if t_ <= a_) - 1))
+        base_ = list(seq[j_][1]); v0_ = stagecraft.mini_frame(base_, city, sc, M, landmark=X_)
+        for t_ in (a_, b_): seq.append([t_, list(v0_), L['orbit'], None])
+        print(f'  mini camera: node {node["id"]}: an orbit round the landmark at {X_[0]:.3f}, {X_[2]:.3f} over {a_:.1f}-{b_:.1f} s')
+    seq.sort(key=lambda r_: r_[0])
+    for i_ in range(1, len(seq)): seq[i_][1][3] = stagecraft.unwrap(seq[i_][1][3], seq[i_ - 1][1][3])
+    out = stagecraft.mini_drift([(r_[0], r_[1], r_[2]) for r_ in seq], M)
+    new = []
+    for r_, v_ in zip(seq, out):
+        k_ = r_[3] if r_[3] is not None else {'t': round(r_[0], 3)}
+        k_['v'] = [round(x_, 6) for x_ in v_[:6]]; k_['fov'] = round(v_[6], 3); new.append(k_)
+    node['camera'] = [k for k in node.get('camera', []) if not isinstance(k.get('t'), (int, float))] + new
+
 def footage_item(ft, on, nid):
     """a picture or clip of a node (or of the prologue, nid None) as film.json shows it, from `on` seconds"""
     a_, b_ = ab(ft)
@@ -968,12 +1015,15 @@ if _fx is not None:
 # a period city of another region or time says its own: its node's city `palette`); today, today's city's colours (mini.js
 # TODAY: an old town's plasters and tiles, or a modern city's concrete and glass). Both asked for, never guessed: a city's
 # colours are its region's. backdrop_from: the year the modern section begins for the colour film (default 1800, or the modern growth
-# if that comes first). Absent or kind white: the white model, and film.json carries no key (docs/STAGING.md "Look and effects")
+# if that comes first). Absent or kind white: the white model, and film.json carries no key (docs/STAGING.md "Look and effects").
+# The colour film's camera is the miniature's (stagecraft.MINI: pitch, lens, the widest view, the drift, landmark orbits; camera:
+# a dict of some of its keys in place of their defaults); overlay: full (the film's) or lean (the year, the era, the subtitles and
+# the pictures: engine/main.js LEAN)
 LOOK_PALETTES = {'roman', 'chinese', 'modern'}
-LOOK_OUT = None; _lk = FM.get('look')
+LOOK_OUT = None; _lk = FM.get('look'); MINI_CAM = None
 if _lk is not None:
-    if not isinstance(_lk, dict) or set(_lk) - {'kind', 'palette', 'today', 'backdrop_from'} or _lk.get('kind') not in ('white', 'mini'):
-        raise SystemExit(f'compile: film.look: {{ kind: white | mini, palette: <{" | ".join(sorted(LOOK_PALETTES))}>, today: <the same>, backdrop_from: <a year> }} (got {_lk})')
+    if not isinstance(_lk, dict) or set(_lk) - {'kind', 'palette', 'today', 'backdrop_from', 'camera', 'overlay'} or _lk.get('kind') not in ('white', 'mini'):
+        raise SystemExit(f'compile: film.look: {{ kind: white | mini, palette: <{" | ".join(sorted(LOOK_PALETTES))}>, today: <the same>, backdrop_from: <a year>, camera: {{..}}, overlay: full | lean }} (got {_lk})')
     if _lk['kind'] == 'mini':
         for k_ in ('palette', 'today'):
             what_ = 'its period cities' if k_ == 'palette' else "today's city"
@@ -982,6 +1032,12 @@ if _lk is not None:
         if 'backdrop_from' in _lk:   # the year from which today's city stays as a backdrop where the white film dims it (engine/mini.js; 1800 when unset)
             if not isinstance(_lk['backdrop_from'], (int, float)) or isinstance(_lk['backdrop_from'], bool): raise SystemExit(f'compile: film.look.backdrop_from: a year, e.g. 1900 (got {_lk["backdrop_from"]!r})')
             LOOK_OUT['backdrop_from'] = float(_lk['backdrop_from'])
+        if _lk.get('overlay', 'full') not in ('full', 'lean'): raise SystemExit(f'compile: film.look.overlay: full or lean (got {_lk.get("overlay")!r})')
+        if _lk.get('overlay', 'full') == 'lean': LOOK_OUT['overlay'] = 'lean'
+        _mc = _lk.get('camera') or {}
+        if not isinstance(_mc, dict) or set(_mc) - set(stagecraft.MINI) or (isinstance(_mc.get('landmark'), dict) and set(_mc['landmark']) - set(stagecraft.MINI['landmark'])):
+            raise SystemExit(f'compile: film.look.camera: some of {sorted(stagecraft.MINI)} (landmark: {sorted(stagecraft.MINI["landmark"])}; stagecraft.MINI) (got {_mc})')
+        MINI_CAM = {**stagecraft.MINI, **{k_: v_ for k_, v_ in _mc.items() if k_ != 'landmark'}, 'landmark': {**stagecraft.MINI['landmark'], **(_mc.get('landmark') or {})}}
 # ------------------------------------------------------------------ layout: opening -> nodes -> closing
 OP = FM.get('opening', {'dur': 5.0}); CL = FM.get('closing', {})
 cursor = PD + float(OP.get('dur', 5.0))
@@ -1564,6 +1620,7 @@ def node_rel(node, t):
 for i, node in enumerate(FM['nodes']):
     if 'city' in node: gen_city(node)
     expand_areas(node)
+    if MINI_CAM and not node.get('tour'): mini_camera(node)   # (the colour film: the miniature's camera; a tour's beats fly, turn and push already)
     if node.get('dark'):   # a silence before the node: projector off
         light['darks'].append([round(cursor, 3), round(cursor + float(node['dark']), 3)]); cursor += float(node['dark'])
     cursor += float(node.get('gap', 0))
@@ -1641,6 +1698,7 @@ for i, node in enumerate(FM['nodes']):
             if gb is not None and (ga == gb or ga == 'prev'): continue   # inside a planned flight, or its start (its own pacing)
             vb = list(vb); vb[3] = stagecraft.unwrap(vb[3], va[3])
             if max(abs(x_ - y_) for x_, y_ in zip(va, vb)) < 1e-6: continue   # (no move: a hold, however short)
+            if MINI_CAM and stagecraft.frames_of(va, vb) <= .6 * (tb - ta): continue   # (the colour film: a hold's drift, a slow turn within the pace, however short)
             need_ = stagecraft.move_time(va, vb, speed=.6, t_min=.8)
             if tb - ta < need_ - .05: fix_ = (posa, taua, round(need_ - (tb - ta), 2)); break
         if fix_ is None: break
@@ -2161,6 +2219,9 @@ def plan_stages():
     new = []
     state = lambda t: [round(v, 6) for v in CAMERA.state(t)]
     key_ = lambda v: {'v': v[:6], 'fov': v[6]}
+    # the colour film: a hold the plan inserts drifts as the miniature's camera does (stagecraft.mini_orbit), turning on the way the
+    # camera turns there; the white film's stands still
+    drift_ = lambda v, dl, t: [round(x_, 6) for x_ in stagecraft.mini_orbit(v, dl, 1 if CAMERA.state(t + .3)[3] >= CAMERA.state(t - .3)[3] else -1, MINI_CAM)] if MINI_CAM else v
     in_follow = lambda t: any(w0 - .05 <= t <= w1 + .05 for _, _, (w0, w1) in FOLLOW)
     for e in eras_out:
         node = next(n for n in FM['nodes'] if n['id'] == e['id'])
@@ -2174,7 +2235,7 @@ def plan_stages():
             early = [k[0] for k in cam if P['t_from'] - 1e-6 <= k[0] < P['t0'] - 1.2 and node['_t0'] <= k[0] < node['_t1'] and not in_follow(k[0]) and not owned(k[0]) and not covered(k[0]) and framed(k[0])]
             if early:
                 tk = early[0]; dl = round(need_end - P['t0'] + .5, 2)
-                new.append((node, {'tau': round(node_rel(node, tk) + 1e-3, 4), 'delta': dl, 'keys': [[dl, key_(state(tk))]], 'kind': 'start', 'why': f'stage of {e["id"]} starts on the key at {tk:.1f} s (was {P["t0"]:.1f} s)'})); continue
+                new.append((node, {'tau': round(node_rel(node, tk) + 1e-3, 4), 'delta': dl, 'keys': [[dl, key_(drift_(state(tk), dl, tk))]], 'kind': 'start', 'why': f'stage of {e["id"]} starts on the key at {tk:.1f} s (was {P["t0"]:.1f} s)'})); continue
             # (b) the camera leaves before the stage is done and seen
             t, bad, leave = P['t0'], 0, None
             while t <= need_end:
@@ -2183,7 +2244,7 @@ def plan_stages():
                 t += .1
             if leave is not None and not in_follow(leave) and not owned(leave):
                 dl = round(need_end - leave + .3, 2); S_ = state(leave - .1)
-                new.append((node, {'tau': round(node_rel(node, leave - .1), 4), 'delta': dl, 'keys': [[.001, key_(S_)], [dl, key_(S_)]], 'kind': 'hold', 'why': f'hold on {e["id"]} until {need_end:.1f} s (the camera left at {leave:.1f} s)'})); continue
+                new.append((node, {'tau': round(node_rel(node, leave - .1), 4), 'delta': dl, 'keys': [[.001, key_(S_)], [dl, key_(drift_(S_, dl, leave - .1))]], 'kind': 'hold', 'why': f'hold on {e["id"]} until {need_end:.1f} s (the camera left at {leave:.1f} s)'})); continue
             # (c) never seen close: once the city (all its stages under way by then) stands, a closer look at its key building
             # (look_target: named, drawn in light, any landmark; never the houses). Seen close = that building on screen (inside
             # 80 % of the frame) near enough that a look_focus_m patch round it fills look_size of the frame's height, for

@@ -264,3 +264,81 @@ def fit_distance(v, pts, mx=.9, my=.85, d_lo=.01, d_hi=20.0):
         if in_frame(w[:5] + [math.exp(mid)] + w[6:], pts, mx, my): hi = mid
         else: lo = mid
     return w[:5] + [math.exp(hi)] + w[6:]
+
+
+# ------------------------------------------------------------------ the colour miniature's camera (film.look kind mini)
+# A miniature is looked at, not read as a map: a city-scale view from 30-50 degrees down, the built city filling most of the frame,
+# the horizon out of it, the camera always on the move (a slow orbit or push, a new framing every few seconds) and a close orbit
+# round each landmark the film names. The node's own keys keep what they look at and when (lines and pictures hang on them);
+# mini_frame and mini_drift change how: pitch, lens and distance, and a drift wherever the camera would stand still. Every value a
+# city may change through film.look.camera (compile); the speed limit and the readability checks are the film's own (9f, camcheck).
+MINI = {'el': [32.0, 52.0],        # the pitch's range, degrees down: steep enough that the horizon leaves the frame, low enough to see walls
+        'fov': [26.0, 34.0],       # the lens's range (a street glide's wide lens exaggerates a model's depth)
+        'fit': [1.0, .92],         # the widest view: the node's city (the middle 80 % of its buildings each way) inside this share of the
+                                   # frame's half-width and half-height: a city-scale view, its houses houses, not specks
+        'd_min_m': 500.0,          # the nearest a key comes (a model's detail is made to be seen from a few hundred metres up)
+        'orbit': 2.5,              # degrees a second the camera turns round what it looks at where it would stand still
+        'push': .012, 'push_max': .2,   # ... and how fast it closes in meanwhile (a share of the distance a second, at most push_max)
+        'still': .04,              # frames a second under which a stretch counts as standing still (move_time's frames)
+        'landmark': {'r_m': 60.0, 'size': .5, 'orbit': 3.5, 'lead': 1.5}}   # a named landmark: framed at `size` of the frame's height
+                                   # round r_m metres, orbited at `orbit` degrees a second, from `lead` s before its name shows
+
+
+def frames_of(v0, v1):
+    """how far a move between two keys travels on screen, in frames (move_time's measure, without its pace)"""
+    x0, y0, z0, a0, e0, d0 = v0[:6]; x1, y1, z1, a1, e1, d1 = v1[:6]
+    fov = v0[6] if len(v0) > 6 else 30
+    dm = math.sqrt(d0 * d1); wide = 2 * dm * math.tan(math.radians(fov) / 2) * ASPECT
+    return math.dist((x0, y0, z0), (x1, y1, z1)) / wide + abs(math.log(d1 / d0)) / math.log(2) * .5 + abs(a1 - a0) / 120 + abs(e1 - e0) / 60
+
+
+def mini_orbit(v, secs, sign, M=MINI, rate=None):
+    """key v after `secs` of the miniature's drift: turned round its target and closer by the push"""
+    w = list(v); w[3] = v[3] + sign * (rate if rate is not None else M['orbit']) * secs; w[5] = v[5] * (1 - min(M['push_max'], M['push'] * secs))
+    return w
+
+
+def mini_frame(v, city, scale, M=MINI, landmark=None):
+    """one key in the miniature's framing: its pitch and lens inside their ranges; aimed at a named landmark (landmark: model xyz),
+    the landmark at its size; else no farther than the view that holds the node's city whole (city: the corners of its built
+    area, model xyz) nor nearer than d_min_m"""
+    w = list(v); fov0 = w[6] if len(w) > 6 else 30
+    w[4] = min(M['el'][1], max(M['el'][0], w[4])); w[6] = min(M['fov'][1], max(M['fov'][0], fov0))
+    w[5] *= math.tan(math.radians(fov0) / 2) / math.tan(math.radians(w[6]) / 2)   # (the same width of the place in the frame through the new lens)
+    if landmark is not None:
+        L = M['landmark']; w[0], w[1], w[2] = landmark
+        w[5] = L['r_m'] * scale / (L['size'] * math.tan(math.radians(w[6]) / 2))
+        return w
+    if city:
+        cx = sum(p[0] for p in city) / len(city); cz = sum(p[2] for p in city) / len(city); cy = min(p[1] for p in city)
+        cap = fit_distance([cx, cy, cz] + w[3:5] + [1.0, w[6]], city, M['fit'][0], M['fit'][1])[5]
+        w[5] = min(w[5], cap)
+    w[5] = max(w[5], M['d_min_m'] * scale)
+    return w
+
+
+def mini_drift(keys, M=MINI):
+    """keys [(t, v, rate)] in time order (rate: the orbit's degrees a second there, None for the film's): where the camera would
+    stand still from one key to the next (under M['still'] frames a second), the later key turned round its target and pushed in
+    by the time between, the turn carried on through a run of such keys; the turn goes the way the next real move turns (else the
+    last one did, else alternately), so the drift flows into the move. Returns the new values in the same order."""
+    out = [list(v) for _, v, _ in keys]
+    if len(keys) < 2: return out
+    still = [frames_of(keys[i][1], keys[i + 1][1]) / max(keys[i + 1][0] - keys[i][0], 1e-3) < M['still'] for i in range(len(keys) - 1)]
+    turn = [keys[i + 1][1][3] - keys[i][1][3] for i in range(len(keys) - 1)]
+    run, off, dk, sign = 0, 0.0, 1.0, 1
+    for i in range(len(keys) - 1):
+        if not still[i]: off, dk = 0.0, 1.0; continue
+        if i == 0 or not still[i - 1]:   # a run of standing still begins: which way it turns (its own slow turn, if it has one)
+            j_ = i
+            while j_ < len(still) and still[j_]: j_ += 1
+            own = keys[j_][1][3] - keys[i][1][3]
+            nxt = next((turn[j] for j in range(i, len(turn)) if not still[j] and abs(turn[j]) >= 4), None)
+            prv = next((turn[j] for j in range(i - 1, -1, -1) if not still[j] and abs(turn[j]) >= 4), None)
+            way = own if abs(own) >= 2 else nxt if nxt is not None else prv if prv is not None else (1 if run % 2 == 0 else -1)
+            sign = 1 if way > 0 else -1; run += 1
+        secs = keys[i + 1][0] - keys[i][0]; rate = keys[i + 1][2] if keys[i + 1][2] is not None else M['orbit']
+        off += sign * max(0.0, rate * secs - (abs(turn[i]) if turn[i] * sign > 0 else 0.0))   # (at least `rate`: a key's own slow turn counts)
+        dk *= 1 - min(M['push_max'], M['push'] * secs)
+        out[i + 1][3] = keys[i + 1][1][3] + off; out[i + 1][5] = keys[i + 1][1][5] * max(dk, 1 - 2 * M['push_max'])
+    return out
