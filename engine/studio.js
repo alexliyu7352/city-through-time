@@ -909,9 +909,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         float w = .42 * (1. - y) * sqrt(max(y, 0.) + .04) * 1.6 * (1. + .25 * sin(y * 9. + vS * 30. + vK * 4.));
         float m = smoothstep(w, w * .55, abs(c.x)) * smoothstep(1., .75, y) * smoothstep(0., .1, y);
         float hot = smoothstep(w * .7, 0., abs(c.x)) * smoothstep(.75, .1, y);
-        vec3 col = mix(vec3(.95, .25, .03), vec3(1., .66, .14), hot) + vec3(.55, .42, .18) * hot * hot;
+        vec3 col = mix(vec3(.9, .2, .02), vec3(1., .5, .08), hot) + vec3(.35, .22, .05) * hot * hot;   // (orange, a yellow heart: not white)
         float a = m * min(vA * 1.4, 1.); if (a < .01) discard;
-        gl_FragColor = vec4(col * 1.5 * a, a); }`, 8);
+        gl_FragColor = vec4(col * 1.3 * a, a); }`, 8);
     // embers: two over every flame, small, rising 15 to 45 m and out within a second or so, only where a flame is hot
     const NE = Math.min(8000, NF * 2);
     const embers = points(NE, (i, pos, seed, ctr) => { const k = i % NF, c = at(centres[k], k); pos.set([c[0], c[1], c[2]], i * 3); seed[i * 2] = rnd(); seed[i * 2 + 1] = rnd(); ctr[i * 2] = centres[k][0]; ctr[i * 2 + 1] = centres[k][1]; },

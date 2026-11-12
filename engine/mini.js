@@ -71,8 +71,8 @@ const roofOf = (pal, x, z) => { const h = hash(x, z); return new THREE.Color(pal
 // a period city's colour per vertex: a house's walls and roof each one of the palette's, by its building; a little lighter or darker;
 // with the detail (detail.js; wall: { face: the city's walls' (film.json wall_face) or null, upright: its region's for an upright
 // wall }), a gable's end in its wall's colour and a city wall in the colour of what it is faced with (a battered side rammed earth)
-// trees (the film): { cell, dark } the generator's own trees (part TREE: a garden's, a park's) each its own green, as the look's
-// trees are (a cell that wide holds one tree), not one flat dark green over a whole garden
+// trees: { cell, dark } the generator's own trees (part TREE: a garden's, a park's) each its own green, as the look's trees are (a
+// cell that wide holds one tree), not one flat dark green over a whole garden
 function colourMesh(mesh, pal, detail, wall, trees = null) {
   const g = mesh.geometry, d = g.attributes.aData, c = g.attributes.aCtr, n = g.attributes.position.count, out = new Float32Array(n * 3), col = new THREE.Color(), P = g.attributes.position;
   const walls = pal.walls.map(v => new THREE.Color(v)), roofs = pal.roofs.map(v => new THREE.Color(v)), gable = detail ? gableEnds(g) : new Uint8Array(n);
@@ -345,7 +345,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // a city's colours, made the first time it is shown (or warmed)
   function colour(m) {
     if (m.userData.mini) return; const id = idOf.get(m);
-    m.userData.mini = m === cityMesh ? colourToday(m, today ? TODAY[today] : undefined) : colourMesh(m, palOf(id), !!DET, { face: face(id), upright: uprightOf(id) }, film ? { cell: 12 * scale, dark: (palOf(id).tree && palOf(id).tree.dark) || 1 } : null);
+    m.userData.mini = m === cityMesh ? colourToday(m, today ? TODAY[today] : undefined) : colourMesh(m, palOf(id), !!DET, { face: face(id), upright: uprightOf(id) }, { cell: 12 * scale, dark: (palOf(id).tree && palOf(id).tree.dark) || 1 });
     if (film) { const u = m === cityMesh ? null : S.eras[id].u, ruin = m === cityMesh ? null : new THREE.Color(palOf(id).parts[11]);
       filmMaterial(S, m.userData.mini, u, ruin, fadeAt, u && S.fires[id] && S.fires[id].day ? S.fires[id] : null); m.userData.miniDepth = filmMaterial(S, new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), u, null, fadeAt); }
   }
