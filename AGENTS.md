@@ -149,6 +149,7 @@ Honesty
   a place with no basis for a position at all is mentioned without a pin.
 - Careful means checked, not left out. A well-known story, saying or figure the film needs is looked up and verified like any fact; one that cannot be verified is told as
   legend, with "about", or as the range the sources give. Leaving a city's most memorable material out because it needed checking makes a film nobody remembers.
+  A legend the city's people tell is part of its story: said as legend, it needs only where it is told (RESEARCH.md §3).
 - On screen, use third-party material only if it is CC, public domain, or something the user has the right to license. AI-generated narration, music and imagined pictures are labelled on screen and in the end card.
 
 Writing rules
@@ -163,7 +164,7 @@ Writing rules
 | Step | What to do | Read first | Done when (★ = the user must approve) |
 |---|---|---|---|
 | 0 | First use: local paths, install the environment | `docs/SETUP.md` | `local/config.json` written; `uv sync` and `npm ci` have run |
-| 1 | Research: timeline, choice of stations, through-line, sources | `docs/RESEARCH.md` | `FACTS.md` and `research/` (including story material `stories.md`, the picture list `images.md` and the period cities' survey `period_cities.md`); ★ the story and the station list |
+| 1 | The story first, then research: sources, stations, through-line | `docs/RESEARCH.md` | ★ the story (`research/story.md`, told as the narrator would, before the deep research); `FACTS.md` and `research/` (including story material `stories.md`, the picture list `images.md` and the period cities' survey `period_cities.md`); ★ the station list, the story's index |
 | 2 | Extent and data: frame, scale, map, buildings, terrain | `docs/DATA.md` | extent and data sources in `city.yaml`, `prep.py` has run; ★ one white-model still to check the scale |
 | 3 | Script: story outline, detailed outline, treatment, copy, timeline, pictures | `docs/SCRIPT.md` | `TREATMENT.md`, nodes, `script.yaml`; ★ story outline, ★ detailed outline, ★ narration draft, each shown after your own listener review (SCRIPT.md); ★ the storyboard (each line → what is on screen) |
 | 4 | Period cities and terrain | `docs/MODEL.md` | one whole city per period, generated from the sources, what the storyboard asks for first, clipcheck at zero; its quarters and type sheets judged by you (no ★) |
