@@ -138,14 +138,15 @@ async function loadEra(e) {   // (all of them, in order, for the film; the walk-
     const cx = top[1] / top[0], cz = top[2] / top[0]; let best = null, bd = Infinity;
     J.prims.forEach((p, i) => { if (!up(p, i) || `${Math.floor(p[1] / cell)},${Math.floor(p[2] / cell)}` !== kt) return; const d = Math.hypot(p[1] - cx, p[2] - cz); if (d < bd) { bd = d; best = [p[1], p[2]]; } });
     return { t, dense: best }; });
-  if (e.sinkStyle === 'burn') { const seen = new Set(), cs = [];   // one spark source per building
-    for (const p of J.prims) { const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`; if (p[11] === 4 || p[11] === 5 || p[11] === 7 || seen.has(k)) continue; seen.add(k); cs.push([p[15] ?? p[1], p[16] ?? p[2]]); }
-    S.addFire(e.id, cs, S.ground); }
+  if (e.sinkStyle === 'burn') { const seen = new Set(), cs = [], top = new Map();   // one spark source per building (the colour film: and its roof's height, for its flames)
+    for (const p of J.prims) { const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`; if (COLOUR) top.set(k, Math.max(top.get(k) ?? -1e9, p[4] + p[7])); if (p[11] === 4 || p[11] === 5 || p[11] === 7 || seen.has(k)) continue; seen.add(k); cs.push([p[15] ?? p[1], p[16] ?? p[2]]); }
+    S.addFire(e.id, cs, S.ground, COLOUR ? { tops: cs.map(c => top.get(`${c[0]},${c[1]}`)) } : {}); }
   (e.losses || []).forEach((q, j) => { if (!q.burn || !J.lost) return;   // a part of the city that burns (lose: style burn): sparks of its own, from its own parts' floors
-    const at = new Map(); let r = 0;
+    const at = new Map(), top = new Map(); let r = 0;
     J.prims.forEach((p, i) => { if (J.lost[i] !== j + 1 || p[11] === 4 || p[11] === 5 || p[11] === 7) return; const k = `${p[15] ?? p[1]},${p[16] ?? p[2]}`, c = at.get(k);
+      if (COLOUR) top.set(k, Math.max(top.get(k) ?? -1e9, p[4] + p[7]));   // (the colour film: its roof's height, for its flames)
       if (!c) at.set(k, [p[15] ?? p[1], p[16] ?? p[2], p[4]]); else c[2] = Math.min(c[2], p[4]); r = Math.max(r, Math.hypot(p[1] - (p[15] ?? p[1]), p[2] - (p[16] ?? p[2])) + Math.max(p[5], p[6]) / 2); });
-    if (at.size) S.addFire(`${e.id}:${j}`, [...at.values()], S.ground, { n: 1500, h: Math.min(.009, Math.max(.0015, r * .6)) }); });   // (as many sparks as a street's, spread over the building, not a city's reach)
+    if (at.size) S.addFire(`${e.id}:${j}`, [...at.values()], S.ground, { n: 1500, h: Math.min(.009, Math.max(.0015, r * .6)), ...(COLOUR ? { tops: [...at.keys()].map(k => top.get(k)) } : {}) }); });   // (as many sparks as a street's, spread over the building, not a city's reach)
 }
 const ERALOAD = {};
 if (!FREE) for (const e of FILM.eras || []) await loadEra(e);
@@ -377,7 +378,7 @@ function eraShape(e, t) {
   (e.losses || []).forEach((q, j) => {   // a part of the city lost while the rest stands (compile lose:): its own ring, its own fire
     E.u.uLossR.value[j] = curveAt(q.curve, t); E.u.uLossW.value[j] = curveAt(q.curve, t - SD); E.u.uLossIn.value[j] = q.mode === 'in' ? 1 : 0;
     E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0;
-    const lf = S.fires[`${e.id}:${j}`]; if (lf) lf.set(E.u.uLossBurn.value[j] * U.uProj.value, t, q.mode === 'in' ? E.u.uLossR.value[j] : 1e3, q.o); });
+    const lf = S.fires[`${e.id}:${j}`]; if (lf) lf.set(E.u.uLossBurn.value[j] * U.uProj.value, t, q.mode === 'in' ? E.u.uLossR.value[j] : 1e3, q.o, COLOUR && q.burn ? [q.burn[0], Math.max(2, q.burn[1] - q.burn[0])] : null); });
 }
 function setLayers(t) {
   { let sk = 0, sp = null;   // spot (film.spots): the light falls on one subject, the rest of the room goes dark
@@ -518,7 +519,7 @@ function setLayers(t) {
         U.uRiseMode.value[h] = F_.mode === 'ring' ? 0 : F_.mode === 'line' ? 1 : 2; U.uRiseW.value[h] = F_.w || 0; }
     }
     if (S.edges[e.id]) S.edges[e.id].set(Math.max(edgeA, gA * .8) * (LOOK.line ?? 1) * (1 - (LV ? LV.k : 0)), gA > edgeA ? S.eras[e.id].base : E.u.uEraCol.value, gA > edgeA ? gD : draw);
-    if (S.fires[e.id]) S.fires[e.id].set(burn * (gone ? 0 : 1) * U.uProj.value, t, fin ? fr : 1e3, fo);
+    if (S.fires[e.id]) S.fires[e.id].set(burn * (gone ? 0 : 1) * U.uProj.value, t, fin ? fr : 1e3, fo, COLOUR ? [e.off - e.burn, e.burn * 1.2] : null);   // (the colour film: the fire catches over its burn, spreading)
   }
   // today's city steps back while a period city is told; the change travels with the node's ring: outside it, the level from
   // just before the ring started (docs/STAGING.md 1: a ring shows what changes inside it)
@@ -705,7 +706,8 @@ const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, cityMesh: CITYME
 // the colour film's ruins (engine/mini.js filmMaterial): a period city's foundations stay until a later city rises on that ground
 // (each channel's city: how far it has risen, never back, and whether it is later than the city the foundations are of) or the
 // modern growth begins (RUINS_TO: the city taken back by then); a loss a fire took leaves them charred
-const RUINS_TO = FILM.grow ? FILM.grow.on + 1 : Infinity;
+// (the modern section, engine/mini.js MODERN_FROM: the counter reaching that year, or the modern growth, whichever comes first)
+const RUINS_TO = Math.min(FILM.grow ? FILM.grow.on : Infinity, ...(FILM.yearline || []).filter(([, y]) => y >= 1800).map(([t]) => t).slice(0, 1)) + 1;
 function ruinsAt(t) {
   const ch = {}; for (const e of FILM.eras || []) if (e.hide != null && inChannel(e)) ch[e.hide] = e;
   for (const [h, q] of Object.entries(ch)) MINI.ruinT.value[h] = (t - q.on) / q.span;

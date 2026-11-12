@@ -270,17 +270,25 @@ cameras (the tool's header gives the cameras' format).
 - **What the colour film shows, and how.** The film tells the same things; what differs is how:
   - a period city rises in place, building by building as in the white model, its detail with it; a faint light along the rise front
     on the ground (the white film's light, restrained) keeps a quiet rise readable;
-  - a burning city (`sinkStyle: burn`, `lose: burn`) burns with flames and columns of smoke, its walls charred and glowing (embers at
-    night); a building taken back or lost leaves its foundations, charred after a fire, until a later period city rises on that ground
-    or the modern growth begins;
-  - today's city is drawn in colour where the white film shows it fully, and goes, building by building, where the white film dims it
-    under a period city (a then-and-now moment that keeps it in the white film keeps it here); it grows by year as in the white film;
-  - the projector's light on the plate (node rings, the rings that take a city back, a beam's landing, area washes, decals, the pick,
-    a standing city's light round its edge) is laid over the land in a screen blend at a restrained strength; beams are always fx
-    glow's (a column of light where one lands); lines, arrows and props are drawn as in the white film; the neon line round a city
-    is left out;
-  - the land is fields close by, calming with distance into soft large areas, and goes on beyond the plate to the horizon (the
-    context relief where the film has one); water as it was, dug pools and a city's open ground as in the white film;
+  - a burning city (`sinkStyle: burn`, `lose: burn`) catches building by building, spreading from where the fire starts over its burn:
+    flames stand on the roofs, hottest just behind the front and in clusters, a few embers near them, a few thick columns of smoke rise
+    and drift into a pall that dims and warms the light; each house chars as the fire reaches it, its detail burning away;
+  - **the modern section** is the film from the year 1800 the counter tells, or from the modern growth, whichever comes first: before
+    it little of any city's present fabric stood, from it much of it did. A building taken back or lost leaves its foundations (charred
+    after a fire) until a later period city rises on that ground or the modern section begins;
+  - today's city is drawn in colour where the white film shows it fully; where the white film dims it under a period city, before the
+    modern section it goes, building by building, and from it it stays as a muted backdrop in its own colours (less saturated, flatter):
+    a period city of the 1900s is never left standing in fields where the city was. It is hidden only where the white film hides it,
+    and grows by year as in the white film; a building new in the modern growth is warm while it is new, as there;
+  - an area the story marks (an epoch: a bombed district, a burnt zone) is laid over the land in its colour with its glowing edge, and
+    its buildings take the colour, as clearly as in the white film;
+  - the period city keeps the white film's outline (the neon line round it, at a restrained strength), so in a wide shot it is the
+    clearest thing on screen; the projector's light on the plate (node rings, the rings that take a city back, a beam's landing,
+    the rise front, decals, the pick, a standing city's light round its edge) is laid over the land in a screen blend at a restrained
+    strength; beams are always fx glow's (a column of light where one lands); lines, arrows and props are drawn as in the white film;
+  - the land is fields close by, calming with distance into a few soft areas kilometres wide, lighter and cleaner than the palette's
+    raw colours, with little haze over the plate, and goes on beyond the plate to the horizon (the context relief where the film has
+    one); water as it was, dug pools and a city's open ground as in the white film;
   - night lowers the sun to a moon's light and darkens the sky; windows light on the walls and the studio's light grows;
   - a living moment's picture is laid on the frame from the shot's camera under the white film's climbing front; tools/living.py's
     reference still is the colour frame (it renders the film as it is);

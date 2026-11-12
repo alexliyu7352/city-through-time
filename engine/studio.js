@@ -362,7 +362,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     }
     return g;
   }
-  float layerAt(vec2 uv, int i){ if (!onPlate(uv)) return 0.; vec4 m = ${Z.E > 8 ? 'i < 4 ? texture2D(uL1, uv) : i < 8 ? texture2D(uL2, uv) : texture2D(uL3, uv)' : Z.E > 4 ? 'i < 4 ? texture2D(uL1, uv) : texture2D(uL2, uv)' : 'texture2D(uL1, uv)'}; int k = i - (i < 4 ? 0 : i < 8 ? 4 : 8); return k == 0 ? m.r : k == 1 ? m.g : k == 2 ? m.b : m.a; }
+  ${LAYER_AT(Z)}
   // today's buildings inside an epoch's mask (an area the narration names) take its colour in their own material, as a period city
   // takes its node's: the projector light alone was washed out by the lit white walls (the ground showed the colour, the houses not)
   vec3 epTint(vec3 base){
@@ -532,6 +532,13 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   float eraRiseK(){ float ry;
      ${ERA_RY(Z, 'iRank', 'iW')}
      return ry; }`;
+  // an area's mask on the plate (an epoch's: compile's layer maps), 0..1: the white model's and the colour film's marks (marksGLSL)
+  const LAYER_AT = Z => `float layerAt(vec2 uv, int i){ if (!onPlate(uv)) return 0.; vec4 m = ${Z.E > 8 ? 'i < 4 ? texture2D(uL1, uv) : i < 8 ? texture2D(uL2, uv) : texture2D(uL3, uv)' : Z.E > 4 ? 'i < 4 ? texture2D(uL1, uv) : texture2D(uL2, uv)' : 'texture2D(uL1, uv)'}; int k = i - (i < 4 ? 0 : i < 8 ? 4 : 8); return k == 0 ? m.r : k == 1 ? m.g : k == 2 ? m.b : m.a; }`;
+  // the colour film's marks (engine/mini.js): the areas the story names, their uniforms and their masks (layerAt), on any shader
+  const marksGLSL = () => `uniform float uEpA[${Z.E}], uEpB[${Z.E}], uEpR[${Z.E}], uEpRim[${Z.E}], uEpW[${Z.E}]; uniform vec2 uEpC[${Z.E}]; uniform vec3 cEp[${Z.E}];
+  uniform sampler2D uL1, uL2, uL3; uniform vec2 uPlate;
+  bool onPlate(vec2 uv){ return all(greaterThanEqual(uv, vec2(0.))) && all(lessThanEqual(uv, vec2(1.))); }
+  ${LAYER_AT(Z)}`;
   const RISE_DECL = Z => `${YL_GLSL(Z)}
   uniform float uNow; attribute vec4 aData; attribute float aBase; varying vec4 vData; varying vec3 vWP; varying vec3 vWN; varying float vUp; varying float vBase; uniform float uToday, uGrowRise, uYear, uGhost, uLiveSink; uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''}; uniform vec2 uPlateV; attribute vec2 aCtr; uniform vec2 uResetC; uniform float uResetR, uResetY; varying vec2 aCtrV; attribute vec3 aGrowH; attribute float aGrowT; varying float vGrowT;
   uniform float uHideT[${HMAX}], uHideG[${HMAX}], uHideFR[${HMAX}], uHideFI[${HMAX}], uHideFW[${HMAX}]; uniform vec2 uHideO[${HMAX}];${K ? ` uniform sampler2D uKeep, uKeep2${H3 ? ', uKeep3' : ''}; uniform float uHideKeep[${HMAX}];` : ''}
@@ -579,6 +586,11 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // burns a bright field to white), at a restrained strength (LIGHTK, the look's: engine/mini.js). ground: a period city's open
   // ground instead (the studio's grounds: its paving's texture where it stands), in the look's paving colour (GROUNDC), laid over
   // the land by its cover, lit by the look's sun
+  // when a building catches fire (the colour film): spreading from the fire's start (uO) to its farthest building (uMaxR) over uSpread
+  // seconds from uT0, unevenly by the building (h, fireHash); its fireByDay and engine/mini.js's charring walls share it
+  const FIRE_GLSL = `uniform float uT0, uSpread, uMaxR;
+      float fireHash(vec2 c){ return fract(sin(dot(c, vec2(127.1e3, 311.7e3))) * 43758.5453); }
+      float ign(vec2 c, float h){ return uT0 + uSpread * (clamp(length(c - uO) / uMaxR, 0., 1.) * .7 + h * .3); }`;
   const LIGHTK = { value: .55 }, GROUNDC = { value: new THREE.Color('#d6caae') };
   function lightMaterial(ground = false) {
     const m = projMaterial(1, { color: '#ffffff', roughness: .95 }, { uPlateTop: { value: 1 }, uBase: { value: 0 } }), made = m.onBeforeCompile, key = m.customProgramCacheKey;
@@ -858,58 +870,83 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     eras[id] = { mesh, u, base: u.uEraCol.value.clone() };
     return eras[id];
   }
-  // a fire as the colour film shows it by day (addFire, COLOUR; drawn there alone, layer 1): a flame on each burning building,
-  // flickering, and columns of smoke over the fire, rising, spreading and drifting downwind, the same fire's uniforms (its
-  // strength, its clock, the ring past which it is out). Sizes in metres as drawn (the period cities stand twice their height)
-  function fireByDay(centres, ground, u) {
+  // a fire as the colour film shows it by day (addFire, COLOUR; drawn there alone, layer 1), its own uniforms beside the fire's
+  // (strength, clock, the ring past which it is out): it catches building by building, spreading from where it starts (the ring's
+  // centre) over uSpread seconds, unevenly (FIRE_GLSL ign: the look's burning walls char by the same front, engine/mini.js);
+  // flames stand on the roofs as shapes, hottest just behind the front and in clusters, smaller once a building is burnt through;
+  // a few embers rise near the flames; a few thick columns of smoke rise straight, then drift downwind and spread into a pall.
+  // tops: each building's roof height (else its floor, else the ground). Sizes in metres as drawn, larger than life (a model's fire)
+  function fireByDay(centres, ground, u, tops) {
     let sd = 7; const rnd = () => { sd = (sd * 16807) % 2147483647; return sd / 2147483647; };
-    const at = c => [c[0], c.length > 2 ? c[2] : ground(c[0], c[1]), c[1]];
-    const points = (n, fill, vert, frag, order) => { const pos = new Float32Array(n * 3), seed = new Float32Array(n * 2);
-      for (let i = 0; i < n; i++) fill(i, pos, seed);
-      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('aSeed', new THREE.BufferAttribute(seed, 2));
-      const mat = new THREE.ShaderMaterial({ uniforms: { ...u, uM: { value: M.scale } }, vertexShader: vert, fragmentShader: frag, transparent: true, depthWrite: false,
-        blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor });   // (premultiplied: a flame or a puff over what is behind it)
+    const at = (c, i) => [c[0], tops ? tops[i] : c.length > 2 ? c[2] : ground(c[0], c[1]), c[1]];
+    const F = { uT0: { value: -1e9 }, uSpread: { value: 3 }, uMaxR: { value: 1 }, uM: { value: M.scale } };
+    const points = (n, fill, vert, frag, order, blendDst = THREE.OneMinusSrcAlphaFactor) => { const pos = new Float32Array(n * 3), seed = new Float32Array(n * 2), ctr = new Float32Array(n * 2);
+      for (let i = 0; i < n; i++) fill(i, pos, seed, ctr);
+      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('aSeed', new THREE.BufferAttribute(seed, 2)); g.setAttribute('aC', new THREE.BufferAttribute(ctr, 2));
+      const mat = new THREE.ShaderMaterial({ uniforms: { ...u, ...F }, vertexShader: vert, fragmentShader: frag, transparent: true, depthWrite: false,
+        blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst });   // (premultiplied: a flame or a puff over what is behind it)
       const o = new THREE.Points(g, mat); o.frustumCulled = false; o.visible = false; o.renderOrder = order; o.layers.set(1); o.userData.fxGlow = true; scene.add(o); return o; };
-    const head = `attribute vec2 aSeed; uniform float uT, uR, uPxH, uM; uniform vec2 uO; varying float vK, vA, vS;
-      float px(vec4 mv, float m){ return clamp(uPxH * projectionMatrix[1][1] / max(.0005, -mv.z) * m, 1.5, 256.); }`;
-    // flames: two on each building, a metre or few above its floor, 30 to 50 m tall as drawn (a model's flames, larger than
-    // life: a city's fire reads from afar), each its own flicker
-    const NF = Math.min(24000, centres.length * 2);
-    const flames = points(NF, (i, pos, seed) => { const c = at(centres[i % centres.length]); pos[i * 3] = c[0] + (rnd() - .5) * 6 * M.scale; pos[i * 3 + 1] = c[1]; pos[i * 3 + 2] = c[2] + (rnd() - .5) * 6 * M.scale; seed[i * 2] = rnd(); seed[i * 2 + 1] = rnd(); },
+    const head = `attribute vec2 aSeed, aC; uniform float uT, uR, uPxH, uM, uA; uniform vec2 uO; varying float vK, vA, vS;
+      ${FIRE_GLSL}
+      float px(vec4 mv, float m){ return uPxH * projectionMatrix[1][1] / max(.0005, -mv.z) * m; }`;
+    // flames: one on every building's roof; each burns hot from its catching for about 3 s, then lower; hotter in clusters (blocks
+    // of about 150 m), 60 to 100 m tall as drawn and never under 24 pixels of the drawn picture while hot (a fire reads in a wide
+    // shot), each its own flicker
+    const NF = Math.min(16000, centres.length);
+    const flames = points(NF, (i, pos, seed, ctr) => { const c = at(centres[i], i); pos.set([c[0] + (rnd() - .5) * 4 * M.scale, c[1], c[2] + (rnd() - .5) * 4 * M.scale], i * 3);
+      seed[i * 2] = rnd(); seed[i * 2 + 1] = rnd(); ctr[i * 2] = centres[i][0]; ctr[i * 2 + 1] = centres[i][1]; },
       `${head}
-      void main(){ float f = .55 + .45 * sin(uT * (7. + 6. * aSeed.y) + aSeed.x * 60.) * sin(uT * 3.1 + aSeed.y * 17.);
-        vec3 p = position; p.y += (2. + 4. * aSeed.y) * uM;
-        vec4 mv = modelViewMatrix * vec4(p, 1.); gl_Position = projectionMatrix * mv;
-        vA = length(position.xz - uO) < uR ? 1. : 0.; vK = f; vS = aSeed.x;   // (the ring that takes the city back has passed: out)
-        gl_PointSize = max(px(mv, (30. + 20. * aSeed.y) * (.75 + .35 * f) * uM), 3.) * vA; }`,
-      `uniform float uA; varying float vK, vA, vS;
+      void main(){ float h = fireHash(aC), g = ign(aC, h), e = uT - g, hot = smoothstep(0., .6, e) * (1. - .65 * smoothstep(2.5, 5., e));
+        float cl = smoothstep(.25, .75, fireHash(floor(aC / (150. * uM)) + .37));   // (its block's share of the fire: clusters)
+        float f = .6 + .4 * sin(uT * (7. + 6. * aSeed.y) + aSeed.x * 60.) * sin(uT * 3.1 + aSeed.y * 17.);
+        vec4 mv = modelViewMatrix * vec4(position, 1.); gl_Position = projectionMatrix * mv;
+        vA = length(aC - uO) < uR ? hot * mix(.35, 1., cl) * uA : 0.; vK = f; vS = aSeed.x;
+        float sz = (60. + 40. * aSeed.y) * uM * (.6 + .4 * f) * mix(.55, 1., cl);
+        gl_PointSize = vA > .01 ? clamp(max(px(mv, sz), 24. * vA), 2., 160.) : 0.;
+        gl_Position.y += gl_PointSize / uPxH * .45 * gl_Position.w; }`,   // (its foot on the roof: the sprite raised by half its height)
+      `varying float vK, vA, vS;
       void main(){ vec2 c = gl_PointCoord - .5; float y = .5 - c.y;   // (0 at its foot .. 1 at its tip)
         float w = .42 * (1. - y) * sqrt(max(y, 0.) + .04) * 1.6 * (1. + .25 * sin(y * 9. + vS * 30. + vK * 4.));
         float m = smoothstep(w, w * .55, abs(c.x)) * smoothstep(1., .75, y) * smoothstep(0., .1, y);
         float hot = smoothstep(w * .7, 0., abs(c.x)) * smoothstep(.75, .1, y);
-        vec3 col = mix(vec3(.95, .22, .03), vec3(1., .62, .12), hot) + vec3(.6, .45, .2) * hot * hot;
-        float a = m * uA * vA * (.75 + .25 * vK); if (a < .01) discard;
-        gl_FragColor = vec4(col * 1.6 * a, a); }`, 8);
-    // smoke: a few thick columns over the fire (one for about every 60 burning buildings, 2 to 40), puffs rising 1100 m as drawn
-    // over 9 to 13 s, growing from 120 to 560 m and drifting downwind as they go, near black at the fire and greying as they thin
-    // (a city's smoke, larger than life as its flames)
-    const cols = Math.max(2, Math.min(40, Math.round(centres.length / 60))), per = 110, NS = cols * per, base = [];
-    for (let k = 0; k < cols; k++) base.push(at(centres[Math.floor(rnd() * centres.length)]));
-    const smoke = points(NS, (i, pos, seed) => { const c = base[Math.floor(i / per)]; pos[i * 3] = c[0]; pos[i * 3 + 1] = c[1]; pos[i * 3 + 2] = c[2]; seed[i * 2] = rnd(); seed[i * 2 + 1] = rnd(); },
+        vec3 col = mix(vec3(.95, .25, .03), vec3(1., .66, .14), hot) + vec3(.55, .42, .18) * hot * hot;
+        float a = m * min(vA * 1.4, 1.); if (a < .01) discard;
+        gl_FragColor = vec4(col * 1.5 * a, a); }`, 8);
+    // embers: two over every flame, small, rising 15 to 45 m and out within a second or so, only where a flame is hot
+    const NE = Math.min(8000, NF * 2);
+    const embers = points(NE, (i, pos, seed, ctr) => { const k = i % NF, c = at(centres[k], k); pos.set([c[0], c[1], c[2]], i * 3); seed[i * 2] = rnd(); seed[i * 2 + 1] = rnd(); ctr[i * 2] = centres[k][0]; ctr[i * 2 + 1] = centres[k][1]; },
       `${head}
-      void main(){ float life = 9. + 4. * aSeed.y, k = fract(uT / life + aSeed.x); vK = k; vS = aSeed.y;
-        vec3 p = position; float h = 1100. * uM * k;
-        p.y += h; p.x += (520. * pow(k, 1.5) + 60. * sin(aSeed.x * 40. + uT * .4)) * uM; p.z += (160. * pow(k, 1.5) + 60. * cos(aSeed.y * 40. + uT * .3)) * uM;
+      void main(){ float h = fireHash(aC), e = uT - ign(aC, h), hot = smoothstep(0., .6, e) * (1. - smoothstep(2., 4., e));
+        float life = .9 + .8 * aSeed.y, k = fract(uT / life + aSeed.x); vK = k;
+        vec3 p = position + vec3((aSeed.x - .5) * 18., (15. + 30. * aSeed.y) * k + 12., (aSeed.y - .5) * 18.) * uM;
         vec4 mv = modelViewMatrix * vec4(p, 1.); gl_Position = projectionMatrix * mv;
-        vA = length(position.xz - uO) < uR ? 1. : 0.;
-        gl_PointSize = px(mv, (120. + 440. * k) * uM) * vA; }`,
+        vA = length(aC - uO) < uR ? hot * (1. - k) * uA : 0.;
+        gl_PointSize = vA > .05 ? clamp(px(mv, 3. * uM), 2., 4.) : 0.; }`,
+      `varying float vK, vA, vS;
+      void main(){ float r = length(gl_PointCoord - .5) * 2.; float a = smoothstep(1., .2, r) * vA; if (a < .02) discard;
+        gl_FragColor = vec4(vec3(1., .45, .08) * 1.8 * a, a); }`, 8);
+    // smoke: a few thick columns (one for about every 350 burning buildings, 2 to 12), each from when its building catches: puffs
+    // rising 1400 m as drawn over 12 to 16 s, straight up first, then drifting downwind as they spread from 160 to 800 m into a pall;
+    // near black at the fire, greying as they thin
+    const cols = Math.max(2, Math.min(12, Math.round(centres.length / 350))), per = 140, base = [];
+    for (let k = 0; k < cols; k++) { const j = Math.floor(rnd() * centres.length); base.push([at(centres[j], j), centres[j]]); }
+    const smoke = points(cols * per, (i, pos, seed, ctr) => { const [c, cc] = base[Math.floor(i / per)]; pos.set(c, i * 3); seed[i * 2] = rnd(); seed[i * 2 + 1] = rnd(); ctr[i * 2] = cc[0]; ctr[i * 2 + 1] = cc[1]; },
+      `${head}
+      void main(){ float life = 12. + 4. * aSeed.y, k = fract(uT / life + aSeed.x), age = uT - ign(aC, fireHash(aC)); vK = k; vS = aSeed.y;
+        float up = 1400. * k, drift = 900. * pow(smoothstep(.22, 1., k), 1.6);
+        vec3 p = position + vec3(drift + 40. * sin(aSeed.x * 40. + uT * .3) * k, up, .3 * drift + 40. * cos(aSeed.y * 40. + uT * .25) * k) * uM;
+        vec4 mv = modelViewMatrix * vec4(p, 1.); gl_Position = projectionMatrix * mv;
+        vA = age > k * life ? uA : 0.;   // (a column grows from its fire: no puff older than the fire under it)
+        gl_PointSize = vA > .01 ? clamp(px(mv, mix(160., 800., pow(k, .8)) * uM), 1.5, 512.) : 0.; }`,
       `uniform float uA; varying float vK, vA, vS;
       void main(){ vec2 c = gl_PointCoord - .5; float r = length(c) * 2.;
-        float n = .75 + .25 * sin(c.x * 9. + vS * 20.) * sin(c.y * 7. + vS * 13.);
-        float a = smoothstep(1., .3, r / n) * pow(1. - vK, 1.1) * smoothstep(0., .05, vK) * .8 * uA * vA; if (a < .004) discard;
-        vec3 col = mix(vec3(.06, .055, .05), vec3(.3, .29, .28), smoothstep(.1, .8, vK));
+        float n = .8 + .2 * sin(c.x * 9. + vS * 20.) * sin(c.y * 7. + vS * 13.);
+        float a = smoothstep(1., .25, r / n) * pow(1. - vK, .8) * smoothstep(0., .04, vK) * .85 * vA; if (a < .004) discard;
+        vec3 col = mix(vec3(.06, .055, .05), vec3(.34, .33, .31), smoothstep(.08, .8, vK));
         gl_FragColor = vec4(col * a, a); }`, 9);
-    return [flames, smoke];
+    const parts = [flames, embers, smoke];
+    return { parts, F, size: centres.length, start(t0, o, spread) { F.uT0.value = t0; F.uSpread.value = spread;   // (when it starts, where, over how long)
+      let r = 1e-6; for (const c of centres) r = Math.max(r, Math.hypot(c[0] - o[0], c[1] - o[1])); F.uMaxR.value = r; } };
   }
   // light routes: a glowing path drawn along a raised arc (a capital moving, a river shifting, a distance): the head is a
   // comet, the drawn part carries travelling pulses; additive, so it reads as light over the model
@@ -959,7 +996,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // the edge of a standing period city: a thin neon line draped on the ground along its outline (the reference's lit edge).
   // The tube keeps about the same width on screen at any distance (radius = uW x camera distance); its core is near white,
   // its rim the city's colour; bloom gives the glow. set(alpha, colour).
-  const edges = {};
+  const edges = {}, EDGEK = .7;
   // the neon line on a standing city's outline. `start` (a direction [dx, dz]): the line can draw itself (uDraw 0..1) both ways
   // round from the point of the outline furthest against it, the two ends meeting on the far side, a bright head on each
   function addEdge(id, rings, col, start = null) {
@@ -984,8 +1021,9 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       if (pts.length < 4) continue;
       const geo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true, 'centripetal'), pts.length, .0001, 6, true);
       const m = new THREE.Mesh(geo, mat); m.frustumCulled = false; m.renderOrder = 4; m.visible = false; scene.add(m); meshes.push(m);
+      if (COLOUR) { m.layers.enable(1); m.userData.fxGlow = true; }   // (the colour film: the city's outline too, at EDGEK of the white's)
     }
-    edges[id] = { u, set(a, c, draw = 1) { u.uA.value = a; u.uDraw.value = draw; if (c) u.uCol.value.copy(c); for (const m of meshes) m.visible = a > .002; } };
+    edges[id] = { u, set(a, c, draw = 1) { u.uA.value = a * (COLOUR ? EDGEK : 1); u.uDraw.value = draw; if (c) u.uCol.value.copy(c); for (const m of meshes) m.visible = a > .002; } };
     return edges[id];
   }
   // the key light stands to the camera's front left, KEY_SIDE degrees round from it at KEY_EL above the plate, whichever way
@@ -1272,9 +1310,12 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
           if (a < .003) discard;
           gl_FragColor = vec4(col * a, 1.); }` });
     const pts = new THREE.Points(g, mat); pts.frustumCulled = false; pts.visible = false; pts.renderOrder = 7; scene.add(pts);
-    const more = COLOUR ? fireByDay(centres, ground, u) : [];
-    if (COLOUR) { pts.layers.enable(1); pts.userData.fxGlow = true; }
-    fires[id] = { u, set(a, t, R, o) { u.uA.value = a; u.uT.value = t; u.uR.value = R; if (o) u.uO.value.set(o[0], o[1]); pts.visible = a > .002; for (const q of more) q.visible = a > .002; } };
+    const day = COLOUR ? fireByDay(centres, ground, u, o.tops) : null, more = day ? day.parts : [];   // (the colour film: its own fire; these sparks are the white film's)
+    // set(strength, film seconds, the ring past which it is out, its centre, start: [the second it starts, the seconds it takes to spread]:
+    // the colour film's front, fireByDay; none: as before)
+    fires[id] = { u, day, size: centres.length, set(a, t, R, o, start) { u.uA.value = a; u.uT.value = t; u.uR.value = R; if (o) u.uO.value.set(o[0], o[1]); pts.visible = a > .002;
+      if (day && o && start && day.F.uT0.value !== start[0]) day.start(start[0], o, start[1]);
+      for (const q of more) q.visible = a > .002; } };
     return fires[id];
   }
 
@@ -1422,5 +1463,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // fx land trees: trees in the land's woods and open ground in the white model too, planted as the miniature plants them, in a pale
   // sage that sits with the white city (fx.js treeField; the viewer's, engine/view.js)
   const fxTrees = () => treeField(scene, renderer, U, PW, PD, M.scale, { size: .8, keep: .25, ...(landPalette(FXL).trees || {}), dark: 1, cypress: .1, woods: woodsFn(FXL, EXG, M.scale, ground, FXR), ground, layer: 0, tone: 'film' });
-  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, deformMaterial, eraRiseGLSL, eraRy: (rank, w) => ERA_RY(Z, rank, w), colourLight: LIGHTK, colourGround: GROUNDC, wThenGLSL: T ? WTHEN : null, context: () => ctxMesh, slots: HMAX, slots3: H3, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, deformMaterial, eraRiseGLSL, eraRy: (rank, w) => ERA_RY(Z, rank, w), marksGLSL, marksN: () => Z.E, colourLight: LIGHTK, colourGround: GROUNDC, fireGLSL: FIRE_GLSL, wThenGLSL: T ? WTHEN : null, context: () => ctxMesh, slots: HMAX, slots3: H3, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
 }

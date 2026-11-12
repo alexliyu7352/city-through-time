@@ -175,7 +175,7 @@ export const LAND_PALETTES = {
 // no edges and the fields at most a faint grain (the patchwork read as rags sewn together). Both: woods in soft patches, and
 // scrub and woods where the ground is steep (steep 0..1: the caller's, from the relief; 0 without one); woods false: no woods.
 // fxDetail(m): the quiet ground's own variation alone (1 on average)
-export function landGLSL(p, woods = true, style = 'fields', name = 'fxLand', withHead = true) {   // (name, withHead: a second land beside fxLand in one shader, its own name, the helpers once)
+export function landGLSL(p, woods = true, style = 'fields') {
   const v3 = a => `vec3(${a.map(x => x.toFixed(3)).join(', ')})`;
   const head = /* glsl */`
 float fxLh(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -190,16 +190,16 @@ float fxDetail(vec2 m){ return 1. + .2 * (fxLn(m / 610. + 3.1) - .5) + .16 * (fx
   const wood = (lo, hi, k) => `
   float wood = max(steep, smoothstep(${lo}, ${hi}, fxWoodsN(m_)));
   land = mix(land, ${v3(p.wood)} * (.82 + .36 * fxLn(m_ / 26.)), wood * ${woods ? k : '0.'});`;
-  if (style === 'quiet') return (withHead ? head : '') + `
-vec3 ${name}(vec2 m_, float steep){
+  if (style === 'quiet') return head + `
+vec3 fxLand(vec2 m_, float steep){
   float n1 = fxLn(m_ / 2300.), n2 = fxLn(m_ / 610. + 3.1), n3 = fxLn(m_ / 140. + 7.7);
   vec3 grass = mix(${v3(p.grass0)}, ${v3(p.grass1)}, n2), earth = mix(${v3(p.soil)}, ${v3(p.straw)}, n3 * .7);
   vec3 land = mix(grass, earth, smoothstep(.2, .9, n1) * .5);   // (soil and grass shading into each other over kilometres)
   vec2 m = m_ + vec2(fxLn(m_ / 300.), fxLn(m_ / 300. + 7.)) * 60.;
   land *= fxDetail(m_) * (1. + .05 * (fxLh(floor(m / vec2(160., 105.) + vec2(.3, .7) * floor(m.y / 105.))) - .5));   // (the fields: a faint grain)${wood('.56', '.76', '.75')}
   return pow(land, vec3(2.2)); }`;
-  return (withHead ? head : '') + `
-vec3 ${name}(vec2 m_, float steep){
+  return head + `
+vec3 fxLand(vec2 m_, float steep){
   vec2 m = m_ + vec2(fxLn(m_ / 300.), fxLn(m_ / 300. + 7.)) * 60.;   // (the fields' edges not ruled straight)
   float field = fxLh(floor(m / vec2(160., 105.) + vec2(.3, .7) * floor(m.y / 105.)));
   float n = fxLn(m_ / 60.) * .6 + fxLn(m_ / 13.) * .4;
