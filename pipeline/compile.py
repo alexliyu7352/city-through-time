@@ -891,50 +891,68 @@ def camv(k):
 
 MINI_CITY = [None]   # the built area of the last period city (its corners, model xyz): the view of a node with none of its own
 def mini_camera(node):
-    """the colour film's camera (film.look kind mini; stagecraft.MINI, docs/STAGING.md "Look and effects"): the node's own keys,
-    still looking at what they look at and when, framed as a miniature is (stagecraft.mini_frame: the pitch and lens in range, no
-    farther than the node's city whole, no nearer than d_min_m; a key aimed at a landmark a pin names while it shows, that
-    landmark close), a landmark named with no key on it given an orbit of its own, and a drift wherever the camera would stand
-    still (stagecraft.mini_drift). A function of the node's keys, city and pins alone: every pass of the plan makes the same keys."""
-    M = MINI_CAM; L = M['landmark']; sc = F.scale
+    """the colour film's camera, first part (film.look kind mini; stagecraft.MINI, docs/STAGING.md "Look and effects"): each of the
+    node's own keys, however it is timed, framed as a miniature is (stagecraft.mini_frame: the pitch and lens in range, no farther
+    than the node's city whole, no nearer than d_min_m), still looking where it looked. Before the node's pacing, so the moves are
+    paced as framed; what needs the keys' and pins' times (a landmark close, the drift) is mini_motion's, once the lines are laid.
+    A function of the node's keys and city alone: every pass of the plan makes the same keys."""
     if node.get('city') and PRIMS.get(node['id']):   # (its built area: the middle 80 % of its houses and landmarks each way)
         P_ = [p_ for p_ in PRIMS[node['id']] if p_[11] not in (4, 5, 7)]
         if P_:
             xs_, zs_ = sorted(p_[1] for p_ in P_), sorted(p_[2] for p_ in P_); q_ = lambda a, f: a[min(len(a) - 1, int(f * len(a)))]
             x0, x1, z0, z1 = q_(xs_, .1), q_(xs_, .9), q_(zs_, .1), q_(zs_, .9)
             MINI_CITY[0] = [(x_, model_ground(x_, z_), z_) for x_ in (x0, (x0 + x1) / 2, x1) for z_ in (z0, (z0 + z1) / 2, z1)]
-    city = MINI_CITY[0]
-    keys = [k for k in node.get('camera', []) if isinstance(k.get('t'), (int, float))]
-    if not keys: return
-    keys.sort(key=lambda k: float(k['t']))
-    near_city = lambda X: city is not None and min(c_[0] for c_ in city) - .02 <= X[0] <= max(c_[0] for c_ in city) + .02 and min(c_[2] for c_ in city) - .02 <= X[2] <= max(c_[2] for c_ in city) + .02
-    marks = []   # a landmark a pin names in the node's city, while its name shows: (from, to, model xyz)
+    node['_mini_city'] = MINI_CITY[0]; L = MINI_CAM['landmark']
+    # (a key set in seconds aimed at a landmark a pin set in seconds names while it shows: framed on it here already, so the
+    # pacing gives the moves to and from it their time; mini_motion finds it again and does the rest, and the ones timed by lines)
+    marks = []
     for p_ in node.get('pins', []):
-        if not isinstance(p_.get('t0'), (int, float)) or not isinstance(p_.get('t1'), (int, float)) or 'lon' not in p_: continue
-        x_, z_ = F.model_lonlat(p_['lon'], p_['lat']); X_ = (x_, model_ground(x_, z_), z_)
-        if near_city(X_): marks.append((float(p_['t0']) - L['lead'], float(p_['t1']), X_))
-    def aimed(k_, v_):   # the landmark a key looks at while its name shows (its target within a third of the frame of it), or None
-        for a_, b_, X_ in marks:
-            if a_ - .05 <= float(k_['t']) <= b_ + .05 and math.dist(v_[:3], X_) <= max(3 * L['r_m'] * sc, v_[5] * math.tan(math.radians(v_[6] / 2)) * .66): return X_
-        return None
-    seq = []
-    for k_ in keys:
-        v_ = camv(k_); X_ = aimed(k_, v_)
-        seq.append([float(k_['t']), stagecraft.mini_frame(v_, city, sc, M, landmark=X_), L['orbit'] if X_ is not None else None, k_])
-    for a_, b_, X_ in marks:   # a landmark named with no key on it: an orbit of its own over its name
-        if any(r_[2] is not None and a_ - .05 <= r_[0] <= b_ + .05 and math.dist(r_[1][:3], X_) < 1e-6 for r_ in seq) or b_ - a_ < 2.5: continue
-        ts_ = [r_[0] for r_ in seq]; j_ = max(0, min(len(seq) - 1, sum(1 for t_ in ts_ if t_ <= a_) - 1))
-        base_ = list(seq[j_][1]); v0_ = stagecraft.mini_frame(base_, city, sc, M, landmark=X_)
-        for t_ in (a_, b_): seq.append([t_, list(v0_), L['orbit'], None])
-        print(f'  mini camera: node {node["id"]}: an orbit round the landmark at {X_[0]:.3f}, {X_[2]:.3f} over {a_:.1f}-{b_:.1f} s')
+        if isinstance(p_.get('t0'), (int, float)) and isinstance(p_.get('t1'), (int, float)) and 'lon' in p_:
+            x_, z_ = F.model_lonlat(p_['lon'], p_['lat']); marks.append((float(p_['t0']) - L['lead'], float(p_['t1']), (x_, model_ground(x_, z_), z_)))
+    for k_ in node.get('camera', []):
+        v_ = stagecraft.mini_frame(camv(k_), MINI_CITY[0], F.scale, MINI_CAM)
+        if isinstance(k_.get('t'), (int, float)):
+            X_ = next((X_ for a_, b_, X_ in marks if a_ - .05 <= float(k_['t']) <= b_ + .05 and mini_aims(v_, X_)), None)
+            if X_ is not None: v_ = stagecraft.mini_frame(v_, MINI_CITY[0], F.scale, MINI_CAM, landmark=X_)
+        k_['v'] = [round(x_, 6) for x_ in v_[:6]]; k_['fov'] = round(v_[6], 3)
+
+def mini_aims(v, X):
+    """key v looks at the landmark at X (model xyz): its target within a third of the frame's height of it, or 3 r_m"""
+    return math.dist(v[:3], X) <= max(3 * MINI_CAM['landmark']['r_m'] * F.scale, v[5] * math.tan(math.radians(v[6] / 2)) * .66)
+
+def mini_motion(node, keys, pins_n, fixed=()):
+    """the colour film's camera, second part, once the lines are laid: keys [[film s, key, inserted?]] the node's own and the
+    plan's, pins_n its pins as film.json has them (times resolved, however they were written). A key aimed at a landmark a pin
+    names while it shows (its target within a third of the frame of it, or 3 r_m) frames that landmark close and orbits it; a
+    landmark named with no key on it gets an orbit of its own where the camera has the time to get there and back at the 9f pace;
+    then the drift wherever the camera would stand still (stagecraft.mini_drift; fixed: [[film s, key]] that stay as they are,
+    a beam follow's). Returns [[film s, key]]."""
+    M = MINI_CAM; L = M['landmark']; sc = F.scale; city = node.get('_mini_city')
+    near_city = lambda X: city is not None and min(c_[0] for c_ in city) - .02 <= X[0] <= max(c_[0] for c_ in city) + .02 and min(c_[2] for c_ in city) - .02 <= X[2] <= max(c_[2] for c_ in city) + .02
+    marks = []   # (from, to, model xyz, pin id): a landmark of the node's city while its name shows
+    for p_ in pins_n:
+        X_ = (p_['pos'][0], model_ground(p_['pos'][0], p_['pos'][1]), p_['pos'][1])
+        if near_city(X_): marks.append((p_['t0'] - L['lead'], p_['t1'], X_, p_['id']))
+    seq = [[float(t_), list(v_), None, False] for t_, v_ in keys] + [[float(t_), list(v_), None, True] for t_, v_ in fixed]
     seq.sort(key=lambda r_: r_[0])
+    for r_ in seq:
+        if r_[3]: continue
+        for a_, b_, X_, _ in marks:
+            if a_ - .05 <= r_[0] <= b_ + .05 and mini_aims(r_[1], X_):
+                r_[1] = stagecraft.mini_frame(r_[1], city, sc, M, landmark=X_); r_[2] = L['orbit']; break
+    for a_, b_, X_, id_ in marks:   # a landmark named with no key in its time: an orbit of its own over its name, if the camera has the
+        # time to get there and back (a key in its time looks at something else for a line of its own: that stays, and the check says so)
+        if b_ - a_ < 2.5 or any(a_ - .05 <= r_[0] <= b_ + .05 for r_ in seq): continue
+        pre_ = [r_ for r_ in seq if r_[0] < a_ - .05]; post_ = [r_ for r_ in seq if r_[0] > b_ + .05]
+        if not pre_: continue
+        V_ = stagecraft.mini_frame(pre_[-1][1], city, sc, M, landmark=X_)
+        if a_ - pre_[-1][0] < stagecraft.move_time(pre_[-1][1], V_, speed=.6, t_min=.8) or (post_ and post_[0][0] - b_ < stagecraft.move_time(V_, post_[0][1], speed=.6, t_min=.8)):
+            print(f'  mini camera: node {node["id"]}: pin {id_} names a landmark the camera has no time to get to ({a_ + L["lead"]:.1f}-{b_:.1f} s): a key on it would'); continue
+        seq += [[a_, list(V_), L['orbit'], False], [b_, list(V_), L['orbit'], False]]
+        seq.sort(key=lambda r_: r_[0]); print(f'  mini camera: node {node["id"]}: an orbit round the landmark of pin {id_} over {a_:.1f}-{b_:.1f} s')
     for i_ in range(1, len(seq)): seq[i_][1][3] = stagecraft.unwrap(seq[i_][1][3], seq[i_ - 1][1][3])
-    out = stagecraft.mini_drift([(r_[0], r_[1], r_[2]) for r_ in seq], M)
-    new = []
-    for r_, v_ in zip(seq, out):
-        k_ = r_[3] if r_[3] is not None else {'t': round(r_[0], 3)}
-        k_['v'] = [round(x_, 6) for x_ in v_[:6]]; k_['fov'] = round(v_[6], 3); new.append(k_)
-    node['camera'] = [k for k in node.get('camera', []) if not isinstance(k.get('t'), (int, float))] + new
+    out = stagecraft.mini_drift([(r_[0], r_[1], r_[2], r_[3]) for r_ in seq], M)
+    return [[round(r_[0], 3), [round(x_, 6) for x_ in v_[:6]] + [round(v_[6], 3)]] for r_, v_ in zip(seq, out) if not r_[3]]
 
 def footage_item(ft, on, nid):
     """a picture or clip of a node (or of the prologue, nid None) as film.json shows it, from `on` seconds"""
@@ -2054,15 +2072,18 @@ for i, node in enumerate(FM['nodes']):
         if 'pause' in c: continue
         a, b = ab(c); cues.append({'id': c['id'], 'node': node['id'], 'later': bool(c.get('later')), 't0': node['_line_t'][c['id']][0], 'a': a, 'b': b, 'say': round(spoken(c), 3), 'extra': c.get('extra', 0.4)})
     for e in node.get('events', []): evs.append({'t': T(e['t']), 'type': e['type'], **{k: v for k, v in e.items() if k not in ('t', 'type')}})
-    keys = node.get('camera', [])
+    keys = node.get('camera', []); nk_ = []
     for k in keys:
         tk_ = T(k['t'])
         inside_ = [rid_ for nid_, rid_, (w0_, w1_) in FOLLOW if nid_ == node['id'] and w0_ - .05 < tk_ < w1_ + .05]
         if inside_: print(f'  camera: key at {tk_:.2f} s left out (inside the follow of {inside_[0]}, which ends on the city)'); continue
-        cam.append([tk_, camv(k)])
+        nk_.append([tk_, camv(k)])
     for qi_, q in enumerate(node['_ins']):   # the camera moves the algorithm inserted (a hold, a closer look), each in its own time
         at_ = node_time(node, q['tau']) + sum(o['delta'] for o in node['_ins'][:qi_] if o['tau'] == q['tau'])   # after earlier ones at the same place
-        for off_, kv_ in q['keys']: cam.append([round(at_ + off_, 3), camv(kv_)])
+        for off_, kv_ in q['keys']: nk_.append([round(at_ + off_, 3), camv(kv_)])
+    if MINI_CAM and not node.get('tour'):   # (the colour film: a landmark close while its name shows, the drift; a beam follow's keys stay)
+        nk_ = mini_motion(node, nk_, [p_ for p_ in pins if p_['_node'] == node['id']], [k_ for k_ in FOLLOW_KEYS if node['_t0'] - .05 <= k_[0] <= node['_t1'] + .05])
+    cam += nk_
     cursor = node['_t1']
 
 # resolve `until: <node>` epochs / props
@@ -2219,9 +2240,6 @@ def plan_stages():
     new = []
     state = lambda t: [round(v, 6) for v in CAMERA.state(t)]
     key_ = lambda v: {'v': v[:6], 'fov': v[6]}
-    # the colour film: a hold the plan inserts drifts as the miniature's camera does (stagecraft.mini_orbit), turning on the way the
-    # camera turns there; the white film's stands still
-    drift_ = lambda v, dl, t: [round(x_, 6) for x_ in stagecraft.mini_orbit(v, dl, 1 if CAMERA.state(t + .3)[3] >= CAMERA.state(t - .3)[3] else -1, MINI_CAM)] if MINI_CAM else v
     in_follow = lambda t: any(w0 - .05 <= t <= w1 + .05 for _, _, (w0, w1) in FOLLOW)
     for e in eras_out:
         node = next(n for n in FM['nodes'] if n['id'] == e['id'])
@@ -2235,7 +2253,7 @@ def plan_stages():
             early = [k[0] for k in cam if P['t_from'] - 1e-6 <= k[0] < P['t0'] - 1.2 and node['_t0'] <= k[0] < node['_t1'] and not in_follow(k[0]) and not owned(k[0]) and not covered(k[0]) and framed(k[0])]
             if early:
                 tk = early[0]; dl = round(need_end - P['t0'] + .5, 2)
-                new.append((node, {'tau': round(node_rel(node, tk) + 1e-3, 4), 'delta': dl, 'keys': [[dl, key_(drift_(state(tk), dl, tk))]], 'kind': 'start', 'why': f'stage of {e["id"]} starts on the key at {tk:.1f} s (was {P["t0"]:.1f} s)'})); continue
+                new.append((node, {'tau': round(node_rel(node, tk) + 1e-3, 4), 'delta': dl, 'keys': [[dl, key_(state(tk))]], 'kind': 'start', 'why': f'stage of {e["id"]} starts on the key at {tk:.1f} s (was {P["t0"]:.1f} s)'})); continue
             # (b) the camera leaves before the stage is done and seen
             t, bad, leave = P['t0'], 0, None
             while t <= need_end:
@@ -2244,7 +2262,7 @@ def plan_stages():
                 t += .1
             if leave is not None and not in_follow(leave) and not owned(leave):
                 dl = round(need_end - leave + .3, 2); S_ = state(leave - .1)
-                new.append((node, {'tau': round(node_rel(node, leave - .1), 4), 'delta': dl, 'keys': [[.001, key_(S_)], [dl, key_(drift_(S_, dl, leave - .1))]], 'kind': 'hold', 'why': f'hold on {e["id"]} until {need_end:.1f} s (the camera left at {leave:.1f} s)'})); continue
+                new.append((node, {'tau': round(node_rel(node, leave - .1), 4), 'delta': dl, 'keys': [[.001, key_(S_)], [dl, key_(S_)]], 'kind': 'hold', 'why': f'hold on {e["id"]} until {need_end:.1f} s (the camera left at {leave:.1f} s)'})); continue
             # (c) never seen close: once the city (all its stages under way by then) stands, a closer look at its key building
             # (look_target: named, drawn in light, any landmark; never the houses). Seen close = that building on screen (inside
             # 80 % of the frame) near enough that a look_focus_m patch round it fills look_size of the frame's height, for
@@ -2688,6 +2706,18 @@ for p in pins:
         q = CAMERA.project(t, X); n_ += 1; ok_ += 1 if (q is not None and abs(q[0]) <= .92 and abs(q[1]) <= .92) else 0; t += .25
     if n_ and ok_ / n_ < .7: off_.append(p)
 for p in off_: print(f'  {"error" if p["_tour"] else "warning"}: pin {p["id"]} ({p["_node"]}, {p["t0"]:.1f}-{p["t1"]:.1f} s) is off screen most of its time')
+if MINI_CAM:   # the colour film: a landmark a pin names in its city is seen close while its name shows (mini_motion; its name is the
+    # lean overlay's centred caption, which points at nothing): close = in the middle 60 % of the frame, r_m round it at least a
+    # quarter of the frame's height, for half the pin's time
+    _lr = MINI_CAM['landmark']['r_m'] * F.scale
+    for p in pins:
+        nd_ = next((n for n in FM['nodes'] if n['id'] == p['_node']), None); city_ = nd_.get('_mini_city') if nd_ else None
+        if p['_offok'] or p['_tour'] or not city_ or not (min(c_[0] for c_ in city_) - .02 <= p['pos'][0] <= max(c_[0] for c_ in city_) + .02 and min(c_[2] for c_ in city_) - .02 <= p['pos'][1] <= max(c_[2] for c_ in city_) + .02): continue
+        X = (p['pos'][0], model_ground(p['pos'][0], p['pos'][1]), p['pos'][1]); n_ = ok_ = 0; t = p['t0']
+        while t <= p['t1']:
+            q = CAMERA.project(t, X); n_ += 1; ok_ += 1 if q is not None and abs(q[0]) <= .6 and abs(q[1]) <= .6 and stagecraft.size_on_screen(CAMERA, t, X, _lr) >= .25 else 0; t += .25
+        if n_ and ok_ / n_ < .5: print(f'  warning: mini camera: pin {p["id"]} ({p["_node"]}, {p["t0"]:.1f}-{p["t1"]:.1f} s) names a landmark the camera shows close for {ok_ / n_:.0%} of its time: '
+                                       f'a key aimed at it while it shows, or the time to get there (mini_motion)')
 if any(p['_tour'] for p in off_) and not os.environ.get('CT_PINWARN'): fault('a tour stop shows a pin whose place is not on screen: frame it (tour_subjects) or mark it offscreen_ok')
 for p in pins:
     for k_ in ('_node', '_tour', '_offok'): p.pop(k_, None)

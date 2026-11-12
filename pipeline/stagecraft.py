@@ -292,12 +292,6 @@ def frames_of(v0, v1):
     return math.dist((x0, y0, z0), (x1, y1, z1)) / wide + abs(math.log(d1 / d0)) / math.log(2) * .5 + abs(a1 - a0) / 120 + abs(e1 - e0) / 60
 
 
-def mini_orbit(v, secs, sign, M=MINI, rate=None):
-    """key v after `secs` of the miniature's drift: turned round its target and closer by the push"""
-    w = list(v); w[3] = v[3] + sign * (rate if rate is not None else M['orbit']) * secs; w[5] = v[5] * (1 - min(M['push_max'], M['push'] * secs))
-    return w
-
-
 def mini_frame(v, city, scale, M=MINI, landmark=None):
     """one key in the miniature's framing: its pitch and lens inside their ranges; aimed at a named landmark (landmark: model xyz),
     the landmark at its size; else no farther than the view that holds the node's city whole (city: the corners of its built
@@ -318,13 +312,15 @@ def mini_frame(v, city, scale, M=MINI, landmark=None):
 
 
 def mini_drift(keys, M=MINI):
-    """keys [(t, v, rate)] in time order (rate: the orbit's degrees a second there, None for the film's): where the camera would
-    stand still from one key to the next (under M['still'] frames a second), the later key turned round its target and pushed in
-    by the time between, the turn carried on through a run of such keys; the turn goes the way the next real move turns (else the
-    last one did, else alternately), so the drift flows into the move. Returns the new values in the same order."""
-    out = [list(v) for _, v, _ in keys]
+    """keys [(t, v, rate[, fixed])] in time order (rate: the orbit's degrees a second there, None for the film's; fixed: a key that
+    stays as it is, a beam follow's): where the camera would stand still from one key to the next (under M['still'] frames a
+    second), the later key turned round its target and pushed in by the time between, the turn carried on through a run of such
+    keys; the turn goes the way the run turns itself, else the way the next real move turns (else the last one did, else
+    alternately), so the drift flows into the move. Returns the new values in the same order."""
+    out = [list(k[1]) for k in keys]
     if len(keys) < 2: return out
-    still = [frames_of(keys[i][1], keys[i + 1][1]) / max(keys[i + 1][0] - keys[i][0], 1e-3) < M['still'] for i in range(len(keys) - 1)]
+    fx = [len(k) > 3 and bool(k[3]) for k in keys]
+    still = [not fx[i + 1] and frames_of(keys[i][1], keys[i + 1][1]) / max(keys[i + 1][0] - keys[i][0], 1e-3) < M['still'] for i in range(len(keys) - 1)]
     turn = [keys[i + 1][1][3] - keys[i][1][3] for i in range(len(keys) - 1)]
     run, off, dk, sign = 0, 0.0, 1.0, 1
     for i in range(len(keys) - 1):
