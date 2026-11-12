@@ -327,7 +327,7 @@ function gridTrees(scene, ins, out, kinds, open, wet, PW, PD, centre, R, count, 
     if ((x - centre.x) ** 2 + (z - centre.z) ** 2 > R * R || Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2 || !stands(i, j, x, z) || wet(x, z) || !open(x, z) || (T.clear && !T.clear(x, z))) continue;
     const wood = inWood(i, j, x, z); if (wood && T.clearWood && !open(x, z, T.clearWood * scale)) continue;   // (a wood's tree not among the houses)
     const ki = hash(i, j, 6) < T.cypress ? 1 : 0, k = kinds[ki], [ic, it] = ins[ki]; if (ic.count >= ic.instanceMatrix.count) continue;
-    const y = T.ground ? T.ground(x, z) : 0, sc = (.7 + hash(i, j, 7) * .7) * T.size * (wood && T.woodSize ? T.woodSize : 1) * (T.grow ? Math.min(2.4, Math.pow(rank, -.5)) : 1);   // (T.grow: fewer trees afar, each the bigger, a wood's cover kept)
+    const y = T.ground ? T.ground(x, z) : 0, sc = (.7 + hash(i, j, 7) * .7) * T.size * (wood && T.woodSize ? T.woodSize : 1) * (T.grow && wood ? Math.min(1.6, Math.pow(rank, -.5)) : 1);   // (T.grow: fewer of a wood's trees afar, each a little bigger, its cover kept; never a tree in the open grown past a house)
     M.compose(p.set(x, y, z), q.setFromAxisAngle(up, hash(i, j, 9) * 6.28), s.set(sc, sc * (.85 + hash(i, j, 10) * .4), sc));
     ic.setMatrixAt(ic.count, M); it.setMatrixAt(it.count, M); ic.setColorAt(ic.count, col.setHSL(k.hue[0] + (T.hue || 0) + hash(i, j, 11) * k.hue[1], .32 + hash(i, j, 12) * .16, (k.l[0] + hash(i, j, 13) * k.l[1]) * T.dark));
     ic.count++; it.count++;

@@ -361,9 +361,9 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
     return treeOK(X, Z); };
   const TR = ST.trees, gTrees = new Map();   // (the generator's own trees, by building)
   for (const r of R) if (r.part === 4) gTrees.set(bkey(r), (gTrees.get(bkey(r)) || 0) + 1);
-  const tree = (r, X, Z, size) => { const cyp = hash(X * 3.1, Z * 1.7) < TR.cypress, sz = size * (.85 + .3 * hash(Z, X)), g = r.g + shear(r, X, Z);
-    put(cyp ? 'cone' : 'crown', r, X, g, Z, hash(X, Z) * 6.28, sz, sz * (cyp ? 1.15 : .9 + .25 * hash(X * 2, Z)), sz, 0, .85 + .3 * hash(X * 5, Z * 3));
-    put('trunk', r, X, g, Z, 0, sz, sz, sz); };
+  const tree = (r, X, Z, size, tier = '') => { const cyp = hash(X * 3.1, Z * 1.7) < TR.cypress, sz = size * (.85 + .3 * hash(Z, X)), g = r.g + shear(r, X, Z);   // (tier: a garden tree's, _g1 or _g2: gone sooner afar)
+    put((cyp ? 'cone' : 'crown') + tier, r, X, g, Z, hash(X, Z) * 6.28, sz, sz * (cyp ? 1.15 : .9 + .25 * hash(X * 2, Z)), sz, 0, .85 + .3 * hash(X * 5, Z * 3));
+    put('trunk' + tier, r, X, g, Z, 0, sz, sz, sz); };
   if (TR) {
     for (const [k, list] of byBuilding) {   // (a court: a building of three wings or more round a free middle)
       if (list.length < 3 || (gTrees.get(k) || 0) >= TR.court) continue;
@@ -389,7 +389,8 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
           const h = near(X, Z); if (!h) continue;
           const gr = THREE.MathUtils.smoothstep(grove, .45, .8);   // (in groves and orchards, a few alone between them)
           if (hash(X * 7.7, Z * 3.3) > G.share * (.15 + 2.6 * gr) * (h.part === LMK ? 2 : 1) || street(X, Z) || !free(X, Z, 3 * M)) continue;
-          tree(h, X, Z, (8 + 5 * hash(Z * 2.1, X)) * (.8 + .35 * gr) * M);
+          const th = hash(X * 1.9, Z * 4.3);   // (afar fewer: half gone by the time a tree is 7 px, three in ten more by 11 px, the roofs read first)
+          tree(h, X, Z, (8 + 5 * hash(Z * 2.1, X)) * (.8 + .35 * gr) * M, th < .5 ? '_g1' : th < .8 ? '_g2' : '');
         }
       }
     }
@@ -439,7 +440,8 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
     L.forEach(([x, y, z, phi, sx, sy, sz, tilt, kk, bx, bz, rk, roll, b0, si], i) => {
       e.set(tilt, phi, roll); q.setFromEuler(e); m4.compose(p.set(x, y, z), q, sc.set(sx, sy, sz)).toArray(m, i * 16);
       k[i] = kk; ctr[i * 2] = bx; ctr[i * 2 + 1] = bz; rank[i] = rk; base[i] = b0; src[i] = si; });
-    kinds[kind] = { n, m, k, ctr, rank, base, src, size: SIZE[kind] || M, fade: kind === 'tile' ? FADE_ROWS : FADE_PX }; count += n;
+    const root = kind.split('_')[0];
+    kinds[kind] = { n, m, k, ctr, rank, base, src, size: SIZE[kind] || SIZE[root] || M, fade: kind === 'tile' ? FADE_ROWS : kind.endsWith('_g1') ? FADE_GARDEN[0] : kind.endsWith('_g2') ? FADE_GARDEN[1] : FADE_PX }; count += n;
   }
   return { kinds, count, treeOK };
 }
@@ -502,6 +504,9 @@ export const FADE_PX = [1.1, 2.6];
 // camera moves (a slow pan at a mid shot: more change between frames than their edges account for); a close shot keeps them in
 // its foreground
 export const FADE_ROWS = [5, 7];
+// a town's garden trees afar (STYLES trees gardens): half of them gone by the time a crown is 7 px, three in ten more by 11 px,
+// so a district seen from afar reads by its roofs, its gardens thinning, never a moss with specks in it
+export const FADE_GARDEN = [[5, 7], [8, 11]];
 export const FLAT = { tile: 1.12, verge: .78, course: .84 };
 const FADE_GLSL = /* glsl */`
   { vec4 o_ = modelMatrix * instanceMatrix * vec4(0., 0., 0., 1.);
@@ -533,15 +538,15 @@ function fading(mat, size, pxK, flat = 0, fade = FADE_PX, rise = null) {
 export function detailMeshes(D, cols, o = {}) {
   const group = new THREE.Group(), c = new THREE.Color(), base = new THREE.Color();
   for (const [kind, K] of Object.entries(D.kinds)) {
-    if (!cols[kind]) continue;
-    const root = kind.split('_')[0];   // (a kind by a wall's face: course_brick, merlon_earth ..: its shape and its shadow the root's)
+    const root = kind.split('_')[0], colK = cols[kind] || cols[root];   // (a tier of a kind, crown_g1: the kind's colour)
+    if (!colK) continue;   // (a kind by a wall's face: course_brick, merlon_earth ..: its shape and its shadow the root's)
     const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .92, metalness: 0, side: ['window', 'door', 'spandrel', 'archRing', 'flag', 'sail'].includes(root) ? THREE.DoubleSide : THREE.FrontSide });   // (a flat piece seen from either side)
     const flat = FLAT[root] && !kind.endsWith('_banded') ? FLAT[root] : 0;   // (a stone wall's bands of brick are its face's own colour: they fade by their size)
     const rise = o.rise && K.base ? o.rise : null;
     const mesh = new THREE.InstancedMesh((SHAPES[kind] || SHAPES[root])(), o.pxK || rise ? fading(mat, K.size, o.pxK, flat, K.fade, rise) : mat, K.n);
     mesh.instanceMatrix.array.set(K.m); mesh.instanceMatrix.needsUpdate = true;
-    const own = typeof cols[kind] === 'function'; if (!own) base.set(cols[kind]);
-    for (let i = 0; i < K.n; i++) mesh.setColorAt(i, (own ? c.copy(cols[kind](K.ctr[i * 2], K.ctr[i * 2 + 1])) : c.copy(base)).multiplyScalar(K.k[i]));
+    const own = typeof colK === 'function'; if (!own) base.set(colK);
+    for (let i = 0; i < K.n; i++) mesh.setColorAt(i, (own ? c.copy(colK(K.ctr[i * 2], K.ctr[i * 2 + 1])) : c.copy(base)).multiplyScalar(K.k[i]));
     mesh.instanceColor.needsUpdate = true;
     mesh.geometry.setAttribute('iCtr', new THREE.InstancedBufferAttribute(K.ctr, 2)); mesh.geometry.setAttribute('iRank', new THREE.InstancedBufferAttribute(K.rank, 1));
     if (rise) { mesh.geometry.setAttribute('iBase', new THREE.InstancedBufferAttribute(K.base, 1));

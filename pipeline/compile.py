@@ -903,6 +903,7 @@ def mini_camera(node):
             x0, x1, z0, z1 = q_(xs_, .1), q_(xs_, .9), q_(zs_, .1), q_(zs_, .9)
             MINI_CITY[0] = [(x_, model_ground(x_, z_), z_) for x_ in (x0, (x0 + x1) / 2, x1) for z_ in (z0, (z0 + z1) / 2, z1)]
     node['_mini_city'] = MINI_CITY[0]; L = MINI_CAM['landmark']
+    wpts = mini_water(node, MINI_CITY[0]) if MINI_CITY[0] else []   # (a wide view takes in the river by the city, as it ran then)
     # (a key set in seconds aimed at a landmark a pin set in seconds names while it shows: framed on it here already, so the
     # pacing gives the moves to and from it their time; mini_motion finds it again and does the rest, and the ones timed by lines)
     marks = []
@@ -910,11 +911,51 @@ def mini_camera(node):
         if isinstance(p_.get('t0'), (int, float)) and isinstance(p_.get('t1'), (int, float)) and 'lon' in p_:
             x_, z_ = F.model_lonlat(p_['lon'], p_['lat']); marks.append((float(p_['t0']) - L['lead'], float(p_['t1']), (x_, model_ground(x_, z_), z_)))
     for k_ in node.get('camera', []):
-        v_ = stagecraft.mini_frame(camv(k_), MINI_CITY[0], F.scale, MINI_CAM)
+        v_ = stagecraft.mini_frame(camv(k_), MINI_CITY[0], F.scale, MINI_CAM, water=wpts)
         if isinstance(k_.get('t'), (int, float)):
             X_ = next((X_ for a_, b_, X_ in marks if a_ - .05 <= float(k_['t']) <= b_ + .05 and mini_aims(v_, X_)), None)
             if X_ is not None: v_ = stagecraft.mini_frame(v_, MINI_CITY[0], F.scale, MINI_CAM, landmark=X_)
         k_['v'] = [round(x_, 6) for x_ in v_[:6]]; k_['fov'] = round(v_[6], 3)
+
+_MINI_WATER = {}
+def mini_water(node, city):
+    """the water by a node's city as the film shows it then (today's, or a water_then state in force: its water where its stretch
+    is, today's elsewhere): a few points of it nearest the city, within stagecraft.MINI water_km of its built area, model xyz; []
+    when none is that near. A wide view of the miniature takes them in: the river a city stands by is part of its picture."""
+    import shapely as _sh, shapely.ops as _so
+    ids_ = [n['id'] for n in FM['nodes']]; i_ = ids_.index(node['id'])
+    st_ = None
+    for w_ in FM.get('water_then') or []:   # (the state in force: the last one begun by this node, not yet ended)
+        if w_.get('from') in ids_ and ids_.index(w_['from']) <= i_ and not (w_.get('until') in ids_ and ids_.index(w_['until']) <= i_): st_ = w_
+    key_ = st_.get('id') if st_ else None
+    if key_ not in _MINI_WATER:
+        today_ = osmgeo.water(LAYOUT.raw(D), F.area, F.to_utm.transform); tu_ = _sh.union_all(today_) if today_ else _sh.Polygon()
+        if st_:
+            def shp_(v, kind):
+                out_ = []
+                for f_ in (json.load(open(os.path.join(D, v), encoding='utf-8'))['features'] if isinstance(v, str) else []):
+                    pr_ = f_.get('properties') or {}
+                    if f_['geometry']['type'] in ('Polygon', 'MultiPolygon') and pr_.get('kind', 'water') == kind and pr_.get('state', key_) == key_:
+                        g_ = _sh.transform(_sh.geometry.shape(f_['geometry']), lambda q: [F.to_utm.transform(*p_) for p_ in q]); out_ += list(getattr(g_, 'geoms', [g_]))
+                return _sh.union_all(out_) if out_ else _sh.Polygon()
+            wa_, sr_ = shp_(st_.get('water'), 'water'), shp_(st_.get('stretch') or st_.get('water'), 'stretch')
+            tu_ = tu_.difference(sr_).union(wa_) if not sr_.is_empty else tu_.union(wa_)
+        big_ = [g_ for g_ in getattr(tu_, 'geoms', [tu_]) if g_.area >= 2e5]   # (a river or a lake, not a pond, a ditch or a pool)
+        _MINI_WATER[key_] = _sh.union_all(big_) if big_ else _sh.Polygon()
+    W_ = _MINI_WATER[key_]
+    if W_.is_empty: return []
+    xs_, zs_ = [c_[0] for c_ in city], [c_[2] for c_ in city]
+    box_ = _sh.box(min(xs_) / F.scale + F.cx, -max(zs_) / F.scale + F.cy, max(xs_) / F.scale + F.cx, -min(zs_) / F.scale + F.cy)   # (the built area, ground metres)
+    if W_.distance(box_) > MINI_CAM['water_km'] * 1000 or W_.intersects(box_.buffer(-1)): return []   # (none near; or the river runs through the city: the city's own view holds it)
+    p_, _ = _so.nearest_points(W_, box_); c_ = box_.centroid; out_ = []
+    for dx_ in (-1200, 0, 1200):   # (a stretch of it, not a point: its near bank and its far one, either way along the city)
+        q_, _ = _so.nearest_points(W_, _sh.Point(p_.x + dx_, p_.y))
+        ux_, uy_ = q_.x - c_.x, q_.y - c_.y; ul_ = math.hypot(ux_, uy_) or 1; ux_, uy_ = ux_ / ul_, uy_ / ul_
+        k_ = 50
+        while k_ < 2500 and W_.contains(_sh.Point(q_.x + ux_ * k_, q_.y + uy_ * k_)): k_ += 50
+        for b_ in ((q_.x, q_.y), (q_.x + ux_ * (k_ - 50), q_.y + uy_ * (k_ - 50))):
+            mx_, mz_ = F.model(*b_); out_.append((mx_, model_ground(mx_, mz_), mz_))
+    return out_
 
 def mini_aims(v, X):
     """key v looks at the landmark at X (model xyz): its target within a third of the frame's height of it, or 3 r_m"""

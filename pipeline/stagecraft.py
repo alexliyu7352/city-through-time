@@ -273,8 +273,10 @@ def fit_distance(v, pts, mx=.9, my=.85, d_lo=.01, d_hi=20.0):
 # mini_frame and mini_drift change how: pitch, lens and distance, and a drift wherever the camera would stand still. Every value a
 # city may change through film.look.camera (compile); the speed limit and the readability checks are the film's own (9f, camcheck).
 MINI = {'el': [32.0, 52.0],        # the pitch's range, degrees down: steep enough that the horizon leaves the frame, low enough to see walls
-        'el_wide': 25.0,           # a wide view's pitch (one at the widest the city allows, the land round it): low over the land, its
-                                   # nearest woods and fields passing soft through the foot of the frame, as a model is seen from its table's edge
+        'el_wide': 25.0, 'wide': .7, 'water_km': 6.0,           # a wide view's pitch (one at the widest the city allows, the land round it): low over the land, its
+                                   # nearest woods and fields passing soft through the foot of the frame, as a model is seen from its table's edge;
+                                   # wide: a view this share of the widest or more is wide; water_km: a wide view takes in the river
+                                   # by the city (compile mini_water) when it runs this near its built area
         'fov': [26.0, 34.0],       # the lens's range (a street glide's wide lens exaggerates a model's depth)
         'fit': [1.0, .92],         # the widest view: the node's city (the middle 80 % of its buildings each way) inside this share of the
                                    # frame's half-width and half-height: a city-scale view, its houses houses, not specks
@@ -294,7 +296,7 @@ def frames_of(v0, v1):
     return math.dist((x0, y0, z0), (x1, y1, z1)) / wide + abs(math.log(d1 / d0)) / math.log(2) * .5 + abs(a1 - a0) / 120 + abs(e1 - e0) / 60
 
 
-def mini_frame(v, city, scale, M=MINI, landmark=None):
+def mini_frame(v, city, scale, M=MINI, landmark=None, water=()):
     """one key in the miniature's framing: its pitch and lens inside their ranges; aimed at a named landmark (landmark: model xyz),
     the landmark at its size; else no farther than the view that holds the node's city whole (city: the corners of its built
     area, model xyz) nor nearer than d_min_m"""
@@ -308,8 +310,15 @@ def mini_frame(v, city, scale, M=MINI, landmark=None):
     if city:
         cx = sum(p[0] for p in city) / len(city); cz = sum(p[2] for p in city) / len(city); cy = min(p[1] for p in city)
         cap = fit_distance([cx, cy, cz] + w[3:5] + [1.0, w[6]], city, M['fit'][0], M['fit'][1])[5]
-        if w[5] >= .85 * cap and M.get('el_wide'):   # a wide view: low over the land
-            w[4] = M['el_wide']; cap = fit_distance([cx, cy, cz] + w[3:5] + [1.0, w[6]], city, M['fit'][0], M['fit'][1])[5]
+        if w[5] >= M.get('wide', .85) * cap and M.get('el_wide'):   # a wide view: low over the land, the river by the city in it
+            if water:   # (the river and the city's edge toward it: the rest of the city may run on past the frame's top)
+                wc = (sum(p[0] for p in water) / len(water), sum(p[2] for p in water) / len(water))
+                near = sorted(city, key=lambda p: math.hypot(p[0] - wc[0], p[2] - wc[1]))[:4]
+                pts = near + list(water)
+            else: pts = list(city)
+            if water: w[0] = (min(p[0] for p in pts) + max(p[0] for p in pts)) / 2; w[2] = (min(p[2] for p in pts) + max(p[2] for p in pts)) / 2; w[1] = cy
+            w[4] = M['el_wide']; cap = fit_distance(w[:5] + [1.0, w[6]], pts, M['fit'][0], M['fit'][1])[5]
+            w[5] = cap if water else min(w[5], cap)
         w[5] = min(w[5], cap)
     w[5] = max(w[5], M['d_min_m'] * scale)
     return w

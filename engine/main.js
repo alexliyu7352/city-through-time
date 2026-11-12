@@ -84,6 +84,10 @@ const COLOUR = !FREE && !QS.has('view') && (QS.get('look') ? QS.get('look') === 
 // the subtitles, the pictures with their tags and a landmark's name in plain centred text; no locator, place and scale line,
 // coordinates, timeline or source lines, as a miniature film carries two or three words on screen, not six to nine
 const LEAN = COLOUR && (QS.get('overlay') || (FILM.look && FILM.look.overlay) || 'full') === 'lean';
+// the colour film's own picture (no effects asked for, engine/mini.js FILM_PIC): none of the dark room's marks of light on a sunlit
+// model; each has its form in the world there: a beam a path drawn on the land (or the water itself, where the water as it was
+// comes with it), a rise the buildings growing, a city's extent its own buildings (no neon outline)
+const QUIET = COLOUR && !FX;
 if (FX && FX.light && FX.light.az == null) {   // (the fixed sun from the terrain's own side light, else from the north-west)
   const sh = FILM.shade || (FILM.context && FILM.context.shade) || null;
   FX.light.az = sh && sh.az != null ? sh.az : 315; if (sh && sh.el != null && !(FILM.fx && FILM.fx.light && FILM.fx.light.el != null)) FX.light.el = sh.el; }
@@ -522,7 +526,7 @@ function setLayers(t) {
       if (F_) { U.uRiseR.value[h] = curveAt(F_.curve, t); U.uRiseO.value[h].set(F_.o[0], F_.o[1]); U.uRiseDir.value[h].set(...(F_.dir || [0, 0]));
         U.uRiseMode.value[h] = F_.mode === 'ring' ? 0 : F_.mode === 'line' ? 1 : 2; U.uRiseW.value[h] = F_.w || 0; }
     }
-    if (S.edges[e.id]) S.edges[e.id].set(Math.max(edgeA, gA * .8) * (LOOK.line ?? 1) * (1 - (LV ? LV.k : 0)), gA > edgeA ? S.eras[e.id].base : E.u.uEraCol.value, gA > edgeA ? gD : draw);
+    if (S.edges[e.id]) S.edges[e.id].set(Math.max(edgeA, gA * .8) * (LOOK.line ?? 1) * (1 - (LV ? LV.k : 0)) * (QUIET ? 0 : 1), gA > edgeA ? S.eras[e.id].base : E.u.uEraCol.value, gA > edgeA ? gD : draw);
     if (S.fires[e.id]) S.fires[e.id].set(burn * (gone ? 0 : 1) * U.uProj.value, t, fin ? fr : 1e3, fo, COLOUR ? [e.off - e.burn, e.burn * 1.2] : null);   // (the colour film: the fire catches over its burn, spreading)
   }
   // today's city steps back while a period city is told; the change travels with the node's ring: outside it, the level from
@@ -530,6 +534,7 @@ function setLayers(t) {
   U.uDimToday.value = dimAt(t, eraUp) * (1 - today);
   U.uDimToday0.value = ci >= 0 ? dimBefore(nodes_[ci]) * (1 - today) : U.uDimToday.value;
   for (const r of FILM.routes || []) { const R = S.routes[r.id]; const land = r.on + r.draw;   // a landing beam flashes where it lands
+    if (QUIET) { if (R) R.set(0, 0, 0); if (R && R.land) R.land(-1, 0); continue; }   // (the colour film: its path on the land, engine/mini.js)
     if (R) R.set(ss(seg(t, r.on, r.on + r.draw)), ss(seg(t, r.on, r.on + .3)) * (1 - ss(seg(t, r.off - .6, r.off))) * (1 - (LV ? LV.k : 0)), r.impact && t >= land ? Math.exp(-(t - land) / .35) : 0);
     if (R && R.land) R.land(r.impact ? t - land : -1, (1 - ss(seg(t, r.off - .6, r.off + .6))) * (1 - (LV ? LV.k : 0))); }   // (fx glow: the column, flare and sparks where it lands, out with the line)
   for (const r of FILM.arrows || []) { const R = S.arrows[r.id];   // a light arrow: drawn tail to head, then its chevrons run
@@ -713,7 +718,7 @@ const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, cityMesh: CITYME
   fadeAt: LOOK.dim ?? .8, phone: TOUCH, backdropFrom: (FILM.look && FILM.look.backdrop_from) ?? 1800,
   dataFrom: (M.b || []).reduce((m, b) => b[0] > 0 && b[0] < m ? b[0] : m, 1e4),   // (the data's earliest epoch: what it first sees then counts as standing before)
   prims: QS.get('detail') === '0' || TOUCH ? null : id => eraJ(id).then(J => J.prims),   // (a phone: no detail, as the viewer's look on a touch screen)
-  camAz: CAM_AZ,
+  camAz: CAM_AZ, paths: QUIET ? (FILM.routes || []).filter(r => !((FILM.waterThen && FILM.waterThen.events) || []).some(w => Math.abs(w.t0 - r.on) < .05)) : null,   // (a beam the water as it was comes with: the water itself)
   lost: id => eraJ(id).then(J => { delete ERAJ[id]; return J.lost || null; }),   // (the look asks for the records, then their losses: the last of them)
   hex: id => eraOf(id).exaggeration ?? 2, face: id => eraOf(id).wall_face ?? null }) : null;
 // the colour film's ruins (engine/mini.js filmMaterial): a period city's foundations stay until a later city rises on that ground
