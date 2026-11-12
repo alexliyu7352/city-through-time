@@ -31,6 +31,24 @@ const L = 1;   // the layer this look draws
 // had greyed it): the sun and the sky's light raised, the air thinner (its distance times haze), the occlusion lighter
 const MINI_LIFT = { sun: 1.5, sky: 1.45, haze: 3.5, ao: .3 };
 const FILM_AO = .45;   // (the film without the effects: the occlusion of its own passes)
+// the colour film's picture, as a photograph of a model in the sun: a high hard sun fixed in the world (crisp shadows that turn as
+// the camera goes round), less of the sky's fill, no veil of air over the plate (the depth cue is the tilt-shift band below), the
+// land a meadow with woods in dark clusters (no patchwork of fields), its trees big enough to read; the colours clean
+const FILM_PIC = { sunEl: 54, sun: 1.12, sky: .74, skyGround: '#7f8a68', fogNear: 6, fogFar: 40, ao: .3, vignette: .1, sat: 1.04, contrast: .06,
+  land: { source: 'quiet', scrub: 14, earth: .18, meadow: true }, tree: { size: 1.35, keep: .14, wood: .95, grid: 18, hue: .06 },
+  roofs: { chinese: ['#8b8984', '#817f7b', '#95928c', '#878581', '#7d7b77'] },   // (a grey tile roof read as a dark bar in the sun: the same grey, lighter)
+  band: { mid: .5, inner: .1, outer: .5, top: 10, bottom: 6 } };   // the tilt-shift: sharp within inner of the middle, full from outer, px of a 1080 frame
+// the tilt-shift band (the colour film): blur in one direction per pass, as wide as the distance from the band asks
+const BAND_BLUR = {
+  uniforms: { tDiffuse: { value: null }, dir: { value: new THREE.Vector2(1, 0) }, px: { value: new THREE.Vector2(1 / 1920, 1 / 1080) }, k: { value: 1 },
+    mid: { value: .5 }, inner: { value: .1 }, outer: { value: .5 }, top: { value: 10 }, bottom: { value: 6 } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.); }',
+  fragmentShader: `varying vec2 vUv; uniform sampler2D tDiffuse; uniform vec2 dir, px; uniform float k, mid, inner, outer, top, bottom;
+  void main(){ float y = vUv.y - mid, r = smoothstep(inner, outer, abs(y)) * (y > 0. ? top : bottom) * k;
+    if (r < .3) { gl_FragColor = texture2D(tDiffuse, vUv); return; }
+    vec4 c = vec4(0.); float w = 0.;
+    for (int i = -7; i <= 7; i++) { float f = float(i) / 7., g = exp(-f * f * 2.2); c += texture2D(tDiffuse, vUv + dir * px * f * r) * g; w += g; }
+    gl_FragColor = c / w; }` };
 // the parts (pipeline/citygen.py): FAB 0, LMK 1, WALL 2, BRIDGE 3, TREE 4, WATER 5, DARK 6, PAVE 7, ROOF 8, LROOF 9, EARTH 10, PLINTH 11.
 // A house (FAB walls, ROOF) takes one of the walls and one of the roofs by its building's centre; the other parts their colour.
 // land: the fields' greens and straw (fx.js LAND_PALETTES, the white model's land under fx land too); glb: a detailed model's materials (tools/blender/kit.py); cypress: the share of tall
@@ -73,7 +91,7 @@ const roofOf = (pal, x, z) => { const h = hash(x, z); return new THREE.Color(pal
 // wall }), a gable's end in its wall's colour and a city wall in the colour of what it is faced with (a battered side rammed earth)
 // trees: { cell, dark } the generator's own trees (part TREE: a garden's, a park's) each its own green, as the look's trees are (a
 // cell that wide holds one tree), not one flat dark green over a whole garden
-function colourMesh(mesh, pal, detail, wall, trees = null) {
+function colourMesh(mesh, pal, detail, wall, trees = null, flatRoofs = false) {   // (flatRoofs, the film: a house body's flat top a roof, in the roofs' colours)
   const g = mesh.geometry, d = g.attributes.aData, c = g.attributes.aCtr, n = g.attributes.position.count, out = new Float32Array(n * 3), col = new THREE.Color(), P = g.attributes.position;
   const walls = pal.walls.map(v => new THREE.Color(v)), roofs = pal.roofs.map(v => new THREE.Color(v)), gable = detail ? gableEnds(g) : new Uint8Array(n);
   const parts = Object.fromEntries(Object.entries(pal.parts).map(([k, v]) => [k, new THREE.Color(v)]));
@@ -81,7 +99,8 @@ function colourMesh(mesh, pal, detail, wall, trees = null) {
   const faceAt = i => { if (wall.face) return faces[wall.face]; const ny = Math.abs(N.getY(i - i % 3) + N.getY(i - i % 3 + 1) + N.getY(i - i % 3 + 2)) / 3; return faces[ny > .02 && ny < .9 ? 'earth' : wall.upright]; };
   for (let i = 0; i < n; i++) {
     const part = d ? Math.round(d.getY(i)) : 0, h = c ? hash(c.getX(i), c.getY(i)) : .5, h2 = (h * 7.31) % 1, h3 = (h * 13.7) % 1;
-    if (part === 0 || gable[i]) col.copy(walls[Math.floor(h * walls.length)]);
+    if (part === 0 && flatRoofs && N.getY(i) > .9) col.copy(roofs[Math.floor(h2 * roofs.length)]);   // (seen from above a light top among the roofs reads as a speck)
+    else if (part === 0 || gable[i]) col.copy(walls[Math.floor(h * walls.length)]);
     else if (part === 8) col.copy(roofs[Math.floor(h2 * roofs.length)]);
     else if (part === 2 && faces) col.copy(faceAt(i));
     else if (part === 4 && trees) { const q = hash(Math.round(P.getX(i - i % 3) / trees.cell), Math.round(P.getZ(i - i % 3) / trees.cell)); col.setHSL(.2 + q * .09, .3 + (q * 7.31) % 1 * .16, (.25 + (q * 13.7) % 1 * .12) * trees.dark); }
@@ -132,13 +151,13 @@ function landMaterial(U, PW, PD, kind, land, relief, o, ex, scale, S = null, far
     if (relief) { for (const k of ['uFxHgt', 'uFxRect', 'uFxSun', 'uFxR', 'uFxRA', 'uFxLitC', 'uFxShadeC', 'uFxFlat']) sh.uniforms[k] = U[k]; sh.uniforms.uFxAdd = { value: 0 }; }   // (a bright ground: no light added on top)
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec2 vXZ; varying vec3 vFxW;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvXZ = (modelMatrix * vec4(position, 1.)).xz; vFxW = (modelMatrix * vec4(transformed, 1.)).xyz;');
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
-varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${relief ? RELIEF_GLSL : ''}${landLookGLSL(land, relief, o || null, ex, scale, 'mini')}${S ? farLandGLSL(land) : ''}${then ? '\nuniform sampler2D uWater;' + S.wThenGLSL : ''}`)
+varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${relief ? RELIEF_GLSL : ''}${landLookGLSL(land, relief, o || null, ex, scale, 'mini')}${S ? farLandGLSL(land, o) : ''}${then ? '\nuniform sampler2D uWater;' + S.wThenGLSL : ''}`)
       .replace('#include <color_fragment>', `#include <color_fragment>${S ? '\n// (look: mini)' : ''}
   vec2 m_ = vXZ / ${scale.toFixed(6)};   // metres
   float wr_ = ${wr}, wMask = smoothstep(.35, .65, wr_);
 { vec3 land = fxLandAt(vFxW);${S ? `
   land = mix(land, fxLandFar(m_), smoothstep(1.2, 5., length(fwidth(m_))));   // (afar: the fields calm into soft large areas once one is under about 40 pixels of the drawn picture, gone by about 12)
-  land = mix(vec3(dot(land, vec3(.2126, .7152, .0722))), land, .82) * vec3(.84, 1.05, .9) * 1.06;   // (the film's land a clean, quiet green, a sunlit model's: not olive, not lime)` : ''}
+  land *= vec3(.5, .93, .98);   // (the film's land a clean meadow green, a sunlit model's: not olive, not lime)` : ''}
   if (uKind > .5) land = mix(land, vec3(.29, .27, .23), .55);   // a city's ground: paved, dusty
   float deep = smoothstep(.4, .98, wr_);
   vec3 water = mix(vec3(.38, .68, .70), vec3(.17, .42, .56), deep) * (.95 + .1 * fxLn(m_ / 40.));
@@ -176,8 +195,13 @@ void main(){ vec2 uv = vW.xz / uPlate + .5; vec3 c = vec3(0.); float a = 0.;
 // the colour film's land seen from afar (landMaterial S): the palette's grass, woods and earth in soft areas a kilometre or two
 // wide, a little structure inside them, no grain (the fields' patchwork read from afar as rags sewn together, a finer noise as
 // smudged felt, one even tone as a featureless smear)
-function farLandGLSL(p) {
+function farLandGLSL(p, o = null) {
   const v3 = a => `vec3(${a.map(x => x.toFixed(3)).join(', ')})`;
+  if (o && o.meadow) return `
+vec3 fxLandFar(vec2 m_){ float n1 = fxLn(m_ / 2300.), n2 = fxLn(m_ / 610. + 3.1);   // (the colour film's meadow, as fxLand draws it close, its grain averaged out: the same woods in the same places)
+  vec3 land = mix(mix(${v3(p.grass0)}, ${v3(p.grass1)}, n2), mix(${v3(p.soil)}, ${v3(p.straw)}, .35), smoothstep(.2, .9, n1) * ${(o.earth ?? .5).toFixed(3)});
+  land = mix(land, ${v3(p.wood)}, smoothstep(.6, .655, fxMeadowWoods(m_)) * .75);
+  return pow(land, vec3(2.2)); }`;
   return `
 vec3 fxLandFar(vec2 m){ float a = fxLn(m / 2400.), b = fxLn(m / 900. + 3.1), c = fxLn(m / 380. + 7.7), t = a * .55 + b * .3 + c * .15;
   vec3 col = mix(${v3(p.grass0)}, ${v3(p.grass1)}, smoothstep(.35, .65, t));
@@ -228,9 +252,11 @@ ${pop ? `<div style="position:absolute;right:72px;top:60px;font:500 34px/1 'Noto
 // or null; paletteOf: id -> that period city's palette (its own, else the film's); today: today's city's colours (TODAY; none: an
 // old Mediterranean town's); fadeAt: the white film's dimming of today's city at which it is gone in colour (film.era_look dim)
 export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', ground = 'land', card = null, prims = null, hex = () => 2, face = () => null, film = false, lost = null,
-  paletteOf = () => palette, today = null, fadeAt = .8, phone = false, backdropFrom = 1800, dataFrom = 1e4 }) {   // (phone: the film on a phone, main.js: no ambient occlusion, a smaller shadow map; the caller leaves the detail out)
+  paletteOf = () => palette, today = null, fadeAt = .8, phone = false, backdropFrom = 1800, dataFrom = 1e4, sunAz = null }) {   // (sunAz: the film's sun's compass bearing, degrees, fixed in the world)   // (phone: the film on a phone, main.js: no ambient occlusion, a smaller shadow map; the caller leaves the detail out)
   const { scene, camera, renderer, U } = S, PW = S.PW, PD = S.PD;
-  const pal = PALETTES[palette] || PALETTES.roman, palOf = id => PALETTES[paletteOf(id)] || pal;
+  const tone = p => film && !S.fx && FILM_PIC.roofs[p] ? { ...PALETTES[p], roofs: FILM_PIC.roofs[p] } : PALETTES[p];   // (the film's roofs, FILM_PIC)
+  const TONED = Object.fromEntries(Object.keys(PALETTES).map(k => [k, tone(k)]));
+  const pal = TONED[palette] || TONED.roman, palOf = id => TONED[paletteOf(id)] || pal;
   // the meshes this look draws: the period cities, today's city, the plate
   const eraMeshes = Object.values(S.eras).map(e => e.mesh);
   let plate = null;
@@ -239,7 +265,8 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // the film's own uniforms: when the modern section begins and the data's earliest epoch (filmMaterial), the pall of a burning
   // city's smoke shading the ground beneath it (its centre, reach and strength: render)
   const BACK = { uBackdropY: { value: backdropFrom }, uDataY0: { value: dataFrom }, uPallC: { value: new THREE.Vector2() }, uPallR: { value: 1 }, uPallK: { value: 0 } };
-  if (plate) plate.userData.mini = landMaterial(U, PW, PD, ground, FX && FX.land ? landPalette(FX.land) : pal.land, relief, FX && FX.land, S.terrainEx, scale, film ? S : null, false, BACK);
+  const LANDO = FX && FX.land ? FX.land : film ? FILM_PIC.land : null;   // (the film: a meadow and woods, not the palette's patchwork of fields)
+  if (plate) plate.userData.mini = landMaterial(U, PW, PD, ground, FX && FX.land ? landPalette(FX.land) : pal.land, relief, LANDO, S.terrainEx, scale, film ? S : null, false, BACK);
   U.__ground = S.ground;
   // the film: the ruins' uniforms (filmMaterial; main.js sets their values each frame), the land beyond the plate (its context relief,
   // else a skirt of land to the horizon), the light the studio lays on the plate (S.colourLight: more of it at night)
@@ -247,15 +274,16 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   if (film) for (const [id, E] of Object.entries(S.eras)) Object.assign(E.u, { uRuinLater: { value: Array(S.slots).fill(0) }, uRuinT: RUIN_T, uRuinH: { value: 1.4 * hex(id) * scale },
     uLossBurnt: { value: Array(E.u.uLossBurn.value.length).fill(0) } });
   if (film) S.colourGround.value.set(pal.parts[7]);   // (a city's open ground in its paving's colour: studio.js lightMaterial ground)
-  const far = film ? landMaterial(U, PW, PD, 'land', FX && FX.land ? landPalette(FX.land) : pal.land, false, FX && FX.land, S.terrainEx, scale, S, true, BACK) : null;
+  const far = film ? landMaterial(U, PW, PD, 'land', FX && FX.land ? landPalette(FX.land) : pal.land, false, LANDO, S.terrainEx, scale, S, true, BACK) : null;
   const ctx = film ? S.context() : null, skirt = film ? skirtMesh(S, far, ctx) : null, marks = film && plate ? marksMesh(S, plate) : null;
   // the land's woods where trees stand close (fx land: fx.js woodsFn)
-  const woods = FX && FX.land ? woodsFn(FX.land, S.terrainEx, scale, S.ground, relief) : null;
+  const woods = LANDO ? woodsFn(LANDO, S.terrainEx, scale, S.ground, relief) : null;
   // the light of a clear day: the sun to one side behind the eye, 40 degrees up, soft shadows; the sky's blue from above, the land's from below
   // (fx light: a lower, warmer sun, as in the late afternoon, as bright on flat ground as the higher one; the sky's light a little bluer)
-  const warm = FX && FX.light ? FX.light.warm : 0, SUN_EL = THREE.MathUtils.lerp(40, 28, warm), SUN_SIDE = relief ? 95 : 55;   // (fx relief: the sun more to the side, so the slopes facing the eye show light and shade)
-  const sun = new THREE.DirectionalLight(new THREE.Color('#ffeed4').lerp(new THREE.Color('#ffd09a'), warm), 2.7 * (FX ? MINI_LIFT.sun : 1) * Math.sin(THREE.MathUtils.degToRad(40)) / Math.sin(THREE.MathUtils.degToRad(SUN_EL))), sky = new THREE.HemisphereLight(new THREE.Color('#c3d8ee').lerp(new THREE.Color('#a9c4ea'), warm), '#6b7550', .9 * (FX ? MINI_LIFT.sky : 1));
-  sun.castShadow = true; sun.shadow.mapSize.set(phone ? 2048 : 4096, phone ? 2048 : 4096); sun.shadow.bias = -.0004; sun.shadow.normalBias = .00002; sun.shadow.radius = 2;
+  const warm = FX && FX.light ? FX.light.warm : 0, SUN_EL = film && !(FX && FX.light) ? FILM_PIC.sunEl : THREE.MathUtils.lerp(40, 28, warm), SUN_SIDE = relief ? 95 : 55;   // (fx relief: the sun more to the side, so the slopes facing the eye show light and shade)
+  const FP_ = film && !FX;   // (the film's own picture, FILM_PIC; with the effects, theirs)
+  const sun = new THREE.DirectionalLight(new THREE.Color('#ffeed4').lerp(new THREE.Color('#ffd09a'), warm), 2.7 * (FX ? MINI_LIFT.sun : FP_ ? FILM_PIC.sun : 1) * Math.sin(THREE.MathUtils.degToRad(40)) / Math.sin(THREE.MathUtils.degToRad(SUN_EL))), sky = new THREE.HemisphereLight(new THREE.Color('#c3d8ee').lerp(new THREE.Color('#a9c4ea'), warm), FP_ ? FILM_PIC.skyGround : '#6b7550', .9 * (FX ? MINI_LIFT.sky : FP_ ? FILM_PIC.sky : 1));
+  sun.castShadow = true; sun.shadow.mapSize.set(phone ? 2048 : 4096, phone ? 2048 : 4096); sun.shadow.bias = -.0004; sun.shadow.normalBias = .00002; sun.shadow.radius = FP_ ? 1 : 2;
   for (const o of [sun, sun.target, sky]) { o.layers.set(L); scene.add(o); }
   const bg = new THREE.Color('#c4d8ea'), fog = new THREE.Fog('#cfdde8', 1, 3), FOG = fog.color.clone(), SUN0 = sun.intensity, SKY0 = sky.intensity;
   const NIGHT = { bg: new THREE.Color('#16223a'), fog: new THREE.Color('#1c2a44'), sun: new THREE.Color('#9fb4e0') }, SUNC = sun.color.clone(), bgNow = bg.clone();   // (the film at night: film.night)
@@ -271,8 +299,9 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     // the town's trees as the land's (fx.js plantTrees' colours), flags in the palette's colours (one or the other by the flag's
     // building), the boats' wood, sails and mat roofs
     const tdark = (pal.tree && pal.tree.dark) || 1, H3 = (x, z) => { const h = hash(x, z); return [h, (h * 7.31) % 1, (h * 13.7) % 1]; }, D_ = pal.detail || PALETTES.roman.detail;
-    Object.assign(dcols, { crown: (x, z) => { const [a, b, c] = H3(x, z); return new THREE.Color().setHSL(.2 + a * .09, .32 + b * .16, (.24 + c * .1) * tdark); },
-      cone: (x, z) => { const [a, , c] = H3(x, z); return new THREE.Color().setHSL(.27 + a * .05, .4, (.18 + c * .06) * tdark); }, trunk: '#6b5440', pole: '#5b4a3a',
+    const th = film ? FILM_PIC.tree.hue : 0;   // (the film's greens a little bluer: FILM_PIC)
+    Object.assign(dcols, { crown: (x, z) => { const [a, b, c] = H3(x, z); return new THREE.Color().setHSL(.2 + th + a * .09, .32 + b * .16, (.24 + c * .1) * tdark); },
+      cone: (x, z) => { const [a, , c] = H3(x, z); return new THREE.Color().setHSL(.27 + th + a * .05, .4, (.18 + c * .06) * tdark); }, trunk: '#6b5440', pole: '#5b4a3a',
       flag: (x, z) => new THREE.Color(D_.flags[Math.floor(H3(x, z)[1] * D_.flags.length)]), hull: '#7a5236', mast: '#5b4a3a', sail: D_.sail, cabin: '#4a4038' });
     return dcols; };
   const dcols = colsOf(pal), DCOLS = new Map([[pal, dcols]]), dcolsOf = p => DCOLS.get(p) || DCOLS.set(p, colsOf(p)).get(p);
@@ -288,7 +317,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     g.userData.count = D.count; g.userData.treeOK = D.treeOK; scene.add(g); return g; };
   // where trees may stand: off every shown city's wall bands and gate approaches (detail.js eraDetail treeOK)
   let clearNow = [];
-  const TF = treeField(scene, renderer, U, PW, PD, scale, { size: 1, keep: 1, dark: 1, ...pal.tree, cypress: pal.cypress, woods, ground: S.ground, layer: L, tone: 'mini',
+  const TF = treeField(scene, renderer, U, PW, PD, scale, { size: 1, keep: 1, dark: 1, ...pal.tree, ...(film ? FILM_PIC.tree : {}), cypress: pal.cypress, woods, ground: S.ground, layer: L, tone: 'mini',
     clear: (x, z) => clearNow.every(f => f(x, z)) });
   // boats on the water round where the eye looks (detail.js boatsAt), planted again when it moves away, as the trees are
   let wpx = null; const water = () => { if (wpx) return wpx; const img = U.uWater.value && U.uWater.value.image; if (!img) return null;
@@ -306,12 +335,15 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // (the film: always the film's passes, its ambient occlusion from the picture's own depth: the geometry the passes would draw
   // themselves is the city as built, not as it stands at that moment)
   const FP = FX || film ? makePost(renderer, scene, camera, S.post.dof.rt.width / S.post.dof.s, S.post.dof.rt.height / S.post.dof.s,
-    { ssaa: S.post.dof.s, ao: !phone, aoAmt: FX ? MINI_LIFT.ao : FILM_AO, aoDepth: film, ...S.gpu.targets, ...(FX && FX.haze ? { haze: FX_SKY.mini } : {}), ...(FX && FX.dof ? { dof2: true } : {}) }) : null;
+    { ssaa: S.post.dof.s, ao: !phone, aoAmt: FX ? MINI_LIFT.ao : FP_ ? FILM_PIC.ao : FILM_AO, aoDepth: film, ...S.gpu.targets, ...(FX && FX.haze ? { haze: FX_SKY.mini } : {}), ...(FX && FX.dof ? { dof2: true } : {}) }) : null;
   const dome = FX && FX.haze ? makeSky(FX_SKY.mini) : null;
   if (FP) { FP.bloom.strength = .1; FP.bloom.threshold = 2.2;   // (a bright day: only the sun's glints glow, not every lit wall)
     FP.vig.uniforms.amt.value = .22;
     if (FP.dof.haze) { const ex = S.terrainEx; FP.dof.haze.uHazeD.value = 1 / (FX.haze.dist_km * 1000 * scale * MINI_LIFT.haze); FP.dof.haze.uHazeB.value = 1 / (FX.haze.height_m * scale * ex); FP.dof.haze.uHazeK.value = FX.haze.k; FP.dof.haze.uHazeS.value = FX.haze.start_km * 1000 * scale; FP.dof.haze.uHazeRect.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect.value : new THREE.Vector4(-PW / 2, -PD / 2, PW / 2, PD / 2)); FP.dof.haze.uHazeRect2.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect2.value : FP.dof.haze.uHazeRect.value); FP.dof.haze.uHazeEdge.value = FX.haze.edge_km * 1000 * scale; } }
   if (dome) { dome.mesh.layers.set(L); scene.add(dome.mesh); }
+  // the film: the tilt-shift band after the bloom (in place of the depth of field by distance), a lighter vignette, the colours clean
+  const BAND = FP && FP_ ? [1, 0].map(v => { const b = new ShaderPass(BAND_BLUR); b.uniforms.dir.value.set(1 - v, v); for (const k of ['mid', 'inner', 'outer', 'top', 'bottom']) b.uniforms[k].value = FILM_PIC.band[k]; FP.composer.insertPass(b, 2); return b; }) : null;
+  if (FP && FP_) { FP.vig.uniforms.amt.value = FILM_PIC.vignette; FP.vig.uniforms.sat.value = FILM_PIC.sat; FP.vig.uniforms.contrast.value = FILM_PIC.contrast; }
   if (FP && film && FP.dof.ao) FP.dof.ao.updatePdMaterial({ radius: 4 * S.post.dof.s });   // (its denoise a little tighter: the depth's own normals are noisier than a rendered normal pass)
   // the ambient occlusion passes leave out what detail.js marks noAO (they draw the scene with their own material, unfaded)
   const noAO = p => { if (!p) return; const o = p.overrideVisibility.bind(p); p.overrideVisibility = () => { o(); p.scene.traverse(x => { if (x.userData.noAO) x.visible = false; }); }; };
@@ -354,7 +386,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // a city's colours, made the first time it is shown (or warmed)
   function colour(m) {
     if (m.userData.mini) return; const id = idOf.get(m);
-    m.userData.mini = m === cityMesh ? colourToday(m, today ? TODAY[today] : undefined) : colourMesh(m, palOf(id), !!DET, { face: face(id), upright: uprightOf(id) }, { cell: 12 * scale, dark: (palOf(id).tree && palOf(id).tree.dark) || 1 });
+    m.userData.mini = m === cityMesh ? colourToday(m, today ? TODAY[today] : undefined) : colourMesh(m, palOf(id), !!DET, { face: face(id), upright: uprightOf(id) }, { cell: 12 * scale, dark: (palOf(id).tree && palOf(id).tree.dark) || 1 }, film);
     if (film) { const u = m === cityMesh ? null : S.eras[id].u, ruin = m === cityMesh ? null : new THREE.Color(palOf(id).parts[11]);
       filmMaterial(S, m.userData.mini, u, ruin, fadeAt, u && S.fires[id] && S.fires[id].day ? S.fires[id] : null, BACK); m.userData.miniDepth = filmMaterial(S, new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), u, null, fadeAt, null, BACK); }
   }
@@ -366,7 +398,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     camera.layers.set(L); renderer.compile(scene, camera); camera.layers.mask = lay0;
     for (const [m, v, mat, mask] of keep) { m.visible = v; m.material = mat; m.layers.mask = mask; }
   }
-  async function render({ target, d }) {
+  async function render({ target, d, sharp = 0 }) {   // (sharp: 0..1, a living moment's picture up, sharp throughout)
     window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
     renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     const up = E => E.mesh.visible && !E.mesh.userData.gone;   // (the film: a city gone may still show its foundations, without its detail)
@@ -380,7 +412,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     { const src = [...eraMeshes.filter(m => m.visible), ...(cityMesh.visible ? [cityMesh] : [])]; for (const l of landmarks) l.traverse(o => { if (o.isMesh) src.push(o); });
       TF.update(target, d, src); }
     const v = camera.position.clone().sub(target), kd = U.uKeyDir.value, el = THREE.MathUtils.degToRad(SUN_EL), r = d * 1.2;
-    const az = film ? Math.atan2(kd.x, kd.z) : Math.atan2(v.x, v.z) + THREE.MathUtils.degToRad(SUN_SIDE);   // the sun: behind the eye, to its left, 40 degrees up (fx light: lower); the film: from the key light's bearing
+    const az = film ? (sunAz != null ? THREE.MathUtils.degToRad(sunAz) : Math.atan2(kd.x, kd.z)) : Math.atan2(v.x, v.z) + THREE.MathUtils.degToRad(SUN_SIDE);   // the sun: behind the eye, to its left, 40 degrees up (fx light: lower); the film: from the key light's bearing
     sun.position.set(target.x + r * Math.sin(az) * Math.cos(el), target.y + r * Math.sin(el), target.z + r * Math.cos(az) * Math.cos(el)); sun.target.position.copy(target);
     if (S.fxSun) sun.position.copy(target).addScaledVector(S.fxSun, r);   // (fx light: the sun fixed in the world, as the white model's)
     const c = sun.shadow.camera; c.left = c.bottom = -d * 1.6; c.right = c.top = d * 1.6; c.near = r * .2; c.far = r * 2.5; c.updateProjectionMatrix();
@@ -394,16 +426,17 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
       bgNow.copy(bg).lerp(NIGHT.bg, nt).lerp(PALL.sky, .3 * fk); fog.color.copy(FOG).lerp(NIGHT.fog, nt).lerp(PALL.sky, .3 * fk);
       S.colourLight.value = .55 + .6 * nt; if (FP) { FP.bloom.threshold = THREE.MathUtils.lerp(2.2, .9, nt); FP.bloom.strength = THREE.MathUtils.lerp(.1, .45, nt); }
       if (ctx) { swapM.push([ctx, ctx.material, ctx.customDepthMaterial]); ctx.material = far; ctx.userData.vis0 = ctx.visible; ctx.visible = true; ctx.layers.enable(L); ctx.receiveShadow = true; } }
-    scene.background = film ? bgNow : bg; fog.near = d * (film ? 2.6 : 1.6); fog.far = d * (film ? 14 : 8); scene.fog = FX && FX.haze ? null : fog; camera.layers.set(L);   // (the film: less haze over the plate)
+    scene.background = film ? bgNow : bg; fog.near = d * (FP_ ? FILM_PIC.fogNear : film ? 2.6 : 1.6); fog.far = d * (FP_ ? FILM_PIC.fogFar : film ? 14 : 8); scene.fog = FX && FX.haze ? null : fog; camera.layers.set(L);   // (the film: less haze over the plate)
     const sd = sun.position.clone().sub(target).normalize();
     if (relief) { U.uFxSun.value.copy(sd); if (FX.light) { U.uFxLitC.value.setRGB(1, 1, 1).lerp(new THREE.Color(1.1, .99, .84), warm); U.uFxShadeC.value.setRGB(1, 1, 1).lerp(new THREE.Color(.82, .9, 1.1), warm); } }
     if (dome) dome.u.uSunD.value.copy(sd);
     if (FP) {   // the film's lens for this distance (main.js lens), with the stronger depth of field
-      if (lens) { if (!film) lens(d); FP.dof.focus = S.post.dof.focus; FP.dof.aper = film || FX.dof ? S.post.dof.aper : 0; FP.dof.maxCoc = S.post.dof.maxCoc; FP.dof.band = S.post.dof.band; }   // (the film: as main.js set it for this frame, a living moment's sharp picture included)
+      if (lens) { if (!film) lens(d); FP.dof.focus = S.post.dof.focus; FP.dof.aper = FP_ ? 0 : film || FX.dof ? S.post.dof.aper : 0; FP.dof.maxCoc = S.post.dof.maxCoc; FP.dof.band = S.post.dof.band; }   // (the film: as main.js set it for this frame, a living moment's sharp picture included)
       if (FX && FX.dof && !S.post.dof.rtB) fxLens(FP.dof, FX.dof, d);   // (the studio's own pass applied it already where it has the stronger gather)
       if (FP.dof.haze) FP.dof.haze.uHazeSunD.value.copy(sd);
       if (FP.dof.ao) FP.dof.ao.updateGtaoMaterial({ radius: fxAoRadius(d) });
     }
+    if (BAND) { const rt = FP.composer.renderTarget1; for (const b of BAND) { b.uniforms.px.value.set(1 / rt.width, 1 / rt.height); b.uniforms.k.value = rt.height / 1080 * (1 - sharp); } }
     renderer.getDrawingBufferSize(size); composer.setSize(size.x / renderer.getPixelRatio(), size.y / renderer.getPixelRatio());
     ht.uniforms.h.value = 4 / size.x; vt.uniforms.v.value = 4 / size.y; ht.uniforms.r.value = vt.uniforms.r.value = .5;
     ao.setSize(size.x, size.y); ao.updateGtaoMaterial({ radius: d * .02 });
@@ -446,7 +479,7 @@ function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null) {
      if (fd_ > hh_ * max(ry, 0.) && fd_ > 1e-7) transformed.y = aBase + fd_; }` : `
    if (aData.w > -.5 && aData.w < .5) {   // (by its building: a building goes whole, the ring passing it as the white film's dimming does)
      float dm_ = ${dim}, mod_ = ${MODERN_GLSL}; vMute = dm_ * mod_;
-     if (fract(sin(dot(aCtr, vec2(127.1e3, 311.7e3))) * 43758.5453) < dm_ * (1. - mod_) * 1.001 - .001) transformed.y = aBase - .02;
+     if (fract(sin(dot(aCtr, vec2(127.1e3, 311.7e3))) * 43758.5453) < (1. - mod_) * 1.001 - .001) transformed.y = aBase - .02;   // (before the modern section none of it stood: building by building as it begins)
      if (vMute > .02 && aData.x > max(uYear, uDataY0) + .5) transformed.y = aBase - .02;   // (the backdrop: not built yet in the year told)
      float e_ = uNow - (aGrowT > 0. ? aGrowT : tOfYear(aData.x - .5));   // (new: the white film's warm while new, uGrowWarm)
      vFresh = aData.x > 0. && uYLn > 1.5 && uGrowRise > .5 ? smoothstep(0., .22, e_) * (1. - smoothstep(.15, max(uGrowWarm, .5), e_)) : 0.; }`;

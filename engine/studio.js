@@ -599,7 +599,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     const m = projMaterial(1, { color: '#ffffff', roughness: .95 }, { uPlateTop: { value: 1 }, uBase: { value: 0 } }), made = m.onBeforeCompile, key = m.customProgramCacheKey;
     m.onBeforeCompile = sh => { made(sh); sh.uniforms.uLightK = LIGHTK; sh.uniforms.uPaveC = GROUNDC;
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\n// (look: mini)\nuniform float uLightK; uniform vec3 uPaveC;')
-        .replace('#include <opaque_fragment>', ground ? 'outgoingLight = outgoingLight * uPaveC; float gA_ = gCover * (1. - wm);\n#include <opaque_fragment>'
+        .replace('#include <opaque_fragment>', ground ? 'outgoingLight = uPaveC * dot(reflectedLight.directDiffuse + reflectedLight.indirectDiffuse, vec3(.2126, .7152, .0722)) / max(dot(diffuseColor.rgb, vec3(.2126, .7152, .0722)), .02); float gA_ = gCover * (1. - wm);\n#include <opaque_fragment>'   // (the paving lit by the look\'s sun and sky, not in the white film\'s dark tint of its era)
           : 'outgoingLight = projLight(1., wm) * uLightK;\n#include <opaque_fragment>');
       if (ground) sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>', '#include <dithering_fragment>\n gl_FragColor = vec4(gl_FragColor.rgb * gA_, gA_);   // (premultiplied, by its cover)'); };
     m.customProgramCacheKey = () => (ground ? 'ground ' : 'light ') + key();   // (not 'proj1': the look finds the plate by that)

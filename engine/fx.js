@@ -175,7 +175,7 @@ export const LAND_PALETTES = {
 // no edges and the fields at most a faint grain (the patchwork read as rags sewn together). Both: woods in soft patches, and
 // scrub and woods where the ground is steep (steep 0..1: the caller's, from the relief; 0 without one); woods false: no woods.
 // fxDetail(m): the quiet ground's own variation alone (1 on average)
-export function landGLSL(p, woods = true, style = 'fields') {
+export function landGLSL(p, woods = true, style = 'fields', earth = .5, meadow = false) {   // (meadow: the colour film's, its woods in rounder shapes)
   const v3 = a => `vec3(${a.map(x => x.toFixed(3)).join(', ')})`;
   const head = /* glsl */`
 float fxLh(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -186,15 +186,19 @@ float fxWh(vec2 p){ vec3 q = fract(vec3(p.xyx) * .1031); q += dot(q, q.yzx + 33.
 float fxWn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f);
   return mix(mix(fxWh(i), fxWh(i + vec2(1, 0)), f.x), mix(fxWh(i + vec2(0, 1)), fxWh(i + vec2(1, 1)), f.x), f.y); }
 float fxWoodsN(vec2 m){ return fxWn(m / 520.) * .7 + fxWn(m / 110.) * .3; }
+// the colour film's woods (meadow): a few large rounded woods with clear edges, as a model's are laid, from sines (no grid in their
+// shapes, and meadowWoods in JS finds the same ones for the trees)
+float fxMeadowWoods(vec2 m){ vec2 q = m + 220. * vec2(sin(m.y / 1700. + 1.3), sin(m.x / 1900. + 4.1));
+  return .5 + .32 * sin(q.x / 1150.) * sin(q.y / 980. + 1.7) + .12 * sin(q.x / 470. + 2.3) * sin(q.y / 520. + .4) + .06 * sin((q.x + q.y) / 260. + 5.) * sin((q.x - q.y) / 300.); }
 float fxDetail(vec2 m){ return 1. + .2 * (fxLn(m / 610. + 3.1) - .5) + .16 * (fxLn(m / 140. + 7.7) - .5) + .12 * (fxLn(m / 23. + 1.3) - .5); }`;
   const wood = (lo, hi, k) => `
-  float wood = max(steep, smoothstep(${lo}, ${hi}, fxWoodsN(m_)));
+  float wood = max(steep, ${meadow ? 'smoothstep(.6, .655, fxMeadowWoods(m_))' : `smoothstep(${lo}, ${hi}, fxWoodsN(m_))`});
   land = mix(land, ${v3(p.wood)} * (.82 + .36 * fxLn(m_ / 26.)), wood * ${woods ? k : '0.'});`;
   if (style === 'quiet') return head + `
 vec3 fxLand(vec2 m_, float steep){
   float n1 = fxLn(m_ / 2300.), n2 = fxLn(m_ / 610. + 3.1), n3 = fxLn(m_ / 140. + 7.7);
   vec3 grass = mix(${v3(p.grass0)}, ${v3(p.grass1)}, n2), earth = mix(${v3(p.soil)}, ${v3(p.straw)}, n3 * .7);
-  vec3 land = mix(grass, earth, smoothstep(.2, .9, n1) * .5);   // (soil and grass shading into each other over kilometres)
+  vec3 land = mix(grass, earth, smoothstep(.2, .9, n1) * ${earth.toFixed(3)});   // (soil and grass shading into each other over kilometres)
   vec2 m = m_ + vec2(fxLn(m_ / 300.), fxLn(m_ / 300. + 7.)) * 60.;
   land *= fxDetail(m_) * (1. + .05 * (fxLh(floor(m / vec2(160., 105.) + vec2(.3, .7) * floor(m.y / 105.))) - .5));   // (the fields: a faint grain)${wood('.56', '.76', '.75')}
   return pow(land, vec3(2.2)); }`;
@@ -220,7 +224,7 @@ export function landLookGLSL(p, hgt, o, ex, scale, look) {
   const f = x => x.toFixed(6), [s0, s1] = o ? landSlopes(o, ex) : [1e3, 2e3], film = look !== 'mini' && !!o;
   const mute = film ? o.mute : 0, dark = film ? o.dark : 1, warm = film ? (o.warm ?? 0) : 0;
   const style = o && o.source !== 'fields' ? 'quiet' : 'fields';
-  return landGLSL(p, !!o, style) + `
+  return landGLSL(p, !!o, style, o && o.earth != null ? o.earth : .5, !!(o && o.meadow)) + `
 vec3 fxLandAt(vec3 w){ float st = ${hgt ? `smoothstep(${f(s0)}, ${f(s1)}, length(fxHg(w.xz).zw))` : '0.'};
   vec3 c = fxLand(w.xz / ${f(scale)}, st);
   c = mix(c, vec3(dot(c, vec3(.2126, .7152, .0722))), ${f(mute)}) * mix(vec3(1.), vec3(1.1, 1., .8), ${f(warm)});
@@ -235,6 +239,8 @@ function woodsNoise(x, y) { const i = Math.floor(x), j = Math.floor(y); let u = 
   const a = woodsHash(i, j), b = woodsHash(i + 1, j), c = woodsHash(i, j + 1), d = woodsHash(i + 1, j + 1);
   return (a + (b - a) * u) + ((c + (d - c) * u) - (a + (b - a) * u)) * v; }
 export function woodsAt(mx, mz, lo = .62, hi = .7) { return THREE.MathUtils.smoothstep(woodsNoise(mx / 520, mz / 520) * .7 + woodsNoise(mx / 110, mz / 110) * .3, lo, hi); }
+export function meadowWoods(mx, mz) { const S = Math.sin, qx = mx + 220 * S(mz / 1700 + 1.3), qz = mz + 220 * S(mx / 1900 + 4.1);   // (fxMeadowWoods)
+  return THREE.MathUtils.smoothstep(.5 + .32 * S(qx / 1150) * S(qz / 980 + 1.7) + .12 * S(qx / 470 + 2.3) * S(qz / 520 + .4) + .06 * S((qx + qz) / 260 + 5) * S((qx - qz) / 300), .6, .655); }
 
 // ---------------------------------------------------------------- trees
 // where something stands, seen from above round a centre: an orthographic render of the meshes' tops into a float target -> a test
@@ -259,6 +265,7 @@ export function openTest(renderer, meshes, cx, cz, R, r) {
 // with fx land, also standing close in the land's woods (T.woods(x, z): 0..1, the ground's own woods, woodsFn). T: size, keep
 // (the share of places kept), dark (lightness), layer (the look's), tone ('mini': greens; 'film': the white model's pale sage)
 export function plantTrees(scene, renderer, sources, U, PW, PD, centre, R, count, scale, T) {
+  if (T.grid) R = Math.min(R, T.reach || R);
   const open = openTest(renderer, sources, centre.x, centre.z, R, 4.5 * scale);
   const img = U.uWater.value && U.uWater.value.image; let wpx = null, ww = 0, wh = 0;
   if (img) { const cv = document.createElement('canvas'); cv.width = ww = img.width; cv.height = wh = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0); wpx = g.getImageData(0, 0, ww, wh).data; }
@@ -271,6 +278,7 @@ export function plantTrees(scene, renderer, sources, U, PW, PD, centre, R, count
   const film = T.tone === 'film', tm = new THREE.MeshStandardMaterial({ color: film ? '#b5ae9f' : '#6b5440', roughness: 1 }), out = [];
   const M = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(), p = new THREE.Vector3(), col = new THREE.Color(), up = new THREE.Vector3(0, 1, 0);
   const ins = kinds.map(k => { const ic = new THREE.InstancedMesh(k.crown, new THREE.MeshStandardMaterial({ roughness: .95, flatShading: true }), count), it = new THREE.InstancedMesh(k.trunk, tm, count); ic.count = it.count = 0; return [ic, it]; });
+  if (T.grid) return gridTrees(scene, ins, out, kinds, open, wet, PW, PD, centre, R, count, scale, T);
   for (let tries = 0, n = 0; n < count && tries < count * 10; tries++) {
     const a = Math.random() * Math.PI * 2, d = R * Math.sqrt(Math.random()), x = centre.x + Math.cos(a) * d, z = centre.z + Math.sin(a) * d;
     if (Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2) continue;
@@ -283,6 +291,33 @@ export function plantTrees(scene, renderer, sources, U, PW, PD, centre, R, count
     ic.count++; it.count++; n++;
   }
   for (const pair of ins) for (const o of pair) { o.castShadow = o.receiveShadow = true; o.layers.set(T.layer ?? 1); o.frustumCulled = false; scene.add(o); out.push(o); }
+  return out;
+}
+
+// T.grid (the colour film): trees at fixed places on the world, one cell of T.grid metres each, everything about a tree (where in its
+// cell, kind, size, turn, colour, whether it stands) from a hash of its cell, so a film's frames agree whichever worker draws them
+// and planting again round a new view leaves each tree where it stood; a wider view keeps only the cells of the lowest ranks (a
+// half, a quarter ...: the same trees, fewer), so a tree comes or goes as the view's scale doubles, never moves
+function gridTrees(scene, ins, out, kinds, open, wet, PW, PD, centre, R, count, scale, T) {
+  const c = T.grid * scale, i0 = Math.floor((centre.x - R) / c), i1 = Math.ceil((centre.x + R) / c), j0 = Math.floor((centre.z - R) / c), j1 = Math.ceil((centre.z + R) / c);
+  const hash = (i, j, k) => { let h = Math.imul(i, 0x27d4eb2d) ^ Math.imul(j, 0x165667b1) ^ Math.imul(k + 1, 0x9e3779b1); h = Math.imul(h ^ h >>> 15, 0x85ebca6b); h = Math.imul(h ^ h >>> 13, 0xc2b2ae35); return ((h ^ h >>> 16) >>> 0) / 4294967296; };
+  const stands = (i, j, x, z) => { const grove = Math.sin(x * 900 + Math.sin(z * 400) * 2) * Math.sin(z * 700 + Math.sin(x * 300) * 2) > .2 || hash(i, j, 3) < .07;
+    const inWood = T.woods && hash(i, j, 4) < T.woods(x, z) * (T.wood ?? .9); return inWood || (grove && hash(i, j, 5) <= T.keep); };
+  // the share of cells that hold a tree here (a sample), and the rank under which a cell's tree is drawn: a power of a half
+  let hit = 0; for (let k = 0; k < 400; k++) { const a = hash(k, 7, 8) * Math.PI * 2, d = R * Math.sqrt(hash(k, 9, 8)), x = centre.x + Math.cos(a) * d, z = centre.z + Math.sin(a) * d; if (stands(k, 11, x, z)) hit++; }
+  const want = Math.PI * R * R / (c * c) * Math.max(hit, 4) / 400, rank = Math.min(1, Math.pow(.5, Math.max(0, Math.ceil(Math.log2(want / (count * .9))))));
+  const M = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(), p = new THREE.Vector3(), col = new THREE.Color(), up = new THREE.Vector3(0, 1, 0);
+  for (let i = i0; i <= i1; i++) for (let j = j0; j <= j1; j++) {
+    if (hash(i, j, 0) >= rank) continue;
+    const x = (i + hash(i, j, 1)) * c, z = (j + hash(i, j, 2)) * c;
+    if ((x - centre.x) ** 2 + (z - centre.z) ** 2 > R * R || Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2 || !stands(i, j, x, z) || wet(x, z) || !open(x, z) || (T.clear && !T.clear(x, z))) continue;
+    const ki = hash(i, j, 6) < T.cypress ? 1 : 0, k = kinds[ki], [ic, it] = ins[ki]; if (ic.count >= ic.instanceMatrix.count) continue;
+    const y = T.ground ? T.ground(x, z) : 0, sc = (.7 + hash(i, j, 7) * .7) * T.size;
+    M.compose(p.set(x, y, z), q.setFromAxisAngle(up, hash(i, j, 9) * 6.28), s.set(sc, sc * (.85 + hash(i, j, 10) * .4), sc));
+    ic.setMatrixAt(ic.count, M); it.setMatrixAt(it.count, M); ic.setColorAt(ic.count, col.setHSL(k.hue[0] + (T.hue || 0) + hash(i, j, 11) * k.hue[1], .32 + hash(i, j, 12) * .16, (k.l[0] + hash(i, j, 13) * k.l[1]) * T.dark));
+    ic.count++; it.count++;
+  }
+  for (const pair of ins) for (const o of pair) { o.castShadow = o.receiveShadow = true; o.layers.set(T.layer ?? 1); o.frustumCulled = false; if (o.instanceColor) o.instanceColor.needsUpdate = true; o.instanceMatrix.needsUpdate = true; scene.add(o); out.push(o); }
   return out;
 }
 
@@ -300,7 +335,7 @@ export function treeField(scene, renderer, U, PW, PD, scale, T) {
 export function woodsFn(o, ex, scale, ground, relief) {
   const [s0, s1] = landSlopes(o, ex), h = 30 * scale, [lo, hi] = o.source === 'fields' ? [.62, .7] : [.56, .76];
   return (x, z) => { const sx = (ground(x + h, z) - ground(x - h, z)) / (2 * h), sz = (ground(x, z + h) - ground(x, z - h)) / (2 * h);
-    return Math.max(woodsAt(x / scale, z / scale, lo, hi), relief ? THREE.MathUtils.smoothstep(Math.hypot(sx, sz), s0, s1) : 0); };
+    return Math.max(o.meadow ? meadowWoods(x / scale, z / scale) : woodsAt(x / scale, z / scale, lo, hi), relief ? THREE.MathUtils.smoothstep(Math.hypot(sx, sz), s0, s1) : 0); };
 }
 
 // ---------------------------------------------------------------- the sky
