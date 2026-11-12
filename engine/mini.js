@@ -77,11 +77,12 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
   band: null };   // the tilt-shift band of screen blur (none: the lens's depth of field does it), else { mid, inner, outer, top, bottom }
 // a still's own picture over the film's (?pic={json}: keys of FILM_PIC, an object merged into its own, e.g. pic={"dof":{"A":6}}):
 // a lens, a light or a far field tried on one frame before it goes into FILM_PIC; the colour film only
-try { const q = typeof location !== 'undefined' && new URLSearchParams(location.search).get('pic');
-  if (q) for (const [k, v] of Object.entries(JSON.parse(q))) FILM_PIC[k] = v && typeof v === 'object' && !Array.isArray(v) && FILM_PIC[k] ? { ...FILM_PIC[k], ...v } : v; }
+const picMerge = o => { for (const [k, v] of Object.entries(o || {})) FILM_PIC[k] = v && typeof v === 'object' && !Array.isArray(v) && FILM_PIC[k] ? { ...FILM_PIC[k], ...v } : v; };
+let PIC_Q = null;
+try { const q = typeof location !== 'undefined' && new URLSearchParams(location.search).get('pic'); if (q) { PIC_Q = JSON.parse(q); picMerge(PIC_Q); } }
 catch (e) { console.error(`pic=: ${e.message}`); }
 const MAT = FILM_PIC.material && FILM_PIC.looks[FILM_PIC.material] || null;
-if (MAT) for (const [k, v] of Object.entries(MAT.pic || {})) FILM_PIC[k] = v && typeof v === 'object' && !Array.isArray(v) && FILM_PIC[k] ? { ...FILM_PIC[k], ...v } : v;   // (a material's light)
+if (MAT) { picMerge(MAT.pic); picMerge(PIC_Q); }   // (a material's light; a still's own picture over it)
 // the tilt-shift band (the colour film): blur in one direction per pass, as wide as the distance from the band asks
 const BAND_BLUR = {
   uniforms: { tDiffuse: { value: null }, dir: { value: new THREE.Vector2(1, 0) }, px: { value: new THREE.Vector2(1 / 1920, 1 / 1080) }, k: { value: 1 },
