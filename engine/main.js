@@ -80,6 +80,10 @@ const FX = fxSettings(FILM.fx, QS); if (FX && TOUCH) { delete FX.dof; delete FX.
 // the same film; the page's ?look=white|mini in place of the film's (the viewer, ?view, has looks of its own). Its beams are fx
 // glow's (a column of light where one lands), whether or not the film asks for the effects
 const COLOUR = !FREE && !QS.has('view') && (QS.get('look') ? QS.get('look') === 'mini' : !!(FILM.look && FILM.look.kind === 'mini'));
+// the colour film's lean overlay (film.look.overlay: lean; the page's &overlay=lean|full in place of the film's): the year, the era,
+// the subtitles, the pictures with their tags and a landmark's name in plain centred text; no locator, place and scale line,
+// coordinates, timeline or source lines, as a miniature film carries two or three words on screen, not six to nine
+const LEAN = COLOUR && (QS.get('overlay') || (FILM.look && FILM.look.overlay) || 'full') === 'lean';
 if (FX && FX.light && FX.light.az == null) {   // (the fixed sun from the terrain's own side light, else from the north-west)
   const sh = FILM.shade || (FILM.context && FILM.context.shade) || null;
   FX.light.az = sh && sh.az != null ? sh.az : 315; if (sh && sh.el != null && !(FILM.fx && FILM.fx.light && FILM.fx.light.el != null)) FX.light.el = sh.el; }
@@ -583,13 +587,13 @@ function drawOverlay(t) {
     const ok = quad.every(Boolean) && camDist < 1.6;
     const secOn = (FILM.sections || []).some(sc => t > sc.t0 - .3 && t < sc.t1 + .3);   // the terrain profile panel takes the same corner
     const la = (1 - fa) * (1 - fcorner) * (1 - skyA) * (secOn ? 0 : 1) * ss(seg(t, LT.lamp + 1.5, LT.lamp + 3)) * (1 - ss(seg(t, LT.lights - .5, LT.lights)));
-    OV.locator(LOC, la, era ? era.outline : null, era ? era.col : '#ffffff', node ? node.label : '', ok ? quad.map(([u, v]) => [Math.max(0, Math.min(1, u)), Math.max(0, Math.min(1, v))]) : null);
+    if (!LEAN) OV.locator(LOC, la, era ? era.outline : null, era ? era.col : '#ffffff', node ? node.label : '', ok ? quad.map(([u, v]) => [Math.max(0, Math.min(1, u)), Math.max(0, Math.min(1, v))]) : null);
   }
   if (LV && LIVETEX[LV.L.id]) OV.caption(LV.L, 96, 170, LV.sky * LV.pa);   // the living moment's label: AI-generated reconstruction, from the sources
   const left = Math.max(...(FILM.readouts || []).map(r => OV.env(t, r.t0 - .3, r.t1 + .2)), 0);
-  OV.scrims(left, 1, COLOUR ? 1 - ffull : 0);   // (the colour film: the top band shaded too)
-  OV.identity(t, (PRO ? PRO.dur : 0) + .3, FILM.end.t - .2, FILM.identity.l1, FILM.identity.l2);   // (not over the prologue)
-  if (FILM.bar) {
+  OV.scrims(left, 1, COLOUR && !LEAN ? 1 - ffull : 0);   // (the colour film: the top band shaded too, where the place, scale and timeline stand)
+  if (!LEAN) OV.identity(t, (PRO ? PRO.dur : 0) + .3, FILM.end.t - .2, FILM.identity.l1, FILM.identity.l2);   // (not over the prologue)
+  if (FILM.bar && !LEAN) {
     const node = (FILM.nodes || []).find(nd => t >= nd.t0 && t < nd.t1) || null;
     const ba = Math.min(ss(seg(t, LT.lamp + .4, LT.lamp + 1.4)), 1 - ss(seg(t, LT.lights - .2, LT.lights + .6)));
     OV.timelineBar(t, FILM.bar, fmtYear(yearAt(t)), node ? node.label : '', ba);
@@ -611,6 +615,7 @@ function drawOverlay(t) {
     const o = { ...r };
     if (!FILM.bar) {}
     if (r.big && typeof r.big === 'object' && r.big.year) { o.big = fmtYear(yearAt(t)); o.live = true; o.bigPx = 112; }
+    if (LEAN) { o.label = null; o.note = null; o.notes = null; }   // (the lean overlay: the chapter, its name and the year)
     if (r.legendBands) o.legend = FILM.bands.map((b, i) => ({ col: FILM.palette.bands[i], text: b.label, text2: `${b.n.toLocaleString('en-US')} ${r.legendBands.unit || ''}`, t0: (FILM.grow.bands.find(q => q.band === i) || {}).t }));
     OV.readout(t, o);
   }
@@ -624,7 +629,8 @@ function drawOverlay(t) {
     const rdy = Math.max(0, ...(FILM.readouts || []).map(q => OV.readoutDrop(q) * OV.env(t, q.t0 - .6, q.t1 + .6, .6, .6)));   // (eased: no jump)
     OV.counters(t, C, (C.a || C.zh).map((_, k) => cs[i][k + 1] + (cs[i + 1][k + 1] - cs[i][k + 1]) * f), OV.env(t, C.t0, C.t1, .6, .6) * (1 - fa), rdy);
   }
-  if (ffull < .99) for (const p of FILM.pins || []) OV.pin(t, at([p.pos[0], p.pos[1], (p.pos[2] || 0) + .002]), p, 1 - ffull);   // (no pins over a full-screen clip)
+  let lmRow = 0;   // (the lean overlay: landmarks up together stack)
+  if (ffull < .99) for (const p of FILM.pins || []) { const q = at([p.pos[0], p.pos[1], (p.pos[2] || 0) + .002]); if (!LEAN) OV.pin(t, q, p, 1 - ffull); else if (OV.landmark(t, q, p, 1 - ffull, lmRow)) lmRow++; }   // (no pins over a full-screen clip)
   for (const m of FILM.marks || []) OV.mark(t, at([m.pos[0], m.pos[1], (m.pos[2] || 0) + .001]), m);
   for (const r of FILM.ranges || []) {
     const pts = r.pts.map(([x, z]) => proj3(x, .0015, z));
@@ -697,11 +703,17 @@ const renderSync = t => { stateAt(t); if (!(PLAY && PLAYING && fullCover(t))) { 
 const ERAJ = {}, eraJ = id => ERAJ[id] ||= fetch(B + FILM.eras.find(e => e.id === id).file).then(r => r.json()), eraOf = id => FILM.eras.find(e => e.id === id) || {};
 // its palettes: the film's (film.look), each period city's own where it has one, today's city's; the page's ?palette=, ?today= in
 // their place (a film without film.look seen with ?look=mini must name them: a city's colours are its region's, never a default)
+// the colour film's sun, fixed in the world (engine/mini.js): to the left of where the film's camera mostly stands, so most shots are
+// lit from the front and side and an orbit turns the shadows as a real one would (the mean of the keys' bearings, by the time each holds)
+const SUN_AZ = COLOUR ? (() => { const K = FILM.camera || []; let x = 0, y = 0; for (let i = 0; i + 1 < K.length; i++) { const w = K[i + 1][0] - K[i][0], a = THREE.MathUtils.degToRad(K[i][1][3]); x += Math.sin(a) * w; y += Math.cos(a) * w; }
+  return (x || y ? THREE.MathUtils.radToDeg(Math.atan2(x, y)) : 0) + 55; })() : null;
 const PAL = COLOUR ? { palette: QS.get('palette') || (FILM.look && FILM.look.palette), today: QS.get('today') || (FILM.look && FILM.look.today) } : null;
 if (PAL && !(PAL.palette && PAL.today)) throw new Error('look=mini: this film has no film.look; give &palette=roman|chinese|modern&today=roman|chinese|modern (its region\'s colours)');
 const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, cityMesh: CITYMESH, scale: M.scale, lens, film: true, palette: PAL.palette, today: PAL.today, paletteOf: id => eraOf(id).palette || PAL.palette,
   fadeAt: LOOK.dim ?? .8, phone: TOUCH, backdropFrom: (FILM.look && FILM.look.backdrop_from) ?? 1800,
-  dataFrom: (M.b || []).reduce((m, b) => b[0] > 0 && b[0] < m ? b[0] : m, 1e4),   // (the data's earliest epoch: what it first sees then counts as standing before) prims: QS.get('detail') === '0' || TOUCH ? null : id => eraJ(id).then(J => J.prims),   // (a phone: no detail, as the viewer's look on a touch screen)
+  dataFrom: (M.b || []).reduce((m, b) => b[0] > 0 && b[0] < m ? b[0] : m, 1e4),   // (the data's earliest epoch: what it first sees then counts as standing before)
+  prims: QS.get('detail') === '0' || TOUCH ? null : id => eraJ(id).then(J => J.prims),   // (a phone: no detail, as the viewer's look on a touch screen)
+  sunAz: SUN_AZ,
   lost: id => eraJ(id).then(J => { delete ERAJ[id]; return J.lost || null; }),   // (the look asks for the records, then their losses: the last of them)
   hex: id => eraOf(id).exaggeration ?? 2, face: id => eraOf(id).wall_face ?? null }) : null;
 // the colour film's ruins (engine/mini.js filmMaterial): a period city's foundations stay until a later city rises on that ground
@@ -717,7 +729,7 @@ function ruinsAt(t) {
     for (let h = 0; h < u.uRuinLater.value.length; h++) u.uRuinLater.value[h] = ch[h] && ch[h].on > e.on ? 1 : 0;
     (e.losses || []).forEach((q, j) => { u.uLossBurnt.value[j] = q.burn && t >= q.burn[0] ? 1 : 0; }); }
 }
-const renderColour = async t => { stateAt(t); ruinsAt(sceneAt(t)); if (!(PLAY && PLAYING && fullCover(t))) await MINI.render({ target: tgt, d: camDist }); overlayAt(t); };
+const renderColour = async t => { stateAt(t); ruinsAt(sceneAt(t)); if (!(PLAY && PLAYING && fullCover(t))) await MINI.render({ target: tgt, d: camDist, sharp: LV ? LV.k : 0 }); overlayAt(t); };
 const seekFootage = async t => {
   for (const f of FILM.footage || []) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;

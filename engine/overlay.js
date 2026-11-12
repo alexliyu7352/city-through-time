@@ -160,6 +160,22 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     if (o.sub) txt(o.id ? o.id + 's' : null, o.sub, tx_, yTop + 58, TAG.b[0], TAG.b[1], 'rgba(240,242,245,.94)', ta, { shadow: 6, right: left, ls: .3 });
     return { x: bx, y: yTop, w, h: boxH };
   }
+  // a landmark's name as a miniature film gives it (the colour film's lean overlay, engine/main.js LEAN): plain centred text with
+  // a hairline either side, above the subtitles, while its pin is up and its place in the frame; the second language under it
+  // (row: several up at once stack upward, the first lowest; returns whether it was drawn)
+  function landmark(t, p, o, k = 1, row = 0) {
+    if (!p) return false;
+    const inside = ss(seg(Math.min(p[0], LW - p[0]), 0, 160)) * ss(seg(Math.min(p[1], LSUB - p[1]), 0, 120));
+    const a = env(t, o.t0, o.t1, .5, .4) * inside * k; if (a <= .001) return false;
+    const lat = !/[\u3000-\u9fff\uac00-\ud7af\uff00-\uffef]/.test(o.text), fk = lat ? 'en_strong' : 'zh_strong', ls = lat ? 2 : 10; let px = lat ? 42 : 52;   // (a Latin name in its own face, spaced lightly: wide spacing breaks its words apart)
+    while (px > 30 && width(o.text, fk, px, ls) > 1240) px -= 2;
+    const Y = LSUB - 150 - row * (o.sub ? 104 : 72), w = width(o.text, fk, px, ls), hw = w / 2 + 34, L = 140;
+    txt(o.id, o.text, LW / 2, Y, fk, px, '#ffffff', a, { center: true, shadow: 14, ls });
+    if (o.sub) txt(o.id ? o.id + 's' : null, o.sub, LW / 2, Y + 40, 'en', 24, 'rgba(240,242,245,.94)', a, { center: true, shadow: 10, ls: .6 });
+    g.save(); g.globalAlpha = a * .85; g.fillStyle = '#ffffff'; g.shadowColor = 'rgba(0,0,0,.5)'; g.shadowBlur = 6;
+    g.fillRect(LW / 2 - hw - L, Y - px * .33, L, 1.5); g.fillRect(LW / 2 + hw, Y - px * .33, L, 1.5); g.restore();
+    return true;
+  }
   function pin(t, p, o, k = 1) {
     if (!p) return;
     const edge = ss(seg(Math.min(p[0], LW - p[0]), 0, 90)) * ss(seg(p[1], 20, 110));   // its building leaving the frame: the pin goes with it
@@ -492,5 +508,5 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     txt('end_credit', CREDIT, X, y + 22, 'mono', 22, 'rgba(228,232,238,.86)', a, { ls: .5 });
   }
 
-  return { g, begin, setLight, txt, width, env, scrims, readout, pin, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, notesDrop, readoutDrop };
+  return { g, begin, setLight, txt, width, env, scrims, readout, pin, landmark, mark, rangeLine, subtitle, identity, endCard, timelineBar, footage, caption, placeLabel, routeLabel, locator, section, sky, counters, texts: () => TX, drawn: () => DRAWN, notesDrop, readoutDrop };
 }
