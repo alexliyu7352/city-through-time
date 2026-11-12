@@ -35,20 +35,22 @@ export const STYLES = {
     storey: 3.5, window: { w: 1.0, h: 1.5, every: 3.6, sill: .38, arch: true }, door: { w: 1.5, h: 2.5, arch: true },
     cornice: { h: .38, out: .22 }, base: { h: .55, out: .06 }, front: null, ridgeEnds: false, coping: { h: .32, over: .14 },
     wall: 'brick', towerWindows: { w: 1.3, h: 2.1, n: 2 }, tiles: null, halls: null,
-    trees: { court: 1, street: 30, cypress: .35 }, flags: { gate: 4 },
+    trees: { court: 1, street: 30, cypress: .35 }, flags: { gate: 4 },   // (a dense town's open ground stays its streets' and yards': no gardens)
   },
   chinese: {
     storey: 3.6, window: null, door: null, cornice: { h: .55, out: .45 }, base: { h: .6, out: .1 },   // (cornice: the eave's dark underside over the wall's top)
     front: { post: .34, every: 2.8, beam: .45 }, ridgeEnds: true, coping: { h: .42, over: .2 },
     wall: 'earth', towerWindows: null, tiles: { every: 1.1, w: .36, t: .16, verge: { w: .46, t: .34 } }, halls: { column: .65, beam: .7 },
     eaves: { out: 1.8, t: .35 }, ridge: { w: 1.1, h: .9 },
-    trees: { court: 2, street: 16, cypress: .1 }, flags: { gate: 6 },
+    trees: { court: 3, street: 12, cypress: .1, gardens: { every: 11, share: .3, reach: 70 } }, flags: { gate: 6 },
   },
 };
 // eaves: { out, t } a gable roof's eaves carried this far out past the generator's own overhang, this thick, down its slope; ridge:
 // { w, h } a ridge this wide and high laid along its top (a Chinese roof, read from afar as a roof over its walls, not a slab on a ring)
 // halls: { column, beam } a timber hall's (citygen hall) columns this thick and its architrave this high, in metres: the columns
-// lacquered, the beam painted (a Chinese hall's); trees: { court: trees a court holds (the generator's own counted; on its paving
+// lacquered, the beam painted (a Chinese hall's); trees: { gardens: { every, share, reach } the town's open ground between its
+// buildings planted, one place every `every` metres, `share` of them a tree (more in its groves and round its landmarks), within
+// `reach` metres of a building, each rising with the nearest; court: trees a court holds (the generator's own counted; on its paving
 // too), street: one every this many metres down each edge of a street 10 m wide or more (0: none), cypress: the share of them
 // tall and narrow }; flags: { gate: flags on a gatehouse, round its edges }, and one on each landmark
 // a city wall's face (city.yaml walls `face`): the courses it shows, every `every` metres, `h` high: rammed earth's lifts, brick's
@@ -371,6 +373,25 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
       if (!at.length) for (const [ox, oz] of [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1]]) {   // (two to a court, or a small court: either side of its middle)
         const [X, Z] = world(b0, ox * 3.2 * M, oz * 3.2 * M); if (free(X, Z, 2.2 * M) && at.every(([x, z]) => Math.hypot(x - X, z - Z) > 4 * M)) at.push([X, Z, 2.2 * M]); if (at.length >= want) break; }
       for (const [X, Z, room] of at.slice(0, want)) tree(b0, X, Z, Math.min(11 * M, room * 2.6) * .8);
+    }
+    if (TR.gardens) {   // (the open ground between the buildings: gardens and groves, off the streets and squares, each tree rising with its nearest building)
+      const G = TR.gardens, step = G.every * M, reach = G.reach * M, homes = R.filter(r => r.t === 0 && (r.part === FAB || r.part === LMK) && r.d !== 1);
+      if (homes.length) {
+        const HC = 32 * M, hc = new Map(); for (const r of homes) { const k = key(Math.floor(r.x / HC), Math.floor(r.z / HC)); (hc.get(k) || hc.set(k, []).get(k)).push(r); }
+        const near = (X, Z) => { let best = null, bd = reach; const i0 = Math.floor(X / HC), j0 = Math.floor(Z / HC), n = Math.ceil(reach / HC);
+          for (let i = i0 - n; i <= i0 + n; i++) for (let j = j0 - n; j <= j0 + n; j++) for (const r of hc.get(key(i, j)) || []) { const dd = Math.hypot(r.x - X, r.z - Z) - Math.max(r.a, r.b) / 2; if (dd < bd) { bd = dd; best = r; } }
+          return best; };
+        const street = (X, Z) => { for (const r of solid.get(key(Math.floor(X / SC), Math.floor(Z / SC))) || []) { if (r.part !== 7) continue; const [lx, lz] = local(r, X, Z); if (Math.abs(lx) < r.a / 2 + 2 * M && Math.abs(lz) < r.b / 2 + 2 * M) return true; } return false; };
+        const xs = homes.map(r => r.x), zs = homes.map(r => r.z), x0 = Math.min(...xs) - reach, x1 = Math.max(...xs) + reach, z0 = Math.min(...zs) - reach, z1 = Math.max(...zs) + reach;
+        for (let gx = Math.floor(x0 / step); gx <= Math.ceil(x1 / step); gx++) for (let gz = Math.floor(z0 / step); gz <= Math.ceil(z1 / step); gz++) {
+          const X = (gx + .2 + .6 * hash(gx * 1.3, gz * .7)) * step, Z = (gz + .2 + .6 * hash(gx * .9, gz * 1.9)) * step;
+          const grove = .5 + .5 * Math.sin(X / M / 61 + Math.sin(Z / M / 47) * 1.7) * Math.sin(Z / M / 53 + Math.sin(X / M / 71) * 1.3);
+          const h = near(X, Z); if (!h) continue;
+          const gr = THREE.MathUtils.smoothstep(grove, .45, .8);   // (in groves and orchards, a few alone between them)
+          if (hash(X * 7.7, Z * 3.3) > G.share * (.15 + 2.6 * gr) * (h.part === LMK ? 2 : 1) || street(X, Z) || !free(X, Z, 3 * M)) continue;
+          tree(h, X, Z, (8 + 5 * hash(Z * 2.1, X)) * (.8 + .35 * gr) * M);
+        }
+      }
     }
     if (TR.street) for (const r of R) {   // (a street: a road piece, citygen strip; its trees down its edges, the way between them clear)
       if (r.t !== 0 || r.d !== 1 || r.b < 10 * M || r.a < TR.street * M * .6) continue;

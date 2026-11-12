@@ -43,6 +43,7 @@ const FILM_PIC = { sunEl: 40, sunSide: 75, sun: 1.25, sunC: '#ffdcae', sky: .95,
   // a region's land in the film, where its palette's own greens read olive under the sun (LAND_PALETTES): a clean blue-green meadow
   landTone: { loess: { grass0: [.38, .55, .29], grass1: [.47, .63, .34], straw: [.80, .76, .52], soil: [.70, .62, .46], wood: [.20, .36, .17] } },
   town: .74,   // a standing city's ground: its palette's earth at this lightness, mostly grey, even (compacted earth, paving)
+  garden: { chinese: true },   // ... or, a town of compounds in their gardens, its open ground grass, kitchen gardens and lanes (detail.js trees gardens)
   // a period city's colours as a model's: roof against wall against ground (dark tile over light rammed earth or plaster, deep
   // terracotta over varied washes), a court paved, a ditch's water dark
   tone: { chinese: { roofs: ['#737980', '#7d8389', '#6e747b', '#848a90', '#787e85'], walls: ['#e0d0ad', '#d6c39c', '#e8dcc2', '#cdb790', '#ddcba6'], parts: { 5: '#3f6e7a', 7: '#a39c8f', 9: '#4f5358' } },
@@ -181,10 +182,23 @@ float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv
   if (uKind > .5) land = mix(land, vec3(.29, .27, .23), .55);   // a city's ground: paved, dusty${town ? `
   { vec2 uv_ = vXZ / uPlateM + .5, o_ = vec2(${(9).toFixed(1)} * ${scale.toFixed(8)}) / uPlateM;   // a town's ground: beaten-earth yards and lanes, plots in rows (its edge softened over a few cells of the map)
     float tn_ = (townAt(uv_) * 2. + townAt(uv_ + vec2(o_.x, 0.)) + townAt(uv_ - vec2(o_.x, 0.)) + townAt(uv_ + vec2(0., o_.y)) + townAt(uv_ - vec2(0., o_.y))) / 6.;
-    if (tn_ > .001) {   // (an even, light compacted earth: its grain only, at the scale of the material, never in patches)
+    if (tn_ > .001) {${o.garden ? `   // (a town of compounds in their gardens: its open ground grass, kitchen gardens in rows, lanes worn into the earth; its
+      // streets and squares are the city's own paving, drawn over it)
+      vec2 w_ = m_ + vec2(fxLn(m_ / 90.), fxLn(m_ / 90. + 5.)) * 14.;   // (no ruled grid)
+      float pw_ = length(fwidth(m_)), fr_ = smoothstep(.7, 1.6, pw_);
+      vec2 pc_ = w_ / vec2(34., 14.), pe_ = min(fract(pc_), 1. - fract(pc_)) * vec2(34., 14.);
+      float ph_ = fract(sin(dot(floor(pc_), vec2(127.1, 311.7))) * 43758.5453);
+      vec3 grass_ = ${p3(land.grass1)} * (.93 + .1 * fxLn(m_ / 17.)), soil_ = mix(${p3(land.soil)}, ${p3(land.straw)}, .3);
+      vec3 plot_ = mix(mix(soil_, ${p3(land.grass0)} * .9, smoothstep(.3, .7, .5 + .5 * sin(w_.y * 3.93))), mix(soil_, ${p3(land.grass0)} * .9, .55), fr_);   // (rows 1.6 m apart; afar their mean)
+      vec3 g_ = mix(grass_, plot_, step(ph_, .42) * smoothstep(.8, 1.8, min(pe_.x, pe_.y)) * (.5 + .5 * smoothstep(.35, .6, fxLn(m_ / 160. + 2.))));
+      vec2 v_ = m_ + vec2(fxLn(m_ / 230. + 1.), fxLn(m_ / 230. + 8.)) * 46.;   // (lanes: a few, wandering, broken, mostly one way)
+      vec2 l_ = abs(fract(v_ / vec2(95., 210.)) - .5) * vec2(95., 210.);
+      float ln_ = (1. - smoothstep(1.3, 1.3 + pw_ * 1.5, l_.x)) * smoothstep(.4, .55, fxLn(v_ / 140. + 3.)) + (1. - smoothstep(1.3, 1.3 + pw_ * 1.5, l_.y)) * smoothstep(.55, .7, fxLn(v_ / 140. + 6.));
+      g_ = mix(g_, mix(${p3(land.soil)}, ${p3(land.straw)}, .55) * 1.05, clamp(ln_, 0., 1.) * .75);
+      land = mix(land, pow(g_, vec3(2.2)), smoothstep(.15, .85, tn_));` : `   // (an even, light compacted earth: its grain only, at the scale of the material, never in patches)
       vec3 e_ = mix(${p3(land.soil)}, ${p3(land.straw)}, .5); float l_ = dot(e_, vec3(.2126, .7152, .0722));
       vec3 yard_ = pow(mix(vec3(l_), e_, .45) * ${(o.town || FILM_PIC.town).toFixed(3)} / l_ * (.97 + .06 * fxLn(m_ / 2.3) + .03 * fxLn(m_ / 7. + 3.)), vec3(2.2));
-      land = mix(land, yard_, smoothstep(.15, .85, tn_)); } }` : ''}
+      land = mix(land, yard_, smoothstep(.15, .85, tn_));`} } }` : ''}
   float deep = smoothstep(.4, .98, wr_);
   vec3 water = mix(vec3(.38, .68, .70), vec3(.17, .42, .56), deep) * (.95 + .1 * fxLn(m_ / 40.));${S && o && o.meadow ? `
   water = mix(vec3(.42, .70, .68), vec3(.09, .30, .46), smoothstep(.45, .95, wr_)) * (.95 + .1 * fxLn(m_ / 40.));   // (shallows by the bank, the deep dark)
@@ -195,7 +209,7 @@ float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv
       .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\n  roughnessFactor = mix(roughnessFactor, .32, wMask);')
       .replace('#include <opaque_fragment>', `${relief ? 'outgoingLight = mix(outgoingLight, fxReliefLight(vFxW, outgoingLight, diffuseColor.rgb), 1. - wMask);   // the relief (fx.js)\n' : ''}#include <opaque_fragment>`);
   };
-  m.customProgramCacheKey = () => 'mini-land' + (relief ? ' fx' : '') + (o ? ' land' : '') + (S ? ' film' : '') + (then ? ' then' : '') + (far ? ' far' : '') + (fu ? ' pall' : '') + (town ? ' town' : '') + (o && o.meadow ? ' meadow' : '');
+  m.customProgramCacheKey = () => 'mini-land' + (relief ? ' fx' : '') + (o ? ' land' : '') + (S ? ' film' : '') + (then ? ' then' : '') + (far ? ' far' : '') + (fu ? ' pall' : '') + (town ? ' town' : '') + (o && o.meadow ? ' meadow' : '') + (o && o.garden ? ' garden' : '');
   if (S && !far) { const own = m.onBeforeCompile; S.deformMaterial(m, { uPlateTop: { value: 1 } }); const d = m.onBeforeCompile; m.onBeforeCompile = sh => { d(sh); own(sh); }; }   // (a dug pool lowers it)
   return m;
 }
@@ -294,7 +308,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // city's smoke shading the ground beneath it (its centre, reach and strength: render)
   const BACK = { uBackdropY: { value: backdropFrom }, uDataY0: { value: dataFrom }, uPallC: { value: new THREE.Vector2() }, uPallR: { value: 1 }, uPallK: { value: 0 } };
   const landName = Object.keys(LAND_PALETTES).find(k => LAND_PALETTES[k] === pal.land), LT = film && !S.fx && FILM_PIC.landTone[landName];
-  const LANDO = FX && FX.land ? FX.land : film ? { ...FILM_PIC.land, toned: !!LT } : null;   // (the film: a meadow and woods, not the palette's patchwork of fields)
+  const LANDO = FX && FX.land ? FX.land : film ? { ...FILM_PIC.land, toned: !!LT, garden: !!FILM_PIC.garden[palette] } : null;   // (the film: a meadow and woods, not the palette's patchwork of fields)
   const LANDP = FX && FX.land ? landPalette(FX.land) : LT || pal.land;
   if (plate) plate.userData.mini = landMaterial(U, PW, PD, ground, LANDP, relief, LANDO, S.terrainEx, scale, film ? S : null, false, BACK);
   U.__ground = S.ground;
