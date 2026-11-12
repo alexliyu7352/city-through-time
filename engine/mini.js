@@ -37,11 +37,11 @@ const FILM_AO = .45;   // (the film without the effects: the occlusion of its ow
 // frame shows (every house and tree on its own hard shadow at any range) and the ambient occlusion full (every crevice and the foot
 // of every wall darker); a lens whose depth of field softens what is nearer as well as farther than the subject; no veil of air
 // over the plate. The land a meadow with fields in strips and woods in clusters of big canopies; trees big enough to read
-const FILM_PIC = { sunEl: 40, sunSide: 75, sun: 1.25, sunC: '#ffdcae', sky: .95, skyC: '#d0d6e2', skyGround: '#9a9578', fogNear: 6, fogFar: 40,
-  ao: 1.0, aoR: [.012, 4, 14], vignette: .12, sat: 1.06, contrast: .1, dof: { k: 1.6, max: 11, band: .14 },   // (aoR: the occlusion's reach, a share of the distance, between these metres)
-  land: { source: 'quiet', scrub: 14, earth: .18, meadow: true }, tree: { size: 1.4, woodSize: 1.6, keep: .06, wood: .97, grid: 16, hue: .06, facets: true, clearWood: 40, count: 150000, grow: true },
+const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, skyC: '#d0d6e2', skyGround: '#9a9578', fogNear: 6, fogFar: 40,
+  ao: 1.0, aoR: [.012, 4, 14], vignette: .12, sat: .9, contrast: .1, dof: { k: 1.6, max: 24, band: .375, two: true, at: 1.1, Ak: .0545 },   // (aoR: the occlusion's reach, a share of the distance, between these metres)
+  land: { source: 'quiet', scrub: 14, earth: .18, meadow: true }, tree: { size: 1.1, woodSize: 1.2, keep: .06, wood: .97, grid: 16, hue: .06, facets: true, clearWood: 90, count: 150000, grow: true },
   // a region's land in the film, where its palette's own greens read olive under the sun (LAND_PALETTES): a clean blue-green meadow
-  landTone: { loess: { grass0: [.38, .55, .29], grass1: [.47, .63, .34], straw: [.80, .76, .52], soil: [.70, .62, .46], wood: [.20, .36, .17] } },
+  landTone: { loess: { grass0: [.22, .36, .16], grass1: [.28, .42, .19], straw: [.70, .64, .42], soil: [.58, .50, .36], wood: [.12, .25, .10] } },
   relief: 3.5,   // the land's slopes this many times as steep in the light (the terrain's own heights, exaggerated as drawn)
   projector: 0,   // the studio's projector light on the land by day (rings, washes, a standing city's edge light, the pick): none
   pathW: 16, pathC: '#d8c8a4',   // a route as a path drawn on the land: this many metres wide, its colour mixed with this earth
@@ -77,10 +77,10 @@ const PALETTES = {
   roman: {
     walls: ['#ebe1cc', '#e8d4ab', '#ddc196', '#f1eadc', '#e4c9b0', '#d6b78f', '#efdcc0'],
     roofs: ['#b65c3d', '#c26d45', '#a95d47', '#c47d57', '#a05848', '#ba684b', '#c98a63'],
-    parts: { 1: '#e6dcc8', 2: '#cdb38c', 3: '#cbbd9f', 4: '#5a7340', 5: '#4f8aa3', 6: '#2f2620', 7: '#d6caae', 9: '#a65d45', 10: '#c9b086', 11: '#bcae92' },
+    parts: { 1: '#e6dcc8', 2: '#cdb38c', 3: '#cbbd9f', 4: '#5a7340', 5: '#4f8aa3', 6: '#2f2620', 7: '#aaa59b', 9: '#a65d45', 10: '#c9b086', 11: '#bcae92' },
     land: LAND_PALETTES.mediterranean,
     glb: { stone: '#e8dfcc', dark: '#2b231d', roof: '#a85b43', sand: '#d2b98c' }, cypress: .3,
-    detail: { window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#b9a588', coping: '#b0603f', archRing: '#ebe3d2', flags: ['#a3262a', '#6e2a63'], sail: '#efe6d2' },
+    detail: { window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#8f8a82', coping: '#b0603f', archRing: '#ebe3d2', flags: ['#a3262a', '#6e2a63'], sail: '#efe6d2' },
     faces: { earth: '#c9ad86', brick: '#b8805c', stone: '#ddd3c0', banded: '#e6dbc6' },
   },
   chinese: {
@@ -88,7 +88,7 @@ const PALETTES = {
     roofs: ['#6c6863', '#78726b', '#625f5b', '#7f7970', '#5c5854'],
     parts: { 1: '#e2d5b8', 2: '#bfa070', 3: '#cbbd9f', 4: '#5f7d3c', 5: '#5d8fa8', 6: '#2f2620', 7: '#d8cbaa', 9: '#5d5955', 10: '#c9a978', 11: '#b8a58a' },
     land: LAND_PALETTES.loess,   // the loess plain: wheat, millet, bare earth
-    glb: { stone: '#e3d6b8', dark: '#2b231d', roof: '#5f5b56', sand: '#c8a676' }, cypress: .08, tree: { size: .6, keep: .35, dark: .78 },   // (tree: its size, the share of places kept, its lightness)
+    glb: { stone: '#e3d6b8', dark: '#2b231d', roof: '#5f5b56', sand: '#c8a676' }, cypress: .08, tree: { size: .6, keep: .35, dark: .6, sat: .75 },   // (tree: its size, the share of places kept, its lightness)
     detail: { base: '#97918a', post: '#7a3524', beam: '#4e3b2e', ridgeEnd: '#4f4b47', coping: '#5b5853', archRing: '#8f8b85', column: '#8a2e20', cornice: '#3a3431', ridge: '#a3a6a8', flags: ['#b3262c', '#d9a21b'], sail: '#a8764a' },
     faces: { earth: '#bfa070', brick: '#8f8b84', stone: '#cac2b3', banded: '#d9cdb6' },
   },
@@ -378,7 +378,8 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     // building), the boats' wood, sails and mat roofs
     const tdark = (pal.tree && pal.tree.dark) || 1, H3 = (x, z) => { const h = hash(x, z); return [h, (h * 7.31) % 1, (h * 13.7) % 1]; }, D_ = pal.detail || PALETTES.roman.detail;
     const th = film ? FILM_PIC.tree.hue : 0;   // (the film's greens a little bluer: FILM_PIC)
-    Object.assign(dcols, { crown: (x, z) => { const [a, b, c] = H3(x, z); return new THREE.Color().setHSL(.2 + th + a * .09, .32 + b * .16, (.24 + c * .1) * tdark); },
+    const tsat = (pal.tree && pal.tree.sat) || 1;   // (a palette's town trees this much as saturated: a model's painted foliage, not a lawn's)
+    Object.assign(dcols, { crown: (x, z) => { const [a, b, c] = H3(x, z); return new THREE.Color().setHSL(.2 + th + a * .09, (.32 + b * .16) * tsat, (.24 + c * .1) * tdark); },
       cone: (x, z) => { const [a, , c] = H3(x, z); return new THREE.Color().setHSL(.27 + th + a * .05, .4, (.18 + c * .06) * tdark); }, trunk: '#6b5440', pole: '#5b4a3a',
       flag: (x, z) => new THREE.Color(D_.flags[Math.floor(H3(x, z)[1] * D_.flags.length)]), hull: '#7a5236', mast: '#5b4a3a', sail: D_.sail, cabin: '#4a4038' });
     return dcols; };
@@ -532,7 +533,8 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
       // a model's lens (FILM_PIC.dof.A: its opening in the city's metres, the model's own times its scale): the blur a camera that
       // close to a model that small gives, the same opening at every distance (a wide shot from afar blurs less, as a photograph
       // of the whole table does); at: the focus as a share of the shot's distance (beyond 1: the near ground the softer)
-      if (FP_ && lens && FILM_PIC.dof.A && !(S.post.dof.aper < 1e-6)) { FP.dof.aper = 1080 * FILM_PIC.dof.A * scale / (4 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)); FP.dof.focus = S.post.dof.focus * (FILM_PIC.dof.at || 1); }   // (a living moment's sharp picture kept where its aperture is 0; its fade in and out not yet followed)
+      const A_ = FILM_PIC.dof.A || (FILM_PIC.dof.Ak || 0) * d / scale;   // (Ak: the opening as a share of the shot's distance: every shot the same model seen as close)
+      if (FP_ && lens && A_ && !(S.post.dof.aper < 1e-6)) { FP.dof.aper = 1080 * A_ * scale / (4 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)); FP.dof.focus = S.post.dof.focus * (FILM_PIC.dof.at || 1); }   // (a living moment's sharp picture kept where its aperture is 0; its fade in and out not yet followed)
       if (FX && FX.dof && !S.post.dof.rtB) fxLens(FP.dof, FX.dof, d);   // (the studio's own pass applied it already where it has the stronger gather)
       if (FP.dof.haze) FP.dof.haze.uHazeSunD.value.copy(sd);
       if (FP.dof.ao) FP.dof.ao.updateGtaoMaterial({ radius: FP_ ? THREE.MathUtils.clamp(d * FILM_PIC.aoR[0], scale * FILM_PIC.aoR[1], scale * FILM_PIC.aoR[2]) : fxAoRadius(d) });   // (the film: contact, a few metres at a crevice, never a whole court in shade)

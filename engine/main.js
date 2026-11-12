@@ -275,7 +275,7 @@ for (const f of FREE ? [] : FILM.footage || []) {
 const LOC = FREE ? newImage() : await image(B + 'data/locator.png', true) || newImage();
 const seekTo = (v, time) => new Promise(res => { if (Math.abs(v.currentTime - time) < 1 / 60) return res(); const done = () => { v.removeEventListener('seeked', done); res(); }; v.addEventListener('seeked', done); v.currentTime = time; });
 const OV = makeOverlay(document.getElementById('ov')); OV.setLight(COLOUR);   // (the colour film: a light picture under the words)
-const SCRIM = COLOUR && QS.has('scrim') ? +QS.get('scrim') : 1;   // (a still of the colour film: its dark grounds under the words this much as deep, &scrim=)
+const SCRIM = COLOUR ? +(QS.get('scrim') ?? .5) : 1;   // (the colour film: the dark grounds under its words half as deep, the far field not veiled; &scrim= for a still)
 
 // projected lines: groups of OSM / custom polylines
 const lineA = {};

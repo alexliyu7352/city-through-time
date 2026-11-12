@@ -33,24 +33,24 @@ const FAB = 0, LMK = 1, WALL = 2, DARK = 6, ROOF = 8, LROOF = 9;
 export const STYLES = {
   roman: {
     storey: 3.5, window: { w: 1.0, h: 1.5, every: 3.6, sill: .38, arch: true }, door: { w: 1.5, h: 2.5, arch: true },
-    cornice: { h: .38, out: .22 }, base: { h: .55, out: .06 }, front: null, ridgeEnds: false, coping: { h: .32, over: .14 },
+    cornice: { h: .38, out: .22 }, base: { h: 1.0, out: .08 }, front: null, ridgeEnds: false, coping: { h: .32, over: .14 },
     wall: 'brick', towerWindows: { w: 1.3, h: 2.1, n: 2 }, tiles: null, halls: null,
-    trees: { court: 1, street: 30, cypress: .35 }, flags: { gate: 4 },   // (a dense town's open ground stays its streets' and yards': no gardens)
+    trees: { court: 2, street: 30, cypress: .5 }, flags: { gate: 4 },   // (a dense town's open ground stays its streets' and yards': no gardens)
   },
   chinese: {
     storey: 3.6, window: null, door: null, cornice: { h: .55, out: .45 }, base: { h: .6, out: .1 },   // (cornice: the eave's dark underside over the wall's top)
     front: { post: .34, every: 2.8, beam: .45 }, ridgeEnds: true, coping: { h: .42, over: .2 },
     wall: 'earth', towerWindows: null, tiles: { every: 1.1, w: .36, t: .16, verge: { w: .46, t: .34 } }, halls: { column: .65, beam: .7 },
     eaves: { out: 1.8, t: .35 }, ridge: { w: 1.1, h: .9 },
-    trees: { court: 3, street: 12, cypress: .1, gardens: { every: 11, share: .3, reach: 70 } }, flags: { gate: 6 },
+    trees: { court: 2, street: 12, cypress: .1, gardens: { every: 11, share: .15, reach: 70, size: [5, 3] } }, flags: { gate: 6 },
   },
 };
 // eaves: { out, t } a gable roof's eaves carried this far out past the generator's own overhang, this thick, down its slope; ridge:
 // { w, h } a ridge this wide and high laid along its top (a Chinese roof, read from afar as a roof over its walls, not a slab on a ring)
 // halls: { column, beam } a timber hall's (citygen hall) columns this thick and its architrave this high, in metres: the columns
-// lacquered, the beam painted (a Chinese hall's); trees: { gardens: { every, share, reach } the town's open ground between its
+// lacquered, the beam painted (a Chinese hall's); trees: { gardens: { every, share, reach, size } the town's open ground between its
 // buildings planted, one place every `every` metres, `share` of them a tree (more in its groves and round its landmarks), within
-// `reach` metres of a building, each rising with the nearest; court: trees a court holds (the generator's own counted; on its paving
+// `reach` metres of a building, each rising with the nearest, its crown size[0] + up to size[1] metres (default 8 + 5); court: trees a court holds (the generator's own counted; on its paving
 // too), street: one every this many metres down each edge of a street 10 m wide or more (0: none), cypress: the share of them
 // tall and narrow }; flags: { gate: flags on a gatehouse, round its edges }, and one on each landmark
 // a city wall's face (city.yaml walls `face`): the courses it shows, every `every` metres, `h` high: rammed earth's lifts, brick's
@@ -390,7 +390,7 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
           const gr = THREE.MathUtils.smoothstep(grove, .45, .8);   // (in groves and orchards, a few alone between them)
           if (hash(X * 7.7, Z * 3.3) > G.share * (.15 + 2.6 * gr) * (h.part === LMK ? 2 : 1) || street(X, Z) || !free(X, Z, 3 * M)) continue;
           const th = hash(X * 1.9, Z * 4.3);   // (afar fewer: half gone by the time a tree is 7 px, three in ten more by 11 px, the roofs read first)
-          tree(h, X, Z, (8 + 5 * hash(Z * 2.1, X)) * (.8 + .35 * gr) * M, th < .5 ? '_g1' : th < .8 ? '_g2' : '');
+          tree(h, X, Z, ((G.size || [8, 5])[0] + (G.size || [8, 5])[1] * hash(Z * 2.1, X)) * (.8 + .35 * gr) * M, th < .5 ? '_g1' : th < .8 ? '_g2' : '');
         }
       }
     }
