@@ -700,14 +700,16 @@ const ERAJ = {}, eraJ = id => ERAJ[id] ||= fetch(B + FILM.eras.find(e => e.id ==
 const PAL = COLOUR ? { palette: QS.get('palette') || (FILM.look && FILM.look.palette), today: QS.get('today') || (FILM.look && FILM.look.today) } : null;
 if (PAL && !(PAL.palette && PAL.today)) throw new Error('look=mini: this film has no film.look; give &palette=roman|chinese|modern&today=roman|chinese|modern (its region\'s colours)');
 const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, cityMesh: CITYMESH, scale: M.scale, lens, film: true, palette: PAL.palette, today: PAL.today, paletteOf: id => eraOf(id).palette || PAL.palette,
-  fadeAt: LOOK.dim ?? .8, phone: TOUCH, prims: QS.get('detail') === '0' || TOUCH ? null : id => eraJ(id).then(J => J.prims),   // (a phone: no detail, as the viewer's look on a touch screen)
+  fadeAt: LOOK.dim ?? .8, phone: TOUCH, backdropFrom: (FILM.look && FILM.look.backdrop_from) ?? 1800,
+  dataFrom: (M.b || []).reduce((m, b) => b[0] > 0 && b[0] < m ? b[0] : m, 1e4),   // (the data's earliest epoch: what it first sees then counts as standing before) prims: QS.get('detail') === '0' || TOUCH ? null : id => eraJ(id).then(J => J.prims),   // (a phone: no detail, as the viewer's look on a touch screen)
   lost: id => eraJ(id).then(J => { delete ERAJ[id]; return J.lost || null; }),   // (the look asks for the records, then their losses: the last of them)
   hex: id => eraOf(id).exaggeration ?? 2, face: id => eraOf(id).wall_face ?? null }) : null;
 // the colour film's ruins (engine/mini.js filmMaterial): a period city's foundations stay until a later city rises on that ground
 // (each channel's city: how far it has risen, never back, and whether it is later than the city the foundations are of) or the
 // modern growth begins (RUINS_TO: the city taken back by then); a loss a fire took leaves them charred
 // (the modern section, engine/mini.js MODERN_FROM: the counter reaching that year, or the modern growth, whichever comes first)
-const RUINS_TO = Math.min(FILM.grow ? FILM.grow.on : Infinity, ...(FILM.yearline || []).filter(([, y]) => y >= 1800).map(([t]) => t).slice(0, 1)) + 1;
+const BACKDROP_FROM = (FILM.look && FILM.look.backdrop_from) ?? 1800;   // (film.look.backdrop_from: the colour film's modern section, engine/mini.js)
+const RUINS_TO = Math.min(FILM.grow ? FILM.grow.on : Infinity, ...(FILM.yearline || []).filter(([, y]) => y >= BACKDROP_FROM).map(([t]) => t).slice(0, 1)) + 1;
 function ruinsAt(t) {
   const ch = {}; for (const e of FILM.eras || []) if (e.hide != null && inChannel(e)) ch[e.hide] = e;
   for (const [h, q] of Object.entries(ch)) MINI.ruinT.value[h] = (t - q.on) / q.span;

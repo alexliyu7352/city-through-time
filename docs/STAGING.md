@@ -271,14 +271,20 @@ cameras (the tool's header gives the cameras' format).
   - a period city rises in place, building by building as in the white model, its detail with it; a faint light along the rise front
     on the ground (the white film's light, restrained) keeps a quiet rise readable;
   - a burning city (`sinkStyle: burn`, `lose: burn`) catches building by building, spreading from where the fire starts over its burn:
-    flames stand on the roofs, hottest just behind the front and in clusters, a few embers near them, a few thick columns of smoke rise
-    and drift into a pall that dims and warms the light; each house chars as the fire reaches it, its detail burning away;
-  - **the modern section** is the film from the year 1800 the counter tells, or from the modern growth, whichever comes first: before
-    it little of any city's present fabric stood, from it much of it did. A building taken back or lost leaves its foundations (charred
-    after a fire) until a later period city rises on that ground or the modern section begins;
+    flames stand on the roofs, tallest at the front and on the big buildings, on only part of the burning area at a time (clusters of
+    different sizes moving through it), dying down behind the front to glowing embers and smoke, none ahead of it; a few thick columns
+    of smoke billow up, dense and dark low down, breaking up as they rise, then drift into a pall that shades the ground beneath it and
+    dims and warms the light; each house chars as the fire reaches it, its detail burning away;
+  - **the modern section** is the film from the year the counter tells reaching `film.look.backdrop_from` (1800 when unset), or from
+    the modern growth, whichever comes first: before it little of a city's present fabric stood, from it much of it did. A young city
+    whose period cities cover the whole town of their time sets it later (the year its present town took shape round them), so the
+    town's later fabric does not stand round them as a backdrop. A building taken back or lost leaves its foundations (charred after a
+    fire) until a later period city rises on that ground or the modern section begins;
   - today's city is drawn in colour where the white film shows it fully; where the white film dims it under a period city, before the
     modern section it goes, building by building, and from it it stays as a muted backdrop in its own colours (less saturated, flatter):
-    a period city of the 1900s is never left standing in fields where the city was. It is hidden only where the white film hides it,
+    a period city of the 1900s is never left standing in fields where the city was. The backdrop holds nothing the data first sees after
+    the year told (its earliest epoch, GHSL's 1975, counts as standing before it): no tower of the 1990s across the river in 1930.
+    It is hidden only where the white film hides it,
     and grows by year as in the white film; a building new in the modern growth is warm while it is new, as there;
   - an area the story marks (an epoch: a bombed district, a burnt zone) is laid over the land in its colour with its glowing edge, and
     its buildings take the colour, as clearly as in the white film;

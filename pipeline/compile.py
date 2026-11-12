@@ -967,17 +967,21 @@ if _fx is not None:
 # (engine/mini.js): palette, the colours and detail of the region the period cities stand in (mini.js PALETTES, detail.js STYLES;
 # a period city of another region or time says its own: its node's city `palette`); today, today's city's colours (mini.js
 # TODAY: an old town's plasters and tiles, or a modern city's concrete and glass). Both asked for, never guessed: a city's
-# colours are its region's. Absent or kind white: the white model, and film.json carries no key (docs/STAGING.md "Look and effects")
+# colours are its region's. backdrop_from: the year the modern section begins for the colour film (default 1800, or the modern growth
+# if that comes first). Absent or kind white: the white model, and film.json carries no key (docs/STAGING.md "Look and effects")
 LOOK_PALETTES = {'roman', 'chinese', 'modern'}
 LOOK_OUT = None; _lk = FM.get('look')
 if _lk is not None:
-    if not isinstance(_lk, dict) or set(_lk) - {'kind', 'palette', 'today'} or _lk.get('kind') not in ('white', 'mini'):
-        raise SystemExit(f'compile: film.look: {{ kind: white | mini, palette: <{" | ".join(sorted(LOOK_PALETTES))}>, today: <the same> }} (got {_lk})')
+    if not isinstance(_lk, dict) or set(_lk) - {'kind', 'palette', 'today', 'backdrop_from'} or _lk.get('kind') not in ('white', 'mini'):
+        raise SystemExit(f'compile: film.look: {{ kind: white | mini, palette: <{" | ".join(sorted(LOOK_PALETTES))}>, today: <the same>, backdrop_from: <a year> }} (got {_lk})')
     if _lk['kind'] == 'mini':
         for k_ in ('palette', 'today'):
             what_ = 'its period cities' if k_ == 'palette' else "today's city"
             if _lk.get(k_) not in LOOK_PALETTES: raise SystemExit(f'compile: film.look.{k_}: one of {sorted(LOOK_PALETTES)}, the colours of the region of {what_}, never a default (got {_lk.get(k_)!r})')
         LOOK_OUT = {'kind': 'mini', 'palette': _lk['palette'], 'today': _lk['today']}
+        if 'backdrop_from' in _lk:   # the year from which today's city stays as a backdrop where the white film dims it (engine/mini.js; 1800 when unset)
+            if not isinstance(_lk['backdrop_from'], (int, float)) or isinstance(_lk['backdrop_from'], bool): raise SystemExit(f'compile: film.look.backdrop_from: a year, e.g. 1900 (got {_lk["backdrop_from"]!r})')
+            LOOK_OUT['backdrop_from'] = float(_lk['backdrop_from'])
 # ------------------------------------------------------------------ layout: opening -> nodes -> closing
 OP = FM.get('opening', {'dur': 5.0}); CL = FM.get('closing', {})
 cursor = PD + float(OP.get('dur', 5.0))
