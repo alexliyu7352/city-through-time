@@ -92,9 +92,9 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
   material: null,
   looks: {
     // a museum's architectural maquette: plaster walls, light wood roofs and landmarks, a dark slate base, water as dark resin
-    maquette: { pic: { sunEl: 50, rake: 22, relief: 6, sun: .95, sunC: '#ffe9cc', sky: .72, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
-      roman: { walls: ['#ead9bb', '#e5d2b0', '#eedfc4', '#e0cba8', '#e8d6b6'], roofs: ['#e3cba2', '#ddc398', '#e8d2ad', '#d8bd90', '#e1c69c', '#dbc095'],
-        parts: { 1: '#f6f3ec', 2: '#cfc5b3', 4: '#2e4424', 7: '#cbbfa8', 9: '#e2d3b6', 10: '#cbbfa8', 11: '#d2c6b0' }, tree: { dark: .55, sat: .7 }, flags: false,
+    maquette: { pic: { sunEl: 50, rake: 22, relief: 3, sun: .95, sunC: '#ffe9cc', sky: .72, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
+      roman: { walls: ['#efe9dc', '#e9e1d0', '#f2ede2', '#e4dbc8', '#ece4d4'], roofs: ['#a9a59e', '#9e9a93', '#b4aea4', '#c08d72', '#b9826a', '#cfc3ad', '#a39d94', '#c69a80'],
+        parts: { 1: '#f6f3ec', 2: '#cfc5b3', 4: '#2e4424', 7: '#c6c2ba', 9: '#a9a59e', 10: '#c6c2ba', 11: '#cdc8bf' }, tree: { dark: .55, sat: .7 }, flags: false,
         detail: { floor: '#e6d5b6', joint: '#3c3e42', ridge: '#cfb184', shop: '#5a4a3a', base: '#d3c6ac' } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
