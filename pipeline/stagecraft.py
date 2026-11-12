@@ -312,14 +312,14 @@ def mini_frame(v, city, scale, M=MINI, landmark=None):
 
 
 def mini_drift(keys, M=MINI):
-    """keys [(t, v, rate[, fixed])] in time order (rate: the orbit's degrees a second there, None for the film's; fixed: a key that
-    stays as it is, a beam follow's): where the camera would stand still from one key to the next (under M['still'] frames a
+    """keys [(t, v, rate[, fixed])] in time order (rate: the orbit's degrees a second there, None for the film's, 0 for a key that
+    stays as it is; fixed: such a key too, a beam follow's): where the camera would stand still from one key to the next (under M['still'] frames a
     second), the later key turned round its target and pushed in by the time between, the turn carried on through a run of such
     keys; the turn goes the way the run turns itself, else the way the next real move turns (else the last one did, else
     alternately), so the drift flows into the move. Returns the new values in the same order."""
     out = [list(k[1]) for k in keys]
     if len(keys) < 2: return out
-    fx = [len(k) > 3 and bool(k[3]) for k in keys]
+    fx = [(len(k) > 3 and bool(k[3])) or k[2] == 0 for k in keys]
     still = [not fx[i + 1] and frames_of(keys[i][1], keys[i + 1][1]) / max(keys[i + 1][0] - keys[i][0], 1e-3) < M['still'] for i in range(len(keys) - 1)]
     turn = [keys[i + 1][1][3] - keys[i][1][3] for i in range(len(keys) - 1)]
     run, off, dk, sign = 0, 0.0, 1.0, 1
