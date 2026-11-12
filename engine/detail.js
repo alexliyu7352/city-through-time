@@ -139,14 +139,14 @@ export const SHAPES = { window: () => arched(), door: () => arched(.66), pane: (
   mast: () => new THREE.CylinderGeometry(.5, .5, 1, 5).translate(0, .5, 0), sail: () => new THREE.PlaneGeometry(1, 1).translate(0, .5, 0).rotateY(Math.PI / 2),
   cabin: () => new THREE.CylinderGeometry(.5, .5, 1, 8, 1, false, 0, Math.PI).rotateZ(Math.PI / 2),   // (its arch over the top, along x)
   cornice: box, base: box, post: box, beam: box, course: box, coping: capGeometry, ridgeEnd: hornGeometry,
-  joint: box, gableZ: () => gableZGeometry(), hip: () => hipGeometry(), lean: () => leanGeometry(), upper: box, shop: () => SHAPES.pane(), pent: box,
+  tuft: () => new THREE.IcosahedronGeometry(.5, 1).scale(1, .55, 1), joint: box, gableZ: () => gableZGeometry(), hip: () => hipGeometry(), lean: () => leanGeometry(), upper: box, shop: () => SHAPES.pane(), pent: box,
   lattice: () => SHAPES.pane(), leaf: () => SHAPES.pane(), hallroof: capGeometry, paving: box, patch: box, arcade: box, eaveslab: box,
   well: () => new THREE.CylinderGeometry(.5, .5, 1, 10).translate(0, .5, 0),
   tile: () => new THREE.BoxGeometry(1, 1, 1), verge: () => new THREE.BoxGeometry(1, 1, 1), eave: () => new THREE.BoxGeometry(1, 1, 1), ridge: () => new THREE.BoxGeometry(1, 1, 1) };   // (a row of tiles: x down the slope, y out of it, centred)
 // which kinds cast a shadow (a flat opening or a thin course does not: it would only darken itself)
-export const SHADOW = { eave: true, ridge: true, cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true, hallroof: true, gableZ: true, hip: true, lean: true, upper: true, pent: true, arcade: true, eaveslab: true, well: true, crown: true, cone: true, trunk: true, pole: true, flag: true, hull: true, sail: true, cabin: true };
+export const SHADOW = { eave: true, ridge: true, cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true, hallroof: true, gableZ: true, tuft: true, hip: true, lean: true, upper: true, pent: true, arcade: true, eaveslab: true, well: true, crown: true, cone: true, trunk: true, pole: true, flag: true, hull: true, sail: true, cabin: true };
 
-export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null } = {}) {
+export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null, tiles = 1, tufts = false } = {}) {   // (tiles: the tile rows' relief, times; tufts: moss at the walls' feet: a clay model's)
   const ST = STYLES[style] || STYLES.roman, M = scale, V = scale * hex;   // M: a metre across; V: a metre up, as drawn
   const R = prims.map((p, i) => ({ t: p[0], x: p[1], z: p[2], rot: p[3], y0: p[4], a: p[5], b: p[6], c: p[7], d: p[8], e: p[9], rank: p[10], part: p[11], g: p[12],
     gx: p[13] || 0, gz: p[14] || 0, bx: p[15] ?? p[1], bz: p[16] ?? p[2], i }));
@@ -294,7 +294,7 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
       const place = (kind, lz, w, t, k) => { const lx = side * (run / 2 + nR * t / 2), ly = (r.c - drop) / 2 + nU * t / 2, [X, Z] = world(r, lx, lz);
         put(kind, r, X, r.y0 + ly + shear(r, X, Z), Z, -r.rot, L, t, w, 0, k, -side * al); };
       const n = Math.floor((r.b - 2 * T.verge.w * M) / (T.every * M));
-      for (let i = 0; i < n; i++) place('tile', -r.b / 2 + T.verge.w * M + (r.b - 2 * T.verge.w * M) * (i + .5) / n, T.w * M, T.t * M, 1);
+      for (let i = 0; i < n; i++) place('tile', -r.b / 2 + T.verge.w * M + (r.b - 2 * T.verge.w * M) * (i + .5) / n, T.w * M, T.t * M * tiles, 1);
       for (const e of [-1, 1]) place('verge', e * (r.b / 2 - T.verge.w * M / 2), T.verge.w * M, T.verge.t * M, 1);
     }
   }
@@ -311,7 +311,7 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
         const fm = Math.abs(s) <= wt / 2 ? 1 : Math.max(0, (F.w / 2 - Math.abs(s)) / Math.max(1e-9, (F.w - wt) / 2)); if (fm < .08) return;
         const fc = fm / 2, across = F.half - fc * run + nO * t / 2, lx = F.nx ? F.nx * across : -F.nz * s, lz = F.nz ? F.nz * across : F.nx * s, [X, Z] = world(r, lx, lz);
         put(kind, r, X, r.y0 + fc * r.c + nU * t / 2 + shear(r, X, Z), Z, F.phi, fm * L, w, t, th, 1, Math.PI / 2); };
-      for (let i = 0; i < n; i++) row('tile', -F.w / 2 + F.w * (i + .5) / n, T.w * M, T.t * M);
+      for (let i = 0; i < n; i++) row('tile', -F.w / 2 + F.w * (i + .5) / n, T.w * M, T.t * M * tiles);
     }
   }
   if (ST.eaves || ST.ridge) for (const r of R) {   // a gable's eaves carried out and its ridge on top (ST.eaves, ST.ridge)
@@ -489,6 +489,11 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
         }
       }
     }
+    if (tufts) for (const b of bodies) {   // moss in tufts along each open face's foot (a clay model's)
+      const y0 = floor(b);
+      for (let f = 0; f < 4; f++) { const F = faceOf(b, f), [px, pz] = onFace(b, F, 0, 1.2 * M); if (inside(px, y0 + 1 * V, pz, b)) continue;
+        for (let s_ = -F.w / 2 + 1 * M; s_ < F.w / 2 - 1 * M; s_ += (1.6 + 2.4 * hash(b.x + s_, b.z + f)) * M) { if (hash(b.z + s_ * 3, b.x - f) < .35) continue;
+          const sz = (.8 + .9 * hash(s_, b.x)) * M, [X, Z] = onFace(b, F, s_, sz * .3); put('tuft', b, X, y0 + shear(b, X, Z) - .05 * V, Z, hash(X, Z) * 6.28, sz * 1.5, sz * 1.2, sz * 1.2); } } }
     if (ST.court) for (const [k, list] of byBuilding) {   // a court's inside (STYLES court)
       if (list.length < 3) continue;
       const CS = ST.court, X0 = list[0].bx, Z0 = list[0].bz, y = Math.min(...list.map(floor));
@@ -698,7 +703,7 @@ export function detailMeshes(D, cols, o = {}) {
     mesh.geometry.setAttribute('iCtr', new THREE.InstancedBufferAttribute(K.ctr, 2)); mesh.geometry.setAttribute('iRank', new THREE.InstancedBufferAttribute(K.rank, 1));
     if (rise) { mesh.geometry.setAttribute('iBase', new THREE.InstancedBufferAttribute(K.base, 1)); mesh.geometry.setAttribute('iPiv', new THREE.InstancedBufferAttribute(K.piv || new Float32Array(K.n).fill(-1e9), 1));
       mesh.geometry.setAttribute('iW', new THREE.InstancedBufferAttribute(K.src.map(i => rise.w ? rise.w[i] : 3), 1)); }
-    mesh.castShadow = !!SHADOW[root]; mesh.receiveShadow = true; mesh.frustumCulled = false;
+    mesh.castShadow = !!SHADOW[root] || !!(o.shadowAlso && o.shadowAlso.includes(root)); mesh.receiveShadow = true; mesh.frustumCulled = false;
     if (flat) mesh.userData.noAO = true;   // (an ambient occlusion pass draws a scene with its own material, whole: a flat piece faded away there still shaded its roof in stripes; the look leaves these out of it)
     if (mesh.castShadow && (o.pxK || rise)) mesh.customDepthMaterial = fading(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), K.size, o.pxK, flat, K.fade, rise);
     if (o.layer != null) mesh.layers.set(o.layer);
