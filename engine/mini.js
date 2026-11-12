@@ -80,7 +80,7 @@ const PALETTES = {
     parts: { 1: '#e6dcc8', 2: '#cdb38c', 3: '#cbbd9f', 4: '#5a7340', 5: '#4f8aa3', 6: '#2f2620', 7: '#aaa59b', 9: '#a65d45', 10: '#c9b086', 11: '#bcae92' },
     land: LAND_PALETTES.mediterranean,
     glb: { stone: '#e8dfcc', dark: '#2b231d', roof: '#a85b43', sand: '#d2b98c' }, cypress: .3,
-    detail: { window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#8f8a82', coping: '#b0603f', archRing: '#ebe3d2', flags: ['#a3262a', '#6e2a63'], sail: '#efe6d2' },
+    detail: { arcade: '#e3d9c6', ridge: '#8b4a34', patch: '#5e7a3a', window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#8f8a82', coping: '#b0603f', archRing: '#ebe3d2', flags: ['#a3262a', '#6e2a63'], sail: '#efe6d2' },
     faces: { earth: '#c9ad86', brick: '#b8805c', stone: '#ddd3c0', banded: '#e6dbc6' },
   },
   chinese: {
@@ -89,7 +89,7 @@ const PALETTES = {
     parts: { 1: '#e2d5b8', 2: '#bfa070', 3: '#cbbd9f', 4: '#5f7d3c', 5: '#5d8fa8', 6: '#2f2620', 7: '#d8cbaa', 9: '#5d5955', 10: '#c9a978', 11: '#b8a58a' },
     land: LAND_PALETTES.loess,   // the loess plain: wheat, millet, bare earth
     glb: { stone: '#e3d6b8', dark: '#2b231d', roof: '#5f5b56', sand: '#c8a676' }, cypress: .08, tree: { size: .6, keep: .35, dark: .6, sat: .75 },   // (tree: its size, the share of places kept, its lightness)
-    detail: { base: '#97918a', post: '#7a3524', beam: '#4e3b2e', ridgeEnd: '#4f4b47', coping: '#5b5853', archRing: '#8f8b85', column: '#8a2e20', cornice: '#3a3431', ridge: '#a3a6a8', flags: ['#b3262c', '#d9a21b'], sail: '#a8764a' },
+    detail: { lattice: '#5b3526', leaf: '#3e271c', paving: '#76726b', well: '#4f4b46', patch: '#556a2e', base: '#97918a', post: '#7a3524', beam: '#4e3b2e', ridgeEnd: '#4f4b47', coping: '#5b5853', archRing: '#8f8b85', column: '#8a2e20', cornice: '#3a3431', ridge: '#a3a6a8', flags: ['#b3262c', '#d9a21b'], sail: '#a8764a' },
     faces: { earth: '#bfa070', brick: '#8f8b84', stone: '#cac2b3', banded: '#d9cdb6' },
   },
   modern: {
@@ -369,7 +369,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // each period city's detail (engine/detail.js), made the first time it is shown: era id -> a promise of its group
   const DET = prims ? new Map() : null;
   const colsOf = pal => {   // the detail's colours in a palette
-    const dcols = { ...(pal.detail || PALETTES.roman.detail), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.tile), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.verge),
+    const dcols = { ...(pal.detail || PALETTES.roman.detail), hallroof: (x, z) => roofOf(pal, x, z).multiplyScalar(.93), eaveslab: (x, z) => roofOf(pal, x, z).multiplyScalar(.93), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.tile), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.verge),
       eave: (x, z) => roofOf(pal, x, z), ridge: (pal.detail || {}).ridge || '#9a9da0' };   // (the eaves in the roof's own tile; the ridge a lighter grey)   // (a roof's tiles in its own colour, lighter, its gable ridges darker: detail.js FLAT)
     for (const [f, v] of Object.entries(pal.faces || PALETTES.roman.faces)) {   // (a wall's face: its courses a shade darker, a stone wall's bands brick; a gate's parts the wall's)
       dcols['course_' + f] = f === 'banded' ? (pal.faces || PALETTES.roman.faces).brick : new THREE.Color(v).multiplyScalar(FLAT.course);

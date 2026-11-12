@@ -35,14 +35,17 @@ export const STYLES = {
     storey: 3.5, window: { w: 1.0, h: 1.5, every: 3.6, sill: .38, arch: true }, door: { w: 1.5, h: 2.5, arch: true },
     cornice: { h: .38, out: .22 }, base: { h: 1.0, out: .08 }, front: null, ridgeEnds: false, coping: { h: .32, over: .14 },
     wall: 'brick', towerWindows: { w: 1.3, h: 2.1, n: 2 }, tiles: null, halls: null,
-    trees: { court: 2, street: 30, cypress: .5 }, flags: { gate: 4 },   // (a dense town's open ground stays its streets' and yards': no gardens)
+    trees: { court: 2, street: 30, cypress: .5 }, tiles: { every: .9, w: .32, t: .14, verge: { w: .42, t: .3 } }, ridge: { w: .7, h: .5 },
+    court: { arcade: { every: 3.0, out: 2.2, col: .55, h: 3.4, lintel: .55 }, beds: { n: 3, size: [3.2, 1.8] } }, flags: { gate: 4 },   // (a dense town's open ground stays its streets' and yards': no gardens)
   },
   chinese: {
     storey: 3.6, window: null, door: null, cornice: { h: .55, out: .45 }, base: { h: .6, out: .1 },   // (cornice: the eave's dark underside over the wall's top)
     front: { post: .34, every: 2.8, beam: .45 }, ridgeEnds: true, coping: { h: .42, over: .2 },
     wall: 'earth', towerWindows: null, tiles: { every: 1.1, w: .36, t: .16, verge: { w: .46, t: .34 } }, halls: { column: .65, beam: .7 },
     eaves: { out: 1.8, t: .35 }, ridge: { w: 1.1, h: .9 },
-    trees: { court: 2, street: 12, cypress: .1, gardens: { every: 11, share: .15, reach: 70, size: [5, 3] } }, flags: { gate: 6 },
+    trees: { court: 0, street: 12, cypress: .1, gardens: { every: 11, share: .15, reach: 70, size: [5, 3] } }, flags: { gate: 6 },
+    court: { posts: { every: 2.8, out: 1.3, t: .32 }, lattice: { every: 3.0, w: 1.4, h: 1.3, sill: .9, door: [1.7, 2.5] }, hall: { lift: 1.6, over: 1.2, rise: .42 },
+      gate: { w: 4.5, over: 1.0, rise: .5, lift: .9 }, path: 2.4, well: 1.5, patch: [4.5, 3], tree: 6 },
   },
 };
 // eaves: { out, t } a gable roof's eaves carried this far out past the generator's own overhang, this thick, down its slope; ridge:
@@ -53,6 +56,14 @@ export const STYLES = {
 // `reach` metres of a building, each rising with the nearest, its crown size[0] + up to size[1] metres (default 8 + 5); court: trees a court holds (the generator's own counted; on its paving
 // too), street: one every this many metres down each edge of a street 10 m wide or more (0: none), cypress: the share of them
 // tall and narrow }; flags: { gate: flags on a gatehouse, round its edges }, and one on each landmark
+// court: what a court shows, read from a building of three wings or more round a free middle (the colour look's: the generator's
+// records unchanged): the face each wing turns to the middle; the wing with the generator's way in at its foot the gate's (else
+// the smallest), the one farthest across the middle from it the hall's. posts { every, out, t } under the eaves along those faces;
+// lattice { every, w, h, sill, door: [w, h] } windows on them and a door in their middle; hall { lift, over, rise } the hall
+// raised by `lift` m under a roof `over` m wider each way, its rise a share of its depth; gate { w, over, rise, lift } a roofed
+// gate over the way in; path (its width) paved from the gate to the hall; well (its width), patch [along, across] a vegetable
+// patch, tree (a crown's metres): either side of the path; arcade { every, out, col, h, lintel } a colonnade round the court on
+// its ground floor, `out` m deep under a tiled slab; beds { n, size } garden beds round the court's middle
 // a city wall's face (city.yaml walls `face`): the courses it shows, every `every` metres, `h` high: rammed earth's lifts, brick's
 // courses (faint), stone's, a stone wall's bands of brick
 export const WALL_FACES = { earth: { every: 1.1, h: .1 }, brick: { every: .8, h: .07 }, stone: { every: 1.0, h: .06 }, banded: { every: 1.6, h: .32 } };
@@ -100,9 +111,11 @@ export const SHAPES = { window: () => arched(), door: () => arched(.66), pane: (
   mast: () => new THREE.CylinderGeometry(.5, .5, 1, 5).translate(0, .5, 0), sail: () => new THREE.PlaneGeometry(1, 1).translate(0, .5, 0).rotateY(Math.PI / 2),
   cabin: () => new THREE.CylinderGeometry(.5, .5, 1, 8, 1, false, 0, Math.PI).rotateZ(Math.PI / 2),   // (its arch over the top, along x)
   cornice: box, base: box, post: box, beam: box, course: box, coping: capGeometry, ridgeEnd: hornGeometry,
+  lattice: () => SHAPES.pane(), leaf: () => SHAPES.pane(), hallroof: capGeometry, paving: box, patch: box, arcade: box, eaveslab: box,
+  well: () => new THREE.CylinderGeometry(.5, .5, 1, 10).translate(0, .5, 0),
   tile: () => new THREE.BoxGeometry(1, 1, 1), verge: () => new THREE.BoxGeometry(1, 1, 1), eave: () => new THREE.BoxGeometry(1, 1, 1), ridge: () => new THREE.BoxGeometry(1, 1, 1) };   // (a row of tiles: x down the slope, y out of it, centred)
 // which kinds cast a shadow (a flat opening or a thin course does not: it would only darken itself)
-export const SHADOW = { eave: true, ridge: true, cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true, crown: true, cone: true, trunk: true, pole: true, flag: true, hull: true, sail: true, cabin: true };
+export const SHADOW = { eave: true, ridge: true, cornice: true, post: true, beam: true, coping: true, ridgeEnd: true, verge: true, merlon: true, parapet: true, column: true, hallroof: true, arcade: true, eaveslab: true, well: true, crown: true, cone: true, trunk: true, pole: true, flag: true, hull: true, sail: true, cabin: true };
 
 export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null } = {}) {
   const ST = STYLES[style] || STYLES.roman, M = scale, V = scale * hex;   // M: a metre across; V: a metre up, as drawn
@@ -394,6 +407,56 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
         }
       }
     }
+    if (ST.court) for (const [k, list] of byBuilding) {   // a court's inside (STYLES court)
+      if (list.length < 3) continue;
+      const CS = ST.court, X0 = list[0].bx, Z0 = list[0].bz, y = Math.min(...list.map(floor));
+      if (inside(X0, y + 1 * V, Z0, null)) continue;   // (its middle free)
+      const room = (ux, uz) => { let r = 0; while (r < 30 * M && !inside(X0 + ux * (r + .5 * M), y + 1 * V, Z0 + uz * (r + .5 * M), null)) r += .5 * M; return r; };
+      const W = list.map(b => { const [lx, lz] = local(b, X0, Z0), f = Math.abs(lx) / b.a > Math.abs(lz) / b.b ? (lx > 0 ? 0 : 1) : (lz > 0 ? 2 : 3), F = faceOf(b, f);
+        return { b, F, gap: (F.nx ? Math.abs(lx) : Math.abs(lz)) - F.half }; });   // (gap: from the face to the middle)
+      const gq = (darks.get(k) || []).filter(q => (q.y0 - y) / V < .6).sort((p, q) => q.a * q.b - p.a * p.b)[0];
+      const away = (w, q) => { const [lx, lz] = local(w.b, q.x, q.z); return Math.max(Math.abs(lx) - w.b.a / 2, Math.abs(lz) - w.b.b / 2); };
+      const gate = gq ? W.reduce((m, w) => away(w, gq) < away(m, gq) ? w : m) : W.reduce((m, w) => w.b.a * w.b.b < m.b.a * m.b.b ? w : m);
+      const hall = W.filter(w => w !== gate).reduce((m, w) => Math.hypot(w.b.x - gate.b.x, w.b.z - gate.b.z) > Math.hypot(m.b.x - gate.b.x, m.b.z - gate.b.z) ? w : m, W.find(w => w !== gate));
+      for (const w of W) {
+        const { b, F } = w, y0 = floor(b), H = top(b) - y0;
+        if (CS.posts && w.gap > (CS.posts.out + 1) * M) { const P = CS.posts, n = Math.max(1, Math.round(F.w / (P.every * M)));
+          for (let i = 0; i <= n; i++) { const [X, Z] = onFace(b, F, (i / n - .5) * (F.w - P.t * M), P.out * M); if (!inside(X, y0 + 1 * V, Z, b)) put('post', b, X, y0 + shear(b, X, Z), Z, F.phi, P.t * M, H * .9, P.t * M); }
+          const [X, Z] = onFace(b, F, 0, P.out * M); put('beam', b, X, y0 + H * .9 - .45 * V + shear(b, X, Z), Z, F.phi, F.w, .45 * V, P.t * M * 1.3); }
+        if (CS.lattice && w.gap > 1.5 * M) { const L_ = CS.lattice, n = Math.max(1, Math.floor(F.w / (L_.every * M))), mid = Math.floor(n / 2);
+          for (let i = 0; i < n; i++) { const s_ = (i + .5 - n / 2) * L_.every * M, [X, Z] = onFace(b, F, s_, .06 * M); if (inside(X, y0 + 1 * V, Z, b)) continue;
+            if (i === mid) put('leaf', b, X, y0 + shear(b, X, Z), Z, F.phi, L_.door[0] * M, L_.door[1] * V, 1);
+            else put('lattice', b, X, y0 + L_.sill * V + shear(b, X, Z), Z, F.phi, L_.w * M, L_.h * V, 1); } }
+        if (CS.arcade && w.gap > (CS.arcade.out + 1.5) * M) { const A_ = CS.arcade, h = A_.h * V, n = Math.max(1, Math.round(F.w / (A_.every * M)));
+          for (let i = 0; i <= n; i++) { const [X, Z] = onFace(b, F, (i / n - .5) * (F.w - A_.col * M), A_.out * M); if (!inside(X, y0 + 1 * V, Z, b)) put('arcade', b, X, y0 + shear(b, X, Z), Z, F.phi, A_.col * M, h, A_.col * M); }
+          const [X, Z] = onFace(b, F, 0, A_.out * M / 2); put('arcade', b, X, y0 + h + shear(b, X, Z), Z, F.phi, F.w, A_.lintel * V, A_.out * M + A_.col * M);
+          put('eaveslab', b, X, y0 + h + A_.lintel * V + shear(b, X, Z), Z, F.phi, F.w, .3 * V, A_.out * M + A_.col * M + .4 * M); }
+      }
+      const raise = (b, X, Z, len, dep, along, o) => { const phi = -b.rot + (along ? 0 : Math.PI / 2), y1 = top(b) + o.lift * V + shear(b, X, Z);
+        put('beam', b, X, top(b) + shear(b, X, Z), Z, phi, len * .96, o.lift * V, dep * .86);
+        put('hallroof', b, X, y1, Z, phi, len + 2 * o.over * M, dep * o.rise * hex, dep + 2 * o.over * M); };
+      if (CS.hall && hall) {   // (a second, higher roof over the hall's own ridge, on a timber storey: the hall the court's tallest, its tiles kept)
+        const b = hall.b, along = b.a >= b.b, [X, Z] = world(b, 0, 0), len = along ? b.a : b.b, dep = along ? b.b : b.a, phi = -b.rot + (along ? 0 : Math.PI / 2);
+        const rf = R.find(r => r.t === 1 && tiled(r) && Math.hypot(r.x - b.x, r.z - b.z) < .5 * Math.min(b.a, b.b)), apex = rf ? rf.y0 + rf.c : top(b) + .3 * dep * hex, rise = apex - top(b), o = CS.hall;
+        put('beam', b, X, apex - .35 * rise + shear(b, X, Z), Z, phi, len * .62, .35 * rise + o.lift * V, dep * .42);
+        put('hallroof', b, X, apex + o.lift * V + shear(b, X, Z), Z, phi, len * .72 + 2 * o.over * M, rise * o.rise / .42, dep * .58 + 2 * o.over * M); }
+      if (CS.gate) { const b = gate.b, along = b.a >= b.b, [lx, lz] = gq ? local(b, gq.x, gq.z) : [0, 0], [X, Z] = world(b, along ? lx : 0, along ? 0 : lz);
+        raise(b, X, Z, CS.gate.w * M, along ? b.b : b.a, along, CS.gate); }
+      if (hall && hall !== gate && (CS.path || CS.well || CS.patch)) {
+        const [ax, az] = onFace(gate.b, gate.F, 0, 0), [hx, hz] = onFace(hall.b, hall.F, 0, CS.posts ? CS.posts.out * M : 0), dx = hx - ax, dz = hz - az, Ln = Math.hypot(dx, dz), ux = dx / Ln, uz = dz / Ln, phi = Math.atan2(-dz, dx);
+        const rv = Math.min(room(-uz, ux), room(uz, -ux));
+        if (CS.path) put('paving', gate.b, (ax + hx) / 2, y + shear(gate.b, (ax + hx) / 2, (az + hz) / 2), (az + hz) / 2, phi, Ln, .12 * V, CS.path * M);
+        if (rv > 2.5 * M) {
+          const at = (fv, fu) => [X0 - uz * rv * fv + ux * Ln * fu, Z0 + ux * rv * fv + uz * Ln * fu];
+          if (CS.well) { const [X, Z] = at(.5, .15), w_ = Math.min(CS.well * M, rv * .45); put('well', gate.b, X, y + shear(gate.b, X, Z), Z, 0, w_, .9 * V, w_); }
+          if (CS.patch) { const [X, Z] = at(-.5, -.1); put('patch', gate.b, X, y + shear(gate.b, X, Z), Z, phi, Math.min(CS.patch[0] * M, Ln * .4), .25 * V, Math.min(CS.patch[1] * M, rv * .6)); }
+          if (CS.tree) { const [X, Z] = at(.55, -.25); tree(hall.b, X, Z, Math.min(CS.tree * M, rv * 1.1)); }
+        }
+      }
+      if (CS.beds) { const rr = Math.min(room(1, 0), room(-1, 0), room(0, 1), room(0, -1));
+        if (rr > 2.5 * M) for (let i = 0; i < CS.beds.n; i++) { const th = list[0].rot + i * 2 * Math.PI / CS.beds.n + .5, X = X0 + Math.cos(th) * rr * .5, Z = Z0 + Math.sin(th) * rr * .5;
+          put('patch', list[0], X, y + shear(list[0], X, Z), Z, -th, Math.min(CS.beds.size[0] * M, rr * .5), .35 * V, Math.min(CS.beds.size[1] * M, rr * .3)); } }
+    }
     if (TR.street) for (const r of R) {   // (a street: a road piece, citygen strip; its trees down its edges, the way between them clear)
       if (r.t !== 0 || r.d !== 1 || r.b < 10 * M || r.a < TR.street * M * .6) continue;
       const n = Math.max(1, Math.floor(r.a / (TR.street * M)));
@@ -540,7 +603,7 @@ export function detailMeshes(D, cols, o = {}) {
   for (const [kind, K] of Object.entries(D.kinds)) {
     const root = kind.split('_')[0], colK = cols[kind] || cols[root];   // (a tier of a kind, crown_g1: the kind's colour)
     if (!colK) continue;   // (a kind by a wall's face: course_brick, merlon_earth ..: its shape and its shadow the root's)
-    const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .92, metalness: 0, side: ['window', 'door', 'spandrel', 'archRing', 'flag', 'sail'].includes(root) ? THREE.DoubleSide : THREE.FrontSide });   // (a flat piece seen from either side)
+    const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .92, metalness: 0, side: ['window', 'door', 'spandrel', 'archRing', 'flag', 'sail', 'lattice', 'leaf'].includes(root) ? THREE.DoubleSide : THREE.FrontSide });   // (a flat piece seen from either side)
     const flat = FLAT[root] && !kind.endsWith('_banded') ? FLAT[root] : 0;   // (a stone wall's bands of brick are its face's own colour: they fade by their size)
     const rise = o.rise && K.base ? o.rise : null;
     const mesh = new THREE.InstancedMesh((SHAPES[kind] || SHAPES[root])(), o.pxK || rise ? fading(mat, K.size, o.pxK, flat, K.fade, rise) : mat, K.n);
