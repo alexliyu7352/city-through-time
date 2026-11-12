@@ -80,7 +80,7 @@ const PALETTES = {
     parts: { 1: '#e6dcc8', 2: '#cdb38c', 3: '#cbbd9f', 4: '#5a7340', 5: '#4f8aa3', 6: '#2f2620', 7: '#aaa59b', 9: '#a65d45', 10: '#c9b086', 11: '#bcae92' },
     land: LAND_PALETTES.mediterranean,
     glb: { stone: '#e8dfcc', dark: '#2b231d', roof: '#a85b43', sand: '#d2b98c' }, cypress: .3,
-    detail: { arcade: '#e3d9c6', ridge: '#8b4a34', patch: '#5e7a3a', window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#8f8a82', coping: '#b0603f', archRing: '#ebe3d2', flags: ['#a3262a', '#6e2a63'], sail: '#efe6d2' },
+    detail: { shop: '#3b2b21', arcade: '#e3d9c6', ridge: '#8b4a34', patch: '#5e7a3a', window: '#33281f', door: '#4b3323', cornice: '#f4eee2', base: '#8f8a82', coping: '#b0603f', archRing: '#ebe3d2', flags: ['#a3262a', '#6e2a63'], sail: '#efe6d2' },
     faces: { earth: '#c9ad86', brick: '#b8805c', stone: '#ddd3c0', banded: '#e6dbc6' },
   },
   chinese: {
@@ -369,7 +369,9 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   // each period city's detail (engine/detail.js), made the first time it is shown: era id -> a promise of its group
   const DET = prims ? new Map() : null;
   const colsOf = pal => {   // the detail's colours in a palette
-    const dcols = { ...(pal.detail || PALETTES.roman.detail), hallroof: (x, z) => roofOf(pal, x, z).multiplyScalar(.93), eaveslab: (x, z) => roofOf(pal, x, z).multiplyScalar(.93), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.tile), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.verge),
+    const dcols = { ...(pal.detail || PALETTES.roman.detail), hallroof: (x, z) => roofOf(pal, x, z).multiplyScalar(.93), eaveslab: (x, z) => roofOf(pal, x, z).multiplyScalar(.93),
+      hip: (x, z) => roofOf(pal, x, z), lean: (x, z) => roofOf(pal, x, z).multiplyScalar(.96), pent: (x, z) => roofOf(pal, x, z).multiplyScalar(.9),
+      upper: (x, z) => new THREE.Color(pal.walls[Math.floor(hash(x * 3.7, z * 1.3) * pal.walls.length) % pal.walls.length]), tile: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.tile), verge: (x, z) => roofOf(pal, x, z).multiplyScalar(FLAT.verge),
       eave: (x, z) => roofOf(pal, x, z), ridge: (pal.detail || {}).ridge || '#9a9da0' };   // (the eaves in the roof's own tile; the ridge a lighter grey)   // (a roof's tiles in its own colour, lighter, its gable ridges darker: detail.js FLAT)
     for (const [f, v] of Object.entries(pal.faces || PALETTES.roman.faces)) {   // (a wall's face: its courses a shade darker, a stone wall's bands brick; a gate's parts the wall's)
       dcols['course_' + f] = f === 'banded' ? (pal.faces || PALETTES.roman.faces).brick : new THREE.Color(v).multiplyScalar(FLAT.course);
