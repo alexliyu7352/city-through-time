@@ -936,7 +936,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
         float up = 1400. * k, drift = 900. * pow(smoothstep(.22, 1., k), 1.6);
         vec3 p = position + vec3(drift + 40. * sin(aSeed.x * 40. + uT * .3) * k, up, .3 * drift + 40. * cos(aSeed.y * 40. + uT * .25) * k) * uM;
         vec4 mv = modelViewMatrix * vec4(p, 1.); gl_Position = projectionMatrix * mv;
-        vA = age > k * life ? uA : 0.;   // (a column grows from its fire: no puff older than the fire under it)
+        vA = age > k * life * .3 ? uA : 0.;   // (a column grows from its fire, its full height in about 4 s: no puff older than that)
         gl_PointSize = vA > .01 ? clamp(px(mv, mix(160., 800., pow(k, .8)) * uM), 1.5, 512.) : 0.; }`,
       `uniform float uA; varying float vK, vA, vS;
       void main(){ vec2 c = gl_PointCoord - .5; float r = length(c) * 2.;
