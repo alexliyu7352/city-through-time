@@ -340,9 +340,9 @@ export function makeTally(opts = {}) {
 // record: [type, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx, gz, bx, bz, shape]; aData = [year, part, rank, 3 + loss]; aBase = g (the rise pivot)
 // lost: per record 0, or the number of the loss that takes it (compile lost_parts; the era's own ring, studio.js uLoss*)
 export function buildEra(prims, year = 0, lost = null) {
-  const G = new Geo();
+  const G = new Geo(), Y0 = [];   // Y0: each vertex's record's eave, a roof's y0 (aY0: the colour look's height scale keeps a roof's rise)
   for (const [i, p] of prims.entries()) {
-    const [t, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx = 0, gz = 0, bx = cx, bz = cz] = p;
+    const [t, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, gx = 0, gz = 0, bx = cx, bz = cz] = p; const n0_ = G.pos.length / 3;
     const data = [t === 0 && d === 1 ? 10 + rot : t === 0 && d === 2 ? 30 + rot : year, part, rank, 3 + (lost ? lost[i] : 0)];   // a road piece carries its direction (the engine draws ruts along it); an asphalt one 30 + it (smooth, no ruts)
     G.gx = gx; G.gz = gz;   // a piece laid along a slope (citygen: walls, corridors, paving)
     G.cc = [bx, bz];        // the building it belongs to: rises and falls as one
@@ -353,6 +353,7 @@ export function buildEra(prims, year = 0, lost = null) {
     else if (t === 4) G.cone(cx, y0, cz, a, c, 10, data, g);
     else if (t === 5) G.revolve(cx, y0, cz, a / 2, b / 2, c, p[17].p || p[17], d, rot, data, g, e, !!p[17].inset);   // a, b: width, depth; d: sides; e: the share of a turn (0: whole); p[17]: the section ({p, inset: 1}: measured in from the oval)
     else if (t === 6) G.prism(cx, y0, cz, p[17], e ? b : c, d, e, rot, data, g);      // a, b: width, depth (laid along: b its length); c: height; d: top scale; e: laid along; p[17]: the rings
+    for (let k = n0_; k < G.pos.length / 3; k++) Y0.push(t === 1 ? y0 : -1e9);
   }
-  return G.geometry();
+  const geo = G.geometry(); geo.setAttribute('aY0', new THREE.Float32BufferAttribute(Y0, 1)); return geo;
 }

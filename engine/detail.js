@@ -36,7 +36,7 @@ export const STYLES = {
     cornice: { h: .38, out: .22 }, base: { h: 1.0, out: .08 }, front: null, ridgeEnds: false, coping: { h: .32, over: .14 },
     wall: 'brick', towerWindows: { w: 1.3, h: 2.1, n: 2 }, tiles: null, halls: null,
     trees: { court: 2, street: 30, cypress: .5 }, tiles: { every: .9, w: .32, t: .14, verge: { w: .42, t: .3 } }, ridge: { w: .7, h: .5 },
-    court: { arcade: { every: 3.0, out: 2.2, col: .55, h: 3.4, lintel: .55 }, beds: { n: 3, size: [3.2, 1.8] } },
+    court: { arcade: { every: 3.0, out: 2.2, col: .55, h: 3.4, lintel: .55 }, beds: { n: 3, size: [3.2, 1.8] } }, paving: { every: 3.2, w: .14 },
     vary: { front: [6, 12], deep: 9, raise: [.45, .4], most: .4, storey: 3.2, gable: .45, over: .45, rise: .27,
       shops: { w: 2.3, h: 2.2, every: 3.4 }, pent: { out: 1.3, t: .22, tilt: .3 } }, flags: { gate: 4 },   // (a dense town's open ground stays its streets' and yards': no gardens)
   },
@@ -139,7 +139,7 @@ export const SHAPES = { window: () => arched(), door: () => arched(.66), pane: (
   mast: () => new THREE.CylinderGeometry(.5, .5, 1, 5).translate(0, .5, 0), sail: () => new THREE.PlaneGeometry(1, 1).translate(0, .5, 0).rotateY(Math.PI / 2),
   cabin: () => new THREE.CylinderGeometry(.5, .5, 1, 8, 1, false, 0, Math.PI).rotateZ(Math.PI / 2),   // (its arch over the top, along x)
   cornice: box, base: box, post: box, beam: box, course: box, coping: capGeometry, ridgeEnd: hornGeometry,
-  gableZ: () => gableZGeometry(), hip: () => hipGeometry(), lean: () => leanGeometry(), upper: box, shop: () => SHAPES.pane(), pent: box,
+  joint: box, gableZ: () => gableZGeometry(), hip: () => hipGeometry(), lean: () => leanGeometry(), upper: box, shop: () => SHAPES.pane(), pent: box,
   lattice: () => SHAPES.pane(), leaf: () => SHAPES.pane(), hallroof: capGeometry, paving: box, patch: box, arcade: box, eaveslab: box,
   well: () => new THREE.CylinderGeometry(.5, .5, 1, 10).translate(0, .5, 0),
   tile: () => new THREE.BoxGeometry(1, 1, 1), verge: () => new THREE.BoxGeometry(1, 1, 1), eave: () => new THREE.BoxGeometry(1, 1, 1), ridge: () => new THREE.BoxGeometry(1, 1, 1) };   // (a row of tiles: x down the slope, y out of it, centred)
@@ -150,7 +150,7 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
   const ST = STYLES[style] || STYLES.roman, M = scale, V = scale * hex;   // M: a metre across; V: a metre up, as drawn
   const R = prims.map((p, i) => ({ t: p[0], x: p[1], z: p[2], rot: p[3], y0: p[4], a: p[5], b: p[6], c: p[7], d: p[8], e: p[9], rank: p[10], part: p[11], g: p[12],
     gx: p[13] || 0, gz: p[14] || 0, bx: p[15] ?? p[1], bz: p[16] ?? p[2], i }));
-  const out = {}, put = (kind, r, x, y, z, phi, sx, sy, sz, tilt = 0, k = 1, roll = 0) => (out[kind] ||= []).push([x, y, z, phi, sx, sy, sz, tilt, k, r.bx, r.bz, r.rank, roll, r.g ?? r.y0, r.i]);
+  const out = {}, put = (kind, r, x, y, z, phi, sx, sy, sz, tilt = 0, k = 1, roll = 0) => (out[kind] ||= []).push([x, y, z, phi, sx, sy, sz, tilt, k, r.bx, r.bz, r.rank, roll, r.g ?? r.y0, r.i, r.t === 1 ? r.y0 : -1e9]);   // (last: a roof's eave, the piece's pivot in a close shot's height scale)
   const local = (r, X, Z) => { const c = Math.cos(r.rot), s = Math.sin(r.rot), dx = X - r.x, dz = Z - r.z; return [dx * c + dz * s, -dx * s + dz * c]; };
   const world = (r, lx, lz) => { const c = Math.cos(r.rot), s = Math.sin(r.rot); return [r.x + lx * c - lz * s, r.z + lx * s + lz * c]; };
   const shear = (r, X, Z) => r.gx * (X - r.x) + r.gz * (Z - r.z);
@@ -189,23 +189,33 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
       const y0 = floor(b), Hm = (top(b) - y0) / V, most = Math.round(VY.most * Hm / VY.storey); if (most < 1) continue;
       for (let f = 0; f < 4; f++) {
         const F = faceOf(b, f), [px, pz] = onFace(b, F, 0, 1.2 * M); if (F.w < 8 * M || inside(px, y0 + 1 * V, pz, b)) continue;
-        const n = Math.max(1, Math.round(F.w / ((VY.front[0] + (VY.front[1] - VY.front[0]) * hash(b.x * 2.9 + f, b.z)) * M))), w = F.w / n, deep = Math.min(2 * F.half, VY.deep * M);
+        const deep = Math.min(2 * F.half, VY.deep * M), run = F.w - 2 * deep; if (run < VY.front[0] * M) continue;   // (the corners left to the body: a front from the next face would cross it)
+        const n = Math.max(1, Math.round(run / ((VY.front[0] + (VY.front[1] - VY.front[0]) * hash(b.x * 2.9 + f, b.z)) * M))), w = run / n;
         for (let i = 0; i < n; i++) {
           const s_ = (i + .5 - n / 2) * w, hh = hash(b.x * 7.1 + s_ * 13.3, b.z * 3.7 + f), up = hh < VY.raise[0] ? 0 : hh < VY.raise[0] + VY.raise[1] ? 1 : 2, st = Math.min(up, most);
           if (!st) continue;
           const [X, Z] = onFace(b, F, s_, -deep / 2), along = F.nx !== 0;   // (a face across x runs along z)
           const A = along ? deep : w - .1 * M, Bz = along ? w - .1 * M : deep, c = st * sv, yb = top(b);
-          const body = { t: 0, part: FAB, d: 0, x: X, z: Z, rot: b.rot, y0: yb, a: A, b: Bz, c, e: 0, rank: b.rank, g: yb, gx: b.gx, gz: b.gz, bx: X, bz: Z, i: b.i, syn: true };
+          const body = { t: 0, part: FAB, d: 0, x: X, z: Z, rot: b.rot, y0: yb, a: A, b: Bz, c, e: 0, rank: b.rank, g: b.g, gx: b.gx, gz: b.gz, bx: X, bz: Z, i: b.i, syn: true };
           add(body); put('upper', body, X, yb - .05 * V + shear(b, X, Z), Z, -b.rot, A, c + .05 * V, Bz);
           const toStreet = hash(X * 1.3, Z * 5.1) < VY.gable, ridgeX = toStreet ? !along : along;   // (the ridge across the face: its gable to the street)
           const ra = ridgeX ? Bz : A, rb = ridgeX ? A : Bz, rot = b.rot + (ridgeX ? Math.PI / 2 : 0), rc = ra * VY.rise * hex, od = VY.over * M, drop = od * rc / (ra / 2);
-          const roof = { t: 1, part: ROOF, d: od, x: X, z: Z, rot, y0: yb + c, a: ra, b: rb, c: rc, e: 0, rank: b.rank, g: yb, gx: b.gx, gz: b.gz, bx: X, bz: Z, i: b.i, syn: true };
+          const roof = { t: 1, part: ROOF, d: od, x: X, z: Z, rot, y0: yb + c, a: ra, b: rb, c: rc, e: 0, rank: b.rank, g: b.g, gx: b.gx, gz: b.gz, bx: X, bz: Z, i: b.i, syn: true };
           R.push(roof); put('gableZ', roof, X, yb + c - drop + shear(b, X, Z), Z, -rot, ra + 2 * od, rc + drop, rb + .3 * M);
         }
       }
     }
   }
 
+  // a landmark's open ground paved in large slabs (ST.paving: their joints every `every` m, `w` m wide): on a low, wide platform,
+  // and inside a court's ring (a prism piece: its walls stand over the joints under them)
+  if (ST.paving) for (const r of R) {
+    const low = r.t === 0 && (top(r) - floor(r)) / V <= 1.5, ring = r.t === 6;   // (a low platform, paved on top; a court's ring, paved inside on its ground)
+    if (r.part !== LMK || r.d === 1 || !(low || ring) || r.a * r.b < 600 * M * M) continue;
+    const P_ = ST.paving, e_ = P_.every * M, y = (low ? top(r) : floor(r)) + .02 * V;
+    for (let s = -r.a / 2 + e_; s < r.a / 2; s += e_) { const [X, Z] = world(r, s, 0); put('joint', r, X, y + shear(r, X, Z), Z, -r.rot + Math.PI / 2, r.b, .03 * V, P_.w * M); }
+    for (let s = -r.b / 2 + e_; s < r.b / 2; s += e_) { const [X, Z] = world(r, 0, s); put('joint', r, X, y + shear(r, X, Z), Z, -r.rot, r.a, .03 * V, P_.w * M); }
+  }
   // ---------------------------------------------------------------- houses: the generator's bodies (a house's, a wing's, a hall's)
   const bodies = R.filter(r => r.t === 0 && r.part === FAB && r.d !== 1 && Math.min(r.a, r.b) >= 2.5 * M && (top(r) - floor(r)) / V >= 2.2);
   const byBuilding = new Map(); for (const b of bodies) (byBuilding.get(bkey(b)) || byBuilding.set(bkey(b), []).get(bkey(b))).push(b);
@@ -571,12 +581,12 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null 
     ...Object.fromEntries(Object.entries(WALL_FACES).flatMap(([k, F]) => [['course_' + k, F.every * V], ['spandrel_' + k, 4 * M], ['parapet_' + k, .9 * V], ['merlon_' + k, 1.4 * M]])) };
   let count = 0;
   for (const [kind, L] of Object.entries(out)) {
-    const n = L.length, m = new Float32Array(n * 16), k = new Float32Array(n), ctr = new Float32Array(n * 2), rank = new Float32Array(n), base = new Float32Array(n), src = new Float32Array(n);
-    L.forEach(([x, y, z, phi, sx, sy, sz, tilt, kk, bx, bz, rk, roll, b0, si], i) => {
+    const n = L.length, m = new Float32Array(n * 16), k = new Float32Array(n), ctr = new Float32Array(n * 2), rank = new Float32Array(n), base = new Float32Array(n), src = new Float32Array(n), piv = new Float32Array(n);
+    L.forEach(([x, y, z, phi, sx, sy, sz, tilt, kk, bx, bz, rk, roll, b0, si, pv], i) => {
       e.set(tilt, phi, roll); q.setFromEuler(e); m4.compose(p.set(x, y, z), q, sc.set(sx, sy, sz)).toArray(m, i * 16);
-      k[i] = kk; ctr[i * 2] = bx; ctr[i * 2 + 1] = bz; rank[i] = rk; base[i] = b0; src[i] = si; });
+      k[i] = kk; ctr[i * 2] = bx; ctr[i * 2 + 1] = bz; rank[i] = rk; base[i] = b0; src[i] = si; piv[i] = pv ?? -1e9; });
     const root = kind.split('_')[0];
-    kinds[kind] = { n, m, k, ctr, rank, base, src, size: SIZE[kind] || SIZE[root] || M, fade: kind === 'tile' ? FADE_ROWS : kind.endsWith('_g1') ? FADE_GARDEN[0] : kind.endsWith('_g2') ? FADE_GARDEN[1] : FADE_PX }; count += n;
+    kinds[kind] = { n, m, k, ctr, rank, base, src, piv, size: SIZE[kind] || SIZE[root] || M, fade: kind === 'tile' ? FADE_ROWS : kind.endsWith('_g1') ? FADE_GARDEN[0] : kind.endsWith('_g2') ? FADE_GARDEN[1] : FADE_PX }; count += n;
   }
   return { kinds, count, treeOK };
 }
@@ -654,11 +664,13 @@ const FADE_GLSL = /* glsl */`
 const RISE_PIECE = /* glsl */`
   { float ry_ = eraRiseK();
     if (ry_ < .002) transformed = vec3(0.);
-    else { vec4 w_ = instanceMatrix * vec4(transformed, 1.); w_.y = iBase + (w_.y - iBase) * ry_; transformed = (inverse(instanceMatrix) * w_).xyz; } }`;
+    else { vec4 w_ = instanceMatrix * vec4(transformed, 1.); w_.y = iBase + (w_.y - iBase) * ry_;
+      if (uHScale < .999) w_.y = iPiv > -1e8 ? w_.y + (uHScale - 1.) * max(iPiv - iBase, 0.) : iBase + (w_.y - iBase) * uHScale;   // (a close shot's heights: mini.js HSCALE)
+      transformed = (inverse(instanceMatrix) * w_).xyz; } }`;
 function fading(mat, size, pxK, flat = 0, fade = FADE_PX, rise = null) {
   mat.onBeforeCompile = sh => { if (pxK) { sh.uniforms.uDetSize = { value: size }; sh.uniforms.uPxK = pxK; sh.uniforms.uDetFlat = { value: flat }; sh.uniforms.uDetFade = { value: new THREE.Vector2(...fade) }; }
     if (rise) Object.assign(sh.uniforms, rise.uniforms);
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + (pxK ? 'uniform float uDetSize, uPxK, uDetFlat; uniform vec2 uDetFade; varying float vDetF;' : '') + (rise ? '\nattribute float iBase;\n' + rise.glsl : ''))
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\n' + (pxK ? 'uniform float uDetSize, uPxK, uDetFlat; uniform vec2 uDetFade; varying float vDetF;' : '') + (rise ? '\nattribute float iBase, iPiv; uniform float uHScale;\n' + rise.glsl : ''))
       .replace('#include <begin_vertex>', '#include <begin_vertex>' + (pxK ? FADE_GLSL : '') + (rise ? RISE_PIECE : ''));
     if (pxK && sh.fragmentShader.includes('#include <color_fragment>'))
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uDetFlat; varying float vDetF;')
@@ -684,7 +696,7 @@ export function detailMeshes(D, cols, o = {}) {
     for (let i = 0; i < K.n; i++) mesh.setColorAt(i, (own ? c.copy(colK(K.ctr[i * 2], K.ctr[i * 2 + 1])) : c.copy(base)).multiplyScalar(K.k[i]));
     mesh.instanceColor.needsUpdate = true;
     mesh.geometry.setAttribute('iCtr', new THREE.InstancedBufferAttribute(K.ctr, 2)); mesh.geometry.setAttribute('iRank', new THREE.InstancedBufferAttribute(K.rank, 1));
-    if (rise) { mesh.geometry.setAttribute('iBase', new THREE.InstancedBufferAttribute(K.base, 1));
+    if (rise) { mesh.geometry.setAttribute('iBase', new THREE.InstancedBufferAttribute(K.base, 1)); mesh.geometry.setAttribute('iPiv', new THREE.InstancedBufferAttribute(K.piv || new Float32Array(K.n).fill(-1e9), 1));
       mesh.geometry.setAttribute('iW', new THREE.InstancedBufferAttribute(K.src.map(i => rise.w ? rise.w[i] : 3), 1)); }
     mesh.castShadow = !!SHADOW[root]; mesh.receiveShadow = true; mesh.frustumCulled = false;
     if (flat) mesh.userData.noAO = true;   // (an ambient occlusion pass draws a scene with its own material, whole: a flat piece faded away there still shaded its roof in stripes; the look leaves these out of it)

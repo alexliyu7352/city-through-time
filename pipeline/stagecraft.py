@@ -284,7 +284,9 @@ MINI = {'el': [32.0, 52.0],        # the pitch's range, degrees down: steep enou
         'orbit': 2.5,              # degrees a second the camera turns round what it looks at where it would stand still
         'push': .012, 'push_max': .2,   # ... and how fast it closes in meanwhile (a share of the distance a second, at most push_max)
         'still': .04,              # frames a second under which a stretch counts as standing still (move_time's frames)
-        'landmark': {'r_m': 60.0, 'size': .5, 'orbit': 3.5, 'lead': 1.5}}   # a named landmark: framed at `size` of the frame's height
+        'landmark': {'r_m': 60.0, 'size': .5, 'orbit': 3.5, 'lead': 1.5},
+        'close': {'fov': 16.0, 'el': 35.0}}   # a close district shot's long lens: verticals at the frame's side edges lean 10 degrees or less
+                                   # (atan(tan(fov/2) * 16/9 / cot(el))); its distance keeps the framing (the width at the target)   # a named landmark: framed at `size` of the frame's height
                                    # round r_m metres, orbited at `orbit` degrees a second, from `lead` s before its name shows
 
 
