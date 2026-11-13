@@ -46,7 +46,7 @@ function greenData(dir) {   // -> a promise the first frame waits on (both optio
   return GREEN_P = Promise.all([g, st]);
 }
 let SKY_C0 = null, GLB_DONE = false;
-const REFL = { T: { value: null }, M: { value: new THREE.Matrix4() }, K: { value: 0 } };   // (today's water's reflection: its picture, its texture matrix, on)
+const REFL = { T: { value: null }, M: { value: new THREE.Matrix4() }, K: { value: 0 } }, GLASS_SKY = { value: new THREE.Color(.80, .86, .92) }, GLASS_K = { value: 1 }, DOME_R = { value: 25 };   // (GLASS_K: how much of it; DOME_R: how fast the dome turns from its horizon to its zenith)   // (GLASS_SKY: the sky glass reflects, the dome's horizon: gold at the golden hour)   // (today's water's reflection: its picture, its texture matrix, on)
 const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }, GEO_T = { value: new THREE.Vector4(0, 0, -1, 0) };   // (GEO_T: the crowns drawn as geometry, x z their centre, z their radius: beyond it the ground carries the groves' tone)
 // the built area of the period cities standing (a material's ground_in: its plaster inside it, the table beyond): their buildings'
 // centres drawn over the plate, each `reach` m round, softened; made again when the cities standing change (builtMask)
@@ -187,7 +187,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
   looks: {
     // a sunny pastel miniature (it was a museum's maquette of plaster, wood and slate; the name kept): every period city and today's
     // in soft mixed colours, under today's light (todayLight all)
-    maquette: { pic: { sunEl: 50, rake: 22, relief: 3, sun: 1.12, dof: { k: 6, max: 40, band: [.08, .2], two: true, at: .95, Ak: .25, tilt: [.5, 1, 8, 1, .08, .6] }, aoR: [.02, 4, 30], sunC: '#ffe9cc', sky: .55, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
+    maquette: { pic: { sunEl: 50, rake: 22, relief: 3, sun: 1.12, dof: { k: 6, max: 40, band: [.08, .2], two: true, at: .95, Ak: .25, tilt: [.62, 1, 8, 1, .08, .6, .45, 1.2] }, aoR: [.02, 4, 30], sunC: '#ffe9cc', sky: .55, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
       roman: { walls: ['#f2e2c8', '#ecd2ae', '#f5ece0', '#e6c7a8', '#f0dcc0'], roofs: ['#c47250', '#d0805c', '#b86a4c', '#d89470', '#c27a5c', '#cc8a66'],
         parts: { 1: '#f6f0e4', 2: '#e0cfae', 4: '#4f7a2a', 7: '#d6cfc2', 9: '#c47250', 10: '#d8c7a6', 11: '#ddd4c4' }, tree: { dark: 1.25, sat: 1.5 }, flags: false,
         detail: { floor: '#e6d5b6', joint: '#3c3e42', ridge: '#cfb184', shop: '#5a4a3a', base: '#d3c6ac' } },
@@ -218,19 +218,19 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, skyC: '#adc4ea', skyGround: '#d2c8ba', sky: 1, sun: 1.5, sunC: '#fff2e2', sunEl: 36, exposure: 1.12, ao: .65, bloom: [.85, .22], dof: 1, band: 1,
-        edge: 0, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .1, vignette: .08, shadowR: 3, air: [3, 9, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'],
-        far: [1.2, 4.5, .4, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
+      todayLight: { all: true, skyC: '#adc4ea', skyGround: '#d2c8ba', sky: .75, sun: 1.6, sunC: '#fff2e2', sunEl: 36, exposure: 1.12, ao: .7, bloom: [.85, .22], dof: 1, band: 1,
+        edge: 0, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -40,
+        far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
         board: [.66, .64, .60], soft: [0, 8], street: [[.46, .46, .48], .9], plaza: [.78, .75, .70], kerb: [.86, .85, .82], park: [[.60, .68, .34], [.50, .60, .30]],
-        water: { shallow: [.56, .78, .72], deep: [.28, .54, .54], reach: 90, rough: .5, ripple: .08, gloss: [.03, .05, [.80, .90, .97]], refl: [.2, .35] },
+        water: { shallow: [.48, .74, .68], deep: [.14, .48, .46], reach: 90, rough: .45, ripple: .08, gloss: [.03, .08, [.80, .90, .97]], refl: [.35, .45] },
         trees: [[.32, .48, .20], [.44, .56, .26], [.38, .52, .18]] },
       // light presets over todayLight (FILM_PIC todayPreset): golden, the golden hour for the opening and the return to today: a low
-      // warm sun from ahead and to the side (the film's sunSide for those shots; side: turned this many more degrees), long soft
-      // shadows, its glow on the sky (dome[2]), a warm haze, glass and water catching gold
-      presets: { golden: { sunEl: 14, sun: 2.4, sunC: '#ffb26a', sky: .4, skyC: '#ffcfa0', skyGround: '#d6a678', exposure: 1.06, sat: 1.12, contrast: .18, bloom: [.95, .2],
-        fogC: '#f2cfa6', dome: ['#f4c79a', '#8ea6d6', '#ff9a40', [.9, 1.6, .4, '#fff0e4']], air: [3, 10, 2500], far: [1.3, 4.5, .4, '#f0c9a4'],
+      // warm sun ahead of the camera and to its left (sunLeft), long soft shadows, blue-violet shade, its glow on the sky (dome[2])
+      // and clouds (dome[3]), a warm haze, glass and water catching gold (the rippled water a glitter path toward the sun)
+      presets: { golden: { sunEl: 9, sunLeft: -140, sun: 2.4, sunC: '#ffac5c', sky: 1.15, skyC: '#a49cd0', skyGround: '#d0a888', exposure: 1.2, glassSky: '#ffc890', glassK: 2.2, domeRate: 5, sat: 1.12, contrast: .18, bloom: [.95, .3],
+        fogC: '#f2cfa6', dome: ['#f4c79a', '#8ea6d6', '#ff9a40', [1, 1.1, .34, '#fff2e8']], air: [3.5, 11, 2500], far: [2.2, 6, .5, '#f0c9a4'],
         park: [[.64, .64, .30], [.56, .58, .26]], trees: [[.40, .46, .18], [.50, .52, .22], [.44, .48, .16]],
-        water: { shallow: [.46, .62, .62], deep: [.20, .40, .48], reach: 90, rough: .25, ripple: .1, gloss: [.08, .5, [1, .78, .48]], refl: [.4, .5, .6] } } },
+        water: { shallow: [.46, .62, .62], deep: [.20, .40, .48], reach: 90, rough: .14, ripple: .35, gloss: [.08, .5, [1, .78, .48]], refl: [.3, .35, .7] } } },
       // today's buildings painted by kind (colourToday kinds; FACADE_GLSL draws each kind's facade): the old low fabric (lower than
       // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick; a large low building pale; an office tower (from
       // towerH m and towerA m2 of footprint, or any from tallH m) in tinted glass, pale blue-green or silver; the rest, most of the
@@ -753,13 +753,13 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
   // no sun's glow on it (the haze's one colour meets it at the horizon without a seam); shown while today's city is the subject
   const domeT = film && !FX && MAT && MAT.todayLight && MAT.todayLight.dome ? makeSky({ horizon: '#ffffff', zenith: '#ffffff', sun: '#000000' }) : null;
   if (domeT) { domeT.mesh.layers.set(L); domeT.mesh.visible = false; scene.add(domeT.mesh);
-    const dm_ = domeT.mesh.material; Object.assign(dm_.uniforms, { uCloud: { value: new THREE.Vector4() }, uCloudC: { value: new THREE.Color() } });
-    dm_.fragmentShader = dm_.fragmentShader.replace('pow(max(up, 1e-4), .4)', '(1. - exp(-up * 25.))').replace('uniform float uI;', `uniform float uI; uniform vec4 uCloud; uniform vec3 uCloudC;
+    const dm_ = domeT.mesh.material; Object.assign(dm_.uniforms, { uCloud: { value: new THREE.Vector4() }, uCloudC: { value: new THREE.Color() }, uDomeR: DOME_R });
+    dm_.fragmentShader = dm_.fragmentShader.replace('pow(max(up, 1e-4), .4)', '(1. - exp(-up * uDomeR))').replace('uniform float uI;', `uniform float uI, uDomeR; uniform vec4 uCloud; uniform vec3 uCloudC;
 float cH_(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float cN_(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f); return mix(mix(cH_(i), cH_(i + vec2(1., 0.)), f.x), mix(cH_(i + vec2(0., 1.)), cH_(i + vec2(1., 1.)), f.x), f.y); }
 float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p * 4.3 + 7.7) + .0625 * cN_(p * 8.9 + 1.3); }`)
       .replace('gl_FragColor = vec4(fxSky(normalize(vD), uHor, uZen, uSunC, uSunD) * uI, 1.); }', `vec3 d_ = normalize(vD); vec3 c_ = fxSky(d_, uHor, uZen, uSunC, uSunD) * uI;
-  if (uCloud.x > 0. && d_.y > 0.) { vec2 p_ = d_.xz / (d_.y + .12) * uCloud.y; float n_ = cF_(p_), cl_ = smoothstep(uCloud.z, uCloud.z + .25, n_) * smoothstep(.0, .1, d_.y);   // soft clouds (todayLight dome[3]: [amount, scale, threshold, colour]), lit from below by a low sun
+  if (uCloud.x > 0. && d_.y > 0.) { vec2 p_ = d_.xz / (d_.y + .12) * uCloud.y; float n_ = cF_(p_), cl_ = smoothstep(uCloud.z, uCloud.z + .25, n_) * smoothstep(.0, .025, d_.y);   // soft clouds (todayLight dome[3]: [amount, scale, threshold, colour]), lit from below by a low sun
     c_ = mix(c_, uCloudC * (.62 + .55 * cF_(p_ * 1.7 + 5.)) + uSunC * .25 * pow(max(dot(d_, normalize(uSunD)), 0.), 4.), cl_ * uCloud.x); }
   gl_FragColor = vec4(c_, 1.); }`); }   // (its blue begins close above the horizon, smoothly: a low view's sky blue, not the haze's, and no kink at the horizon)
   if (FP) { FP.bloom.strength = .1; FP.bloom.threshold = 2.2;   // (a bright day: only the sun's glints glow, not every lit wall)
@@ -782,11 +782,11 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     if (FP_ && FILM_PIC.dof.tilt && FP.dof.smooth) {   // a tilt lens over a miniature (FILM_PIC dof tilt: [where the soft bands begin and where they
       // are whole, from the frame's middle (0) to its top and bottom edge (1); the largest blur in pixels of a 1080 picture; the
       // near side's share; the depth's distance from the focus, 1 - focus / z, from which a thing in a band begins to soften and
-      // is whole]): sharp over most of the frame, soft only toward its top (the far) and its bottom (the near), gradually; in a
+      // is whole, farther, then nearer (the near side wider: a subject in the frame's lower part, nearer than the target, stays sharp)]): sharp over most of the frame, soft only toward its top (the far) and its bottom (the near), gradually; in a
       // band what stands at the subject's depth (a tower's top) stays sharp, as with a real lens
-      const cm = FP.dof.coc.material; cm.uniforms.uTilt = { value: new THREE.Vector4() }; cm.uniforms.uTiltR = { value: new THREE.Vector2(1, 1) };
-      cm.fragmentShader = cm.fragmentShader.replace('uniform float aoAmt,', 'uniform vec4 uTilt; uniform vec2 uTiltR;\n    uniform float aoAmt,').replace('c = clamp(c < 0. ? c * .7 : c, -maxCoc, maxCoc);', `c = clamp(c < 0. ? c * .7 : c, -maxCoc, maxCoc);
-      if (uTilt.x > 0.) { float x_ = 1. - focus / zc; c = sign(x_) * maxCoc * smoothstep(uTilt.y, uTilt.z, abs(vUv.y - .5) * 2.) * smoothstep(uTiltR.x, uTiltR.y, abs(x_)) * (x_ < 0. ? uTilt.w : 1.); }`); cm.needsUpdate = true;
+      const cm = FP.dof.coc.material; cm.uniforms.uTilt = { value: new THREE.Vector4() }; cm.uniforms.uTiltR = { value: new THREE.Vector4(1, 1, 1, 1) };
+      cm.fragmentShader = cm.fragmentShader.replace('uniform float aoAmt,', 'uniform vec4 uTilt, uTiltR;\n    uniform float aoAmt,').replace('c = clamp(c < 0. ? c * .7 : c, -maxCoc, maxCoc);', `c = clamp(c < 0. ? c * .7 : c, -maxCoc, maxCoc);
+      if (uTilt.x > 0.) { float x_ = 1. - focus / zc; c = sign(x_) * maxCoc * smoothstep(uTilt.y, uTilt.z, abs(vUv.y - .5) * 2.) * (x_ < 0. ? smoothstep(uTiltR.z, uTiltR.w, -x_) : smoothstep(uTiltR.x, uTiltR.y, x_)) * (x_ < 0. ? uTilt.w : 1.); }`); cm.needsUpdate = true;
       // a soft edge smoothed only from what is about as blurred as it: a sharp tower beside a blurred ground spreads no light into it (no halo)
       const sm = FP.dof.smooth.material; sm.fragmentShader = sm.fragmentShader.replace('vec4 acc = c0; const int N = 24;', 'float ca_ = abs(texture2D(tCoc, vUv).a) / uS; vec4 acc = c0; float ws_ = 1.; const int N = 24;')
         .replace('acc += texture2D(tIn, vUv + vec2(cos(th), sin(th)) * rr / res); }', 'vec2 o_ = vUv + vec2(cos(th), sin(th)) * rr / res; float w_ = smoothstep(.3, .6, abs(texture2D(tCoc, o_).a) / uS / max(ca_, .75)); acc += texture2D(tIn, o_) * w_; ws_ += w_; }')
@@ -948,7 +948,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     const hid = [plate, skirt, marks, ctx].filter(m => m && m.visible); for (const m of hid) m.visible = false; REFL.T.value = null;
     const rt0 = renderer.getRenderTarget(); renderer.setRenderTarget(RF.rt); renderer.clear(); renderer.render(scene, rc); renderer.setRenderTarget(rt0);
     for (const m of hid) m.visible = true; REFL.T.value = RF.rt.texture; }
-  async function render({ target, d, sharp = 0 }) {   // (sharp: 0..1, a living moment's picture up, sharp throughout)
+  async function render({ target, d, sharp = 0, sunAz = null }) {   // (sunAz: { az, own } the film's sun for this moment, main.js SUN_AT)   // (sharp: 0..1, a living moment's picture up, sharp throughout)
     if (film && MAT && MAT.base && MAT.base.ground_in && dataDir) await greenData(dataDir);   // (a city's green and streets, before its first frame)
     todayNow(); if (film && MAT && MAT.roofs) roofsMesh();
     if (film && FILM_PIC.glb && !GLB_DONE) { GLB_DONE = true; for (const o of FILM_PIC.glb) { try { const r_ = await swap(o); console.log('glb', JSON.stringify(r_)); } catch (e) { console.error(`glb ${o.url}: ${e.message}`); } } }   // (FILM_PIC glb: detailed models in place of buildings, ?pic= for a still)
@@ -969,7 +969,8 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     const LT_ = FP_ ? todayL() : null, tsE_ = LT_ ? (LT_.all ? 1 : TODAY_K.value.y * (1 - THREE.MathUtils.smoothstep(TODAY_K.value.z, .3, .6))) : 0;   // (today's city the subject: its own light)
     const kAir_ = FP_ && FILM_PIC.pool ? THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]) : 0, elD_ = THREE.MathUtils.lerp(FP_ && FILM_PIC.rake ? THREE.MathUtils.lerp(SUN_EL, FILM_PIC.rake, kAir_) : SUN_EL, LT_ && LT_.sunEl ? LT_.sunEl : 0, LT_ && LT_.sunEl ? tsE_ : 0);   // (an aerial's raking sun, FILM_PIC rake)
     const v = camera.position.clone().sub(target), kd = U.uKeyDir.value, el = THREE.MathUtils.degToRad(elD_), r = d * 1.2;
-    const az = film ? (camAz != null ? THREE.MathUtils.degToRad(camAz + (FP_ ? FILM_PIC.sunSide + (LT_ && LT_.side || 0) * tsE_ : 55)) : Math.atan2(kd.x, kd.z)) : Math.atan2(v.x, v.z) + THREE.MathUtils.degToRad(SUN_SIDE);   // the sun: behind the eye, to its left, 40 degrees up (fx light: lower); the film: from the key light's bearing
+    const az = film && sunAz && LT_ && LT_.sunLeft != null ? THREE.MathUtils.degToRad(sunAz.az + (sunAz.own ? 0 : LT_.sunLeft))   // (the look's sun per shot: behind and to the left of the camera, todayLight sunLeft; a node's own)
+      : film ? (camAz != null ? THREE.MathUtils.degToRad(camAz + (FP_ ? FILM_PIC.sunSide + (LT_ && LT_.side || 0) * tsE_ : 55)) : Math.atan2(kd.x, kd.z)) : Math.atan2(v.x, v.z) + THREE.MathUtils.degToRad(SUN_SIDE);   // the sun: behind the eye, to its left, 40 degrees up (fx light: lower); the film: from the key light's bearing
     sun.position.set(target.x + r * Math.sin(az) * Math.cos(el), target.y + r * Math.sin(el), target.z + r * Math.cos(az) * Math.cos(el)); sun.target.position.copy(target);
     if (S.fxSun) sun.position.copy(target).addScaledVector(S.fxSun, r);   // (fx light: the sun fixed in the world, as the white model's)
     const c = sun.shadow.camera; c.left = c.bottom = -d * 1.6; c.right = c.top = d * 1.6; c.near = r * .2; c.far = r * 2.5;
@@ -1030,12 +1031,13 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         if (L_.haze) { fog.near = THREE.MathUtils.lerp(fog.near, d * L_.haze[0], ts_); fog.far = THREE.MathUtils.lerp(fog.far, d * L_.haze[1], ts_); }   // (today's haze as a fog)
         const ua_ = FP.dof.coc.material.uniforms; if (ua_.uAir) { const A_ = L_.air; ua_.uAir.value.set(d * A_[0], d * A_[1], A_[2] * scale, ts_); ua_.uAirC.value.set(L_.dome ? L_.dome[0] : L_.fogC); const F_ = L_.far || [1, 2, 1, '#ffffff']; ua_.uAirF.value.set(d * F_[0], d * F_[1], F_[2], L_.far ? ts_ : 0); ua_.uAirFC.value.set(F_[3]); camera.updateMatrixWorld(); ua_.uAirIP.value.copy(camera.projectionMatrixInverse); ua_.uAirCW.value.copy(camera.matrixWorld);
           fog.near = THREE.MathUtils.lerp(fog.near, 1e4, ts_); fog.far = THREE.MathUtils.lerp(fog.far, 2e4, ts_); }   // (today's air in the picture's depth (above): no fog)
+        GLASS_SKY.value.setRGB(.80, .86, .92).lerp(new THREE.Color(L_.glassSky || '#e6edf4'), ts_); GLASS_K.value = THREE.MathUtils.lerp(1, L_.glassK ?? 1, ts_); DOME_R.value = L_.domeRate ?? 25;   // (glassSky, glassK: the sky in the glass; domeRate: the dome's blue, how soon above the horizon)
         if (domeT) { domeT.u.uSunC.value.set(L_.dome[2] || '#000000').multiplyScalar(ts_); domeT.u.uSunD.value.copy(sd);   // (dome[2]: the sun's glow on the sky, a low sun's)
           domeT.mesh.visible = ts_ > .002; const CL_ = L_.dome[3]; domeT.mesh.material.uniforms.uCloud.value.set(CL_ ? CL_[0] * ts_ : 0, CL_ ? CL_[1] : 1, CL_ ? CL_[2] : .5, 0); if (CL_) domeT.mesh.material.uniforms.uCloudC.value.set(CL_[3]); domeT.u.uHor.value.copy(bgNow).lerp(new THREE.Color(L_.dome[0]), ts_); domeT.u.uZen.value.copy(bgNow).lerp(new THREE.Color(L_.dome[1]), ts_); }
         sun.shadow.radius = THREE.MathUtils.lerp(1, L_.shadowR ?? 1, ts_); }   // (soft-edged shadows: PCF's own radius, in the map's texels)
       if (FP_ && FILM_PIC.dof.tilt && FP.dof.coc.material.uniforms.uTilt) { const T_ = FILM_PIC.dof.tilt;   // the model photographer's lens (above)
         FP.dof.coc.material.uniforms.uTilt.value.set(1, T_[0], T_[1], T_[3] ?? 1);
-        FP.dof.coc.material.uniforms.uTiltR.value.set(T_[4] ?? .05, T_[5] ?? .3);
+        FP.dof.coc.material.uniforms.uTiltR.value.set(T_[4] ?? .05, T_[5] ?? .3, T_[6] ?? T_[4] ?? .05, T_[7] ?? T_[5] ?? .3);
         FP.dof.maxCoc = S.post.dof.aper < 1e-6 ? 0 : T_[2] * FP.dof.rt.height / FP.dof.s / 1080; }   // (a living moment's sharp picture kept)
     }
     if (BAND) { const rt = FP.composer.renderTarget1; for (const b of BAND) { b.uniforms.px.value.set(1 / rt.width, 1 / rt.height); b.uniforms.k.value = rt.height / 1080 * (1 - sharp); } }
@@ -1170,15 +1172,15 @@ function baseGLSL(B, scale, town = false, far = false, then = false) {   // (the
 function glbMaterial(nm, k = 1, scale = 1e-4, col = null) {   // (col: the glb entry's own colour for this part or role, else the material's)
   const glass = nm === 'glass', m = new THREE.MeshStandardMaterial({ color: col || MAT.glbC[nm] || MAT.glbC.stone, roughness: glass ? .3 : nm === 'metal' ? .5 : .85, metalness: 0, side: THREE.DoubleSide });
   if (!glass && nm !== 'stone') return m;
-  m.onBeforeCompile = sh => {
+  m.onBeforeCompile = sh => { sh.uniforms.uGlassSky = GLASS_SKY; sh.uniforms.uGlassK = GLASS_K;
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vGW, vGN;').replace('#include <fog_vertex>', '#include <fog_vertex>\n vGW = (modelMatrix * vec4(transformed, 1.)).xyz; vGN = normalize(mat3(modelMatrix) * objectNormal);');
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vGW, vGN;').replace('#include <color_fragment>', `#include <color_fragment>
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vGW, vGN; uniform vec3 uGlassSky; uniform float uGlassK;').replace('#include <color_fragment>', `#include <color_fragment>
   { vec3 n_ = normalize(vGN); float pxm_ = length(fwidth(vGW)) / ${scale.toExponential(4)};   // (metres a pixel)
     if (abs(n_.y) < .5) { float ym_ = vGW.y / ${scale.toExponential(4)} / ${k.toFixed(3)}, fy_ = fract(ym_ / 4.2), kS_ = 1. - smoothstep(.22, .45, pxm_ / 4.2);
       vec2 t_ = normalize(vec2(-n_.z, n_.x) + 1e-6); float fu_ = abs(fract(dot(vGW.xz, t_) / ${scale.toExponential(4)} / 1.5) - .5) * 2., kM_ = 1. - smoothstep(.22, .45, pxm_ / 1.5);
       float fl_ = mix(.08, 1. - smoothstep(.05, .1, fy_), kS_), ml_ = mix(.1, smoothstep(.86, .94, fu_), kM_);   // (afar: their shares of the wall)
       diffuseColor.rgb *= 1. - ${glass ? '.3 * max(ml_, fl_)' : '.12 * fl_'};${glass ? `
-      float fr_ = pow(1. - max(dot(n_, normalize(cameraPosition - vGW)), 0.), 3.); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(.80, .86, .92), .1 + .45 * fr_);   // (the sky in the glass, more as the view grazes)
+      float fr_ = pow(1. - max(dot(n_, normalize(cameraPosition - vGW)), 0.), 3.); diffuseColor.rgb = mix(diffuseColor.rgb, uGlassSky, min(1., uGlassK * (.1 + .45 * fr_)));   // (the sky in the glass, more as the view grazes)
 ` : ''} } }`); };
   m.customProgramCacheKey = () => 'mini-glb ' + nm + k.toFixed(3) + scale;
   return m;
@@ -1212,16 +1214,16 @@ function FACADE_GLSL(S) {
           float mu_ = 1.5, fu_ = abs(fract(um_ / mu_) - .5) * 2., kM_ = 1. - smoothstep(.22, .45, pxm_ / mu_);
           float ml_ = smoothstep(.84, .92, fu_) * kM_, fl_ = (1. - smoothstep(.08, .14, fy_)) * kS_, ln_ = max(ml_, fl_);   // (afar: none, the glass's own tone)
           vec3 v_ = normalize(cameraPosition - vWP); float fr_ = pow(1. - max(dot(n_, v_), 0.), 3.);
-          c_ = mix(pt_, vec3(.80, .86, .92), .12 + .5 * fr_);   // (the sky in it, more as the view grazes)
+          c_ = mix(pt_, uGlassSky, min(1., uGlassK * (.12 + .5 * fr_)));   // (the sky in it, more as the view grazes)
           c_ = mix(c_, pt_ * 1.15 + .05, .65 * ln_); glass_ = (1. - ln_) * show_; eng_ = 0.;
         } else if (res_) {   // a home: a balcony band at each floor, a shade lighter; its windows set back, a shade darker
-          float wu_ = 3.6, fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
+          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
           float band_ = (1. - smoothstep(.12, .2, fy_)) * kS_, win_ = smoothstep(.30, .34, fy_) * (1. - smoothstep(.84, .88, fy_)) * smoothstep(.10, .14, fu_) * (1. - smoothstep(.78, .82, fu_)) * kW_;
-          c_ = mix(pt_ * (1. + .05 * band_), mix(pt_ * .55, vec3(.30, .36, .44), .5), .7 * win_ * (1. - band_)) * (1. - .08 * (1. - kW_)); eng_ = .6 * win_ * (1. - band_) * show_;   // (its windows cool glass set into the paint; afar the paint a shade deeper, their share)
+          c_ = mix(pt_ * (1. + .05 * band_), mix(pt_ * .45, vec3(.24, .30, .40), .55), .85 * win_ * (1. - band_)) * (1. - .08 * (1. - kW_)); eng_ = .6 * win_ * (1. - band_) * show_;   // (its windows cool glass set into the paint; afar the paint a shade deeper, their share)
         } else {   // the low fabric, a large low building: small windows
           float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
           float win_ = smoothstep(.36, .40, fy_) * (1. - smoothstep(.76, .80, fy_)) * smoothstep(.30, .34, fu_) * (1. - smoothstep(.64, .68, fu_)) * kW_;
-          c_ = mix(pt_, mix(pt_ * .55, vec3(.30, .36, .44), .5), .6 * win_) * (1. - .06 * (1. - kW_)); eng_ = .5 * win_ * show_;
+          c_ = mix(pt_, mix(pt_ * .45, vec3(.24, .30, .40), .55), .75 * win_) * (1. - .06 * (1. - kW_)); eng_ = .5 * win_ * show_;
         }
         diffuseColor.rgb = mix(diffuseColor.rgb, c_, show_);
       } else if (n_.y > .9 && kd_ < .5) {   // the old fabric's roof: grey tile in rows, close
@@ -1269,7 +1271,7 @@ function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = 
     if (u) { sh.uniforms.uHScale = HSCALE; sh.uniforms.uPool = POOL; sh.uniforms.uBuilt = BUILT; sh.uniforms.uPlateB = PLATE; }
     if (u) Object.assign(sh.uniforms, { uRuinLater: u.uRuinLater, uRuinT: u.uRuinT, uRuinH: u.uRuinH, uLossBurnt: u.uLossBurnt, uLossBurntV: u.uLossBurnt, uRuinC: { value: ruin || new THREE.Color('#bcae92') } },
       fire ? { ...fire.day.F, uO: fire.u.uO } : {});
-    else { sh.uniforms.uFadeAt = { value: fadeAt }; sh.uniforms.uDimTodayC = S.U.uDimTodayC || { value: 0 }; sh.uniforms.uHScaleT = HSCALE_T; }
+    else { sh.uniforms.uFadeAt = { value: fadeAt }; sh.uniforms.uGlassSky = GLASS_SKY; sh.uniforms.uGlassK = GLASS_K; sh.uniforms.uDimTodayC = S.U.uDimTodayC || { value: 0 }; sh.uniforms.uHScaleT = HSCALE_T; }
     if (u && MAT && MAT.soft && sh.vertexShader.includes('#include <beginnormal_vertex>')) sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec3 aSoft;')
       .replace('#include <beginnormal_vertex>', `#include <beginnormal_vertex>\n  objectNormal = normalize(mix(objectNormal, aSoft, ${MAT.soft.toFixed(2)}));   // (a rounded edge: the material's)`);
     sh.vertexShader = sh.vertexShader.replace('#include <common>', `#include <common>\nvarying float vRuin, vMute, vFresh; uniform float uBackdropY, uDataY0;${u ? ` attribute float aY0; uniform float uHScale; uniform float uLossBurntV[${Math.max(nL, 1)}]; uniform float uRuinLater[${H}], uRuinT[${H}], uRuinH;` : ' uniform float uDimToday, uDimToday0, uDimTodayC, uHScaleT, uNodeR, uFadeAt, uGrowWarm; uniform vec2 uNodeC; attribute float aKind; varying float vKind;'}`)
@@ -1277,7 +1279,7 @@ function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = 
       .replace('#include <project_vertex>', vert + '\n#include <project_vertex>')
       .replace('#include <fog_vertex>', '#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz;' + (depth ? '' : ' vWN = normalize(mat3(modelMatrix) * objectNormal);') + (u ? '' : ' vKind = aKind;'));
     if (depth) return;
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\n// (look: mini)\nfloat glass_ = 0., eng_ = 0.;\nvarying vec4 vData; varying vec3 vWP, vWN; varying float vUp, vBase, vRuin, vMute, vFresh; varying vec2 aCtrV;${u ? '' : ' varying float vKind;'} uniform float uNow, uNight, uScaleM, uPallR, uPallK; uniform vec2 uPallC;${S.marksGLSL()}${u ? ` uniform float uEraBurn, uLossBurn[${nL}], uLossBurnt[${nL}]; uniform vec3 uRuinC;${fire ? ' uniform vec2 uO;' + S.fireGLSL : ''}` : ''}`)
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\n// (look: mini)\nfloat glass_ = 0., eng_ = 0.;\nvarying vec4 vData; varying vec3 vWP, vWN; varying float vUp, vBase, vRuin, vMute, vFresh; varying vec2 aCtrV;${u ? '' : ' varying float vKind; uniform vec3 uGlassSky; uniform float uGlassK;'} uniform float uNow, uNight, uScaleM, uPallR, uPallK; uniform vec2 uPallC;${S.marksGLSL()}${u ? ` uniform float uEraBurn, uLossBurn[${nL}], uLossBurnt[${nL}]; uniform vec3 uRuinC;${fire ? ' uniform vec2 uO;' + S.fireGLSL : ''}` : ''}`)
       .replace('#include <color_fragment>', '#include <color_fragment>' + marks + '\n  diffuseColor.rgb *= 1. - uPallK * .55 * smoothstep(uPallR, uPallR * .3, length(vWP.xz - uPallC));   // (under a burning city\'s pall)')
       .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>' + night);
     if (u && surf) sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>

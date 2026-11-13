@@ -267,6 +267,10 @@ cameras (the tool's header gives the cameras' format).
   its node's `city: { palette: modern }` (a city's mills or concession, say). Absent, or `kind: white`, the film is the white model and
   film.json has no `look` key. The page's `&look=white|mini` (with `&palette=` and `&today=` for a film without `film.look`) shows a
   film in the other look without compiling it again; tools/still.mjs, lookshots and phonecheck pass it with `--q`.
+- **The colour look's sun is chosen per shot.** By default it shines from behind the camera and to its left (the look's
+  `sunLeft`), taken from the bearing of the node's camera as the node starts and held through the node, so the faces turned to the
+  camera are lit and a move never swings the shadows. A node that needs another light names it: `sun: <bearing>` (degrees, the
+  camera keys' az convention: where the sun stands seen from the target). A still with a fixed camera (`&cam=`) takes its own.
 - **What the colour film shows, and how.** The film tells the same things; what differs is how:
   - a period city rises in place, building by building as in the white model, its detail with it; a faint light along the rise front
     on the ground (the white film's light, restrained) keeps a quiet rise readable;

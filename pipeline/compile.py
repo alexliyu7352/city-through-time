@@ -1793,7 +1793,8 @@ for i, node in enumerate(FM['nodes']):
     nodes_out.append({'id': node['id'], 't0': node['_t0'], 't1': node['_t1'], 'years': node['_years'], 'label': ab(node.get('label', {}))[0] or node['id'], 'label2': ab(node.get('label', {}))[1],
                       'col': node.get('col', '#ffffff'), 'tint': node.get('tint', FM.get('node_tint', .5)), 'wave': [round(wv[0], 5), round(wv[1], 5)],
                       'reset': float(node['reset']['year']) if 'reset' in node else None, 'ink': float(node.get('ink', 0)), 'era_tint': float(node.get('era_tint', node.get('tint', FM.get('node_tint', .5)))),
-                      'arrive': round(node['_t0'] + node.get('_tourA', 0), 3), 'ghost': node.get('ghost', []), 'mood': node['_mood']})   # ghost: earlier cities whose outline is drawn again while this node is told   # today's city takes this colour while the node is told
+                      'arrive': round(node['_t0'] + node.get('_tourA', 0), 3), 'ghost': node.get('ghost', []), 'mood': node['_mood'],
+                      **({'sun': float(node['sun'])} if node.get('sun') is not None else {})})   # sun: the colour look's sun for this node, a compass bearing (engine/main.js SUN_AT)   # ghost: earlier cities whose outline is drawn again while this node is told   # today's city takes this colour while the node is told
     # readout (left column); a node without `readout: false` gets one with the year counter. `readout: {continues: true}`: the node
     # goes on telling the chapter before (one city split in two nodes for its timing): that readout runs on, no new chapter card;
     # a `note` of its own replaces the source line from this node on (each phase's sources under one chapter: readouts[].notes)

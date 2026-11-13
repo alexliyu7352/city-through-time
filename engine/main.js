@@ -737,7 +737,13 @@ function ruinsAt(t) {
     for (let h = 0; h < u.uRuinLater.value.length; h++) u.uRuinLater.value[h] = ch[h] && ch[h].on > e.on ? 1 : 0;
     (e.losses || []).forEach((q, j) => { u.uLossBurnt.value[j] = q.burn && t >= q.burn[0] ? 1 : 0; }); }
 }
-const renderColour = async t => { stateAt(t); ruinsAt(sceneAt(t)); if (!(PLAY && PLAYING && fullCover(t))) await MINI.render({ target: tgt, d: camDist, sharp: LV ? LV.k : 0 }); overlayAt(t); };
+// the colour look's sun for this moment (engine/mini.js todayLight sunLeft): a node's own `sun` (city.yaml, a compass bearing in
+// degrees, the camera's az convention: where the sun stands seen from the target), else the bearing of the node's camera as it
+// starts (its first key), the look turning it behind and to the left of the camera; held through the node, so a move never swings
+// the shadows; a still's fixed camera (&cam=) its own
+const SUN_AT = t => { if (CAMQ) return { az: CAMQ[3], own: false }; const n = (FILM.nodes || []).find(n_ => t >= n_.t0 && t < n_.t1);
+  return n && n.sun != null ? { az: n.sun, own: true } : { az: CAM(n ? n.t0 : 0)[3], own: false }; };
+const renderColour = async t => { stateAt(t); ruinsAt(sceneAt(t)); if (!(PLAY && PLAYING && fullCover(t))) await MINI.render({ target: tgt, d: camDist, sharp: LV ? LV.k : 0, sunAz: SUN_AT(t) }); overlayAt(t); };
 const seekFootage = async t => {
   for (const f of FILM.footage || []) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;
