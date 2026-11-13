@@ -218,13 +218,13 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, skyC: '#93acdc', skyGround: '#a8a39c', sky: .42, sun: 2.3, sunC: '#ffdcae', sunEl: 24, exposure: 1.2, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
+      todayLight: { all: true, env: 0, glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 6, sun: 2.3, sunC: '#ffdcae', sunEl: 34, exposure: 1, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
         far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
-        board: [.45, .445, .44], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.52, .50, .47], kerb: [.86, .85, .82],
-        streets: { asphalt: '#5b5d61', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.47, .53, .31], [.41, .48, .28]],   // (streets: geometry, streetsMesh; the raster's share 0)
+        board: [.50, .47, .44], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.52, .50, .47], kerb: [.86, .85, .82],
+        streets: { asphalt: '#62656f', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.61, .69, .37], [.54, .63, .33]],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.48, .74, .68], deep: [.14, .48, .46], reach: 90, rough: .45, ripple: .08, gloss: [.03, .08, [.80, .90, .97]], refl: [.2, .3] },
-        trees: [[.31, .45, .19], [.39, .51, .22], [.27, .41, .18]] },
+        trees: [[.50, .64, .33], [.58, .70, .38], [.45, .58, .30]] },
       // light presets over todayLight (FILM_PIC todayPreset): golden, the golden hour for the opening and the return to today: a low
       // warm sun ahead of the camera and to its left (sunLeft), long soft shadows, blue-violet shade, its glow on the sky (dome[2])
       // and clouds (dome[3]), a warm haze, glass and water catching gold (the rippled water a glitter path toward the sun)
@@ -239,12 +239,12 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // tiledH) a share of them (tiled) in terracotta tile; stone, a civic or old stone building (from the data's first stoneSpan years,
       // stoneA m2 or more, its outline filling stoneC of its extent, lower than stoneH), beige to off-white
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
-        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: [.55, .62], roofGrey: '#a49e96', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
+        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: [.4, .93], roofGrey: '#a49e96', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
           stone: ['#eadfca', '#e3d5bb', '#efe7d8', '#dccfb4', '#e8dcc2'], stoneRoofs: ['#b4aa9a', '#a9a092', '#bcb3a4'],
           homes: ['#f3cfc2', '#eeb9a6', '#f5e6cc', '#f8f3ea', '#ecd6b4', '#d4dde8', '#f2d3bc', '#e8c3be', '#f0dcc8'], homeRoofs: ['#e6e1d8', '#ddd8cf', '#ebe6dd', '#d6d2cb'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
           oldWalls: ['#d2cbc2', '#c8c1b8', '#dcb4a2', '#ddd5ca', '#d0ab9c'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
           big: ['#e4e0d8', '#d9d7d2', '#e8dfcf'], bigRoofs: ['#aeaaa3', '#a3a6a8', '#b6b1a8'],
-          glass: ['#b6d2e4', '#a6c6de', '#c6d6e2', '#b2d2d8', '#a0c0dc'], towerRoofs: ['#a9adb2', '#9ea3a8'] } } },
+          glass: ['#c4d0d8', '#bac8d4', '#ccd4d8', '#c0ccce', '#b6c4d2'], towerRoofs: ['#a9adb2', '#9ea3a8'] } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
       soft: .6, tiles: 2.2, tufts: true,   // (soft: the share of a corner's averaged normal in each face's, a rounded edge; tiles: their rows' relief, times; tufts: moss at the walls' feet)
@@ -883,7 +883,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   }
   // the sun's shadow fitted to the ground the frame shows (the frame's corners and edges where they meet the ground, the far edge
   // held within a few distances of the target, raised by a tall building): the whole shadow map's texels on what is seen
-  const SH = { ray: new THREE.Vector3(), cam: new THREE.Object3D(), p: new THREE.Vector3(), q: [] };
+  const SH = { ray: new THREE.Vector3(), cam: new THREE.OrthographicCamera(), p: new THREE.Vector3(), q: [] };   // (a camera: its lookAt turns -z to the target, as the shadow's own camera does; an Object3D turned +z, so the fitted depth range came out behind the light and no shadow was cast)
   function fitShadow(c, light, target, d) {
     camera.updateMatrixWorld(); const pts = [], H = 150 * scale;   // (H: a tall building, exaggerated)
     for (const [x, y] of [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]) {
@@ -1001,7 +1001,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       TF.update(target, d, src); }
     const LT_ = FP_ ? todayL() : null, tsE_ = LT_ ? (LT_.all ? 1 : TODAY_K.value.y * (1 - THREE.MathUtils.smoothstep(TODAY_K.value.z, .3, .6))) : 0;   // (today's city the subject: its own light)
     const kAir_ = FP_ && FILM_PIC.pool ? THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]) : 0, elD_ = THREE.MathUtils.lerp(FP_ && FILM_PIC.rake ? THREE.MathUtils.lerp(SUN_EL, FILM_PIC.rake, kAir_) : SUN_EL, LT_ && LT_.sunEl ? LT_.sunEl : 0, LT_ && LT_.sunEl ? tsE_ : 0);   // (an aerial's raking sun, FILM_PIC rake)
-    const v = camera.position.clone().sub(target), kd = U.uKeyDir.value, el = THREE.MathUtils.degToRad(elD_), r = d * (FP_ ? 12 : 1.2);   // (the film's: the light far back, so the shadow fitted to the frame (fitShadow) has everything it sees in front of it: at 1.2 shot distances the ground beyond it fell behind the light, outside its depth range, and no shadow was cast)
+    const v = camera.position.clone().sub(target), kd = U.uKeyDir.value, el = THREE.MathUtils.degToRad(elD_), r = d * 1.2;
     const az = film && sunAz && LT_ && LT_.sunLeft != null ? THREE.MathUtils.degToRad(sunAz.az + (sunAz.own ? 0 : LT_.sunLeft))   // (the look's sun per shot: behind and to the left of the camera, todayLight sunLeft; a node's own)
       : film ? (camAz != null ? THREE.MathUtils.degToRad(camAz + (FP_ ? FILM_PIC.sunSide + (LT_ && LT_.side || 0) * tsE_ : 55)) : Math.atan2(kd.x, kd.z)) : Math.atan2(v.x, v.z) + THREE.MathUtils.degToRad(SUN_SIDE);   // the sun: behind the eye, to its left, 40 degrees up (fx light: lower); the film: from the key light's bearing
     sun.position.set(target.x + r * Math.sin(az) * Math.cos(el), target.y + r * Math.sin(el), target.z + r * Math.cos(az) * Math.cos(el)); sun.target.position.copy(target);
@@ -1078,9 +1078,10 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     ht.uniforms.h.value = 4 / size.x; vt.uniforms.v.value = 4 / size.y; ht.uniforms.r.value = vt.uniforms.r.value = .5;
     ao.setSize(size.x, size.y); ao.updateGtaoMaterial({ radius: d * .02 });
     renderer.shadowMap.needsUpdate = true;
+    const env0 = scene.environmentIntensity; if (LT_ && LT_.env != null) scene.environmentIntensity = THREE.MathUtils.lerp(env0, LT_.env, tsE_);   // (todayLight env: the studio's room environment, an even fill that lifted every shade and shadow, at this share)
     if (RF) reflect(target);   // (today's water: the scene mirrored in it, first)
     (FP ? FP.composer : composer).render();
-    scene.background = bg0; scene.fog = fog0; camera.layers.mask = lay0;
+    scene.background = bg0; scene.fog = fog0; camera.layers.mask = lay0; scene.environmentIntensity = env0;
     for (const [m, mat, dm] of swapM) { m.material = mat; m.customDepthMaterial = dm; }
     if (ctx) ctx.visible = ctx.userData.vis0;
   }
