@@ -55,15 +55,15 @@ const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }
 let ROOFS = null, BAND_IX = [];
 const BAND_C = [{ value: null }, { value: null }], BAND_HI = { value: new Array(6).fill(1e5) }, BAND_Y = { value: 1e4 }, ROOF_ON = { value: 1 };   // (BAND_Y: the year the bands' plaster has reached: the growth's own when it is told, the year counter's otherwise; ROOF_ON: no roof pieces while the growth raises the city)   // (BAND_HI: the year each band is done, the shader's)
 const YEAR_W = { value: null }, YEAR_T = { value: null }, YEAR_C = { value: null }, TODAY_K = { value: new THREE.Vector3(1e4, 0, 0) }; let YEAR_D = null, YEAR_E = null;   // (TODAY_K: the film's year, whether today's city stands: x year, y on)
-function todayYears(mesh, PW, PD, reach, scale, roads = null, bands = null) {
+function todayYears(mesh, PW, PD, reach, scale, roads = null, bands = null, riseYear = null) {   // (riseYear(year, t): the growth's band a building rising at film time t (its own, when later than its year's) is shown with)
   if (YEAR_W.value || !mesh || typeof document === 'undefined') return;
-  const P = mesh.geometry.attributes.position, C = mesh.geometry.attributes.aCtr, D = mesh.geometry.attributes.aData; if (!C || !D) return;
+  const P = mesh.geometry.attributes.position, C = mesh.geometry.attributes.aCtr, D = mesh.geometry.attributes.aData, GT = mesh.geometry.attributes.aGrowT; let gt_ = 0; if (!C || !D) return;
   const recs = []; let lx = 1e9, lz = 1e9, x0 = 1e9, z0 = 1e9, x1 = -1e9, z1 = -1e9, yr = 0, y1 = -1e9, hm = 0, n_ = 0, sx_ = 0, sz_ = 0, sxx_ = 0, szz_ = 0, sxz_ = 0, ri0_ = 0; ROOFS = [];
   for (let i = 0; i <= C.count; i++) { const x = i < C.count ? C.getX(i) : NaN, z = i < C.count ? C.getY(i) : NaN;
-    if (x !== lx || z !== lz) { if (x1 > -1e9) { recs.push([yr, x0, z0, x1, z1]); if (hm >= 8 && n_) {   // (its outline's own axes: the corners' spread, a rectangle's half sides)
+    if (x !== lx || z !== lz) { if (x1 > -1e9) { recs.push([yr, x0, z0, x1, z1, gt_]); if (hm >= 8 && n_) {   // (its outline's own axes: the corners' spread, a rectangle's half sides)
         const mx = sx_ / n_, mz = sz_ / n_, cxx = sxx_ / n_ - mx * mx, czz = szz_ / n_ - mz * mz, cxz = sxz_ / n_ - mx * mz, th = .5 * Math.atan2(2 * cxz, cxx - czz);
         const c = Math.cos(th), sn = Math.sin(th), va = c * c * cxx + 2 * c * sn * cxz + sn * sn * czz, vb = sn * sn * cxx - 2 * c * sn * cxz + c * c * czz;
-        ROOFS.push([mx, mz, th, Math.sqrt(Math.max(va, 0)), Math.sqrt(Math.max(vb, 0)), y1, yr, hm, lx, ri0_, i]); } } lx = x; lz = z; x0 = z0 = 1e9; x1 = z1 = -1e9; y1 = -1e9; n_ = sx_ = sz_ = sxx_ = szz_ = sxz_ = 0; ri0_ = i; if (i < C.count) { yr = D.getX(i); hm = D.getY(i); } }
+        ROOFS.push([mx, mz, th, Math.sqrt(Math.max(va, 0)), Math.sqrt(Math.max(vb, 0)), y1, yr, hm, lx, ri0_, i]); } } lx = x; lz = z; x0 = z0 = 1e9; x1 = z1 = -1e9; y1 = -1e9; n_ = sx_ = sz_ = sxx_ = szz_ = sxz_ = 0; ri0_ = i; if (i < C.count) { yr = D.getX(i); hm = D.getY(i); gt_ = GT ? GT.getX(i) : 0; } }
     if (i < C.count) { const px = P.getX(i), pz = P.getZ(i); if (px < x0) x0 = px; if (px > x1) x1 = px; if (pz < z0) z0 = pz; if (pz > z1) z1 = pz; if (P.getY(i) > y1) y1 = P.getY(i); n_++; sx_ += px; sz_ += pz; sxx_ += px * px; szz_ += pz * pz; sxz_ += px * pz; } }
   for (let i = recs.length - 1; i >= 0; i--) { const r = recs[i]; if (Math.max(r[3] - r[1], r[4] - r[2]) > 400 * scale) recs.splice(i, 1); }   // (a runway, a long embankment: no plaster round it, it is not a block)
   recs.sort((a, b) => b[0] - a[0]);   // (the latest first: the earliest drawn last, on top)
@@ -106,7 +106,7 @@ function todayYears(mesh, PW, PD, reach, scale, roads = null, bands = null) {
     const [one, go] = cv(), [one2, go2] = cv(), [ext2, gx2] = cv();
     BAND_IX = []; let slot = 0; const yMax = recs.reduce((m, r) => Math.max(m, r[0]), 0);   // (the data's latest year: the last band, open-ended, is done by then)
     for (let k = 0; k < nb && slot < 6; k++, slot++) { const [, gt_] = tgt[slot < 3 ? 0 : 1]; go.globalCompositeOperation = 'source-over'; go.filter = 'none'; go.fillStyle = '#000'; go.fillRect(0, 0, N, N); go.fillStyle = chan[slot % 3];
-      go.fillStyle = '#fff'; for (const [y, a, b, cc, d] of recs) if ((y > 1 ? y : 1900) < bands[k][1]) go.fillRect((a - e) / PW * N + N / 2, (b - e) / PD * N + N / 2, (cc - a + 2 * e) / PW * N, (d - b + 2 * e) / PD * N);
+      go.fillStyle = '#fff'; for (const [y0_, a, b, cc, d, t_] of recs) { const y = riseYear ? riseYear(y0_, t_) : y0_; if ((y > 1 ? y : 1900) < bands[k][1]) go.fillRect((a - e) / PW * N + N / 2, (b - e) / PD * N + N / 2, (cc - a + 2 * e) / PW * N, (d - b + 2 * e) / PD * N); }   // (a building that rises later than its year (aGrowT: when the camera first sees it) brings its ground with it, not with its year)
       // its fabric: how much of the ground round it the cover holds (the cover softened 150 m): a city's fabric holds most of it, a
       // village's scattered houses a little, so the built ground keeps to the continuous fabric and a village's houses stand on the land
       gx2.globalCompositeOperation = 'source-over'; gx2.filter = `blur(${Math.max(1, 150 * scale / PW * N).toFixed(1)}px)`; gx2.drawImage(one, 0, 0); gx2.filter = 'none';
@@ -821,7 +821,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       l.forEach(([x, y, z, sx, sy, sz, yr, th], n) => { M4.makeRotationY(-th).multiply(R4.makeScale(sx, sy, sz)).setPosition(x, y, z); mesh.setMatrixAt(n, M4); yA[n] = yr; });
       geo.setAttribute('iYear', new THREE.InstancedBufferAttribute(yA, 1)); mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); return mesh; }); };   // (plant rooms; parapets)
   const todayNow = () => {
-      if (film && !S.fx && MAT && MAT.base && MAT.base.ground_in && cityMesh) { todayYears(cityMesh, S.PW, S.PD, MAT.base.ground_in.reachToday || 45, scale, roads, bands);
+      if (film && !S.fx && MAT && MAT.base && MAT.base.ground_in && cityMesh) { todayYears(cityMesh, S.PW, S.PD, MAT.base.ground_in.reachToday || 45, scale, roads, bands, grow ? (y, t) => { if (!(t > 0)) return y; const b = [...grow.bands].sort((p, q) => p.t - q.t).find(b => b.t + b.spread * .5 >= t); return b ? Math.max(y, b.hi - .5) : 1e4; } : null);
         const by_ = BACK.uBackdropY.value, yr_ = U.uYear.value, sm_ = THREE.MathUtils.smoothstep; let yg_ = Infinity; const now_ = U.uNow ? U.uNow.value : 0;   // (the film's growth raises today's city band by band at its own times: the plaster arrives with them, not with the counter)
         if (grow && now_ >= grow.on) { yg_ = -Infinity; for (const b of grow.bands) if (now_ >= b.t + b.spread * .5) yg_ = Math.max(yg_, b.hi - .5); }
         TODAY_K.value.set(Math.min(Math.max(yr_, BACK.uDataY0.value), yg_), Math.max(U.uGrowRise ? U.uGrowRise.value : 0, sm_(yr_, by_ - 5, by_ + 5)) > .5 && cityMesh.visible ? 1 : 0, S.U.uDimTodayC ? S.U.uDimTodayC.value : 0);
@@ -1069,18 +1069,18 @@ function FACADE_GLSL(S) {
         if (tower_) {   // a tower as a model maker cuts it in acrylic: a fine mullion line every 1.5 m and a floor line at each storey,
           // on white or on a pale glass tint that catches the sky (about half the towers)
           float mu_ = 1.5, fu_ = abs(fract(um_ / mu_) - .5) * 2., kM_ = 1. - smoothstep(.22, .45, pxm_ / mu_);
-          float ml_ = mix(.1, smoothstep(.86, .94, fu_), kM_), fl_ = mix(.08, 1. - smoothstep(.05, .1, fy_), kS_);   // (afar: their shares of the wall)
+          float ml_ = mix(.1, smoothstep(.84, .92, fu_), kM_), fl_ = mix(.12, 1. - smoothstep(.08, .14, fy_), kS_);   // (afar: their shares of the wall; the floor line a seventh of a storey, so a pixel of the lens's blur keeps it)
           vec3 v_ = normalize(cameraPosition - vWP); float fr_ = pow(1. - max(dot(n_, v_), 0.), 3.), gs_ = step(fract(hh_ * 5.3), .5);
           vec3 gz_ = mix(vec3(.80, .85, .89), vec3(.92, .94, .97), .3 + .6 * fr_);   // (pale tinted glass, the sky in it at a grazing view)
-          c_ = mix(mat_, gz_, gs_) * (1. - .42 * max(ml_, fl_)); glass_ = gs_ * (1. - max(ml_, fl_)) * show_;
+          c_ = mix(mat_, gz_, gs_) * (1. - .42 * max(ml_, fl_)); glass_ = gs_ * (1. - max(ml_, fl_)) * show_; eng_ = max(ml_, fl_) * show_;
         } else if (res_) {   // a slab: a balcony band at each floor, recessed windows between
           float wu_ = 3.6, fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
           float band_ = mix(.16, 1. - smoothstep(.12, .2, fy_), kS_), win_ = mix(.37, step(.32, fy_) * step(fy_, .86) * step(.12, fu_) * step(fu_, .8), kW_);
-          c_ = mat_ * (1. + .06 * band_) * (1. - .5 * win_ * (1. - band_));
+          c_ = mat_ * (1. + .06 * band_) * (1. - .5 * win_ * (1. - band_)); eng_ = win_ * (1. - band_) * show_;
         } else {   // the low fabric: small windows
           float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
           float win_ = mix(.14, step(.38, fy_) * step(fy_, .78) * step(.32, fu_) * step(fu_, .66), kW_);
-          c_ = mat_ * (1. - .45 * win_);
+          c_ = mat_ * (1. - .45 * win_); eng_ = win_ * show_;
         }
         diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * c_ / max(dot(diffuseColor.rgb, vec3(.2126, .7152, .0722)), .05) * .92, show_);
       } else if (n_.y > .9) diffuseColor.rgb = mix(diffuseColor.rgb, mat_ * .9 * (tower_ ? .95 : 1.), show_);   // (a roof in its material)
@@ -1133,7 +1133,7 @@ function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = 
       .replace('#include <project_vertex>', vert + '\n#include <project_vertex>')
       .replace('#include <fog_vertex>', '#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz;' + (depth ? '' : ' vWN = normalize(mat3(modelMatrix) * objectNormal);'));
     if (depth) return;
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\n// (look: mini)\nfloat glass_ = 0.;\nvarying vec4 vData; varying vec3 vWP, vWN; varying float vUp, vBase, vRuin, vMute, vFresh; varying vec2 aCtrV; uniform float uNow, uNight, uScaleM, uPallR, uPallK; uniform vec2 uPallC;${S.marksGLSL()}${u ? ` uniform float uEraBurn, uLossBurn[${nL}], uLossBurnt[${nL}]; uniform vec3 uRuinC;${fire ? ' uniform vec2 uO;' + S.fireGLSL : ''}` : ''}`)
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\n// (look: mini)\nfloat glass_ = 0., eng_ = 0.;\nvarying vec4 vData; varying vec3 vWP, vWN; varying float vUp, vBase, vRuin, vMute, vFresh; varying vec2 aCtrV; uniform float uNow, uNight, uScaleM, uPallR, uPallK; uniform vec2 uPallC;${S.marksGLSL()}${u ? ` uniform float uEraBurn, uLossBurn[${nL}], uLossBurnt[${nL}]; uniform vec3 uRuinC;${fire ? ' uniform vec2 uO;' + S.fireGLSL : ''}` : ''}`)
       .replace('#include <color_fragment>', '#include <color_fragment>' + marks + '\n  diffuseColor.rgb *= 1. - uPallK * .55 * smoothstep(uPallR, uPallR * .3, length(vWP.xz - uPallC));   // (under a burning city\'s pall)')
       .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>' + night);
     if (u && surf) sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
@@ -1174,7 +1174,10 @@ ${FILM_PIC.material === 'clay' ? `
     else sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
   { float l_ = dot(diffuseColor.rgb, vec3(.2126, .7152, .0722)); diffuseColor.rgb = mix(diffuseColor.rgb, mix(vec3(l_), diffuseColor.rgb, .35) * .8 + .1 * l_ + .03, .8 * vMute);   // a muted backdrop
     diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.22, 1.1, .88) + vec3(.07, .045, 0.), vFresh);${MAT ? '\n    diffuseColor.rgb *= 1. - .4 * vMute;   // (a material: today\'s city dimmed further behind a period city standing, the period city the subject)\n' : ''}${MAT && !depth ? FACADE_GLSL(S) : ''} }   // new: warm while new`);
-    if (!u && MAT && !depth) sh.fragmentShader = sh.fragmentShader.replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\n  roughnessFactor = mix(roughnessFactor, .22, glass_);   // (glass: the sun\'s sheen on it)'); };
+    if (!u && MAT && !depth) sh.fragmentShader = sh.fragmentShader.replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\n  roughnessFactor = mix(roughnessFactor, .22, glass_);   // (glass: the sun\'s sheen on it)');
+    if (!u && MAT && !depth) sh.fragmentShader = sh.fragmentShader.replace('#include <opaque_fragment>', `{ float lw_ = dot(outgoingLight, vec3(.2126, .7152, .0722));   // the engraving on a lit wall: a groove keeps its shade however strong the light (on glass the sun's sheen had washed it out)
+    outgoingLight *= 1. - .45 * eng_ * smoothstep(.35, 1., lw_); }
+#include <opaque_fragment>`); };
   mat.customProgramCacheKey = () => 'mini-film ' + (u ? 'era ' + nL + (fire ? ' fire' : '') : 'today') + (depth ? ' depth' : '') + (surf ? ' surf' : '');
   return mat;
 }
