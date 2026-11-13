@@ -53,6 +53,7 @@ const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }
 // building's footprint `reach` m round on a 4096 map (YEAR_W, the built-up area, its streets inside it) and 3 m round (YEAR_T, the
 // blocks: a street is built-up ground off them), the earliest year on top; a texel holds the year - 1899 (0: never built)
 let ROOFS = null, BAND_IX = [];
+const TODAY_B = { value: new THREE.Vector4(-1, 0, 0, 0) };   // (today's board, linear, and its streets' darkening (negative: lighter grooves), when todayLight gives them; x < 0: the base's own)
 const BAND_C = [{ value: null }, { value: null }], BAND_HI = { value: new Array(6).fill(1e5) }, BAND_Y = { value: 1e4 }, ROOF_ON = { value: 1 };   // (BAND_Y: the year the bands' plaster has reached: the growth's own when it is told, the year counter's otherwise; ROOF_ON: no roof pieces while the growth raises the city)   // (BAND_HI: the year each band is done, the shader's)
 const YEAR_W = { value: null }, YEAR_T = { value: null }, YEAR_C = { value: null }, TODAY_K = { value: new THREE.Vector3(1e4, 0, 0) }; let YEAR_D = null, YEAR_E = null;   // (TODAY_K: the film's year, whether today's city stands: x year, y on)
 function todayYears(mesh, PW, PD, reach, scale, roads = null, bands = null) {
@@ -335,7 +336,7 @@ function landMaterial(U, PW, PD, kind, land, relief, o, ex, scale, S = null, far
     if (relief) { for (const k of ['uFxHgt', 'uFxRect', 'uFxSun', 'uFxR', 'uFxRA', 'uFxLitC', 'uFxShadeC', 'uFxFlat']) sh.uniforms[k] = U[k]; sh.uniforms.uFxAdd = { value: 0 }; }   // (a bright ground: no light added on top)
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec2 vXZ; varying vec3 vFxW;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvXZ = (modelMatrix * vec4(position, 1.)).xz; vFxW = (modelMatrix * vec4(transformed, 1.)).xyz;');
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
-varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${S && MAT && MAT.base && MAT.base.tex ? ' uniform sampler2D uSlateC, uSlateN, uSlateR, uBuilt, uTrees, uYearW, uYearT, uYearC, uGreen, uBandC0, uBandC1; uniform float uGreenOn, uBandHi[6], uBandY; uniform vec3 uTodayK; uniform vec4 uPool, uGeoT; vec3 slateN_ = vec3(0., 0., 1.); float slateR_ = .7;' : ''}${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${town ? `
+varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${S && MAT && MAT.base && MAT.base.tex ? ' uniform sampler2D uSlateC, uSlateN, uSlateR, uBuilt, uTrees, uYearW, uYearT, uYearC, uGreen, uBandC0, uBandC1; uniform float uGreenOn, uBandHi[6], uBandY; uniform vec4 uTodayB; uniform vec3 uTodayK; uniform vec4 uPool, uGeoT; vec3 slateN_ = vec3(0., 0., 1.); float slateR_ = .7;' : ''}${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${town ? `
 uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''}; uniform float uHideT[${H}], uHideG[${H}];
 float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv)${H3 ? ', h3 = texture2D(uHide3, uv)' : ''};
   float hm[${H}]; hm[0] = h1.r; hm[1] = h1.g; hm[2] = h1.b; hm[3] = h1.a; hm[4] = h2.r; hm[5] = h2.g; hm[6] = h2.b; hm[7] = h2.a;${H3 ? ' hm[8] = h3.r; hm[9] = h3.g; hm[10] = h3.b; hm[11] = h3.a;' : ''}
@@ -665,6 +666,20 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
   const dome = FX && FX.haze ? makeSky(FX_SKY.mini) : null;
   if (FP) { FP.bloom.strength = .1; FP.bloom.threshold = 2.2;   // (a bright day: only the sun's glints glow, not every lit wall)
     FP.vig.uniforms.amt.value = .22;
+    if (FP_ && MAT && MAT.todayLight) {   // a light test (todayLight edge, filmic, grain): the colour film's passes only
+      const cm = FP.dof.coc.material; Object.assign(cm.uniforms, { uEdge: { value: 0 }, uPx: { value: new THREE.Vector2() }, uPxK: { value: 1 } });
+      cm.fragmentShader = cm.fragmentShader.replace('uniform float aoAmt,', 'uniform float uEdge, uPxK; uniform vec2 uPx;\n    uniform float aoAmt,').replace('gl_FragColor = vec4(col, c);', `if (uEdge > 0. && d < .99999) {   // an edge catches the light like a bevel: where the surface turns away (the centre nearer than its neighbours' mean, in 1/z), faded once two pixels span over 3 m
+        float w0 = 1. / z, wl = -1. / perspectiveDepthToViewZ(texture2D(tDepth, vUv - vec2(uPx.x * 2., 0.)).x, near, far), wr = -1. / perspectiveDepthToViewZ(texture2D(tDepth, vUv + vec2(uPx.x * 2., 0.)).x, near, far);
+        float wu = -1. / perspectiveDepthToViewZ(texture2D(tDepth, vUv + vec2(0., uPx.y * 2.)).x, near, far), wd = -1. / perspectiveDepthToViewZ(texture2D(tDepth, vUv - vec2(0., uPx.y * 2.)).x, near, far);
+        float e_ = smoothstep(.002, .02, max(w0 - .5 * (wl + wr), w0 - .5 * (wu + wd)) / w0) * (1. - smoothstep(1.5, 3., z * uPxK));
+        col *= 1. + uEdge * e_; }
+      gl_FragColor = vec4(col, c);`); cm.needsUpdate = true;
+      const vm = FP.vig.material; Object.assign(vm.uniforms, { uGrain: { value: 0 }, uFilmic: { value: 0 }, uExpo: { value: 1 } });
+      vm.fragmentShader = vm.fragmentShader.replace('uniform float amt,', 'uniform float uGrain, uFilmic, uExpo, amt,').replace('gl_FragColor = c; }', `c.rgb *= uExpo;
+        if (uFilmic > 0.) { vec3 x_ = c.rgb; vec3 f_ = x_ * x_ / (x_ + .045) * 1.06; f_ = f_ / (1. + .18 * f_) * 1.21;   // a filmic curve: a toe for the deep shadows, a soft shoulder, mid grey (.18) kept
+          c.rgb = mix(c.rgb, f_, uFilmic); }
+        if (uGrain > 0.) { vec2 g_ = gl_FragCoord.xy; float n_ = fract(sin(dot(g_, vec2(12.9898, 78.233))) * 43758.5453) + fract(sin(dot(g_ + 3.7, vec2(39.35, 11.13))) * 24634.63) - 1.; c.rgb *= 1. + uGrain * n_; }   // (a trace of grain)
+        gl_FragColor = c; }`); vm.needsUpdate = true; }
     if (FP.dof.haze) { const ex = S.terrainEx; FP.dof.haze.uHazeD.value = 1 / (FX.haze.dist_km * 1000 * scale * MINI_LIFT.haze); FP.dof.haze.uHazeB.value = 1 / (FX.haze.height_m * scale * ex); FP.dof.haze.uHazeK.value = FX.haze.k; FP.dof.haze.uHazeS.value = FX.haze.start_km * 1000 * scale; FP.dof.haze.uHazeRect.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect.value : new THREE.Vector4(-PW / 2, -PD / 2, PW / 2, PD / 2)); FP.dof.haze.uHazeRect2.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect2.value : FP.dof.haze.uHazeRect.value); FP.dof.haze.uHazeEdge.value = FX.haze.edge_km * 1000 * scale; } }
   if (dome) { dome.mesh.layers.set(L); scene.add(dome.mesh); }
   // the film: the tilt-shift band after the bloom (in place of the depth of field by distance), a lighter vignette, the colours clean
@@ -807,7 +822,8 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     for (const m of [...eraMeshes, cityMesh, plate].filter(Boolean)) { if (!m.userData.mini) continue; swapM.push([m, m.material, m.customDepthMaterial]); m.material = m.userData.mini; m.customDepthMaterial = m.userData.miniDepth; m.layers.enable(L); m.castShadow = m.receiveShadow = true; }   // (the film: shadows deformed as the city stands)
     { const src = [...eraMeshes.filter(m => m.visible), ...(cityMesh.visible ? [cityMesh] : [])]; for (const l of landmarks) l.traverse(o => { if (o.isMesh) src.push(o); });
       TF.update(target, d, src); }
-    const kAir_ = FP_ && FILM_PIC.pool ? THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]) : 0, elD_ = FP_ && FILM_PIC.rake ? THREE.MathUtils.lerp(SUN_EL, FILM_PIC.rake, kAir_) : SUN_EL;   // (an aerial's raking sun, FILM_PIC rake)
+    const LT_ = FP_ && MAT && MAT.todayLight ? { ...MAT.todayLight, ...(FILM_PIC.todayLight || {}) } : null, tsE_ = LT_ ? TODAY_K.value.y * (1 - THREE.MathUtils.smoothstep(TODAY_K.value.z, .3, .6)) : 0;   // (today's city the subject: its own light)
+    const kAir_ = FP_ && FILM_PIC.pool ? THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]) : 0, elD_ = THREE.MathUtils.lerp(FP_ && FILM_PIC.rake ? THREE.MathUtils.lerp(SUN_EL, FILM_PIC.rake, kAir_) : SUN_EL, LT_ && LT_.sunEl ? LT_.sunEl : 0, LT_ && LT_.sunEl ? tsE_ : 0);   // (an aerial's raking sun, FILM_PIC rake)
     const v = camera.position.clone().sub(target), kd = U.uKeyDir.value, el = THREE.MathUtils.degToRad(elD_), r = d * 1.2;
     const az = film ? (camAz != null ? THREE.MathUtils.degToRad(camAz + (FP_ ? FILM_PIC.sunSide : 55)) : Math.atan2(kd.x, kd.z)) : Math.atan2(v.x, v.z) + THREE.MathUtils.degToRad(SUN_SIDE);   // the sun: behind the eye, to its left, 40 degrees up (fx light: lower); the film: from the key light's bearing
     sun.position.set(target.x + r * Math.sin(az) * Math.cos(el), target.y + r * Math.sin(el), target.z + r * Math.cos(az) * Math.cos(el)); sun.target.position.copy(target);
@@ -855,6 +871,11 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
         sky.intensity *= THREE.MathUtils.lerp(1, L_.sky, ts_); sun.intensity *= THREE.MathUtils.lerp(1, L_.sun, ts_);
         FP.dof.aoAmt = THREE.MathUtils.lerp(FILM_PIC.ao, L_.ao, ts_); FP.bloom.threshold = THREE.MathUtils.lerp(2.2, L_.bloom[0], ts_); FP.bloom.strength = THREE.MathUtils.lerp(.1, L_.bloom[1], ts_);
         if (L_.sunC) sun.color.lerp(new THREE.Color(L_.sunC), ts_);
+        FP.vig.uniforms.uExpo.value = THREE.MathUtils.lerp(1, L_.exposure ?? 1, ts_);   // (the whole picture's exposure: the board has its own light, fxReliefLight)
+        if (L_.board) TODAY_B.value.set(...L_.board.map(v => Math.pow(v, 2.2)), L_.street ?? .3); else TODAY_B.value.x = -1;
+        if (FP.dof.coc.material.uniforms.uEdge) { const u_ = FP.dof.coc.material.uniforms, rt_ = FP.dof.rt; u_.uEdge.value = (L_.edge || 0) * ts_; u_.uPx.value.set(1 / rt_.width, 1 / rt_.height);
+          u_.uPxK.value = 2 * 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / rt_.height / scale; }
+        FP.vig.uniforms.uGrain.value = (L_.grain || 0) * ts_; FP.vig.uniforms.uFilmic.value = (L_.filmic || 0) * ts_;
         FP.dof.aper *= THREE.MathUtils.lerp(1, L_.dof ?? 1, ts_); FP.dof.band *= THREE.MathUtils.lerp(1, L_.band ?? 1, ts_); }
     }
     if (BAND) { const rt = FP.composer.renderTarget1; for (const b of BAND) { b.uniforms.px.value.set(1 / rt.width, 1 / rt.height); b.uniforms.k.value = rt.height / 1080 * (1 - sharp); } }
@@ -899,7 +920,7 @@ let SLATE_MAPS = null;
 function slateMaps() {
   if (SLATE_MAPS) return SLATE_MAPS; const L_ = new THREE.TextureLoader(), dir = new URL(`./tex/${MAT.base.tex}/`, import.meta.url).href;
   const t = (f, srgb) => { const x = L_.load(dir + f); x.wrapS = x.wrapT = THREE.RepeatWrapping; x.anisotropy = 8; if (srgb) x.colorSpace = THREE.SRGBColorSpace; return x; };
-  return SLATE_MAPS = { uBandC0: BAND_C[0], uBandC1: BAND_C[1], uBandHi: BAND_HI, uBandY: BAND_Y, uGreen: GREEN, uGreenOn: GREEN_ON, uYearW: YEAR_W, uYearT: YEAR_T, uYearC: YEAR_C, uTodayK: TODAY_K, uGeoT: GEO_T, uBuilt: BUILT, uTrees: TREES, uPool: POOL, uSlateC: { value: t('Diffuse.jpg', true) }, uSlateN: { value: t('nor_gl.jpg') }, uSlateR: { value: t('Rough.jpg') } };
+  return SLATE_MAPS = { uTodayB: TODAY_B, uBandC0: BAND_C[0], uBandC1: BAND_C[1], uBandHi: BAND_HI, uBandY: BAND_Y, uGreen: GREEN, uGreenOn: GREEN_ON, uYearW: YEAR_W, uYearT: YEAR_T, uYearC: YEAR_C, uTodayK: TODAY_K, uGeoT: GEO_T, uBuilt: BUILT, uTrees: TREES, uPool: POOL, uSlateC: { value: t('Diffuse.jpg', true) }, uSlateN: { value: t('nor_gl.jpg') }, uSlateR: { value: t('Rough.jpg') } };
 }
 // a material's base under the model (FILM_PIC.looks: maquette, clay), in place of the painted land: m_ the metres, vFxW the world
 function baseGLSL(B, scale, town = false, far = false) {
@@ -933,7 +954,8 @@ function baseGLSL(B, scale, town = false, far = false) {
         ld_ = pow(mix(${v3(B.land.olive)}, ${v3(B.land.ochre)}, .45 + .2 * (fxLn(m_ / 2600.) - .5)), vec3(2.2)) * (.96 + .05 * fxLn(m_ / 900.)); rk_ = 0.;   // (beyond the plate: the board calm, one land with a slow swell, no patches)` : ''}
         sl_ = ld_; slateN_ = normalize(mix(vec3(0., 0., 1.), slateN_, rk_)); slateR_ = mix(.95, slateR_, rk_); }   // (the photo's relief on the rock only: on open land its broad undulation read as cloud)` : ''}
       float tk_ = kt_ * (1. - smoothstep(.3, .6, uTodayK.z));   // (today's city the subject: its board darker and cooler, ground_in.today, so the buildings carry the white; its streets firmer)
-      vec3 pl_ = pow(${B.ground_in.today ? `mix(${v3(B.ground_in.col)}, ${v3(B.ground_in.today)}, tk_)` : v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - ${B.ground_in.street ? `mix(${B.ground_in.street[0].toFixed(2)}, ${B.ground_in.street[1].toFixed(2)}, tk_)` : '.28'} * st_);   // (today's streets: fine lines a shade darker in the plaster, the arterials wider and darker)
+      vec3 pl_ = pow(${B.ground_in.today ? `mix(${v3(B.ground_in.col)}, ${v3(B.ground_in.today)}, tk_)` : v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - ${B.ground_in.street ? `mix(${B.ground_in.street[0].toFixed(2)}, ${B.ground_in.street[1].toFixed(2)}, tk_)` : '.28'} * st_);
+      if (uTodayB.x >= 0.) pl_ = mix(pl_, uTodayB.xyz * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - uTodayB.w * st_), tk_);   // (todayLight's board, a light test)   // (today's streets: fine lines a shade darker in the plaster, the arterials wider and darker)
       float gr_ = uGreenOn * in_ * smoothstep(.35, .65, texture2D(uGreen, vXZ / uPlateM + .5).r);   // (the city's green space, from the data: pipeline/greens.py)
       float pk_ = uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z)) * smoothstep(.6, .75, yc4_.b) * step(.5, yt_) * step(yt_, yc_ + .5) * gr_ * (1. - wMask);   // (inside the urban extent: a park, a garden, a lawn, flat green; open land with no data stays plaster)
       kt_ *= 1. - pk_;   // (not while today's city is a backdrop behind a period city: uTodayK.z its dim)   // (inside the urban extent, off the blocks: the model's green)
