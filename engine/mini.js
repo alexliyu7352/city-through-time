@@ -203,7 +203,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // a glb entry's own colours over them (swap colours: by role; parts: by its parts' names). In the sunny miniature: stone a
       // warm off-white, glass pale blue-silver, metal light silver; glbParts: a landmark's spheres, capsules and domes (by their
       // parts' names) in the look's rose accent
-      glbC: { stone: '#ece6dc', glass: '#76a0cc', metal: '#d3d9de', dark: '#8f9295', roof: '#d9d6cf' }, glbParts: [['sphere|capsule|dome', '#d68a98']], roofs: true, backdropH: .04,   // (backdropH: today's city behind a period city, its heights this share: a plan on the board)
+      glbC: { stone: '#ece6dc', glass: '#8ca8c6', metal: '#d3d9de', dark: '#8f9295', roof: '#d9d6cf' }, glbParts: [['sphere|capsule|dome', '#d68a98']], roofs: true, backdropH: .04,   // (backdropH: today's city behind a period city, its heights this share: a plan on the board)
       // today's city the subject, a coloured miniature city in a clear warm day: a warm sun with soft-edged shadows (sunEl,
       // shadowR: the shadow's softening in its map's texels), a cool sky in the shade (sky, skyC), the whole picture's exposure, a
       // gentle filmic curve, no grain; edge: every edge catching the light as a bevel (a pale line, close only: afar it outlined
@@ -218,12 +218,12 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, env: 0, groundFill: [.6, 1.05], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 6, sun: 2.3, sunC: '#ffdcae', sunEl: 34, exposure: 1, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
+      todayLight: { all: true, env: 0, groundFill: [.6, 1.05], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 6, sun: 2.3, sunC: '#ffdfbc', sunEl: 34, exposure: 1.04, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
         far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
-        board: [.56, .52, .48], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.74, .68, .60], kerb: [.86, .85, .82],
-        streets: { asphalt: '#62656f', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.61, .69, .37], [.54, .63, .33]],   // (streets: geometry, streetsMesh; the raster's share 0)
-        water: { shallow: [.48, .74, .68], deep: [.14, .48, .46], reach: 90, rough: .45, ripple: .08, gloss: [.03, .08, [.80, .90, .97]], refl: [.2, .3] },
+        board: [.57, .53, .50], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.75, .71, .67], kerb: [.86, .85, .82],
+        streets: { asphalt: '#747679', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.61, .69, .37], [.54, .63, .33]],   // (streets: geometry, streetsMesh; the raster's share 0)
+        water: { shallow: [.44, .67, .65], deep: [.29, .55, .55], reach: 60, rough: .45, ripple: .08, gloss: [.03, .08, [.80, .90, .97]], refl: [.2, .3] },
         trees: [[.55, .70, .35], [.63, .76, .40], [.50, .64, .32]] },
       // light presets over todayLight (FILM_PIC todayPreset): golden, the golden hour for the opening and the return to today: a low
       // warm sun ahead of the camera and to its left (sunLeft), long soft shadows, blue-violet shade, its glow on the sky (dome[2])
@@ -239,12 +239,12 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // tiledH) a share of them (tiled) in terracotta tile; stone, a civic or old stone building (from the data's first stoneSpan years,
       // stoneA m2 or more, its outline filling stoneC of its extent, lower than stoneH), beige to off-white
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
-        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: [.4, .93], roofGrey: '#a49e96', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
-          stone: ['#eadfca', '#e3d5bb', '#efe7d8', '#dccfb4', '#e8dcc2'], stoneRoofs: ['#b4aa9a', '#a9a092', '#bcb3a4'],
-          homes: ['#f3cfc2', '#eeb9a6', '#f5e6cc', '#f8f3ea', '#ecd6b4', '#d4dde8', '#f2d3bc', '#e8c3be', '#f0dcc8'], homeRoofs: ['#e6e1d8', '#ddd8cf', '#ebe6dd', '#d6d2cb'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
+        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: [.55, .93], roofGrey: '#a8a8a8', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
+          stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'], stoneRoofs: ['#b4b0aa', '#aaa8a4', '#bcb8b2'],
+          homes: ['#f4c8bc', '#eeb2a2', '#f6e4cc', '#f8f2ea', '#e6e0dc', '#d4dde8', '#fbf3ea', '#eabcb6', '#f2d8c8'], homeRoofs: ['#e6e1d8', '#ddd8cf', '#ebe6dd', '#d6d2cb'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
           oldWalls: ['#d2cbc2', '#c8c1b8', '#dcb4a2', '#ddd5ca', '#d0ab9c'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
           big: ['#e4e0d8', '#d9d7d2', '#e8dfcf'], bigRoofs: ['#aeaaa3', '#a3a6a8', '#b6b1a8'],
-          glass: ['#8eaacc', '#98b2d0', '#a4b8cc', '#8aa8c8', '#9cb4d2'], towerRoofs: ['#a9adb2', '#9ea3a8'] } } },
+          glass: ['#a2b4c8', '#aabace', '#b2c0cc', '#9eb0c4', '#aebece'], towerRoofs: ['#a9adb2', '#9ea3a8'] } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
       soft: .6, tiles: 2.2, tufts: true,   // (soft: the share of a corner's averaged normal in each face's, a rounded edge; tiles: their rows' relief, times; tufts: moss at the walls' feet)
