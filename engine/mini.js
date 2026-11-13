@@ -207,7 +207,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // The board: the base's own slate (its grain, its cleft, its sheen where the light grazes) at this grey, neutral to cool;
       // its streets pale grooves by class (street: their colour, their share), a kerb line close (kerb); trees: its street and park
       // trees (flockAt) a model maker's foam greens, light enough to read on the slate. ?pic={"todayLight":{...}}: a still's own
-      todayLight: { skyC: '#dfe8f2', skyGround: '#8a8780', sky: .33, sun: 1.15, sunC: '#fff4e6', sunEl: 32, exposure: .72, ao: .85, bloom: [1.05, .22], dof: .6, band: 1.4,
+      todayLight: { skyC: '#dfe8f2', skyGround: '#8a8780', sky: .33, sun: 1.15, sunC: '#fff4e6', sunEl: 32, exposure: .56, ao: .85, bloom: [1.05, .22], dof: .6, band: 1.4,
         edge: .6, filmic: 1, grain: .03, pool: .62, fogC: '#8d8f93', vignette: .3,
         board: [.33, .335, .345], soft: [1.8, 8], street: [[.56, .57, .58], .75], kerb: [.70, .70, .69],
         trees: [[.36, .53, .25], [.47, .62, .29], [.29, .45, .21]] },
@@ -697,7 +697,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       gl_FragColor = vec4(col, c);`); cm.needsUpdate = true;
       const vm = FP.vig.material; Object.assign(vm.uniforms, { uGrain: { value: 0 }, uFilmic: { value: 0 }, uExpo: { value: 1 } });
       vm.fragmentShader = vm.fragmentShader.replace('uniform float amt,', 'uniform float uGrain, uFilmic, uExpo, amt,').replace('gl_FragColor = c; }', `c.rgb *= uExpo;
-        if (uFilmic > 0.) { vec3 x_ = c.rgb; vec3 f_ = x_ * x_ / (x_ + .045) * 1.06; f_ = f_ / (1. + .18 * f_) * 1.21;   // a filmic curve: a toe for the deep shadows, a soft shoulder, mid grey (.18) kept
+        if (uFilmic > 0.) { vec3 x_ = c.rgb; vec3 f_ = x_ * x_ / (x_ + .045) * 1.06; f_ = f_ / (1. + .3 * f_) * 1.234;   // a filmic curve: a toe for the deep shadows, a soft shoulder (the lit walls' engraving kept), mid grey (.18) kept
           c.rgb = mix(c.rgb, f_, uFilmic); }
         if (uGrain > 0.) { vec2 g_ = gl_FragCoord.xy; float n_ = fract(sin(dot(g_, vec2(12.9898, 78.233))) * 43758.5453) + fract(sin(dot(g_ + 3.7, vec2(39.35, 11.13))) * 24634.63) - 1.; c.rgb *= 1. + uGrain * n_; }   // (a trace of grain)
         gl_FragColor = c; }`); vm.needsUpdate = true; }
@@ -1072,11 +1072,11 @@ function FACADE_GLSL(S) {
           float ml_ = mix(.1, smoothstep(.86, .94, fu_), kM_), fl_ = mix(.08, 1. - smoothstep(.05, .1, fy_), kS_);   // (afar: their shares of the wall)
           vec3 v_ = normalize(cameraPosition - vWP); float fr_ = pow(1. - max(dot(n_, v_), 0.), 3.), gs_ = step(fract(hh_ * 5.3), .5);
           vec3 gz_ = mix(vec3(.80, .85, .89), vec3(.92, .94, .97), .3 + .6 * fr_);   // (pale tinted glass, the sky in it at a grazing view)
-          c_ = mix(mat_, gz_, gs_) * (1. - .3 * max(ml_, fl_)); glass_ = gs_ * (1. - max(ml_, fl_)) * show_;
+          c_ = mix(mat_, gz_, gs_) * (1. - .42 * max(ml_, fl_)); glass_ = gs_ * (1. - max(ml_, fl_)) * show_;
         } else if (res_) {   // a slab: a balcony band at each floor, recessed windows between
           float wu_ = 3.6, fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
           float band_ = mix(.16, 1. - smoothstep(.12, .2, fy_), kS_), win_ = mix(.37, step(.32, fy_) * step(fy_, .86) * step(.12, fu_) * step(fu_, .8), kW_);
-          c_ = mat_ * (1. + .06 * band_) * (1. - .42 * win_ * (1. - band_));
+          c_ = mat_ * (1. + .06 * band_) * (1. - .5 * win_ * (1. - band_));
         } else {   // the low fabric: small windows
           float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
           float win_ = mix(.14, step(.38, fy_) * step(fy_, .78) * step(.32, fu_) * step(fu_, .66), kW_);
