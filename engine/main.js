@@ -103,6 +103,7 @@ if (GPU.fail) { if (L.unable('gpuWeak', `${GPU.fail}: ${GPU.fails[0] || ''} (${g
 GPU.onFail = e => L.unable('gpuWeak', e);
 S.renderer.domElement.addEventListener('webglcontextlost', () => L.unable('gpuLost'));
 const { U, camera, post, renderer, house, hemi, scene } = S;
+if (COLOUR) U.uDimTodayC = { value: 0 };   // (the colour film's own: engine/mini.js today's city)
 // each loss that takes a draped pool or a ground: one ring (studio uBasinL, eraShape), its slots pointing to it (uBasinRi)
 { let r = 0; for (const e of FILM.eras || []) { const of = {}; for (const b of e.basins || []) if (b.draped && b.lost) { b.ring = of[b.lost] ??= ++r; U.uBasinRi.value[b.k] = b.ring; } } }
 const TL = new THREE.TextureLoader();
@@ -533,6 +534,7 @@ function setLayers(t) {
   // today's city steps back while a period city is told; the change travels with the node's ring: outside it, the level from
   // just before the ring started (docs/STAGING.md 1: a ring shows what changes inside it)
   U.uDimToday.value = dimAt(t, eraUp) * (1 - today);
+  if (COLOUR && U.uDimTodayC) U.uDimTodayC.value = dimAt(t, eraUp);   // (the colour film: today's city steps back behind a period city standing in the modern section too, its later buildings not yet built)
   U.uDimToday0.value = ci >= 0 ? dimBefore(nodes_[ci]) * (1 - today) : U.uDimToday.value;
   for (const r of FILM.routes || []) { const R = S.routes[r.id]; const land = r.on + r.draw;   // a landing beam flashes where it lands
     if (QUIET) { if (R) R.set(0, 0, 0); if (R && R.land) R.land(-1, 0); continue; }   // (the colour film: its path on the land, engine/mini.js)
