@@ -184,7 +184,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
   material: null,
   looks: {
     // a museum's architectural maquette: plaster walls, light wood roofs and landmarks, a dark slate base, water as dark resin
-    maquette: { pic: { sunEl: 50, rake: 22, relief: 3, sun: 1.12, dof: { k: 6, max: 40, band: [.08, .2], two: true, at: .95, Ak: .25 }, sunC: '#ffe9cc', sky: .55, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
+    maquette: { pic: { sunEl: 50, rake: 22, relief: 3, sun: 1.12, dof: { k: 6, max: 40, band: [.08, .2], two: true, at: .95, Ak: .25, tilt: [.3, 1.2, 6, 1] }, sunC: '#ffe9cc', sky: .55, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
       roman: { walls: ['#efe9dc', '#e9e1d0', '#f2ede2', '#e4dbc8', '#ece4d4'], roofs: ['#a9a59e', '#9e9a93', '#b4aea4', '#c08d72', '#b9826a', '#cfc3ad', '#a39d94', '#c69a80'],
         parts: { 1: '#f6f3ec', 2: '#cfc5b3', 4: '#2e4424', 7: '#c6c2ba', 9: '#a9a59e', 10: '#c6c2ba', 11: '#cdc8bf' }, tree: { dark: .55, sat: .7 }, flags: false,
         detail: { floor: '#e6d5b6', joint: '#3c3e42', ridge: '#cfb184', shop: '#5a4a3a', base: '#d3c6ac' } },
@@ -195,23 +195,40 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
         faces: { earth: '#cfc2a4', brick: '#aaa7a1', stone: '#d2ccc0', banded: '#d8d1c3' },
         detail: { floor: '#e3ddd2', joint: '#9d988f', base: '#bdb7ac', post: '#9a5a4b', column: '#965446', beam: '#6e6156', ridgeEnd: '#6f706e', coping: '#8f908f', cornice: '#6a6866',
           ridge: '#7e7f7d', lattice: '#86705f', leaf: '#5e4b3f', paving: '#bfbab1', well: '#77736d', patch: '#6f7a4a', archRing: '#b5afa4' } },
-      // today's city: a planning model's white, the tall a little cooler
       // a detailed model's material roles (a glb's material names) as the model's: stone and glass a white acrylic, glass engraved as a
-      // tower is (a fine floor line each storey, a mullion every 1.5 m, by pixels) with a sheen, metal a light grey
+      // tower is (a fine floor line each storey, a mullion every 1.5 m, by pixels) with a sheen and the sky in it, metal a light grey;
+      // a glb entry's own colours over them (swap colours: by role; parts: by its parts' names, e.g. a tower's spheres)
       glbC: { stone: '#efece6', glass: '#eceef0', metal: '#c4c7ca', dark: '#8f9295', roof: '#d9d6cf' }, roofs: true, backdropH: .04,   // (backdropH: today's city behind a period city, its heights this share: a plan on the board)
-      // today's city the subject, lit as a photograph of a model: a key that dominates (sunEl, a low sun: long cast shadows; sky,
-      // the fill, a third of the key's), the whole picture's exposure, a filmic curve (a toe for the deep shadows, a soft
-      // shoulder) and a trace of grain; every edge catching the light like a bevel (edge, a pale line a pixel or more wide); the
-      // street canyons darker; the lens opened less (dof: its aperture this share, band: the sharp band this many times as deep);
-      // daylight, not a dark room: the light pool's floor and the far haze lifted (pool, fogC), a soft vignette.
-      // The board: the base's own slate (its grain, its cleft, its sheen where the light grazes) at this grey, neutral to cool;
-      // its streets pale grooves by class (street: their colour, their share), a kerb line close (kerb); trees: its street and park
-      // trees (flockAt) a model maker's foam greens, light enough to read on the slate. ?pic={"todayLight":{...}}: a still's own
-      todayLight: { skyC: '#dfe8f2', skyGround: '#8a8780', sky: .33, sun: 1.15, sunC: '#fff4e6', sunEl: 32, exposure: .56, ao: .85, bloom: [1.05, .22], dof: .6, band: 1.4,
-        edge: .6, filmic: 1, grain: .03, pool: .62, fogC: '#8d8f93', vignette: .3,
-        board: [.33, .335, .345], soft: [1.8, 8], street: [[.56, .57, .58], .75], kerb: [.70, .70, .69],
-        trees: [[.36, .53, .25], [.47, .62, .29], [.29, .45, .21]] },
-      today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'] } },
+      // today's city the subject, a coloured miniature city in a clear warm day: a warm sun with soft-edged shadows (sunEl,
+      // shadowR: the shadow's softening in its map's texels), a cool sky in the shade (sky, skyC), the whole picture's exposure, a
+      // gentle filmic curve, no grain; edge: every edge catching the light as a bevel (a pale line, close only: afar it outlined
+      // every roof into speckle); no bloom (it ringed the white towers); daylight, not a dark room (pool: the light pool's floor).
+      // The air: a sky dome (dome: its horizon and its zenith) and a warm light haze toward its horizon colour (fogC, haze: where
+      // it begins and where it is whole, times the shot's distance), so the far city fades into the sky and the board's edge is
+      // never seen (air: [where it begins and its depth, times the shot's distance; the plate's last metres, whole at its edge],
+      // drawn in the picture's own depth; fogC: the same as a fog, where the passes have no depth); sat, contrast: the grade.
+      // The board: a model's painted ground, light grey (board), its streets asphalt by class (street: their colour, their
+      // share), squares and quays paved light (plaza), a kerb line close (kerb), parks lawn in two greens (park); the water
+      // (water: the shallows along the banks, the deep, how far from the bank the deep begins in metres, its roughness (the sun's
+      // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
+      // park trees (flockAt), natural greens.
+      // ?pic={"todayLight":{...}}: a still's own
+      todayLight: { skyC: '#cfdcea', skyGround: '#c9c0ae', sky: .5, sun: 1.35, sunC: '#ffdfb8', sunEl: 34, exposure: .9, ao: .55, bloom: [9, 0], dof: 1, band: 1,
+        edge: 0, filmic: .5, grain: 0, pool: 1, sat: 1.08, contrast: .15, vignette: .1, shadowR: 3, air: [2, 7, 2500], fogC: '#ebe8e0', dome: ['#ebe8e0', '#a9c9e8'],
+        board: [.64, .63, .60], soft: [.8, 8], street: [[.46, .46, .47], .85], plaza: [.74, .73, .70], kerb: [.80, .79, .76], park: [[.48, .61, .36], [.40, .54, .31]],
+        water: { shallow: [.46, .74, .73], deep: [.20, .55, .62], reach: 90, rough: .4, gloss: [.05, .15, [.85, .90, .95]] },
+        trees: [[.36, .52, .25], [.46, .60, .31], [.30, .45, .23]] },
+      // today's buildings painted by kind (colourToday kinds; FACADE_GLSL draws each kind's facade): the old low fabric (lower than
+      // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick; a large low building pale; an office tower (from
+      // towerH m and towerA m2 of footprint, or any from tallH m) in tinted glass, pale blue-green or silver; the rest, most of the
+      // city, homes in soft paints (cream, ivory, sand, pale peach, light grey), their roofs light, the walk-ups' (lower than
+      // tiledH) a share of them (tiled) in terracotta tile
+      today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
+        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .22,
+          homes: ['#efe5d0', '#f3eee3', '#e6d2ae', '#efd3bf', '#dcdad5', '#ead9bd', '#e8c9b5', '#f0e9da'], homeRoofs: ['#d6d1c7', '#cbc7bf', '#ddd8cf', '#c7c3bb'], tiles: ['#b4775c', '#a87058', '#bc8466'],
+          oldWalls: ['#aaa59c', '#9f9b94', '#a9785f', '#b5b0a6', '#9a7462'], oldRoofs: ['#6f6e6b', '#787571', '#666461', '#807d78'],
+          big: ['#e4e0d8', '#d9d7d2', '#e8dfcf'], bigRoofs: ['#cfccc6', '#c3c6c8', '#d8d4cc'],
+          glass: ['#a9c5c6', '#a2b9cb', '#c0c8ce', '#b3c8c4', '#9db3c4'], towerRoofs: ['#c9cbcc', '#bfc2c4'] } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
       soft: .6, tiles: 2.2, tufts: true,   // (soft: the share of a corner's averaged normal in each face's, a rounded edge; tiles: their rows' relief, times; tufts: moss at the walls' feet)
@@ -320,15 +337,31 @@ function colourToday(mesh, T = TODAY.roman) {
     const end = i => { let x0 = 1e9, z0 = 1e9, x1 = -1e9, z1 = -1e9; for (let j = i0; j < i; j++) { const x = P.getX(j), z = P.getZ(j); if (x < x0) x0 = x; if (x > x1) x1 = x; if (z < z0) z0 = z; if (z > z1) z1 = z; }
       if (Math.max(x1 - x0, z1 - z0) > lim) lng.fill(1, i0, i); i0 = i; };
     for (let i = 1; i <= n; i++) if (i === n || A.getX(i) !== A.getX(i - 1) || A.getY(i) !== A.getY(i - 1)) end(i); }
+  // T.kinds (a material's, looks.maquette today): each building painted by its kind, read from its height and its footprint's
+  // area (the data's years do not tell old from new); aKind the facade FACADE_GLSL draws on it (0 the old fabric, 1 a home, 2 an
+  // office tower's glass, 3 a large low building), from the same choice
+  const K = T.kinds, kind = K ? new Float32Array(n) : null, paint = K ? new Float32Array(n * 3) : null;
+  if (K) { const P = g.attributes.position, A = g.attributes.aCtr, s2 = (T.scale || 1e-4) ** 2, KC = {}, pick = (a, x) => (KC[a] ||= C(K[a]))[Math.floor(x * K[a].length) % K[a].length];
+    let i0 = 0;
+    const end = i1 => { let ar = 0;   // (its footprint: the area of its roof's triangles)
+      for (let j = i0; j + 2 < i1; j += 3) if (nrm.getY(j) > .6) ar += Math.abs((P.getX(j + 1) - P.getX(j)) * (P.getZ(j + 2) - P.getZ(j)) - (P.getX(j + 2) - P.getX(j)) * (P.getZ(j + 1) - P.getZ(j))) / 2;
+      ar /= s2; const hm = d.getY(i0), h = d.getZ(i0), q = (h * 7.13) % 1, q2 = (h * 3.31) % 1;
+      const k = hm < K.oldH && ar < K.bigA ? 0 : hm < 24 && ar >= K.bigA ? 3 : (hm >= K.towerH && ar >= K.towerA) || hm >= K.tallH ? 2 : 1;
+      const wall = pick(['oldWalls', 'homes', 'glass', 'big'][k], q), roof = k === 1 && hm < K.tiledH && q2 < K.tiled ? pick('tiles', (q2 * 7.7) % 1) : pick(['oldRoofs', 'homeRoofs', 'towerRoofs', 'bigRoofs'][k], q2);
+      for (let j = i0; j < i1; j++) { const c = nrm.getY(j) > .6 ? roof : wall; paint[j * 3] = c.r; paint[j * 3 + 1] = c.g; paint[j * 3 + 2] = c.b; kind[j] = k; }
+      i0 = i1; };
+    for (let i = 1; i <= n; i++) if (i === n || A.getX(i) !== A.getX(i - 1) || A.getY(i) !== A.getY(i - 1)) end(i); }
   for (let i = 0; i < n; i++) {
     const h = d.getZ(i), hm = d.getY(i), top = nrm.getY(i) > .6, mound = d.getW(i) > .5;
     if (mound) col.set('#9a8f6a');
     else if (lng[i]) col.copy(LC);
+    else if (K) col.setRGB(paint[i * 3], paint[i * 3 + 1], paint[i * 3 + 2]);
     else if (top) col.copy(hm > 24 || h < T.flatShare ? flats[Math.floor(h * 41) % flats.length] : roofs[Math.floor(h * 97) % roofs.length]);
     else col.copy(hm > 30 ? tall[Math.floor(h * 31) % tall.length] : walls[Math.floor(h * 53) % walls.length]);
-    const k = .9 + .2 * ((h * 7.13) % 1); out[i * 3] = col.r * k; out[i * 3 + 1] = col.g * k; out[i * 3 + 2] = col.b * k;
+    const k = K ? .95 + .1 * ((h * 7.13) % 1) : .9 + .2 * ((h * 7.13) % 1); out[i * 3] = col.r * k; out[i * 3 + 1] = col.g * k; out[i * 3 + 2] = col.b * k;   // (painted: a gentle variation)
   }
   g.setAttribute('color', new THREE.BufferAttribute(out, 3));
+  if (K) g.setAttribute('aKind', new THREE.BufferAttribute(kind, 1));
   return new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .92, metalness: 0 });
 }
 
@@ -393,7 +426,7 @@ float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv
   diffuseColor.rgb = mix(land, pow(water, vec3(2.2)), wMask);${S && MAT && MAT.base ? baseGLSL(MAT.base, scale, town, far) : ''}${fu ? `
   diffuseColor.rgb *= 1. - uPallK * .55 * smoothstep(uPallR, uPallR * .3, length(vXZ - uPallC));   // (under a burning city's pall)` : ''}
   }`)   // (the water's colours are sRGB; the shading is linear)
-      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\n  roughnessFactor = mix(roughnessFactor, .32, wMask);' + (S && MAT && MAT.base && MAT.base.tex ? '\n  roughnessFactor = mix(clamp(slateR_ * .9, .3, 1.), .15, wMask);   // (the slate\'s own roughness, the resin\'s gloss)' : S && MAT && MAT.base && MAT.base.slate ? '\n  roughnessFactor = mix(.55, .18, wMask);   // (the slate\'s sheen, the resin\'s gloss)' : ''))
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\n  roughnessFactor = mix(roughnessFactor, .32, wMask);' + (S && MAT && MAT.base && MAT.base.tex ? '\n  roughnessFactor = mix(clamp(slateR_ * .9, .3, 1.), .15, wMask);   // (the slate\'s own roughness, the resin\'s gloss)' + (todayL() && todayL().water ? `\n  roughnessFactor = mix(roughnessFactor, ${todayL().water.rough.toFixed(2)}, wMask * uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z)));   // (today's water: its own)` : '') : S && MAT && MAT.base && MAT.base.slate ? '\n  roughnessFactor = mix(.55, .18, wMask);   // (the slate\'s sheen, the resin\'s gloss)' : ''))
       .replace('#include <normal_fragment_begin>', `#include <normal_fragment_begin>${o && o.meadow ? `
   { vec3 up_ = normalize((viewMatrix * vec4(0., 1., 0., 0.)).xyz); float a_ = dot(normal, up_);   // (the film: the land's slopes drawn steeper in the light, a terrace or a plateau read; buildings keep their seat)
     normal = normalize(a_ * up_ + (normal - a_ * up_) * ${(FILM_PIC.relief).toFixed(2)}); }` : ''}${S && MAT && MAT.base && MAT.base.tex ? `
@@ -401,7 +434,9 @@ float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv
     vec3 up_ = normalize((viewMatrix * vec4(0., 1., 0., 0.)).xyz), ex_ = normalize((viewMatrix * vec4(1., 0., 0., 0.)).xyz), ez_ = normalize((viewMatrix * vec4(0., 0., 1., 0.)).xyz);
     normal = normalize(mix(normal, normalize(normal + ex_ * tb_.x + ez_ * tb_.z), 1. - wMask)); }` : ''}`)
       .replace('#include <opaque_fragment>', `${relief ? 'outgoingLight = mix(outgoingLight, fxReliefLight(vFxW, outgoingLight, diffuseColor.rgb), 1. - wMask);   // the relief (fx.js)\n' : ''}${S && MAT && MAT.base && MAT.base.gloss ? `{ float cv_ = max(normalize(cameraPosition - vFxW).y, 0.);   // the resin's gloss: the room and its sky reflected, more as the view grazes it
-    outgoingLight = mix(outgoingLight, pow(vec3(${MAT.base.gloss[2].map(x => x.toFixed(3)).join(', ')}), vec3(2.2)), wMask * (${MAT.base.gloss[0].toFixed(2)} + ${MAT.base.gloss[1].toFixed(2)} * pow(1. - cv_, 3.))); }
+    outgoingLight = mix(outgoingLight, pow(vec3(${MAT.base.gloss[2].map(x => x.toFixed(3)).join(', ')}), vec3(2.2)), wMask * (${MAT.base.gloss[0].toFixed(2)} + ${MAT.base.gloss[1].toFixed(2)} * pow(1. - cv_, 3.)));${todayL() && todayL().water ? (G_ => `
+    float tw_ = uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z));   // (today's water: its own gloss, the sky in it)
+    outgoingLight = mix(outgoingLight, pow(vec3(${G_[2].map(x => x.toFixed(3)).join(', ')}), vec3(2.2)), wMask * tw_ * (${G_[0].toFixed(2)} + ${G_[1].toFixed(2)} * pow(1. - cv_, 3.)));`)(todayL().water.gloss) : ''} }
 ` : ''}#include <opaque_fragment>`);
   };
   m.customProgramCacheKey = () => 'mini-land' + (relief ? ' fx' : '') + (o ? ' land' : '') + (S ? ' film' : '') + (then ? ' then' : '') + (far ? ' far' : '') + (fu ? ' pall' : '') + (town ? ' town' : '') + (o && o.meadow ? ' meadow' : '') + (o && o.garden ? ' garden' : '');
@@ -671,8 +706,9 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     const geo = new THREE.IcosahedronGeometry(1, out.length > 100000 ? 1 : 2).scale(1, .82, 1),   // (many crowns: a wide shot, each a few pixels, the coarser sphere)
     mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95 }), mesh = new THREE.InstancedMesh(geo, mat, Math.max(out.length, 1));
     const M4 = new THREE.Matrix4(), col = new THREE.Color(), base = new THREE.Color().setRGB(...F.col.map(v => Math.pow(v, 2.2))), base2 = new THREE.Color().setRGB(...(F.col2 || F.col).map(v => Math.pow(v, 2.2)));
-    const TT_ = MAT.todayLight && MAT.todayLight.trees, tb = TT_ ? TT_.map(c_ => new THREE.Color().setRGB(...c_.map(v => Math.pow(v, 2.2)))) : [base, base2];   // (today's trees: todayLight.trees, each tree one of its greens)
-    out.forEach(([x, y, z, r, h, t], n) => { M4.compose(new THREE.Vector3(x, y + r * .7, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), h * 6.28), new THREE.Vector3(r, r, r)); mesh.setMatrixAt(n, M4);
+    const TT_ = MAT.todayLight && todayL().trees, tb = TT_ ? TT_.map(c_ => new THREE.Color().setRGB(...c_.map(v => Math.pow(v, 2.2)))) : [base, base2];   // (today's trees: todayLight.trees, each tree one of its greens)
+    out.forEach(([x, y, z, r, h, t], n) => { const sy_ = t ? .8 + .4 * ((h * 13.7) % 1) : 1;   // (today's: taller or flatter crowns, not identical balls)
+      M4.compose(new THREE.Vector3(x, y + r * .7 * sy_, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), h * 6.28), new THREE.Vector3(r, r * sy_, r)); mesh.setMatrixAt(n, M4);
       mesh.setColorAt(n, t ? col.copy(tb[Math.floor(((h * 7.31) % 1) * tb.length)]).multiplyScalar(.9 + .2 * h) : col.copy(base).lerp(base2, vn(x / scale / 40, z / scale / 40) * .7 + h * .3).multiplyScalar(.8 + .4 * h)); });   // (col2: a second green, by groves more than by tree)
     mesh.count = out.length; mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); FL.mesh = mesh; };
   const info = card ? infoPanel(card) : null;
@@ -684,6 +720,10 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
   const FP = FX || film ? makePost(renderer, scene, camera, S.post.dof.rt.width / S.post.dof.s, S.post.dof.rt.height / S.post.dof.s,
     { ssaa: S.post.dof.s, ao: !phone, aoAmt: FX ? MINI_LIFT.ao : FP_ ? FILM_PIC.ao : FILM_AO, aoDepth: film, ...S.gpu.targets, ...(FX && FX.haze ? { haze: FX_SKY.mini } : {}), ...(FX && FX.dof || FP_ && FILM_PIC.dof.two ? { dof2: true } : {}) }) : null;
   const dome = FX && FX.haze ? makeSky(FX_SKY.mini) : null;
+  // today's sky (a material's todayLight dome: [horizon, zenith]): a dome from the haze's colour at the horizon up to a soft blue,
+  // no sun's glow on it (the haze's one colour meets it at the horizon without a seam); shown while today's city is the subject
+  const domeT = film && !FX && MAT && MAT.todayLight && MAT.todayLight.dome ? makeSky({ horizon: '#ffffff', zenith: '#ffffff', sun: '#000000' }) : null;
+  if (domeT) { domeT.mesh.layers.set(L); domeT.mesh.visible = false; scene.add(domeT.mesh); }
   if (FP) { FP.bloom.strength = .1; FP.bloom.threshold = 2.2;   // (a bright day: only the sun's glints glow, not every lit wall)
     FP.vig.uniforms.amt.value = .22;
     if (FP_ && MAT && MAT.todayLight) {   // today's light (todayLight edge, exposure, filmic, grain): the colour film's own passes only
@@ -701,6 +741,24 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
           c.rgb = mix(c.rgb, f_, uFilmic); }
         if (uGrain > 0.) { vec2 g_ = gl_FragCoord.xy; float n_ = fract(sin(dot(g_, vec2(12.9898, 78.233))) * 43758.5453) + fract(sin(dot(g_ + 3.7, vec2(39.35, 11.13))) * 24634.63) - 1.; c.rgb *= 1. + uGrain * n_; }   // (a trace of grain)
         gl_FragColor = c; }`); vm.needsUpdate = true; }
+    if (FP_ && FILM_PIC.dof.tilt && FP.dof.smooth) {   // a model photographer's lens (FILM_PIC dof tilt: [where the blur begins and where it is whole, in
+      // the depth's share past the focus, 1 - focus / z, either side; the largest blur in pixels of a 1080 picture; the near side's
+      // share]): sharp over the subject's depth, soft only toward the far and the near, gradually, a modest blur at most
+      const cm = FP.dof.coc.material; cm.uniforms.uTilt = { value: new THREE.Vector4() };
+      cm.fragmentShader = cm.fragmentShader.replace('uniform float aoAmt,', 'uniform vec4 uTilt;\n    uniform float aoAmt,').replace('c = clamp(c < 0. ? c * .7 : c, -maxCoc, maxCoc);', `c = clamp(c < 0. ? c * .7 : c, -maxCoc, maxCoc);
+      if (uTilt.x > 0.) { float x_ = 1. - focus / zc; c = sign(x_) * maxCoc * smoothstep(uTilt.y, uTilt.z, abs(x_)) * (x_ < 0. ? uTilt.w : 1.); }`); cm.needsUpdate = true;
+      // a soft edge smoothed only from what is about as blurred as it: a sharp tower beside a blurred ground spreads no light into it (no halo)
+      const sm = FP.dof.smooth.material; sm.fragmentShader = sm.fragmentShader.replace('vec4 acc = c0; const int N = 24;', 'float ca_ = abs(texture2D(tCoc, vUv).a) / uS; vec4 acc = c0; float ws_ = 1.; const int N = 24;')
+        .replace('acc += texture2D(tIn, vUv + vec2(cos(th), sin(th)) * rr / res); }', 'vec2 o_ = vUv + vec2(cos(th), sin(th)) * rr / res; float w_ = smoothstep(.3, .6, abs(texture2D(tCoc, o_).a) / uS / max(ca_, .75)); acc += texture2D(tIn, o_) * w_; ws_ += w_; }')
+        .replace('gl_FragColor = acc / float(N + 1);', 'gl_FragColor = acc / ws_;'); sm.needsUpdate = true; }
+    if (FP_ && MAT && MAT.todayLight && MAT.todayLight.air) {   // today's air (todayLight air), in the picture's own depth before the lens: every
+      // surface, trees and detailed models too, toward the sky's horizon colour by its distance from the eye (slowly near, whole
+      // afar), and whole at the end of the model (the plate's last stretch: no board's edge, no land beyond it seen)
+      const cm = FP.dof.coc.material; Object.assign(cm.uniforms, { uAirIP: { value: new THREE.Matrix4() }, uAirCW: { value: new THREE.Matrix4() }, uAir: { value: new THREE.Vector4() }, uAirR: { value: new THREE.Vector4(-PW / 2, -PD / 2, PW / 2, PD / 2) }, uAirC: { value: new THREE.Color() } });
+      cm.fragmentShader = cm.fragmentShader.replace('uniform float aoAmt,', 'uniform mat4 uAirIP, uAirCW; uniform vec4 uAir, uAirR; uniform vec3 uAirC;\n    uniform float aoAmt,').replace('gl_FragColor = vec4(col, c);', `if (uAir.w > 0. && d < .99999) { vec4 vh_ = uAirIP * vec4(vUv * 2. - 1., d * 2. - 1., 1.); vec3 vp_ = vh_.xyz / vh_.w, wp_ = (uAirCW * vec4(vp_, 1.)).xyz;
+        float x_ = max(length(vp_) - uAir.x, 0.) / uAir.y, f_ = 1. - exp(-x_ * x_), sd_ = max(max(uAirR.x - wp_.x, wp_.x - uAirR.z), max(uAirR.y - wp_.z, wp_.z - uAirR.w));
+        col = mix(col, uAirC, max(f_, smoothstep(-uAir.z, 0., sd_)) * uAir.w); }
+      gl_FragColor = vec4(col, c);`); cm.needsUpdate = true; }
     if (FP.dof.haze) { const ex = S.terrainEx; FP.dof.haze.uHazeD.value = 1 / (FX.haze.dist_km * 1000 * scale * MINI_LIFT.haze); FP.dof.haze.uHazeB.value = 1 / (FX.haze.height_m * scale * ex); FP.dof.haze.uHazeK.value = FX.haze.k; FP.dof.haze.uHazeS.value = FX.haze.start_km * 1000 * scale; FP.dof.haze.uHazeRect.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect.value : new THREE.Vector4(-PW / 2, -PD / 2, PW / 2, PD / 2)); FP.dof.haze.uHazeRect2.value.copy(S.post.dof.haze ? S.post.dof.haze.uHazeRect2.value : FP.dof.haze.uHazeRect.value); FP.dof.haze.uHazeEdge.value = FX.haze.edge_km * 1000 * scale; } }
   if (dome) { dome.mesh.layers.set(L); scene.add(dome.mesh); }
   // the film: the tilt-shift band after the bloom (in place of the depth of field by distance), a lighter vignette, the colours clean
@@ -719,7 +777,8 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
   // a landmark's detailed model (a museum page's glb: x east, y up, z south, metres, unturned) in place of the generator's: the
   // generator's landmark is the building whose centre most landmark vertices near `near` share; its vertices are folded away, and
   // the model stands at that centre, turned by theta_deg, as tall as the generator's (the film's height exaggeration)
-  async function swap({ url, theta_deg = 0, near, r_m = 120, today = false }) {   // (today: a building of today's city, any part, in place of an era's landmark)
+  async function swap({ url, theta_deg = 0, near, r_m = 120, today = false, colours = null, parts = null }) {   // (today: a building of today's city, any part, in place of an era's landmark)
+    // (colours: {role: colour} the model's own colours by material role; parts: [[a pattern of its parts' names, colour], ...] by part, first match)
     const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js'), { DRACOLoader } = await import('three/addons/loaders/DRACOLoader.js');
     const map = (() => { try { return JSON.parse(document.querySelector('script[type=importmap]').textContent).imports['three/addons/']; } catch (e) { return null; } })();
     const draco = new DRACOLoader().setDecoderPath((map || 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/') + 'libs/draco/gltf/');
@@ -745,7 +804,8 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     const root = new THREE.Group(); root.matrixAutoUpdate = false; root.matrix.copy(M); root.add(g.scene);
     const mats = {};
     g.scene.traverse(o => { if (!o.isMesh) return; const nm = (o.material && o.material.name) || 'stone';
-      o.material = mats[nm] ||= film && MAT && MAT.glbC ? glbMaterial(nm, k, scale) : new THREE.MeshStandardMaterial({ color: pal.glb[nm] || pal.glb.stone, roughness: .9, metalness: 0, side: THREE.DoubleSide });
+      const pc = parts && parts.find(([re]) => new RegExp(re).test(o.name)), col = pc ? pc[1] : colours && colours[nm] || null;
+      o.material = mats[nm + (col || '')] ||= film && MAT && MAT.glbC ? glbMaterial(nm, k, scale, col) : new THREE.MeshStandardMaterial({ color: col || pal.glb[nm] || pal.glb.stone, roughness: .9, metalness: 0, side: THREE.DoubleSide });
       o.castShadow = o.receiveShadow = true; o.layers.set(L); });
     scene.add(root); root.updateMatrixWorld(true); landmarks.push(root); TF.reset(); if (today) { FOOTS.push(inFoot); FL.at = null; }   // (today's trees planted again round it)
     if (today && ROOF_MESH) for (const RM of ROOF_MESH) { const M_ = new THREE.Matrix4(), p_ = new THREE.Vector3(), Z_ = new THREE.Matrix4().makeScale(0, 0, 0), rr = Math.max(r * .5, 30 * scale);   // (its roof pieces go with it)
@@ -896,6 +956,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
         if (L_.pool != null) POOL.value.w = THREE.MathUtils.lerp(POOL.value.w, Math.max(POOL.value.w, L_.pool), ts_);   // (daylight: the light pool's floor lifted, no dark surround)
         if (L_.fogC) fog.color.lerp(new THREE.Color(L_.fogC), ts_);
         if (L_.vignette != null) FP.vig.uniforms.amt.value = THREE.MathUtils.lerp(FILM_PIC.vignette, L_.vignette, ts_);
+        for (const k_ of ['sat', 'contrast']) if (L_[k_] != null) FP.vig.uniforms[k_].value = THREE.MathUtils.lerp(FILM_PIC[k_], L_[k_], ts_);   // (its colour's saturation and contrast)
         if (!SKY_C0) SKY_C0 = [sky.color.clone(), sky.groundColor.clone()];
         sky.color.copy(SKY_C0[0]).lerp(new THREE.Color(L_.skyC), ts_); sky.groundColor.copy(SKY_C0[1]).lerp(new THREE.Color(L_.skyGround), ts_);
         sky.intensity *= THREE.MathUtils.lerp(1, L_.sky, ts_); sun.intensity *= THREE.MathUtils.lerp(1, L_.sun, ts_);
@@ -905,7 +966,14 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
         if (FP.dof.coc.material.uniforms.uEdge) { const u_ = FP.dof.coc.material.uniforms, rt_ = FP.dof.rt; u_.uEdge.value = (L_.edge || 0) * ts_; u_.uPx.value.set(1 / rt_.width, 1 / rt_.height);
           u_.uPxK.value = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / rt_.height / scale; }   // (metres a supersampled pixel spans at unit depth)
         FP.vig.uniforms.uGrain.value = (L_.grain || 0) * ts_; FP.vig.uniforms.uFilmic.value = (L_.filmic || 0) * ts_;
-        FP.dof.aper *= THREE.MathUtils.lerp(1, L_.dof ?? 1, ts_); FP.dof.band *= THREE.MathUtils.lerp(1, L_.band ?? 1, ts_); }
+        FP.dof.aper *= THREE.MathUtils.lerp(1, L_.dof ?? 1, ts_); FP.dof.band *= THREE.MathUtils.lerp(1, L_.band ?? 1, ts_);
+        if (L_.haze) { fog.near = THREE.MathUtils.lerp(fog.near, d * L_.haze[0], ts_); fog.far = THREE.MathUtils.lerp(fog.far, d * L_.haze[1], ts_); }   // (today's haze as a fog)
+        const ua_ = FP.dof.coc.material.uniforms; if (ua_.uAir) { const A_ = L_.air; ua_.uAir.value.set(d * A_[0], d * A_[1], A_[2] * scale, ts_); ua_.uAirC.value.set(L_.dome ? L_.dome[0] : L_.fogC); camera.updateMatrixWorld(); ua_.uAirIP.value.copy(camera.projectionMatrixInverse); ua_.uAirCW.value.copy(camera.matrixWorld);
+          fog.near = THREE.MathUtils.lerp(fog.near, 1e4, ts_); fog.far = THREE.MathUtils.lerp(fog.far, 2e4, ts_); }   // (today's air in the picture's depth (above): no fog)
+        if (domeT) { domeT.mesh.visible = ts_ > .002; domeT.u.uHor.value.copy(bgNow).lerp(new THREE.Color(L_.dome[0]), ts_); domeT.u.uZen.value.copy(bgNow).lerp(new THREE.Color(L_.dome[1]), ts_); }
+        sun.shadow.radius = THREE.MathUtils.lerp(1, L_.shadowR ?? 1, ts_); }   // (soft-edged shadows: PCF's own radius, in the map's texels)
+      if (FP_ && FILM_PIC.dof.tilt && FP.dof.coc.material.uniforms.uTilt) { const T_ = FILM_PIC.dof.tilt;   // the model photographer's lens (above)
+        FP.dof.coc.material.uniforms.uTilt.value.set(1, T_[0], T_[1], T_[3] ?? 1); FP.dof.maxCoc = S.post.dof.aper < 1e-6 ? 0 : T_[2] * FP.dof.rt.height / FP.dof.s / 1080; }   // (a living moment's sharp picture kept)
     }
     if (BAND) { const rt = FP.composer.renderTarget1; for (const b of BAND) { b.uniforms.px.value.set(1 / rt.width, 1 / rt.height); b.uniforms.k.value = rt.height / 1080 * (1 - sharp); } }
     renderer.getDrawingBufferSize(size); composer.setSize(size.x / renderer.getPixelRatio(), size.y / renderer.getPixelRatio());
@@ -988,14 +1056,15 @@ function baseGLSL(B, scale, town = false, far = false) {
       vec3 pl_ = pow(${v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - .28 * st_);   // (the plaster; today's streets fine lines a shade darker in it, the arterials wider and darker)${TL && TL.board ? `
       { vec3 bd_ = pow(${v3(TL.board)}, vec3(2.2)) * (.97 + .035 * fxLn(m_ / 1.1) + .02 * fxLn(m_ / 6.));   // today's board: a honed slate at its grey, its grain the material's own (no cleft, no cracks)
         float pv_ = 1. - smoothstep(.45, .7, yc4_.r);   // (open ground off the blocks: a square, a plaza, a quay; paved pale as the streets, the parks over it)
-        bd_ = mix(bd_, pow(${v3(TL.street[0])}, vec3(2.2)) * (.97 + .05 * fxLn(m_ / 5.)), ${TL.street[1].toFixed(2)} * max(sv_, .8 * pv_));   // (its streets pale grooves, by class)
+        ${TL.plaza ? `bd_ = mix(bd_, pow(${v3(TL.plaza)}, vec3(2.2)) * (.98 + .03 * fxLn(m_ / 3.)), .8 * pv_ * (1. - sv_));   // (a square, a quay: paved light)
+        bd_ = mix(bd_, pow(${v3(TL.street[0])}, vec3(2.2)) * (.97 + .05 * fxLn(m_ / 5.)), ${TL.street[1].toFixed(2)} * sv_);   // (its streets by class)` : `bd_ = mix(bd_, pow(${v3(TL.street[0])}, vec3(2.2)) * (.97 + .05 * fxLn(m_ / 5.)), ${TL.street[1].toFixed(2)} * max(sv_, .8 * pv_));   // (its streets pale grooves, by class)`}
         float kb_ = (1. - smoothstep(.0, 1.5, abs(sv_ - .25) / max(fwidth(sv_), 1e-4))) * step(.02, sv_) * (1. - smoothstep(.35, .8, px_));   // (a kerb line along each street's edge, close)
         bd_ = mix(bd_, pow(${v3(TL.kerb)}, vec3(2.2)), .7 * kb_);
         pl_ = mix(pl_, bd_, tk_); }` : ''}
       float gr_ = uGreenOn * in_ * smoothstep(.35, .65, texture2D(uGreen, vXZ / uPlateM + .5).r);   // (the city's green space, from the data: pipeline/greens.py)
       float pk_ = uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z)) * smoothstep(.6, .75, yc4_.b) * step(.5, yt_) * step(yt_, yc_ + .5) * gr_ * (1. - wMask);   // (inside the urban extent: a park, a garden, a lawn, flat green; open land with no data stays plaster)
       kt_ *= 1. - pk_;   // (not while today's city is a backdrop behind a period city: uTodayK.z its dim)   // (inside the urban extent, off the blocks: the model's green)
-      sl_ = mix(sl_, pl_, k_ * ${B.land ? '(1. - rk_ * (1. - smoothstep(.85, .97, tw_)))' : '1.'}); slateR_ = mix(slateR_, .9, k_); slateN_ = mix(slateN_, vec3(0., 0., 1.), k_ * ${B.land ? '(1. - rk_)' : '1.'});${TL && TL.board ? ' slateR_ = mix(slateR_, .8, tk_ * (1. - sv_));\n      ' : ''} ${B.ground_in.park ? `sl_ = mix(sl_, pow(${v3(B.ground_in.park)}, vec3(2.2)) * (.95 + .08 * fxLn(m_ / 29.)), pk_); slateR_ = mix(slateR_, .95, pk_);` : ''}${B.flock ? `
+      sl_ = mix(sl_, pl_, k_ * ${B.land ? '(1. - rk_ * (1. - smoothstep(.85, .97, tw_)))' : '1.'}); slateR_ = mix(slateR_, .9, k_); slateN_ = mix(slateN_, vec3(0., 0., 1.), k_ * ${B.land ? '(1. - rk_)' : '1.'});${TL && TL.board ? ' slateR_ = mix(slateR_, .8, tk_ * (1. - sv_));\n      ' : ''} ${TL && TL.park ? `sl_ = mix(sl_, pow(mix(${v3(TL.park[0])}, ${v3(TL.park[1])}, smoothstep(.35, .65, fxLn(m_ / 53.))), vec3(2.2)) * (.96 + .06 * fxLn(m_ / 17.)), pk_); slateR_ = mix(slateR_, .95, pk_);   // (a park: lawn in two greens)` : B.ground_in.park ? `sl_ = mix(sl_, pow(${v3(B.ground_in.park)}, vec3(2.2)) * (.95 + .08 * fxLn(m_ / 29.)), pk_); slateR_ = mix(slateR_, .95, pk_);` : ''}${B.flock ? `
       { // trees: round crowns in groves (a crown a cell of ${B.flock.cell} m, there by the groves' density): where the generator's trees stand, on the banks, the slopes and the open ground at the city's edge
         float cl_ = smoothstep(.42, .56, fxLn(m_ / 52.) * .65 + mix(fxLn(m_ / 17.), .5, smoothstep(2., 5., px_)) * .35), tr_ = in_ * smoothstep(.12, .35, texture2D(uTrees, vXZ / uPlateM + .5).r);
         float bk_ = smoothstep(.01, .08, wr_) * (1. - smoothstep(.25, .4, wr_));   // (the banks: just off the water)
@@ -1013,7 +1082,12 @@ function baseGLSL(B, scale, town = false, far = false) {
         far_ = max(far_, uGeoT.w);
         vec3 gt_ = pow(mix(${v3(B.flock.col)}, ${v3(B.flock.col2 || B.flock.col)}, smoothstep(.3, .7, fxLn(m_ / 61.))), vec3(2.2)) * (.7 + .5 * mix(fxLn(m_ / 9.), .5, smoothstep(1.5, 4., px_))) * (.85 + .3 * mix(fxLn(m_ / 23.), .5, smoothstep(4., 10., px_)));   // (afar its grain calms: soft woods, not speckle)
         sl_ *= 1. - .3 * fl_ * (1. - far_); sl_ = mix(sl_, gt_, smoothstep(.2, .55, fl_) * far_ * .92); }` : ''} }` : ''}
-    diffuseColor.rgb = mix(sl_, pow(${v3(B.resin)}, vec3(2.2)), wMask);
+    diffuseColor.rgb = mix(sl_, pow(${v3(B.resin)}, vec3(2.2)), wMask);${TL && TL.water ? `
+    { float tw_ = uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z));   // today's water (todayLight water): turquoise in the shallows along the banks, blue-green in the deep
+      if (wMask > .01 && tw_ > 0.) { vec2 uv_ = vXZ / uPlateM + .5, o_ = vec2(${(TL.water.reach * scale).toExponential(4)}) / uPlateM; float s_ = 0.;
+        for (int i = 0; i < 8; i++) { float a_ = float(i) * .7854; vec2 e_ = vec2(cos(a_), sin(a_)); s_ += texture2D(uWaterM, uv_ + o_ * e_).r + texture2D(uWaterM, uv_ + o_ * e_ * .45).r; }   // (the water round it: near a bank, less)
+        vec3 wc_ = mix(pow(${v3(TL.water.shallow)}, vec3(2.2)), pow(${v3(TL.water.deep)}, vec3(2.2)), smoothstep(.6, .97, s_ / 16.)) * (.97 + .05 * fxLn(m_ / 70.));
+        diffuseColor.rgb = mix(diffuseColor.rgb, wc_, wMask * tw_); } }` : ''}
     diffuseColor.rgb *= mix(1., uPool.w, smoothstep(uPool.z * .35, uPool.z * 1.05, length(vXZ - uPool.xy)));   // (a light pool: the plate falls off into shadow away from the city, FILM_PIC pool)
   }`;
   if (B.slate) return `
@@ -1028,8 +1102,8 @@ function baseGLSL(B, scale, town = false, far = false) {
 }
 // a detailed model's part in a material's colours (MAT.glbC, by its material role): k its height's exaggeration (a storey's lines at
 // its true height times k)
-function glbMaterial(nm, k = 1, scale = 1e-4) {
-  const glass = nm === 'glass', m = new THREE.MeshStandardMaterial({ color: MAT.glbC[nm] || MAT.glbC.stone, roughness: glass ? .3 : nm === 'metal' ? .5 : .85, metalness: 0, side: THREE.DoubleSide });
+function glbMaterial(nm, k = 1, scale = 1e-4, col = null) {   // (col: the glb entry's own colour for this part or role, else the material's)
+  const glass = nm === 'glass', m = new THREE.MeshStandardMaterial({ color: col || MAT.glbC[nm] || MAT.glbC.stone, roughness: glass ? .3 : nm === 'metal' ? .5 : .85, metalness: 0, side: THREE.DoubleSide });
   if (!glass && nm !== 'stone') return m;
   m.onBeforeCompile = sh => {
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vGW, vGN;').replace('#include <fog_vertex>', '#include <fog_vertex>\n vGW = (modelMatrix * vec4(transformed, 1.)).xyz; vGN = normalize(mat3(modelMatrix) * objectNormal);');
@@ -1038,7 +1112,9 @@ function glbMaterial(nm, k = 1, scale = 1e-4) {
     if (abs(n_.y) < .5) { float ym_ = vGW.y / ${scale.toExponential(4)} / ${k.toFixed(3)}, fy_ = fract(ym_ / 4.2), kS_ = 1. - smoothstep(.22, .45, pxm_ / 4.2);
       vec2 t_ = normalize(vec2(-n_.z, n_.x) + 1e-6); float fu_ = abs(fract(dot(vGW.xz, t_) / ${scale.toExponential(4)} / 1.5) - .5) * 2., kM_ = 1. - smoothstep(.22, .45, pxm_ / 1.5);
       float fl_ = mix(.08, 1. - smoothstep(.05, .1, fy_), kS_), ml_ = mix(.1, smoothstep(.86, .94, fu_), kM_);   // (afar: their shares of the wall)
-      diffuseColor.rgb *= 1. - ${glass ? '.3 * max(ml_, fl_)' : '.12 * fl_'}; } }`); };
+      diffuseColor.rgb *= 1. - ${glass ? '.3 * max(ml_, fl_)' : '.12 * fl_'};${glass ? `
+      float fr_ = pow(1. - max(dot(n_, normalize(cameraPosition - vGW)), 0.), 3.); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(.80, .86, .92), .1 + .45 * fr_);   // (the sky in the glass, more as the view grazes)
+` : ''} } }`); };
   m.customProgramCacheKey = () => 'mini-glb ' + nm + k.toFixed(3) + scale;
   return m;
 }
@@ -1048,42 +1124,45 @@ function hull2(P) { const p = P.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1
   for (let i = p.length - 1; i >= 0; i--) { const q = p[i]; while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], q) <= 0) up.pop(); up.push(q); }
   lo.pop(); up.pop(); return lo.concat(up); }
 function hullIn(H, x, z) { let m = Infinity; for (let k = 0; k < H.length; k++) { const [ax, az] = H[k], [bx, bz] = H[(k + 1) % H.length], l = Math.hypot(bx - ax, bz - az) || 1; m = Math.min(m, ((bx - ax) * (z - az) - (bz - az) * (x - ax)) / l); } return m; }
-// today's buildings as a model maker engraves them (a material's): storeys at their true height (times the model's own exaggeration,
-// so the count stays right) and windows by the kind of building, read from what the data has (height; a hash of the building):
-// a tower above 60 m (or 36 m, some) in a curtain wall of pale glass that catches the sky; a residential slab from 18 m with balcony
-// bands; the low fabric with small windows; each building white acrylic or warm stone. Every line fades by its size in pixels,
-// toward its own share of the wall (afar a facade keeps the tone its engraving gives it: no brightening, no moire).
+// today's buildings as a model maker paints and engraves them (a material's): each in its paint (colourToday kinds, the vertex
+// colour) with the facade of its kind (vKind): an office tower a curtain wall of tinted glass, a fine mullion every 1.5 m and a floor
+// line each storey, the sky in it as the view grazes; a home from 18 m a balcony band each floor, its windows set back; the low
+// fabric and a large low building small windows; the old fabric's roofs in rows of grey tile. Storeys at their true height (times
+// the model's own exaggeration, so the count stays right). Every line fades by its size in pixels into the wall's own colour, a
+// shade of it (afar a facade is its paint, evenly: no grime, no speckle, no moire)
 function FACADE_GLSL(S) {
   const EX = (S.U.uScaleH ? S.U.uScaleH.value / S.U.uScaleM.value : 3).toFixed(3);
   return `
-  { vec3 n_ = normalize(vWN); float hm_ = vData.y, hh_ = vData.z;
+  { vec3 n_ = normalize(vWN); float hm_ = vData.y, kd_ = floor(vKind + .5);
     if (vData.w < .5 && hm_ > 2.5) {
       float pxm_ = length(fwidth(vWP)) / uScaleM, show_ = 1. - vMute;   // (metres a pixel; none on today's plan behind a period city)
-      vec3 mat_ = mix(vec3(.97, .968, .96), vec3(.95, .925, .87), step(.75, fract(hh_ * 13.7)));   // (white acrylic, or a warm stone)
-      bool tower_ = hm_ > 60. || (hm_ > 36. && fract(hh_ * 5.3) < .45), res_ = hm_ >= 18.;
+      vec3 pt_ = diffuseColor.rgb;   // (its paint)
+      bool tower_ = abs(kd_ - 2.) < .5, res_ = abs(kd_ - 1.) < .5 && hm_ >= 18.;
       if (abs(n_.y) < .3) {
         float ym_ = (vWP.y - vBase) / uScaleM / ${EX}; vec2 t_ = normalize(vec2(-n_.z, n_.x) + 1e-6); float um_ = dot(vWP.xz, t_) / uScaleM;
         float sh_ = tower_ ? 4. : 3.;   // (a storey)
         float fy_ = fract(ym_ / sh_), kS_ = 1. - smoothstep(.22, .45, pxm_ / sh_);
-        vec3 c_ = mat_;
-        if (tower_) {   // a tower as a model maker cuts it in acrylic: a fine mullion line every 1.5 m and a floor line at each storey,
-          // on white or on a pale glass tint that catches the sky (about half the towers)
+        vec3 c_ = pt_;
+        if (tower_) {   // tinted glass in a fine grid of mullions and floor lines, a little lighter than the glass (aluminium)
           float mu_ = 1.5, fu_ = abs(fract(um_ / mu_) - .5) * 2., kM_ = 1. - smoothstep(.22, .45, pxm_ / mu_);
-          float ml_ = mix(.1, smoothstep(.84, .92, fu_), kM_), fl_ = mix(.12, 1. - smoothstep(.08, .14, fy_), kS_);   // (afar: their shares of the wall; the floor line a seventh of a storey, so a pixel of the lens's blur keeps it)
-          vec3 v_ = normalize(cameraPosition - vWP); float fr_ = pow(1. - max(dot(n_, v_), 0.), 3.), gs_ = step(fract(hh_ * 5.3), .5);
-          vec3 gz_ = mix(vec3(.80, .85, .89), vec3(.92, .94, .97), .3 + .6 * fr_);   // (pale tinted glass, the sky in it at a grazing view)
-          c_ = mix(mat_, gz_, gs_) * (1. - .42 * max(ml_, fl_)); glass_ = gs_ * (1. - max(ml_, fl_)) * show_; eng_ = max(ml_, fl_) * show_;
-        } else if (res_) {   // a slab: a balcony band at each floor, recessed windows between
+          float ml_ = smoothstep(.84, .92, fu_) * kM_, fl_ = (1. - smoothstep(.08, .14, fy_)) * kS_, ln_ = max(ml_, fl_);   // (afar: none, the glass's own tone)
+          vec3 v_ = normalize(cameraPosition - vWP); float fr_ = pow(1. - max(dot(n_, v_), 0.), 3.);
+          c_ = mix(pt_, vec3(.80, .86, .92), .12 + .5 * fr_);   // (the sky in it, more as the view grazes)
+          c_ = mix(c_, pt_ * 1.15 + .05, .65 * ln_); glass_ = (1. - ln_) * show_; eng_ = 0.;
+        } else if (res_) {   // a home: a balcony band at each floor, a shade lighter; its windows set back, a shade darker
           float wu_ = 3.6, fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
-          float band_ = mix(.16, 1. - smoothstep(.12, .2, fy_), kS_), win_ = mix(.37, step(.32, fy_) * step(fy_, .86) * step(.12, fu_) * step(fu_, .8), kW_);
-          c_ = mat_ * (1. + .06 * band_) * (1. - .5 * win_ * (1. - band_)); eng_ = win_ * (1. - band_) * show_;
-        } else {   // the low fabric: small windows
+          float band_ = (1. - smoothstep(.12, .2, fy_)) * kS_, win_ = smoothstep(.30, .34, fy_) * (1. - smoothstep(.84, .88, fy_)) * smoothstep(.10, .14, fu_) * (1. - smoothstep(.78, .82, fu_)) * kW_;
+          c_ = pt_ * (1. + .05 * band_) * (1. - .34 * win_ * (1. - band_)) * (1. - .06 * (1. - kW_)); eng_ = .6 * win_ * (1. - band_) * show_;   // (afar: the paint a shade deeper, its windows' share)
+        } else {   // the low fabric, a large low building: small windows
           float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
-          float win_ = mix(.14, step(.38, fy_) * step(fy_, .78) * step(.32, fu_) * step(fu_, .66), kW_);
-          c_ = mat_ * (1. - .45 * win_); eng_ = win_ * show_;
+          float win_ = smoothstep(.36, .40, fy_) * (1. - smoothstep(.76, .80, fy_)) * smoothstep(.30, .34, fu_) * (1. - smoothstep(.64, .68, fu_)) * kW_;
+          c_ = pt_ * (1. - .32 * win_) * (1. - .04 * (1. - kW_)); eng_ = .5 * win_ * show_;
         }
-        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * c_ / max(dot(diffuseColor.rgb, vec3(.2126, .7152, .0722)), .05) * .92, show_);
-      } else if (n_.y > .9) diffuseColor.rgb = mix(diffuseColor.rgb, mat_ * .9 * (tower_ ? .95 : 1.), show_);   // (a roof in its material)
+        diffuseColor.rgb = mix(diffuseColor.rgb, c_, show_);
+      } else if (n_.y > .9 && kd_ < .5) {   // the old fabric's roof: grey tile in rows, close
+        float px_ = pxm_ / 1.2, r_ = abs(fract(dot(vWP.xz, normalize(vec2(1., .2))) / uScaleM / 1.2) - .5) * 2.;
+        diffuseColor.rgb *= 1. - show_ * (.14 * smoothstep(.6, .95, r_) * (1. - smoothstep(.3, .6, px_)) + .025 * smoothstep(.3, .6, px_));   // (afar: their share)
+      }
     } }`;
 }
 function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = false) {   // (surf: a model's surfaces, the film's picture: FILM_PIC)
@@ -1128,12 +1207,12 @@ function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = 
     else { sh.uniforms.uFadeAt = { value: fadeAt }; sh.uniforms.uDimTodayC = S.U.uDimTodayC || { value: 0 }; sh.uniforms.uHScaleT = HSCALE_T; }
     if (u && MAT && MAT.soft && sh.vertexShader.includes('#include <beginnormal_vertex>')) sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec3 aSoft;')
       .replace('#include <beginnormal_vertex>', `#include <beginnormal_vertex>\n  objectNormal = normalize(mix(objectNormal, aSoft, ${MAT.soft.toFixed(2)}));   // (a rounded edge: the material's)`);
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', `#include <common>\nvarying float vRuin, vMute, vFresh; uniform float uBackdropY, uDataY0;${u ? ` attribute float aY0; uniform float uHScale; uniform float uLossBurntV[${Math.max(nL, 1)}]; uniform float uRuinLater[${H}], uRuinT[${H}], uRuinH;` : ' uniform float uDimToday, uDimToday0, uDimTodayC, uHScaleT, uNodeR, uFadeAt, uGrowWarm; uniform vec2 uNodeC;'}`)
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', `#include <common>\nvarying float vRuin, vMute, vFresh; uniform float uBackdropY, uDataY0;${u ? ` attribute float aY0; uniform float uHScale; uniform float uLossBurntV[${Math.max(nL, 1)}]; uniform float uRuinLater[${H}], uRuinT[${H}], uRuinH;` : ' uniform float uDimToday, uDimToday0, uDimTodayC, uHScaleT, uNodeR, uFadeAt, uGrowWarm; uniform vec2 uNodeC; attribute float aKind; varying float vKind;'}`)
       .replace('#include <begin_vertex>', '#include <begin_vertex>\n vec3 tr0_ = transformed; vRuin = 0.; vMute = 0.; vFresh = 0.;')   // (as built, before the studio's deformation)
       .replace('#include <project_vertex>', vert + '\n#include <project_vertex>')
-      .replace('#include <fog_vertex>', '#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz;' + (depth ? '' : ' vWN = normalize(mat3(modelMatrix) * objectNormal);'));
+      .replace('#include <fog_vertex>', '#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz;' + (depth ? '' : ' vWN = normalize(mat3(modelMatrix) * objectNormal);') + (u ? '' : ' vKind = aKind;'));
     if (depth) return;
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\n// (look: mini)\nfloat glass_ = 0., eng_ = 0.;\nvarying vec4 vData; varying vec3 vWP, vWN; varying float vUp, vBase, vRuin, vMute, vFresh; varying vec2 aCtrV; uniform float uNow, uNight, uScaleM, uPallR, uPallK; uniform vec2 uPallC;${S.marksGLSL()}${u ? ` uniform float uEraBurn, uLossBurn[${nL}], uLossBurnt[${nL}]; uniform vec3 uRuinC;${fire ? ' uniform vec2 uO;' + S.fireGLSL : ''}` : ''}`)
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\n// (look: mini)\nfloat glass_ = 0., eng_ = 0.;\nvarying vec4 vData; varying vec3 vWP, vWN; varying float vUp, vBase, vRuin, vMute, vFresh; varying vec2 aCtrV;${u ? '' : ' varying float vKind;'} uniform float uNow, uNight, uScaleM, uPallR, uPallK; uniform vec2 uPallC;${S.marksGLSL()}${u ? ` uniform float uEraBurn, uLossBurn[${nL}], uLossBurnt[${nL}]; uniform vec3 uRuinC;${fire ? ' uniform vec2 uO;' + S.fireGLSL : ''}` : ''}`)
       .replace('#include <color_fragment>', '#include <color_fragment>' + marks + '\n  diffuseColor.rgb *= 1. - uPallK * .55 * smoothstep(uPallR, uPallR * .3, length(vWP.xz - uPallC));   // (under a burning city\'s pall)')
       .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>' + night);
     if (u && surf) sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
