@@ -121,12 +121,19 @@ buildings:
     regularize: guarded      # 'off' | guarded (quote 'off' in YAML)
     split_coverage: 0.4
     split_distribution: 0.7
+    protect_bi: []            # reviewed primary identities whose appearance must retain the original outline
 ```
 
 Fetch `pipeline/osm.py CITY building_footprints` explicitly: unlike building_heights this includes outlines without heights.
 prep never fetches it. Parts, construction and invalid outlines are excluded; polygon holes remain. Named landmarks in the
 height supplement's exclude_osm and appended gap-fill records retain their primary base. The cache is not added to the
 general named-geometry lookup, so fetching it cannot change historic traces or the white film.
+
+Use `protect_bi` for reviewed named buildings whose roof silhouette differs from the mapped ground outline, or where a
+whole-building tag actually represents a base or part. It prevents both OSM replacement and regularization without changing
+height supplementation. Identities refer to the exact prepared model, not OSM IDs; missing identities are refused. Review the
+list again if primary data changes. Protection retains matching decisions for other buildings, then reruns the normal overlap
+guards against the restored outlines. It does not authorize or create a separate landmark model.
 
 One-to-one candidates use heights.py's shared geometry scores and reject ambiguous or multiple references. Splits are considered
 first: each whole-building child must have at least 70% inside a unique primary parent. The union covers at least 40% of the

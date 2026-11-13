@@ -18,7 +18,7 @@ from geo import Frame
 
 DEFAULTS = {'enabled': False, 'source': 'primary', 'regularize': 'off', 'split_coverage': .4,
             'split_distribution': .7, 'child_coverage': .7, 'simplify_m': 2., 'angle_deg': 10.,
-            'max_move_m': 1., 'max_area_change': .03}
+            'max_move_m': 1., 'max_area_change': .03, 'protect_bi': []}
 
 
 def settings(value):
@@ -30,6 +30,8 @@ def settings(value):
     if not isinstance(s['enabled'], bool): raise ValueError('today_footprints.enabled: boolean required')
     if s['source'] not in ('primary', 'osm_matched') or s['regularize'] not in ('off', 'guarded'):
         raise ValueError('today_footprints: source primary|osm_matched; regularize off|guarded')
+    if not isinstance(s['protect_bi'], list) or any(type(i) is not int or i < 0 for i in s['protect_bi']):
+        raise ValueError('today_footprints.protect_bi: list of nonnegative building identities required')
     for k, lo, hi in [('split_coverage', .1, 1), ('split_distribution', .1, 1), ('child_coverage', .7, 1),
                       ('simplify_m', 0, 2), ('angle_deg', 0, 15), ('max_move_m', 0, 2), ('max_area_change', 0, .1)]:
         if isinstance(s[k], bool) or not isinstance(s[k], (int, float)) or not math.isfinite(s[k]) or not lo <= s[k] <= hi:
@@ -124,6 +126,9 @@ def create(model, refs, config, *, protected=(), seat=None):
     s = settings(config)
     if not s['enabled']: return {'version': 1, 'enabled': False}
     polys = polygons(model); tree = STRtree(polys); n = len(polys); protected = set(protected)
+    protected_bi = set(s['protect_bi'])
+    missing = protected_bi - {p[0] for p in model['p']}
+    if missing: raise ValueError(f'today_footprints.protect_bi: identities absent from prepared model {sorted(missing)}')
     counts = collections.Counter(); rejected = collections.Counter(); associations = collections.defaultdict(list)
     candidate_types = collections.defaultdict(set); geometry_hits = {}; reserved = set(); proposals = {}
     # Excluded named landmarks retain their base; still count as mapped for regularization eligibility.
@@ -196,6 +201,13 @@ def create(model, refs, config, *, protected=(), seat=None):
             if not hits or hits[0][1]!=i or len(hits)>1 and hits[0][0]-hits[1][0]<.05:
                 rejected['quantized_single_guard']+=1;del proposals[i];continue
         if len(item['parts'])==1 and polys[i].equals_exact(item['parts'][0],1e-7):del proposals[i]
+    # Protect reviewed parent identities without transferring their OSM references to another building.
+    # Do this before global overlap checks so restoring a primary outline cannot introduce a conflict.
+    for i, p in enumerate(model['p']):
+        if p[0] in protected_bi:
+            protected.add(i)
+            if i in proposals:
+                del proposals[i]; rejected['explicit_protection'] += 1
     # Reject conflicts simultaneously; rollbacks can expose an old outline, so repeat until the remaining choices are stable.
     while proposals:
         effective=[unary_union(proposals[i]['parts']) if i in proposals else p for i,p in enumerate(polys)]
@@ -330,6 +342,24 @@ def selftest():
         def ref(self,p,n=1,**tags):return {'poly':p,'id':f'way/{n}','component':0,'tags':tags}
         def test_disabled(self):self.assertEqual(create({},[],{}),{'version':1,'enabled':False})
         def test_appearance_fetch_is_explicit(self):self.assertNotIn('building_footprints',osm.DEFAULT_THEMES)
+        def test_explicit_identity_protection_all_appearance_sources(self):
+            for p, rr, source, regularize in [
+                (box(0,0,100,50), [self.ref(box(2,2,42,48)), self.ref(box(58,2,98,48),2)], 'osm_matched', 'off'),
+                (box(0,0,100,50), [self.ref(box(2,2,98,48))], 'osm_matched', 'off'),
+                (Polygon([(0,0),(20,.2),(20,20),(0,20)]), [], 'primary', 'guarded')]:
+                m=self.model([p,Polygon([(200,0),(220,.2),(220,20),(200,20)])]);before=json.dumps(m)
+                if source=='osm_matched':rr=rr+[self.ref(box(201,1,219,19),3)]
+                config={'enabled':True,'source':source,'regularize':regularize}
+                original=create(m,rr,config)
+                self.assertTrue(any(r['bi']==0 for r in original['replacements']))
+                self.assertTrue(any(r['bi']==1 for r in original['replacements']))
+                kept=create(m,rr,{**config,'protect_bi':[0]})
+                self.assertEqual(kept['replacements'],[r for r in original['replacements'] if r['bi']!=0])
+                self.assertEqual(kept['counts']['protected'],1);self.assertEqual(json.dumps(m),before)
+        def test_invalid_protection_list_refused(self):
+            for value in ([True],[-1],['0'],0):
+                with self.assertRaises(ValueError):settings({'protect_bi':value})
+            with self.assertRaises(ValueError):create(self.model([box(0,0,10,10)]),[],{'enabled':True,'protect_bi':[4]})
         def test_split_inherits_without_mutating(self):
             m=self.model([box(0,0,100,50)]);before=json.dumps(m);rr=[self.ref(box(2,2,42,48),1,height='30'),self.ref(box(58,2,98,48),2)]
             r=create(m,rr,{'enabled':True,'source':'osm_matched'})
