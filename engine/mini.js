@@ -73,7 +73,7 @@ const SLATE = { slate: [.31, .31, .31], step: 6, edge: 1.45, resin: [.20, .14, .
 // the maquette's base: a photographed cleft slate (engine/tex/slate: Poly Haven dark_rock_02, CC0), its colour scaled to `slate`
 // (linear) over its own mean, `size` m a repeat (and 6.3 times that, turned, over it), its normal `bump` strong; the sheets of the
 // land's rise `step` m, their edges a faint `edge`; the water a glossy resin
-const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.81, .79, .75], reach: 24 }, flock: { col: [.20, .27, .14], tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 12 },
+const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.81, .79, .75], reach: 16 }, flock: { col: [.20, .27, .14], col2: [.30, .33, .15], cellMax: 16, most: 400000, tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 12 },
   land: { olive: [.56, .55, .42], ochre: [.66, .59, .44], field: 140, rock: [.5, .8], rockC: [.47, .44, .39], scrub: [.30, .33, .20] }, bump: 1.6, ground: '#bdb19c', step: 6, edge: 1.12, resin: [.60, .66, .70] };   // (land rock: only the steep faces, the slope as drawn)
 // the colour film's picture, as a photograph of a model on a table: a warm key from a sun fixed in the world, low and to the side
 // of where the film's camera mostly looks from (sunSide degrees round from it: shadows fall across the frame and toward the eye,
@@ -81,8 +81,10 @@ const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size
 // frame shows (every house and tree on its own hard shadow at any range) and the ambient occlusion full (every crevice and the foot
 // of every wall darker); a lens whose depth of field softens what is nearer as well as farther than the subject; no veil of air
 // over the plate. The land a meadow with fields in strips and woods in clusters of big canopies; trees big enough to read
+// a lens setting given as [close, wide]: eased between them by the shot's distance (fx.js fxLens: a close shot .03, a whole city .35), else as it is
+const byD = (v, d) => Array.isArray(v) ? THREE.MathUtils.lerp(v[0], v[1], THREE.MathUtils.smoothstep(d, .03, .35)) : v;
 const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, skyC: '#d0d6e2', skyGround: '#9a9578', fogNear: 6, fogFar: 40,
-  ao: 1.0, aoR: [.012, 4, 14], vignette: .12, sat: .9, contrast: .1, dof: { k: 1.6, max: 24, band: .375, two: true, at: 1.1, Ak: .0545 },   // (aoR: the occlusion's reach, a share of the distance, between these metres)
+  ao: 1.0, aoR: [.012, 4, 14], vignette: .12, sat: .9, contrast: .1, dof: { k: 1.6, max: 24, band: .375, two: true, at: 1.1, Ak: .0545 },   // (aoR: the occlusion's reach, a share of the distance, between these metres; dof band and Ak may be [close, wide], byD)
   land: { source: 'quiet', scrub: 14, earth: .18, meadow: true }, tree: { size: 1.1, woodSize: 1.2, keep: .06, wood: .97, grid: 16, hue: .06, facets: true, clearWood: 90, count: 150000, grow: true },
   // a region's land in the film, where its palette's own greens read olive under the sun (LAND_PALETTES): a clean blue-green meadow
   landTone: { loess: { grass0: [.22, .36, .16], grass1: [.28, .42, .19], straw: [.70, .64, .42], soil: [.58, .50, .36], wood: [.12, .25, .10] } },
@@ -103,7 +105,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
   material: null,
   looks: {
     // a museum's architectural maquette: plaster walls, light wood roofs and landmarks, a dark slate base, water as dark resin
-    maquette: { pic: { sunEl: 50, rake: 22, relief: 3, sun: 1.12, dof: { k: 6, max: 40, band: .08, two: true, at: .95, Ak: .25 }, sunC: '#ffe9cc', sky: .55, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
+    maquette: { pic: { sunEl: 50, rake: 22, relief: 3, sun: 1.12, dof: { k: 6, max: 40, band: [.08, .2], two: true, at: .95, Ak: .25 }, sunC: '#ffe9cc', sky: .55, skyC: '#ece4d6', skyGround: '#6a645a', ao: .35, vignette: .45, pathW: 0, pool: [.12, .2], haze: [.7, 2.6], fogC: '#3a3530', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE_TEX,
       roman: { walls: ['#efe9dc', '#e9e1d0', '#f2ede2', '#e4dbc8', '#ece4d4'], roofs: ['#a9a59e', '#9e9a93', '#b4aea4', '#c08d72', '#b9826a', '#cfc3ad', '#a39d94', '#c69a80'],
         parts: { 1: '#f6f3ec', 2: '#cfc5b3', 4: '#2e4424', 7: '#c6c2ba', 9: '#a9a59e', 10: '#c6c2ba', 11: '#cdc8bf' }, tree: { dark: .55, sat: .7 }, flags: false,
         detail: { floor: '#e6d5b6', joint: '#3c3e42', ridge: '#cfb184', shop: '#5a4a3a', base: '#d3c6ac' } } },
@@ -480,7 +482,7 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
   const boats = (target, d) => { if (BF.at && BF.at.distanceTo(target) <= d * .3 && Math.abs(Math.log(d / BF.dAt)) <= .4 && BF.ch === chan()) return; BF.ch = chan();
     if (BF.g) { scene.remove(BF.g); BF.g.traverse(o => { if (o.isMesh) { o.geometry.dispose(); o.material.dispose(); } }); }
     BF.g = detailMeshes(boatsAt(wet, target, d * 2.2, { scale, style: palette, ground: S.ground }), dcols, { layer: L, pxK }); scene.add(BF.g); BF.at = target.clone(); BF.dAt = d; };
-  // a material's groves (base flock): round crowns, a cell of `cell` m near (wider afar), there by the groves' density: the generator's
+  // a material's groves (base flock): round crowns, a cell of `cell` m near (wider afar, at most `cellMax` m: a crown never outgrows the houses; at most `most` crowns; col2 a second green by grove), there by the groves' density: the generator's
   // trees (its mask), the banks, the steep slopes, the open ground at the city's edge and a few in the country; never in the built blocks
   const FL = { at: null, dAt: 1, mesh: null };
   const flockAt = (target, d) => { const F = MAT && MAT.base && MAT.base.flock; if (!film || !F || !BUILT_C || !BUILT.value) return;
@@ -491,9 +493,9 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     const px = (D_, x, z) => { const u = Math.floor((x / PW + .5) * N), v = Math.floor((z / PD + .5) * N); return u < 0 || v < 0 || u >= N || v >= N ? 0 : D_[(v * N + u) * 4] / 255; };
     const h2 = (i, j, k) => { const t = Math.sin(i * 127.1 + j * 311.7 + k * 74.7) * 43758.5453; return t - Math.floor(t); };
     const vn = (x, y) => { const i = Math.floor(x), j = Math.floor(y), fx = x - i, fy = y - j, a = h2(i, j, 9), b = h2(i + 1, j, 9), c = h2(i, j + 1, 9), e = h2(i + 1, j + 1, 9), sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy); return a + (b - a) * sx + (c - a) * sy + (a - b - c + e) * sx * sy; };
-    const cellM = Math.max(F.cell, d / scale * .009), c = cellM * scale, R = d * 2.2, sm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+    const cellM = Math.min(Math.max(F.cell, d / scale * .009), F.cellMax || 1e9), c = cellM * scale, R = d * 2.2, sm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
     const out = [], i0 = Math.floor((target.x - R) / c), i1 = Math.ceil((target.x + R) / c), j0 = Math.floor((target.z - R) / c), j1 = Math.ceil((target.z + R) / c);
-    for (let i = i0; i <= i1 && out.length < 120000; i++) for (let j = j0; j <= j1; j++) {
+    for (let i = i0; i <= i1 && out.length < (F.most || 120000); i++) for (let j = j0; j <= j1; j++) {
       const x = (i + .2 + .6 * h2(i, j, 1)) * c, z = (j + .2 + .6 * h2(i, j, 2)) * c;
       if ((x - target.x) ** 2 + (z - target.z) ** 2 > R * R || Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2 || wet(x, z)) continue;
       const tw = px(bd, x, z); if (tw > .8) continue;
@@ -501,11 +503,12 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
       const e = 2 * c, g0 = S.ground(x, z), sl = Math.hypot(S.ground(x + e, z) - g0, S.ground(x, z + e) - g0) / e;
       const bank = !wet(x, z) && (wet(x + 3 * c, z) || wet(x - 3 * c, z) || wet(x, z + 3 * c) || wet(x, z - 3 * c)) ? 1 : 0;
       let k = Math.max(px(td, x, z) * (.5 + .5 * cl), F.bank * bank * (.55 + .45 * cl), cl * Math.max(F.slope * sm(.12, .3, sl), F.edge * sm(.08, .25, tw) * (1 - sm(.72, .9, tw))), F.land * sm(.75, .9, cl) * (1 - sm(.2, .4, tw)));   // (groves with clearings; the banks lined; in the open country only the heart of a grove)
-      k *= 1 - sm(.7, .8, tw); if (h2(i, j, 3) >= k) continue;
+      k = sm(.3, .62, k) * (1 - sm(.7, .8, tw)); if (h2(i, j, 3) >= k) continue;   // (a grove's density sharpened: crowns close in its heart, none in its thin edge, so the country reads as woods, not dots)
       out.push([x, g0, z, cellM * .42 * (.6 + 1. * Math.pow(h2(i, j, 4), 1.4)) * (.8 + .4 * cl) * scale, h2(i, j, 5)]); }   // (a crown .6 to 1.6 times, the bigger in a grove's heart)
-    const geo = new THREE.IcosahedronGeometry(1, 2).scale(1, .82, 1), mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95 }), mesh = new THREE.InstancedMesh(geo, mat, Math.max(out.length, 1));
-    const M4 = new THREE.Matrix4(), col = new THREE.Color(), base = new THREE.Color().setRGB(...F.col.map(v => Math.pow(v, 2.2)));
-    out.forEach(([x, y, z, r, h], n) => { M4.compose(new THREE.Vector3(x, y + r * .7, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), h * 6.28), new THREE.Vector3(r, r, r)); mesh.setMatrixAt(n, M4); mesh.setColorAt(n, col.copy(base).multiplyScalar(.75 + .5 * h)); });
+    const geo = new THREE.IcosahedronGeometry(1, out.length > 100000 ? 1 : 2).scale(1, .82, 1),   // (many crowns: a wide shot, each a few pixels, the coarser sphere)
+    mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95 }), mesh = new THREE.InstancedMesh(geo, mat, Math.max(out.length, 1));
+    const M4 = new THREE.Matrix4(), col = new THREE.Color(), base = new THREE.Color().setRGB(...F.col.map(v => Math.pow(v, 2.2))), base2 = new THREE.Color().setRGB(...(F.col2 || F.col).map(v => Math.pow(v, 2.2)));
+    out.forEach(([x, y, z, r, h], n) => { M4.compose(new THREE.Vector3(x, y + r * .7, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), h * 6.28), new THREE.Vector3(r, r, r)); mesh.setMatrixAt(n, M4); mesh.setColorAt(n, col.copy(base).lerp(base2, vn(x / scale / 40, z / scale / 40) * .7 + h * .3).multiplyScalar(.8 + .4 * h)); });   // (col2: a second green, by groves more than by tree)
     mesh.count = out.length; mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); FL.mesh = mesh; };
   const info = card ? infoPanel(card) : null;
   // the tilt-shift: sharp in a band through the middle, blurred above and below
@@ -632,11 +635,11 @@ export function miniLook({ S, cityMesh, scale, lens = null, palette = 'roman', g
     if (relief) { U.uFxSun.value.copy(sd); if (FX.light) { U.uFxLitC.value.setRGB(1, 1, 1).lerp(new THREE.Color(1.1, .99, .84), warm); U.uFxShadeC.value.setRGB(1, 1, 1).lerp(new THREE.Color(.82, .9, 1.1), warm); } }
     if (dome) dome.u.uSunD.value.copy(sd);
     if (FP) {   // the film's lens for this distance (main.js lens), with the stronger depth of field
-      if (lens) { if (!film) lens(d); FP.dof.focus = S.post.dof.focus; FP.dof.aper = FP_ ? S.post.dof.aper * FILM_PIC.dof.k : film || FX.dof ? S.post.dof.aper : 0; FP.dof.maxCoc = FP_ ? FILM_PIC.dof.max : S.post.dof.maxCoc; FP.dof.band = FP_ ? FILM_PIC.dof.band : S.post.dof.band; }   // (the film: as main.js set it for this frame, a living moment's sharp picture included)
+      if (lens) { if (!film) lens(d); FP.dof.focus = S.post.dof.focus; FP.dof.aper = FP_ ? S.post.dof.aper * FILM_PIC.dof.k : film || FX.dof ? S.post.dof.aper : 0; FP.dof.maxCoc = FP_ ? FILM_PIC.dof.max : S.post.dof.maxCoc; FP.dof.band = FP_ ? byD(FILM_PIC.dof.band, d) : S.post.dof.band; }   // (the film: as main.js set it for this frame, a living moment's sharp picture included)
       // a model's lens (FILM_PIC.dof.A: its opening in the city's metres, the model's own times its scale): the blur a camera that
       // close to a model that small gives, the same opening at every distance (a wide shot from afar blurs less, as a photograph
       // of the whole table does); at: the focus as a share of the shot's distance (beyond 1: the near ground the softer)
-      const A_ = FILM_PIC.dof.A || (FILM_PIC.dof.Ak || 0) * d / scale;   // (Ak: the opening as a share of the shot's distance: every shot the same model seen as close)
+      const A_ = FILM_PIC.dof.A || byD(FILM_PIC.dof.Ak || 0, d) * d / scale;   // (Ak: the opening as a share of the shot's distance: every shot the same model seen as close)
       if (FP_ && lens && A_ && !(S.post.dof.aper < 1e-6)) { FP.dof.aper = 1080 * A_ * scale / (4 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)); FP.dof.focus = S.post.dof.focus * (FILM_PIC.dof.at || 1); }   // (a living moment's sharp picture kept where its aperture is 0; its fade in and out not yet followed)
       if (FP_ && MAT && MAT.base && MAT.base.tex && U.uGroundN) U.uGroundN.value = 0;
       if (FP_ && MAT && MAT.base && MAT.base.ground_in && BUILT_C) builtMask(Object.values(S.eras), S.PW, S.PD, scale, MAT.base.ground_in.reach, MAT.base.flock ? MAT.base.flock.tree : 15);   // (a material's plate: the period cities' open ground is the plate itself, not patches of earth and gravel on it)
