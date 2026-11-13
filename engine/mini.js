@@ -57,16 +57,28 @@ const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }
 let ROOFS = null, BAND_IX = [];
 const BAND_C = [{ value: null }, { value: null }], BAND_HI = { value: new Array(6).fill(1e5) }, BAND_Y = { value: 1e4 }, ROOF_ON = { value: 1 };   // (BAND_Y: the year the bands' plaster has reached: the growth's own when it is told, the year counter's otherwise; ROOF_ON: no roof pieces while the growth raises the city)   // (BAND_HI: the year each band is done, the shader's)
 const YEAR_W = { value: null }, YEAR_T = { value: null }, YEAR_C = { value: null }, TODAY_K = { value: new THREE.Vector3(1e4, 0, 0) }; let YEAR_D = null, YEAR_E = null;   // (TODAY_K: the film's year, whether today's city stands: x year, y on)
+// today's rooftops' records (roofsMesh): each building from 8 m its outline's centre and own axes (the corners' spread, a
+// rectangle's half sides), top, year, height, its aCtr's x (its hash), its vertices [i0, i1) and their positions. split: a new
+// record also where walls follow a roof under one aCtr (a replacement footprint's children share their parent's: buildTodayFootprints)
+function roofScan(g, split = false) {
+  const P = g.attributes.position, C = g.attributes.aCtr, D = g.attributes.aData, N = g.attributes.normal, out = []; if (!C || !D) return out;
+  let lx = 1e9, lz = 1e9, top = false, yr = 0, y1 = -1e9, hm = 0, n_ = 0, sx_ = 0, sz_ = 0, sxx_ = 0, szz_ = 0, sxz_ = 0, ri0_ = 0;
+  for (let i = 0; i <= C.count; i++) { const x = i < C.count ? C.getX(i) : NaN, z = i < C.count ? C.getY(i) : NaN, up = i < C.count && N.getY(i) > .6;
+    if (x !== lx || z !== lz || (split && top && !up)) { if (hm >= 8 && n_) {
+        const mx = sx_ / n_, mz = sz_ / n_, cxx = sxx_ / n_ - mx * mx, czz = szz_ / n_ - mz * mz, cxz = sxz_ / n_ - mx * mz, th = .5 * Math.atan2(2 * cxz, cxx - czz);
+        const c = Math.cos(th), sn = Math.sin(th), va = c * c * cxx + 2 * c * sn * cxz + sn * sn * czz, vb = sn * sn * cxx - 2 * c * sn * cxz + c * c * czz;
+        out.push([mx, mz, th, Math.sqrt(Math.max(va, 0)), Math.sqrt(Math.max(vb, 0)), y1, yr, hm, lx, ri0_, i, P]); }
+      lx = x; lz = z; y1 = -1e9; n_ = sx_ = sz_ = sxx_ = szz_ = sxz_ = 0; ri0_ = i; if (i < C.count) { yr = D.getX(i); hm = D.getY(i); } }
+    top = up; if (i < C.count) { const px = P.getX(i), pz = P.getZ(i); if (P.getY(i) > y1) y1 = P.getY(i); n_++; sx_ += px; sz_ += pz; sxx_ += px * px; szz_ += pz * pz; sxz_ += px * pz; } }
+  return out;
+}
 function todayYears(mesh, PW, PD, reach, scale, roads = null, bands = null, riseYear = null) {   // (riseYear(year, t): the growth's band a building rising at film time t (its own, when later than its year's) is shown with)
   if (YEAR_W.value || !mesh || typeof document === 'undefined') return;
   const P = mesh.geometry.attributes.position, C = mesh.geometry.attributes.aCtr, D = mesh.geometry.attributes.aData, GT = mesh.geometry.attributes.aGrowT; let gt_ = 0; if (!C || !D) return;
-  const recs = []; let lx = 1e9, lz = 1e9, x0 = 1e9, z0 = 1e9, x1 = -1e9, z1 = -1e9, yr = 0, y1 = -1e9, hm = 0, n_ = 0, sx_ = 0, sz_ = 0, sxx_ = 0, szz_ = 0, sxz_ = 0, ri0_ = 0; ROOFS = [];
+  const recs = []; let lx = 1e9, lz = 1e9, x0 = 1e9, z0 = 1e9, x1 = -1e9, z1 = -1e9, yr = 0; ROOFS = roofScan(mesh.geometry);
   for (let i = 0; i <= C.count; i++) { const x = i < C.count ? C.getX(i) : NaN, z = i < C.count ? C.getY(i) : NaN;
-    if (x !== lx || z !== lz) { if (x1 > -1e9) { recs.push([yr, x0, z0, x1, z1, gt_]); if (hm >= 8 && n_) {   // (its outline's own axes: the corners' spread, a rectangle's half sides)
-        const mx = sx_ / n_, mz = sz_ / n_, cxx = sxx_ / n_ - mx * mx, czz = szz_ / n_ - mz * mz, cxz = sxz_ / n_ - mx * mz, th = .5 * Math.atan2(2 * cxz, cxx - czz);
-        const c = Math.cos(th), sn = Math.sin(th), va = c * c * cxx + 2 * c * sn * cxz + sn * sn * czz, vb = sn * sn * cxx - 2 * c * sn * cxz + c * c * czz;
-        ROOFS.push([mx, mz, th, Math.sqrt(Math.max(va, 0)), Math.sqrt(Math.max(vb, 0)), y1, yr, hm, lx, ri0_, i]); } } lx = x; lz = z; x0 = z0 = 1e9; x1 = z1 = -1e9; y1 = -1e9; n_ = sx_ = sz_ = sxx_ = szz_ = sxz_ = 0; ri0_ = i; if (i < C.count) { yr = D.getX(i); hm = D.getY(i); gt_ = GT ? GT.getX(i) : 0; } }
-    if (i < C.count) { const px = P.getX(i), pz = P.getZ(i); if (px < x0) x0 = px; if (px > x1) x1 = px; if (pz < z0) z0 = pz; if (pz > z1) z1 = pz; if (P.getY(i) > y1) y1 = P.getY(i); n_++; sx_ += px; sz_ += pz; sxx_ += px * px; szz_ += pz * pz; sxz_ += px * pz; } }
+    if (x !== lx || z !== lz) { if (x1 > -1e9) recs.push([yr, x0, z0, x1, z1, gt_]); lx = x; lz = z; x0 = z0 = 1e9; x1 = z1 = -1e9; if (i < C.count) { yr = D.getX(i); gt_ = GT ? GT.getX(i) : 0; } }
+    if (i < C.count) { const px = P.getX(i), pz = P.getZ(i); if (px < x0) x0 = px; if (px > x1) x1 = px; if (pz < z0) z0 = pz; if (pz > z1) z1 = pz; } }
   for (let i = recs.length - 1; i >= 0; i--) { const r = recs[i]; if (Math.max(r[3] - r[1], r[4] - r[2]) > 400 * scale) recs.splice(i, 1); }   // (a runway, a long embankment: no plaster round it, it is not a block)
   recs.sort((a, b) => b[0] - a[0]);   // (the latest first: the earliest drawn last, on top)
   const N = 4096, mk = e => { const c = document.createElement('canvas'); c.width = c.height = N; const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, N, N);
@@ -867,6 +879,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       o.material = mats[nm + (col || '')] ||= film && MAT && MAT.glbC ? glbMaterial(nm, k, scale, col) : new THREE.MeshStandardMaterial({ color: col || pal.glb[nm] || pal.glb.stone, roughness: .9, metalness: 0, side: THREE.DoubleSide });
       o.castShadow = o.receiveShadow = true; o.layers.set(L); });
     scene.add(root); root.updateMatrixWorld(true); landmarks.push(root); TF.reset(); if (today) { FOOTS.push(inFoot); FL.at = null; }   // (today's trees planted again round it)
+    if (today) { const f_ = { cx, cz, inFoot, rr: Math.max(r * .5, 30 * scale) }; FOLDS.push(f_); if (FPT.mesh) foldIn(FPT.mesh.geometry, f_); }   // (a replacement footprint there folded too, and any loaded later: todayFootprints)
     if (today && ROOF_MESH) for (const RM of ROOF_MESH) { const M_ = new THREE.Matrix4(), p_ = new THREE.Vector3(), Z_ = new THREE.Matrix4().makeScale(0, 0, 0), rr = Math.max(r * .5, 30 * scale);   // (its roof pieces go with it)
       for (let n = 0; n < RM.count; n++) { RM.getMatrixAt(n, M_); p_.setFromMatrixPosition(M_); if (Math.hypot(p_.x - cx, p_.z - cz) < rr || inFoot(p_.x, p_.z)) RM.setMatrixAt(n, Z_); } RM.instanceMatrix.needsUpdate = true; }
     if (today && RIM_MESH) { const P_ = RIM_MESH.geometry.attributes.position, rr = Math.max(r * .5, 30 * scale);   // (and the rims: folded to the ground)
@@ -880,7 +893,38 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     m.userData.mini = m === cityMesh ? colourToday(m, today ? (film && MAT && MAT.today ? { ...TODAY[today], ...MAT.today, scale } : TODAY[today]) : undefined) : colourMesh(m, palOf(id), !!DET, { face: face(id), upright: uprightOf(id) }, { cell: 12 * scale, dark: (palOf(id).tree && palOf(id).tree.dark) || 1 }, film);
     if (film && MAT && MAT.soft && m !== cityMesh) softNormals(m.geometry);
     if (film) { const u = m === cityMesh ? null : S.eras[id].u, ruin = m === cityMesh ? null : new THREE.Color(palOf(id).parts[11]);
-      filmMaterial(S, m.userData.mini, u, ruin, fadeAt, u && S.fires[id] && S.fires[id].day ? S.fires[id] : null, BACK, FP_ && !!u); m.userData.miniDepth = filmMaterial(S, new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), u, null, fadeAt, null, BACK); }
+      const sk_ = m === cityMesh && !!FPT.mesh;   // (today's city with replacement footprints: its replaced buildings hidden, in its colours and its shadows alike)
+      filmMaterial(S, m.userData.mini, u, ruin, fadeAt, u && S.fires[id] && S.fires[id].day ? S.fires[id] : null, BACK, FP_ && !!u, sk_); m.userData.miniDepth = filmMaterial(S, new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), u, null, fadeAt, null, BACK, false, sk_); }
+  }
+  // today's replacement footprints (a city's build/data/today_footprints.json, pipeline/footprints.py: opt-in, for this look only):
+  // studio.js buildTodayFootprints's sparse geometry, its buildings in today's colours (each child its parent's paint and kind,
+  // their aCtr shared), drawn on this look's layer alone; the replaced parents hidden in this look's colours and shadows (aSkip),
+  // the white film's geometry and pictures untouched; loaded once, the first time today's city stands (it is large: the whole
+  // city's). Their rooftops join today's (roofScan, split by child); a detailed model's fold reaches them too (FOLDS)
+  const FPT = { tried: false, mesh: null, skip: 0, ms: 0, bytes: 0 }, FOLDS = [];
+  async function todayFootprints(target) {
+    if (FPT.tried || !film || !MAT || !dataDir || !cityMesh || !S.buildTodayFootprints || todayL() && todayL().footprints === false) return; FPT.tried = true;
+    const t0 = performance.now(); let side = null;
+    try { const r = await fetch(dataDir + 'today_footprints.json'); if (r.ok) side = await r.json(); } catch (e) { side = null; }
+    if (!side || side.enabled !== true) return;
+    const R_ = todayL() && todayL().footprintsR;   // (todayLight footprintsR: only the replacements within this many metres of the first shot's target; none: the whole city)
+    if (R_) { const r2 = (R_ * scale) ** 2; side.replacements = side.replacements.filter(r => { const g = r.children[0].rings[0], x = g.reduce((a_, p) => a_ + p[0], 0) / g.length, z = g.reduce((a_, p) => a_ + p[1], 0) / g.length; return (x - target.x) ** 2 + (z - target.z) ** 2 < r2; }); }
+    const { geometry, skipCentres } = await S.buildTodayFootprints(side); side = null; if (!geometry) return;
+    geometry.deleteAttribute('aBi');   // (this look does not read it)
+    const key = (x, z) => Math.fround(x) + ',' + Math.fround(z), skip = new Set(skipCentres.map(([x, z]) => key(x, z)));
+    const G_ = cityMesh.geometry, C = G_.attributes.aCtr, n = C.count, a = new Uint8Array(n);   // (a byte a vertex)   // (the parents: their aCtr is the mean of their outer ring, as the sidecar's)
+    for (let i = 0, lx = NaN, lz = NaN, v = 0; i < n; i++) { const x = C.getX(i), z = C.getY(i); if (x !== lx || z !== lz) { lx = x; lz = z; v = skip.has(key(x, z)) ? 1 : 0; if (v) FPT.skip++; } a[i] = v; }
+    G_.setAttribute('aSkip', new THREE.BufferAttribute(a, 1));
+    if (cityMesh.userData.mini) { cityMesh.userData.mini.dispose(); cityMesh.userData.miniDepth.dispose(); }
+    const T_ = today ? (MAT.today ? { ...TODAY[today], ...MAT.today, scale } : TODAY[today]) : undefined, mat = colourToday({ geometry }, T_);
+    filmMaterial(S, mat, null, null, fadeAt, null, BACK, false);
+    const mesh = new THREE.Mesh(geometry, mat); mesh.customDepthMaterial = filmMaterial(S, new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), null, null, fadeAt, null, BACK);
+    mesh.castShadow = mesh.receiveShadow = true; mesh.frustumCulled = false; mesh.layers.set(L); scene.add(mesh); FPT.mesh = mesh;
+    cityMesh.userData.mini = null; colour(cityMesh);   // (its colours again, with aSkip)
+    for (const f of FOLDS) foldIn(geometry, f);   // (a detailed model already in place)
+    if (ROOFS) { ROOFS = ROOFS.filter(r => !(r[11] === G_.attributes.position && a[r[9]] > .5)).concat(roofScan(geometry, true)); dropRoofs(); }
+    FPT.ms = performance.now() - t0; FPT.bytes = Object.values(geometry.attributes).reduce((s_, at) => s_ + at.array.byteLength, 0) + a.byteLength;
+    console.log('footprints', JSON.stringify({ parents: FPT.skip, vertices: geometry.attributes.position.count, MB: +(FPT.bytes / 1e6).toFixed(1), ms: Math.round(FPT.ms) }));
   }
   // the programs of every city's colours made before playback (main.js warm-up: else the first frame a city shows stalls; and
   // tools/phonecheck.mjs sees them all)
@@ -910,13 +954,16 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // year and stand only while today's city is the subject (TODAY_K)
   let ROOF_MESH = null;
   let RIM_MESH = null;   // (the convex roofs' rims, one mesh)
+  const dropRoofs = () => { for (const m of [...(ROOF_MESH || []), ...(RIM_MESH ? [RIM_MESH] : [])]) { scene.remove(m); m.geometry.dispose(); } ROOF_MESH = RIM_MESH = null; };   // (made again by roofsMesh)
+  const foldIn = (g, f) => { const P = g.attributes.position, C = g.attributes.aCtr; let hit = false;   // (a detailed model's fold, swap: what stands at its centre or inside its footprint to the ground)
+    for (let i = 0; i < P.count; i++) { const x = C.getX(i), z = C.getY(i); if (Math.abs(x - f.cx) < 2e-7 && Math.abs(z - f.cz) < 2e-7 || f.inFoot(x, z)) { P.setXYZ(i, x, S.ground(x, z) - 1e-4, z); hit = true; } }
+    if (hit) P.needsUpdate = true; };
   const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [], rims = [];
-    const P_ = cityMesh.geometry.attributes.position;
-    for (let [cx, cz, th, a, b, y1, yr, hm, h0, i0, i1] of ROOFS) {
+    for (let [cx, cz, th, a, b, y1, yr, hm, h0, i0, i1, P_] of ROOFS) {   // (P_: the record's own positions, today's city's or a replacement footprint's)
       { const c = Math.cos(th), sn = Math.sin(th); let u0 = 1e9, u1 = -1e9, v0 = 1e9, v1 = -1e9;   // (its outline's exact extent along its own axes)
         for (let i = i0; i < i1; i++) { const x = P_.getX(i), z = P_.getZ(i), u = x * c + z * sn, v = -x * sn + z * c; if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v; }
         const um = (u0 + u1) / 2, vm = (v0 + v1) / 2; cx = um * c - vm * sn; cz = um * sn + vm * c; a = (u1 - u0) / 2; b = (v1 - v0) / 2; }
-      if (Math.min(a, b) < 4 * scale) continue;
+      if (Math.min(a, b) < 4 * scale || FOLDS.some(f => Math.hypot(cx - f.cx, cz - f.cz) < f.rr || f.inFoot(cx, cz))) continue;   // (none where a detailed model stands)
       if (i1 - i0 <= 36) lips.push([cx, y1, cz, 2 * a * .995, ex * scale, 2 * b * .995, yr, th]);
       else {   // any other convex roof (an octagon, a round tower): the rim along its own hull, 0.6 m wide; a concave roof (a corner left inside the hull) none
         const pts = []; for (let i = i0; i < i1; i++) if (Math.abs(P_.getY(i) - y1) < .2 * ex * scale) pts.push([P_.getX(i), P_.getZ(i)]);
@@ -1005,10 +1052,12 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       boats(target, d); flockAt(target, d); }
     for (const P of PATHS) { const t = U.uNow.value, r = P.r, a = sm(r.on, r.on + .3, t) * (1 - sm(r.off - .6, r.off, t));   // (the routes' paths, as they draw and go)
       P.mesh.visible = a > .002; P.mesh.material.opacity = a; P.u.uP.value = sm(r.on, r.on + r.draw, t) * 1.0001; }
+    if (film && MAT && cityMesh && cityMesh.visible && TODAY_K.value.y > .5) await todayFootprints(target);   // (today's replacement footprints, once: before its rooftops and the detailed models)
+    if (FPT.mesh) FPT.mesh.visible = cityMesh.visible;
     const swapM = [];   // (the studio's materials back after the frame)
     for (const m of [...eraMeshes, cityMesh]) if (m.visible) colour(m);
     for (const m of [...eraMeshes, cityMesh, plate].filter(Boolean)) { if (!m.userData.mini) continue; swapM.push([m, m.material, m.customDepthMaterial]); m.material = m.userData.mini; m.customDepthMaterial = m.userData.miniDepth; m.layers.enable(L); m.castShadow = m.receiveShadow = true; }   // (the film: shadows deformed as the city stands)
-    { const src = [...eraMeshes.filter(m => m.visible), ...(cityMesh.visible ? [cityMesh] : [])]; for (const l of landmarks) l.traverse(o => { if (o.isMesh) src.push(o); });
+    { const src = [...eraMeshes.filter(m => m.visible), ...(cityMesh.visible ? [cityMesh, ...(FPT.mesh ? [FPT.mesh] : [])] : [])]; for (const l of landmarks) l.traverse(o => { if (o.isMesh) src.push(o); });
       TF.update(target, d, src); }
     const LT_ = FP_ ? todayL() : null, tsE_ = LT_ ? (LT_.all ? 1 : TODAY_K.value.y * (1 - THREE.MathUtils.smoothstep(TODAY_K.value.z, .3, .6))) : 0;   // (today's city the subject: its own light)
     const kAir_ = FP_ && FILM_PIC.pool ? THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]) : 0, elD_ = THREE.MathUtils.lerp(FP_ && FILM_PIC.rake ? THREE.MathUtils.lerp(SUN_EL, FILM_PIC.rake, kAir_) : SUN_EL, LT_ && LT_.sunEl ? LT_.sunEl : 0, LT_ && LT_.sunEl ? tsE_ : 0);   // (an aerial's raking sun, FILM_PIC rake)
@@ -1279,7 +1328,7 @@ function FACADE_GLSL(S) {
       }
     } }`;
 }
-function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = false) {   // (surf: a model's surfaces, the film's picture: FILM_PIC)
+function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = false, skip = false) {   // (surf: a model's surfaces, the film's picture: FILM_PIC; skip: today's city, its buildings marked aSkip hidden: a replacement footprint stands in their place, todayFootprints)
   S.deformMaterial(mat, u); const deform = mat.onBeforeCompile, nL = u ? u.uLossBurn.value.length : 0, H = S.slots, depth = !!mat.isMeshDepthMaterial, E = S.marksN();
   const hm = `vec2 huv_ = aCtr / uPlateV + .5; vec4 h1_ = texture2D(uHide, huv_), h2_ = texture2D(uHide2, huv_)${S.slots3 ? ', h3_ = texture2D(uHide3, huv_)' : ''};
      float hm_[${H}]; hm_[0] = h1_.r; hm_[1] = h1_.g; hm_[2] = h1_.b; hm_[3] = h1_.a; hm_[4] = h2_.r; hm_[5] = h2_.g; hm_[6] = h2_.b; hm_[7] = h2_.a;${S.slots3 ? ' hm_[8] = h3_.r; hm_[9] = h3_.g; hm_[10] = h3_.b; hm_[11] = h3_.a;' : ''}`;
@@ -1295,7 +1344,7 @@ function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = 
      if (fd_ > hh_ * max(ry, 0.) && fd_ > 1e-7) transformed.y = aBase + fd_;
      if (uHScale < .999 && transformed.y > aBase) transformed.y = aY0 > -1e8 ? transformed.y + (uHScale - 1.) * max(aY0 - aBase, 0.) : aBase + (transformed.y - aBase) * uHScale; }` : `
    if (aData.w > -.5 && aData.w < .5) {   // (by its building: a building goes whole, the ring passing it as the white film's dimming does)
-     float dm_ = ${dim}, mod_ = ${MODERN_GLSL}; vMute = dm_ * mod_;
+     float dm_ = ${dim}, mod_ = ${MODERN_GLSL}; vMute = dm_ * mod_;${skip ? '\n     if (aSkip > .5) transformed.y = aBase - .02;   // (a replacement footprint stands here: todayFootprints)' : ''}
      if (fract(sin(dot(aCtr, vec2(127.1e3, 311.7e3))) * 43758.5453) < (1. - mod_) * 1.001 - .001) transformed.y = aBase - .02;   // (before the modern section none of it stood: building by building as it begins)
      if (vMute > .02 && aData.x > max(uYear, uDataY0) + .5) transformed.y = aBase - .02;   // (the backdrop: not built yet in the year told)${MAT ? `
      if (transformed.y > aBase) transformed.y = aBase + (transformed.y - aBase) * mix(1., ${(MAT.backdropH ?? .12).toFixed(2)}, vMute) * uHScaleT;   // (uHScaleT: today's heights toward true in a district or a close shot)
@@ -1321,7 +1370,7 @@ function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = 
     else { sh.uniforms.uFadeAt = { value: fadeAt }; sh.uniforms.uGlassSky = GLASS_SKY; sh.uniforms.uGlassK = GLASS_K; sh.uniforms.uDimTodayC = S.U.uDimTodayC || { value: 0 }; sh.uniforms.uHScaleT = HSCALE_T; }
     if (u && MAT && MAT.soft && sh.vertexShader.includes('#include <beginnormal_vertex>')) sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec3 aSoft;')
       .replace('#include <beginnormal_vertex>', `#include <beginnormal_vertex>\n  objectNormal = normalize(mix(objectNormal, aSoft, ${MAT.soft.toFixed(2)}));   // (a rounded edge: the material's)`);
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', `#include <common>\nvarying float vRuin, vMute, vFresh; uniform float uBackdropY, uDataY0;${u ? ` attribute float aY0; uniform float uHScale; uniform float uLossBurntV[${Math.max(nL, 1)}]; uniform float uRuinLater[${H}], uRuinT[${H}], uRuinH;` : ' uniform float uDimToday, uDimToday0, uDimTodayC, uHScaleT, uNodeR, uFadeAt, uGrowWarm; uniform vec2 uNodeC; attribute float aKind; varying float vKind;'}`)
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', `#include <common>\nvarying float vRuin, vMute, vFresh; uniform float uBackdropY, uDataY0;${u ? ` attribute float aY0; uniform float uHScale; uniform float uLossBurntV[${Math.max(nL, 1)}]; uniform float uRuinLater[${H}], uRuinT[${H}], uRuinH;` : ' uniform float uDimToday, uDimToday0, uDimTodayC, uHScaleT, uNodeR, uFadeAt, uGrowWarm; uniform vec2 uNodeC; attribute float aKind; varying float vKind;' + (skip ? ' attribute float aSkip;' : '')}`)
       .replace('#include <begin_vertex>', '#include <begin_vertex>\n vec3 tr0_ = transformed; vRuin = 0.; vMute = 0.; vFresh = 0.;')   // (as built, before the studio's deformation)
       .replace('#include <project_vertex>', vert + '\n#include <project_vertex>')
       .replace('#include <fog_vertex>', '#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz;' + (depth ? '' : ' vWN = normalize(mat3(modelMatrix) * objectNormal);') + (u ? '' : ' vKind = aKind;'));
@@ -1371,6 +1420,6 @@ ${FILM_PIC.material === 'clay' ? `
     if (!u && MAT && !depth) sh.fragmentShader = sh.fragmentShader.replace('#include <opaque_fragment>', `{ float lw_ = dot(outgoingLight, vec3(.2126, .7152, .0722));   // the engraving on a lit wall: a groove keeps its shade however strong the light (on glass the sun's sheen had washed it out)
     outgoingLight *= 1. - .45 * eng_ * smoothstep(.35, 1., lw_); }
 #include <opaque_fragment>`); };
-  mat.customProgramCacheKey = () => 'mini-film ' + (u ? 'era ' + nL + (fire ? ' fire' : '') : 'today') + (depth ? ' depth' : '') + (surf ? ' surf' : '');
+  mat.customProgramCacheKey = () => 'mini-film ' + (u ? 'era ' + nL + (fire ? ' fire' : '') : 'today') + (depth ? ' depth' : '') + (surf ? ' surf' : '') + (skip ? ' skip' : '');
   return mat;
 }
