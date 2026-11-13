@@ -53,7 +53,7 @@ const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }
 // building's footprint `reach` m round on a 4096 map (YEAR_W, the built-up area, its streets inside it) and 3 m round (YEAR_T, the
 // blocks: a street is built-up ground off them), the earliest year on top; a texel holds the year - 1899 (0: never built)
 let ROOFS = null, BAND_IX = [];
-const BAND_C = [{ value: null }, { value: null }], BAND_HI = { value: new Array(6).fill(1e5) };   // (BAND_HI: each band's first year, the shader's)
+const BAND_C = [{ value: null }, { value: null }], BAND_HI = { value: new Array(6).fill(1e5) };   // (BAND_HI: the year each band is done, the shader's)
 const YEAR_W = { value: null }, YEAR_T = { value: null }, YEAR_C = { value: null }, TODAY_K = { value: new THREE.Vector3(1e4, 0, 0) }; let YEAR_D = null, YEAR_E = null;   // (TODAY_K: the film's year, whether today's city stands: x year, y on)
 function todayYears(mesh, PW, PD, reach, scale, roads = null, bands = null) {
   if (YEAR_W.value || !mesh || typeof document === 'undefined') return;
@@ -103,10 +103,10 @@ function todayYears(mesh, PW, PD, reach, scale, roads = null, bands = null) {
   if (bands && bands.length) { const nb = Math.min(bands.length, 8), e = 45 * scale, chan = ['#f00', '#0f0', '#00f'];
     const tgt = [0, 1].map(() => { const c = document.createElement('canvas'); c.width = c.height = N; const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, N, N); return [c, g]; });
     const one = document.createElement('canvas'); one.width = one.height = N; const go = one.getContext('2d');
-    BAND_IX = []; let slot = 0;
+    BAND_IX = []; let slot = 0; const yMax = recs.reduce((m, r) => Math.max(m, r[0]), 0);   // (the data's latest year: the last band, open-ended, is done by then)
     for (let k = 0; k < nb && slot < 6; k++, slot++) { const [, gt_] = tgt[slot < 3 ? 0 : 1]; go.globalCompositeOperation = 'source-over'; go.filter = 'none'; go.fillStyle = '#000'; go.fillRect(0, 0, N, N); go.fillStyle = chan[slot % 3];
       for (const [y, a, b, cc, d] of recs) if ((y > 1 ? y : 1900) < bands[k][1]) go.fillRect((a - e) / PW * N + N / 2, (b - e) / PD * N + N / 2, (cc - a + 2 * e) / PW * N, (d - b + 2 * e) / PD * N);
-      gt_.globalCompositeOperation = 'lighter'; gt_.filter = `blur(${Math.max(1, 22 * scale / PW * N).toFixed(1)}px)`; gt_.drawImage(one, 0, 0); gt_.filter = 'none'; gt_.globalCompositeOperation = 'source-over'; BAND_IX.push(bands[k][0]); }   // (shown from the band's start: its buildings rise over its few seconds)
+      gt_.globalCompositeOperation = 'lighter'; gt_.filter = `blur(${Math.max(1, 22 * scale / PW * N).toFixed(1)}px)`; gt_.drawImage(one, 0, 0); gt_.filter = 'none'; gt_.globalCompositeOperation = 'source-over'; BAND_IX.push(Math.min(bands[k][1], yMax + 1)); }   // (shown once the band is done, its buildings up: the growth counts a band done half way through its rise; the plaster never runs ahead of them)
     BAND_C.forEach((U_, i) => { const t2 = new THREE.CanvasTexture(tgt[i][0]); t2.colorSpace = THREE.NoColorSpace; t2.flipY = false; t2.minFilter = THREE.LinearFilter; t2.generateMipmaps = false; U_.value = t2; });
     for (let k = 0; k < 6; k++) BAND_HI.value[k] = k < BAND_IX.length ? BAND_IX[k] : 1e5; }
   { const ie = gt.getImageData(0, 0, N, N).data; YEAR_E = new Uint8Array(N * N); for (let i = 0; i < N * N; i++) YEAR_E[i] = ie[i * 4]; }
@@ -146,7 +146,7 @@ const SLATE = { slate: [.31, .31, .31], step: 6, edge: 1.45, resin: [.20, .14, .
 // the maquette's base: a photographed cleft slate (engine/tex/slate: Poly Haven dark_rock_02, CC0), its colour scaled to `slate`
 // (linear) over its own mean, `size` m a repeat (and 6.3 times that, turned, over it), its normal `bump` strong; the sheets of the
 // land's rise `step` m, their edges a faint `edge`; the water a glossy resin
-const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.81, .79, .75], reach: 16, park: [.47, .56, .36] }, flock: { col: [.20, .27, .14], col2: [.30, .33, .15], cellMax: 16, most: 400000, tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 12 },
+const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.81, .79, .75], reach: 16, park: [.47, .56, .36], today: .85 }, flock: { col: [.20, .27, .14], col2: [.30, .33, .15], cellMax: 16, most: 400000, tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 12 },
   land: { olive: [.56, .55, .42], ochre: [.66, .59, .44], field: 140, rock: [.5, .8], rockC: [.47, .44, .39], scrub: [.30, .33, .20] }, bump: 1.6, ground: '#bdb19c', step: 6, edge: 1.12, resin: [.60, .66, .70] };   // (land rock: only the steep faces, the slope as drawn)
 // the colour film's picture, as a photograph of a model on a table: a warm key from a sun fixed in the world, low and to the side
 // of where the film's camera mostly looks from (sunSide degrees round from it: shadows fall across the frame and toward the eye,
@@ -191,7 +191,10 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
           ridge: '#7e7f7d', lattice: '#86705f', leaf: '#5e4b3f', paving: '#bfbab1', well: '#77736d', patch: '#6f7a4a', archRing: '#b5afa4' } },
       // today's city: a planning model's white, the tall a little cooler
       glbC: { stone: '#ece7dc' }, roofs: true, backdropH: .04,   // (backdropH: today's city behind a period city, its heights this share: a plan on the board)
-      todayLight: { skyC: '#dfe8f2', skyGround: '#8a8780', sky: 1.15, sun: 1.12, ao: .7, bloom: [1.05, .22] },   // (today's city the subject)
+      // today's city the subject: a clear key, a cool sky fill, the street canyons darker, a mild bloom on the glass' glints; the lens
+      // opened less (dof: its aperture this share, band: the sharp band this many times as deep), a model's detail sharp, not
+      // smeared; trees: its street and park trees (flockAt) a model maker's foam green, fresher than the country groves
+      todayLight: { skyC: '#dfe8f2', skyGround: '#8a8780', sky: 1, sun: 1.15, ao: .85, bloom: [1.05, .22], dof: .6, band: 1.4, trees: [[.33, .45, .22], [.42, .52, .24]] },
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'] } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
@@ -528,7 +531,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
   const bg = new THREE.Color('#c4d8ea'), fog = new THREE.Fog('#cfdde8', 1, 3), FOG = fog.color.clone(), SUN0 = sun.intensity, SKY0 = sky.intensity;
   const NIGHT = { bg: new THREE.Color('#16223a'), fog: new THREE.Color('#1c2a44'), sun: new THREE.Color('#9fb4e0') }, SUNC = sun.color.clone(), bgNow = bg.clone();   // (the film at night: film.night)
   const PALL = { sun: new THREE.Color('#ffb070'), sky: new THREE.Color('#8f8273') };   // (under a burning city's smoke)
-  const landmarks = [];   // detailed models drawn in place of the generator's (swap)
+  const landmarks = [], FOOTS = [];   // detailed models drawn in place of the generator's (swap); FOOTS: today's ones' footprints, no tree planted in them
   // each period city's detail (engine/detail.js), made the first time it is shown: era id -> a promise of its group
   const DET = prims ? new Map() : null;
   const colsOf = pal => {   // the detail's colours in a palette
@@ -604,26 +607,27 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     // today's street trees (data/streets.json, the finer streets: plane trees along both kerbs) and its parks planted in clusters
     // (data/green.png), where today's city stands and is the subject; as near as the crowns are drawn (R), a tree every `every` m
     if (yc >= 0 && !small && (STREETS.list || GREEN_ON.value)) {
-      const ST_ = F.street || { every: 14, off: 9, r: 3.6 }, ev = Math.max(ST_.every, cellM * .9) * scale, R2 = R * R, cap = (F.most || 120000);
+      const ST_ = F.street || { every: 8, off: 9, r: 3.2 }, ev = Math.max(ST_.every, cellM * .9) * scale, R2 = R * R, cap = (F.most || 120000);
       if (GREEN_ON.value && !GREEN_D && GREEN.value && GREEN.value.image) { const im_ = GREEN.value.image, c_ = document.createElement('canvas'); c_.width = im_.width; c_.height = im_.height; const g_ = c_.getContext('2d'); g_.drawImage(im_, 0, 0); GREEN_D = { w: im_.width, h: im_.height, d: g_.getImageData(0, 0, im_.width, im_.height).data }; }
       for (const r of STREETS.list || []) { if (out.length >= cap) break;
         for (let k = 1; k < r.pts.length; k++) { const [ax, az] = r.pts[k - 1], [bx, bz] = r.pts[k], L_ = Math.hypot(bx - ax, bz - az); if (L_ < 1e-9) continue;
           const mx = (ax + bx) / 2, mz = (az + bz) / 2; if ((mx - target.x) ** 2 + (mz - target.z) ** 2 > R2) continue;
           const nx = -(bz - az) / L_, nz = (bx - ax) / L_, off = ST_.off * scale;
           for (let u = ev / 2; u < L_; u += ev) for (const sd of [-1, 1]) { const x = ax + (bx - ax) * u / L_ + nx * off * sd, z = az + (bz - az) * u / L_ + nz * off * sd;
-            if (!ty(x, z) || wet(x, z)) continue; out.push([x, S.ground(x, z), z, ST_.r * (.85 + .3 * h2(Math.floor(x / scale), Math.floor(z / scale), 6)) * scale, h2(Math.floor(z / scale), Math.floor(x / scale), 7)]); } } }
+            if (!ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z))) continue; out.push([x, S.ground(x, z), z, ST_.r * (.85 + .3 * h2(Math.floor(x / scale), Math.floor(z / scale), 6)) * scale, h2(Math.floor(z / scale), Math.floor(x / scale), 7), 1]); } } }
       if (GREEN_D) { const c2 = Math.max(8, cellM * .7) * scale, gi0 = Math.floor((target.x - R) / c2), gi1 = Math.ceil((target.x + R) / c2), gj0 = Math.floor((target.z - R) / c2), gj1 = Math.ceil((target.z + R) / c2);
         for (let i = gi0; i <= gi1 && out.length < cap; i++) for (let j = gj0; j <= gj1; j++) {
           const x = (i + .2 + .6 * h2(i, j, 11)) * c2, z = (j + .2 + .6 * h2(i, j, 12)) * c2; if ((x - target.x) ** 2 + (z - target.z) ** 2 > R2) continue;
           const u = Math.floor((x / PW + .5) * GREEN_D.w), v = Math.floor((z / PD + .5) * GREEN_D.h); if (u < 0 || v < 0 || u >= GREEN_D.w || v >= GREEN_D.h || GREEN_D.d[(v * GREEN_D.w + u) * 4] < 128) continue;
           const m = [x / scale, z / scale], clp = sm(.4, .62, vn(m[0] / 70, m[1] / 70) * .6 + vn(m[0] / 23, m[1] / 23) * .4);   // (clusters with lawns between)
-          if (h2(i, j, 13) >= clp * .9 || !ty(x, z) || wet(x, z)) continue;
-          out.push([x, S.ground(x, z), z, Math.max(8, cellM * .7) * .5 * (.7 + .6 * h2(i, j, 14)) * scale, h2(i, j, 15)]); } }
+          if (h2(i, j, 13) >= clp * .9 || !ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z))) continue;
+          out.push([x, S.ground(x, z), z, Math.max(8, cellM * .7) * .5 * (.7 + .6 * h2(i, j, 14)) * scale, h2(i, j, 15), 1]); } }
     }
     const geo = new THREE.IcosahedronGeometry(1, out.length > 100000 ? 1 : 2).scale(1, .82, 1),   // (many crowns: a wide shot, each a few pixels, the coarser sphere)
     mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95 }), mesh = new THREE.InstancedMesh(geo, mat, Math.max(out.length, 1));
     const M4 = new THREE.Matrix4(), col = new THREE.Color(), base = new THREE.Color().setRGB(...F.col.map(v => Math.pow(v, 2.2))), base2 = new THREE.Color().setRGB(...(F.col2 || F.col).map(v => Math.pow(v, 2.2)));
-    out.forEach(([x, y, z, r, h], n) => { M4.compose(new THREE.Vector3(x, y + r * .7, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), h * 6.28), new THREE.Vector3(r, r, r)); mesh.setMatrixAt(n, M4); mesh.setColorAt(n, col.copy(base).lerp(base2, vn(x / scale / 40, z / scale / 40) * .7 + h * .3).multiplyScalar(.8 + .4 * h)); });   // (col2: a second green, by groves more than by tree)
+    const TT_ = MAT.todayLight && MAT.todayLight.trees, tb = TT_ ? TT_.map(c_ => new THREE.Color().setRGB(...c_.map(v => Math.pow(v, 2.2)))) : [base, base2];   // (today's trees: todayLight.trees)
+    out.forEach(([x, y, z, r, h, t], n) => { M4.compose(new THREE.Vector3(x, y + r * .7, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), h * 6.28), new THREE.Vector3(r, r, r)); mesh.setMatrixAt(n, M4); mesh.setColorAt(n, col.copy(t ? tb[0] : base).lerp(t ? tb[1] : base2, vn(x / scale / 40, z / scale / 40) * .7 + h * .3).multiplyScalar(.8 + .4 * h)); });   // (col2: a second green, by groves more than by tree)
     mesh.count = out.length; mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); FL.mesh = mesh; };
   const info = card ? infoPanel(card) : null;
   // the tilt-shift: sharp in a band through the middle, blurred above and below
@@ -666,20 +670,22 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
         const k = C.getX(i).toFixed(7) + ',' + C.getY(i).toFixed(7); votes.set(k, (votes.get(k) || 0) + 1); } }
     if (!votes.size) throw new Error(`mini: no landmark near ${near}`);
     const [key] = [...votes].sort((a, b) => b[1] - a[1])[0], [cx, cz] = key.split(',').map(Number), y0 = S.ground(cx, cz);
-    let top = -Infinity, folded = 0;
+    let top = -Infinity, folded = 0; const box = new THREE.Box3().setFromObject(g.scene), th_ = THREE.MathUtils.degToRad(theta_deg), co_ = Math.cos(th_), si_ = Math.sin(th_);
+    // today's: every building whose centre stands inside the model's footprint goes too (a tower inside a stadium's bowl, a block cut by it)
+    const inFoot = (x, z) => { if (!today) return false; const dx = (x - cx) / scale, dz = (z - cz) / scale, lx = dx * co_ - dz * si_, lz = dx * si_ + dz * co_; return lx > box.min.x && lx < box.max.x && lz > box.min.z && lz < box.max.z; };
     for (const m of pool) { const P = m.geometry.attributes.position, C = m.geometry.attributes.aCtr; let hit = false;
-      for (let i = 0; i < P.count; i++) if (Math.abs(C.getX(i) - cx) < 2e-7 && Math.abs(C.getY(i) - cz) < 2e-7) { top = Math.max(top, P.getY(i)); P.setXYZ(i, cx, y0 - 1e-4, cz); hit = true; folded++; }
+      for (let i = 0; i < P.count; i++) if (Math.abs(C.getX(i) - cx) < 2e-7 && Math.abs(C.getY(i) - cz) < 2e-7 || inFoot(C.getX(i), C.getY(i))) { top = Math.max(top, P.getY(i)); P.setXYZ(i, C.getX(i), S.ground(C.getX(i), C.getY(i)) - 1e-4, C.getY(i)); hit = true; folded++; }
       if (hit) P.needsUpdate = true; }
-    const box = new THREE.Box3().setFromObject(g.scene), H = box.max.y - Math.max(box.min.y, 0), k = today ? (S.U.uScaleH ? S.U.uScaleH.value / scale : 1) : THREE.MathUtils.clamp((top - y0) / (H * scale), 1, 3);   // (today's: the model's own exaggeration)
+    const H = box.max.y - Math.max(box.min.y, 0), k = today ? (S.U.uScaleH ? S.U.uScaleH.value / scale : 1) : THREE.MathUtils.clamp((top - y0) / (H * scale), 1, 3);   // (today's: the model's own exaggeration)
     const M = new THREE.Matrix4().makeTranslation(cx, y0, cz).multiply(new THREE.Matrix4().makeScale(scale, scale * k, scale)).multiply(new THREE.Matrix4().makeRotationY(THREE.MathUtils.degToRad(theta_deg)));
     const root = new THREE.Group(); root.matrixAutoUpdate = false; root.matrix.copy(M); root.add(g.scene);
     const mats = {};
     g.scene.traverse(o => { if (!o.isMesh) return; const nm = (o.material && o.material.name) || 'stone';
       o.material = mats[nm] ||= new THREE.MeshStandardMaterial({ color: film && MAT && MAT.glbC ? (MAT.glbC[nm] || MAT.glbC.stone) : pal.glb[nm] || pal.glb.stone, roughness: .9, metalness: 0, side: THREE.DoubleSide });   // (a material's own: the model's plaster)
       o.castShadow = o.receiveShadow = true; o.layers.set(L); });
-    scene.add(root); root.updateMatrixWorld(true); landmarks.push(root); TF.reset();
-    if (today && ROOF_MESH) { const M_ = new THREE.Matrix4(), p_ = new THREE.Vector3(), Z_ = new THREE.Matrix4().makeScale(0, 0, 0), rr = Math.max(r * .5, 30 * scale);   // (its roof pieces go with it)
-      for (let n = 0; n < ROOF_MESH.count; n++) { ROOF_MESH.getMatrixAt(n, M_); p_.setFromMatrixPosition(M_); if (Math.hypot(p_.x - cx, p_.z - cz) < rr) ROOF_MESH.setMatrixAt(n, Z_); } ROOF_MESH.instanceMatrix.needsUpdate = true; }
+    scene.add(root); root.updateMatrixWorld(true); landmarks.push(root); TF.reset(); if (today) { FOOTS.push(inFoot); FL.at = null; }   // (today's trees planted again round it)
+    if (today && ROOF_MESH) for (const RM of ROOF_MESH) { const M_ = new THREE.Matrix4(), p_ = new THREE.Vector3(), Z_ = new THREE.Matrix4().makeScale(0, 0, 0), rr = Math.max(r * .5, 30 * scale);   // (its roof pieces go with it)
+      for (let n = 0; n < RM.count; n++) { RM.getMatrixAt(n, M_); p_.setFromMatrixPosition(M_); if (Math.hypot(p_.x - cx, p_.z - cz) < rr || inFoot(p_.x, p_.z)) RM.setMatrixAt(n, Z_); } RM.instanceMatrix.needsUpdate = true; }
     return { centre: [cx, cz], folded, height_k: +k.toFixed(3) };
   }
 
@@ -715,24 +721,26 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     c.left = x0 - m; c.right = x1 + m; c.bottom = y0 - m; c.top = y1 + m; c.near = Math.max(1e-5, -z1 - H * 3); c.far = -z0 + H * 3;
   }
   // today's city's state for the base and the groves (TODAY_K), and its year maps (todayYears): before the groves are planted
-  // today's rooftops (a material's): a parapet lip on every flat roof from 8 m, a plant room on those from 20 m; they follow the
+  // today's rooftops (a material's): a parapet (a rim a metre high) round every simple flat roof from 8 m, a plant room on those from 20 m; they follow the
   // year and stand only while today's city is the subject (TODAY_K)
   let ROOF_MESH = null;
-  const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [];
+  const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [];
     const P_ = cityMesh.geometry.attributes.position;
     for (let [cx, cz, th, a, b, y1, yr, hm, h0, i0, i1] of ROOFS) {
       { const c = Math.cos(th), sn = Math.sin(th); let u0 = 1e9, u1 = -1e9, v0 = 1e9, v1 = -1e9;   // (its outline's exact extent along its own axes)
         for (let i = i0; i < i1; i++) { const x = P_.getX(i), z = P_.getZ(i), u = x * c + z * sn, v = -x * sn + z * c; if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v; }
         const um = (u0 + u1) / 2, vm = (v0 + v1) / 2; cx = um * c - vm * sn; cz = um * sn + vm * c; a = (u1 - u0) / 2; b = (v1 - v0) / 2; }
       if (Math.min(a, b) < 4 * scale) continue;
-      if (i1 - i0 <= 36) list.push([cx, y1, cz, 2 * a * .97, .7 * ex * scale, 2 * b * .97, yr, th]);   // (the lip, on a rectangular roof only: its own outline a hair in, its rim shading)
+      if (i1 - i0 <= 36) lips.push([cx, y1, cz, 2 * a * .995, ex * scale, 2 * b * .995, yr, th]);   // (the parapet, on a rectangular roof only: a rim a metre high round its own outline, a hair in)
       if (hm >= 20) { const k = .26 + .1 * (((h0 * 1e4) % 1 + 1) % 1); list.push([cx + Math.cos(th) * a * .15, y1, cz + Math.sin(th) * a * .15, 2 * a * k, 4.2 * ex * scale, 2 * b * k, yr, th]); } }
-    const geo = new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), yA = new Float32Array(list.length), M4 = new THREE.Matrix4();
+    const ring = (() => { const w = .035, o = new THREE.Shape([[-.5, -.5], [.5, -.5], [.5, .5], [-.5, .5]].map(([x, y]) => new THREE.Vector2(x, y))), h = new THREE.Path([[-.5 + w, -.5 + w], [-.5 + w, .5 - w], [.5 - w, .5 - w], [.5 - w, -.5 + w]].map(([x, y]) => new THREE.Vector2(x, y)));
+      o.holes.push(h); return new THREE.ExtrudeGeometry(o, { depth: 1, bevelEnabled: false }).rotateX(-Math.PI / 2); })();   // (a parapet: the roof's rim, 3.5 % of each side wide)
     const mat = new THREE.MeshStandardMaterial({ color: '#e9e6df', roughness: .9 }); mat.onBeforeCompile = sh => { sh.uniforms.uTodayK = TODAY_K;
       sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float iYear; uniform vec3 uTodayK;').replace('#include <begin_vertex>', '#include <begin_vertex>\n  if (iYear > uTodayK.x + .5 || uTodayK.y < .5 || uTodayK.z > .3) transformed *= 0.;'); };
-    const mesh = new THREE.InstancedMesh(geo, mat, list.length);
-    const R4 = new THREE.Matrix4(); list.forEach(([x, y, z, sx, sy, sz, yr, th], n) => { M4.makeRotationY(-th).multiply(R4.makeScale(sx, sy, sz)).setPosition(x, y, z); mesh.setMatrixAt(n, M4); yA[n] = yr; });
-    geo.setAttribute('iYear', new THREE.InstancedBufferAttribute(yA, 1)); mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); ROOF_MESH = mesh; };
+    const M4 = new THREE.Matrix4(), R4 = new THREE.Matrix4();
+    ROOF_MESH = [[new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), list], [ring, lips]].filter(([, l]) => l.length).map(([geo, l]) => { const mesh = new THREE.InstancedMesh(geo, mat, l.length), yA = new Float32Array(l.length);
+      l.forEach(([x, y, z, sx, sy, sz, yr, th], n) => { M4.makeRotationY(-th).multiply(R4.makeScale(sx, sy, sz)).setPosition(x, y, z); mesh.setMatrixAt(n, M4); yA[n] = yr; });
+      geo.setAttribute('iYear', new THREE.InstancedBufferAttribute(yA, 1)); mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); return mesh; }); };   // (plant rooms; parapets)
   const todayNow = () => {
       if (film && !S.fx && MAT && MAT.base && MAT.base.ground_in && cityMesh) { todayYears(cityMesh, S.PW, S.PD, MAT.base.ground_in.reachToday || 45, scale, roads, bands);
         const by_ = BACK.uBackdropY.value, yr_ = U.uYear.value, sm_ = THREE.MathUtils.smoothstep; let yg_ = Infinity; const now_ = U.uNow ? U.uNow.value : 0;   // (the film's growth raises today's city band by band at its own times: the plaster arrives with them, not with the counter)
@@ -797,11 +805,12 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       if (FP.dof.haze) FP.dof.haze.uHazeSunD.value.copy(sd);
       if (FP.dof.ao) FP.dof.ao.updateGtaoMaterial({ radius: FP_ ? THREE.MathUtils.clamp(d * FILM_PIC.aoR[0], scale * FILM_PIC.aoR[1], scale * FILM_PIC.aoR[2]) : fxAoRadius(d) });   // (the film: contact, a few metres at a crevice, never a whole court in shade)
       if (FP_ && MAT && MAT.todayLight) {   // today's city the subject (a material's todayLight): a clear key, a cool sky fill, its street canyons darker, a mild bloom on glass
-        const L_ = MAT.todayLight, ts_ = TODAY_K.value.y * (1 - THREE.MathUtils.smoothstep(TODAY_K.value.z, .3, .6));
+        const L_ = { ...MAT.todayLight, ...(FILM_PIC.todayLight || {}) }, ts_ = TODAY_K.value.y * (1 - THREE.MathUtils.smoothstep(TODAY_K.value.z, .3, .6));
         if (!SKY_C0) SKY_C0 = [sky.color.clone(), sky.groundColor.clone()];
         sky.color.copy(SKY_C0[0]).lerp(new THREE.Color(L_.skyC), ts_); sky.groundColor.copy(SKY_C0[1]).lerp(new THREE.Color(L_.skyGround), ts_);
         sky.intensity *= THREE.MathUtils.lerp(1, L_.sky, ts_); sun.intensity *= THREE.MathUtils.lerp(1, L_.sun, ts_);
-        FP.dof.aoAmt = THREE.MathUtils.lerp(FILM_PIC.ao, L_.ao, ts_); FP.bloom.threshold = THREE.MathUtils.lerp(2.2, L_.bloom[0], ts_); FP.bloom.strength = THREE.MathUtils.lerp(.1, L_.bloom[1], ts_); }
+        FP.dof.aoAmt = THREE.MathUtils.lerp(FILM_PIC.ao, L_.ao, ts_); FP.bloom.threshold = THREE.MathUtils.lerp(2.2, L_.bloom[0], ts_); FP.bloom.strength = THREE.MathUtils.lerp(.1, L_.bloom[1], ts_);
+        FP.dof.aper *= THREE.MathUtils.lerp(1, L_.dof ?? 1, ts_); FP.dof.band *= THREE.MathUtils.lerp(1, L_.band ?? 1, ts_); }
     }
     if (BAND) { const rt = FP.composer.renderTarget1; for (const b of BAND) { b.uniforms.px.value.set(1 / rt.width, 1 / rt.height); b.uniforms.k.value = rt.height / 1080 * (1 - sharp); } }
     renderer.getDrawingBufferSize(size); composer.setSize(size.x / renderer.getPixelRatio(), size.y / renderer.getPixelRatio());
@@ -878,7 +887,7 @@ function baseGLSL(B, scale, town = false, far = false) {
         ld_ = mix(ld_, rc_, rk_); ld_ = mix(ld_, pow(${v3(B.land.scrub)}, vec3(2.2)), sc_ * .8);${far ? `
         ld_ = pow(mix(${v3(B.land.olive)}, ${v3(B.land.ochre)}, .45 + .2 * (fxLn(m_ / 2600.) - .5)), vec3(2.2)) * (.96 + .05 * fxLn(m_ / 900.)); rk_ = 0.;   // (beyond the plate: the board calm, one land with a slow swell, no patches)` : ''}
         sl_ = ld_; slateN_ = normalize(mix(vec3(0., 0., 1.), slateN_, rk_)); slateR_ = mix(.95, slateR_, rk_); }   // (the photo's relief on the rock only: on open land its broad undulation read as cloud)` : ''}
-      vec3 pl_ = pow(${v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - .22 * st_);   // (today's streets: fine lines a shade darker in the plaster, the arterials wider and darker)
+      vec3 pl_ = pow(${v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - .28 * st_) * mix(1., ${(B.ground_in.today ?? 1).toFixed(2)}, kt_ * (1. - smoothstep(.3, .6, uTodayK.z)));   // (today's streets: fine lines a shade darker in the plaster, the arterials wider and darker; today's base, today's city the subject, a shade under its white buildings)
       float gr_ = uGreenOn * in_ * smoothstep(.35, .65, texture2D(uGreen, vXZ / uPlateM + .5).r);   // (the city's green space, from the data: pipeline/greens.py)
       float pk_ = uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z)) * smoothstep(.6, .75, yc4_.b) * step(.5, yt_) * step(yt_, yc_ + .5) * gr_ * (1. - wMask);   // (inside the urban extent: a park, a garden, a lawn, flat green; open land with no data stays plaster)
       kt_ *= 1. - pk_;   // (not while today's city is a backdrop behind a period city: uTodayK.z its dim)   // (inside the urban extent, off the blocks: the model's green)
@@ -916,7 +925,8 @@ function baseGLSL(B, scale, town = false, far = false) {
 // today's buildings as a model maker engraves them (a material's): storeys at their true height (times the model's own exaggeration,
 // so the count stays right) and windows by the kind of building, read from what the data has (height; a hash of the building):
 // a tower above 60 m (or 36 m, some) in a curtain wall of pale glass that catches the sky; a residential slab from 18 m with balcony
-// bands; the low fabric with small windows; each building white acrylic or warm stone. Every line fades by its size in pixels.
+// bands; the low fabric with small windows; each building white acrylic or warm stone. Every line fades by its size in pixels,
+// toward its own share of the wall (afar a facade keeps the tone its engraving gives it: no brightening, no moire).
 function FACADE_GLSL(S) {
   const EX = (S.U.uScaleH ? S.U.uScaleH.value / S.U.uScaleM.value : 3).toFixed(3);
   return `
@@ -930,20 +940,20 @@ function FACADE_GLSL(S) {
         float sh_ = tower_ ? 4. : 3.;   // (a storey)
         float fy_ = fract(ym_ / sh_), kS_ = 1. - smoothstep(.22, .45, pxm_ / sh_);
         vec3 c_ = mat_;
-        if (tower_) {   // a curtain wall: glass between mullions every 1.5 m and a spandrel at each floor
+        if (tower_) {   // a curtain wall: pale glass between engraved mullions every 1.5 m, a white spandrel at each floor
           float mu_ = 1.5, fu_ = abs(fract(um_ / mu_) - .5) * 2., kM_ = 1. - smoothstep(.22, .45, pxm_ / mu_);
-          float frame_ = max(smoothstep(.86, .94, fu_) * kM_, (1. - smoothstep(.05, .12, fy_)) * kS_);
+          float sp_ = mix(.2, 1. - smoothstep(.16, .24, fy_), kS_), mul_ = mix(.12, smoothstep(.84, .92, fu_), kM_);   // (afar: their shares of the wall)
           vec3 v_ = normalize(cameraPosition - vWP); float fr_ = pow(1. - max(dot(n_, v_), 0.), 3.);
-          vec3 gz_ = mix(vec3(.60, .68, .74), vec3(.84, .89, .94), .35 + .55 * fr_);   // (pale tinted glass, the sky in it at a grazing view)
-          c_ = mix(gz_, mat_, frame_ * .85); glass_ = (1. - frame_) * show_;
+          vec3 gz_ = mix(vec3(.72, .78, .83), vec3(.90, .93, .96), .3 + .6 * fr_);   // (pale tinted glass, the sky in it at a grazing view)
+          c_ = mix(gz_, mat_, sp_ * .9) * (1. - .25 * mul_ * (1. - sp_)); glass_ = (1. - sp_) * show_;
         } else if (res_) {   // a slab: a balcony band at each floor, recessed windows between
-          float wu_ = 3.6, fu_ = fract(um_ / wu_), kW_ = 1. - smoothstep(.22, .45, pxm_ / wu_);
-          float band_ = (1. - smoothstep(.12, .2, fy_)) * kS_, win_ = step(.32, fy_) * step(fy_, .86) * step(.12, fu_) * step(fu_, .8) * kW_;
-          c_ = mat_ * (1. + .06 * band_) * (1. - .3 * win_ * (1. - band_));
+          float wu_ = 3.6, fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
+          float band_ = mix(.16, 1. - smoothstep(.12, .2, fy_), kS_), win_ = mix(.37, step(.32, fy_) * step(fy_, .86) * step(.12, fu_) * step(fu_, .8), kW_);
+          c_ = mat_ * (1. + .06 * band_) * (1. - .42 * win_ * (1. - band_));
         } else {   // the low fabric: small windows
-          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = 1. - smoothstep(.22, .45, pxm_ / wu_);
-          float win_ = step(.38, fy_) * step(fy_, .78) * step(.32, fu_) * step(fu_, .66) * kW_;
-          c_ = mat_ * (1. - .38 * win_);
+          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(kS_, 1. - smoothstep(.22, .45, pxm_ / wu_));
+          float win_ = mix(.14, step(.38, fy_) * step(fy_, .78) * step(.32, fu_) * step(fu_, .66), kW_);
+          c_ = mat_ * (1. - .45 * win_);
         }
         diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * c_ / max(dot(diffuseColor.rgb, vec3(.2126, .7152, .0722)), .05) * .92, show_);
       } else if (n_.y > .9) diffuseColor.rgb = mix(diffuseColor.rgb, mat_ * .9 * (tower_ ? .95 : 1.), show_);   // (a roof in its material)
