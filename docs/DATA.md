@@ -108,6 +108,62 @@ existing `hide_layer` / `keep_layer` and `today_from` mechanism clears the corre
 block rather than standing on it or duplicating it. Give the landmark its researched construction / opening event in staging:
 the primary dataset's first-impervious-surface year stays an estimate even after its present-day height is corrected.
 
+### Optional appearance footprints
+
+`buildings.today_footprints` is absent/off by default. It produces `build/data/today_footprints.json` for a colour renderer,
+without changing `model.json`, `stats.json`, the primary indices, years or white geometry. It works with any primary adapter.
+
+```yaml
+buildings:
+  today_footprints:
+    enabled: false
+    source: osm_matched       # primary | osm_matched
+    regularize: guarded      # 'off' | guarded (quote 'off' in YAML)
+    split_coverage: 0.4
+    split_distribution: 0.7
+```
+
+Fetch `pipeline/osm.py CITY building_footprints` explicitly: unlike building_heights this includes outlines without heights.
+prep never fetches it. Parts, construction and invalid outlines are excluded; polygon holes remain. Named landmarks in the
+height supplement's exclude_osm and appended gap-fill records retain their primary base. The cache is not added to the
+general named-geometry lookup, so fetching it cannot change historic traces or the white film.
+
+One-to-one candidates use heights.py's shared geometry scores and reject ambiguous or multiple references. Splits are considered
+first: each whole-building child must have at least 70% inside a unique primary parent. The union covers at least 40% of the
+parent, and its convex hull covers at least 70% to reject groups missing a whole wing. The hull is only a distribution test,
+never output geometry. These configurable thresholds require a plan overlay review in the city's research. Overlapping children
+are refused. Final quantized alternatives are checked together against all other buildings: a new overlap over 0.01 m² beyond
+the original overlap rejects both changed parents. Rollbacks are checked again until stable; rejected split groups retain the
+primary outline rather than drawing only one child. Candidate and accepted parent/child counts are reported separately.
+
+Every child keeps its parent's bi, original centre, year and grow/renew timing; it makes no new construction-date claim.
+Height stays at the approved primary value, raised only by that child's valid explicit, non-estimated OSM height. A lower
+height or storey estimate does not lower/change it. No OSM start_date is used. New outlines are seated on the same terrain.
+
+`regularize: guarded` applies only where the sum of whole-building OSM intersection areas is at most 1 m². It tries topology-preserving
+2 m simplification and near-axis least-movement constraints within 10 degrees. The axis adjustment is at most 1 m Hausdorff;
+the combined change at most 3 m and 3% area, with holes preserved. Failed stages keep their preceding shape; final new overlaps
+roll back the whole parent. Label these outlines schematic, not measured improvements. Defaults may be tightened with
+simplify_m, angle_deg, max_move_m and max_area_change; regularization can be off independently of OSM replacement.
+
+Normal prep writes the sidecar after its unchanged outputs. `pipeline/prep.py CITY --footprints-only` rebuilds just it after
+the prepared model changes (including terrain grading), leaving primary data alone. Disabled prep writes an explicit disabled
+sidecar to stop stale alternatives. Web packing includes only enabled sidecars. Credit the OSM snapshot and ODbL in CREDITS.
+
+The integration API is `await S.buildTodayFootprints(sidecar)` (or exported `buildTodayFootprints(model, sidecar, options)`
+in studio.js). It returns `{geometry, skipBi, skipCentres}` and never changes the source mesh. The sparse geometry has normal
+city attributes plus aBi; all children share the original aCtr and parent timing. The colour renderer hides those original
+parents only in its colour material and draws the sparse geometry; the white material keeps the original. Do not fold original
+vertices or copy dates from the sidecar. A Float64-stream SHA256 binds all primary building records/metadata to the sidecar;
+an outdated or malformed sidecar is refused. The sidecar also records the source file's exact SHA256. This API does not itself
+load a sidecar or alter mini.js: a renderer must explicitly opt in, including its shadows, AO and tree avoidance.
+
+Checks: `pipeline/footprints.py selftest`, `node tools/footprintcheck.mjs --selftest`, and `node tools/footprintcheck.mjs CITY`.
+`pipeline/footprints.py review CITY AREAS.yaml OUT_FOLDER` makes before/after plan overlays and coverage figures; AREAS holds
+`areas: [{id, ll: [lon,lat], radius_m, focus_bi}]`. Keep OUT_FOLDER under the city's build/review. Use
+`render/still.mjs --format png --seed N` for exact white-frame comparisons; default JPEG output stays unchanged. Before delivery,
+compare prepared files byte for byte, check white PNG pixels against the baseline and verify disabled/missing-sidecar behavior.
+
 ### Steps of the overture_ghsl adapter (global cities)
 
 1. Overture: use DuckDB to select footprint, height and num_floors in the city's area from `s3://overturemaps-us-west-2/release/<release>/theme=buildings/type=building/` (needs network and duckdb + the spatial extension; `pipeline/overture_ghsl.py fetch cities/<slug> --release <name>`, into the city's own raw folder).

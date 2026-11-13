@@ -27,6 +27,9 @@ def files(D):
     F = json.load(open(os.path.join(B, 'film.json'), encoding='utf-8'))
     out = ['build/film.json'] + [f'build/data/{n}' for n in ('model.json', 'stats.json', 'lines.json', 'water.png', 'layers1.png', 'layers2.png',
                                                               'layers3.png', 'hide.png', 'hide2.png', 'edge.png', 'edge2.png', 'locator.png')]
+    fp = os.path.join(B,'data','today_footprints.json')
+    if os.path.isfile(fp) and json.load(open(fp,encoding='utf-8')).get('enabled'):
+        out.append('build/data/today_footprints.json')
     if (F.get('eraSlots') or 8) > 8: out += ['build/data/hide3.png', 'build/data/edge3.png']   # (a film with more than 8 cities at once)
     if F.get('keepMaps'): out += ['build/data/keep.png', 'build/data/keep2.png'] + (['build/data/keep3.png'] if (F.get('eraSlots') or 8) > 8 else [])   # (a city with today_from)
     for e in F.get('eras') or []:   # cities apart in time sharing a channel: each one's own maps, drawn in when it takes the channel (engine/main.js)

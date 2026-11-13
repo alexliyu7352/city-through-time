@@ -6,6 +6,7 @@ def elements(city_raw, area):
     import osm
     out = []
     for theme in sorted(osm.THEMES):
+        if theme == 'building_footprints': continue   # appearance-only cache must not change historic named geometry
         f = osm.cache_path(city_raw, area, theme)
         if os.path.exists(f): out += json.load(open(f, encoding='utf-8'))['elements']
     return out
@@ -21,9 +22,9 @@ def rings(els, name):
                 if m.get('role') != 'inner' and m.get('geometry'): out.append([(p['lon'], p['lat']) for p in m['geometry']])
     return out
 
-def polys(el, to_utm):
+def polys(el, to_utm, repair=True):
     """a closed way or a multipolygon relation -> shapely polygons in ground metres (its inner rings as holes)"""
-    from shapely.geometry import LineString, Polygon
+    from shapely.geometry import LineString, Polygon, MultiPolygon
     from shapely.ops import linemerge, polygonize, unary_union
     out = []
     if el['type'] == 'way' and el.get('geometry') and el['geometry'][0] == el['geometry'][-1]:
@@ -36,15 +37,24 @@ def polys(el, to_utm):
             pts = [to_utm(p['lon'], p['lat']) for p in m['geometry']]
             (outers if m.get('role') != 'inner' else inners).append(LineString(pts))
         try:
-            ol = list(polygonize(unary_union(linemerge(outers)))) if outers else []
-            il = list(polygonize(unary_union(linemerge(inners)))) if inners else []
+            def strict(lines):
+                if not lines:return []
+                merged=linemerge(lines);parts=list(getattr(merged,'geoms',[merged]))
+                if not all(q.is_ring for q in parts):raise ValueError('invalid or unclosed relation ring')
+                result=[Polygon(q.coords) for q in parts]
+                if not all(q.is_valid for q in result):raise ValueError('invalid relation polygon')
+                return result
+            ol = (list(polygonize(unary_union(linemerge(outers)))) if repair else strict(outers)) if outers else []
+            il = (list(polygonize(unary_union(linemerge(inners)))) if repair else strict(inners)) if inners else []
+            if not repair and any(not any(o.contains(i) for o in ol) for i in il):raise ValueError('inner ring outside outline')
             for o in ol:
                 for i in il:
                     if o.contains(i): o = o.difference(i)
                 out.append(o)
         except Exception:   # noqa: BLE001
             pass
-    return [p.buffer(0) for p in out if not p.is_empty]
+    if not repair and len(out)>1 and not MultiPolygon(out).is_valid:return []
+    return [(p.buffer(0) if repair else p) for p in out if not p.is_empty]
 
 def water(city_raw, area, to_utm):
     """the water the film draws (pipeline/prep.py, data/water.png), in drawing order, as shapely polygons in ground metres: every

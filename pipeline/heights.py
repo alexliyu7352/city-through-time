@@ -65,6 +65,19 @@ def references(city, frame, floor_height_m=3.2):
                  'snapshot': data.get('osm3s', {}).get('timestamp_osm_base'), 'references': len(out), 'skipped': dict(skipped)}
 
 
+def match_candidates(q, polys, tree):
+    """Conservative geometry scores shared by height and appearance adapters; no height or date decision here."""
+    hits = []
+    for i in tree.query(q, predicate='intersects'):
+        i = int(i); p = polys[i]
+        if not p.buffer(3).covers(q.centroid): continue
+        area = p.intersection(q).area
+        cover = area / min(p.area, q.area); ratio = min(p.area, q.area) / max(p.area, q.area)
+        iou = area / (p.area + q.area - area)
+        if cover >= .7 and ratio >= .25 and iou >= .35: hits.append((iou, i))
+    return sorted(hits, reverse=True)
+
+
 def supplement(buildings, refs):
     """Return the same adapter records with raised heights and indexed provenance, plus matching counts.
 
@@ -75,15 +88,7 @@ def supplement(buildings, refs):
     rows = list(buildings); polys = [b[0] for b in rows]; tree = STRtree(polys)
     candidates = collections.defaultdict(list); counts = collections.Counter(); unmatched = []
     for r in refs:
-        q = r['poly']; hits = []
-        for i in tree.query(q, predicate='intersects'):
-            i = int(i); p = polys[i]
-            if not p.buffer(3).covers(q.centroid): continue
-            area = p.intersection(q).area
-            cover = area / min(p.area, q.area); ratio = min(p.area, q.area) / max(p.area, q.area)
-            iou = area / (p.area + q.area - area)
-            if cover >= .7 and ratio >= .25 and iou >= .35: hits.append((iou, i))
-        hits.sort(reverse=True)
+        q = r['poly']; hits = match_candidates(q, polys, tree)
         if not hits or len(hits) > 1 and hits[0][0] - hits[1][0] < .05:
             counts['ambiguous' if hits else 'unmatched'] += 1
             if r['meta']['height_m'] >= 200: unmatched.append(r['meta'])

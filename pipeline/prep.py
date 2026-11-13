@@ -14,6 +14,10 @@ import cmab, local
 
 D = os.path.abspath(sys.argv[1])
 C = yaml.safe_load(open(os.path.join(D, 'city.yaml'), encoding='utf-8'))
+if '--footprints-only' in sys.argv[2:]:
+    import footprints
+    footprints.write(D,C)
+    raise SystemExit(0)
 F = Frame(tuple(C['box']), 1.0 / C['scale'])
 import layout as LAYOUT
 LAYOUT.ensure(D)
@@ -221,6 +225,8 @@ stats = {
 if height_report is not None:
     stats['height_supplement'] = {k: v for k, v in height_report.items() if k not in ('changes', 'unmatched_tall')}
 json.dump(stats, open(LAYOUT.data(D, 'stats.json'), 'w'), indent=1, ensure_ascii=False)
+import footprints
+footprints.write(D,C)
 print(json.dumps({k: stats[k] for k in ('buildings', 'age_how', 'size_m', 'box_km', 'centre_wgs', 'no_year')}, ensure_ascii=False))
 for b in stats['bands']: print(b)
 print('tallest', [(t['h'], t['year']) for t in stats['tallest'][:5]])

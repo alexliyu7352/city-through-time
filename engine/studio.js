@@ -21,6 +21,121 @@ const GMAX = 8;   // period cities whose open ground (compile ground map) the pl
 const EMAX = 12;   // epoch mask channels: data/layers1-3.png, RGBA each (compile shares a channel between masks apart in time and place; a 13th stops it)
 const YLN = 48;   // points of the modern year line the shaders read (compile: grow.yl)
 
+const hash = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+export function cityGeometry(M, options = {}) {
+  const EARLY = options.early || new Map(), RENEW = options.renew || new Map(), GROWT = options.grow || new Map();
+  const ids = options.parents ? [] : null; let parent = null, sourceBi = 0;
+  const pos = [], nor = [], dat = [], bas = [], ctr = [], gh = [], gt = [];
+  let BASE = 0, CX = 0, CZ = 0, GH = [1, 0, 0], GT = 0;
+  const push = (p, n, d) => { pos.push(...p); nor.push(...n); dat.push(...d); bas.push(BASE); ctr.push(CX, CZ); gh.push(...GH); gt.push(GT); if (ids) ids.push(sourceBi); };
+  const area = r => { let a = 0; for (let i = 0; i < r.length; i++) { const [x0, z0] = r[i], [x1, z1] = r[(i + 1) % r.length]; a += x0 * z1 - x1 * z0; } return a / 2; };
+  const prism = (rings, h, d, base = 0) => {
+    BASE = base; CX = parent ? parent.centre[0] : rings[0].reduce((a, p) => a + p[0], 0) / rings[0].length; CZ = parent ? parent.centre[1] : rings[0].reduce((a, p) => a + p[1], 0) / rings[0].length;
+    rings.forEach((r, ri) => {
+      const A = area(r), sgn = (A > 0 ? 1 : -1) * (ri ? -1 : 1);
+      for (let i = 0; i < r.length; i++) {
+        const [x0, z0] = r[i], [x1, z1] = r[(i + 1) % r.length];
+        const dx = x1 - x0, dz = z1 - z0, L = Math.hypot(dx, dz); if (L < 1e-7) continue;
+        const nx = dz / L * sgn, nz = -dx / L * sgn;
+        const a = [x0, base, z0], b = [x1, base, z1], c = [x1, base + h, z1], e = [x0, base + h, z0];
+        const cx = (b[1] - a[1]) * (e[2] - a[2]) - (b[2] - a[2]) * (e[1] - a[1]);
+        const cz = (b[0] - a[0]) * (e[1] - a[1]) - (b[1] - a[1]) * (e[0] - a[0]);
+        const tri = cx * nx + cz * nz > 0 ? [a, b, c, a, c, e] : [a, c, b, a, e, c];
+        for (const p of tri) push(p, [nx, 0, nz], d);
+      }
+    });
+    const V = THREE.Vector2;
+    const contour = rings[0].map(([x, z]) => new V(x, z)), holes = rings.slice(1).map(r => r.map(([x, z]) => new V(x, z)));
+    const all = contour.concat(...holes);
+    let tris; try { tris = THREE.ShapeUtils.triangulateShape(contour, holes); } catch { return; }
+    for (const [i, j, k] of tris) {
+      const p = all[i], q = all[j], r = all[k];
+      const up = (q.y - p.y) * (r.x - p.x) - (q.x - p.x) * (r.y - p.y) > 0;
+      for (const v of (up ? [p, q, r] : [p, r, q])) push([v.x, base + h, v.y], [0, 1, 0], d);
+    }
+  };
+  // frustum: a truncated pyramid (earthwork mounds) from a base ring and a top ring at height h, standing on g
+  const frustum = (base, top, h, d, g = 0) => {
+    BASE = g; CX = base.reduce((a, p) => a + p[0], 0) / base.length; CZ = base.reduce((a, p) => a + p[1], 0) / base.length;
+    const n = base.length;
+    for (let i = 0; i < n; i++) {
+      const [x0, z0] = base[i], [x1, z1] = base[(i + 1) % n], [tx0, tz0] = top[i], [tx1, tz1] = top[(i + 1) % n];
+      const a = [x0, g, z0], b = [x1, g, z1], c = [tx1, g + h, tz1], e = [tx0, g + h, tz0];
+      const ux = b[0] - a[0], uy = 0, uz = b[2] - a[2], vx = e[0] - a[0], vy = h, vz = e[2] - a[2];
+      let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx; const L = Math.hypot(nx, ny, nz) || 1; nx /= L; ny /= L; nz /= L;
+      const mx = (x0 + x1) / 2, mz = (z0 + z1) / 2, cx = base.reduce((s, p) => s + p[0], 0) / n, cz = base.reduce((s, p) => s + p[1], 0) / n;
+      if ((mx - cx) * nx + (mz - cz) * nz < 0) { nx = -nx; ny = -ny; nz = -nz; }
+      const tri = [a, b, c, a, c, e];
+      const cxp = (b[1] - a[1]) * (e[2] - a[2]) - (b[2] - a[2]) * (e[1] - a[1]), czp = (b[0] - a[0]) * (e[1] - a[1]) - (b[1] - a[1]) * (e[0] - a[0]);
+      for (const p of (cxp * nx + czp * nz > 0 ? tri : [a, c, b, a, e, c])) push(p, [nx, ny, nz], d);
+    }
+    const V = THREE.Vector2, contour = top.map(([x, z]) => new V(x, z));
+    for (const [i, j, k] of THREE.ShapeUtils.triangulateShape(contour, [])) {
+      const p = contour[i], q = contour[j], r = contour[k];
+      const up = (q.y - p.y) * (r.x - p.x) - (q.x - p.x) * (r.y - p.y) > 0;
+      for (const v of (up ? [p, q, r] : [p, r, q])) push([v.x, g + h, v.y], [0, 1, 0], d);
+    }
+  };
+  (options.records || M.p).forEach(([bi, h, rings, base], index) => {
+    parent = options.parents ? options.parents[index] : null; const i = parent ? parent.pi : index; sourceBi = bi;
+    const [y0, bh] = M.b[bi], year = EARLY.get(i) ?? y0;   // the first layer dated from GHSL (1975-1987, pipeline/ghsl_change.py)
+    GH = RENEW.get(i) || [1, 0, 0];   // rebuilt taller later (pipeline/ghsl_change.py): first f0 of its height, today's height from yA to yB
+    GT = GROWT.get(i) || 0;           // rises later than its year: when the camera first sees it (compile, data/grow_t.json)
+    prism(rings, h, [year, parent ? parent.height_m : bh, hash(bi * 1.37 + .5), 0], base || 0);
+  });
+  GH = [1, 0, 0]; GT = 0;
+  for (const m of (options.parents ? [] : M.mounds || [])) frustum(m.base, m.top, m.h, [m.year, m.h_m, 0, 1], m.g || 0);
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
+  g.setAttribute('aData', new THREE.Float32BufferAttribute(dat, 4));
+  g.setAttribute('aBase', new THREE.Float32BufferAttribute(bas, 1));
+  g.setAttribute('aCtr', new THREE.Float32BufferAttribute(ctr, 2));
+  g.setAttribute('aGrowH', new THREE.Float32BufferAttribute(gh, 3));
+  g.setAttribute('aGrowT', new THREE.Float32BufferAttribute(gt, 1));
+  if (ids) g.setAttribute('aBi', new THREE.Float32BufferAttribute(ids, 1));
+  return g;
+}
+
+// Same Float64 byte stream as pipeline/footprints.py, independent of JSON numeric spelling.
+export async function todayFootprintFingerprint(M) {
+  let n = 9 + M.b.length * 2;
+  for (const p of M.p) { n += 4; for (const ring of p[2]) n += 1 + ring.length * 2; }
+  const data = new ArrayBuffer(n * 8), view = new DataView(data); let i = 0;
+  const put = v => { if (!Number.isFinite(v)) throw new Error('footprints: nonfinite model value'); view.setFloat64(i++ * 8, v, true); };
+  [1, M.scale, M.bex ?? 1, M.b.length, M.p.length, ...M.box].forEach(put);
+  for (const b of M.b) { put(b[0]); put(b[1]); }
+  for (const [bi, h, rings, base = 0] of M.p) {
+    [bi, h, base, rings.length].forEach(put);
+    for (const ring of rings) { put(ring.length); for (const [x,z] of ring) { put(x); put(z); } }
+  }
+  const hash = await globalThis.crypto.subtle.digest('SHA-256', data);
+  return [...new Uint8Array(hash)].map(v => v.toString(16).padStart(2, '0')).join('');
+}
+
+// Appearance integration only. Never modifies the prepared model or the white city's geometry/material/visibility.
+// The caller skips skipBi (or skipCentres) only in its colour material, and renders this sparse geometry there.
+export async function buildTodayFootprints(M, sidecar, options = {}) {
+  if (!sidecar || sidecar.enabled === false) return { geometry: null, skipBi: [], skipCentres: [] };
+  if (sidecar.version !== 1 || sidecar.enabled !== true || !Array.isArray(sidecar.replacements)) throw new Error('footprints: invalid sidecar');
+  if (await todayFootprintFingerprint(M) !== sidecar.model_fingerprint) throw new Error('footprints: sidecar belongs to another prepared model');
+  const records = [], parents = [], skipBi = [], skipCentres = [], seen = new Set();
+  for (const r of sidecar.replacements) {
+    if (!Number.isInteger(r.pi) || r.pi < 0 || r.pi >= M.p.length || r.bi !== M.p[r.pi][0] || seen.has(r.bi) || !r.children?.length)
+      throw new Error('footprints: invalid or duplicate parent');
+    seen.add(r.bi);
+    const old = M.p[r.pi][2][0], centre = [0,1].map(k => old.reduce((a,p) => a+p[k],0)/old.length);
+    skipBi.push(r.bi); skipCentres.push(centre);
+    for (const c of r.children) {
+      if (!Number.isFinite(c.h) || c.h <= 0 || !Number.isFinite(c.base) || !Number.isFinite(c.height_m) || c.height_m < M.b[r.bi][1] - .001 ||
+          !Array.isArray(c.rings) || !c.rings.length || c.rings.some(ring => !Array.isArray(ring) || ring.length < 3 || ring.some(p => p.length !== 2 || !p.every(Number.isFinite))))
+        throw new Error('footprints: invalid child geometry/height');
+      records.push([r.bi,c.h,c.rings,c.base]); parents.push({ pi:r.pi, centre, height_m:c.height_m });
+    }
+  }
+  return { geometry: cityGeometry(M, { ...options, records, parents }), skipBi, skipCentres };
+}
+
 export function makeStudio(W, H, M, PAL, opts = {}) {
   const need = opts.fit || {};   // (what the film uses: main.js FIT)
   const BMAX = Math.max(BMAX0, opts.bmax || 0), LM = Math.max(LMAX, need.losses || 0), GM = Math.max(GMAX, opts.gmax || 0), NM = Math.max(NMAX, need.bands || 0), YM = Math.max(YLN, need.yl || 0), RM = 1 + (need.rings || 0);
@@ -681,77 +796,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   }
 
   // ---------------------------------------------------------------- the model: extruded footprints (+ mounds), one mesh
-  const hash = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
-  function buildCity() {
-    const pos = [], nor = [], dat = [], bas = [], ctr = [], gh = [], gt = [];
-    let BASE = 0, CX = 0, CZ = 0, GH = [1, 0, 0], GT = 0;
-    const push = (p, n, d) => { pos.push(...p); nor.push(...n); dat.push(...d); bas.push(BASE); ctr.push(CX, CZ); gh.push(...GH); gt.push(GT); };
-    const area = r => { let a = 0; for (let i = 0; i < r.length; i++) { const [x0, z0] = r[i], [x1, z1] = r[(i + 1) % r.length]; a += x0 * z1 - x1 * z0; } return a / 2; };
-    const prism = (rings, h, d, base = 0) => {
-      BASE = base; CX = rings[0].reduce((a, p) => a + p[0], 0) / rings[0].length; CZ = rings[0].reduce((a, p) => a + p[1], 0) / rings[0].length;
-      rings.forEach((r, ri) => {
-        const A = area(r), sgn = (A > 0 ? 1 : -1) * (ri ? -1 : 1);
-        for (let i = 0; i < r.length; i++) {
-          const [x0, z0] = r[i], [x1, z1] = r[(i + 1) % r.length];
-          const dx = x1 - x0, dz = z1 - z0, L = Math.hypot(dx, dz); if (L < 1e-7) continue;
-          const nx = dz / L * sgn, nz = -dx / L * sgn;
-          const a = [x0, base, z0], b = [x1, base, z1], c = [x1, base + h, z1], e = [x0, base + h, z0];
-          const cx = (b[1] - a[1]) * (e[2] - a[2]) - (b[2] - a[2]) * (e[1] - a[1]);
-          const cz = (b[0] - a[0]) * (e[1] - a[1]) - (b[1] - a[1]) * (e[0] - a[0]);
-          const tri = cx * nx + cz * nz > 0 ? [a, b, c, a, c, e] : [a, c, b, a, e, c];
-          for (const p of tri) push(p, [nx, 0, nz], d);
-        }
-      });
-      const V = THREE.Vector2;
-      const contour = rings[0].map(([x, z]) => new V(x, z)), holes = rings.slice(1).map(r => r.map(([x, z]) => new V(x, z)));
-      const all = contour.concat(...holes);
-      let tris; try { tris = THREE.ShapeUtils.triangulateShape(contour, holes); } catch { return; }
-      for (const [i, j, k] of tris) {
-        const p = all[i], q = all[j], r = all[k];
-        const up = (q.y - p.y) * (r.x - p.x) - (q.x - p.x) * (r.y - p.y) > 0;
-        for (const v of (up ? [p, q, r] : [p, r, q])) push([v.x, base + h, v.y], [0, 1, 0], d);
-      }
-    };
-    // frustum: a truncated pyramid (earthwork mounds) from a base ring and a top ring at height h, standing on g
-    const frustum = (base, top, h, d, g = 0) => {
-      BASE = g; CX = base.reduce((a, p) => a + p[0], 0) / base.length; CZ = base.reduce((a, p) => a + p[1], 0) / base.length;
-      const n = base.length;
-      for (let i = 0; i < n; i++) {
-        const [x0, z0] = base[i], [x1, z1] = base[(i + 1) % n], [tx0, tz0] = top[i], [tx1, tz1] = top[(i + 1) % n];
-        const a = [x0, g, z0], b = [x1, g, z1], c = [tx1, g + h, tz1], e = [tx0, g + h, tz0];
-        const ux = b[0] - a[0], uy = 0, uz = b[2] - a[2], vx = e[0] - a[0], vy = h, vz = e[2] - a[2];
-        let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx; const L = Math.hypot(nx, ny, nz) || 1; nx /= L; ny /= L; nz /= L;
-        const mx = (x0 + x1) / 2, mz = (z0 + z1) / 2, cx = base.reduce((s, p) => s + p[0], 0) / n, cz = base.reduce((s, p) => s + p[1], 0) / n;
-        if ((mx - cx) * nx + (mz - cz) * nz < 0) { nx = -nx; ny = -ny; nz = -nz; }
-        const tri = [a, b, c, a, c, e];
-        const cxp = (b[1] - a[1]) * (e[2] - a[2]) - (b[2] - a[2]) * (e[1] - a[1]), czp = (b[0] - a[0]) * (e[1] - a[1]) - (b[1] - a[1]) * (e[0] - a[0]);
-        for (const p of (cxp * nx + czp * nz > 0 ? tri : [a, c, b, a, e, c])) push(p, [nx, ny, nz], d);
-      }
-      const V = THREE.Vector2, contour = top.map(([x, z]) => new V(x, z));
-      for (const [i, j, k] of THREE.ShapeUtils.triangulateShape(contour, [])) {
-        const p = contour[i], q = contour[j], r = contour[k];
-        const up = (q.y - p.y) * (r.x - p.x) - (q.x - p.x) * (r.y - p.y) > 0;
-        for (const v of (up ? [p, q, r] : [p, r, q])) push([v.x, g + h, v.y], [0, 1, 0], d);
-      }
-    };
-    M.p.forEach(([bi, h, rings, base], i) => {
-      const [y0, bh] = M.b[bi], year = EARLY.get(i) ?? y0;   // the first layer dated from GHSL (1975-1987, pipeline/ghsl_change.py)
-      GH = RENEW.get(i) || [1, 0, 0];   // rebuilt taller later (pipeline/ghsl_change.py): first f0 of its height, today's height from yA to yB
-      GT = GROWT.get(i) || 0;           // rises later than its year: when the camera first sees it (compile, data/grow_t.json)
-      prism(rings, h, [year, bh, hash(bi * 1.37 + .5), 0], base || 0);
-    });
-    GH = [1, 0, 0]; GT = 0;
-    for (const m of (M.mounds || [])) frustum(m.base, m.top, m.h, [m.year, m.h_m, 0, 1], m.g || 0);
-    const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
-    g.setAttribute('aData', new THREE.Float32BufferAttribute(dat, 4));
-    g.setAttribute('aBase', new THREE.Float32BufferAttribute(bas, 1));
-    g.setAttribute('aCtr', new THREE.Float32BufferAttribute(ctr, 2));
-    g.setAttribute('aGrowH', new THREE.Float32BufferAttribute(gh, 3));
-    g.setAttribute('aGrowT', new THREE.Float32BufferAttribute(gt, 1));
-    return g;
-  }
+  const buildCity = () => cityGeometry(M, { early: EARLY, renew: RENEW, grow: GROWT });
   const RENEW = new Map(), EARLY = new Map(), GROWT = new Map();
   function setGrowT(list) { for (const [i, t] of list || []) GROWT.set(i, t); }
   function setRenew(list, early) { for (const [i, f0, yA, yB] of list || []) RENEW.set(i, [f0, yA, yB]); for (const [i, y] of early || []) EARLY.set(i, y); }
@@ -1482,5 +1527,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // fx land trees: trees in the land's woods and open ground in the white model too, planted as the miniature plants them, in a pale
   // sage that sits with the white city (fx.js treeField; the viewer's, engine/view.js)
   const fxTrees = () => treeField(scene, renderer, U, PW, PD, M.scale, { size: .8, keep: .25, ...(landPalette(FXL).trees || {}), dark: 1, cypress: .1, woods: woodsFn(FXL, EXG, M.scale, ground, FXR), ground, layer: 0, tone: 'film' });
-  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, deformMaterial, eraRiseGLSL, eraRy: (rank, w) => ERA_RY(Z, rank, w), marksGLSL, marksN: () => Z.E, colourLight: LIGHTK, colourGround: GROUNDC, fireGLSL: FIRE_GLSL, wThenGLSL: T ? WTHEN : null, context: () => ctxMesh, slots: HMAX, slots3: H3, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD };
+  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, deformMaterial, eraRiseGLSL, eraRy: (rank, w) => ERA_RY(Z, rank, w), marksGLSL, marksN: () => Z.E, colourLight: LIGHTK, colourGround: GROUNDC, fireGLSL: FIRE_GLSL, wThenGLSL: T ? WTHEN : null, context: () => ctxMesh, slots: HMAX, slots3: H3, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD, buildTodayFootprints: sidecar => buildTodayFootprints(M, sidecar, { early: EARLY, renew: RENEW, grow: GROWT }) };
 }

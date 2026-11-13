@@ -3,7 +3,8 @@
 usage: python -I pipeline/osm.py <city_dir> [themes...]      (the area around the plate: pipeline/layout.py area)
 Themes: water (areas + rivers), roads (motorway..primary), rail (rail, light rail, subway), historic (historic=*, sites),
 green (parks, gardens, grass, woods, recreation grounds: pipeline/greens.py), streets (secondary..residential: pipeline/greens.py),
-building_heights (building / part polygons with a mapped height or above-ground storey count).
+building_heights (building / part polygons with a mapped height or above-ground storey count),
+building_footprints (all whole-building outlines, including those without heights; parts are filtered by the reader).
 Overpass is slow and sometimes down: each theme is one request with a long timeout; a cached answer is never re-fetched."""
 import sys, os, json, hashlib, time, urllib.request, urllib.error
 
@@ -52,7 +53,13 @@ THEMES = {
   relation["type"="multipolygon"]["building:part"]["height"]({bbox});
   relation["type"="multipolygon"]["building:part"]["building:levels"]({bbox});
 );''',
+    'building_footprints': '''(
+  way["building"]({bbox});
+  relation["type"="multipolygon"]["building"]({bbox});
+);''',
 }
+
+DEFAULT_THEMES = tuple(t for t in THEMES if t != 'building_footprints')   # large appearance cache is always explicit
 
 
 def query(box, theme, timeout=300):
@@ -99,6 +106,6 @@ def fetch(city_raw, box, theme, timeout=300):
 if __name__ == '__main__':
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import layout   # the city's raw folder and area
     if len(sys.argv) < 2: sys.exit(__doc__)
-    city = sys.argv[1]; box = layout.area(city); themes = sys.argv[2:] or list(THEMES)
+    city = sys.argv[1]; box = layout.area(city); themes = sys.argv[2:] or DEFAULT_THEMES
     for t in themes:
         fetch(layout.raw(city), box, t)
