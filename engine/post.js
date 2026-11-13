@@ -106,6 +106,22 @@ const gather2Shader = {
       gl_FragColor = vec4(acc / wsum, clamp(2.5 * near / wsum, 0., 1.));
     }`
 };
+// the gather's grain smoothed (o.dof2): its disc turned per pixel leaves a speckle about a sixth of the blur apart, which frayed a
+// soft edge into a speckled fringe; each pixel averaged over a fixed disc a third of its own blur wide (its own, or the nearer
+// blur spreading over it), so a soft edge is as smooth as a lens's; under a pixel or so of blur, untouched
+const smoothShader = {
+  uniforms: { tIn: { value: null }, tCoc: { value: null }, res: { value: new THREE.Vector2(1920, 1080) }, maxCoc: { value: 18 }, uS: { value: 2 } },
+  vertexShader: cocShader.vertexShader,
+  fragmentShader: `
+    varying vec2 vUv; uniform sampler2D tIn, tCoc; uniform vec2 res; uniform float maxCoc, uS;
+    void main(){
+      vec4 c0 = texture2D(tIn, vUv); float r = clamp(.33 * max(abs(texture2D(tCoc, vUv).a) / uS, c0.a * maxCoc), 0., 12.);
+      if (r < .75) { gl_FragColor = c0; return; }
+      vec4 acc = c0; const int N = 24;
+      for (int i = 0; i < N; i++) { float rr = r * sqrt((float(i) + .5) / float(N)), th = float(i) * 2.39996; acc += texture2D(tIn, vUv + vec2(cos(th), sin(th)) * rr / res); }
+      gl_FragColor = acc / float(N + 1);
+    }`
+};
 const downShader = {
   uniforms: { tIn: { value: null } }, vertexShader: cocShader.vertexShader,
   fragmentShader: 'varying vec2 vUv; uniform sampler2D tIn; void main(){ gl_FragColor = texture2D(tIn, vUv); }'   // (at the centre of each 2 x 2 block: the linear filter averages it)
@@ -166,6 +182,7 @@ class DofScenePass extends Pass {
       this.rtB = new THREE.WebGLRenderTarget(lw, lh, { type, depthBuffer: false });
       this.down = new FullScreenQuad(own(downShader));
       this.gat2 = new FullScreenQuad(own(gather2Shader)); this.gat2.material.uniforms.res.value.set(lw, lh);
+      this.rtB2 = new THREE.WebGLRenderTarget(lw, lh, { type, depthBuffer: false }); this.smooth = new FullScreenQuad(own(smoothShader)); this.smooth.material.uniforms.res.value.set(lw, lh);
       this.lay = new FullScreenQuad(own(layShader));
     }
     if (o.ao) {
@@ -181,7 +198,7 @@ class DofScenePass extends Pass {
   // with its pixel ratio on top of the supersampling when the pass is added, and the film's pass keeps the size it was made at
   resize(w, h) { this.rt.setSize(w, h); this.rtC.setSize(w, h); this.gat.material.uniforms.res.value.set(w, h); if (this.ao) this.ao.setSize(w, h);
     if (this.rtG) this.rtG.setSize(w, h);
-    if (this.rtB) { const lw = Math.round(w / this.s), lh = Math.round(h / this.s); this.rtB.setSize(lw, lh); if (this.rtD) this.rtD.setSize(lw, lh); this.gat2.material.uniforms.res.value.set(lw, lh); } }
+    if (this.rtB) { const lw = Math.round(w / this.s), lh = Math.round(h / this.s); this.rtB.setSize(lw, lh); this.rtB2.setSize(lw, lh); if (this.rtD) this.rtD.setSize(lw, lh); this.gat2.material.uniforms.res.value.set(lw, lh); this.smooth.material.uniforms.res.value.set(lw, lh); } }
   render(renderer, writeBuffer) {
     const lit = [];   // (light drawn after the haze: out of the scene's own picture)
     if (this.glowAfter) this.scene.traverse(o => { if (o.userData.fxGlow && o.visible) { o.visible = false; lit.push(o); } });
@@ -210,7 +227,9 @@ class DofScenePass extends Pass {
       if (this.rtD) { this.down.material.uniforms.tIn.value = src; renderer.setRenderTarget(this.rtD); this.down.render(renderer); src = this.rtD.texture; }
       const g2 = this.gat2.material.uniforms; g2.tIn.value = src; g2.maxCoc.value = this.maxCoc; g2.uS.value = this.s;
       renderer.setRenderTarget(this.rtB); this.gat2.render(renderer);
-      const l = this.lay.material.uniforms; l.tSharp.value = this.rtC.texture; l.tBlur.value = this.rtB.texture; l.uS.value = this.s;
+      const sm = this.smooth.material.uniforms; sm.tIn.value = this.rtB.texture; sm.tCoc.value = src; sm.maxCoc.value = this.maxCoc; sm.uS.value = this.s;
+      renderer.setRenderTarget(this.rtB2); this.smooth.render(renderer);
+      const l = this.lay.material.uniforms; l.tSharp.value = this.rtC.texture; l.tBlur.value = this.rtB2.texture; l.uS.value = this.s;
       renderer.setRenderTarget(this.renderToScreen ? null : writeBuffer); this.lay.render(renderer); return;
     }
     const g = this.gat.material.uniforms; g.tIn.value = this.rtC.texture; g.maxCoc.value = this.flat ? 0 : this.maxCoc * this.s;
