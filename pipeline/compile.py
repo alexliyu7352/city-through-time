@@ -74,17 +74,26 @@ if not (C.get('film') or {}).get('nodes'):
     _nm = C.get('name') or {}; _nm = _nm.get('en') or next(iter(_nm.values()), C.get('slug', '')) if isinstance(_nm, dict) else str(_nm)
     _c, _d = ST['centre_wgs'], max(ST['size_m']); _y = _time.localtime().tm_year
     _cam = lambda t, az, el, d: {'t': t, 'll': [round(_c[0], 5), round(_c[1], 5)], 'az': az, 'el': el, 'd': round(d * _d, 3)}
+    # Fit the full plate and its height envelope with the same framing helper used for the film's stations. A fixed
+    # multiple of its longest side cropped corners on tall or wide plates; 8 s must still be a lit white-model view.
+    _ter = json.load(open(LAYOUT.data(D, 'terrain.json'))) if (C.get('terrain') or {}).get('enabled', True) and os.path.exists(LAYOUT.data(D, 'terrain.json')) else {}
+    _h = ((float(_ter.get('max_m', 0)) - float(_ter.get('min_m', 0))) * float((C.get('terrain') or {}).get('exaggeration', 3))
+          + max((b['h'] for b in ST.get('tallest', [])), default=0) * float((C.get('buildings') or {}).get('exaggeration', 3))) / C['scale']
+    _corners = [(x, y, z) for x in (-ST['size_m'][0] / 2, ST['size_m'][0] / 2)
+                for z in (-ST['size_m'][1] / 2, ST['size_m'][1] / 2) for y in (0, _h)]
+    _wide = stagecraft.fit_distance([0, 0, 0, 34, 40, _d, 30], _corners, .88, .78, d_hi=10 * _d)[5] / _d
     _f = {'family': 'Noto Sans SC', 'weight': 300}; _fs = {'family': 'Noto Sans SC', 'weight': 500}
     C['film'] = yaml.load(yaml.safe_dump({
-        'lang': ['en'], 'emblem': 'none', 'light': {'base': 0.62},
+        'lang': ['en'], 'emblem': 'none', 'light': {'base': 0.62}, 'drift': 0,
         'identity': {'l1': f'{_nm} · 1:{{cfg.scale:g}}', 'l2': '{plate_km[0]:.1f} × {plate_km[1]:.1f} km'},
         'palette': {'plate': '#3a4757', 'plateSide': '#15191e', 'water': '#3a5670', 'plateEmit': 0.55},
         'fonts': {'primary_strong': _fs, 'primary': _f, 'primary_sans': _f, 'primary_sans_strong': _fs, 'secondary': _f, 'secondary_strong': _fs,
                   'numeral': {'family': 'Cormorant Garamond', 'weight': 300}, 'numeral_strong': {'family': 'Cormorant Garamond', 'weight': 500},
                   'mono': {'family': 'IBM Plex Mono', 'weight': 400}},
-        'opening': {'dur': 6.0, 'camera': [_cam(0, 30, 12, .6), _cam(6, 34, 30, .9)]},
+        'opening': {'dur': 12.0, 'camera': [_cam(0, 30, 12, .6), _cam(4, 30, 12, .6), _cam(7, 34, 40, _wide), _cam(12, 34, 40, _wide)]},
+        'closing': {'lights_after': 0, 'end_after': 0, 'end_hold': 2},   # the scale view has no narrated tail to wait for
         'nodes': [{'id': 'scale', 'mood': {'feel': 'calm', 'level': 1}, 'years': [_y, _y], 'dur': 4, 'label': {'en': _nm}, 'col': '#2f98ff',
-                   'camera': [_cam(0, 34, 30, .9), _cam(4, 38, 34, .9)]}]}, allow_unicode=True), Loader=_SeenLoader)
+                   'camera': [_cam(0, 34, 40, _wide), _cam(4, 34, 40, _wide)]}]}, allow_unicode=True), Loader=_SeenLoader)
     print(f'compile: city.yaml has no film nodes yet: a stand-in film of the white model alone for the scale still (docs/DATA.md); '
           f'node render/still.mjs {os.path.basename(D)} 3 8', flush=True)
 FM = C['film']
