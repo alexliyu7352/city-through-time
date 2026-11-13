@@ -219,11 +219,11 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, env: 0, groundFill: [.6, 1.35], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 6.5, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.02, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
+      todayLight: { all: true, env: 0, winFade: [.25, .8], groundFill: [.6, 1.75], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
         far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
         board: [.57, .53, .50], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.80, .77, .73], kerb: [.86, .85, .82],
-        streets: { asphalt: '#747679', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.61, .69, .37], [.54, .63, .33]],   // (streets: geometry, streetsMesh; the raster's share 0)
+        streets: { asphalt: '#747679', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.55, .62, .26], [.49, .57, .23]],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.38, .66, .64], deep: [.22, .52, .52], reach: 60, rough: .45, ripple: .08, gloss: [.03, .4, [.62, .86, .88]], refl: [.2, .3], sparkle: [.3, 2.5] },
         trees: [[.55, .70, .35], [.63, .76, .40], [.50, .64, .32]] },
       // light presets over todayLight (FILM_PIC todayPreset): golden, the golden hour for the opening and the return to today: a low
@@ -1245,7 +1245,7 @@ function hullIn(H, x, z) { let m = Infinity; for (let k = 0; k < H.length; k++) 
 function FACADE_GLSL(S) {
   const EX = (S.U.uScaleH ? S.U.uScaleH.value / S.U.uScaleM.value : 3).toFixed(3);
   return `
-  { vec3 n_ = normalize(vWN); float hm_ = vData.y, kd_ = floor(vKind + .5);
+  { vec3 n_ = normalize(vWN); float hm_ = vData.y, kd_ = floor(vKind + .5), KW0_ = ${((todayL() && todayL().winFade) || [.125, .5])[0].toFixed(3)}, KW1_ = ${((todayL() && todayL().winFade) || [.125, .5])[1].toFixed(3)};   // (todayLight winFade: the windows' contrast ramp, in fwidth's metres a pixel over a storey)
     if (vData.w < .5 && hm_ > 2.5) {
       float pxm_ = length(fwidth(vWP)) / uScaleM, show_ = 1. - vMute;   // (metres a pixel; none on today's plan behind a period city)
       vec3 pt_ = diffuseColor.rgb;   // (its paint)
@@ -1264,11 +1264,11 @@ function FACADE_GLSL(S) {
           c_ = mix(pt_, uGlassSky, min(1., uGlassK * (.12 + .5 * fr_)));   // (the sky in it, more as the view grazes)
           c_ = mix(c_, pt_ * .62, .55 * ln_); glass_ = (1. - ln_) * show_; eng_ = 0.;
         } else if (res_) {   // a home: a balcony band at each floor, a shade lighter; its windows set back, a shade darker
-          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(1. - smoothstep(.13, .3, pxm_ / sh_), 1. - smoothstep(.13, .3, pxm_ / wu_));   // (pxm_ from fwidth's length runs about 1.5 times a pixel: whole while a storey spans some 10 picture pixels, gone by about 5: crisp close, a quiet wall afar, never a speckle)
+          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = pow(1. - smoothstep(KW0_, KW1_, max(pxm_ / sh_, pxm_ / wu_)), 1.5);   // (a contrast ramp: pxm_ from fwidth's length runs about 1.5 times a pixel, so whole from some 12 picture pixels a storey, about 40 % at 5, none by 3: window rows close, a quiet wall afar, never a speckle)
           float band_ = (1. - smoothstep(.12, .2, fy_)) * kS_, win_ = smoothstep(.30, .34, fy_) * (1. - smoothstep(.84, .88, fy_)) * smoothstep(.10, .14, fu_) * (1. - smoothstep(.78, .82, fu_)) * kW_;
           c_ = mix(pt_ * (1. + .08 * band_), mix(pt_ * .5, vec3(.30, .35, .44), .45), .9 * win_ * (1. - band_)) * (1. - .04 * (1. - kW_)); eng_ = .35 * win_ * (1. - band_) * show_;   // (a window no darker than the wall's own shade side)   // (its windows cool glass set into the paint; afar the paint a shade deeper, their share)
         } else {   // the low fabric, a large low building: small windows
-          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(1. - smoothstep(.13, .3, pxm_ / sh_), 1. - smoothstep(.13, .3, pxm_ / wu_));
+          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = pow(1. - smoothstep(KW0_, KW1_, max(pxm_ / sh_, pxm_ / wu_)), 1.5);
           float win_ = smoothstep(.36, .40, fy_) * (1. - smoothstep(.76, .80, fy_)) * smoothstep(.30, .34, fu_) * (1. - smoothstep(.64, .68, fu_)) * kW_;
           c_ = mix(pt_, mix(pt_ * .5, vec3(.30, .35, .44), .45), .88 * win_) * (1. - .03 * (1. - kW_)); eng_ = .3 * win_ * show_;
         }
