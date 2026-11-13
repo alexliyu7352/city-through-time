@@ -76,7 +76,7 @@ SKIRT = 3.0       # metres every body reaches below grade (citygen Builder.skirt
 FOUND_MAX = .3    # a foundation on screen over this share of its building's height is tall (tall_foundation)
 
 
-SOLID = (0, 2, 5, 6)   # the record types that are bodies (box, frustum, solid of revolution, prism; not a roof, a trunk, a cone)
+SOLID = (0, 2, 5, 6, 7)   # box, frustum, revolution, prism and closed mesh; not a roof, trunk or cone
 
 
 def rect(p, shrink=0.0):

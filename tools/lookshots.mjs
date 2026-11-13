@@ -77,7 +77,10 @@ let swapped = false;
 for (const [name, c] of Object.entries(cams)) {
   const view = viewOf(c);
   await page.evaluate(v => window.VIEW(v), view);
-  if (mini && c.swap && !swapped) { console.log('swap', JSON.stringify(await page.evaluate(s => window.__MINI.swap(s), c.swap))); swapped = true; }
+  if (mini && c.swap && !swapped) {
+    for (const s of (Array.isArray(c.swap) ? c.swap : [c.swap])) console.log('swap', JSON.stringify(await page.evaluate(s => window.__MINI.swap(s), s)));
+    swapped = true;
+  }
   await page.evaluate(() => window.VIEW({}));
   if (timing) {
     const o = await page.evaluate(async ([c, rb]) => { const read = new Function(`return (${rb})`)(), o = [];

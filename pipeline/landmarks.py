@@ -174,6 +174,36 @@ FIELDS = {
         'section_m': ('pts', 3, None, '[[across, up], ...] metres: an outline laid along its y instead (a vault, a nave with its aisles)'),
         'length_m': ('num', (.1, 2000), None, 'section: how long'),
     }, 'any solid carried straight: a plan raised (holes allowed) or a section laid along'),
+    'highrise': ({
+        'h_m': ('num', (1, 2000), REQ, 'documented total height, also the last section z_m'),
+        'plan_m': ('pts', 3, REQ, 'base outline in metres about its axis; do not repeat the first point; a recess is real geometry'),
+        'sections': ('list', {
+            'z_m': ('num', (0, 2000), REQ, 'height above ground; nondecreasing, equal heights form a sharp setback'),
+            'scale': ('pair', (.001, 10), [1,1], 'x and y scales of the base outline'),
+            'turn_deg': ('num', (-1440, 1440), 0.0, 'counter-clockwise turn of this section relative to the base'),
+            'offset_m': ('pair', (-2000, 2000), [0,0], 'east/north shift in its frame'),
+            'plan_m': ('pts', 3, None, 'optional outline at this height, before scale/turn; matching point counts keep its corners'),
+        }, REQ, 'ruled sections from ground to h_m: tapering, twisting or stepped skyscrapers'),
+        'opening': ('obj', {'z0_m': ('num',(1,1999),REQ,'sill height'), 'z1_m': ('num',(1,1999),REQ,'head height'),
+                            'w0_m': ('num',(.1,500),REQ,'opening width at sill'), 'w1_m': ('num',(.1,500),REQ,'opening width at head')}, None,
+                    'a real trapezoidal through-opening along local y; constant section bearing required'),
+        'crown_slope_m': ('num', (0, 300), 0.0, 'height difference across the sloping crown; highest point remains h_m'),
+        'crown_direction_deg': ('num', (-1440,1440), 0.0, 'high side bearing in the landmark frame, after the section turn'),
+        'facade': ('obj', {'floor_m': ('num',(.5,20),4.0,'detailed model storey pitch'), 'bay_m': ('num',(.5,20),3.0,'mullion pitch'),
+                           'mullion_m': ('num',(.05,2),.25,'mullion diameter'), 'band_m': ('num',(.02,3),.3,'belt projection'),
+                           'band_h_m': ('num',(.05,3),.35,'belt height'), 'top_m': ('num',(0,2000),None,'stop normal curtain wall below a structural crown')}, None, 'optional detailed GLB facade; estimated dimensions need a basis'),
+        'panels': ('list', {'id': ('str',None,None,'part name'), 'points_m': ('xyzs',3,REQ,'convex planar polygon in local east/north/up metres'),
+                            'thickness_m': ('num',(.05,10),REQ,'plate thickness')}, None, 'optional real thin crown fins or facade plates, with air between them'),
+    }, 'a skyscraper lofted between sourced or schematic sections, with taper, twist, setbacks and a through-opening'),
+    'broadcast_tower': ({
+        'h_m': ('num',(1,2000),REQ,'documented total height including antenna'),
+        'spheres': ('list', {'id': ('str',None,None,'part name'), 'z_m': ('num',(0,2000),REQ,'sphere centre height'),
+                              'd_m': ('num',(.1,300),REQ,'diameter'), 'at_m': ('pair',(-2000,2000),[0,0],'sphere centre in plan'),
+                              'band_share': ('num',(0,.8),.24,'detailed equatorial glazing height over diameter')}, REQ,'observation spheres'),
+        'members': ('list', {'id': ('str',None,None,'part name'), 'from_m': ('triple',(-2000,2000),REQ,'[east,north,up] at one end'),
+                              'to_m': ('triple',(-2000,2000),REQ,'other end'), 'r_m': ('num',(.01,100),REQ,'radius at first end'),
+                              'r1_m': ('num',(.01,100),None,'radius at other end, absent keeps r_m')}, REQ,'upright piers, inclined struts, ties and stepped antenna members'),
+    }, 'a television or observation tower made of spheres and round members in any direction'),
     'parts': ({
         'parts': ('list', None, REQ, 'the landmarks it is made of, each of any kind above (not parts), each with at, theta_deg, z_m and repeat; its basis is the whole\'s'),
     }, 'several classes put together: a domed hall with its portico, a cathedral with towers, a mosque with minarets'),
@@ -207,6 +237,12 @@ def _field(v, spec, where):
     if t == 'enum':
         if v not in arg: bad(f'one of {", ".join(arg)}')
         return v
+    if t == 'triple':
+        if not (isinstance(v,list) and len(v)==3 and all(isnum(q) and arg[0]<=q<=arg[1] for q in v)): bad('[x, y, z] within the permitted metre range')
+        return [float(q) for q in v]
+    if t == 'xyzs':
+        if not (isinstance(v,list) and len(v)>=arg):bad('three or more [x,y,z] points')
+        return [_field(q,('triple',(-2000,2000),None,''),where) for q in v]
     if t == 'pair':
         v_ = [v, v] if isnum(v) else v
         if not (isinstance(v_, list) and len(v_) == 2 and all(isnum(q) and arg[0] <= q <= arg[1] for q in v_)): bad(f'[a, b] (or one number), each from {arg[0]:g} to {arg[1]:g}')
@@ -280,6 +316,10 @@ def check(L, src, part=False):
         if 'plan_m' in out and 'h_m' not in out: raise Bad(f'{src}: h_m is missing: the plan\'s height')
         if 'section_m' in out and 'length_m' not in out: raise Bad(f'{src}: length_m is missing: how long the section is laid')
         if 'section_m' in out and (out['holes_m'] or out['top'] != 1): raise Bad(f'{src}: holes_m and top go with plan_m')
+    if k in ('highrise','broadcast_tower'):
+        import towergeom
+        try: towergeom.validate(out)
+        except ValueError as e: raise Bad(f'{src}: {e}') from e
     if k == 'parts':
         out['parts'] = [check(q, f'{src}.parts[{i}]', part=True) for i, q in enumerate(out['parts'])]
         if any(q['kind'] == 'parts' for q in out['parts']): raise Bad(f'{src}: a part is one of the classes, not parts again')
@@ -297,7 +337,8 @@ def library(C, city_dir):
     v = (C or {}).get('landmark_types') or {}; out = {}
     for src in ([v] if isinstance(v, (dict, str)) else v):
         d = yaml.safe_load(open(os.path.join(city_dir, src), encoding='utf-8')) if isinstance(src, str) else src
-        items = {L['name']: L for L in d['landmarks']} if isinstance(d, dict) and isinstance(d.get('landmarks'), list) else d
+        items = ({d['name']:d} if isinstance(d,dict) and d.get('kind') and d.get('name') else
+                 {L['name']: L for L in d['landmarks']} if isinstance(d, dict) and isinstance(d.get('landmarks'), list) else d)
         if not isinstance(items, dict): raise SystemExit(f'citygen: landmark_types {src}: a mapping name -> landmark, or {{landmarks: [{{name, ..}}]}}')
         out.update(items)
     return out
@@ -446,6 +487,10 @@ def extent(L):
     """(half width, half depth) in its own frame, metres, round its anchor: the frame a sheet or a study gives it (the fabric
     keeps clear of the box of what it covers instead, bounds)"""
     k = L['kind']
+    if k in ('highrise','broadcast_tower'):
+        import towergeom
+        v=[p for m in towergeom.build(L) for p in m['v']]
+        return max(abs(p[0]) for p in v),max(abs(p[1]) for p in v)
     if k == 'ring':
         o = L['outer_m']; hw, hd = o[0] / 2, o[1] / 2
         if L['plan'] == 'half': hd = o[0] / 2 + (L.get('stage') or {}).get('d_m', 0)
@@ -520,6 +565,7 @@ def bounds(L):
 def top(L, hx):
     """about how high it stands on screen, metres (its heights exaggerated by hx, a dome's curve true): the sheet frames it"""
     k = L['kind']; z = (L.get('z_m') or 0) * hx
+    if k in ('highrise','broadcast_tower'): return z + L['h_m'] * hx
     if k == 'ring': return z + L['h_m'] * hx
     if k == 'dome':
         dm = L['dome']; dw = dm.get('d_m') or L['d_m'] / NECK.get(dm['shape'], 1.0); rise = dm.get('rise_m') or RISE[dm['shape']] * dw
@@ -600,6 +646,11 @@ def draw(D, L, x, y, th, z=0.0):
                             g_ = B.gsite(sx_, sy_, th + pth, w_, d_); draw(Draw(B, g_), q, qx, qy, th + pth, z_)
                     finally: B.plinth = p0_
             gs.append(g_); tops.append(max(((r[4] + r[7] - r[12]) / (B.F.scale * B.hex) for r in B.prims[n0:]), default=z_))
+        return
+    if k in ('highrise','broadcast_tower'):
+        import towergeom
+        for m in towergeom.build(L):
+            with D.B.labelled(m['name']): D.B.mesh(*P(0,0),th,z,m,part=C.LMK,g_m=D.g)
         return
     {'ring': _ring, 'dome': _dome, 'long_hall': _long_hall, 'column': _column, 'stepped': _stepped, 'arches': _arches, 'revolve': _revolve, 'prism': _prism}[k](D, L, P, th, z)
 

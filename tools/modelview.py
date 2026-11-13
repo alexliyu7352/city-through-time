@@ -113,6 +113,8 @@ def sheet_city(C, era, spec, at, Fr, city, scale, d, az=None, el=12.0):
 # what each kind of landmark would need to read as the building it is (--landmarks), beyond the detail the colour look already
 # puts on it (engine/detail.js: tiled roofs, red columns, painted beams, ridge ends)
 NEED = {
+  'highrise': 'its sourced section profile, facade mullions and belts, and a genuine crown or through-opening; detailed GLB kind highrise reads the same shape',
+  'broadcast_tower': 'its sourced observation spheres, piers, inclined members and stepped antenna; detailed GLB kind broadcast_tower reads the same shape',
   'court': 'its halls: lattice doors and windows between the columns, bracket sets (斗拱) under the eaves, eave corners turned up, balustrades on its terraces; its wall: a tiled coping',
   'terrace': 'brick or rammed-earth facing with its lifts, stairs with balustrades, a parapet round the top; its halls as a court\'s',
   'palace': 'as a court\'s halls, on a tall stone platform (須彌座) with a balustrade and stairs',
@@ -265,6 +267,8 @@ def main():
     ap.add_argument('city'); ap.add_argument('era', nargs='?')
     ap.add_argument('--at', action='append'); ap.add_argument('--spec'); ap.add_argument('--year', type=int)
     ap.add_argument('--az', type=float); ap.add_argument('--el', type=float); ap.add_argument('--d', type=float); ap.add_argument('--fov', type=float, default=42.0)
+    ap.add_argument('--height-m', type=float, default=0.0, help='camera target metres above the ground, for a tall landmark')
+    ap.add_argument('--size', default='1920x1080', help='still dimensions, passed to render/still.mjs')
     ap.add_argument('--wide', action='store_true'); ap.add_argument('--name'); ap.add_argument('--sheet', action='store_true')
     ap.add_argument('--landmarks', metavar='OUT.md')
     args = ap.parse_args()
@@ -301,6 +305,9 @@ def main():
         if not isinstance(spec, dict): raise SystemExit(f'modelview: {args.spec} holds no city: block')
     Fr = geo.Frame(tuple(C['box']), 1.0 / C['scale'])
     sh = shots(args)
+    if not 0 <= args.height_m <= 2000: raise SystemExit('modelview: --height-m must be between 0 and 2000 metres above ground')
+    if args.height_m:
+        for s in sh: s['y'] = args.height_m / C['scale']
     if args.sheet:
         if len(sh) != 1: raise SystemExit('modelview: --sheet takes one --at, where the row of blocks starts (a flat open place)')
         spec, sh = sheet_city(C, args.era, spec, sh[0]['ll'], Fr, city, C['scale'], args.d, az_given, args.el)
@@ -337,7 +344,7 @@ def main():
     files = []
     for i, (s, v) in enumerate(zip(sh, cams), 1):
         q = f'bundle={bundle}&cam=' + ','.join(f'{x:g}' for x in v); pre = f'{i}_{s["name"]}_' if 'name' in s else f'{i}_'
-        r = run(['node', 'render/still.mjs', slug, f'{t:.2f}', '--q', q, '--out', out, '--prefix', pre], LAYOUT.logs(S, f'still_{i}.log'))
+        r = run(['node', 'render/still.mjs', slug, f'{t:.2f}', '--q', q, '--out', out, '--prefix', pre, '--size', args.size], LAYOUT.logs(S, f'still_{i}.log'))
         if r.returncode: print(r.stdout[-2000:]); raise SystemExit('modelview: the still failed')
         files.append(os.path.join(out, f'{pre}{t:.2f}.jpg'))
         print(f'{os.path.relpath(files[-1], ROOT)}   at {s["ll"][0]:.5f},{s["ll"][1]:.5f} az {s["az"]:g} el {s["el"]:g} d {s["d"]:g}')

@@ -176,6 +176,21 @@ export class Geo {
       for (const [i, j, k] of faces) this.tri(P(V[i].x, V[i].y, t), P(V[j].x, V[j].y, t), P(V[k].x, V[k].y, t), nn, data, B0);
     }
   }
+  // A closed local mesh from the shared procedural geometry. Its shape is authored once in metres by the pipeline and
+  // read here; taper, twist and genuine apertures therefore match the detailed Blender kind.
+  mesh(cx, y0, cz, shape, rot = 0, data = [0, 0, 0, 1], base = null) {
+    const c = Math.cos(rot), s = Math.sin(rot), B0 = base == null ? y0 : base;
+    const V = shape.v.map(([x, y, z]) => { const X = cx + x * c - z * s, Z = cz + x * s + z * c; return [X, y0 + y + this.gx * (X - cx) + this.gz * (Z - cz), Z]; });
+    const N = shape.f.map(([a, b, c]) => { const u = V[b].map((x,i) => x - V[a][i]), v = V[c].map((x,i) => x - V[a][i]);
+      const n = [u[1]*v[2]-u[2]*v[1], u[2]*v[0]-u[0]*v[2], u[0]*v[1]-u[1]*v[0]], d = Math.hypot(...n); return d > 1e-14 ? n.map(x => x/d) : null; });
+    const adjacent = V.map(() => []);
+    shape.f.forEach((f,j) => { if (N[j]) f.forEach(i => adjacent[i].push(j)); });
+    shape.f.forEach((f,j) => { const n = N[j]; if (!n) return;
+      const smooth = shape.smooth ? f.map(i => { const sum = [0,0,0];
+        adjacent[i].forEach(k => { if (N[k].reduce((a,x,l) => a+x*n[l],0) > Math.cos(Math.PI/5)) N[k].forEach((x,l) => sum[l] += x); });
+        const d = Math.hypot(...sum) || 1; return sum.map(x => x/d); }) : null;
+      this.tri(V[f[0]], V[f[1]], V[f[2]], n, data, B0, smooth); });
+  }
   // a wall segment from a to b (model xz) as a box of thickness t and height h, standing on y0
   seg(a, b, y0, h, t, data) {
     const dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz); if (L < 1e-7) return;
@@ -353,6 +368,7 @@ export function buildEra(prims, year = 0, lost = null) {
     else if (t === 4) G.cone(cx, y0, cz, a, c, 10, data, g);
     else if (t === 5) G.revolve(cx, y0, cz, a / 2, b / 2, c, p[17].p || p[17], d, rot, data, g, e, !!p[17].inset);   // a, b: width, depth; d: sides; e: the share of a turn (0: whole); p[17]: the section ({p, inset: 1}: measured in from the oval)
     else if (t === 6) G.prism(cx, y0, cz, p[17], e ? b : c, d, e, rot, data, g);      // a, b: width, depth (laid along: b its length); c: height; d: top scale; e: laid along; p[17]: the rings
+    else if (t === 7) G.mesh(cx, y0, cz, p[17], rot, data, g);
     for (let k = n0_; k < G.pos.length / 3; k++) Y0.push(t === 1 ? y0 : -1e9);
   }
   const geo = G.geometry(); geo.setAttribute('aY0', new THREE.Float32BufferAttribute(Y0, 1)); return geo;

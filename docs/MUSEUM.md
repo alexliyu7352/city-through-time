@@ -100,6 +100,21 @@ model made in Blender instead: `detailed: {kind, spec}` beside `landmark` (or in
   Object names have no `/` (three.js drops it from a node's name).
 - **Parts:** the model's objects, by name (an amphitheatre's: `facade_arcades`, `orders`, `attic`, `cavea`, `podium`, `arena`), are
   taken by `labels` as records are, a piece's with its id first (`theatre/cavea`); `kinds` take records only.
+- **Modern towers:** `highrise` and `broadcast_tower` take the same landmark data as their `landmarks.py` classes, through
+  `pipeline/towergeom.py`; the Blender adapters do not maintain a second body profile. High-rise `facade` declares `floor_m`,
+  `bay_m`, `mullion_m`, `band_m` and `band_h_m`: the detailed model adds actual mullions and belts, stopping at a true opening,
+  while the massing keeps the silhouette. `facade.top_m` stops normal glazing below a structural crown; optional thin
+  `panels` retain its separated fins in both versions. Television-tower spheres add equatorial glazing belts (`band_share`). Source or
+  label these dimensions as schematic; an author's picture is a shape reference, not a surveyed elevation.
+  Objects are grouped by meaningful parts (body, opening piers, facade belts, mullions, spheres, members), in metres about
+  the landmark axis, unturned, y-up in GLB. Apply the source `theta_deg` once when placing it. Materials distinguish
+  `stone` (solid structure), `glass` (curtain wall or glazing belt), and `metal` (facade rails). A colour-look swap palette
+  can map those roles; an unrecognised role uses its existing neutral stone fallback. The detailed model preserves the
+  landmark's true height; the city scale and existing base-hiding mechanism handle its placement, not a second height factor.
+  `tools/lookshots.mjs` camera data accepts either one `swap` object or a list, to inspect a skyline of several detailed
+  models in one view. Give each its own `near`, `theta_deg` and a radius that excludes neighbouring landmarks; apply it once.
+  The swap seats the model at the selected source's `aBase` and measures its height from that base; terrain beneath a
+  raised or levelled site is not extra building height.
 - **Building it:** `tools/museum.py` runs Blender headless (local/config.json `blender`, docs/SETUP.md; a second or two) and writes
   `build/museum/<page>/<piece or model>.glb`, Draco-compressed (an amphitheatre of 349,000 triangles, its mouldings and capitals turned, is 1.7 MB), turned and placed
   as the generator places the landmark. The page draws it with the white model's material: the tones, the picking and the pictures

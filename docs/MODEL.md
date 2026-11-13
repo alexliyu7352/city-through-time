@@ -161,6 +161,29 @@ and hides an open ground floor:
 - `arches`: a wall of arches: triumphal arches and gates, aqueducts and arched bridges (`tiers`, `from`/`to`; a run over 120 m is laid in pieces, each on its own ground), arcades and loggias, iwans and great portals (`through: false`: deep recesses, dark at the back).
 - `revolve` and `prism`: free solids for a form no class has: a section turned round an axis (a television tower, a bell-shaped stupa), an outline raised (a star fort, a building round its court: `holes_m`) or a section laid along (a vault).
 - `parts`: several of these together, each placed (`at`, `theta_deg`, `z_m` above the whole's ground, or `atop` another part: a lantern on a dome, a spire on a tower) and copied (`repeat`: `mirror`, `ring`, `line`, `corners`); the parts may overlap, the model shows their union. A part on another stands on it with `atop`, never a `z_m` counted by hand: a dome keeps its true curve while the other heights are exaggerated, so a height added up from the sizes misses its top.
+- `highrise`: a sourced outline carried through `sections` in metres: each `z_m`, `scale`, `turn_deg` and `offset_m` gives its
+  taper, twist or setback. Equal section heights make a sharp ledge; `sections[].plan_m` can change the outline itself (a
+  square becoming a thin blade). A concave `plan_m` makes a real vertical recess. `opening: {z0_m,z1_m,w0_m,w1_m}` cuts a real
+  trapezoidal void through local y, leaving two piers and a head beam; sections must keep a constant bearing. `crown_slope_m`
+  slopes the roof while keeping its high side at `h_m`; `crown_direction_deg` names that high side in the landmark frame,
+  after the section turn. The outline is centred on the building's axis, not its larger podium. An opening cannot consume
+  either pier. The sections run from ground 0 to the documented `h_m`. No specific skyline, floor count or completion date
+  is built into this class.
+  Optional `panels` are real thin convex planar polygons (`points_m` in east/north/up metres, `thickness_m`); use them for
+  separated crown fins with air between them, rather than lofting their outer tips into a solid inverted cone.
+- `broadcast_tower`: observation `spheres` (`z_m` is the **centre**, `d_m` the diameter, `at_m` its horizontal offset) and
+  `members` (metre `from_m`/`to_m` triples and `r_m`, optionally `r1_m`). Members may be vertical piers, inclined struts,
+  horizontal ties or stepped antenna shafts. `h_m` includes the antenna; the geometry must close to that height. Minor
+  spheres and joints are data too. Do not infer a whole television tower from an antenna part's footprint or storey tag.
+
+These two classes share `pipeline/towergeom.py` with the detailed Blender kinds (`docs/MUSEUM.md`). The film stores their
+closed meshes as primitive type 7: local model-unit vertices, triangle faces and a projected plan in record field 17. The
+same footprint adapter supplies masks, tree clearance and clipcheck's solid-body tests, and geocheck checks the actual closed surface, including recesses and
+apertures. Existing primitive records keep their format. Test the geometry with `uv run python -I pipeline/towergeom.py selftest`.
+Every measured or photo-estimated profile still needs `basis`; an estimated dimension is schematic, not a survey.
+
+A landmark template file may also hold one named landmark directly (`name` and `kind`), instead of a name-to-spec mapping.
+This lets its model study and detailed model read the same source without copying its profile between files.
 
 ```yaml
 landmarks:
@@ -185,6 +208,11 @@ Before story nodes exist, run `pipeline/compile.py` once after prep. `tools/mode
 scale defaults (`build/scale_input.json`) for a schematic landmark study without adding story nodes. This scale study keeps
 today's base at full height under the room light, with the normal landmark masks. It refuses defaults
 whose city.yaml fingerprint is stale; rerun compile after changing that file. The study stays under the city's build/review/.
+For a tall landmark, `--height-m <metres>` aims above its ground (usually half its total height); `--size 3840x2160` gives
+a larger still within the renderer's 16:9 format. Neither changes the building's scale or the film's cameras. Give `--at` at several bearings to inspect
+the recess, opening and structural connections from every side before combining it with the city.
+When comparing references of a different aspect, `tools/sheet.py --fit contain` preserves both frames, or `--fit cover`
+crops centrally to the first image's aspect. Do not stretch a tower to fit a portrait reference.
 
 Every key, its range, its default and what it means: `uv run python -I pipeline/landmarks.py [kind]`, the same table compile checks against: a key a class does not have, a value
 out of range, a missing size or a missing `basis` stops compile with what to write. Each size comes from the sources and `basis` says which are estimates; a size the sources do not

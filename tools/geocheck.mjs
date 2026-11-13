@@ -11,7 +11,7 @@ import path from 'path';
 import { Geo, buildEra, buildProp } from '../engine/props.js';
 import { buildDir } from '../render/local.mjs';
 
-const KINDS = ['box', 'gable', 'frustum', 'cylinder', 'cone', 'revolve', 'prism'];
+const KINDS = ['box', 'gable', 'frustum', 'cylinder', 'cone', 'revolve', 'prism', 'mesh'];
 
 // every piece a build makes, with the triangles it wrote: Geo's shape methods are wrapped while the build runs
 export function pieces(build) {
@@ -50,7 +50,7 @@ export function faults(P) {
   let y0 = Infinity, y1 = -Infinity; for (let j = 0; j < pos.length; j += 3) { const y = at(j)[1]; y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
   const C = [P.cx, (y0 + y1) / 2, P.cz];
   let S = null;
-  if (P.kind === 'revolve' || P.kind === 'prism') {
+  if (P.kind === 'revolve' || P.kind === 'prism' || P.kind === 'mesh') {
     const T = [...Array(n).keys()].map(i => [at(i * 9), at(i * 9 + 3), at(i * 9 + 6)]), xs = T.flat().map(p => p[0]), zs = T.flat().map(p => p[2]);
     S = { inside: closed(T), size: Math.min(Math.max(...xs) - Math.min(...xs), Math.max(...zs) - Math.min(...zs), y1 - y0) };
   }

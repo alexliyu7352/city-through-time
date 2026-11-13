@@ -33,6 +33,26 @@ def dark(): return material('dark', (.06, .06, .07), .95)
 def roof(): return material('roof', (.62, .60, .58))   # (a roof's covering, tiles or lead: the page shades it as the film's roofs, darker than the walls)
 
 
+def tower(spec, kind):
+    """Detailed tower geometry shared with landmarks.py, grouped into named parts rather than thousands of objects."""
+    import os, sys
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'pipeline'))
+    import towergeom
+    S = {**spec, 'kind': kind}; towergeom.validate(S)
+    grouped = {}
+    for m in towergeom.build(S, detailed=True):
+        name = ('facade_belts' if '_belt_' in m['name'] else 'facade_mullions' if '_mullion_' in m['name'] else m['name'])
+        key = name, m['material']
+        if key not in grouped: grouped[key] = bmesh.new()
+        bm = grouped[key]
+        v = [bm.verts.new(p) for p in m['v']]
+        for f in m['f']:
+            q = bm.faces.new([v[i] for i in f]); q.smooth = m['smooth']
+    mats = {'stone': stone(), 'glass': material('glass', (.52,.61,.66), .5),
+            'metal': material('metal', (.82,.84,.85), .5)}
+    return [obj(name, bm, [mats[mat]]) for (name,mat),bm in grouped.items()]
+
+
 def obj(name, bm, mats):
     """a bmesh as an object of its own (its faces' material_index into mats), normals made consistent; the edges where faces meet
     at more than 40 degrees split, so a turned profile is smooth round its axis and keeps its steps (a base's torus, an abacus's

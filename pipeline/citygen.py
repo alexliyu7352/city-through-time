@@ -33,7 +33,7 @@ from shapely.ops import unary_union
 from shapely import affinity
 import terrainio
 
-BOX, GABLE, FRUSTUM, CYL, CONE, REVOLVE, PRISM = 0, 1, 2, 3, 4, 5, 6   # REVOLVE, PRISM carry their shape after the building's centre (record field 17)
+BOX, GABLE, FRUSTUM, CYL, CONE, REVOLVE, PRISM, MESH = range(8)   # shaped primitives carry their shape in field 17
 FAB, LMK, WALL, BRIDGE, TREE, WATER, DARK, PAVE, ROOF, LROOF, EARTH = range(11)
 PLINTH = 11   # a body's base on a slope (_emit): darker than the walls, so a tall foundation reads as a platform
 DETAIL = {'low': 0, 'medium': 1, 'high': 2}
@@ -52,6 +52,10 @@ def footprint(p, pad=0.0):
             a0, n = -math.pi / 2 - sw * math.pi, max(2, math.ceil(24 * sw)); r0 = min(r for r, _ in pr)
             arc = lambda r_, k_: [((p[5] / 2 * r_ + k_ * pad) * math.cos(a0 + i / n * sw * math.tau), (p[6] / 2 * r_ + k_ * pad) * math.sin(a0 + i / n * sw * math.tau)) for i in range(n + 1)]
             pts = arc(rm, 1) + (arc(r0, -1)[::-1] if r0 > 0 else [(0.0, 0.0)])
+    elif t == MESH:
+        q = Polygon(p[17]['plan']).buffer(pad, join_style='mitre')
+        if q.geom_type == 'MultiPolygon': q = max(q.geoms, key=lambda p: p.area)
+        pts = list(q.exterior.coords)[:-1] if not q.is_empty else p[17]['plan']
     elif t == PRISM and not p[9]:   # a plan: its outer ring (shrunk past a narrow neck: its largest piece; plan keeps them all)
         g = Polygon(p[17][0]).buffer(pad, join_style='mitre') if pad else None
         if g is not None and g.geom_type == 'MultiPolygon': g = max(g.geoms, key=lambda q: q.area)
@@ -129,9 +133,11 @@ class Builder:
         base = gm * S * self.gex
         y0 = base + z0 * S * self.hex
         ch = c * S * self.hex
-        if z0 <= 1e-6 and t in (BOX, FRUSTUM, CYL, REVOLVE, PRISM):   # a foundation below grade (deeper by the slope under a building on a hillside)
+        if z0 <= 1e-6 and t in (BOX, FRUSTUM, CYL, REVOLVE, PRISM, MESH):   # a foundation below grade
             sk = (self.skirt + self.found) * S * self.gex; y0 -= sk
-            if t == REVOLVE:   # the section's base stays at the foot, the rest of it rises by the foundation
+            if t == MESH:
+                shape = {**shape, 'v': [[x, 0 if y <= 0 else round(y + sk, 7), z] for x,y,z in shape['v']]}
+            elif t == REVOLVE:   # the section's base stays at the foot, the rest of it rises by the foundation
                 lift = lambda pr: [[r_, 0.0 if q_ <= 0 else round((q_ * ch + sk) / (ch + sk), 5)] for r_, q_ in pr]
                 shape = {**shape, 'p': lift(shape['p'])} if isinstance(shape, dict) else lift(shape)
             elif t == PRISM and e:   # (a section laid along: the same, in model units)
@@ -144,7 +150,7 @@ class Builder:
         if t == BOX: rec = [t, mx, mz, -theta, y0, pl(a), pl(b), ch, d, 0]   # d: 1 marks a road piece (strip)
         elif t == GABLE: rec = [t, mx, mz, -theta, y0, pl(a), pl(b), ch, pl(d), 0]
         elif t == FRUSTUM: rec = [t, mx, mz, -theta, y0, pl(a), pl(b), ch, pl(d), pl(e)]
-        elif t in (REVOLVE, PRISM): rec = [t, mx, mz, -theta, y0, pl(a), pl(b), ch, d, e]
+        elif t in (REVOLVE, PRISM, MESH): rec = [t, mx, mz, -theta, y0, pl(a), pl(b), ch, d, e]
         else: rec = [t, mx, mz, 0, y0, pl(a), 0, ch, 0, 0]
         rec = [round(v, 7) if isinstance(v, float) else v for v in rec]
         rec += [r, part, round(base, 7)]
@@ -189,6 +195,15 @@ class Builder:
             sh = [[[round(u * S, 7), round(-v * S, 7)] for u, v in r] for r in R_]   # (model z points south)
             w = 2 * max(abs(u) for r in R_ for u, _ in r); dd = 2 * max(abs(v) for r in R_ for _, v in r)
             self._emit(PRISM, x, y, theta, z0, w, dd, h, max(0.0, min(1.0, float(top))), 0, part=part, g_m=g_m, shape=sh)
+
+    def mesh(self, x, y, theta, z0, mesh, part=LMK, g_m=None):
+        """A closed metre mesh in local x east, y north, z up; the common tower geometry and any future ruled solid."""
+        S = self.F.scale; v = mesh['v']; lo = min(p[2] for p in v)
+        outline = shapely.MultiPoint([(p[0]*S,-p[1]*S) for p in v]).convex_hull
+        shape = {'v': [[round(px*S,7),round((pz-lo)*S*self.hex,7),round(-py*S,7)] for px,py,pz in v],
+                 'f': mesh['f'], 'plan': list(outline.exterior.coords)[:-1], 'smooth': mesh.get('smooth', True)}
+        self._emit(MESH,x,y,theta,z0+lo,2*max(abs(p[0]) for p in v),2*max(abs(p[1]) for p in v),
+                   max(p[2] for p in v)-lo,part=part,g_m=g_m,shape=shape)
 
     @contextmanager
     def labelled(self, name):
@@ -1980,7 +1995,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     if spec.get('trees') or spec.get('grounds'):   # (every kind of body, its court or arena left open: a garden inside a portico is planted)
         S_ = F.scale
         whole = lambda p: p[:15] + [p[1], p[2]] + p[15:]   # (a record as finish leaves it: the centre before a shape, where footprint reads it)
-        bi_ = [i for i, p in enumerate(B.prims) if p[0] in (BOX, FRUSTUM, REVOLVE, PRISM) and p[11] in (FAB, LMK, EARTH) and p[7] > 1.0 * S_ * B.hex]
+        bi_ = [i for i, p in enumerate(B.prims) if p[0] in (BOX, FRUSTUM, REVOLVE, PRISM, MESH) and p[11] in (FAB, LMK, EARTH) and p[7] > 1.0 * S_ * B.hex]
         rects = [solid_plan(whole(B.prims[i])) for i in bi_]
         bodies = (shapely.STRtree(rects), rects, [B.meta[i][1][0] == 'fabric' for i in bi_]) if rects else None
         di_ = [i for i, p in enumerate(B.prims) if p[0] == BOX and p[11] == PLINTH]; dk = [B.prims[i] for i in di_]   # the platforms a lot or a court stands on (lot_site)
