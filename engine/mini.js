@@ -47,6 +47,7 @@ function greenData(dir) {   // -> a promise the first frame waits on (both optio
 }
 let SKY_C0 = null, GLB_DONE = false;
 const SUN_DIR = { value: new THREE.Vector3(0, 1, 0) }, SUN_COL = { value: new THREE.Color() };   // (the sun's direction and light, for the water's sparkle)
+const ROOF_PX = { value: 1 };   // (the model's metres a picture pixel spans at unit depth: the rims' fade, roofsMesh)
 const REFL = { T: { value: null }, M: { value: new THREE.Matrix4() }, K: { value: 0 }, D: { value: new THREE.Vector2(1e9, 2e9) } }, GLASS_SKY = { value: new THREE.Color(.80, .86, .92) }, GLASS_K = { value: 1 }, DOME_R = { value: 25 };   // (GLASS_K: how much of it; DOME_R: how fast the dome turns from its horizon to its zenith)   // (GLASS_SKY: the sky glass reflects, the dome's horizon: gold at the golden hour)   // (today's water's reflection: its picture, its texture matrix, on)
 const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }, GEO_T = { value: new THREE.Vector4(0, 0, -1, 0) };   // (GEO_T: the crowns drawn as geometry, x z their centre, z their radius: beyond it the ground carries the groves' tone)
 // the built area of the period cities standing (a material's ground_in: its plaster inside it, the table beyond): their buildings'
@@ -231,7 +232,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, env: 0, winFade: [.25, .8], groundFill: [.6, 1.75], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
+      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], groundFill: [.6, 1.75], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
         far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
         board: [.57, .53, .50], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.80, .77, .73], kerb: [.86, .85, .82],
@@ -902,12 +903,12 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // the white film's geometry and pictures untouched; loaded once, the first time today's city stands (it is large: the whole
   // city's). Their rooftops join today's (roofScan, split by child); a detailed model's fold reaches them too (FOLDS)
   const FPT = { tried: false, mesh: null, skip: 0, ms: 0, bytes: 0 }, FOLDS = [];
-  async function todayFootprints(target) {
+  async function todayFootprints(target, d) {
     if (FPT.tried || !film || !MAT || !dataDir || !cityMesh || !S.buildTodayFootprints || todayL() && todayL().footprints === false) return; FPT.tried = true;
     const t0 = performance.now(); let side = null;
     try { const r = await fetch(dataDir + 'today_footprints.json'); if (r.ok) side = await r.json(); } catch (e) { side = null; }
     if (!side || side.enabled !== true) return;
-    const R_ = todayL() && todayL().footprintsR;   // (todayLight footprintsR: only the replacements within this many metres of the first shot's target; none: the whole city)
+    const F_ = todayL() && todayL().footprintsR, R_ = Array.isArray(F_) ? Math.max(F_[1], F_[0] * d / scale) : F_;   // (todayLight footprintsR: only the replacements within this many metres of the first shot's target, or [times the shot's distance, at least metres]; none: the whole city)
     if (R_) { const r2 = (R_ * scale) ** 2; side.replacements = side.replacements.filter(r => { const g = r.children[0].rings[0], x = g.reduce((a_, p) => a_ + p[0], 0) / g.length, z = g.reduce((a_, p) => a_ + p[1], 0) / g.length; return (x - target.x) ** 2 + (z - target.z) ** 2 < r2; }); }
     const { geometry, skipCentres } = await S.buildTodayFootprints(side); side = null; if (!geometry) return;
     geometry.deleteAttribute('aBi');   // (this look does not read it)
@@ -915,8 +916,18 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     const G_ = cityMesh.geometry, C = G_.attributes.aCtr, n = C.count, a = new Uint8Array(n);   // (a byte a vertex)   // (the parents: their aCtr is the mean of their outer ring, as the sidecar's)
     for (let i = 0, lx = NaN, lz = NaN, v = 0; i < n; i++) { const x = C.getX(i), z = C.getY(i); if (x !== lx || z !== lz) { lx = x; lz = z; v = skip.has(key(x, z)) ? 1 : 0; if (v) FPT.skip++; } a[i] = v; }
     G_.setAttribute('aSkip', new THREE.BufferAttribute(a, 1));
+    colour(cityMesh);   // (today's city painted first: its kinds and paints, by each building's own record)
+    // each child in its parent's paint and kind exactly, read from the parent's own record (its wall's and its roof's colour, its
+    // kind), never from the child's outline: a split or squared footprint changes no building's class
+    const PC = G_.attributes.color, PK = G_.attributes.aKind, PN = G_.attributes.normal, par = new Map();
+    for (let i = 0; i < n; i++) { if (!a[i]) continue; const k = key(C.getX(i), C.getY(i)); let e = par.get(k); if (!e) par.set(k, e = { w: null, r: null, kd: PK ? PK.getX(i) : 1 });
+      if (PN.getY(i) > .6) { if (!e.r) e.r = [PC.getX(i), PC.getY(i), PC.getZ(i)]; } else if (!e.w) e.w = [PC.getX(i), PC.getY(i), PC.getZ(i)]; }
+    { const FC = geometry.attributes.aCtr, FN = geometry.attributes.normal, m_ = FC.count, col = new Float32Array(m_ * 3), kd = new Float32Array(m_); FPT.miss = 0;
+      for (let i = 0; i < m_; i++) { const e = par.get(key(FC.getX(i), FC.getY(i))), c = e ? (FN.getY(i) > .6 ? e.r || e.w : e.w || e.r) : null;
+        if (c) { col[i * 3] = c[0]; col[i * 3 + 1] = c[1]; col[i * 3 + 2] = c[2]; } else { col.fill(.9, i * 3, i * 3 + 3); FPT.miss++; } kd[i] = e ? e.kd : 1; }   // (miss: a child whose parent was not found: none expected)
+      geometry.setAttribute('color', new THREE.BufferAttribute(col, 3)); geometry.setAttribute('aKind', new THREE.BufferAttribute(kd, 1)); }
     if (cityMesh.userData.mini) { cityMesh.userData.mini.dispose(); cityMesh.userData.miniDepth.dispose(); }
-    const T_ = today ? (MAT.today ? { ...TODAY[today], ...MAT.today, scale } : TODAY[today]) : undefined, mat = colourToday({ geometry }, T_);
+    const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .92, metalness: 0 });   // (colourToday's)
     filmMaterial(S, mat, null, null, fadeAt, null, BACK, false);
     const mesh = new THREE.Mesh(geometry, mat); mesh.customDepthMaterial = filmMaterial(S, new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), null, null, fadeAt, null, BACK);
     mesh.castShadow = mesh.receiveShadow = true; mesh.frustumCulled = false; mesh.layers.set(L); scene.add(mesh); FPT.mesh = mesh;
@@ -924,7 +935,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     for (const f of FOLDS) foldIn(geometry, f);   // (a detailed model already in place)
     if (ROOFS) { ROOFS = ROOFS.filter(r => !(r[11] === G_.attributes.position && a[r[9]] > .5)).concat(roofScan(geometry, true)); dropRoofs(); }
     FPT.ms = performance.now() - t0; FPT.bytes = Object.values(geometry.attributes).reduce((s_, at) => s_ + at.array.byteLength, 0) + a.byteLength;
-    console.log('footprints', JSON.stringify({ parents: FPT.skip, vertices: geometry.attributes.position.count, MB: +(FPT.bytes / 1e6).toFixed(1), ms: Math.round(FPT.ms) }));
+    console.log('footprints', JSON.stringify({ parents: FPT.skip, unmatched: FPT.miss, vertices: geometry.attributes.position.count, MB: +(FPT.bytes / 1e6).toFixed(1), ms: Math.round(FPT.ms) }));
   }
   // the programs of every city's colours made before playback (main.js warm-up: else the first frame a city shows stalls; and
   // tools/phonecheck.mjs sees them all)
@@ -964,16 +975,30 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         for (let i = i0; i < i1; i++) { const x = P_.getX(i), z = P_.getZ(i), u = x * c + z * sn, v = -x * sn + z * c; if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v; }
         const um = (u0 + u1) / 2, vm = (v0 + v1) / 2; cx = um * c - vm * sn; cz = um * sn + vm * c; a = (u1 - u0) / 2; b = (v1 - v0) / 2; }
       if (Math.min(a, b) < 4 * scale || FOLDS.some(f => Math.hypot(cx - f.cx, cz - f.cz) < f.rr || f.inFoot(cx, cz))) continue;   // (none where a detailed model stands)
-      if (i1 - i0 <= 36) lips.push([cx, y1, cz, 2 * a * .995, ex * scale, 2 * b * .995, yr, th]);
-      else {   // any other convex roof (an octagon, a round tower): the rim along its own hull, 0.6 m wide; a concave roof (a corner left inside the hull) none
+      let ar_ = 0; for (let i = i0; i + 2 < i1; i += 3) if (Math.abs(P_.getY(i) - y1) + Math.abs(P_.getY(i + 1) - y1) + Math.abs(P_.getY(i + 2) - y1) < .1 * ex * scale)   // (its roof's area)
+        ar_ += Math.abs((P_.getX(i + 1) - P_.getX(i)) * (P_.getZ(i + 2) - P_.getZ(i)) - (P_.getX(i + 2) - P_.getX(i)) * (P_.getZ(i + 1) - P_.getZ(i))) / 2;
+      if (i1 - i0 <= 36 && ar_ > .95 * 4 * a * b) lips.push([cx, y1, cz, 2 * a * .995, ex * scale, 2 * b * .995, yr, th]);   // (a rectangle: its roof fills its own box; a triangle or a trapezoid's box rim stood in the air)
+      else {   // any other convex roof (a triangle, an octagon, a round tower): the rim along its own hull, 0.6 m wide; a concave roof (a corner left inside the hull) none
         const pts = []; for (let i = i0; i < i1; i++) if (Math.abs(P_.getY(i) - y1) < .2 * ex * scale) pts.push([P_.getX(i), P_.getZ(i)]);
-        const hull = hull2(pts); if (hull.length >= 5 && pts.every(([x, z]) => hullIn(hull, x, z) < .4 * scale)) rims.push([hull, y1, yr]); }   // (the parapet, on a rectangular roof only: a rim a metre high round its own outline, a hair in)
+        const hull = hull2(pts); if (hull.length >= 3 && pts.every(([x, z]) => hullIn(hull, x, z) < .4 * scale)) rims.push([hull, y1, yr]); }   // (the parapet, on a rectangular roof only: a rim a metre high round its own outline, a hair in)
       if (hm >= 20) { const q_ = ((h0 * 1e4) % 1 + 1) % 1, k = .2 + .16 * q_; list.push([cx + Math.cos(th) * a * .15, y1, cz + Math.sin(th) * a * .15, 2 * a * k, (3 + 2.5 * ((q_ * 7.3) % 1)) * ex * scale, 2 * b * k * (.7 + .5 * ((q_ * 3.1) % 1)), yr, th, q_]);
         if (a * b > 150 * scale * scale && q_ > .3) list.push([cx - Math.cos(th) * a * .45, y1, cz - Math.sin(th) * a * .45 + b * .3 * Math.cos(th), 2 * a * .12, 2.4 * ex * scale, 2 * b * .16, yr, th, (q_ * 5.7) % 1]); } }   // (plant rooms: one or two, each its own size, height and grey)
     const ring = (() => { const w = .035, o = new THREE.Shape([[-.5, -.5], [.5, -.5], [.5, .5], [-.5, .5]].map(([x, y]) => new THREE.Vector2(x, y))), h = new THREE.Path([[-.5 + w, -.5 + w], [-.5 + w, .5 - w], [.5 - w, .5 - w], [.5 - w, -.5 + w]].map(([x, y]) => new THREE.Vector2(x, y)));
       o.holes.push(h); return new THREE.ExtrudeGeometry(o, { depth: 1, bevelEnabled: false }).rotateX(-Math.PI / 2); })();   // (a parapet: the roof's rim, 3.5 % of each side wide)
     const mat = new THREE.MeshStandardMaterial({ color: '#e9e6df', roughness: .9 }); mat.onBeforeCompile = sh => { sh.uniforms.uTodayK = TODAY_K; sh.uniforms.uRoofOn = ROOF_ON;
       sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float iYear; uniform vec3 uTodayK; uniform float uRoofOn;').replace('#include <begin_vertex>', '#include <begin_vertex>\n  if (iYear > uTodayK.x + .5 || uTodayK.y < .5 || uTodayK.z > .3 || uRoofOn < .5) transformed *= 0.;'); };
+    // a parapet's rim (the rectangular roofs' rings, the convex roofs' rims) sinks into its roof as it shrinks: whole while a metre
+    // spans 2 picture pixels, gone below 0.8 (afar a light rim a pixel wide outlined every roof, as a wireframe); drop: how far it sinks
+    const rimMat = (m0, drop, key) => { const m = m0.clone(); m.onBeforeCompile = sh => { mat.onBeforeCompile(sh); sh.uniforms.uRoofPx = ROOF_PX;
+        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uRoofPx;').replace('#include <begin_vertex>', `#include <begin_vertex>
+  {
+#ifdef USE_INSTANCING
+    vec4 mv_ = modelViewMatrix * instanceMatrix * vec4(transformed, 1.);
+#else
+    vec4 mv_ = modelViewMatrix * vec4(transformed, 1.);
+#endif
+    transformed.y -= (1. - smoothstep(.8, 2., 1. / max(-mv_.z * uRoofPx, 1e-9))) * ${drop}; }`); };
+      m.customProgramCacheKey = () => 'mini-roof-rim ' + key; return m; };
     const M4 = new THREE.Matrix4(), R4 = new THREE.Matrix4();
     if (rims.length) {   // the hull rims as one mesh: outer wall, inner wall, top, a metre high
       const pos = [], yrs = [], w = .6 * scale, h = ex * scale;
@@ -983,8 +1008,8 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         for (let k = 0; k < H_.length; k++) { const k2 = (k + 1) % H_.length, [ox, oz] = H_[k], [px, pz] = H_[k2], [ix, iz] = inn[k], [jx, jz] = inn[k2];
           quad([ox, y0, oz], [px, y0, pz], [px, y0 + h, pz], [ox, y0 + h, oz]); quad([jx, y0, jz], [ix, y0, iz], [ix, y0 + h, iz], [jx, y0 + h, jz]); quad([ox, y0 + h, oz], [px, y0 + h, pz], [jx, y0 + h, jz], [ix, y0 + h, iz]); } }
       const g_ = new THREE.BufferGeometry(); g_.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g_.setAttribute('iYear', new THREE.Float32BufferAttribute(yrs, 1)); g_.computeVertexNormals();
-      const m_ = new THREE.Mesh(g_, mat.clone()); m_.material.side = THREE.DoubleSide; m_.material.onBeforeCompile = mat.onBeforeCompile; m_.castShadow = m_.receiveShadow = true; m_.layers.set(L); m_.frustumCulled = false; scene.add(m_); RIM_MESH = m_; }
-    ROOF_MESH = [[new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), list], [ring, lips]].filter(([, l]) => l.length).map(([geo, l]) => { const mesh = new THREE.InstancedMesh(geo, l === list ? Object.assign(mat.clone(), { color: new THREE.Color('#c4bfb6'), onBeforeCompile: mat.onBeforeCompile }) : mat, l.length), yA = new Float32Array(l.length);   // (plant rooms a mid grey, each its own shade; the parapets the rim's light)
+      const m_ = new THREE.Mesh(g_, rimMat(mat, (1.5 * ex * scale).toExponential(4), 'hull')); m_.material.side = THREE.DoubleSide; m_.castShadow = m_.receiveShadow = true; m_.layers.set(L); m_.frustumCulled = false; scene.add(m_); RIM_MESH = m_; }
+    ROOF_MESH = [[new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), list], [ring, lips]].filter(([, l]) => l.length).map(([geo, l]) => { const mesh = new THREE.InstancedMesh(geo, l === list ? Object.assign(mat.clone(), { color: new THREE.Color('#c4bfb6'), onBeforeCompile: mat.onBeforeCompile }) : rimMat(mat, '1.5', 'ring'), l.length), yA = new Float32Array(l.length);   // (plant rooms a mid grey, each its own shade; the parapets the rim's light)
       const G_ = [.62, .74, .86, .7, .8], c_ = new THREE.Color();
       l.forEach(([x, y, z, sx, sy, sz, yr, th, q], n) => { M4.makeRotationY(-th).multiply(R4.makeScale(sx, sy, sz)).setPosition(x, y, z); mesh.setMatrixAt(n, M4); yA[n] = yr;
         if (q != null) mesh.setColorAt(n, c_.setRGB(1, 1, 1).multiplyScalar(G_[Math.floor(q * 5) % 5])); });   // (each plant room its own grey; the parapets the rim's light)
@@ -1044,7 +1069,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     todayNow(); if (film && MAT && MAT.roofs) roofsMesh(); if (film && MAT && dataDir) streetsMesh();
     if (film && FILM_PIC.glb && !GLB_DONE) { GLB_DONE = true; for (const o of FILM_PIC.glb) { try { const r_ = await swap(o); console.log('glb', JSON.stringify(r_)); } catch (e) { console.error(`glb ${o.url}: ${e.message}`); } } }   // (FILM_PIC glb: detailed models in place of buildings, ?pic= for a still)
     window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
-    renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
+    renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2; ROOF_PX.value = 2 / (camera.projectionMatrix.elements[5] * 1080) / scale;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     const up = E => E.mesh.visible && !E.mesh.userData.gone;   // (the film: a city gone may still show its foundations, without its detail)
     if (DET) { for (const [id, E] of Object.entries(S.eras)) if (up(E) && !DET.has(id)) DET.set(id, detailOf(id));
       clearNow = [];
@@ -1052,7 +1077,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       boats(target, d); flockAt(target, d); }
     for (const P of PATHS) { const t = U.uNow.value, r = P.r, a = sm(r.on, r.on + .3, t) * (1 - sm(r.off - .6, r.off, t));   // (the routes' paths, as they draw and go)
       P.mesh.visible = a > .002; P.mesh.material.opacity = a; P.u.uP.value = sm(r.on, r.on + r.draw, t) * 1.0001; }
-    if (film && MAT && cityMesh && cityMesh.visible && TODAY_K.value.y > .5) await todayFootprints(target);   // (today's replacement footprints, once: before its rooftops and the detailed models)
+    if (film && MAT && cityMesh && cityMesh.visible && TODAY_K.value.y > .5) await todayFootprints(target, d);   // (today's replacement footprints, once: before its rooftops and the detailed models)
     if (FPT.mesh) FPT.mesh.visible = cityMesh.visible;
     const swapM = [];   // (the studio's materials back after the frame)
     for (const m of [...eraMeshes, cityMesh]) if (m.visible) colour(m);
