@@ -32,6 +32,55 @@ or the last name): with a second city on the machine, that file is the other cit
 
 CMAB download: the provincial zips of figshare article 27992417 (Shaanxi = `shanxisheng.zip`, Shanxi = `shanxi.zip`); unzip into `raw/cmab/<province>/`, and `prep.py` finds every shapefile that intersects the extent by itself.
 
+### Supplementing low building heights
+
+An estimated-height dataset can flatten a skyline. Use public mapped heights to raise reliable matches, keeping the primary
+footprints and years. This is opt-in for any city and either primary adapter; optional Overture gap-fill buildings keep their
+adapter's own height policy and are identified separately in the tallest-building sources:
+
+```yaml
+buildings:
+  source: cmab
+  exaggeration: 1.0
+  height_supplement:
+    source: osm
+    floor_height_m: 3.2
+```
+
+1. Fetch `uv run python -I pipeline/osm.py cities/<slug> building_heights` once for the city's area. It caches building and part
+   polygons carrying `height` or `building:levels`; existing caches are not fetched again. `prep.py` never silently fetches data.
+2. `pipeline/heights.py` reads **existing whole buildings**, excluding construction, proposed buildings and separate roof,
+   antenna or other parts. `height` is metres by default; explicit metric or feet/inches units are converted. Ranges, multiple
+   values and invalid numbers are refused. `ele` is not a building height. An explicit height takes precedence over a storey
+   count; `building:levels × floor_height_m` is only an **estimate**, excluding underground storeys. The default 3.2 m is the same
+   convention used by the Overture adapter, not an OSM measurement or a guarantee about roof height.
+3. A reference's centroid must be inside the primary footprint (3 m mapping tolerance), with at least 70% overlap of the smaller
+   polygon, at least a 1:4 area ratio and at least 35% intersection-over-union. One reference raises at most one primary polygon.
+   Nearly tied matches or conflicting nearly tied references are refused. There is no nearest-building transfer across a road
+   or from a small tower to a large podium. A higher matched reference raises the primary height; lower, absent or ambiguous
+   references leave it unchanged. No year, age method, footprint or primary building order changes.
+4. Rerun `prep.py`. `build/data/building_heights.json` records every raised building, primary height, reference ID, name, tag,
+   URL, overlap, estimate flag, cache snapshot and matching counts, plus unmatched references at least 200 m high.
+   `stats.json` includes the selected height source for each of its tallest ten; `model.json` keeps its existing building format.
+   This is the **prepared dataset's** tallest ten, not a city's complete real-world ranking: unmapped or unmatched towers remain
+   a gap, not an invented height. `uv run python -I pipeline/heights.py inspect cities/<slug>` explains the overlap and
+   centroid distance of mapped towers against the prepared footprints without changing them. Disabling the supplement
+   resets the sidecar to `enabled: false` rather than leaving an earlier run's changes active. Test parsing and matching with
+   `uv run python -I pipeline/heights.py selftest`.
+5. Credit both datasets: primary footprints and age estimates, plus © OpenStreetMap contributors, ODbL 1.0, for supplemented
+   heights and storey counts. Record the selected source and remaining uncertainty in FACTS.md and CREDITS. On-screen labelling
+   must distinguish mapped heights, storey-based estimates and the original estimated years; a supplement does not make all
+   heights or construction years ground truth. OSM height conventions and an owner's architectural height can differ; preserve
+   the tag actually used and explain the difference instead of quietly replacing it with a preferred number.
+
+Choose the present-day vertical factor **after** correcting heights. `buildings.exaggeration: 1` preserves true skyline
+proportions (a 632 m tower is 0.0632 model metres at 1:10000); do not stretch surveyed or mapped skyscrapers fourfold because an
+earlier dataset was too low. This setting applies to today's base, independently of terrain and schematic period house types.
+A separately modelled landmark uses its documented geometry and `exaggeration: 1` for true proportions. Its period city's
+existing `hide_layer` / `keep_layer` and `today_from` mechanism clears the corresponding base footprints; it replaces the base
+block rather than standing on it or duplicating it. Give the landmark its researched construction / opening event in staging:
+the primary dataset's first-impervious-surface year stays an estimate even after its present-day height is corrected.
+
 ### Steps of the overture_ghsl adapter (global cities)
 
 1. Overture: use DuckDB to select footprint, height and num_floors in the city's area from `s3://overturemaps-us-west-2/release/<release>/theme=buildings/type=building/` (needs network and duckdb + the spatial extension; `pipeline/overture_ghsl.py fetch cities/<slug> --release <name>`, into the city's own raw folder).

@@ -75,6 +75,10 @@ elif src == 'overture_ghsl':
 else:
     sys.exit(f'unknown buildings.source {src}')
 tallest = []
+height_meta, height_report = {}, None
+if C['buildings'].get('height_supplement'):
+    import heights
+    it, height_meta, height_report = heights.load(D, F, it, C['buildings']['height_supplement'])
 for poly, h, year, how, func in it:
     bi = len(B)
     b = band_of(year)
@@ -97,6 +101,7 @@ if C['buildings'].get('fill') == 'overture_ghsl':
         c = poly.centroid; k = (int(c.x // gap), int(c.y // gap))
         if any((k[0] + dx, k[1] + dy) in occ for dx in (-1, 0, 1) for dy in (-1, 0, 1)): continue
         bi = len(B); b = band_of(year)
+        height_meta[bi] = {'source': 'overture_ghsl', 'estimated': True}
         B.append([spread(year, how, c) if year is not None else 0, round(h, 1)])
         rings = [[F.model(x, y) for x, y in poly.exterior.coords[:-1]]] + [[F.model(x, y) for x, y in r.coords[:-1]] for r in poly.interiors]
         hh, base = seat(rings, h * F.scale * BEX, F.model(c.x, c.y))
@@ -198,6 +203,8 @@ model = {'scale': F.scale, 'epsg': F.epsg, 'box': C['box'], 'crop_utm': [F.x0, F
          'bands': [[b['lo'], b['hi']] for b in bands], 'b': B, 'p': P, 'decks': [], 'mounds': mounds, 'terrain': TER, 'bex': BEX}
 json.dump(model, open(LAYOUT.data(D, 'model.json'), 'w'), separators=(',', ':'))
 json.dump(lines, open(LAYOUT.data(D, 'lines.json'), 'w'), separators=(',', ':'))
+json.dump(height_report if height_report is not None else {'enabled': False, 'changes': []},
+          open(LAYOUT.data(D, 'building_heights.json'), 'w'), indent=1, ensure_ascii=False)
 tot_area = sum(area_by_band.values())
 stats = {
     'buildings': len(B), 'age_how': dict(stat), 'scale': C['scale'], 'size_m': [round(v, 3) for v in F.size],
@@ -205,9 +212,12 @@ stats = {
     'bands': [{'lo': b['lo'], 'hi': b['hi'], 'zh': b.get('zh'), 'en': b.get('en'), 'n': n_by_band[i], 'area_share': round(area_by_band[i] / tot_area, 4) if tot_area else 0,
                'mean_h': round(sum(h_by_band[i]) / len(h_by_band[i]), 1) if h_by_band[i] else 0, 'over_h': {str(t): sum(1 for h in h_by_band[i] if h >= t) for t in (50, 100)}} for i, b in enumerate(bands)],
     'no_year': {'n': n_by_band[-1], 'area_share': round(area_by_band[-1] / tot_area, 4) if tot_area else 0},
-    'tallest': [{'bi': bi, 'h': round(h, 1), 'year': y, 'pos': F.model(cx, cy) + [round(h * F.scale * BEX + ground(cx, cy), 6)], 'wgs': [round(v, 5) for v in F.ground_wgs(cx, cy)]} for h, bi, cx, cy, y in tallest[:10]],
+    'tallest': [{'bi': bi, 'h': round(h, 1), 'year': y, 'pos': F.model(cx, cy) + [round(h * F.scale * BEX + ground(cx, cy), 6)], 'wgs': [round(v, 5) for v in F.ground_wgs(cx, cy)],
+                 'height_source': height_meta.get(bi, {'source': src, 'estimated': True})} for h, bi, cx, cy, y in tallest[:10]],
     'marks': marks,
 }
+if height_report is not None:
+    stats['height_supplement'] = {k: v for k, v in height_report.items() if k not in ('changes', 'unmatched_tall')}
 json.dump(stats, open(LAYOUT.data(D, 'stats.json'), 'w'), indent=1, ensure_ascii=False)
 print(json.dumps({k: stats[k] for k in ('buildings', 'age_how', 'size_m', 'box_km', 'centre_wgs', 'no_year')}, ensure_ascii=False))
 for b in stats['bands']: print(b)
