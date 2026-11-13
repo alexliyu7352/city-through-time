@@ -36,13 +36,22 @@ const FILM_AO = .45;   // (the film without the effects: the occlusion of its ow
 const HSCALE = { value: 1 };
 // a light pool on a material's plate (FILM_PIC pool: [the darkness it falls to, the shot distance from which it is whole]): x z its
 // centre (the shot's target), z its radius, w the darkness, set each frame
+// a city's green space (pipeline/greens.py data/green.png) and its finer streets (data/streets.json), when it has them
+const GREEN = { value: null }, GREEN_ON = { value: 0 }, STREETS = { list: null };
+let GREEN_P = null;
+function greenData(dir) {   // -> a promise the first frame waits on (both optional: a city without them draws none)
+  if (GREEN_P || !dir || typeof document === 'undefined') return GREEN_P; const z = new THREE.DataTexture(new Uint8Array(4), 1, 1); z.needsUpdate = true; GREEN.value = z;
+  const g = new Promise(res => new THREE.TextureLoader().load(dir + 'green.png', t => { t.colorSpace = THREE.NoColorSpace; t.flipY = false; GREEN.value = t; GREEN_ON.value = 1; res(); }, undefined, () => res()));
+  const st = fetch(dir + 'streets.json').then(r => r.ok ? r.json() : null).then(j => { STREETS.list = j && j.streets || []; }).catch(() => { STREETS.list = []; });
+  return GREEN_P = Promise.all([g, st]);
+}
 const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }, GEO_T = { value: new THREE.Vector4(0, 0, -1, 0) };   // (GEO_T: the crowns drawn as geometry, x z their centre, z their radius: beyond it the ground carries the groves' tone)
 // the built area of the period cities standing (a material's ground_in: its plaster inside it, the table beyond): their buildings'
 // centres drawn over the plate, each `reach` m round, softened; made again when the cities standing change (builtMask)
 // today's city as the year each place is first built (a material's ground_in: its plaster from that year on), drawn once: every
 // building's footprint `reach` m round on a 4096 map (YEAR_W, the built-up area, its streets inside it) and 3 m round (YEAR_T, the
 // blocks: a street is built-up ground off them), the earliest year on top; a texel holds the year - 1899 (0: never built)
-const YEAR_W = { value: null }, YEAR_T = { value: null }, YEAR_C = { value: null }, TODAY_K = { value: new THREE.Vector3(1e4, 0, 0) }; let YEAR_D = null;   // (TODAY_K: the film's year, whether today's city stands: x year, y on)
+const YEAR_W = { value: null }, YEAR_T = { value: null }, YEAR_C = { value: null }, TODAY_K = { value: new THREE.Vector3(1e4, 0, 0) }; let YEAR_D = null, YEAR_E = null;   // (TODAY_K: the film's year, whether today's city stands: x year, y on)
 function todayYears(mesh, PW, PD, reach, scale, roads = null) {
   if (YEAR_W.value || !mesh || typeof document === 'undefined') return;
   const P = mesh.geometry.attributes.position, C = mesh.geometry.attributes.aCtr, D = mesh.geometry.attributes.aData; if (!C || !D) return;
@@ -56,7 +65,7 @@ function todayYears(mesh, PW, PD, reach, scale, roads = null) {
     for (const [y, a, b, cc, d] of recs) { const v = Math.max(1, Math.min(255, Math.round((y > 1 ? y : 1900) - 1899))); g.fillStyle = `rgb(${v},${v},${v})`;
       const u0 = Math.floor((a - e) / PW * N + N / 2), v0 = Math.floor((b - e) / PD * N + N / 2), u1 = Math.ceil((cc + e) / PW * N + N / 2), v1 = Math.ceil((d + e) / PD * N + N / 2); g.fillRect(u0, v0, u1 - u0, v1 - v0); }
     const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.NoColorSpace; t.flipY = false; t.magFilter = t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; return [t, g]; };
-  const [w, gw] = mk(reach * scale), [tt] = mk(3 * scale); YEAR_W.value = w; YEAR_T.value = tt;
+  const [w, gw] = mk(reach * scale), [tt, gt] = mk(130 * scale); YEAR_W.value = w; YEAR_T.value = tt;   // (YEAR_T: the year the urban extent reaches a place)
   // the cover: every footprint 18 m round, softened by about a block's street (so its edge runs along the blocks, round at their
   // corners, never in texels), read with a linear filter; the year still decides when (YEAR_W, wider)
   // the cover as whole blocks: every footprint 45 m round, softened, cut high (the shader's .6-.75): the gaps inside a block
@@ -72,11 +81,18 @@ function todayYears(mesh, PW, PD, reach, scale, roads = null) {
       g2.drawImage(c2, 0, 0); g2.filter = 'none';
       g.globalCompositeOperation = 'lighter'; g.drawImage(c2, 0, 0); g.globalCompositeOperation = 'source-over'; }
     if (roads) { g.globalCompositeOperation = 'lighter'; g.strokeStyle = '#0f0'; g.lineCap = 'round';
-      const W = { motorway: 22, trunk: 20, primary: 16, secondary: 13, tertiary: 10, residential: 7, unclassified: 7 };
+      const W = { motorway: 30, trunk: 26, primary: 22, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 6 };   // (the arterials as wide grooves)
       for (const r of roads) { const w = W[(r.cls || '').replace('_link', '')] || 6; g.lineWidth = Math.max(1, w * scale / PW * N); g.beginPath();
         r.pts.forEach(([x, z], k) => { const u = (x / PW + .5) * N, v = (z / PD + .5) * N; k ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke(); }
       g.globalCompositeOperation = 'source-over'; }
+    if (STREETS.list && STREETS.list.length) {   // the finer streets (data/streets.json) at half: lines, not grooves
+      g.globalCompositeOperation = 'lighter'; g.strokeStyle = '#007000'; g.lineCap = 'round';
+      const W = { secondary: 12, tertiary: 9, residential: 6, unclassified: 6, living_street: 5 };
+      for (const r of STREETS.list) { g.lineWidth = Math.max(.8, (W[r.cls] || 6) * scale / PW * N); g.beginPath();
+        r.pts.forEach(([x, z], k) => { const u = (x / PW + .5) * N, v = (z / PD + .5) * N; k ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke(); }
+      g.globalCompositeOperation = 'source-over'; }
     const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.NoColorSpace; t.flipY = false; t.minFilter = THREE.LinearFilter; t.generateMipmaps = false; YEAR_C.value = t; }
+  { const ie = gt.getImageData(0, 0, N, N).data; YEAR_E = new Uint8Array(N * N); for (let i = 0; i < N * N; i++) YEAR_E[i] = ie[i * 4]; }
   const im = gw.getImageData(0, 0, N, N).data; YEAR_D = new Uint8Array(N * N); for (let i = 0; i < N * N; i++) YEAR_D[i] = im[i * 4];
 }
 const BUILT = { value: null }, TREES = { value: null }, PLATE = { value: new THREE.Vector2(1, 1) }, CANV = () => typeof document !== 'undefined' ? document.createElement('canvas') : null, BUILT_C = CANV(), TREES_C = CANV(); let BUILT_K = null;
@@ -298,7 +314,7 @@ function landMaterial(U, PW, PD, kind, land, relief, o, ex, scale, S = null, far
     if (relief) { for (const k of ['uFxHgt', 'uFxRect', 'uFxSun', 'uFxR', 'uFxRA', 'uFxLitC', 'uFxShadeC', 'uFxFlat']) sh.uniforms[k] = U[k]; sh.uniforms.uFxAdd = { value: 0 }; }   // (a bright ground: no light added on top)
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec2 vXZ; varying vec3 vFxW;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvXZ = (modelMatrix * vec4(position, 1.)).xz; vFxW = (modelMatrix * vec4(transformed, 1.)).xyz;');
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
-varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${S && MAT && MAT.base && MAT.base.tex ? ' uniform sampler2D uSlateC, uSlateN, uSlateR, uBuilt, uTrees, uYearW, uYearT, uYearC; uniform vec3 uTodayK; uniform vec4 uPool, uGeoT; vec3 slateN_ = vec3(0., 0., 1.); float slateR_ = .7;' : ''}${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${town ? `
+varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${S && MAT && MAT.base && MAT.base.tex ? ' uniform sampler2D uSlateC, uSlateN, uSlateR, uBuilt, uTrees, uYearW, uYearT, uYearC, uGreen; uniform float uGreenOn; uniform vec3 uTodayK; uniform vec4 uPool, uGeoT; vec3 slateN_ = vec3(0., 0., 1.); float slateR_ = .7;' : ''}${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${town ? `
 uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''}; uniform float uHideT[${H}], uHideG[${H}];
 float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv)${H3 ? ', h3 = texture2D(uHide3, uv)' : ''};
   float hm[${H}]; hm[0] = h1.r; hm[1] = h1.g; hm[2] = h1.b; hm[3] = h1.a; hm[4] = h2.r; hm[5] = h2.g; hm[6] = h2.b; hm[7] = h2.a;${H3 ? ' hm[8] = h3.r; hm[9] = h3.g; hm[10] = h3.b; hm[11] = h3.a;' : ''}
@@ -431,7 +447,7 @@ ${pop ? `<div style="position:absolute;right:72px;top:60px;font:500 34px/1 'Noto
 // film: the film's look (main.js; above); lost: id -> (a promise of) that period city's loss per record (film.json era file's lost),
 // or null; paletteOf: id -> that period city's palette (its own, else the film's); today: today's city's colours (TODAY; none: an
 // old Mediterranean town's); fadeAt: the white film's dimming of today's city at which it is gone in colour (film.era_look dim)
-export function miniLook({ S, roads = null, cityMesh, scale, lens = null, palette = 'roman', ground = 'land', card = null, prims = null, hex = () => 2, face = () => null, film = false, lost = null,
+export function miniLook({ S, roads = null, dataDir = null, grow = null, cityMesh, scale, lens = null, palette = 'roman', ground = 'land', card = null, prims = null, hex = () => 2, face = () => null, film = false, lost = null,
   paletteOf = () => palette, today = null, fadeAt = .8, phone = false, backdropFrom = 1800, dataFrom = 1e4, camAz = null, paths = null }) {   // (paths: the film's routes drawn as paths on the land, main.js QUIET)   // (camAz: the bearing the film's camera mostly looks from, degrees: the sun's is fixed from it)   // (phone: the film on a phone, main.js: no ambient occlusion, a smaller shadow map; the caller leaves the detail out)
   const { scene, camera, renderer, U } = S, PW = S.PW, PD = S.PD;
   const tone = p => { const T0 = film && !S.fx && FILM_PIC.tone[p], M_ = film && !S.fx && MAT && MAT[p], T = T0 || M_ ? { ...(T0 || {}), ...(M_ || {}), parts: { ...((T0 || {}).parts || {}), ...((M_ || {}).parts || {}) } } : null;
@@ -543,9 +559,9 @@ export function miniLook({ S, roads = null, cityMesh, scale, lens = null, palett
   // trees (its mask), the banks, the steep slopes, the open ground at the city's edge and a few in the country; never in the built blocks
   const FL = { at: null, dAt: 1, mesh: null };
   const flockAt = (target, d) => { const F = MAT && MAT.base && MAT.base.flock; if (!film || !F || !BUILT_C || !BUILT.value) return;
-    if (FL.at && FL.at.distanceTo(target) <= d * .3 && Math.abs(Math.log(d / FL.dAt)) <= .3) return;
+    if (FL.at && FL.ty === TODAY_K.value.x + ':' + TODAY_K.value.y && FL.at.distanceTo(target) <= d * .3 && Math.abs(Math.log(d / FL.dAt)) <= .3) return;
     if (FL.mesh) { scene.remove(FL.mesh); FL.mesh.geometry.dispose(); FL.mesh.material.dispose(); FL.mesh = null; }
-    FL.at = target.clone(); FL.dAt = d;
+    FL.at = target.clone(); FL.dAt = d; FL.ty = TODAY_K.value.x + ':' + TODAY_K.value.y;   // (planted again as today's city grows)
     const N = BUILT_C.width, bd = BUILT_C.getContext('2d').getImageData(0, 0, N, N).data, td = TREES_C.getContext('2d').getImageData(0, 0, N, N).data;
     const px = (D_, x, z) => { const u = Math.floor((x / PW + .5) * N), v = Math.floor((z / PD + .5) * N); return u < 0 || v < 0 || u >= N || v >= N ? 0 : D_[(v * N + u) * 4] / 255; };
     const h2 = (i, j, k) => { const t = Math.sin(i * 127.1 + j * 311.7 + k * 74.7) * 43758.5453; return t - Math.floor(t); };
@@ -554,7 +570,8 @@ export function miniLook({ S, roads = null, cityMesh, scale, lens = null, palett
     // the crowns as geometry only as far as the budget reaches (at about a third of the cells planted) and only while a crown is a few pixels or more: beyond, the ground's groves' tone (GEO_T)
     const mpp = 2 * d * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / 1080, small = cellM * .84 * scale / mpp < 3;
     const R = small ? 0 : Math.min(d * 2.2, c * Math.sqrt((F.most || 120000) * 3 / Math.PI)); GEO_T.value.set(target.x, target.z, R, small ? 1 : 0);
-    const YN = 4096, yc = TODAY_K.value.y > .5 ? TODAY_K.value.x - 1899 : -1, ty = (x, z) => { if (!YEAR_D || yc < 0) return 0; const u = Math.floor((x / PW + .5) * YN), v = Math.floor((z / PD + .5) * YN); if (u < 0 || v < 0 || u >= YN || v >= YN) return 0; const y = YEAR_D[v * YN + u]; return y > 0 && y <= yc ? 1 : 0; };
+    const YN = 4096, yc = TODAY_K.value.y > .5 && TODAY_K.value.z < .3 ? TODAY_K.value.x - 1899 : -1,   // (behind a period city today's city is a plan on the board: the period's groves stand over it)
+      ty = (x, z) => { if (!YEAR_D || yc < 0) return 0; const u = Math.floor((x / PW + .5) * YN), v = Math.floor((z / PD + .5) * YN); if (u < 0 || v < 0 || u >= YN || v >= YN) return 0; const y = YEAR_D[v * YN + u], ye = GREEN_ON.value && YEAR_E && TODAY_K.value.z < .3 ? YEAR_E[v * YN + u] : 0; return (y > 0 && y <= yc) || (ye > 0 && ye <= yc) ? 1 : 0; };   // (with green data the urban extent is plaster: no country groves on it)
     const out = [], i0 = Math.floor((target.x - R) / c), i1 = Math.ceil((target.x + R) / c), j0 = Math.floor((target.z - R) / c), j1 = Math.ceil((target.z + R) / c);
     for (let i = i0; i <= i1 && out.length < (F.most || 120000); i++) for (let j = j0; j <= j1; j++) {
       const x = (i + .2 + .6 * h2(i, j, 1)) * c, z = (j + .2 + .6 * h2(i, j, 2)) * c;
@@ -563,7 +580,7 @@ export function miniLook({ S, roads = null, cityMesh, scale, lens = null, palett
       const m = [x / scale, z / scale], cl = sm(.42, .56, vn(m[0] / 52, m[1] / 52) * .65 + vn(m[0] / 17, m[1] / 17) * .35);
       const e = 2 * c, g0 = S.ground(x, z), sl = Math.hypot(S.ground(x + e, z) - g0, S.ground(x, z + e) - g0) / e;
       const bank = !wet(x, z) && (wet(x + 3 * c, z) || wet(x - 3 * c, z) || wet(x, z + 3 * c) || wet(x, z - 3 * c)) ? 1 : 0;
-      let k = Math.max(px(td, x, z) * (.5 + .5 * cl), F.bank * bank * (.55 + .45 * cl), cl * Math.max(F.slope * sm(.12, .3, sl), F.edge * sm(.08, .25, tw) * (1 - sm(.72, .9, tw))), F.land * (1 - .75 * TODAY_K.value.y) * sm(.75, .9, cl) * (1 - sm(.2, .4, tw)));   // (groves with clearings; the banks lined; in the open country only the heart of a grove)
+      let k = Math.max(px(td, x, z) * (.5 + .5 * cl), F.bank * bank * (.55 + .45 * cl), cl * Math.max(F.slope * sm(.12, .3, sl), F.edge * sm(.08, .25, tw) * (1 - sm(.72, .9, tw))), F.land * (1 - .75 * TODAY_K.value.y * (TODAY_K.value.z < .3 ? 1 : 0)) * sm(.75, .9, cl) * (1 - sm(.2, .4, tw)));   // (groves with clearings; the banks lined; in the open country only the heart of a grove)
       k = sm(.3, .62, k) * (1 - sm(.7, .8, tw)); if (h2(i, j, 3) >= k) continue;   // (a grove's density sharpened: crowns close in its heart, none in its thin edge, so the country reads as woods, not dots)
       out.push([x, g0, z, Math.min(cellM * .42 * (.6 + 1. * Math.pow(h2(i, j, 4), 1.4)) * (.8 + .4 * cl), tw > .25 ? 4.5 : 1e9) * scale, h2(i, j, 5)]); }   // (inside a town no bigger than a courtyard house)   // (a crown .6 to 1.6 times, the bigger in a grove's heart)
     const geo = new THREE.IcosahedronGeometry(1, out.length > 100000 ? 1 : 2).scale(1, .82, 1),   // (many crowns: a wide shot, each a few pixels, the coarser sphere)
@@ -657,7 +674,16 @@ export function miniLook({ S, roads = null, cityMesh, scale, lens = null, palett
     const m = (x1 - x0 + y1 - y0) * .02;
     c.left = x0 - m; c.right = x1 + m; c.bottom = y0 - m; c.top = y1 + m; c.near = Math.max(1e-5, -z1 - H * 3); c.far = -z0 + H * 3;
   }
-  async function render({ target, d, sharp = 0 }) {   // (sharp: 0..1, a living moment's picture up, sharp throughout)
+  // today's city's state for the base and the groves (TODAY_K), and its year maps (todayYears): before the groves are planted
+  const todayNow = () => {
+      if (film && !S.fx && MAT && MAT.base && MAT.base.ground_in && cityMesh) { todayYears(cityMesh, S.PW, S.PD, MAT.base.ground_in.reachToday || 45, scale, roads);
+        const by_ = BACK.uBackdropY.value, yr_ = U.uYear.value, sm_ = THREE.MathUtils.smoothstep; let yg_ = Infinity; const now_ = U.uNow ? U.uNow.value : 0;   // (the film's growth raises today's city band by band at its own times: the plaster arrives with them, not with the counter)
+        if (grow && now_ >= grow.on) { yg_ = -Infinity; for (const b of grow.bands) if (now_ >= b.t + b.spread * .5) yg_ = Math.max(yg_, b.hi - .5); }
+        TODAY_K.value.set(Math.min(Math.max(yr_, BACK.uDataY0.value), yg_), Math.max(U.uGrowRise ? U.uGrowRise.value : 0, sm_(yr_, by_ - 5, by_ + 5)) > .5 && cityMesh.visible ? 1 : 0, S.U.uDimTodayC ? S.U.uDimTodayC.value : 0); }
+  };
+  async function render({ target, d, sharp = 0 }) {
+    if (film && MAT && MAT.base && MAT.base.ground_in && dataDir) await greenData(dataDir);   // (a city's green and streets, before its first frame)
+    todayNow();   // (sharp: 0..1, a living moment's picture up, sharp throughout)
     window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
     renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     const up = E => E.mesh.visible && !E.mesh.userData.gone;   // (the film: a city gone may still show its foundations, without its detail)
@@ -703,8 +729,7 @@ export function miniLook({ S, roads = null, cityMesh, scale, lens = null, palett
       const A_ = FILM_PIC.dof.A || byD(FILM_PIC.dof.Ak || 0, d) * d / scale;   // (Ak: the opening as a share of the shot's distance: every shot the same model seen as close)
       if (FP_ && lens && A_ && !(S.post.dof.aper < 1e-6)) { FP.dof.aper = 1080 * A_ * scale / (4 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)); FP.dof.focus = S.post.dof.focus * (FILM_PIC.dof.at || 1); }   // (a living moment's sharp picture kept where its aperture is 0; its fade in and out not yet followed)
       if (FP_ && MAT && MAT.base && MAT.base.tex && U.uGroundN) U.uGroundN.value = 0;
-      if (FP_ && MAT && MAT.base && MAT.base.ground_in && cityMesh) { todayYears(cityMesh, S.PW, S.PD, MAT.base.ground_in.reachToday || 130, scale, roads);
-        const by_ = BACK.uBackdropY.value, yr_ = U.uYear.value, sm_ = THREE.MathUtils.smoothstep; TODAY_K.value.set(Math.max(yr_, BACK.uDataY0.value), Math.max(U.uGrowRise ? U.uGrowRise.value : 0, sm_(yr_, by_ - 5, by_ + 5)) > .5 && cityMesh.visible ? 1 : 0, S.U.uDimTodayC ? S.U.uDimTodayC.value : 0); }
+      todayNow();   // (again: the lights and the dim as this frame has them)
       if (FP_ && MAT && MAT.base && MAT.base.ground_in && BUILT_C) builtMask(Object.values(S.eras), S.PW, S.PD, scale, MAT.base.ground_in.reach, MAT.base.flock ? MAT.base.flock.tree : 15);   // (a material's plate: the period cities' open ground is the plate itself, not patches of earth and gravel on it)
       { const T_ = MAT && MAT.todayH, bex = S.U.uScaleH ? S.U.uScaleH.value / scale : 3; HSCALE_T.value = FP_ && T_ ? THREE.MathUtils.lerp(Math.min(1, T_.k / bex), 1, THREE.MathUtils.smoothstep(d, T_.near, T_.far)) : 1; }   // (today's city: the model's own heights, x k, nearer than `near`, its exaggeration back by `far`)
       if (FILM_PIC.pool) { const k_ = THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]); POOL.value.set(target.x, target.z, d * .95, THREE.MathUtils.lerp(1, FILM_PIC.pool[0], k_)); } else POOL.value.set(0, 0, 1e9, 1);
@@ -755,7 +780,7 @@ let SLATE_MAPS = null;
 function slateMaps() {
   if (SLATE_MAPS) return SLATE_MAPS; const L_ = new THREE.TextureLoader(), dir = new URL(`./tex/${MAT.base.tex}/`, import.meta.url).href;
   const t = (f, srgb) => { const x = L_.load(dir + f); x.wrapS = x.wrapT = THREE.RepeatWrapping; x.anisotropy = 8; if (srgb) x.colorSpace = THREE.SRGBColorSpace; return x; };
-  return SLATE_MAPS = { uYearW: YEAR_W, uYearT: YEAR_T, uYearC: YEAR_C, uTodayK: TODAY_K, uGeoT: GEO_T, uBuilt: BUILT, uTrees: TREES, uPool: POOL, uSlateC: { value: t('Diffuse.jpg', true) }, uSlateN: { value: t('nor_gl.jpg') }, uSlateR: { value: t('Rough.jpg') } };
+  return SLATE_MAPS = { uGreen: GREEN, uGreenOn: GREEN_ON, uYearW: YEAR_W, uYearT: YEAR_T, uYearC: YEAR_C, uTodayK: TODAY_K, uGeoT: GEO_T, uBuilt: BUILT, uTrees: TREES, uPool: POOL, uSlateC: { value: t('Diffuse.jpg', true) }, uSlateN: { value: t('nor_gl.jpg') }, uSlateR: { value: t('Rough.jpg') } };
 }
 // a material's base under the model (FILM_PIC.looks: maquette, clay), in place of the painted land: m_ the metres, vFxW the world
 function baseGLSL(B, scale, town = false, far = false) {
@@ -772,7 +797,8 @@ function baseGLSL(B, scale, town = false, far = false) {
     ${B.ground_in ? `{ vec2 pu_ = vXZ / uPlateM + .5; float in_ = step(0., pu_.x) * step(pu_.x, 1.) * step(0., pu_.y) * step(pu_.y, 1.);   // (the maps cover the plate: beyond it a clamped edge texel ran on as a long strip)
       float tw_ = in_ * texture2D(uBuilt, vXZ / uPlateM + .5).r, k_ = smoothstep(.5, .72, tw_), px_ = length(fwidth(m_));   // (px_: metres a pixel)
       float yw_ = in_ * texture2D(uYearW, vXZ / uPlateM + .5).r * 255., yt_ = in_ * texture2D(uYearT, vXZ / uPlateM + .5).r * 255., yc_ = uTodayK.x - 1899.;   // today's city: its built-up area once built (todayYears), its blocks
-      vec4 yc4_ = in_ * texture2D(uYearC, vXZ / uPlateM + .5); float kt_ = uTodayK.y * smoothstep(.6, .75, yc4_.r) * step(.5, yw_) * step(yw_, yc_ + .5), ft_ = uTodayK.y * step(.5, yt_) * step(yt_, yc_ + .5), st_ = kt_ * smoothstep(.15, .6, yc4_.g);   // (st_: a street through the plaster)
+      vec4 yc4_ = in_ * texture2D(uYearC, vXZ / uPlateM + .5); float kt_ = uTodayK.y * max(smoothstep(.6, .75, yc4_.r) * step(.5, yw_) * step(yw_, yc_ + .5), uGreenOn * (1. - smoothstep(.3, .6, uTodayK.z)) * smoothstep(.6, .75, yc4_.b) * step(.5, yt_) * step(yt_, yc_ + .5)),   // (a block's plaster when its buildings are built; the extent's when the extent reaches it)
+       ft_ = uTodayK.y * step(.5, yt_) * step(yt_, yc_ + .5), st_ = kt_ * (.55 * smoothstep(.15, .38, yc4_.g) + .45 * smoothstep(.6, .85, yc4_.g));   // (st_: a street through the plaster)
       tw_ = max(tw_, kt_); k_ = max(k_, kt_);
       float hs_ = length(vec2(dFdx(vFxW.y), dFdy(vFxW.y))) / max(length(vec2(dFdx(vFxW.x), dFdy(vFxW.x)) + vec2(dFdx(vFxW.z), dFdy(vFxW.z))), 1e-6), rk_ = 0.;   // (the ground's slope as drawn; rk_ its rock)
       ${B.land ? `// the countryside: the model's own land, a muted olive and ochre flock, fields faintly; on the steep slopes the rock (the photo: its light grey, its own normal) with scrub
@@ -785,15 +811,16 @@ function baseGLSL(B, scale, town = false, far = false) {
         ld_ = mix(ld_, rc_, rk_); ld_ = mix(ld_, pow(${v3(B.land.scrub)}, vec3(2.2)), sc_ * .8);${far ? `
         ld_ = pow(mix(${v3(B.land.olive)}, ${v3(B.land.ochre)}, .45 + .2 * (fxLn(m_ / 2600.) - .5)), vec3(2.2)) * (.96 + .05 * fxLn(m_ / 900.)); rk_ = 0.;   // (beyond the plate: the board calm, one land with a slow swell, no patches)` : ''}
         sl_ = ld_; slateN_ = normalize(mix(vec3(0., 0., 1.), slateN_, rk_)); slateR_ = mix(.95, slateR_, rk_); }   // (the photo's relief on the rock only: on open land its broad undulation read as cloud)` : ''}
-      vec3 pl_ = pow(${v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - .16 * st_);   // (today's streets: fine lines a shade darker in the plaster)
-      float pk_ = uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z)) * smoothstep(.72, .86, yc4_.b) * step(.5, yw_) * step(yw_, yc_ + .5) * (1. - kt_) * (1. - wMask);   // (not while today's city is a backdrop behind a period city: uTodayK.z its dim)   // (inside the urban extent, off the blocks: the model's green)
-      ${B.ground_in.park ? `sl_ = mix(sl_, pow(${v3(B.ground_in.park)}, vec3(2.2)) * (.95 + .08 * fxLn(m_ / 29.)), pk_); rk_ *= 1. - pk_;` : ''}
-      sl_ = mix(sl_, pl_, k_ * ${B.land ? '(1. - rk_ * (1. - smoothstep(.85, .97, tw_)))' : '1.'}); slateR_ = mix(slateR_, .9, k_); slateN_ = mix(slateN_, vec3(0., 0., 1.), k_ * ${B.land ? '(1. - rk_)' : '1.'});${B.flock ? `
+      vec3 pl_ = pow(${v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - .22 * st_);   // (today's streets: fine lines a shade darker in the plaster, the arterials wider and darker)
+      float gr_ = uGreenOn * in_ * smoothstep(.35, .65, texture2D(uGreen, vXZ / uPlateM + .5).r);   // (the city's green space, from the data: pipeline/greens.py)
+      float pk_ = uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z)) * smoothstep(.6, .75, yc4_.b) * step(.5, yt_) * step(yt_, yc_ + .5) * gr_ * (1. - wMask);   // (inside the urban extent: a park, a garden, a lawn, flat green; open land with no data stays plaster)
+      kt_ *= 1. - pk_;   // (not while today's city is a backdrop behind a period city: uTodayK.z its dim)   // (inside the urban extent, off the blocks: the model's green)
+      sl_ = mix(sl_, pl_, k_ * ${B.land ? '(1. - rk_ * (1. - smoothstep(.85, .97, tw_)))' : '1.'}); slateR_ = mix(slateR_, .9, k_); slateN_ = mix(slateN_, vec3(0., 0., 1.), k_ * ${B.land ? '(1. - rk_)' : '1.'}); ${B.ground_in.park ? `sl_ = mix(sl_, pow(${v3(B.ground_in.park)}, vec3(2.2)) * (.95 + .08 * fxLn(m_ / 29.)), pk_); slateR_ = mix(slateR_, .95, pk_);` : ''}${B.flock ? `
       { // trees: round crowns in groves (a crown a cell of ${B.flock.cell} m, there by the groves' density): where the generator's trees stand, on the banks, the slopes and the open ground at the city's edge
         float cl_ = smoothstep(.42, .56, fxLn(m_ / 52.) * .65 + mix(fxLn(m_ / 17.), .5, smoothstep(2., 5., px_)) * .35), tr_ = in_ * smoothstep(.12, .35, texture2D(uTrees, vXZ / uPlateM + .5).r);
         float bk_ = smoothstep(.01, .08, wr_) * (1. - smoothstep(.25, .4, wr_));   // (the banks: just off the water)
         float fl_ = max(tr_ * (.6 + .4 * cl_), cl_ * max(max(${B.flock.bank.toFixed(2)} * bk_, ${B.flock.slope.toFixed(2)} * smoothstep(.12, .3, hs_)), ${B.flock.edge.toFixed(2)} * smoothstep(.08, .25, tw_) * (1. - smoothstep(.72, .9, tw_))));
-        fl_ = max(fl_, ${B.flock.land.toFixed(2)} * (1. - .75 * uTodayK.y) * cl_ * (1. - smoothstep(.2, .4, tw_)));   // (a few groves in the country; round a modern city the plain is fields)
+        fl_ = max(fl_, ${B.flock.land.toFixed(2)} * (1. - .75 * uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z))) * cl_ * (1. - smoothstep(.2, .4, tw_)));   // (a few groves in the country; round a modern city the plain is fields)
         fl_ *= (1. - smoothstep(.8, .92, tw_)) * (1. - wMask) * (1. - pk_);   // (a park of today's city: flat green, its trees not drawn as country groves)
         vec2 q_ = m_ / ${B.flock.cell.toFixed(1)}, ci_ = floor(q_), f_ = q_ - ci_ - .5; float h1_ = fract(sin(dot(ci_, vec2(12.99, 78.23))) * 43758.55), h2_ = fract(sin(dot(ci_, vec2(39.35, 11.13))) * 24634.63);
         vec2 o_ = f_ - (vec2(fract(h1_ * 7.31), fract(h2_ * 3.17)) - .5) * .34; float r_ = .36 + .16 * h2_, dd_ = length(o_) / r_, on_ = step(h1_, fl_);

@@ -717,7 +717,7 @@ const CAM_AZ = COLOUR ? (() => { const K = FILM.camera || []; let x = 0, y = 0; 
   return x || y ? THREE.MathUtils.radToDeg(Math.atan2(x, y)) : 0; })() : null;
 const PAL = COLOUR ? { palette: QS.get('palette') || (FILM.look && FILM.look.palette), today: QS.get('today') || (FILM.look && FILM.look.today) } : null;
 if (PAL && !(PAL.palette && PAL.today)) throw new Error('look=mini: this film has no film.look; give &palette=roman|chinese|modern&today=roman|chinese|modern (its region\'s colours)');
-const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, roads: (LN && LN.roads) || null, cityMesh: CITYMESH, scale: M.scale, lens, film: true, palette: PAL.palette, today: PAL.today, paletteOf: id => eraOf(id).palette || PAL.palette,
+const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, roads: (LN && LN.roads) || null, dataDir: B + 'data/', grow: FILM.grow && FILM.bands ? { on: FILM.grow.on, bands: FILM.grow.bands.map(b => ({ t: b.t, spread: b.spread, hi: FILM.bands[b.band].hi })) } : null, cityMesh: CITYMESH, scale: M.scale, lens, film: true, palette: PAL.palette, today: PAL.today, paletteOf: id => eraOf(id).palette || PAL.palette,
   fadeAt: LOOK.dim ?? .8, phone: TOUCH, backdropFrom: (FILM.look && FILM.look.backdrop_from) ?? 1800,
   dataFrom: (M.b || []).reduce((m, b) => b[0] > 0 && b[0] < m ? b[0] : m, 1e4),   // (the data's earliest epoch: what it first sees then counts as standing before)
   prims: QS.get('detail') === '0' || TOUCH ? null : id => eraJ(id).then(J => J.prims),   // (a phone: no detail, as the viewer's look on a touch screen)

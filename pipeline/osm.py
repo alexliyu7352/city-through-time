@@ -1,7 +1,8 @@
 """OpenStreetMap features for a city's area, through Overpass, cached by query hash in the city's own raw folder
 (<raw root>/cities/<slug>/osm/, pipeline/layout.py raw).
 usage: python -I pipeline/osm.py <city_dir> [themes...]      (the area around the plate: pipeline/layout.py area)
-Themes: water (areas + rivers), roads (motorway..primary), rail (rail, light rail, subway), historic (historic=*, sites).
+Themes: water (areas + rivers), roads (motorway..primary), rail (rail, light rail, subway), historic (historic=*, sites),
+green (parks, gardens, grass, woods, recreation grounds: pipeline/greens.py), streets (secondary..residential: pipeline/greens.py).
 Overpass is slow and sometimes down: each theme is one request with a long timeout; a cached answer is never re-fetched."""
 import sys, os, json, hashlib, time, urllib.request, urllib.error
 
@@ -30,6 +31,14 @@ THEMES = {
 );''',
     'places': '''(
   node["place"~"^(city|town|suburb|village|quarter)$"]({bbox});
+);''',
+    'green': '''(
+  way["leisure"~"^(park|garden|recreation_ground|nature_reserve)$"]({bbox}); relation["leisure"~"^(park|garden|nature_reserve)$"]({bbox});
+  way["landuse"~"^(grass|forest|recreation_ground|village_green|cemetery)$"]({bbox}); relation["landuse"~"^(grass|forest)$"]({bbox});
+  way["natural"~"^(wood|scrub)$"]({bbox}); relation["natural"="wood"]({bbox});
+);''',
+    'streets': '''(
+  way["highway"~"^(secondary|tertiary|residential|unclassified|living_street)$"]({bbox});
 );''',
     'aeroway': '''(
   way["aeroway"~"^(aerodrome|runway|terminal)$"]({bbox}); relation["aeroway"="aerodrome"]({bbox});
