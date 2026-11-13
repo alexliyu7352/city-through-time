@@ -113,10 +113,63 @@ def load(city, frame, buildings, settings):
     floor = float(settings.get('floor_height_m', 3.2))
     if not math.isfinite(floor) or not 2 <= floor <= 6: raise SystemExit('heights: floor_height_m must be between 2 and 6 metres')
     refs, provenance = references(city, frame, floor)
+    excluded = set(settings.get('exclude_osm', []))
+    if excluded:
+        refs = [r for r in refs if r['meta']['id'] not in excluded]
+        provenance['excluded_osm'] = sorted(excluded)
     rows, selected, result = supplement(buildings, refs)
+    fill = settings.get('fill_gaps')
+    if fill:
+        added, metadata, report = gap_buildings(rows, refs, frame, fill)
+        offset = len(rows)
+        rows.extend(added)
+        selected.update({offset + i: m for i, m in enumerate(metadata)})
+        result['fill_gaps'] = report
     result.update(provenance)
     print(f'heights: {len(refs)} OSM references; {json.dumps(result["counts"], ensure_ascii=False)}')
     return rows, selected, result
+
+
+def gap_candidates(buildings, refs, frame, min_height_m=100, min_levels=30):
+    """Whole tall buildings only on empty primary ground. Boundary contact also refuses a candidate; never clip a tower
+    round an old footprint or transfer its height to a neighbour. Accepted OSM footprints cannot overlap each other either.
+    """
+    tree = STRtree([b[0] for b in buildings]); accepted = []; counts = collections.Counter()
+    for r in sorted(refs, key=lambda x: (-x['meta']['height_m'], x['meta']['id'], x['component'])):
+        p, m = r['poly'], r['meta']; c = p.centroid
+        tall = m['height_m'] >= min_height_m or (m['field'] == 'building:levels' and float(m['value']) >= min_levels)
+        if not tall: continue
+        if not frame.inside(c.x, c.y): counts['outside_plate'] += 1; continue
+        if len(tree.query(p, predicate='intersects')): counts['primary_overlap'] += 1; continue
+        if any(p.intersects(q['poly']) for q in accepted): counts['duplicate_overlap'] += 1; continue
+        accepted.append(r)
+    return accepted, counts
+
+
+def gap_buildings(buildings, refs, frame, settings):
+    """Use the existing global-fallback age sampler; retain its 100m/five-year estimates, never OSM start_date."""
+    import local, overture_ghsl
+    mh = float(settings.get('min_height_m', 100)); ml = int(settings.get('min_levels', 30))
+    threshold = float(settings.get('ghsl_threshold_m2', 1500))
+    if not math.isfinite(mh) or mh <= 0 or ml <= 0 or not 0 < threshold <= 10000:
+        raise SystemExit('heights: positive skyline thresholds and ghsl_threshold_m2 in (0,10000] required')
+    candidates, counts = gap_candidates(buildings, refs, frame, mh, ml)
+    points = [frame.ground_wgs(r['poly'].centroid.x, r['poly'].centroid.y) for r in candidates]
+    years = overture_ghsl.first_epoch(local.raw(), points, frame.area, threshold) if points else []
+    added, metadata = [], []
+    for r, year in zip(candidates, years):
+        if year is None:
+            counts['no_ghsl_epoch'] += 1
+            continue   # no invented date or undated filler when the cell has no threshold crossing
+        m = {**r['meta'], 'footprint_source': 'OSM', 'age_source': 'GHSL R2023A GHS-BUILT-S',
+             'age_method': 'epoch', 'epoch': year, 'age_estimated': True, 'age_resolution_m': 100,
+             'ghsl_threshold_m2': threshold}
+        added.append((r['poly'], m['height_m'], year, 'epoch', ''))
+        metadata.append(m)
+    counts['added'] = len(added)
+    print(f'height gaps: {dict(counts)}; GHSL 100m / five-year estimates')
+    return added, metadata, {'min_height_m': mh, 'min_levels': ml, 'counts': dict(counts),
+                             'buildings': [{'offset': i, **m} for i, m in enumerate(metadata)]}
 
 
 def inspect(city):
@@ -204,6 +257,40 @@ def selftest():
             self.assertAlmostEqual(refs[1]['meta']['height_m'], 38.4)
             self.assertTrue(refs[1]['meta']['estimated'])
             self.assertEqual(report['skipped']['not_existing_whole_building'], 2)
+        def test_gaps_refuse_even_small_overlap_and_boundary_contact(self):
+            from types import SimpleNamespace
+            f = SimpleNamespace(inside=lambda x, y: True)
+            b = [(box(0, 0, 20, 20), 12, 1987, 'seen', '')]
+            ref = lambda p, i: {'poly': p, 'component': 0, 'meta': {'id': i, 'height_m': 150, 'field': 'height'}}
+            refs = [ref(box(19.99, 0, 40, 20), 'overlap'), ref(box(20, 0, 40, 20), 'touch'),
+                    ref(box(50, 0, 70, 20), 'empty')]
+            accepted, counts = gap_candidates(b, refs, f)
+            self.assertEqual([r['meta']['id'] for r in accepted], ['empty'])
+            self.assertEqual(counts['primary_overlap'], 2)
+            self.assertEqual(b[0][2:], (1987, 'seen', ''))
+        def test_gaps_do_not_duplicate_osm_or_add_low_buildings(self):
+            from types import SimpleNamespace
+            f = SimpleNamespace(inside=lambda x, y: x < 100)
+            refs = [{'poly': box(x, 0, x+20, 20), 'component': 0,
+                     'meta': {'id': i, 'height_m': h, 'field': 'height'}}
+                    for i, x, h in (('a', 0, 150), ('duplicate', 0, 140), ('low', 50, 20), ('outside', 200, 150))]
+            accepted, counts = gap_candidates([], refs, f)
+            self.assertEqual([r['meta']['id'] for r in accepted], ['a'])
+            self.assertEqual(counts['duplicate_overlap'], 1)
+            self.assertEqual(counts['outside_plate'], 1)
+        def test_gap_dates_use_existing_ghsl_sampler(self):
+            import local, overture_ghsl
+            from types import SimpleNamespace
+            f = SimpleNamespace(inside=lambda x, y: True, area=(0, 0, 1, 1), ground_wgs=lambda x, y: (x, y))
+            refs = [{'poly': box(x, 0, x+20, 20), 'component': 0,
+                     'meta': {'id': str(x), 'height_m': 150, 'field': 'height'}} for x in (0, 50)]
+            with patch.object(local, 'raw', return_value='fixture'), patch.object(overture_ghsl, 'first_epoch', return_value=[1980, None]) as sample:
+                added, meta, report = gap_buildings([], refs, f, {})
+            self.assertEqual(added[0][1:4], (150, 1980, 'epoch'))
+            self.assertTrue(meta[0]['age_estimated'])
+            self.assertEqual(meta[0]['age_resolution_m'], 100)
+            self.assertEqual(report['counts']['no_ghsl_epoch'], 1)
+            sample.assert_called_once_with('fixture', [(10, 10), (60, 10)], f.area, 1500)
     result = unittest.TextTestRunner(verbosity=1).run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests))
     if not result.wasSuccessful(): raise SystemExit(1)
 

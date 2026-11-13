@@ -181,6 +181,11 @@ landmarks:
     top: { shape: cone, h_m: 12 }
 ```
 
+Before story nodes exist, run `pipeline/compile.py` once after prep. `tools/modelview.py --spec` can then use its generated
+scale defaults (`build/scale_input.json`) for a schematic landmark study without adding story nodes. This scale study keeps
+today's base at full height under the room light, with the normal landmark masks. It refuses defaults
+whose city.yaml fingerprint is stale; rerun compile after changing that file. The study stays under the city's build/review/.
+
 Every key, its range, its default and what it means: `uv run python -I pipeline/landmarks.py [kind]`, the same table compile checks against: a key a class does not have, a value
 out of range, a missing size or a missing `basis` stops compile with what to write. Each size comes from the sources and `basis` says which are estimates; a size the sources do not
 give is taken from a building of the same type and period (named in the research note), not a round number. Proportions that tell a wrong guess at once: a hemispherical dome rises

@@ -282,6 +282,18 @@ def main():
     try: os.nice(10)   # (compile and the browser after it: the desktop stays usable)
     except OSError: pass
     C = yaml.safe_load(open(os.path.join(city, 'city.yaml'), encoding='utf-8'))
+    if not (C.get('film') or {}).get('nodes'):
+        import hashlib
+        p = LAYOUT.build(city, 'scale_input.json')
+        if not os.path.isfile(p): raise SystemExit('modelview: no story nodes yet; run pipeline/compile.py for the scale defaults first')
+        prepared = json.load(open(p, encoding='utf-8'))
+        digest = hashlib.sha256(open(os.path.join(city, 'city.yaml'), 'rb').read()).hexdigest()
+        if prepared['source_sha256'] != digest:
+            raise SystemExit('modelview: scale defaults predate city.yaml; rerun pipeline/compile.py first')
+        C = prepared['settings']
+        C['film']['identity']['l1'] += ' · schematic study'
+        C['film']['rise'] = {'ghost': 1}   # a scale study keeps today's full-height base around the landmarks
+        C['film']['light']['base'] = 1
     spec = None
     if args.spec:
         spec = yaml.safe_load(open(args.spec, encoding='utf-8'))

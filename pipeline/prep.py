@@ -213,7 +213,9 @@ stats = {
                'mean_h': round(sum(h_by_band[i]) / len(h_by_band[i]), 1) if h_by_band[i] else 0, 'over_h': {str(t): sum(1 for h in h_by_band[i] if h >= t) for t in (50, 100)}} for i, b in enumerate(bands)],
     'no_year': {'n': n_by_band[-1], 'area_share': round(area_by_band[-1] / tot_area, 4) if tot_area else 0},
     'tallest': [{'bi': bi, 'h': round(h, 1), 'year': y, 'pos': F.model(cx, cy) + [round(h * F.scale * BEX + ground(cx, cy), 6)], 'wgs': [round(v, 5) for v in F.ground_wgs(cx, cy)],
-                 'height_source': height_meta.get(bi, {'source': src, 'estimated': True})} for h, bi, cx, cy, y in tallest[:10]],
+                 'height_source': height_meta.get(bi, {'source': src, 'estimated': True}),
+                 'age_source': height_meta.get(bi, {}).get('age_source', 'CMAB GAIA first impervious surface' if src == 'cmab' else 'GHSL R2023A GHS-BUILT-S'),
+                 'model_year': B[bi][0]} for h, bi, cx, cy, y in tallest[:10]],
     'marks': marks,
 }
 if height_report is not None:

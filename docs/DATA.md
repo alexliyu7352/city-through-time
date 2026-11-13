@@ -45,6 +45,13 @@ buildings:
   height_supplement:
     source: osm
     floor_height_m: 3.2
+    # Optional: tall whole buildings entirely absent from the primary footprints.
+    fill_gaps:
+      min_height_m: 100
+      min_levels: 30
+      ghsl_threshold_m2: 1500
+    # Optional: separately modelled landmarks, excluded from matching and gap fill.
+    exclude_osm: [way/123456]
 ```
 
 1. Fetch `uv run python -I pipeline/osm.py cities/<slug> building_heights` once for the city's area. It caches building and part
@@ -72,6 +79,26 @@ buildings:
    must distinguish mapped heights, storey-based estimates and the original estimated years; a supplement does not make all
    heights or construction years ground truth. OSM height conventions and an owner's architectural height can differ; preserve
    the tag actually used and explain the difference instead of quietly replacing it with a preferred number.
+
+`fill_gaps` is optional and uses the same whole-building references. It adds a footprint only when its explicit height is at
+least `min_height_m`, or its height is inferred from at least `min_levels` storeys. Its centroid must be on the plate and its
+entire footprint must have **no intersection at all** with any primary footprint, even a small overlap or a shared boundary.
+Accepted additions cannot intersect each other either. This is deliberately stricter than height matching: a reference with
+an ambiguous primary counterpart remains a gap, rather than duplicating a tower or replacing primary geometry.
+
+Download GHSL with `uv run python -I pipeline/overture_ghsl.py ghsl cities/<slug>` before enabling gap fill. The tool reuses
+that adapter's `first_epoch` sampler and the GHS-BUILT-S R2023A 100 m cells, with the same built-up threshold and five-year
+spreading described below. A reference with no qualifying epoch is skipped, never assigned an invented construction year.
+All primary footprints, order, years and age methods remain unchanged; additions are appended with `age_method: epoch`.
+The sidecar records each addition's OSM ID, height tag, footprint source, GHSL epoch and estimate flag; stats also distinguish
+the source epoch (`year`) from the spread model year (`model_year`). Record GHSL's CC BY 4.0 credit in CREDITS and label the
+screen "GHSL 100 m / 5-year built-up periods, estimated". Already built up in 1975 describes the cell's ground, **not** a
+present-day tower's construction in 1975.
+
+Put researched landmarks in `exclude_osm` by exact `type/id`, not a translated name. They take their documented existence
+events and separate `landmarks.py` models; exclusions do not erase the primary base. Use the existing landmark masks when
+the independent models are built. Until then, report the prepared base and landmark studies separately, including the
+remaining skyline gaps. A height-envelope study is schematic massing, not a completed landmark reconstruction.
 
 Choose the present-day vertical factor **after** correcting heights. `buildings.exaggeration: 1` preserves true skyline
 proportions (a 632 m tower is 0.0632 model metres at 1:10000); do not stretch surveyed or mapped skyscrapers fourfold because an

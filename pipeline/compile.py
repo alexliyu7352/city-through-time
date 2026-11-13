@@ -82,10 +82,15 @@ if not (C.get('film') or {}).get('nodes'):
     _corners = [(x, y, z) for x in (-ST['size_m'][0] / 2, ST['size_m'][0] / 2)
                 for z in (-ST['size_m'][1] / 2, ST['size_m'][1] / 2) for y in (0, _h)]
     _wide = stagecraft.fit_distance([0, 0, 0, 34, 40, _d, 30], _corners, .88, .78, d_hi=10 * _d)[5] / _d
+    _source = ''
+    if (C.get('buildings') or {}).get('height_supplement'):
+        _source = ' · CMAB+OSM · GAIA est.' if C['buildings']['source'] == 'cmab' else ' · Overture+OSM · GHSL 100m/5y est.'
+        if C['buildings']['height_supplement'].get('fill_gaps') and C['buildings']['source'] == 'cmab':
+            _source += ' · GHSL 100m/5y est.'
     _f = {'family': 'Noto Sans SC', 'weight': 300}; _fs = {'family': 'Noto Sans SC', 'weight': 500}
     C['film'] = yaml.load(yaml.safe_dump({
         'lang': ['en'], 'emblem': 'none', 'light': {'base': 0.62}, 'drift': 0,
-        'identity': {'l1': f'{_nm} · 1:{{cfg.scale:g}}', 'l2': '{plate_km[0]:.1f} × {plate_km[1]:.1f} km'},
+        'identity': {'l1': f'{_nm} · 1:{{cfg.scale:g}}', 'l2': '{plate_km[0]:.1f} × {plate_km[1]:.1f} km' + _source},
         'palette': {'plate': '#3a4757', 'plateSide': '#15191e', 'water': '#3a5670', 'plateEmit': 0.55},
         'fonts': {'primary_strong': _fs, 'primary': _f, 'primary_sans': _f, 'primary_sans_strong': _fs, 'secondary': _f, 'secondary_strong': _fs,
                   'numeral': {'family': 'Cormorant Garamond', 'weight': 300}, 'numeral_strong': {'family': 'Cormorant Garamond', 'weight': 500},
@@ -96,6 +101,11 @@ if not (C.get('film') or {}).get('nodes'):
                    'camera': [_cam(0, 34, 40, _wide), _cam(4, 34, 40, _wide)]}]}, allow_unicode=True), Loader=_SeenLoader)
     print(f'compile: city.yaml has no film nodes yet: a stand-in film of the white model alone for the scale still (docs/DATA.md); '
           f'node render/still.mjs {os.path.basename(D)} 3 8', flush=True)
+    # Model studies can precede story staging. Reuse these generated defaults rather than maintaining another scale-film
+    # template in modelview; the source fingerprint prevents a study from using settings from an earlier city.yaml.
+    import hashlib
+    json.dump({'source_sha256': hashlib.sha256(open(os.path.join(D, 'city.yaml'), 'rb').read()).hexdigest(), 'settings': C},
+              open(LAYOUT.build(D, 'scale_input.json'), 'w'), ensure_ascii=False)
 FM = C['film']
 LAYOUT.ensure(D)
 if FM.get('satellite_source', 'sentinel') not in ('sentinel', 'hr'):   # (read here, so a film with no satellite plate yet is not told the template's key is unread)
