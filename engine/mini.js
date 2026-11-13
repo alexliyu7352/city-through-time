@@ -218,11 +218,11 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, skyC: '#a4bce6', skyGround: '#beb4a8', sky: .55, sun: 1.95, sunC: '#fff0dc', sunEl: 32, exposure: 1.1, ao: .5, bloom: [9, 0], dof: 1, band: 1,
-        edge: 0, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 2, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
+      todayLight: { all: true, skyC: '#93acdc', skyGround: '#a8a39c', sky: .42, sun: 2.3, sunC: '#ffdcae', sunEl: 24, exposure: 1.2, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
+        edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
         far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
-        board: [.47, .45, .43], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.52, .50, .47], kerb: [.86, .85, .82],
-        streets: { asphalt: '#5b5d61', pavement: '#b9b4ab', kerb: 2.5, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.47, .53, .31], [.41, .48, .28]],   // (streets: geometry, streetsMesh; the raster's share 0)
+        board: [.45, .445, .44], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.52, .50, .47], kerb: [.86, .85, .82],
+        streets: { asphalt: '#5b5d61', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.47, .53, .31], [.41, .48, .28]],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.48, .74, .68], deep: [.14, .48, .46], reach: 90, rough: .45, ripple: .08, gloss: [.03, .08, [.80, .90, .97]], refl: [.2, .3] },
         trees: [[.31, .45, .19], [.39, .51, .22], [.27, .41, .18]] },
       // light presets over todayLight (FILM_PIC todayPreset): golden, the golden hour for the opening and the return to today: a low
@@ -721,6 +721,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     // as the crowns are drawn (R); never in a carriageway (any street's or arterial's half width and a little) nor near a junction
     // (a node where three or more arms meet: a way's end one arm, a node inside it two)
     if (yc >= 0 && !small && (STREETS.list || GREEN_ON.value)) {
+      const PT_ = (todayL() && todayL().parkTrees) || [1, .9];   // (todayLight parkTrees: the parks' crowns [this many times as large, their density])
       const ST_ = F.street || { off: 2.5, r: 3.6, every: { secondary: 13, tertiary: 14 }, minor: 18, junction: 14 }, R2 = R * R, cap = (F.most || 120000), IX = streetIndex();
       if (GREEN_ON.value && !GREEN_D && GREEN.value && GREEN.value.image) { const im_ = GREEN.value.image, c_ = document.createElement('canvas'); c_.width = im_.width; c_.height = im_.height; const g_ = c_.getContext('2d'); g_.drawImage(im_, 0, 0); GREEN_D = { w: im_.width, h: im_.height, d: g_.getImageData(0, 0, im_.width, im_.height).data }; }
       (STREETS.list || []).forEach((r, w) => { if (out.length >= cap) return; const hw = IX.hw(r.cls), off = (hw / scale + ST_.off) * scale, ev = Math.max(ST_.every[r.cls] || ST_.minor, cellM * .9) * scale;
@@ -735,8 +736,8 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
           const x = (i + .2 + .6 * h2(i, j, 11)) * c2, z = (j + .2 + .6 * h2(i, j, 12)) * c2; if ((x - target.x) ** 2 + (z - target.z) ** 2 > R2) continue;
           const u = Math.floor((x / PW + .5) * GREEN_D.w), v = Math.floor((z / PD + .5) * GREEN_D.h); if (u < 0 || v < 0 || u >= GREEN_D.w || v >= GREEN_D.h || GREEN_D.d[(v * GREEN_D.w + u) * 4] < 128) continue;
           const m = [x / scale, z / scale], clp = sm(.4, .62, vn(m[0] / 70, m[1] / 70) * .6 + vn(m[0] / 23, m[1] / 23) * .4);   // (clusters with lawns between)
-          if (h2(i, j, 13) >= clp * .9 || !ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z))) continue;
-          out.push([x, S.ground(x, z), z, Math.max(8, cellM * .7) * .34 * [.75, 1, 1.3][Math.floor(h2(i, j, 14) * 3)] * scale, h2(i, j, 15), 1]); } }
+          if (h2(i, j, 13) >= clp * PT_[1] || !ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z))) continue;
+          out.push([x, S.ground(x, z), z, Math.max(8, cellM * .7) * .34 * PT_[0] * [.75, 1, 1.3][Math.floor(h2(i, j, 14) * 3)] * scale, h2(i, j, 15), 1]); } }
     }
     if (out.length < 60000) { const n0 = out.length; for (let i = 0; i < n0; i++) { const o = out[i]; if (!o[5]) continue; const [x, y, z, r, h] = o;   // today's trees as a model maker's clusters: two smaller balls (a closer shot's: a wide one's crowns are a few pixels, and thrice as many cost more than they show)
         for (let j = 0; j < 2; j++) { const a_ = h * 40 + j * 2.6, rr = r * (.55 + .15 * j); out.push([x + Math.cos(a_) * r * .62, y, z + Math.sin(a_) * r * .62, rr, (h * 3.7 + j * .31) % 1, 1]); } } }   // (beside each crown, lower: the group lit on top, shaded below)
@@ -938,18 +939,19 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // shown where today's city stands and is the subject, as the urban extent's year reaches it (YEAR_T)
   let STREET_MESH = null;
   const streetsMesh = () => { const T_ = todayL() && todayL().streets; if (STREET_MESH || !T_ || !YEAR_T.value || !STREETS.list) return;
-    const W = T_.w; STREET_MESH = [0, 1].map(layer => { const pos = [], idx = [], nrm = [];
+    const W = T_.w; STREET_MESH = [0, 1].map(layer => { const pos = [], idx = [], nrm = [], mid = [];
       const add = (pts, cls) => { const hw = ((W[(cls || '').replace('_link', '')] || W.other) / 2 + (layer ? 0 : T_.kerb)) * scale;
         for (let k = 1; k < pts.length; k++) { const [ax, az] = pts[k - 1], [bx, bz] = pts[k], l = Math.hypot(bx - ax, bz - az); if (l < 1e-9) continue;
+          if (wet(ax, az) || wet(bx, bz) || wet((ax + bx) / 2, (az + bz) / 2)) continue;   // (none over the water: a tunnel under the river, a bridge above it, are not paving on its surface)
           const ux = (bx - ax) / l, uz = (bz - az) / l, nx = -uz * hw, nz = ux * hw, ex = ux * hw * .6, ez = uz * hw * .6, i0 = pos.length / 3;   // (each end carried on: the joints closed)
-          for (const [x, z] of [[ax - ex + nx, az - ez + nz], [bx + ex + nx, bz + ez + nz], [bx + ex - nx, bz + ez - nz], [ax - ex - nx, az - ez - nz]]) { pos.push(x, S.ground(x, z) + (layer ? .45 : .3) * scale, z); nrm.push(0, 1, 0); }
+          for (const [x, z] of [[ax - ex + nx, az - ez + nz], [bx + ex + nx, bz + ez + nz], [bx + ex - nx, bz + ez - nz], [ax - ex - nx, az - ez - nz]]) { pos.push(x, S.ground(x, z) + (layer ? .45 : .3) * scale, z); nrm.push(0, 1, 0); mid.push((ax + bx) / 2, (az + bz) / 2); }
           idx.push(i0, i0 + 1, i0 + 2, i0, i0 + 2, i0 + 3); } };
       for (const r of STREETS.list) add(r.pts, r.cls); for (const r of roads || []) add(r.pts, r.cls);
-      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3)); g.setIndex(idx);
+      const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3)); g.setAttribute('aMid', new THREE.Float32BufferAttribute(mid, 2)); g.setIndex(idx);
       const m = new THREE.MeshStandardMaterial({ color: layer ? T_.asphalt : T_.pavement, roughness: .95, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: layer ? -4 : -2, polygonOffsetUnits: layer ? -4 : -2 });
       m.onBeforeCompile = sh => { Object.assign(sh.uniforms, { uTodayK: TODAY_K, uYearT: YEAR_T, uPlateS: { value: new THREE.Vector2(PW, PD) } });
-        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform vec3 uTodayK; uniform sampler2D uYearT; uniform vec2 uPlateS;').replace('#include <begin_vertex>', `#include <begin_vertex>
-  { float yt_ = texture2D(uYearT, position.xz / uPlateS + .5).r * 255.; if (uTodayK.y < .5 || uTodayK.z > .3 || yt_ < .5 || yt_ > uTodayK.x - 1899. + .5) transformed *= 0.; }`); };
+        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform vec3 uTodayK; uniform sampler2D uYearT; uniform vec2 uPlateS; attribute vec2 aMid;').replace('#include <begin_vertex>', `#include <begin_vertex>
+  { float yt_ = texture2D(uYearT, aMid / uPlateS + .5).r * 255.; if (uTodayK.y < .5 || uTodayK.z > .3 || yt_ < .5 || yt_ > uTodayK.x - 1899. + .5) transformed = vec3(aMid.x, -1., aMid.y); }`); };   // (by its segment's middle: a segment goes whole, its four corners to one point, never stretched to the origin)
       m.customProgramCacheKey = () => 'mini-streets';
       const mesh = new THREE.Mesh(g, m); mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; mesh.renderOrder = .5 + layer * .01; scene.add(mesh); return mesh; }); };
   const todayNow = () => {
@@ -999,7 +1001,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       TF.update(target, d, src); }
     const LT_ = FP_ ? todayL() : null, tsE_ = LT_ ? (LT_.all ? 1 : TODAY_K.value.y * (1 - THREE.MathUtils.smoothstep(TODAY_K.value.z, .3, .6))) : 0;   // (today's city the subject: its own light)
     const kAir_ = FP_ && FILM_PIC.pool ? THREE.MathUtils.smoothstep(d, .06, FILM_PIC.pool[1]) : 0, elD_ = THREE.MathUtils.lerp(FP_ && FILM_PIC.rake ? THREE.MathUtils.lerp(SUN_EL, FILM_PIC.rake, kAir_) : SUN_EL, LT_ && LT_.sunEl ? LT_.sunEl : 0, LT_ && LT_.sunEl ? tsE_ : 0);   // (an aerial's raking sun, FILM_PIC rake)
-    const v = camera.position.clone().sub(target), kd = U.uKeyDir.value, el = THREE.MathUtils.degToRad(elD_), r = d * 1.2;
+    const v = camera.position.clone().sub(target), kd = U.uKeyDir.value, el = THREE.MathUtils.degToRad(elD_), r = d * (FP_ ? 12 : 1.2);   // (the film's: the light far back, so the shadow fitted to the frame (fitShadow) has everything it sees in front of it: at 1.2 shot distances the ground beyond it fell behind the light, outside its depth range, and no shadow was cast)
     const az = film && sunAz && LT_ && LT_.sunLeft != null ? THREE.MathUtils.degToRad(sunAz.az + (sunAz.own ? 0 : LT_.sunLeft))   // (the look's sun per shot: behind and to the left of the camera, todayLight sunLeft; a node's own)
       : film ? (camAz != null ? THREE.MathUtils.degToRad(camAz + (FP_ ? FILM_PIC.sunSide + (LT_ && LT_.side || 0) * tsE_ : 55)) : Math.atan2(kd.x, kd.z)) : Math.atan2(v.x, v.z) + THREE.MathUtils.degToRad(SUN_SIDE);   // the sun: behind the eye, to its left, 40 degrees up (fx light: lower); the film: from the key light's bearing
     sun.position.set(target.x + r * Math.sin(az) * Math.cos(el), target.y + r * Math.sin(el), target.z + r * Math.cos(az) * Math.cos(el)); sun.target.position.copy(target);
@@ -1250,11 +1252,11 @@ function FACADE_GLSL(S) {
         } else if (res_) {   // a home: a balcony band at each floor, a shade lighter; its windows set back, a shade darker
           float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(1. - smoothstep(.3, .55, pxm_ / sh_), 1. - smoothstep(.3, .55, pxm_ / wu_));   // (pxm_ from fwidth's length runs about 1.5 times a pixel: whole to some 2.5 picture pixels a bay)
           float band_ = (1. - smoothstep(.12, .2, fy_)) * kS_, win_ = smoothstep(.30, .34, fy_) * (1. - smoothstep(.84, .88, fy_)) * smoothstep(.10, .14, fu_) * (1. - smoothstep(.78, .82, fu_)) * kW_;
-          c_ = mix(pt_ * (1. + .08 * band_), mix(pt_ * .35, vec3(.20, .25, .34), .6), .9 * win_ * (1. - band_)) * (1. - .08 * (1. - kW_)); eng_ = .6 * win_ * (1. - band_) * show_;   // (its windows cool glass set into the paint; afar the paint a shade deeper, their share)
+          c_ = mix(pt_ * (1. + .08 * band_), mix(pt_ * .22, vec3(.13, .16, .22), .65), .95 * win_ * (1. - band_)) * (1. - .08 * (1. - kW_)); eng_ = .6 * win_ * (1. - band_) * show_;   // (its windows cool glass set into the paint; afar the paint a shade deeper, their share)
         } else {   // the low fabric, a large low building: small windows
           float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = min(1. - smoothstep(.3, .55, pxm_ / sh_), 1. - smoothstep(.3, .55, pxm_ / wu_));
           float win_ = smoothstep(.36, .40, fy_) * (1. - smoothstep(.76, .80, fy_)) * smoothstep(.30, .34, fu_) * (1. - smoothstep(.64, .68, fu_)) * kW_;
-          c_ = mix(pt_, mix(pt_ * .35, vec3(.20, .25, .34), .6), .85 * win_) * (1. - .06 * (1. - kW_)); eng_ = .5 * win_ * show_;
+          c_ = mix(pt_, mix(pt_ * .22, vec3(.13, .16, .22), .65), .92 * win_) * (1. - .06 * (1. - kW_)); eng_ = .5 * win_ * show_;
         }
         diffuseColor.rgb = mix(diffuseColor.rgb, c_, show_);
       } else if (n_.y > .9 && kd_ < .5) {   // the old fabric's roof: grey tile in rows, close
