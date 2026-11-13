@@ -214,9 +214,9 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
       todayLight: { skyC: '#cfdcea', skyGround: '#c9c0ae', sky: .5, sun: 1.35, sunC: '#ffdfb8', sunEl: 34, exposure: .9, ao: .55, bloom: [9, 0], dof: 1, band: 1,
-        edge: 0, filmic: .5, grain: 0, pool: 1, sat: 1.08, contrast: .15, vignette: .1, shadowR: 3, air: [2, 7, 2500], fogC: '#ebe8e0', dome: ['#ebe8e0', '#a9c9e8'],
+        edge: 0, filmic: .5, grain: 0, pool: 1, sat: 1.08, contrast: .15, vignette: .1, shadowR: 3, air: [2, 7, 2500], fogC: '#efebe3', dome: ['#efebe3', '#86b2e0'],
         board: [.64, .63, .60], soft: [.8, 8], street: [[.46, .46, .47], .85], plaza: [.74, .73, .70], kerb: [.80, .79, .76], park: [[.48, .61, .36], [.40, .54, .31]],
-        water: { shallow: [.46, .74, .73], deep: [.20, .55, .62], reach: 90, rough: .4, gloss: [.05, .15, [.85, .90, .95]] },
+        water: { shallow: [.42, .74, .72], deep: [.14, .50, .55], reach: 90, rough: .45, gloss: [.04, .1, [.85, .90, .95]] },
         trees: [[.36, .52, .25], [.46, .60, .31], [.30, .45, .23]] },
       // today's buildings painted by kind (colourToday kinds; FACADE_GLSL draws each kind's facade): the old low fabric (lower than
       // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick; a large low building pale; an office tower (from
@@ -224,7 +224,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // city, homes in soft paints (cream, ivory, sand, pale peach, light grey), their roofs light, the walk-ups' (lower than
       // tiledH) a share of them (tiled) in terracotta tile
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
-        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .22,
+        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12,
           homes: ['#efe5d0', '#f3eee3', '#e6d2ae', '#efd3bf', '#dcdad5', '#ead9bd', '#e8c9b5', '#f0e9da'], homeRoofs: ['#d6d1c7', '#cbc7bf', '#ddd8cf', '#c7c3bb'], tiles: ['#b4775c', '#a87058', '#bc8466'],
           oldWalls: ['#aaa59c', '#9f9b94', '#a9785f', '#b5b0a6', '#9a7462'], oldRoofs: ['#6f6e6b', '#787571', '#666461', '#807d78'],
           big: ['#e4e0d8', '#d9d7d2', '#e8dfcf'], bigRoofs: ['#cfccc6', '#c3c6c8', '#d8d4cc'],
