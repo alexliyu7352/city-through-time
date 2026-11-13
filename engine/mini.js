@@ -46,7 +46,7 @@ function greenData(dir) {   // -> a promise the first frame waits on (both optio
   return GREEN_P = Promise.all([g, st]);
 }
 let SKY_C0 = null, GLB_DONE = false;
-const REFL = { T: { value: null }, M: { value: new THREE.Matrix4() }, K: { value: 0 } }, GLASS_SKY = { value: new THREE.Color(.80, .86, .92) }, GLASS_K = { value: 1 }, DOME_R = { value: 25 };   // (GLASS_K: how much of it; DOME_R: how fast the dome turns from its horizon to its zenith)   // (GLASS_SKY: the sky glass reflects, the dome's horizon: gold at the golden hour)   // (today's water's reflection: its picture, its texture matrix, on)
+const REFL = { T: { value: null }, M: { value: new THREE.Matrix4() }, K: { value: 0 }, D: { value: new THREE.Vector2(1e9, 2e9) } }, GLASS_SKY = { value: new THREE.Color(.80, .86, .92) }, GLASS_K = { value: 1 }, DOME_R = { value: 25 };   // (GLASS_K: how much of it; DOME_R: how fast the dome turns from its horizon to its zenith)   // (GLASS_SKY: the sky glass reflects, the dome's horizon: gold at the golden hour)   // (today's water's reflection: its picture, its texture matrix, on)
 const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }, GEO_T = { value: new THREE.Vector4(0, 0, -1, 0) };   // (GEO_T: the crowns drawn as geometry, x z their centre, z their radius: beyond it the ground carries the groves' tone)
 // the built area of the period cities standing (a material's ground_in: its plaster inside it, the table beyond): their buildings'
 // centres drawn over the plate, each `reach` m round, softened; made again when the cities standing change (builtMask)
@@ -222,7 +222,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
         edge: 0, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -40,
         far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
         board: [.66, .64, .60], soft: [0, 8], street: [[.46, .46, .48], .9], plaza: [.78, .75, .70], kerb: [.86, .85, .82], park: [[.60, .68, .34], [.50, .60, .30]],
-        water: { shallow: [.48, .74, .68], deep: [.14, .48, .46], reach: 90, rough: .45, ripple: .08, gloss: [.03, .08, [.80, .90, .97]], refl: [.35, .45] },
+        water: { shallow: [.48, .74, .68], deep: [.14, .48, .46], reach: 90, rough: .45, ripple: .08, gloss: [.03, .08, [.80, .90, .97]], refl: [.2, .3] },
         trees: [[.32, .48, .20], [.44, .56, .26], [.38, .52, .18]] },
       // light presets over todayLight (FILM_PIC todayPreset): golden, the golden hour for the opening and the return to today: a low
       // warm sun ahead of the camera and to its left (sunLeft), long soft shadows, blue-violet shade, its glow on the sky (dome[2])
@@ -230,7 +230,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       presets: { golden: { sunEl: 9, sunLeft: -140, sun: 2.4, sunC: '#ffac5c', sky: 1.15, skyC: '#a49cd0', skyGround: '#d0a888', exposure: 1.2, glassSky: '#ffc890', glassK: 2.2, domeRate: 5, sat: 1.12, contrast: .18, bloom: [.95, .3],
         fogC: '#f2cfa6', dome: ['#f4c79a', '#8ea6d6', '#ff9a40', [1, 1.1, .34, '#fff2e8']], air: [3.5, 11, 2500], far: [2.2, 6, .5, '#f0c9a4'],
         park: [[.64, .64, .30], [.56, .58, .26]], trees: [[.40, .46, .18], [.50, .52, .22], [.44, .48, .16]],
-        water: { shallow: [.46, .62, .62], deep: [.20, .40, .48], reach: 90, rough: .14, ripple: .35, gloss: [.08, .5, [1, .78, .48]], refl: [.3, .35, .7] } } },
+        water: { shallow: [.46, .62, .62], deep: [.20, .40, .48], reach: 90, rough: .14, ripple: .35, gloss: [.08, .5, [1, .78, .48]], refl: [.3, .35] } } },
       // today's buildings painted by kind (colourToday kinds; FACADE_GLSL draws each kind's facade): the old low fabric (lower than
       // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick; a large low building pale; an office tower (from
       // towerH m and towerA m2 of footprint, or any from tallH m) in tinted glass, pale blue-green or silver; the rest, most of the
@@ -408,7 +408,7 @@ function landMaterial(U, PW, PD, kind, land, relief, o, ex, scale, S = null, far
     if (relief) { for (const k of ['uFxHgt', 'uFxRect', 'uFxSun', 'uFxR', 'uFxRA', 'uFxLitC', 'uFxShadeC', 'uFxFlat']) sh.uniforms[k] = U[k]; sh.uniforms.uFxAdd = { value: 0 }; }   // (a bright ground: no light added on top)
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec2 vXZ; varying vec3 vFxW;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvXZ = (modelMatrix * vec4(position, 1.)).xz; vFxW = (modelMatrix * vec4(transformed, 1.)).xyz;');
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
-varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${S && MAT && MAT.base && MAT.base.tex ? ' uniform sampler2D uRefl; uniform mat4 uReflM; uniform float uReflK; uniform sampler2D uSlateC, uSlateN, uSlateR, uBuilt, uTrees, uYearW, uYearT, uYearC, uGreen, uBandC0, uBandC1; uniform float uGreenOn, uBandHi[6], uBandY; uniform vec3 uTodayK; uniform vec4 uPool, uGeoT; vec3 slateN_ = vec3(0., 0., 1.); float slateR_ = .7;' : ''}${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${town ? `
+varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${S && MAT && MAT.base && MAT.base.tex ? ' uniform sampler2D uRefl; uniform mat4 uReflM; uniform float uReflK; uniform vec2 uReflD; uniform sampler2D uSlateC, uSlateN, uSlateR, uBuilt, uTrees, uYearW, uYearT, uYearC, uGreen, uBandC0, uBandC1; uniform float uGreenOn, uBandHi[6], uBandY; uniform vec3 uTodayK; uniform vec4 uPool, uGeoT; vec3 slateN_ = vec3(0., 0., 1.); float slateR_ = .7;' : ''}${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${town ? `
 uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''}; uniform float uHideT[${H}], uHideG[${H}];
 float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv)${H3 ? ', h3 = texture2D(uHide3, uv)' : ''};
   float hm[${H}]; hm[0] = h1.r; hm[1] = h1.g; hm[2] = h1.b; hm[3] = h1.a; hm[4] = h2.r; hm[5] = h2.g; hm[6] = h2.b; hm[7] = h2.a;${H3 ? ' hm[8] = h3.r; hm[9] = h3.g; hm[10] = h3.b; hm[11] = h3.a;' : ''}
@@ -464,8 +464,13 @@ float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv
     float tw_ = ${TS_GLSL()};   // (today's water: its own gloss, the sky in it)
     outgoingLight = mix(outgoingLight, pow(vec3(${G_[2].map(x => x.toFixed(3)).join(', ')}), vec3(2.2)), wMask * tw_ * (${G_[0].toFixed(2)} + ${G_[1].toFixed(2)} * pow(1. - cv_, 3.)));
     if (uReflK > 0. && wMask * tw_ > .01) { vec4 rc_ = uReflM * vec4(vFxW, 1.); vec2 ru_ = rc_.xy / rc_.w + (vec2(fxLn(m_ / 5.), fxLn(m_ / 5. + 3.7)) - .5) * vec2(.006, .014);   // (the banks and towers mirrored, broken by the ripples, in the water's own hue: the sky's blue in it turns turquoise)
-      vec3 rf0_ = texture2D(uRefl, ru_).rgb, rf_ = mix(vec3(dot(rf0_, vec3(.2126, .7152, .0722))), rf0_, .3);
-      outgoingLight = mix(outgoingLight, mix(rf_ * diffuseColor.rgb / max(dot(diffuseColor.rgb, vec3(.2126, .7152, .0722)), .05) * .8, rf0_, ${((todayL().water.refl || [])[2] || 0).toFixed(2)}), wMask * tw_ * uReflK * (${(todayL().water.refl || [0, 0])[0].toFixed(2)} + ${(todayL().water.refl || [0, 0])[1].toFixed(2)} * pow(1. - cv_, 2.))); }`)(todayL().water.gloss) : ''} }
+      // the reflected scene in its own colours, softened and a shade darker, never brighter than the water round it (no bright
+      // bars where a pale wall is mirrored); faded out toward the edges of the reflection's picture and with distance, where its
+      // picture holds nothing reliable (no patches cut off)
+      vec3 rf_ = mix(vec3(dot(texture2D(uRefl, ru_).rgb, vec3(.2126, .7152, .0722))), texture2D(uRefl, ru_).rgb, .7) * .78;
+      float lw_ = dot(outgoingLight, vec3(.2126, .7152, .0722)), lr_ = dot(rf_, vec3(.2126, .7152, .0722)); rf_ *= min(1., lw_ / max(lr_, 1e-4));
+      vec2 eu_ = min(ru_, 1. - ru_); float fe_ = smoothstep(0., .08, min(eu_.x, eu_.y)) * (1. - smoothstep(uReflD.x, uReflD.y, length(cameraPosition - vFxW)));
+      outgoingLight = mix(outgoingLight, rf_, fe_ * wMask * tw_ * uReflK * (${(todayL().water.refl || [0, 0])[0].toFixed(2)} + ${(todayL().water.refl || [0, 0])[1].toFixed(2)} * pow(1. - cv_, 2.))); }`)(todayL().water.gloss) : ''} }
 ` : ''}#include <opaque_fragment>`);
   };
   m.customProgramCacheKey = () => 'mini-land' + (relief ? ' fx' : '') + (o ? ' land' : '') + (S ? ' film' : '') + (then ? ' then' : '') + (far ? ' far' : '') + (fu ? ' pall' : '') + (town ? ' town' : '') + (o && o.meadow ? ' meadow' : '') + (o && o.garden ? ' garden' : '');
@@ -935,7 +940,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   const RF = film && !FX && MAT && MAT.todayLight && todayL().water && todayL().water.refl ? { rt: new THREE.WebGLRenderTarget(4, 4, { type: THREE.HalfFloatType }), cam: new THREE.PerspectiveCamera(),
     n: new THREE.Vector3(0, 1, 0), p0: new THREE.Vector3(), cp: new THREE.Vector3(), rot: new THREE.Matrix4(), v: new THREE.Vector3(), lk: new THREE.Vector3(), pl: new THREE.Plane(), c4: new THREE.Vector4(), q: new THREE.Vector4() } : null;
   function reflect(target) {
-    const L_ = todayL(), k_ = L_.all ? 1 : TODAY_K.value.y * (1 - THREE.MathUtils.smoothstep(TODAY_K.value.z, .3, .6)); REFL.K.value = k_; if (k_ < .002) return;
+    const L_ = todayL(), k_ = L_.all ? 1 : TODAY_K.value.y * (1 - THREE.MathUtils.smoothstep(TODAY_K.value.z, .3, .6)); REFL.K.value = k_; if (k_ < .002) return; REFL.D.value.set(camera.position.distanceTo(target) * 1.6, camera.position.distanceTo(target) * 4);   // (the reflection gone by four times the shot's distance)
     const W_ = Math.max(4, Math.round(size.x / renderer.getPixelRatio() / 4)), H_ = Math.max(4, Math.round(size.y / renderer.getPixelRatio() / 4)); if (RF.rt.width !== W_ || RF.rt.height !== H_) RF.rt.setSize(W_, H_);
     const { n, p0, cp, rot, v, lk, pl, c4, q } = RF, rc = RF.cam; p0.set(target.x, S.ground(target.x, target.z), target.z);
     camera.updateMatrixWorld(); cp.setFromMatrixPosition(camera.matrixWorld); rot.extractRotation(camera.matrixWorld);
@@ -1084,7 +1089,7 @@ let SLATE_MAPS = null;
 function slateMaps() {
   if (SLATE_MAPS) return SLATE_MAPS; const L_ = new THREE.TextureLoader(), dir = new URL(`./tex/${MAT.base.tex}/`, import.meta.url).href;
   const t = (f, srgb) => { const x = L_.load(dir + f); x.wrapS = x.wrapT = THREE.RepeatWrapping; x.anisotropy = 8; if (srgb) x.colorSpace = THREE.SRGBColorSpace; return x; };
-  return SLATE_MAPS = { uRefl: REFL.T, uReflM: REFL.M, uReflK: REFL.K, uBandC0: BAND_C[0], uBandC1: BAND_C[1], uBandHi: BAND_HI, uBandY: BAND_Y, uGreen: GREEN, uGreenOn: GREEN_ON, uYearW: YEAR_W, uYearT: YEAR_T, uYearC: YEAR_C, uTodayK: TODAY_K, uGeoT: GEO_T, uBuilt: BUILT, uTrees: TREES, uPool: POOL, uSlateC: { value: t('Diffuse.jpg', true) }, uSlateN: { value: t('nor_gl.jpg') }, uSlateR: { value: t('Rough.jpg') } };
+  return SLATE_MAPS = { uRefl: REFL.T, uReflM: REFL.M, uReflK: REFL.K, uReflD: REFL.D, uBandC0: BAND_C[0], uBandC1: BAND_C[1], uBandHi: BAND_HI, uBandY: BAND_Y, uGreen: GREEN, uGreenOn: GREEN_ON, uYearW: YEAR_W, uYearT: YEAR_T, uYearC: YEAR_C, uTodayK: TODAY_K, uGeoT: GEO_T, uBuilt: BUILT, uTrees: TREES, uPool: POOL, uSlateC: { value: t('Diffuse.jpg', true) }, uSlateN: { value: t('nor_gl.jpg') }, uSlateR: { value: t('Rough.jpg') } };
 }
 // a material's base under the model (FILM_PIC.looks: maquette, clay), in place of the painted land: m_ the metres, vFxW the world
 function baseGLSL(B, scale, town = false, far = false, then = false) {   // (then: the film's water as it was, studio.js wThen)
