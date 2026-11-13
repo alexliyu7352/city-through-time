@@ -1,10 +1,12 @@
 """Sentinel-2 true-colour mosaic under a city's plate, for the "today, from above" plate texture.
 usage: python -I pipeline/satellite.py <city_dir> [--from 2025-04-01 --to 2025-10-31 --cloud 5]
-Finds the least-cloudy L2A scenes per MGRS tile through Earth Search (STAC, no login), reads only the window of the city's area
+Finds the least-cloudy L2A scenes per MGRS tile through Earth Search (STAC, no login), fills gaps with other matching scenes,
+and stops before writing if any pixels remain uncovered. Reads only the window of the city's area
 (the lon/lat box around the plate, geo.Frame.area) from each TCI cloud-optimised GeoTIFF on AWS, reprojects to the city's UTM frame at 10 m, mosaics and writes data/satellite.png
 (+ data/satellite.json with scene ids, dates, cloud cover). Licence: Copernicus Sentinel data, free to use with attribution
 ("Contains modified Copernicus Sentinel data [year]")."""
 import json, os, sys, urllib.request
+from datetime import date
 import numpy as np, yaml
 import rasterio
 from rasterio.warp import reproject, Resampling
@@ -36,13 +38,22 @@ best_date = max(dates, key=lambda d: (len(dates[d]), d))
 for f in feats:
     if f['properties']['datetime'][:10] == best_date: by_tile[f['properties']['grid:code']] = f
 print('tiles:', {t: (f['id'], round(f['properties']['eo:cloud_cover'], 2)) for t, f in by_tile.items()})
+# A scene may cover only part of its MGRS tile (different orbital swaths share the grid code). Keep the preferred mosaic,
+# then fill only its gaps, preferring nearby dates and lower cloud cover. A tile code alone does not establish coverage.
+primary = list(by_tile.values()); primary_ids = {f['id'] for f in primary}
+day = date.fromisoformat(best_date)
+fallback = sorted((f for f in feats if f['id'] not in primary_ids),
+                  key=lambda f: (abs((date.fromisoformat(f['properties']['datetime'][:10]) - day).days), f['properties'].get('eo:cloud_cover', 100)))
 
 RES = 10.0
 W = int(round((F.x1 - F.x0) / RES)); H = int(round((F.y1 - F.y0) / RES))
 dst_transform = rasterio.transform.from_origin(F.x0, F.y1, RES, RES)
 mosaic = np.zeros((3, H, W), np.uint8); filled = np.zeros((H, W), bool)
 os.environ.setdefault('AWS_NO_SIGN_REQUEST', 'YES')
-for t, f in by_tile.items():
+used = []
+for f in primary + fallback:
+    if filled.all(): break
+    t = f['properties'].get('grid:code')
     href = f['assets']['visual']['href']
     with rasterio.open(href) as src:
         # the area in the scene's CRS
@@ -58,10 +69,18 @@ for t, f in by_tile.items():
     has = out.max(0) > 0
     put = has & ~filled
     mosaic[:, put] = out[:, put]; filled |= put
+    if put.any(): used.append(f)
     print(f'{t}: {f["id"]} window {int(win.width)}x{int(win.height)} -> filled {filled.mean() * 100:.1f}%')
+if not filled.all():
+    sys.exit(f'satellite: {filled.mean() * 100:.2f}% coverage; {(~filled).sum()} pixels remain uncovered after {len(primary) + len(fallback)} matching scenes. '
+             'Widen --from/--to or raise --cloud; existing output files were not changed.')
 img = Image.fromarray(np.moveaxis(mosaic, 0, -1), 'RGB')
 os.makedirs(os.path.join(D, 'build', 'data'), exist_ok=True)   # (pipeline/layout.py)
 img.save(os.path.join(D, 'build', 'data', 'satellite.png'))
-json.dump({'scenes': {t: {'id': f['id'], 'date': f['properties']['datetime'][:10], 'cloud': f['properties']['eo:cloud_cover']} for t, f in by_tile.items()},
-           'res_m': RES, 'size': [W, H], 'credit': f'Contains modified Copernicus Sentinel data {best_date[:4]}'}, open(os.path.join(D, 'build', 'data', 'satellite.json'), 'w'), indent=1)
+scene = lambda f: {'id': f['id'], 'date': f['properties']['datetime'][:10], 'cloud': f['properties']['eo:cloud_cover']}
+years = ', '.join(sorted({f['properties']['datetime'][:4] for f in used}))
+json.dump({'scenes': {f['properties'].get('grid:code'): scene(f) for f in used if f['id'] in primary_ids},
+           'fill_scenes': [{'tile': f['properties'].get('grid:code'), **scene(f)} for f in used if f['id'] not in primary_ids],
+           'coverage_percent': float(filled.mean() * 100),
+           'res_m': RES, 'size': [W, H], 'credit': f'Contains modified Copernicus Sentinel data {years}'}, open(os.path.join(D, 'build', 'data', 'satellite.json'), 'w'), indent=1)
 print('wrote data/satellite.png', W, 'x', H, 'filled', f'{filled.mean() * 100:.1f}%')
