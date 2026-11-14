@@ -1318,7 +1318,8 @@ function baseGLSL(B, scale, town = false, far = false, then = false) {   // (the
       // stone, the water meeting it directly (the water map's own ramp a texel of some 7 m wide: these by the distance to the water)
       if (bkT_ > .01 && wMask < .99) { vec2 op_ = vec2(${(TL.bank.pw * scale).toExponential(4)}) / uPlateM, oc_ = vec2(${(TL.bank.w * scale).toExponential(4)}) / uPlateM, uv_ = vXZ / uPlateM + .5; float bp_ = 0., bc_ = 0.;
         for (int i = 0; i < 8; i++) { float a_ = float(i) * .7854; vec2 e_ = vec2(cos(a_), sin(a_)); bp_ = max(bp_, ${wAt('uv_ + op_ * e_')}); bc_ = max(bc_, ${wAt('uv_ + oc_ * e_')}); }
-        bkP_ = bkT_ * smoothstep(.35, .65, bp_) * (1. - wMask); bkC_ = bkT_ * smoothstep(.35, .65, bc_) * (1. - wMask); }` : ''}
+        float ci_ = smoothstep(.2, .6, tk_);   // (inside today's urban extent only: a village's or the country's banks stay as they are)
+        bkP_ = ci_ * bkT_ * smoothstep(.35, .65, bp_) * (1. - wMask); bkC_ = ci_ * bkT_ * smoothstep(.35, .65, bc_) * (1. - wMask) * (1. - smoothstep(.5, 1., length(fwidth(m_)) / ${TL.bank.w.toFixed(2)})); }` : ''}   // (the coping gone as it shrinks under a pixel: no flickering line afar)
       float sv_ = .55 * smoothstep(.15, .38, yc4_.g) + .45 * smoothstep(.6, .85, yc4_.g);   // (a street here: the finer ones at half, the arterials whole)
       vec3 pl_ = pow(${v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - .28 * st_);   // (the plaster; today's streets fine lines a shade darker in it, the arterials wider and darker)${TL && TL.board ? `
       { vec3 bd_ = pow(${v3(TL.board)}, vec3(2.2)) * (.97 + .035 * fxLn(m_ / 1.1) + .02 * fxLn(m_ / 6.));   // today's board: a honed slate at its grey, its grain the material's own (no cleft, no cracks)${TL.pave ? `
