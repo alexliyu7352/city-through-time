@@ -133,7 +133,11 @@ export async function buildTodayFootprints(M, sidecar, options = {}) {
       records.push([r.bi,c.h,c.rings,c.base]); parents.push({ pi:r.pi, centre, height_m:c.height_m });
     }
   }
-  return { geometry: cityGeometry(M, { ...options, records, parents }), skipBi, skipCentres };
+  // the reviewed parents kept as the data drew them (the sidecar's protect_bi: named and civic buildings): their centres, as the
+  // replaced parents' are found, so the colour look leaves their silhouettes alone (mini.js massing)
+  const pb = new Set(sidecar.parameters?.protect_bi || []), protectCentres = [];
+  if (pb.size) M.p.forEach(([bi, , rings]) => { if (pb.has(bi)) protectCentres.push([0, 1].map(k => rings[0].reduce((a, p) => a + p[k], 0) / rings[0].length)); });
+  return { geometry: cityGeometry(M, { ...options, records, parents }), skipBi, skipCentres, protectCentres };
 }
 
 export function makeStudio(W, H, M, PAL, opts = {}) {
