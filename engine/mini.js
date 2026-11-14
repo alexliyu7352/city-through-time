@@ -49,6 +49,9 @@ let SKY_C0 = null, GLB_DONE = false;
 const SUN_DIR = { value: new THREE.Vector3(0, 1, 0) }, SUN_COL = { value: new THREE.Color() };   // (the sun's direction and light, for the water's sparkle)
 const ROOF_PX = { value: 1 };   // (the model's metres a picture pixel spans at unit depth: the rims' fade, roofsMesh)
 const REFL = { T: { value: null }, M: { value: new THREE.Matrix4() }, K: { value: 0 }, D: { value: new THREE.Vector2(1e9, 2e9) } }, GLASS_SKY = { value: new THREE.Color(.80, .86, .92) }, GLASS_K = { value: 1 }, DOME_R = { value: 25 };   // (GLASS_K: how much of it; DOME_R: how fast the dome turns from its horizon to its zenith)   // (GLASS_SKY: the sky glass reflects, the dome's horizon: gold at the golden hour)   // (today's water's reflection: its picture, its texture matrix, on)
+// a landmark's own round plaza (a glb entry's plaza, todayLight roundPlaza): up to four, P: its centre x z (model units), its lawn
+// ring's inner and outer radius m; Q: its inner disc's radius, its outer radius m, -, on
+const RPLAZA = { P: { value: [0, 1, 2, 3].map(() => new THREE.Vector4()) }, Q: { value: [0, 1, 2, 3].map(() => new THREE.Vector4()) } };
 const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }, GEO_T = { value: new THREE.Vector4(0, 0, -1, 0) };   // (GEO_T: the crowns drawn as geometry, x z their centre, z their radius: beyond it the ground carries the groves' tone)
 // the built area of the period cities standing (a material's ground_in: its plaster inside it, the table beyond): their buildings'
 // centres drawn over the plate, each `reach` m round, softened; made again when the cities standing change (builtMask)
@@ -263,16 +266,22 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // which, whole, its height m, its largest footprint m2]); optionally a light paving where the fabric is open, pave: [colour, density from
       // which asphalt, whole], e.g. [[.64, .62, .61], .05, .18]: round towers in their superblocks), its streets asphalt by
       // class (street: their colour, their share), squares and quays paved light
-      // (plaza: a light warm paving, not cream), a kerb line close (kerb), parks lawn in two greens (park); the water
+      // (plaza: a light warm paving, not cream; paving: [a slab m, its joint m, the joint's tone, the slabs' variation], its large
+      // slabs), a kerb line close (kerb), parks lawn in two greens (park), mown (lawn: [its mottle's strength, size m, its grain's
+      // strength, size m, a low border along its edge m, the border's tone]); a landmark's own round plaza (a glb entry's plaza,
+      // roundPlaza: [its paving, its inner disc's, its rings' spacing m, radial joints, a joint m, the joints' tone]); the streets
+      // as geometry with their materials (streets: see streetsMesh); the shade side of today's painted walls in their own paint, warmed
+      // by the sunlit ground (wallShade: [the sky light's own colour kept, times, its tint, the shade's saturation]: a pastel in shade still a pastel); the water
       // (water: the shallows along the banks, the deep, how far from the bank the deep begins in metres, its roughness (the sun's
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.36, 1.2, .92], groundFill: [.45, 3.6, 1.75, [.6, 1.75]], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: [.5, .2], parkTrees: [1, 1.1, [.6, .8, 1, 1.25, 1.5], [.47, .56]], bloom: [9, 0], dof: 1, band: 1,
+      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.36, 1.2, .92], wallShade: [1, 1.08, [1.04, 1, .93], 1.2], groundFill: [.45, 3.6, 1.75, [.6, 1.75]], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: [.5, .2], parkTrees: [1, 1.1, [.6, .8, 1, 1.25, 1.5], [.47, .56]], bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
-        far: [2.2, 6, .55, '#e2e8f0'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
-        board: [.355, .345, .335], lanes: [[.47, .44, .41], .16, .45, 40, 1500], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.535, .505, .48], kerb: [.86, .85, .82],
-        streets: { asphalt: '#505154', pavement: '#65625d', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.49, .575, .22], [.44, .525, .195]],   // (streets: geometry, streetsMesh; the raster's share 0)
+        far: [2.2, 6, .55, '#e2e8f0', [.85, 1.1]],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint; a raking shot's from and whole as shares of its frame's top edge's distance, whichever nearer: the top of the frame pale and cool as the paintings' are])
+        board: [.355, .345, .335], lanes: [[.47, .44, .41], .16, .45, 40, 1500], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.535, .505, .48], paving: [7, .4, .12, .06], kerb: [.86, .85, .82],
+        streets: { asphalt: '#505154', pavement: '#716c65', kerb: 2.5, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 }, grain: [.08, .8, .1, .05],
+          marks: { minW: 9, lane: 3.5, w: .45, dash: [6, 9], edge: 13, clear: 1.5, zebra: [1.5, 4, .9, .9], stop: .6, drive: 1, c: '#f4f2ec', k: .09, kerb: [.4, .4, '#cdc8bf', .45, .6], far: [.9, 2.5] } }, park: [[.49, .575, .22], [.44, .525, .195]], lawn: [.16, 2.5, .08, .7, 1.2, -.18], roundPlaza: [[.40, .39, .38], [.50, .49, .47], 7, 48, .35, .25],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.32, .61, .61], deep: [.22, .52, .52], reach: 15, rough: .45, ripple: .08, gloss: [.03, .4, [.62, .86, .88]], refl: [.2, .3], sparkle: [0, 2.5, .8, .58] },
         bank: { stone: [.74, .70, .66], w: 2.5, prom: [.50, .48, .47], pw: 14, line: .3 },
         trees: [[.38, .53, .23], [.45, .59, .26], [.31, .46, .21], [.26, .40, .22]],
@@ -464,7 +473,7 @@ function landMaterial(U, PW, PD, kind, land, relief, o, ex, scale, S = null, far
     if (relief) { for (const k of ['uFxHgt', 'uFxRect', 'uFxSun', 'uFxR', 'uFxRA', 'uFxLitC', 'uFxShadeC', 'uFxFlat']) sh.uniforms[k] = U[k]; sh.uniforms.uFxAdd = { value: 0 }; }   // (a bright ground: no light added on top)
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec2 vXZ; varying vec3 vFxW;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvXZ = (modelMatrix * vec4(position, 1.)).xz; vFxW = (modelMatrix * vec4(transformed, 1.)).xyz;');
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
-varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${S && MAT && MAT.base && MAT.base.tex ? ' uniform vec3 uSunDir, uSunCol; uniform sampler2D uRefl; uniform mat4 uReflM; uniform float uReflK; uniform vec2 uReflD; uniform sampler2D uSlateC, uSlateN, uSlateR, uBuilt, uTrees, uYearW, uYearT, uYearC, uLanes, uGreen, uBandC0, uBandC1; uniform float uGreenOn, uBandHi[6], uBandY; uniform vec3 uTodayK; uniform vec4 uPool, uGeoT; vec3 slateN_ = vec3(0., 0., 1.); float slateR_ = .7, todayG_ = 0.;' : ''}${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${town ? `
+varying vec2 vXZ; varying vec3 vFxW; uniform sampler2D uWaterM; uniform vec2 uPlateM; uniform float uKind;${S && MAT && MAT.base && MAT.base.tex ? ' uniform vec3 uSunDir, uSunCol; uniform sampler2D uRefl; uniform mat4 uReflM; uniform float uReflK; uniform vec2 uReflD; uniform sampler2D uSlateC, uSlateN, uSlateR, uBuilt, uTrees, uYearW, uYearT, uYearC, uLanes, uGreen, uBandC0, uBandC1; uniform float uGreenOn, uBandHi[6], uBandY; uniform vec3 uTodayK; uniform vec4 uPool, uGeoT, uRp[4], uRq[4]; vec3 slateN_ = vec3(0., 0., 1.); float slateR_ = .7, todayG_ = 0.;' : ''}${fu ? ' uniform vec2 uPallC; uniform float uPallR, uPallK;' : ''}${town ? `
 uniform sampler2D uHide, uHide2${H3 ? ', uHide3' : ''}; uniform float uHideT[${H}], uHideG[${H}];
 float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv)${H3 ? ', h3 = texture2D(uHide3, uv)' : ''};
   float hm[${H}]; hm[0] = h1.r; hm[1] = h1.g; hm[2] = h1.b; hm[3] = h1.a; hm[4] = h2.r; hm[5] = h2.g; hm[6] = h2.b; hm[7] = h2.a;${H3 ? ' hm[8] = h3.r; hm[9] = h3.g; hm[10] = h3.b; hm[11] = h3.a;' : ''}
@@ -1097,24 +1106,84 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // widths by class }): a ribbon along every street and arterial (data/streets.json, lines.json roads) at its class's width, an
   // asphalt carriageway on a lighter pavement band, crisp at any range (the ground's raster of them, some 7 m a texel, frays close);
   // shown where today's city stands and is the subject, as the urban extent's year reaches it (YEAR_T)
+  // The materials (each fine pattern box-filtered by its own coordinate's pixel footprint, so it averages to its mean as it shrinks
+  // and never crawls): grain: [the asphalt's fine grain's strength, its size m, its wear's (lighter and darker patches some 9 to 23 m)
+  // strength, the pavement's grain's strength]; marks: the road markings, light paint at k of its colour c, w m wide (a model's,
+  // wider than life, to read): a carriageway from minW m wide carries them, its lanes some lane m wide; the centre line solid
+  // from four lanes, dashed below (dash: [paint, gap] m), lane lines dashed, edge lines from edge m wide; half of a dual
+  // carriageway its median line; at a junction of two marked ways a crossing (zebra: [from the junction m, its depth, bar, gap])
+  // and a stop line stop m wide on the lanes approaching it (drive: 1 right-hand traffic, -1 left); kerb: [its lit top m, the
+  // gutter's shade m, the top's colour, the shade's strength, the top's], along every carriageway's edge, the shade where the kerb's face
+  // turns from the sun; far: [from, whole] m a pixel, the paint toward its mean share of the carriageway (no lattice of
+  // single-pixel lines afar)
   let STREET_MESH = null;
   const streetsMesh = () => { const T_ = todayL() && todayL().streets; if (STREET_MESH || !T_ || !YEAR_T.value || !STREETS.list) return;
-    const W = T_.w; STREET_MESH = [0, 1].map(layer => { const pos = [], idx = [], nrm = [], mid = [];
-      const add = (pts, cls) => { const hw = ((W[(cls || '').replace('_link', '')] || W.other) / 2 + (layer ? 0 : T_.kerb)) * scale;
+    const W = T_.w, MK = T_.marks, GR = T_.grain, cw = c => W[(c || '').replace('_link', '')] || W.other, RD = [...STREETS.list, ...(roads || [])].map(r => ({ pts: r.pts, w: cw(r.cls), link: /_link$/.test(r.cls || '') }));
+    const NET = MK ? streetNet(RD, T_.kerb, MK, scale) : null;
+    STREET_MESH = (MK ? [0, 1, 2] : [0, 1]).map(layer => { const pos = [], idx = [], nrm = [], mid = [], rd = [], jn = [], sg = [], nr = [];
+      (layer === 2 ? NET.R : RD).forEach((r, ri) => { const pts = r.pts, hw = (r.w / 2 + (layer === 1 ? 0 : T_.kerb)) * scale, A_ = layer === 2 ? NET.at(ri) : null;   // (the markings' ways with their crossings as vertices)
         for (let k = 1; k < pts.length; k++) { const [ax, az] = pts[k - 1], [bx, bz] = pts[k], l = Math.hypot(bx - ax, bz - az); if (l < 1e-9) continue;
           if (wet(ax, az) || wet(bx, bz) || wet((ax + bx) / 2, (az + bz) / 2)) continue;   // (none over the water: a tunnel under the river, a bridge above it, are not paving on its surface)
           const ux = (bx - ax) / l, uz = (bz - az) / l, nx = -uz * hw, nz = ux * hw, ex = ux * hw * .6, ez = uz * hw * .6, i0 = pos.length / 3;   // (each end carried on: the joints closed)
-          for (const [x, z] of [[ax - ex + nx, az - ez + nz], [bx + ex + nx, bz + ez + nz], [bx + ex - nx, bz + ez - nz], [ax - ex - nx, az - ez - nz]]) { pos.push(x, S.ground(x, z) + (layer ? .45 : .3) * scale, z); nrm.push(0, 1, 0); mid.push((ax + bx) / 2, (az + bz) / 2); }
-          idx.push(i0, i0 + 1, i0 + 2, i0, i0 + 2, i0 + 3); } };
-      for (const r of STREETS.list) add(r.pts, r.cls); for (const r of roads || []) add(r.pts, r.cls);
+          for (const [x, z] of [[ax - ex + nx, az - ez + nz], [bx + ex + nx, bz + ez + nz], [bx + ex - nx, bz + ez - nz], [ax - ex - nx, az - ez - nz]]) { pos.push(x, S.ground(x, z) + [.3, .45, .5][layer] * scale, z); nrm.push(0, 1, 0); mid.push((ax + bx) / 2, (az + bz) / 2); }
+          idx.push(i0, i0 + 1, i0 + 2, i0, i0 + 2, i0 + 3);
+          if (A_) { const L_ = l / scale, s0 = A_.s[k - 1], e_ = hw * .6 / scale, h_ = hw / scale, jb = A_.J.filter(j => j[0] <= k - 1).pop(), jf = A_.J.find(j => j[0] >= k), ca = NET.clip(ri, ax, az, ux, uz), cb = NET.clip(ri, bx, bz, ux, uz);   // (the junctions behind and ahead; the parallel ways at each end)
+            for (const [t, c, kk] of [[-e_, h_, ca], [L_ + e_, h_, cb], [L_ + e_, -h_, cb], [-e_, -h_, ca]]) { const s = s0 + t;
+              rd.push(s, c, r.w / 2, r.link ? 0 : Math.floor(r.w / MK.lane)); jn.push(jb ? s - jb[1] - jb[2] : 1e4, jf ? jf[1] - jf[2] - s : 1e4, jb ? jb[3] : 0, jf ? jf[3] : 0); sg.push(t, L_, kk[0], kk[1]); nr.push(-uz, ux); } } } });
       const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3)); g.setAttribute('aMid', new THREE.Float32BufferAttribute(mid, 2)); g.setIndex(idx);
-      const m = new THREE.MeshStandardMaterial({ color: layer ? T_.asphalt : T_.pavement, roughness: .95, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: layer ? -4 : -2, polygonOffsetUnits: layer ? -4 : -2 });
-      m.onBeforeCompile = sh => { Object.assign(sh.uniforms, { uTodayK: TODAY_K, uYearT: YEAR_T, uPlateS: { value: new THREE.Vector2(PW, PD) } });
+      if (layer === 2) { g.setAttribute('aRd', new THREE.Float32BufferAttribute(rd, 4)); g.setAttribute('aJn', new THREE.Float32BufferAttribute(jn, 4)); g.setAttribute('aSg', new THREE.Float32BufferAttribute(sg, 4)); g.setAttribute('aNr', new THREE.Float32BufferAttribute(nr, 2)); }
+      const m = new THREE.MeshStandardMaterial({ color: [T_.pavement, T_.asphalt, '#ffffff'][layer], roughness: .95, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: [-2, -4, -6][layer], polygonOffsetUnits: [-2, -4, -6][layer], ...(layer === 2 ? { transparent: true, depthWrite: false } : {}) });
+      m.onBeforeCompile = sh => { Object.assign(sh.uniforms, { uTodayK: TODAY_K, uYearT: YEAR_T, uPlateS: { value: new THREE.Vector2(PW, PD) }, uSunDir: SUN_DIR });
         const GF_ = todayL().groundFill; if (GF_) sh.fragmentShader = sh.fragmentShader.replace('#include <lights_fragment_end>', `#include <lights_fragment_end>
   { vec3 id_ = reflectedLight.indirectDiffuse; reflectedLight.indirectDiffuse = mix(vec3(dot(id_, vec3(.2126, .7152, .0722))), id_, ${GF_[0].toFixed(2)}) * ${GF_[1].toFixed(2)}; }`);   // (the ground's sky light, as the plate's)
-        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform vec3 uTodayK; uniform sampler2D uYearT; uniform vec2 uPlateS; attribute vec2 aMid;').replace('#include <begin_vertex>', `#include <begin_vertex>
-  { float yt_ = texture2D(uYearT, aMid / uPlateS + .5).r * 255.; if (uTodayK.y < .5 || uTodayK.z > .3 || yt_ < .5 || yt_ > uTodayK.x - 1899. + .5) transformed = vec3(aMid.x, -1., aMid.y); }`); };   // (by its segment's middle: a segment goes whole, its four corners to one point, never stretched to the origin)
-      m.customProgramCacheKey = () => 'mini-streets';
+        sh.vertexShader = sh.vertexShader.replace('#include <common>', `#include <common>
+uniform vec3 uTodayK; uniform sampler2D uYearT; uniform vec2 uPlateS; attribute vec2 aMid; varying vec2 vWm;${layer === 2 ? ' attribute vec4 aRd, aJn, aSg; attribute vec2 aNr; varying vec4 vRd, vJn, vSg; varying vec2 vNr;' : ''}`).replace('#include <begin_vertex>', `#include <begin_vertex>
+  vWm = (modelMatrix * vec4(transformed, 1.)).xz / ${scale.toExponential(4)};${layer === 2 ? ' vRd = aRd; vJn = aJn; vSg = aSg; vNr = aNr;' : ''}   // (metres)
+  { float yt_ = texture2D(uYearT, aMid / uPlateS + .5).r * 255.; if (uTodayK.y < .5 || uTodayK.z > .3 || yt_ < .5 || yt_ > uTodayK.x - 1899. + .5) transformed = vec3(aMid.x, -1., aMid.y); }`);   // (by its segment's middle: a segment goes whole, its four corners to one point, never stretched to the origin)
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
+uniform vec3 uSunDir; varying vec2 vWm;${layer === 2 ? ' varying vec4 vRd, vJn, vSg; varying vec2 vNr;' : ''}
+float sbH(vec2 p){ vec3 q = fract(vec3(p.xyx) * .1031); q += dot(q, q.yzx + 33.33); return fract((q.x + q.y) * q.z); }
+float sbN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3. - 2. * f); return mix(mix(sbH(i), sbH(i + vec2(1, 0)), f.x), mix(sbH(i + vec2(0, 1)), sbH(i + vec2(1, 1)), f.x), f.y); }
+float sbBox(float x, float h, float f){ return clamp((x + h) / f + .5, 0., 1.) - clamp((x - h) / f + .5, 0., 1.); }   // (a band |x| < h: its share of a pixel f wide)
+float sbDashI(float x, float on, float per){ return floor(x / per) * on + min(mod(x, per), on); }
+float sbDash(float s, float on, float per, float f){ return (sbDashI(s + f * .5, on, per) - sbDashI(s - f * .5, on, per)) / f; }   // (dashes on of every per: their share of a pixel f long)
+vec4 sbOver(vec4 d, vec3 c, float a){ return vec4(c * a + d.rgb * (1. - a), a + d.a * (1. - a)); }`);
+        if (GR && layer < 2) sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+  { float px_ = length(fwidth(vWm));   // the ${layer ? 'asphalt' : 'pavement'}'s grain${layer ? ' and its wear' : ''}, each gone as a pixel outgrows it
+    diffuseColor.rgb *= 1. + ${(+GR[layer ? 0 : 3]).toFixed(3)} * 2. * (sbN(vWm / ${(+GR[1]).toFixed(2)}) - .5) * (1. - smoothstep(.3, 1., px_ / ${(+GR[1]).toFixed(2)}))${layer ? `
+      + ${(+GR[2]).toFixed(3)} * 2. * (.6 * sbN(vWm / 9. + 3.7) + .4 * sbN(vWm / 23. + 8.1) - .5) * (1. - smoothstep(4., 12., px_))` : ''}; }`);
+        if (layer === 2) { const v3_ = c => `vec3(${new THREE.Color(c).toArray().map(v => v.toFixed(4)).join(', ')})`, f_ = v => (+v).toFixed(3), Z = MK.zebra, KB = MK.kerb;
+          sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+  { float x_ = vRd.y, s_ = vRd.x, hw_ = vRd.z, n_ = vRd.w, fx_ = max(fwidth(x_), 1e-4), fs_ = max(fwidth(s_), 1e-4), fj_ = max(fwidth(vJn.y), 1e-4);   // a way's markings and kerbs (todayLight streets marks)
+    if (vSg.x < 0. || vSg.x > vSg.y) discard;   // (each segment its own stretch: a bend's overlap painted once)
+    float cl_ = vSg.z, cr_ = vSg.w, el_ = -min(hw_, cl_), er_ = min(hw_, cr_), db_ = vJn.x, df_ = vJn.y, out_ = step(0., min(db_, df_)) * step(0., cl_);   // (out_: off the junctions, not under a wider way)
+    bool one_ = cl_ < hw_ - .5 || cr_ < hw_ - .5;   // (half of a dual carriageway: one way, its median on its clipped side)
+    float W2 = ${f_(MK.w / 2)}, mk_ = 0., sh_ = 0., kt_ = 0., in_ = sbBox(x_ - (el_ + er_) * .5, (er_ - el_) * .5, fx_), dash_ = sbDash(s_, ${f_(MK.dash[0])}, ${f_(MK.dash[0] + MK.dash[1])}, fs_);
+    float nl_ = one_ ? max(1., floor((er_ - el_) / ${f_(MK.lane)} + .2)) : max(1., floor(n_ * .5)), lw_ = one_ ? (er_ - el_) / nl_ : hw_ / nl_, xl_ = one_ ? x_ - el_ : abs(x_);
+    float k_ = floor(xl_ / lw_ + .5), share_ = 0.;
+    if (n_ >= 2. && hw_ * 2. >= ${f_(MK.minW)}) {
+      if (k_ >= 1. && k_ <= nl_ - 1.) mk_ = max(mk_, sbBox(xl_ - k_ * lw_, W2, fx_) * dash_);   // lane lines, dashed
+      if (!one_) mk_ = max(mk_, sbBox(x_, W2, fx_) * (n_ >= 4. ? 1. : dash_));   // the centre line
+      if (cr_ < hw_ - .5) mk_ = max(mk_, sbBox(x_ - er_ + W2 * 1.5, W2, fx_));   // a dual carriageway's median line (its other half's beside it: a double line)
+      if (cl_ < hw_ - .5) mk_ = max(mk_, sbBox(x_ - el_ - W2 * 1.5, W2, fx_));
+      if (hw_ * 2. >= ${f_(MK.edge)}) { if (cr_ >= hw_ - .5) mk_ = max(mk_, sbBox(x_ - hw_ + .6, W2, fx_)); if (cl_ >= hw_ - .5) mk_ = max(mk_, sbBox(x_ + hw_ - .6, W2, fx_)); }   // edge lines
+      share_ = (W2 * 2. * ((nl_ - 1.) * (one_ ? 1. : 2.) * ${f_(MK.dash[0] / (MK.dash[0] + MK.dash[1]))} + (one_ ? 1. : (n_ >= 4. ? 1. : ${f_(MK.dash[0] / (MK.dash[0] + MK.dash[1]))})) + (hw_ * 2. >= ${f_(MK.edge)} ? 2. : 0.))) / max(er_ - el_, 1.);   // (their mean share of the carriageway)
+      mk_ = mix(mk_, share_ * in_, smoothstep(${f_(MK.far[0])}, ${f_(MK.far[1])}, fx_));
+      float zx_ = in_ * sbDash(x_ - el_ - .3, ${f_(Z[2])}, ${f_(Z[2] + Z[3])}, fx_);   // crossings at junctions of two marked ways: bars along the way, across its carriageway
+      mk_ = max(mk_, zx_ * (step(.5, vJn.w) * step(0., db_) * sbBox(df_ - ${f_(Z[0] + Z[1] / 2)}, ${f_(Z[1] / 2)}, fj_) + step(.5, vJn.z) * step(0., df_) * sbBox(db_ - ${f_(Z[0] + Z[1] / 2)}, ${f_(Z[1] / 2)}, fj_)));
+      if (!one_) { float d_ = ${f_(MK.drive || 1)} * x_, so_ = ${f_(Z[0] + Z[1] + 1 + MK.stop / 2)};   // stop lines on the lanes approaching each junction
+        mk_ = max(mk_, sbBox(d_ - hw_ * .5, hw_ * .5 - .3, fx_) * step(.5, vJn.w) * step(0., db_) * sbBox(df_ - so_, ${f_(MK.stop / 2)}, fj_) + sbBox(d_ + hw_ * .5, hw_ * .5 - .3, fx_) * step(.5, vJn.z) * step(0., df_) * sbBox(db_ - so_, ${f_(MK.stop / 2)}, fj_)); }
+      mk_ *= out_; }
+    ${KB ? `{ float ax_ = abs(x_), sd_ = x_ > 0. ? step(hw_ - .5, cr_) : step(hw_ - .5, cl_), kn_ = step(0., min(db_, df_)) * sd_;   // the kerb along each edge (not where a parallel way's carriageway meets this one)
+      vec2 fc_ = -sign(x_) * vNr; float sl_ = dot(fc_, normalize(uSunDir.xz + 1e-5));   // (its face toward the road, and whether that face turns to the sun)
+      kt_ = kn_ * (sbBox(ax_ - hw_ - ${f_(KB[0] / 2)}, ${f_(KB[0] / 2)}, fx_) + max(sl_, 0.) * sbBox(ax_ - hw_ + ${f_(KB[1] / 4)}, ${f_(KB[1] / 4)}, fx_));   // (its lit top; its face when lit)
+      sh_ = kn_ * clamp(-sl_ * 1.5, 0., 1.) * sbBox(ax_ - hw_ + ${f_(KB[1] / 2)}, ${f_(KB[1] / 2)}, fx_);   // (the gutter in its shade)
+      float kf_ = smoothstep(${f_(KB[0])}, ${f_(KB[0] * 4)}, fx_); kt_ *= 1. - .5 * kf_; sh_ *= 1. - .5 * kf_; }` : ''}   // (afar softer: a fine line, not a hard one)
+    vec4 o_ = sbOver(vec4(0.), ${v3_(MK.c)}, mk_ * ${f_(MK.k)});${KB ? `
+    o_ = sbOver(o_, ${v3_(KB[2])}, min(kt_, 1.) * ${f_(KB[4] == null ? 1 : KB[4])}); o_ = sbOver(o_, vec3(.02), min(sh_, 1.) * ${f_(KB[3])});` : ''}
+    if (o_.a < .004) discard;
+    diffuseColor = vec4(o_.rgb / o_.a, o_.a); }`); } };
+      m.customProgramCacheKey = () => 'mini-streets ' + layer + (GR ? ' grain' : '');
       const mesh = new THREE.Mesh(g, m); mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; mesh.renderOrder = .5 + layer * .01; scene.add(mesh); return mesh; }); };
   const todayNow = () => {
       if (film && !S.fx && MAT && MAT.base && MAT.base.ground_in && cityMesh) { todayYears(cityMesh, S.PW, S.PD, MAT.base.ground_in.reachToday || 45, scale, roads, bands, grow ? (y, t) => { if (!(t > 0)) return y; const b = [...grow.bands].sort((p, q) => p.t - q.t).find(b => b.t + b.spread * .5 >= t); return b ? Math.max(y, b.hi - .5) : 1e4; } : null, todayL() && todayL().lanes ? [todayL().lanes[3], todayL().lanes[4] || 1e9] : 0);
@@ -1147,8 +1216,11 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     if (film && MAT && MAT.base && MAT.base.ground_in && dataDir) await greenData(dataDir);   // (a city's green and streets, before its first frame)
     todayNow(); if (film && MAT && MAT.roofs) roofsMesh(); if (film && MAT && dataDir) streetsMesh();
     { const on_ = TODAY_K.value.y > .5 && TODAY_K.value.z <= .3 && ROOF_ON.value > .5;   // (today's rooftops not drawn at all while today's city is not the subject: hundreds of thousands of instances folded to nothing in the shader still cost a period city's frame)
-      for (const m_ of [...(ROOF_MESH || []), ...(RIM_MESH ? [RIM_MESH] : [])]) m_.visible = on_; }
-    if (film && FILM_PIC.glb && !GLB_DONE) { GLB_DONE = true; for (const o of FILM_PIC.glb) { try { const r_ = await swap(o); console.log('glb', JSON.stringify(r_)); } catch (e) { console.error(`glb ${o.url}: ${e.message}`); } } }   // (FILM_PIC glb: detailed models in place of buildings, ?pic= for a still)
+      for (const m_ of [...(ROOF_MESH || []), ...(RIM_MESH ? [RIM_MESH] : [])]) m_.visible = on_;
+      for (const m_ of STREET_MESH || []) m_.visible = TODAY_K.value.y > .5 && TODAY_K.value.z <= .3; }   // (nor today's streets: their vertices folded away in a period city's frames, as the rooftops')
+    if (film && FILM_PIC.glb && !GLB_DONE) { GLB_DONE = true; for (const o of FILM_PIC.glb) { try { const r_ = await swap(o); console.log('glb', JSON.stringify(r_)); } catch (e) { console.error(`glb ${o.url}: ${e.message}`); } }
+      // (a glb entry's plaza: { r: [its inner disc's, its lawn ring's inner and outer, its paving's outer radius] m, at: [x, z] m from near }: the landmark's own round plaza, todayLight roundPlaza)
+      FILM_PIC.glb.filter(o => o.plaza && o.near).slice(0, 4).forEach((o, i) => { const r = o.plaza.r, at = o.plaza.at || [0, 0]; RPLAZA.P.value[i].set(o.near[0] + at[0] * scale, o.near[1] + at[1] * scale, r[1], r[2]); RPLAZA.Q.value[i].set(r[0], r[3], 0, 1); }); }   // (FILM_PIC glb: detailed models in place of buildings, ?pic= for a still)
     window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
     renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2; ROOF_PX.value = 2 / (camera.projectionMatrix.elements[5] * 1080) / scale;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     const up = E => E.mesh.visible && !E.mesh.userData.gone;   // (the film: a city gone may still show its foundations, without its detail)
@@ -1228,7 +1300,9 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         FP.vig.uniforms.uGrain.value = (L_.grain || 0) * ts_; FP.vig.uniforms.uFilmic.value = (L_.filmic || 0) * ts_;
         FP.dof.aper *= THREE.MathUtils.lerp(1, L_.dof ?? 1, ts_); FP.dof.band *= THREE.MathUtils.lerp(1, L_.band ?? 1, ts_);
         if (L_.haze) { fog.near = THREE.MathUtils.lerp(fog.near, d * L_.haze[0], ts_); fog.far = THREE.MathUtils.lerp(fog.far, d * L_.haze[1], ts_); }   // (today's haze as a fog)
-        const ua_ = FP.dof.coc.material.uniforms; if (ua_.uAir) { const A_ = L_.air; ua_.uAir.value.set(d * A_[0], d * A_[1], A_[2] * scale, ts_); ua_.uAirC.value.set(L_.dome ? L_.dome[0] : L_.fogC); const F_ = L_.far || [1, 2, 1, '#ffffff']; ua_.uAirF.value.set(d * F_[0], d * F_[1], F_[2], L_.far ? ts_ : 0); ua_.uAirFC.value.set(F_[3]); camera.updateMatrixWorld(); ua_.uAirIP.value.copy(camera.projectionMatrixInverse); ua_.uAirCW.value.copy(camera.matrixWorld);
+        const ua_ = FP.dof.coc.material.uniforms; if (ua_.uAir) { const A_ = L_.air; ua_.uAir.value.set(d * A_[0], d * A_[1], A_[2] * scale, ts_); ua_.uAirC.value.set(L_.dome ? L_.dome[0] : L_.fogC); const F_ = L_.far || [1, 2, 1, '#ffffff']; let f0_ = d * F_[0], f1_ = d * F_[1]; camera.updateMatrixWorld();
+          if (F_[4] && TODAY_K.value.y > .5 && TODAY_K.value.z < .3) { const r_ = new THREE.Vector3(0, 1, .5).unproject(camera).sub(camera.position).normalize(); if (r_.y < -.02) { const dt_ = (camera.position.y - target.y) / -r_.y; f0_ = Math.min(f0_, F_[4][0] * dt_); f1_ = Math.min(f1_, F_[4][1] * dt_); } }   // (far [4]: a raking shot of today's city whose frame ends on the city, not the sky, softens toward its own top edge's ground: from and whole by these shares of that distance, whichever is nearer; a period city's shots as they were)
+          ua_.uAirF.value.set(f0_, f1_, F_[2], L_.far ? ts_ : 0); ua_.uAirFC.value.set(F_[3]); camera.updateMatrixWorld(); ua_.uAirIP.value.copy(camera.projectionMatrixInverse); ua_.uAirCW.value.copy(camera.matrixWorld);
           fog.near = THREE.MathUtils.lerp(fog.near, 1e4, ts_); fog.far = THREE.MathUtils.lerp(fog.far, 2e4, ts_); }   // (today's air in the picture's depth (above): no fog)
         GLASS_SKY.value.setRGB(.80, .86, .92).lerp(new THREE.Color(L_.glassSky || '#e6edf4'), ts_); GLASS_K.value = THREE.MathUtils.lerp(1, L_.glassK ?? 1, ts_); DOME_R.value = L_.domeRate ?? 25;   // (glassSky, glassK: the sky in the glass; domeRate: the dome's blue, how soon above the horizon)
         if (domeT) { domeT.u.uSunC.value.set(L_.dome[2] || '#000000').multiplyScalar(ts_); domeT.u.uSunD.value.copy(sd);   // (dome[2]: the sun's glow on the sky, a low sun's)
@@ -1284,7 +1358,7 @@ let SLATE_MAPS = null;
 function slateMaps() {
   if (SLATE_MAPS) return SLATE_MAPS; const L_ = new THREE.TextureLoader(), dir = new URL(`./tex/${MAT.base.tex}/`, import.meta.url).href;
   const t = (f, srgb) => { const x = L_.load(dir + f); x.wrapS = x.wrapT = THREE.RepeatWrapping; x.anisotropy = 8; if (srgb) x.colorSpace = THREE.SRGBColorSpace; return x; };
-  return SLATE_MAPS = { uSunDir: SUN_DIR, uSunCol: SUN_COL, uRefl: REFL.T, uReflM: REFL.M, uReflK: REFL.K, uReflD: REFL.D, uBandC0: BAND_C[0], uBandC1: BAND_C[1], uBandHi: BAND_HI, uBandY: BAND_Y, uGreen: GREEN, uGreenOn: GREEN_ON, uYearW: YEAR_W, uYearT: YEAR_T, uYearC: YEAR_C, uLanes: LANES, uTodayK: TODAY_K, uGeoT: GEO_T, uBuilt: BUILT, uTrees: TREES, uPool: POOL, uSlateC: { value: t('Diffuse.jpg', true) }, uSlateN: { value: t('nor_gl.jpg') }, uSlateR: { value: t('Rough.jpg') } };
+  return SLATE_MAPS = { uSunDir: SUN_DIR, uSunCol: SUN_COL, uRefl: REFL.T, uReflM: REFL.M, uReflK: REFL.K, uReflD: REFL.D, uBandC0: BAND_C[0], uBandC1: BAND_C[1], uBandHi: BAND_HI, uBandY: BAND_Y, uGreen: GREEN, uGreenOn: GREEN_ON, uRp: RPLAZA.P, uRq: RPLAZA.Q, uYearW: YEAR_W, uYearT: YEAR_T, uYearC: YEAR_C, uLanes: LANES, uTodayK: TODAY_K, uGeoT: GEO_T, uBuilt: BUILT, uTrees: TREES, uPool: POOL, uSlateC: { value: t('Diffuse.jpg', true) }, uSlateN: { value: t('nor_gl.jpg') }, uSlateR: { value: t('Rough.jpg') } };
 }
 // a material's base under the model (FILM_PIC.looks: maquette, clay), in place of the painted land: m_ the metres, vFxW the world
 function baseGLSL(B, scale, town = false, far = false, then = false) {   // (then: the film's water as it was, studio.js wThen)
@@ -1328,20 +1402,36 @@ function baseGLSL(B, scale, town = false, far = false, then = false) {   // (the
         bkP_ = ci_ * bkT_ * smoothstep(.35, .65, bp_) * (1. - wMask); bkC_ = ci_ * bkT_ * smoothstep(.35, .65, bc_) * (1. - wMask) * (1. - smoothstep(.5, 1., length(fwidth(m_)) / ${TL.bank.w.toFixed(2)})); }` : ''}   // (the coping gone as it shrinks under a pixel: no flickering line afar)
       float sv_ = .55 * smoothstep(.15, .38, yc4_.g) + .45 * smoothstep(.6, .85, yc4_.g);   // (a street here: the finer ones at half, the arterials whole)
       vec3 pl_ = pow(${v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - .28 * st_);   // (the plaster; today's streets fine lines a shade darker in it, the arterials wider and darker)${TL && TL.board ? `
+      float rpI_ = 0., rpL_ = 0.;   // (inside a landmark's round plaza; its lawn ring)
       { vec3 bd_ = pow(${v3(TL.board)}, vec3(2.2)) * (.97 + .035 * fxLn(m_ / 1.1) + .02 * fxLn(m_ / 6.));   // today's board: a honed slate at its grey, its grain the material's own (no cleft, no cracks)${TL.pave ? `
         bd_ = mix(pow(${v3(TL.pave[0])}, vec3(2.2)) * (.98 + .03 * fxLn(m_ / 3.)), bd_, smoothstep(${TL.pave[1].toFixed(3)}, ${TL.pave[2].toFixed(3)}, yc4_.a));   // (todayLight pave: [its colour, the fabric's density from which the ground is asphalt, whole]: an open superblock's ground paved light)` : ''}${TL.lanes ? `
         bd_ = mix(bd_, pow(${v3(TL.lanes[0])}, vec3(2.2)) * (.97 + .04 * fxLn(m_ / 2.3)), smoothstep(${TL.lanes[1].toFixed(3)}, ${TL.lanes[2].toFixed(3)}, in_ * texture2D(uLanes, vXZ / uPlateM + .5).r));   // (todayLight lanes: [its colour, the low fabric's density from which, whole, the low fabric's height m]: inside a densely built block the ground between its buildings is lanes and courtyards in a warm mid grey under the roofs; the roads (streets mesh) and open plots stay as they are)` : ''}
         float pv_ = 1. - smoothstep(.45, .7, yc4_.r);   // (open ground off the blocks: a square, a plaza, a quay; paved pale as the streets, the parks over it)
-        ${TL.plaza ? `bd_ = mix(bd_, pow(${v3(TL.plaza)}, vec3(2.2)) * (.98 + .03 * fxLn(m_ / 3.)), .8 * pv_ * (1. - sv_));   // (a square, a quay: paved light)${TL.bank && !far ? `
+        ${TL.plaza ? `${TL.paving ? `float pave_ = 1.; { vec2 t_ = m_ / ${f3(TL.paving[0])}, f_ = max(fwidth(m_), vec2(1e-4)), g_ = (fract(t_ + .5) - .5) * ${f3(TL.paving[0])}, q_ = smoothstep(.25, .5, f_ / ${f3(TL.paving[0])});   // (todayLight paving: [a slab m, its joint m, the joint's tone, the slabs' variation]: a square paved in large slabs, each its own shade, the joints a fine grid; each gone to its mean as a pixel outgrows it)
+          vec2 j_ = mix(clamp((g_ + ${f3(TL.paving[1] / 2)}) / f_ + .5, 0., 1.) - clamp((g_ - ${f3(TL.paving[1] / 2)}) / f_ + .5, 0., 1.), vec2(${f3(TL.paving[1] / TL.paving[0])}), q_);
+          pave_ = (1. + ${f3(TL.paving[3])} * 2. * (fxLh(floor(t_) + 17.) - .5) * (1. - max(q_.x, q_.y))) * (1. + ${f3(TL.paving[2])} * (1. - (1. - j_.x) * (1. - j_.y))); }
+        ` : ''}bd_ = mix(bd_, pow(${v3(TL.plaza)}, vec3(2.2)) * (.98 + .03 * fxLn(m_ / 3.))${TL.paving ? ' * pave_' : ''}, .8 * pv_ * (1. - sv_));   // (a square, a quay: paved light)${TL.bank && !far ? `
         bd_ = mix(bd_, pow(${v3(TL.bank.prom)}, vec3(2.2)) * (.97 + .04 * fxLn(m_ / 4.)), bkP_);   // (the promenade along the river)` : ''}
         bd_ = mix(bd_, pow(${v3(TL.street[0])}, vec3(2.2)) * (.97 + .05 * fxLn(m_ / 5.)), ${TL.street[1].toFixed(2)} * sv_);   // (its streets by class)` : `bd_ = mix(bd_, pow(${v3(TL.street[0])}, vec3(2.2)) * (.97 + .05 * fxLn(m_ / 5.)), ${TL.street[1].toFixed(2)} * max(sv_, .8 * pv_));   // (its streets pale grooves, by class)`}
-        float kb_ = (1. - smoothstep(.0, 1.5, abs(sv_ - .25) / max(fwidth(sv_), 1e-4))) * step(.02, sv_) * (1. - smoothstep(.35, .8, px_));   // (a kerb line along each street's edge, close)
+        ${TL.roundPlaza ? `for (int i = 0; i < 4; i++) { vec4 P_ = uRp[i], Q_ = uRq[i]; if (Q_.w < .5) continue;   // a landmark's round plaza (todayLight roundPlaza: [its paving, its inner disc's, the rings' spacing m, radial joints, a joint m, the joints' tone]): rings of paving
+          float r_ = length(vXZ - P_.xy) / ${scale.toFixed(8)}; if (r_ > Q_.y + 10.) continue;   // round its lawn ring round a light inner disc, crisp at its edges, the joints each gone to its mean as a pixel outgrows it
+          float f_ = max(fwidth(r_), 1e-4), o_ = clamp((Q_.y - r_) / f_ + .5, 0., 1.), d_ = clamp((Q_.x - r_) / f_ + .5, 0., 1.);
+          float g_ = (fract(r_ / ${f3(TL.roundPlaza[2])} + .5) - .5) * ${f3(TL.roundPlaza[2])}, j_ = mix(clamp((g_ + ${f3(TL.roundPlaza[4] / 2)}) / f_ + .5, 0., 1.) - clamp((g_ - ${f3(TL.roundPlaza[4] / 2)}) / f_ + .5, 0., 1.), ${f3(TL.roundPlaza[4] / TL.roundPlaza[2])}, smoothstep(.25, .5, f_ / ${f3(TL.roundPlaza[2])}));
+          vec2 v_ = (vXZ - P_.xy) / ${scale.toFixed(8)}; float a_ = atan(v_.y, v_.x) / 6.2832 * ${f3(TL.roundPlaza[3])}, fa_ = min(fwidth(a_), fwidth(fract(a_ + .5))) * 6.2832 * r_ / ${f3(TL.roundPlaza[3])}, ga_ = (fract(a_ + .5) - .5) * 6.2832 * r_ / ${f3(TL.roundPlaza[3])};
+          float ja_ = mix(clamp((ga_ + ${f3(TL.roundPlaza[4] / 2)}) / fa_ + .5, 0., 1.) - clamp((ga_ - ${f3(TL.roundPlaza[4] / 2)}) / fa_ + .5, 0., 1.), 0., smoothstep(.25, .5, fa_ / max(6.2832 * r_ / ${f3(TL.roundPlaza[3])}, 1e-3))) * (1. - d_);   // (radial joints in the outer paving)
+          float c_ = clamp((Q_.x * .55 + .3 - r_) / f_ + .5, 0., 1.) - clamp((Q_.x * .55 - .3 - r_) / f_ + .5, 0., 1.) + clamp((Q_.x * .2 - r_) / f_ + .5, 0., 1.) * .6;   // (the inner disc's ring line and its centre)
+          vec3 pc_ = mix(pow(${v3(TL.roundPlaza[0])}, vec3(2.2)), pow(${v3(TL.roundPlaza[1])}, vec3(2.2)) * (1. + .08 * c_ * (1. - smoothstep(.3, 1., f_ / 2.))), d_) * (1. + ${f3(TL.roundPlaza[5])} * max(j_, ja_));
+          bd_ = mix(bd_, pc_, o_); rpI_ = max(rpI_, o_); rpL_ = max(rpL_, clamp((r_ - P_.z) / f_ + .5, 0., 1.) * clamp((P_.w - r_) / f_ + .5, 0., 1.)); }
+        ` : ''}float kb_ = (1. - smoothstep(.0, 1.5, abs(sv_ - .25) / max(fwidth(sv_), 1e-4))) * step(.02, sv_) * (1. - smoothstep(.35, .8, px_));   // (a kerb line along each street's edge, close)
         bd_ = mix(bd_, pow(${v3(TL.kerb)}, vec3(2.2)), .7 * kb_);
         pl_ = mix(pl_, bd_, tk_); }` : ''}
       float gr_ = uGreenOn * in_ * smoothstep(.35, .65, texture2D(uGreen, vXZ / uPlateM + .5).r);   // (the city's green space, from the data: pipeline/greens.py)
       float pk_ = uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z)) * smoothstep(.6, .75, yc4_.b) * step(.5, yt_) * step(yt_, yc_ + .5) * gr_ * (1. - wMask);   // (inside the urban extent: a park, a garden, a lawn, flat green; open land with no data stays plaster)
-      kt_ *= 1. - pk_;   // (not while today's city is a backdrop behind a period city: uTodayK.z its dim)   // (inside the urban extent, off the blocks: the model's green)
-      sl_ = mix(sl_, pl_, k_ * ${B.land ? '(1. - rk_ * (1. - smoothstep(.85, .97, tw_)))' : '1.'}); slateR_ = mix(slateR_, .9, k_); slateN_ = mix(slateN_, vec3(0., 0., 1.), k_ * ${B.land ? '(1. - rk_)' : '1.'});${TL && TL.board ? ' slateR_ = mix(slateR_, .8, tk_ * (1. - sv_));\n      ' : ''} ${TL && TL.park ? `sl_ = mix(sl_, pow(mix(${v3(TL.park[0])}, ${v3(TL.park[1])}, smoothstep(.3, .7, fxLn(m_ / 41.))), vec3(2.2)) * (.8 + .2 * fxLn(m_ / 23.) + .1 * fxLn(m_ / 6.)), pk_); slateR_ = mix(slateR_, .95, pk_);   // (a park: lawn in two greens)` : B.ground_in.park ? `sl_ = mix(sl_, pow(${v3(B.ground_in.park)}, vec3(2.2)) * (.95 + .08 * fxLn(m_ / 29.)), pk_); slateR_ = mix(slateR_, .95, pk_);` : ''}${B.flock ? `
+      ${TL && TL.board && TL.roundPlaza ? 'pk_ = mix(pk_, uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z)) * rpL_, rpI_);   // (a round plaza: its own lawn ring, crisp, in place of the data\'s)\n      ' : ''}kt_ *= 1. - pk_;   // (not while today's city is a backdrop behind a period city: uTodayK.z its dim)   // (inside the urban extent, off the blocks: the model's green)
+      sl_ = mix(sl_, pl_, k_ * ${B.land ? '(1. - rk_ * (1. - smoothstep(.85, .97, tw_)))' : '1.'}); slateR_ = mix(slateR_, .9, k_); slateN_ = mix(slateN_, vec3(0., 0., 1.), k_ * ${B.land ? '(1. - rk_)' : '1.'});${TL && TL.board ? ' slateR_ = mix(slateR_, .8, tk_ * (1. - sv_));\n      ' : ''} ${TL && TL.park ? `${TL.lawn ? `float lawn_ = 1. + ${f3(TL.lawn[0])} * 2. * (fxLn(m_ / ${f3(TL.lawn[1])} + 3.3) - .5) * (1. - smoothstep(.3, .8, px_ / ${f3(TL.lawn[1])})) + ${f3(TL.lawn[2])} * 2. * (fxLn(m_ / ${f3(TL.lawn[3])} + 7.1) - .5) * (1. - smoothstep(.3, .8, px_ / ${f3(TL.lawn[3])}));   // (todayLight lawn: [its mottle's strength, size m, its mown grain's strength, size m, its border m, the border's tone]: a mown lawn, clumps and grain, each gone as a pixel outgrows it;
+      { float g0_ = in_ * texture2D(uGreen, vXZ / uPlateM + .5).r, e_ = (g0_ - .5) / max(length(vec2(dFdx(g0_), dFdy(g0_))) / max(px_, 1e-4), 1e-5);   // a low border along its edge: e_ metres inside it)
+        lawn_ *= 1. + ${f3(TL.lawn[5])} * (clamp((${f3(TL.lawn[4])} - e_) / px_ + .5, 0., 1.) - clamp(-e_ / px_ + .5, 0., 1.)) * (1. - smoothstep(${f3(TL.lawn[4])}, ${f3(TL.lawn[4] * 3)}, px_)); }
+      ` : ''}sl_ = mix(sl_, pow(mix(${v3(TL.park[0])}, ${v3(TL.park[1])}, smoothstep(.3, .7, fxLn(m_ / 41.))), vec3(2.2)) * (.8 + .2 * fxLn(m_ / 23.) + .1 * fxLn(m_ / 6.))${TL.lawn ? ' * lawn_' : ''}, pk_); slateR_ = mix(slateR_, .95, pk_);   // (a park: lawn in two greens)` : B.ground_in.park ? `sl_ = mix(sl_, pow(${v3(B.ground_in.park)}, vec3(2.2)) * (.95 + .08 * fxLn(m_ / 29.)), pk_); slateR_ = mix(slateR_, .95, pk_);` : ''}${B.flock ? `
       { // trees: round crowns in groves (a crown a cell of ${B.flock.cell} m, there by the groves' density): where the generator's trees stand, on the banks, the slopes and the open ground at the city's edge
         float cl_ = smoothstep(.42, .56, fxLn(m_ / 52.) * .65 + mix(fxLn(m_ / 17.), .5, smoothstep(2., 5., px_)) * .35), tr_ = in_ * smoothstep(.12, .35, texture2D(uTrees, vXZ / uPlateM + .5).r);
         float bk_ = smoothstep(.01, .08, wr_) * (1. - smoothstep(.25, .4, wr_));   // (the banks: just off the water)
@@ -1401,6 +1491,47 @@ function glbMaterial(nm, k = 1, scale = 1e-4, col = null) {   // (col: the glb e
   return m;
 }
 // a convex hull of points [x, z] (monotone chain, counter-clockwise), and a point's signed distance inside it (negative: outside)
+// today's street network, for its markings (todayLight streets marks): R the ways ([{ pts, w: the carriageway's width m, link: a
+// ramp }]). Where three or more ways meet (a vertex they share) a junction: each way's markings and kerbs stop short of it by the
+// widest other way's half-width and pavement (and mk.clear more), and its crossing (zebra) is painted there when the other way is
+// marked too (a ramp is not). Where two ways cross without a shared vertex (one over the other) the narrower stops short of the
+// wider, which keeps its paint, and no crossing is painted. Beside a parallel way whose carriageway overlaps its own (a dual
+// carriageway mapped as two one-way ways, a road over a road) a way keeps its own side up to the median midway between their
+// centre lines; the narrower of two on one line unmarked
+function streetNet(R0, kerb, mk, scale) {   // -> { R: the ways with their crossings as vertices, at(i): the way's along metres at each vertex and its junctions [vertex, along, clearance m, zebra], clip(i, x, z, ux, uz): [left, right] m kept (-1: unmarked) }
+  const GC = 60 * scale, grid = (RR, ok) => { const G = new Map(); RR.forEach((r, i) => { if (!ok(r)) return; for (let k = 1; k < r.pts.length; k++) { const [ax, az] = r.pts[k - 1], [bx, bz] = r.pts[k];   // (the ways' segments in a 60 m grid)
+    for (let gx = Math.floor(Math.min(ax, bx) / GC); gx <= Math.floor(Math.max(ax, bx) / GC); gx++) for (let gz = Math.floor(Math.min(az, bz) / GC); gz <= Math.floor(Math.max(az, bz) / GC); gz++) { const kk = gx * 100003 + gz; (G.get(kk) || G.set(kk, Object.assign([], { gx, gz })).get(kk)).push([i, ax, az, bx, bz, r.w, k]); } } }); return G; };
+  const marked = r => r.w >= mk.minW && !r.link;
+  // the crossings without a shared vertex, each made a vertex of both ways
+  const G0 = grid(R0, () => true), ins = R0.map(() => []), X = new Set();
+  for (const L_ of G0.values()) for (let a = 0; a < L_.length; a++) for (let b = a + 1; b < L_.length; b++) { const [i, ax, az, bx, bz, , k] = L_[a], [j, cx, cz, dx, dz, , k2] = L_[b]; if (i === j) continue;
+    const rx = bx - ax, rz = bz - az, sx = dx - cx, sz = dz - cz, dn = rx * sz - rz * sx, lr = Math.hypot(rx, rz), ls = Math.hypot(sx, sz); if (Math.abs(dn) < .2 * lr * ls) continue;   // (alongside, or nearly: the parallel ways' clip)
+    const t = ((cx - ax) * sz - (cz - az) * sx) / dn, u = ((cx - ax) * rz - (cz - az) * rx) / dn; if (t <= 1e-3 || t >= 1 - 1e-3 || u <= 1e-3 || u >= 1 - 1e-3) continue;
+    const x = ax + t * rx, z = az + t * rz; if (Math.floor(x / GC) !== L_.gx || Math.floor(z / GC) !== L_.gz) continue;   // (each crossing once: in the cell it lies in)
+    ins[i].push([k, t, x, z]); ins[j].push([k2, u, x, z]); X.add(x + ',' + z); }
+  const R = R0.map((r, i) => { if (!ins[i].length) return r; const I = ins[i].sort((p, q) => p[0] - q[0] || p[1] - q[1]), pts = [r.pts[0]]; let n = 0;
+    for (let k = 1; k < r.pts.length; k++) { while (n < I.length && I[n][0] === k) { pts.push([I[n][2], I[n][3]]); n++; } pts.push(r.pts[k]); }
+    return { ...r, pts }; });
+  const key = p => p[0] + ',' + p[1], N = new Map();
+  R.forEach((r, i) => r.pts.forEach((p, k) => { const kk = key(p); let n = N.get(kk); if (!n) N.set(kk, n = { d: 0, a: 0, ai: -1, aw: 0, am: 0, b: 0, bw: 0, bm: 0 });
+    n.d += k === 0 || k === r.pts.length - 1 ? 1 : 2; const h = r.w / 2 + kerb, m = marked(r) ? 1 : 0;   // (the ways at a node, a way through it twice; the two widest pavements, a different way each)
+    if (i === n.ai) return; if (h > n.a) { n.b = n.a; n.bw = n.aw; n.bm = n.am; n.a = h; n.ai = i; n.aw = r.w; n.am = m; } else if (h > n.b) { n.b = h; n.bw = r.w; n.bm = m; } }));
+  const G = grid(R, marked);   // (the marked ways: the parallel ones' clip)
+  const clip = (i, x, z, ux, uz) => { const hw = R[i].w / 2, gx = Math.floor(x / GC), gz = Math.floor(z / GC); let cl = 1e4, cr = 1e4;
+    for (let a = gx - 1; a <= gx + 1; a++) for (let b = gz - 1; b <= gz + 1; b++) for (const [j, ax, az, bx, bz, w2] of G.get(a * 100003 + b) || []) { if (j === i) continue;
+      const vx = bx - ax, vz = bz - az, l2 = vx * vx + vz * vz; if (l2 < 1e-18 || Math.abs(ux * vx + uz * vz) < .9 * Math.sqrt(l2)) continue;   // (not alongside: a crossing)
+      const t = ((x - ax) * vx + (z - az) * vz) / l2; if (t < 0 || t > 1) continue;
+      const qx = ax + t * vx - x, qz = az + t * vz - z, sd = (qz * ux - qx * uz) / scale;   // (its centre line's offset, + to the right)
+      if (Math.abs(sd) >= hw + w2 / 2) continue;   // (the carriageways apart)
+      if (Math.abs(sd) < Math.min(hw, w2 / 2)) { if (hw * 2 < w2 || (hw * 2 === w2 && i > j)) return [-1, -1]; continue; }   // (one over the other: the wider one's markings)
+      if (sd > 0) cr = Math.min(cr, sd / 2); else cl = Math.min(cl, -sd / 2); }
+    return [cl, cr]; };
+  const at = i => { const p = R[i].pts, s = [0]; for (let k = 1; k < p.length; k++) s.push(s[k - 1] + Math.hypot(p[k][0] - p[k - 1][0], p[k][1] - p[k - 1][1]) / scale);
+    const J = []; p.forEach((q, k) => { const kk = key(q), n = N.get(kk); if (!n || n.d < 3) return; const o = n.ai === i, c = o ? n.b : n.a, w = o ? n.bw : n.aw, m = o ? n.bm : n.am, x = X.has(kk);
+      if (c > 0 && !(x && R[i].w > w)) J.push([k, s[k], c + mk.clear, !x && marked(R[i]) && m ? 1 : 0]); });   // (over a narrower way: the wider keeps its paint)
+    return { s, J }; };
+  return { R, at, clip };
+}
 function hull2(P) { const p = P.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]), cr = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]), lo = [], up = [];
   for (const q of p) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], q) <= 0) lo.pop(); lo.push(q); }
   for (let i = p.length - 1; i >= 0; i--) { const q = p[i]; while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], q) <= 0) up.pop(); up.push(q); }
@@ -1589,6 +1720,11 @@ ${FILM_PIC.material === 'clay' ? `
     const WS_ = !u && MAT && !depth && todayL() && todayL().wallSun;   // (todayLight wallSun: the sun on today's painted walls this much brighter and warmer (rgb, times), its direct light only: a lit wall a warm cream, the shade side as it was)
     if (WS_) sh.fragmentShader = sh.fragmentShader.replace('#include <lights_fragment_end>', `#include <lights_fragment_end>
   if (abs(normalize(vWN).y) < .3) reflectedLight.directDiffuse *= mix(vec3(1.), vec3(${WS_.map(v => v.toFixed(3)).join(', ')}), (1. - glass_) * (1. - vMute));`);
+    const WD_ = !u && MAT && !depth && todayL() && todayL().wallShade;   // (todayLight wallShade: [the sky light's own colour kept, times, [rgb], the shade's saturation]: the shade side of today's painted walls lit by a neutral (or this tinted) sky light and its paint's chroma this many times, hue kept, so a pastel in shade stays a pastel; the lit side as it was)
+    if (WD_) sh.fragmentShader = sh.fragmentShader.replace('#include <lights_fragment_end>', `float wd_ = abs(normalize(vWN).y) < .3 ? (1. - glass_) * (1. - vMute) : 0.;
+  irradiance = mix(irradiance, mix(vec3(dot(irradiance, vec3(.2126, .7152, .0722))), irradiance, ${(+WD_[0]).toFixed(3)}) * ${(+WD_[1]).toFixed(3)} * vec3(${(WD_[2] || [1, 1, 1]).map(v => (+v).toFixed(3)).join(', ')}), wd_);
+#include <lights_fragment_end>${WD_[3] ? `
+  { vec3 id_ = reflectedLight.indirectDiffuse; float l_ = dot(id_, vec3(.2126, .7152, .0722)); reflectedLight.indirectDiffuse = mix(id_, max(vec3(0.), l_ + (id_ - l_) * ${(+WD_[3]).toFixed(3)}), wd_); }` : ''}`);
     if (!u && MAT && !depth) sh.fragmentShader = sh.fragmentShader.replace('#include <opaque_fragment>', `{ float lw_ = dot(outgoingLight, vec3(.2126, .7152, .0722));   // the engraving on a lit wall: a groove keeps its shade however strong the light (on glass the sun's sheen had washed it out)
     outgoingLight *= 1. - .45 * eng_ * smoothstep(.35, 1., lw_); }
 #include <opaque_fragment>`); };
