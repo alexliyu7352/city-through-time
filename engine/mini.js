@@ -983,7 +983,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     m.userData.mini = m === cityMesh ? colourToday(m, today ? (film && MAT && MAT.today ? { ...TODAY[today], ...MAT.today, scale } : TODAY[today]) : undefined) : colourMesh(m, palOf(id), !!DET, { face: face(id), upright: uprightOf(id) }, { cell: 12 * scale, dark: (palOf(id).tree && palOf(id).tree.dark) || 1 }, film);
     if (film && MAT && MAT.soft && m !== cityMesh) softNormals(m.geometry);
     if (film) { const u = m === cityMesh ? null : S.eras[id].u, ruin = m === cityMesh ? null : new THREE.Color(palOf(id).parts[11]);
-      const sk_ = m === cityMesh && !!FPT.mesh;   // (today's city with replacement footprints: its replaced buildings hidden, in its colours and its shadows alike)
+      const sk_ = m === cityMesh && (!!FPT.mesh || FPT.skipNow);   // (today's city with replacement footprints: its replaced buildings hidden, in its colours and its shadows alike)
       filmMaterial(S, m.userData.mini, u, ruin, fadeAt, u && S.fires[id] && S.fires[id].day ? S.fires[id] : null, BACK, FP_ && !!u, sk_); m.userData.miniDepth = filmMaterial(S, new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), u, null, fadeAt, null, BACK, false, sk_); }
   }
   // today's replacement footprints (a city's build/data/today_footprints.json, pipeline/footprints.py: opt-in, for this look only):
@@ -992,26 +992,35 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // the white film's geometry and pictures untouched; loaded once, the first time today's city stands (it is large: the whole
   // city's). Their rooftops join today's (roofScan, split by child); a detailed model's fold reaches them too (FOLDS). A batch of
   // stills (nextShot) chooses them again for each shot, as the shot's own page would: the sidecar kept once read again, the
-  // replacements made again only where the choice differs from the shot before's
-  const FPT = { tried: false, mesh: null, skip: 0, ms: 0, bytes: 0, side: null, keep: false, sel: null, roofs0: null, skipMat: false }, FOLDS = [];
+  // replacements made again where the choice differs from the shot before's
+  const FPT = { tried: false, mesh: null, skip: 0, ms: 0, bytes: 0, side: null, keep: false, sel: null, roofs0: null, skipNow: false }, FOLDS = [];
+  const sidecar = () => FPT.side ||= fetch(dataDir + 'today_footprints.json').then(r => r.ok ? r.json() : null).catch(() => null);   // (its promise: kept while a batch of stills chooses again)
+  const footprintsWait = () => !FPT.tried && film && MAT && dataDir && cityMesh && S.buildTodayFootprints && !(todayL() && todayL().footprints === false) && cityMesh.visible && TODAY_K.value.y > .5;
+  // today's materials as colour() makes them (colourToday's, on the film's deformation), [colour, shadow]: a replacement
+  // footprint's, or today's city's own with its replaced buildings hidden (skip). The footprints' are made first and today's city's
+  // after them, after whatever was made round the view before them, as on a page of its own: the renderer draws the objects in the
+  // order their materials were made, and where two surfaces meet exactly that order decides a pixel
+  const todayMats = (skip = false) => [filmMaterial(S, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .92, metalness: 0 }), null, null, fadeAt, null, BACK, false, skip),
+    filmMaterial(S, new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), null, null, fadeAt, null, BACK, false, skip)];
+  const cityMats = () => { const u_ = cityMesh.userData; if (u_.mini) { u_.mini.dispose(); u_.miniDepth.dispose(); } [u_.mini, u_.miniDepth] = todayMats(true); };
   async function todayFootprints(target, d) {
-    if (FPT.tried || !film || !MAT || !dataDir || !cityMesh || !S.buildTodayFootprints || todayL() && todayL().footprints === false) return; FPT.tried = true;
-    const t0 = performance.now(); let side = FPT.side;   // (null: not kept; false: kept, none)
-    if (side === null) { try { const r = await fetch(dataDir + 'today_footprints.json'); if (r.ok) side = await r.json(); } catch (e) { side = null; } if (FPT.keep) FPT.side = side || false; }
+    if (!footprintsWait()) return; FPT.tried = true;
+    const t0 = performance.now(); let side = await sidecar(); if (!FPT.keep) FPT.side = null;   // (a page of one shot lets it go)
     if (!side || side.enabled !== true) return;
     const F_ = todayL() && todayL().footprintsR, R_ = Array.isArray(F_) ? Math.max(F_[1], F_[0] * d / scale) : F_;   // (todayLight footprintsR: only the replacements within this many metres of the first shot's target, or [times the shot's distance, at least metres]; none: the whole city)
     let rep = side.replacements;
     if (R_) { const r2 = (R_ * scale) ** 2; rep = rep.filter(r => { const g = r.children[0].rings[0], x = g.reduce((a_, p) => a_ + p[0], 0) / g.length, z = g.reduce((a_, p) => a_ + p[1], 0) / g.length; return (x - target.x) ** 2 + (z - target.z) ** 2 < r2; }); }
-    const sel = rep.map(r => r.bi).join();   // (the parents replaced: a shot that chooses the same keeps the shot before's)
-    if (sel === FPT.sel) return;
-    if (FPT.sel !== null) dropFootprints(); FPT.sel = sel;
+    const sel = rep.map(r => r.bi).join(), same = sel === FPT.sel && !!FPT.mesh;   // (the parents replaced: a batch's shot that chooses the same keeps the shot before's)
+    if (FPT.sel !== null) dropFootprints(same); FPT.sel = sel;
+    const [mat, depth] = todayMats();
+    if (same) { FPT.mesh.material = mat; FPT.mesh.customDepthMaterial = depth; cityMats(); return; }
     const { geometry, skipCentres } = await S.buildTodayFootprints({ ...side, replacements: rep }); side = rep = null; if (!geometry) return;
     geometry.deleteAttribute('aBi');   // (this look does not read it)
     const key = (x, z) => Math.fround(x) + ',' + Math.fround(z), skip = new Set(skipCentres.map(([x, z]) => key(x, z)));
     const G_ = cityMesh.geometry, C = G_.attributes.aCtr, n = C.count, A_ = G_.attributes.aSkip, a = A_ ? A_.array : new Uint8Array(n);   // (a byte a vertex; a shot after another: the same one written again)   // (the parents: their aCtr is the mean of their outer ring, as the sidecar's)
     for (let i = 0, lx = NaN, lz = NaN, v = 0; i < n; i++) { const x = C.getX(i), z = C.getY(i); if (x !== lx || z !== lz) { lx = x; lz = z; v = skip.has(key(x, z)) ? 1 : 0; if (v) FPT.skip++; } a[i] = v; }
     if (A_) A_.needsUpdate = true; else G_.setAttribute('aSkip', new THREE.BufferAttribute(a, 1));
-    colour(cityMesh);   // (today's city painted first: its kinds and paints, by each building's own record)
+    const fresh_ = !cityMesh.userData.mini; if (fresh_) { FPT.skipNow = true; colour(cityMesh); FPT.skipNow = false; }   // (today's city painted first: its kinds and paints, by each building's own record, its replaced buildings hidden at once)
     // each child in its parent's paint and kind exactly, read from the parent's own record (its wall's and its roof's colour, its
     // kind), never from the child's outline: a split or squared footprint changes no building's class
     const PC = G_.attributes.color, PK = G_.attributes.aKind, PN = G_.attributes.normal, par = new Map();
@@ -1021,31 +1030,30 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       for (let i = 0; i < m_; i++) { const e = par.get(key(FC.getX(i), FC.getY(i))), c = e ? (FN.getY(i) > .6 ? e.r || e.w : e.w || e.r) : null;
         if (c) { col[i * 3] = c[0]; col[i * 3 + 1] = c[1]; col[i * 3 + 2] = c[2]; } else { col.fill(.9, i * 3, i * 3 + 3); FPT.miss++; } kd[i] = e ? e.kd : 1; }   // (miss: a child whose parent was not found: none expected)
       geometry.setAttribute('color', new THREE.BufferAttribute(col, 3)); geometry.setAttribute('aKind', new THREE.BufferAttribute(kd, 1)); geometry.setAttribute('aTop', new THREE.BufferAttribute(recordTops(geometry), 1)); if (todayL() && todayL().bevel) geometry.setAttribute('aEdge', new THREE.BufferAttribute(wallEdges(geometry, scale), 2)); }
-    if (cityMesh.userData.mini && !FPT.skipMat) { cityMesh.userData.mini.dispose(); cityMesh.userData.miniDepth.dispose(); }
-    const mat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .92, metalness: 0 });   // (colourToday's)
-    filmMaterial(S, mat, null, null, fadeAt, null, BACK, false);
-    const mesh = new THREE.Mesh(geometry, mat); mesh.customDepthMaterial = filmMaterial(S, new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), null, null, fadeAt, null, BACK);
+    const mesh = new THREE.Mesh(geometry, mat); mesh.customDepthMaterial = depth;
     mesh.castShadow = mesh.receiveShadow = true; mesh.frustumCulled = false; mesh.layers.set(L); scene.add(mesh); FPT.mesh = mesh;
-    if (!FPT.skipMat) { cityMesh.userData.mini = null; colour(cityMesh); FPT.skipMat = true; }   // (its colours again, with aSkip; a shot after another keeps them)
+    if (!fresh_) cityMats();   // (its materials again, with aSkip, where it was painted before)
     for (const f of FOLDS) foldIn(geometry, f);   // (a detailed model already in place)
     if (ROOFS) { FPT.roofs0 ||= ROOFS; ROOFS = FPT.roofs0.filter(r => !(r[11] === G_.attributes.position && a[r[9]] > .5)).concat(roofScan(geometry, true)); dropRoofs(); }
     FPT.ms = performance.now() - t0; FPT.bytes = Object.values(geometry.attributes).reduce((s_, at) => s_ + at.array.byteLength, 0) + a.byteLength;
     console.log('footprints', JSON.stringify({ parents: FPT.skip, unmatched: FPT.miss, vertices: geometry.attributes.position.count, MB: +(FPT.bytes / 1e6).toFixed(1), ms: Math.round(FPT.ms) }));
   }
-  function dropFootprints() {   // (the shot before's replacements gone: its parents stand again, today's rooftops made again without its)
-    if (FPT.mesh) { scene.remove(FPT.mesh); FPT.mesh.geometry.dispose(); FPT.mesh.material.dispose(); FPT.mesh.customDepthMaterial.dispose(); FPT.mesh = null; }
-    const A_ = cityMesh.geometry.attributes.aSkip; if (A_) { A_.array.fill(0); A_.needsUpdate = true; }
-    FPT.skip = 0; if (FPT.roofs0) { ROOFS = FPT.roofs0; dropRoofs(); }
+  function dropFootprints(same) {   // (the shot before's replacements gone, their parents standing again; same: kept, their materials made again) and today's rooftops made again after them
+    if (FPT.mesh) { FPT.mesh.material.dispose(); FPT.mesh.customDepthMaterial.dispose(); if (!same) { scene.remove(FPT.mesh); FPT.mesh.geometry.dispose(); FPT.mesh = null; } }
+    const A_ = cityMesh.geometry.attributes.aSkip; if (A_ && !same) { A_.array.fill(0); A_.needsUpdate = true; FPT.skip = 0; }
+    if (FPT.roofs0) { ROOFS = same ? ROOFS : FPT.roofs0; dropRoofs(); }
   }
   // a batch of stills on one page (render/still.mjs --shots, main.js SHOT): the next shot as its own page would draw it. What the
   // look made round the first frame's view is made again round the next frame's (the trees, the boats, the groves, today's
-  // replacement footprints); STILL_KEYS, the picture's keys (?pic=) read only as a frame is drawn, take the shot's values (a shot
-  // that differs from the page in any other key needs a page of its own: main.js SHOT.fits)
+  // replacement footprints), and the built-up mask as on a page's first frame (the groves come in the frame after it, flockAt);
+  // STILL_KEYS, the picture's keys (?pic=) read only as a frame is drawn, take the shot's values (a shot that differs from the page in
+  // any other key needs a page of its own: main.js SHOT.fits)
   const STILL_KEYS = ['sunSide', 'todayLight.sunLeft'];
   function nextShot(pic = {}) {
     for (const k of STILL_KEYS) { const [a, b] = k.split('.'), v = b ? pic[a] && pic[a][b] : pic[a]; if (v === undefined) continue;
       if (b) FILM_PIC[a] = { ...FILM_PIC[a], [b]: v }; else FILM_PIC[a] = v; }
     TF.reset(); BF.at = null; FL.at = null; FPT.tried = false; FPT.keep = true;
+    for (const U_ of [BUILT, TREES]) if (U_.value) { U_.value.dispose(); U_.value = null; } BUILT_K = null;
   }
   // the programs of every city's colours made before playback (main.js warm-up: else the first frame a city shows stalls; and
   // tools/phonecheck.mjs sees them all)
