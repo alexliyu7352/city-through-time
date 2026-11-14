@@ -192,7 +192,7 @@ const SLATE = { slate: [.31, .31, .31], step: 6, edge: 1.45, resin: [.20, .14, .
 // (linear) over its own mean, `size` m a repeat (and 6.3 times that, turned, over it), its normal `bump` strong; the sheets of the
 // land's rise `step` m, their edges a faint `edge`; the water a glossy resin. In the sunny miniature the land is a fresh meadow
 // (land olive and ochre: its two greens, fields faintly), the groves fresh greens (flock), a town's ground light warm paving (ground_in)
-const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.80, .76, .70], reach: 16, park: [.56, .72, .34] }, flock: { col: [.30, .48, .18], col2: [.44, .56, .22], cellMax: 16, most: 400000, tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 12, crown: [.5, 1.06, [1.06, 1.03, .84]], wall: 1.5,
+const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.80, .76, .70], reach: 16, park: [.56, .72, .34] }, flock: { col: [.30, .48, .18], col2: [.44, .56, .22], cellMax: 16, most: 400000, tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 12, crown: [.42, 1.04, [1.06, 1.03, .84]], wall: 1.5,
     street: { off: 2.2, r: 2.5, vary: [.9, 1, 1.12], every: { secondary: 9, tertiary: 9 }, minor: 11, junction: 14, cellK: .6, rows: true } },
   land: { olive: [.56, .64, .36], ochre: [.68, .70, .44], field: 140, rock: [.5, .8], rockC: [.64, .60, .52], scrub: [.42, .54, .22] }, bump: 1.6, ground: '#cfc3a6', step: 6, edge: 1.12, resin: [.46, .64, .71], gloss: [.08, .55, [.80, .86, .92]] };   // (resin: clear tinted acrylic; gloss: its reflection of the room, [at a steep view, toward a grazing one, its colour])   // (land rock: only the steep faces, the slope as drawn)
 // the colour film's picture, as a photograph of a model on a table: a warm key from a sun fixed in the world, low and to the side
@@ -263,13 +263,13 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], groundFill: [.6, 1.75], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: .5, parkTrees: [1, 1.1, [.6, .8, 1, 1.25, 1.5], [.47, .56]], bloom: [9, 0], dof: 1, band: 1,
+      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.36, 1.2, .92], groundFill: [.45, 3, 1.75], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: .5, parkTrees: [1, 1.1, [.6, .8, 1, 1.25, 1.5], [.47, .56]], bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
         far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
         board: [.39, .385, .385], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.66, .63, .62], kerb: [.86, .85, .82],
         streets: { asphalt: '#747679', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.55, .62, .26], [.49, .57, .23]],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.38, .66, .64], deep: [.22, .52, .52], reach: 60, rough: .45, ripple: .08, gloss: [.03, .4, [.62, .86, .88]], refl: [.2, .3], sparkle: [.3, 2.5] },
-        trees: [[.44, .60, .27], [.52, .66, .30], [.36, .52, .24], [.30, .46, .26]],
+        trees: [[.38, .53, .23], [.45, .59, .26], [.31, .46, .21], [.26, .40, .22]],
         facade: { base: [4.5, .8, 9], cap: [.9, 1.1, .72, 1.8], piers: [2, 4, 1.4], rows: [.25, .38], mid: [.3, .42, .45, .8, .85, .7], reveal: [1.14, .72], glass: { pale: [.9, .92, .94], mull: .85, span: [.2, .45], top: 1.12, px: 1.2, coarse: 4, deep: [.74, .82, .95] }, brick: [.4, .55, .6] } },
       // light presets over todayLight (FILM_PIC todayPreset): golden, the golden hour for the opening and the return to today: a low
       // warm sun ahead of the camera and to its left (sunLeft), long soft shadows, blue-violet shade, its glow on the sky (dome[2])
@@ -281,16 +281,18 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // today's buildings painted by kind (colourToday kinds; FACADE_GLSL draws each kind's facade): the old low fabric (lower than
       // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick; a large low building pale; an office tower (from
       // towerH m and towerA m2 of footprint, or any from tallH m) in tinted glass, pale blue-green or silver; the rest, most of the
-      // city, homes in soft paints (cream, ivory, sand, pale peach, light grey), their roofs light, the walk-ups' (lower than
-      // tiledH) a share of them (tiled) in terracotta tile; stone, a civic or old stone building (from the data's first stoneSpan years,
-      // stoneA m2 or more, its outline filling stoneC of its extent, lower than stoneH), beige to off-white
+      // city, homes in soft paints (cream, ivory, sand, pale peach, light grey), a mid- or high-rise's roof light cream or greige,
+      // a lower one's (lowRoofH) the old fabric's mid grey, the walk-ups' (lower than tiledH) a share of them (tiled) in
+      // terracotta tile; stone, a civic or old stone building (from the data's first stoneSpan years, stoneA m2 or more, its
+      // outline filling stoneC of its extent, lower than stoneH), beige to off-white. Every roof by its building's kind and
+      // height, never by the camera's distance (a roof would change colour as the camera moves)
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
         kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: null, roofGrey: '#a8a8a8', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
           stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'], stoneRoofs: ['#a6a39e', '#9e9c99', '#aba8a3'],
-          homes: ['#f4c8bc', '#f0bca9', '#f6e4cc', '#f8f2ea', '#e6e0dc', '#d4dde8', '#fbf3ea', '#ecc2ba', '#f2d8c8'], homeRoofs: ['#9a9ca0', '#94979c', '#9fa0a3', '#96989b'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
-          oldWalls: ['#d2cbc2', '#c8c1b8', '#e0bcaa', '#ddd5ca', '#d6b4a6'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
-          big: ['#e4e0d8', '#d9d7d2', '#e8dfcf'], bigRoofs: ['#9f9d99', '#989a9c', '#a4a29d'],
-          glass: ['#adbed0', '#b4c3d4', '#bbc6d0', '#a9bacc', '#b8c6d4'], towerRoofs: ['#a0a4a9', '#999ea3'] } } },
+          homes: ['#f6c0b0', '#f2b8a2', '#f6e0c4', '#f8efe2', '#f4cbb4', '#d4dde8', '#fbf0e2', '#efbdb2', '#f4d2bc'], homeRoofs: ['#e2dbd0', '#d9d2c6', '#e6e0d6', '#d4cec4'], lowRoofH: 40, lowRoofs: ['#86878a', '#808285', '#8b8b8c', '#838486'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
+          oldWalls: ['#dccfc2', '#d2c6b8', '#e6bca8', '#e2d6c8', '#dcb4a2'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
+          big: ['#ece2d4', '#e2dcd2', '#efe0cc'], bigRoofs: ['#c9c4bb', '#c0bdb7', '#cec8be'],
+          glass: ['#adbed0', '#b4c3d4', '#bbc6d0', '#a9bacc', '#b8c6d4'], towerRoofs: ['#d6d4cf', '#cccbc7'] } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
       soft: .6, tiles: 2.2, tufts: true,   // (soft: the share of a corner's averaged normal in each face's, a rounded edge; tiles: their rows' relief, times; tufts: moss at the walls' feet)
@@ -416,7 +418,8 @@ function colourToday(mesh, T = TODAY.roman) {
       const k = K.stoneA && yr > 1 && yr <= y0 + K.stoneSpan && ar >= K.stoneA && cmp >= K.stoneC && hm < K.stoneH ? 4
         : hm < K.oldH && ar < K.bigA ? 0 : hm < 24 && ar >= K.bigA ? 3 : (hm >= K.towerH && ar >= K.towerA) || hm >= K.tallH ? 2 : 1;
       const wall = pick(['oldWalls', 'homes', 'glass', 'big', 'stone'][k], q), roof = k === 1 && hm < K.tiledH && q2 < K.tiled ? pick('tiles', (q2 * 7.7) % 1)
-        : k === 1 && K.homeRoof != null ? wall.clone().lerp(ROOFG_, K.homeRoof[0]).multiplyScalar(K.homeRoof[1]) : pick(['oldRoofs', 'homeRoofs', 'towerRoofs', 'bigRoofs', 'stoneRoofs'][k], q2);   // (homeRoof: [share, times] a home's roof its walls' paint taken this share toward a warm mid grey (roofGrey) and darkened: darker than its walls, each building reads from above)
+        : k === 1 && K.homeRoof != null ? wall.clone().lerp(ROOFG_, K.homeRoof[0]).multiplyScalar(K.homeRoof[1])
+        : k === 1 && K.lowRoofs && hm < K.lowRoofH ? pick('lowRoofs', q2) : pick(['oldRoofs', 'homeRoofs', 'towerRoofs', 'bigRoofs', 'stoneRoofs'][k], q2);   // (lowRoofs: a home lower than lowRoofH, a walk-up or a lane house, in the old fabric's mid grey; a modern mid- or high-rise's light)   // (homeRoof: [share, times] a home's roof its walls' paint taken this share toward a warm mid grey (roofGrey) and darkened: darker than its walls, each building reads from above)
       for (let j = i0; j < i1; j++) { const c = nrm.getY(j) > .6 ? roof : wall; paint[j * 3] = c.r; paint[j * 3 + 1] = c.g; paint[j * 3 + 2] = c.b; kind[j] = k; }
       i0 = i1; };
     for (let i = 1; i <= n; i++) if (i === n || A.getX(i) !== A.getX(i - 1) || A.getY(i) !== A.getY(i - 1)) end(i); }
@@ -507,8 +510,9 @@ float townAt(vec2 uv){ vec4 h1 = texture2D(uHide, uv), h2 = texture2D(uHide2, uv
       float n0_ = fxLn(q_) + .5 * fxLn(q_ * 2.3 + 7.1), nx_ = fxLn(q_ + vec2(e_, 0.)) + .5 * fxLn((q_ + vec2(e_, 0.)) * 2.3 + 7.1) - n0_, nz_ = fxLn(q_ + vec2(0., e_)) + .5 * fxLn((q_ + vec2(0., e_)) * 2.3 + 7.1) - n0_;
       normal = normalize(normal - (ex_ * nx_ + ez_ * nz_) / e_ * ${todayL().water.ripple.toFixed(2)} * tw_ * fd_); }` : ''} }` : ''}`)
       .replace('#include <lights_fragment_end>', `#include <lights_fragment_end>${S && MAT && MAT.base && MAT.base.tex && todayL() && todayL().groundFill ? `
-  { float gk_ = (1. - wMask) * ${TS_GLSL()}; vec3 id_ = reflectedLight.indirectDiffuse;   // (todayLight groundFill: the ground's sky light [the share of its blue kept, times]: its cast shadows a soft neutral grey, the walls' shade still cool)
-    reflectedLight.indirectDiffuse = mix(id_, mix(vec3(dot(id_, vec3(.2126, .7152, .0722))), id_, ${todayL().groundFill[0].toFixed(2)}) * ${todayL().groundFill[1].toFixed(2)}, gk_); }` : ''}`)
+  { float gk_ = (1. - wMask) * ${TS_GLSL()}; vec3 id_ = reflectedLight.indirectDiffuse;   // (todayLight groundFill: the ground's sky light [the share of its blue kept, times, a lawn's times]: its cast shadows a soft neutral grey, light as the painting's, the walls' shade still cool)
+    float gn_ = smoothstep(.02, .06, diffuseColor.g - max(diffuseColor.r, diffuseColor.b));   // (a lawn keeps its own fill, groundFill[2]: lifted with the paving it washed pale)
+    reflectedLight.indirectDiffuse = mix(id_, mix(vec3(dot(id_, vec3(.2126, .7152, .0722))), id_, ${todayL().groundFill[0].toFixed(2)}) * mix(${todayL().groundFill[1].toFixed(2)}, ${(todayL().groundFill[2] ?? todayL().groundFill[1]).toFixed(2)}, gn_), gk_); }` : ''}`)
       .replace('#include <opaque_fragment>', `${relief ? 'outgoingLight = mix(outgoingLight, fxReliefLight(vFxW, outgoingLight, diffuseColor.rgb), 1. - wMask);   // the relief (fx.js)\n' : ''}${S && MAT && MAT.base && MAT.base.gloss ? `{ float cv_ = max(normalize(cameraPosition - vFxW).y, 0.);   // the resin's gloss: the room and its sky reflected, more as the view grazes it
     outgoingLight = mix(outgoingLight, pow(vec3(${MAT.base.gloss[2].map(x => x.toFixed(3)).join(', ')}), vec3(2.2)), wMask * (${MAT.base.gloss[0].toFixed(2)} + ${MAT.base.gloss[1].toFixed(2)} * pow(1. - cv_, 3.))${todayL() && todayL().water ? ` * (1. - ${TS_GLSL()})` : ''});${todayL() && todayL().water ? (G_ => `
     float tw_ = ${TS_GLSL()};   // (today's water: its own gloss, the sky in it)
@@ -1559,6 +1563,9 @@ ${FILM_PIC.material === 'clay' ? `
   { float l_ = dot(diffuseColor.rgb, vec3(.2126, .7152, .0722)); diffuseColor.rgb = mix(diffuseColor.rgb, mix(vec3(l_), diffuseColor.rgb, .35) * .8 + .1 * l_ + .03, .8 * vMute);   // a muted backdrop
     diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.22, 1.1, .88) + vec3(.07, .045, 0.), vFresh);${MAT ? '\n    diffuseColor.rgb *= 1. - .4 * vMute;   // (a material: today\'s city dimmed further behind a period city standing, the period city the subject)\n' : ''}${MAT && !depth ? FACADE_GLSL(S) : ''} }   // new: warm while new`);
     if (!u && MAT && !depth) sh.fragmentShader = sh.fragmentShader.replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\n  roughnessFactor = mix(roughnessFactor, .22, glass_);   // (glass: the sun\'s sheen on it)');
+    const WS_ = !u && MAT && !depth && todayL() && todayL().wallSun;   // (todayLight wallSun: the sun on today's painted walls this much brighter and warmer (rgb, times), its direct light only: a lit wall a warm cream, the shade side as it was)
+    if (WS_) sh.fragmentShader = sh.fragmentShader.replace('#include <lights_fragment_end>', `#include <lights_fragment_end>
+  if (abs(normalize(vWN).y) < .3) reflectedLight.directDiffuse *= mix(vec3(1.), vec3(${WS_.map(v => v.toFixed(3)).join(', ')}), (1. - glass_) * (1. - vMute));`);
     if (!u && MAT && !depth) sh.fragmentShader = sh.fragmentShader.replace('#include <opaque_fragment>', `{ float lw_ = dot(outgoingLight, vec3(.2126, .7152, .0722));   // the engraving on a lit wall: a groove keeps its shade however strong the light (on glass the sun's sheen had washed it out)
     outgoingLight *= 1. - .45 * eng_ * smoothstep(.35, 1., lw_); }
 #include <opaque_fragment>`); };
