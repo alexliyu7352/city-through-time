@@ -976,7 +976,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     if (today && ROOF_MESH) for (const RM of ROOF_MESH) { const M_ = new THREE.Matrix4(), p_ = new THREE.Vector3(), Z_ = new THREE.Matrix4().makeScale(0, 0, 0), rr = Math.max(r * .5, 30 * scale);   // (its roof pieces go with it)
       for (let n = 0; n < RM.count; n++) { RM.getMatrixAt(n, M_); p_.setFromMatrixPosition(M_); if (Math.hypot(p_.x - cx, p_.z - cz) < rr || inFoot(p_.x, p_.z)) RM.setMatrixAt(n, Z_); } RM.instanceMatrix.needsUpdate = true; }
     if (today && MASS_MESH) for (const m_ of MASS_MESH) { const B_ = m_.geometry.attributes.iBox, D_ = m_.geometry.attributes.iDim, rr = Math.max(r * .5, 30 * scale);   // (the massing's parts: flat on their base)
-      for (let n = 0; n < B_.count; n++) if (Math.hypot(B_.getX(n) - cx, B_.getY(n) - cz) < rr || inFoot(B_.getX(n), B_.getY(n))) D_.setW(n, D_.getZ(n)); D_.needsUpdate = true; }
+      for (let n = 0; n < B_.count; n++) if (Math.hypot(B_.getX(n) - cx, B_.getY(n) - cz) < rr || inFoot(B_.getX(n), B_.getY(n))) D_.setXYZW(n, 0, 0, D_.getZ(n), D_.getZ(n)); D_.needsUpdate = true; }
     if (today && RIM_MESH) { const P_ = RIM_MESH.geometry.attributes.position, rr = Math.max(r * .5, 30 * scale);   // (and the rims: folded to the ground)
       for (let i = 0; i < P_.count; i++) if (Math.hypot(P_.getX(i) - cx, P_.getZ(i) - cz) < rr || inFoot(P_.getX(i), P_.getZ(i))) P_.setY(i, S.ground(P_.getX(i), P_.getZ(i)) - 1e-4); P_.needsUpdate = true; }
     return { centre: [cx, cz], folded, height_k: +k.toFixed(3) };
@@ -1112,7 +1112,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     m.customProgramCacheKey = () => (ck ? ck.call(m) : '') + ' mass'; return m; };
   // today's buildings in schematic massing (todayLight massing), inside the data's envelope only: nothing outside the footprint, nothing
   // above the building's height; deterministic by the building's centre, by its height and its footprint's size, for any city:
-  // tower: from this height m a podium (podium: [its footprint's least half side m, the share of towers, its storeys [from, to], at most
+  // tower: from this height m a podium, on a box-like or round footprint only (a faceted tower keeps its own shaft, only its crown set in; podium: [its footprint's least half side m, the share of towers, its storeys [from, to], at most
   // this share of the height, the shaft's inset [share of the least half side, at least m, at most m]]) and a crown (crown: [always from
   // this height m, else the share, its storeys, its inset m]); set: a mid-rise's upper setback ([from this height m, the share, its
   // storeys [from, to], the inset [from, to] m, the share set in all round; else stepped back from one end]); step: a low building's
@@ -1121,29 +1121,31 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   const massPlan = (MS, R0) => { const { cx, cz, c, sn, y1, yb, hm, round, fits, hull } = R0; let { a, b } = R0;
     const hq = k => { const t = Math.sin(cx * 9.731e4 + cz * 3.173e4 + k * 78.233) * 43758.5453; return t - Math.floor(t); };
     const st = (y1 - yb) / hm * MS.storey, m = scale, L = (f, x) => f[0] + (f[1] - f[0]) * x;
-    const inside = (x, z, hu, hv, sh, mg) => { if (!sh) return fits(x, z, hu, hv, mg);
+    const inside = (x, z, hu, hv, sh, mg) => { if (!sh && hull) return fits(x, z, hu, hv, mg);   // (a convex outline: its corners inside it, the box is)
+      if (!sh) { for (const [p, q] of MASS_GRID) { const u = p * (hu + mg), v = q * (hv + mg); if (!fits(x + c * u - sn * v, z + sn * u + c * v, 0, 0, 0)) return false; } return true; }   // (a concave one: its corners, its sides' middles and its centre on its own top, no box over a courtyard)
       for (let k = 0; k < 12; k++) { const t = k * Math.PI / 6, u = Math.cos(t) * (hu + mg), v = Math.sin(t) * (hv + mg), X = x + c * u - sn * v, Z = z + sn * u + c * v; if (hull ? hullIn(hull, X, Z) < 0 : !fits(X, Z, 0, 0, 0)) return false; } return true; };
-    const sh = round ? 1 : 0, parts = []; let cut = null;
+    const sh = round ? 1 : 0, parts = []; let cut = null, kind = '';
     { let k = 0; for (; k < 12 && !inside(cx, cz, a, b, sh, 0); k++) { a *= .93; b *= .93; } if (k === 12) return null; }   // (the footprint's own box shrunk till it lies inside the outline: its extent's box pokes out of any outline not square to its axes)
     const R = { ...R0, a, b };
+    const within = () => true;   // (every part lies in that box: tested once, above)
     if (hm >= MS.tower) {
-      const P = MS.podium, C = MS.crown, pod = Math.min(a, b) >= P[0] * m && hq(1) < P[1], cro = hm >= C[0] || hq(3) < C[1];
+      const P = MS.podium, C = MS.crown, pod = ((round && hull.length >= 10) || R0.fill >= .85) && Math.min(a, b) >= P[0] * m && hq(1) < P[1], cro = hm >= C[0] || hq(3) < C[1];
       let ha = a, hb = b, top = y1;
       const hc = cro ? (C[2] + (hq(4) < .5 ? 1 : 0)) * st : 0;
       if (pod) { const hp = Math.min((P[2][0] + Math.floor(hq(2) * (P[2][1] - P[2][0] + 1))) * st, P[3] * (y1 - yb)), d = THREE.MathUtils.clamp(P[4][0] * Math.min(a, b), P[4][1] * m, P[4][2] * m);
-        if (a - d >= 4 * m && b - d >= 4 * m && inside(cx, cz, a - d, b - d, sh, .3 * m)) { ha = a - d; hb = b - d; cut = yb + hp; parts.push([cx, cz, sh, ha, hb, yb + hp, cro ? y1 - hc : y1]); } }
-      if (cro && ha - C[3] * m >= 3 * m && hb - C[3] * m >= 3 * m && inside(cx, cz, ha - C[3] * m, hb - C[3] * m, sh, .3 * m)) {
-        if (cut === null) cut = y1 - hc; parts.push([cx, cz, sh, ha - C[3] * m, hb - C[3] * m, y1 - hc, y1]); }
+        if (a - d >= 4 * m && b - d >= 4 * m && within(cx, cz, a - d, b - d, sh, .3 * m)) { ha = a - d; hb = b - d; cut = yb + hp; kind = 'podium'; parts.push([cx, cz, sh, ha, hb, yb + hp, cro ? y1 - hc : y1]); } }
+      if (cro && ha - C[3] * m >= 3 * m && hb - C[3] * m >= 3 * m && within(cx, cz, ha - C[3] * m, hb - C[3] * m, sh, .3 * m)) {
+        if (cut === null) cut = y1 - hc; kind += 'crown'; parts.push([cx, cz, sh, ha - C[3] * m, hb - C[3] * m, y1 - hc, y1]); }
       else if (parts.length) parts[0][6] = y1; }
     if (!parts.length && hm >= MS.set[0] && hq(5) < MS.set[1]) {   // an upper setback, all round or stepped back from one end
       const S_ = MS.set, ns = S_[2][0] + Math.floor(hq(6) * (S_[2][1] - S_[2][0] + 1)), d = L(S_[3], hq(8)) * m;
       if (y1 - ns * st - yb >= st) { cut = y1 - ns * st;
-        if (round || hq(7) < S_[4]) { if (a - d >= 3 * m && b - d >= 3 * m && inside(cx, cz, a - d, b - d, sh, .3 * m)) parts.push([cx, cz, sh, a - d, b - d, cut, y1]); }
-        else parts.push(...stepPart(R, L(MS.step[1], hq(10)), hq(11), cut, inside)); } }
-    if (!parts.length && hm < MS.set[0] && hq(9) < MS.step[0] && y1 - st - yb >= st && !round) { cut = y1 - st; parts.push(...stepPart(R, L(MS.step[1], hq(10)), hq(11), cut, inside)); }
-    return parts.length ? { cut, parts } : null; };
+        if (round || hq(7) < S_[4]) { kind = 'setback'; if (a - d >= 3 * m && b - d >= 3 * m && within(cx, cz, a - d, b - d, sh, .3 * m)) parts.push([cx, cz, sh, a - d, b - d, cut, y1]); }
+        else { kind = 'setback-end'; parts.push(...stepPart(R, L(MS.step[1], hq(10)), hq(11), cut, within)); } } }
+    if (!parts.length && hm < MS.set[0] && hq(9) < MS.step[0] && y1 - st - yb >= st && !round) { cut = y1 - st; kind = 'step'; parts.push(...stepPart(R, L(MS.step[1], hq(10)), hq(11), cut, within)); }
+    return parts.length ? { cut, parts, kind } : null; };
   // the parts as meshes and the main masses cut (aCut: a byte a vertex, 0 none, else the share of its height, of 255, where it ends)
-  const MASS = { parts: 0, bytes: 0 };
+  const MASS = { parts: 0, bytes: 0, kinds: {}, kept: 0 }, MASS_GRID = [[-1, -1], [1, 1], [1, -1], [-1, 1], [0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]];   // (the corners first: most boxes that fail, fail there)
   const massMesh = (parts, cuts) => {
     const MS = todayL() && todayL().massing;
     for (const G_ of [cityMesh && cityMesh.geometry, FPT.mesh && FPT.mesh.geometry]) { if (!G_) continue; let A_ = G_.attributes.aCut;
@@ -1165,7 +1167,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       const [mat, depth] = todayMats(); const mesh = new THREE.Mesh(g, massMat(mat, false)); mesh.customDepthMaterial = massMat(depth, true);
       mesh.castShadow = mesh.receiveShadow = true; mesh.frustumCulled = false; mesh.layers.set(L); scene.add(mesh); MASS_MESH.push(mesh); }
     for (const G_ of [cityMesh && cityMesh.geometry, FPT.mesh && FPT.mesh.geometry]) if (G_ && G_.attributes.aCut) MASS.bytes += G_.attributes.aCut.array.byteLength;
-    console.log('massing', JSON.stringify({ parts: MASS.parts, cut: cuts.length, MB: +(MASS.bytes / 1e6).toFixed(1) })); };
+    console.log('massing', JSON.stringify({ parts: MASS.parts, cut: cuts.length, kinds: MASS.kinds, protected: MASS.kept, MB: +(MASS.bytes / 1e6).toFixed(1) })); };
   const stepPart = ({ cx, cz, c, sn, a, b, y1 }, f, side, y0, inside) => {   // (the higher part over f of the long side, from one end, a hair in from its walls)
     const lu = a >= b, A = lu ? a : b, B = lu ? b : a, i = .3 * scale, hl = f * A - i, hs = B - i, o = (side < .5 ? -1 : 1) * (A - f * A), u = lu ? o : 0, v = lu ? 0 : o;
     const x = cx + c * u - sn * v, z = cz + sn * u + c * v, hu = lu ? hl : hs, hv = lu ? hs : hl;
@@ -1178,7 +1180,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   const onTris = (T, x, z) => T.some(([ax, az, bx, bz, cx, cz]) => { const d1 = (x - bx) * (az - bz) - (ax - bx) * (z - bz), d2 = (x - cx) * (bz - cz) - (bx - cx) * (z - cz), d3 = (x - ax) * (cz - az) - (cx - ax) * (z - az);
     return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); });
   const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [], rims = [], units = [], parts = [], cuts = [];
-    const MS = todayL() && todayL().massing; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
+    const MS = todayL() && todayL().massing; MASS.kinds = {}; MASS.kept = 0; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
     const geoOf = P => cityMesh && cityMesh.geometry.attributes.position === P ? cityMesh.geometry : FPT.mesh && FPT.mesh.geometry.attributes.position === P ? FPT.mesh.geometry : null;
     const RU = MAT.roofUnits || null;   // (small rooftop units: below)
     // a batch of stills: a record made again takes its pieces as they were made (today's rooftops after the replacement footprints
@@ -1206,10 +1208,11 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         for (const [p, q] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { const X = x + c * (hu + m) * p - sn * (hv + m) * q, Z = z + sn * (hu + m) * p + c * (hv + m) * q; if (hull ? hullIn(hull, X, Z) < 0 : !onTris(tops, X, Z)) return false; } return true; };
       let at = (u, v) => [cx + c * u - sn * v, cz + sn * u + c * v], placed = [];
       if (MS && hm >= MS.min[0] && Math.min(a, b) >= MS.min[1] * scale) { const G_ = geoOf(P_), C_ = G_ && G_.attributes.aCtr;   // the massing (massPlan): its parts, its main mass cut
-        if (G_ && G_.attributes.color && G_.attributes.aBase && !(FPT.protect && FPT.protect.has(Math.fround(C_.getX(i0)) + ',' + Math.fround(C_.getY(i0))))) {
-          const yb = G_.attributes.aBase.getX(i0), round = !rect && !!hull && hull.length >= 10 && hull.every(([x, z]) => { const u = ((x - cx) * c + (z - cz) * sn) / a, v = (-(x - cx) * sn + (z - cz) * c) / b; return Math.abs(Math.hypot(u, v) - 1) < .1; });   // (an ellipse: every point of its outline on it)
-          const M_ = y1 - yb > 1e-7 && massPlan(MS, { cx, cz, c, sn, a, b, y1, yb, hm, rect, round, fits, hull });
-          if (M_) { cuts.push([G_, i0, i1, Math.max(1, Math.min(254, Math.round(255 * (M_.cut - yb) / (y1 - yb))))]);
+        const pr_ = FPT.protect && FPT.protect.has(Math.fround(C_.getX(i0)) + ',' + Math.fround(C_.getY(i0))); if (pr_) MASS.kept++;
+        if (G_ && G_.attributes.color && G_.attributes.aBase && G_.attributes.aData.getW(i0) < .5 && !pr_) {   // (a building of today's, not a mound, not a reviewed parent)
+          const yb = G_.attributes.aBase.getX(i0), round = !rect && !!hull && hull.length >= 6 && hull.every(([x, z]) => { const u = ((x - cx) * c + (z - cz) * sn) / a, v = (-(x - cx) * sn + (z - cz) * c) / b; return Math.abs(Math.hypot(u, v) - 1) < .1; });   // (an ellipse: every point of its outline on it)
+          const M_ = y1 - yb > 1e-7 && massPlan(MS, { cx, cz, c, sn, a, b, y1, yb, hm, rect, round, fits, hull, fill: ar_ / (4 * a * b) });
+          if (M_) { cuts.push([G_, i0, i1, Math.max(1, Math.min(254, Math.round(255 * (M_.cut - yb) / (y1 - yb))))]); MASS.kinds[M_.kind] = (MASS.kinds[M_.kind] || 0) + 1;
             for (let k = nl0; k < lips.length; k++) lips[k][1] = M_.cut; for (let k = nr0; k < rims.length; k++) rims[k][1] = M_.cut;   // (its parapet round the main mass's roof)
             let wi = i0, ri = i0; const NN = G_.attributes.normal; for (let i = i0; i < i1; i++) { if (Math.abs(NN.getY(i)) < .3 && wi === i0) wi = i; if (NN.getY(i) > .6) { ri = i; break; } }
             for (const q of M_.parts) { parts.push([...q, th, G_, i0, wi, ri]); if (!q[2]) lips.push([q[0], q[6], q[1], 2 * q[3] * .995, ex * scale, 2 * q[4] * .995, yr, th]); }
