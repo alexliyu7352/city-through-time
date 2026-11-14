@@ -266,7 +266,13 @@ cameras (the tool's header gives the cameras' format).
   or unknown palette: a city's colours are its region's, never a default. A period city of another region or time names its own:
   its node's `city: { palette: modern }` (a city's mills or concession, say). Absent, or `kind: white`, the film is the white model and
   film.json has no `look` key. The page's `&look=white|mini` (with `&palette=` and `&today=` for a film without `film.look`) shows a
-  film in the other look without compiling it again; tools/still.mjs, lookshots and phonecheck pass it with `--q`.
+  film in the other look without compiling it again; render/still.mjs, lookshots and phonecheck pass it with `--q`.
+- **Stills of the look at fixed cameras** (`&cam=tx,ty,tz,az,el,d,fov`, a picture's own keys in `&pic=`, engine/mini.js
+  FILM_PIC): a look change is judged on a set of shots, near pairs of cameras for crawl, before and after. Take a set on one page
+  load with `node render/still.mjs <slug> <t> --q '<the look>' --shots <shots.json>` (its header gives the file): the city loads
+  once, and each shot is the picture its own run of still.mjs would give. Shots whose page differs in more than the camera and
+  the look's per-shot keys (the sun's side) are taken on a page of their own. The ambient occlusion's noise is drawn anew on
+  every page load, so two runs of the same still differ faintly everywhere: give both `--seed N` to compare them pixel for pixel.
 - **The colour look's sun is chosen per shot.** By default it shines from behind the camera and to its left (the look's
   `sunLeft`), taken from the bearing of the node's camera as the node starts and held through the node, so the faces turned to the
   camera are lit and a move never swings the shadows. A node that needs another light names it: `sun: <bearing>` (degrees, the

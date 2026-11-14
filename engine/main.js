@@ -307,7 +307,8 @@ const fmtYear = y => { const r = Math.round(y); return yearAs(y, false) ?? (FILM
 // ------------------------------------------------------------------ camera
 const CAM = track(FILM.camera);
 const tgt = new THREE.Vector3();
-const CAMQ = QS.has('cam') ? QS.get('cam').split(',').map(Number) : null;   // stills: a fixed camera "tx,ty,tz,az,el,d"
+const camQ = Q => Q.has('cam') ? Q.get('cam').split(',').map(Number) : null;   // stills: a fixed camera "tx,ty,tz,az,el,d"
+let CAMQ = camQ(QS);   // (a batch of stills: each shot's own, window.SHOT)
 let camDist = 1, camElev = 30;
 function setCamera(t) {
   let [tx, ty, tz, az, el, d, fov] = CAMQ || CAM(t);
@@ -769,6 +770,18 @@ window.DRAWN = () => OV.drawn();   // every text of the frame TEXTS last drew (t
 // tools/camcheck.mjs: the camera at time t without drawing (position, target, near plane, distance)
 if (QS.has('export')) window.EXPORT = { S, THREE, CITYMESH };   // (tools/blender/scene_export.mjs: the scene as it stands, for an offline render)
 window.CAMAT = t => { LV = liveAt(t); setCamera(t); return { p: camera.position.toArray(), tg: tgt.toArray(), near: camera.near, d: camDist, fov: camera.fov }; };   // (the camera render(t) sets, a living moment's shot included, whatever was drawn last)
+// render/still.mjs --shots: more stills on this page, each as a page of its own would take it. fits(q): whether this page can draw
+// the shot whose page query is q (this page's but for its camera, cam, and the look's per-shot picture keys: engine/mini.js
+// STILL_KEYS); go(q): its camera and keys, what the look made round the last view made again round its own, and this page's first
+// frame drawn again (the look makes them round the first frame it draws, as on its load)
+const T_LOAD = QS.has('t') ? +QS.get('t') : 0;
+const shotKey = Q => { let pic = Q.get('pic');
+  if (pic != null) try { const o = JSON.parse(pic); for (const k of MINI ? MINI.still.keys : []) { const [a, b] = k.split('.');   // (a per-shot key: there or not, whatever its value)
+    if (!b && a in o) o[a] = 0; else if (b && o[a] && typeof o[a] === 'object' && b in o[a]) o[a][b] = 0; } pic = JSON.stringify(o); } catch (e) { /* as written */ }
+  return JSON.stringify([[...Q].filter(([k]) => k !== 'cam' && k !== 'pic').map(([k, v]) => k + '=' + v).sort(), pic]); };
+window.SHOT = { fits: q => shotKey(new URLSearchParams(q)) === shotKey(QS),
+  go: async q => { const Q = new URLSearchParams(q); let pic = {}; try { pic = JSON.parse(Q.get('pic') || '{}'); } catch (e) { /* as on its own page: none */ }
+    CAMQ = camQ(Q); if (MINI) MINI.still.next(pic); await window.render(T_LOAD); } };
 
 // the film's fonts (FILM.fonts: the faces compile found in fonts/ for each job), all loaded before the first frame
 if (!FREE) {
@@ -782,7 +795,7 @@ if (!FREE) {   // single-line subtitle check with the real fonts (tools/subcheck
   const cues = (FILM.cues || []).map(q => { const wa = m(q.a, 'a'), wb = m(q.b, 'b'); return { id: q.id, a: q.a, b: q.b, wa, wb, ok: wa <= SUB.safe && wb <= SUB.safe }; });
   window.SUBCHECK = { safe: SUB.safe, cues, ok: cues.every(q => q.ok) };
 }
-await window.render(QS.has('t') ? +QS.get('t') : 0);
+await window.render(T_LOAD);
 // warm-up: draw every era city once so its buffers and programs are on the GPU before playback (else the first frame it appears stalls)
 {
   const keep = Object.values(S.eras).map(E => [E, E.mesh.visible, E.u.uEraT.value, E.u.uEraFallR.value]);
