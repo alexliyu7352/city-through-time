@@ -283,9 +283,10 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick; a large low building pale; an office tower (from
       // towerH m and towerA m2 of footprint, or any from tallH m) in tinted glass, pale blue-green or silver; the rest, most of the
       // city, homes in soft paints (cream, ivory, sand, pale peach, salmon, light grey), a high-rise's roof light cream, a lower
-      // one's (lowRoofH) a light cool grey (apart from the warm walls: a block reads as walls and a roof), the walk-ups' (lower than tiledH) a share of them (tiled) in terracotta tile; stone, a
-      // civic or old stone building (from the data's first stoneSpan years, stoneA m2 or more, its outline filling stoneC of its
-      // extent, lower than stoneH), beige to off-white. Every roof by its building's kind and height, never by the camera's distance (a roof would change colour as the camera moves)
+      // one's (lowRoofH) a light cool grey (apart from the warm walls: a block reads as walls and a roof), the walk-ups'
+      // (lower than tiledH) a share of them (tiled) in terracotta tile; stone, a civic or old stone building (from the data's
+      // first stoneSpan years, stoneA m2 or more, its outline filling stoneC of its extent, lower than stoneH), beige to
+      // off-white. Every roof by its building's kind and height, never by the camera's distance (a roof would change colour as the camera moves)
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
         kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: null, roofGrey: '#a8a8a8', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
           stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'], stoneRoofs: ['#a6a39e', '#9e9c99', '#aba8a3'],
