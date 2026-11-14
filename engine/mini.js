@@ -993,9 +993,13 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // city's). Their rooftops join today's (roofScan, split by child); a detailed model's fold reaches them too (FOLDS). A batch of
   // stills (nextShot) chooses them again for each shot, as the shot's own page would: the sidecar kept once read again, the
   // replacements made again where the choice differs from the shot before's
-  const FPT = { tried: false, mesh: null, skip: 0, ms: 0, bytes: 0, side: null, keep: false, sel: null, roofs0: null, skipNow: false }, FOLDS = [];
+  const BATCH = typeof location !== 'undefined' && new URLSearchParams(location.search).has('shots');   // (a page that takes a batch of stills, render/still.mjs --shots: it keeps what a next shot takes again)
+  const FPT = { tried: false, mesh: null, skip: 0, ms: 0, bytes: 0, side: null, keep: BATCH, sel: null, roofs0: null, skipNow: false }, FOLDS = [];
   const sidecar = () => FPT.side ||= fetch(dataDir + 'today_footprints.json').then(r => r.ok ? r.json() : null).catch(() => null);   // (its promise: kept while a batch of stills chooses again)
   const footprintsWait = () => !FPT.tried && film && MAT && dataDir && cityMesh && S.buildTodayFootprints && !(todayL() && todayL().footprints === false) && cityMesh.visible && TODAY_K.value.y > .5;
+  // whether today's replacement footprints come in this frame (render): its rooftops are then made once, after them, not made
+  // before them and dropped again
+  const footprintsDue = async () => { if (!footprintsWait()) return false; const s_ = await sidecar(); return !!s_ && s_.enabled === true; };
   // today's materials as colour() makes them (colourToday's, on the film's deformation), [colour, shadow]: a replacement
   // footprint's, or today's city's own with its replaced buildings hidden (skip). The footprints' are made first and today's city's
   // after them, after whatever was made round the view before them, as on a page of its own: the renderer draws the objects in the
@@ -1082,6 +1086,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // today's rooftops (a material's): a parapet (a rim a metre high) round every simple flat roof from 8 m, a plant room on those from 20 m; they follow the
   // year and stand only while today's city is the subject (TODAY_K)
   let ROOF_MESH = null;
+  const ROOF_KEEP = { n: -1, m: null };   // (roofsMesh, a batch of stills: each record's pieces as last made, while the detailed models stand as they did)
   let RIM_MESH = null;   // (the convex roofs' rims, one mesh)
   const dropRoofs = () => { for (const m of [...(ROOF_MESH || []), ...(RIM_MESH ? [RIM_MESH] : [])]) { scene.remove(m); m.geometry.dispose(); } ROOF_MESH = RIM_MESH = null; };   // (made again by roofsMesh)
   const foldIn = (g, f) => { const P = g.attributes.position, C = g.attributes.aCtr; let hit = false;   // (a detailed model's fold, swap: what stands at its centre or inside its footprint to the ground)
@@ -1093,7 +1098,12 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); });
   const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [], rims = [], units = [];
     const RU = MAT.roofUnits || null;   // (small rooftop units: below)
-    for (let [cx, cz, th, a, b, y1, yr, hm, h0, i0, i1, P_] of ROOFS) {   // (P_: the record's own positions, today's city's or a replacement footprint's)
+    // a batch of stills: a record made again takes its pieces as they were made (today's rooftops after the replacement footprints
+    // chosen for the next shot), while the detailed models stand as they did (FOLDS: they fold records and take their pieces)
+    if (BATCH && ROOF_KEEP.n !== FOLDS.length) { ROOF_KEEP.n = FOLDS.length; ROOF_KEEP.m = new WeakMap(); }
+    let rec_ = null; const kept_ = () => { if (rec_) ROOF_KEEP.m.set(rec_[0], [list.slice(rec_[1]), lips.slice(rec_[2]), rims.slice(rec_[3]), units.slice(rec_[4])]); rec_ = null; };
+    for (const r_ of ROOFS) { kept_(); const k_ = BATCH && ROOF_KEEP.m.get(r_); if (k_) { list.push(...k_[0]); lips.push(...k_[1]); rims.push(...k_[2]); units.push(...k_[3]); continue; }
+      rec_ = BATCH ? [r_, list.length, lips.length, rims.length, units.length] : null; let [cx, cz, th, a, b, y1, yr, hm, h0, i0, i1, P_] = r_;   // (P_: the record's own positions, today's city's or a replacement footprint's)
       const c = Math.cos(th), sn = Math.sin(th);
       { let u0 = 1e9, u1 = -1e9, v0 = 1e9, v1 = -1e9;   // (its outline's exact extent along its own axes)
         for (let i = i0; i < i1; i++) { const x = P_.getX(i), z = P_.getZ(i), u = x * c + z * sn, v = -x * sn + z * c; if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v; }
@@ -1124,6 +1134,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
           const u = (hh(30 + tries) * 2 - 1) * Math.max(0, a - hu - 1.4 * scale), v = (hh(40 + tries) * 2 - 1) * Math.max(0, b - hv - 1.4 * scale), [x, z] = at(u, v);
           if (placed.some(([pu, pv, ph, pw]) => Math.abs(u - pu) < ph + hu + .6 * scale && Math.abs(v - pv) < pw + hv + .6 * scale) || !fits(x, z, hu, hv, .8 * scale)) continue;
           units.push([x, y1, z, 2 * hu, (RU.h[0] + RU.h[1] * hh(50 + tries)) * ex * scale, 2 * hv, yr, th, hh(60 + tries)]); placed.push([u, v, hu, hv]); k++; } } }
+    kept_();
     const ring = (() => { const w = .035, o = new THREE.Shape([[-.5, -.5], [.5, -.5], [.5, .5], [-.5, .5]].map(([x, y]) => new THREE.Vector2(x, y))), h = new THREE.Path([[-.5 + w, -.5 + w], [-.5 + w, .5 - w], [.5 - w, .5 - w], [.5 - w, -.5 + w]].map(([x, y]) => new THREE.Vector2(x, y)));
       o.holes.push(h); return new THREE.ExtrudeGeometry(o, { depth: 1, bevelEnabled: false }).rotateX(-Math.PI / 2); })();   // (a parapet: the roof's rim, 3.5 % of each side wide)
     const mat = new THREE.MeshStandardMaterial({ color: '#e9e6df', roughness: .9 }); mat.onBeforeCompile = sh => { sh.uniforms.uTodayK = TODAY_K; sh.uniforms.uRoofOn = ROOF_ON;
@@ -1271,7 +1282,7 @@ vec4 sbOver(vec4 d, vec3 c, float a){ return vec4(c * a + d.rgb * (1. - a), a + 
     for (const m of hid) m.visible = true; REFL.T.value = RF.rt.texture; }
   async function render({ target, d, sharp = 0, sunAz = null }) {   // (sunAz: { az, own } the film's sun for this moment, main.js SUN_AT)   // (sharp: 0..1, a living moment's picture up, sharp throughout)
     if (film && MAT && MAT.base && MAT.base.ground_in && dataDir) await greenData(dataDir);   // (a city's green and streets, before its first frame)
-    todayNow(); if (film && MAT && MAT.roofs) roofsMesh(); if (film && MAT && dataDir) streetsMesh();
+    todayNow(); if (film && MAT && MAT.roofs && !(await footprintsDue())) roofsMesh(); if (film && MAT && dataDir) streetsMesh();   // (the rooftops come after today's replacement footprints, when they come in this frame)
     { const on_ = TODAY_K.value.y > .5 && TODAY_K.value.z <= .3 && ROOF_ON.value > .5;   // (today's rooftops not drawn at all while today's city is not the subject: hundreds of thousands of instances folded to nothing in the shader still cost a period city's frame)
       for (const m_ of [...(ROOF_MESH || []), ...(RIM_MESH ? [RIM_MESH] : [])]) m_.visible = on_;
       for (const m_ of STREET_MESH || []) m_.visible = TODAY_K.value.y > .5 && TODAY_K.value.z <= .3; }   // (nor today's streets: their vertices folded away in a period city's frames, as the rooftops')

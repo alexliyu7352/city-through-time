@@ -10,6 +10,7 @@
 // { "q": "<the shot's own page query, over --q: e.g. cam=tx,ty,tz,az,el,d,fov&pic={..}>", "prefix": "<its files' prefix (--prefix)>",
 // "out": "<its folder (--out)>" }. A page takes the shots whose query is its own but for the camera (cam) and the look's per-shot
 // picture keys (engine/mini.js STILL_KEYS, e.g. the sun's side); the others open a page of their own, in turn (engine/main.js SHOT).
+// Such a page carries &shots: the look keeps what a next shot takes again (the footprints' sidecar, each rooftop's pieces).
 // --seed N: the page's Math.random seeded (the ambient occlusion's noise is drawn at random on every page load: two runs of a still
 // agree pixel for pixel only with the same seed, a shot of a batch and its own run alike).
 import fs from 'fs'; import path from 'path';
@@ -53,7 +54,7 @@ if (shotsFile) {
   let list; try { list = JSON.parse(fs.readFileSync(shotsFile, 'utf8')); } catch (e) { console.error(`still.mjs: --shots ${shotsFile}: ${e.message}`); process.exit(2); }
   if (!Array.isArray(list) || !list.length || list.some(s => !s || typeof s !== 'object' || typeof (s.q ?? '') !== 'string' || ['prefix', 'out'].some(k => s[k] != null && typeof s[k] !== 'string'))) {
     console.error('still.mjs: --shots wants a list of { "q": "<page query>", "prefix": "<file prefix>", "out": "<folder>" }'); process.exit(2); }
-  SHOTS = list.map(s => { const Q = new URLSearchParams(q); for (const [k, v] of new URLSearchParams(s.q || '')) Q.set(k, v);
+  SHOTS = list.map(s => { const Q = new URLSearchParams(q); for (const [k, v] of new URLSearchParams(s.q || '')) Q.set(k, v); Q.set('shots', '1');   // (shots: the page keeps what a next shot takes again)
     return { q: Q.toString(), prefix: s.prefix ?? prefix, out: s.out || jobs[0][0] }; });
 }
 for (const d of new Set([...jobs.map(([d]) => d), ...(SHOTS || []).map(s => s.out)])) fs.mkdirSync(d, { recursive: true });

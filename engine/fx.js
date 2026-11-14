@@ -277,11 +277,13 @@ export function openTest(renderer, meshes, cx, cz, R, r) {
 // trees: round crowns and (by T.cypress) tall narrow cypresses, in groves and alone, on the open land and in the city's gardens;
 // with fx land, also standing close in the land's woods (T.woods(x, z): 0..1, the ground's own woods, woodsFn). T: size, keep
 // (the share of places kept), dark (lightness), layer (the look's), tone ('mini': greens; 'film': the white model's pale sage)
+const WATER_PX = new WeakMap();   // (plantTrees: the water map's pixels, read once)
 export function plantTrees(scene, renderer, sources, U, PW, PD, centre, R, count, scale, T) {
   if (T.grid) R = Math.min(R, T.reach || R);
   const open = openTest(renderer, sources, centre.x, centre.z, R, 4.5 * scale);
   const img = U.uWater.value && U.uWater.value.image; let wpx = null, ww = 0, wh = 0;
-  if (img) { const cv = document.createElement('canvas'); cv.width = ww = img.width; cv.height = wh = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0); wpx = g.getImageData(0, 0, ww, wh).data; }
+  if (img) { let px = WATER_PX.get(img); if (!px) { const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0); WATER_PX.set(img, px = g.getImageData(0, 0, img.width, img.height)); }
+    wpx = px.data; ww = px.width; wh = px.height; }   // (trees planted again round a new view read the same pixels)
   const wet = (x, z) => { if (!wpx) return false; const u = Math.floor((x / PW + .5) * ww), v = Math.floor((z / PD + .5) * wh); return u < 0 || v < 0 || u >= ww || v >= wh || wpx[(v * ww + u) * 4] > 90; };
   const h = 11 * scale, r = 3.8 * scale;
   const kinds = [   // (T.facets, the colour film: a model's trees, each crown a few big facets)
