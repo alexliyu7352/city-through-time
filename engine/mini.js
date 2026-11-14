@@ -263,11 +263,11 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.36, 1.2, .92], groundFill: [.45, 3, 1.75, [.6, 1.75]], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: .5, parkTrees: [1, 1.1, [.6, .8, 1, 1.25, 1.5], [.47, .56]], bloom: [9, 0], dof: 1, band: 1,
+      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.36, 1.2, .92], groundFill: [.45, 3.6, 1.75, [.6, 1.75]], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.09, ao: [.5, .2], parkTrees: [1, 1.1, [.6, .8, 1, 1.25, 1.5], [.47, .56]], bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
-        far: [2.2, 6, .45, '#efdcd6'], farWide: [.35, .55, .35, 2.6, .7, '#f6dcc4'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
-        board: [.35, .345, .345], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.63, .60, .59], kerb: [.86, .85, .82],
-        streets: { asphalt: '#747679', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.55, .62, .26], [.49, .57, .23]],   // (streets: geometry, streetsMesh; the raster's share 0)
+        far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
+        board: [.355, .345, .335], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.535, .505, .48], kerb: [.86, .85, .82],
+        streets: { asphalt: '#505154', pavement: '#65625d', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.49, .575, .22], [.44, .525, .195]],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.32, .61, .61], deep: [.22, .52, .52], reach: 15, rough: .45, ripple: .08, gloss: [.03, .4, [.62, .86, .88]], refl: [.2, .3], sparkle: [0, 2.5, .8, .58] },
         bank: { stone: [.74, .70, .66], w: 2.5, prom: [.50, .48, .47], pw: 14, line: .3 },
         trees: [[.38, .53, .23], [.45, .59, .26], [.31, .46, .21], [.26, .40, .22]],
@@ -282,17 +282,16 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // today's buildings painted by kind (colourToday kinds; FACADE_GLSL draws each kind's facade): the old low fabric (lower than
       // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick; a large low building pale; an office tower (from
       // towerH m and towerA m2 of footprint, or any from tallH m) in tinted glass, pale blue-green or silver; the rest, most of the
-      // city, homes in soft paints (cream, ivory, sand, pale peach, light grey), a mid- or high-rise's roof light cream or greige,
-      // a lower one's (lowRoofH) the old fabric's mid grey, the walk-ups' (lower than tiledH) a share of them (tiled) in
-      // terracotta tile; stone, a civic or old stone building (from the data's first stoneSpan years, stoneA m2 or more, its
-      // outline filling stoneC of its extent, lower than stoneH), beige to off-white. Every roof by its building's kind and
-      // height, never by the camera's distance (a roof would change colour as the camera moves)
+      // city, homes in soft paints (cream, ivory, sand, pale peach, salmon, light grey), a high-rise's roof light cream, a lower
+      // one's (lowRoofH) a warm greige, the walk-ups' (lower than tiledH) a share of them (tiled) in terracotta tile; stone, a
+      // civic or old stone building (from the data's first stoneSpan years, stoneA m2 or more, its outline filling stoneC of its
+      // extent, lower than stoneH), beige to off-white. Every roof by its building's kind and height, never by the camera's distance (a roof would change colour as the camera moves)
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
         kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: null, roofGrey: '#a8a8a8', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
           stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'], stoneRoofs: ['#a6a39e', '#9e9c99', '#aba8a3'],
-          homes: ['#f6c0b0', '#f2b8a2', '#f6e0c4', '#f8efe2', '#f4cbb4', '#d4dde8', '#fbf0e2', '#efbdb2', '#f4d2bc'], homeRoofs: ['#e2dbd0', '#d9d2c6', '#e6e0d6', '#d4cec4'], lowRoofH: 30, lowRoofs: ['#8e8d8c', '#888989', '#939291', '#8b8b8b'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
-          oldWalls: ['#dccfc2', '#d2c6b8', '#e6bca8', '#e2d6c8', '#dcb4a2'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
-          big: ['#ece2d4', '#e2dcd2', '#efe0cc'], bigRoofs: ['#c9c4bb', '#c0bdb7', '#cec8be'],
+          homes: ['#f8d0c6', '#f6c8bc', '#f7d4cc', '#f8efe2', '#f6d2c2', '#d4dde8', '#f8dccf', '#f4cbc4', '#f5d6c6', '#f6cdc6'], homeRoofs: ['#e2dbd0', '#d9d2c6', '#e6e0d6', '#d4cec4'], lowRoofH: 45, lowRoofs: ['#a0988f', '#999289', '#a69d93', '#9c958d'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
+          oldWalls: ['#dccfc2', '#d2c6b8', '#ecc8b6', '#e2d6c8', '#e6c2b2'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
+          big: ['#ece2d4', '#f2d8ca', '#efe0cc'], bigRoofs: ['#c9c4bb', '#c0bdb7', '#cec8be'],
           glass: ['#adbed0', '#b4c3d4', '#bbc6d0', '#a9bacc', '#b8c6d4'], towerRoofs: ['#d6d4cf', '#cccbc7'] } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
@@ -1213,7 +1212,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         if (!SKY_C0) SKY_C0 = [sky.color.clone(), sky.groundColor.clone()];
         sky.color.copy(SKY_C0[0]).lerp(new THREE.Color(L_.skyC), ts_); sky.groundColor.copy(SKY_C0[1]).lerp(new THREE.Color(L_.skyGround), ts_);
         sky.intensity *= THREE.MathUtils.lerp(1, L_.sky, ts_); sun.intensity *= THREE.MathUtils.lerp(1, L_.sun, ts_);
-        FP.dof.aoAmt = THREE.MathUtils.lerp(FILM_PIC.ao, L_.ao, ts_); FP.bloom.threshold = THREE.MathUtils.lerp(2.2, L_.bloom[0], ts_); FP.bloom.strength = THREE.MathUtils.lerp(.1, L_.bloom[1], ts_);
+        FP.dof.aoAmt = THREE.MathUtils.lerp(FILM_PIC.ao, byD(L_.ao, d), ts_);   // (todayLight ao: a number, or [close, wide] eased by the shot's distance: a wide shot's gaps between buildings not sunk in dark) FP.bloom.threshold = THREE.MathUtils.lerp(2.2, L_.bloom[0], ts_); FP.bloom.strength = THREE.MathUtils.lerp(.1, L_.bloom[1], ts_);
         if (L_.sunC) sun.color.lerp(new THREE.Color(L_.sunC), ts_);
         FP.vig.uniforms.uExpo.value = THREE.MathUtils.lerp(1, L_.exposure ?? 1, ts_);   // (the whole picture's exposure)
         if (FP.dof.coc.material.uniforms.uEdge) { const u_ = FP.dof.coc.material.uniforms, rt_ = FP.dof.rt; u_.uEdge.value = (L_.edge || 0) * ts_; u_.uPx.value.set(1 / rt_.width, 1 / rt_.height);
@@ -1221,8 +1220,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         FP.vig.uniforms.uGrain.value = (L_.grain || 0) * ts_; FP.vig.uniforms.uFilmic.value = (L_.filmic || 0) * ts_;
         FP.dof.aper *= THREE.MathUtils.lerp(1, L_.dof ?? 1, ts_); FP.dof.band *= THREE.MathUtils.lerp(1, L_.band ?? 1, ts_);
         if (L_.haze) { fog.near = THREE.MathUtils.lerp(fog.near, d * L_.haze[0], ts_); fog.far = THREE.MathUtils.lerp(fog.far, d * L_.haze[1], ts_); }   // (today's haze as a fog)
-        const ua_ = FP.dof.coc.material.uniforms; if (ua_.uAir) { const A_ = L_.air; ua_.uAir.value.set(d * A_[0], d * A_[1], A_[2] * scale, ts_); ua_.uAirC.value.set(L_.dome ? L_.dome[0] : L_.fogC); let F_ = L_.far || [1, 2, 1, '#ffffff'], FC_ = new THREE.Color(F_[3]); if (L_.far && L_.farWide) { const W_ = L_.farWide, k_ = THREE.MathUtils.smoothstep(d, W_[0], W_[1]); F_ = [0, 1, 2].map(i => THREE.MathUtils.lerp(F_[i], W_[2 + i], k_)); if (W_[5]) FC_.lerp(new THREE.Color(W_[5]), k_); }   // (todayLight farWide: [from, whole: the shot's distance; far's from, whole, share kept and tint there]: a wide shot's city through more air, lighter, warmer and softer from nearer)
-          ua_.uAirF.value.set(d * F_[0], d * F_[1], F_[2], L_.far ? ts_ : 0); ua_.uAirFC.value.copy(FC_); camera.updateMatrixWorld(); ua_.uAirIP.value.copy(camera.projectionMatrixInverse); ua_.uAirCW.value.copy(camera.matrixWorld);
+        const ua_ = FP.dof.coc.material.uniforms; if (ua_.uAir) { const A_ = L_.air; ua_.uAir.value.set(d * A_[0], d * A_[1], A_[2] * scale, ts_); ua_.uAirC.value.set(L_.dome ? L_.dome[0] : L_.fogC); const F_ = L_.far || [1, 2, 1, '#ffffff']; ua_.uAirF.value.set(d * F_[0], d * F_[1], F_[2], L_.far ? ts_ : 0); ua_.uAirFC.value.set(F_[3]); camera.updateMatrixWorld(); ua_.uAirIP.value.copy(camera.projectionMatrixInverse); ua_.uAirCW.value.copy(camera.matrixWorld);
           fog.near = THREE.MathUtils.lerp(fog.near, 1e4, ts_); fog.far = THREE.MathUtils.lerp(fog.far, 2e4, ts_); }   // (today's air in the picture's depth (above): no fog)
         GLASS_SKY.value.setRGB(.80, .86, .92).lerp(new THREE.Color(L_.glassSky || '#e6edf4'), ts_); GLASS_K.value = THREE.MathUtils.lerp(1, L_.glassK ?? 1, ts_); DOME_R.value = L_.domeRate ?? 25;   // (glassSky, glassK: the sky in the glass; domeRate: the dome's blue, how soon above the horizon)
         if (domeT) { domeT.u.uSunC.value.set(L_.dome[2] || '#000000').multiplyScalar(ts_); domeT.u.uSunD.value.copy(sd);   // (dome[2]: the sun's glow on the sky, a low sun's)
