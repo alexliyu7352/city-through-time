@@ -257,7 +257,8 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
         board: [.38, .38, .395], pave: [[.64, .62, .61], .05, .18], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.66, .63, .62], kerb: [.86, .85, .82],
         streets: { asphalt: '#747679', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.55, .62, .26], [.49, .57, .23]],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.38, .66, .64], deep: [.22, .52, .52], reach: 60, rough: .45, ripple: .08, gloss: [.03, .4, [.62, .86, .88]], refl: [.2, .3], sparkle: [.3, 2.5] },
-        trees: [[.44, .60, .27], [.52, .66, .30], [.36, .52, .24], [.30, .46, .26]] },
+        trees: [[.44, .60, .27], [.52, .66, .30], [.36, .52, .24], [.30, .46, .26]],
+        facade: { base: [4.5, .8, 9], cap: [.9, 1.1, .72], piers: [2, 4, 1.4], reveal: [1.14, .72], glass: { pale: [.86, .89, .92], mull: .6, span: [.2, .45], top: 1.12 }, brick: [.4, .55, .6] } },
       // light presets over todayLight (FILM_PIC todayPreset): golden, the golden hour for the opening and the return to today: a low
       // warm sun ahead of the camera and to its left (sunLeft), long soft shadows, blue-violet shade, its glow on the sky (dome[2])
       // and clouds (dome[3]), a warm haze, glass and water catching gold (the rippled water a glitter path toward the sun)
@@ -274,10 +275,10 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
         kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: null, roofGrey: '#a8a8a8', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
           stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'], stoneRoofs: ['#a6a39e', '#9e9c99', '#aba8a3'],
-          homes: ['#f4c8bc', '#eeb2a2', '#f6e4cc', '#f8f2ea', '#e6e0dc', '#d4dde8', '#fbf3ea', '#eabcb6', '#f2d8c8'], homeRoofs: ['#9a9ca0', '#94979c', '#9fa0a3', '#96989b'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
-          oldWalls: ['#d2cbc2', '#c8c1b8', '#dcb4a2', '#ddd5ca', '#d0ab9c'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
+          homes: ['#f4c8bc', '#f0bca9', '#f6e4cc', '#f8f2ea', '#e6e0dc', '#d4dde8', '#fbf3ea', '#ecc2ba', '#f2d8c8'], homeRoofs: ['#9a9ca0', '#94979c', '#9fa0a3', '#96989b'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
+          oldWalls: ['#d2cbc2', '#c8c1b8', '#e0bcaa', '#ddd5ca', '#d6b4a6'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
           big: ['#e4e0d8', '#d9d7d2', '#e8dfcf'], bigRoofs: ['#9f9d99', '#989a9c', '#a4a29d'],
-          glass: ['#a2b4c8', '#aabace', '#b2c0cc', '#9eb0c4', '#aebece'], towerRoofs: ['#a0a4a9', '#999ea3'] } } },
+          glass: ['#adbed0', '#b4c3d4', '#bbc6d0', '#a9bacc', '#b8c6d4'], towerRoofs: ['#a0a4a9', '#999ea3'] } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
       soft: .6, tiles: 2.2, tufts: true,   // (soft: the share of a corner's averaged normal in each face's, a rounded edge; tiles: their rows' relief, times; tufts: moss at the walls' feet)
@@ -1371,7 +1372,47 @@ function hullIn(H, x, z) { let m = Infinity; for (let k = 0; k < H.length; k++) 
 // the model's own exaggeration, so the count stays right). Every line fades by its size in pixels into the wall's own colour, a
 // shade of it (afar a facade is its paint, evenly: no grime, no speckle, no moire)
 function FACADE_GLSL(S) {
-  const EX = (S.U.uScaleH ? S.U.uScaleH.value / S.U.uScaleM.value : 3).toFixed(3);
+  const EX = (S.U.uScaleH ? S.U.uScaleH.value / S.U.uScaleM.value : 3).toFixed(3), F_ = todayL() && todayL().facade, f = v => (+v).toFixed(3), v3 = c => `vec3(${c.map(f).join(', ')})`;
+  // todayLight facade: a facade's architecture, each part on the windows' ramp (crisp close, gone by some 3 pixels a storey):
+  // base [the ground floor's height m, its tone (times), from which height m]: a taller storey in a greyer, darker stone, its
+  // openings wide; cap [its height m, its light (times), the shadow line under it (times)]: a parapet's coping along the wall's
+  // top; piers [fewest, most windows a group, the pier's width m]: the windows in groups between wider piers; reveal [the sill's
+  // light, the head's shade (times)]: each window's sill catching the sun, its head in the lintel's shadow; glass {pale: the
+  // mullions' and spandrels' silver (sRGB), mull: their share, span: [a spandrel's share of a storey, its strength], top: the
+  // glass this much lighter toward the top}; brick [the paint's saturation from which, whole, the windows' contrast kept]: a
+  // salmon or brick wall's windows quieter (else a red wall with white dots)
+  const wallTop = F_ ? `float top_ = hm_ * uHScaleT * max(vUp, .001), dt_ = top_ - ym_;   // (the wall's top in these metres, as drawn: its height times today's own height scale)` : '';
+  const tower = F_ ? `
+          ${wallTop}
+          float tf_ = clamp(ym_ / max(top_, 1.), 0., 1.), sp_ = (1. - smoothstep(${f(F_.glass.span[0] - .03)}, ${f(F_.glass.span[0] + .03)}, fy_)) * kS_;   // (a spandrel band each storey)
+          c_ *= mix(1., ${f(F_.glass.top)}, smoothstep(.25, 1., tf_));   // (lighter toward the top, as the sky in it)
+          c_ = mix(c_, pow(${v3(F_.glass.pale)}, vec3(2.2)), max(${f(F_.glass.mull)} * ml_, ${f(F_.glass.span[1])} * max(sp_, (1. - smoothstep(.1, .18, fy2_)) * kS2_)));   // (pale silver mullions and spandrels)
+          glass_ = (1. - max(ml_, sp_)) * show_; eng_ = 0.;` : `
+          c_ = mix(c_, pt_ * .62, .55 * ln_); glass_ = (1. - ln_) * show_; eng_ = 0.;`;
+  // the walls (a home, the low fabric, a large low building, stone): the window rows with the facade's architecture
+  const wall = (rows, cols, home) => F_ ? `
+          ${wallTop}
+          float bH_ = hm_ >= ${f(F_.base[2])} ? ${f(F_.base[0])} : 0., inB_ = (1. - smoothstep(bH_ - .12, bH_ + .12, ym_)) * step(.5, bH_), yu_ = ym_ - bH_, fyU_ = fract(yu_ / sh_);
+          float hb_ = fract(sin(dot(aCtrV, vec2(127.1e3, 311.7e3))) * 43758.5453), G_ = floor(mix(${f(F_.piers[0])}, ${f(F_.piers[1] + .999)}, hb_)), pp_ = mod(um_, G_ * wu_ + ${f(F_.piers[2])});
+          float fq_ = fract((pp_ - ${f(F_.piers[2])}) / wu_), bay_ = step(${f(F_.piers[2])}, pp_) * step(0., yu_) * smoothstep(${f(F_.cap[0] + .5)}, ${f(F_.cap[0] + .9)}, dt_);   // (no window on a pier, in the base or under the coping)
+          float sat_ = (max(pt_.r, max(pt_.g, pt_.b)) - min(pt_.r, min(pt_.g, pt_.b))) / max(max(pt_.r, max(pt_.g, pt_.b)), 1e-3), wk_ = mix(1., ${f(F_.brick[2])}, smoothstep(${f(F_.brick[0])}, ${f(F_.brick[1])}, sat_));
+          float wc_ = smoothstep(${f(cols[0])}, ${f(cols[0] + .04)}, fq_) * (1. - smoothstep(${f(cols[1])}, ${f(cols[1] + .04)}, fq_)), wr_ = smoothstep(${f(rows[0])}, ${f(rows[0] + .04)}, fyU_) * (1. - smoothstep(${f(rows[1])}, ${f(rows[1] + .04)}, fyU_));
+          float win_ = wr_ * wc_ * bay_ * kW_, head_ = win_ * smoothstep(${f(rows[1] - .14)}, ${f(rows[1] - .06)}, fyU_);   // (its head in the lintel's shadow)
+          float sill_ = wc_ * bay_ * kW_ * smoothstep(${f(rows[0] - .07)}, ${f(rows[0] - .04)}, fyU_) * (1. - smoothstep(${f(rows[0] - .01)}, ${f(rows[0] + .02)}, fyU_));   // (a lit sill under it)
+          ${home ? `float band_ = (1. - smoothstep(.12, .2, fyU_)) * kS_ * step(0., yu_) * smoothstep(${f(F_.cap[0])}, ${f(F_.cap[0] + .3)}, dt_);   // (a balcony band each floor, a shade lighter)
+          ` : 'float band_ = 0.; '}vec3 wg_ = mix(pt_ * .5, vec3(.30, .35, .44), .45);   // (a window: cool glass set into the paint, no darker than the wall's own shade side)
+          c_ = pt_ * (1. + .08 * band_ + (${f(F_.reveal[0])} - 1.) * sill_);
+          c_ = mix(c_, wg_ * mix(1., ${f(F_.reveal[1])}, head_), ${home ? '.9' : '.88'} * wk_ * win_ * (1. - band_));
+          { vec3 st_ = mix(pt_, vec3(dot(pt_, vec3(.2126, .7152, .0722))), .4) * ${f(F_.base[1])}; float fs_ = fract(um_ / 6.);   // (the base: stone, greyer and darker; shop fronts wide and dark)
+            float op_ = smoothstep(.12, .16, fs_) * (1. - smoothstep(.84, .88, fs_)) * smoothstep(.35, .5, ym_) * (1. - smoothstep(bH_ - 1.1, bH_ - .9, ym_));
+            c_ = mix(c_, mix(st_, wg_ * .9, .85 * wk_ * op_ * kW_), inB_ * pow(1. - smoothstep(KW0_, KW1_, pxm_ / max(bH_, 1.)), 1.5)); }   // (the base on its own ramp, by its height: a band, never speckle; its openings on the windows')
+          { float cap_ = (1. - smoothstep(${f(F_.cap[0] - .06)}, ${f(F_.cap[0] + .06)}, dt_)) * kW_, ln_ = smoothstep(${f(F_.cap[0] - .02)}, ${f(F_.cap[0] + .06)}, dt_) * (1. - smoothstep(${f(F_.cap[0] + .22)}, ${f(F_.cap[0] + .34)}, dt_)) * kW_;   // (the coping, a shadow line under it)
+            c_ *= mix(1., ${f(F_.cap[1])}, cap_) * mix(1., ${f(F_.cap[2])}, ln_); }
+          c_ *= 1. - ${home ? '.04' : '.03'} * (1. - kW_); eng_ = ${home ? '.35' : '.3'} * win_ * wk_ * (1. - band_) * show_;` : home ? `
+          float band_ = (1. - smoothstep(.12, .2, fy_)) * kS_, win_ = smoothstep(.30, .34, fy_) * (1. - smoothstep(.84, .88, fy_)) * smoothstep(.10, .14, fu_) * (1. - smoothstep(.78, .82, fu_)) * kW_;
+          c_ = mix(pt_ * (1. + .08 * band_), mix(pt_ * .5, vec3(.30, .35, .44), .45), .9 * win_ * (1. - band_)) * (1. - .04 * (1. - kW_)); eng_ = .35 * win_ * (1. - band_) * show_;   // (a window no darker than the wall's own shade side)   // (its windows cool glass set into the paint; afar the paint a shade deeper, their share)` : `
+          float win_ = smoothstep(.36, .40, fy_) * (1. - smoothstep(.76, .80, fy_)) * smoothstep(.30, .34, fu_) * (1. - smoothstep(.64, .68, fu_)) * kW_;
+          c_ = mix(pt_, mix(pt_ * .5, vec3(.30, .35, .44), .45), .88 * win_) * (1. - .03 * (1. - kW_)); eng_ = .3 * win_ * show_;`;
   return `
   { vec3 n_ = normalize(vWN); float hm_ = vData.y, kd_ = floor(vKind + .5), KW0_ = ${((todayL() && todayL().winFade) || [.125, .5])[0].toFixed(3)}, KW1_ = ${((todayL() && todayL().winFade) || [.125, .5])[1].toFixed(3)};   // (todayLight winFade: the windows' contrast ramp, in fwidth's metres a pixel over a storey)
     if (vData.w < .5 && hm_ > 2.5) {
@@ -1383,22 +1424,17 @@ function FACADE_GLSL(S) {
         float sh_ = tower_ ? 4. : 3.;   // (a storey)
         float fy_ = fract(ym_ / sh_), kS_ = 1. - smoothstep(.3, .55, pxm_ / sh_);
         vec3 c_ = pt_;
-        if (tower_) {   // tinted glass in a grid of mullions and floor lines, a shade darker than the glass: fine close (every 2 m, each
-          // storey), coarser as it shrinks (every 6 m, every second storey), so the grid reads as far as a curtain wall's does
+        if (tower_) {   // tinted glass in a grid of mullions and floor lines: fine close (every 2 m, each storey), coarser as it shrinks
+          // (every 6 m, every second storey), so the grid reads as far as a curtain wall's does
           float mu_ = 2., fu_ = abs(fract(um_ / mu_) - .5) * 2., kM_ = 1. - smoothstep(.3, .55, pxm_ / mu_);
           float fu2_ = abs(fract(um_ / 6.) - .5) * 2., kM2_ = (1. - kM_) * (1. - smoothstep(.3, .55, pxm_ / 6.)), fy2_ = fract(ym_ / 8.), kS2_ = (1. - kS_) * (1. - smoothstep(.3, .55, pxm_ / 8.));
           float ml_ = max(smoothstep(.84, .92, fu_) * kM_, smoothstep(.8, .9, fu2_) * kM2_), fl_ = max((1. - smoothstep(.08, .14, fy_)) * kS_, (1. - smoothstep(.1, .18, fy2_)) * kS2_), ln_ = max(ml_, fl_);   // (afar: none, the glass's own tone)
           vec3 v_ = normalize(cameraPosition - vWP); float fr_ = pow(1. - max(dot(n_, v_), 0.), 3.);
-          c_ = mix(pt_, uGlassSky, min(1., uGlassK * (.12 + .5 * fr_)));   // (the sky in it, more as the view grazes)
-          c_ = mix(c_, pt_ * .62, .55 * ln_); glass_ = (1. - ln_) * show_; eng_ = 0.;
+          c_ = mix(pt_, uGlassSky, min(1., uGlassK * (.12 + .5 * fr_)));   // (the sky in it, more as the view grazes)${tower}
         } else if (res_) {   // a home: a balcony band at each floor, a shade lighter; its windows set back, a shade darker
-          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = pow(1. - smoothstep(KW0_, KW1_, max(pxm_ / sh_, pxm_ / wu_)), 1.5);   // (a contrast ramp: pxm_ from fwidth's length runs about 1.5 times a pixel, so whole from some 12 picture pixels a storey, about 40 % at 5, none by 3: window rows close, a quiet wall afar, never a speckle)
-          float band_ = (1. - smoothstep(.12, .2, fy_)) * kS_, win_ = smoothstep(.30, .34, fy_) * (1. - smoothstep(.84, .88, fy_)) * smoothstep(.10, .14, fu_) * (1. - smoothstep(.78, .82, fu_)) * kW_;
-          c_ = mix(pt_ * (1. + .08 * band_), mix(pt_ * .5, vec3(.30, .35, .44), .45), .9 * win_ * (1. - band_)) * (1. - .04 * (1. - kW_)); eng_ = .35 * win_ * (1. - band_) * show_;   // (a window no darker than the wall's own shade side)   // (its windows cool glass set into the paint; afar the paint a shade deeper, their share)
+          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = pow(1. - smoothstep(KW0_, KW1_, max(pxm_ / sh_, pxm_ / wu_)), 1.5);   // (a contrast ramp: pxm_ from fwidth's length runs about 1.5 times a pixel, so whole from some 12 picture pixels a storey, about 40 % at 5, none by 3: window rows close, a quiet wall afar, never a speckle)${wall([.30, .84], [.10, .78], true)}
         } else {   // the low fabric, a large low building: small windows
-          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = pow(1. - smoothstep(KW0_, KW1_, max(pxm_ / sh_, pxm_ / wu_)), 1.5);
-          float win_ = smoothstep(.36, .40, fy_) * (1. - smoothstep(.76, .80, fy_)) * smoothstep(.30, .34, fu_) * (1. - smoothstep(.64, .68, fu_)) * kW_;
-          c_ = mix(pt_, mix(pt_ * .5, vec3(.30, .35, .44), .45), .88 * win_) * (1. - .03 * (1. - kW_)); eng_ = .3 * win_ * show_;
+          float wu_ = 3., fu_ = fract(um_ / wu_), kW_ = pow(1. - smoothstep(KW0_, KW1_, max(pxm_ / sh_, pxm_ / wu_)), 1.5);${wall([.36, .76], [.30, .64], false)}
         }
         diffuseColor.rgb = mix(diffuseColor.rgb, c_, show_);
       } else if (n_.y > .9 && kd_ < .5) {   // the old fabric's roof: grey tile in rows, close
@@ -1454,7 +1490,7 @@ function filmMaterial(S, mat, u, ruin, fadeAt, fire = null, back = null, surf = 
       .replace('#include <project_vertex>', vert + '\n#include <project_vertex>')
       .replace('#include <fog_vertex>', '#include <fog_vertex>\n vData = aData; vWP = (modelMatrix * vec4(transformed, 1.)).xyz;' + (depth ? '' : ' vWN = normalize(mat3(modelMatrix) * objectNormal);') + (u ? '' : ' vKind = aKind;'));
     if (depth) return;
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\n// (look: mini)\nfloat glass_ = 0., eng_ = 0.;\nvarying vec4 vData; varying vec3 vWP, vWN; varying float vUp, vBase, vRuin, vMute, vFresh; varying vec2 aCtrV;${u ? '' : ' varying float vKind; uniform vec3 uGlassSky; uniform float uGlassK;'} uniform float uNow, uNight, uScaleM, uPallR, uPallK; uniform vec2 uPallC;${S.marksGLSL()}${u ? ` uniform float uEraBurn, uLossBurn[${nL}], uLossBurnt[${nL}]; uniform vec3 uRuinC;${fire ? ' uniform vec2 uO;' + S.fireGLSL : ''}` : ''}`)
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\n// (look: mini)\nfloat glass_ = 0., eng_ = 0.;\nvarying vec4 vData; varying vec3 vWP, vWN; varying float vUp, vBase, vRuin, vMute, vFresh; varying vec2 aCtrV;${u ? '' : ' varying float vKind; uniform vec3 uGlassSky; uniform float uGlassK, uHScaleT;'} uniform float uNow, uNight, uScaleM, uPallR, uPallK; uniform vec2 uPallC;${S.marksGLSL()}${u ? ` uniform float uEraBurn, uLossBurn[${nL}], uLossBurnt[${nL}]; uniform vec3 uRuinC;${fire ? ' uniform vec2 uO;' + S.fireGLSL : ''}` : ''}`)
       .replace('#include <color_fragment>', '#include <color_fragment>' + marks + '\n  diffuseColor.rgb *= 1. - uPallK * .55 * smoothstep(uPallR, uPallR * .3, length(vWP.xz - uPallC));   // (under a burning city\'s pall)')
       .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>' + night);
     if (u && surf) sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
