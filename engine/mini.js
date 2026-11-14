@@ -112,7 +112,15 @@ function todayYears(mesh, PW, PD, reach, scale, roads = null, bands = null, rise
       for (const r of STREETS.list) { g.lineWidth = Math.max(.8, (W[r.cls] || 6) * scale / PW * N); g.beginPath();
         r.pts.forEach(([x, z], k) => { const u = (x / PW + .5) * N, v = (z / PD + .5) * N; k ? g.lineTo(u, v) : g.moveTo(u, v); }); g.stroke(); }
       g.globalCompositeOperation = 'source-over'; }
-    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.NoColorSpace; t.flipY = false; t.minFilter = THREE.LinearFilter; t.generateMipmaps = false; YEAR_C.value = t; }
+    // the fabric's density in its alpha: the share of the ground round a place its buildings' extents cover, softened some 40 m
+    // (todayLight pave: a dense fabric's ground between its buildings is lanes and courts in asphalt, an open superblock's round
+    // its towers paved plazas); the cover kept as data, so no canvas premultiplies its colours by that alpha
+    const cv = document.createElement('canvas'); cv.width = cv.height = N; const gc = cv.getContext('2d'); gc.fillStyle = '#000'; gc.fillRect(0, 0, N, N); gc.fillStyle = '#fff';
+    for (const [, a, b, cc, d] of recs) gc.fillRect((a / PW + .5) * N, (b / PD + .5) * N, Math.max(.5, (cc - a) / PW * N), Math.max(.5, (d - b) / PD * N));
+    const cv2 = document.createElement('canvas'); cv2.width = cv2.height = N; const gc2 = cv2.getContext('2d'); gc2.fillStyle = '#000'; gc2.fillRect(0, 0, N, N);
+    gc2.filter = `blur(${Math.max(1, 40 * scale / PW * N).toFixed(1)}px)`; gc2.drawImage(cv, 0, 0); gc2.filter = 'none';
+    const id = g.getImageData(0, 0, N, N).data, dd = gc2.getImageData(0, 0, N, N).data; for (let i = 3; i < id.length; i += 4) id[i] = dd[i - 3];
+    const t = new THREE.DataTexture(id, N, N, THREE.RGBAFormat); t.colorSpace = THREE.NoColorSpace; t.minFilter = t.magFilter = THREE.LinearFilter; t.generateMipmaps = false; t.needsUpdate = true; YEAR_C.value = t; }
   // the cover by the film's bands of years (its growth): band k's channel holds every building older than its end, closed into
   // blocks as the cover is, so the plaster arrives band by band in block shapes, never in the year map's cells (BAND_C, BAND_HI)
   if (bands && bands.length) { const nb = Math.min(bands.length, 8), e = 45 * scale, chan = ['#f00', '#0f0', '#00f'];
@@ -226,8 +234,10 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // it begins and where it is whole, times the shot's distance), so the far city fades into the sky and the board's edge is
       // never seen (air: [where it begins and its depth, times the shot's distance; the plate's last metres, whole at its edge],
       // drawn in the picture's own depth; fogC: the same as a fog, where the passes have no depth); sat, contrast: the grade.
-      // The board: a model's painted ground, light grey (board), its streets asphalt by class (street: their colour, their
-      // share), squares and quays paved light (plaza), a kerb line close (kerb), parks lawn in two greens (park); the water
+      // The board: a model's painted ground between the buildings, an asphalt grey a touch cool (board: lit by the warm sun it
+      // reads as neutral asphalt, never sand) where the fabric is dense, a light paving where it is open (pave: round towers in
+      // their superblocks), its streets asphalt by class (street: their colour, their share), squares and quays paved light
+      // (plaza: a light warm paving, not cream), a kerb line close (kerb), parks lawn in two greens (park); the water
       // (water: the shallows along the banks, the deep, how far from the bank the deep begins in metres, its roughness (the sun's
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
       // park trees (flockAt), natural greens.
@@ -235,7 +245,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], groundFill: [.6, 1.75], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: .5, parkTrees: [1.5, 1.15], bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
         far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
-        board: [.57, .53, .50], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.80, .77, .73], kerb: [.86, .85, .82],
+        board: [.38, .38, .395], pave: [[.64, .62, .61], .05, .18], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.66, .63, .62], kerb: [.86, .85, .82],
         streets: { asphalt: '#747679', pavement: '#8f8b85', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.55, .62, .26], [.49, .57, .23]],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.38, .66, .64], deep: [.22, .52, .52], reach: 60, rough: .45, ripple: .08, gloss: [.03, .4, [.62, .86, .88]], refl: [.2, .3], sparkle: [.3, 2.5] },
         trees: [[.55, .70, .35], [.63, .76, .40], [.50, .64, .32]] },
@@ -1240,7 +1250,8 @@ function baseGLSL(B, scale, town = false, far = false, then = false) {   // (the
       float tk_ = kt_ * (1. - smoothstep(.3, .6, uTodayK.z));   // (today's city the subject: it stands on a honed slate, todayLight.board, matte with a little sheen)
       float sv_ = .55 * smoothstep(.15, .38, yc4_.g) + .45 * smoothstep(.6, .85, yc4_.g);   // (a street here: the finer ones at half, the arterials whole)
       vec3 pl_ = pow(${v3(B.ground_in.col)}, vec3(2.2)) * (.96 + .05 * fxLn(m_ / 13.) + .03 * fxLn(m_ / 2.1)) * (1. - .28 * st_);   // (the plaster; today's streets fine lines a shade darker in it, the arterials wider and darker)${TL && TL.board ? `
-      { vec3 bd_ = pow(${v3(TL.board)}, vec3(2.2)) * (.97 + .035 * fxLn(m_ / 1.1) + .02 * fxLn(m_ / 6.));   // today's board: a honed slate at its grey, its grain the material's own (no cleft, no cracks)
+      { vec3 bd_ = pow(${v3(TL.board)}, vec3(2.2)) * (.97 + .035 * fxLn(m_ / 1.1) + .02 * fxLn(m_ / 6.));   // today's board: a honed slate at its grey, its grain the material's own (no cleft, no cracks)${TL.pave ? `
+        bd_ = mix(pow(${v3(TL.pave[0])}, vec3(2.2)) * (.98 + .03 * fxLn(m_ / 3.)), bd_, smoothstep(${TL.pave[1].toFixed(3)}, ${TL.pave[2].toFixed(3)}, yc4_.a));   // (todayLight pave: [its colour, the fabric's density from which the ground is asphalt, whole]: an open superblock's ground paved light)` : ''}
         float pv_ = 1. - smoothstep(.45, .7, yc4_.r);   // (open ground off the blocks: a square, a plaza, a quay; paved pale as the streets, the parks over it)
         ${TL.plaza ? `bd_ = mix(bd_, pow(${v3(TL.plaza)}, vec3(2.2)) * (.98 + .03 * fxLn(m_ / 3.)), .8 * pv_ * (1. - sv_));   // (a square, a quay: paved light)
         bd_ = mix(bd_, pow(${v3(TL.street[0])}, vec3(2.2)) * (.97 + .05 * fxLn(m_ / 5.)), ${TL.street[1].toFixed(2)} * sv_);   // (its streets by class)` : `bd_ = mix(bd_, pow(${v3(TL.street[0])}, vec3(2.2)) * (.97 + .05 * fxLn(m_ / 5.)), ${TL.street[1].toFixed(2)} * max(sv_, .8 * pv_));   // (its streets pale grooves, by class)`}
