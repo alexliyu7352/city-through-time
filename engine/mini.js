@@ -225,7 +225,8 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // a glb entry's own colours over them (swap colours: by role; parts: by its parts' names). In the sunny miniature: stone a
       // warm off-white, glass pale blue-silver, metal light silver; glbParts: a landmark's spheres, capsules and domes (by their
       // parts' names) in the look's rose accent
-      glbC: { stone: '#ece6dc', glass: '#8ca8c6', metal: '#d3d9de', dark: '#8f9295', roof: '#d9d6cf' }, glbParts: [['sphere|capsule|dome', '#d68a98']], roofs: true, backdropH: .04,   // (backdropH: today's city behind a period city, its heights this share: a plan on the board)
+      glbC: { stone: '#ece6dc', glass: '#8ca8c6', metal: '#d3d9de', dark: '#8f9295', roof: '#d9d6cf' }, glbParts: [['sphere|capsule|dome', '#d68a98']], roofs: true, backdropH: .04,
+      roofUnits: { main: [.14, .1], mainH: [2.5, 1.5], mainCol: '#c4bfb6', area: 250, n: [1, 3], size: [2.5, 2.5], h: [1.4, 1], col: '#bdbab4', greys: [.7, .8, .9, .75, .85] },   // (backdropH: today's city behind a period city, its heights this share: a plan on the board)
       // today's city the subject, a coloured miniature city in a clear warm day: a warm sun with soft-edged shadows (sunEl,
       // shadowR: the shadow's softening in its map's texels), a cool sky in the shade (sky, skyC), the whole picture's exposure, a
       // gentle filmic curve, no grain; edge: every edge catching the light as a bevel (a pale line, close only: afar it outlined
@@ -263,12 +264,12 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // tiledH) a share of them (tiled) in terracotta tile; stone, a civic or old stone building (from the data's first stoneSpan years,
       // stoneA m2 or more, its outline filling stoneC of its extent, lower than stoneH), beige to off-white
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
-        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: [.55, .93], roofGrey: '#a8a8a8', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
-          stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'], stoneRoofs: ['#b4b0aa', '#aaa8a4', '#bcb8b2'],
-          homes: ['#f4c8bc', '#eeb2a2', '#f6e4cc', '#f8f2ea', '#e6e0dc', '#d4dde8', '#fbf3ea', '#eabcb6', '#f2d8c8'], homeRoofs: ['#e6e1d8', '#ddd8cf', '#ebe6dd', '#d6d2cb'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
+        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: null, roofGrey: '#a8a8a8', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
+          stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'], stoneRoofs: ['#a6a39e', '#9e9c99', '#aba8a3'],
+          homes: ['#f4c8bc', '#eeb2a2', '#f6e4cc', '#f8f2ea', '#e6e0dc', '#d4dde8', '#fbf3ea', '#eabcb6', '#f2d8c8'], homeRoofs: ['#9a9ca0', '#94979c', '#9fa0a3', '#96989b'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
           oldWalls: ['#d2cbc2', '#c8c1b8', '#dcb4a2', '#ddd5ca', '#d0ab9c'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
-          big: ['#e4e0d8', '#d9d7d2', '#e8dfcf'], bigRoofs: ['#aeaaa3', '#a3a6a8', '#b6b1a8'],
-          glass: ['#a2b4c8', '#aabace', '#b2c0cc', '#9eb0c4', '#aebece'], towerRoofs: ['#a9adb2', '#9ea3a8'] } } },
+          big: ['#e4e0d8', '#d9d7d2', '#e8dfcf'], bigRoofs: ['#9f9d99', '#989a9c', '#a4a29d'],
+          glass: ['#a2b4c8', '#aabace', '#b2c0cc', '#9eb0c4', '#aebece'], towerRoofs: ['#a0a4a9', '#999ea3'] } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
       soft: .6, tiles: 2.2, tufts: true,   // (soft: the share of a corner's averaged normal in each face's, a rounded edge; tiles: their rows' relief, times; tufts: moss at the walls' feet)
@@ -979,20 +980,43 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   const foldIn = (g, f) => { const P = g.attributes.position, C = g.attributes.aCtr; let hit = false;   // (a detailed model's fold, swap: what stands at its centre or inside its footprint to the ground)
     for (let i = 0; i < P.count; i++) { const x = C.getX(i), z = C.getY(i); if (Math.abs(x - f.cx) < 2e-7 && Math.abs(z - f.cz) < 2e-7 || f.inFoot(x, z)) { P.setXYZ(i, x, S.ground(x, z) - 1e-4, z); hit = true; } }
     if (hit) P.needsUpdate = true; };
-  const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [], rims = [];
+  // a top's triangles (the record's own, at its roof's height) and whether a point is on one of them: a concave roof's outline
+  const topTris = (i0, i1, P_, y1, tol) => { const t = []; for (let i = i0; i + 2 < i1; i += 3) if (Math.abs(P_.getY(i) - y1) + Math.abs(P_.getY(i + 1) - y1) + Math.abs(P_.getY(i + 2) - y1) < tol) t.push([P_.getX(i), P_.getZ(i), P_.getX(i + 1), P_.getZ(i + 1), P_.getX(i + 2), P_.getZ(i + 2)]); return t; };
+  const onTris = (T, x, z) => T.some(([ax, az, bx, bz, cx, cz]) => { const d1 = (x - bx) * (az - bz) - (ax - bx) * (z - bz), d2 = (x - cx) * (bz - cz) - (bx - cx) * (z - cz), d3 = (x - ax) * (cz - az) - (cx - ax) * (z - az);
+    return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); });
+  const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [], rims = [], units = [];
+    const RU = MAT.roofUnits || null;   // (small rooftop units: below)
     for (let [cx, cz, th, a, b, y1, yr, hm, h0, i0, i1, P_] of ROOFS) {   // (P_: the record's own positions, today's city's or a replacement footprint's)
-      { const c = Math.cos(th), sn = Math.sin(th); let u0 = 1e9, u1 = -1e9, v0 = 1e9, v1 = -1e9;   // (its outline's exact extent along its own axes)
+      const c = Math.cos(th), sn = Math.sin(th);
+      { let u0 = 1e9, u1 = -1e9, v0 = 1e9, v1 = -1e9;   // (its outline's exact extent along its own axes)
         for (let i = i0; i < i1; i++) { const x = P_.getX(i), z = P_.getZ(i), u = x * c + z * sn, v = -x * sn + z * c; if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v; }
         const um = (u0 + u1) / 2, vm = (v0 + v1) / 2; cx = um * c - vm * sn; cz = um * sn + vm * c; a = (u1 - u0) / 2; b = (v1 - v0) / 2; }
       if (Math.min(a, b) < 4 * scale || FOLDS.some(f => Math.hypot(cx - f.cx, cz - f.cz) < f.rr || f.inFoot(cx, cz))) continue;   // (none where a detailed model stands)
       let ar_ = 0; for (let i = i0; i + 2 < i1; i += 3) if (Math.abs(P_.getY(i) - y1) + Math.abs(P_.getY(i + 1) - y1) + Math.abs(P_.getY(i + 2) - y1) < .1 * ex * scale)   // (its roof's area)
         ar_ += Math.abs((P_.getX(i + 1) - P_.getX(i)) * (P_.getZ(i + 2) - P_.getZ(i)) - (P_.getX(i + 2) - P_.getX(i)) * (P_.getZ(i + 1) - P_.getZ(i))) / 2;
-      if (i1 - i0 <= 36 && ar_ > .95 * 4 * a * b) lips.push([cx, y1, cz, 2 * a * .995, ex * scale, 2 * b * .995, yr, th]);   // (a rectangle: its roof fills its own box; a triangle or a trapezoid's box rim stood in the air)
+      let hull = null;   // (its roof's outline when convex: what stands on it is tested against it)
+      if (i1 - i0 <= 36 && ar_ > .95 * 4 * a * b) { lips.push([cx, y1, cz, 2 * a * .995, ex * scale, 2 * b * .995, yr, th]);   // (a rectangle: its roof fills its own box; a triangle or a trapezoid's box rim stood in the air)
+        hull = hull2([[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([p, q]) => [cx + c * a * p - sn * b * q, cz + sn * a * p + c * b * q])); }
       else {   // any other convex roof (a triangle, an octagon, a round tower): the rim along its own hull, 0.6 m wide; a concave roof (a corner left inside the hull) none
         const pts = []; for (let i = i0; i < i1; i++) if (Math.abs(P_.getY(i) - y1) < .2 * ex * scale) pts.push([P_.getX(i), P_.getZ(i)]);
-        const hull = hull2(pts); if (hull.length >= 3 && pts.every(([x, z]) => hullIn(hull, x, z) < .4 * scale)) rims.push([hull, y1, yr]); }   // (the parapet, on a rectangular roof only: a rim a metre high round its own outline, a hair in)
-      if (hm >= 20) { const q_ = ((h0 * 1e4) % 1 + 1) % 1, k = .2 + .16 * q_; list.push([cx + Math.cos(th) * a * .15, y1, cz + Math.sin(th) * a * .15, 2 * a * k, (3 + 2.5 * ((q_ * 7.3) % 1)) * ex * scale, 2 * b * k * (.7 + .5 * ((q_ * 3.1) % 1)), yr, th, q_]);
-        if (a * b > 150 * scale * scale && q_ > .3) list.push([cx - Math.cos(th) * a * .45, y1, cz - Math.sin(th) * a * .45 + b * .3 * Math.cos(th), 2 * a * .12, 2.4 * ex * scale, 2 * b * .16, yr, th, (q_ * 5.7) % 1]); } }   // (plant rooms: one or two, each its own size, height and grey)
+        const H_ = hull2(pts); if (H_.length >= 3 && pts.every(([x, z]) => hullIn(H_, x, z) < .4 * scale)) { rims.push([H_, y1, yr]); hull = H_; } }   // (the parapet, on a rectangular roof only: a rim a metre high round its own outline, a hair in)
+      // whatever stands on the roof stands wholly on it, a margin inside its parapet (on a concave roof: on its own top's triangles),
+      // never over its edge or in the air beside it
+      let tops = null; const fits = (x, z, hu, hv, m) => { if (!hull && !tops) tops = topTris(i0, i1, P_, y1, .1 * ex * scale);
+        for (const [p, q] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { const X = x + c * (hu + m) * p - sn * (hv + m) * q, Z = z + sn * (hu + m) * p + c * (hv + m) * q; if (hull ? hullIn(hull, X, Z) < 0 : !onTris(tops, X, Z)) return false; } return true; };
+      const at = (u, v) => [cx + c * u - sn * v, cz + sn * u + c * v], placed = [];
+      if (hm >= 20) { const q_ = ((h0 * 1e4) % 1 + 1) % 1, k = RU ? RU.main[0] + RU.main[1] * q_ : .2 + .16 * q_, mH = RU ? RU.mainH : [3, 2.5];   // (plant rooms: one or two, each its own size, height and grey)
+        const w1 = 2 * a * k, d1 = 2 * b * k * (.7 + .5 * ((q_ * 3.1) % 1));   // (where it fits: a curved slab's box centre may lie outside it)
+        for (const [u1, v1] of RU ? [[.15, 0], [0, 0], [-.3, 0], [.4, 0], [-.5, 0], [0, .3], [0, -.3]] : [[.15, 0]]) { const P1 = at(a * u1, b * v1);
+          if (!RU || fits(P1[0], P1[1], w1 / 2, d1 / 2, .8 * scale)) { list.push([P1[0], y1, P1[1], w1, (mH[0] + mH[1] * ((q_ * 7.3) % 1)) * ex * scale, d1, yr, th, q_]); placed.push([a * u1, b * v1, w1 / 2, d1 / 2]); break; } }
+        const P2 = [cx - c * a * .45, cz - sn * a * .45 + b * .3 * c], w2 = 2 * a * .12, d2 = 2 * b * .16;
+        if (a * b > 150 * scale * scale && q_ > .3 && (!RU || fits(P2[0], P2[1], w2 / 2, d2 / 2, .8 * scale))) list.push([P2[0], y1, P2[1], w2, 2.4 * ex * scale, d2, yr, th, (q_ * 5.7) % 1]); }
+      if (RU && 4 * a * b >= RU.area * scale * scale) {   // small units (the look's roofUnits): a few boxes, each its own size and place, by the roof's hash
+        const hh = k => { const t = Math.sin(h0 * 1e5 + k * 78.233) * 43758.5453; return t - Math.floor(t); }, n = RU.n[0] + Math.floor(hh(1) * (RU.n[1] - RU.n[0] + 1));
+        for (let k = 0, tries = 0; k < n && tries < 4 * n; tries++) { const s_ = (RU.size[0] + RU.size[1] * hh(10 + tries)) * scale, hu = s_ / 2, hv = s_ * (.6 + .5 * hh(20 + tries)) / 2;
+          const u = (hh(30 + tries) * 2 - 1) * Math.max(0, a - hu - 1.4 * scale), v = (hh(40 + tries) * 2 - 1) * Math.max(0, b - hv - 1.4 * scale), [x, z] = at(u, v);
+          if (placed.some(([pu, pv, ph, pw]) => Math.abs(u - pu) < ph + hu + .6 * scale && Math.abs(v - pv) < pw + hv + .6 * scale) || !fits(x, z, hu, hv, .8 * scale)) continue;
+          units.push([x, y1, z, 2 * hu, (RU.h[0] + RU.h[1] * hh(50 + tries)) * ex * scale, 2 * hv, yr, th, hh(60 + tries)]); placed.push([u, v, hu, hv]); k++; } } }
     const ring = (() => { const w = .035, o = new THREE.Shape([[-.5, -.5], [.5, -.5], [.5, .5], [-.5, .5]].map(([x, y]) => new THREE.Vector2(x, y))), h = new THREE.Path([[-.5 + w, -.5 + w], [-.5 + w, .5 - w], [.5 - w, .5 - w], [.5 - w, -.5 + w]].map(([x, y]) => new THREE.Vector2(x, y)));
       o.holes.push(h); return new THREE.ExtrudeGeometry(o, { depth: 1, bevelEnabled: false }).rotateX(-Math.PI / 2); })();   // (a parapet: the roof's rim, 3.5 % of each side wide)
     const mat = new THREE.MeshStandardMaterial({ color: '#e9e6df', roughness: .9 }); mat.onBeforeCompile = sh => { sh.uniforms.uTodayK = TODAY_K; sh.uniforms.uRoofOn = ROOF_ON;
@@ -1019,8 +1043,9 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
           quad([ox, y0, oz], [px, y0, pz], [px, y0 + h, pz], [ox, y0 + h, oz]); quad([jx, y0, jz], [ix, y0, iz], [ix, y0 + h, iz], [jx, y0 + h, jz]); quad([ox, y0 + h, oz], [px, y0 + h, pz], [jx, y0 + h, jz], [ix, y0 + h, iz]); } }
       const g_ = new THREE.BufferGeometry(); g_.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g_.setAttribute('iYear', new THREE.Float32BufferAttribute(yrs, 1)); g_.computeVertexNormals();
       const m_ = new THREE.Mesh(g_, rimMat(mat, (1.5 * ex * scale).toExponential(4), 'hull')); m_.material.side = THREE.DoubleSide; m_.castShadow = m_.receiveShadow = true; m_.layers.set(L); m_.frustumCulled = false; scene.add(m_); RIM_MESH = m_; }
-    ROOF_MESH = [[new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), list], [ring, lips]].filter(([, l]) => l.length).map(([geo, l]) => { const mesh = new THREE.InstancedMesh(geo, l === list ? Object.assign(mat.clone(), { color: new THREE.Color('#c4bfb6'), onBeforeCompile: mat.onBeforeCompile }) : rimMat(mat, '1.5', 'ring'), l.length), yA = new Float32Array(l.length);   // (plant rooms a mid grey, each its own shade; the parapets the rim's light)
-      const G_ = [.62, .74, .86, .7, .8], c_ = new THREE.Color();
+    const unitC = new THREE.Color(RU ? RU.col : '#c4bfb6');   // (the units, each its own grey, sink into the roof as they shrink, as the rims do: afar they were speckle)
+    ROOF_MESH = [[new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), list], [ring, lips], [new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), units]].filter(([, l]) => l.length).map(([geo, l]) => { const mesh = new THREE.InstancedMesh(geo, l === list ? Object.assign(mat.clone(), { color: new THREE.Color(RU ? RU.mainCol : '#c4bfb6'), onBeforeCompile: mat.onBeforeCompile }) : l === units ? rimMat(Object.assign(mat.clone(), { color: unitC }), '1.5', 'unit') : rimMat(mat, '1.5', 'ring'), l.length), yA = new Float32Array(l.length);   // (plant rooms a mid grey, each its own shade; the parapets the rim's light)
+      const G_ = l === units && RU ? RU.greys : [.62, .74, .86, .7, .8], c_ = new THREE.Color();
       l.forEach(([x, y, z, sx, sy, sz, yr, th, q], n) => { M4.makeRotationY(-th).multiply(R4.makeScale(sx, sy, sz)).setPosition(x, y, z); mesh.setMatrixAt(n, M4); yA[n] = yr;
         if (q != null) mesh.setColorAt(n, c_.setRGB(1, 1, 1).multiplyScalar(G_[Math.floor(q * 5) % 5])); });   // (each plant room its own grey; the parapets the rim's light)
       geo.setAttribute('iYear', new THREE.InstancedBufferAttribute(yA, 1)); mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); return mesh; }); };   // (plant rooms; parapets)
