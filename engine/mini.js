@@ -265,7 +265,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // ?pic={"todayLight":{...}}: a still's own
       todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.36, 1.2, .92], groundFill: [.45, 3.6, 1.75, [.6, 1.75]], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: [.5, .2], parkTrees: [1, 1.1, [.6, .8, 1, 1.25, 1.5], [.47, .56]], bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
-        far: [2.2, 6, .45, '#efdcd6'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
+        far: [2.2, 6, .55, '#e2e8f0'],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint])
         board: [.355, .345, .335], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.535, .505, .48], kerb: [.86, .85, .82],
         streets: { asphalt: '#505154', pavement: '#65625d', kerb: 2, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 } }, park: [[.49, .575, .22], [.44, .525, .195]],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.32, .61, .61], deep: [.22, .52, .52], reach: 15, rough: .45, ripple: .08, gloss: [.03, .4, [.62, .86, .88]], refl: [.2, .3], sparkle: [0, 2.5, .8, .58] },
@@ -283,13 +283,13 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick; a large low building pale; an office tower (from
       // towerH m and towerA m2 of footprint, or any from tallH m) in tinted glass, pale blue-green or silver; the rest, most of the
       // city, homes in soft paints (cream, ivory, sand, pale peach, salmon, light grey), a high-rise's roof light cream, a lower
-      // one's (lowRoofH) a warm greige, the walk-ups' (lower than tiledH) a share of them (tiled) in terracotta tile; stone, a
+      // one's (lowRoofH) a light cool grey (apart from the warm walls: a block reads as walls and a roof), the walk-ups' (lower than tiledH) a share of them (tiled) in terracotta tile; stone, a
       // civic or old stone building (from the data's first stoneSpan years, stoneA m2 or more, its outline filling stoneC of its
       // extent, lower than stoneH), beige to off-white. Every roof by its building's kind and height, never by the camera's distance (a roof would change colour as the camera moves)
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
         kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: null, roofGrey: '#a8a8a8', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
           stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'], stoneRoofs: ['#a6a39e', '#9e9c99', '#aba8a3'],
-          homes: ['#f8d0c6', '#f6c8bc', '#f7d4cc', '#f8efe2', '#f6d2c2', '#d4dde8', '#f8dccf', '#f4cbc4', '#f5d6c6', '#f6cdc6'], homeRoofs: ['#e2dbd0', '#d9d2c6', '#e6e0d6', '#d4cec4'], lowRoofH: 45, lowRoofs: ['#a0988f', '#999289', '#a69d93', '#9c958d'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
+          homes: ['#f8d0c6', '#f6c8bc', '#f7d4cc', '#f8efe2', '#f6d2c2', '#d4dde8', '#f8dccf', '#f4cbc4', '#f5d6c6', '#f6cdc6'], homeRoofs: ['#e2dbd0', '#d9d2c6', '#e6e0d6', '#d4cec4'], lowRoofH: 45, lowRoofs: ['#a5a9ae', '#9fa3a8', '#aaadb1', '#a1a5a9'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
           oldWalls: ['#dccfc2', '#d2c6b8', '#ecc8b6', '#e2d6c8', '#e6c2b2'], oldRoofs: ['#8e8d8b', '#989693', '#84837f', '#a09e9a'],
           big: ['#ece2d4', '#f2d8ca', '#efe0cc'], bigRoofs: ['#c9c4bb', '#c0bdb7', '#cec8be'],
           glass: ['#adbed0', '#b4c3d4', '#bbc6d0', '#a9bacc', '#b8c6d4'], towerRoofs: ['#d6d4cf', '#cccbc7'] } } },
