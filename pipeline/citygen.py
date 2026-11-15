@@ -23,7 +23,8 @@ Primitive record (list): [type, cx, cz, rot, y0, a, b, c, d, e, rank, part, g, g
 Heights: ground relief is exaggerated like the terrain plate (gex); building heights by the era's own factor (hex), so
 courtyards keep their proportions while the plateau still reads.
 """
-import math, os, random
+import math, os, random, sys
+if __name__ == '__main__': sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 from contextlib import contextmanager
 import shapely
@@ -1054,10 +1055,21 @@ class Builder:
             self.house_body(*P(0, -ld / 2 + front + s + d / 2), th, w, d, n, T, part, along=along)
             if T['yard_wall_m'] and self.det >= 1: self._yard_wall(P, lw, ld, m, T['yard_wall_m'], part)
         elif f == 'row':   # (no eaves past the party walls: two neighbours' roofs at one height would overlap and flicker)
-            d = D * (.6 + .06 * j())
-            self.house_body(*P(0, -ld / 2 + front + d / 2), th, W, d, n, T, part, along=along, ends=False)
-            if T['yard_wall_m'] and self.det >= 1:   # the yard's back wall and the wall to the next yard
-                yb = ld / 2 - m - .2; y0_ = -ld / 2 + front + d; g = self.gsite(*P(0, (y0_ + yb) / 2), th, W, yb - y0_)
+            row = T.get('row')
+            setback = row['front_yard_m'] if row else 0.0
+            d = D - setback - row['rear_yard_m'] if row else D * (.6 + .06 * j())
+            if row and (d < 2 or W < 2):
+                raise SystemExit(f'citygen: a row house on a {lw:g} x {ld:g} m lot: its margins and row yards leave less than 2 m for the body; give a larger lot or smaller yards')
+            self.house_body(*P(0, -ld / 2 + front + setback + d / 2), th, W, d, n, T, part, along=along, ends=False)
+            if row and setback and T['yard_wall_m'] and self.det >= 1:
+                # Only the front yard: a wall round the whole lot would run through the house.
+                fy = -ld / 2 + front; by = fy + setback; hw = W / 2 - .2
+                gate = min(1.6, max(.4, hw - .4))
+                for a, b in (((-hw, fy), (-gate, fy)), ((gate, fy), (hw, fy)),
+                             ((-hw, fy), (-hw, by)), ((hw, fy), (hw, by))):
+                    self.strip(P(*a), P(*b), .4, T['yard_wall_m'], part=part)
+            if T['yard_wall_m'] and self.det >= 1 and (not row or row['rear_yard_m'] > .8):   # the yard's back wall and the wall to the next yard
+                yb = ld / 2 - m - .2; y0_ = -ld / 2 + front + setback + d; g = self.gsite(*P(0, (y0_ + yb) / 2), th, W, yb - y0_)
                 self._emit(BOX, *P(0, yb), th, 0, W, .4, T['yard_wall_m'], part=part, g_m=g)
                 self._emit(BOX, *P(-W / 2 + .2, (y0_ + yb) / 2), th, 0, .4, yb - y0_ - .4, T['yard_wall_m'], part=part, g_m=g); self.found = 0.0
         elif f == 'court':
@@ -1476,7 +1488,7 @@ ROOF_ROUND = ('dome', 'onion', 'round')
 # sections of round roofs (Builder.revolve: r a share of the half width, y of the rise), from the base round to the top on the axis
 DOME = [(0.0, 0.0), (1.0, 0.0)] + [(round(math.cos(i / 12 * math.pi / 2), 5), round(math.sin(i / 12 * math.pi / 2), 5)) for i in range(1, 13)]
 ONION = [(0.0, 0.0), (.7, 0.0), (.84, .16), (1.0, .36), (.96, .52), (.78, .68), (.48, .82), (.2, .93), (0.0, 1.0)]   # a bulb wider than its neck, drawn to a point
-TYPE_KEYS = ('where', 'when', 'basis', 'form', 'storeys', 'storey_m', 'roof', 'court', 'yard_wall_m', 'ground', 'arcade_m', 'portico_m', 'podium_m')
+TYPE_KEYS = ('where', 'when', 'basis', 'form', 'storeys', 'storey_m', 'roof', 'court', 'row', 'yard_wall_m', 'ground', 'arcade_m', 'portico_m', 'podium_m')
 
 
 def roof_as(R, shape):
@@ -1570,6 +1582,12 @@ def house_type(T, src):
     elif 'ridge' in R: no(f'roof.ridge: a {f} house runs each ridge along its wing; only a detached or a row house turns it')
     out = {'where': str(T['where']), 'when': str(T['when']), 'basis': str(T['basis']), 'form': f, 'storeys': list(st),
            'storey_m': num('storey_m', T.get('storey_m', 3.2), 2.2, 8), 'roof': roof}
+    if 'row' in T:
+        if f != 'row': no(f'row: only a row house uses front_yard_m and rear_yard_m')
+        r = T['row']
+        if not isinstance(r, dict) or set(r) - {'front_yard_m', 'rear_yard_m'}:
+            no('row: { front_yard_m, rear_yard_m }, distances inside the lot margins')
+        out['row'] = {k: num(f'row.{k}', r.get(k, 0), 0, 200) for k in ('front_yard_m', 'rear_yard_m')}
     if f in ('court', 'compound'):
         C_ = T.get('court', {})
         if not isinstance(C_, dict) or set(C_) - {'frac'}: no('court: { frac } (the court\'s share of the lot, .05 to .7)')
@@ -2057,3 +2075,65 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
     if basins is not None: basins.extend(B.basins)   # (compile lowers the plate in them: its basin map; a ground: its ground map)
     if labels is not None: labels.extend(B.labels)   # (each record's part, in the records' order: Builder.labelled)
     return B.finish(spec.get('rank_noise', .08), meta)
+
+
+def selftest():
+    """Row-envelope regressions, including the old geometry and following random draws."""
+    import hashlib, json, unittest
+    from geo import Frame
+
+    class Tests(unittest.TestCase):
+        def setUp(self):
+            self.F = Frame([121.47, 31.23, 121.49, 31.25], 1 / 10000)
+            self.x, self.y = self.F.cx, self.F.cy
+            self.T = {'where': 'test region', 'when': 'test period', 'basis': 'geometry fixture',
+                      'form': 'row', 'storeys': [2, 3], 'roof': {'shape': 'gabled', 'ridge': 'along'}, 'yard_wall_m': 2}
+
+        def builder(self, seed=1):
+            return Builder(self.F, lambda x, y: 0, 1, 1, (self.x, self.y), seed=seed, detail='high')
+
+        def test_absent_row_keeps_geometry_and_following_random_draws(self):
+            expected = {1: 'f0765e11b2b3f654bb0d139d44c052756745d94e48bb8902bf5934cd805d6b94',
+                        17: 'b02f8eece69cc9fd107d71a896a4dab016344cf242eabc2d8824d4823a21137c',
+                        99: 'bee21215ec4b012c341d1ff99390f96f706fc9e837792073ec019021a705c062'}
+            for seed, digest in expected.items():
+                with self.subTest(seed=seed):
+                    b = self.builder(seed); t = house_type(self.T, 'fixture')
+                    for i in range(3):
+                        b.group(); b.house(self.x + i * 8, self.y, 0, 8, 21.2, t)
+                    b.group(); b.house(self.x + 40, self.y, 0, 18, 26, house_type({**self.T, 'form': 'detached'}, 'fixture'))
+                    self.assertEqual(hashlib.sha256(json.dumps(b.finish(), separators=(',', ':')).encode()).hexdigest(), digest)
+
+        def test_explicit_yards_leave_open_ground_and_body_at_the_sourced_depth(self):
+            b = self.builder(); t = house_type({**self.T, 'row': {'front_yard_m': 3, 'rear_yard_m': 2}}, 'fixture')
+            b.group(); b.house(self.x, self.y, 0, 8, 21.2, t)
+            ps = b.finish(); bodies = [p for p in ps if p[0] == BOX and p[11] == FAB and p[4] + p[7] > 3 * self.F.scale]
+            self.assertEqual(len(bodies), 1)
+            self.assertAlmostEqual(bodies[0][6] / self.F.scale, 15.9)
+            for dy in (-9, 9.5):
+                q = Point(*self.F.model(self.x, self.y + dy))
+                self.assertFalse(any(solid_plan(p).contains(q) for p in ps if p[11] != DARK))
+
+        def test_empty_row_fills_envelope_without_a_random_rear_yard(self):
+            b = self.builder(); t = house_type({**self.T, 'row': {}}, 'fixture')
+            self.assertEqual(house_type(t, 'completed fixture'), t)
+            b.group(); b.house(self.x, self.y, 0, 4, 21.2, t)
+            ps = b.finish(); body = next(p for p in ps if p[0] == BOX and p[11] == FAB)
+            self.assertAlmostEqual(body[6] / self.F.scale, 20.9)
+            self.assertFalse(any(p[0] == BOX and p[11] == FAB and p[7] / self.F.scale <= 2 for p in ps))
+
+        def test_invalid_yards_fail_before_emitting_geometry(self):
+            for row in ({'front_yard_m': -1}, {'rear_yard_m': True}, {'depth_m': 12}):
+                with self.subTest(row=row), self.assertRaises(SystemExit): house_type({**self.T, 'row': row}, 'fixture')
+            with self.assertRaises(SystemExit): house_type({**self.T, 'form': 'court', 'row': {}}, 'fixture')
+            b = self.builder(); t = house_type({**self.T, 'row': {'front_yard_m': 20}}, 'fixture')
+            with self.assertRaises(SystemExit): b.house(self.x, self.y, 0, 8, 21.2, t)
+            self.assertFalse(b.prims)
+
+    result = unittest.TextTestRunner().run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests))
+    if not result.wasSuccessful(): raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    if sys.argv[1:] == ['selftest']: selftest()
+    else: raise SystemExit('usage: python -I pipeline/citygen.py selftest')

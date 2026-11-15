@@ -89,6 +89,18 @@ exaggerated (a stretched dome reads as an egg). A pitched roof keeps its pitch t
 **Choose the form by how the buildings were built.** A block built in one go as one building (a block of flats round a light well, a barracks, a monastery, a mill's dormitories) is one body of one height:
 `court` or `detached` on a lot the size of the block, `storeys` a single number. `row` is for a street built house by house, each on its own narrow lot, where a `storeys` range gives the street its uneven skyline.
 On the sheet, a row whose units step up and down shows each unit's gable end standing above its lower neighbour: when the sources describe the block as one building, that sawtooth is wrong.
+For a row whose building depth or yards can be read from a source, write
+`row: {front_yard_m: 3, rear_yard_m: 2}` in its type. These distances are inside
+the lot's usual margins; the body fills the depth between them. Both default to
+0 when `row` is present, so `row: {}` fills a traced building envelope instead of
+inventing a rear yard. The body must remain at least 2 m wide and deep. A positive
+`yard_wall_m` encloses the front yard with a gate gap and the rear yard separately,
+without passing through the body. A yard does not supply side wings, a rear annex
+or a covered upper floor: use this form only when the source supports one body
+between open yards. With `row` absent, the existing varied body depth and rear yard
+are kept exactly. The dimensions and any estimates belong in the type's `basis`.
+Run `uv run python -I pipeline/citygen.py selftest` for the row-envelope geometry,
+open-yard, validation and unchanged-default regressions.
 Look at the types before laying the city: `uv run python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat>` (a flat open place) builds a block of each type the period
 declares or its fabric names, at the film's close-up distance, in its palette and light, and puts the stills side by side in `sheet.jpg`. Judge the sheet yourself, and lay the city once
 each type reads as itself.
