@@ -387,6 +387,12 @@ try { const q = typeof location !== 'undefined' && new URLSearchParams(location.
 catch (e) { console.error(`pic=: ${e.message}`); }
 const MAT = FILM_PIC.material && FILM_PIC.looks[FILM_PIC.material] || null;
 if (MAT) { picMerge(MAT.pic); picMerge(PIC_Q); }   // (a material's light; a still's own picture over it)
+// ?without=trees,flags: a period city studied without the look's own decoration, to judge its houses (the viewer, render/still.mjs,
+// tools/lookshots.mjs, tools/modelview.py: docs/MODEL.md): trees, the land's tree field round the eye (fx.js treeField, which
+// reads it, in either look) and the detail's own garden and street trees (detail.js); flags, the painted flags the detail puts on
+// gates and landmarks (detail.js flags). The default keeps both
+const WITHOUT = new Set(((typeof location !== 'undefined' && new URLSearchParams(location.search).get('without')) || '').split(',').filter(Boolean));
+for (const w of WITHOUT) if (!['trees', 'flags'].includes(w)) console.error(`without=${w}: trees or flags (engine/mini.js)`);
 // the tilt-shift band (the colour film): blur in one direction per pass, as wide as the distance from the band asks
 const BAND_BLUR = {
   uniforms: { tDiffuse: { value: null }, dir: { value: new THREE.Vector2(1, 0) }, px: { value: new THREE.Vector2(1 / 1920, 1 / 1080) }, k: { value: 1 },
@@ -899,7 +905,8 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     Object.assign(dcols, { crown: (x, z) => { const [a, b, c] = H3(x, z); return new THREE.Color().setHSL(.2 + th + a * .09, (.32 + b * .16) * tsat, (.24 + c * .1) * tdark); },
       cone: (x, z) => { const [a, , c] = H3(x, z); return new THREE.Color().setHSL(.27 + th + a * .05, .4, (.18 + c * .06) * tdark); }, trunk: '#6b5440', pole: '#5b4a3a',
       flag: (x, z) => new THREE.Color(D_.flags[Math.floor(H3(x, z)[1] * D_.flags.length)]), hull: '#7a5236', mast: '#5b4a3a', sail: D_.sail, cabin: '#4a4038' });
-    if (pal.flags === false) { delete dcols.flag; delete dcols.pole; }   // (a material without the painted flags)
+    if (pal.flags === false || WITHOUT.has('flags')) { delete dcols.flag; delete dcols.pole; }   // (a material without the painted flags; a study without them, ?without)
+    if (WITHOUT.has('trees')) { delete dcols.crown; delete dcols.cone; delete dcols.trunk; }   // (a study without the detail's own trees either: gardens, street rows)
     return dcols; };
   const dcols = colsOf(pal), DCOLS = new Map([[pal, dcols]]), dcolsOf = p => DCOLS.get(p) || DCOLS.set(p, colsOf(p)).get(p);
   const pxK = { value: 1 }, idOf = new Map(Object.entries(S.eras).map(([id, E]) => [E.mesh, id])), uprightOf = id => (STYLES[paletteOf(id)] || STYLES[palette] || STYLES.roman).wall;   // (the fade's scale: detail.js FADE_PX)

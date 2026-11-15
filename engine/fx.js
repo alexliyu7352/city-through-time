@@ -339,8 +339,11 @@ function gridTrees(scene, ins, out, kinds, open, wet, PW, PD, centre, R, count, 
 }
 
 // trees round where the eye looks, planted again when it moves away or the shot's distance changes much (trees made for a far
-// first view lay thinly over the whole plate). update(target, d, sources): sources the meshes trees keep clear of
+// first view lay thinly over the whole plate). update(target, d, sources): sources the meshes trees keep clear of. T.off: none
+// (a study of a period city's houses, the page's ?without=trees: engine/mini.js)
+const NO_TREES = typeof location !== 'undefined' && (new URLSearchParams(location.search).get('without') || '').split(',').includes('trees');
 export function treeField(scene, renderer, U, PW, PD, scale, T) {
+  if (T.off || NO_TREES) return { objs: () => null, reset() {}, update() {} };
   let objs = null, at = null, dAt = 1;
   return { objs: () => objs, reset() { at = null; },
     update(target, d, sources) {

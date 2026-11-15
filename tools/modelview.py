@@ -14,6 +14,8 @@ usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,
             still's own, else --az/--el/--d (defaults: the close-up of docs/MODEL.md, d .045 and el 12; az 305 looks across
             terrain.shade's fixed sun, from the north-west, so slopes read; the room light stands beside the camera at any az)
   --wide    d .35, el 30: the whole city, for the colour and the layout
+  --q       more of the stills' page query: look=mini&palette=<p> the colour look, &without=trees,flags without its tree field
+            and painted flags (docs/MODEL.md)
   --duration  the target study node's seconds (default: its film duration, or 20 for a new --spec).
             Give a longer study when its growth needs more time; this never changes the real film's timing.
   --sheet   the city's houses, type by type, in place of the city: a block two lots deep of each house type its fabric
@@ -273,6 +275,7 @@ def main():
     ap.add_argument('--height-m', type=float, default=0.0, help='camera target metres above the ground, for a tall landmark')
     ap.add_argument('--size', default='1920x1080', help='still dimensions, passed to render/still.mjs')
     ap.add_argument('--duration', type=float, help='study node seconds; leave enough time for the whole city to rise')
+    ap.add_argument('--q', default='', help="more of the stills' page query, e.g. look=mini&palette=chinese&without=trees,flags (the colour look without its trees and flags)")
     ap.add_argument('--wide', action='store_true'); ap.add_argument('--name'); ap.add_argument('--sheet', action='store_true')
     ap.add_argument('--landmarks', metavar='OUT.md')
     args = ap.parse_args()
@@ -348,7 +351,7 @@ def main():
     bundle = os.path.relpath(S, ROOT).replace(os.sep, '/') + '/'
     files = []
     for i, (s, v) in enumerate(zip(sh, cams), 1):
-        q = f'bundle={bundle}&cam=' + ','.join(f'{x:g}' for x in v); pre = f'{i}_{s["name"]}_' if 'name' in s else f'{i}_'
+        q = f'bundle={bundle}&cam=' + ','.join(f'{x:g}' for x in v) + (f'&{args.q.lstrip("&")}' if args.q else ''); pre = f'{i}_{s["name"]}_' if 'name' in s else f'{i}_'
         r = run(['node', 'render/still.mjs', slug, f'{t:.2f}', '--q', q, '--out', out, '--prefix', pre, '--size', args.size], LAYOUT.logs(S, f'still_{i}.log'))
         if r.returncode: print(r.stdout[-2000:]); raise SystemExit('modelview: the still failed')
         files.append(os.path.join(out, f'{pre}{t:.2f}.jpg'))
