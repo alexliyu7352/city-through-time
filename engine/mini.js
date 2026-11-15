@@ -813,7 +813,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
         if (J_) for (const [jx, jz] of J_) if (Math.hypot(x - jx, z - jz) < r) return false; }
       return true; };
     return SIX = { hw, clear }; };
-  const flockKey = () => [Math.floor(TODAY_K.value.x), TODAY_K.value.y, TODAY_K.value.z < .3 ? 1 : 0, FOOTS.length, chan()].join(':');   // (what decides every tile's trees; the period cities standing, BUILT, tile by tile: FL.sums)
+  const flockKey = () => [Math.floor(TODAY_K.value.x), STREET_K.value > 0 ? 1 : 0, FOOTS.length, chan()].join(':');   // (what decides every tile's trees; the period cities standing, BUILT, tile by tile: FL.sums)
   const FH = (i, j, k) => { const t = Math.sin(i * 127.1 + j * 311.7 + k * 74.7) * 43758.5453; return t - Math.floor(t); };
   const fvn = (x, y) => { const i = Math.floor(x), j = Math.floor(y), fx = x - i, fy = y - j, a = FH(i, j, 9), b = FH(i + 1, j, 9), c = FH(i, j + 1, 9), e = FH(i + 1, j + 1, 9), sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy); return a + (b - a) * sx + (c - a) * sy + (a - b - c + e) * sx * sy; };
   const fsm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
@@ -827,13 +827,15 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       const rk = FH(i, j, 21); if (rk < q0 || rk >= p) continue;
       const x = (i + .2 + .6 * FH(i, j, 1)) * c, z = (j + .2 + .6 * FH(i, j, 2)) * c;
       if (x < x0 || x >= x0 + T0 || z < z0 || z >= z0 + T0 || Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2 || wet(x, z)) continue;
-      const tw = Math.max(M.px(M.bd, x, z), M.ty(x, z)); if (tw > .8) continue;   // (never on a block, today's included)
+      const tw0 = M.px(M.bd, x, z), tw1 = Math.max(tw0, M.ty(x, z)); if (tw0 > .8) continue;   // (never on a block; today's: tw1, the same grove while today's city is the subject)
       const m = [x / scale, z / scale], cl = fsm(.42, .56, fvn(m[0] / 52, m[1] / 52) * .65 + fvn(m[0] / 17, m[1] / 17) * .35);
       const e = 2 * c, g0 = S.ground(x, z), sl = Math.hypot(S.ground(x + e, z) - g0, S.ground(x, z + e) - g0) / e;
       const bank = (wet(x + 3 * c, z) || wet(x - 3 * c, z) || wet(x, z + 3 * c) || wet(x, z - 3 * c)) ? 1 : 0;
-      let k = Math.max(M.px(M.td, x, z) * (.5 + .5 * cl), F.bank * bank * (.55 + .45 * cl), cl * Math.max(F.slope * fsm(.12, .3, sl), F.edge * fsm(.08, .25, tw) * (1 - fsm(.72, .9, tw))), F.land * (1 - .75 * TODAY_K.value.y * (TODAY_K.value.z < .3 ? 1 : 0)) * fsm(.75, .9, cl) * (1 - fsm(.2, .4, tw)));   // (groves with clearings; the banks lined; in the open country only the heart of a grove)
-      k = fsm(.3, .62, k) * (1 - fsm(.7, .8, tw)); if (FH(i, j, 3) >= k) continue;   // (a grove's density sharpened: crowns close in its heart, none in its thin edge, so the country reads as woods, not dots)
-      out.push([x, g0, z, Math.min(F.cell * .42 * (.6 + 1. * Math.pow(FH(i, j, 4), 1.4)) * (.8 + .4 * cl), tw > .25 ? 4.5 : 1e9) * scale, FH(i, j, 5), 0, rk]); }   // (inside a town no bigger than a courtyard house)   // (a crown .6 to 1.6 times, the bigger in a grove's heart)
+      const kOf = (tw, ty_) => { const k = Math.max(M.px(M.td, x, z) * (.5 + .5 * cl), F.bank * bank * (.55 + .45 * cl), cl * Math.max(F.slope * fsm(.12, .3, sl), F.edge * fsm(.08, .25, tw) * (1 - fsm(.72, .9, tw))), F.land * (1 - .75 * ty_) * fsm(.75, .9, cl) * (1 - fsm(.2, .4, tw)));   // (groves with clearings; the banks lined; in the open country only the heart of a grove)
+        return fsm(.3, .62, k) * (1 - fsm(.7, .8, tw)); };   // (a grove's density sharpened: crowns close in its heart, none in its thin edge, so the country reads as woods, not dots)
+      const hk = FH(i, j, 3), in0 = hk < kOf(tw0, 0), in1 = tw1 <= .8 && hk < kOf(tw1, M.ycT >= 0 ? 1 : 0); if (!in0 && !in1) continue;
+      const tw = in1 ? tw1 : tw0;   // (today's state a grove keeps: its size where today's blocks are near)
+      out.push([x, g0, z, Math.min(F.cell * .42 * (.6 + 1. * Math.pow(FH(i, j, 4), 1.4)) * (.8 + .4 * cl), tw > .25 ? 4.5 : 1e9) * scale, FH(i, j, 5), in0 && in1 ? 0 : in0 ? -1 : -2, rk]); }   // (kind 0 a grove's; -1 one only while today's city is not the subject, -2 only while it is: each fades with today's city, STREET_K)   // (inside a town no bigger than a courtyard house)   // (a crown .6 to 1.6 times, the bigger in a grove's heart)
     // a period town's own trees (flock town): its courtyards and lanes planted, where a period city stands (the built-up mask over
     // town.built), where its region plants them (its palette's tree town: a share of town.share), a cell of town.cell m, town.share
     // of them a tree in its leafy quarters (a slow noise passing groves[0], whole by groves[1]; a quarter of that between them), its
@@ -922,11 +924,11 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     const N = FL.N, bd = FL.bd, td = FL.td, px = (D_, x, z) => { const u = Math.floor((x / PW + .5) * N), v = Math.floor((z / PD + .5) * N); return u < 0 || v < 0 || u >= N || v >= N ? 0 : D_[(v * N + u) * 4] / 255; };
     const tileSum = (i, j) => { const T0 = TILE * scale, u0 = Math.max(0, Math.floor((i * T0 / PW + .5) * N)), u1 = Math.min(N - 1, Math.floor(((i + 1) * T0 / PW + .5) * N)), v0 = Math.max(0, Math.floor((j * T0 / PD + .5) * N)), v1 = Math.min(N - 1, Math.floor(((j + 1) * T0 / PD + .5) * N));
       let s = 0; for (let v = v0; v <= v1; v++) for (let u = u0; u <= u1; u++) { const o = (v * N + u) * 4; s = (s * 31 + bd[o] * 7 + td[o]) % 1000000007; } return s; };
-    const YN = 4096, yc = TODAY_K.value.y > .5 && TODAY_K.value.z < .3 ? TODAY_K.value.x - 1899 : -1,   // (behind a period city today's city is a plan on the board: the period's groves stand over it)
+    const YN = 4096, yc = STREET_K.value > 0 ? TODAY_K.value.x - 1899 : -1,   // (today's ground as the year has it, where today's city is coming or is the subject: its trees fade in and out with it, STREET_K; behind a period city it is a plan on the board, the period's groves stand over it)
       ty = (x, z) => { if (!YEAR_D || yc < 0) return 0; const u = Math.floor((x / PW + .5) * YN), v = Math.floor((z / PD + .5) * YN); if (u < 0 || v < 0 || u >= YN || v >= YN) return 0; const y = YEAR_D[v * YN + u], ye = GREEN_ON.value && YEAR_E && TODAY_K.value.z < .3 ? YEAR_E[v * YN + u] : 0; return (y > 0 && y <= yc) || (ye > 0 && ye <= yc) ? 1 : 0; };   // (with green data the urban extent is plaster: no country groves on it)
     const today = yc >= 0 && (STREETS.list || GREEN_ON.value);
     if (today && GREEN_ON.value && !GREEN_D && GREEN.value && GREEN.value.image) { const im_ = GREEN.value.image, c_ = document.createElement('canvas'); c_.width = im_.width; c_.height = im_.height; const g_ = c_.getContext('2d'); g_.drawImage(im_, 0, 0); GREEN_D = { w: im_.width, h: im_.height, d: g_.getImageData(0, 0, im_.width, im_.height).data }; }
-    const M = { F, bd, td, px, ty, yc: today ? yc : -1, IX: today ? streetIndex() : null, ST: { ...(F.street || { off: 2.5, r: 3.6, every: { secondary: 13, tertiary: 14 }, minor: 18, junction: 14 }), ...((todayL() && todayL().streetTrees) || {}) }, PT: { cell: 10, size: [3, 4.5], groves: [.5, .62], noise: [60, 20], dense: .9, lone: .04, edge: [12, .4], ...((todayL() && todayL().parkTrees) || {}) } };
+    const M = { F, bd, td, px, ty, yc: today ? yc : -1, ycT: yc, IX: today ? streetIndex() : null, ST: { ...(F.street || { off: 2.5, r: 3.6, every: { secondary: 13, tertiary: 14 }, minor: 18, junction: 14 }), ...((todayL() && todayL().streetTrees) || {}) }, PT: { cell: 10, size: [3, 4.5], groves: [.5, .62], noise: [60, 20], dense: .9, lone: .04, edge: [12, .4], ...((todayL() && todayL().parkTrees) || {}) } };
     if (today && STREETS.list) segIndex();
     // the tiles the frame sees: its ground as far as the frame reaches (the plate's edge at most), the tiles there inside the view
     // (with a margin for a tree's shadow falling into it), nearest first
@@ -968,7 +970,8 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
         let w, rd;
         if (t === 2) { rd = Math.max(r, SPX * mpp); const p = r / rd; w = (rk ? Math.min(1, Math.max(0, (p - rk) / rk)) : 1) * fsm(SFAR[0], SFAR[1], r / mpp); }   // (a row: its trees at least street px pixels round, every other one going as they grow; gone where a crown would be under far[0] of a pixel)
         else { const p = Math.min(1, (r / (mpp * PX0)) ** 2); rd = r / Math.sqrt(p); w = Math.min(1, Math.max(0, (p * (1 + B_) - rk) / (B_ * p))) * fsm(FAR[0], FAR[1], F.cell * scale / mpp); }   // (a grove's or a park's: fewer, larger, whole under rank p, gone from p (1 + B_); afar the ground's groves' tone)
-        if (w > .002) put(x, y, z, rd * w, h, t, rd); } }
+        w *= t > 0 || t === -2 ? STREET_K.value : t === -1 ? 1 - STREET_K.value : 1;   // (today's trees, and the groves only today's city keeps or drops, fading with it)
+        if (w > .002) put(x, y, z, rd * w, h, Math.max(t, 0), rd); } }
     // the crowns: a finer sphere where a crown is 6 pixels round or more, the coarsest (20 faces) under 3: afar a row's or a grove's
     // crowns are a few pixels each, their facets never seen, and there are most of them; the parks' in their own paint (parkTrees crown, trees)
     const CR_ = (yc >= 0 && todayL() && todayL().crown) || F.crown, CRP_ = (yc >= 0 && M.PT.crown) || CR_;   // (todayLight crown: today's own, while today's city is the subject; a period city's groves keep the flock's)
@@ -1146,7 +1149,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   const BATCH = typeof location !== 'undefined' && new URLSearchParams(location.search).has('shots');   // (a page that takes a batch of stills, render/still.mjs --shots: it keeps what a next shot takes again)
   const FPT = { tried: false, mesh: null, skip: 0, ms: 0, bytes: 0, side: null, keep: BATCH, sel: null, roofs0: null, skipNow: false }, FOLDS = [];
   const sidecar = () => FPT.side ||= fetch(dataDir + 'today_footprints.json').then(r => r.ok ? r.json() : null).catch(() => null);   // (its promise: kept while a batch of stills chooses again)
-  const footprintsWait = () => !FPT.tried && film && MAT && dataDir && cityMesh && S.buildTodayFootprints && !(todayL() && todayL().footprints === false) && cityMesh.visible && TODAY_K.value.y > .5;
+  const footprintsWait = () => !FPT.tried && film && MAT && dataDir && cityMesh && S.buildTodayFootprints && !(todayL() && todayL().footprints === false) && cityMesh.visible && TODAY_K.value.y > .002;
   // whether today's replacement footprints come in this frame (render): its rooftops are then made once, after them, not made
   // before them and dropped again
   const footprintsDue = async () => { if (!footprintsWait()) return false; const s_ = await sidecar(); return !!s_ && s_.enabled === true; };
@@ -1552,13 +1555,13 @@ vec4 sbOver(vec4 d, vec3 c, float a){ return vec4(c * a + d.rgb * (1. - a), a + 
       if (film && !S.fx && MAT && MAT.base && MAT.base.ground_in && cityMesh) { todayYears(cityMesh, S.PW, S.PD, MAT.base.ground_in.reachToday || 45, scale, roads, bands, grow ? (y, t) => { if (!(t > 0)) return y; const b = [...grow.bands].sort((p, q) => p.t - q.t).find(b => b.t + b.spread * .5 >= t); return b ? Math.max(y, b.hi - .5) : 1e4; } : null, todayL() && todayL().lanes ? [todayL().lanes[3], todayL().lanes[4] || 1e9] : 0);
         const by_ = BACK.uBackdropY.value, yr_ = U.uYear.value, sm_ = THREE.MathUtils.smoothstep; let yg_ = Infinity; const now_ = U.uNow ? U.uNow.value : 0;   // (the film's growth raises today's city band by band at its own times: the plaster arrives with them, not with the counter)
         if (grow && now_ >= grow.on) { yg_ = -Infinity; for (const b of grow.bands) if (now_ >= b.t + b.spread * .5) yg_ = Math.max(yg_, b.hi - .5); }
-        TODAY_K.value.set(Math.min(Math.max(yr_, BACK.uDataY0.value), yg_), Math.max(U.uGrowRise ? U.uGrowRise.value : 0, sm_(yr_, by_ - 5, by_ + 5)) > .5 && cityMesh.visible ? 1 : 0, S.U.uDimTodayC ? S.U.uDimTodayC.value : 0);
+        TODAY_K.value.set(Math.min(Math.max(yr_, BACK.uDataY0.value), yg_), cityMesh.visible ? Math.max(U.uGrowRise ? U.uGrowRise.value : 0, sm_(yr_, by_ - 5, by_ + 5)) : 0, S.U.uDimTodayC ? S.U.uDimTodayC.value : 0);   // (y: today's city the subject, 0 to 1 with the modern section's own ramp: its ground, water and light come with its buildings, never in one frame)
         BAND_Y.value = grow && now_ >= grow.on ? yg_ : TODAY_K.value.x;   // (the growth's bands raise the city by their own clock, ahead of or behind the counter: their plaster with them)
         // today's details (rooftop pieces, massing, split buildings; streets: STREET_K) come and go over DETAIL_FADE s, never in one
         // frame: out before the growth begins and in after its last band (they stand still while it raises the city), in and out
         // with today's city becoming the subject (the modern section's own ramp, the white film's dim of it)
         const F_ = DETAIL_FADE, end_ = grow ? Math.max(...grow.bands.map(b => b.t + b.spread)) : 0, gk_ = !grow ? 1 : Math.max(1 - sm_(now_, grow.on - F_, grow.on), sm_(now_, end_, end_ + F_));
-        const sk_ = (cityMesh.visible ? sm_(Math.max(U.uGrowRise ? U.uGrowRise.value : 0, sm_(yr_, by_ - 5, by_ + 5)), .35, .65) : 0) * (1 - sm_(TODAY_K.value.z, .2, .35));
+        const sk_ = (cityMesh.visible ? Math.max(U.uGrowRise ? U.uGrowRise.value : 0, sm_(yr_, by_ - 5, by_ + 5)) : 0) * (1 - sm_(TODAY_K.value.z, .2, .35));   // (with today's buildings as they come, the modern section's own ramp)
         STREET_K.value = sk_; ROOF_ON.value = sk_ * gk_; }
   };
   // today's water's reflection (todayLight water refl: [its share at a steep view, more toward a grazing one]): the scene drawn
@@ -1599,7 +1602,7 @@ vec4 sbOver(vec4 d, vec3 c, float a){ return vec4(c * a + d.rgb * (1. - a), a + 
       builtNow(); boats(); flockAt(target, d); }   // (the built-up mask as this frame has it before the trees read it: a frame drawn first, a render's worker's or a seek's, plants by its own)
     for (const P of PATHS) { const t = U.uNow.value, r = P.r, a = sm(r.on, r.on + .3, t) * (1 - sm(r.off - .6, r.off, t));   // (the routes' paths, as they draw and go)
       P.mesh.visible = a > .002; P.mesh.material.opacity = a; P.u.uP.value = sm(r.on, r.on + r.draw, t) * 1.0001; }
-    if (film && MAT && cityMesh && cityMesh.visible && TODAY_K.value.y > .5) await todayFootprints(target, d);   // (today's replacement footprints, once: before its rooftops and the detailed models)
+    if (film && MAT && cityMesh && cityMesh.visible && TODAY_K.value.y > .002) await todayFootprints(target, d);   // (as soon as today's city begins to come: they fade in with it)   // (today's replacement footprints, once: before its rooftops and the detailed models)
     if (FPT.mesh) FPT.mesh.visible = cityMesh.visible;
     const swapM = [];   // (the studio's materials back after the frame)
     for (const m of [...eraMeshes, cityMesh]) if (m.visible) colour(m);
