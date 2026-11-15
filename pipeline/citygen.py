@@ -1206,6 +1206,22 @@ class Builder:
         if gate_style == 'han3':   # 一门三道 (han_changan.md §2-B): three 8 m passages, piers 4 m (14 m facing a palace), 20 m deep
             cuts = [(gp - (24 + 2 * pw) / 2, gp + (24 + 2 * pw) / 2) for gp, pw in gl]
         else: cuts = [(gp - gw / 2, gp + gw / 2) for gp in gpos]
+        # Positions along the line. A closed ring has no ends: a gate near where its points start or finish is cut round that seam
+        # (its two pieces, merged with any cut they meet), so the same ring started anywhere has the same openings. An open run
+        # keeps its ends: a cut past one is clipped there.
+        if closed:
+            cw = []
+            for c0, c1 in cuts:
+                if c0 < 0: cw += [(0.0, c1), (L + c0, L)]
+                elif c1 > L: cw += [(c0, L), (0.0, c1 - L)]
+                else: cw.append((c0, c1))
+            cuts = []
+            for c0, c1 in sorted(cw):
+                if cuts and c0 <= cuts[-1][1]: cuts[-1] = (cuts[-1][0], max(cuts[-1][1], c1))
+                else: cuts.append((c0, c1))
+        along = (lambda d: d % L) if closed else (lambda d: min(L, max(0.0, d)))   # (a distance taken round the seam, or kept to the ends)
+        ahead = (lambda d: (d + 1.0) % L if d + 1.0 > L else d + 1.0) if closed else (lambda d: min(L, d + 1.0))   # (a metre on: the line's direction there)
+        apart = (lambda a, b: min(abs(a - b), L - abs(a - b))) if closed else (lambda a, b: abs(a - b))
         verts = [0.0]
         for i in range(1, len(ring)): verts.append(verts[-1] + math.hypot(ring[i][0] - ring[i - 1][0], ring[i][1] - ring[i - 1][1]))
         def pieces(s0, s1, most=60.0):   # wall pieces between corners and gates, at most `most` metres: each sits on its own ground
@@ -1267,11 +1283,12 @@ class Builder:
                 for s0, s1 in spans:
                     n = int((s1 - s0) // tower_every)
                     at += [s0 + (s1 - s0) * (k + .5) / max(1, n) for k in range(n)] if n else []
-            fixed = ([line.project(Point(x, y)) for x, y in (ring[:-1] if closed else ring[1:-1])] if towers else []) + [gp + k * (gw / 2 + tw / 2) for gp in gpos for k in (-1, 1)]
+            fixed = ([line.project(Point(x, y)) for x, y in (ring[:-1] if closed else ring[1:-1])] if towers else []) + [along(gp + k * (gw / 2 + tw / 2)) if closed else gp + k * (gw / 2 + tw / 2) for gp in gpos for k in (-1, 1)]
             keep = max(1.5 * tw, .5 * (tower_every or 0))   # (a tower in the run keeps off the corner and gate towers)
             for d in sorted(at):
-                if all(abs(d - v) > keep for v in fixed) and all(not (c0 < d < c1) for c0, c1 in cuts): ctower(d, h * 1.3)
-        corners = (ring[:-1] if closed else ring[1:-1]) if towers else []
+                if all(apart(d, v) > keep for v in fixed) and all(not (c0 < d < c1) for c0, c1 in cuts): ctower(d, h * 1.3)
+        # (no corner tower in a gate's opening: a ring's points may start at a gate, or have one at a gate)
+        corners = [q for q in (ring[:-1] if closed else ring[1:-1]) if not any(c0 <= line.project(Point(q[0], q[1])) <= c1 for c0, c1 in cuts)] if towers else []
         if curtain:
             for x, y in corners: ctower(line.project(Point(x, y)), h * 1.3)
             corners = []
@@ -1282,20 +1299,20 @@ class Builder:
                 if tower and self.det >= 1: self.hall(x, y, math.pi / 4, t * 1.1, t * 1.1, h * .9, roof='xieshan', z0=h * 1.04, part=LMK, g=g, cols=False)
                 else: self._emit(FRUSTUM, x, y, 0, h * 1.04, t * 1.7, t * 1.7, h * .35, t * .6, t * .6, part=LROOF, g_m=g)
         for gp, pw in (gl if gate_style == 'han3' else []):   # a Han gate: its platform over three passages, a tower on top
-            p = line.interpolate(gp); q = line.interpolate(min(L, gp + 1.0)); th = math.atan2(q.y - p.y, q.x - p.x)
+            p = line.interpolate(gp); q = line.interpolate(ahead(gp)); th = math.atan2(q.y - p.y, q.x - p.x)
             W = 24 + 2 * pw + 8; D = max(20.0, t + 4); self.group(); g = self.gsite(p.x, p.y, th, W, D); self.found = 0.0
             self._emit(BOX, p.x, p.y, th, 0, W, D, h, part=part, g_m=g)
             for k in (-1, 0, 1):
                 qx, qy = p.x + math.cos(th) * k * (8 + pw), p.y + math.sin(th) * k * (8 + pw); self._emit(BOX, qx, qy, th, 0, 7.6, D + .4, min(7.5, h * .62), part=DARK, g_m=g)
             self.hall(p.x, p.y, th, W * .86, D * .7, 11, roof='double_hip' if pw > 8 else 'hip', z0=h, part=LMK, g=g, front=1)
         for gp in (gpos if curtain else []):   # a curtain wall's gate: a dark passage through its gatehouse, a tower either side
-            p = line.interpolate(gp); q = line.interpolate(min(L, gp + 1.0)); th = math.atan2(q.y - p.y, q.x - p.x)
+            p = line.interpolate(gp); q = line.interpolate(ahead(gp)); th = math.atan2(q.y - p.y, q.x - p.x)
             self.group(); g = self.gsite(p.x, p.y, th, gw, t * 1.2)
             self._emit(BOX, p.x, p.y, th, 0, gw + .4, t * 1.2, h * 1.1, part=part, g_m=g)
             self._emit(BOX, p.x, p.y, th, 0, 5.5, t * 1.2 + .4, min(7, h * .7), part=DARK, g_m=g); self.found = 0.0   # the passage
-            for k in (-1, 1): ctower(min(L, max(0.0, gp + k * (gw / 2 + tw / 2))), h * 1.35)
+            for k in (-1, 1): ctower(along(gp + k * (gw / 2 + tw / 2)), h * 1.35)
         for gp in (gpos if gate_style not in ('none', 'han3', 'curtain') else []):   # gate towers (城楼) over the passages, barbicans outward
-            p = line.interpolate(gp); q = line.interpolate(min(L, gp + 1.0)); th = math.atan2(q.y - p.y, q.x - p.x)
+            p = line.interpolate(gp); q = line.interpolate(ahead(gp)); th = math.atan2(q.y - p.y, q.x - p.x)
             self.group(); g = self.gsite(p.x, p.y, th, gw * 2.2, t * 1.3); ox_, oy_ = math.sin(th), -math.cos(th)
             self._emit(BOX, p.x, p.y, th, 0, gw * 2.2, t * 1.3, h, part=part, g_m=g)
             self._emit(BOX, p.x, p.y, th, 0, 5.5, t * 1.3 + .4, min(7, h * .7), part=DARK, g_m=g)                   # the passage
@@ -1316,7 +1333,7 @@ class Builder:
             for a, b in zip(mring[:-1], mring[1:]):
                 self.strip(a, b, moat_w, .25, part=WATER)
             for gp in gpos:
-                p = line.interpolate(gp); q = line.interpolate(min(L, gp + 1.0)); th = math.atan2(q.y - p.y, q.x - p.x)
+                p = line.interpolate(gp); q = line.interpolate(ahead(gp)); th = math.atan2(q.y - p.y, q.x - p.x)
                 ox_, oy_ = math.sin(th), -math.cos(th)
                 if tower: p = Point(p.x + math.cos(th) * gw * .9, p.y + math.sin(th) * gw * .9)
                 a = (p.x + ox_ * (d0 - moat_w / 2 - 6), p.y + oy_ * (d0 - moat_w / 2 - 6)); b = (p.x + ox_ * (d0 + moat_w / 2 + 6), p.y + oy_ * (d0 + moat_w / 2 + 6))
@@ -2078,7 +2095,7 @@ def build_city(spec, F, ground_m, exag, osm_rings=None, extra_avoid=None, meta=N
 
 
 def selftest():
-    """Row-envelope regressions, including the old geometry and following random draws."""
+    """Row-envelope regressions, including the old geometry and following random draws; a closed wall's gates round its seam."""
     import hashlib, json, unittest
     from geo import Frame
 
@@ -2130,7 +2147,45 @@ def selftest():
             with self.assertRaises(SystemExit): b.house(self.x, self.y, 0, 8, 21.2, t)
             self.assertFalse(b.prims)
 
-    result = unittest.TextTestRunner().run(unittest.defaultTestLoader.loadTestsFromTestCase(Tests))
+    class WallSeam(unittest.TestCase):
+        """A closed wall's gates open the same wherever its ring of points starts (Builder.walls cuts round the seam)."""
+        def setUp(self):
+            self.F = Frame([121.47, 31.23, 121.49, 31.25], 1 / 10000)
+            x, y = self.F.cx, self.F.cy
+            self.sq = [(x, y - 200), (x + 200, y - 200), (x + 200, y + 200), (x - 200, y + 200), (x - 200, y - 200)]   # (from the middle of a side)
+            self.ring = LineString(self.sq + self.sq[:1])
+
+        def blocked(self, ring, gates, closed=True, towers=False):
+            """the wall's body along the ring's line, a sample every metre round it from its first corner: covered or open"""
+            b = Builder(self.F, lambda x, y: 0, 1, 1, (self.F.cx, self.F.cy), seed=1, detail='high')
+            b.walls(ring, gates=gates, gate_style='none', closed=closed, towers=towers)
+            body = unary_union([solid_plan(p) for p in b.finish() if p[11] == WALL])
+            L = self.ring.length
+            return [body.contains(Point(*self.F.model(*self.ring.interpolate(s).coords[0]))) for s in np.arange(0, L, 1.0)]
+
+        def test_gates_by_the_seam_are_open_and_the_start_changes_nothing(self):
+            L = self.ring.length; at = lambda s: self.ring.interpolate(s % L).coords[0]
+            for s_gate in (0.0, 3.0, L - 3.0, L / 3):   # a gate on the ring's first point, just after it, just before it closes, between:
+                got = self.blocked(self.sq, [at(s_gate)])   # each open 6 m either side of its middle, the seam no matter
+                with self.subTest(gate=s_gate):
+                    self.assertFalse(any(got[int(round(s_gate + ds)) % len(got)] for ds in range(-6, 7)))
+                    self.assertTrue(all(got[int(round(s_gate + ds)) % len(got)] for ds in (-12, -10, 10, 12)))   # (and wall past it)
+            gates = [at(0.0), at(L - 30.0), at(L / 3)]
+            ref = self.blocked(self.sq, gates)
+            towered = self.blocked(self.sq, gates, towers=True)   # (a corner tower stands on each of the ring's points, never in a gate)
+            self.assertFalse(any(towered[int(round(ds)) % len(towered)] for ds in range(-6, 7)))
+            self.assertTrue(towered[200] and towered[600])
+            for k, start in ((1, None), (3, None), (0, 937.5)):   # the same ring from a corner, another, and a point along a side
+                pts = self.sq[k:] + self.sq[:k]
+                if start is not None: pts = [at(start)] + self.sq[3:] + self.sq[:3]
+                with self.subTest(start=k if start is None else start): self.assertEqual(self.blocked(pts, gates), ref)
+
+        def test_an_open_run_keeps_its_ends(self):
+            got = self.blocked(self.sq, [self.sq[0]], closed=False)   # (the run: the ring's points but the last side)
+            self.assertFalse(any(got[:6]))   # (a gate on its first point opens it there)
+            self.assertTrue(all(got[1390:1399]))   # (and the run's far end, 1400 m on, is not cut round to it)
+
+    result = unittest.TextTestRunner().run(unittest.TestSuite([unittest.defaultTestLoader.loadTestsFromTestCase(T_) for T_ in (Tests, WallSeam)]))
     if not result.wasSuccessful(): raise SystemExit(1)
 
 
