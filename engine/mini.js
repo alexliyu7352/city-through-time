@@ -566,7 +566,12 @@ const ROOF_MAP = ['#d8d8d8', '#f2c200', '#8e44ad', '#40b0ff', '#30e0a0', '#8a5a2
 const roofMapOn = () => kindsOn() && !!todayL().roofMap;
 // (todayLight roofMap a colour, '#rrggbb': every roof that one colour, its pieces and pitched roofs with it: two renders that differ
 // only there give a frame's roof pixels, a mask for a check that nothing else changed)
-const ROOF_MAP1 = {}, roofMapC = k => { const v = todayL() && todayL().roofMap; return typeof v === 'string' ? (ROOF_MAP1[v] ||= new THREE.Color(v)) : ROOF_MAP[k]; };
+// (todayLight roofMap "parts": each roof's parts apart, unlit, for a measure of each on the lit frame of the same camera
+// (tools/roofsheet.py): roofs red, parapets green, plant rooms (and caps) blue, small units yellow, the pieces' sides half as bright,
+// the walls the map's grey)
+const ROOF_PARTS = { roof: new THREE.Color('#ff0000'), rim: new THREE.Color('#00ff00'), plant: new THREE.Color('#0000ff'), unit: new THREE.Color('#ffff00') };
+const partsOn = () => roofMapOn() && todayL().roofMap === 'parts';
+const ROOF_MAP1 = {}, roofMapC = k => { const v = todayL() && todayL().roofMap; return v === 'parts' ? ROOF_PARTS.roof : typeof v === 'string' ? (ROOF_MAP1[v] ||= new THREE.Color(v)) : ROOF_MAP[k]; };
 function colourToday(mesh, T = TODAY.roman) {
   const g = mesh.geometry, d = g.attributes.aData, nrm = g.attributes.normal, n = g.attributes.position.count, out = new Float32Array(n * 3), col = new THREE.Color();
   const C = a => a.map(c => new THREE.Color(c)), roofs = C(T.roofs), flats = C(T.flat), walls = C(T.walls), tall = C(T.tall);
@@ -1465,10 +1470,10 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // its massing plan, 0, 0, its roof kind (its parent's: roofClass), its parent's centre x z] and the units in their place (a
   // script's check of the kinds and their shares in a frame, window.__MINI.roofs)
   const ROOF_K = new Map();
-  const roofList = () => { const out = [];
+  const roofList = (near = null) => { const out = [];   // (near [x, z, r]: only the buildings whose centre lies within r of x, z)
     for (const G_ of [cityMesh && cityMesh.geometry, FPT.mesh && FPT.mesh.geometry]) { const rk = G_ && G_.userData.roofKind; if (!rk) continue; const sk = G_.attributes.aSkip, P = G_.attributes.position;
       const C_ = G_.attributes.aCtr;
-      for (const [x, z, , , , y1, yr, hm, , i0, i1] of roofScan(G_, G_ !== cityMesh.geometry)) { if (sk && sk.array[i0]) continue; const o = ROOF_K.get(G_.uuid + ':' + i0) || {};
+      for (const [x, z, , , , y1, yr, hm, , i0, i1] of roofScan(G_, G_ !== cityMesh.geometry)) { if ((sk && sk.array[i0]) || (near && Math.hypot(x - near[0], z - near[1]) > near[2])) continue; const o = ROOF_K.get(G_.uuid + ':' + i0) || {};
         if (o.units) { out.push(...o.units); continue; }
         let ar = 0; for (let i = i0; i + 2 < i1; i += 3) if (Math.abs(P.getY(i) - y1) + Math.abs(P.getY(i + 1) - y1) + Math.abs(P.getY(i + 2) - y1) < 1e-7)
           ar += Math.abs((P.getX(i + 1) - P.getX(i)) * (P.getZ(i + 2) - P.getZ(i)) - (P.getX(i + 2) - P.getX(i)) * (P.getZ(i + 1) - P.getZ(i))) / 2;
@@ -1589,7 +1594,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     const MS = todayL() && todayL().massing; MASS.kinds = {}; MASS.why = {}; MASS.list = []; MASS.kept = 0; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
     const geoOf = P => cityMesh && cityMesh.geometry.attributes.position === P ? cityMesh.geometry : FPT.mesh && FPT.mesh.geometry.attributes.position === P ? FPT.mesh.geometry : null;
     const roofC = (P_, i0, i1) => { const G_ = geoOf(P_), A_ = G_ && G_.attributes.color, N_ = G_ && G_.attributes.normal; if (A_) for (let i = i0; i < i1; i++) if (N_.getY(i) > .6) return new THREE.Color().fromArray(A_.array, i * 3); return null; };   // (a record's roof paint, its top's vertex colour: its pieces take it)
-    const RKS = film && kindsOn() && cityMesh ? MAT.today.roofKinds : null, RY0 = cityMesh ? cityMesh.geometry.userData.y0 : 0, ROOF_MAPON = !!RKS && roofMapOn();   // (today's roof kinds: roofClass)
+    const RKS = film && kindsOn() && cityMesh ? MAT.today.roofKinds : null, RY0 = cityMesh ? cityMesh.geometry.userData.y0 : 0, ROOF_MAPON = !!RKS && roofMapOn(), PARTS_ = ROOF_MAPON && partsOn();   // (today's roof kinds: roofClass; their map, its parts)
     const RU = (RKS ? RKS.units : MAT.roofUnits) || null;   // (the rooftop pieces, by roof kind with the kinds on: below)
     const TK = (film && MAT && MAT.today ? { ...TODAY[today], ...MAT.today } : TODAY[today] || {}).kinds, KC_ = {}, pickK = (a_, x) => (KC_[a_] ||= TK[a_].map(c_ => new THREE.Color(c_)))[Math.floor(x * TK[a_].length) % TK[a_].length];   // (today's kinds and paints: a split unit's, kindPaint)
     // a pitched roof (roofKinds pitch: [its pitch in degrees, a slab's], its height at most m and at most this share of the
@@ -1643,7 +1648,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       const pitchIt = () => { const one = pitchOf(G0, i0, i1, P_, y1, hm, rk, kd0, h0, inTop);   // (its pitched roof, over its least rectangle or over its pieces: no parapet, no plant room)
         const prs = one ? [one] : PT.pieces && G0.attributes.aBase ? piecesOf({ cx, cz, c, sn, a, b, y1, yb: G0.attributes.aBase.getX(i0), hm, th }, h0, rk, kd0, rasOf()) : null; if (!prs) return false;
         const w = G0.attributes.color, wi = wallOf(G0, i0, i1), wall = new THREE.Color().fromArray(w.array, wi * 3);
-        const rp = ROOF_MAPON ? roofMapC(rk) : roofPaint(RKS, rk, wall, ((h0 * 7.7e3) % 1 + 1) % 1); cuts.push([G0, i0, i1, prs[0].cut]); for (const pr of prs) pitch.push([pr, G0, i0, ROOF_MAPON ? rp : wall, rp, rk]); RO_.k = rk; return true; };
+        const rp = ROOF_MAPON ? roofMapC(rk) : roofPaint(RKS, rk, wall, ((h0 * 7.7e3) % 1 + 1) % 1); cuts.push([G0, i0, i1, prs[0].cut]); for (const pr of prs) pitch.push([pr, G0, i0, ROOF_MAPON ? (PARTS_ ? ROOF_MAP[0] : rp) : wall, rp, rk]); RO_.k = rk; return true; };
       if (hm < 8 || Math.min(a, b) < 4 * scale) { if (pitched_) pitchIt(); continue; }   // (a low or a narrow building: a pitched roof, or nothing on its flat one)
       let ar_ = 0; for (let i = i0; i + 2 < i1; i += 3) if (Math.abs(P_.getY(i) - y1) + Math.abs(P_.getY(i + 1) - y1) + Math.abs(P_.getY(i + 2) - y1) < .1 * ex * scale)   // (its roof's area)
         ar_ += Math.abs((P_.getX(i + 1) - P_.getX(i)) * (P_.getZ(i + 2) - P_.getZ(i)) - (P_.getX(i + 2) - P_.getX(i)) * (P_.getZ(i + 1) - P_.getZ(i))) / 2;
@@ -1684,7 +1689,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
                 if (RKS) { const u_ = 2 * q[3] / scale, v_ = 2 * q[4] / scale; rk_ = old_ && q[7].inner ? 8 : 1;
                   if (rk_ === 8 && PT) { const hr_ = Math.min(Math.min(q[3], q[4]) / scale * Math.tan(PT.deg[0] * Math.PI / 180), PT.maxH, PT.share * q[7].hm) * (q[6] - q[5]) / q[7].hm, lu_ = q[3] >= q[4];   // (its gable over it, its walls that much lower)
                     const kv_ = .95 + .1 * ((q[7].q * 7.13) % 1), rp_ = ROOF_MAPON ? roofMapC(8) : roofPaint(RKS, 8, w_, q[7].q2);
-                    q[6] -= hr_; pitch.push([{ cx: q[0], cz: q[1], th: lu_ ? th : th + Math.PI / 2, hl: Math.max(q[3], q[4]), hw: Math.min(q[3], q[4]), ridge: Math.max(q[3], q[4]), y0: q[6], y1: q[6] + hr_, gable: true, unit: { x: q[0], z: q[1], hm: q[7].hm, h: q[7].q } }, G_, i0, ROOF_MAPON ? rp_ : w_.clone().multiplyScalar(kv_), rp_, 8]); }
+                    q[6] -= hr_; pitch.push([{ cx: q[0], cz: q[1], th: lu_ ? th : th + Math.PI / 2, hl: Math.max(q[3], q[4]), hw: Math.min(q[3], q[4]), ridge: Math.max(q[3], q[4]), y0: q[6], y1: q[6] + hr_, gable: true, unit: { x: q[0], z: q[1], hm: q[7].hm, h: q[7].q } }, G_, i0, ROOF_MAPON ? (PARTS_ ? ROOF_MAP[0] : rp_) : w_.clone().multiplyScalar(kv_), rp_, 8]); }
                   else if (rk_ === 1) r_ = w_;   // (a ring's flat roof in its own paint)
                   unitK.push([q[0], q[6], q[1], rk_, u_ * v_, q[7].hm, yr, Math.max(u_, v_), Math.min(u_, v_), 1, '', hm, q[7].inner ? 1 : 0, rk, C_.getX(i0), C_.getY(i0)]); if (ROOF_MAPON) { w_ = ROOF_MAP[0]; r_ = roofMapC(rk_); } }
                 return { wall: w_, roof: r_, k: k_, h: q[7].q, hm: q[7].hm, rk: rk_ }; })() : null;
@@ -1744,12 +1749,14 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   else transformed.y -= (1. - uRoofOn) * 1.05;   // (coming or going: sunk into its roof, its own height and a little, rising out of it as uRoofOn comes)
 #else
   else transformed.y -= (1. - uRoofOn) * ${(1.05 * ex * scale).toExponential(4)};
-#endif`); };
+#endif`);
+      if (PARTS_) sh.fragmentShader = sh.fragmentShader.replace('#include <opaque_fragment>', `outgoingLight = diffuseColor.rgb * (dot(normalize(vNormal), normalize((viewMatrix * vec4(0., 1., 0., 0.)).xyz)) > .9 ? 1. : .5);   // (the parts mask: unlit, a side half as bright)
+#include <opaque_fragment>`); };
     // a parapet's rim (the rectangular roofs' rings, the convex roofs' rims) sinks into its roof as it shrinks: whole while a metre
     // spans 2 picture pixels, gone below 0.8 (afar a light rim a pixel wide outlined every roof, as a wireframe); drop: how far it sinks
     const RT_ = todayL() && todayL().roof && todayL().roof[4];   // (todayLight roof [4]: a parapet's top this much lighter than its wall's paint: a lit coping round the roof)
     const rimMat = (m0, drop, key) => { const m = m0.clone(); m.onBeforeCompile = sh => { mat.onBeforeCompile(sh); sh.uniforms.uRoofPx = ROOF_PX;
-        if (RT_ && key !== 'unit') sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>\n  if (dot(normalize(vNormal), normalize((viewMatrix * vec4(0., 1., 0., 0.)).xyz)) > .9) diffuseColor.rgb *= ${(+RT_).toFixed(3)};`);
+        if (RT_ && key !== 'unit' && !PARTS_) sh.fragmentShader = sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>\n  if (dot(normalize(vNormal), normalize((viewMatrix * vec4(0., 1., 0., 0.)).xyz)) > .9) diffuseColor.rgb *= ${(+RT_).toFixed(3)};`);
         sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uRoofPx;').replace('#include <begin_vertex>', `#include <begin_vertex>
   {
 #ifdef USE_INSTANCING
@@ -1766,7 +1773,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     const RIM0 = new THREE.Color('#e9e6df'), C0 = new THREE.Color('#c4bfb6');
     if (rims.length) {   // the hull rims as one mesh: outer wall, inner wall, top, a metre high
       const pos = [], yrs = [], cols = [], w = .6 * scale, h = ex * scale;
-      for (const [H_, y0, yr, rc] of rims) { const cr = rc || RIM0; const cx_ = H_.reduce((a_, p_) => a_ + p_[0], 0) / H_.length, cz_ = H_.reduce((a_, p_) => a_ + p_[1], 0) / H_.length;
+      for (const [H_, y0, yr, rc] of rims) { const cr = PARTS_ ? ROOF_PARTS.rim : rc || RIM0; const cx_ = H_.reduce((a_, p_) => a_ + p_[0], 0) / H_.length, cz_ = H_.reduce((a_, p_) => a_ + p_[1], 0) / H_.length;
         const inn = H_.map(([x, z]) => { const dx = x - cx_, dz = z - cz_, l = Math.hypot(dx, dz) || 1; return [x - dx / l * w, z - dz / l * w]; });
         const quad = (a_, b_, c_, d_) => { for (const q of [a_, b_, c_, a_, c_, d_]) { pos.push(...q); yrs.push(yr); cols.push(cr.r, cr.g, cr.b); } };
         for (let k = 0; k < H_.length; k++) { const k2 = (k + 1) % H_.length, [ox, oz] = H_[k], [px, pz] = H_[k2], [ix, iz] = inn[k], [jx, jz] = inn[k2];
@@ -1776,8 +1783,9 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     // (the small pieces sink into the roof as they shrink, as the rims do: afar they were speckle; caps and long plant rooms round)
     ROOF_MESH = [[new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), list], [ring, lips], [new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), units], [new THREE.CylinderGeometry(.5, .5, 1, 16, 1).translate(0, .5, 0), caps]].filter(([, l]) => l.length).map(([geo, l]) => { const W_ = Object.assign(mat.clone(), { color: new THREE.Color(1, 1, 1) }), mesh = new THREE.InstancedMesh(geo, l === list ? Object.assign(W_, { onBeforeCompile: mat.onBeforeCompile }) : rimMat(W_, '1.5', l === units || l === caps ? 'unit' : 'ring'), l.length), yA = new Float32Array(l.length);
       const K_ = l === list ? (RU ? RU.mainK : [.62, .74, .86, .7, .8]) : l === units || l === caps ? RU.unitK : null, c_ = new THREE.Color();
+      const P_ = PARTS_ ? (l === lips ? ROOF_PARTS.rim : l === units ? ROOF_PARTS.unit : ROOF_PARTS.plant) : null;   // (the parts mask: each list its part's colour)
       l.forEach(([x, y, z, sx, sy, sz, yr, th, q, rc, f], n) => { M4.makeRotationY(-th).multiply(R4.makeScale(sx, sy, sz)).setPosition(x, y, z); mesh.setMatrixAt(n, M4); yA[n] = yr;
-        mesh.setColorAt(n, c_.copy(rc || (K_ ? C0 : RIM0)).multiplyScalar(f ?? (K_ ? K_[Math.floor(q * K_.length) % K_.length] : 1))); });   // (each plant room and unit its own step of its roof's paint, a hatch its own (f); a parapet its roof's)
+        mesh.setColorAt(n, P_ ? P_ : c_.copy(rc || (K_ ? C0 : RIM0)).multiplyScalar(f ?? (K_ ? K_[Math.floor(q * K_.length) % K_.length] : 1))); });   // (each plant room and unit its own step of its roof's paint, a hatch its own (f); a parapet its roof's)
       geo.setAttribute('iYear', new THREE.InstancedBufferAttribute(yA, 1)); mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); return mesh; }); };   // (plant rooms; parapets)
   // today's streets as geometry (todayLight streets: { asphalt, pavement colours, kerb: the pavement's metres each side, w: full
   // widths by class }): a ribbon along every street and arterial (data/streets.json, lines.json roads) at its class's width, an
@@ -1907,7 +1915,7 @@ vec4 sbOver(vec4 d, vec3 c, float a){ return vec4(c * a + d.rgb * (1. - a), a + 
     if (film && FILM_PIC.glb && !GLB_DONE) { GLB_DONE = true; for (const o of FILM_PIC.glb) { try { const r_ = await swap(o); console.log('glb', JSON.stringify(r_)); } catch (e) { console.error(`glb ${o.url}: ${e.message}`); } }
       // (a glb entry's plaza: { r: [its inner disc's, its lawn ring's inner and outer, its paving's outer radius] m, at: [x, z] m from near }: the landmark's own round plaza, todayLight roundPlaza)
       FILM_PIC.glb.filter(o => o.plaza && o.near).slice(0, 4).forEach((o, i) => { const r = o.plaza.r, at = o.plaza.at || [0, 0]; RPLAZA.P.value[i].set(o.near[0] + at[0] * scale, o.near[1] + at[1] * scale, r[1], r[2]); RPLAZA.Q.value[i].set(r[0], r[3], 0, 1); }); }   // (FILM_PIC glb: detailed models in place of buildings, ?pic= for a still)
-    window.__MINI = { mass: () => MASS, roofs: roofList, scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), flock: () => ({ ms: FL.ms, ...FL.stat }), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
+    window.__MINI = { mass: () => MASS, roofs: roofList, scale, landmarks: () => landmarks.map(r => { const b = new THREE.Box3().setFromObject(r); return [b.min.x, b.min.y, b.min.z, b.max.x, b.max.y, b.max.z]; }), scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), flock: () => ({ ms: FL.ms, ...FL.stat }), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
     renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2; ROOF_PX.value = 2 / (camera.projectionMatrix.elements[5] * 1080) / scale;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     const up = E => E.mesh.visible && !E.mesh.userData.gone;   // (the film: a city gone may still show its foundations, without its detail)
     if (DET) { for (const [id, E] of Object.entries(S.eras)) if (up(E) && !DET.has(id)) DET.set(id, detailOf(id));
