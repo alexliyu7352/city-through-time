@@ -221,7 +221,7 @@ const SLATE = { slate: [.31, .31, .31], step: 6, edge: 1.45, resin: [.20, .14, .
 // (linear) over its own mean, `size` m a repeat (and 6.3 times that, turned, over it), its normal `bump` strong; the sheets of the
 // land's rise `step` m, their edges a faint `edge`; the water a glossy resin. In the sunny miniature the land is a fresh meadow
 // (land olive and ochre: its two greens, fields faintly), the groves fresh greens (flock), a town's ground light warm paving (ground_in)
-const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.80, .76, .70], reach: 16, park: [.56, .72, .34] }, flock: { col: [.30, .48, .18], col2: [.44, .56, .22], tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 16, crown: [.42, 1.04, [1.06, 1.03, .84]], wall: 1.5,
+const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.80, .76, .70], reach: 16, park: [.56, .72, .34] }, flock: { col: [.30, .48, .18], col2: [.44, .56, .22], town: { built: .6, cell: 11, share: .7, groves: [.35, .6], size: [4.5, 7], free: .3 }, tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 16, crown: [.42, 1.04, [1.06, 1.03, .84]], wall: 1.5,
     street: { off: 2.2, r: 2.5, vary: [.9, 1, 1.12], every: { secondary: 9, tertiary: 9 }, minor: 11, junction: 14, floor: 8.6, rows: true, px: 1.2, far: [.35, .5] }, px: 1.5, far: [2, 3] },
   land: { olive: [.56, .64, .36], ochre: [.68, .70, .44], field: 140, rock: [.5, .8], rockC: [.64, .60, .52], scrub: [.42, .54, .22] }, bump: 1.6, ground: '#cfc3a6', step: 6, edge: 1.12, resin: [.46, .64, .71], gloss: [.08, .55, [.80, .86, .92]] };   // (resin: clear tinted acrylic; gloss: its reflection of the room, [at a steep view, toward a grazing one, its colour])   // (land rock: only the steep faces, the slope as drawn)
 // the colour film's picture, as a photograph of a model on a table: a warm key from a sun fixed in the world, low and to the side
@@ -262,7 +262,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // a Chinese town: dark grey tile roofs over warm walls (cream, ochre, brick red), a city wall of light warm stone, its courts
       // and streets paved light, red columns
       chinese: { walls: ['#ecd9b4', '#e2c49a', '#cf9b78', '#f0e3c8', '#d8ae86'], roofs: ['#cdd0d4', '#d6d8db', '#c4c8cc', '#dadcde', '#cfd2d6'],
-        parts: { 1: '#f0e6d2', 2: '#dcc7a0', 5: '#5fb8b0', 7: '#d2cbbf', 9: '#cdd0d4', 10: '#d8c7a6', 11: '#d6cdbd' }, tree: { dark: 1.25, sat: 1.5 }, flags: false,
+        parts: { 1: '#f0e6d2', 2: '#dcc7a0', 5: '#5fb8b0', 7: '#d2cbbf', 9: '#cdd0d4', 10: '#d8c7a6', 11: '#d6cdbd' }, tree: { dark: 1.25, sat: 1.5, town: 1 }, flags: false,
         faces: { earth: '#dcc59c', brick: '#cdb48e', stone: '#e0cfac', banded: '#d8c6a2' },
         detail: { floor: '#e8dcc6', joint: '#a8a092', base: '#c9c0b0', post: '#a85a44', column: '#b0503c', beam: '#6e6156', ridgeEnd: '#6f706e', coping: '#8f908f', cornice: '#6a6866',
           ridge: '#7e7f7d', lattice: '#86705f', leaf: '#5e4b3f', paving: '#bfbab1', well: '#77736d', patch: '#6f7a4a', archRing: '#b5afa4' } },
@@ -830,6 +830,19 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       let k = Math.max(M.px(M.td, x, z) * (.5 + .5 * cl), F.bank * bank * (.55 + .45 * cl), cl * Math.max(F.slope * fsm(.12, .3, sl), F.edge * fsm(.08, .25, tw) * (1 - fsm(.72, .9, tw))), F.land * (1 - .75 * TODAY_K.value.y * (TODAY_K.value.z < .3 ? 1 : 0)) * fsm(.75, .9, cl) * (1 - fsm(.2, .4, tw)));   // (groves with clearings; the banks lined; in the open country only the heart of a grove)
       k = fsm(.3, .62, k) * (1 - fsm(.7, .8, tw)); if (FH(i, j, 3) >= k) continue;   // (a grove's density sharpened: crowns close in its heart, none in its thin edge, so the country reads as woods, not dots)
       out.push([x, g0, z, Math.min(F.cell * .42 * (.6 + 1. * Math.pow(FH(i, j, 4), 1.4)) * (.8 + .4 * cl), tw > .25 ? 4.5 : 1e9) * scale, FH(i, j, 5), 0, rk]); }   // (inside a town no bigger than a courtyard house)   // (a crown .6 to 1.6 times, the bigger in a grove's heart)
+    // a period town's own trees (flock town): its courtyards and lanes planted, where a period city stands (the built-up mask over
+    // town.built), where its region plants them (its palette's tree town: a share of town.share), a cell of town.cell m, town.share
+    // of them a tree in its leafy quarters (a slow noise passing groves[0], whole by groves[1]; a quarter of that between them), its
+    // trunk and `free` of its crown off every roof (townFree: the standing cities' roofs drawn in the tile, 1.5 m a cell), never on a
+    // city wall's band or a gate's approach; a crown size[0] to size[1] m round. Any period city's, by its own buildings
+    const TW = F.town; if (TW) { const c3 = TW.cell * scale, ti0 = Math.floor(x0 / c3), ti1 = Math.floor((x0 + T0) / c3), tj0 = Math.floor(z0 / c3), tj1 = Math.floor((z0 + T0) / c3);
+      for (let i = ti0; i <= ti1; i++) for (let j = tj0; j <= tj1; j++) { const rk = FH(i, j, 24); if (rk < q0 || rk >= p) continue;
+        const x = (i + .2 + .6 * FH(i, j, 25)) * c3, z = (j + .2 + .6 * FH(i, j, 26)) * c3; if (x < x0 || x >= x0 + T0 || z < z0 || z >= z0 + T0) continue;
+        if (M.px(M.bd, x, z) < TW.built) continue;
+        const m = [x / scale, z / scale], g = fsm(TW.groves[0], TW.groves[1], fvn(m[0] / 40, m[1] / 40) * .6 + fvn(m[0] / 13 + 5.1, m[1] / 13) * .4);
+        const r = (TW.size[0] + (TW.size[1] - TW.size[0]) * FH(i, j, 28)) * scale; if (!townFree(T, x, z, r * (TW.free ?? .8))) continue;   // (free: the share of its crown kept off the roofs: the rest may lean over them)
+        if (FH(i, j, 27) >= TW.share * T.townK * (.25 + .75 * g) || wet(x, z) || !clearNow.every(f => f(x, z))) continue;
+        out.push([x, S.ground(x, z), z, r, FH(i, j, 29), 0, rk]); } }
     if (M.yc < 0) return;
     // today's street trees (data/streets.json, the finer streets: plane trees along both kerbs, a class's own spacing, sparser along
     // the minor streets): a row's every other tree the first to go afar (its rank by its place), never in a carriageway (any
@@ -859,6 +872,28 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       if (WC_ && !walls(x, z, rp * 1.6 + WC_)) continue;   // (its cluster's reach)
       out.push([x, S.ground(x, z), z, rp, FH(i, j, 15), 1, rk]); }
   };
+  // the period cities' roofs by tile (each era mesh's roof and top triangles of its buildings, parts 0 1 8 9, in every tile they
+  // touch), made once a mesh; townFree(T, x, z, r): no roof of a standing city at x z or r round it, from the tile's own raster
+  // (its roofs drawn at 1.5 m, made when a town tree first asks, again with the tile)
+  const ROOF_IX = new WeakMap();
+  const roofIndex = m => { let ix = ROOF_IX.get(m.geometry); if (ix) return ix; ix = new Map(); ROOF_IX.set(m.geometry, ix);
+    const g = m.geometry, P = g.attributes.position, N = g.attributes.normal, D = g.attributes.aData, I = g.index, n = I ? I.count : P.count, T0 = TILE * scale; if (!D || !N) return ix;
+    for (let t = 0; t + 2 < n; t += 3) { const a = I ? I.getX(t) : t, b = I ? I.getX(t + 1) : t + 1, c = I ? I.getX(t + 2) : t + 2, pt = Math.round(D.getY(a));
+      if (!(pt === 0 || pt === 1 || pt === 8 || pt === 9) || N.getY(a) + N.getY(b) + N.getY(c) < .6) continue;
+      const xs = [P.getX(a), P.getX(b), P.getX(c)], zs = [P.getZ(a), P.getZ(b), P.getZ(c)];
+      for (let i = Math.floor(Math.min(...xs) / T0); i <= Math.floor(Math.max(...xs) / T0); i++) for (let j = Math.floor(Math.min(...zs) / T0); j <= Math.floor(Math.max(...zs) / T0); j++) {
+        const k = i * 100003 + j; (ix.get(k) || ix.set(k, []).get(k)).push(xs[0], zs[0], xs[1], zs[1], xs[2], zs[2]); } }
+    return ix; };
+  const townFree = (T, x, z, r) => { const T0 = TILE * scale, cs = 1.5 * scale, NC = Math.ceil(TILE / 1.5), x0 = T.i * T0, z0 = T.j * T0;
+    if (!T.occ) { const o = T.occ = new Uint8Array(NC * NC), k = T.i * 100003 + T.j; T.townK = 0;
+      for (const m of eraMeshes) { if (!m.visible) continue; const L_ = roofIndex(m).get(k); if (!L_) continue; T.townK = Math.max(T.townK, (palOf(idOf.get(m)).tree || {}).town || 0);   // (the region's own: palette tree town)
+        for (let q = 0; q < L_.length; q += 6) { const ax = L_[q], az = L_[q + 1], bx = L_[q + 2], bz = L_[q + 3], cx = L_[q + 4], cz = L_[q + 5], d_ = (bz - cz) * (ax - cx) + (cx - bx) * (az - cz); if (Math.abs(d_) < 1e-20) continue;
+          const u0 = Math.max(0, Math.floor((Math.min(ax, bx, cx) - x0) / cs)), u1 = Math.min(NC - 1, Math.floor((Math.max(ax, bx, cx) - x0) / cs)), v0 = Math.max(0, Math.floor((Math.min(az, bz, cz) - z0) / cs)), v1 = Math.min(NC - 1, Math.floor((Math.max(az, bz, cz) - z0) / cs));
+          for (let v = v0; v <= v1; v++) for (let u = u0; u <= u1; u++) { const px_ = x0 + (u + .5) * cs, pz_ = z0 + (v + .5) * cs, l1 = ((bz - cz) * (px_ - cx) + (cx - bx) * (pz_ - cz)) / d_, l2 = ((cz - az) * (px_ - cx) + (ax - cx) * (pz_ - cz)) / d_;
+            if (l1 >= -.05 && l2 >= -.05 && l1 + l2 <= 1.05) o[v * NC + u] = 1; } } } }
+    for (let a = 0; a < 9; a++) { const sx = a ? x + Math.cos(a * Math.PI / 4) * r : x, sz = a ? z + Math.sin(a * Math.PI / 4) * r : z, u = Math.floor((sx - x0) / cs), v = Math.floor((sz - z0) / cs);
+      if (u >= 0 && v >= 0 && u < NC && v < NC && T.occ[v * NC + u]) return false; }
+    return true; };
   // the street index by tile (each street segment in every tile its trees may stand in), made once
   const segIndex = () => { if (FL.seg) return FL.seg; const T0 = TILE * scale, m = new Map(), IX = streetIndex();
     (STREETS.list || []).forEach((r, w) => { const e = (IX.hw(r.cls) / scale + 12) * scale;
