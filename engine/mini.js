@@ -313,7 +313,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
         bank: { stone: [.74, .70, .66], w: 2.5, prom: [.50, .48, .47], pw: 14, line: .3 },
         trees: [[.48, .60, .30], [.56, .66, .33], [.42, .55, .28], [.37, .50, .27]], crown: [.58, 1.14, [1.14, 1.1, .72]],
         streetTrees: { r: 3.8, every: { secondary: 6, tertiary: 6 }, minor: 7, junction: 10 },
-        massing: { storey: 3.2, min: [8, 5], tower: 50, podium: [14, .7, [4, 6], .3, [.22, 4, 10]], crown: [80, .5, 2, 2.5], set: [24, .55, [1, 2], [2, 3.5], .5], step: [.45, [.55, .75]] },
+        massing: { storey: 3.2, min: [8, 5], tower: 50, podium: [14, .7, [4, 6], .3, [.22, 4, 10]], crown: [80, .5, 2, 2.5], set: [24, .55, [1, 2], [2, 3.5], .5], step: [.45, [.55, .75]], split: { area: 1000, maxH: 45, minW: 20, depth: [11, 17], width: [8, 15], lane: 1.6, h: [.7, 1] } },
         facade: { base: [4.5, .8, 9], cap: [.9, 1.1, .72, 1.8], piers: [2, 4, 1.4], rows: [.25, .38], mid: [.3, .42, .45, .8, .85, .7], reveal: [1.14, .72], glass: { pale: [.9, .92, .94], mull: .85, span: [.2, .45], top: 1.12, px: 1.2, coarse: 4, deep: [.74, .82, .95] }, brick: [.4, .55, .6] } },
       // light presets over todayLight (FILM_PIC todayPreset): golden, the golden hour for the opening and the return to today: a low
       // warm sun ahead of the camera and to its left (sunLeft), long soft shadows, blue-violet shade, its glow on the sky (dome[2])
@@ -441,6 +441,12 @@ const TODAY = {
   chinese: { roofs: ['#5f5c58', '#6a6661', '#57544f', '#73706a'], flat: ['#9a9893', '#8c8a86'], flatShare: .35, walls: ['#cfc8bc', '#b9b2a6', '#e0dbd0', '#a8a197', '#d8d2c6'], tall: ['#e2e1dc', '#c9ced2', '#d8d4ca'] },
   modern: { roofs: ['#6d6e72', '#7d6a5e', '#5f6268'], flat: ['#a9a8a3', '#9b9a96', '#b8b6b0', '#8f8e8a'], flatShare: .85, walls: ['#dad6ce', '#c8c5bf', '#e6e2da', '#b9b6b0', '#d4ccbe', '#c2bfb8'], tall: ['#cdd4d9', '#b4c0ca', '#e3e3df', '#9eaebb', '#d6d3cb'] },
 };
+// a building's paint by its kind (colourToday's choice; the massing's split units take theirs the same way): [wall, roof]
+function kindPaint(K, k, hm, q, q2, pick, ROOFG_) {
+  const wall = pick(['oldWalls', 'homes', 'glass', 'big', 'stone'][k], q), roof = k === 1 && hm < K.tiledH && q2 < K.tiled ? pick('tiles', (q2 * 7.7) % 1)
+    : k === 1 && K.homeRoof != null ? wall.clone().lerp(ROOFG_, K.homeRoof[0]).multiplyScalar(K.homeRoof[1])
+    : k === 1 && K.lowRoofs && hm < K.lowRoofH ? pick('lowRoofs', q2) : pick(['oldRoofs', 'homeRoofs', 'towerRoofs', 'bigRoofs', 'stoneRoofs'][k], q2);   // (lowRoofs: a home lower than lowRoofH, a walk-up or a lane house, in the old fabric's mid grey; a modern mid- or high-rise's light)   // (homeRoof: [share, times] a home's roof its walls' paint taken this share toward a warm mid grey (roofGrey) and darkened: darker than its walls, each building reads from above)
+  return [wall, roof]; }
 function colourToday(mesh, T = TODAY.roman) {
   const g = mesh.geometry, d = g.attributes.aData, nrm = g.attributes.normal, n = g.attributes.position.count, out = new Float32Array(n * 3), col = new THREE.Color();
   const C = a => a.map(c => new THREE.Color(c)), roofs = C(T.roofs), flats = C(T.flat), walls = C(T.walls), tall = C(T.tall);
@@ -463,9 +469,7 @@ function colourToday(mesh, T = TODAY.roman) {
       // (stone: a civic or old stone building, by the data: there from the data's first years, large, compact, not a tower)
       const k = K.stoneA && yr > 1 && yr <= y0 + K.stoneSpan && ar >= K.stoneA && cmp >= K.stoneC && hm < K.stoneH ? 4
         : hm < K.oldH && ar < K.bigA ? 0 : hm < 24 && ar >= K.bigA ? 3 : (hm >= K.towerH && ar >= K.towerA) || hm >= K.tallH ? 2 : 1;
-      const wall = pick(['oldWalls', 'homes', 'glass', 'big', 'stone'][k], q), roof = k === 1 && hm < K.tiledH && q2 < K.tiled ? pick('tiles', (q2 * 7.7) % 1)
-        : k === 1 && K.homeRoof != null ? wall.clone().lerp(ROOFG_, K.homeRoof[0]).multiplyScalar(K.homeRoof[1])
-        : k === 1 && K.lowRoofs && hm < K.lowRoofH ? pick('lowRoofs', q2) : pick(['oldRoofs', 'homeRoofs', 'towerRoofs', 'bigRoofs', 'stoneRoofs'][k], q2);   // (lowRoofs: a home lower than lowRoofH, a walk-up or a lane house, in the old fabric's mid grey; a modern mid- or high-rise's light)   // (homeRoof: [share, times] a home's roof its walls' paint taken this share toward a warm mid grey (roofGrey) and darkened: darker than its walls, each building reads from above)
+      const [wall, roof] = kindPaint(K, k, hm, q, q2, pick, ROOFG_);
       for (let j = i0; j < i1; j++) { const c = nrm.getY(j) > .6 ? roof : wall; paint[j * 3] = c.r; paint[j * 3 + 1] = c.g; paint[j * 3 + 2] = c.b; kind[j] = k; }
       i0 = i1; };
     for (let i = 1; i <= n; i++) if (i === n || A.getX(i) !== A.getX(i - 1) || A.getY(i) !== A.getY(i - 1)) end(i); }
@@ -1144,7 +1148,8 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     if (FPT.sel !== null) dropFootprints(same); FPT.sel = sel;
     const [mat, depth] = todayMats();
     if (same) { FPT.mesh.material = mat; FPT.mesh.customDepthMaterial = depth; cityMats(); return; }
-    const { geometry, skipCentres, protectCentres } = await S.buildTodayFootprints({ ...side, replacements: rep }); side = rep = null; if (!geometry) return;
+    const { geometry, skipCentres, protectCentres } = await S.buildTodayFootprints({ ...side, replacements: rep }); if (!geometry) return;
+    FPT.osm = new Set(skipCentres.filter((_, i) => rep[i].source !== 'regularized').map(([x, z]) => Math.fround(x) + ',' + Math.fround(z))); side = rep = null;   // (the parents whose children are OpenStreetMap's single buildings: never split, roofsMesh)
     FPT.protect = new Set((protectCentres || []).map(([x, z]) => Math.fround(x) + ',' + Math.fround(z)));   // (the reviewed parents: no massing on them, roofsMesh)
     geometry.deleteAttribute('aBi');   // (this look does not read it)
     const key = (x, z) => Math.fround(x) + ',' + Math.fround(z), skip = new Set(skipCentres.map(([x, z]) => key(x, z)));
@@ -1239,12 +1244,33 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // storeys [from, to], the inset [from, to] m, the share set in all round; else stepped back from one end]); step: a low building's
   // roof stepped ([the share, the stepped part's share of the long side [from, to]]); min: [height m, least half side m]; storey m.
   // Never on the reviewed parents (FPT.protect), a detailed model's footprint, or a roof too small; the colour look only.
+  // whether a box (centre x z, half sides hu hv along the footprint's axes, a margin mg; sh: a cylinder) lies inside a footprint's outline
+  const insideOf = ({ c, sn, fits, hull }) => (x, z, hu, hv, sh, mg) => { if (!sh && hull) return fits(x, z, hu, hv, mg);   // (a convex outline: its corners inside it, the box is)
+    if (!sh) { for (const [p, q] of MASS_GRID) { const u = p * (hu + mg), v = q * (hv + mg); if (!fits(x + c * u - sn * v, z + sn * u + c * v, 0, 0, 0)) return false; } return true; }   // (a concave one: its corners, its sides' middles and its centre on its own top, no box over a courtyard)
+    for (let k = 0; k < 12; k++) { const t = k * Math.PI / 6, u = Math.cos(t) * (hu + mg), v = Math.sin(t) * (hv + mg), X = x + c * u - sn * v, Z = z + sn * u + c * v; if (hull ? hullIn(hull, X, Z) < 0 : !fits(X, Z, 0, 0, 0)) return false; } return true; };
+  // a large footprint split into buildings (massing split: the data records a whole block, or a merged plot, as one footprint):
+  // rows of units along its long sides (bands of depth[0] to depth[1] m, as many as its depth holds, lane m between them), each
+  // band cut across into frontages of width[0] to width[1] m, the last one taking a short remainder (tools/parcels.py's rows of
+  // shop-houses along a street front, in the footprint's own frame); every unit inside the outline, its own height in whole
+  // storeys (h[0] to all of the data's, never above it), its own paint by its own kind (kindPaint: the old fabric under oldH,
+  // else a home; a stone block's units `stone` of them stone), lanes between them on the footprint's own mass cut to its base.
+  // Not a tower's glass (kind 2) nor anything from maxH m up. By the footprint's hash: any camera, the same
+  const splitPlan = (MS, R0, h0) => { const SP = MS.split, { cx, cz, c, sn, a, b, y1, yb, hm } = R0, m = scale, inside = insideOf(R0);
+    const hq = k => { const t = Math.sin(h0 * 1e5 + k * 78.233) * 43758.5453; return t - Math.floor(t); };
+    const lu = a >= b, A = lu ? a : b, B = lu ? b : a, ln = SP.lane * m, D0 = (SP.depth[0] + (SP.depth[1] - SP.depth[0]) * hq(1)) * m;
+    const nb = Math.max(1, Math.floor((2 * B + ln) / (D0 + ln))), Db = (2 * B + ln) / nb - ln, st = (y1 - yb) / hm * MS.storey, ns = Math.max(1, Math.floor(hm / MS.storey)), parts = [];
+    for (let j = 0; j < nb; j++) { const v = -B + Db / 2 + j * (Db + ln); let u = -A;
+      for (let k = 0; u < A - 2 * m && k < 400; k++) { let u1 = Math.min(A, u + (SP.width[0] + (SP.width[1] - SP.width[0]) * hq(10 + j * 37 + k)) * m); if (A - u1 < SP.width[0] * m * .6) u1 = A;
+        const hu = (u1 - u - ln) / 2, hv = Db / 2, um = (u + u1) / 2, U_ = lu ? um : v, V_ = lu ? v : um, x = cx + c * U_ - sn * V_, z = cz + sn * U_ + c * V_, ha = lu ? hu : hv, hb = lu ? hv : hu;
+        let f_ = 1; while (f_ > .6 && !(hu * f_ > 2 * m && hv * f_ > 2 * m && inside(x, z, ha * f_, hb * f_, 0, .3 * m))) f_ -= .15;   // (where the outline bends: the unit smaller, its centre kept)
+        if (f_ > .6) { const ha_ = ha * f_, hb_ = hb * f_, n = Math.max(1, Math.min(ns, Math.round(ns * (SP.h[0] + (1 - SP.h[0]) * hq(200 + j * 41 + k)))));
+          parts.push([x, z, 0, ha_, hb_, yb, Math.min(y1, yb + n * st), { q: hq(300 + j * 43 + k), q2: hq(400 + j * 47 + k), hm: Math.min(hm, n * MS.storey) }]); }
+        u = u1; } }
+    return parts.length >= 2 ? { cut: yb, parts, kind: 'split' } : null; };
   const massPlan = (MS, R0) => { const { cx, cz, c, sn, y1, yb, hm, round, fits, hull } = R0; let { a, b } = R0;
     const hq = k => { const t = Math.sin(cx * 9.731e4 + cz * 3.173e4 + k * 78.233) * 43758.5453; return t - Math.floor(t); };
     const st = (y1 - yb) / hm * MS.storey, m = scale, L = (f, x) => f[0] + (f[1] - f[0]) * x;
-    const inside = (x, z, hu, hv, sh, mg) => { if (!sh && hull) return fits(x, z, hu, hv, mg);   // (a convex outline: its corners inside it, the box is)
-      if (!sh) { for (const [p, q] of MASS_GRID) { const u = p * (hu + mg), v = q * (hv + mg); if (!fits(x + c * u - sn * v, z + sn * u + c * v, 0, 0, 0)) return false; } return true; }   // (a concave one: its corners, its sides' middles and its centre on its own top, no box over a courtyard)
-      for (let k = 0; k < 12; k++) { const t = k * Math.PI / 6, u = Math.cos(t) * (hu + mg), v = Math.sin(t) * (hv + mg), X = x + c * u - sn * v, Z = z + sn * u + c * v; if (hull ? hullIn(hull, X, Z) < 0 : !fits(X, Z, 0, 0, 0)) return false; } return true; };
+    const inside = insideOf(R0);
     const sh = round ? 1 : 0, parts = []; let cut = null, kind = '';
     { let k = 0; for (; k < 12 && !inside(cx, cz, a, b, sh, 0); k++) { a *= .93; b *= .93; } if (k === 12) return null; }   // (the footprint's own box shrunk till it lies inside the outline: its extent's box pokes out of any outline not square to its axes)
     const R = { ...R0, a, b };
@@ -1279,16 +1305,18 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       const base = shp ? new THREE.CylinderGeometry(.5, .5, 1, 20, 1).translate(0, .5, 0) : new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), g = new THREE.InstancedBufferGeometry();
       g.index = base.index; g.setAttribute('position', base.attributes.position); g.setAttribute('normal', base.attributes.normal); g.instanceCount = n;
       const F = k => new Float32Array(n * k), at = { iBox: F(4), iDim: F(4), aData: F(4), aBase: F(1), aCtr: F(2), aGrowH: F(3), aGrowT: F(1), color: F(3), aRoofC: F(3), aKind: F(1), aTop: F(1), aEdge: F(2) };
-      ps.forEach(([x, z, , hu, hv, y0, y1, th, G_, i0, wi, ri], j) => { const A = G_.attributes;
+      ps.forEach(([x, z, , hu, hv, y0, y1, th, G_, i0, wi, ri, own], j) => { const A = G_.attributes;
         at.iBox.set([x, z, th, shp], j * 4); at.iDim.set([hu, hv, y0, y1], j * 4);
         for (const [k, w] of [['aData', 4], ['aBase', 1], ['aCtr', 2], ['aGrowH', 3], ['aGrowT', 1], ['aKind', 1]]) if (A[k]) for (let e = 0; e < w; e++) at[k][j * w + e] = A[k].array[i0 * w + e];
         for (let e = 0; e < 3; e++) { at.color[j * 3 + e] = A.color.array[wi * 3 + e]; at.aRoofC[j * 3 + e] = A.color.array[ri * 3 + e]; }
+        if (own) { const kv = .95 + .1 * ((own.h * 7.13) % 1); at.color.set([own.wall.r * kv, own.wall.g * kv, own.wall.b * kv], j * 3); at.aRoofC.set([own.roof.r * kv, own.roof.g * kv, own.roof.b * kv], j * 3);   // (a split unit: a building of its own, its paint, its kind, its centre and hash)
+          at.aKind[j] = own.k; at.aCtr.set([x, z], j * 2); at.aData[j * 4 + 1] = own.hm; at.aData[j * 4 + 2] = own.h; }
         at.aTop[j] = y1; at.aEdge[j * 2] = at.aEdge[j * 2 + 1] = 65535; });
       for (const [k, v] of Object.entries(at)) { g.setAttribute(k, new THREE.InstancedBufferAttribute(v, v.length / n)); MASS.bytes += v.byteLength; }
       const [mat, depth] = todayMats(); const mesh = new THREE.Mesh(g, massMat(mat, false)); mesh.customDepthMaterial = massMat(depth, true);
       mesh.castShadow = mesh.receiveShadow = true; mesh.frustumCulled = false; mesh.layers.set(L); scene.add(mesh); MASS_MESH.push(mesh); }
     for (const G_ of [cityMesh && cityMesh.geometry, FPT.mesh && FPT.mesh.geometry]) if (G_ && G_.attributes.aCut) MASS.bytes += G_.attributes.aCut.array.byteLength;
-    console.log('massing', JSON.stringify({ parts: MASS.parts, cut: cuts.length, kinds: MASS.kinds, protected: MASS.kept, MB: +(MASS.bytes / 1e6).toFixed(1) })); };
+    console.log('massing', JSON.stringify({ parts: MASS.parts, cut: cuts.length, kinds: MASS.kinds, large: MASS.why, protected: MASS.kept, MB: +(MASS.bytes / 1e6).toFixed(1) })); };
   const stepPart = ({ cx, cz, c, sn, a, b, y1 }, f, side, y0, inside) => {   // (the higher part over f of the long side, from one end, a hair in from its walls)
     const lu = a >= b, A = lu ? a : b, B = lu ? b : a, i = .3 * scale, hl = f * A - i, hs = B - i, o = (side < .5 ? -1 : 1) * (A - f * A), u = lu ? o : 0, v = lu ? 0 : o;
     const x = cx + c * u - sn * v, z = cz + sn * u + c * v, hu = lu ? hl : hs, hv = lu ? hs : hl;
@@ -1296,14 +1324,26 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   const foldIn = (g, f) => { const P = g.attributes.position, C = g.attributes.aCtr; let hit = false;   // (a detailed model's fold, swap: what stands at its centre or inside its footprint to the ground)
     for (let i = 0; i < P.count; i++) { const x = C.getX(i), z = C.getY(i); if (Math.abs(x - f.cx) < 2e-7 && Math.abs(z - f.cz) < 2e-7 || f.inFoot(x, z)) { P.setXYZ(i, x, S.ground(x, z) - 1e-4, z); hit = true; } }
     if (hit) P.needsUpdate = true; };
-  // a top's triangles (the record's own, at its roof's height) and whether a point is on one of them: a concave roof's outline
+  // a top's triangles (the record's own, at its roof's height): a concave roof's outline
   const topTris = (i0, i1, P_, y1, tol) => { const t = []; for (let i = i0; i + 2 < i1; i += 3) if (Math.abs(P_.getY(i) - y1) + Math.abs(P_.getY(i + 1) - y1) + Math.abs(P_.getY(i + 2) - y1) < tol) t.push([P_.getX(i), P_.getZ(i), P_.getX(i + 1), P_.getZ(i + 1), P_.getX(i + 2), P_.getZ(i + 2)]); return t; };
-  const onTris = (T, x, z) => T.some(([ax, az, bx, bz, cx, cz]) => { const d1 = (x - bx) * (az - bz) - (ax - bx) * (z - bz), d2 = (x - cx) * (bz - cz) - (bx - cx) * (z - cz), d3 = (x - ax) * (cz - az) - (cx - ax) * (z - az);
-    return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); });
+  // a concave top, whether a point is on it: its triangles tested, or for a larger top (more than 4 triangles: testing every one
+  // for every point cost seconds on the whole city's large outlines) a raster in its own axes, cells of half a metre (at most 256
+  // a side), drawn once
+  const topGrid = (T, cx, cz, c, sn, a, b) => { if (T.length <= 4) return (x, z) => T.some(([ax, az, bx, bz, qx, qz]) => { const d1 = (x - bx) * (az - bz) - (ax - bx) * (z - bz), d2 = (x - qx) * (bz - qz) - (bx - qx) * (z - qz), d3 = (x - ax) * (qz - az) - (qx - ax) * (z - az);
+      return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); });
+    const cs = Math.max(.5 * scale, 2 * Math.max(a, b) / 256), nu = Math.ceil(2 * a / cs) + 2, nv = Math.ceil(2 * b / cs) + 2, g = new Uint8Array(nu * nv);
+    const lu = (x, z) => (x - cx) * c + (z - cz) * sn, lv = (x, z) => -(x - cx) * sn + (z - cz) * c;
+    for (const [ax, az, bx, bz, qx, qz] of T) { const P3 = [[lu(ax, az), lv(ax, az)], [lu(bx, bz), lv(bx, bz)], [lu(qx, qz), lv(qx, qz)]];   // (row by row: each row's span of the triangle)
+      const j0 = Math.max(0, Math.ceil((Math.min(P3[0][1], P3[1][1], P3[2][1]) + b) / cs - .5)), j1 = Math.min(nv - 1, Math.floor((Math.max(P3[0][1], P3[1][1], P3[2][1]) + b) / cs - .5));
+      for (let j = j0; j <= j1; j++) { const v = -b + (j + .5) * cs; let u0 = Infinity, u1 = -Infinity;
+        for (let e = 0; e < 3; e++) { const [p0, p1] = [P3[e], P3[(e + 1) % 3]]; if ((v < p0[1]) === (v < p1[1]) && v !== p0[1]) continue; const t = p1[1] === p0[1] ? 0 : (v - p0[1]) / (p1[1] - p0[1]), u = p0[0] + (p1[0] - p0[0]) * t; if (u < u0) u0 = u; if (u > u1) u1 = u; }
+        if (!(u1 >= u0)) continue; const i0 = Math.max(0, Math.ceil((u0 + a) / cs - .5)), i1 = Math.min(nu - 1, Math.floor((u1 + a) / cs - .5)); for (let i = i0; i <= i1; i++) g[j * nu + i] = 1; } }
+    return (x, z) => { const i = Math.floor((lu(x, z) + a) / cs), j = Math.floor((lv(x, z) + b) / cs); return i >= 0 && j >= 0 && i < nu && j < nv && g[j * nu + i] === 1; }; };
   const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [], rims = [], units = [], parts = [], cuts = [];
-    const MS = todayL() && todayL().massing; MASS.kinds = {}; MASS.kept = 0; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
+    const MS = todayL() && todayL().massing; MASS.kinds = {}; MASS.why = {}; MASS.kept = 0; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
     const geoOf = P => cityMesh && cityMesh.geometry.attributes.position === P ? cityMesh.geometry : FPT.mesh && FPT.mesh.geometry.attributes.position === P ? FPT.mesh.geometry : null;
     const RU = MAT.roofUnits || null;   // (small rooftop units: below)
+    const TK = (film && MAT && MAT.today ? { ...TODAY[today], ...MAT.today } : TODAY[today] || {}).kinds, KC_ = {}, pickK = (a_, x) => (KC_[a_] ||= TK[a_].map(c_ => new THREE.Color(c_)))[Math.floor(x * TK[a_].length) % TK[a_].length], ROOFG = new THREE.Color((TK && TK.roofGrey) || '#a49e96');   // (today's kinds and paints: a split unit's, kindPaint)
     // a batch of stills: a record made again takes its pieces as they were made (today's rooftops after the replacement footprints
     // chosen for the next shot), while the detailed models stand as they did (FOLDS: they fold records and take their pieces)
     if (BATCH && ROOF_KEEP.n !== FOLDS.length) { ROOF_KEEP.n = FOLDS.length; ROOF_KEEP.m = new WeakMap(); }
@@ -1325,21 +1365,27 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         const H_ = hull2(pts); if (H_.length >= 3 && pts.every(([x, z]) => hullIn(H_, x, z) < .4 * scale)) { rims.push([H_, y1, yr]); hull = H_; } }   // (the parapet, on a rectangular roof only: a rim a metre high round its own outline, a hair in)
       // whatever stands on the roof stands wholly on it, a margin inside its parapet (on a concave roof: on its own top's triangles),
       // never over its edge or in the air beside it
-      let tops = null; const fits = (x, z, hu, hv, m) => { if (!hull && !tops) tops = topTris(i0, i1, P_, y1, .1 * ex * scale);
-        for (const [p, q] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { const X = x + c * (hu + m) * p - sn * (hv + m) * q, Z = z + sn * (hu + m) * p + c * (hv + m) * q; if (hull ? hullIn(hull, X, Z) < 0 : !onTris(tops, X, Z)) return false; } return true; };
-      let at = (u, v) => [cx + c * u - sn * v, cz + sn * u + c * v], placed = [];
+      let tops = null; const fits = (x, z, hu, hv, m) => { if (!hull && !tops) tops = topGrid(topTris(i0, i1, P_, y1, .1 * ex * scale), cx, cz, c, sn, a, b);
+        for (const [p, q] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { const X = x + c * (hu + m) * p - sn * (hv + m) * q, Z = z + sn * (hu + m) * p + c * (hv + m) * q; if (hull ? hullIn(hull, X, Z) < 0 : !tops(X, Z)) return false; } return true; };
+      let at = (u, v) => [cx + c * u - sn * v, cz + sn * u + c * v], placed = [], split_ = false;
       if (MS && hm >= MS.min[0] && Math.min(a, b) >= MS.min[1] * scale) { const G_ = geoOf(P_), C_ = G_ && G_.attributes.aCtr;   // the massing (massPlan): its parts, its main mass cut
         const pr_ = FPT.protect && FPT.protect.has(Math.fround(C_.getX(i0)) + ',' + Math.fround(C_.getY(i0))); if (pr_) MASS.kept++;
         if (G_ && G_.attributes.color && G_.attributes.aBase && G_.attributes.aData.getW(i0) < .5 && !pr_) {   // (a building of today's, not a mound, not a reviewed parent)
           const yb = G_.attributes.aBase.getX(i0), round = !rect && !!hull && hull.length >= 6 && hull.every(([x, z]) => { const u = ((x - cx) * c + (z - cz) * sn) / a, v = (-(x - cx) * sn + (z - cz) * c) / b; return Math.abs(Math.hypot(u, v) - 1) < .1; });   // (an ellipse: every point of its outline on it)
-          const M_ = y1 - yb > 1e-7 && massPlan(MS, { cx, cz, c, sn, a, b, y1, yb, hm, rect, round, fits, hull, fill: ar_ / (4 * a * b) });
+          const R_ = { cx, cz, c, sn, a, b, y1, yb, hm, rect, round, fits, hull, fill: ar_ / (4 * a * b) }, SP = MS.split, kd = G_.attributes.aKind ? G_.attributes.aKind.getX(i0) : 1;
+          const big_ = SP && TK && ar_ / scale / scale >= SP.area, why_ = !big_ ? null : G_ !== cityMesh.geometry && FPT.osm && FPT.osm.has(Math.fround(C_.getX(i0)) + ',' + Math.fround(C_.getY(i0))) ? 'osm' : hm >= SP.maxH ? 'tall' : kd === 2 ? 'kind' : 2 * Math.min(a, b) < SP.minW * scale ? 'narrow' : null;
+          const sp_ = big_ && !why_ ? splitPlan(MS, R_, h0) : null; if (big_) { MASS.why[why_ || (sp_ ? 'split' : 'unfit')] = (MASS.why[why_ || (sp_ ? 'split' : 'unfit')] || 0) + 1; (MASS.list ||= []).push([cx, y1, cz, why_ || (sp_ ? 'split' : 'unfit'), ar_ / scale / scale, hm]); }   // (MASS large, list: each large footprint, whether it was split and why not; window.__MINI.mass for a check)
+          const M_ = y1 - yb > 1e-7 && (sp_ || massPlan(MS, R_));   // (split: today's data's own footprints, a squared one's too, never an OpenStreetMap building (the sidecar's osm sources: single buildings), a tower's glass or a stone civic building)
           if (M_) { cuts.push([G_, i0, i1, Math.max(1, Math.min(254, Math.round(255 * (M_.cut - yb) / (y1 - yb))))]); MASS.kinds[M_.kind] = (MASS.kinds[M_.kind] || 0) + 1;
-            for (let k = nl0; k < lips.length; k++) lips[k][1] = M_.cut; for (let k = nr0; k < rims.length; k++) rims[k][1] = M_.cut;   // (its parapet round the main mass's roof)
+            if (M_.kind === 'split') { lips.length = nl0; rims.length = nr0; split_ = true; }   // (its own roof gone to its base: no parapet of its own)
+            else { for (let k = nl0; k < lips.length; k++) lips[k][1] = M_.cut; for (let k = nr0; k < rims.length; k++) rims[k][1] = M_.cut; }   // (its parapet round the main mass's roof)
             let wi = i0, ri = i0; const NN = G_.attributes.normal; for (let i = i0; i < i1; i++) { if (Math.abs(NN.getY(i)) < .3 && wi === i0) wi = i; if (NN.getY(i) > .6) { ri = i; break; } }
-            for (const q of M_.parts) { parts.push([...q, th, G_, i0, wi, ri]); if (!q[2]) lips.push([q[0], q[6], q[1], 2 * q[3] * .995, ex * scale, 2 * q[4] * .995, yr, th]); }
-            const T_ = M_.parts[M_.parts.length - 1];   // (its rooftops on its highest part)
+            for (const q of M_.parts) { const o_ = q[7] ? (() => { const k_ = kd === 4 && q[7].q2 < (SP.stone ?? .35) ? 4 : q[7].hm < TK.oldH ? 0 : 1, [w_, r_] = kindPaint(TK, k_, q[7].hm, q[7].q, q[7].q2, pickK, ROOFG); return { wall: w_, roof: r_, k: k_, h: q[7].q, hm: q[7].hm }; })() : null;   // (a split unit: its own paint and kind)
+              parts.push([q[0], q[1], q[2], q[3], q[4], q[5], q[6], th, G_, i0, wi, ri, o_]); if (!q[2]) lips.push([q[0], q[6], q[1], 2 * q[3] * .995, ex * scale, 2 * q[4] * .995, yr, th]); }
+            if (!split_) { const T_ = M_.parts[M_.parts.length - 1];   // (its rooftops on its highest part)
             cx = T_[0]; cz = T_[1]; a = T_[3]; b = T_[4]; y1 = T_[6]; tops = null; at = (u, v) => [cx + c * u - sn * v, cz + sn * u + c * v];
-            hull = hull2(T_[2] ? Array.from({ length: 12 }, (_, k) => at(Math.cos(k * Math.PI / 6) * a, Math.sin(k * Math.PI / 6) * b)) : [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([p, q]) => at(a * p, b * q))); } } }
+            hull = hull2(T_[2] ? Array.from({ length: 12 }, (_, k) => at(Math.cos(k * Math.PI / 6) * a, Math.sin(k * Math.PI / 6) * b)) : [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([p, q]) => at(a * p, b * q))); } } } }
+      if (split_) continue;   // (a split footprint's roof pieces: none; its units carry their parapets)
       if (hm >= 20) { const q_ = ((h0 * 1e4) % 1 + 1) % 1, k = RU ? RU.main[0] + RU.main[1] * q_ : .2 + .16 * q_, mH = RU ? RU.mainH : [3, 2.5];   // (plant rooms: one or two, each its own size, height and grey)
         const w1 = 2 * a * k, d1 = 2 * b * k * (.7 + .5 * ((q_ * 3.1) % 1));   // (where it fits: a curved slab's box centre may lie outside it)
         for (const [u1, v1] of RU ? [[.15, 0], [0, 0], [-.3, 0], [.4, 0], [-.5, 0], [0, .3], [0, -.3]] : [[.15, 0]]) { const P1 = at(a * u1, b * v1);
@@ -1509,7 +1555,7 @@ vec4 sbOver(vec4 d, vec3 c, float a){ return vec4(c * a + d.rgb * (1. - a), a + 
     if (film && FILM_PIC.glb && !GLB_DONE) { GLB_DONE = true; for (const o of FILM_PIC.glb) { try { const r_ = await swap(o); console.log('glb', JSON.stringify(r_)); } catch (e) { console.error(`glb ${o.url}: ${e.message}`); } }
       // (a glb entry's plaza: { r: [its inner disc's, its lawn ring's inner and outer, its paving's outer radius] m, at: [x, z] m from near }: the landmark's own round plaza, todayLight roundPlaza)
       FILM_PIC.glb.filter(o => o.plaza && o.near).slice(0, 4).forEach((o, i) => { const r = o.plaza.r, at = o.plaza.at || [0, 0]; RPLAZA.P.value[i].set(o.near[0] + at[0] * scale, o.near[1] + at[1] * scale, r[1], r[2]); RPLAZA.Q.value[i].set(r[0], r[3], 0, 1); }); }   // (FILM_PIC glb: detailed models in place of buildings, ?pic= for a still)
-    window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), flock: () => ({ ms: FL.ms, ...FL.stat }), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
+    window.__MINI = { mass: () => MASS, scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), flock: () => ({ ms: FL.ms, ...FL.stat }), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
     renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2; ROOF_PX.value = 2 / (camera.projectionMatrix.elements[5] * 1080) / scale;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     const up = E => E.mesh.visible && !E.mesh.userData.gone;   // (the film: a city gone may still show its foundations, without its detail)
     if (DET) { for (const [id, E] of Object.entries(S.eras)) if (up(E) && !DET.has(id)) DET.set(id, detailOf(id));
