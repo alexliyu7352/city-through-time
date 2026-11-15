@@ -222,7 +222,7 @@ const SLATE = { slate: [.31, .31, .31], step: 6, edge: 1.45, resin: [.20, .14, .
 // land's rise `step` m, their edges a faint `edge`; the water a glossy resin. In the sunny miniature the land is a fresh meadow
 // (land olive and ochre: its two greens, fields faintly), the groves fresh greens (flock), a town's ground light warm paving (ground_in)
 const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.80, .76, .70], reach: 16, park: [.56, .72, .34] }, flock: { col: [.30, .48, .18], col2: [.44, .56, .22], town: { built: .6, cell: 11, share: .7, groves: [.35, .6], size: [4.5, 7], free: .3 }, tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 16, crown: [.42, 1.04, [1.06, 1.03, .84]], wall: 1.5,
-    street: { off: 2.2, r: 2.5, vary: [.9, 1, 1.12], every: { secondary: 9, tertiary: 9 }, minor: 11, junction: 14, floor: 8.6, rows: true, px: 1.2, far: [.35, .5] }, px: 1.5, far: [2, 3] },
+    street: { off: 2.2, r: 2.5, vary: [.9, 1, 1.12], every: { secondary: 9, tertiary: 9 }, minor: 11, junction: 14, floor: 8.6, rows: true, px: 1.2, far: [.35, .5] }, px: 2, far: [3.5, 4.5] },
   land: { olive: [.56, .64, .36], ochre: [.68, .70, .44], field: 140, rock: [.5, .8], rockC: [.64, .60, .52], scrub: [.42, .54, .22] }, bump: 1.6, ground: '#cfc3a6', step: 6, edge: 1.12, resin: [.46, .64, .71], gloss: [.08, .55, [.80, .86, .92]] };   // (resin: clear tinted acrylic; gloss: its reflection of the room, [at a steep view, toward a grazing one, its colour])   // (land rock: only the steep faces, the slope as drawn)
 // the colour film's picture, as a photograph of a model on a table: a warm key from a sun fixed in the world, low and to the side
 // of where the film's camera mostly looks from (sunSide degrees round from it: shadows fall across the frame and toward the eye,
@@ -839,7 +839,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     // of them a tree in its leafy quarters (a slow noise passing groves[0], whole by groves[1]; a quarter of that between them), its
     // trunk and `free` of its crown off every roof (townFree: the standing cities' roofs drawn in the tile, 1.5 m a cell), never on a
     // city wall's band or a gate's approach; a crown size[0] to size[1] m round. Any period city's, by its own buildings
-    const TW = F.town; if (TW) { const c3 = TW.cell * scale, ti0 = Math.floor(x0 / c3), ti1 = Math.floor((x0 + T0) / c3), tj0 = Math.floor(z0 / c3), tj1 = Math.floor((z0 + T0) / c3);
+    const TW = F.town; if (TW && townPrep(T)) { const c3 = TW.cell * scale, ti0 = Math.floor(x0 / c3), ti1 = Math.floor((x0 + T0) / c3), tj0 = Math.floor(z0 / c3), tj1 = Math.floor((z0 + T0) / c3);
       for (let i = ti0; i <= ti1; i++) for (let j = tj0; j <= tj1; j++) { const rk = FH(i, j, 24); if (rk < q0 || rk >= p) continue;
         const x = (i + .2 + .6 * FH(i, j, 25)) * c3, z = (j + .2 + .6 * FH(i, j, 26)) * c3; if (x < x0 || x >= x0 + T0 || z < z0 || z >= z0 + T0) continue;
         if (M.px(M.bd, x, z) < TW.built) continue;
@@ -888,9 +888,14 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       for (let i = Math.floor(Math.min(...xs) / T0); i <= Math.floor(Math.max(...xs) / T0); i++) for (let j = Math.floor(Math.min(...zs) / T0); j <= Math.floor(Math.max(...zs) / T0); j++) {
         const k = i * 100003 + j; (ix.get(k) || ix.set(k, []).get(k)).push(xs[0], zs[0], xs[1], zs[1], xs[2], zs[2]); } }
     return ix; };
+  // townPrep(T): the share of town trees the tile's standing cities plant (their palettes' tree town, the largest), and their roofs
+  // drawn, only where it is above 0 (a city that plants none, Rome's, costs nothing as it rises and falls)
+  const townPrep = T => { if (T.townK !== undefined) return T.townK; const k = T.i * 100003 + T.j; T.townK = 0;
+    for (const m of eraMeshes) { const t_ = m.visible ? (palOf(idOf.get(m)).tree || {}).town || 0 : 0; if (t_ > T.townK && roofIndex(m).get(k)) T.townK = t_; }
+    return T.townK; };
   const townFree = (T, x, z, r) => { const T0 = TILE * scale, cs = 1.5 * scale, NC = Math.ceil(TILE / 1.5), x0 = T.i * T0, z0 = T.j * T0;
-    if (!T.occ) { const o = T.occ = new Uint8Array(NC * NC), k = T.i * 100003 + T.j; T.townK = 0;
-      for (const m of eraMeshes) { if (!m.visible) continue; const L_ = roofIndex(m).get(k); if (!L_) continue; T.townK = Math.max(T.townK, (palOf(idOf.get(m)).tree || {}).town || 0);   // (the region's own: palette tree town)
+    if (!T.occ) { const o = T.occ = new Uint8Array(NC * NC), k = T.i * 100003 + T.j;
+      for (const m of eraMeshes) { if (!m.visible) continue; const L_ = roofIndex(m).get(k); if (!L_) continue;
         for (let q = 0; q < L_.length; q += 6) { const ax = L_[q], az = L_[q + 1], bx = L_[q + 2], bz = L_[q + 3], cx = L_[q + 4], cz = L_[q + 5], d_ = (bz - cz) * (ax - cx) + (cx - bx) * (az - cz); if (Math.abs(d_) < 1e-20) continue;
           const u0 = Math.max(0, Math.floor((Math.min(ax, bx, cx) - x0) / cs)), u1 = Math.min(NC - 1, Math.floor((Math.max(ax, bx, cx) - x0) / cs)), v0 = Math.max(0, Math.floor((Math.min(az, bz, cz) - z0) / cs)), v1 = Math.min(NC - 1, Math.floor((Math.max(az, bz, cz) - z0) / cs));
           for (let v = v0; v <= v1; v++) for (let u = u0; u <= u1; u++) { const px_ = x0 + (u + .5) * cs, pz_ = z0 + (v + .5) * cs, l1 = ((bz - cz) * (px_ - cx) + (cx - bx) * (pz_ - cz)) / d_, l2 = ((cz - az) * (px_ - cx) + (ax - cx) * (pz_ - cz)) / d_;
@@ -925,7 +930,11 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     if (today && STREETS.list) segIndex();
     // the tiles the frame sees: its ground as far as the frame reaches (the plate's edge at most), the tiles there inside the view
     // (with a margin for a tree's shadow falling into it), nearest first
-    camera.updateMatrixWorld(); const cp = FR.cp.copy(camera.position), kp = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / 1080;   // (kp: model units a picture pixel spans at unit distance)
+    // (the eye the trees are sized from: the camera's own, snapped to a grid of 0.4 % of its distance from the target, that distance
+    // in steps of 1.5 %: a crown's size moves by less than that, unseen, and a frame whose eye and tiles are the frame before's
+    // (a hold, a hand-held drift) takes the trees as they are, not all of them made and sent again)
+    camera.updateMatrixWorld(); const dq_ = Math.pow(2, Math.round(Math.log2(Math.max(camera.position.distanceTo(target), 1e-9)) * 48) / 48) * .004;
+    const cp = FR.cp.set(Math.round(camera.position.x / dq_) * dq_, Math.round(camera.position.y / dq_) * dq_, Math.round(camera.position.z / dq_) * dq_), kp = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / 1080;   // (kp: model units a picture pixel spans at unit distance)
     FR.fr.setFromProjectionMatrix(FR.pm.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
     const rS = (M.ST.r || 3.6) * 1.25 * scale, Dg = F.cell * scale / (FAR[0] * kp), Ds = today ? rS / (SFAR[0] * kp) : 0, Dmax = Math.max(Dg, Ds);   // (nothing of a tree beyond these: a grove's crowns gone into the ground's tone, a row's under a third of a pixel)
     const T0 = TILE * scale, gy = target.y, far = Math.min(Math.hypot(PW, PD), Dmax);
@@ -940,14 +949,18 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       const dx = Math.max(xa - cp.x, 0, cp.x - xa - T0), dz = Math.max(za - cp.z, 0, cp.z - za - T0), D0 = Math.max(Math.hypot(dx, dz, cp.y - gc), 1e-6);
       if (D0 < Dmax) tiles.push([i, j, D0]); }
     tiles.sort((a, b) => a[2] - b[2]);
+    { let h_ = 0; for (const t_ of tiles) { const gk = t_[0] * 100003 + t_[1]; let T = FL.tiles.get(gk);   // (each tile as this frame has it: planted again where the period cities standing changed in it)
+        if (T && T.bv !== FL.bv) { const s_ = tileSum(t_[0], t_[1]); if (s_ !== T.sum) { FL.tiles.delete(gk); T = null; } else T.bv = FL.bv; }
+        if (!T) { T = { i: t_[0], j: t_[1], p: 0, list: [], sum: tileSum(t_[0], t_[1]), bv: FL.bv, id: FL.ids = (FL.ids || 0) + 1 }; FL.tiles.set(gk, T); }
+        h_ = (h_ * 31 + gk * 7 + T.id) % 1000000007; }
+      const sig = [cp.x, cp.y, cp.z, kp, h_, tiles.length, FL.key, FL.mesh.length].join();
+      if (sig === FL.sig) { GEO_T.value.set(F.cell * scale / (FAR[1] * kp), F.cell * scale / (FAR[0] * kp), 1, 0); return; } FL.sig = sig; }   // (the same eye, the same tiles: the trees as they stand)
     // each tile's trees as far down their ranks as its nearest point needs (the largest crown's density there), then each tree by
     // its own distance: its density, its share of the canopy, its fade
     const rMax = F.cell * .42 * 1.6 * 1.2 * scale, rMaxP = M.PT.size[1] * scale, out = FL.out || (FL.out = []);
     let n = 0; const put = (x, y, z, r, h, t, w) => { const o = out[n] || (out[n] = new Float32Array(7)); o[0] = x; o[1] = y; o[2] = z; o[3] = r; o[4] = h; o[5] = t; o[6] = w; n++; };
     for (const [i, j, D0] of tiles) {
-      const gk = i * 100003 + j; let T = FL.tiles.get(gk);
-      if (T && T.bv !== FL.bv) { const s = tileSum(i, j); if (s !== T.sum) T = null; else T.bv = FL.bv; }   // (the period cities standing changed here: planted again)
-      if (!T) { T = { i, j, p: 0, list: [], sum: tileSum(i, j), bv: FL.bv }; FL.tiles.set(gk, T); }
+      const T = FL.tiles.get(i * 100003 + j);   // (made above, as this frame has it)
       const pa = (r_) => Math.min(1, (r_ / (D0 * kp * PX0)) ** 2), ps = SPX ? Math.min(1, M.ST.r * 1.25 * scale / (D0 * kp * SPX)) : 1;
       const pN = Math.min(1, Math.max(pa(rMax), today ? Math.max(pa(rMaxP), ps) : 0) * (1 + B_)); plantTile(T, pN, M);
       for (const tr of T.list) { const [x, y, z, r, h, t, rk] = tr; if (rk >= pN) continue;
@@ -959,28 +972,37 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     // the crowns: a finer sphere where a crown is 6 pixels round or more, the coarsest (20 faces) under 3: afar a row's or a grove's
     // crowns are a few pixels each, their facets never seen, and there are most of them; the parks' in their own paint (parkTrees crown, trees)
     const CR_ = (yc >= 0 && todayL() && todayL().crown) || F.crown, CRP_ = (yc >= 0 && M.PT.crown) || CR_;   // (todayLight crown: today's own, while today's city is the subject; a period city's groves keep the flock's)
-    const mk = (detail, CR_) => { const geo = new THREE.IcosahedronGeometry(1, detail).scale(1, .82, 1), mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95 });
-      if (CR_) {   // a crown painted as a model's foliage (flock crown: [its underside's share, its cap's, the cap's warmth]): a darker shade side, a lighter, yellower sunlit cap
-        const [cd_, cc_, cw_] = CR_; mat.onBeforeCompile = sh => {
-          sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vCrownY;').replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\n  vCrownY = normal.y;');
-          sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vCrownY;').replace('#include <color_fragment>', `#include <color_fragment>
+    // (each crown 9 numbers sent, not an instance matrix's 16 and its colour: iT its foot and radius, iS its turn and its height's
+    // share, its colour; turned and placed in the vertex shader, its shadow's alike)
+    const crownGLSL = sh => { sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec4 iT; attribute vec2 iS;')
+        .replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\n  { float c_ = cos(iS.x), s_ = sin(iS.x); objectNormal = vec3(c_ * objectNormal.x + s_ * objectNormal.z, objectNormal.y, -s_ * objectNormal.x + c_ * objectNormal.z); }')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\n  { float c_ = cos(iS.x), s_ = sin(iS.x); vec3 p_ = position * vec3(iT.w, iT.w * iS.y, iT.w); transformed = vec3(c_ * p_.x + s_ * p_.z, p_.y + iT.w * .7 * iS.y, -s_ * p_.x + c_ * p_.z) + iT.xyz; }'); };
+    const mk = (detail, CR_) => { const base_ = new THREE.IcosahedronGeometry(1, detail).scale(1, .82, 1), geo = new THREE.InstancedBufferGeometry(), cap = Math.max(1024, FL.cap);
+      geo.setAttribute('position', base_.attributes.position); geo.setAttribute('normal', base_.attributes.normal);
+      for (const [k, w] of [['iT', 4], ['iS', 2], ['color', 3]]) geo.setAttribute(k, new THREE.InstancedBufferAttribute(new Float32Array(cap * w), w).setUsage(THREE.DynamicDrawUsage));
+      geo.instanceCount = 0;
+      const mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, vertexColors: true }), depth = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking });
+      depth.onBeforeCompile = crownGLSL; depth.customProgramCacheKey = () => 'mini-crown-depth';
+      mat.onBeforeCompile = sh => { crownGLSL(sh); if (!CR_) return;   // a crown painted as a model's foliage (flock crown: [its underside's share, its cap's, the cap's warmth]): a darker shade side, a lighter, yellower sunlit cap
+        const [cd_, cc_, cw_] = CR_;
+        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vCrownY;').replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\n  vCrownY = normal.y;');
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vCrownY;').replace('#include <color_fragment>', `#include <color_fragment>
   diffuseColor.rgb *= mix(${cd_.toFixed(3)}, ${cc_.toFixed(3)}, smoothstep(-.6, .9, vCrownY)); diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(${cw_.map(v => v.toFixed(3)).join(', ')}), smoothstep(.35, 1., vCrownY));`); };
-        mat.customProgramCacheKey = () => 'mini-crown' + CR_.flat().join(); }
-      const cap = Math.max(1024, FL.cap), mesh = new THREE.InstancedMesh(geo, mat, cap); mesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(cap * 3), 3);
-      mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); mesh.userData.crown = (CR_ || []).flat().join(); return mesh; };
+      mat.customProgramCacheKey = () => 'mini-crown2' + (CR_ || []).flat().join();
+      const mesh = new THREE.Mesh(geo, mat); mesh.customDepthMaterial = depth;
+      mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); mesh.userData.crown = (CR_ || []).flat().join(); mesh.userData.cap = cap; return mesh; };
     let nAll = n; for (let k = 0; k < n; k++) if (out[k][5] === 1) nAll += 2;   // (today's park crowns as a model maker's clusters: two smaller balls beside each)
-    if (nAll > FL.cap || !FL.mesh[5] || FL.mesh[0].userData.crown !== (CR_ || []).flat().join() || FL.mesh[3].userData.crown !== (CRP_ || []).flat().join()) { FL.cap = Math.max(FL.cap, Math.ceil(nAll * 1.3)); for (const m of FL.mesh) if (m) { scene.remove(m); m.geometry.dispose(); m.material.dispose(); m.dispose(); } FL.mesh = [mk(0, CR_), mk(1, CR_), mk(2, CR_), mk(0, CRP_), mk(1, CRP_), mk(2, CRP_)]; }   // (a street's or a grove's, a park's; each coarsest, coarse and fine)
+    if (nAll > FL.cap || !FL.mesh[5] || FL.mesh[0].userData.crown !== (CR_ || []).flat().join() || FL.mesh[3].userData.crown !== (CRP_ || []).flat().join()) { FL.cap = Math.max(FL.cap, Math.ceil(nAll * 1.3)); for (const m of FL.mesh) if (m) { scene.remove(m); m.geometry.dispose(); m.material.dispose(); m.customDepthMaterial.dispose(); } FL.mesh = [mk(0, CR_), mk(1, CR_), mk(2, CR_), mk(0, CRP_), mk(1, CRP_), mk(2, CRP_)]; }   // (a street's or a grove's, a park's; each coarsest, coarse and fine)
     const base = new THREE.Color().setRGB(...F.col.map(v => Math.pow(v, 2.2))), base2 = new THREE.Color().setRGB(...(F.col2 || F.col).map(v => Math.pow(v, 2.2))), col = new THREE.Color();
     const lin = L_ => L_.map(c_ => new THREE.Color().setRGB(...c_.map(v => Math.pow(v, 2.2)))), TT_ = MAT.todayLight && todayL().trees, tb = TT_ ? lin(TT_) : [base, base2], tp = M.PT.trees ? lin(M.PT.trees) : tb;   // (today's trees: todayLight.trees, each tree one of its greens; a park's its own, parkTrees trees)
-    const cnt = [0, 0, 0, 0, 0, 0], A = FL.mesh.map(m => m.instanceMatrix.array), C = FL.mesh.map(m => m.instanceColor.array);
-    const one = (x, y, z, r, h, t, rd) => { const px_ = r / (Math.hypot(x - cp.x, y - cp.y, z - cp.z) * kp), s = (px_ >= 6 ? 2 : px_ >= 3 ? 1 : 0) + (t === 1 ? 3 : 0), q = cnt[s]++, a = A[s], o = q * 16, sy_ = t ? .8 + .4 * ((h * 13.7) % 1) : 1, cs = Math.cos(h * 6.28), sn = Math.sin(h * 6.28);   // (today's: taller or flatter crowns, not identical balls)
-      a[o] = cs * r; a[o + 1] = 0; a[o + 2] = -sn * r; a[o + 3] = 0; a[o + 4] = 0; a[o + 5] = r * sy_; a[o + 6] = 0; a[o + 7] = 0; a[o + 8] = sn * r; a[o + 9] = 0; a[o + 10] = cs * r; a[o + 11] = 0;
-      a[o + 12] = x; a[o + 13] = y + r * .7 * sy_; a[o + 14] = z; a[o + 15] = 1;
+    const cnt = [0, 0, 0, 0, 0, 0], AT = FL.mesh.map(m => m.geometry.attributes.iT.array), AS = FL.mesh.map(m => m.geometry.attributes.iS.array), C = FL.mesh.map(m => m.geometry.attributes.color.array);
+    const one = (x, y, z, r, h, t) => { const px_ = r / (Math.hypot(x - cp.x, y - cp.y, z - cp.z) * kp), s = (px_ >= 6 ? 2 : px_ >= 3 ? 1 : 0) + (t === 1 ? 3 : 0), q = cnt[s]++, sy_ = t ? .8 + .4 * ((h * 13.7) % 1) : 1;   // (today's: taller or flatter crowns, not identical balls)
+      AT[s][q * 4] = x; AT[s][q * 4 + 1] = y; AT[s][q * 4 + 2] = z; AT[s][q * 4 + 3] = r; AS[s][q * 2] = h * 6.28; AS[s][q * 2 + 1] = sy_;
       if (t) { const T_ = t === 1 ? tp : tb; col.copy(T_[Math.floor(((h * 7.31) % 1) * T_.length)]).multiplyScalar(.9 + .2 * h); } else col.copy(base).lerp(base2, fvn(x / scale / 40, z / scale / 40) * .7 + h * .3).multiplyScalar(.8 + .4 * h);   // (col2: a second green, by groves more than by tree)
       C[s][q * 3] = col.r; C[s][q * 3 + 1] = col.g; C[s][q * 3 + 2] = col.b; };
     for (let k = 0; k < n; k++) { const [x, y, z, r, h, t] = out[k]; one(x, y, z, r, h, t);
       if (t === 1) for (let j = 0; j < 2; j++) { const a_ = h * 40 + j * 2.6; one(x + Math.cos(a_) * r * .62, y, z + Math.sin(a_) * r * .62, r * (.55 + .15 * j), (h * 3.7 + j * .31) % 1, 1); } }   // (beside each crown, lower: the group lit on top, shaded below)
-    FL.mesh.forEach((m, s) => { m.count = cnt[s]; m.instanceMatrix.needsUpdate = true; m.instanceColor.needsUpdate = true; });
+    FL.mesh.forEach((m, s) => { const g_ = m.geometry; g_.instanceCount = cnt[s]; for (const [k, w_] of [['iT', 4], ['iS', 2], ['color', 3]]) { const B_ = g_.attributes[k]; B_.clearUpdateRanges(); if (cnt[s]) B_.addUpdateRange(0, cnt[s] * w_); B_.needsUpdate = true; } });   // (only the crowns drawn are sent)
     FL.stat = { tiles: tiles.length, trees: n, crowns: cnt.reduce((a_, b_) => a_ + b_, 0), planted: [...FL.tiles.values()].reduce((s_, T) => s_ + T.list.length, 0) };
     GEO_T.value.set(F.cell * scale / (FAR[1] * kp), F.cell * scale / (FAR[0] * kp), 1, 0);   // (the ground's groves' tone from where a grove's cell is far[1] pixels, whole by far[0]: the crowns' own fade, by the eye's distance)
   };
@@ -1340,7 +1362,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         if (!(u1 >= u0)) continue; const i0 = Math.max(0, Math.ceil((u0 + a) / cs - .5)), i1 = Math.min(nu - 1, Math.floor((u1 + a) / cs - .5)); for (let i = i0; i <= i1; i++) g[j * nu + i] = 1; } }
     return (x, z) => { const i = Math.floor((lu(x, z) + a) / cs), j = Math.floor((lv(x, z) + b) / cs); return i >= 0 && j >= 0 && i < nu && j < nv && g[j * nu + i] === 1; }; };
   const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [], rims = [], units = [], parts = [], cuts = [];
-    const MS = todayL() && todayL().massing; MASS.kinds = {}; MASS.why = {}; MASS.kept = 0; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
+    const MS = todayL() && todayL().massing; MASS.kinds = {}; MASS.why = {}; MASS.list = []; MASS.kept = 0; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
     const geoOf = P => cityMesh && cityMesh.geometry.attributes.position === P ? cityMesh.geometry : FPT.mesh && FPT.mesh.geometry.attributes.position === P ? FPT.mesh.geometry : null;
     const RU = MAT.roofUnits || null;   // (small rooftop units: below)
     const TK = (film && MAT && MAT.today ? { ...TODAY[today], ...MAT.today } : TODAY[today] || {}).kinds, KC_ = {}, pickK = (a_, x) => (KC_[a_] ||= TK[a_].map(c_ => new THREE.Color(c_)))[Math.floor(x * TK[a_].length) % TK[a_].length], ROOFG = new THREE.Color((TK && TK.roofGrey) || '#a49e96');   // (today's kinds and paints: a split unit's, kindPaint)
