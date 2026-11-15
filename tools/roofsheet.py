@@ -25,8 +25,8 @@ usage: uv run python -I tools/roofsheet.py <city> --refs <refs.json> --out <dir>
   --film-d  film distance (model units; default the first --from camera's): the camera a film shot has, its frame cropped to
             the share of it a catalogue crop at --zoom covers of its painting (the painting's cell / zoom of its width)
   --kinds   only these kinds: their renders made again (the current scene's column reused as it is, --fresh-off to make it
-            again) and their bands alone in <prefix>_k<kinds>.jpg; one kind's try is about a minute with --no-mask (no mask
-            render: their measured swatches left out), a minute and a half with it. Without --kinds every kind, the whole sheet
+            again) and their bands alone in <prefix>_k<kinds>.jpg; one kind's try takes about 90 s with --no-mask (no mask
+            render: their measured swatches left out), a page load and three shots more with it. Without --kinds, every kind
   --no-render  lay out the sheet from the renders there; --picks-only: choose the specimens (picks.json) and stop
 
 Per kind (rows): the painting's crops; per building (n, the kind's typical height and size, one with an irregular outline where
