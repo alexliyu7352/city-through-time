@@ -245,7 +245,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     // the edge (alpha, crop of its distance field, falloff); the ring/edge colour is uHideCol
     uHideT: { value: Array(HMAX).fill(-1) }, uHideG: { value: Array(HMAX).fill(.1) }, uHideO: { value: Array.from({ length: HMAX }, () => new THREE.Vector2()) }, uHideFR: { value: Array(HMAX).fill(-1) }, uHideFI: { value: Array(HMAX).fill(0) }, uHideFW: { value: Array(HMAX).fill(.01) },
     uEdgeA: { value: Array(HMAX).fill(0) }, uEdgeD: { value: Array(HMAX).fill(.015) }, uEdgeRect: { value: Array.from({ length: HMAX }, () => new THREE.Vector4(0, 0, 1, 1)) }, uEdgeLight: { value: .0045 }, uEdgeHalo: { value: .0014 }, uGrowWarm: { value: 0 }, uShockA: { value: 0 }, uShockR: { value: 0 }, uShockC: { value: new THREE.Vector2() }, uHideFA: { value: Array(HMAX).fill(0) }, uRiseA: { value: Array(HMAX).fill(0) }, uRiseMode: { value: Array(HMAX).fill(0) }, uRiseW: { value: Array(HMAX).fill(0) }, uRiseO: { value: Array.from({ length: HMAX }, () => new THREE.Vector2()) }, uRiseDir: { value: Array.from({ length: HMAX }, () => new THREE.Vector2()) }, uRiseR: { value: Array(HMAX).fill(-1) },
-    uResetC: { value: new THREE.Vector2(0, 0) }, uResetR: { value: -1 }, uResetY: { value: 0 }, uGrowMono: { value: 0 }, uYLt: { value: arr(YM, 1e6) }, uYLy: { value: arr(YM, 1e6) }, uYLn: { value: 0 }, uGrowDur: { value: 1.8 },   // while a period city stands: today's city dims, its ground glows, a band of light along its edge
+    uResetC: { value: new THREE.Vector2(0, 0) }, uResetR: { value: -1 }, uResetY: { value: 0 }, uGrowMono: { value: 0 }, uYLt: { value: arr(YM, 1e6) }, uYLy: { value: arr(YM, 1e6) }, uYLn: { value: 0 }, uCutT: { value: arr(4, 0) }, uCutY: { value: arr(4, 0) }, uCutN: { value: 0 }, uCutNow: { value: 0 }, uGrowDur: { value: 1.8 },   // while a period city stands: today's city dims, its ground glows, a band of light along its edge
     cEp: { value: cols(PAL.epochs || [], EMAX) },
     uGrowOn: { value: 0 }, uGT: { value: arr(NM, 99999) }, uGS: { value: arr(NM, 1) }, uBLo: { value: arr(NM, 1e9) }, uNB: { value: 0 }, uGrowDim: { value: 1 },
     cBand: { value: cols(PAL.bands || [], NM) },
@@ -292,10 +292,16 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   const decalTex = Z => { let e = `texture2D(uD${Z.D - 1}, duv)`; for (let k = Z.D - 2; k >= 0; k--) e = `i == ${k} ? texture2D(uD${k}, duv) : ${e}`; return e; };   // (one sampler per decal the film has)
   // the film's year line from the modern growth on (compile: grow.yl): when the counter first reaches a year. Today's buildings
   // rise at that moment (uGrowDur seconds), one by one as the counter runs, and flash warm as they do
-  const YL_GLSL = Z => `uniform float uYLt[${Z.Y}], uYLy[${Z.Y}], uYLn, uGrowDur;
-  float tOfYear(float y){ for (int i = 0; i < ${Z.Y - 1}; i++) { if (float(i) + 1.5 > uYLn) break; float y0 = uYLy[i], y1 = uYLy[i + 1];
+  // A look back (compile grow.cuts: when the counter went back, and to which year): a year above the one it went back to is
+  // reached again only after it, so a building newer than that year goes at the look back (unseen: the picture dissolves) and
+  // rises again when the counter comes back to its year. growOn: a building that waited for the camera, as it waited, unless a
+  // look back has taken it since
+  const YL_GLSL = Z => `uniform float uYLt[${Z.Y}], uYLy[${Z.Y}], uYLn, uGrowDur, uCutT[4], uCutY[4], uCutN, uCutNow;
+  float cutT(float y){ float c = -1e9; for (int k = 0; k < 4; k++) { if (float(k) + .5 > uCutN) break; if (uCutT[k] <= uCutNow && y > uCutY[k]) c = max(c, uCutT[k]); } return c; }
+  float tOfYear(float y){ float c = cutT(y); for (int i = 0; i < ${Z.Y - 1}; i++) { if (float(i) + 1.5 > uYLn) break; if (uYLt[i + 1] <= c) continue; float y0 = uYLy[i], y1 = uYLy[i + 1];
       if (y1 >= y) return y0 >= y ? uYLt[i] : uYLt[i] + (uYLt[i + 1] - uYLt[i]) * (y - y0) / max(y1 - y0, 1e-4); }
-    return 1e6; }`;
+    return 1e6; }
+  float growOn(float gt, float y){ return gt > 0. && gt >= cutT(y) ? gt : tOfYear(y); }`;
   const HEAD = Z => /* glsl */`
   ${YL_GLSL(Z)}
   varying float vGrowT;
@@ -530,7 +536,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
     if (bld && vData.w < .5 && uGrowOn > .5 && yr > 0.) {
       int bd = bandOf(yr);
       if (bd >= 0) {
-        float on = uYLn > 1.5 ? (vGrowT > 0. ? vGrowT : tOfYear(yr - .5)) : uGT[bd] + vData.z * uGS[bd], e = uNow - on;
+        float on = uYLn > 1.5 ? growOn(vGrowT, yr - .5) : uGT[bd] + vData.z * uGS[bd], e = uNow - on;
         float a = smoothstep(0., .22, e), fl = e > 0. ? exp(-e / .16) : 0.;
         vec3 bc = uGrowMono > .5 ? mix(vec3(1., .74, .38) * 1.25, vec3(.9, .93, 1.), uGrowWarm > 0. ? smoothstep(.15, uGrowWarm, e) : 1.) : cBand[bd];   // mono: every building rises white (warm while it is new)
         c = mix(c, bc * uGrowDim, a) + bc * fl * 1.4 + vec3(.6) * fl;
@@ -673,7 +679,7 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
  { // rise: buildings grow from the plate as the year counter passes their first-seen year; mounds/props appear at their year; everything is up "today"
    float yr = aData.x; float ry = 1.;
    if (aData.w > -.5 && aData.w < .5) {
-     float by = yr > 0. ? (uYLn > 1.5 ? smoothstep(0., uGrowDur, uNow - (aGrowT > 0. ? aGrowT : tOfYear(yr - .5))) : smoothstep(yr - .5, yr + 2.5, uYear)) : smoothstep(1985., 1988., uYear);
+     float by = yr > 0. ? (uYLn > 1.5 ? smoothstep(0., uGrowDur, uNow - growOn(aGrowT, yr - .5)) : smoothstep(yr - .5, yr + 2.5, uYear)) : smoothstep(1985., 1988., uYear);
      float keep = uGhost;   // the latent city: today's footprints before they grow; a reset ring takes back what came after uResetY
      // rebuilt taller later: f0 of today's height until yA, today's height by yB (only while the modern growth is told)
      float hf = aGrowH.x < .999 ? mix(aGrowH.x, 1., smoothstep(aGrowH.y, aGrowH.z, uYear)) : 1.;
@@ -1092,6 +1098,32 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
       if (COLOUR) { m.layers.enable(1); m.userData.fxGlow = true; }   // (the colour film: the city's outline too, at EDGEK of the white's)
     }
     edges[id] = { u, set(a, c, draw = 1) { u.uA.value = a * (COLOUR ? EDGEK : 1); u.uDraw.value = draw; if (c) u.uCol.value.copy(c); for (const m of meshes) m.visible = a > .002; } };
+    return edges[id];
+  }
+  // a stage built along a path (compile: a front of mode path, docs/STAGING.md 5): a light line on the ground from where the build
+  // starts to where it has reached (set(a, col, k): k the share of the path), brightest at its head, the built stretch behind it
+  // dimmer; open or round a ring. Its own material: the outline's (addEdge) is unchanged
+  function addPath(id, pts, col, closed) {
+    const u = { uA: { value: 0 }, uCol: { value: lin(col) }, uW: { value: .0007 }, uWmax: { value: .006 }, uDraw: { value: 0 }, uLen: { value: 1 }, uTrail: { value: 400 * M.scale } };
+    const mat = new THREE.ShaderMaterial({ uniforms: u, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      vertexShader: `uniform float uW, uWmax; varying vec3 vN; varying vec3 vV; varying float vS;
+        void main(){ vec3 c = position - normal * .0001; float r = min(uWmax, uW * distance(cameraPosition, (modelMatrix * vec4(c, 1.)).xyz));
+          vec4 mv = modelViewMatrix * vec4(c + normal * r, 1.); vN = normalize(normalMatrix * normal); vV = -mv.xyz; vS = uv.x; gl_Position = projectionMatrix * mv; }`,
+      fragmentShader: `uniform float uA, uDraw, uLen, uTrail; uniform vec3 uCol; varying vec3 vN; varying vec3 vV; varying float vS;
+        void main(){ if (vS > uDraw + 1e-4) discard; float f = abs(dot(normalize(vN), normalize(vV))), back = (uDraw - vS) * uLen;
+          float head = uDraw < 1. ? exp(-pow(back / (.25 * uTrail), 2.)) : 0., trail = mix(.3, 1., exp(-back / uTrail));
+          gl_FragColor = vec4((uCol * (.25 + 1.3 * pow(f, 2.5)) * trail + vec3(1.) * pow(f, 10.) * .9 * trail + vec3(1.) * head * 1.8) * uA, 1.); }` });
+    const q = [];
+    for (let i = 0; i < pts.length - (closed ? 0 : 1); i++) {   // every ~10 m, on the ground
+      const [x0, z0] = pts[i], [x1, z1] = pts[(i + 1) % pts.length], n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, z1 - z0) / .001));
+      for (let k = 0; k < n; k++) { const x = x0 + (x1 - x0) * k / n, z = z0 + (z1 - z0) * k / n; q.push(new THREE.Vector3(x, ground(x, z) + .0005, z)); }
+    }
+    if (!closed) { const [x, z] = pts[pts.length - 1]; q.push(new THREE.Vector3(x, ground(x, z) + .0005, z)); }
+    if (q.length < 4) return null;
+    const curve = new THREE.CatmullRomCurve3(q, closed, 'centripetal'); u.uLen.value = curve.getLength();
+    const m = new THREE.Mesh(new THREE.TubeGeometry(curve, q.length, .0001, 6, closed), mat); m.frustumCulled = false; m.renderOrder = 4; m.visible = false; scene.add(m);
+    if (COLOUR) { m.layers.enable(1); m.userData.fxGlow = true; }
+    edges[id] = { u, set(a, c, draw = 1) { u.uA.value = a * (COLOUR ? EDGEK : 1); u.uDraw.value = draw; if (c) u.uCol.value.copy(c); m.visible = a > .002; } };
     return edges[id];
   }
   // the key light stands to the camera's front left, KEY_SIDE degrees round from it at KEY_EL above the plate, whichever way
@@ -1531,5 +1563,5 @@ export function makeStudio(W, H, M, PAL, opts = {}) {
   // fx land trees: trees in the land's woods and open ground in the white model too, planted as the miniature plants them, in a pale
   // sage that sits with the white city (fx.js treeField; the viewer's, engine/view.js)
   const fxTrees = () => treeField(scene, renderer, U, PW, PD, M.scale, { size: .8, keep: .25, ...(landPalette(FXL).trees || {}), dark: 1, cypress: .1, woods: woodsFn(FXL, EXG, M.scale, ground, FXR), ground, layer: 0, tone: 'film' });
-  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, deformMaterial, eraRiseGLSL, eraRy: (rank, w) => ERA_RY(Z, rank, w), marksGLSL, marksN: () => Z.E, colourLight: LIGHTK, colourGround: GROUNDC, fireGLSL: FIRE_GLSL, wThenGLSL: T ? WTHEN : null, context: () => ctxMesh, slots: HMAX, slots3: H3, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD, buildTodayFootprints: sidecar => buildTodayFootprints(M, sidecar, { early: EARLY, renew: RENEW, grow: GROWT }) };
+  return { fx: FX, fxSun: SUN, fxLanding, fxTrees, air, deformMaterial, eraRiseGLSL, eraRy: (rank, w) => ERA_RY(Z, rank, w), marksGLSL, marksN: () => Z.E, colourLight: LIGHTK, colourGround: GROUNDC, fireGLSL: FIRE_GLSL, wThenGLSL: T ? WTHEN : null, context: () => ctxMesh, slots: HMAX, slots3: H3, terrainEx: (M.terrain && M.terrain.exaggeration) || 3, gpu, renderer, scene, camera, post, U, liveSky, aimProjector, projFill, resize, addContext, setContext, setHide, setKeep, setHideCols, shareChannels, setBasins, setGrounds, groundsNow, addRoute, routes, addArrow, arrows, build, setRenew, addLines, lineGroups, addEdge, addPath, setGrowT, edges, addFire, fires, addProp, props, addEra, eras, followShadow, tally, setBeam, ground: (x, z) => ground(x, z), house, hemi, rim, DIAG, PW, PD, buildTodayFootprints: sidecar => buildTodayFootprints(M, sidecar, { early: EARLY, renew: RENEW, grow: GROWT }) };
 }

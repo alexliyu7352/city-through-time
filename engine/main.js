@@ -121,6 +121,9 @@ if (FILM.grow && FILM.grow.tfile && !FREE) S.setGrowT(await L.json(B + FILM.grow
 if (FILM.grow && FILM.grow.yl) {   // the modern year line: today's buildings rise when the counter first reaches their year
   FILM.grow.yl.forEach(([t, y], i) => { S.U.uYLt.value[i] = t; S.U.uYLy.value[i] = y; }); S.U.uYLn.value = FILM.grow.yl.length;
 }
+if (FILM.grow && FILM.grow.cuts) {   // the look backs (compile grow.cuts: when, and to which year): today's newer buildings go, and rise again with the counter
+  FILM.grow.cuts.forEach(([t, y], i) => { S.U.uCutT.value[i] = t; S.U.uCutY.value[i] = y; }); S.U.uCutN.value = FILM.grow.cuts.length;
+}
 const CITYMESH = S.build(await tex(B + (!FREE && FILM.waterThen ? FILM.waterThen.file : 'data/water.png')), await tex(B + 'data/layers1.png'), await tex(B + 'data/layers2.png'), await tex(B + 'data/layers3.png'), decalTex, photoTex, terrain);
 // the land beyond the plate (terrain.context): relief for a mountain or river off the plate, shown in the nodes that ask for it
 if (FILM.context && !QS.has('flat') && !FREE) {
@@ -164,6 +167,7 @@ for (const e of FILM.eras || []) {   // each standing city's edge: its distance 
   if (e.hide != null && e.edgeRect && !e.occupy) { S.U.uEdgeRect.value[e.hide].set(...e.edgeRect); S.U.uEdgeD.value[e.hide] = e.edgeD; }   // (a shared channel: set by the city it holds)
   const sc = (e.fronts || []).find(f => f.mode === 'scan');   // a small place: its outline draws itself from where the scan starts
   if (e.boundary && e.boundary.length) S.addEdge(e.id, e.boundary, e.col, sc ? sc.dir : null);
+  (e.fronts || []).forEach((q, k) => { if (q.mode === 'path') S.addPath(`${e.id}:path${k}`, q.pts, e.col, q.closed); });   // (a stage built along a path: its light walks it)
 }
 // a period city takes the colour of the node being told: its own colour in its own node, a paler node colour in a later one
 const WHITE = new THREE.Color(1, 1, 1), ownNode = e => (FILM.nodes || []).find(n => n.id === e.id);
@@ -174,13 +178,13 @@ const eraInk = (e, n) => later(e, n) ? n.ink || 0 : (ownNode(e) || {}).ink || 0;
 const DIMK = FILM.dim && FILM.dim.length ? track(FILM.dim) : null;
 // how far a period city stands at t: as it rises, or with stages as its first stage rises (compile up), so a part built
 // later does not keep today's city bright and the city unlit until it is up; it goes with its contracting ring
-const upAt = (e, t) => { const FR = e.fallR; if (FR != null && t > FR.gone) return 0;
+const upAt = (e, t, tf = t) => { const FR = e.fallR; if (FR != null && tf > FR.gone) return 0;   // (tf: the clock of its taking back, clk)
   const [a, b] = e.up || [e.on, e.on + e.span + e.grow];
-  return ss(seg(t, a, b)) * (FR ? 1 - ss(seg(t, FR.hit, FR.gone)) : 1); };
+  return ss(seg(t, a, b)) * (FR ? 1 - ss(seg(tf, FR.hit, FR.gone)) : 1); };
 // a city with today_from: from its node, what of it still stands is part of today's city, which no longer steps back for it (the same 3 s
 // as its keep map: uHideKeep)
 const nowK = (e, t) => e.todayFrom != null ? ss(seg(t, e.todayFrom, e.todayFrom + 3)) : 0;
-const eraUpAt = t => Math.max(0, ...(FILM.eras || []).map(e => upAt(e, t) * (1 - nowK(e, t))));
+const eraUpAt = t => Math.max(0, ...(FILM.eras || []).map(e => upAt(e, clk(e.on, t), clk(e.fallR ? e.fallR.curve[0][0] : e.on, t)) * (1 - nowK(e, clk(e.todayFrom, t)))));
 const dimAt = (t, up = eraUpAt(t)) => Math.max((LOOK.dim ?? .8) * up, DIMK ? DIMK(t)[0] : 0);
 const DIM0 = new Map(); const dimBefore = n => { if (!DIM0.has(n.id)) DIM0.set(n.id, dimAt(ringT0(n) - .01)); return DIM0.get(n.id); };
 // a node's colour ring: radius at time t (the plate's far corner from its origin is reached after wave_dur seconds)
@@ -188,6 +192,12 @@ const DIM0 = new Map(); const dimBefore = n => { if (!DIM0.has(n.id)) DIM0.set(n
 const curveAt = (c, t) => { if (!c || !c.length) return -1; if (t <= c[0][0]) return c[0][1]; const n = c.length; if (t >= c[n - 1][0]) return c[n - 1][1];
   let lo = 0, hi = n - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (c[m][0] <= t) lo = m; else hi = m; } return c[lo][1] + (c[hi][1] - c[lo][1]) * (t - c[lo][0]) / ((c[hi][0] - c[lo][0]) || 1e-9); };
 const ringR = (n, t) => n.ring && t < n.ring.curve[n.ring.curve.length - 1][0] ? curveAt(n.ring.curve, t) : 99;
+// a look back (film.backs, compile: a node with look_back; docs/STAGING.md "Basic grammar"): from its start the counter shows an
+// earlier year, and each change the film made before it (s0, its own start, before the look back's) plays on the clock of the
+// year shown: as it stood the last time the counter was at that year, until the counter is back at the year it left. What the
+// look back and the nodes after it tell keeps the film's own time. With no look back, clk(s0, t) is t
+const BACKS = FILM.backs || [];
+const clk = (s0, t) => { for (let j = BACKS.length - 1; j >= 0; j--) { const b = BACKS[j]; if (t >= b.t && t < b.end && s0 < b.t) return clk(s0, curveAt(b.keys, t)); } return t; };
 S.setHide(...await Promise.all(['hide', 'hide2', 'edge', 'edge2', ...(FILM.eraSlots > 8 ? ['hide3', 'edge3'] : [])].map(f => tex(B + `data/${f}.png`))));
 if (FILM.keepMaps) S.setKeep(...await Promise.all(['keep', 'keep2', ...(FILM.eraSlots > 8 ? ['keep3'] : [])].map(f => tex(B + `data/${f}.png`))));   // (a city with today_from: what of it still stands)   // (hide3, edge3: a film with more than 8 cities standing at once)
 // cities apart in time share a channel (compile: era channels): a shared channel holds, at any moment, the city in use then
@@ -360,7 +370,7 @@ function setLight(t) {
   const strike = seg(t, LT.lamp, LT.lamp + .12), flick = t > LT.lamp && t < LT.lamp + .25 ? .75 + .25 * Math.sin((t - LT.lamp) * 90) : 1;
   U.uProj.value = strike * flick * (1 - darkK(t)) * (1 - ss(seg(t, LT.lights, LT.lights + .8)));
   S.setBeam(U.uProj.value, ((FILM.epochs || []).some(e => e.offStyle === 'burn' && t >= e.off && t < e.off + (e.offDur ?? 1.2) + 1.5) || (FILM.eras || []).some(e => e.sinkStyle === 'burn' && t >= e.off - e.burn * .6 && t < e.off + e.sink)) ? 1 : 0, t);
-  U.uNow.value = t; U.uWave.value = QS.has('clean') ? 0 : t; U.uYear.value = yearAt(t);   // (waves, glints, lit windows: still in the living reference, so it does not change with when the moment falls)
+  U.uNow.value = t; U.uCutNow.value = t; U.uWave.value = QS.has('clean') ? 0 : t; U.uYear.value = yearAt(t);   // (waves, glints, lit windows: still in the living reference, so it does not change with when the moment falls)
   U.uBase.value = ss(seg(t, LT.lamp, LT.lamp + 1.2));
   // the century rings around the old town: one ring per century of the counter, drawn by the projector
   if (FILM.rings_motif) { const R = FILM.rings_motif; U.uRingC.value.set(R.centre[0], R.centre[1]); U.uRingS.value = R.spacing; U.uRingN.value = Math.max(0, (yearAt(t) - R.from) / 100) * ss(seg(t, LT.lamp + .5, LT.lamp + 2)) * (1 - ss(seg(t, LT.lights - .5, LT.lights + .5))); U.uRingA.value = R.gain ?? .5; }
@@ -369,65 +379,68 @@ function setLight(t) {
   U.uPulse.value = pulse;
 }
 // an epoch's alpha over time: fade in at `on`, out at `off` (burn = a flicker then dark)
-function epochAlpha(t, e) {
+function epochAlpha(t, e, t2 = t) {   // (t2: the clock of its going, a look back's: clk)
   let a = ss(seg(t, e.on, e.on + (e.fade ?? 1.2)));
   if (e.off != null) {
     if (e.offStyle === 'burn') {
-      const k = seg(t, e.off, e.off + (e.offDur ?? 1.2));
+      const k = seg(t2, e.off, e.off + (e.offDur ?? 1.2));
       const fl = k > 0 && k < 1 ? .55 + .45 * Math.abs(Math.sin(k * 41 + Math.sin(k * 17) * 3)) : 1;
       a *= (1 - ei(k)) * fl;
-    } else a *= 1 - ss(seg(t, e.off, e.off + (e.offDur ?? 1.0)));
+    } else a *= 1 - ss(seg(t2, e.off, e.off + (e.offDur ?? 1.0)));
   }
   return a;
 }
+const alphaAt = (t, e) => epochAlpha(clk(e.on, t), e, clk(e.off ?? e.on, t));   // (an area, a decal, a prop: each on its own clock)
 // a period city's own shape at a moment of the film: each building's rise (its stage), its pools, the parts it has lost
 // (setLayers; the viewer, ?view, at the moment it shows the city)
-function eraShape(e, t) {
-  const E = S.eras[e.id], SD = e.fallDur || 1.4, FR = e.fallR;
-  E.u.uEraT.value = t - e.on; E.u.uEraSpan.value = e.span; E.u.uEraGrow.value = e.grow;
+function eraShape(e, t, k = () => t) {   // (k: an event's clock from its start, setLayers' clk; the viewer's: t)
+  const E = S.eras[e.id], SD = e.fallDur || 1.4, FR = e.fallR, tR = k(e.on), tF = FR ? k(FR.curve[0][0]) : tR, tQ = q => k(q.curve[0][0]);
+  E.u.uEraT.value = tR - e.on; E.u.uEraSpan.value = e.span; E.u.uEraGrow.value = e.grow;
   for (const b of e.basins || []) { const st = e.on + b.rank * e.span, q = b.lost ? e.losses[b.lost - 1] : null;
-    U.uBasinA.value[b.k] = ss(seg(t, st, st + e.grow)) * (1 - ringK(b.c, FR, t, SD)) * (1 - (q && !b.draped ? ringK(b.c, q, t, SD) : 0));
+    U.uBasinA.value[b.k] = ss(seg(tR, st, st + e.grow)) * (1 - ringK(b.c, FR, tF, SD)) * (1 - (q && !b.draped ? ringK(b.c, q, tQ(q), SD) : 0));
     if (b.draped && q) {   // a draped pool is the plate: its water goes point by point as its loss's ring passes (studio wmask)
-      const R = curveAt(q.curve, t), R1 = curveAt(q.curve, t - SD);
+      const R = curveAt(q.curve, tQ(q)), R1 = curveAt(q.curve, tQ(q) - SD);
       U.uBasinL.value[b.ring].set(q.o[0], q.o[1], R, q.mode === 'in' ? Math.max(R1, R + 1e-5) : Math.min(R1, R - 1e-5)); } }   // (which side of R tells the ring's way)
   (e.losses || []).forEach((q, j) => {   // a part of the city lost while the rest stands (compile lose:): its own ring, its own fire
+    const t = tQ(q);
     E.u.uLossR.value[j] = curveAt(q.curve, t); E.u.uLossW.value[j] = curveAt(q.curve, t - SD); E.u.uLossIn.value[j] = q.mode === 'in' ? 1 : 0;
     E.u.uLossO.value[j].set(q.o[0], q.o[1]); E.u.uLossBurn.value[j] = q.burn && t < q.gone ? ss(seg(t, q.burn[0], q.burn[1])) : 0;
     const lf = S.fires[`${e.id}:${j}`]; if (lf) lf.set(E.u.uLossBurn.value[j] * U.uProj.value, t, q.mode === 'in' ? E.u.uLossR.value[j] : 1e3, q.o, COLOUR && q.burn ? [q.burn[0], Math.max(2, q.burn[1] - q.burn[0])] : null); });
 }
 function setLayers(t) {
+  const t_ = t, ck = s0 => clk(s0, t_);   // (an event's clock from its start: a look back's, else t)
   { let sk = 0, sp = null;   // spot (film.spots): the light falls on one subject, the rest of the room goes dark
     for (const q of FILM.spots || []) { const a = ss(seg(t, q.t0, q.t0 + q.fade)) * (1 - ss(seg(t, q.t1 - q.fade, q.t1))); if (a > sk) { sk = a; sp = q; } }
     U.uSpotK.value = sp ? lerp(1, sp.k, sk) : 1; U.uSpotB.value = sp ? lerp(1, sp.b, sk) : 1; if (sp) { U.uSpotC.value.set(sp.c[0], sp.c[1]); U.uSpotR.value = sp.r; } }
   if (FILM.waterThen) { let v = null;   // the water as it was (compile water_then): a state, or a change running down the river from one to the next
-    for (const e of FILM.waterThen.events) { if (t < e.t0 || t > (e.back1 ?? e.t1)) continue;
+    for (const e of FILM.waterThen.events) { const t = clk(e.t0, t_); if (t < e.t0 || t > (e.back1 ?? e.t1)) continue;   // (each change on its own clock: a look back)
       const s = e.back1 == null || t < e.t1 ? seg(t, e.t0, e.t1) : 1 - seg(t, e.back0, e.back1);   // (a glimpse: out, held, back)
       v = [e.a, e.b, s, 1]; U.uWTF.value.set(e.dir[0], e.dir[1], e.f[0], e.f[1]); break; }
-    if (!v) { const st = FILM.waterThen.states.find(w => t >= w.on && t < w.off); v = [st ? st.c + 1 : 0, 0, 0, 0]; }
+    if (!v) { const st = FILM.waterThen.states.find(w => clk(w.on, t) >= w.on && clk(w.off, t) < w.off); v = [st ? st.c + 1 : 0, 0, 0, 0]; }
     U.uWT.value.set(...v); U.uWTE.value = FILM.waterThen.edge; }
   for (let i = 0; i < U.uEpA.value.length; i++) { U.uEpA.value[i] = 0; U.uEpY0.value[i] = 1e9; U.uEpY1.value[i] = -1e9; U.uEpB.value[i] = 0; U.uEpR.value[i] = 9; U.uEpW.value[i] = 1; }
   for (const e of FILM.epochs || []) {   // (masks that share a channel never overlap in time: the one showing sets it)
     const fl = (e.flash || []).reduce((m, tf) => Math.max(m, Math.exp(-(((t - tf) / .45) ** 2))), 0);   // an area flares as it is named
-    const a = epochAlpha(t, e) * (e.gain ?? 1) * (e.dimAt != null && t > e.dimAt ? lerp(1, e.dimTo ?? .5, ss(seg(t, e.dimAt, e.dimAt + .8))) : 1) * (1 + 1.4 * fl);
+    const a = alphaAt(t, e) * (e.gain ?? 1) * (e.dimAt != null && ck(e.dimAt) > e.dimAt ? lerp(1, e.dimTo ?? .5, ss(seg(ck(e.dimAt), e.dimAt, e.dimAt + .8))) : 1) * (1 + 1.4 * fl);
     if (a <= 0 && U.uEpA.value[e.i] > 0) continue;
     U.uEpA.value[e.i] = a;
     if (e.yr) { U.uEpY0.value[e.i] = e.yr[0]; U.uEpY1.value[e.i] = e.yr[1]; }
     U.uEpB.value[e.i] = e.bld ? 1 : 0;
-    if (e.centre) { U.uEpC.value[e.i].set(e.centre[0], e.centre[1]); U.uEpR.value[e.i] = lerp(0, e.reach || 1, eo(seg(t, e.on, e.on + (e.fade ?? 1.2) * 1.6))); }
+    if (e.centre) { U.uEpC.value[e.i].set(e.centre[0], e.centre[1]); U.uEpR.value[e.i] = lerp(0, e.reach || 1, eo(seg(ck(e.on), e.on, e.on + (e.fade ?? 1.2) * 1.6))); }
     U.uEpRim.value[e.i] = e.rim ?? 1; U.uEpW.value[e.i] = e.wash ?? 1;
     if (e.col) U.cEp.value[e.i].set(e.col);
   }
-  for (const d of FILM.decals || []) { U.uDA.value[d.i] = epochAlpha(t, d) * (d.gain ?? 1); U.uDG.value[d.i] = d.glow ?? 1; }
+  for (const d of FILM.decals || []) { U.uDA.value[d.i] = alphaAt(t, d) * (d.gain ?? 1); U.uDG.value[d.i] = d.glow ?? 1; }
   let pdim = 1;
-  for (const d of FILM.decals || []) if (d.photo_dim) pdim *= 1 - d.photo_dim * epochAlpha(t, d);
+  for (const d of FILM.decals || []) if (d.photo_dim) pdim *= 1 - d.photo_dim * alphaAt(t, d);
   const roomBack = ss(seg(t, LT.lights - .2, LT.lights + 1.2));
   const SAT = FILM.satellite;
   let satOn = 0;
   if (SAT && SAT.sweep) {   // a line crosses the plate west to east over the fade time; the photo replaces the model behind it; a second line gives the model back
-    const k = seg(t, SAT.on, SAT.on + (SAT.fade ?? 4)), k2 = SAT.back != null ? seg(t, SAT.back, SAT.back + (SAT.backFade ?? 4)) : 0;
+    const k = seg(ck(SAT.on), SAT.on, SAT.on + (SAT.fade ?? 4)), k2 = SAT.back != null ? seg(ck(SAT.back), SAT.back, SAT.back + (SAT.backFade ?? 4)) : 0;
     satOn = k > 0 && k2 < 1 ? 1 : 0;
     U.uPhotoA.value = satOn * (1 - roomBack); U.uPhotoSweep.value = k >= 1 ? 2 : eo(k) * 1.02 - .01; U.uPhotoSweep0.value = k2 <= 0 ? -1 : eo(k2) * 1.02 - .01;
-  } else { satOn = SAT ? epochAlpha(t, SAT) : 0; U.uPhotoA.value = satOn * (1 - roomBack); U.uPhotoSweep.value = 2; U.uPhotoSweep0.value = -1; }
+  } else { satOn = SAT ? alphaAt(t, SAT) : 0; U.uPhotoA.value = satOn * (1 - roomBack); U.uPhotoSweep.value = 2; U.uPhotoSweep0.value = -1; }
   U.uPhotoK.value = (SAT?.gain ?? 1) * pdim;
   for (const L of FILM.lines || []) if (lineA[L.id]) {   // (an area's outline flares as it is named)
     const fl = (L.flash || []).reduce((m, tf) => Math.max(m, Math.exp(-(((t - tf) / .45) ** 2))), 0);
@@ -457,7 +470,7 @@ function setLayers(t) {
   U.uGhost.value = R.ghost ?? .05;   // the floor it sinks to, there from the start (ghost 1: it stays up; a floor that came after the sink read as the city falling and growing again)
   for (const p of FILM.props || []) {
     const mesh = S.props[p.id]; if (!mesh) continue;
-    const a = epochAlpha(t, p); mesh.visible = a > 0.002; mesh.scale.y = Math.max(.002, a);
+    const a = alphaAt(t, p); mesh.visible = a > 0.002; mesh.scale.y = Math.max(.002, a);
   }
   { // today's white city takes the colour of the age being told: the new colour spreads as a ring of light from the node's
     // origin (its beam's landing point, at the landing, with a flash and a shock ring) on a curve paced on screen (compile)
@@ -492,29 +505,30 @@ function setLayers(t) {
   for (const e of SHARE) if (e.occupy.some(([a, b]) => t >= a && t < b)) takeChannel(e);   // the city in use takes its shared channel
   for (const e of FILM.eras || []) {
     const E = S.eras[e.id]; if (!E) continue;
-    const tE = t - e.on, full = e.span + e.grow, SD = e.fallDur || 1.4, FR = e.fallR, fin = FR && FR.mode === 'in';
+    const FR = e.fallR, tR = ck(e.on), tF = FR ? ck(FR.curve[0][0]) : tR, tB = e.off != null ? ck(e.off - (e.burn || 0)) : tR;   // (its rise, its taking back, its fire: each on its own clock, clk)
+    const tE = tR - e.on, full = e.span + e.grow, SD = e.fallDur || 1.4, fin = FR && FR.mode === 'in';
     const fo = FR ? FR.o : [0, 0];
-    const fr = FR ? curveAt(FR.curve, t) : (fin ? 1e3 : -1), fr1 = FR ? curveAt(FR.curve, t - SD) : fr;
-    const gone = FR != null && t > FR.gone;
-    E.mesh.visible = tE > -.01 && (!gone || (COLOUR && t < RUINS_TO)); E.mesh.userData.gone = gone;   // (the colour film: its foundations stay, engine/mini.js filmMaterial)
-    eraShape(e, t);
+    const fr = FR ? curveAt(FR.curve, tF) : (fin ? 1e3 : -1), fr1 = FR ? curveAt(FR.curve, tF - SD) : fr;
+    const gone = FR != null && tF > FR.gone;
+    E.mesh.visible = tE > -.01 && (!gone || (COLOUR && tF < RUINS_TO)); E.mesh.userData.gone = gone;   // (the colour film: its foundations stay, engine/mini.js filmMaterial)
+    eraShape(e, t, ck);
     E.u.uEraFallR.value = fr; E.u.uEraFallIn.value = fin ? 1 : 0; E.u.uEraFallW.value = fr1; E.u.uEraO.value.set(fo[0], fo[1]);
     E.u.uEraA.value = Math.max(e.tint, later(e, nodes_[ci]) ? (nodes_[ci].era_tint ?? nodes_[ci].tint) : 0) * (1 - .5 * today);   // a later node recolours at its own strength
-    const burn = e.sinkStyle === 'burn' && e.off != null ? ss(seg(t, e.off - e.burn, e.off - e.burn * .55)) : 0;   // the city catches fire, then falls
-    const up = upAt(e, t);
+    const burn = e.sinkStyle === 'burn' && e.off != null ? ss(seg(tB, e.off - e.burn, e.off - e.burn * .55)) : 0;   // the city catches fire, then falls
+    const up = upAt(e, tR, tF), tN = ck(e.todayFrom);
     E.u.uEraBurn.value = burn; E.u.uEraGlow.value = up * (LOOK.glow ?? 1);
-    eraUp = Math.max(eraUp, up * (1 - nowK(e, t)));
+    eraUp = Math.max(eraUp, up * (1 - nowK(e, tN)));
     E.u.uEraCol.value.copy(eraTint(e, nodes_[ci])); E.u.uEraCol0.value.copy(ci > 0 ? eraTint(e, nodes_[ci - 1]) : E.base);
     E.u.uEraInk.value = eraInk(e, nodes_[ci]); E.u.uEraInk0.value = ci > 0 ? eraInk(e, nodes_[ci - 1]) : eraInk(e, null);
     const offStart = !FR ? Infinity : e.sinkStyle === 'burn' ? e.off - e.burn : FR.hit;
     const scf = (e.fronts || []).find(f => f.mode === 'scan'), sc0 = scf ? scf.curve[0][0] : 0;
-    const draw = scf ? eo(seg(t, sc0, sc0 + Math.max(1.4, .5 * (scf.curve[1][0] - sc0)))) : 1;   // a small place: the outline draws itself as it is scanned
+    const draw = scf ? eo(seg(tR, sc0, sc0 + Math.max(1.4, .5 * (scf.curve[1][0] - sc0)))) : 1;   // a small place: the outline draws itself as it is scanned
     // only the newest city keeps its line: an older one's goes out as a newer city's lights (docs/STAGING.md 2; a late node lit
     // eight lines in five colours round the Vatican while one boundary was told). A later node that tells of it draws it again (ghost)
     let newer = Infinity;
     for (const q of FILM.eras || []) if (q.on > e.on) { const f = (q.fronts || []).find(r => r.mode === 'scan'); newer = Math.min(newer, f ? f.curve[0][0] : q.on + q.span + q.grow); }
-    const edgeA = gone ? 0 : (scf ? ss(seg(t, sc0, sc0 + .3)) : ss(seg(t, e.on + full, e.on + full + 1.2)) * (1 - U.uNodeFront.value)) * (1 - ss(seg(t, offStart - .4, offStart))) * (1 - satOn)
-      * (newer < Infinity ? 1 - ss(seg(t, newer, newer + 1.2)) : 1);
+    const edgeA = gone ? 0 : (scf ? ss(seg(tR, sc0, sc0 + .3)) : ss(seg(tR, e.on + full, e.on + full + 1.2)) * (1 - U.uNodeFront.value)) * (1 - ss(seg(e.sinkStyle === 'burn' ? tB : tF, offStart - .4, offStart))) * (1 - satOn)
+      * (newer < Infinity ? 1 - ss(seg(ck(newer), newer, newer + 1.2)) : 1);
     // a city long gone, drawn again as its outline (and the light along it on the ground) while a later node tells what stands
     // on it now (node `ghost`)
     let gA = 0, gD = 1;
@@ -522,19 +536,21 @@ function setLayers(t) {
     if (e.hide != null && inChannel(e)) {
       const h = e.hide;
       U.uHideT.value[h] = tE < -.01 || gone ? -1 : tE / e.span; U.uHideG.value[h] = e.grow / e.span;
-      U.uHideKeep.value[h] = nowK(e, t);   // (today_from: today's city comes back round what still stands)
+      U.uHideKeep.value[h] = nowK(e, tN);   // (today_from: today's city comes back round what still stands)
       U.uHideO.value[h].set(fo[0], fo[1]); U.uHideFR.value[h] = fr; U.uHideFI.value[h] = fin ? 1 : 0; U.uHideFW.value[h] = fr1;
-      U.uHideFA.value[h] = FR && fin && t >= FR.hit && !gone ? ss(seg(t, FR.hit, FR.hit + .4)) * (1 - ss(seg(t, FR.gone - .5, FR.gone))) : 0;
+      U.uHideFA.value[h] = FR && fin && tF >= FR.hit && !gone ? ss(seg(tF, FR.hit, FR.hit + .4)) * (1 - ss(seg(tF, FR.gone - .5, FR.gone))) : 0;
       U.uHideCol.value[h].copy(gA > edgeA ? S.eras[e.id].base : E.u.uEraCol.value);
       U.uEdgeA.value[h] = Math.max(edgeA * ss(seg(draw, .85, 1)), gA * .9 * ss(seg(gD, .6, 1)));   // the light on the ground once the line has closed
       let F_ = null, fa = 0;   // the stage growing now: its front, faded in and out
-      for (const q of e.fronts || []) { const a = ss(seg(t, q.a[0], q.a[0] + .4)) * (1 - ss(seg(t, q.a[1], q.a[1] + .4))); if (a > fa) { fa = a; F_ = q; } }
+      for (const q of e.fronts || []) { const a = ss(seg(tR, q.a[0], q.a[0] + .4)) * (1 - ss(seg(tR, q.a[1], q.a[1] + .4))); if (a > fa) { fa = a; F_ = q; } }
       U.uRiseA.value[h] = gone ? 0 : fa;
-      if (F_) { U.uRiseR.value[h] = curveAt(F_.curve, t); U.uRiseO.value[h].set(F_.o[0], F_.o[1]); U.uRiseDir.value[h].set(...(F_.dir || [0, 0]));
+      if (F_) { U.uRiseR.value[h] = curveAt(F_.curve, tR); U.uRiseO.value[h].set(F_.o[0], F_.o[1]); U.uRiseDir.value[h].set(...(F_.dir || [0, 0]));
         U.uRiseMode.value[h] = F_.mode === 'ring' ? 0 : F_.mode === 'line' ? 1 : 2; U.uRiseW.value[h] = F_.w || 0; }
     }
     if (S.edges[e.id]) S.edges[e.id].set(Math.max(edgeA, gA * .8) * (LOOK.line ?? 1) * (1 - (LV ? LV.k : 0)) * (QUIET ? 0 : 1), gA > edgeA ? S.eras[e.id].base : E.u.uEraCol.value, gA > edgeA ? gD : draw);
-    if (S.fires[e.id]) S.fires[e.id].set(burn * (gone ? 0 : 1) * U.uProj.value, t, fin ? fr : 1e3, fo, COLOUR ? [e.off - e.burn, e.burn * 1.2] : null);   // (the colour film: the fire catches over its burn, spreading)
+    (e.fronts || []).forEach((q, k) => { const P_ = q.mode === 'path' && S.edges[`${e.id}:path${k}`]; if (!P_) return;   // a build along a path: its front, walking it
+      P_.set(ss(seg(tR, q.a[0], q.a[0] + .4)) * (1 - ss(seg(tR, q.a[1], q.a[1] + .4))) * (gone ? 0 : 1) * (LOOK.line ?? 1) * (1 - (LV ? LV.k : 0)) * (QUIET ? 0 : 1), E.u.uEraCol.value, curveAt(q.curve, tR)); });
+    if (S.fires[e.id]) S.fires[e.id].set(burn * (gone ? 0 : 1) * U.uProj.value, tB, fin ? fr : 1e3, fo, COLOUR ? [e.off - e.burn, e.burn * 1.2] : null);   // (the colour film: the fire catches over its burn, spreading)
   }
   // today's city steps back while a period city is told; the change travels with the node's ring: outside it, the level from
   // just before the ring started (docs/STAGING.md 1: a ring shows what changes inside it)
@@ -561,6 +577,9 @@ const hgtFront = t => FILM.height ? U.uHgtF.value : 0;
 
 // ------------------------------------------------------------------ overlay
 const cueAt = t => (FILM.cues || []).find(c => t >= c.t0 && t < c.t1);
+// the counter's look-back mark (film.backs): while the counter shows a year earlier than the one the film had reached, until it is
+// back there, in the film's languages (compile ui.back); its strength, 0 to 1
+const backMark = t => { for (const b of BACKS) if (t >= b.t - .05 && t < b.end) return ss(seg(t, b.t - .05, b.t + .5)) * (1 - ss(seg(t, b.end - .6, b.end))); return 0; };
 function drawOverlay(t) {
   OV.begin();
   const { g } = OV;
@@ -609,7 +628,7 @@ function drawOverlay(t) {
   if (FILM.bar && !LEAN) {
     const node = (FILM.nodes || []).find(nd => t >= nd.t0 && t < nd.t1) || null;
     const ba = Math.min(ss(seg(t, LT.lamp + .4, LT.lamp + 1.4)), 1 - ss(seg(t, LT.lights - .2, LT.lights + .6)));
-    OV.timelineBar(t, FILM.bar, fmtYear(yearAt(t)), node ? node.label : '', ba);
+    OV.timelineBar(t, FILM.bar, fmtYear(yearAt(t)), node ? node.label : '', ba, BACKS.length ? [FILM.ui.back, backMark(t)] : null);
   }
 
   for (const sc of FILM.sections || []) {
@@ -627,7 +646,7 @@ function drawOverlay(t) {
   for (const r of FILM.readouts || []) {
     const o = { ...r };
     if (!FILM.bar) {}
-    if (r.big && typeof r.big === 'object' && r.big.year) { o.big = fmtYear(yearAt(t)); o.live = true; o.bigPx = 112; }
+    if (r.big && typeof r.big === 'object' && r.big.year) { o.big = fmtYear(yearAt(t)); o.live = true; o.bigPx = 112; if (BACKS.length) o.back = [FILM.ui.back, backMark(t)]; }
     if (LEAN) { o.label = null; o.note = null; o.notes = null; }   // (the lean overlay: the chapter, its name and the year)
     if (r.legendBands) o.legend = FILM.bands.map((b, i) => ({ col: FILM.palette.bands[i], text: b.label, text2: `${b.n.toLocaleString('en-US')} ${r.legendBands.unit || ''}`, t0: (FILM.grow.bands.find(q => q.band === i) || {}).t }));
     OV.readout(t, o);
@@ -708,9 +727,21 @@ window.EV = EV;
 // frame the 3D scene is not drawn. Stills, scrubbing and the offline render seek every frame exactly (deterministic).
 let PLAYING = false;
 const fullCover = t => (FILM.footage || []).some(f => (f.mode || 'full') === 'full' && t >= f.on + f.fin && t <= f.on + f.dur - f.fout);
-const stateAt = t => { const s = sceneAt(t); LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); S.groundsNow(); setLiving(t); };
+const stateAt = (t, s = sceneAt(t)) => { LV = liveAt(t); setCamera(t); setLight(s); setLayers(s); S.groundsNow(); setLiving(t); };
 const overlayAt = t => { if (!QS.has('clean') && !FREE) drawOverlay(t); else OV.begin(); };   // clean: the model alone (tools/living.py's reference)
-const renderSync = t => { stateAt(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } overlayAt(t); };
+// a dissolve (film.dissolves, compile: where a look back changes what the city shows at once): for its seconds the picture is the
+// city as it stood just before (the scene's clock held there, the camera and the words going on) fading into the city as it is
+// now, two pictures drawn each frame and laid one over the other, so no building sinks or vanishes in view. Every frame is a
+// function of t alone (a render's workers, a still, the player's seek)
+const DISS = FILM.dissolves || [];
+const dissolveAt = t => { for (const [a, d] of DISS) if (t >= a && t < a + d) return { s: sceneAt(a) - 1e-3, k: ss(seg(t, a, a + d)) }; return null; };
+const DIS = DISS.length ? (() => { const gl = renderer.domElement, c = document.createElement('canvas'), g2 = c.getContext('2d');
+  c.style.cssText = 'position:absolute;left:0;top:0;pointer-events:none;display:none'; gl.after(c);
+  return { hold() { if (c.width !== gl.width || c.height !== gl.height) { c.width = gl.width; c.height = gl.height; } c.style.width = gl.style.width; c.style.height = gl.style.height; g2.drawImage(gl, 0, 0); },
+    show(a) { c.style.display = a > .002 ? 'block' : 'none'; c.style.opacity = String(a); } }; })() : null;
+const renderSync = t => { const D = DIS && !(PLAY && PLAYING && fullCover(t)) ? dissolveAt(t) : null;
+  if (D) { stateAt(t, D.s); renderer.shadowMap.needsUpdate = true; post.composer.render(); DIS.hold(); }
+  stateAt(t); if (!(PLAY && PLAYING && fullCover(t))) { renderer.shadowMap.needsUpdate = true; post.composer.render(); } if (DIS) DIS.show(D ? 1 - D.k : 0); overlayAt(t); };
 // the colour film (film.look mini): the same state, drawn by the look (engine/mini.js film); each period city's detail is made the
 // first time it shows (its records read again, then let go: a film's period cities all kept would be the most of its memory)
 const ERAJ = {}, eraJ = id => ERAJ[id] ||= fetch(B + FILM.eras.find(e => e.id === id).file).then(r => r.json()), eraOf = id => FILM.eras.find(e => e.id === id) || {};
@@ -737,10 +768,10 @@ const BACKDROP_FROM = (FILM.look && FILM.look.backdrop_from) ?? 1800;   // (film
 const RUINS_TO = Math.min(FILM.grow ? FILM.grow.on : Infinity, ...(FILM.yearline || []).filter(([, y]) => y >= BACKDROP_FROM).map(([t]) => t).slice(0, 1)) + 1;
 function ruinsAt(t) {
   const ch = {}; for (const e of FILM.eras || []) if (e.hide != null && inChannel(e)) ch[e.hide] = e;
-  for (const [h, q] of Object.entries(ch)) MINI.ruinT.value[h] = (t - q.on) / q.span;
+  for (const [h, q] of Object.entries(ch)) MINI.ruinT.value[h] = (clk(q.on, t) - q.on) / q.span;
   for (const e of FILM.eras || []) { const u = S.eras[e.id] && S.eras[e.id].u; if (!u || !u.uRuinLater) continue;
     for (let h = 0; h < u.uRuinLater.value.length; h++) u.uRuinLater.value[h] = ch[h] && ch[h].on > e.on ? 1 : 0;
-    (e.losses || []).forEach((q, j) => { u.uLossBurnt.value[j] = q.burn && t >= q.burn[0] ? 1 : 0; }); }
+    (e.losses || []).forEach((q, j) => { u.uLossBurnt.value[j] = q.burn && clk(q.curve[0][0], t) >= q.burn[0] ? 1 : 0; }); }
 }
 // the colour look's sun for this moment (engine/mini.js todayLight sunLeft): a node's own `sun` (city.yaml, a compass bearing in
 // degrees, the camera's az convention: where the sun stands seen from the target), else the bearing of the node's camera as it
@@ -748,7 +779,9 @@ function ruinsAt(t) {
 // the shadows; a still's fixed camera (&cam=) its own
 const SUN_AT = t => { if (CAMQ) return { az: CAMQ[3], own: false }; const n = (FILM.nodes || []).find(n_ => t >= n_.t0 && t < n_.t1);
   return n && n.sun != null ? { az: n.sun, own: true } : { az: CAM(n ? n.t0 : 0)[3], own: false }; };
-const renderColour = async t => { stateAt(t); ruinsAt(sceneAt(t)); if (!(PLAY && PLAYING && fullCover(t))) await MINI.render({ target: tgt, d: camDist, sharp: LV ? LV.k : 0, sunAz: SUN_AT(t) }); overlayAt(t); };
+const renderColour = async t => { const D = DIS && !(PLAY && PLAYING && fullCover(t)) ? dissolveAt(t) : null;
+  if (D) { stateAt(t, D.s); ruinsAt(D.s); await MINI.render({ target: tgt, d: camDist, sharp: LV ? LV.k : 0, sunAz: SUN_AT(t) }); DIS.hold(); }
+  stateAt(t); ruinsAt(sceneAt(t)); if (!(PLAY && PLAYING && fullCover(t))) await MINI.render({ target: tgt, d: camDist, sharp: LV ? LV.k : 0, sunAz: SUN_AT(t) }); if (DIS) DIS.show(D ? 1 - D.k : 0); overlayAt(t); };
 const seekFootage = async t => {
   for (const f of FILM.footage || []) {
     const v = VID[f.id]; if (!(v instanceof HTMLVideoElement)) continue;

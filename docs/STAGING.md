@@ -24,8 +24,17 @@ While a period city stands, today's city keeps about a fifth of its light (`era_
 A city that rises in stages stands once its first stage is up, so a landmark built later in the node does not keep today's city bright, and the city unlit, until it rises.
 The plate is a deep blue, not black (`palette.plate`, Xianyang `#3a4757`): in a wide shot most of the frame is plate, so the plate sets how dark the film feels.
 The events with the most room need a close, brightly lit camera with the subject filling the frame, not only dark wide shots (for the brightness threshold see CHECKS.md "Brightness").
-The year counter is the film's clock and only runs forward: a stop starts no earlier than the year the one before ended on (compile stops). An earlier event is told in words
-under the later year, as a look back, never by turning the counter back; only the first stop, which may sum up the place, spans the whole story.
+The year counter is the film's clock: the audience reads it as when they are, so it runs forward. A stop starts no earlier than the year the one before ended on (compile
+stops), and an earlier event is told in words under the later year; only the first stop, which may sum up the place, spans the whole story. The one exception is a look
+back the story itself makes (a founding told after the years it led to, a city's growth seen again from its start), and it is shown as one: the node declares it
+(`look_back: true`, or `look_back: {dissolve: <seconds>}`, 2 by default). The counter goes back to the node's first year with a look-back mark beside it, in the film's
+languages, until it is back at the year it left; the picture dissolves from the later city to the city as the film showed it at that year, and no building shrinks, sinks or
+vanishes in view (a city taken apart building by building reads as its demolition). From there the story goes forward again: today's buildings rise again as the counter
+reaches their years, and what the film built, took back or changed after that year (period cities and their losses, the water as it was, areas, decals) comes back as the
+counter reaches the year it happened at, in a dissolve where it would otherwise change at once; what the look back and the nodes after it tell plays as usual, in both looks.
+To come back without the years between, give the next node a first year at or after the year left: the counter jumps there and the picture dissolves to the later city.
+For instance, a node after Xianyang's `ming` that shows the Tang city again would be `{id: tang_again, years: [760, 760], look_back: true, ...}`: the Ming city dissolves
+into the Tang one under 760 and the mark, and the next node, `rail` (1936), dissolves back to the city the counter left.
 A building with a known date rises while the counter is inside its documented building years (begun to finished); one shown already standing under a later year carries a tag
 with its date, and the line or tag says it was already there.
 No cut between nodes: the camera travels on from where the previous node left it (compile merges keys set at the same time, unwraps azimuth, and flags jumps, 9f), and a node's colour change is seen covering the whole city, in one shot or one move.
@@ -33,7 +42,7 @@ No cut between nodes: the camera travels on from where the previous node left it
 ## Rules
 
 1. **Ring expanding = change inside the ring; ring contracting = change outside the ring.** When a new period's city grows from a point, the ring (or a band of light sweeping along a line) follows the growing front
-   (`city.stages`: `from` radiates, `sweep` sweeps a line). When a city is taken back, the old city sinks wherever the contracting ring has swept and today's city returns (`fall: in`, burning or demolishing a city);
+   (`city.stages`: `from` radiates, `sweep` sweeps a line, `path` builds along a line on the plan: see 9b). When a city is taken back, the old city sinks wherever the contracting ring has swept and today's city returns (`fall: in`, burning or demolishing a city);
    when it is replaced by the next node, it is taken back along with the next node's colour-change ring (`fall: out`, the default). **An expanding ring always runs out of the picture before it disappears:** the city's ring keeps accelerating outward after the last
    building, until the whole ring is outside the picture (compile's `stagecraft.ring_exit`: the farthest ground visible at the picture edge) and only then fades out; it must not stop and go out in the middle of the picture.
 2. **While change happens, only the ring glows.** Do not light whole plots; once the city has settled, a thin neon line lights up at its outer edge, lighting only the buildings beside the line (`era_look.line/light_m/halo_m`),
@@ -107,7 +116,16 @@ No cut between nodes: the camera travels on from where the previous node left it
    each growth stage takes at least 4 seconds (2 seconds for a small place), and the front moves at most a third of the picture width per second. The engine and camcheck read only the sampled curve compile writes (computed in one place, used in two).
 9b. **The refresh method is chosen by size:** if the changed area is large on screen (over 1 km or 35% of half the picture width), expand a ring of light from the start; if it is small (a village, one ward), use "refresh within the area":
    the ground is not lit, the city's outline (thin geometric lines, not a mask image) is traced from both ends on the side where the scan begins and joins on the opposite side, and the houses grow in order with a flash on top
-   (a mask image has 7.6 m per cell, which is jagged up close, so effects for small areas are always drawn with geometry); things laid out along a line (`sweep`) use one sweep line. All rings and contracting rings share one drawing method:
+   (a mask image has 7.6 m per cell, which is jagged up close, so effects for small areas are always drawn with geometry); things laid out along a line (`sweep`) use one sweep line.
+   **A build that follows a line** (a city wall raised in one campaign, from one gate round the city until the ring closes; a road or a canal dug from one end)
+   is one stage with a `path`: its parts rise in the order of their centres' distance along it, and its light is a line on the ground walking the path, brightest
+   at its head, the stretch built behind it dimmer; a part spread along the path (a moat dug with the wall) rises piece by piece where each piece lies, and the
+   gates, bridges and wall pieces of a stretch rise with that stretch. `path: {wall: <the wall's id or index>}` follows one of the city's own walls (a `ring:`
+   is closed, a `pts:` run open), `path: {pts: [[lon, lat], ...], closed: true}` a line of its own; `from: [lon, lat]` is where a ring's build starts (its
+   nearest point; default the first point), `reverse: true` runs against the points' order, and `noise: 0` keeps the order exact. For instance Xianyang's Ming
+   city (`cities/xianyang/city.yaml`, node `ming`) would raise its wall from its west gate round the town with
+   `stages: [{select: {walls: true}, path: {wall: 0, from: [108.714, 34.3347]}, noise: 0, dur: 8}, {}]` (its west gate is `[108.714, 34.3347]`; the second stage takes the rest).
+   All rings and contracting rings share one drawing method:
    a bright core of 1–2 pixels, a soft glow of a few pixels, a faint trail on one side, with width computed in screen pixels; appearing and disappearing both fade in and out over about 0.4 seconds.
 9c. **The beam's landing point is the centre of the circle** (`routes: impact: true`): on landing, first a flash (decaying over 0.35 seconds), then a shock wave spreading for 1.6 seconds (shorter looks like nothing happened);
    a ring with the new colour spreads from the landing point, and the city grows with it. With `film.fx.glow` the landing also raises a column of light ("Look and effects").
@@ -208,7 +226,7 @@ prints the node's time round it: lines, stages, camera keys, the holds it insert
 
 By the end of each historic period the audience knows what stands on that place today, through a picture of it (`footage:`, `mode: full | panel | card | doc`; CC, public domain or
 the user's own, see below), held long enough to take in as a place, never a flash, and labelled as today's footage with the place and the source. Full frame only when the material
-holds up full frame (for instance 4K, or video of 1600×900 or more, for 7–9 seconds with a slow push-in); lower resolution goes in the right-hand panel or a small card with a leader
+holds up full frame (for instance 4K, or video of 1600×900 or more, for 7–9 seconds with a slow push-in); a full-frame clip fills the letterboxed band and pushes in slowly (from 1.02 to 1.1), so its top and sides are cropped a little: one whose subject reaches the edge (a spire near the top) keeps the whole frame with `fit: contain` (no push-in, dark bands beside it), or takes a push-in of its own, `zoom: [1, 1.04]`; lower resolution goes in the right-hand panel or a small card with a leader
 line (`anchor`); a document card holds old maps. A card holds a picture: a photograph,
 a painting or a drawing, a map, a document of its time, or an imagined picture. Words the film sets in type are not one: what they say belongs to the narration or a tag,
 and a card of them over the model shows the audience nothing (a person gets a portrait, an event a picture of it, found or imagined: SCRIPT.md "Pictures"). The `kicker` above the title says

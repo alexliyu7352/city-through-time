@@ -107,6 +107,7 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
       if (m[3]) w += 10 + txt(bigId ? o.id + 'b3' : null, m[3], X + w + 10, Y + 6, 'zh', px * .5, '#f4f1ea', a, { shadow: 12 }); }
     else w = txt(bigId, big, X - 4, Y + 6, 'numeral', px, '#ffffff', a, { shadow: 16 });
     if (o.unit) txt(bigId ? o.id + 'u' : null, o.unit, X + w + 10, Y + 4, 'zh', 44, 'rgba(244,241,234,.9)', a, { shadow: 10 });
+    if (o.back && o.back[1] > .002) backTag(o.back[0], X + w + 24, Y - px * .36, 24, a * o.back[1]);   // a look back: the year is an earlier one (main.js backMark)
     if (o.label) txt(o.id + 'l', o.label, X, Y + 58, 'zh', 30, '#f4f1ea', a, { shadow: 10, ls: 1 });
     // the source note: bright enough and shadowed to read over a lit map or the satellite plate, in lines;
     // readcheck reads it as one text, the whole note (it sets how short the stop may be: docs/STAGING.md 5d)
@@ -217,7 +218,15 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
   }
 
   // timeline bar, top centre: film time on the x axis, a tick per node (labelled with its first year), a cursor with the current year
-  function timelineBar(t, bar, yearText, label, a = 1) {
+  // the look-back mark beside a year: a thin bracket and the words, in the film's languages (compile ui.back)
+  function backTag(text, x, y, px, a, left = null) {   // (left: where it ends instead, when it would run off the right edge from x)
+    if (a <= .002 || !text) return;
+    const k = plain(text) ? 'mono' : 'zh_strong', w = width(text, k, px, 2) + 12;
+    if (left != null && x + w > W - 24) x = left - w;
+    g.save(); g.globalAlpha = a; g.fillStyle = '#ffd27a'; g.fillRect(x, y - px * .8, 2, px * 1.05); g.restore();
+    txt(null, text, x + 12, y, k, px, '#ffd27a', a, { ls: 2, shadow: 8 });
+  }
+  function timelineBar(t, bar, yearText, label, a = 1, back = null) {
     if (a <= 0) return;
     const X0 = 1040, X1 = 1824, Y = 66;
     const k = clamp((t - bar.from) / Math.max(1e-6, bar.to - bar.from), 0, 1);
@@ -236,6 +245,7 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
     g.fillStyle = '#ffffff'; g.beginPath(); g.arc(cx, Y, 3.2, 0, 7); g.fill();
     g.restore();
     txt(null, yearText, cx, Y - 16, 'numeral_strong', 32, '#ffffff', a, { center: true, shadow: 8 });
+    if (back && back[1] > .002) { const yw = width(yearText, 'numeral_strong', 32) / 2 + 12; backTag(back[0], cx + yw, Y - 18, 18, a * back[1], cx - yw); }   // (beside the year, on its left near the bar's end)
     if (label) txt(null, label, X0 - 30, Y + 8, 'zh', READ_PX, 'rgba(235,238,242,.94)', a, { right: true, ls: 1.5, shadow: 6 });
   }
 
@@ -277,6 +287,11 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
   // e = { in: 0..1, out: 0..1, k: 0..1 over the clip }, anchor = [x, y] on screen (card mode)
   let OFF = null;
   const offscreen = () => { if (!OFF) { OFF = document.createElement('canvas'); OFF.width = W; OFF.height = H; } const o = OFF.getContext('2d'); o.clearRect(0, 0, W, H); return [OFF, o]; };
+  function contain(gg, src, x, y, w, h) {   // the whole picture inside the box, centred, the rest left as it is
+    const isVid = src instanceof HTMLVideoElement, sw = isVid ? src.videoWidth : src.naturalWidth, sh = isVid ? src.videoHeight : src.naturalHeight;
+    if (!sw) return; const s0 = Math.min(w / sw, h / sh), dw = sw * s0, dh = sh * s0;
+    gg.drawImage(src, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+  }
   function cover(gg, src, x, y, w, h, z, panX = 0, panY = 0) {
     const isVid = src instanceof HTMLVideoElement, sw = isVid ? src.videoWidth : src.naturalWidth, sh = isVid ? src.videoHeight : src.naturalHeight;
     if (!sw) return; const s0 = Math.max(w / sw, h / sh) * z, dw = sw * s0, dh = sh * s0;
@@ -311,7 +326,8 @@ export function makeOverlay(canvas, size = { w: W, h: H }) {
       g.save(); g.beginPath(); g.rect(L, 0, Math.max(0, R - L), H); g.clip();
       g.fillStyle = '#05060a'; g.fillRect(0, 0, W, H);
       g.beginPath(); g.rect(0, bar, W, H - 2 * bar); g.clip();
-      cover(g, src, 0, bar, W, H - 2 * bar, 1.02 + .08 * e.k, (f.pan || 0) * (e.k * 2 - 1), 0);
+      if (f.fit === 'contain') contain(g, src, 0, bar, W, H - 2 * bar);   // (the whole frame, no push-in: compile's fit)
+      else cover(g, src, 0, bar, W, H - 2 * bar, f.zoom ? f.zoom[0] + (f.zoom[1] - f.zoom[0]) * e.k : 1.02 + .08 * e.k, (f.pan || 0) * (e.k * 2 - 1), 0);
       const vg = g.createLinearGradient(0, H - bar - 320, 0, H - bar); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.55)');
       g.fillStyle = vg; g.fillRect(0, H - bar - 320, W, 320);
       g.restore();

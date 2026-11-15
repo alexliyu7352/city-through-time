@@ -794,6 +794,41 @@ def look_target(G, gids, cs, node_id, traced):
         if best is None or key < best[0]: best = (key, (x_, model_ground(x_, z_), z_), spec.get('id') or spec.get('kind'))
     return None if best is None else {'c': best[1], 'rank': best[0][0], 'what': best[2]}
 
+def stage_path(st, cs, node_id):
+    """a stage's `path` (docs/STAGING.md rule 5, "a stage along a path"): the line its parts are built along, in model units,
+    from where the build starts in the way it goes -> (shapely LineString, closed, s(x, z): a point's distance along it).
+    path: {pts: [[lon, lat], ..]} a line drawn on the plan, or {wall: <its id or index in walls>} the city's own wall line;
+    closed (a ring: a wall's ring is, its pts are not), from [lon, lat] (where the build starts: the line's nearest point; default
+    its first point), reverse (against the points' order). On a ring a distance is taken round from the start; a part centred a
+    few metres before the start counts as at it (a gate on the start point is its first, not its last)."""
+    from shapely.geometry import LineString, Point
+    P = st['path']; where = f'compile: era {node_id}: stage {st.get("id") or st.get("name") or ""} path'
+    if not isinstance(P, dict) or set(P) - {'pts', 'wall', 'closed', 'from', 'reverse'} or ('pts' in P) == ('wall' in P):
+        raise SystemExit(f'{where}: {{pts: [[lon, lat], ..]}} or {{wall: <id or index>}}, closed, from: [lon, lat], reverse (got {P})')
+    if 'wall' in P:
+        W_ = cs.get('walls') or []; w = next((x for i, x in enumerate(W_) if x.get('id') == P['wall'] or (isinstance(P['wall'], int) and not isinstance(P['wall'], bool) and i == P['wall'])), None)
+        if w is None or not any(k in w for k in ('ring', 'pts')): raise SystemExit(f'{where}: wall {P["wall"]!r}: no wall of this city by that id or index written as ring: or pts: (an osm wall: copy its points into path pts)')
+        ll, closed = (w['ring'], True) if 'ring' in w else (w['pts'], False)
+    else: ll, closed = P['pts'], bool(P.get('closed', False))
+    closed = bool(P.get('closed', closed))
+    if not isinstance(ll, list) or len(ll) < 2 or not all(isinstance(q, (list, tuple)) and len(q) == 2 for q in ll): raise SystemExit(f'{where}: pts: two or more [lon, lat]')
+    pts = [tuple(F.model_lonlat(*q)) for q in ll]
+    if closed and pts[0] == pts[-1]: pts = pts[:-1]
+    if P.get('reverse'): pts = pts[::-1]
+    if closed:
+        ring = LineString(pts + pts[:1]); s0 = ring.project(Point(*F.model_lonlat(*P['from']))) if 'from' in P else 0.0
+        L = ring.length; k = 0; acc = 0.0   # (the ring from its start: the points after it, round to the start again)
+        while k < len(pts) and acc + math.dist(pts[k], pts[(k + 1) % len(pts)]) <= s0: acc += math.dist(pts[k], pts[(k + 1) % len(pts)]); k += 1
+        a_ = ring.interpolate(s0).coords[0]; seq = [a_] + pts[k + 1:] + pts[:k + 1] + [a_]
+        line = LineString([q for i, q in enumerate(seq) if i == 0 or math.dist(q, seq[i - 1]) > 1e-9])
+        tol = 10 * F.scale
+        def s_of(x, z):
+            v = line.project(Point(x, z)); return v - L if v > L - tol else v
+        return line, True, s_of
+    line = LineString(pts)
+    if 'from' in P: raise SystemExit(f'{where}: from: only a closed path (a ring) starts where it is told; an open one starts at its first point (reverse: its last)')
+    return line, False, lambda x, z: line.project(Point(x, z))
+
 def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
     """when each building of a period city starts to rise (absolute seconds) and how each stage is lit (docs/STAGING.md).
     `stages` in the spec, each with at, dur, select ({landmarks: [i..], fabric: [i..], walls/streets/lanes/trees: true or
@@ -808,13 +843,14 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
     G, order = stage_parts(prims, meta, cs, node_id)
     grow = float(cs.get('grow', TIMING['grow']))
     start, fronts = {}, []
+    pstart = {}   # (a primitive's own start, where its group is laid along a path piece by piece)
     study_next = t_lo   # (a study: each stage starts once the one before has run)
     for st, first, gids in order:   # (the beam lands on the city's first stage in spec order)
         C = [G[g]['c'] for g in gids]
         cx_ = sum(c[0] for c in C) / len(C); cz_ = sum(c[1] for c in C) / len(C)
         rad_ = max(math.hypot(x - cx_, z - cz_) for x, z in C) + 30 * F.scale
         centre = (cx_, model_ground(cx_, cz_), cz_)
-        if 'sweep' not in st:   # a change that starts from a point (from, the beam's landing, the city's origin): the viewer must see that point
+        if 'sweep' not in st and 'path' not in st:   # a change that starts from a point (from, the beam's landing, the city's origin): the viewer must see that point
             ox_, oz_ = F.model_lonlat(*st['from']) if 'from' in st else impact['end'] if (first and impact) else F.model_lonlat(*cs['origin'])
             centre = (ox_, model_ground(ox_, oz_), oz_); rad_ = max(math.hypot(x - ox_, z - oz_) for x, z in C) + 30 * F.scale
         at = st.get('at', cs.get('at', 'auto'))
@@ -846,6 +882,11 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
             pr = [(x - ax) * dx + (z - az) * dz for x, z in C]; p0, p1 = max(0.0, min(pr)), min(L, max(pr))
             u = [min(1, max(0, (v - p0) / ((p1 - p0) or 1))) for v in pr]
             mode, o, dirv, r0, r1, length = 'line', [ax, az], [dx, dz], p0, p1, p1 - p0
+        elif 'path' in st:   # along a line on the plan (a wall built round the city): each group by its centre's distance along it
+            PL_, ring_, s_of = stage_path(st, cs, node_id); L = PL_.length
+            pr = [s_of(x, z) for x, z in C]; p0, p1 = min(pr), max(pr)
+            u = [(v - p0) / ((p1 - p0) or 1) for v in pr]
+            mode, o, dirv, r0, r1, length = 'path', list(PL_.coords[0]), None, p0 / L, p1 / L, p1 - p0
         else:
             if 'from' in st: ox, oz = F.model_lonlat(*st['from'])
             elif first and impact: ox, oz = impact['end']
@@ -879,6 +920,16 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
         else:
             for g, uu in zip(gids, u):
                 h = random.Random(g * 7919 + 13).random(); start[g] = t0 + (uu * (1 - nz) + h * nz) * dur
+            if mode == 'path':   # a group spread along the path (a moat dug round with the wall, its bridges): piece by piece where each lies
+                at_g = {g: v for g, v in zip(gids, pr)}; mine = {}
+                for i_, (gid_, _, _) in enumerate(meta):
+                    if gid_ in at_g: mine.setdefault(gid_, []).append(i_)
+                for g, ids_ in mine.items():
+                    sv = [s_of(prims[i_][1], prims[i_][2]) for i_ in ids_]
+                    if ring_: sv = [at_g[g] + (v - at_g[g] + L / 2) % L - L / 2 for v in sv]   # (round the seam, as near its centre)
+                    if max(sv) - min(sv) <= 120 * F.scale: continue   # (a building, a wall piece, a gate: whole)
+                    h = random.Random(g * 7919 + 13).random()
+                    for i_, v in zip(ids_, sv): pstart[i_] = t0 + (min(1, max(0, (v - p0) / ((p1 - p0) or 1))) * (1 - nz) + h * nz) * dur
             t1 = t0 + dur * (1 - nz)
             w = (r1 - r0) * TIMING['scan_w'] if mode == 'scan' else 0.0
             curve_ = [[round(t0, 3), round(r0 - (w if mode == 'scan' else 0), 6)], [round(t1, 3), round(r1 + (w if mode == 'scan' else 0), 6)]]
@@ -889,12 +940,12 @@ def era_times(prims, meta, cs, at_of, cam, t_lo, t_hi, impact=None, node_id=''):
                 acc = 2 * (r_off - r1 - v1 * T_) / (T_ * T_)
                 curve_ += [[round(t1 + T_ * k / 8, 3), round(r1 + v1 * T_ * k / 8 + acc * (T_ * k / 8) ** 2 / 2, 6)] for k in range(1, 9)]
         fronts.append({'mode': mode, 'o': [round(o[0], 6), round(o[1], 6)], 'dir': [round(v, 6) for v in dirv] if dirv else None,
-                       'curve': curve_,
+                       'curve': curve_, **({'pts': [[round(x, 6), round(z, 6)] for x, z in PL_.coords], 'closed': ring_} if mode == 'path' else {}),
                        'w': round(w, 6), 'a': [round(t0 - TIMING['fade'], 3), round(max(t1 + grow * .5, curve_[-1][0]), 3)], 'n': len(gids),
                        '_plan': {'t_from': t_from, 't0': t0, 't_end': round((start[gids[0]] if len(gids) == 1 else t0 + dur) + grow, 3), 'centre': centre, 'rad': rad_, 'n': len(gids), 'stage': st.get('name') or st.get('id'),   # (one building rises at once, not over the stage's time)
                                  'focus': look_target(G, gids, cs, node_id, mode == 'scan')}})   # for plan_stages (popped)
         study_next = fronts[-1]['a'][1] + .5
-    st_p = [start[gid] for gid, _, _ in meta]
+    st_p = [pstart.get(i_, start[gid]) for i_, (gid, _, _) in enumerate(meta)]
     on = min(st_p); span = max(1e-3, max(st_p) - on)
     # when the city stands, for the engine (today's city steps back, the city glows): with stages, as its first stage rises,
     # so a part built later in the node does not keep today's city bright and the city unlit until it is up
@@ -1021,7 +1072,18 @@ def footage_item(ft, on, nid):
     if 'kicker' not in ft and ft.get('mode', 'full') != 'full':   # the default label is a film of the place today: a card, map or photo says what it is
         raise SystemExit(f"compile: footage {ft['id']} (mode: {ft['mode']}) has no kicker: it would be labelled {KICKER_TODAY!r}, a film of the place "
                          f"today; write what the picture is (kicker: a photograph and its year, a map, a card, an imagined picture ..)")
-    return {'id': ft['id'], 'file': ft['file'], 'on': on, 'dur': float(ft['dur']), 'start': float(ft.get('start', 0)), 'fin': ft.get('in', 1.0), 'fout': ft.get('out', 1.0),
+    fz_ = {}   # a full-frame clip's framing (docs/STAGING.md "Footage and pictures"): fit contain (the whole frame, no push-in) or its own push-in
+    if 'fit' in ft or 'zoom' in ft:
+        if ft.get('mode', 'full') != 'full': raise SystemExit(f"compile: footage {ft['id']}: fit and zoom are a full-frame clip's (mode: full)")
+        if 'fit' in ft:
+            if ft['fit'] not in ('cover', 'contain') or 'zoom' in ft: raise SystemExit(f"compile: footage {ft['id']}: fit: contain (the whole frame inside the letterbox, no push-in) or cover (the default), and no zoom with it (got {ft['fit']!r})")
+            if ft['fit'] == 'contain': fz_['fit'] = 'contain'
+        else:
+            z_ = ft['zoom']
+            if not (isinstance(z_, list) and len(z_) == 2 and all(isinstance(v, (int, float)) and not isinstance(v, bool) and 1 <= v <= 2 for v in z_)):
+                raise SystemExit(f"compile: footage {ft['id']}: zoom: [from, to], each 1 to 2 (the push-in over the clip; 1 fills the letterbox without cropping more; default [1.02, 1.1]) (got {z_!r})")
+            fz_['zoom'] = [float(v) for v in z_]
+    return {'id': ft['id'], 'file': ft['file'], 'on': on, 'dur': float(ft['dur']), 'start': float(ft.get('start', 0)), 'fin': ft.get('in', 1.0), 'fout': ft.get('out', 1.0), **fz_,
             'title': a_, 'sub': b_, 'kicker': pick(ft['kicker']) if 'kicker' in ft else KICKER_TODAY, 'credit': pick(ft.get('credit', '')), 'pan': ft.get('pan', 0),
             'mode': ft.get('mode', 'full'), 'side': ft.get('side', 'right'),
             'anchor': (F.model_lonlat(*ft['anchor']) + [ground_ll(*ft['anchor'])]) if 'anchor' in ft else None,
@@ -1790,15 +1852,23 @@ for i, node in enumerate(FM['nodes']):
     dur = dur * k_ + sum(q['delta'] for q in node['_ins'])
     node['_t0'] = round(cursor, 3); node['_t1'] = round(cursor + dur, 3)
     ys = node.get('years') or [node['year'], node['year']]; node['_years'] = [float(ys[0]), float(ys[1])]
-    if i > 1 and node['_years'][0] < FM['nodes'][i - 1]['_years'][1]:   # (the first stop may span the whole story: a name, an overview)
+    lb_ = node.get('look_back')   # a declared look back (docs/STAGING.md "Basic grammar"): the counter goes back to the node's first year, shown as one
+    if lb_ is not None:
+        if not (lb_ is True or (isinstance(lb_, dict) and not set(lb_) - {'dissolve'} and isinstance(lb_.get('dissolve', 2.0), (int, float)) and not isinstance(lb_.get('dissolve', 2.0), bool) and .5 <= lb_.get('dissolve', 2.0) <= 6)):
+            raise SystemExit(f"compile: node {node['id']}: look_back: true, or {{dissolve: <seconds, .5 to 6>}} (the picture's dissolve to the earlier city; 2 s unless written) (got {lb_!r})")
+        if i < 1 or node['_years'][0] >= FM['nodes'][i - 1]['_years'][1]:
+            raise SystemExit(f"compile: node {node['id']}: look_back, but it starts at year {node['_years'][0]:g}, not before the year the node before ended on"
+                             f"{'' if i < 1 else ' (' + format(FM['nodes'][i - 1]['_years'][1], 'g') + ')'}: a look back goes to an earlier year; leave look_back out")
+    if i > 1 and node['_years'][0] < FM['nodes'][i - 1]['_years'][1] and lb_ is None:   # (the first stop may span the whole story: a name, an overview)
         raise SystemExit(f"compile: node {node['id']} starts at year {node['_years'][0]:g}, before {FM['nodes'][i - 1]['_years'][1]:g} where "
-                         f"{FM['nodes'][i - 1]['id']} ended: the year counter would run backward. Tell an earlier event in words under the later year, or put the stops in order (docs/STAGING.md \"Basic grammar\")")
+                         f"{FM['nodes'][i - 1]['id']} ended: the year counter would run backward. Tell an earlier event in words under the later year, put the stops in order, "
+                         f"or, where the story itself looks back, declare it on the node: look_back: true (docs/STAGING.md \"Basic grammar\")")
     if i > 0 and node.get('tour') and FM['nodes'][i - 1].get('tour') and node['_years'][0] > FM['nodes'][i - 1]['_years'][1]:   # (between two stops of
         # the tour the counter runs in the flight from the one stop's last year to the next one's: a gap is crossed in no time, its growth unseen)
         fault(f"node {node['id']} starts at year {node['_years'][0]:g}, after {FM['nodes'][i - 1]['_years'][1]:g} where the tour stop {FM['nodes'][i - 1]['id']} "
               f"ended: the counter would jump the years between in no time. A stop's years run from the last stop's last year: years: [{FM['nodes'][i - 1]['_years'][1]:g}, {node['_years'][1]:g}] (docs/STAGING.md 9i)")
     if first_year is None: first_year = node['_years'][0]
-    yearline += node_years(node)
+    node['_yl0'] = len(yearline); yearline += node_years(node)   # (_yl0: where its counter starts in the year line, look backs)
     T = lambda v, d=None, _n=node: node_time(_n, v, d)
     # the node's colour reaches today's city as a ring of light spreading from where the story just was: `wave_from` [lon, lat],
     # else the previous node's period city, else where the camera last looked
@@ -2163,6 +2233,57 @@ light['lights'] = round(last + float(CL.get('lights_after', 1.5)), 3)
 end_t = round(light['lights'] + float(CL.get('end_after', 1.5)), 3)
 DUR = round(end_t + float(CL.get('end_hold', 9.0)), 3)
 yearline = [[0.0, first_year]] + yearline + [[DUR, yearline[-1][1]]]
+# look backs (node look_back, docs/STAGING.md "Basic grammar"). From the node's start the counter shows the earlier year. Each
+# change the film made before it (its own start before the look back's) follows the counter: it shows as it stood the last time
+# the counter was at the year on it (keys: film seconds -> that moment, the engine's clk), until the counter is back at the year
+# the look back left (end); what the look back and the nodes after it tell keeps the film's own time. The picture dissolves at
+# the look back and wherever that clock jumps over a change (dissolves, below: once the changes are timed).
+def t_before(pre, y):
+    """the last moment of the year line `pre` at which the counter stood at y or below (just before a jump that took it above)"""
+    best = pre[0][0]
+    for k_ in range(len(pre) - 1):
+        (ta, ya), (tb, yb) = pre[k_], pre[k_ + 1]
+        if tb - ta < 1e-9: c = ta - 1e-3 if ya <= y < yb else (tb if yb <= y else None)
+        elif yb <= y: c = tb - (1e-3 if k_ + 2 < len(pre) and pre[k_ + 2][0] - tb < 1e-9 and pre[k_ + 2][1] > y else 0)
+        elif ya <= y: c = ta + (tb - ta) * (y - ya) / (yb - ya)
+        else: c = None
+        if c is not None: best = max(best, c)
+    return round(min(best, pre[-1][0] - 1e-3), 4)
+BACKS = []
+for node in FM['nodes']:
+    if node.get('look_back') is None: continue
+    i0 = node['_yl0'] + 1; pre = yearline[:i0]; tj, A, B = node['_t0'], pre[-1][1], node['_years'][0]
+    win, t_end = [], DUR
+    for (ta, ya), (tb, yb) in zip(yearline[i0:], yearline[i0 + 1:]):   # the counter from the look back on, to where it is back at A
+        if yb >= A:
+            t_end = ta if (ya >= A or tb - ta < 1e-9) else ta + (tb - ta) * (A - ya) / (yb - ya); win.append((ta, ya, t_end, min(yb, A))); break
+        win.append((ta, ya, tb, yb))
+    years_ = sorted({y for _, y in pre})
+    keys_ = []
+    for ta, ya, tb, yb in win:
+        if tb - ta < 1e-9 or ya == yb: keys_ += [[ta, t_before(pre, ya)], [tb, t_before(pre, yb)]]; continue
+        lo_, hi_ = min(ya, yb), max(ya, yb); ys_ = [ya] + [y for y in (years_ if yb > ya else years_[::-1]) if lo_ < y < hi_] + [yb]
+        for y in ys_:
+            ty_ = round(ta + (tb - ta) * (y - ya) / (yb - ya), 4)
+            if y not in (ya, yb): keys_.append([ty_, t_before(pre, y - 1e-6 if yb > ya else y + 1e-6)])
+            keys_.append([ty_, t_before(pre, y)])
+    keys_ = [[round(t_, 4), s_] for t_, s_ in keys_]
+    keys_ = [k_ for i_, k_ in enumerate(keys_) if i_ == 0 or k_ != keys_[i_ - 1]]
+    lb_ = node['look_back']; dis_ = float(lb_.get('dissolve', 2.0)) if isinstance(lb_, dict) else 2.0
+    BACKS.append({'t': round(tj, 3), 'end': round(t_end, 3), 'from': A, 'to': B, 'keys': keys_, '_node': node['id'], '_dis': dis_})
+    print(f"  look back {node['id']}: {A:g} -> {B:g} at {tj:.1f} s, the counter back at {A:g} at {t_end:.1f} s{' (the end)' if t_end >= DUR else ''}")
+def clk_py(s0, t):
+    """engine/main.js clk: an event's clock from its start s0 (a look back's, else t)"""
+    for b in reversed(BACKS):
+        if b['t'] <= t < b['end'] and s0 < b['t']: return clk_py(s0, curve_py(b['keys'], t))
+    return t
+def curve_py(c, t):
+    """engine/main.js curveAt: linear between samples, clamped at the ends, the later of two at one time"""
+    import bisect
+    if t <= c[0][0]: return c[0][1]
+    if t >= c[-1][0]: return c[-1][1]
+    j_ = bisect.bisect_right([k_[0] for k_ in c], t) - 1; (ta, va), (tb, vb) = c[j_], c[j_ + 1]
+    return va + (vb - va) * (t - ta) / ((tb - ta) or 1e-9)
 def year_time(Y):
     """the first moment the film's year counter reaches Y (after the modern growth starts)"""
     t_on = grow['on'] if grow else 0.0
@@ -2176,6 +2297,9 @@ if grow:   # the growth's {year} times and its counters' end, on the whole year 
     yl_ = [[ta, ya] for ta, ya in yearline if ta >= grow['on'] - 1.0]
     yl_ = [p_ for i_, p_ in enumerate(yl_) if i_ == 0 or p_ != yl_[i_ - 1]]
     grow['yl'] = [[round(ta, 3), round(ya, 3)] for ta, ya in yl_]
+    if BACKS:   # today's buildings newer than a look back's year go with it and rise again with the counter (engine/studio.js cutT)
+        if len(BACKS) > 4: raise SystemExit(f"compile: {len(BACKS)} look backs ({', '.join(b['_node'] for b in BACKS)}): the engine takes four (studio.js uCutT)")
+        grow['cuts'] = [[b['t'], b['to']] for b in BACKS]
     for b in grow['bands']:
         tr_ = b.pop('_traw', None)
         if isinstance(tr_, dict) and 'year' in tr_: b['t'] = round(year_time(float(tr_['year'])) + float(tr_.get('plus', 0)), 3)
@@ -2328,8 +2452,8 @@ def plan_stages():
             # (c) never seen close: once the city (all its stages under way by then) stands, a closer look at its key building
             # (look_target: named, drawn in light, any landmark; never the houses). Seen close = that building on screen (inside
             # 80 % of the frame) near enough that a look_focus_m patch round it fills look_size of the frame's height, for
-            # look_secs, at any time in the node (its own close shots count). Not for a sweep along a line.
-            if P['n'] < TIMING['look_min_n'] or f['mode'] == 'line' or P['focus'] is None: continue
+            # look_secs, at any time in the node (its own close shots count). Not for a sweep along a line, nor a build along a path.
+            if P['n'] < TIMING['look_min_n'] or f['mode'] in ('line', 'path') or P['focus'] is None: continue
             Rf = TIMING['look_focus_m'] * F.scale; run, best, t = 0, 0, P['t0']; Fc = P['focus']['c']
             while t <= node['_t1']:
                 q_ = CAMERA.project(t, Fc); fov_ = CAMERA.at(t)[2]
@@ -2505,6 +2629,15 @@ def occupancy(e):
     and while a later node draws it again as its outline (ghost)"""
     a = min([e['on']] + [f['curve'][0][0] for f in e.get('fronts') or []]) - 1.0
     iv = [[a, (e['fallR']['gone'] if e.get('fallR') else DUR) + 1.0]]
+    FR_ = e.get('fallR'); b_end = iv[0][1]
+    for b in BACKS:   # (and while a look back shows it again: its rise and its taking back on their clocks, clk)
+        if not e['on'] < b['t']: continue
+        t_, run_ = b['t'], None
+        while t_ < b['end'] + .1:
+            on_ = t_ < b['end'] and clk_py(e['on'], t_) >= a + 1.0 - 1e-6 and (clk_py(FR_['curve'][0][0], t_) if FR_ else t_) <= b_end - 1.0
+            if on_ and run_ is None: run_ = t_
+            if not on_ and run_ is not None: iv.append([round(run_ - 1.0, 3), round(t_ + 1.0, 3)]); run_ = None
+            t_ += .1
     return iv + [[n['arrive'] - 1.0, n['t1'] + 1.0] for n in nodes_out if e['id'] in (n.get('ghost') or [])]
 occ_ = {e['id']: occupancy(e) for e in eras_out}
 meet = lambda A, B: any(a0 < b1 and b0 < a1 for a0, a1 in A for b0, b1 in B)
@@ -2850,6 +2983,8 @@ if grow and grow.get('yl'):
         if not covered(t): k_ = np.where(np.isnan(seen_) & (ty_ <= t + .125))[0]; seen_[k_[big_(t, k_)]] = t
         t += .25
     late_ = ~np.isnan(seen_) & (seen_ > ty_ + .5)
+    for b_ in BACKS:   # (a wait a look back cuts short: the building goes with it, and rises again with the counter)
+        late_ &= ~((ty_ < b_['t']) & (seen_ >= b_['t']) & (np.array(yrs_) - .5 > b_['to']))
     out_ = []; rs_ = ty_.copy()   # (when each rises: its year on the counter, or when the camera comes to see it)
     for t_ in np.unique(seen_[late_]):   # those entering the frame together: oldest first, longer for more (a whole district, up to see_max)
         k_ = np.where(late_ & (seen_ == t_))[0]; k_ = k_[np.argsort(np.array(yrs_)[k_], kind='stable')]
@@ -3295,6 +3430,40 @@ _ypack = FM.get('yearFmt') if FM.get('yearFmt') in _LANGS_ANY and os.path.exists
 film['years'] = i18n.pack(_ypack)['year']
 _ui_l = next((l_ for l_, sc_ in zip(LANG, SCRIPTS) if sc_ == 'latin'), LANG[0])   # (chapter and locator words in capitals: a Latin-script language when there is one)
 film['ui'] = {'chapter': i18n.word(_ui_l, 'chapter'), 'locator': i18n.word(_ui_l, 'locator')}
+if BACKS:   # the look backs (above): the counter's mark, and where the picture dissolves
+    film['ui']['back'] = ' · '.join([i18n.word(LANG[0], 'look_back')] + ([i18n.word(LANG[1], 'look_back').upper()] if len(LANG) > 1 else []))
+    def scene_changes():
+        """each change of the city the clocks of a look back move: (its start, from, to), film seconds"""
+        out = []
+        for e in eras_out:
+            out.append((e['on'], e['on'] - .5, e['on'] + e['span'] + e['grow']))
+            if e.get('fallR'): out.append((e['fallR']['curve'][0][0], e['fallR']['curve'][0][0], e['fallR']['gone']))
+            for q in e.get('losses') or []: out.append((q['curve'][0][0], q['curve'][0][0], q['gone']))
+            if e.get('off') is not None and e.get('sinkStyle') == 'burn': out.append((e['off'] - e['burn'], e['off'] - e['burn'], e['off'] + e.get('sink', 2.0)))
+            if e.get('todayFrom') is not None: out.append((e['todayFrom'], e['todayFrom'], e['todayFrom'] + 3))
+        for x in epochs + decals_out + props_out + ([film['satellite']] if film.get('satellite') else []):
+            out.append((x['on'], x['on'], x['on'] + float(x.get('fade') or 1.2)))
+            if x.get('off') is not None: out.append((x['off'], x['off'], x['off'] + float(x.get('offDur') or 1.2)))
+            if x.get('back') is not None: out.append((x['back'], x['back'], x['back'] + float(x.get('backFade') or 4)))
+        for w in WT_STATES: out += [(w['on'], w['on'], w['on'] + .1)] + ([(w['off'], w['off'], w['off'] + .1)] if w.get('off') is not None else [])
+        for w in WT_EVENTS: out.append((w['t0'], w['t0'], w.get('back1') or w['t1']))
+        return out
+    CH_ = scene_changes(); dis_ = []
+    def moves(b, a0, a1):   # a change made before look back b that its clock passes between a0 and a1
+        lo_, hi_ = min(a0, a1), max(a0, a1)
+        return any(s0 < b['t'] and c0 <= hi_ and c1 >= lo_ for s0, c0, c1 in CH_)
+    for b in BACKS:
+        dis_.append([b['t'], b['_dis']])   # (always: today's newer buildings go with it too)
+        for (ta, sa), (tb, sb) in zip(b['keys'], b['keys'][1:]):   # where its clock jumps (a change told while the counter held a year)
+            if tb - ta < 1e-6 and abs(sb - sa) > .02 and ta > b['t'] + 1e-3 and moves(b, sa, sb): dis_.append([round(ta, 3), b['_dis']])
+        if b['end'] < DUR and moves(b, curve_py(b['keys'], b['end'] - 1e-3), b['end']): dis_.append([b['end'], b['_dis']])   # (the counter back where it left)
+    dis_.sort(); film['dissolves'] = []
+    for a_, d_ in dis_:   # (one dissolve into the next that starts before it ends: one, to the second's end)
+        if film['dissolves'] and a_ < film['dissolves'][-1][0] + film['dissolves'][-1][1]:
+            film['dissolves'][-1][1] = round(max(film['dissolves'][-1][1], a_ + d_ - film['dissolves'][-1][0]), 3)
+        else: film['dissolves'].append([round(a_, 3), d_])
+    film['backs'] = [{k_: v_ for k_, v_ in b.items() if not k_.startswith('_')} for b in BACKS]
+    print(f"  look backs: {len(BACKS)}, dissolves at {', '.join(f'{a_:.1f}' for a_, _ in film['dissolves'])} s")
 _px = lambda sc_, first: (38 if sc_ in ('cjk', 'hangul') else 34) if first else (32 if sc_ in ('cjk', 'hangul') else 30)
 film['sub'] = {'a': ['zh_strong', _px(SCRIPTS[0], True)], 'b': ['en', _px(SCRIPTS[-1], False)]}
 if MISSING:

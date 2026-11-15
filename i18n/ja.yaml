@@ -20,6 +20,7 @@ words:
   new: 新築
   chapter: "第{n}章"
   locator: 位置
+  look_back: 回想
   credit_author: 作者     # end-card credits (city.yaml end.credits)
   credit_voice: ナレーション
   credit_music: 音楽

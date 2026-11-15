@@ -20,6 +20,7 @@ words:
   new: nuovi
   chapter: "CAPITOLO {n}"
   locator: LOCALIZZAZIONE
+  look_back: Sguardo indietro
   credit_author: Autore
   credit_voice: Voce
   credit_music: Musica

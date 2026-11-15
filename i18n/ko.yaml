@@ -20,6 +20,7 @@ words:
   new: 신축
   chapter: "제{n}장"
   locator: 위치
+  look_back: 회상
   credit_author: 작가     # end-card credits (city.yaml end.credits)
   credit_voice: 내레이션
   credit_music: 음악

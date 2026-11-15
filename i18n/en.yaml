@@ -21,6 +21,7 @@ words:
   new: new
   chapter: "CHAPTER {n}"
   locator: LOCATOR
+  look_back: Looking back          # the year counter's mark while it shows an earlier year (a look back, docs/STAGING.md)
   credit_author: Author     # end-card credits (city.yaml end.credits)
   credit_voice: Narration
   credit_music: Music

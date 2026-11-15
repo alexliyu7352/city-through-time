@@ -21,6 +21,7 @@ words:
   new: 新建
   chapter: "第 {n} 章"
   locator: 定位
+  look_back: 回看
   credit_author: 作者     # end-card credits (city.yaml end.credits)
   credit_voice: 配音
   credit_music: 配樂

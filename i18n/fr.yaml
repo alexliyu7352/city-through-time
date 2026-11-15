@@ -20,6 +20,7 @@ words:
   new: neufs
   chapter: "CHAPITRE {n}"
   locator: LOCALISATION
+  look_back: Retour en arrière
   credit_author: Auteur     # end-card credits (city.yaml end.credits)
   credit_voice: Narration
   credit_music: Musique
