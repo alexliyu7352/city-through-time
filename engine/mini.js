@@ -352,11 +352,12 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
         // footprint fills for a pitched roof; slab: [height m from, to, its length over its width from, its width at most m, the
         // share of its least rectangle it fills from]; point: a point tower [from m, its footprint at most m2, its length over its
         // width at most]; pink, grey: the shares of the old blocks hipped in pastel pink and in grey tile (the rest flat in their
-        // own paint: grey stays a minority), drawn for a whole street block (cluster: roofClusters); slabOchre: the share of the
+        // own paint: grey stays a minority), drawn for a whole street block (cluster: roofClusters), and in any district (quota:
+        // [its size m, its grey tile's share of its roofs' area at most]) no more; slabOchre: the share of the
         // estates under ochre gables, hallOchre: of the near-rectangular large halls under ochre hips; pitch: a pitched roof's
         // (roofsMesh; tiles: its courses [their spacing along the slope m, their shade, from this many courses a pixel toward their
         // mean, there by twice that], FACADE_GLSL); paint: the roofs' paints (roofPaint)
-        roofKinds: { old: 12, oldH: 26, oldA: [40, 3000], rect: .8, slab: [12, 30, 2.4, 18, .7], point: [40, 950, 1.5], pink: .3, grey: .5, slabOchre: .2, hallOchre: .1, cluster: [60, 6, 30, [3.5, .2], 12],
+        roofKinds: { old: 12, oldH: 26, oldA: [40, 3000], rect: .8, slab: [12, 30, 2.4, 18, .7], point: [40, 950, 1.5], pink: .3, grey: .35, slabOchre: .2, hallOchre: .1, cluster: [60, 8, 30, [5, .25], 15], quota: [500, .3],
           pitch: { deg: [30, 22], maxH: 5, share: .35, minW: 4, cover: .6, gable: .3, tiles: [.9, .16, .35] },
           paint: { light: .3, slab: ['#fbf6f0'], slabK: .9, glass: ['#e7d8c5', '#e6dbd9', '#e0d8d4'], hall: ['#9da3ab', .7], grey: ['#8f9098', '#94959a', '#8a8b92'], tile: ['#8b8e96', '#94989f', '#8f9095'], lane: ['#8d888c', '#888588'],
             pink: ['#bf9c99', '#d6a49f', '#cca19c'], ochre: ['#ef916c', '#f19c6e'] } } } },
@@ -517,7 +518,8 @@ const roofFlat = (kind, kd) => kind === 7 ? 6 : kind === 9 ? 1 : kind === 10 ? (
 // height, square to each other and a lane apart, are one street block; two slabs of about one height, parallel, a row's spacing
 // apart, are one estate; each takes its whole neighbourhood's choice, by the least hash of its members, so a block reads as one
 // patch of roofs, an estate as rows of one roof (no building its own draw among its neighbours). M: [x, z, bearing, L, W, height
-// m, -1 or -2, hash] each, in the model's units; s: the model's scale. Returns each member's neighbourhood hash
+// m, -1 or -2, hash] each, in the model's units; s: the model's scale. Returns each member's neighbourhood hash and its
+// neighbourhood (one member's index)
 function roofClusters(R, M, s) {
   const C = R.cluster, cell = C[0] * s, grid = new Map(), up = new Int32Array(M.length), q = new Float64Array(M.length);
   for (let i = 0; i < M.length; i++) { up[i] = i; const k = Math.floor(M[i][0] / cell) * 100003 + Math.floor(M[i][1] / cell); (grid.get(k) || grid.set(k, []).get(k)).push(i); }
@@ -535,8 +537,8 @@ function roofClusters(R, M, s) {
         if (gap(a, b) > (a[6] === -2 ? C[2] : C[1]) * s) continue;
         const ra = root(i), rb = root(j); if (ra !== rb) up[Math.max(ra, rb)] = Math.min(ra, rb); } } }
   const lo = new Float64Array(M.length).fill(Infinity); for (let i = 0; i < M.length; i++) { const r = root(i); lo[r] = Math.min(lo[r], M[i][7]); }
-  for (let i = 0; i < M.length; i++) { const t = Math.sin(lo[root(i)] * 1e4 + 91.7) * 43758.5453; q[i] = t - Math.floor(t); }
-  return q; }
+  const top = new Int32Array(M.length); for (let i = 0; i < M.length; i++) { top[i] = root(i); const t = Math.sin(lo[top[i]] * 1e4 + 91.7) * 43758.5453; q[i] = t - Math.floor(t); }
+  return { q, root: top }; }
 // a flat roof's paint by its kind (today.roofKinds paint): its wall's own (1, 11), its wall's lighter (2: light, toward white), a
 // near-white cream with its wall's tint (3: slab, slabK: the cream, its share), warm white (4: glass), its wall's toward a light
 // warm grey (5: hall [the grey, its share]),
@@ -576,7 +578,7 @@ function colourToday(mesh, T = TODAY.roman) {
   const K = T.kinds, kind = K ? new Float32Array(n) : null, paint = K ? new Float32Array(n * 3) : null, RK = K && T.roofKinds, rkind = RK ? new Uint8Array(n) : null, map = !!RK && roofMapOn();
   if (K) { const P = g.attributes.position, A = g.attributes.aCtr, s2 = (T.scale || 1e-4) ** 2, s1 = T.scale || 1e-4, KC = {}, pick = (a, x) => (KC[a] ||= C(K[a]))[Math.floor(x * K[a].length) % K[a].length];
     let i0 = 0, y0 = 1e9; for (let i = 0; i < n; i++) { const y = d.getX(i); if (y > 1 && d.getW(i) < .5 && y < y0) y0 = y; } g.userData.y0 = y0;   // (y0: the data's first year)
-    const recs = [], mem = [];   // (each record [i0, i1, its kind of building, wall, roof, roof kind or neighbourhood, its hash]; the neighbourhoods' members)
+    const recs = [], mem = [], cellA = new Map(), QC = RK ? RK.quota[0] * s1 : 1, cellOf = (x, z) => Math.floor(x / QC) * 100003 + Math.floor(z / QC);   // (each record [i0, i1, its kind of building, wall, roof, roof kind or neighbourhood, its hash]; the neighbourhoods' members; each district's roofs' m2)
     const end = i1 => { let ar = 0, x0 = 1e9, z0 = 1e9, x1 = -1e9, z1 = -1e9;   // (its footprint: the area of its roof's triangles; its extent)
       for (let j = i0; j + 2 < i1; j += 3) if (nrm.getY(j) > .6) ar += Math.abs((P.getX(j + 1) - P.getX(j)) * (P.getZ(j + 2) - P.getZ(j)) - (P.getX(j + 2) - P.getX(j)) * (P.getZ(j + 1) - P.getZ(j))) / 2;
       for (let j = i0; j < i1; j++) { const x = P.getX(j), z = P.getZ(j); if (x < x0) x0 = x; if (x > x1) x1 = x; if (z < z0) z0 = z; if (z > z1) z1 = z; }
@@ -587,10 +589,20 @@ function colourToday(mesh, T = TODAY.roman) {
       const [wall, roof] = kindPaint(K, k, hm, q, q2, pick); let rk = 0;
       if (RK) { let f_ = null; const t = Math.sin(h * 1e4 + 17.3) * 43758.5453, form = () => f_ ||= recordForm(P, nrm, i0, i1, ar, s1);
         rk = roofClass(RK, { k, hm, ar: arm, old: yr > 1 && yr <= y0 + RK.old, q: t - Math.floor(t) }, form);
-        if (rk < 0) { const { lr } = form(); if (lr) mem.push([lr.cx, lr.cz, lr.th, lr.L, lr.W, hm, rk, h, recs.length]); else rk = 1; } }
+        if (rk < 0) { const { lr } = form(); if (lr) mem.push([lr.cx, lr.cz, lr.th, lr.L, lr.W, hm, rk, h, recs.length, arm]); else rk = 1; }
+        const c_ = cellOf((x0 + x1) / 2, (z0 + z1) / 2); cellA.set(c_, (cellA.get(c_) || 0) + arm); }
       recs.push([i0, i1, k, wall, roof, rk, h]); i0 = i1; };
     for (let i = 1; i <= n; i++) if (i === n || A.getX(i) !== A.getX(i - 1) || A.getY(i) !== A.getY(i - 1)) end(i);
-    if (RK) { const cq = roofClusters(RK, mem, s1); mem.forEach((m, i) => { recs[m[8]][5] = roofOfCluster(RK, m[6], cq[i]); }); }
+    if (RK) { const { q: cq, root } = roofClusters(RK, mem, s1), CL = new Map();
+      mem.forEach((m, i) => { let c = CL.get(root[i]); if (!c) CL.set(root[i], c = { kind: roofOfCluster(RK, m[6], cq[i]), q: cq[i], a: new Map(), m: [] });
+        const k = cellOf(m[0], m[1]); c.a.set(k, (c.a.get(k) || 0) + m[9]); c.m.push(m[8]); });
+      // (roofKinds quota [the district m, its grey's share at most]: a district's grey tile blocks no more than this share of all
+      // its roofs' area; a neighbourhood that would take any district it lies in past it, in their hashes' order, flat in its own
+      // paints: grey stays a minority in every district, not only on the whole)
+      const grey = new Map(); for (const c of [...CL.values()].filter(c => c.kind === 7).sort((a, b) => a.q - b.q)) {
+        if ([...c.a].some(([k, a]) => (grey.get(k) || 0) + a > RK.quota[1] * (cellA.get(k) || 0))) { c.kind = 1; continue; }
+        for (const [k, a] of c.a) grey.set(k, (grey.get(k) || 0) + a); }
+      for (const c of CL.values()) for (const r of c.m) recs[r][5] = c.kind; }
     for (const [j0, j1, k, wall, roof0, rk, h] of recs) { let w = wall, roof = roof0;
       if (RK) { const fk = roofFlat(rk, k); roof = map ? roofMapC(fk) : roofPaint(RK, fk, wall, (h * 5.31) % 1); if (map) w = ROOF_MAP[0]; rkind.fill(rk, j0, j1); }
       for (let j = j0; j < j1; j++) { const c = nrm.getY(j) > .6 ? roof : w; paint[j * 3] = c.r; paint[j * 3 + 1] = c.g; paint[j * 3 + 2] = c.b; kind[j] = k; } } }
@@ -1618,7 +1630,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
             // under a setback a flat roof is 11 (its levels each a flat roof); a split footprint's units each their own: an old low
             // grey-tiled block's inner units lane houses' small gables (8) in a ring of flat roofs in their own paints (1), as the
             // paintings' perimeter blocks, any other block's units flat in their own paints; the roof map's tints on them
-            const old_ = !!RKS && rk === 7 && yr > 1 && yr <= RY0 + RKS.old && hm < RKS.oldH, unitK = [];
+            const big_o = ar_ / scale / scale > RKS?.oldA?.[1] || kd0 === 3, old_ = !!RKS && yr > 1 && yr <= RY0 + RKS.old && hm < RKS.oldH && (rk === 7 || (big_o && rk !== 9 && rk !== 10 && ((h0 * 3.7e3) % 1 + 1) % 1 < RKS.grey)), unitK = [];   // (a lane-house block: an old low block of grey tile, or a large old low one (a hall's footprint, one past an old block's size: no neighbourhood draws for it) by its own draw)
             if (RO_) RO_.plan = M_.kind;
             if (RO_ && !split_ && RO_.k <= 5 && /^(podium|setback)/.test(M_.kind)) { RO_.k = 11;
               if (ROOF_MAPON) { const M11 = roofMapC(11); for (let i = i0; i < i1; i++) if (NN.getY(i) > .6) G_.attributes.color.setXYZ(i, M11.r, M11.g, M11.b); G_.attributes.color.needsUpdate = true; rc = M11;
