@@ -3690,6 +3690,13 @@ for e in eras_out:
     print(f'  landmarks on a platform over 30% of their height (raised as built, or let into the hill: site: cut? docs/MODEL.md, Landmarks) in {e["id"]}: '
           + ', '.join(f'{who_.get((x_, z_), f"at {x_:.4f},{z_:.4f}")} {r_:.0%} ({f_:g} m under {h_:g} m)' for x_, z_, r_, f_, h_ in sorted(pl_, key=lambda q_: -q_[2])[:8])
           + (f' and {len(pl_) - 8} more (logs/clipcheck.json)' if len(pl_) > 8 else ''))   # (the tallest first; a city of many slopes would fill the log)
+# a tower standing in a gate's opening (clipcheck towers_in_gates_at: a wall body of another building on the middle of a gate's
+# passage, most often a corner tower on the point of the wall's line the gate lies on): named, not a fault; move the gate or the
+# point of the line, or leave it where the sources have it so
+for e in eras_out:
+    gi_ = (_plat.get(e['id']) or {}).get('towers_in_gates_at') or []
+    if gi_: print(f"  warning: {e['id']}: {len(gi_)} gate passage(s) with a tower standing in them (clipcheck towers_in_gates_at, model x, z): "
+                  + ', '.join(f'{x_:.4f},{z_:.4f}' for x_, z_ in gi_[:6]) + ': a gate on a point of the wall\'s line takes that point\'s tower (docs/MODEL.md walls)')
 # living moments: one at a time, never with another picture (footage, a panel, a card); each needs its picture, made from its own shot
 _lw = sorted([(x_['on'] - x_['arrive'], x_['on'] + x_['reveal'] + x_['hold'] + x_['out'] + x_['back'], x_['id']) for x_ in living_out])
 for (a0_, a1_, ai_), (b0_, b1_, bi_) in zip(_lw, _lw[1:]):

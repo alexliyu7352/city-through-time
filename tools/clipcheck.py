@@ -38,6 +38,8 @@ Listed, not counted (the era's line and clipcheck.json; compile names them):
                       than max(3 road widths, 30 m): not a road under an arch or through a gate). citygen leaves such stretches
                       out; what is listed is a road it let through (a PASSABLE kind, through: true) or a body it could not close:
                       the audience sees a road through the monument. Move the road, or say why
+  towers_in_gates_at  a gate's dark passage with a wall body of another building on its middle: a tower standing in the gate's
+                      opening (a corner tower on the point of the wall's line a gate lies on)
   tall_platform_at    landmarks levelled on a slope whose platform (site: raised) shows over 30% of the landmark's height: a podium
                       or a terrace as built, or a building let into the hill that writes site: cut (docs/MODEL.md, Landmarks; the
                       ground compile levelled under the landmarks on a slope has none: pipeline/grade.py)
@@ -330,6 +332,17 @@ def main():
         R['tall_platform_at'] = [[x_, z_, round(r_, 2), round(f_ / S, 1), round(h_ / S, 1)] for (x_, z_), (r_, f_, h_) in sorted(tp_.items(), key=lambda q: -q[1][0])]
         if tp_: notes[e['id']] += f'; {len(tp_)} landmark(s) on a platform over {FOUND_MAX:.0%} of their height (tall_platform_at)'
         if R.get('streets_through_landmarks_at'): notes[e['id']] += f"; {len(R['streets_through_landmarks_at'])} street(s) through a landmark (streets_through_landmarks_at)"
+        # towers_in_gates_at (a list, not a fault): a gate's dark passage (citygen walls, part DARK) with a wall body of another
+        # building standing on its middle: a tower in the gate's opening (a corner tower on a point of the wall's line the gate
+        # lies on). [passage x, z]. Known: Rome's another_centre, its gate at 12.5015, 41.8733 on a point of the Aurelian runs
+        dk_ = [p for p in prims if p[11] == DARK and p[0] in SOLID and len(p) > 16 and p[4] <= p[12] + 1e-9]   # (passages on the ground: not a door up in a tower's hall)
+        if dk_:
+            wb_ = [p for p in prims if p[11] == WALL and p[0] in SOLID and len(p) > 16]; wt_ = STRtree([plan(p) for p in wb_]); gi_ = []
+            for d_ in dk_:
+                c_ = shapely.Point(d_[1], d_[2])
+                if any((wb_[j][15], wb_[j][16]) != (d_[15], d_[16]) and plan(wb_[j]).contains(c_) for j in wt_.query(c_)): gi_.append([round(d_[1], 4), round(d_[2], 4)])
+            R['towers_in_gates_at'] = gi_
+            if gi_: notes[e['id']] += f'; {len(gi_)} gate passage(s) with a tower standing in them (towers_in_gates_at)'
         xb_ = body((FAB, LMK, WALL, EARTH))
         def wall_ends(p):   # a wall piece's two ends (a thin long piece of a city's or a court's wall), else None
             if p[11] not in (WALL, LMK) or min(p[5], p[6]) > 8 * S or max(p[5], p[6]) < 3 * min(p[5], p[6]): return None
