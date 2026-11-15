@@ -273,13 +273,10 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // warm off-white, glass pale blue-silver, metal light silver; glbParts: a landmark's spheres, capsules and domes (by their
       // parts' names) in the look's rose accent
       glbC: { stone: '#ece6dc', glass: '#a2b6cc', metal: '#d3d9de', dark: '#8f9295', roof: '#d9d6cf' }, glbParts: [['sphere|capsule|dome', '#d68a98']], roofs: true, backdropH: .04,   // (backdropH: today's city behind a period city, its heights this share: a plan on the board)
-      // today's rooftops by roof kind (roofsMesh, the paintings' catalogue): one large low plant room on a mid- or high-rise's flat
-      // roof (main: its share of the roof's area [from, more]; mainH: its height m [from, more]); a point tower's round caps (caps:
-      // their diameter's share of the roof's width [from, more], their height m [from, more]); a slab's long rounded plant room
-      // (capsule: its length's share of the roof's [from, more], its width's, its height m); the old fabric's grey roof's dark
-      // hatch (slot: its share of the roof's area, its paint's times); mainK, unitK: a plant room's and a small piece's paint, its
-      // roof's own times one of these (each its own)
-      roofUnits: { main: [.2, .15], mainH: [2.4, .8], mainK: [.86, .9, .94, .88, .92], caps: [.25, .15, 1.2, .6], capsule: [.3, .3, .4, 1.8], slot: [.06, .55], unitK: [.94, .97, 1, .96, .98] },
+      // today's rooftops (roofsMesh): the plant room (main: its share of the roof's sides, [from, more]; mainH: its height m [from, more]), small units on roofs from area m2
+      // (n: how many [from, to], size and h: m [from, more]); mainK, unitK: a plant room's and a unit's paint, its roof's own times one of these (each its own).
+      // With the roof kinds on (todayLight roofKinds), today.roofKinds units in their place
+      roofUnits: { main: [.14, .1], mainH: [2.5, 1.5], mainK: [.86, .9, .94, .88, .92], area: 250, n: [1, 3], size: [2.5, 2.5], h: [1.4, 1], unitK: [.88, .92, .96, .9, .94] },
       // today's city the subject, a coloured miniature city in a clear warm day: a warm sun with soft-edged shadows (sunEl,
       // shadowR: the shadow's softening in its map's texels), a cool sky in the shade (sky, skyC), the whole picture's exposure, a
       // gentle filmic curve, no grain; edge: every edge catching the light as a bevel (a pale line, close only: afar it outlined
@@ -346,7 +343,8 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
           oldWalls: ['#dccfc2', '#d2c6b8', '#ecc8b6', '#e2d6c8', '#e6c2b2'], oldRoofs: ['#868c94', '#8c9199', '#80868e', '#90959c'],
           big: ['#ece2d4', '#f2d8ca', '#efe0cc'], bigRoofs: ['#9da3ab', '#979ea6', '#a3a8af'],
           glass: ['#adbed0', '#b4c3d4', '#bbc6d0', '#a9bacc', '#b8c6d4'], towerRoofs: ['#d6d4cf', '#cccbc7'] },
-        // each building's roof kind (roofClass: the paintings' catalogue of roofs), by its data alone: old: a building counts as
+        // each building's roof kind (roofClass: the paintings' catalogue of roofs; drawn only with todayLight roofKinds on, a
+        // specimen sheet's (tools/roofsheet.py) until every kind passes there), by its data alone: old: a building counts as
         // old up to this many years from the data's first; oldH: an old block's height below this m (3 to 7 storeys, as the
         // data's estimated heights read them), oldA: its footprint m2 [from, to]; rect: the share of its least rectangle a
         // footprint fills for a pitched roof; slab: [height m from, to, its length over its width from, its width at most m, the
@@ -356,8 +354,14 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
         // [its size m, its grey tile's share of its roofs' area at most]) no more; slabOchre: the share of the
         // estates under ochre gables, hallOchre: of the near-rectangular large halls under ochre hips; pitch: a pitched roof's
         // (roofsMesh; tiles: its courses [their spacing along the slope m, their shade, from this many courses a pixel toward their
-        // mean, there by twice that], FACADE_GLSL); paint: the roofs' paints (roofPaint)
+        // mean, there by twice that], FACADE_GLSL); paint: the roofs' paints (roofPaint); units: the rooftop pieces by roof kind
+        // (roofsMesh): one large low plant room on a mid- or high-rise's flat roof (main: its share of the roof's area [from, more];
+        // mainH: its height m [from, more]); a point tower's round caps (caps: their diameter's share of the roof's width [from,
+        // more], their height m [from, more]); a slab's long rounded plant room (capsule: its length's share of the roof's [from,
+        // more], its width's, its height m); the old fabric's grey roof's dark hatch (slot: its share of the roof's area, its
+        // paint's times); mainK, unitK: a plant room's and a small piece's paint, its roof's own times one of these (each its own)
         roofKinds: { old: 12, oldH: 26, oldA: [40, 3000], rect: .8, slab: [12, 30, 2.4, 18, .7], point: [40, 950, 1.5], pink: .3, grey: .35, slabOchre: .2, hallOchre: .1, cluster: [60, 8, 30, [5, .25], 15], quota: [500, .3],
+          units: { main: [.2, .15], mainH: [2.4, .8], mainK: [.86, .9, .94, .88, .92], caps: [.25, .15, 1.2, .6], capsule: [.3, .3, .4, 1.8], slot: [.06, .55], unitK: [.94, .97, 1, .96, .98] },
           pitch: { deg: [30, 22], maxH: 5, share: .35, minW: 4, cover: .6, gable: .3, pieces: 6, tiles: [.9, .16, .35] },
           paint: { light: .3, slab: ['#fbf6f0'], slabK: .9, glass: ['#e7d8c5', '#e6dbd9', '#e0d8d4'], hall: ['#9da3ab', .7], grey: ['#8f9098', '#94959a', '#8a8b92'], tile: ['#8b8e96', '#94989f', '#8f9095'], lane: ['#8d888c', '#888588'],
             pink: ['#bf9c99', '#d6a49f', '#cca19c'], ochre: ['#ef916c', '#f19c6e'] } } } },
@@ -370,6 +374,9 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
 // today's light (a material's todayLight, a still's own over it): see looks.maquette
 // (a light preset over it, todayPreset: one of the material's presets, e.g. the golden hour; the film or ?pic= names it)
 const todayL = () => MAT && MAT.todayLight ? { ...MAT.todayLight, ...((MAT.presets || {})[FILM_PIC.todayPreset] || {}), ...(FILM_PIC.todayLight || {}) } : null;
+// (todayLight roofKinds: each building's roof by its kind (today.roofKinds: roofClass, roofsMesh); off, every flat roof in its
+// building's paint with its plant room and units, the old fabric's grey tile in rows)
+const kindsOn = () => !!(todayL() && todayL().roofKinds && MAT && MAT.today && MAT.today.roofKinds);
 // (todayLight all: its light, air, lens and water are the look's in every shot, the period cities' too; else only while today's city is the subject)
 const allDay = () => !!(todayL() && todayL().all), TS_GLSL = () => allDay() ? '1.' : 'uTodayK.y * (1. - smoothstep(.3, .6, uTodayK.z))';
 // a still's own picture over the film's (?pic={json}: keys of FILM_PIC, an object merged into its own, e.g. pic={"dof":{"A":6}}):
@@ -556,7 +563,7 @@ function topArea(P, N, i0, i1) { const pa = P.array, na = N.array; let ar = 0;
 // the roof kinds' map (todayLight roofMap: a check of the assignment, each roof tinted by its kind, the walls one light grey):
 // [the walls, kind 1, .., kind 11]; the grey kinds (6, 7, 8) dark
 const ROOF_MAP = ['#d8d8d8', '#f2c200', '#8e44ad', '#40b0ff', '#30e0a0', '#8a5a2e', '#4040a0', '#101010', '#a0206a', '#ff7fa8', '#ff6a00', '#e02020'].map(c => new THREE.Color(c));
-const roofMapOn = () => !!(todayL() && todayL().roofMap);
+const roofMapOn = () => kindsOn() && !!todayL().roofMap;
 // (todayLight roofMap a colour, '#rrggbb': every roof that one colour, its pieces and pitched roofs with it: two renders that differ
 // only there give a frame's roof pixels, a mask for a check that nothing else changed)
 const ROOF_MAP1 = {}, roofMapC = k => { const v = todayL() && todayL().roofMap; return typeof v === 'string' ? (ROOF_MAP1[v] ||= new THREE.Color(v)) : ROOF_MAP[k]; };
@@ -575,7 +582,7 @@ function colourToday(mesh, T = TODAY.roman) {
   // T.roofKinds: each building's roof kind (roofClass; an old block's and a slab's its neighbourhood's, roofClusters), a byte a
   // vertex in g.userData.roofKind (read on the CPU only: a replacement footprint's children take their parent's, todayFootprints;
   // roofsMesh draws it, or its flat member, on each record), its top in the paint of the kind it shows flat (roofPaint, roofFlat)
-  const K = T.kinds, kind = K ? new Float32Array(n) : null, paint = K ? new Float32Array(n * 3) : null, RK = K && T.roofKinds, rkind = RK ? new Uint8Array(n) : null, map = !!RK && roofMapOn();
+  const K = T.kinds, kind = K ? new Float32Array(n) : null, paint = K ? new Float32Array(n * 3) : null, RK = K && kindsOn() && T.roofKinds, rkind = RK ? new Uint8Array(n) : null, map = !!RK && roofMapOn();
   if (K) { const P = g.attributes.position, A = g.attributes.aCtr, s2 = (T.scale || 1e-4) ** 2, s1 = T.scale || 1e-4, KC = {}, pick = (a, x) => (KC[a] ||= C(K[a]))[Math.floor(x * K[a].length) % K[a].length];
     let i0 = 0, y0 = 1e9; for (let i = 0; i < n; i++) { const y = d.getX(i); if (y > 1 && d.getW(i) < .5 && y < y0) y0 = y; } g.userData.y0 = y0;   // (y0: the data's first year)
     const recs = [], mem = [], cellA = new Map(), QC = RK ? RK.quota[0] * s1 : 1, cellOf = (x, z) => Math.floor(x / QC) * 100003 + Math.floor(z / QC);   // (each record [i0, i1, its kind of building, wall, roof, roof kind or neighbourhood, its hash]; the neighbourhoods' members; each district's roofs' m2)
@@ -1582,8 +1589,8 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     const MS = todayL() && todayL().massing; MASS.kinds = {}; MASS.why = {}; MASS.list = []; MASS.kept = 0; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
     const geoOf = P => cityMesh && cityMesh.geometry.attributes.position === P ? cityMesh.geometry : FPT.mesh && FPT.mesh.geometry.attributes.position === P ? FPT.mesh.geometry : null;
     const roofC = (P_, i0, i1) => { const G_ = geoOf(P_), A_ = G_ && G_.attributes.color, N_ = G_ && G_.attributes.normal; if (A_) for (let i = i0; i < i1; i++) if (N_.getY(i) > .6) return new THREE.Color().fromArray(A_.array, i * 3); return null; };   // (a record's roof paint, its top's vertex colour: its pieces take it)
-    const RU = MAT.roofUnits || null;   // (the rooftop pieces by roof kind: below)
-    const RKS = film && MAT && MAT.today && MAT.today.roofKinds && cityMesh ? MAT.today.roofKinds : null, RY0 = cityMesh ? cityMesh.geometry.userData.y0 : 0, ROOF_MAPON = !!RKS && roofMapOn();   // (today's roof kinds: roofClass)
+    const RKS = film && kindsOn() && cityMesh ? MAT.today.roofKinds : null, RY0 = cityMesh ? cityMesh.geometry.userData.y0 : 0, ROOF_MAPON = !!RKS && roofMapOn();   // (today's roof kinds: roofClass)
+    const RU = (RKS ? RKS.units : MAT.roofUnits) || null;   // (the rooftop pieces, by roof kind with the kinds on: below)
     const TK = (film && MAT && MAT.today ? { ...TODAY[today], ...MAT.today } : TODAY[today] || {}).kinds, KC_ = {}, pickK = (a_, x) => (KC_[a_] ||= TK[a_].map(c_ => new THREE.Color(c_)))[Math.floor(x * TK[a_].length) % TK[a_].length];   // (today's kinds and paints: a split unit's, kindPaint)
     // a pitched roof (roofKinds pitch: [its pitch in degrees, a slab's], its height at most m and at most this share of the
     // building's, the least width m it stands on, the least share of the rectangle it covers, the share of grey tile roofs
@@ -1688,6 +1695,21 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
             hull = hull2(T_[2] ? Array.from({ length: 12 }, (_, k) => at(Math.cos(k * Math.PI / 6) * a, Math.sin(k * Math.PI / 6) * b)) : [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([p, q]) => at(a * p, b * q))); } } } }
       if (split_) continue;   // (a split footprint's roof pieces: none; its units carry their parapets)
       if (pitched_ && !massed_ && pitchIt()) { lips.length = nl0; rims.length = nr0; continue; }
+      if (!RKS) {   // the roof kinds off (todayLight roofKinds): from 20 m a plant room or two, each its own size, height and step of its
+        // roof's paint, and on a large roof a few small units (roofUnits), by the roof's hash
+        if (hm >= 20) { const q_ = ((h0 * 1e4) % 1 + 1) % 1, k = RU ? RU.main[0] + RU.main[1] * q_ : .2 + .16 * q_, mH = RU ? RU.mainH : [3, 2.5];   // (plant rooms: one or two, each its own size, height and step of its roof's paint)
+          const w1 = 2 * a * k, d1 = 2 * b * k * (.7 + .5 * ((q_ * 3.1) % 1));   // (where it fits: a curved slab's box centre may lie outside it)
+          for (const [u1, v1] of RU ? [[.15, 0], [0, 0], [-.3, 0], [.4, 0], [-.5, 0], [0, .3], [0, -.3]] : [[.15, 0]]) { const P1 = at(a * u1, b * v1);
+            if (!RU || fits(P1[0], P1[1], w1 / 2, d1 / 2, .8 * scale)) { list.push([P1[0], y1, P1[1], w1, (mH[0] + mH[1] * ((q_ * 7.3) % 1)) * ex * scale, d1, yr, th, q_, rc]); placed.push([a * u1, b * v1, w1 / 2, d1 / 2]); break; } }
+          const P2 = [cx - c * a * .45, cz - sn * a * .45 + b * .3 * c], w2 = 2 * a * .12, d2 = 2 * b * .16;
+          if (a * b > 150 * scale * scale && q_ > .3 && (!RU || fits(P2[0], P2[1], w2 / 2, d2 / 2, .8 * scale))) list.push([P2[0], y1, P2[1], w2, 2.4 * ex * scale, d2, yr, th, (q_ * 5.7) % 1, rc]); }
+        if (RU && 4 * a * b >= RU.area * scale * scale) {   // small units (the look's roofUnits): a few boxes, each its own size and place, by the roof's hash
+          const hh = k => { const t = Math.sin(h0 * 1e5 + k * 78.233) * 43758.5453; return t - Math.floor(t); }, n = RU.n[0] + Math.floor(hh(1) * (RU.n[1] - RU.n[0] + 1));
+          for (let k = 0, tries = 0; k < n && tries < 4 * n; tries++) { const s_ = (RU.size[0] + RU.size[1] * hh(10 + tries)) * scale, hu = s_ / 2, hv = s_ * (.6 + .5 * hh(20 + tries)) / 2;
+            const u = (hh(30 + tries) * 2 - 1) * Math.max(0, a - hu - 1.4 * scale), v = (hh(40 + tries) * 2 - 1) * Math.max(0, b - hv - 1.4 * scale), [x, z] = at(u, v);
+            if (placed.some(([pu, pv, ph, pw]) => Math.abs(u - pu) < ph + hu + .6 * scale && Math.abs(v - pv) < pw + hv + .6 * scale) || !fits(x, z, hu, hv, .8 * scale)) continue;
+            units.push([x, y1, z, 2 * hu, (RU.h[0] + RU.h[1] * hh(50 + tries)) * ex * scale, 2 * hv, yr, th, hh(60 + tries), rc]); placed.push([u, v, hu, hv]); k++; } }
+        continue; }
       // the pieces on a flat roof, by the kind it shows (roofUnits; the paintings' catalogue): one large low plant room on a mid- or
       // high-rise's roof (1, 4, 11; main: its share of the roof's area [from, more], mainH: its height m [from, more]), at times a
       // small one in a corner; on a point tower's one or two round caps (2; caps: their diameter's share of the roof's width [from,
@@ -2218,7 +2240,7 @@ function FACADE_GLSL(S) {
   // a faint grain and fine horizontal seams, close only; roof: [a flat roof's mottle, its size m, its membrane's rolls m, their
   // seam's shade, the parapet's top (times)]: a membrane in rolls, its parapet's top lighter; glassSky: [its strength, low, high
   // (sRGB)]: a tower's glass the sky's gradient, paler low, bluer high. Each by pixels, gone to its mean as a pixel outgrows it
-  const WM_ = todayL() && todayL().walls, RM_ = todayL() && todayL().roof, GS_ = todayL() && todayL().glassSky, TL_ = MAT && MAT.today && MAT.today.roofKinds && MAT.today.roofKinds.pitch && MAT.today.roofKinds.pitch.tiles;
+  const WM_ = todayL() && todayL().walls, RM_ = todayL() && todayL().roof, GS_ = todayL() && todayL().glassSky, KO_ = kindsOn(), TL_ = KO_ && MAT.today.roofKinds.pitch && MAT.today.roofKinds.pitch.tiles;   // (KO_: the roof kinds on, todayLight roofKinds)
   // todayLight facade: a facade's architecture, crisp close and simpler with distance, never speckle: base [the ground floor's
   // height m, its tone (times), from which height m]: a taller storey in a greyer, darker stone, its openings wide; cap [its
   // height m, its light (times), the shadow line under it (times), its least height in fwidth's metres]: a parapet's coping
@@ -2300,12 +2322,15 @@ function FACADE_GLSL(S) {
           float sy_ = (fract(ym_ / ${f(WM_[2])} + .5) - .5) * ${f(WM_[2])}, fy0_ = max(fwidth(ym_), 1e-4);   // (its courses' seams, box-filtered, their mean afar)
           c_ *= 1. - ${f(WM_[3])} * mix(clamp((sy_ + .04) / fy0_ + .5, 0., 1.) - clamp((sy_ - .04) / fy0_ + .5, 0., 1.), ${f(.08 / WM_[2])}, smoothstep(.25, .5, fy0_ / ${f(WM_[2])})); }
         ` : ''}diffuseColor.rgb = mix(diffuseColor.rgb, c_, show_);${RM_ ? `
-      } else if (n_.y > .9 && kd_ < 4.5 && show_ > .01) {   // a flat roof's membrane (todayLight roof; none on today's plan behind a period city: nothing to see, nothing to pay): mottled, in rolls along one of the building's axes
+      } else if (n_.y > .9 && ${KO_ ? 'kd_ < 4.5' : 'kd_ > .5'} && show_ > .01) {   // a flat roof's membrane (the old fabric's too with the roof kinds on) (todayLight roof; none on today's plan behind a period city: nothing to see, nothing to pay): mottled, in rolls along one of the building's axes
         vec2 m_ = vWP.xz / uScaleM, rd_ = fract(sin(dot(aCtrV, vec2(127.1e3, 311.7e3))) * 43758.5453) < .5 ? vec2(1., 0.) : vec2(0., 1.); float v_ = dot(m_, rd_), fv_ = max(fwidth(v_), 1e-4), g_ = (fract(v_ / ${f(RM_[2])} + .5) - .5) * ${f(RM_[2])};
         float mo_ = 1. + ${f(RM_[0])} * 2. * (mtN(m_ / ${f(RM_[1])} + 5.3) - .5) * (1. - smoothstep(.3, 1., pxm_ / ${f(RM_[1])}));
         float sm_ = mix(clamp((g_ + .05) / fv_ + .5, 0., 1.) - clamp((g_ - .05) / fv_ + .5, 0., 1.), ${f(.1 / RM_[2])}, smoothstep(.25, .5, fv_ / ${f(RM_[2])}));
         diffuseColor.rgb *= mix(1., mo_ * (1. - ${f(RM_[3])} * sm_), show_);` : ''}
-      }${TL_ ? `
+      }${KO_ ? '' : ` else if (n_.y > .9 && kd_ < .5) {   // the old fabric's roof (the roof kinds off): grey tile in rows, close
+        float px_ = pxm_ / 1.2, r_ = abs(fract(dot(vWP.xz, normalize(vec2(1., .2))) / uScaleM / 1.2) - .5) * 2.;
+        diffuseColor.rgb *= 1. - show_ * (.14 * smoothstep(.6, .95, r_) * (1. - smoothstep(.3, .6, px_)) + .025 * smoothstep(.3, .6, px_));   // (afar: their share)
+      }`}${TL_ ? `
       if (kd_ > 4.5 && n_.y > .3 && n_.y < .99 && show_ > .01) {   // a pitched roof's tiles (roofKinds pitch tiles): courses along its eaves, lines of one height on the slope, box-filtered, their mean afar
         float t_ = (vWP.y - vBase) / uScaleM / ${EX} / (${f(TL_[0])} * sqrt(max(1. - n_.y * n_.y, 1e-4))), ft_ = max(fwidth(t_), 1e-4), g_ = fract(t_ + .5) - .5;
         float ln_ = mix(clamp((g_ + .1) / ft_ + .5, 0., 1.) - clamp((g_ - .1) / ft_ + .5, 0., 1.), .2, smoothstep(${f(TL_[2])}, ${f(2 * TL_[2])}, ft_));
