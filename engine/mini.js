@@ -298,11 +298,12 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // by the sunlit ground (wallShade: [the sky light's own colour kept, times, its tint, the shade's saturation]: a pastel in shade still a pastel); the water
       // (water: the shallows along the banks, the deep, how far from the bank the deep begins in metres, its roughness (the sun's
       // glint broad and soft), its gloss [at a steep view, toward a grazing one, the sky's colour in it]); trees: its street and
-      // park trees (flockAt), natural greens; crown: today's crowns' shade side and sunlit cap (flock crown's), lighter and yellower than a
-      // period grove's; streetTrees: today's street trees over the flock's street (crowns that touch along a planted strip); parks in dense
-      // clusters of mid-size crowns (parkTrees): parks and strips read as a canopy, as the paintings' do.
+      // park trees (flockAt), deeper mid-greens under the lawn's light green; crown: today's crowns' shade side and sunlit cap (flock
+      // crown's), a lit cap over a darker body as the paintings' trees; streetTrees: today's street trees over the flock's street (crowns
+      // that touch along a planted strip); parkTrees: the parks as the paintings' are, groves and clusters on open lawn, single trees
+      // between, their edges lined (flockAt plantTile).
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.42, 1.2, .84, .55], wallShade: [1, 1.08, [1.025, .995, .96], 1.3], bevel: [1.5, 1.4, .75, .85], walls: [.03, .8, 1, .04], roof: [.05, 2.5, 1, .06, 1.12], glassSky: [.22, [.86, .85, .84], [.60, .72, .86]], groundFill: [.45, 3.6, 1.75, [.6, 1.75]], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: [.5, .45], parkTrees: [1.25, 2, [.8, 1, 1.2, 1.4], [.36, .56]], bloom: [9, 0], dof: 1, band: 1,
+      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.42, 1.2, .84, .55], wallShade: [1, 1.08, [1.025, .995, .96], 1.3], bevel: [1.5, 1.4, .75, .85], walls: [.03, .8, 1, .04], roof: [.05, 2.5, 1, .06, 1.12], glassSky: [.22, [.86, .85, .84], [.60, .72, .86]], groundFill: [.45, 3.6, 1.75, [.6, 1.75]], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: [.5, .45], parkTrees: { cell: 7, size: [2.6, 4], groves: [.42, .47], noise: [90, 28], dense: .95, lone: .05, edge: [12, .5] }, bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
         far: [3, 8, .6, '#e2e8f0', [.85, 1.1, [.3, .5], [1.55, 1.85, .45, .8, 1.05, '#a4adb9'], [.7, '#a6b1bd', 1]], .5],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint; a raking shot's from and whole as shares of its frame's top edge's distance, whichever nearer: the top of the frame pale and cool as the paintings' are; in a wide shot only cooled, its buildings still distinct; the share of its own chroma kept where it is whole: its colour goes before its definition])
         board: [.49, .44, .375], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.535, .505, .48], paving: [7, .45, .2, .08], kerb: [.86, .85, .82],
@@ -310,7 +311,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
           marks: { minW: 9, lane: 3.5, most: 2, w: .45, dash: [6, 9], edge: 99, clear: 1.5, zebra: [1.5, 4, .9, .9], stop: .6, drive: 1, c: '#e6e3dc', k: .06, kerb: [.4, .4, '#cdc8bf', .45, .6], far: [.45, 1.2] } }, park: [[.49, .575, .22], [.44, .525, .195]], lawn: [.16, 2.5, .08, .7, 1.2, -.18], roundPlaza: [[.40, .39, .38], [.50, .49, .47], 7, 48, .35, .25],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.32, .61, .61], deep: [.22, .52, .52], reach: 15, rough: .45, ripple: .08, gloss: [.03, .4, [.62, .86, .88]], refl: [.2, .3], sparkle: [0, 2.5, .8, .58] },
         bank: { stone: [.74, .70, .66], w: 2.5, prom: [.50, .48, .47], pw: 14, line: .3 },
-        trees: [[.48, .60, .30], [.56, .66, .33], [.42, .55, .28], [.37, .50, .27]], crown: [.58, 1.14, [1.14, 1.1, .72]],
+        trees: [[.33, .50, .25], [.38, .54, .27], [.30, .47, .23], [.27, .43, .22]], crown: [.62, 1.1, [1.06, 1.05, .9]],
         streetTrees: { r: 3.8, every: { secondary: 6, tertiary: 6 }, minor: 7, junction: 10 },
         massing: { storey: 3.2, min: [8, 5], tower: 50, podium: [14, .7, [4, 6], .3, [.22, 4, 10]], crown: [80, .5, 2, 2.5], set: [24, .55, [1, 2], [2, 3.5], .5], step: [.45, [.55, .75]] },
         facade: { base: [4.5, .8, 9], cap: [.9, 1.1, .72, 1.8], piers: [2, 4, 1.4], rows: [.25, .38], mid: [.3, .42, .45, .8, .85, .7], reveal: [1.14, .72], glass: { pale: [.9, .92, .94], mull: .85, span: [.2, .45], top: 1.12, px: 1.2, coarse: 4, deep: [.74, .82, .95] }, brick: [.4, .55, .6] } },
@@ -843,14 +844,18 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
           const rs = ST_.r * (ST_.vary || [.75, 1, 1.25])[Math.floor(hh * (ST_.vary || [0, 0, 0]).length)] * (.9 + .2 * FH(Math.floor(x / scale), Math.floor(z / scale), 6)) * scale;
           if (WC_ && !walls(x, z, rs + WC_)) continue;
           out.push([x, S.ground(x, z), z, rs, hh, 2, rk]); } } }
-    // its parks planted in clusters (data/green.png)
-    if (!GREEN_D) return; const PT_ = M.PT, c2 = (PT_[4] || 10) * scale, gi0 = Math.floor(x0 / c2), gi1 = Math.floor((x0 + T0) / c2), gj0 = Math.floor(z0 / c2), gj1 = Math.floor((z0 + T0) / c2);
+    // its parks (data/green.png) as the paintings' are: groves on open lawn (todayLight parkTrees: a crown a cell of `cell` m;
+    // groves where a slow noise of `noise` m passes groves[0], whole by groves[1], `dense` of their cells a crown, the larger in a
+    // grove's heart; on the open lawn `lone` of the cells; within edge[0] m of a park's edge edge[1], its trees lining it; a crown
+    // size[0] to size[1] m round, each with two smaller beside it)
+    if (!GREEN_D) return; const PT_ = M.PT, c2 = PT_.cell * scale, gi0 = Math.floor(x0 / c2), gi1 = Math.floor((x0 + T0) / c2), gj0 = Math.floor(z0 / c2), gj1 = Math.floor((z0 + T0) / c2);
+    const park = (x, z) => { const u = Math.floor((x / PW + .5) * GREEN_D.w), v = Math.floor((z / PD + .5) * GREEN_D.h); return u >= 0 && v >= 0 && u < GREEN_D.w && v < GREEN_D.h && GREEN_D.d[(v * GREEN_D.w + u) * 4] >= 128; };
     for (let i = gi0; i <= gi1; i++) for (let j = gj0; j <= gj1; j++) { const rk = FH(i, j, 22); if (rk < q0 || rk >= p) continue;
-      const x = (i + .2 + .6 * FH(i, j, 11)) * c2, z = (j + .2 + .6 * FH(i, j, 12)) * c2; if (x < x0 || x >= x0 + T0 || z < z0 || z >= z0 + T0) continue;
-      const u = Math.floor((x / PW + .5) * GREEN_D.w), v = Math.floor((z / PD + .5) * GREEN_D.h); if (u < 0 || v < 0 || u >= GREEN_D.w || v >= GREEN_D.h || GREEN_D.d[(v * GREEN_D.w + u) * 4] < 128) continue;
-      const m = [x / scale, z / scale], CE_ = PT_[3] || [.4, .62], clp = fsm(CE_[0], CE_[1], fvn(m[0] / 70, m[1] / 70) * .6 + fvn(m[0] / 23, m[1] / 23) * .4);   // (clusters with lawns between: parkTrees [3], their edge)
-      if (FH(i, j, 13) >= clp * PT_[1] || !M.ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z))) continue;
-      const SZ_ = PT_[2] || [.75, 1, 1.3], rp = c2 / scale * .34 * PT_[0] * SZ_[Math.floor(FH(i, j, 14) * SZ_.length)] * scale;   // (parkTrees [size, density, its sizes, its clusters' edge, its cell m])
+      const x = (i + .2 + .6 * FH(i, j, 11)) * c2, z = (j + .2 + .6 * FH(i, j, 12)) * c2; if (x < x0 || x >= x0 + T0 || z < z0 || z >= z0 + T0 || !park(x, z)) continue;
+      const m = [x / scale, z / scale], N_ = PT_.noise, gv = fsm(PT_.groves[0], PT_.groves[1], fvn(m[0] / N_[0], m[1] / N_[0]) * .65 + fvn(m[0] / N_[1] + 17.3, m[1] / N_[1]) * .35);
+      const e = PT_.edge[0] * scale, rim = !park(x + e, z) || !park(x - e, z) || !park(x, z + e) || !park(x, z - e);
+      if (FH(i, j, 13) >= Math.max(PT_.dense * gv, PT_.lone, rim ? PT_.edge[1] : 0) || !M.ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z))) continue;
+      const rp = (PT_.size[0] + (PT_.size[1] - PT_.size[0]) * FH(i, j, 14) * (.55 + .45 * gv)) * scale;
       if (WC_ && !walls(x, z, rp * 1.6 + WC_)) continue;   // (its cluster's reach)
       out.push([x, S.ground(x, z), z, rp, FH(i, j, 15), 1, rk]); }
   };
@@ -877,7 +882,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       ty = (x, z) => { if (!YEAR_D || yc < 0) return 0; const u = Math.floor((x / PW + .5) * YN), v = Math.floor((z / PD + .5) * YN); if (u < 0 || v < 0 || u >= YN || v >= YN) return 0; const y = YEAR_D[v * YN + u], ye = GREEN_ON.value && YEAR_E && TODAY_K.value.z < .3 ? YEAR_E[v * YN + u] : 0; return (y > 0 && y <= yc) || (ye > 0 && ye <= yc) ? 1 : 0; };   // (with green data the urban extent is plaster: no country groves on it)
     const today = yc >= 0 && (STREETS.list || GREEN_ON.value);
     if (today && GREEN_ON.value && !GREEN_D && GREEN.value && GREEN.value.image) { const im_ = GREEN.value.image, c_ = document.createElement('canvas'); c_.width = im_.width; c_.height = im_.height; const g_ = c_.getContext('2d'); g_.drawImage(im_, 0, 0); GREEN_D = { w: im_.width, h: im_.height, d: g_.getImageData(0, 0, im_.width, im_.height).data }; }
-    const M = { F, bd, td, px, ty, yc: today ? yc : -1, IX: today ? streetIndex() : null, ST: { ...(F.street || { off: 2.5, r: 3.6, every: { secondary: 13, tertiary: 14 }, minor: 18, junction: 14 }), ...((todayL() && todayL().streetTrees) || {}) }, PT: (todayL() && todayL().parkTrees) || [1, .9] };
+    const M = { F, bd, td, px, ty, yc: today ? yc : -1, IX: today ? streetIndex() : null, ST: { ...(F.street || { off: 2.5, r: 3.6, every: { secondary: 13, tertiary: 14 }, minor: 18, junction: 14 }), ...((todayL() && todayL().streetTrees) || {}) }, PT: { cell: 10, size: [3, 4.5], groves: [.5, .62], noise: [60, 20], dense: .9, lone: .04, edge: [12, .4], ...((todayL() && todayL().parkTrees) || {}) } };
     if (today && STREETS.list) segIndex();
     // the tiles the frame sees: its ground as far as the frame reaches (the plate's edge at most), the tiles there inside the view
     // (with a margin for a tree's shadow falling into it), nearest first
@@ -899,7 +904,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
     // each tile's trees as far down their ranks as its nearest point needs (the largest crown's density there), then each tree by
     // its own distance: its density, its share of the canopy, its fade
     const gc = D => Math.min(Math.max(.009 * D / scale / F.cell, 1), (F.cellMax || F.cell) / F.cell);   // (a grove's cell as it stands from the eye: flock cell m near, wider afar (.9 % of its distance), at most cellMax m)
-    const rMax = F.cell * .42 * 1.6 * 1.2 * scale, rMaxP = (M.PT[4] || 10) * .34 * M.PT[0] * Math.max(...(M.PT[2] || [1.3])) * scale, out = FL.out || (FL.out = []);
+    const rMax = F.cell * .42 * 1.6 * 1.2 * scale, rMaxP = M.PT.size[1] * scale, out = FL.out || (FL.out = []);
     let n = 0; const put = (x, y, z, r, h, t, w) => { const o = out[n] || (out[n] = new Float32Array(7)); o[0] = x; o[1] = y; o[2] = z; o[3] = r; o[4] = h; o[5] = t; o[6] = w; n++; };
     for (const [i, j, D0] of tiles) {
       const gk = i * 100003 + j; let T = FL.tiles.get(gk);
