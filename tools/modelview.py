@@ -2,7 +2,7 @@
 before the city has a place in the film's timeline; city.yaml, script.yaml and the city's build/ are never written.
 
 usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,<el>[,<d>]]] [--at ...]
-                                    [--spec <file.yaml> [--year <y>]] [--az 305] [--el 12] [--d .045] [--fov 42] [--wide] [--name <folder>]
+                                    [--spec <file.yaml> [--year <y>]] [--az 305] [--el 12] [--d .045] [--fov 42] [--wide] [--name <folder>] [--duration <seconds>]
        python -I tools/modelview.py cities/<slug> <era> --sheet --at <lon>,<lat> [--spec <file.yaml>] ...
        python -I tools/modelview.py cities/<slug> --landmarks <out.md>
 
@@ -14,6 +14,8 @@ usage: python -I tools/modelview.py cities/<slug> <era> --at <lon>,<lat>[,<az>[,
             still's own, else --az/--el/--d (defaults: the close-up of docs/MODEL.md, d .045 and el 12; az 305 looks across
             terrain.shade's fixed sun, from the north-west, so slopes read; the room light stands beside the camera at any az)
   --wide    d .35, el 30: the whole city, for the colour and the layout
+  --duration  the target study node's seconds (default: its film duration, or 20 for a new --spec).
+            Give a longer study when its growth needs more time; this never changes the real film's timing.
   --sheet   the city's houses, type by type, in place of the city: a block two lots deep of each house type its fabric
             names or it declares (docs/MODEL.md "House types"; the lot its fabric gives, else one usual for the form), in a
             row eastward from --at along a street (give a flat open place), one still of each block at the close-up distance
@@ -197,7 +199,7 @@ def landmark_list(city, out):
     print(f'{out}: {len(rows)} landmarks, {gt + gh} gates')
 
 
-def study_film(C, era, spec, shots_, fov, year=None, sheet=False):
+def study_film(C, era, spec, shots_, fov, year=None, sheet=False, duration=None):
     """the study's city.yaml: the film's own settings, its nodes reduced to the era (and the cities it stands on), one camera key
     per still in the era's node"""
     F = C['film']; nodes = {n['id']: n for n in F['nodes']}
@@ -213,6 +215,7 @@ def study_film(C, era, spec, shots_, fov, year=None, sheet=False):
         last = F['nodes'][-1]
         target.update(id=era, years=[year, year] if year is not None else list(last.get('years', [2000, 2000])), dur=20.0, mood={'feel': 'calm', 'level': 1}, label={l: era for l in F.get('lang', ['zh', 'en'])},
                       col=target['city'].get('col', '#E8DCC6'), tint=0)
+    if duration is not None: target['dur'] = duration
     # the cities it is built on (avoid_eras), in the film's order, ahead of it
     need, todo = [], list(target['city'].get('avoid_eras') or [])
     while todo:
@@ -269,9 +272,11 @@ def main():
     ap.add_argument('--az', type=float); ap.add_argument('--el', type=float); ap.add_argument('--d', type=float); ap.add_argument('--fov', type=float, default=42.0)
     ap.add_argument('--height-m', type=float, default=0.0, help='camera target metres above the ground, for a tall landmark')
     ap.add_argument('--size', default='1920x1080', help='still dimensions, passed to render/still.mjs')
+    ap.add_argument('--duration', type=float, help='study node seconds; leave enough time for the whole city to rise')
     ap.add_argument('--wide', action='store_true'); ap.add_argument('--name'); ap.add_argument('--sheet', action='store_true')
     ap.add_argument('--landmarks', metavar='OUT.md')
     args = ap.parse_args()
+    if args.duration is not None and (not math.isfinite(args.duration) or args.duration <= 0): ap.error('--duration must be finite seconds above zero')
     if args.landmarks:
         if not os.path.isfile(os.path.join(args.city, 'city.yaml')): raise SystemExit(f'modelview: {args.city}: no city.yaml here (give the city folder, cities/<slug>)')
         return landmark_list(os.path.abspath(args.city), args.landmarks)
@@ -317,7 +322,7 @@ def main():
     except OSError: raise SystemExit(f'modelview: the study {os.path.relpath(S, ROOT)} is being made by another run: give this one its own --name')
     study_folder(city, args.name or args.era)
     import slots; slots.take(f'study {S}')   # one machine slot for the study, its compile and its stills (pipeline/slots.py)
-    yaml.safe_dump(study_film(C, args.era, spec, sh, args.fov, args.year, sheet=args.sheet), open(os.path.join(S, 'city.yaml'), 'w', encoding='utf-8'), allow_unicode=True, sort_keys=False)
+    yaml.safe_dump(study_film(C, args.era, spec, sh, args.fov, args.year, sheet=args.sheet, duration=args.duration), open(os.path.join(S, 'city.yaml'), 'w', encoding='utf-8'), allow_unicode=True, sort_keys=False)
     env = {**{k: v for k, v in os.environ.items() if k not in ('CT_SCRIPT', 'CT_PLAN', 'CT_PASS')},   # (a draft script or a plan of the real film is not the study's)
            'CT_STUDY': '1', 'CT_DEADAIR': 'warn', 'CT_MODELCHECK': 'warn'}   # (compile: the city rises without the camera; a film without words; a study is looked at even when its model checks fail)
     LAYOUT.ensure(S)
@@ -329,7 +334,7 @@ def main():
     if era is None: raise SystemExit(f'modelview: the city of {args.era} came out empty (no buildings): see {os.path.relpath(LAYOUT.logs(S, "compile.log"), ROOT)}')
     up = era['on'] + era['span'] + era['grow']
     t = round(min(node['t1'] - .2, max(up + 1.0, FILM['light']['lamp'] + 2.5)), 2)
-    if t < up: print(f'WARNING: {args.era} is still rising when its node ends ({up:.1f} s > {node["t1"]:.1f} s): the stills show it unfinished')
+    if t < up: print(f'WARNING: {args.era} is still rising when its node ends ({up:.1f} s > {node["t1"]:.1f} s): the stills show it unfinished; rerun with --duration {math.ceil(up - node["t0"] + 2)} or more')
     # each still's camera as compile landed it (the ground under --at, at the film's terrain exaggeration)
     cams = []
     for s in sh:
