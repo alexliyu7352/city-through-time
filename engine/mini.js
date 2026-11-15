@@ -68,12 +68,13 @@ const BAND_C = [{ value: null }, { value: null }], BAND_HI = { value: new Array(
 const LANES = { value: null }, YEAR_W = { value: null }, YEAR_T = { value: null }, YEAR_C = { value: null }, TODAY_K = { value: new THREE.Vector3(1e4, 0, 0) }; let YEAR_D = null, YEAR_E = null;   // (TODAY_K: the film's year, whether today's city stands: x year, y on)
 // today's rooftops' records (roofsMesh): each building from 8 m its outline's centre and own axes (the corners' spread, a
 // rectangle's half sides), top, year, height, its aCtr's x (its hash), its vertices [i0, i1) and their positions. split: a new
-// record also where walls follow a roof under one aCtr (a replacement footprint's children share their parent's: buildTodayFootprints)
-function roofScan(g, split = false) {
+// record also where walls follow a roof under one aCtr (a replacement footprint's children share their parent's: buildTodayFootprints);
+// minH: from this height m (a check of every building's roof: 0)
+function roofScan(g, split = false, minH = 8) {
   const P = g.attributes.position, C = g.attributes.aCtr, D = g.attributes.aData, N = g.attributes.normal, out = []; if (!C || !D) return out;
   let lx = 1e9, lz = 1e9, top = false, yr = 0, y1 = -1e9, hm = 0, n_ = 0, sx_ = 0, sz_ = 0, sxx_ = 0, szz_ = 0, sxz_ = 0, ri0_ = 0;
   for (let i = 0; i <= C.count; i++) { const x = i < C.count ? C.getX(i) : NaN, z = i < C.count ? C.getY(i) : NaN, up = i < C.count && N.getY(i) > .6;
-    if (x !== lx || z !== lz || (split && top && !up)) { if (hm >= 8 && n_) {
+    if (x !== lx || z !== lz || (split && top && !up)) { if (hm >= minH && n_) {
         const mx = sx_ / n_, mz = sz_ / n_, cxx = sxx_ / n_ - mx * mx, czz = szz_ / n_ - mz * mz, cxz = sxz_ / n_ - mx * mz, th = .5 * Math.atan2(2 * cxz, cxx - czz);
         const c = Math.cos(th), sn = Math.sin(th), va = c * c * cxx + 2 * c * sn * cxz + sn * sn * czz, vb = sn * sn * cxx - 2 * c * sn * cxz + c * c * czz;
         out.push([mx, mz, th, Math.sqrt(Math.max(va, 0)), Math.sqrt(Math.max(vb, 0)), y1, yr, hm, lx, ri0_, i, P]); }
@@ -340,7 +341,17 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
           homes: ['#f8d0c6', '#f6c8bc', '#f7d4cc', '#f8efe2', '#f6d2c2', '#d4dde8', '#f8dccf', '#f4cbc4', '#f5d6c6', '#f6cdc6'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
           oldWalls: ['#dccfc2', '#d2c6b8', '#ecc8b6', '#e2d6c8', '#e6c2b2'], oldRoofs: ['#868c94', '#8c9199', '#80868e', '#90959c'],
           big: ['#ece2d4', '#f2d8ca', '#efe0cc'], bigRoofs: ['#9da3ab', '#979ea6', '#a3a8af'],
-          glass: ['#adbed0', '#b4c3d4', '#bbc6d0', '#a9bacc', '#b8c6d4'], towerRoofs: ['#d6d4cf', '#cccbc7'] } } },
+          glass: ['#adbed0', '#b4c3d4', '#bbc6d0', '#a9bacc', '#b8c6d4'], towerRoofs: ['#d6d4cf', '#cccbc7'] },
+        // each building's roof kind (roofKind: the paintings' catalogue of roofs), by its data alone: old: a building counts as old
+        // up to this many years from the data's first; oldH: an old block's height below this m (3 to 7 storeys, as the data's
+        // estimated heights read them), oldA: its footprint m2 [from, to]; rect: the share of its least rectangle a
+        // near-rectangular footprint fills (a pitched roof's condition), irr: an irregular one fills less than this; slab: [height
+        // m from, to, its length over its width from, its width at most m, the share of its least rectangle it fills from]; point:
+        // a point tower [from m, its footprint at most m2,
+        // its length over its width at most]; pink, grey: the shares of the old near-rectangular blocks hipped in pastel pink and
+        // in grey tile, six: of the irregular old ones grey and flat (the rest flat in their own paint: grey stays a minority);
+        // slabOchre, hallOchre: the shares of the near-rectangular slabs and large halls under ochre
+        roofKinds: { old: 12, oldH: 26, oldA: [40, 3000], rect: .8, irr: .65, slab: [12, 30, 2.4, 18, .7], point: [40, 950, 1.5], pink: .3, grey: .5, six: .5, slabOchre: .2, hallOchre: .1 } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
     clay: { pic: { sunEl: 38, sun: 1.1, sunC: '#ffd6a8', sky: .85, skyC: '#efe2cf', skyGround: '#6e6150', tree: { keep: 0, wood: 0, count: 0 } }, base: SLATE,
       soft: .6, tiles: 2.2, tufts: true,   // (soft: the share of a corner's averaged normal in each face's, a rounded edge; tiles: their rows' relief, times; tufts: moss at the walls' feet)
@@ -451,6 +462,52 @@ function kindPaint(K, k, hm, q, q2, pick) {
   const roof = k === 1 && hm < K.tiledH && q2 < K.tiled ? pick('tiles', (q2 * 7.7) % 1)
     : k === 1 || k === 4 ? wall : pick({ 0: 'oldRoofs', 2: 'towerRoofs', 3: 'bigRoofs' }[k], q2);
   return [wall, roof]; }
+// a footprint's least rectangle (along one of its outline's edges: one of them is the hull's that bounds it least), from its walls'
+// ring points (each wall's first vertex: studio.js prism, walls before the top); its long and short side and its area, in the
+// model's units; null for fewer than three points
+const LR_ = { x: new Float64Array(256), z: new Float64Array(256) };
+function leastRect(P, N, i0, i1) {
+  let n = 0; const pa = P.array, na = N.array;   // (positions and normals: three floats a vertex, as studio.js makes them)
+  for (let j = i0; j + 5 < i1 && Math.abs(na[j * 3 + 1]) < .3; j += 6) { if (n === LR_.x.length) { const x = new Float64Array(n * 2), z = new Float64Array(n * 2); x.set(LR_.x); z.set(LR_.z); LR_.x = x; LR_.z = z; }
+    LR_.x[n] = pa[j * 3]; LR_.z[n] = pa[j * 3 + 2]; n++; }
+  if (n < 3) return null; const X = LR_.x, Z = LR_.z; let A = Infinity, L = 0, W = 0;
+  for (let e = 0; e < n; e++) { const e1 = e + 1 < n ? e + 1 : 0, dx = X[e1] - X[e], dz = Z[e1] - Z[e], l = Math.hypot(dx, dz); if (!(l > 0)) continue;
+    const ux = dx / l, uz = dz / l; let u0 = Infinity, u1 = -Infinity, v0 = Infinity, v1 = -Infinity;
+    for (let m = 0; m < n; m++) { const u = X[m] * ux + Z[m] * uz, v = Z[m] * ux - X[m] * uz; if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v; }
+    const du = u1 - u0, dv = v1 - v0; if (du * dv < A) { A = du * dv; L = Math.max(du, dv); W = Math.min(du, dv); } }
+  return A < Infinity ? { A, L, W } : null; }
+// a building's roof kind (today.roofKinds R; the paintings' catalogue of roofs), by its data alone, the same from any camera:
+// its kind of building k (colourToday: 2 a glass tower, 3 a large low hall), height hm m, footprint ar m2, old (from the data's
+// first years), q its own hash, and form(): its least rectangle's long and short side L, W m and the share fill of it the
+// footprint covers (asked only where a rule needs it).
+// 1 flat in its own paint, one large plant room (the default: mid- and high-rise); 2 a point tower's, round caps; 3 a slab's, one
+// long plant room; 4 a glass tower's, warm white; 5 a large low hall's, a thick rim; 6 the old fabric's soft grey, flat (an
+// irregular old footprint); 7 grey tile, gabled or hipped, and 9 a pastel pink hip (old blocks of 3-7 storeys, near-rectangular);
+// 10 an ochre gable (a share of the slabs and of the halls). 8 (a lane house's small gable: an old split block's inner units) and
+// 11 (setbacks: the massing's podiums and setbacks) are roofsMesh's; 12 the detailed models' own
+function roofKind(R, { k, hm, ar, old, q }, form) {
+  if (k === 2) return 4;
+  if (k === 3) return q < R.hallOchre && form().fill >= R.rect ? 10 : 5;
+  const slab = hm >= R.slab[0] && hm < R.slab[1], oldB = old && hm < R.oldH && ar >= R.oldA[0] && ar <= R.oldA[1], point = hm >= R.point[0] && ar <= R.point[1];
+  if (!slab && !oldB && !point) return 1;
+  const { L, W, fill } = form(), rect = fill >= R.rect, asp = L / Math.max(W, 1e-9);
+  if (slab && fill >= R.slab[4] && asp >= R.slab[2] && W <= R.slab[3]) return rect && q < R.slabOchre ? 10 : 3;
+  if (oldB) return rect ? (q < R.pink ? 9 : q < R.pink + R.grey ? 7 : 1) : fill < R.irr && q < R.six ? 6 : 1;
+  if (point && asp <= R.point[2]) return 2;
+  return 1; }
+// a drawn record's form, its vertices [i0, i1): its top's area ar (model units) and its least rectangle's sides L, W m and fill
+function recordForm(P, N, i0, i1, ar, s) { const lr = leastRect(P, N, i0, i1); return { L: lr ? lr.L / s : 0, W: lr ? lr.W / s : 0, fill: lr && lr.A > 0 ? ar / lr.A : 0 }; }
+// a drawn record's roof kind (roofKind), its vertices [i0, i1): its kind of building k, height hm m, year yr, hash h (aData's z;
+// a replacement's ci-th child of one parent its own draw of it), the data's first year y0, the model's scale s
+function recordRoofKind(R, P, N, i0, i1, k, hm, yr, h, ci, y0, s) {
+  const pa = P.array, na = N.array; let ar = 0;
+  for (let j = i0; j + 2 < i1; j += 3) if (na[j * 3 + 1] > .6) { const o = j * 3; ar += Math.abs((pa[o + 3] - pa[o]) * (pa[o + 8] - pa[o + 2]) - (pa[o + 6] - pa[o]) * (pa[o + 5] - pa[o + 2])) / 2; }
+  const t = Math.sin(h * 1e4 + 17.3 + 7.1 * ci) * 43758.5453;
+  return roofKind(R, { k, hm, ar: ar / s / s, old: yr > 1 && yr <= y0 + R.old, q: t - Math.floor(t) }, () => recordForm(P, N, i0, i1, ar, s)); }
+// the roof kinds' map (todayLight roofMap: a check of the assignment, each roof tinted by its kind, the walls one light grey):
+// [the walls, kind 1, .., kind 11]; the grey kinds (6, 7, 8) dark
+const ROOF_MAP = ['#b4b4b4', '#f2c200', '#8e44ad', '#1f5fd6', '#ffffff', '#8a5a2e', '#2e4a80', '#101010', '#6b2d6b', '#ff7fa8', '#ff6a00', '#e02020'].map(c => new THREE.Color(c));
+const roofMapOn = () => !!(todayL() && todayL().roofMap);
 function colourToday(mesh, T = TODAY.roman) {
   const g = mesh.geometry, d = g.attributes.aData, nrm = g.attributes.normal, n = g.attributes.position.count, out = new Float32Array(n * 3), col = new THREE.Color();
   const C = a => a.map(c => new THREE.Color(c)), roofs = C(T.roofs), flats = C(T.flat), walls = C(T.walls), tall = C(T.tall);
@@ -463,9 +520,11 @@ function colourToday(mesh, T = TODAY.roman) {
   // T.kinds (a material's, looks.maquette today): each building painted by its kind, read from its height and its footprint's
   // area, and stone (a civic or old stone building) by its year, size and compact outline; aKind the facade FACADE_GLSL draws on it
   // (0 the old fabric, 1 a home, 2 an office tower's glass, 3 a large low building, 4 stone), from the same choice
-  const K = T.kinds, kind = K ? new Float32Array(n) : null, paint = K ? new Float32Array(n * 3) : null;
-  if (K) { const P = g.attributes.position, A = g.attributes.aCtr, s2 = (T.scale || 1e-4) ** 2, KC = {}, pick = (a, x) => (KC[a] ||= C(K[a]))[Math.floor(x * K[a].length) % K[a].length];
-    let i0 = 0, y0 = 1e9; for (let i = 0; i < n; i++) { const y = d.getX(i); if (y > 1 && d.getW(i) < .5 && y < y0) y0 = y; }   // (y0: the data's first year)
+  // T.roofKinds: each building's roof kind (roofKind), a byte a vertex in g.userData.roofKind (read on the CPU only, roofsMesh
+  // each record's; a replacement footprint's child has its own, by its own outline: todayFootprints)
+  const K = T.kinds, kind = K ? new Float32Array(n) : null, paint = K ? new Float32Array(n * 3) : null, RK = K && T.roofKinds, rkind = RK ? new Uint8Array(n) : null, map = !!RK && roofMapOn();
+  if (K) { const P = g.attributes.position, A = g.attributes.aCtr, s2 = (T.scale || 1e-4) ** 2, s1 = T.scale || 1e-4, KC = {}, pick = (a, x) => (KC[a] ||= C(K[a]))[Math.floor(x * K[a].length) % K[a].length];
+    let i0 = 0, y0 = 1e9; for (let i = 0; i < n; i++) { const y = d.getX(i); if (y > 1 && d.getW(i) < .5 && y < y0) y0 = y; } g.userData.y0 = y0;   // (y0: the data's first year)
     const end = i1 => { let ar = 0, x0 = 1e9, z0 = 1e9, x1 = -1e9, z1 = -1e9;   // (its footprint: the area of its roof's triangles; its extent)
       for (let j = i0; j + 2 < i1; j += 3) if (nrm.getY(j) > .6) ar += Math.abs((P.getX(j + 1) - P.getX(j)) * (P.getZ(j + 2) - P.getZ(j)) - (P.getX(j + 2) - P.getX(j)) * (P.getZ(j + 1) - P.getZ(j))) / 2;
       for (let j = i0; j < i1; j++) { const x = P.getX(j), z = P.getZ(j); if (x < x0) x0 = x; if (x > x1) x1 = x; if (z < z0) z0 = z; if (z > z1) z1 = z; }
@@ -473,7 +532,8 @@ function colourToday(mesh, T = TODAY.roman) {
       // (stone: a civic or old stone building, by the data: there from the data's first years, large, compact, not a tower)
       const k = K.stoneA && yr > 1 && yr <= y0 + K.stoneSpan && ar >= K.stoneA && cmp >= K.stoneC && hm < K.stoneH ? 4
         : hm < K.oldH && ar < K.bigA ? 0 : hm < 24 && ar >= K.bigA ? 3 : (hm >= K.towerH && ar >= K.towerA) || hm >= K.tallH ? 2 : 1;
-      const [wall, roof] = kindPaint(K, k, hm, q, q2, pick);
+      let [wall, roof] = kindPaint(K, k, hm, q, q2, pick);
+      if (RK) { const rk = recordRoofKind(RK, P, nrm, i0, i1, k, hm, yr, h, 0, y0, s1); rkind.fill(rk, i0, i1); if (map) { wall = ROOF_MAP[0]; roof = ROOF_MAP[rk]; } }
       for (let j = i0; j < i1; j++) { const c = nrm.getY(j) > .6 ? roof : wall; paint[j * 3] = c.r; paint[j * 3 + 1] = c.g; paint[j * 3 + 2] = c.b; kind[j] = k; }
       i0 = i1; };
     for (let i = 1; i <= n; i++) if (i === n || A.getX(i) !== A.getX(i - 1) || A.getY(i) !== A.getY(i - 1)) end(i); }
@@ -486,7 +546,7 @@ function colourToday(mesh, T = TODAY.roman) {
     else col.copy(hm > 30 ? tall[Math.floor(h * 31) % tall.length] : walls[Math.floor(h * 53) % walls.length]);
     const k = K ? .95 + .1 * ((h * 7.13) % 1) : .9 + .2 * ((h * 7.13) % 1); out[i * 3] = col.r * k; out[i * 3 + 1] = col.g * k; out[i * 3 + 2] = col.b * k;   // (painted: a gentle variation)
   }
-  g.setAttribute('color', new THREE.BufferAttribute(out, 3));
+  g.setAttribute('color', new THREE.BufferAttribute(out, 3)); if (rkind) g.userData.roofKind = rkind;
   if (K) { g.setAttribute('aKind', new THREE.BufferAttribute(kind, 1)); g.setAttribute('aTop', new THREE.BufferAttribute(recordTops(g), 1)); if (todayL() && todayL().bevel) g.setAttribute('aEdge', new THREE.BufferAttribute(wallEdges(g, T.scale || 1e-4), 2)); }
   return new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .92, metalness: 0 });
 }
@@ -1192,10 +1252,18 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     const PC = G_.attributes.color, PK = G_.attributes.aKind, PN = G_.attributes.normal, par = new Map();
     for (let i = 0; i < n; i++) { if (!a[i]) continue; const k = key(C.getX(i), C.getY(i)); let e = par.get(k); if (!e) par.set(k, e = { w: null, r: null, kd: PK ? PK.getX(i) : 1 });
       if (PN.getY(i) > .6) { if (!e.r) e.r = [PC.getX(i), PC.getY(i), PC.getZ(i)]; } else if (!e.w) e.w = [PC.getX(i), PC.getY(i), PC.getZ(i)]; }
-    { const FC = geometry.attributes.aCtr, FN = geometry.attributes.normal, m_ = FC.count, col = new Float32Array(m_ * 3), kd = new Float32Array(m_); FPT.miss = 0;
+    { const FC = geometry.attributes.aCtr, FN = geometry.attributes.normal, m_ = FC.count, col = new Float32Array(m_ * 3), kd = new Float32Array(m_), rk = G_.userData.roofKind ? new Uint8Array(m_) : null; FPT.miss = 0;
       for (let i = 0; i < m_; i++) { const e = par.get(key(FC.getX(i), FC.getY(i))), c = e ? (FN.getY(i) > .6 ? e.r || e.w : e.w || e.r) : null;
         if (c) { col[i * 3] = c[0]; col[i * 3 + 1] = c[1]; col[i * 3 + 2] = c[2]; } else { col.fill(.9, i * 3, i * 3 + 3); FPT.miss++; } kd[i] = e ? e.kd : 1; }   // (miss: a child whose parent was not found: none expected)
-      geometry.setAttribute('color', new THREE.BufferAttribute(col, 3)); geometry.setAttribute('aKind', new THREE.BufferAttribute(kd, 1)); geometry.setAttribute('aTop', new THREE.BufferAttribute(recordTops(geometry), 1)); if (todayL() && todayL().bevel) geometry.setAttribute('aEdge', new THREE.BufferAttribute(wallEdges(geometry, scale), 2)); }
+      // (each child's roof kind by its own outline, the one drawn: its parent's kind of building, year and hash, its own height)
+      const RK_ = rk && MAT.today && MAT.today.roofKinds, FP = geometry.attributes.position, FD = geometry.attributes.aData;
+      if (RK_) { const map = roofMapOn(), ca = FC.array, na = FN.array, da = FD.array;
+        for (let j0 = 0, ci = 0, j = 1; j <= m_; j++) {   // (a child: a new record where its parent's centre changes or walls follow a top)
+          if (j < m_ && ca[j * 2] === ca[j0 * 2] && ca[j * 2 + 1] === ca[j0 * 2 + 1] && !(na[j * 3 - 2] > .6 && !(na[j * 3 + 1] > .6))) continue;
+          const k_ = recordRoofKind(RK_, FP, FN, j0, j, kd[j0], da[j0 * 4 + 1], da[j0 * 4], da[j0 * 4 + 2], ci, G_.userData.y0, scale); rk.fill(k_, j0, j);
+          if (map) for (let i = j0; i < j; i++) if (na[i * 3 + 1] > .6) col.set([ROOF_MAP[k_].r, ROOF_MAP[k_].g, ROOF_MAP[k_].b], i * 3);
+          ci = j < m_ && ca[j * 2] === ca[j0 * 2] && ca[j * 2 + 1] === ca[j0 * 2 + 1] ? ci + 1 : 0; j0 = j; } }
+      geometry.setAttribute('color', new THREE.BufferAttribute(col, 3)); if (rk) geometry.userData.roofKind = rk; geometry.setAttribute('aKind', new THREE.BufferAttribute(kd, 1)); geometry.setAttribute('aTop', new THREE.BufferAttribute(recordTops(geometry), 1)); if (todayL() && todayL().bevel) geometry.setAttribute('aEdge', new THREE.BufferAttribute(wallEdges(geometry, scale), 2)); }
     const mesh = new THREE.Mesh(geometry, mat); mesh.customDepthMaterial = depth;
     mesh.castShadow = mesh.receiveShadow = true; mesh.frustumCulled = false; mesh.layers.set(L); scene.add(mesh); FPT.mesh = mesh;
     if (!fresh_) cityMats();   // (its materials again, with aSkip, where it was painted before)
@@ -1293,7 +1361,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         const hu = (u1 - u - ln) / 2, hv = Db / 2, um = (u + u1) / 2, U_ = lu ? um : v, V_ = lu ? v : um, x = cx + c * U_ - sn * V_, z = cz + sn * U_ + c * V_, ha = lu ? hu : hv, hb = lu ? hv : hu;
         let f_ = 1; while (f_ > .6 && !(hu * f_ > 2 * m && hv * f_ > 2 * m && inside(x, z, ha * f_, hb * f_, 0, .3 * m))) f_ -= .15;   // (where the outline bends: the unit smaller, its centre kept)
         if (f_ > .6) { const ha_ = ha * f_, hb_ = hb * f_, n = Math.max(1, Math.min(ns, Math.round(ns * (SP.h[0] + (1 - SP.h[0]) * hq(200 + j * 41 + k)))));
-          parts.push([x, z, 0, ha_, hb_, yb, Math.min(y1, yb + n * st), { q: hq(300 + j * 43 + k), q2: hq(400 + j * 47 + k), hm: Math.min(hm, n * MS.storey) }]); }
+          parts.push([x, z, 0, ha_, hb_, yb, Math.min(y1, yb + n * st), { q: hq(300 + j * 43 + k), q2: hq(400 + j * 47 + k), hm: Math.min(hm, n * MS.storey), inner: j > 0 && j < nb - 1 && k > 0 && u1 < A - 2 * m }]); }   // (inner: off every side of the footprint, a block's courtyard)
         u = u1; } }
     return parts.length >= 2 ? { cut: yb, parts, kind: 'split' } : null; };
   const massPlan = (MS, R0) => { const { cx, cz, c, sn, y1, yb, hm, round, fits, hull } = R0; let { a, b } = R0;
@@ -1320,6 +1388,21 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         else { kind = 'setback-end'; parts.push(...stepPart(R, L(MS.step[1], hq(10)), hq(11), cut, within)); } } }
     if (!parts.length && hm < MS.set[0] && hq(9) < MS.step[0] && y1 - st - yb >= st && !round) { cut = y1 - st; kind = 'step'; parts.push(...stepPart(R, L(MS.step[1], hq(10)), hq(11), cut, within)); }
     return parts.length ? { cut, parts, kind } : null; };
+  // what roofsMesh makes of a record's roof, by its geometry and first vertex: { k: the kind the massing makes (11), plan: its
+  // massing plan (massPlan's kind), units: a split footprint's units [x, top, z, kind, m2, height m, its block's year, long and
+  // short side m, 1, '', its block's height m, whether inner] }. roofList: every building of today's standing [its centre x, top,
+  // z, roof kind, footprint m2, height m, year, least rectangle's long and short side m, the share of it filled, its massing
+  // plan, 0, 0] and the units in their place (a script's check of the kinds' shares in a frame, window.__MINI.roofs)
+  const ROOF_K = new Map();
+  const roofList = () => { const out = [];
+    for (const G_ of [cityMesh && cityMesh.geometry, FPT.mesh && FPT.mesh.geometry]) { const rk = G_ && G_.userData.roofKind; if (!rk) continue; const sk = G_.attributes.aSkip, P = G_.attributes.position;
+      for (const [x, z, , , , y1, yr, hm, , i0, i1] of roofScan(G_, G_ !== cityMesh.geometry, 0)) { if (sk && sk.array[i0]) continue; const o = ROOF_K.get(G_.uuid + ':' + i0) || {};
+        if (o.units) { out.push(...o.units); continue; }
+        let ar = 0; for (let i = i0; i + 2 < i1; i += 3) if (Math.abs(P.getY(i) - y1) + Math.abs(P.getY(i + 1) - y1) + Math.abs(P.getY(i + 2) - y1) < 1e-7)
+          ar += Math.abs((P.getX(i + 1) - P.getX(i)) * (P.getZ(i + 2) - P.getZ(i)) - (P.getX(i + 2) - P.getX(i)) * (P.getZ(i + 1) - P.getZ(i))) / 2;
+        const f = recordForm(P, G_.attributes.normal, i0, i1, ar, scale);
+        out.push([x, y1, z, o.k || rk[i0], ar / scale / scale, hm, yr, f.L, f.W, f.fill, o.plan || '', 0, 0]); } }
+    return out; };
   // the parts as meshes and the main masses cut (aCut: a byte a vertex, 0 none, else the share of its height, of 255, where it ends)
   const MASS = { parts: 0, bytes: 0, kinds: {}, kept: 0 }, MASS_GRID = [[-1, -1], [1, 1], [1, -1], [-1, 1], [0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]];   // (the corners first: most boxes that fail, fail there)
   const massMesh = (parts, cuts) => {
@@ -1373,6 +1456,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     const geoOf = P => cityMesh && cityMesh.geometry.attributes.position === P ? cityMesh.geometry : FPT.mesh && FPT.mesh.geometry.attributes.position === P ? FPT.mesh.geometry : null;
     const roofC = (P_, i0, i1) => { const G_ = geoOf(P_), A_ = G_ && G_.attributes.color, N_ = G_ && G_.attributes.normal; if (A_) for (let i = i0; i < i1; i++) if (N_.getY(i) > .6) return new THREE.Color().fromArray(A_.array, i * 3); return null; };   // (a record's roof paint, its top's vertex colour: its pieces take it)
     const RU = MAT.roofUnits || null;   // (small rooftop units: below)
+    const RKS = film && MAT && MAT.today && MAT.today.roofKinds && cityMesh ? MAT.today.roofKinds : null, RY0 = cityMesh ? cityMesh.geometry.userData.y0 : 0, ROOF_MAPON = !!RKS && roofMapOn();   // (today's roof kinds: roofKind)
     const TK = (film && MAT && MAT.today ? { ...TODAY[today], ...MAT.today } : TODAY[today] || {}).kinds, KC_ = {}, pickK = (a_, x) => (KC_[a_] ||= TK[a_].map(c_ => new THREE.Color(c_)))[Math.floor(x * TK[a_].length) % TK[a_].length];   // (today's kinds and paints: a split unit's, kindPaint)
     // a batch of stills: a record made again takes its pieces as they were made (today's rooftops after the replacement footprints
     // chosen for the next shot), while the detailed models stand as they did (FOLDS: they fold records and take their pieces)
@@ -1410,8 +1494,21 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
             if (M_.kind === 'split') { lips.length = nl0; rims.length = nr0; split_ = true; }   // (its own roof gone to its base: no parapet of its own)
             else { for (let k = nl0; k < lips.length; k++) lips[k][1] = M_.cut; for (let k = nr0; k < rims.length; k++) rims[k][1] = M_.cut; }   // (its parapet round the main mass's roof)
             let wi = i0, ri = i0; const NN = G_.attributes.normal; for (let i = i0; i < i1; i++) { if (Math.abs(NN.getY(i)) < .3 && wi === i0) wi = i; if (NN.getY(i) > .6) { ri = i; break; } }
-            for (const q of M_.parts) { const o_ = q[7] ? (() => { const k_ = kd === 4 && q[7].q2 < (SP.stone ?? .35) ? 4 : q[7].hm < TK.oldH ? 0 : 1, [w_, r_] = kindPaint(TK, k_, q[7].hm, q[7].q, q[7].q2, pickK); return { wall: w_, roof: r_, k: k_, h: q[7].q, hm: q[7].hm }; })() : null;   // (a split unit: its own paint and kind)
+            // the roof kinds the massing makes (roofKind): a split footprint's units each their own (an old low block's: its
+            // inner units lane houses' small gables (8), the ring round them flat in its own paint (1), as the paintings' perimeter
+            // blocks; any other block's by their own form), a flat roof over a podium or under a setback 11 (its levels each a
+            // flat roof); the roof map's tints on them
+            const rk0 = RKS && G_.userData.roofKind ? G_.userData.roofKind[i0] : 0, old_ = !!RKS && yr > 1 && yr <= RY0 + RKS.old && hm < RKS.oldH, unitK = [], RO_ = { plan: M_.kind };
+            if (RKS) ROOF_K.set(G_.uuid + ':' + i0, RO_);
+            if (rk0 && !split_ && rk0 <= 5 && /^(podium|setback)/.test(M_.kind)) { RO_.k = 11;
+              if (ROOF_MAPON) { const M11 = ROOF_MAP[11]; for (let i = i0; i < i1; i++) if (NN.getY(i) > .6) G_.attributes.color.setXYZ(i, M11.r, M11.g, M11.b); G_.attributes.color.needsUpdate = true; rc = M11;
+                for (let k = nl0; k < lips.length; k++) lips[k][9] = M11; for (let k = nr0; k < rims.length; k++) rims[k][3] = M11; } }
+            for (const q of M_.parts) { const o_ = q[7] ? (() => { const k_ = kd === 4 && q[7].q2 < (SP.stone ?? .35) ? 4 : q[7].hm < TK.oldH ? 0 : 1; let [w_, r_] = kindPaint(TK, k_, q[7].hm, q[7].q, q[7].q2, pickK);   // (a split unit: its own paint and kind)
+                if (RKS) { const u_ = 2 * q[3] / scale, v_ = 2 * q[4] / scale, rk_ = old_ ? (q[7].inner ? 8 : 1) : roofKind(RKS, { k: k_, hm: q[7].hm, ar: u_ * v_, old: false, q: q[7].q2 }, () => ({ L: Math.max(u_, v_), W: Math.min(u_, v_), fill: 1 }));
+                  unitK.push([q[0], q[6], q[1], rk_, u_ * v_, q[7].hm, yr, Math.max(u_, v_), Math.min(u_, v_), 1, '', hm, q[7].inner ? 1 : 0]); if (ROOF_MAPON) { w_ = ROOF_MAP[0]; r_ = ROOF_MAP[rk_]; } }
+                return { wall: w_, roof: r_, k: k_, h: q[7].q, hm: q[7].hm }; })() : null;
               parts.push([q[0], q[1], q[2], q[3], q[4], q[5], q[6], th, G_, i0, wi, ri, o_]); if (!q[2]) lips.push([q[0], q[6], q[1], 2 * q[3] * .995, ex * scale, 2 * q[4] * .995, yr, th, null, o_ ? o_.roof : rc]); }
+            if (unitK.length) RO_.units = unitK;
             if (!split_) { const T_ = M_.parts[M_.parts.length - 1];   // (its rooftops on its highest part)
             cx = T_[0]; cz = T_[1]; a = T_[3]; b = T_[4]; y1 = T_[6]; tops = null; at = (u, v) => [cx + c * u - sn * v, cz + sn * u + c * v];
             hull = hull2(T_[2] ? Array.from({ length: 12 }, (_, k) => at(Math.cos(k * Math.PI / 6) * a, Math.sin(k * Math.PI / 6) * b)) : [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([p, q]) => at(a * p, b * q))); } } } }
@@ -1602,7 +1699,7 @@ vec4 sbOver(vec4 d, vec3 c, float a){ return vec4(c * a + d.rgb * (1. - a), a + 
     if (film && FILM_PIC.glb && !GLB_DONE) { GLB_DONE = true; for (const o of FILM_PIC.glb) { try { const r_ = await swap(o); console.log('glb', JSON.stringify(r_)); } catch (e) { console.error(`glb ${o.url}: ${e.message}`); } }
       // (a glb entry's plaza: { r: [its inner disc's, its lawn ring's inner and outer, its paving's outer radius] m, at: [x, z] m from near }: the landmark's own round plaza, todayLight roundPlaza)
       FILM_PIC.glb.filter(o => o.plaza && o.near).slice(0, 4).forEach((o, i) => { const r = o.plaza.r, at = o.plaza.at || [0, 0]; RPLAZA.P.value[i].set(o.near[0] + at[0] * scale, o.near[1] + at[1] * scale, r[1], r[2]); RPLAZA.Q.value[i].set(r[0], r[3], 0, 1); }); }   // (FILM_PIC glb: detailed models in place of buildings, ?pic= for a still)
-    window.__MINI = { mass: () => MASS, scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), flock: () => ({ ms: FL.ms, ...FL.stat }), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
+    window.__MINI = { mass: () => MASS, roofs: roofList, scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), flock: () => ({ ms: FL.ms, ...FL.stat }), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
     renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2; ROOF_PX.value = 2 / (camera.projectionMatrix.elements[5] * 1080) / scale;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     const up = E => E.mesh.visible && !E.mesh.userData.gone;   // (the film: a city gone may still show its foundations, without its detail)
     if (DET) { for (const [id, E] of Object.entries(S.eras)) if (up(E) && !DET.has(id)) DET.set(id, detailOf(id));
