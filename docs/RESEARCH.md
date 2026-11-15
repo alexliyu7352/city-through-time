@@ -1,40 +1,61 @@
-# Research: timeline, selection, story material and sources
+# Research: the story first, then its sources, stations and material
 
-Goal: the user gives only a city and a starting era. The agent finds the timeline, the choice of stations, the through-line, the story material and the geometry itself, and every item can be traced back to its source.
+Goal: the user gives only a city and a starting era. The agent tells the city's story, and once the user approves it, researches it. Every fact on screen is traced to its source, and the research yields the stations, the through-line, the story material and the geometry.
 Research is the script's stock room: the events, people, stories and the locals' feelings that the script will need are collected in this step, so that writing the script does not require going back to look things up.
 
 ## The most common mistakes in this step
 
-- Filling in a generic dynasty table (Neolithic → Qin → Han → Tang → Ming → railway) with every station weighted the same → first answer the questions in §2; every station must be this city's own.
-- Collecting only dry records of "what happened in which year" → collect the course of events, people, details and the locals' feelings together (§3), or there will be no story to tell when the script is written.
-- Making archaeological digs or tombs into stations; putting connections such as bridges, roads and subways too early → follow the priority order in §2.
-- Letting the story stop at today's statistics → tell it up to this year and end on the city's future (§4).
-- Lists pasted by subagents and the user contain many errors → go back to the original text item by item (§4, §7).
-- Leaving what each period's city was like to the modelling step: its size, people and houses turn up after the script is approved and contradict it, and the model is sent back round by round for basis it never had → a survey of each period's city here (§9).
-- Writing the music, clothes and objects of "that era" from impression → first find out what actually existed in that era (§8).
+- **Showing a table of stations as the story**, each row a year and an event. Read aloud, it is an announcer reading out eras.
+  - The film is one story told across the whole span, as a historian tells it.
+  - Tell it first (§1); the stations come from it.
+- **Building the story only from what an official page could confirm.** That leaves statistics and administrative acts, and drops what people remember.
+  - The story is built from what the city's history holds: its turning points, the people who drove them, and the legends its people tell.
+  - Research then checks it and deepens it. What cannot be confirmed is told as legend, or dropped (§3).
+- **Making an unknown person the hero or the face of a station:** an interviewee, a name in a record. Viewers cannot hold on to them.
+  - The story is carried by the people who drove the turns, and by people the audience knows or will remember (§2).
+- **Letting the story stop at today's statistics.** Tell it up to this year and end on the city's future (§4).
+- **Trusting lists pasted by subagents and the user.** They contain many errors: go back to the original text item by item (§4, §7).
+- **Leaving what each period's city was like to the modelling step.**
+  - Its size, people and houses then turn up after the script is approved and contradict it.
+  - The model is sent back round by round for a basis it never had.
+  - Instead, survey each period's city here (§9).
+- **Writing the music, clothes and objects of "that era" from impression.** First find out what actually existed in that era (§8).
 
 ## 1. How to do it
 
-1. Build the timeline with WebSearch / WebFetch, with a URL and the original text for every fact (research subagents may be used; brief them as in §7).
-2. Answer the questions in §2, then choose the stations and the through-line (§5).
-3. Collect story material for each station (§3).
-4. Write the results into the city folder: `FACTS.md` (the source of every claim on screen) and `research/` (notes, reports, source texts, `stories.md`, `images.md`),
-   which go into git with the city: they are this city's data, not temporary files.
-5. Check every key fact on screen again against its original text, independently of the agent that collected it (for instance by the main agent, or by a separate verifier
-   working from `FACTS.md` and the source texts, never from summaries): the opening and the ending, every year shown on screen, people's and places' names, quotations.
-6. **Show the user the story first, then the station table**, and go to the next step only when the user approves:
-   - one sentence that says what the city wins, loses and becomes (the stakes), not an abstract theme such as "a city that keeps rewriting itself";
-   - the shape: the highest peak, the deepest fall, where the film turns, and the narrator's feeling rising and falling across the stations;
-   - the two or three big passages (the most room; real times come only after the script), the people who drive them and the picture only this film can show for each (SCRIPT.md),
-     and which stations are short transitions;
-   - the opening and the ending: name at least one concrete thing ahead (being built, scheduled, planned or hoped for, with its source), and an echo of an earlier
-     station if there is one; "the city's next chapter" with nothing named is not an ending;
-   - then the table: for each station the year, what happens and what the city becomes, the story and its people, big or short, and the status of the sources.
+1. **Tell the story first,** before the deep research.
+   - Write the city's whole story as the film's narrator would tell it: a historian telling a friend, in a few paragraphs (`research/story.md`).
+   - Draw on what you know and on a first broad reading; the research comes after.
+   - What it holds:
+     - **One thread,** from the first people here to this year and what lies ahead (§5).
+     - **The shape this city's history actually has** (§2 "Tell an epic"): its rise, its peak, its fall, its turns.
+     - **The people who drove each turn,** and the legends and sayings its people tell, marked as legend.
+     - **Room by drama, not by years.** A long stretch with little story is a few lines of setup that the later story pays off. A short stretch full of events gets the most room.
+     - **An ending:** this year, and something concrete ahead (being built, scheduled, planned or hoped for). "The city's next chapter" with nothing named is not an ending.
+   - What stays out: tables, shares, source marks and analysis. They go in the station index (step 6).
+   - **The test:** read it aloud. If it sounds like a chronicle or a report, or a listener could not retell it afterwards, rewrite it.
+   - **Show it to the user ★.** A story turned down costs a few paragraphs, not a research round.
+2. **Research the approved story** with WebSearch / WebFetch. Research subagents may be used; brief them as in §7.
+   - Build the timeline with a URL and the original text for every fact (§4).
+   - Collect the story material for each beat (§3), deepest where the story is biggest.
+   - What research corrects goes back into the story. What cannot be confirmed is told as legend if it is what people tell (§3), or dropped.
+3. **The stations come from the story.** Each beat that changes the city on the model is a station, checked as in §2 "From the story to the stations".
+4. **Write the results into the city folder,** where they go into git with the city: they are this city's data, not temporary files.
+   - `FACTS.md`: the source of every claim on screen.
+   - `research/`: notes, reports, source texts, `story.md`, `stories.md`, `images.md`.
+5. **Check every key fact on screen again against its original text,** independently of the agent that collected it.
+   - The checker is, for instance, the main agent, or a separate verifier working from `FACTS.md` and the source texts, never from summaries.
+   - Check the opening and the ending, every year shown on screen, people's and places' names, and quotations.
+6. **Show the user the station table as the story's index ★,** with what research changed in the story. Go to the next step only when the user approves.
+   - For each station: the year, what happens and what the city becomes, its people, big or short, and the status of the sources.
 
 ## 2. Selection: what is worth telling
 
-The weight of history comes from two things: the turning points the city went through, and the events and people that matter greatly to the city and deserve to be remembered. The number of archaeological finds is not weight.
-In order of priority:
+The weight of history comes from two things:
+- the turning points the city went through;
+- the events and people that matter greatly to the city and deserve to be remembered.
+
+The number of archaeological finds is not weight. The story is built from these, in order of priority:
 
 1. **Status and major events:** founding the city, becoming a capital, unification, moving the capital, becoming a municipality, promotion in rank, and events that happened here and matter greatly to the city
    (Xianyang: Qin unified the six states and Xianyang became the capital of the first unified empire; Xiang Yu burned the city).
@@ -44,10 +65,6 @@ In order of priority:
 5. **Industry:** the rise, peak, decline and transformation of an industry (Xianyang: textile city → electronics city → state cotton mill restructuring → Western Screen Valley).
 6. **Connections** (considered last): bridges, railways, airports, subways, area codes. They become a station only if they changed the city's fate or carry a story themselves
    (Xianyang: the 029 area code merger, which carried the hope of the two cities becoming one).
-
-Test: if this station is removed, does the audience understand a piece less of "who this city is, what it went through, how it became today"? If not, it is not a station.
-A world event that only took place in the city (a treaty signed there, a match played there) passes this test only if the city or its people changed because of it;
-otherwise it is a line of narration or a short transition.
 
 **Know the audience.** The audience is the world (AGENTS.md): viewers who know neither the city nor its country. Places, people and moments known worldwide (a famous
 ruler, a war, a film) are anchors: use them by name, and give them what they did not know about them. A topic few of them know needs a reason to be in the film and must say at once why it matters.
@@ -61,16 +78,27 @@ for every state he destroyed, he rebuilt its palaces as exact copies on the nort
 Tell the protagonist of such an event plainly and fully too: what he achieved and why it matters, and do not use him only as a contrast to the decline that follows.
 Where the sources disagree, say what they support (the range, "about", or legend), no less and no more.
 
-**Tell an epic, not a list of public works.** Choose the stations as the film's director already: the city is the protagonist, and it has stakes. An epic has the shape
-this city's history actually has: what it won, risked and lost, its highest and its lowest moments (Xianyang's is rise, peak, fall, return), and a future; name the people who
-drove each turn (rulers, builders, invaders, saints, artists, ordinary residents whose words survive). Never enlarge an event to fill a slot of another city's shape.
-A station whose story is a building programme, an administrative act or a planning policy is a short transition at most, unless something was won or lost there.
-Compress a stretch without drama, but never leave the modern era empty: the city growing building by building from the first year of the data
-(GHSL: 1975) is one of this film's signature pictures (STAGING.md 9i), and the story must reach this year. Give the decades of living memory their own
-stations (new districts, industries that rose or fell, events that shook the city, the people of those years), and end on this year and the future.
-At least one of them is about the city's own growth, with the data's year-by-year growth as its main picture, not only as a backdrop to another event. Test: read the station table aloud as one story; if it sounds like a list of projects, rewrite it.
+**Tell an epic, not a list of public works.** Tell it as the film's director: the city is the protagonist, and it has stakes.
+- **The shape.** An epic has the shape this city's history actually has:
+  - what it won, risked and lost;
+  - its highest and its lowest moments (Xianyang's is rise, peak, fall, return);
+  - a future.
 
-**First find what makes this city different from other cities, then decide the structure.** Before fixing the stations, answer these questions; the answers decide the opening, the longest passages, the unique scene and the ending:
+  Never enlarge an event to fill a slot of another city's shape.
+- **The people.** Name the people who drove each turn: rulers, builders, invaders, saints, artists.
+- **Transitions.** A beat whose story is a building programme, an administrative act or a planning policy is a short transition at most, unless something was won or lost there.
+- **Compression.** Compress a stretch without drama, but the story always reaches this year.
+
+**People and legends.**
+- **The people of the story** are those who drove its turns, and those the audience knows or will remember.
+- **An unknown person** (an interviewee, a name in a record) never stands as the hero of a station or the face of an era: the audience cannot hold on to a name it has never heard.
+  - Their words can carry a moment inside the story that no known figure can.
+  - Where no person stands out, the city's own fate is the story (SCRIPT.md).
+- **A legend the city tells is part of its story:** where its name came from, a heroine, a deed everyone retells. Tell it as legend ("legend has it", 「相傳」).
+  - Saying so keeps the film honest.
+  - A well-told legend serves the film better than an unknown name.
+
+**Ask yourself what makes this city different from other cities.** While telling the story, answer these questions for yourself. The answers shape the opening, the longest passages, the unique scene and the ending; they are not handed in as a list.
 1. Where the name comes from: say it in the opening (Xianyang: Mount Jiuzong to the north and the Wei river to the south, so mountain and water are both "yang").
 2. What are the most important and most memorable events and people for this city: they are the longest passages of the film.
 3. What planning or geography does it have that other cities do not: give it a scene (STAGING.md rule 8; Xianyang: Qin Xianyang modelled on heaven and earth, the terraces of the Xianyang plateau).
@@ -79,7 +107,18 @@ At least one of them is about the city's own growth, with the data's year-by-yea
 6. Is there something that is there from start to finish (the through-line in §5; for the optional emblem see SCRIPT.md).
 7. What its future is: what is being built, what is planned, what the locals look forward to (the outlook at the end, §4).
 
-Do not fill the station list in generic dynasty order; every station must be this city's own.
+### From the story to the stations
+
+The stations are where the approved story changes the city on the model. Check them against these rules. A rule that would remove a beat the story needs moves the beat into the narration of a neighbouring station; it never cuts the beat from the story.
+
+**The removal test.** If this station is removed, does the audience understand a piece less of who this city is, what it went through and how it became today? If not, it is not a station.
+- A world event that only took place in the city (a treaty signed there, a match played there) passes this test only if the city or its people changed because of it.
+- Otherwise it is a line of narration or a short transition.
+
+**The modern era is never empty.**
+- The city growing building by building from the first year of the data (GHSL: 1975) is one of this film's signature pictures (STAGING.md 9i).
+- Give the decades of living memory their own stations: new districts, industries that rose or fell, events that shook the city, the people of those years.
+- At least one of them is about the city's own growth, with the data's year-by-year growth as its main picture, not only as a backdrop to another event.
 
 **Archaeology and tombs:** they become a station only when they changed the city itself, for example the conflict between new-town construction and site protection, or a site that became a city park or landmark. An excavation by itself, find counts
 and tombs are never a station of their own, at most a sentence inside one. When the ancient part is about the city, archaeology is the source of "how we know", not the story itself.
@@ -101,10 +140,10 @@ Record not only "what happened" but also what makes it a story, in `research/sto
   Example: Xianyang and Xi'an are too close and their history is too entangled. After the 029 merger in 2006, Xianyang people hoped the two cities would become one and the old glory would return; in 2017 the Xixian New Area was handed to Xi'an to administer,
   the finest piece of land went to Xi'an, and a merger would never happen. So the 2017 line is wistful, not a neutral administrative change.
   These feelings decide the narrator's emotion and also how the ending closes (Xianyang: the two cities did not merge, yet grew together).
-- **The decades of living memory as people lived them:** for these stations the figures (built-up area, population, households, visitors) say what
-  changed, not what it was like. Collect how residents met the change: what a new estate, a closed factory, a crowded flat or an emptied street
-  meant to the people in it, from interviews, local news, oral histories and memoirs. Without them a modern station has no fate to tell, and its
-  narration falls back on a report's wording.
+- **The decades of living memory as people lived them.**
+  - For these stations, the figures (built-up area, population, households, visitors) say what changed, not what it was like.
+  - Collect how residents met the change: what a new estate, a closed factory, a crowded flat or an emptied street meant to the people in it. Sources: interviews, local news, oral histories, memoirs.
+  - Their words give a moment its feeling inside the story. They do not replace the people who drove the turn (§2 "People and legends").
 - **What the audience will remember:** the city's best-known stories, sayings and images (the ones a viewer may already know, or will retell afterwards), and the
   magnitudes that make a change felt: how many lived there at its height and its lowest, how far it spread, how long a fire or a siege lasted, how many left and how many came back.
   Verify them like any fact (AGENTS.md "Careful means checked, not left out").
@@ -112,14 +151,26 @@ Record not only "what happened" but also what makes it a story, in `research/sto
 - **Scenes worth a picture:** the city at its most prosperous, the scenes of major events, the mood of a poem; note the source where there is a picture, and mark the scene even where there is none (DATA.md "Pictures and footage").
 - **Threads that can echo:** an early event and a later one that can be set against each other (Xianyang: in Qin times the two banks of the Wei were one Xianyang; over 2,000 years later Xianyang and Xi'an grew into one city across the Wei).
 
-The sources for story material are held to the same standard as facts (the status marks in §4): they need not be official records; verifiable reports, interviews, gazetteers and scholars' works are all fine;
-do not collect what has no source. Use `stories.md` first when writing the script; when it is not enough, go back to this step and research more; never invent.
+**Sources for story material.**
+- **Facts** in the story material are held to the same standard as any fact (the status marks in §4).
+  - They need not be official records: verifiable reports, interviews, gazetteers and scholars' works are all fine.
+- **Legends and what people tell** are collected as legend, with where they are told: a gazetteer, a local museum, a widely retold version.
+  - They go into the film marked as legend, never as fact.
+- **Using the material.** Use `stories.md` first when writing the script. When it is not enough, go back to this step and research more. Never invent.
 
 ## 4. The timeline
 
 From the starting era to today, each entry has: year (BCE as a negative number), event, source URL, the original quotation, a status mark.
-Status: [OK] original text opened; [SEC] only Wikipedia or a search summary; [WEAK] tourism or aggregator site; [EST] estimate.
-Only [OK] and [SEC] may go on screen; for the key years of a [SEC] entry find one more source or note it in FACTS.md. When two sources conflict, record both and on screen say what they support (the range, "about", or legend), no less and no more.
+**Status marks:**
+- [OK]: the original text was opened;
+- [SEC]: only Wikipedia or a search summary;
+- [WEAK]: a tourism or aggregator site;
+- [EST]: an estimate;
+- [LEGEND]: a legend or tradition, with where it is told.
+
+**What goes on screen:**
+- Only [OK] and [SEC] go on screen as fact. For the key years of a [SEC] entry, find one more source or note it in FACTS.md.
+- [LEGEND] goes on screen as legend, and the narration says so. When two sources conflict, record both and on screen say what they support (the range, "about", or legend), no less and no more.
 Copy numbers as in the original (for checking); for how to write them in the narration see SCRIPT.md.
 
 **Tell it up to this year, and close on the future:** the last station reaches this year (the latest government work report, statistical bulletin, this year's major events); the ending must land on the city's future:
@@ -132,9 +183,13 @@ Material the user pastes from elsewhere (a list from another agent, a web articl
 when what you find differs from what was pasted, write what you found and tell the user. Practices it suggests are adopted only after testing (example: a pasted Xianyang modern station list kept only three and a half items after checking:
 "the textile street" had no source; "Western Display Valley" was actually "Western Screen Valley"; "2019 subway era" had to be told in two steps, crossing the boundary in 2019 and entering the main city in 2023).
 
-## 5. The through-line (anchor)
+## 5. The through-line: the thread and its anchor
 
-Find something that has existed from the start and can still be seen today, so the audience recognises the same city in every era: a river and its ferry crossing, a plateau, an axis, a city gate,
+**The thread** is what the city keeps doing, wanting or fighting across the whole span. Examples: a river it lives by, a sea it keeps chasing, a border it sits on.
+- The opening plants it, and the ending pays it off.
+- It is what turns a long, quiet stretch into setup for the story that follows.
+
+**The anchor** shows the thread on the model. Find something that has existed from the start and can still be seen today, so the audience recognises the same city in every era: a river and its ferry crossing, a plateau, an axis, a city gate,
 an industry that continues. The Chengdu model: the Jinsha site, buried 3,000 years ago and dug up during construction in 2001, whose Sun Bird became the city emblem (archaeology counts here because it became a symbol of the city).
 Scoring order:
 1. Its changes are themselves turning points of the city (moved, rebuilt, abandoned, reused), each with a clear year.
@@ -154,7 +209,11 @@ Earthworks and platforms that still exist today, such as mounds, are built as re
 
 ## 7. Briefing research subagents
 
-- The brief begins with the selection rules and priority order of §2: status and major events, people and stories first, connections last; archaeology and tombs are listed only when they changed the city.
+- **How the brief begins:**
+  - the approved story (`research/story.md`) and the beats this subagent verifies and deepens;
+  - then the selection rules and priority order of §2: status and major events, people and stories first, connections last;
+  - archaeology and tombs only when they changed the city;
+  - legends collected as legend (§3).
 - Name the output files and sections: timeline, story material (§3), coordinate table, ranking of anchor candidates, numbers, a list of unverified items.
 - Require a URL and the original text for every item; require a distinction between original text and the fetcher's summary ([PARAPHRASE]); story material also carries sources (a person's own words, gazetteer, interview).
 - Government sites are often unreachable: have the subagent note the URL, and the main agent tries again or uses a news reprint.

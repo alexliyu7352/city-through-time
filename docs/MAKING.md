@@ -41,9 +41,9 @@ Tell the agent: "Use A City Through Time to make <city>, starting from <era>." T
 
 ## 5. The workflow
 
-The agent works in the order below. It stops for your go-ahead on the story outline, the detailed outline, the narration draft, the scale still, the film in the preview, the music and the final render; the steps between (the past cities, camera, pacing) it judges itself against the example film, watching as an audience would before showing you. When it needs to change code or switch approach, it first explains the reason and the approach and only goes ahead once you agree; for a problem you name, it changes only those places, and it finds similar problems itself and lists them for you:
+The agent works in the order below. It stops for your go-ahead on the story, the station table, the story outline, the detailed outline, the narration draft, the scale still, the film in the preview, the music and the final render; the steps between (the past cities, camera, pacing) it judges itself against the example film, watching as an audience would before showing you. When it needs to change code or switch approach, it first explains the reason and the approach and only goes ahead once you agree; for a problem you name, it changes only those places, and it finds similar problems itself and lists them for you:
 
-1. **Research**: a timeline, the source and original text of every fact (`FACTS.md`), and the turning points chosen for this city.
+1. **Story and research**: the agent first tells you the city's whole story, as a historian would; once you approve it, it checks it: a timeline, the source and original text of every fact (`FACTS.md`), and the turning points taken from the story as the station table. A legend it cannot source is told as legend.
 2. **Data**: set the area (about 20–30 km square), fetch OpenStreetMap, buildings, terrain and satellite imagery, then render one white-model still so you can check the scale.
 3. **Past cities**: generate the city of each era from archaeological reports and historical sources, marked "schematic" on screen.
 4. **Script and timeline**: first write one continuous narration, then let the picture follow its sentences.

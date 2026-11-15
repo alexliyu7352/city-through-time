@@ -21,7 +21,7 @@ In this step you are the director of the film, not a data clerk: the data is mat
 Do the following in order. The items with a ★ in AGENTS.md's workflow table (step 3: the story outline, the detailed outline, the narration draft, the storyboard) wait for the user's approval;
 the treatment and the emotional line are yours, shown together with the next ★ item:
 
-1. **Story outline:** read `research/stories.md` and the confirmed station list, and write an outline for the user to read:
+1. **Story outline:** read the approved story (`research/story.md`), `research/stories.md` and the confirmed station list, and write an outline for the user to read:
    - One sentence: what kind of city the film is about and what story, a fate with a turn that the audience could retell, not a list of eras (Xianyang: a city that was once the centre of the world, burned into fields, shrank to a small town, and two thousand years later grew into one city with Chang'an across the river);
    - The arc of the story: which stations carry the beginning, development, turn and close;
    - The longest passages: for the most important events and people of the city, what is told in each and why it matters, and what the protagonist achieved (RESEARCH.md §2);
