@@ -604,7 +604,7 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null,
 // boat can work on, not a ditch), each laid along the water (the way it runs furthest), the same wherever the camera goes; at
 // most `most` (those with the lowest hashes); in its region's way (STYLES boats: { sail, cabin }). wet(x, z): water there (the
 // look's water map). -> { kinds, count } as eraDetail's. ground(x, z): the water's height there
-export function boatsAt(wet, x0, z0, x1, z1, { scale, style = 'roman', wide = 30, apart = 70, share = .1, most = 4000, ground = () => 0 } = {}) {
+export function boatsAt(wet, x0, z0, x1, z1, { scale, style = 'roman', wide = 30, apart = 70, share = .05, most = 4000, ground = () => 0 } = {}) {
   const ST = STYLES[style] || STYLES.roman, B = ST.boats || { sail: true, cabin: false }, M = scale, out = [], put = (kind, x, y, z, phi, sx, sy, sz, k = 1) => (out[kind] ||= []).push([x, y, z, phi, sx, sy, sz, k]);
   const H = (i, j, k) => { const t = Math.sin(i * 127.1 + j * 311.7 + k * 74.7) * 43758.5453; return t - Math.floor(t); }, c = apart * M, found = [];
   for (let i = Math.floor(x0 / c); i <= Math.floor(x1 / c); i++) for (let j = Math.floor(z0 / c); j <= Math.floor(z1 / c); j++) {
