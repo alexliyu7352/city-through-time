@@ -273,8 +273,8 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // parts' names) in the look's rose accent
       glbC: { stone: '#ece6dc', glass: '#a2b6cc', metal: '#d3d9de', dark: '#8f9295', roof: '#d9d6cf' }, glbParts: [['sphere|capsule|dome', '#d68a98']], roofs: true, backdropH: .04,   // (backdropH: today's city behind a period city, its heights this share: a plan on the board)
       // today's rooftops (roofsMesh): the plant room (main: its share of the roof's sides, [from, more]; mainH: its height m [from, more]), small units on roofs from area m2
-      // (n: how many [from, to], size and h: m [from, more], col and greys: their paint, each its own share of it)
-      roofUnits: { main: [.14, .1], mainH: [2.5, 1.5], mainCol: '#c4bfb6', area: 250, n: [1, 3], size: [2.5, 2.5], h: [1.4, 1], col: '#bdbab4', greys: [.7, .8, .9, .75, .85] },
+      // (n: how many [from, to], size and h: m [from, more]); mainK, unitK: a plant room's and a unit's paint, its roof's own times one of these (each its own)
+      roofUnits: { main: [.14, .1], mainH: [2.5, 1.5], mainK: [.86, .9, .94, .88, .92], area: 250, n: [1, 3], size: [2.5, 2.5], h: [1.4, 1], unitK: [.88, .92, .96, .9, .94] },
       // today's city the subject, a coloured miniature city in a clear warm day: a warm sun with soft-edged shadows (sunEl,
       // shadowR: the shadow's softening in its map's texels), a cool sky in the shade (sky, skyC), the whole picture's exposure, a
       // gentle filmic curve, no grain; edge: every edge catching the light as a bevel (a pale line, close only: afar it outlined
@@ -303,10 +303,10 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
       // the parks as the paintings' are, groves and clusters on open lawn, single trees between, their edges lined (flockAt plantTile),
       // in their own deeper mid-greens under the lawn's light green, a lit cap over a darker body (its trees and crown).
       // ?pic={"todayLight":{...}}: a still's own
-      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.42, 1.2, .84, .55], wallShade: [1, 1.08, [1.025, .995, .96], 1.3], bevel: [1.5, 1.4, .75, .85], walls: [.03, .8, 1, .04], roof: [.05, 2.5, 1, .06, 1.12], glassSky: [.22, [.86, .85, .84], [.60, .72, .86]], groundFill: [.45, 3.6, 1.75, [.6, 1.75]], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: [.5, .45], parkTrees: { cell: 8, size: [3.1, 4.8], groves: [.42, .47], noise: [90, 28], dense: .95, lone: .05, edge: [12, .5], trees: [[.33, .50, .25], [.38, .54, .27], [.30, .47, .23], [.27, .43, .22]], crown: [.62, 1.1, [1.06, 1.05, .9]], far: [2.2, 3.2, .9, [.62, .76, .30]] }, bloom: [9, 0], dof: 1, band: 1,
+      todayLight: { all: true, env: 0, footprintsR: [4, 3000], winFade: [.25, .8], wallSun: [1.38, 1.2, .9, .55], wallShade: [1, 1.08, [1.025, .995, .96], 1.3], bevel: [1.5, 1.4, .75, .85], walls: [.03, .8, 1, .04], roof: [.05, 2.5, 1, .06, 1.12], glassSky: [.22, [.86, .85, .84], [.60, .72, .86]], groundFill: [.45, 3.6, 1.75, [.6, 1.75]], glassK: .55, skyC: '#b4c4dc', skyGround: '#c8b8a0', sky: 4.8, sun: 2.3, sunC: '#ffdfbc', sunEl: 42, exposure: 1.06, ao: [.5, .45], parkTrees: { cell: 8, size: [3.1, 4.8], groves: [.42, .47], noise: [90, 28], dense: .95, lone: .05, edge: [12, .5], trees: [[.33, .50, .25], [.38, .54, .27], [.30, .47, .23], [.27, .43, .22]], crown: [.62, 1.1, [1.06, 1.05, .9]], far: [2.2, 3.2, .9, [.62, .76, .30]] }, bloom: [9, 0], dof: 1, band: 1,
         edge: .35, filmic: .5, grain: 0, pool: 1, sat: 1.12, contrast: .16, vignette: .08, shadowR: 3, air: [3.5, 10, 2500], fogC: '#dfe5ee', dome: ['#dfe5ee', '#4a90e0'], sunLeft: -70,
         far: [3, 8, .6, '#e2e8f0', [.85, 1.1, [.3, .5], [1.55, 1.85, .45, .8, 1.05, '#a4adb9'], [.85, '#a6b1bd', 1]], .5],   // (far: the far city softened, [from, whole, times the shot's distance; the share of its own contrast kept; the tint; a raking shot's from and whole as shares of its frame's top edge's distance, whichever nearer: the top of the frame pale and cool as the paintings' are; in a wide shot only cooled, its buildings still distinct; the share of its own chroma kept where it is whole: its colour goes before its definition])
-        board: [.49, .44, .375], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.535, .505, .48], paving: [7, .45, .2, .08], kerb: [.86, .85, .82],
+        board: [.48, .435, .385], soft: [0, 8], street: [[.46, .46, .48], 0], plaza: [.535, .505, .48], paving: [7, .45, .2, .08], kerb: [.86, .85, .82],
         streets: { asphalt: '#505154', pavement: '#716c65', kerb: 2.5, w: { motorway: 30, trunk: 26, primary: 20, secondary: 13, tertiary: 10, residential: 7, unclassified: 7, living_street: 5, other: 6 }, grain: [.08, .8, .1, .05],
           marks: { minW: 9, lane: 3.5, most: 2, w: .45, dash: [6, 9], edge: 99, clear: 1.5, zebra: [1.5, 4, .9, .9], stop: .6, drive: 1, c: '#e6e3dc', k: .06, kerb: [.4, .4, '#cdc8bf', .45, .6], far: [.45, 1.2] } }, park: [[.49, .575, .22], [.44, .525, .195]], lawn: [.16, 2.5, .08, .7, 1.2, -.18], roundPlaza: [[.40, .39, .38], [.50, .49, .47], 7, 48, .35, .25],   // (streets: geometry, streetsMesh; the raster's share 0)
         water: { shallow: [.32, .61, .61], deep: [.22, .52, .52], reach: 15, rough: .45, ripple: .08, gloss: [.03, .4, [.62, .86, .88]], refl: [.2, .3], sparkle: [0, 2.5, .8, .58] },
@@ -323,19 +323,21 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
         park: [[.64, .64, .30], [.56, .58, .26]], trees: [[.40, .46, .18], [.50, .52, .22], [.44, .48, .16]],
         water: { shallow: [.46, .62, .62], deep: [.20, .40, .48], reach: 90, rough: .14, ripple: .35, gloss: [.08, .5, [.88, .80, .84]], refl: [.3, .35], sparkle: [.2, 5] } } },
       // today's buildings painted by kind (colourToday kinds; FACADE_GLSL draws each kind's facade): the old low fabric (lower than
-      // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick; a large low building pale; an office tower (from
-      // towerH m and towerA m2 of footprint, or any from tallH m) in tinted glass, pale blue-green or silver; the rest, most of the
-      // city, homes in soft paints (cream, ivory, sand, pale peach, salmon, light grey), a high-rise's roof light cream, a low or
-      // mid-rise one's (lowRoofH) a cool mid grey that the warm sun turns neutral, the old fabric's and a large low building's
-      // greys too: in the sun a roof sits between the lit walls and the shaded ground (the paintings' dense blocks: lit walls
-      // L 84, roofs L 70, the lanes in shade L 40), so each building reads as a box with a top, not one cream mass; the walk-ups'
-      // (lower than tiledH) a share of them (tiled) in terracotta tile; stone, a civic or old stone building (from the data's
-      // first stoneSpan years, stoneA m2 or more, its outline filling stoneC of its extent, lower than stoneH), beige to
-      // off-white. Every roof by its building's kind and height, never by the camera's distance (a roof would change colour as the camera moves)
+      // oldH, smaller than bigA m2) grey tile roofs over grey brick and red brick (oldRoofs: the only grey roofs the paintings
+      // have); a large low building pale, its hall's roof a material of its own (bigRoofs); an office tower (from towerH m and
+      // towerA m2 of footprint, or any from tallH m) in tinted glass, pale blue-green or silver, its top its own (towerRoofs); the
+      // rest, most of the city, homes in soft paints (cream, ivory, sand, pale peach, salmon, light grey); stone, a civic or old
+      // stone building (from the data's first stoneSpan years, stoneA m2 or more, its outline filling stoneC of its extent, lower
+      // than stoneH), beige to off-white. A home's and a stone building's flat roof in its own wall's paint, lit as a top facing the
+      // sky and the sun: light, about as bright as its lit walls, its warmth a step cooler under the sky (as the paintings' roofs
+      // against their lit walls: the same L, a* kept, b* some 6 lower), so each building reads as one coloured block with a bright
+      // top (a pink building a light pink roof, a cream one a light cream one; one grey for every roof made an aerial a grid of
+      // grey squares); the walk-ups' (lower than tiledH) a share of them (tiled) in terracotta tile. Every roof by its building's
+      // kind and height, never by the camera's distance (a roof would change colour as the camera moves)
       today: { long: ['#8d8a84', 400], roofs: ['#d9d6cf', '#cfccc5', '#e2dfd8'], flat: ['#dcd9d2', '#d2cfc8', '#e4e1da', '#cbc8c1'], flatShare: .85, walls: ['#ebe8e1', '#e3e0d9', '#f0ede6', '#dedbd4', '#e7e4dd'], tall: ['#e6e8ea', '#dde1e5', '#eceeef', '#d6dbe0'],
-        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, homeRoof: null, roofGrey: '#a8a8a8', stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
-          stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'], stoneRoofs: ['#959ba3', '#9097a0', '#9aa0a7'],
-          homes: ['#f8d0c6', '#f6c8bc', '#f7d4cc', '#f8efe2', '#f6d2c2', '#d4dde8', '#f8dccf', '#f4cbc4', '#f5d6c6', '#f6cdc6'], homeRoofs: ['#e2dbd0', '#d9d2c6', '#e6e0d6', '#d4cec4'], lowRoofH: 60, lowRoofs: ['#8a93a0', '#868f9c', '#8f97a2', '#8b93a0'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
+        kinds: { oldH: 13, bigA: 1500, towerH: 60, towerA: 900, tallH: 120, tiledH: 30, tiled: .12, stoneSpan: 12, stoneA: 1000, stoneC: .5, stoneH: 80,
+          stone: ['#ece6dc', '#e6ded2', '#f2eee6', '#e0d8cc', '#ebe4d8'],
+          homes: ['#f8d0c6', '#f6c8bc', '#f7d4cc', '#f8efe2', '#f6d2c2', '#d4dde8', '#f8dccf', '#f4cbc4', '#f5d6c6', '#f6cdc6'], tiles: ['#d08a6a', '#c98066', '#d89a78'],
           oldWalls: ['#dccfc2', '#d2c6b8', '#ecc8b6', '#e2d6c8', '#e6c2b2'], oldRoofs: ['#868c94', '#8c9199', '#80868e', '#90959c'],
           big: ['#ece2d4', '#f2d8ca', '#efe0cc'], bigRoofs: ['#9da3ab', '#979ea6', '#a3a8af'],
           glass: ['#adbed0', '#b4c3d4', '#bbc6d0', '#a9bacc', '#b8c6d4'], towerRoofs: ['#d6d4cf', '#cccbc7'] } } },
@@ -441,11 +443,13 @@ const TODAY = {
   chinese: { roofs: ['#5f5c58', '#6a6661', '#57544f', '#73706a'], flat: ['#9a9893', '#8c8a86'], flatShare: .35, walls: ['#cfc8bc', '#b9b2a6', '#e0dbd0', '#a8a197', '#d8d2c6'], tall: ['#e2e1dc', '#c9ced2', '#d8d4ca'] },
   modern: { roofs: ['#6d6e72', '#7d6a5e', '#5f6268'], flat: ['#a9a8a3', '#9b9a96', '#b8b6b0', '#8f8e8a'], flatShare: .85, walls: ['#dad6ce', '#c8c5bf', '#e6e2da', '#b9b6b0', '#d4ccbe', '#c2bfb8'], tall: ['#cdd4d9', '#b4c0ca', '#e3e3df', '#9eaebb', '#d6d3cb'] },
 };
-// a building's paint by its kind (colourToday's choice; the massing's split units take theirs the same way): [wall, roof]
-function kindPaint(K, k, hm, q, q2, pick, ROOFG_) {
-  const wall = pick(['oldWalls', 'homes', 'glass', 'big', 'stone'][k], q), roof = k === 1 && hm < K.tiledH && q2 < K.tiled ? pick('tiles', (q2 * 7.7) % 1)
-    : k === 1 && K.homeRoof != null ? wall.clone().lerp(ROOFG_, K.homeRoof[0]).multiplyScalar(K.homeRoof[1])
-    : k === 1 && K.lowRoofs && hm < K.lowRoofH ? pick('lowRoofs', q2) : pick(['oldRoofs', 'homeRoofs', 'towerRoofs', 'bigRoofs', 'stoneRoofs'][k], q2);   // (lowRoofs: a home lower than lowRoofH, a walk-up or a lane house, in the old fabric's mid grey; a modern mid- or high-rise's light)   // (homeRoof: [share, times] a home's roof its walls' paint taken this share toward a warm mid grey (roofGrey) and darkened: darker than its walls, each building reads from above)
+// a building's paint by its kind (colourToday's choice; the massing's split units take theirs the same way): [wall, roof]. A home's
+// (but a tiled walk-up's) and a stone building's roof its own wall's paint (the light does the rest); the old fabric's, a tower's
+// and a hall's their kind's own (oldRoofs, towerRoofs, bigRoofs)
+function kindPaint(K, k, hm, q, q2, pick) {
+  const wall = pick(['oldWalls', 'homes', 'glass', 'big', 'stone'][k], q);
+  const roof = k === 1 && hm < K.tiledH && q2 < K.tiled ? pick('tiles', (q2 * 7.7) % 1)
+    : k === 1 || k === 4 ? wall : pick({ 0: 'oldRoofs', 2: 'towerRoofs', 3: 'bigRoofs' }[k], q2);
   return [wall, roof]; }
 function colourToday(mesh, T = TODAY.roman) {
   const g = mesh.geometry, d = g.attributes.aData, nrm = g.attributes.normal, n = g.attributes.position.count, out = new Float32Array(n * 3), col = new THREE.Color();
@@ -460,7 +464,7 @@ function colourToday(mesh, T = TODAY.roman) {
   // area, and stone (a civic or old stone building) by its year, size and compact outline; aKind the facade FACADE_GLSL draws on it
   // (0 the old fabric, 1 a home, 2 an office tower's glass, 3 a large low building, 4 stone), from the same choice
   const K = T.kinds, kind = K ? new Float32Array(n) : null, paint = K ? new Float32Array(n * 3) : null;
-  if (K) { const ROOFG_ = new THREE.Color(K.roofGrey || '#a49e96'), P = g.attributes.position, A = g.attributes.aCtr, s2 = (T.scale || 1e-4) ** 2, KC = {}, pick = (a, x) => (KC[a] ||= C(K[a]))[Math.floor(x * K[a].length) % K[a].length];
+  if (K) { const P = g.attributes.position, A = g.attributes.aCtr, s2 = (T.scale || 1e-4) ** 2, KC = {}, pick = (a, x) => (KC[a] ||= C(K[a]))[Math.floor(x * K[a].length) % K[a].length];
     let i0 = 0, y0 = 1e9; for (let i = 0; i < n; i++) { const y = d.getX(i); if (y > 1 && d.getW(i) < .5 && y < y0) y0 = y; }   // (y0: the data's first year)
     const end = i1 => { let ar = 0, x0 = 1e9, z0 = 1e9, x1 = -1e9, z1 = -1e9;   // (its footprint: the area of its roof's triangles; its extent)
       for (let j = i0; j + 2 < i1; j += 3) if (nrm.getY(j) > .6) ar += Math.abs((P.getX(j + 1) - P.getX(j)) * (P.getZ(j + 2) - P.getZ(j)) - (P.getX(j + 2) - P.getX(j)) * (P.getZ(j + 1) - P.getZ(j))) / 2;
@@ -469,7 +473,7 @@ function colourToday(mesh, T = TODAY.roman) {
       // (stone: a civic or old stone building, by the data: there from the data's first years, large, compact, not a tower)
       const k = K.stoneA && yr > 1 && yr <= y0 + K.stoneSpan && ar >= K.stoneA && cmp >= K.stoneC && hm < K.stoneH ? 4
         : hm < K.oldH && ar < K.bigA ? 0 : hm < 24 && ar >= K.bigA ? 3 : (hm >= K.towerH && ar >= K.towerA) || hm >= K.tallH ? 2 : 1;
-      const [wall, roof] = kindPaint(K, k, hm, q, q2, pick, ROOFG_);
+      const [wall, roof] = kindPaint(K, k, hm, q, q2, pick);
       for (let j = i0; j < i1; j++) { const c = nrm.getY(j) > .6 ? roof : wall; paint[j * 3] = c.r; paint[j * 3 + 1] = c.g; paint[j * 3 + 2] = c.b; kind[j] = k; }
       i0 = i1; };
     for (let i = 1; i <= n; i++) if (i === n || A.getX(i) !== A.getX(i - 1) || A.getY(i) !== A.getY(i - 1)) end(i); }
@@ -1367,14 +1371,15 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [], rims = [], units = [], parts = [], cuts = [];
     const MS = todayL() && todayL().massing; MASS.kinds = {}; MASS.why = {}; MASS.list = []; MASS.kept = 0; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
     const geoOf = P => cityMesh && cityMesh.geometry.attributes.position === P ? cityMesh.geometry : FPT.mesh && FPT.mesh.geometry.attributes.position === P ? FPT.mesh.geometry : null;
+    const roofC = (P_, i0, i1) => { const G_ = geoOf(P_), A_ = G_ && G_.attributes.color, N_ = G_ && G_.attributes.normal; if (A_) for (let i = i0; i < i1; i++) if (N_.getY(i) > .6) return new THREE.Color().fromArray(A_.array, i * 3); return null; };   // (a record's roof paint, its top's vertex colour: its pieces take it)
     const RU = MAT.roofUnits || null;   // (small rooftop units: below)
-    const TK = (film && MAT && MAT.today ? { ...TODAY[today], ...MAT.today } : TODAY[today] || {}).kinds, KC_ = {}, pickK = (a_, x) => (KC_[a_] ||= TK[a_].map(c_ => new THREE.Color(c_)))[Math.floor(x * TK[a_].length) % TK[a_].length], ROOFG = new THREE.Color((TK && TK.roofGrey) || '#a49e96');   // (today's kinds and paints: a split unit's, kindPaint)
+    const TK = (film && MAT && MAT.today ? { ...TODAY[today], ...MAT.today } : TODAY[today] || {}).kinds, KC_ = {}, pickK = (a_, x) => (KC_[a_] ||= TK[a_].map(c_ => new THREE.Color(c_)))[Math.floor(x * TK[a_].length) % TK[a_].length];   // (today's kinds and paints: a split unit's, kindPaint)
     // a batch of stills: a record made again takes its pieces as they were made (today's rooftops after the replacement footprints
     // chosen for the next shot), while the detailed models stand as they did (FOLDS: they fold records and take their pieces)
     if (BATCH && ROOF_KEEP.n !== FOLDS.length) { ROOF_KEEP.n = FOLDS.length; ROOF_KEEP.m = new WeakMap(); }
     let rec_ = null; const kept_ = () => { if (rec_) ROOF_KEEP.m.set(rec_[0], [list.slice(rec_[1]), lips.slice(rec_[2]), rims.slice(rec_[3]), units.slice(rec_[4]), parts.slice(rec_[5]), cuts.slice(rec_[6])]); rec_ = null; };
     for (const r_ of ROOFS) { kept_(); const k_ = BATCH && ROOF_KEEP.m.get(r_); if (k_) { list.push(...k_[0]); lips.push(...k_[1]); rims.push(...k_[2]); units.push(...k_[3]); parts.push(...k_[4]); cuts.push(...k_[5]); continue; }
-      rec_ = BATCH ? [r_, list.length, lips.length, rims.length, units.length, parts.length, cuts.length] : null; let [cx, cz, th, a, b, y1, yr, hm, h0, i0, i1, P_] = r_;   // (P_: the record's own positions, today's city's or a replacement footprint's)
+      rec_ = BATCH ? [r_, list.length, lips.length, rims.length, units.length, parts.length, cuts.length] : null; let [cx, cz, th, a, b, y1, yr, hm, h0, i0, i1, P_] = r_, rc = roofC(P_, i0, i1);   // (P_: the record's own positions, today's city's or a replacement footprint's)
       const c = Math.cos(th), sn = Math.sin(th);
       { let u0 = 1e9, u1 = -1e9, v0 = 1e9, v1 = -1e9;   // (its outline's exact extent along its own axes)
         for (let i = i0; i < i1; i++) { const x = P_.getX(i), z = P_.getZ(i), u = x * c + z * sn, v = -x * sn + z * c; if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v; }
@@ -1383,11 +1388,11 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       let ar_ = 0; for (let i = i0; i + 2 < i1; i += 3) if (Math.abs(P_.getY(i) - y1) + Math.abs(P_.getY(i + 1) - y1) + Math.abs(P_.getY(i + 2) - y1) < .1 * ex * scale)   // (its roof's area)
         ar_ += Math.abs((P_.getX(i + 1) - P_.getX(i)) * (P_.getZ(i + 2) - P_.getZ(i)) - (P_.getX(i + 2) - P_.getX(i)) * (P_.getZ(i + 1) - P_.getZ(i))) / 2;
       let hull = null; const nl0 = lips.length, nr0 = rims.length, rect = i1 - i0 <= 36 && ar_ > .95 * 4 * a * b;   // (its roof's outline when convex: what stands on it is tested against it)
-      if (rect) { lips.push([cx, y1, cz, 2 * a * .995, ex * scale, 2 * b * .995, yr, th]);   // (a rectangle: its roof fills its own box; a triangle or a trapezoid's box rim stood in the air)
+      if (rect) { lips.push([cx, y1, cz, 2 * a * .995, ex * scale, 2 * b * .995, yr, th, null, rc]);   // (a rectangle: its roof fills its own box; a triangle or a trapezoid's box rim stood in the air)
         hull = hull2([[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([p, q]) => [cx + c * a * p - sn * b * q, cz + sn * a * p + c * b * q])); }
       else {   // any other convex roof (a triangle, an octagon, a round tower): the rim along its own hull, 0.6 m wide; a concave roof (a corner left inside the hull) none
         const pts = []; for (let i = i0; i < i1; i++) if (Math.abs(P_.getY(i) - y1) < .2 * ex * scale) pts.push([P_.getX(i), P_.getZ(i)]);
-        const H_ = hull2(pts); if (H_.length >= 3 && pts.every(([x, z]) => hullIn(H_, x, z) < .4 * scale)) { rims.push([H_, y1, yr]); hull = H_; } }   // (the parapet, on a rectangular roof only: a rim a metre high round its own outline, a hair in)
+        const H_ = hull2(pts); if (H_.length >= 3 && pts.every(([x, z]) => hullIn(H_, x, z) < .4 * scale)) { rims.push([H_, y1, yr, rc]); hull = H_; } }   // (the parapet, on a rectangular roof only: a rim a metre high round its own outline, a hair in)
       // whatever stands on the roof stands wholly on it, a margin inside its parapet (on a concave roof: on its own top's triangles),
       // never over its edge or in the air beside it
       let tops = null; const fits = (x, z, hu, hv, m) => { if (!hull && !tops) tops = topGrid(topTris(i0, i1, P_, y1, .1 * ex * scale), cx, cz, c, sn, a, b);
@@ -1405,24 +1410,24 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
             if (M_.kind === 'split') { lips.length = nl0; rims.length = nr0; split_ = true; }   // (its own roof gone to its base: no parapet of its own)
             else { for (let k = nl0; k < lips.length; k++) lips[k][1] = M_.cut; for (let k = nr0; k < rims.length; k++) rims[k][1] = M_.cut; }   // (its parapet round the main mass's roof)
             let wi = i0, ri = i0; const NN = G_.attributes.normal; for (let i = i0; i < i1; i++) { if (Math.abs(NN.getY(i)) < .3 && wi === i0) wi = i; if (NN.getY(i) > .6) { ri = i; break; } }
-            for (const q of M_.parts) { const o_ = q[7] ? (() => { const k_ = kd === 4 && q[7].q2 < (SP.stone ?? .35) ? 4 : q[7].hm < TK.oldH ? 0 : 1, [w_, r_] = kindPaint(TK, k_, q[7].hm, q[7].q, q[7].q2, pickK, ROOFG); return { wall: w_, roof: r_, k: k_, h: q[7].q, hm: q[7].hm }; })() : null;   // (a split unit: its own paint and kind)
-              parts.push([q[0], q[1], q[2], q[3], q[4], q[5], q[6], th, G_, i0, wi, ri, o_]); if (!q[2]) lips.push([q[0], q[6], q[1], 2 * q[3] * .995, ex * scale, 2 * q[4] * .995, yr, th]); }
+            for (const q of M_.parts) { const o_ = q[7] ? (() => { const k_ = kd === 4 && q[7].q2 < (SP.stone ?? .35) ? 4 : q[7].hm < TK.oldH ? 0 : 1, [w_, r_] = kindPaint(TK, k_, q[7].hm, q[7].q, q[7].q2, pickK); return { wall: w_, roof: r_, k: k_, h: q[7].q, hm: q[7].hm }; })() : null;   // (a split unit: its own paint and kind)
+              parts.push([q[0], q[1], q[2], q[3], q[4], q[5], q[6], th, G_, i0, wi, ri, o_]); if (!q[2]) lips.push([q[0], q[6], q[1], 2 * q[3] * .995, ex * scale, 2 * q[4] * .995, yr, th, null, o_ ? o_.roof : rc]); }
             if (!split_) { const T_ = M_.parts[M_.parts.length - 1];   // (its rooftops on its highest part)
             cx = T_[0]; cz = T_[1]; a = T_[3]; b = T_[4]; y1 = T_[6]; tops = null; at = (u, v) => [cx + c * u - sn * v, cz + sn * u + c * v];
             hull = hull2(T_[2] ? Array.from({ length: 12 }, (_, k) => at(Math.cos(k * Math.PI / 6) * a, Math.sin(k * Math.PI / 6) * b)) : [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([p, q]) => at(a * p, b * q))); } } } }
       if (split_) continue;   // (a split footprint's roof pieces: none; its units carry their parapets)
-      if (hm >= 20) { const q_ = ((h0 * 1e4) % 1 + 1) % 1, k = RU ? RU.main[0] + RU.main[1] * q_ : .2 + .16 * q_, mH = RU ? RU.mainH : [3, 2.5];   // (plant rooms: one or two, each its own size, height and grey)
+      if (hm >= 20) { const q_ = ((h0 * 1e4) % 1 + 1) % 1, k = RU ? RU.main[0] + RU.main[1] * q_ : .2 + .16 * q_, mH = RU ? RU.mainH : [3, 2.5];   // (plant rooms: one or two, each its own size, height and step of its roof's paint)
         const w1 = 2 * a * k, d1 = 2 * b * k * (.7 + .5 * ((q_ * 3.1) % 1));   // (where it fits: a curved slab's box centre may lie outside it)
         for (const [u1, v1] of RU ? [[.15, 0], [0, 0], [-.3, 0], [.4, 0], [-.5, 0], [0, .3], [0, -.3]] : [[.15, 0]]) { const P1 = at(a * u1, b * v1);
-          if (!RU || fits(P1[0], P1[1], w1 / 2, d1 / 2, .8 * scale)) { list.push([P1[0], y1, P1[1], w1, (mH[0] + mH[1] * ((q_ * 7.3) % 1)) * ex * scale, d1, yr, th, q_]); placed.push([a * u1, b * v1, w1 / 2, d1 / 2]); break; } }
+          if (!RU || fits(P1[0], P1[1], w1 / 2, d1 / 2, .8 * scale)) { list.push([P1[0], y1, P1[1], w1, (mH[0] + mH[1] * ((q_ * 7.3) % 1)) * ex * scale, d1, yr, th, q_, rc]); placed.push([a * u1, b * v1, w1 / 2, d1 / 2]); break; } }
         const P2 = [cx - c * a * .45, cz - sn * a * .45 + b * .3 * c], w2 = 2 * a * .12, d2 = 2 * b * .16;
-        if (a * b > 150 * scale * scale && q_ > .3 && (!RU || fits(P2[0], P2[1], w2 / 2, d2 / 2, .8 * scale))) list.push([P2[0], y1, P2[1], w2, 2.4 * ex * scale, d2, yr, th, (q_ * 5.7) % 1]); }
+        if (a * b > 150 * scale * scale && q_ > .3 && (!RU || fits(P2[0], P2[1], w2 / 2, d2 / 2, .8 * scale))) list.push([P2[0], y1, P2[1], w2, 2.4 * ex * scale, d2, yr, th, (q_ * 5.7) % 1, rc]); }
       if (RU && 4 * a * b >= RU.area * scale * scale) {   // small units (the look's roofUnits): a few boxes, each its own size and place, by the roof's hash
         const hh = k => { const t = Math.sin(h0 * 1e5 + k * 78.233) * 43758.5453; return t - Math.floor(t); }, n = RU.n[0] + Math.floor(hh(1) * (RU.n[1] - RU.n[0] + 1));
         for (let k = 0, tries = 0; k < n && tries < 4 * n; tries++) { const s_ = (RU.size[0] + RU.size[1] * hh(10 + tries)) * scale, hu = s_ / 2, hv = s_ * (.6 + .5 * hh(20 + tries)) / 2;
           const u = (hh(30 + tries) * 2 - 1) * Math.max(0, a - hu - 1.4 * scale), v = (hh(40 + tries) * 2 - 1) * Math.max(0, b - hv - 1.4 * scale), [x, z] = at(u, v);
           if (placed.some(([pu, pv, ph, pw]) => Math.abs(u - pu) < ph + hu + .6 * scale && Math.abs(v - pv) < pw + hv + .6 * scale) || !fits(x, z, hu, hv, .8 * scale)) continue;
-          units.push([x, y1, z, 2 * hu, (RU.h[0] + RU.h[1] * hh(50 + tries)) * ex * scale, 2 * hv, yr, th, hh(60 + tries)]); placed.push([u, v, hu, hv]); k++; } } }
+          units.push([x, y1, z, 2 * hu, (RU.h[0] + RU.h[1] * hh(50 + tries)) * ex * scale, 2 * hv, yr, th, hh(60 + tries), rc]); placed.push([u, v, hu, hv]); k++; } } }
     kept_();
     massMesh(parts, cuts);
     const ring = (() => { const w = .035, o = new THREE.Shape([[-.5, -.5], [.5, -.5], [.5, .5], [-.5, .5]].map(([x, y]) => new THREE.Vector2(x, y))), h = new THREE.Path([[-.5 + w, -.5 + w], [-.5 + w, .5 - w], [.5 - w, .5 - w], [.5 - w, -.5 + w]].map(([x, y]) => new THREE.Vector2(x, y)));
@@ -1450,20 +1455,24 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     transformed.y -= (1. - smoothstep(.8, 2., 1. / max(-mv_.z * uRoofPx, 1e-9))) * ${drop}; }`); };
       m.customProgramCacheKey = () => 'mini-roof-rim ' + key; return m; };
     const M4 = new THREE.Matrix4(), R4 = new THREE.Matrix4();
+    // every piece in its roof's paint (rc: a quiet step of its building's own family, never a grey of its own): a parapet its roof's,
+    // its top lighter (todayLight roof [4]), plant rooms and units a step of it each (roofUnits mainK, unitK); a roof without a
+    // painted top (rc null) the light rim and the grey they had
+    const RIM0 = new THREE.Color('#e9e6df'), C0 = new THREE.Color('#c4bfb6');
     if (rims.length) {   // the hull rims as one mesh: outer wall, inner wall, top, a metre high
-      const pos = [], yrs = [], w = .6 * scale, h = ex * scale;
-      for (const [H_, y0, yr] of rims) { const cx_ = H_.reduce((a_, p_) => a_ + p_[0], 0) / H_.length, cz_ = H_.reduce((a_, p_) => a_ + p_[1], 0) / H_.length;
+      const pos = [], yrs = [], cols = [], w = .6 * scale, h = ex * scale;
+      for (const [H_, y0, yr, rc] of rims) { const cr = rc || RIM0; const cx_ = H_.reduce((a_, p_) => a_ + p_[0], 0) / H_.length, cz_ = H_.reduce((a_, p_) => a_ + p_[1], 0) / H_.length;
         const inn = H_.map(([x, z]) => { const dx = x - cx_, dz = z - cz_, l = Math.hypot(dx, dz) || 1; return [x - dx / l * w, z - dz / l * w]; });
-        const quad = (a_, b_, c_, d_) => { for (const q of [a_, b_, c_, a_, c_, d_]) { pos.push(...q); yrs.push(yr); } };
+        const quad = (a_, b_, c_, d_) => { for (const q of [a_, b_, c_, a_, c_, d_]) { pos.push(...q); yrs.push(yr); cols.push(cr.r, cr.g, cr.b); } };
         for (let k = 0; k < H_.length; k++) { const k2 = (k + 1) % H_.length, [ox, oz] = H_[k], [px, pz] = H_[k2], [ix, iz] = inn[k], [jx, jz] = inn[k2];
           quad([ox, y0, oz], [px, y0, pz], [px, y0 + h, pz], [ox, y0 + h, oz]); quad([jx, y0, jz], [ix, y0, iz], [ix, y0 + h, iz], [jx, y0 + h, jz]); quad([ox, y0 + h, oz], [px, y0 + h, pz], [jx, y0 + h, jz], [ix, y0 + h, iz]); } }
-      const g_ = new THREE.BufferGeometry(); g_.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g_.setAttribute('iYear', new THREE.Float32BufferAttribute(yrs, 1)); g_.computeVertexNormals();
-      const m_ = new THREE.Mesh(g_, rimMat(mat, (1.5 * ex * scale).toExponential(4), 'hull')); m_.material.side = THREE.DoubleSide; m_.castShadow = m_.receiveShadow = true; m_.layers.set(L); m_.frustumCulled = false; scene.add(m_); RIM_MESH = m_; }
-    const unitC = new THREE.Color(RU ? RU.col : '#c4bfb6');   // (the units, each its own grey, sink into the roof as they shrink, as the rims do: afar they were speckle)
-    ROOF_MESH = [[new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), list], [ring, lips], [new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), units]].filter(([, l]) => l.length).map(([geo, l]) => { const mesh = new THREE.InstancedMesh(geo, l === list ? Object.assign(mat.clone(), { color: new THREE.Color(RU ? RU.mainCol : '#c4bfb6'), onBeforeCompile: mat.onBeforeCompile }) : l === units ? rimMat(Object.assign(mat.clone(), { color: unitC }), '1.5', 'unit') : rimMat(mat, '1.5', 'ring'), l.length), yA = new Float32Array(l.length);   // (plant rooms a mid grey, each its own shade; the parapets the rim's light)
-      const G_ = l === units && RU ? RU.greys : [.62, .74, .86, .7, .8], c_ = new THREE.Color();
-      l.forEach(([x, y, z, sx, sy, sz, yr, th, q], n) => { M4.makeRotationY(-th).multiply(R4.makeScale(sx, sy, sz)).setPosition(x, y, z); mesh.setMatrixAt(n, M4); yA[n] = yr;
-        if (q != null) mesh.setColorAt(n, c_.setRGB(1, 1, 1).multiplyScalar(G_[Math.floor(q * 5) % 5])); });   // (each plant room its own grey; the parapets the rim's light)
+      const g_ = new THREE.BufferGeometry(); g_.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g_.setAttribute('iYear', new THREE.Float32BufferAttribute(yrs, 1)); g_.setAttribute('color', new THREE.Float32BufferAttribute(cols, 3)); g_.computeVertexNormals();
+      const m_ = new THREE.Mesh(g_, rimMat(Object.assign(mat.clone(), { color: new THREE.Color(1, 1, 1), vertexColors: true }), (1.5 * ex * scale).toExponential(4), 'hull')); m_.material.side = THREE.DoubleSide; m_.castShadow = m_.receiveShadow = true; m_.layers.set(L); m_.frustumCulled = false; scene.add(m_); RIM_MESH = m_; }
+    // (the units sink into the roof as they shrink, as the rims do: afar they were speckle)
+    ROOF_MESH = [[new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), list], [ring, lips], [new THREE.BoxGeometry(1, 1, 1).translate(0, .5, 0), units]].filter(([, l]) => l.length).map(([geo, l]) => { const W_ = Object.assign(mat.clone(), { color: new THREE.Color(1, 1, 1) }), mesh = new THREE.InstancedMesh(geo, l === list ? Object.assign(W_, { onBeforeCompile: mat.onBeforeCompile }) : rimMat(W_, '1.5', l === units ? 'unit' : 'ring'), l.length), yA = new Float32Array(l.length);
+      const K_ = l === list ? (RU ? RU.mainK : [.62, .74, .86, .7, .8]) : l === units ? RU.unitK : null, c_ = new THREE.Color();
+      l.forEach(([x, y, z, sx, sy, sz, yr, th, q, rc], n) => { M4.makeRotationY(-th).multiply(R4.makeScale(sx, sy, sz)).setPosition(x, y, z); mesh.setMatrixAt(n, M4); yA[n] = yr;
+        mesh.setColorAt(n, c_.copy(rc || (K_ ? C0 : RIM0)).multiplyScalar(K_ ? K_[Math.floor(q * K_.length) % K_.length] : 1)); });   // (each plant room and unit its own step of its roof's paint; a parapet its roof's)
       geo.setAttribute('iYear', new THREE.InstancedBufferAttribute(yA, 1)); mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); return mesh; }); };   // (plant rooms; parapets)
   // today's streets as geometry (todayLight streets: { asphalt, pavement colours, kerb: the pavement's metres each side, w: full
   // widths by class }): a ribbon along every street and arterial (data/streets.json, lines.json roads) at its class's width, an
