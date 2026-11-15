@@ -789,7 +789,7 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
   // pixels round, every other one going as they grow); a tree fades in and out over a band of its rank, never at once; afar a
   // grove whose cell is under far[1] pixels hands over to the ground's own groves' tone (whole by far[0]), a street's crown under
   // street.far[1] of a pixel fades (gone by far[0]). The same camera draws the same trees, whatever frame came before it
-  const FL = { tiles: new Map(), key: null, built: undefined, bv: 0, mesh: [null, null, null, null], cap: 0, seg: null, out: null }, TILE = 256;
+  const FL = { tiles: new Map(), key: null, built: undefined, bv: 0, mesh: [], cap: 0, seg: null, out: null }, TILE = 256;
   // the streets (data/streets.json) and arterials (roads) as carriageways and junctions, built once: each segment in a 60 m grid
   // with its half width; the nodes where three or more arms meet. clear(x, z, way, r): off every other way's carriageway (its half
   // width and 1.5 m) and r from every junction
@@ -952,7 +952,8 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
         if (t === 2) { rd = Math.max(r, SPX * mpp); const p = r / rd; w = (rk ? Math.min(1, Math.max(0, (p - rk) / rk)) : 1) * fsm(SFAR[0], SFAR[1], r / mpp); }   // (a row: its trees at least street px pixels round, every other one going as they grow; gone where a crown would be under far[0] of a pixel)
         else { const p = Math.min(1, (r / (mpp * PX0)) ** 2); rd = r / Math.sqrt(p); w = Math.min(1, Math.max(0, (p * (1 + B_) - rk) / (B_ * p))) * fsm(FAR[0], FAR[1], F.cell * scale / mpp); }   // (a grove's or a park's: fewer, larger, whole under rank p, gone from p (1 + B_); afar the ground's groves' tone)
         if (w > .002) put(x, y, z, rd * w, h, t, rd); } }
-    // the crowns: a finer sphere where a crown is 6 pixels round or more; the parks' in their own paint (parkTrees crown, trees)
+    // the crowns: a finer sphere where a crown is 6 pixels round or more, the coarsest (20 faces) under 3: afar a row's or a grove's
+    // crowns are a few pixels each, their facets never seen, and there are most of them; the parks' in their own paint (parkTrees crown, trees)
     const CR_ = (yc >= 0 && todayL() && todayL().crown) || F.crown, CRP_ = (yc >= 0 && M.PT.crown) || CR_;   // (todayLight crown: today's own, while today's city is the subject; a period city's groves keep the flock's)
     const mk = (detail, CR_) => { const geo = new THREE.IcosahedronGeometry(1, detail).scale(1, .82, 1), mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95 });
       if (CR_) {   // a crown painted as a model's foliage (flock crown: [its underside's share, its cap's, the cap's warmth]): a darker shade side, a lighter, yellower sunlit cap
@@ -964,11 +965,11 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
       const cap = Math.max(1024, FL.cap), mesh = new THREE.InstancedMesh(geo, mat, cap); mesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(cap * 3), 3);
       mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); mesh.userData.crown = (CR_ || []).flat().join(); return mesh; };
     let nAll = n; for (let k = 0; k < n; k++) if (out[k][5] === 1) nAll += 2;   // (today's park crowns as a model maker's clusters: two smaller balls beside each)
-    if (nAll > FL.cap || !FL.mesh[3] || FL.mesh[0].userData.crown !== (CR_ || []).flat().join() || FL.mesh[2].userData.crown !== (CRP_ || []).flat().join()) { FL.cap = Math.max(FL.cap, Math.ceil(nAll * 1.3)); for (const m of FL.mesh) if (m) { scene.remove(m); m.geometry.dispose(); m.material.dispose(); m.dispose(); } FL.mesh = [mk(1, CR_), mk(2, CR_), mk(1, CRP_), mk(2, CRP_)]; }   // (a street's or a grove's, a park's; each coarse and fine)
+    if (nAll > FL.cap || !FL.mesh[5] || FL.mesh[0].userData.crown !== (CR_ || []).flat().join() || FL.mesh[3].userData.crown !== (CRP_ || []).flat().join()) { FL.cap = Math.max(FL.cap, Math.ceil(nAll * 1.3)); for (const m of FL.mesh) if (m) { scene.remove(m); m.geometry.dispose(); m.material.dispose(); m.dispose(); } FL.mesh = [mk(0, CR_), mk(1, CR_), mk(2, CR_), mk(0, CRP_), mk(1, CRP_), mk(2, CRP_)]; }   // (a street's or a grove's, a park's; each coarsest, coarse and fine)
     const base = new THREE.Color().setRGB(...F.col.map(v => Math.pow(v, 2.2))), base2 = new THREE.Color().setRGB(...(F.col2 || F.col).map(v => Math.pow(v, 2.2))), col = new THREE.Color();
     const lin = L_ => L_.map(c_ => new THREE.Color().setRGB(...c_.map(v => Math.pow(v, 2.2)))), TT_ = MAT.todayLight && todayL().trees, tb = TT_ ? lin(TT_) : [base, base2], tp = M.PT.trees ? lin(M.PT.trees) : tb;   // (today's trees: todayLight.trees, each tree one of its greens; a park's its own, parkTrees trees)
-    const cnt = [0, 0, 0, 0], A = FL.mesh.map(m => m.instanceMatrix.array), C = FL.mesh.map(m => m.instanceColor.array);
-    const one = (x, y, z, r, h, t, rd) => { const s = (r * kp > 0 && r / (Math.hypot(x - cp.x, y - cp.y, z - cp.z) * kp) >= 6 ? 1 : 0) + (t === 1 ? 2 : 0), q = cnt[s]++, a = A[s], o = q * 16, sy_ = t ? .8 + .4 * ((h * 13.7) % 1) : 1, cs = Math.cos(h * 6.28), sn = Math.sin(h * 6.28);   // (today's: taller or flatter crowns, not identical balls)
+    const cnt = [0, 0, 0, 0, 0, 0], A = FL.mesh.map(m => m.instanceMatrix.array), C = FL.mesh.map(m => m.instanceColor.array);
+    const one = (x, y, z, r, h, t, rd) => { const px_ = r / (Math.hypot(x - cp.x, y - cp.y, z - cp.z) * kp), s = (px_ >= 6 ? 2 : px_ >= 3 ? 1 : 0) + (t === 1 ? 3 : 0), q = cnt[s]++, a = A[s], o = q * 16, sy_ = t ? .8 + .4 * ((h * 13.7) % 1) : 1, cs = Math.cos(h * 6.28), sn = Math.sin(h * 6.28);   // (today's: taller or flatter crowns, not identical balls)
       a[o] = cs * r; a[o + 1] = 0; a[o + 2] = -sn * r; a[o + 3] = 0; a[o + 4] = 0; a[o + 5] = r * sy_; a[o + 6] = 0; a[o + 7] = 0; a[o + 8] = sn * r; a[o + 9] = 0; a[o + 10] = cs * r; a[o + 11] = 0;
       a[o + 12] = x; a[o + 13] = y + r * .7 * sy_; a[o + 14] = z; a[o + 15] = 1;
       if (t) { const T_ = t === 1 ? tp : tb; col.copy(T_[Math.floor(((h * 7.31) % 1) * T_.length)]).multiplyScalar(.9 + .2 * h); } else col.copy(base).lerp(base2, fvn(x / scale / 40, z / scale / 40) * .7 + h * .3).multiplyScalar(.8 + .4 * h);   // (col2: a second green, by groves more than by tree)
