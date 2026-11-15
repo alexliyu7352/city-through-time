@@ -358,7 +358,7 @@ const FILM_PIC = { sunEl: 30, sunSide: 75, sun: 1.05, sunC: '#ffdcae', sky: .8, 
         // (roofsMesh; tiles: its courses [their spacing along the slope m, their shade, from this many courses a pixel toward their
         // mean, there by twice that], FACADE_GLSL); paint: the roofs' paints (roofPaint)
         roofKinds: { old: 12, oldH: 26, oldA: [40, 3000], rect: .8, slab: [12, 30, 2.4, 18, .7], point: [40, 950, 1.5], pink: .3, grey: .35, slabOchre: .2, hallOchre: .1, cluster: [60, 8, 30, [5, .25], 15], quota: [500, .3],
-          pitch: { deg: [30, 22], maxH: 5, share: .35, minW: 4, cover: .6, gable: .3, tiles: [.9, .16, .35] },
+          pitch: { deg: [30, 22], maxH: 5, share: .35, minW: 4, cover: .6, gable: .3, pieces: 6, tiles: [.9, .16, .35] },
           paint: { light: .3, slab: ['#fbf6f0'], slabK: .9, glass: ['#e7d8c5', '#e6dbd9', '#e0d8d4'], hall: ['#9da3ab', .7], grey: ['#8f9098', '#94959a', '#8a8b92'], tile: ['#8b8e96', '#94989f', '#8f9095'], lane: ['#8d888c', '#888588'],
             pink: ['#bf9c99', '#d6a49f', '#cca19c'], ochre: ['#ef916c', '#f19c6e'] } } } },
     // a clay diorama: terracotta tiles in relief, each its own, a sandy ground, cobbled streets, moss at the walls' feet
@@ -1547,8 +1547,12 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   // a concave top, whether a point is on it: its triangles tested, or for a larger top (more than 4 triangles: testing every one
   // for every point cost seconds on the whole city's large outlines) a raster in its own axes, cells of half a metre (at most 256
   // a side), drawn once
-  const topGrid = (T, cx, cz, c, sn, a, b) => { if (T.length <= 4) return (x, z) => T.some(([ax, az, bx, bz, qx, qz]) => { const d1 = (x - bx) * (az - bz) - (ax - bx) * (z - bz), d2 = (x - qx) * (bz - qz) - (bx - qx) * (z - qz), d3 = (x - ax) * (qz - az) - (qx - ax) * (z - az);
+  const topGrid = (T, cx, cz, c, sn, a, b, R = null) => { if (T.length <= 4) return (x, z) => T.some(([ax, az, bx, bz, qx, qz]) => { const d1 = (x - bx) * (az - bz) - (ax - bx) * (z - bz), d2 = (x - qx) * (bz - qz) - (bx - qx) * (z - qz), d3 = (x - ax) * (qz - az) - (qx - ax) * (z - az);
       return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); });
+    const { g, nu, nv, cs, lu, lv } = R || topRaster(T, cx, cz, c, sn, a, b);   // (R: the raster, drawn already)
+    return (x, z) => { const i = Math.floor((lu(x, z) + a) / cs), j = Math.floor((lv(x, z) + b) / cs); return i >= 0 && j >= 0 && i < nu && j < nv && g[j * nu + i] === 1; }; };
+  // a top's raster in its own axes (cell i, j: u from -a + i cs, v from -b + j cs; a cell set where its centre lies on the top)
+  const topRaster = (T, cx, cz, c, sn, a, b) => {
     const cs = Math.max(.5 * scale, 2 * Math.max(a, b) / 256), nu = Math.ceil(2 * a / cs) + 2, nv = Math.ceil(2 * b / cs) + 2, g = new Uint8Array(nu * nv);
     const lu = (x, z) => (x - cx) * c + (z - cz) * sn, lv = (x, z) => -(x - cx) * sn + (z - cz) * c;
     for (const [ax, az, bx, bz, qx, qz] of T) { const P3 = [[lu(ax, az), lv(ax, az)], [lu(bx, bz), lv(bx, bz)], [lu(qx, qz), lv(qx, qz)]];   // (row by row: each row's span of the triangle)
@@ -1556,7 +1560,24 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       for (let j = j0; j <= j1; j++) { const v = -b + (j + .5) * cs; let u0 = Infinity, u1 = -Infinity;
         for (let e = 0; e < 3; e++) { const [p0, p1] = [P3[e], P3[(e + 1) % 3]]; if ((v < p0[1]) === (v < p1[1]) && v !== p0[1]) continue; const t = p1[1] === p0[1] ? 0 : (v - p0[1]) / (p1[1] - p0[1]), u = p0[0] + (p1[0] - p0[0]) * t; if (u < u0) u0 = u; if (u > u1) u1 = u; }
         if (!(u1 >= u0)) continue; const i0 = Math.max(0, Math.ceil((u0 + a) / cs - .5)), i1 = Math.min(nu - 1, Math.floor((u1 + a) / cs - .5)); for (let i = i0; i <= i1; i++) g[j * nu + i] = 1; } }
-    return (x, z) => { const i = Math.floor((lu(x, z) + a) / cs), j = Math.floor((lv(x, z) + b) / cs); return i >= 0 && j >= 0 && i < nu && j < nv && g[j * nu + i] === 1; }; };
+    return { g, nu, nv, cs, lu, lv }; };
+  // a raster's largest rectangles of set cells, each at least k cells a side, one after another (the cells each takes cleared),
+  // at most n, till they cover this share of its cells: [i0, i1, j0, j1] each (the largest rectangle under each row's histogram)
+  const RECT_ = { s: new Int32Array(0), h: new Int32Array(0), H: new Int32Array(0) };   // (rectsOf's stacks and histogram, kept)
+  // a raster f times coarser (a cell set where all of its f x f are): the same origin
+  const coarse = (R, f) => { if (f <= 1) return R; const nu = Math.floor(R.nu / f), nv = Math.floor(R.nv / f), g = new Uint8Array(nu * nv);
+    for (let j = 0; j < nv; j++) for (let i = 0; i < nu; i++) { let all = 1; for (let y = 0; y < f && all; y++) for (let x = 0; x < f; x++) if (!R.g[(j * f + y) * R.nu + i * f + x]) { all = 0; break; } g[j * nu + i] = all; }
+    return { g, nu, nv, cs: R.cs * f }; };
+  const rectsOf = ({ g, nu, nv }, k, n, enough = 1) => { const G = g.slice(), out = []; let left = 0; for (let i = 0; i < G.length; i++) left += G[i]; const stop = (1 - enough) * left;
+    if (RECT_.H.length < nu + 1) RECT_.s = new Int32Array(nu + 1), RECT_.h = new Int32Array(nu + 1), RECT_.H = new Int32Array(nu + 1);
+    const S_ = RECT_.s, Sh = RECT_.h, H = RECT_.H;
+    for (let r = 0; r < n && left >= k * k && left > stop; r++) { H.fill(0, 0, nu); let best = 0, bi = null;   // (none left that could hold one, or enough covered)
+      for (let j = 0; j < nv; j++) { const o = j * nu; for (let i = 0; i < nu; i++) H[i] = G[o + i] ? H[i] + 1 : 0;
+        let t = 0; for (let i = 0; i <= nu; i++) { const h = i < nu ? H[i] : 0; let s0 = i;
+          while (t > 0 && Sh[t - 1] >= h) { t--; const si = S_[t], sh = Sh[t]; if (sh >= k && i - si >= k && sh * (i - si) > best) { best = sh * (i - si); bi = [si, i - 1, j - sh + 1, j]; } s0 = si; }
+          S_[t] = s0; Sh[t] = h; t++; } }
+      if (!bi) break; out.push(bi); left -= best; for (let j = bi[2]; j <= bi[3]; j++) G.fill(0, j * nu + bi[0], j * nu + bi[1] + 1); }
+    return out; };
   const roofsMesh = () => { if (ROOF_MESH || !ROOFS || !ROOFS.length) return; const ex = S.U.uScaleH ? S.U.uScaleH.value / scale : 1, list = [], lips = [], rims = [], units = [], caps = [], parts = [], cuts = [], pitch = [];
     const MS = todayL() && todayL().massing; MASS.kinds = {}; MASS.why = {}; MASS.list = []; MASS.kept = 0; if (MS && cityMesh && !cityMesh.geometry.attributes.color) colour(cityMesh);   // (the massing's parts take their building's paint)
     const geoOf = P => cityMesh && cityMesh.geometry.attributes.position === P ? cityMesh.geometry : FPT.mesh && FPT.mesh.geometry.attributes.position === P ? FPT.mesh.geometry : null;
@@ -1581,6 +1602,19 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       const slab = kind === 10 && kd !== 3, gable = slab || kind === 8 || (kind === 7 && (((h0 * 1e4) % 1 + 1) % 1) < PT.gable), hl = lr.L / 2 * fu, hw = lr.W / 2 * fv;
       const hr = Math.min(hw / scale * Math.tan((slab ? PT.deg[1] : PT.deg[0]) * Math.PI / 180), PT.maxH, PT.share * hm), v = Math.max(1, Math.min(254, Math.floor(255 * (1 - hr / hm))));   // (its eaves where the walls' cut falls: aCut's own steps)
       return { cx: lr.cx, cz: lr.cz, th: lr.th, hl, hw, ridge: gable ? hl : Math.max(0, hl - hw), y0: yb + (y1 - yb) * v / 255, y1, gable, cut: v, yb }; };
+    // a footprint that fills no rectangle (an L, a T, a stepped or ragged block): its pieces, rectangles along its own main axes
+    // cut from its top's raster, the largest first (rectsOf; roofKinds pitch pieces: at most this many, each at least minW m a
+    // side), a hair inside its outline; a pitched roof on each, their eaves at one height and their ridges at the data's (a
+    // narrower piece the steeper), so one building carries the paintings' many ridges; only where the pieces cover cover of its
+    // top (else its flat member)
+    const piecesOf = (R0, h0, kind, kd, Ra) => { const { cx, cz, c, sn, a, b, y1, yb, hm, th } = R0, m = .25 * scale;
+      const R2 = coarse(Ra, Math.ceil(scale / Ra.cs - 1e-6)), tot = R2.g.reduce((s_, v) => s_ + v, 0), rs = rectsOf(R2, Math.ceil(PT.minW * scale / R2.cs), PT.pieces, .9);   // (on cells of a metre or more: a piece never needs finer)
+      if (!rs.length || y1 - yb < 1e-7 || rs.reduce((s_, [i0, i1, j0, j1]) => s_ + (i1 - i0 + 1) * (j1 - j0 + 1), 0) < PT.cover * tot) return null;
+      const ps = rs.map(([i0, i1, j0, j1]) => { const u0 = -a + i0 * R2.cs + m, u1 = -a + (i1 + 1) * R2.cs - m, v0 = -b + j0 * R2.cs + m, v1 = -b + (j1 + 1) * R2.cs - m, U = (u0 + u1) / 2, V = (v0 + v1) / 2, hu = (u1 - u0) / 2, hv = (v1 - v0) / 2;
+        return { cx: cx + c * U - sn * V, cz: cz + sn * U + c * V, th: hu >= hv ? th : th + Math.PI / 2, hl: Math.max(hu, hv), hw: Math.min(hu, hv) }; });
+      const slab = kind === 10 && kd !== 3, gable = slab || (kind === 7 && (((h0 * 1e4) % 1 + 1) % 1) < PT.gable);
+      const hr = Math.min(Math.max(...ps.map(p => p.hw)) / scale * Math.tan((slab ? PT.deg[1] : PT.deg[0]) * Math.PI / 180), PT.maxH, PT.share * hm), v = Math.max(1, Math.min(254, Math.floor(255 * (1 - hr / hm)))), y0 = yb + (y1 - yb) * v / 255;
+      return ps.map(p => ({ ...p, ridge: gable ? p.hl : Math.max(0, p.hl - p.hw), y0, y1, gable, cut: v, yb })); };
     const wallOf = (G_, i0, i1) => { const NN = G_.attributes.normal; for (let i = i0; i < i1; i++) if (Math.abs(NN.getY(i)) < .3) return i; return i0; };
     // a batch of stills: a record made again takes its pieces as they were made (today's rooftops after the replacement footprints
     // chosen for the next shot), while the detailed models stand as they did (FOLDS: they fold records and take their pieces)
@@ -1596,11 +1630,13 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
         for (let i = i0; i < i1; i++) { const x = P_.getX(i), z = P_.getZ(i), u = x * c + z * sn, v = -x * sn + z * c; if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v; }
         const um = (u0 + u1) / 2, vm = (v0 + v1) / 2; cx = um * c - vm * sn; cz = um * sn + vm * c; a = (u1 - u0) / 2; b = (v1 - v0) / 2; }
       if (FOLDS.some(f => Math.hypot(cx - f.cx, cz - f.cz) < f.rr || f.inFoot(cx, cz))) continue;   // (none where a detailed model stands)
-      let tops = null; const inTop = (x, z) => (tops ||= topGrid(topTris(i0, i1, P_, y1, .1 * ex * scale), cx, cz, c, sn, a, b))(x, z);
+      let tops = null, tri_ = null, ras_ = null; const triOf = () => tri_ ||= topTris(i0, i1, P_, y1, .1 * ex * scale), rasOf = () => ras_ ||= topRaster(triOf(), cx, cz, c, sn, a, b);   // (its top: triangles, raster, a point's test, each made once)
+      const inTop = (x, z) => (tops ||= topGrid(triOf(), cx, cz, c, sn, a, b, triOf().length > 4 ? rasOf() : null))(x, z);
       const pitched_ = (rk === 7 || rk === 9 || rk === 10) && PT && G0 && G0.attributes.aData.getW(i0) < .5;
-      const pitchIt = () => { const pr = pitchOf(G0, i0, i1, P_, y1, hm, rk, kd0, h0, inTop); if (!pr) return false;   // (its pitched roof: no parapet, no pieces)
+      const pitchIt = () => { const one = pitchOf(G0, i0, i1, P_, y1, hm, rk, kd0, h0, inTop);   // (its pitched roof, over its least rectangle or over its pieces: no parapet, no plant room)
+        const prs = one ? [one] : PT.pieces && G0.attributes.aBase ? piecesOf({ cx, cz, c, sn, a, b, y1, yb: G0.attributes.aBase.getX(i0), hm, th }, h0, rk, kd0, rasOf()) : null; if (!prs) return false;
         const w = G0.attributes.color, wi = wallOf(G0, i0, i1), wall = new THREE.Color().fromArray(w.array, wi * 3);
-        const rp = ROOF_MAPON ? roofMapC(rk) : roofPaint(RKS, rk, wall, ((h0 * 7.7e3) % 1 + 1) % 1); cuts.push([G0, i0, i1, pr.cut]); pitch.push([pr, G0, i0, ROOF_MAPON ? rp : wall, rp, rk]); RO_.k = rk; return true; };
+        const rp = ROOF_MAPON ? roofMapC(rk) : roofPaint(RKS, rk, wall, ((h0 * 7.7e3) % 1 + 1) % 1); cuts.push([G0, i0, i1, prs[0].cut]); for (const pr of prs) pitch.push([pr, G0, i0, ROOF_MAPON ? rp : wall, rp, rk]); RO_.k = rk; return true; };
       if (hm < 8 || Math.min(a, b) < 4 * scale) { if (pitched_) pitchIt(); continue; }   // (a low or a narrow building: a pitched roof, or nothing on its flat one)
       let ar_ = 0; for (let i = i0; i + 2 < i1; i += 3) if (Math.abs(P_.getY(i) - y1) + Math.abs(P_.getY(i + 1) - y1) + Math.abs(P_.getY(i + 2) - y1) < .1 * ex * scale)   // (its roof's area)
         ar_ += Math.abs((P_.getX(i + 1) - P_.getX(i)) * (P_.getZ(i + 2) - P_.getZ(i)) - (P_.getX(i + 2) - P_.getX(i)) * (P_.getZ(i + 1) - P_.getZ(i))) / 2;
@@ -1622,6 +1658,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
           const big_ = SP && TK && ar_ / scale / scale >= SP.area, why_ = !big_ ? null : G_ !== cityMesh.geometry && FPT.osm && FPT.osm.has(Math.fround(C_.getX(i0)) + ',' + Math.fround(C_.getY(i0))) ? 'osm' : hm >= SP.maxH ? 'tall' : kd === 2 ? 'kind' : 2 * Math.min(a, b) < SP.minW * scale ? 'narrow' : null;
           const sp_ = big_ && !why_ ? splitPlan(MS, R_, h0) : null; if (big_) { MASS.why[why_ || (sp_ ? 'split' : 'unfit')] = (MASS.why[why_ || (sp_ ? 'split' : 'unfit')] || 0) + 1; (MASS.list ||= []).push([cx, y1, cz, why_ || (sp_ ? 'split' : 'unfit'), ar_ / scale / scale, hm]); }   // (MASS large, list: each large footprint, whether it was split and why not; window.__MINI.mass for a check)
           const M_ = y1 - yb > 1e-7 && (sp_ || massPlan(MS, R_));   // (split: today's data's own footprints, a squared one's too, never an OpenStreetMap building (the sidecar's osm sources: single buildings), a tower's glass or a stone civic building)
+          if (M_ && M_.kind === 'step' && pitched_ && pitchIt()) { lips.length = nl0; rims.length = nr0; continue; }   // (a low-rise's step, one end a storey higher, is a roof's variety: a pitched roof in its place)
           if (M_) { cuts.push([G_, i0, i1, Math.max(1, Math.min(254, Math.round(255 * (M_.cut - yb) / (y1 - yb))))]); MASS.kinds[M_.kind] = (MASS.kinds[M_.kind] || 0) + 1; massed_ = true;
             if (M_.kind === 'split') { lips.length = nl0; rims.length = nr0; split_ = true; }   // (its own roof gone to its base: no parapet of its own)
             else { for (let k = nl0; k < lips.length; k++) lips[k][1] = M_.cut; for (let k = nr0; k < rims.length; k++) rims[k][1] = M_.cut; }   // (its parapet round the main mass's roof)
@@ -1647,7 +1684,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
               parts.push([q[0], q[1], q[2], q[3], q[4], q[5], q[6], th, G_, i0, wi, ri, o_]); if (!q[2] && !(o_ && o_.rk === 8)) lips.push([q[0], q[6], q[1], 2 * q[3] * .995, ex * scale, 2 * q[4] * .995, yr, th, null, o_ ? o_.roof : rc]); }
             if (unitK.length && RO_) RO_.units = unitK;
             if (!split_) { const T_ = M_.parts[M_.parts.length - 1];   // (its rooftops on its highest part)
-            cx = T_[0]; cz = T_[1]; a = T_[3]; b = T_[4]; y1 = T_[6]; tops = null; at = (u, v) => [cx + c * u - sn * v, cz + sn * u + c * v];
+            cx = T_[0]; cz = T_[1]; a = T_[3]; b = T_[4]; y1 = T_[6]; tops = tri_ = ras_ = null; at = (u, v) => [cx + c * u - sn * v, cz + sn * u + c * v];
             hull = hull2(T_[2] ? Array.from({ length: 12 }, (_, k) => at(Math.cos(k * Math.PI / 6) * a, Math.sin(k * Math.PI / 6) * b)) : [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([p, q]) => at(a * p, b * q))); } } } }
       if (split_) continue;   // (a split footprint's roof pieces: none; its units carry their parapets)
       if (pitched_ && !massed_ && pitchIt()) { lips.length = nl0; rims.length = nr0; continue; }
