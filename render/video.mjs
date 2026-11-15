@@ -5,6 +5,8 @@
 // desktop stays usable. One render per --out: <out>.lock holds the pid (a lock whose pid is gone, or untouched for 12 h, is taken
 // over); the segments sit in a hidden folder beside --out, removed when the render ends, fails or is stopped. An --out ending in
 // .ffconcat keeps them unjoined (in <name>_parts/ beside it, listed in the file): the disk holds the picture once, not twice while joining.
+// A look in motion (any city): --q '...&camkeys=[[t, [tx,ty,tz,az,el,d,fov]], ...]' moves a test camera over the film's seconds in place
+// of the film's own (engine/main.js CAMK), e.g. keys held, then eased from one pose to another; --workers 1 --from --to the move.
 import fs from 'fs'; import os from 'os'; import path from 'path'; import { spawn, execFileSync } from 'child_process';
 import { openFilm, closeServer, takeSize, shot } from './page.mjs';
 import { local, buildDir } from './local.mjs';

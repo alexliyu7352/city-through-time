@@ -52,7 +52,7 @@ const REFL = { T: { value: null }, M: { value: new THREE.Matrix4() }, K: { value
 // a landmark's own round plaza (a glb entry's plaza, todayLight roundPlaza): up to four, P: its centre x z (model units), its lawn
 // ring's inner and outer radius m; Q: its inner disc's radius, its outer radius m, -, on
 const RPLAZA = { P: { value: [0, 1, 2, 3].map(() => new THREE.Vector4()) }, Q: { value: [0, 1, 2, 3].map(() => new THREE.Vector4()) } };
-const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }, GEO_T = { value: new THREE.Vector4(0, 0, -1, 0) };   // (GEO_T: the crowns drawn as geometry, x z their centre, z their radius: beyond it the ground carries the groves' tone)
+const HSCALE_T = { value: 1 }, POOL = { value: new THREE.Vector4(0, 0, 1e9, 1) }, GEO_T = { value: new THREE.Vector4(0, 0, -1, 0) };   // (GEO_T: where the crowns drawn as geometry hand over to the ground's groves' tone, x from and y whole at these distances from the eye; z < 0: none)
 // the built area of the period cities standing (a material's ground_in: its plaster inside it, the table beyond): their buildings'
 // centres drawn over the plate, each `reach` m round, softened; made again when the cities standing change (builtMask)
 // today's city as the year each place is first built (a material's ground_in: its plaster from that year on), drawn once: every
@@ -181,13 +181,14 @@ function todayYears(mesh, PW, PD, reach, scale, roads = null, bands = null, rise
   { const ie = gt.getImageData(0, 0, N, N).data; YEAR_E = new Uint8Array(N * N); for (let i = 0; i < N * N; i++) YEAR_E[i] = ie[i * 4]; }
   const im = gw.getImageData(0, 0, N, N).data; YEAR_D = new Uint8Array(N * N); for (let i = 0; i < N * N; i++) YEAR_D[i] = im[i * 4];
 }
-const BUILT = { value: null }, TREES = { value: null }, PLATE = { value: new THREE.Vector2(1, 1) }, CANV = () => typeof document !== 'undefined' ? document.createElement('canvas') : null, BUILT_C = CANV(), TREES_C = CANV(); let BUILT_K = null;
+const BUILT = { value: null }, TREES = { value: null }, PLATE = { value: new THREE.Vector2(1, 1) }, CANV = () => typeof document !== 'undefined' ? document.createElement('canvas') : null, BUILT_C = CANV(), TREES_C = CANV(); let BUILT_K = null; const BUILT_S = { sig: null, v: 0 };
 // the trees' mask the same way: the generator's trees (part 4: gardens, horti, groves), each `tree` m round, the flock laid over them (baseGLSL)
 function builtMask(eras, PW, PD, scale, reach, treeR) {   // (eras: S.eras; a building counts once its era's front has raised it halfway: uEraT past its rank's start)
+  // (drawn again only when what it shows changes, BUILT_V: an era's clock moves on every frame, its buildings standing do not)
   const meshes = eras.map(e => e.mesh), up = e => e.u && e.u.uEraT ? e.u.uEraT.value : 1e9, span = e => e.u && e.u.uEraSpan ? e.u.uEraSpan.value : 0, grow = e => e.u && e.u.uEraGrow ? e.u.uEraGrow.value : 0;
   const key = eras.filter(e => e.mesh.visible).map(e => e.mesh.uuid + ':' + up(e).toFixed(2)).join(); if (key === BUILT_K) return; BUILT_K = key; PLATE.value.set(PW, PD);
   const N = 2048, mk = c => { c.width = c.height = N; const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, N, N); g.fillStyle = '#fff'; return g; };
-  const gb = mk(BUILT_C), gt = mk(TREES_C), r = Math.max(1, reach * scale / PW * N), rt = Math.max(1, treeR * scale / PW * N);
+  const r = Math.max(1, reach * scale / PW * N), rt = Math.max(1, treeR * scale / PW * N), ops = []; let sig = 2166136261;   // (ops: what to draw; sig: its fingerprint)
   for (const e of eras) { const m = e.mesh; if (!m.visible) continue; const C = m.geometry.attributes.aCtr, D = m.geometry.attributes.aData; if (!C) continue;
     let lx = 1e9, lz = 1e9; const T_ = up(e), sp = span(e), gr = grow(e), u = e.u || {}, v_ = k => u[k] ? u[k].value : 0;
     const fO = u.uEraO ? u.uEraO.value : { x: 0, y: 0 }, fR = v_('uEraFallR'), fIn = v_('uEraFallIn'), fW = v_('uEraFallW'), LO = u.uLossO ? u.uLossO.value : [];
@@ -199,13 +200,17 @@ function builtMask(eras, PW, PD, scale, reach, treeR) {   // (eras: S.eras; a bu
       if (fall(x, z, fO, fR, fIn, fW) > .5) return;   // (taken back)
       if (D) { const w = D.getW(i0), k = Math.round(w - 4); if (k >= 0 && k < LO.length && fall(x, z, LO[k], u.uLossR.value[k], u.uLossIn.value[k], u.uLossW.value[k]) > .5) return; }   // (a part lost)
       const pt = D ? Math.round(D.getY(i0)) : 0, yr = D ? D.getX(i0) : 0;
-      if (pt === 4) { gt.beginPath(); gt.arc((x / PW + .5) * N, (z / PD + .5) * N, rt, 0, 6.2832); gt.fill(); return; }
+      if (pt === 4) { ops.push([0, (x / PW + .5) * N, (z / PD + .5) * N]); sig = Math.imul(sig ^ i0, 16777619); return; }
       if (!(pt === 0 || pt === 1 || pt === 11 || (pt === 7 && !(yr > 9.5 && yr < 49.5)))) return;   // (buildings, platforms, plazas and yards: not walls, roads, earth or water)
-      const e = reach * scale; gb.fillRect((bx0 - e) / PW * N + N / 2, (bz0 - e) / PD * N + N / 2, (bx1 - bx0 + 2 * e) / PW * N, (bz1 - bz0 + 2 * e) / PD * N); };
+      const e = reach * scale; ops.push([1, (bx0 - e) / PW * N + N / 2, (bz0 - e) / PD * N + N / 2, (bx1 - bx0 + 2 * e) / PW * N, (bz1 - bz0 + 2 * e) / PD * N]); sig = Math.imul(sig ^ (i0 + 7), 16777619); };
     for (let i = 0; i < C.count; i++) { const x = C.getX(i), z = C.getY(i);
       if (x !== lx || z !== lz) { flush(i); lx = x; lz = z; i0 = i; bx0 = bz0 = 1e9; bx1 = bz1 = -1e9; }
       const px_ = P_.getX(i), pz_ = P_.getZ(i); if (px_ < bx0) bx0 = px_; if (px_ > bx1) bx1 = px_; if (pz_ < bz0) bz0 = pz_; if (pz_ > bz1) bz1 = pz_; }
-    flush(C.count); }
+    flush(C.count); sig = Math.imul(sig ^ (C.count + 13), 16777619); }
+  sig = String(sig) + ':' + eras.filter(e => e.mesh.visible).map(e => e.mesh.uuid).join() + ':' + PW + ':' + PD;
+  if (sig === BUILT_S.sig && BUILT.value) return; BUILT_S.sig = sig; BUILT_S.v++;
+  const gb = mk(BUILT_C), gt = mk(TREES_C);
+  for (const o of ops) if (o[0]) gb.fillRect(o[1], o[2], o[3], o[4]); else { gt.beginPath(); gt.arc(o[1], o[2], rt, 0, 6.2832); gt.fill(); }
   for (const [g, c, b] of [[gb, BUILT_C, r * 1.1], [gt, TREES_C, rt * 1.2]]) { g.filter = `blur(${b.toFixed(1)}px)`; g.drawImage(c, 0, 0); g.filter = 'none'; }   // (wide: a lone building outside the city fades under the threshold, a quarter stays)
   for (const [U_, c] of [[BUILT, BUILT_C], [TREES, TREES_C]]) { if (!U_.value) { U_.value = new THREE.CanvasTexture(c); U_.value.colorSpace = THREE.NoColorSpace; U_.value.flipY = false; } U_.value.needsUpdate = true; }   // (flipY off: rows as drawn, z down the canvas, as the plate's uv)
 }
@@ -216,8 +221,8 @@ const SLATE = { slate: [.31, .31, .31], step: 6, edge: 1.45, resin: [.20, .14, .
 // (linear) over its own mean, `size` m a repeat (and 6.3 times that, turned, over it), its normal `bump` strong; the sheets of the
 // land's rise `step` m, their edges a faint `edge`; the water a glossy resin. In the sunny miniature the land is a fresh meadow
 // (land olive and ochre: its two greens, fields faintly), the groves fresh greens (flock), a town's ground light warm paving (ground_in)
-const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.80, .76, .70], reach: 16, park: [.56, .72, .34] }, flock: { col: [.30, .48, .18], col2: [.44, .56, .22], cellMax: 16, most: 400000, tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 12, crown: [.42, 1.04, [1.06, 1.03, .84]], wall: 1.5,
-    street: { off: 2.2, r: 2.5, vary: [.9, 1, 1.12], every: { secondary: 9, tertiary: 9 }, minor: 11, junction: 14, cellK: .6, rows: true, px: 1.2 } },
+const SLATE_TEX = { tex: 'slate', slate: [.0068, .0068, .0068], mean: .032, size: 55, ground_in: { col: [.80, .76, .70], reach: 16, park: [.56, .72, .34] }, flock: { col: [.30, .48, .18], col2: [.44, .56, .22], cellMax: 16, tree: 16, bank: .9, slope: .8, edge: .7, land: .5, cell: 12, crown: [.42, 1.04, [1.06, 1.03, .84]], wall: 1.5,
+    street: { off: 2.2, r: 2.5, vary: [.9, 1, 1.12], every: { secondary: 9, tertiary: 9 }, minor: 11, junction: 14, floor: 8.6, rows: true, px: 1.2, far: [.35, .5] }, px: 1.5, far: [2, 3] },
   land: { olive: [.56, .64, .36], ochre: [.68, .70, .44], field: 140, rock: [.5, .8], rockC: [.64, .60, .52], scrub: [.42, .54, .22] }, bump: 1.6, ground: '#cfc3a6', step: 6, edge: 1.12, resin: [.46, .64, .71], gloss: [.08, .55, [.80, .86, .92]] };   // (resin: clear tinted acrylic; gloss: its reflection of the room, [at a steep view, toward a grazing one, its colour])   // (land rock: only the steep faces, the slope as drawn)
 // the colour film's picture, as a photograph of a model on a table: a warm key from a sun fixed in the world, low and to the side
 // of where the film's camera mostly looks from (sunSide degrees round from it: shadows fall across the frame and toward the eye,
@@ -660,7 +665,7 @@ ${pop ? `<div style="position:absolute;right:72px;top:60px;font:500 34px/1 'Noto
 // or null; paletteOf: id -> that period city's palette (its own, else the film's); today: today's city's colours (TODAY; none: an
 // old Mediterranean town's); fadeAt: the white film's dimming of today's city at which it is gone in colour (film.era_look dim)
 export function miniLook({ S, roads = null, dataDir = null, grow = null, bands = null, cityMesh, scale, lens = null, palette = 'roman', ground = 'land', card = null, prims = null, hex = () => 2, face = () => null, film = false, lost = null,
-  paletteOf = () => palette, today = null, fadeAt = .8, phone = false, backdropFrom = 1800, dataFrom = 1e4, camAz = null, paths = null }) {   // (paths: the film's routes drawn as paths on the land, main.js QUIET)   // (camAz: the bearing the film's camera mostly looks from, degrees: the sun's is fixed from it)   // (phone: the film on a phone, main.js: no ambient occlusion, a smaller shadow map; the caller leaves the detail out)
+  paletteOf = () => palette, today = null, fadeAt = .8, phone = false, backdropFrom = 1800, dataFrom = 1e4, camAz = null, paths = null, camPath = null }) {   // (paths: the film's routes drawn as paths on the land, main.js QUIET)   // (camPath(): every place the film's camera looks at, [[x, z, distance], ..], or null for a fixed camera (a still's): today's replacement footprints are chosen round all of them)   // (camAz: the bearing the film's camera mostly looks from, degrees: the sun's is fixed from it)   // (phone: the film on a phone, main.js: no ambient occlusion, a smaller shadow map; the caller leaves the detail out)
   const { scene, camera, renderer, U } = S, PW = S.PW, PD = S.PD;
   const tone = p => { const T0 = film && !S.fx && FILM_PIC.tone[p], M_ = film && !S.fx && MAT && MAT[p], T = T0 || M_ ? { ...(T0 || {}), ...(M_ || {}), parts: { ...((T0 || {}).parts || {}), ...((M_ || {}).parts || {}) } } : null;
     return T ? { ...PALETTES[p], ...T, parts: { ...PALETTES[p].parts, ...T.parts }, detail: { ...PALETTES[p].detail, ...(T.detail || {}) } } : PALETTES[p]; };   // (the film's colours, FILM_PIC; a material's over them)   // (the film's colours, FILM_PIC)
@@ -761,18 +766,29 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
   let clearNow = [];
   const TF = treeField(scene, renderer, U, PW, PD, scale, { size: 1, keep: 1, dark: 1, ...pal.tree, ...(film ? FILM_PIC.tree : {}), ...(film && phone ? { count: 40000 } : {}), cypress: pal.cypress, woods, ground: S.ground, layer: L, tone: 'mini',
     clear: (x, z) => clearNow.every(f => f(x, z)) });
-  // boats on the water round where the eye looks (detail.js boatsAt), planted again when it moves away, as the trees are
+  // boats on the water (detail.js boatsAt): the whole plate's, planted in the world once (again when the water as it was changes),
+  // the same wherever the camera goes; a far one fades by its size (detailMeshes)
   let wpx = null; const water = () => { if (wpx) return wpx; const img = U.uWater.value && U.uWater.value.image; if (!img) return null;
     const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height; const g = cv.getContext('2d'); g.drawImage(img, 0, 0); return wpx = { d: g.getImageData(0, 0, img.width, img.height).data, w: img.width, h: img.height }; };
   const chan = () => film && S.wThenGLSL ? Math.round(U.uWT.value.x) : 0;   // (the film's water as it was: the state's channel, studio.js WTHEN; else today's, R)
   const wet = (x, z) => { const W_ = water(); if (!W_) return false; const u = Math.floor((x / PW + .5) * W_.w), v = Math.floor((z / PD + .5) * W_.h); return u >= 0 && v >= 0 && u < W_.w && v < W_.h && W_.d[(v * W_.w + u) * 4 + chan()] > 90; };
-  const BF = { at: null, dAt: 1, g: null, ch: 0 };
-  const boats = (target, d) => { if (BF.at && BF.at.distanceTo(target) <= d * .3 && Math.abs(Math.log(d / BF.dAt)) <= .4 && BF.ch === chan()) return; BF.ch = chan();
+  const BF = { g: null, ch: null };
+  const boats = () => { if (BF.g && BF.ch === chan()) return; BF.ch = chan();
     if (BF.g) { scene.remove(BF.g); BF.g.traverse(o => { if (o.isMesh) { o.geometry.dispose(); o.material.dispose(); } }); }
-    BF.g = detailMeshes(boatsAt(wet, target, d * 2.2, { scale, style: palette, ground: S.ground }), dcols, { layer: L, pxK }); scene.add(BF.g); BF.at = target.clone(); BF.dAt = d; };
-  // a material's groves (base flock): round crowns, a cell of `cell` m near (wider afar, at most `cellMax` m: a crown never outgrows the houses; at most `most` crowns; col2 a second green by grove), there by the groves' density: the generator's
-  // trees (its mask), the banks, the steep slopes, the open ground at the city's edge and a few in the country; never in the built blocks
-  const FL = { at: null, dAt: 1, mesh: null };
+    BF.g = detailMeshes(boatsAt(wet, -PW / 2, -PD / 2, PW / 2, PD / 2, { scale, style: palette, ground: S.ground }), dcols, { layer: L, pxK }); scene.add(BF.g); };
+  // a material's groves (base flock): round crowns, a cell of `cell` m near (wider afar by each tree's own distance from the eye, at most `cellMax` m: fewer,
+  // larger crowns, never outgrowing the houses; col2 a second green by grove), there by the groves' density: the generator's
+  // trees (its mask), the banks, the steep slopes, the open ground at the city's edge and a few in the country; never in the built blocks.
+  // Every tree (the groves; today's street and park trees, flockAt) is planted in the world, never round the eye, so nothing jumps or
+  // pops as the camera moves: the plate in tiles of TILE m, each tile's trees made once, as far down their ranks as a frame has
+  // needed them (a grove's or a park's tree a rank at random, a street's by its place in its row: every other one first), made again
+  // only where what decides them changes (the year, today's city standing, the period cities standing, a detailed model, the water
+  // as it was). Each frame draws the trees of the tiles it sees, each by its own distance from the eye: a crown drawn smaller than
+  // `px` pixels round stands for several, fewer and larger, the canopy's share kept (a street's: its crowns at least street.px
+  // pixels round, every other one going as they grow); a tree fades in and out over a band of its rank, never at once; afar a
+  // grove whose cell is under far[1] pixels hands over to the ground's own groves' tone (whole by far[0]), a street's crown under
+  // street.far[1] of a pixel fades (gone by far[0]). The same camera draws the same trees, whatever frame came before it
+  const FL = { tiles: new Map(), key: null, built: undefined, bv: 0, mesh: [null, null], cap: 0, seg: null, out: null }, TILE = 256;
   // the streets (data/streets.json) and arterials (roads) as carriageways and junctions, built once: each segment in a 60 m grid
   // with its half width; the nodes where three or more arms meet. clear(x, z, way, r): off every other way's carriageway (its half
   // width and 1.5 m) and r from every junction
@@ -792,76 +808,138 @@ export function miniLook({ S, roads = null, dataDir = null, grow = null, bands =
         if (J_) for (const [jx, jz] of J_) if (Math.hypot(x - jx, z - jz) < r) return false; }
       return true; };
     return SIX = { hw, clear }; };
-  const flockAt = (target, d) => { const F = MAT && MAT.base && MAT.base.flock; if (!film || !F || !BUILT_C || !BUILT.value) return;
-    if (FL.at && FL.ty === TODAY_K.value.x + ':' + TODAY_K.value.y && FL.at.distanceTo(target) <= d * .3 && Math.abs(Math.log(d / FL.dAt)) <= .3) return;
-    if (FL.mesh) { scene.remove(FL.mesh); FL.mesh.geometry.dispose(); FL.mesh.material.dispose(); FL.mesh = null; }
-    FL.at = target.clone(); FL.dAt = d; FL.ty = TODAY_K.value.x + ':' + TODAY_K.value.y;   // (planted again as today's city grows)
-    const N = BUILT_C.width, bd = BUILT_C.getContext('2d').getImageData(0, 0, N, N).data, td = TREES_C.getContext('2d').getImageData(0, 0, N, N).data;
-    const px = (D_, x, z) => { const u = Math.floor((x / PW + .5) * N), v = Math.floor((z / PD + .5) * N); return u < 0 || v < 0 || u >= N || v >= N ? 0 : D_[(v * N + u) * 4] / 255; };
-    const h2 = (i, j, k) => { const t = Math.sin(i * 127.1 + j * 311.7 + k * 74.7) * 43758.5453; return t - Math.floor(t); };
-    const vn = (x, y) => { const i = Math.floor(x), j = Math.floor(y), fx = x - i, fy = y - j, a = h2(i, j, 9), b = h2(i + 1, j, 9), c = h2(i, j + 1, 9), e = h2(i + 1, j + 1, 9), sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy); return a + (b - a) * sx + (c - a) * sy + (a - b - c + e) * sx * sy; };
-    const cellM = Math.min(Math.max(F.cell, d / scale * .009), F.cellMax || 1e9), c = cellM * scale, sm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
-    // the crowns as geometry only as far as the budget reaches (at about a third of the cells planted) and only while a crown is 4.5 pixels or more (fewer: hundreds of thousands of them cost more than they show): beyond, the ground's groves' tone (GEO_T)
-    const mpp = 2 * d * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / 1080, small = cellM * .84 * scale / mpp < 4.5;
-    const R = small ? 0 : Math.min(d * 2.2, c * Math.sqrt((F.most || 120000) * 3 / Math.PI)); GEO_T.value.set(target.x, target.z, R, small ? 1 : 0);
+  const flockKey = () => [Math.floor(TODAY_K.value.x), TODAY_K.value.y, TODAY_K.value.z < .3 ? 1 : 0, FOOTS.length, chan()].join(':');   // (what decides every tile's trees; the period cities standing, BUILT, tile by tile: FL.sums)
+  const FH = (i, j, k) => { const t = Math.sin(i * 127.1 + j * 311.7 + k * 74.7) * 43758.5453; return t - Math.floor(t); };
+  const fvn = (x, y) => { const i = Math.floor(x), j = Math.floor(y), fx = x - i, fy = y - j, a = FH(i, j, 9), b = FH(i + 1, j, 9), c = FH(i, j + 1, 9), e = FH(i + 1, j + 1, 9), sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy); return a + (b - a) * sx + (c - a) * sy + (a - b - c + e) * sx * sy; };
+  const fsm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  // one tile's trees down to rank p (T: its record, made the first time it is seen): its groves' cells, its parks' cells, its streets'
+  // places, each looked at only once its rank is under p (a far tile needs few); a tree: [x, y, z, r, h, kind (0 a grove's, 1 a
+  // park's, 2 a street's), rank]
+  const plantTile = (T, p, M) => { const F = M.F, c = F.cell * scale, T0 = TILE * scale, x0 = T.i * T0, z0 = T.j * T0, out = T.list, q0 = T.p;
+    if (p <= q0) return; T.p = p;
+    const i0 = Math.floor(x0 / c), i1 = Math.floor((x0 + T0) / c), j0 = Math.floor(z0 / c), j1 = Math.floor((z0 + T0) / c);
+    for (let i = i0; i <= i1; i++) for (let j = j0; j <= j1; j++) {   // the groves: a crown a cell of flock cell m, there by the groves' density
+      const rk = FH(i, j, 21); if (rk < q0 || rk >= p) continue;
+      const x = (i + .2 + .6 * FH(i, j, 1)) * c, z = (j + .2 + .6 * FH(i, j, 2)) * c;
+      if (x < x0 || x >= x0 + T0 || z < z0 || z >= z0 + T0 || Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2 || wet(x, z)) continue;
+      const tw = Math.max(M.px(M.bd, x, z), M.ty(x, z)); if (tw > .8) continue;   // (never on a block, today's included)
+      const m = [x / scale, z / scale], cl = fsm(.42, .56, fvn(m[0] / 52, m[1] / 52) * .65 + fvn(m[0] / 17, m[1] / 17) * .35);
+      const e = 2 * c, g0 = S.ground(x, z), sl = Math.hypot(S.ground(x + e, z) - g0, S.ground(x, z + e) - g0) / e;
+      const bank = (wet(x + 3 * c, z) || wet(x - 3 * c, z) || wet(x, z + 3 * c) || wet(x, z - 3 * c)) ? 1 : 0;
+      let k = Math.max(M.px(M.td, x, z) * (.5 + .5 * cl), F.bank * bank * (.55 + .45 * cl), cl * Math.max(F.slope * fsm(.12, .3, sl), F.edge * fsm(.08, .25, tw) * (1 - fsm(.72, .9, tw))), F.land * (1 - .75 * TODAY_K.value.y * (TODAY_K.value.z < .3 ? 1 : 0)) * fsm(.75, .9, cl) * (1 - fsm(.2, .4, tw)));   // (groves with clearings; the banks lined; in the open country only the heart of a grove)
+      k = fsm(.3, .62, k) * (1 - fsm(.7, .8, tw)); if (FH(i, j, 3) >= k) continue;   // (a grove's density sharpened: crowns close in its heart, none in its thin edge, so the country reads as woods, not dots)
+      out.push([x, g0, z, Math.min(F.cell * .42 * (.6 + 1. * Math.pow(FH(i, j, 4), 1.4)) * (.8 + .4 * cl), tw > .25 ? 4.5 : 1e9) * scale, FH(i, j, 5), 0, rk]); }   // (inside a town no bigger than a courtyard house)   // (a crown .6 to 1.6 times, the bigger in a grove's heart)
+    if (M.yc < 0) return;
+    // today's street trees (data/streets.json, the finer streets: plane trees along both kerbs, a class's own spacing, sparser along
+    // the minor streets): a row's every other tree the first to go afar (its rank by its place), never in a carriageway (any
+    // street's or arterial's half width and a little) nor near a junction (a node where three or more arms meet)
+    const ST_ = M.ST, IX = M.IX, WC_ = (F.wall || 0) * scale;
+    for (const [w, k] of (FL.seg && FL.seg.get(T.i * 100003 + T.j)) || []) { const r = STREETS.list[w], hw = IX.hw(r.cls), off = (hw / scale + ST_.off) * scale, ev = Math.max(ST_.every[r.cls] || ST_.minor, ST_.floor || 0) * scale;   // (floor: no row closer than this)
+      const [ax, az] = r.pts[k - 1], [bx, bz] = r.pts[k], L_ = Math.hypot(bx - ax, bz - az), nx = -(bz - az) / L_, nz = (bx - ax) / L_;
+      for (let n = 0, u = ev / 2; u < L_; n++, u += ev) { let tz = 0; if (n) while (!((n >> tz) & 1)) tz++; const rk = n ? Math.pow(2, -tz - 1) : 0; if (rk < q0 || rk >= p) continue;   // (n's trailing zeros: 1, 3, 5.. go first, then 2, 6, 10..; the row's first stays)
+        for (const sd of [-1, 1]) { const x = ax + (bx - ax) * u / L_ + nx * off * sd, z = az + (bz - az) * u / L_ + nz * off * sd;
+          if (x < x0 || x >= x0 + T0 || z < z0 || z >= z0 + T0) continue;
+          if (!M.ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z)) || !IX.clear(x, z, w, ST_.junction * scale)) continue; const hh = FH(Math.floor(z / scale), Math.floor(x / scale), 7);
+          const rs = ST_.r * (ST_.vary || [.75, 1, 1.25])[Math.floor(hh * (ST_.vary || [0, 0, 0]).length)] * (.9 + .2 * FH(Math.floor(x / scale), Math.floor(z / scale), 6)) * scale;
+          if (WC_ && !walls(x, z, rs + WC_)) continue;
+          out.push([x, S.ground(x, z), z, rs, hh, 2, rk]); } } }
+    // its parks planted in clusters (data/green.png)
+    if (!GREEN_D) return; const PT_ = M.PT, c2 = (PT_[4] || 10) * scale, gi0 = Math.floor(x0 / c2), gi1 = Math.floor((x0 + T0) / c2), gj0 = Math.floor(z0 / c2), gj1 = Math.floor((z0 + T0) / c2);
+    for (let i = gi0; i <= gi1; i++) for (let j = gj0; j <= gj1; j++) { const rk = FH(i, j, 22); if (rk < q0 || rk >= p) continue;
+      const x = (i + .2 + .6 * FH(i, j, 11)) * c2, z = (j + .2 + .6 * FH(i, j, 12)) * c2; if (x < x0 || x >= x0 + T0 || z < z0 || z >= z0 + T0) continue;
+      const u = Math.floor((x / PW + .5) * GREEN_D.w), v = Math.floor((z / PD + .5) * GREEN_D.h); if (u < 0 || v < 0 || u >= GREEN_D.w || v >= GREEN_D.h || GREEN_D.d[(v * GREEN_D.w + u) * 4] < 128) continue;
+      const m = [x / scale, z / scale], CE_ = PT_[3] || [.4, .62], clp = fsm(CE_[0], CE_[1], fvn(m[0] / 70, m[1] / 70) * .6 + fvn(m[0] / 23, m[1] / 23) * .4);   // (clusters with lawns between: parkTrees [3], their edge)
+      if (FH(i, j, 13) >= clp * PT_[1] || !M.ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z))) continue;
+      const SZ_ = PT_[2] || [.75, 1, 1.3], rp = c2 / scale * .34 * PT_[0] * SZ_[Math.floor(FH(i, j, 14) * SZ_.length)] * scale;   // (parkTrees [size, density, its sizes, its clusters' edge, its cell m])
+      if (WC_ && !walls(x, z, rp * 1.6 + WC_)) continue;   // (its cluster's reach)
+      out.push([x, S.ground(x, z), z, rp, FH(i, j, 15), 1, rk]); }
+  };
+  // the street index by tile (each street segment in every tile its trees may stand in), made once
+  const segIndex = () => { if (FL.seg) return FL.seg; const T0 = TILE * scale, m = new Map(), IX = streetIndex();
+    (STREETS.list || []).forEach((r, w) => { const e = (IX.hw(r.cls) / scale + 12) * scale;
+      for (let k = 1; k < r.pts.length; k++) { const [ax, az] = r.pts[k - 1], [bx, bz] = r.pts[k]; if (Math.hypot(bx - ax, bz - az) < 1e-9) continue;
+        for (let i = Math.floor((Math.min(ax, bx) - e) / T0); i <= Math.floor((Math.max(ax, bx) + e) / T0); i++) for (let j = Math.floor((Math.min(az, bz) - e) / T0); j <= Math.floor((Math.max(az, bz) + e) / T0); j++) {
+          const g = i * 100003 + j; (m.get(g) || m.set(g, []).get(g)).push([w, k]); } } });
+    return FL.seg = m; };
+  const FR = { fr: new THREE.Frustum(), pm: new THREE.Matrix4(), box: new THREE.Box3(), ray: new THREE.Vector3(), cp: new THREE.Vector3() };
+  const flockAt = (target, d) => { const t0_ = performance.now(); flockDraw(target, d); FL.ms = performance.now() - t0_; };
+  const flockDraw = (target, d) => { const F = MAT && MAT.base && MAT.base.flock; if (!film || !F || !BUILT_C || !BUILT.value) return;
+    const key = flockKey(), PX0 = F.px || 1.5, FAR = F.far || [2, 3], SPX = (F.street && F.street.px) || 0, SFAR = (F.street && F.street.far) || [.35, .5], B_ = .35;
+    if (key !== FL.key) { FL.key = key; FL.tiles.clear(); }   // (the year, today's city standing, a detailed model, the water: every tile again)
+    if (BUILT_S.v !== FL.built) { FL.built = BUILT_S.v; const N = 1024;   // (the period cities standing changed: each tile looks at its own share of the masks again; read through a copy kept for reading, never
+      // from the masks themselves: a canvas read back again and again is moved off the graphics card, and its blur and its upload slow every frame)
+      FL.rd ||= [0, 1].map(() => { const c = document.createElement('canvas'); c.width = c.height = N; return c.getContext('2d', { willReadFrequently: true }); });
+      [FL.bd, FL.td] = [BUILT_C, TREES_C].map((c, k) => { const g = FL.rd[k]; g.clearRect(0, 0, N, N); g.drawImage(c, 0, 0, N, N); return g.getImageData(0, 0, N, N).data; }); FL.N = N; FL.bv = (FL.bv || 0) + 1; }
+    const N = FL.N, bd = FL.bd, td = FL.td, px = (D_, x, z) => { const u = Math.floor((x / PW + .5) * N), v = Math.floor((z / PD + .5) * N); return u < 0 || v < 0 || u >= N || v >= N ? 0 : D_[(v * N + u) * 4] / 255; };
+    const tileSum = (i, j) => { const T0 = TILE * scale, u0 = Math.max(0, Math.floor((i * T0 / PW + .5) * N)), u1 = Math.min(N - 1, Math.floor(((i + 1) * T0 / PW + .5) * N)), v0 = Math.max(0, Math.floor((j * T0 / PD + .5) * N)), v1 = Math.min(N - 1, Math.floor(((j + 1) * T0 / PD + .5) * N));
+      let s = 0; for (let v = v0; v <= v1; v++) for (let u = u0; u <= u1; u++) { const o = (v * N + u) * 4; s = (s * 31 + bd[o] * 7 + td[o]) % 1000000007; } return s; };
     const YN = 4096, yc = TODAY_K.value.y > .5 && TODAY_K.value.z < .3 ? TODAY_K.value.x - 1899 : -1,   // (behind a period city today's city is a plan on the board: the period's groves stand over it)
       ty = (x, z) => { if (!YEAR_D || yc < 0) return 0; const u = Math.floor((x / PW + .5) * YN), v = Math.floor((z / PD + .5) * YN); if (u < 0 || v < 0 || u >= YN || v >= YN) return 0; const y = YEAR_D[v * YN + u], ye = GREEN_ON.value && YEAR_E && TODAY_K.value.z < .3 ? YEAR_E[v * YN + u] : 0; return (y > 0 && y <= yc) || (ye > 0 && ye <= yc) ? 1 : 0; };   // (with green data the urban extent is plaster: no country groves on it)
-    const out = [], i0 = Math.floor((target.x - R) / c), i1 = Math.ceil((target.x + R) / c), j0 = Math.floor((target.z - R) / c), j1 = Math.ceil((target.z + R) / c);
-    for (let i = i0; i <= i1 && out.length < (F.most || 120000); i++) for (let j = j0; j <= j1; j++) {
-      const x = (i + .2 + .6 * h2(i, j, 1)) * c, z = (j + .2 + .6 * h2(i, j, 2)) * c;
-      if ((x - target.x) ** 2 + (z - target.z) ** 2 > R * R || Math.abs(x) > PW / 2 || Math.abs(z) > PD / 2 || wet(x, z)) continue;
-      const tw = Math.max(px(bd, x, z), ty(x, z)); if (tw > .8) continue;   // (never on a block, today's included)
-      const m = [x / scale, z / scale], cl = sm(.42, .56, vn(m[0] / 52, m[1] / 52) * .65 + vn(m[0] / 17, m[1] / 17) * .35);
-      const e = 2 * c, g0 = S.ground(x, z), sl = Math.hypot(S.ground(x + e, z) - g0, S.ground(x, z + e) - g0) / e;
-      const bank = !wet(x, z) && (wet(x + 3 * c, z) || wet(x - 3 * c, z) || wet(x, z + 3 * c) || wet(x, z - 3 * c)) ? 1 : 0;
-      let k = Math.max(px(td, x, z) * (.5 + .5 * cl), F.bank * bank * (.55 + .45 * cl), cl * Math.max(F.slope * sm(.12, .3, sl), F.edge * sm(.08, .25, tw) * (1 - sm(.72, .9, tw))), F.land * (1 - .75 * TODAY_K.value.y * (TODAY_K.value.z < .3 ? 1 : 0)) * sm(.75, .9, cl) * (1 - sm(.2, .4, tw)));   // (groves with clearings; the banks lined; in the open country only the heart of a grove)
-      k = sm(.3, .62, k) * (1 - sm(.7, .8, tw)); if (h2(i, j, 3) >= k) continue;   // (a grove's density sharpened: crowns close in its heart, none in its thin edge, so the country reads as woods, not dots)
-      out.push([x, g0, z, Math.min(cellM * .42 * (.6 + 1. * Math.pow(h2(i, j, 4), 1.4)) * (.8 + .4 * cl), tw > .25 ? 4.5 : 1e9) * scale, h2(i, j, 5)]); }   // (inside a town no bigger than a courtyard house)   // (a crown .6 to 1.6 times, the bigger in a grove's heart)
-    // today's street trees (data/streets.json, the finer streets: plane trees along both kerbs, a class's own spacing, sparser along
-    // the minor streets) and its parks planted in clusters (data/green.png), where today's city stands and is the subject, as near
-    // as the crowns are drawn (R); never in a carriageway (any street's or arterial's half width and a little) nor near a junction
-    // (a node where three or more arms meet: a way's end one arm, a node inside it two)
-    if (yc >= 0 && !small && (STREETS.list || GREEN_ON.value)) {
-      const PT_ = (todayL() && todayL().parkTrees) || [1, .9];   // (todayLight parkTrees: the parks' crowns [this many times as large, their density])
-      const ST_ = { ...(F.street || { off: 2.5, r: 3.6, every: { secondary: 13, tertiary: 14 }, minor: 18, junction: 14 }), ...((todayL() && todayL().streetTrees) || {}) }, R2 = R * R, cap = (F.most || 120000), IX = streetIndex(), WC_ = (F.wall || 0) * scale;   // (flock wall: metres a crown keeps off a wall)
-      if (GREEN_ON.value && !GREEN_D && GREEN.value && GREEN.value.image) { const im_ = GREEN.value.image, c_ = document.createElement('canvas'); c_.width = im_.width; c_.height = im_.height; const g_ = c_.getContext('2d'); g_.drawImage(im_, 0, 0); GREEN_D = { w: im_.width, h: im_.height, d: g_.getImageData(0, 0, im_.width, im_.height).data }; }
-      (STREETS.list || []).forEach((r, w) => { if (out.length >= cap) return; const hw = IX.hw(r.cls), off = (hw / scale + ST_.off) * scale, ev = Math.max(ST_.every[r.cls] || ST_.minor, cellM * (ST_.cellK || .9)) * scale;   // (cellK: the spacing's floor, a share of the shot's cell)
-        for (let k = 1; k < r.pts.length; k++) { const [ax, az] = r.pts[k - 1], [bx, bz] = r.pts[k], L_ = Math.hypot(bx - ax, bz - az); if (L_ < 1e-9) continue;
-          const mx = (ax + bx) / 2, mz = (az + bz) / 2; if ((mx - target.x) ** 2 + (mz - target.z) ** 2 > R2) continue;
-          const nx = -(bz - az) / L_, nz = (bx - ax) / L_;
-          for (let u = ev / 2; u < L_; u += ev) for (const sd of [-1, 1]) { const x = ax + (bx - ax) * u / L_ + nx * off * sd, z = az + (bz - az) * u / L_ + nz * off * sd;
-            if (!ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z)) || !IX.clear(x, z, w, ST_.junction * scale)) continue; const hh = h2(Math.floor(z / scale), Math.floor(x / scale), 7);
-            let rs = ST_.r * (ST_.vary || [.75, 1, 1.25])[Math.floor(hh * (ST_.vary || [0, 0, 0]).length)] * (.9 + .2 * h2(Math.floor(x / scale), Math.floor(z / scale), 6)) * scale;
-            if (ST_.px) rs = Math.max(rs, ST_.px * mpp * Math.hypot(x - camera.position.x, S.ground(x, z) - camera.position.y, z - camera.position.z) / d);   // (street px: a crown at least this many picture pixels round where it stands, so a wide shot's avenues still read as rows of green, not lost under a pixel)
-            if (WC_ && !walls(x, z, rs + WC_)) continue;
-            out.push([x, S.ground(x, z), z, rs, hh, ST_.rows ? 2 : 1]); } } });   // (rows: a street's trees one crown each, in a row; not clusters)
-      if (GREEN_D) { const c2 = Math.max(8, cellM * .7) * scale, gi0 = Math.floor((target.x - R) / c2), gi1 = Math.ceil((target.x + R) / c2), gj0 = Math.floor((target.z - R) / c2), gj1 = Math.ceil((target.z + R) / c2);
-        for (let i = gi0; i <= gi1 && out.length < cap; i++) for (let j = gj0; j <= gj1; j++) {
-          const x = (i + .2 + .6 * h2(i, j, 11)) * c2, z = (j + .2 + .6 * h2(i, j, 12)) * c2; if ((x - target.x) ** 2 + (z - target.z) ** 2 > R2) continue;
-          const u = Math.floor((x / PW + .5) * GREEN_D.w), v = Math.floor((z / PD + .5) * GREEN_D.h); if (u < 0 || v < 0 || u >= GREEN_D.w || v >= GREEN_D.h || GREEN_D.d[(v * GREEN_D.w + u) * 4] < 128) continue;
-          const m = [x / scale, z / scale], CE_ = PT_[3] || [.4, .62], clp = sm(CE_[0], CE_[1], vn(m[0] / 70, m[1] / 70) * .6 + vn(m[0] / 23, m[1] / 23) * .4);   // (clusters with lawns between: parkTrees [3], their edge)
-          if (h2(i, j, 13) >= clp * PT_[1] || !ty(x, z) || wet(x, z) || FOOTS.some(f => f(x, z))) continue;
-          const SZ_ = PT_[2] || [.75, 1, 1.3], rp = Math.max(8, cellM * .7) * .34 * PT_[0] * SZ_[Math.floor(h2(i, j, 14) * SZ_.length)] * scale;   // (parkTrees [size, density, its sizes])
-          if (WC_ && !walls(x, z, rp * 1.6 + WC_)) continue;   // (its cluster's reach)
-          out.push([x, S.ground(x, z), z, rp, h2(i, j, 15), 1]); } }
-    }
-    if (out.length < 60000) { const n0 = out.length; for (let i = 0; i < n0; i++) { const o = out[i]; if (o[5] !== 1) continue; const [x, y, z, r, h] = o;   // today's trees as a model maker's clusters: two smaller balls (a closer shot's: a wide one's crowns are a few pixels, and thrice as many cost more than they show)
-        for (let j = 0; j < 2; j++) { const a_ = h * 40 + j * 2.6, rr = r * (.55 + .15 * j); out.push([x + Math.cos(a_) * r * .62, y, z + Math.sin(a_) * r * .62, rr, (h * 3.7 + j * .31) % 1, 1]); } } }   // (beside each crown, lower: the group lit on top, shaded below)
-    const geo = new THREE.IcosahedronGeometry(1, out.length > 100000 ? 1 : 2).scale(1, .82, 1),   // (many crowns: a wide shot, each a few pixels, the coarser sphere)
-    mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95 }), mesh = new THREE.InstancedMesh(geo, mat, Math.max(out.length, 1));
+    const today = yc >= 0 && (STREETS.list || GREEN_ON.value);
+    if (today && GREEN_ON.value && !GREEN_D && GREEN.value && GREEN.value.image) { const im_ = GREEN.value.image, c_ = document.createElement('canvas'); c_.width = im_.width; c_.height = im_.height; const g_ = c_.getContext('2d'); g_.drawImage(im_, 0, 0); GREEN_D = { w: im_.width, h: im_.height, d: g_.getImageData(0, 0, im_.width, im_.height).data }; }
+    const M = { F, bd, td, px, ty, yc: today ? yc : -1, IX: today ? streetIndex() : null, ST: { ...(F.street || { off: 2.5, r: 3.6, every: { secondary: 13, tertiary: 14 }, minor: 18, junction: 14 }), ...((todayL() && todayL().streetTrees) || {}) }, PT: (todayL() && todayL().parkTrees) || [1, .9] };
+    if (today && STREETS.list) segIndex();
+    // the tiles the frame sees: its ground as far as the frame reaches (the plate's edge at most), the tiles there inside the view
+    // (with a margin for a tree's shadow falling into it), nearest first
+    camera.updateMatrixWorld(); const cp = FR.cp.copy(camera.position), kp = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2) / 1080;   // (kp: model units a picture pixel spans at unit distance)
+    FR.fr.setFromProjectionMatrix(FR.pm.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+    const rS = (M.ST.r || 3.6) * 1.25 * scale, Dg = (F.cellMax || F.cell) * scale / (FAR[0] * kp), Ds = today ? rS / (SFAR[0] * kp) : 0, Dmax = Math.max(Dg, Ds);   // (nothing of a tree beyond these: a grove's crowns gone into the ground's tone, a row's under a third of a pixel)
+    const T0 = TILE * scale, gy = target.y, far = Math.min(Math.hypot(PW, PD), Dmax);
+    let bx0 = cp.x, bx1 = cp.x, bz0 = cp.z, bz1 = cp.z;
+    for (const [sx, sy] of [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1], [-1, .5], [1, .5], [-1, .2], [1, .2]]) {
+      const ray = FR.ray.set(sx, sy, .5).unproject(camera).sub(cp).normalize(); const k = Math.min(ray.y < -1e-5 ? (gy - cp.y) / ray.y : far, far);
+      const x = cp.x + ray.x * k, z = cp.z + ray.z * k; bx0 = Math.min(bx0, x); bx1 = Math.max(bx1, x); bz0 = Math.min(bz0, z); bz1 = Math.max(bz1, z); }
+    const mg = 150 * scale, tiles = [];
+    for (let i = Math.floor((Math.max(bx0, -PW / 2) - mg) / T0); i <= Math.floor((Math.min(bx1, PW / 2) + mg) / T0); i++) for (let j = Math.floor((Math.max(bz0, -PD / 2) - mg) / T0); j <= Math.floor((Math.min(bz1, PD / 2) + mg) / T0); j++) {
+      const xa = i * T0, za = j * T0, gc = S.ground(xa + T0 / 2, za + T0 / 2);
+      FR.box.min.set(xa - mg, gc - 400 * scale, za - mg); FR.box.max.set(xa + T0 + mg, gc + 400 * scale, za + T0 + mg); if (!FR.fr.intersectsBox(FR.box)) continue;
+      const dx = Math.max(xa - cp.x, 0, cp.x - xa - T0), dz = Math.max(za - cp.z, 0, cp.z - za - T0), D0 = Math.max(Math.hypot(dx, dz, cp.y - gc), 1e-6);
+      if (D0 < Dmax) tiles.push([i, j, D0]); }
+    tiles.sort((a, b) => a[2] - b[2]);
+    // each tile's trees as far down their ranks as its nearest point needs (the largest crown's density there), then each tree by
+    // its own distance: its density, its share of the canopy, its fade
+    const gc = D => Math.min(Math.max(.009 * D / scale / F.cell, 1), (F.cellMax || F.cell) / F.cell);   // (a grove's cell as it stands from the eye: flock cell m near, wider afar (.9 % of its distance), at most cellMax m)
+    const rMax = F.cell * .42 * 1.6 * 1.2 * scale, rMaxP = (M.PT[4] || 10) * .34 * M.PT[0] * Math.max(...(M.PT[2] || [1.3])) * scale, out = FL.out || (FL.out = []);
+    let n = 0; const put = (x, y, z, r, h, t, w) => { const o = out[n] || (out[n] = new Float32Array(7)); o[0] = x; o[1] = y; o[2] = z; o[3] = r; o[4] = h; o[5] = t; o[6] = w; n++; };
+    for (const [i, j, D0] of tiles) {
+      const gk = i * 100003 + j; let T = FL.tiles.get(gk);
+      if (T && T.bv !== FL.bv) { const s = tileSum(i, j); if (s !== T.sum) T = null; else T.bv = FL.bv; }   // (the period cities standing changed here: planted again)
+      if (!T) { T = { i, j, p: 0, list: [], sum: tileSum(i, j), bv: FL.bv }; FL.tiles.set(gk, T); }
+      const pa = (r_) => Math.min(1, (r_ / (D0 * kp * PX0)) ** 2, 1 / gc(D0) ** 2), ps = SPX ? Math.min(1, M.ST.r * 1.25 * scale / (D0 * kp * SPX)) : 1;
+      const pN = Math.min(1, Math.max(pa(rMax), today ? Math.max(pa(rMaxP), ps) : 0) * (1 + B_)); plantTile(T, pN, M);
+      for (const tr of T.list) { const [x, y, z, r, h, t, rk] = tr; if (rk >= pN) continue;
+        const D = Math.hypot(x - cp.x, y - cp.y, z - cp.z), mpp = D * kp;
+        let w, rd;
+        if (t === 2) { rd = Math.max(r, SPX * mpp); const p = r / rd; w = (rk ? Math.min(1, Math.max(0, (p - rk) / rk)) : 1) * fsm(SFAR[0], SFAR[1], r / mpp); }   // (a row: its trees at least street px pixels round, every other one going as they grow; gone where a crown would be under far[0] of a pixel)
+        else { const g = gc(D), p = Math.min(1, (r / (mpp * PX0)) ** 2, 1 / g ** 2); rd = r / Math.sqrt(p); w = Math.min(1, Math.max(0, (p * (1 + B_) - rk) / (B_ * p))) * fsm(FAR[0], FAR[1], F.cell * g * scale / mpp); }   // (a grove's or a park's: fewer, larger, whole under rank p, gone from p (1 + B_); afar the ground's groves' tone)
+        if (w > .002) put(x, y, z, rd * w, h, t, rd); } }
+    // the crowns: two meshes, a finer sphere where a crown is 6 pixels round or more
     const CR_ = (yc >= 0 && todayL() && todayL().crown) || F.crown;   // (todayLight crown: today's own, while today's city is the subject; a period city's groves keep the flock's)
-    if (CR_) {   // a crown painted as a model's foliage (flock crown: [its underside's share, its cap's, the cap's warmth]): a darker shade side, a lighter, yellower sunlit cap
-      const [cd_, cc_, cw_] = CR_; mat.onBeforeCompile = sh => {
-        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vCrownY;').replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\n  vCrownY = normal.y;');
-        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vCrownY;').replace('#include <color_fragment>', `#include <color_fragment>
+    const mk = (detail) => { const geo = new THREE.IcosahedronGeometry(1, detail).scale(1, .82, 1), mat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95 });
+      if (CR_) {   // a crown painted as a model's foliage (flock crown: [its underside's share, its cap's, the cap's warmth]): a darker shade side, a lighter, yellower sunlit cap
+        const [cd_, cc_, cw_] = CR_; mat.onBeforeCompile = sh => {
+          sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vCrownY;').replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\n  vCrownY = normal.y;');
+          sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vCrownY;').replace('#include <color_fragment>', `#include <color_fragment>
   diffuseColor.rgb *= mix(${cd_.toFixed(3)}, ${cc_.toFixed(3)}, smoothstep(-.6, .9, vCrownY)); diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(${cw_.map(v => v.toFixed(3)).join(', ')}), smoothstep(.35, 1., vCrownY));`); };
-      mat.customProgramCacheKey = () => 'mini-crown' + CR_.flat().join(); }
-    const M4 = new THREE.Matrix4(), col = new THREE.Color(), base = new THREE.Color().setRGB(...F.col.map(v => Math.pow(v, 2.2))), base2 = new THREE.Color().setRGB(...(F.col2 || F.col).map(v => Math.pow(v, 2.2)));
+        mat.customProgramCacheKey = () => 'mini-crown' + CR_.flat().join(); }
+      const cap = Math.max(1024, FL.cap), mesh = new THREE.InstancedMesh(geo, mat, cap); mesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(cap * 3), 3);
+      mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); mesh.userData.crown = (CR_ || []).flat().join(); return mesh; };
+    let nAll = n; for (let k = 0; k < n; k++) if (out[k][5] === 1) nAll += 2;   // (today's park crowns as a model maker's clusters: two smaller balls beside each)
+    if (nAll > FL.cap || (FL.mesh[0] && FL.mesh[0].userData.crown !== (CR_ || []).flat().join())) { FL.cap = Math.max(FL.cap, Math.ceil(nAll * 1.3)); for (const m of FL.mesh) if (m) { scene.remove(m); m.geometry.dispose(); m.material.dispose(); m.dispose(); } FL.mesh = [mk(1), mk(2)]; }
+    const base = new THREE.Color().setRGB(...F.col.map(v => Math.pow(v, 2.2))), base2 = new THREE.Color().setRGB(...(F.col2 || F.col).map(v => Math.pow(v, 2.2))), col = new THREE.Color();
     const TT_ = MAT.todayLight && todayL().trees, tb = TT_ ? TT_.map(c_ => new THREE.Color().setRGB(...c_.map(v => Math.pow(v, 2.2)))) : [base, base2];   // (today's trees: todayLight.trees, each tree one of its greens)
-    out.forEach(([x, y, z, r, h, t], n) => { const sy_ = t ? .8 + .4 * ((h * 13.7) % 1) : 1;   // (today's: taller or flatter crowns, not identical balls)
-      M4.compose(new THREE.Vector3(x, y + r * .7 * sy_, z), new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), h * 6.28), new THREE.Vector3(r, r * sy_, r)); mesh.setMatrixAt(n, M4);
-      mesh.setColorAt(n, t ? col.copy(tb[Math.floor(((h * 7.31) % 1) * tb.length)]).multiplyScalar(.9 + .2 * h) : col.copy(base).lerp(base2, vn(x / scale / 40, z / scale / 40) * .7 + h * .3).multiplyScalar(.8 + .4 * h)); });   // (col2: a second green, by groves more than by tree)
-    mesh.count = out.length; mesh.castShadow = mesh.receiveShadow = true; mesh.layers.set(L); mesh.frustumCulled = false; scene.add(mesh); FL.mesh = mesh; };
+    const cnt = [0, 0], A = FL.mesh.map(m => m.instanceMatrix.array), C = FL.mesh.map(m => m.instanceColor.array);
+    const one = (x, y, z, r, h, t, rd) => { const s = r * kp > 0 && r / (Math.hypot(x - cp.x, y - cp.y, z - cp.z) * kp) >= 6 ? 1 : 0, q = cnt[s]++, a = A[s], o = q * 16, sy_ = t ? .8 + .4 * ((h * 13.7) % 1) : 1, cs = Math.cos(h * 6.28), sn = Math.sin(h * 6.28);   // (today's: taller or flatter crowns, not identical balls)
+      a[o] = cs * r; a[o + 1] = 0; a[o + 2] = -sn * r; a[o + 3] = 0; a[o + 4] = 0; a[o + 5] = r * sy_; a[o + 6] = 0; a[o + 7] = 0; a[o + 8] = sn * r; a[o + 9] = 0; a[o + 10] = cs * r; a[o + 11] = 0;
+      a[o + 12] = x; a[o + 13] = y + r * .7 * sy_; a[o + 14] = z; a[o + 15] = 1;
+      if (t) col.copy(tb[Math.floor(((h * 7.31) % 1) * tb.length)]).multiplyScalar(.9 + .2 * h); else col.copy(base).lerp(base2, fvn(x / scale / 40, z / scale / 40) * .7 + h * .3).multiplyScalar(.8 + .4 * h);   // (col2: a second green, by groves more than by tree)
+      C[s][q * 3] = col.r; C[s][q * 3 + 1] = col.g; C[s][q * 3 + 2] = col.b; };
+    for (let k = 0; k < n; k++) { const [x, y, z, r, h, t] = out[k]; one(x, y, z, r, h, t);
+      if (t === 1) for (let j = 0; j < 2; j++) { const a_ = h * 40 + j * 2.6; one(x + Math.cos(a_) * r * .62, y, z + Math.sin(a_) * r * .62, r * (.55 + .15 * j), (h * 3.7 + j * .31) % 1, 1); } }   // (beside each crown, lower: the group lit on top, shaded below)
+    FL.mesh.forEach((m, s) => { m.count = cnt[s]; m.instanceMatrix.needsUpdate = true; m.instanceColor.needsUpdate = true; });
+    FL.stat = { tiles: tiles.length, trees: n, crowns: cnt[0] + cnt[1], planted: [...FL.tiles.values()].reduce((s_, T) => s_ + T.list.length, 0) };
+    GEO_T.value.set((F.cellMax || F.cell) * scale / (FAR[1] * kp), (F.cellMax || F.cell) * scale / (FAR[0] * kp), 1, 0);   // (the ground's groves' tone from where a grove's cell is far[1] pixels, whole by far[0]: the crowns' own fade, by the eye's distance)
+  };
   const info = card ? infoPanel(card) : null;
   // the tilt-shift: sharp in a band through the middle, blurred above and below
   // with the effects: the film's own passes (post.js: ambient occlusion, haze toward a sky dome, the stronger depth of field),
@@ -971,7 +1049,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
       const pc = (parts || (film && MAT && MAT.glbParts) || []).find(([re]) => new RegExp(re).test(o.name)), col = pc ? pc[1] : colours && colours[nm] || null;
       o.material = mats[nm + (col || '')] ||= film && MAT && MAT.glbC ? glbMaterial(nm, k, scale, col) : new THREE.MeshStandardMaterial({ color: col || pal.glb[nm] || pal.glb.stone, roughness: .9, metalness: 0, side: THREE.DoubleSide });
       o.castShadow = o.receiveShadow = true; o.layers.set(L); });
-    scene.add(root); root.updateMatrixWorld(true); landmarks.push(root); TF.reset(); if (today) { FOOTS.push(inFoot); FL.at = null; }   // (today's trees planted again round it)
+    scene.add(root); root.updateMatrixWorld(true); landmarks.push(root); TF.reset(); if (today) FOOTS.push(inFoot);   // (today's trees planted again round it: flockKey)
     if (today) { const f_ = { cx, cz, inFoot, rr: Math.max(r * .5, 30 * scale) }; FOLDS.push(f_); if (FPT.mesh) foldIn(FPT.mesh.geometry, f_); }   // (a replacement footprint there folded too, and any loaded later: todayFootprints)
     if (today && ROOF_MESH) for (const RM of ROOF_MESH) { const M_ = new THREE.Matrix4(), p_ = new THREE.Vector3(), Z_ = new THREE.Matrix4().makeScale(0, 0, 0), rr = Math.max(r * .5, 30 * scale);   // (its roof pieces go with it)
       for (let n = 0; n < RM.count; n++) { RM.getMatrixAt(n, M_); p_.setFromMatrixPosition(M_); if (Math.hypot(p_.x - cx, p_.z - cz) < rr || inFoot(p_.x, p_.z)) RM.setMatrixAt(n, Z_); } RM.instanceMatrix.needsUpdate = true; }
@@ -1016,9 +1094,12 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
     if (!footprintsWait()) return; FPT.tried = true;
     const t0 = performance.now(); let side = await sidecar(); if (!FPT.keep) FPT.side = null;   // (a page of one shot lets it go)
     if (!side || side.enabled !== true) return;
-    const F_ = todayL() && todayL().footprintsR, R_ = Array.isArray(F_) ? Math.max(F_[1], F_[0] * d / scale) : F_;   // (todayLight footprintsR: only the replacements within this many metres of the first shot's target, or [times the shot's distance, at least metres]; none: the whole city)
+    // (todayLight footprintsR: only the replacements within this many metres of where the camera looks, or [times the shot's
+    // distance, at least metres]; none: the whole city. A still's: round its own target; the film's: round every place its camera
+    // looks at (camPath), so the same replacements stand in every frame whichever frame a page begins on: a render's workers, a seek)
+    const F_ = todayL() && todayL().footprintsR, at_ = (camPath && camPath()) || [[target.x, target.z, d]], R_ = p => Array.isArray(F_) ? Math.max(F_[1], F_[0] * p[2] / scale) : F_;
     let rep = side.replacements;
-    if (R_) { const r2 = (R_ * scale) ** 2; rep = rep.filter(r => { const g = r.children[0].rings[0], x = g.reduce((a_, p) => a_ + p[0], 0) / g.length, z = g.reduce((a_, p) => a_ + p[1], 0) / g.length; return (x - target.x) ** 2 + (z - target.z) ** 2 < r2; }); }
+    if (F_) rep = rep.filter(r => { const g = r.children[0].rings[0], x = g.reduce((a_, p) => a_ + p[0], 0) / g.length, z = g.reduce((a_, p) => a_ + p[1], 0) / g.length; return at_.some(p => (x - p[0]) ** 2 + (z - p[1]) ** 2 < (R_(p) * scale) ** 2); });
     const sel = rep.map(r => r.bi).join(), same = sel === FPT.sel && !!FPT.mesh;   // (the parents replaced: a batch's shot that chooses the same keeps the shot before's)
     if (FPT.sel !== null) dropFootprints(same); FPT.sel = sel;
     const [mat, depth] = todayMats();
@@ -1062,7 +1143,7 @@ float cF_(vec2 p){ return .5 * cN_(p) + .25 * cN_(p * 2.1 + 3.1) + .125 * cN_(p 
   function nextShot(pic = {}) {
     for (const k of STILL_KEYS) { const [a, b] = k.split('.'), v = b ? pic[a] && pic[a][b] : pic[a]; if (v === undefined) continue;
       if (b) FILM_PIC[a] = { ...FILM_PIC[a], [b]: v }; else FILM_PIC[a] = v; }
-    TF.reset(); BF.at = null; FL.at = null; FPT.tried = false; FPT.keep = true;
+    TF.reset(); FPT.tried = false; FPT.keep = true;   // (the trees and the boats stand in the world: nothing to plant again)
     for (const U_ of [BUILT, TREES]) if (U_.value) { U_.value.dispose(); U_.value = null; } BUILT_K = null;
   }
   // the programs of every city's colours made before playback (main.js warm-up: else the first frame a city shows stalls; and
@@ -1387,13 +1468,13 @@ vec4 sbOver(vec4 d, vec3 c, float a){ return vec4(c * a + d.rgb * (1. - a), a + 
     if (film && FILM_PIC.glb && !GLB_DONE) { GLB_DONE = true; for (const o of FILM_PIC.glb) { try { const r_ = await swap(o); console.log('glb', JSON.stringify(r_)); } catch (e) { console.error(`glb ${o.url}: ${e.message}`); } }
       // (a glb entry's plaza: { r: [its inner disc's, its lawn ring's inner and outer, its paving's outer radius] m, at: [x, z] m from near }: the landmark's own round plaza, todayLight roundPlaza)
       FILM_PIC.glb.filter(o => o.plaza && o.near).slice(0, 4).forEach((o, i) => { const r = o.plaza.r, at = o.plaza.at || [0, 0]; RPLAZA.P.value[i].set(o.near[0] + at[0] * scale, o.near[1] + at[1] * scale, r[1], r[2]); RPLAZA.Q.value[i].set(r[0], r[3], 0, 1); }); }   // (FILM_PIC glb: detailed models in place of buildings, ?pic= for a still)
-    window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
+    window.__MINI = { scene, camera, eraMeshes, cityMesh, plate, trees: () => TF.objs(), flock: () => ({ ms: FL.ms, ...FL.stat }), sun, target: target.clone(), d, swap, detail: DET };   // (for a script: tools that export the frame's geometry, swap)
     renderer.getDrawingBufferSize(size); pxK.value = camera.projectionMatrix.elements[5] * size.y / renderer.getPixelRatio() / 2; ROOF_PX.value = 2 / (camera.projectionMatrix.elements[5] * 1080) / scale;   // (the picture's pixels, not the drawing buffer's: it is drawn at twice their number and shrunk)
     const up = E => E.mesh.visible && !E.mesh.userData.gone;   // (the film: a city gone may still show its foundations, without its detail)
     if (DET) { for (const [id, E] of Object.entries(S.eras)) if (up(E) && !DET.has(id)) DET.set(id, detailOf(id));
       clearNow = [];
       for (const [id, g] of DET) { const G = await g; G.visible = up(S.eras[id]); if (G.visible) clearNow.push(G.userData.treeOK); }
-      boats(target, d); flockAt(target, d); }
+      boats(); flockAt(target, d); }
     for (const P of PATHS) { const t = U.uNow.value, r = P.r, a = sm(r.on, r.on + .3, t) * (1 - sm(r.off - .6, r.off, t));   // (the routes' paths, as they draw and go)
       P.mesh.visible = a > .002; P.mesh.material.opacity = a; P.u.uP.value = sm(r.on, r.on + r.draw, t) * 1.0001; }
     if (film && MAT && cityMesh && cityMesh.visible && TODAY_K.value.y > .5) await todayFootprints(target, d);   // (today's replacement footprints, once: before its rooftops and the detailed models)
@@ -1616,8 +1697,7 @@ function baseGLSL(B, scale, town = false, far = false, then = false) {   // (the
         float crown_ = 0., shade_ = 0.;   // (the crowns are geometry: flockAt; the ground under the groves a little darker)
         sl_ *= 1. - .45 * shade_;   // (a crown's contact shadow round it)
         sl_ = mix(sl_, tg_, crown_); slateN_ = normalize(mix(slateN_, vec3(o_.x / r_ * .95, -o_.y / r_ * .95, sqrt(max(1. - dd_ * dd_, .05))), crown_)); slateR_ = mix(slateR_, .98, crown_);
-        float far_ = uGeoT.z < 0. ? 0. : smoothstep(uGeoT.z * .85, uGeoT.z, length(vXZ - uGeoT.xy));   // (beyond the crowns drawn as geometry, or too small to draw: the groves' tone itself)
-        far_ = max(far_, uGeoT.w);
+        float far_ = uGeoT.z < 0. ? 0. : smoothstep(uGeoT.x, uGeoT.y, length(vFxW - cameraPosition));   // (where the crowns drawn as geometry fade by the eye's distance, flockAt: the groves' tone itself)
         vec3 gt_ = pow(mix(${v3(B.flock.col)}, ${v3(B.flock.col2 || B.flock.col)}, smoothstep(.3, .7, fxLn(m_ / 61.))), vec3(2.2)) * (.7 + .5 * mix(fxLn(m_ / 9.), .5, smoothstep(1.5, 4., px_))) * (.85 + .3 * mix(fxLn(m_ / 23.), .5, smoothstep(4., 10., px_)));   // (afar its grain calms: soft woods, not speckle)
         sl_ *= 1. - .3 * fl_ * (1. - far_); sl_ = mix(sl_, gt_, smoothstep(.2, .55, fl_) * far_ * .92); }` : ''} }` : ''}
     ${TL && TL.bank && !far ? `sl_ = mix(sl_, pow(${v3(TL.bank.stone)}, vec3(2.2)) * (.97 + .04 * fxLn(m_ / 3.)), bkC_); slateR_ = mix(slateR_, .85, bkC_);   // (the embankment's coping: a light stone line along the water)

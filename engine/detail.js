@@ -599,24 +599,26 @@ export function eraDetail(prims, { scale, hex = 2, style = 'roman', face = null,
   return { kinds, count, treeOK };
 }
 
-// boats on the water round a point: where the water reaches `wide` metres every way (a river a boat can work on, not a ditch),
-// at least `apart` metres from each other, each laid along the water (the way it runs furthest); in its region's way (STYLES
-// boats: { sail, cabin }). wet(x, z): water there (the look's water map). -> { kinds, count } as eraDetail's
-// ground(x, z): the water's height there
-export function boatsAt(wet, centre, R, { scale, style = 'roman', wide = 30, apart = 70, most = 40, seed = 1, ground = () => 0 } = {}) {
+// boats on the water of a rectangle (x0 z0 to x1 z1, model units), planted in the world, never round the eye: a cell of `apart`
+// metres a boat or none (`share` of the cells, by a hash of the cell), where the water reaches `wide` metres every way (a river a
+// boat can work on, not a ditch), each laid along the water (the way it runs furthest), the same wherever the camera goes; at
+// most `most` (those with the lowest hashes); in its region's way (STYLES boats: { sail, cabin }). wet(x, z): water there (the
+// look's water map). -> { kinds, count } as eraDetail's. ground(x, z): the water's height there
+export function boatsAt(wet, x0, z0, x1, z1, { scale, style = 'roman', wide = 30, apart = 70, share = .1, most = 4000, ground = () => 0 } = {}) {
   const ST = STYLES[style] || STYLES.roman, B = ST.boats || { sail: true, cabin: false }, M = scale, out = [], put = (kind, x, y, z, phi, sx, sy, sz, k = 1) => (out[kind] ||= []).push([x, y, z, phi, sx, sy, sz, k]);
-  let a = seed >>> 0; const rnd = () => { a = a + 0x6D2B79F5 >>> 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
-  const placed = [];
-  for (let tries = 0; tries < most * 40 && placed.length < most; tries++) {
-    const an = rnd() * Math.PI * 2, d = R * Math.sqrt(rnd()), x = centre.x + Math.cos(an) * d, z = centre.z + Math.sin(an) * d;
-    if (!wet(x, z) || placed.some(([px, pz]) => Math.hypot(px - x, pz - z) < apart * M)) continue;
+  const H = (i, j, k) => { const t = Math.sin(i * 127.1 + j * 311.7 + k * 74.7) * 43758.5453; return t - Math.floor(t); }, c = apart * M, found = [];
+  for (let i = Math.floor(x0 / c); i <= Math.floor(x1 / c); i++) for (let j = Math.floor(z0 / c); j <= Math.floor(z1 / c); j++) {
+    const h = H(i, j, 31); if (h >= share) continue;
+    const x = (i + .2 + .6 * H(i, j, 32)) * c, z = (j + .2 + .6 * H(i, j, 33)) * c;
+    if (x < x0 || x > x1 || z < z0 || z > z1 || !wet(x, z)) continue;
     let ok = true; for (let k = 0; k < 8 && ok; k++) ok = wet(x + Math.cos(k * Math.PI / 4) * wide / 2 * M, z + Math.sin(k * Math.PI / 4) * wide / 2 * M);
-    if (!ok) continue;
+    if (ok) found.push([h, i, j, x, z]); }
+  found.sort((a, b) => a[0] - b[0]);
+  for (const [, i, j, x, z] of found.slice(0, most)) {
     let best = 0, run = 0;   // (the way the water runs: the longest of eight)
     for (let k = 0; k < 8; k++) { let s = 0; while (s < 200 && wet(x + Math.cos(k * Math.PI / 4) * s * M, z + Math.sin(k * Math.PI / 4) * s * M)) s += 10; if (s > run) { run = s; best = k; } }
-    const phi = -best * Math.PI / 4 + (rnd() - .5) * .3, L = (12 + rnd() * 10) * M, y = ground(x, z) - .3 * M;
-    placed.push([x, z]);
-    put('hull', x, y, z, phi, L, 1.4 * M, L * .26, .9 + .2 * rnd());
+    const phi = -best * Math.PI / 4 + (H(i, j, 34) - .5) * .3, L = (12 + H(i, j, 35) * 10) * M, y = ground(x, z) - .3 * M;
+    put('hull', x, y, z, phi, L, 1.4 * M, L * .26, .9 + .2 * H(i, j, 36));
     if (B.sail) { put('mast', x, y, z, 0, .25 * M, L * .55, .25 * M); put('sail', x, y + L * .12, z, phi, 1, L * .38, L * .32); }
     if (B.cabin) put('cabin', x, y + 1.1 * M, z, phi, L * .38, L * .13, L * .18);
   }

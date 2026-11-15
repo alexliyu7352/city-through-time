@@ -305,7 +305,11 @@ function yearAt(t) {
 const fmtYear = y => { const r = Math.round(y); return yearAs(y, false) ?? (FILM.yearFmt === 'en' ? (r < 0 ? `${-r} BCE` : `${r}`) : (r < 0 ? `前 ${-r}` : `${r}`)); };
 
 // ------------------------------------------------------------------ camera
-const CAM = track(FILM.camera);
+// the camera's keys: the film's own; &camkeys=[[t, [tx,ty,tz,az,el,d,fov]], ...] a test camera's in their place, moving over the
+// film's seconds as the film's own camera does (eased the same way, its sun held as a shot's): a look seen in motion, any city
+// (render/video.mjs --from --to); &cam= a fixed one over both
+const CAMK = QS.has('camkeys') ? JSON.parse(QS.get('camkeys')) : FILM.camera;
+const CAM = track(CAMK);
 const tgt = new THREE.Vector3();
 const camQ = Q => Q.has('cam') ? Q.get('cam').split(',').map(Number) : null;   // stills: a fixed camera "tx,ty,tz,az,el,d"
 let CAMQ = camQ(QS);   // (a batch of stills: each shot's own, window.SHOT)
@@ -714,7 +718,7 @@ const ERAJ = {}, eraJ = id => ERAJ[id] ||= fetch(B + FILM.eras.find(e => e.id ==
 // their place (a film without film.look seen with ?look=mini must name them: a city's colours are its region's, never a default)
 // the bearing the colour film's camera mostly looks from (the mean of the keys' bearings, by the time each holds): the colour look
 // fixes its sun from it, in the world, so an orbit turns the shadows as a real one would (engine/mini.js FILM_PIC sunSide)
-const CAM_AZ = COLOUR ? (() => { const K = FILM.camera || []; let x = 0, y = 0; for (let i = 0; i + 1 < K.length; i++) { const w = K[i + 1][0] - K[i][0], a = THREE.MathUtils.degToRad(K[i][1][3]); x += Math.sin(a) * w; y += Math.cos(a) * w; }
+const CAM_AZ = COLOUR ? (() => { const K = CAMK || []; let x = 0, y = 0; for (let i = 0; i + 1 < K.length; i++) { const w = K[i + 1][0] - K[i][0], a = THREE.MathUtils.degToRad(K[i][1][3]); x += Math.sin(a) * w; y += Math.cos(a) * w; }
   return x || y ? THREE.MathUtils.radToDeg(Math.atan2(x, y)) : 0; })() : null;
 const PAL = COLOUR ? { palette: QS.get('palette') || (FILM.look && FILM.look.palette), today: QS.get('today') || (FILM.look && FILM.look.today) } : null;
 if (PAL && !(PAL.palette && PAL.today)) throw new Error('look=mini: this film has no film.look; give &palette=roman|chinese|modern&today=roman|chinese|modern (its region\'s colours)');
@@ -722,7 +726,7 @@ const MINI = COLOUR ? (await import('./mini.js')).miniLook({ S, roads: (LN && LN
   fadeAt: LOOK.dim ?? .8, phone: TOUCH, backdropFrom: (FILM.look && FILM.look.backdrop_from) ?? 1800,
   dataFrom: (M.b || []).reduce((m, b) => b[0] > 0 && b[0] < m ? b[0] : m, 1e4),   // (the data's earliest epoch: what it first sees then counts as standing before)
   prims: QS.get('detail') === '0' || TOUCH ? null : id => eraJ(id).then(J => J.prims),   // (a phone: no detail, as the viewer's look on a touch screen)
-  camAz: CAM_AZ, paths: QUIET ? (FILM.routes || []).filter(r => !((FILM.waterThen && FILM.waterThen.events) || []).some(w => Math.abs(w.t0 - r.on) < .05)) : null,   // (a beam the water as it was comes with: the water itself)
+  camAz: CAM_AZ, camPath: () => CAMQ ? null : [...CAMK, ...(FILM.living || []).filter(v => v.cam).map(v => [0, v.cam])].map(([, k]) => [k[0], k[2], k[5]]), paths: QUIET ? (FILM.routes || []).filter(r => !((FILM.waterThen && FILM.waterThen.events) || []).some(w => Math.abs(w.t0 - r.on) < .05)) : null,   // (a beam the water as it was comes with: the water itself)
   lost: id => eraJ(id).then(J => { delete ERAJ[id]; return J.lost || null; }),   // (the look asks for the records, then their losses: the last of them)
   hex: id => eraOf(id).exaggeration ?? 2, face: id => eraOf(id).wall_face ?? null }) : null;
 // the colour film's ruins (engine/mini.js filmMaterial): a period city's foundations stay until a later city rises on that ground
