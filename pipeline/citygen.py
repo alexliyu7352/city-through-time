@@ -1287,8 +1287,9 @@ class Builder:
             keep = max(1.5 * tw, .5 * (tower_every or 0))   # (a tower in the run keeps off the corner and gate towers)
             for d in sorted(at):
                 if all(apart(d, v) > keep for v in fixed) and all(not (c0 < d < c1) for c0, c1 in cuts): ctower(d, h * 1.3)
-        # (no corner tower in a gate's opening: a ring's points may start at a gate, or have one at a gate)
-        corners = [q for q in (ring[:-1] if closed else ring[1:-1]) if not any(c0 <= line.project(Point(q[0], q[1])) <= c1 for c0, c1 in cuts)] if towers else []
+        corners = (ring[:-1] if closed else ring[1:-1]) if towers else []
+        # (a ring that starts at a gate has a point there only because it starts there: no corner tower in that gate's opening)
+        if closed and corners and any(c0 <= 0.0 <= c1 or c0 <= L <= c1 for c0, c1 in cuts): corners = corners[1:]
         if curtain:
             for x, y in corners: ctower(line.project(Point(x, y)), h * 1.3)
             corners = []
