@@ -176,7 +176,8 @@ def blocks(PD, ground, DP=()):
     def one(g):
         p = {'landmarks': sorted(sum((q['landmarks'] for q in g), [])), 'poly': unary_union([q['poly'] for q in g])}
         if any(q.get('declared') for q in g):   # (its level from the ground declared and the landmarks' pads with it)
-            p.update(declared=sorted(sum((q.get('declared', []) for q in g), [])), area=unary_union([q['area'] if q.get('declared') else q['poly'] for q in g]))
+            p.update(landmarks=sorted(set(p['landmarks'])), declared=sorted(sum((q.get('declared', []) for q in g), [])),   # (a landmark it names may have a pad of its own too)
+                     area=unary_union([q['area'] if q.get('declared') else q['poly'] for q in g]))
         return p
     out = measure([one(g) for g in groups.values()], ground)
     out.sort(key=lambda p: p['landmarks'])

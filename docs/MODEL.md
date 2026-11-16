@@ -168,7 +168,7 @@ pads:
 
 A declared pad is levelled whatever its cut or fill, under 1.5 m too: a quarter's houses on a plain each stand raised on their own lot, a metre above the street their doors
 open on, and `site: cut` levels a building, not the ground. Its level is half-way between the highest and the lowest ground it declares, and it is levelled over every cell of
-the plate's mesh that ground touches and the relief's texels round them (with a 45 m mesh and 30 m relief, some 40-110 m beyond it), so the plate as the engine draws it is flat
+the plate's mesh that ground touches and the relief's texels round them (up to a mesh cell and a texel beyond it), so the plate as the engine draws it is flat
 under all of it: the houses, their doors and the street in front of them. Declare the ground the doors and their street share (the houses that open on one street with it, or the
 whole quarter), labelled schematic (on a plain a metre of relief is not story); one that touches a landmark's pad is one with it, and its bank is as any pad's. compile prints it
 among the pads it laid (`declared`); clipcheck's `graded_lean` lists a declared pad whose plate still rises more than 0.3 m over the ground it declares. A city that declares no
