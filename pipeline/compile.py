@@ -3690,6 +3690,12 @@ for e in eras_out:
     print(f'  landmarks on a platform over 30% of their height (raised as built, or let into the hill: site: cut? docs/MODEL.md, Landmarks) in {e["id"]}: '
           + ', '.join(f'{who_.get((x_, z_), f"at {x_:.4f},{z_:.4f}")} {r_:.0%} ({f_:g} m under {h_:g} m)' for x_, z_, r_, f_, h_ in sorted(pl_, key=lambda q_: -q_[2])[:8])
           + (f' and {len(pl_) - 8} more (logs/clipcheck.json)' if len(pl_) > 8 else ''))   # (the tallest first; a city of many slopes would fill the log)
+# landmarks on levelled ground whose plate still leans (clipcheck graded_lean: a pad smaller than the plate's mesh cells, or a pad's
+# bank run under a landmark let into the slope): named, not a fault (docs/MODEL.md, Landmarks: declare a local flat ground or a pad)
+_gl = (_plat.get('graded') or {}).get('lean_at') or []
+if _gl: print(f'  warning: {len(_gl)} landmark(s) on levelled ground whose plate still leans (clipcheck graded_lean): '
+              + ', '.join(f'{l_} {"pad " if k_ == "pad" else "bank +"}{m_:g} m' for l_, k_, m_ in _gl[:8]) + (f' and {len(_gl) - 8} more (logs/clipcheck.json)' if len(_gl) > 8 else '')
+              + ': a declared local flat ground or a pad in the spec (docs/MODEL.md, Landmarks)')
 # a tower standing in a gate's opening (clipcheck towers_in_gates_at: a wall body of another building on the middle of a gate's
 # passage, most often a corner tower on the point of the wall's line the gate lies on): named, not a fault; move the gate or the
 # point of the line, or leave it where the sources have it so

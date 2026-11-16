@@ -63,7 +63,7 @@ def pads(C, F, D, joined=False):
             x0, y0, x1, y1 = landmarks.bounds(L2); P = citygen.Builder.frame(x, y, th)
             rect = Polygon([P(x0, y0), P(x1, y0), P(x1, y1), P(x0, y1)])
             if wet(rect) >= WET: continue
-            out.append({'landmarks': [f'{node["id"]}/{L2.get("id") or L2.get("name") or li}'], 'poly': rect.buffer(PAD_M)})
+            out.append({'landmarks': [f'{node["id"]}/{L2.get("id") or L2.get("name") or li}'], 'poly': rect.buffer(PAD_M), 'rect': rect, 'site': L2.get('site')})
     return out
 
 

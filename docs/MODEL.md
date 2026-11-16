@@ -155,7 +155,10 @@ raised landmark can stand on a taller platform than it ever had: clipcheck lists
 name, a list, not a fault): decide each from the sources. `cut` levels the building, not the ground: a courtyard, an open floor or an arena let in shows the plate through its floor on
 the uphill half (clipcheck's `terrain_cut`); from 1.5 m the ground is levelled instead. compile prints the pads it laid, and names any cut or fill deeper than 15 m: a building
 that steps down the hill (`site: parts`) as the sources say, or one placed where the hill is too steep for it. `uv run python -I pipeline/grade.py cities/<slug>` prints the pads and
-their levels without writing anything. A period model that leaves out a building standing in its time shows today's building there, in today's colour (where a period model stands,
+their levels without writing anything. The plate is a mesh of ~36-50 m cells through the relief, so a pad smaller than a few cells
+still leans under its buildings, and a pad's bank can run under a `cut` landmark beside it, which then stands raised on it: clipcheck lists each such landmark
+(`graded_lean`, by id, with the metres; compile warns, not a fault). The levelling cannot draw two grounds within one mesh cell; the remedy is in the city's data: a
+local flat ground declared for that quarter (labelled schematic; on a plain a metre of relief is not story), or one pad declared in the spec for the buildings that share it. A period model that leaves out a building standing in its time shows today's building there, in today's colour (where a period model stands,
 today's buildings step aside, nowhere else): a levelled slope can uncover one a platform used to hide. It uncovers the plate too: a landmark
 on levelled ground has no platform, so the courts, forecourt and apron the platform's top used to cover lie on the bare plate and read as a pool or a pit; give them their surface
 (`grounds`, "Open ground" below) as the sources say, and let the grounds round the building reach its walls. A

@@ -99,7 +99,7 @@ def plate_mesh(arr, PW, PD, nx=NX):
             inside = shapely.contains_xy(shapely.Polygon(r), gx_, gz_)
             if inside.any(): lo = min(lo, float(V[np.ix_(iz, ix)][inside].min()))
         return lo
-    f.lowest = lowest
+    f.lowest = lowest; f.many = many
     return f
 
 
