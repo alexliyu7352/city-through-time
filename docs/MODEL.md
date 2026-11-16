@@ -352,7 +352,7 @@ shot shows a still, sheened surface and a close one a moving one (engine/studio.
 the foundation on a slope on screen is "actual drop × terrain exaggeration", and a house is "height × building exaggeration"; example: with terrain ×6 and buildings ×2,
 the foundation of a courtyard on a slope is as tall as the walls, and the house looks stretched. `pipeline/terrain.py` measures the slope inside each dynasty city's extent and prints
 one `foundations:` line per city: how much of a reference house's height (12 m wide, 6 m high × the city exaggeration) is taken by the highest tenth of foundations, and the highest exaggeration that stays within 30%;
-if the configured exaggeration is above the limit of the steepest city, it prints a WARNING. After building, clipcheck's `tall_foundation` measures again with the real houses (it counts when the highest tenth exceeds 30% of the house height;
+if the configured exaggeration is above the limit of the steepest city, it prints a WARNING. After building, clipcheck's `tall_foundation` measures again with the real houses, each body from its base down to the lowest plate under its own footprint (parts sharing one site each show only their own foundation, not the site's lowest corner; it counts when the highest tenth exceeds 30% of the house height;
 it must be 0), and also prints, on each line, the highest exaggeration this city can bear. Example: on the Xianyang plain even ×10 is fine, the north slope is about ×4.5, and the film uses ×3.
 Mountain cities have big slopes and can mostly take only ×1–1.5 (the mountain is already high enough). Houses and halls on slopes also have a darker ring of plinth (`PLINTH`), so a high foundation reads as a plinth or stilt house and not as a stretched wall.
 

@@ -29,7 +29,8 @@ Checks, per era city (data/era_<id>.json, primitives from pipeline/citygen.py):
                       filled, an L-shaped wing's inner corner left out; standing while its own parts do): the older city's
                       houses must be gone by the time the newer landmark rises
   paving_under        paving (roads, lanes, yards) the plate rises through by more than 0.3 m: a road comes out in dashes
-  tall_foundation     houses and halls whose foundation on screen is over 30% of the building's height, counted only when
+  tall_foundation     houses and halls whose foundation on screen (each body's base down to the lowest plate under its own
+                      footprint: bodies sharing a site each show only their own) is over 30% of the building's height, counted only when
                       they are more than a tenth of the era's buildings: then the plate's exaggeration is too high for this
                       ground (a slope's fall shows times the exaggeration, the building times its own); the line says the
                       highest exaggeration that would pass. Plinths (citygen PLINTH: a body's base on a slope) are not bodies here.
@@ -301,13 +302,22 @@ def main():
             pts = list(zip(xs[:4], zs[:4])) + [((xs[i] + xs[i + 1]) / 2, (zs[i] + zs[i + 1]) / 2) for i in range(4)] + [(p[1], p[2])]
             if max(plate_y(x, z) - (p[4] + p[7] + gx * (x - p[1]) + gz * (z - p[2])) for x, z in pts) > .3 * S * tex: pu.append(p)
         R['paving_under'] = len(pu); R['paving_under_at'] = [[round(p[1], 4), round(p[2], 4)] for p in pu[:5]]
-        # tall_foundation: each house or hall body's foundation (below its base, less the skirt every body has) against its
-        # building's height (the top of its group); for the suggestion, the same body's fall at another exaggeration from the
-        # ground's two scales (terrain.py: landforms x EX, fine relief x1) at its corners, edge middles and centre
+        # tall_foundation: each house or hall body's foundation on screen against its building's height (the top of its group);
+        # for the suggestion, the same body's fall at another exaggeration from the ground's two scales (terrain.py: landforms x
+        # EX, fine relief x1) at its corners, edge middles and centre
         top = {}
         for p in prims: k_ = (p[15], p[16]) if len(p) > 16 else (p[1], p[2]); top[k_] = max(top.get(k_, -1e9), p[4] + p[7])
         fb = [p for p in ground if p[0] == 0 and p[11] in (FAB, LMK) and p[8] != 1 and not (p[13] or p[14]) and min(p[5], p[6]) >= 2 * S]
-        fr = np.array([[max(0.0, p[12] - p[4] - SKIRT * S * tex), top[(p[15], p[16]) if len(p) > 16 else (p[1], p[2])] - p[12]] for p in fb]).reshape(-1, 2)
+        def bare(p):
+            """the foundation a body shows: its base (grade) down to the lowest plate under its own footprint, never more than
+            it reaches below grade less the skirt (citygen: the relief under its whole site). Several bodies on one site (a
+            landmark's parts, a house's wings) reach down to the lowest ground of the site, which may lie under another part
+            or an empty corner; under each body the plate shows only its own. A body on a lot's platform reaches only the
+            skirt into it, so it shows none (the platform is tall_platform_at's). Without terrain: the site's relief"""
+            site = max(0.0, p[12] - p[4] - SKIRT * S * tex)
+            if plate_ is None or site <= 0: return site
+            return min(site, max(0.0, p[12] - plate_.lowest(list(rect(p).exterior.coords)[:-1]) * S * tex))
+        fr = np.array([[bare(p), top[(p[15], p[16]) if len(p) > 16 else (p[1], p[2])] - p[12]] for p in fb]).reshape(-1, 2)
         fr = fr[fr[:, 1] > 0]; ratio = fr[:, 0] / fr[:, 1] if len(fr) else np.zeros(0)
         # (the share is of the era's houses and halls: one laid along its sloping lot (sheared) shows no foundation of its own, so it
         # counts as none; without them a hill city's few level bodies were all there was, and one stadium end decided it)
