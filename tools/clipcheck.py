@@ -48,7 +48,8 @@ Listed, not counted, on the ground compile levelled (pipeline/grade.py), the who
   graded_lean         a landmark on a pad whose plate (the mesh as the engine draws it) still rises more than 0.3 m under its
                       rectangle (a pad smaller than the plate's mesh cells, levelled texel by texel, leans to the corners out on
                       its bank), and a landmark let into the slope (site: cut) on no pad under which the levelling made the plate
-                      rise 0.3 m more than on its own ground (a pad's bank run under it, and the cut then not made). No share of
+                      rise 0.3 m more than on its own ground (a pad's bank run under it, and the cut then not made), and a pad
+                      the city declares (city.pads) over whose ground the plate still rises more than 0.3 m. No share of
                       the era's buildings: one house lifted reads as wrong however many stand level round it (docs/MODEL.md)
 Checks on today's buildings (data/model.json):
   today floating      buildings whose base stands more than 1 m (times the plate's exaggeration) above the lowest plate point
@@ -426,8 +427,14 @@ def main():
             if L_ in on_ and np.ptp(g1_) > LEAN_M: gl_.append([L_, 'pad', round(float(np.ptp(g1_)), 2)])
             elif L_ not in on_ and p.get('site') == 'cut' and np.ptp(g1_) - np.ptp(g0_) > LEAN_M:
                 gl_.append([L_, 'bank', round(float(np.ptp(g1_) - np.ptp(g0_)), 2)])
+        for d_ in grade.declared(C_, F_, city, t0_.shape):   # a pad the city declares: the plate over all the ground it declares (its doors, its streets)
+            x0_, y0_, x1_, y1_ = d_['area'].bounds; n_ = int(min(80, max(4, max(x1_ - x0_, y1_ - y0_) / 2)))
+            X_, Y_ = np.meshgrid(np.linspace(x0_, x1_, n_), np.linspace(y0_, y1_, n_)); in_ = shapely.contains_xy(d_['area'], X_, Y_)
+            g1_ = plate_.many((X_[in_] - F_.cx) * F_.scale, -(Y_[in_] - F_.cy) * F_.scale)
+            if len(g1_) and np.ptp(g1_) > LEAN_M: gl_.append([d_['declared'][0], 'declared', round(float(np.ptp(g1_)), 2)])
         report['graded'] = {'lean_at': sorted(gl_, key=lambda r: -r[2])}
-        print(f"{'graded':10s} lean (listed) {len(gl_)}" + ''.join(f"\n  {l}: {'on a pad, its plate rises' if k == 'pad' else 'let in on a bank, the levelling adds'} {m:g} m under it" for l, k, m in report['graded']['lean_at'][:20]))
+        how_ = {'pad': 'on a pad, its plate rises', 'bank': 'let in on a bank, the levelling adds', 'declared': 'a declared pad, its plate rises'}
+        print(f"{'graded':10s} lean (listed) {len(gl_)}" + ''.join(f"\n  {l}: {how_[k]} {m:g} m under it" for l, k, m in report['graded']['lean_at'][:20]))
     # how high each pin's dot stands above what is under it while it shows (docs/STAGING.md 9h: the dot on the top of what it
     # names): the top of a period city's body, of today's building (one a period city standing then hides is not there), of a
     # mound, or the ground, within PIN_R. Not a case here: compile judges it on screen (a dot 40 m over a district in a wide shot

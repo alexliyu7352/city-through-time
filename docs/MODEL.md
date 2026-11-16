@@ -157,8 +157,22 @@ the uphill half (clipcheck's `terrain_cut`); from 1.5 m the ground is levelled i
 that steps down the hill (`site: parts`) as the sources say, or one placed where the hill is too steep for it. `uv run python -I pipeline/grade.py cities/<slug>` prints the pads and
 their levels without writing anything. The plate is a mesh of ~36-50 m cells through the relief, so a pad smaller than a few cells
 still leans under its buildings, and a pad's bank can run under a `cut` landmark beside it, which then stands raised on it: clipcheck lists each such landmark
-(`graded_lean`, by id, with the metres; compile warns, not a fault). The levelling cannot draw two grounds within one mesh cell; the remedy is in the city's data: a
-local flat ground declared for that quarter (labelled schematic; on a plain a metre of relief is not story), or one pad declared in the spec for the buildings that share it. A period model that leaves out a building standing in its time shows today's building there, in today's colour (where a period model stands,
+(`graded_lean`, by id, with the metres; compile warns, not a fault). The levelling cannot draw two grounds within one mesh cell; the remedy is in the city's data: a pad
+the period city declares for the ground its buildings share, in its `city:` (a study's spec too):
+
+```yaml
+pads:
+  - { id: <name>, landmarks: [<landmark id>, ..], basis: <why it is one level ground; schematic> }   # those landmarks' rectangles 10 m round, and the hull of them all
+  - { id: <name>, region: [[lon, lat], ..], basis: .. }                                            # a quarter: a region as grounds write it
+```
+
+A declared pad is levelled whatever its cut or fill, under 1.5 m too: a quarter's houses on a plain each stand raised on their own lot, a metre above the street their doors
+open on, and `site: cut` levels a building, not the ground. Its level is half-way between the highest and the lowest ground it declares, and it is levelled over every cell of
+the plate's mesh that ground touches and the relief's texels round them (with a 45 m mesh and 30 m relief, some 40-110 m beyond it), so the plate as the engine draws it is flat
+under all of it: the houses, their doors and the street in front of them. Declare the ground the doors and their street share (the houses that open on one street with it, or the
+whole quarter), labelled schematic (on a plain a metre of relief is not story); one that touches a landmark's pad is one with it, and its bank is as any pad's. compile prints it
+among the pads it laid (`declared`); clipcheck's `graded_lean` lists a declared pad whose plate still rises more than 0.3 m over the ground it declares. A city that declares no
+pad is levelled as above and nothing else. A period model that leaves out a building standing in its time shows today's building there, in today's colour (where a period model stands,
 today's buildings step aside, nowhere else): a levelled slope can uncover one a platform used to hide. It uncovers the plate too: a landmark
 on levelled ground has no platform, so the courts, forecourt and apron the platform's top used to cover lie on the bare plate and read as a pool or a pit; give them their surface
 (`grounds`, "Open ground" below) as the sources say, and let the grounds round the building reach its walls. A
