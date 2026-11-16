@@ -122,7 +122,9 @@ def guarded(p, s):
     return q
 
 
-def create(model, refs, config, *, protected=(), seat=None):
+def create(model, refs, config, *, protected=(), seat=None, both_ways=None):
+    """both_ways: {floor_height_m, zoned_bi} when height_supplement.lower is on: each child takes its own OSM height or storeys
+    x floor height, up or down, but for a primary a researched height zone set (zones come last, docs/DATA.md)"""
     s = settings(config)
     if not s['enabled']: return {'version': 1, 'enabled': False}
     polys = polygons(model); tree = STRtree(polys); n = len(polys); protected = set(protected)
@@ -227,9 +229,17 @@ def create(model, refs, config, *, protected=(), seat=None):
         for k,(q,rr) in enumerate(zip(item['parts'],item['rings'])):
             height=approved;meta={'source':'primary approved height','height_m':approved,'estimated':True}
             if item['refs']:
-                ref=refs[item['refs'][k]];got=heights.height(ref.get('tags',{}))
-                if got and got[1]=='height' and not got[3] and got[0]>height:
-                    height=got[0];meta={'source':'OSM height','height_m':height,'estimated':False,'value':got[2]}
+                ref=refs[item['refs'][k]]
+                if both_ways is not None and bi in both_ways['zoned_bi']:pass   # a researched zone set the primary: it stays
+                elif both_ways is not None:
+                    got=heights.height(ref.get('tags',{}),both_ways['floor_height_m'])
+                    if got:
+                        height=got[0];meta={'source':'OSM '+got[1],'height_m':height,'estimated':got[3],'value':got[2]}
+                        if got[1]=='building:levels':meta['floor_height_m']=both_ways['floor_height_m']
+                else:
+                    got=heights.height(ref.get('tags',{}))
+                    if got and got[1]=='height' and not got[3] and got[0]>height:
+                        height=got[0];meta={'source':'OSM height','height_m':height,'estimated':False,'value':got[2]}
                 meta.update(osm_id=ref['id'],component=ref.get('component',0),url=ref.get('url'))
             h,base=seat(rr,height) if seat else (oldh+(height-approved)*S*model.get('bex',1),oldbase)
             children.append({'rings':rr,'h':round(h,7),'base':round(base,7),'height_m':height,'height_source':meta})
@@ -269,8 +279,13 @@ def write(city, city_config=None):
             mid=plate(cx,cz)*M['scale']*M.get('terrain',{}).get('exaggeration',1)
             base=min(mid,plate.lowest(ring)*M['scale']*M.get('terrain',{}).get('exaggeration',1))
             return h*M['scale']*M.get('bex',1)+mid-base,base
-        result=create(M,refs,s,protected=protected,seat=seat)
+        sup=C.get('buildings',{}).get('height_supplement') or {};both=None
+        if sup.get('lower'):   # children both ways, like their primaries (heights.supplement lower)
+            zoned=json.load(open(hp)).get('layers',{}).get('zones',{}).get('bi',[]) if os.path.isfile(hp) else []
+            both={'floor_height_m':float(sup.get('floor_height_m',3.2)),'zoned_bi':set(zoned)}
+        result=create(M,refs,s,protected=protected,seat=seat,both_ways=both)
         result.update(model_sha256=hashlib.sha256(raw).hexdigest(),provenance=provenance)
+        if both:result['child_heights']='both ways'
     tmp=out+'.tmp';json.dump(result,open(tmp,'w',encoding='utf-8'),separators=(',',':'),ensure_ascii=False);os.replace(tmp,out)
     print('today_footprints: '+json.dumps(result.get('counts',{'enabled':False}),ensure_ascii=False))
     return result
@@ -394,6 +409,14 @@ def selftest():
             for tags in ({'height':'8'},{'height':'50','source:height':'estimated'},{'building:levels':'30'}):
                 r=create(m,[self.ref(box(0,0,19,20),**tags)],{'enabled':True,'source':'osm_matched'})
                 self.assertEqual(r['replacements'][0]['children'][0]['height_m'],12)
+        def test_both_ways_children_take_their_own_storeys_but_not_in_a_zone(self):
+            m=self.model([box(0,0,100,50)]);rr=[self.ref(box(2,2,42,48),1,**{'building:levels':'2'}),self.ref(box(58,2,98,48),2,height='30')]
+            both={'floor_height_m':3,'zoned_bi':set()}
+            r=create(m,rr,{'enabled':True,'source':'osm_matched'},both_ways=both)
+            self.assertEqual([c['height_m'] for c in r['replacements'][0]['children']],[6,30])
+            self.assertTrue(r['replacements'][0]['children'][0]['height_source']['estimated'])
+            r=create(m,rr,{'enabled':True,'source':'osm_matched'},both_ways={**both,'zoned_bi':{0}})
+            self.assertEqual([c['height_m'] for c in r['replacements'][0]['children']],[12,12])
         def test_cross_language_fingerprint(self):
             m={'scale':.001,'box':[0,0,1,1],'bex':1,'b':[[1985,12]],'p':[[0,.012,[[[0,0],[.02,0],[.02,.02],[0,.02]]],0]]}
             self.assertEqual(fingerprint(m),'2e4e17dbc807c2b99526e5fc1adf301242da6ab7f88572c5be6a0ddecb38cc58')

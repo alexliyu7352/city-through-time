@@ -80,9 +80,9 @@ else:
     sys.exit(f'unknown buildings.source {src}')
 tallest = []
 height_meta, height_report = {}, None
-if C['buildings'].get('height_supplement'):
-    import heights
-    it, height_meta, height_report = heights.load(D, F, it, C['buildings']['height_supplement'])
+if any(C['buildings'].get(k) for k in ('height_correction', 'height_supplement', 'height_zones')):
+    import heights   # dataset correction, then OSM, then researched zones (docs/DATA.md "Correcting building heights")
+    it, height_meta, height_report = heights.apply(D, F, it, C['buildings'])
 for poly, h, year, how, func in it:
     bi = len(B)
     b = band_of(year)
@@ -223,7 +223,10 @@ stats = {
     'marks': marks,
 }
 if height_report is not None:
-    stats['height_supplement'] = {k: v for k, v in height_report.items() if k not in ('changes', 'unmatched_tall')}
+    _hs = {k: v for k, v in height_report.items() if k not in ('changes', 'unmatched_tall', 'layers')}
+    if _hs or 'layers' not in height_report: stats['height_supplement'] = _hs
+    if 'layers' in height_report:   # each layer's counts; the per-building record stays in the sidecar
+        stats['height_layers'] = {k: v['counts'] for k, v in height_report['layers'].items()}
 json.dump(stats, open(LAYOUT.data(D, 'stats.json'), 'w'), indent=1, ensure_ascii=False)
 import footprints
 footprints.write(D,C)

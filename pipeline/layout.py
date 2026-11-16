@@ -33,7 +33,8 @@ def dist(city, *p): return os.path.join(city, 'dist', *p)
 def raw(city, *p):
     """the city's own downloads (its OSM answers, its Overture footprints): <raw root>/cities/<slug>/. Data that serves many
     cities (GHSL tiles, CMAB provinces, imagery tiles, Natural Earth) stays shared under the raw root, and a reader takes from it
-    only what covers the city's area, never a file chosen by its place in a folder listing (docs/DATA.md)"""
+    only what covers the city's area, never a file chosen by its place in a folder listing (docs/DATA.md; 3D-GloBFP cells too, in
+    globfp/, pipeline/globfp.py)"""
     import local
     return local.raw('cities', os.path.basename(os.path.normpath(city)), *p)
 

@@ -82,8 +82,14 @@ if not (C.get('film') or {}).get('nodes'):
     _corners = [(x, y, z) for x in (-ST['size_m'][0] / 2, ST['size_m'][0] / 2)
                 for z in (-ST['size_m'][1] / 2, ST['size_m'][1] / 2) for y in (0, _h)]
     _wide = stagecraft.fit_distance([0, 0, 0, 34, 40, _d, 30], _corners, .88, .78, d_hi=10 * _d)[5] / _d
-    _source = ''
-    if (C.get('buildings') or {}).get('height_supplement'):
+    _source = ''; _B = C.get('buildings') or {}
+    if _B.get('height_correction') or _B.get('height_zones'):   # every height layer named; zones are schematic (docs/DATA.md)
+        _source = ' · ' + '+'.join(['CMAB' if _B['source'] == 'cmab' else 'Overture'] + ['3D-GloBFP'] * bool(_B.get('height_correction'))
+                                   + ['OSM'] * bool(_B.get('height_supplement')))
+        _source += ' · GAIA est.' if _B['source'] == 'cmab' else ' · GHSL 100m/5y est.'
+        if (_B.get('height_supplement') or {}).get('fill_gaps') and _B['source'] == 'cmab': _source += ' · GHSL 100m/5y est.'
+        if _B.get('height_zones'): _source += ' · zones schematic'
+    elif _B.get('height_supplement'):
         _source = ' · CMAB+OSM · GAIA est.' if C['buildings']['source'] == 'cmab' else ' · Overture+OSM · GHSL 100m/5y est.'
         if C['buildings']['height_supplement'].get('fill_gaps') and C['buildings']['source'] == 'cmab':
             _source += ' · GHSL 100m/5y est.'

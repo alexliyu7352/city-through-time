@@ -8,13 +8,13 @@
 
 Copy `templates/city.yaml` to `cities/<slug>/city.yaml` and fill in the extent (box), scale and data sources;
 fetch OSM with `uv run python -I pipeline/osm.py cities/<slug>` (it fetches the city's area, worked out from the box in city.yaml); fetch the buildings (CMAB unzipped, or for `overture_ghsl` both `pipeline/overture_ghsl.py fetch` and `ghsl`, below: `terrain.py` takes today's buildings out of the surface, so it stops until they are there); run `pipeline/terrain.py` (DEM) and `pipeline/satellite.py` (Sentinel-2) once each;
-produce the model with `uv run python -I pipeline/prep.py cities/<slug>`. Then render one white-model still to confirm the extent and scale: before the film has nodes, `uv run python -I pipeline/compile.py cities/<slug>` writes a stand-in film (the plate's centre from low, then the whole plate), and `node render/still.mjs <slug> 3 8` takes the low view and the whole plate. Both moments remain under the studio light; the 8-second view fits the plate's corners and height envelope with room around them, without the projection or chapter overlays.
+produce the model with `uv run python -I pipeline/prep.py cities/<slug>`, and check its heights against real storeys with `uv run python -I tools/heightcheck.py cities/<slug>` (where OSM has storeys; a warning means the heights need the layers in "Correcting building heights" below; its tables go in the report). Then render one white-model still to confirm the extent and scale: before the film has nodes, `uv run python -I pipeline/compile.py cities/<slug>` writes a stand-in film (the plate's centre from low, then the whole plate), and `node render/still.mjs <slug> 3 8` takes the low view and the whole plate. Both moments remain under the studio light; the 8-second view fits the plate's corners and height envelope with room around them, without the projection or chapter overlays.
 
 Sentinel scenes can cover only part of their MGRS grid tile. `satellite.py` keeps its preferred scenes, fills uncovered pixels from other scenes matching the same search, and records those additions in `satellite.json` `fill_scenes`. It stops without replacing existing outputs if coverage is still incomplete: widen `--from`/`--to` or raise `--cloud`, then rerun it. A successfully written mosaic has `coverage_percent: 100`; do not accept a black strip as a data limit.
 
 **Where downloads live.** Downloads stay outside git, under this machine's raw root (`raw` in `local/config.json`). What only one city uses, its OSM answers and
 its Overture footprints, goes in that city's own folder, `<raw root>/cities/<slug>/` (`pipeline/layout.py` `raw`). What serves many cities stays shared under the raw root:
-GHSL tiles (`ghsl/`, one tile covers 1000 km), CMAB provinces (`cmab/`), imagery tiles (`tiles/`), Natural Earth. Every fetch and every reader takes the city's
+GHSL tiles (`ghsl/`, one tile covers 1000 km), CMAB provinces (`cmab/`), 3D-GloBFP cells (`globfp/`), imagery tiles (`tiles/`), Natural Earth. Every fetch and every reader takes the city's
 **area**, not its box: the plate is a north-up rectangle in metres cut from the box, and the box turned into metres leans, so half of each
 plate edge stands outside the box (by a few hundred metres; Xianyang 360 m). The area is the lon/lat box around the plate (`pipeline/geo.py` `Frame.area`,
 `pipeline/layout.py` `area`); data fetched for the box alone leaves that ground without terrain, buildings or roads. A reader takes the file made for
@@ -34,19 +34,34 @@ or the last name): with a second city on the machine, that file is the other cit
 
 CMAB download: the provincial zips of figshare article 27992417 (Shaanxi = `shanxisheng.zip`, Shanxi = `shanxi.zip`); unzip into `raw/cmab/<province>/`, and `prep.py` finds every shapefile that intersects the extent by itself.
 
-### Supplementing low building heights
+### Correcting building heights
 
-An estimated-height dataset can flatten a skyline. Use public mapped heights to raise reliable matches, keeping the primary
-footprints and years. This is opt-in for any city and either primary adapter; optional Overture gap-fill buildings keep their
-adapter's own height policy and are identified separately in the tallest-building sources:
+An estimated-height dataset can be wrong in both directions at once: tested against about 2,200 OSM storey counts in a dense
+Chinese city centre, CMAB read two- and three-storey lanes at about 23 m and towers of more than twelve storeys at about 32 m
+(rank correlation 0.13), so the city read as one flat slab and its old quarters as blocks. Three opt-in layers under `buildings` correct the primary adapter's heights, applied in
+this order, each one only where it has evidence, and each recorded per building (before and after) in
+`build/data/building_heights.json`:
+
+1. **`height_correction`**: an outside footprint dataset with heights. Each primary building takes the overlap-area-weighted
+   median of the dataset's heights over it, where the dataset's footprints cover at least `min_cover` of its area (default 0.3);
+   otherwise it keeps its own height. The dataset's own footprints are never drawn.
+2. **`height_supplement`**: matched OSM `height` or `building:levels`, raising and, with `lower: true`, also lowering a building
+   (below).
+3. **`height_zones`**: researched polygons of a known height or storey range, for low old quarters that no dataset separates
+   from their blocks. Schematic (estimated).
+
+None of them changes a footprint, a year, an age method or the building order. With none of the keys, prep is exactly as
+without this section.
 
 ```yaml
 buildings:
   source: cmab
   exaggeration: 1.0
+  height_correction: { source: globfp, min_cover: 0.3 }
   height_supplement:
     source: osm
     floor_height_m: 3.2
+    lower: true            # matched OSM heights and storeys lower as well as raise (default false: raise only)
     # Optional: tall whole buildings entirely absent from the primary footprints.
     fill_gaps:
       min_height_m: 100
@@ -54,7 +69,29 @@ buildings:
       ghsl_threshold_m2: 1500
     # Optional: separately modelled landmarks, excluded from matching and gap fill.
     exclude_osm: [way/123456]
+  height_zones: research/height_zones.geojson   # or a list of zones written here (below)
 ```
+
+#### The dataset correction (3D-GloBFP)
+
+3D-GloBFP (Che et al. 2024, Earth Syst. Sci. Data 16, 5357-5374) maps buildings worldwide, each with a height estimated from
+satellite data, under CC BY 4.0. In the same test it followed real heights much better than CMAB (rank correlation 0.42
+against 0.13; three storeys or fewer at a median 16 m, more than twelve at 53.5 m) but is still an estimate: it stays
+labelled one. Other datasets tested were flat (CNBH-10m, GHSL ANBH: about 20-30 m everywhere) or non-commercial (GBA, CC BY-NC,
+which the films' CC BY-SA licence cannot take).
+
+- Fetch once per city: `uv run python -I pipeline/globfp.py fetch cities/<slug>`. It lists the ten figshare parts once into
+  `<raw root>/globfp/index.json` (DOI, version, licence, md5 of every file), then downloads only the grid cells whose bounds, in
+  their file names, meet the city's area (`pipeline/layout.py` area); a cell already there with the right md5 is kept. Cells
+  are shared by every city they cover. The zips stay zipped (prep reads them in memory: a cell unzipped is three times larger).
+  `prep.py` never fetches; it stops and names the missing cells.
+- Where 3D-GloBFP has no cell, or covers too little of a footprint, the building keeps the primary's height; the sidecar counts
+  `corrected`, `raised`, `lowered`, `low_cover` and `no_cover`.
+- Credit in CREDITS: "Building heights corrected with 3D-GloBFP (Che et al. 2024), CC BY 4.0", with the citation and the DOI of
+  each part used (`building_heights.json` layers.dataset: `citation`, `tiles`). On screen the readout's source line names it
+  with the primary (`CMAB+3D-GloBFP+OSM`), still marked as estimates.
+
+#### OSM heights and storeys
 
 1. Fetch `uv run python -I pipeline/osm.py cities/<slug> building_heights` once for the city's area. It caches building and part
    polygons carrying `height` or `building:levels`; existing caches are not fetched again. `prep.py` never silently fetches data.
@@ -66,8 +103,10 @@ buildings:
 3. A reference's centroid must be inside the primary footprint (3 m mapping tolerance), with at least 70% overlap of the smaller
    polygon, at least a 1:4 area ratio and at least 35% intersection-over-union. One reference raises at most one primary polygon.
    Nearly tied matches or conflicting nearly tied references are refused. There is no nearest-building transfer across a road
-   or from a small tower to a large podium. A higher matched reference raises the primary height; lower, absent or ambiguous
-   references leave it unchanged. No year, age method, footprint or primary building order changes.
+   or from a small tower to a large podium. A higher matched reference raises the primary height. A lower one leaves it unchanged,
+   unless `lower: true`: then it lowers it too (an OSM storey count is better evidence for one building than a remote-sensing
+   estimate over a merged block); the report counts `raised` and `lowered` apart. Absent or ambiguous references leave it
+   unchanged. No year, age method, footprint or primary building order changes.
 4. Rerun `prep.py`. `build/data/building_heights.json` records every raised building, primary height, reference ID, name, tag,
    URL, overlap, estimate flag, cache snapshot and matching counts, plus unmatched references at least 200 m high.
    `stats.json` includes the selected height source for each of its tallest ten; `model.json` keeps its existing building format.
@@ -101,6 +140,35 @@ Put researched landmarks in `exclude_osm` by exact `type/id`, not a translated n
 events and separate `landmarks.py` models; exclusions do not erase the primary base. Use the existing landmark masks when
 the independent models are built. Until then, report the prepared base and landmark studies separately, including the
 remaining skyline gaps. A height-envelope study is schematic massing, not a completed landmark reconstruction.
+
+#### Researched height zones
+
+Old low quarters (lanes of two- or three-storey houses, an old town's courtyard fabric) are often one footprint per block in
+the primary data, and every height layer above then still gives the block one height, usually too high. A zone gives the
+buildings inside a researched polygon the height the sources give that quarter:
+
+- Either a list in `buildings.height_zones`, each `{polygon: [[lon, lat], ...], storeys: [2, 3], source: "...", label: "..."}`,
+  or a GeoJSON path in the city folder (`research/height_zones.geojson`) whose features carry the same keys as properties.
+  Each zone has exactly one of `height_m` and `storeys`, a number or `[low, high]`; `floor_height_m` defaults to 3.2.
+  `source` (where the height comes from, also in FACTS.md) and `label` (what the zone is) are required.
+- A primary building whose centroid lies inside takes the zone's height; with a range, each building its own value in it,
+  from its centroid (the same every run), so a quarter does not stand as one flat block. Where zones overlap, the first listed
+  wins. OSM gap-fill towers keep their own heights. Zones come last: they override the dataset and OSM for the buildings inside,
+  so draw a zone around the low fabric only, not round a tower standing in it.
+- Zones are schematic: the sidecar marks each one `schematic: true` and its buildings' height source says so; label them
+  "schematic (estimated)" in FACTS.md and in the readout's source line (the stand-in film adds `zones schematic`).
+
+#### Checking the heights
+
+Run `uv run python -I tools/heightcheck.py cities/<slug>` after every prep that changes heights, and give its tables in step 2's
+report. It matches the OSM buildings that carry storeys to the prepared footprints and prints, per storey band, the model's
+median against storeys x 3.2 m with the error and the rank correlation, at each stage: the primary's heights, after the
+dataset correction, and final (with the appearance sidecar's own child heights). Once OSM applies, the rows it set agree by
+construction, so it also prints the final table without them. A rank correlation **under about 0.3 before the OSM layer is a
+warning**: the city reads flat or inverted whatever the supplement fixes; try the dataset correction and look at the tallest
+list. It also lists the tallest buildings with the layer that set each, every layer's counts, and with
+`--areas research/<file>.yaml` (`areas: [{id, ll: [lon, lat], radius_m}]`) each area's median height at each stage, to see a
+quarter before and after its zone. It reads only and writes `build/logs/heightcheck.txt`.
 
 Choose the present-day vertical factor **after** correcting heights. `buildings.exaggeration: 1` preserves true skyline
 proportions (a 632 m tower is 0.0632 model metres at 1:10000); do not stretch surveyed or mapped skyscrapers fourfold because an
@@ -146,8 +214,11 @@ the original overlap rejects both changed parents. Rollbacks are checked again u
 primary outline rather than drawing only one child. Candidate and accepted parent/child counts are reported separately.
 
 Every child keeps its parent's bi, original centre, year and grow/renew timing; it makes no new construction-date claim.
-Height stays at the approved primary value, raised only by that child's valid explicit, non-estimated OSM height. A lower
-height or storey estimate does not lower/change it. No OSM start_date is used. New outlines are seated on the same terrain.
+Height stays at the approved primary value, raised only by that child's valid explicit, non-estimated OSM height; a lower
+height or storey estimate does not change it. With `height_supplement.lower: true` each child instead takes its own OSM height,
+or its own storeys x `floor_height_m`, up or down (a split block's tower and its low neighbour each their own), except under a
+height zone: a parent a zone set keeps the zone's height in every child, since zones come last. The sidecar then says
+`child_heights: both ways`. No OSM start_date is used. New outlines are seated on the same terrain.
 
 `regularize: guarded` applies only where the sum of whole-building OSM intersection areas is at most 1 m². It tries topology-preserving
 2 m simplification and near-axis least-movement constraints within 10 degrees. The axis adjustment is at most 1 m Hausdorff;
@@ -235,6 +306,7 @@ Pictures in the film have two uses: each historic node ends with "the same place
 ## Honest labelling (must appear on screen)
 
 - The readout source line: dataset name + the word "estimate" (example: `CMAB · GAIA 不透水面首次出現年份（估算）` (first year an impervious surface appears, estimate)).
+- Corrected heights name every height source (`CMAB+3D-GloBFP+OSM`), still as estimates; researched height zones add "schematic" (`示意` in Chinese).
 - Pins or labels of schematic polygons get "（示意）" ("schematic"); estimated positions get "（位置示意）" ("location schematic").
 - End card lines two and three: data sources and licences; "heights and years are estimates"; "historical sources: see FACTS.md".
 
