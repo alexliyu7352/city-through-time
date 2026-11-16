@@ -86,8 +86,8 @@ if not (C.get('film') or {}).get('nodes'):
     if _B.get('height_correction') or _B.get('height_zones'):   # every height layer named; zones are schematic (docs/DATA.md)
         _source = ' · ' + '+'.join(['CMAB' if _B['source'] == 'cmab' else 'Overture'] + ['3D-GloBFP'] * bool(_B.get('height_correction'))
                                    + ['OSM'] * bool(_B.get('height_supplement')))
-        _source += ' · GAIA est.' if _B['source'] == 'cmab' else ' · GHSL 100m/5y est.'
-        if (_B.get('height_supplement') or {}).get('fill_gaps') and _B['source'] == 'cmab': _source += ' · GHSL 100m/5y est.'
+        # (one line a phone can read, 820 px: the years' sources share one "est.")
+        _source += ' · GAIA/GHSL est.' if _B['source'] == 'cmab' and (_B.get('height_supplement') or {}).get('fill_gaps') else ' · GAIA est.' if _B['source'] == 'cmab' else ' · GHSL est.'
         if _B.get('height_zones'): _source += ' · zones schematic'
     elif _B.get('height_supplement'):
         _source = ' · CMAB+OSM · GAIA est.' if C['buildings']['source'] == 'cmab' else ' · Overture+OSM · GHSL 100m/5y est.'
