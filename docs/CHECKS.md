@@ -94,7 +94,9 @@ camcheck's `spin` does not fail a check: compile unwraps the azimuth, and the ju
   Make a candidate with `uv run python -I tools/candidate.py make <slug> <name> --from <a> --through <b>` (the stations changed and one either side: a cut's first
   node has no film before it; without `--from`/`--through`, the whole city), not with a script of your own: it handles every reference to what the cut leaves out
   the same way and says what of the base the cut does not show, copies what compile writes and links what it only reads (a link written through is a write into
-  the base), and keeps the base's stage plan in `plan_seed.json`. Every compile and round of the candidate takes that plan
+  the base), and keeps the base's stage plan in `plan_seed.json`. It stops when the base's `build/audio` no longer holds the voice, takes or one-shots its
+  film was made with: without the voice every line is timed by the speaking estimate, and the base's plan no longer fits. Every compile and round of the
+  candidate takes that plan
   (`CT_PLAN="$(cat cities/<name>/plan_seed.json)" uv run python -I tools/round.py <name> --against ...`), or its timing drifts from the base's. Compare a cut with
   the same cut of the base, made first and left unchanged (then `make <that cut> <name>` for the one you change). A candidate is a copy of the city's build
   (hundreds of MB for a large city once compiled): once its change is back, delete it (`tools/candidate.py delete <name>`; `list` shows them all), keeping only the version the user is viewing and the one filmdiff compares with (old candidates left behind filled a disk).

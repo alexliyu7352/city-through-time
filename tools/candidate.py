@@ -3,6 +3,7 @@ proportion"), compiled and checked against the version it was made from, then de
 usage: python -I tools/candidate.py make <base slug | folder> <name> [--from <node>] [--through <node>] [--plan base|<file>] [--compile]
        python -I tools/candidate.py list
        python -I tools/candidate.py delete <name>
+       python -I tools/candidate.py selftest
 make    cities/<name>/ from the base. city.yaml and script.yaml: a whole candidate's are copied byte for byte (its change goes back
         by copying them back); a cut's (--from, --through: the nodes kept, the base's first and last by default) are written
         again, comments gone (its change goes back by hand). The base's other folders (research/, assets/ ...) are folders of
@@ -11,11 +12,14 @@ make    cities/<name>/ from the base. city.yaml and script.yaml: a whole candida
         pipeline/grade.py, and a write through a link lands in the base), but for the imagery, which compile only reads (linked),
         and what compile makes again (the period cities, the masks: not brought). build/audio: the voice lines, the music takes
         and the one-shots linked into folders of the candidate's own (compile writes the voice track and the score beside them).
-        The base's downloads are linked under the candidate's name in the raw folder (pipeline/layout.py raw: the OSM answers
-        compile reads; without them a city's named outlines, decals and today's water are missing). The base's stage plan
-        (--plan base: its build/logs/plan.json; or a file), the kept nodes' part of it, goes to plan_seed.json: the time compile
-        inserts is then the base's, not found again and drifting. candidate.json says what the candidate is. --compile compiles
-        it with that plan; every later compile and round of it takes the plan the same way:
+        A base whose build/audio no longer holds what its film (build/film.json) was voiced, scored or given one-shots with (a
+        folder gone, a link leading nowhere) stops make before anything is written: without its voice every line is timed by the
+        speaking estimate, the base's plan no longer fits, and compile stops on a plan that repeats itself. The base's downloads
+        are linked under the candidate's name in the raw folder (pipeline/layout.py raw: the OSM answers compile reads; without
+        them a city's named outlines, decals and today's water are missing). The base's stage plan (--plan base: its
+        build/logs/plan.json; or a file), the kept nodes' part of it, goes to plan_seed.json: the time compile inserts is then the
+        base's, not found again and drifting. candidate.json says what the candidate is. --compile compiles it with that plan;
+        every later compile and round of it takes the plan the same way:
           CT_PLAN="$(cat cities/<name>/plan_seed.json)" uv run python -I tools/round.py <name> --against <the version to compare>
         A cut is compared with the same cut of the base: make that one first, unchanged, then the candidate from it (make <cut> <name>).
 list    the candidates (cities/*/candidate.json): base, cut, size on disk
@@ -82,6 +86,36 @@ def link_children(src, dst, skip=lambda n: False):
     os.makedirs(dst, exist_ok=True)
     for n in sorted(os.listdir(src)):
         if not skip(n): os.symlink(os.path.realpath(os.path.join(src, n)), os.path.join(dst, n))
+
+
+VOICE_EXT = ('wav', 'mp3', 'm4a', 'ogg', 'flac')   # (the voice files compile reads, pipeline/compile.py voice_len)
+
+
+def sound_missing(B):
+    """what the base's film (its build/film.json) was timed and laid with that its build/audio no longer holds -> [what, ...]:
+    its voiced lines (compile times a line by its voice, and without it by the speaking estimate: the film's timing is another,
+    the base's stage plan no longer fits and compile stops, 'the stage plan repeats itself'), its music takes and its one-shots
+    (audio/lay.py). A link that leads nowhere is missing too. A base never compiled has nothing to keep"""
+    try: F = json.load(open(LAYOUT.build(B, 'film.json'), encoding='utf-8'))
+    except (OSError, ValueError): return []
+    where = lambda p: rel(p) + (f' (a link to {os.readlink(p)}, which is missing)' if os.path.islink(p) and not os.path.exists(p) else '')
+    out, V = [], F.get('voice') or {}
+    if V.get('lines'):
+        d = LAYOUT.audio(B, 'voice', V.get('lang') or '')
+        ids = {c['id'] for c in F.get('cues') or [] if isinstance(c, dict) and c.get('id')}
+        have = sum(1 for i in ids if any(os.path.exists(os.path.join(d, f'{i}.{x}')) for x in VOICE_EXT))
+        if have < V['lines']: out.append(f'its voice: {have} of the {V["lines"]} lines its film was timed with, in {where(d)}')
+    S = F.get('score') or {}
+    if S.get('file'):
+        if S.get('source') == 'code': need = [LAYOUT.audio(B, 'music', 'code.wav')]
+        else: need = [LAYOUT.audio(B, 'music', 'cand', f'{c["id"]}_{c["take"]}.wav') for c in S.get('cues') or [] if c.get('take')]   # (audio/lay.py take_path)
+        gone = [p for p in need if not os.path.exists(p)]
+        if gone: out.append(f'its music: {len(gone)} of the {len(need)} takes its score was laid from, e.g. {where(os.path.dirname(gone[0]))}/{os.path.basename(gone[0])}')
+    X = F.get('sfx') or {}
+    if X.get('file'):
+        gone = [k for k in X.get('kinds') or [] if not os.path.exists(LAYOUT.audio(B, 'sfx', k + '.wav'))]
+        if gone: out.append(f'its one-shots: {", ".join(gone)}, in {where(LAYOUT.audio(B, "sfx"))}')
+    return out
 
 
 # ------------------------------------------------------------------ the cut
@@ -206,6 +240,10 @@ def make(A):
     if not re.fullmatch(r'[a-z0-9_]+', A.name): sys.exit(f'candidate: name {A.name!r}: lower-case letters, digits and _ (it is a slug: URLs and file names)')
     if os.path.lexists(D): sys.exit(f'candidate: {rel(D)} exists already')
     if not os.path.isfile(LAYOUT.data(B, 'model.json')): sys.exit(f'candidate: {rel(B)} has no build/data/model.json (prep it first, pipeline/prep.py)')
+    gone = sound_missing(B)
+    if gone: sys.exit(f'candidate: {rel(B)}\'s build/audio lacks what its film was made with (a copy without it is timed or laid otherwise, '
+                      f'and compares with nothing): ' + '; '.join(gone) + '. Put it back in the base\'s build/audio (docs/SOUND.md: where the voice, '
+                      'the takes and the one-shots go), or compile the base without it first, then make the candidate')
     whole = A.from_ is None and A.through is None
     C = yaml.safe_load(open(os.path.join(B, 'city.yaml'), encoding='utf-8'))
     S = yaml.safe_load(open(os.path.join(B, 'script.yaml'), encoding='utf-8')) if os.path.exists(os.path.join(B, 'script.yaml')) else None
@@ -301,14 +339,42 @@ def delete(A):
     print('candidate: removed')
 
 
+def selftest():
+    """sound_missing on a made-up base: never compiled, its sound all there, then each piece gone (a link leading nowhere too)"""
+    import tempfile
+    with tempfile.TemporaryDirectory() as T:
+        B = os.path.join(T, 'base'); os.makedirs(LAYOUT.build(B))
+        assert sound_missing(B) == [], 'a base never compiled has nothing to keep'
+        F = {'cues': [{'id': 'l1'}, {'id': 'l2'}], 'voice': {'lang': 'en', 'lines': 2},
+             'score': {'file': 'audio/music/score.m4a', 'cues': [{'id': 'm1', 'take': 'A'}, {'id': 'm2'}]},
+             'sfx': {'kinds': ['lamp'], 'file': 'audio/sfx_track.m4a'}}
+        json.dump(F, open(LAYOUT.build(B, 'film.json'), 'w'))
+        src = os.path.join(T, 'kept', 'en'); os.makedirs(src)
+        for n in ('l1.flac', 'l2.wav'): open(os.path.join(src, n), 'w').close()
+        os.makedirs(LAYOUT.audio(B, 'voice')); os.symlink(src, LAYOUT.audio(B, 'voice', 'en'))
+        os.makedirs(LAYOUT.audio(B, 'music', 'cand')); open(LAYOUT.audio(B, 'music', 'cand', 'm1_A.wav'), 'w').close()
+        os.makedirs(LAYOUT.audio(B, 'sfx')); open(LAYOUT.audio(B, 'sfx', 'lamp.wav'), 'w').close()
+        assert sound_missing(B) == [], sound_missing(B)
+        os.unlink(os.path.join(src, 'l2.wav'))
+        g = sound_missing(B); assert len(g) == 1 and g[0].startswith('its voice: 1 of the 2'), g
+        shutil.rmtree(src)   # (the link to the voice now leads nowhere)
+        g = sound_missing(B); assert len(g) == 1 and 'its voice: 0 of the 2' in g[0] and 'which is missing' in g[0], g
+        os.unlink(LAYOUT.audio(B, 'music', 'cand', 'm1_A.wav')); os.unlink(LAYOUT.audio(B, 'sfx', 'lamp.wav'))
+        g = sound_missing(B); assert [x.split(':')[0] for x in g] == ['its voice', 'its music', 'its one-shots'], g
+        F['score'] = {'file': 'audio/music/score.m4a', 'source': 'code', 'cues': []}; F.pop('voice'); F.pop('sfx')
+        json.dump(F, open(LAYOUT.build(B, 'film.json'), 'w'))
+        g = sound_missing(B); assert len(g) == 1 and 'code.wav' in g[0], g
+    print('candidate selftest: ok (a base\'s missing voice, takes and one-shots stop make; a whole one or one never compiled does not)')
+
+
 def main():
     ap = argparse.ArgumentParser(description='a working copy of a city to try a change on (tools/candidate.py docstring)')
     sp = ap.add_subparsers(dest='cmd', required=True)
     m = sp.add_parser('make'); m.add_argument('base'); m.add_argument('name'); m.add_argument('--from', dest='from_'); m.add_argument('--through')
     m.add_argument('--plan', default='base'); m.add_argument('--compile', action='store_true')
-    sp.add_parser('list'); d = sp.add_parser('delete'); d.add_argument('name')
+    sp.add_parser('list'); d = sp.add_parser('delete'); d.add_argument('name'); sp.add_parser('selftest')
     A = ap.parse_args()
-    {'make': make, 'list': lambda A: show(), 'delete': delete}[A.cmd](A)
+    {'make': make, 'list': lambda A: show(), 'delete': delete, 'selftest': lambda A: selftest()}[A.cmd](A)
 
 
 if __name__ == '__main__':
