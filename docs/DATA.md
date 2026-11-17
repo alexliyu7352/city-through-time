@@ -107,7 +107,7 @@ which the films' CC BY-SA licence cannot take).
    unless `lower: true`: then it lowers it too (an OSM storey count is better evidence for one building than a remote-sensing
    estimate over a merged block); the report counts `raised` and `lowered` apart. Absent or ambiguous references leave it
    unchanged. No year, age method, footprint or primary building order changes.
-4. Rerun `prep.py`. `build/data/building_heights.json` records every raised building, primary height, reference ID, name, tag,
+4. Rerun `prep.py`. `build/data/building_heights.json` records every raised or lowered building, its height before, reference ID, name, tag,
    URL, overlap, estimate flag, cache snapshot and matching counts, plus unmatched references at least 200 m high.
    `stats.json` includes the selected height source for each of its tallest ten; `model.json` keeps its existing building format.
    This is the **prepared dataset's** tallest ten, not a city's complete real-world ranking: unmapped or unmatched towers remain

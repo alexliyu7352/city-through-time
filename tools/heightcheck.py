@@ -5,7 +5,7 @@ Each OSM building with a whole storey count, its centroid on the plate, is match
 (intersection over union at least 0.5). The storeys table compares the model's height with storeys x 3.2 m per band (3 or fewer,
 4-6, 7-12, more than 12): median, quartiles, mean absolute error, and the rank correlation over all, at each stage of the height
 layers (pipeline/heights.py; the sidecar build/data/building_heights.json keeps each layer's before and after):
-  primary          the adapter's own heights
+  primary          the adapter's own heights (OSM gap-fill towers left out of this stage and the next)
   after dataset    after height_correction
   final (drawn)    every layer, with a split or replaced outline's own height where the appearance sidecar draws one
   final, not OSM   the final heights of the rows whose height OSM did not set: once the supplement applies OSM storeys, the
@@ -128,7 +128,8 @@ def main():
     say(f'heightcheck {os.path.basename(os.path.abspath(city))}: {len(rows)} OSM buildings with storeys or height on the plate, '
         f'{len(matched)} matched (IoU >= 0.5), {len(lv)} with storeys')
     rho = {}
-    for name, h in S.items(): rho[name] = table(say, f'\n{name}', [m['levels'] for m in lv], [h[m['bi']] for m in lv])
+    staged = [m for m in lv if m['bi'] not in gaps]   # gap-fill towers carry OSM heights at every stage: not in the stages before OSM
+    for name, h in S.items(): rho[name] = table(say, f'\n{name}', [m['levels'] for m in staged], [h[m['bi']] for m in staged])
     table(say, '\nfinal (drawn)', [m['levels'] for m in lv], [m['drawn'] for m in lv])
     ind = [m for m in lv if not m['osm']]
     if 'osm' in L: table(say, '\nfinal, not OSM', [m['levels'] for m in ind], [m['drawn'] for m in ind])
@@ -140,7 +141,8 @@ def main():
     if len(ex) >= 3:
         say(f'\nexplicit OSM heights: n={len(ex)}')
         for name, h in [*S.items(), ('final (drawn)', None)]:
-            v = np.array([m['drawn'] if h is None else h[m['bi']] for m in ex]); t = np.array([m['height'] for m in ex])
+            rows_ = ex if h is None else [m for m in ex if m['bi'] not in gaps]
+            v = np.array([m['drawn'] if h is None else h[m['bi']] for m in rows_]); t = np.array([m['height'] for m in rows_])
             say(f'  {name:>14}: MAE {np.mean(np.abs(v - t)):5.1f}  median abs err {np.median(np.abs(v - t)):5.1f}  rank correlation {spearmanr(t, v)[0]:.2f}')
     say('\ntallest (final):')
     changed = {c['bi']: c for c in H.get('changes', [])}

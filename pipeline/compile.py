@@ -87,8 +87,11 @@ if not (C.get('film') or {}).get('nodes'):
         _source = ' · ' + '+'.join(['CMAB' if _B['source'] == 'cmab' else 'Overture'] + ['3D-GloBFP'] * bool(_B.get('height_correction'))
                                    + ['OSM'] * bool(_B.get('height_supplement')))
         # (one line a phone can read, 820 px: the years' sources share one "est.")
-        _source += ' · GAIA/GHSL est.' if _B['source'] == 'cmab' and (_B.get('height_supplement') or {}).get('fill_gaps') else ' · GAIA est.' if _B['source'] == 'cmab' else ' · GHSL est.'
-        if _B.get('height_zones'): _source += ' · zones schematic'
+        _years = ' · GAIA/GHSL est.' if _B['source'] == 'cmab' and (_B.get('height_supplement') or {}).get('fill_gaps') else ' · GAIA est.' if _B['source'] == 'cmab' else ' · GHSL est.'
+        _zones = ' · zones schematic' if _B.get('height_zones') else ''
+        # the most detailed variant that fits (about 46 characters after the plate's size): the years' source shortens first
+        _fits = [_source + _years + _zones, _source + ' · est.' + _zones, _source.replace('3D-GloBFP', 'GloBFP') + ' · est.' + _zones]
+        _source = next((v for v in _fits if len(v) <= 46), _fits[-1])
     elif _B.get('height_supplement'):
         _source = ' · CMAB+OSM · GAIA est.' if C['buildings']['source'] == 'cmab' else ' · Overture+OSM · GHSL 100m/5y est.'
         if C['buildings']['height_supplement'].get('fill_gaps') and C['buildings']['source'] == 'cmab':
