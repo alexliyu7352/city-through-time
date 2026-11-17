@@ -143,8 +143,10 @@ def main():
     # the wide-and-tall class: footprints wider than a tower standing at tower heights read as one solid monolith (a merged
     # block or a coarse outline given a tower's height); a correction that adds many is suspect (docs/DATA.md)
     area_bi = np.zeros(len(final)); area_bi[PB] = [p.area for p in P]
+    own = np.ones(len(final), bool); own[list(gaps)] = False   # (gap-fill towers: OSM's, at every stage; final only)
     say('\nwide and tall (footprint m2 > / height m >): ' + ';  '.join(
-        f'{name} ' + ' '.join(f'{np.sum((area_bi > a) & (h > t))}' for a, t in WIDE) for name, h in [*S.items(), ('final', final)])
+        f'{name} ' + ' '.join(f'{np.sum((area_bi > a) & (h > t) & (own | (name == "final")))}' for a, t in WIDE)
+        for name, h in [*S.items(), ('final', final)])
         + '   (' + ', '.join(f'{a:.0f}/{t:.0f}' for a, t in WIDE) + ')')
     ex = [m for m in matched if m['height']]
     if len(ex) >= 3:
