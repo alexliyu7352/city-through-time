@@ -151,42 +151,63 @@ def load(city, frame, buildings, settings):
     return rows, selected, result
 
 
-def correct(buildings, geoms, values, min_cover=.3):
+TOWER_M2, TALL_M = 3000., 60.   # wider than a tower can be / taller than a podium: the wide-and-tall class (tools/heightcheck.py)
+
+
+def correct(buildings, geoms, values, min_cover=.3, tower_m2=TOWER_M2, tall_m=TALL_M):
     """Each primary building takes the overlap-area-weighted median of the dataset's heights over it, where the dataset's
-    footprints cover at least min_cover of its area; otherwise it keeps its height. -> (rows, the layer's record)"""
+    footprints cover at least min_cover of its area; otherwise it keeps its height. Three guards against wide monoliths
+    (a footprint wider than a tower standing at a tower's height):
+    - a dataset footprint wider than tower_m2 and taller than tall_m is a coarse or merged outline: it is not used;
+    - a result above tall_m that raises the building must hold over its whole footprint: the part the dataset does not
+      cover then counts at the building's own height (a block whose corner holds one dataset tower keeps its podium height);
+    - a primary footprint wider than tower_m2 is not raised above tall_m: a merged block of towers and podiums keeps its
+      height (splitting it by the dataset's footprints would be the full answer).
+    -> (rows, the layer's record)"""
     import numpy as np, shapely
     rows = list(buildings); P = np.array([b[0] for b in rows], dtype=object)
     pi, gi = STRtree(geoms).query(P, predicate='intersects') if len(rows) and len(geoms) else (np.zeros(0, int),) * 2
+    coarse = (shapely.area(geoms) > tower_m2) & (values > tall_m) if len(geoms) else np.zeros(0, bool)
+    counts = collections.Counter({'coarse_footprints': int(coarse.sum())}) if coarse.any() else collections.Counter()
+    keep = ~coarse[gi] if len(gi) else np.zeros(0, bool); pi, gi = pi[keep], gi[keep]
     a = shapely.area(shapely.intersection(P[pi], geoms[gi])) if len(pi) else np.zeros(0)
     keep = a > 0; pi, gi, a = pi[keep], gi[keep], a[keep]
     order = np.lexsort((values[gi], pi)); pi, gi, a = pi[order], gi[order], a[order]   # by building, then by height
     starts = np.searchsorted(pi, np.arange(len(rows))); ends = np.searchsorted(pi, np.arange(len(rows)), side='right')
     area = shapely.area(P) if len(rows) else np.zeros(0)
-    counts = collections.Counter(); rec = {'bi': [], 'before': [], 'after': [], 'cover': []}
+    rec = {'bi': [], 'before': [], 'after': [], 'cover': []}
     for i in range(len(rows)):
         s, e = starts[i], ends[i]
         if s == e: counts['no_cover'] += 1; continue
-        cover = float(a[s:e].sum() / area[i])
+        covered = float(a[s:e].sum()); cover = covered / area[i]
         if cover < min_cover: counts['low_cover'] += 1; continue
-        w = np.cumsum(a[s:e]); h = float(values[gi[s + int(np.searchsorted(w, w[-1] / 2))]])
         p, old, year, how, func = rows[i]
+        def median(rest):
+            hs = np.append(values[gi[s:e]], old); ws = np.append(a[s:e], rest)
+            o = np.argsort(hs, kind='stable'); hs, ws = hs[o], np.cumsum(ws[o])
+            return float(hs[int(np.searchsorted(ws, ws[-1] / 2))])
+        h = median(0.)
+        if h > tall_m and h > old:   # raised to a tower's height: it must hold over the whole footprint, the rest at its own
+            h = median(max(0., area[i] - covered)); counts['rest_kept'] += h == old
+        if area[i] > tower_m2 and h > tall_m and h > old: counts['wide_kept'] += 1; continue
         counts['corrected'] += 1; counts['raised' if h > old else 'lowered' if h < old else 'unchanged'] += 1
         rows[i] = p, h, year, how, func
         for k, v in (('bi', i), ('before', round(old, 2)), ('after', round(h, 2)), ('cover', round(min(cover, 9.999), 3))): rec[k].append(v)
-    return rows, {'min_cover': min_cover, 'counts': dict(counts), **rec}
+    return rows, {'min_cover': min_cover, 'tower_m2': tower_m2, 'tall_m': tall_m, 'counts': dict(counts), **rec}
 
 
 def correction(city, frame, buildings, settings):
-    """The height_correction layer: settings {source: globfp, min_cover: 0.3}"""
-    unknown = set(settings) - {'source', 'min_cover'}
+    """The height_correction layer: settings {source: globfp, min_cover: 0.3, tower_m2: 3000, tall_m: 60}"""
+    unknown = set(settings) - {'source', 'min_cover', 'tower_m2', 'tall_m'}
     if unknown: raise SystemExit(f'heights: height_correction: unknown keys {sorted(unknown)}')
     if settings.get('source', 'globfp') != 'globfp': raise SystemExit('heights: height_correction.source must be globfp')
-    cover = settings.get('min_cover', .3)
-    if isinstance(cover, bool) or not isinstance(cover, (int, float)) or not 0 < cover <= 1:
-        raise SystemExit('heights: height_correction.min_cover must be in (0, 1]')
+    num = lambda v: not isinstance(v, bool) and isinstance(v, (int, float))
+    cover, tower, tall = settings.get('min_cover', .3), settings.get('tower_m2', TOWER_M2), settings.get('tall_m', TALL_M)
+    if not num(cover) or not 0 < cover <= 1: raise SystemExit('heights: height_correction.min_cover must be in (0, 1]')
+    if not num(tower) or not num(tall) or tower <= 0 or tall <= 0: raise SystemExit('heights: height_correction.tower_m2 and tall_m must be positive')
     import globfp, local
     geoms, values, provenance = globfp.load(local.raw(), frame)
-    rows, rec = correct(buildings, geoms, values, float(cover))
+    rows, rec = correct(buildings, geoms, values, float(cover), float(tower), float(tall))
     print(f'height correction: {provenance["footprints"]} {provenance["dataset"]} footprints; {json.dumps(rec["counts"])}')
     return rows, {**provenance, **rec}
 
@@ -390,8 +411,24 @@ def selftest():
             self.assertEqual(rows[0][2:], (1990, 'seen', ''))
             self.assertEqual((rec['bi'], rec['before'], rec['after'], rec['cover']), ([0], [25], [9], [1.0]))
             self.assertEqual(rec['counts'], {'corrected': 1, 'lowered': 1, 'low_cover': 1, 'no_cover': 1})
-            self.assertEqual(correct(b, g, v, .1)[0][1][1], 3)
+            self.assertEqual(correct(b, g, v, .1)[0][1][1], 3)   # lowering: the covered part alone
             self.assertEqual(correct(b, g[:0], v[:0], .3)[0], b)
+        def test_correction_rest_at_own_height_and_wide_guards(self):
+            import numpy as np
+            # a 100 x 50 block, a 40 x 40 dataset tower of 120 m in one corner (32% covered): the rest keeps the block at 30
+            b = [(box(0, 0, 100, 50), 30, 1990, 'seen', '')]
+            rows, rec = correct(b, np.array([box(0, 0, 40, 40)], dtype=object), np.array([120.]), .3)
+            self.assertEqual(rows[0][1], 30)
+            # a small tower footprint is raised; the same height over a footprint wider than a tower is not (kept, counted)
+            t = [(box(0, 0, 40, 40), 30, 1990, 'seen', '')]
+            self.assertEqual(correct(t, np.array([box(0, 0, 40, 40)], dtype=object), np.array([120.]))[0][0][1], 120)
+            two = np.array([box(0, 0, 50, 50), box(50, 0, 100, 50)], dtype=object)   # two towers' footprints filling a merged block
+            rows, rec = correct(b, two, np.array([120., 120.]))
+            self.assertEqual((rows[0][1], rec['counts']['wide_kept']), (30, 1))
+            self.assertEqual(correct(b, np.array([box(0, 0, 100, 50)], dtype=object), np.array([12.]))[0][0][1], 12)   # lowering stays
+            # a dataset footprint wider than a tower and tall is coarse: not used, so a small building under it keeps its height
+            rows, rec = correct(t, np.array([box(-50, -50, 50, 50)], dtype=object), np.array([90.]))
+            self.assertEqual((rows[0][1], rec['counts']['coarse_footprints'], rec['counts']['no_cover']), (30, 1, 1))
         def test_zones_by_centroid_deterministic_and_labelled(self):
             from geo import Frame
             f = Frame((121.4, 31.2, 121.6, 31.4), .0001)

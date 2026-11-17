@@ -57,7 +57,7 @@ without this section.
 buildings:
   source: cmab
   exaggeration: 1.0
-  height_correction: { source: globfp, min_cover: 0.3 }
+  height_correction: { source: globfp, min_cover: 0.3, tower_m2: 3000, tall_m: 60 }
   height_supplement:
     source: osm
     floor_height_m: 3.2
@@ -87,6 +87,18 @@ which the films' CC BY-SA licence cannot take).
   `prep.py` never fetches; it stops and names the missing cells.
 - Where 3D-GloBFP has no cell, or covers too little of a footprint, the building keeps the primary's height; the sidecar counts
   `corrected`, `raised`, `lowered`, `low_cover` and `no_cover`.
+- **No wide monoliths.** A primary dataset that merges a tower and its podium, or several towers, into one block, and a
+  remote-sensing dataset whose own outline for a big hall or a whole estate carries a tower's height, together make a
+  footprint 60-100 m across stand 100 m or more: one solid slab no city has. Three guards, with `tower_m2` (default 3000,
+  wider than a tower floor plate) and `tall_m` (default 60, above a podium):
+  - a dataset footprint wider than `tower_m2` and taller than `tall_m` is a coarse outline and is not used (`coarse_footprints`);
+  - a result that raises a building above `tall_m` must hold over its whole footprint: the part the dataset does not cover
+    then counts at the building's own height, so a block whose corner holds one tower keeps its podium height (`rest_kept`;
+    lowering and low results use the covered part alone, so low old quarters still come down);
+  - a primary footprint wider than `tower_m2` is never raised above `tall_m` (`wide_kept`): a merged block of towers keeps
+    its height until it is split. Mapped towers inside it still take their OSM heights where OSM matches them.
+  `tools/heightcheck.py` counts this class at each stage (its "wide and tall" line); the correction should not raise it above
+  the primary's count. Lower the two settings for a city of smaller towers, raise them for one of bigger floor plates.
 - Credit in CREDITS: "Building heights corrected with 3D-GloBFP (Che et al. 2024), CC BY 4.0", with the citation and the DOI of
   each part used (`building_heights.json` layers.dataset: `citation`, `tiles`). On screen the readout's source line names it
   with the primary (`CMAB+3D-GloBFP+OSM`), still marked as estimates.

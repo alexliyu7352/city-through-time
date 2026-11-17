@@ -11,7 +11,9 @@ layers (pipeline/heights.py; the sidecar build/data/building_heights.json keeps 
   final, not OSM   the final heights of the rows whose height OSM did not set: once the supplement applies OSM storeys, the
                    rows it set agree with their own storeys by construction and say nothing about the rest
 A rank correlation under 0.3 before the OSM layer is a WARNING: the heights barely follow the storeys, and the city reads flat
-whatever the supplement fixes. Also: explicit OSM heights against the model, the tallest buildings with the layer that set them,
+whatever the supplement fixes. The wide-and-tall line counts, at each stage, footprints wider than a tower standing at a
+tower's height (over 3000 m2 and 60 m, 3000 m2 and 100 m, 1500 m2 and 100 m): solid monoliths that a correction must not
+multiply. Also: explicit OSM heights against the model, the tallest buildings with the layer that set them,
 each layer's counts, and with --areas (the format of footprints.py review: areas: [{id, ll: [lon, lat], radius_m}]) each
 area's median height at each stage. Printed, and written to build/logs/heightcheck.txt. Reads only; changes nothing."""
 import argparse, io, json, os, sys
@@ -21,6 +23,7 @@ from shapely.affinity import affine_transform
 from shapely.geometry import Polygon, Point
 from shapely.strtree import STRtree
 
+WIDE = ((3000, 60), (3000, 100), (1500, 100))   # (footprint m2, height m) of the wide-and-tall class
 BANDS = ((1, 3, '<=3'), (4, 6, '4-6'), (7, 12, '7-12'), (13, 400, '>12'))
 FLOOR = 3.2
 WARN = .3
@@ -137,6 +140,12 @@ def main():
     if rho.get(pre) is not None and rho[pre] < WARN:
         say(f'\nWARNING: rank correlation {rho[pre]:.2f} under {WARN} at "{pre}": heights barely follow storeys; '
             f'see docs/DATA.md "Correcting building heights"')
+    # the wide-and-tall class: footprints wider than a tower standing at tower heights read as one solid monolith (a merged
+    # block or a coarse outline given a tower's height); a correction that adds many is suspect (docs/DATA.md)
+    area_bi = np.zeros(len(final)); area_bi[PB] = [p.area for p in P]
+    say('\nwide and tall (footprint m2 > / height m >): ' + ';  '.join(
+        f'{name} ' + ' '.join(f'{np.sum((area_bi > a) & (h > t))}' for a, t in WIDE) for name, h in [*S.items(), ('final', final)])
+        + '   (' + ', '.join(f'{a:.0f}/{t:.0f}' for a, t in WIDE) + ')')
     ex = [m for m in matched if m['height']]
     if len(ex) >= 3:
         say(f'\nexplicit OSM heights: n={len(ex)}')

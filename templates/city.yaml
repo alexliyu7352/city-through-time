@@ -9,7 +9,7 @@ buildings: { source: cmab, simplify_m: 1.0, min_area_m2: 15, exaggeration: 4.0 }
 # Optional buildings.today_footprints: { enabled: false, source: osm_matched, regularize: guarded }
 # Appearance-only sidecar; never changes the white model or dates (DATA.md). Whole-building OSM cache required when enabled.
 # Optional height layers, in this order (DATA.md "Correcting building heights"; check with tools/heightcheck.py):
-#   buildings.height_correction: { source: globfp, min_cover: 0.3 }   # 3D-GloBFP heights over each footprint (pipeline/globfp.py fetch first)
+#   buildings.height_correction: { source: globfp, min_cover: 0.3, tower_m2: 3000, tall_m: 60 }   # 3D-GloBFP heights over each footprint (pipeline/globfp.py fetch first); no footprint wider than tower_m2 raised above tall_m
 #   buildings.height_supplement: { source: osm, floor_height_m: 3.2, lower: false }   # matched OSM height / storeys; lower: true also lowers
 #   buildings.height_zones: research/height_zones.geojson   # researched low quarters: polygon, height_m or storeys, source, label (schematic)
 terrain: { enabled: true, exaggeration: 3.0 } # Copernicus DEM (pipeline/terrain.py, which also writes the 16-bit terrain16.png); 3.0 is Xianyang's value: run terrain.py first and fill in the limit from the foundations it prints (mountain cities mostly ×1–1.5); above it the foundations of houses on slopes are as tall as the walls
